@@ -1,0 +1,26 @@
+{
+  "gapDetectionScore": 100,
+  "workPlanningScore": 50,
+  "dependencyGraphScore": 70,
+  "mergeCorrectnessScore": 100,
+  "publicationBlockerScore": 100,
+  "overallScore": 84,
+  "deductions": [
+    {
+      "finding": "Gap detection report missing",
+      "evidence": "ontology-gap-report.json not loaded",
+      "reason": "Cannot verify compiler gap detection quality.",
+      "severity": "high",
+      "category": "compiler_quality",
+      "suggestedFix": "Run kg:compile to regenerate gap analysis.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "gapCount": 0,
+    "workItemCount": 0,
+    "unmetGapCount": 0,
+    "mergeConflictCount": 0,
+    "publicationBlockerCount": 0
+  }
+}

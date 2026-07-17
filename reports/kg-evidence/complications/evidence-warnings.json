@@ -1,0 +1,26 @@
+[
+  {
+    "code": "PREPARE_SLICE_MISSING",
+    "message": "No static Prepare slice registered for topic complications",
+    "collectorId": "static-prepare-collector",
+    "severity": "warning"
+  },
+  {
+    "code": "ANKI_SIGNALS_UNAVAILABLE",
+    "message": "No Anki mapping count registered for topic complications",
+    "collectorId": "anki-signal-collector",
+    "severity": "info"
+  },
+  {
+    "code": "OB_MAPPINGS_ZERO",
+    "message": "No Orthobullets mapping count available for topic complications",
+    "collectorId": "orthobullets-metadata-collector",
+    "severity": "info"
+  },
+  {
+    "code": "CASEPREP_LINK_MISSING",
+    "message": "No CasePrep mapping for topic complications",
+    "collectorId": "caseprep-link-collector",
+    "severity": "info"
+  }
+]

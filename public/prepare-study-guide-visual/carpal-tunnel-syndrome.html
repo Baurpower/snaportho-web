@@ -1,0 +1,337 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Prepare Study Guide Verification</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: #f8fafc;
+        color: #0f172a;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      .page {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 300px;
+        gap: 24px;
+        padding: 34px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .main { max-width: 920px; }
+      .eyebrow {
+        margin: 0;
+        color: #64748b;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+      h1 {
+        margin: 8px 0 6px;
+        font-size: 34px;
+        line-height: 1.05;
+        letter-spacing: 0;
+      }
+      .subtitle {
+        margin: 0 0 18px;
+        color: #475569;
+        font-size: 14px;
+        line-height: 1.55;
+        max-width: 760px;
+      }
+      .cards { display: grid; gap: 14px; }
+      .card {
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        background: #fff;
+        box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
+        padding: 18px;
+      }
+      .card-top {
+        display: grid;
+        grid-template-columns: 26px 1fr;
+        gap: 12px;
+      }
+      .check {
+        width: 24px;
+        height: 24px;
+        border: 2px solid #0284c7;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        color: #0284c7;
+        font-size: 14px;
+        font-weight: 900;
+      }
+      h3 { margin: 0; font-size: 17px; letter-spacing: 0; }
+      .card p { margin: 6px 0 0; color: #475569; font-size: 13px; line-height: 1.55; }
+      .meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+      .meta span {
+        border-radius: 999px;
+        background: #f1f5f9;
+        padding: 5px 9px;
+        color: #475569;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .objective {
+        margin-top: 14px;
+        border: 1px solid #bae6fd;
+        background: #f0f9ff;
+        border-radius: 14px;
+        padding: 12px;
+        color: #082f49;
+        font-size: 13px;
+        line-height: 1.55;
+      }
+      .objective span {
+        display: block;
+        margin-bottom: 4px;
+        color: #075985;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+      .blocks { display: grid; gap: 10px; margin-top: 12px; }
+      .block {
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 11px 12px;
+        background: #fff;
+      }
+      .block-recognize { background: #f0f9ff; border-color: #bae6fd; }
+      .block-application { background: #ecfdf5; border-color: #a7f3d0; }
+      .block-common-confusion { background: #fffbeb; border-color: #fde68a; }
+      .block-self-check { background: #fff1f2; border-color: #fecdd3; }
+      .block-title {
+        margin: 0 0 6px !important;
+        color: #334155 !important;
+        font-size: 10px !important;
+        font-weight: 900;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+      ul { margin: 0; padding-left: 18px; color: #334155; font-size: 13px; line-height: 1.55; }
+      aside {
+        align-self: start;
+        position: sticky;
+        top: 24px;
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        background: #fff;
+        padding: 18px;
+      }
+      .progress {
+        height: 10px;
+        margin: 14px 0 10px;
+        border-radius: 999px;
+        background: #e2e8f0;
+        overflow: hidden;
+      }
+      .progress span {
+        display: block;
+        width: 25%;
+        height: 100%;
+        background: #0284c7;
+      }
+      aside strong { display: block; font-size: 20px; }
+      aside p:not(.eyebrow) { color: #64748b; font-size: 13px; }
+      @media (max-width: 800px) {
+        .page { grid-template-columns: 1fr; padding: 18px; }
+        aside { position: static; }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="page" id="carpal-tunnel-syndrome">
+      <div class="main">
+        <p class="eyebrow">Case Readiness</p>
+        <h1>Carpal Tunnel Syndrome</h1>
+        <p class="subtitle">Fast study guide for a 15-minute pass. Focus on recognition, explanation, and the next useful action for this clinic topic.</p>
+        <div class="cards">
+        <article class="card expanded">
+          <div class="card-top">
+            <div class="check">✓</div>
+            <div>
+              <h3>Recognize the median-nerve symptom pattern</h3>
+              <p>CTS is usually a clinical diagnosis, so the history has to come first.</p>
+              <div class="meta">
+                <span>4 min</span>
+                <span>must know</span>
+                <span>I can recognize CTS symptoms</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Identify classic carpal tunnel symptoms and severity clues.
+          </div>
+          <div class="blocks">
+            <div class="block block-recognize">
+              <p class="block-title">What to recognize</p>
+              <ul>
+                <li>Numbness and paresthesias in the thumb, index, middle, and radial ring finger.</li><li>Night symptoms or shaking the hand out are classic.</li><li>Thenar weakness or atrophy suggests more advanced compression.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-common-confusion">
+              <p class="block-title">Common confusion</p>
+              <ul>
+                <li>Whole-hand numbness, neck pain, or ulnar-sided symptoms should make you consider mimics.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      
+        <article class="card ">
+          <div class="card-top">
+            <div class="check"></div>
+            <div>
+              <h3>Perform a focused CTS exam</h3>
+              <p>The exam should confirm distribution, severity, and alternate diagnoses.</p>
+              <div class="meta">
+                <span>4 min</span>
+                <span>must know</span>
+                <span>I can examine CTS</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Describe the exam maneuvers and motor findings that matter for CTS.
+          </div>
+          <div class="blocks">
+            <div class="block block-key-concepts">
+              <p class="block-title">Key concepts</p>
+              <ul>
+                <li>Check median sensory distribution and compare sides.</li><li>Assess thenar bulk and thumb abduction strength.</li><li>Use provocative maneuvers as supporting data, not the whole diagnosis.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-say-out-loud">
+              <p class="block-title">What to say out loud</p>
+              <ul>
+                <li>I would document sensation, thenar strength/atrophy, and provocative testing, then screen for cervical or ulnar mimics.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      
+        <article class="card ">
+          <div class="card-top">
+            <div class="check"></div>
+            <div>
+              <h3>Know when electrodiagnostics help</h3>
+              <p>Testing is most useful when the diagnosis is unclear, severity matters, or surgery is being considered.</p>
+              <div class="meta">
+                <span>2 min</span>
+                <span>core</span>
+                <span>I can use electrodiagnostics appropriately</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Explain when EMG/NCS is helpful in CTS workup.
+          </div>
+          <div class="blocks">
+            <div class="block block-key-concepts">
+              <p class="block-title">Key concepts</p>
+              <ul>
+                <li>Many classic cases are diagnosed clinically.</li><li>Electrodiagnostics can confirm diagnosis, grade severity, and evaluate mimics.</li><li>Severe findings or denervation support urgency of decompression.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-self-check">
+              <p class="block-title">Self-check question</p>
+              <ul>
+                <li>When would you order EMG before treating CTS?</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      
+        <article class="card ">
+          <div class="card-top">
+            <div class="check"></div>
+            <div>
+              <h3>Explain indications for carpal tunnel release</h3>
+              <p>Treatment should follow severity, chronicity, and failure of nonoperative care.</p>
+              <div class="meta">
+                <span>4 min</span>
+                <span>must know</span>
+                <span>I can explain release indications</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Distinguish splinting/injection candidates from patients who need release.
+          </div>
+          <div class="blocks">
+            <div class="block block-key-concepts">
+              <p class="block-title">Key concepts</p>
+              <ul>
+                <li>Night splinting is common first-line treatment for mild symptoms.</li><li>Injection can be diagnostic and therapeutic in selected patients.</li><li>Thenar weakness, atrophy, severe studies, or persistent symptoms despite nonoperative care support release.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-say-out-loud">
+              <p class="block-title">What to say out loud</p>
+              <ul>
+                <li>Surgery is to decompress the median nerve by releasing the transverse carpal ligament.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      
+        <article class="card ">
+          <div class="card-top">
+            <div class="check"></div>
+            <div>
+              <h3>Identify structures released during carpal tunnel surgery</h3>
+              <p>You do not need every technical detail, but you should know the target and what must be protected.</p>
+              <div class="meta">
+                <span>1 min</span>
+                <span>core</span>
+                <span>I can describe release anatomy</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Describe the goal of carpal tunnel release and the key structure at risk.
+          </div>
+          <div class="blocks">
+            <div class="block block-application">
+              <p class="block-title">Clinical or operative application</p>
+              <ul>
+                <li>The transverse carpal ligament is released to decompress the median nerve.</li><li>The recurrent motor branch is a key danger structure.</li><li>Persistent symptoms, pillar pain, and nerve injury are complications to remember.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-common-confusion">
+              <p class="block-title">Common confusion</p>
+              <ul>
+                <li>The operation is not a tendon release; the goal is median nerve decompression.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+      </div>
+      <aside>
+        <p class="eyebrow">Progress</p>
+        <div class="progress"><span></span></div>
+        <strong>1 / 5 reviewed</strong>
+        <p>clinic guide · 15 min</p>
+      </aside>
+    </section>
+  </body>
+</html>

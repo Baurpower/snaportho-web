@@ -15,6 +15,19 @@ import {
   isPageUsable,
 } from './shared/page-classification.js';
 import {
+  buildCurriculumExplainRequest,
+  buildQuestionExplainRequest,
+  buildQuestionHintRequest,
+  type BroBotTask,
+  resolveBroBotEndpoint,
+  type BroBotExtensionRequest,
+} from './shared/brobot-routing.js';
+import {
+  BACKGROUND_HANDLER_VERSION,
+  EXTENSION_BUILD_ID,
+  ROUTING_CONTRACT_VERSION,
+} from './shared/build-info.js';
+import {
   detectSupportedQuestionProviderFromUrl,
   getConfiguredAppOrigin,
   isLikelySupportedQuestionUrl,
@@ -23,6 +36,7 @@ import {
 const STORAGE_KEY = 'snaportho_extension_device_token';
 const EXTENSION_TOKEN_HEADER = 'x-snaportho-extension-token';
 const ADDON_BASE_URL_HEADER = 'x-snaportho-addon-base-url';
+const BACKGROUND_BUILD_ID_MARKER = '2026-07-12-rock-curriculum-routing-v3';
 
 // Server error codes (from explain/route.ts and friends) map 1:1 onto the
 // extension's own ExtensionErrorCode for known cases; anything else falls
@@ -31,6 +45,10 @@ const KNOWN_ERROR_CODES = new Set<ExtensionErrorCode>([
   'quota_exceeded',
   'disabled',
   'invalid_request',
+  'invalid_curriculum_request',
+  'curriculum_content_missing',
+  'curriculum_content_too_large',
+  'unsupported_provider',
   'api_failure',
   'parse_failure',
 ]);
@@ -46,6 +64,14 @@ class CodedError extends Error {
 }
 
 void chrome.sidePanel?.setPanelBehavior?.({ openPanelOnActionClick: true });
+
+console.info('[snaportho-extension] background_startup', {
+  extensionBuildId: EXTENSION_BUILD_ID,
+  backgroundBuildIdMarker: BACKGROUND_BUILD_ID_MARKER,
+  routingContractVersion: ROUTING_CONTRACT_VERSION,
+  backgroundHandlerVersion: BACKGROUND_HANDLER_VERSION,
+  loadedManifestVersion: chrome.runtime.getManifest?.().version ?? null,
+});
 
 async function getStoredDeviceToken() {
   const result = await chrome.storage.local.get([STORAGE_KEY]);
@@ -89,16 +115,50 @@ function safeResponseBodyPreview(value: string | null) {
     .slice(0, 800);
 }
 
-async function fetchJson(pathname: string, init?: RequestInit) {
+function buildFetchDiagnosticsMeta(requestPayload: BroBotExtensionRequest | null, requestBody: string | null) {
+  if (!requestPayload) return {};
+  const curriculum = requestPayload.task === 'curriculum_explain' ? requestPayload.curriculum : null;
+  return {
+    requestedTask: requestPayload.task,
+    requestProvider: requestPayload.provider,
+    requestPageKind: requestPayload.pageContext.pageKind,
+    requestPayloadKind: requestPayload.task === 'curriculum_explain' ? 'curriculum' as const : 'question' as const,
+    curriculumSectionCount: curriculum?.sections.length,
+    curriculumContentCharCount:
+      curriculum?.sections.reduce((total, section) => total + section.text.length, 0) ??
+      requestPayload.pageContext.contentText?.length,
+    requestBodyCharCount: requestBody?.length,
+    wasTruncated: Boolean(requestPayload.pageContext.raw?.providerSpecific?.wasTruncated),
+    omittedSectionCount: Number(requestPayload.pageContext.raw?.providerSpecific?.omittedSectionCount ?? 0),
+  };
+}
+
+async function fetchJson(pathname: string, init?: RequestInit, diagnosticsInput?: {
+  requestPayload?: BroBotExtensionRequest;
+  requestBody?: string;
+  messageType?: string;
+  onDiagnostics?: (diagnostics: ExtensionFetchDiagnostics) => void;
+}) {
   const baseUrl = getConfiguredAppOrigin();
   const attemptedLinkUrl = `${baseUrl}${pathname}`;
+  const diagnosticsMeta = buildFetchDiagnosticsMeta(
+    diagnosticsInput?.requestPayload ?? null,
+    diagnosticsInput?.requestBody ?? null
+  );
   const baseDiagnostics = {
     attemptedLinkUrl,
     baseUrl,
+    resolvedEndpoint: attemptedLinkUrl,
+    extensionBuildId: EXTENSION_BUILD_ID,
+    routingContractVersion: ROUTING_CONTRACT_VERSION,
+    backgroundHandlerVersion: BACKGROUND_HANDLER_VERSION,
+    messageType: diagnosticsInput?.messageType,
+    loadedManifestVersion: chrome.runtime.getManifest?.().version ?? null,
     httpStatus: null,
     responseBody: null,
     responseMessage: null,
     fetchFailedBeforeResponse: false,
+    ...diagnosticsMeta,
   };
   let response: Response;
   try {
@@ -122,6 +182,11 @@ async function fetchJson(pathname: string, init?: RequestInit) {
         .catch(() => null)
     : null;
   if (!response.ok) {
+    console.warn('[snaportho-extension] request_failed', {
+      pathname,
+      status: response.status,
+      responseBody: safeResponseBodyPreview(rawBody),
+    });
     const code: ExtensionErrorCode = KNOWN_ERROR_CODES.has(json?.error) ? json.error : 'unknown';
     const message =
       response.status === 401
@@ -132,9 +197,48 @@ async function fetchJson(pathname: string, init?: RequestInit) {
       httpStatus: response.status,
       responseBody: safeResponseBodyPreview(rawBody),
       responseMessage: json?.message ?? json?.error ?? response.statusText,
+      serverErrorCode: typeof json?.error === 'string' ? json.error : null,
     });
   }
+  diagnosticsInput?.onDiagnostics?.({
+    ...baseDiagnostics,
+    httpStatus: response.status,
+    responseMessage: response.statusText || 'OK',
+  });
   return json;
+}
+
+function isCurriculumExplainPage(pageContext: OrthobulletsPageContext) {
+  const classification = pageContext.classification ?? classifyPage(pageContext);
+  return pageContext.mode === 'curriculum_content' || classification.pageKind === 'educational_content';
+}
+
+function inferExplainTask(pageContext: OrthobulletsPageContext): Extract<BroBotTask, 'curriculum_explain' | 'question_explain'> {
+  return isCurriculumExplainPage(pageContext) ? 'curriculum_explain' : 'question_explain';
+}
+
+function buildRequestPayload(task: BroBotTask, pageContext: OrthobulletsPageContext): BroBotExtensionRequest {
+  switch (task) {
+    case 'curriculum_explain':
+      return buildCurriculumExplainRequest(pageContext);
+    case 'question_explain':
+      return buildQuestionExplainRequest(pageContext);
+    case 'question_hint':
+      return buildQuestionHintRequest(pageContext);
+  }
+}
+
+function assertRoutingInvariant(requestPayload: BroBotExtensionRequest, endpoint: string) {
+  if (
+    requestPayload.provider === 'rock' &&
+    requestPayload.pageContext.pageKind === 'curriculum_content' &&
+    endpoint.includes('/orthobullets/explain')
+  ) {
+    throw new Error('Routing invariant violated: ROCK curriculum content cannot use the Orthobullets question explanation endpoint.');
+  }
+  if (requestPayload.task === 'curriculum_explain' && endpoint !== '/api/brobot/curriculum/explain') {
+    throw new Error(`Routing invariant violated for curriculum_explain: ${endpoint}`);
+  }
 }
 
 function enrichPageContext(pageContext: OrthobulletsPageContext) {
@@ -225,7 +329,16 @@ function buildExtractionDiagnostics(input: {
   };
 }
 
-chrome.runtime.onMessage.addListener((message: ExtensionMessage, _sender: unknown, sendResponse: (response: ExtensionMessageResponse) => void) => {
+chrome.runtime.onMessage.addListener((message: ExtensionMessage | { type: 'ob:question-changed' }, sender: { tab?: { id?: number } }, sendResponse: (response: ExtensionMessageResponse) => void) => {
+  if (message && typeof message === 'object' && 'type' in message && message.type === 'ob:question-changed') {
+    void chrome.runtime
+      .sendMessage({
+        ...message,
+        tabId: sender.tab?.id ?? null,
+      })
+      .catch(() => null);
+    return false;
+  }
   void (async () => {
     try {
       if (message.type === 'ob:get-active-page-state') {
@@ -355,48 +468,89 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage, _sender: unknow
         return;
       }
 
-      if (message.type === 'ob:explain') {
+      if (message.type === 'brobot:request' || message.type === 'ob:explain' || message.type === 'ob:hint') {
         const deviceToken = await getStoredDeviceToken();
         if (!deviceToken) {
           throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');
         }
 
-        const explanation = await fetchJson('/api/brobot/orthobullets/explain', {
+        const task: BroBotTask =
+          message.type === 'brobot:request'
+            ? message.task
+            : message.type === 'ob:hint'
+              ? 'question_hint'
+              : inferExplainTask(message.pageContext);
+        const requestPayload = buildRequestPayload(task, message.pageContext);
+        const endpoint = resolveBroBotEndpoint(requestPayload);
+        assertRoutingInvariant(requestPayload, endpoint);
+        const requestBodyObject =
+          task === 'question_hint'
+            ? {
+                ...requestPayload,
+                hintLevel: 'hintLevel' in message ? message.hintLevel : undefined,
+                selectedAnswerKey: 'selectedAnswerKey' in message ? message.selectedAnswerKey : undefined,
+              }
+            : {
+                ...requestPayload,
+                emphasis: 'emphasis' in message ? message.emphasis : undefined,
+              };
+        const requestBody = JSON.stringify(requestBodyObject);
+        let fetchDiagnostics: ExtensionFetchDiagnostics | undefined;
+
+        console.info('[snaportho-extension] background_message', {
+          messageType: message.type,
+          provider: message.pageContext.provider,
+          pageKind: message.pageContext.pageKind,
+          requestedTask: task,
+          extensionBuildId: EXTENSION_BUILD_ID,
+          routingContractVersion: ROUTING_CONTRACT_VERSION,
+        });
+        console.info('[snaportho-extension] endpoint_resolution', {
+          requestedTask: requestPayload.task,
+          resolvedEndpoint: `${getConfiguredAppOrigin()}${endpoint}`,
+        });
+        console.info('[snaportho-extension] fetch', {
+          method: 'POST',
+          resolvedEndpoint: `${getConfiguredAppOrigin()}${endpoint}`,
+          payloadKind: requestPayload.task === 'curriculum_explain' ? 'curriculum' : 'question',
+        });
+        console.info('[snaportho-extension] explain_request', {
+          requestedTask: requestPayload.task,
+          resolvedEndpoint: `${getConfiguredAppOrigin()}${endpoint}`,
+          requestProvider: requestPayload.provider,
+          requestPageKind: message.pageContext.pageKind,
+          requestPayloadKind: requestPayload.task === 'curriculum_explain' ? 'curriculum' : 'question',
+          curriculumSectionCount: requestPayload.task === 'curriculum_explain' ? requestPayload.curriculum.sections.length : undefined,
+          curriculumContentCharCount:
+            requestPayload.task === 'curriculum_explain'
+              ? requestPayload.curriculum.sections.reduce((total, section) => total + section.text.length, 0)
+              : undefined,
+          requestBodyCharCount: requestBody.length,
+          wasTruncated: Boolean(message.pageContext.raw?.providerSpecific?.wasTruncated),
+          omittedSectionCount: Number(message.pageContext.raw?.providerSpecific?.omittedSectionCount ?? 0),
+        });
+
+        const result = await fetchJson(endpoint, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             [EXTENSION_TOKEN_HEADER]: deviceToken,
           },
-          body: JSON.stringify({
-            pageContext: message.pageContext,
-            emphasis: message.emphasis,
-          }),
+          body: requestBody,
+        }, {
+          requestPayload,
+          requestBody,
+          messageType: message.type,
+          onDiagnostics: (diagnostics) => {
+            fetchDiagnostics = diagnostics;
+          },
         });
 
-        sendResponse({ ok: true, explanation });
-        return;
-      }
-
-      if (message.type === 'ob:hint') {
-        const deviceToken = await getStoredDeviceToken();
-        if (!deviceToken) {
-          throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');
+        if (task === 'question_hint') {
+          sendResponse({ ok: true, hint: result, fetchDiagnostics });
+        } else {
+          sendResponse({ ok: true, explanation: result, fetchDiagnostics });
         }
-
-        const hint = await fetchJson('/api/brobot/orthobullets/hint', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            [EXTENSION_TOKEN_HEADER]: deviceToken,
-          },
-          body: JSON.stringify({
-            pageContext: message.pageContext,
-            hintLevel: message.hintLevel,
-            selectedAnswerKey: message.selectedAnswerKey,
-          }),
-        });
-
-        sendResponse({ ok: true, hint });
         return;
       }
 

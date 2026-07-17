@@ -3,16 +3,61 @@
   "pilotKey": "extensor-mechanism-failure-neighborhood",
   "primaryEntitySlug": "extensor-mechanism-failure",
   "displayName": "Extensor Mechanism Failure",
-  "generatedAt": "2026-07-05T23:15:39.243Z",
+  "generatedAt": "2026-07-16T02:40:53.926Z",
   "nodes": [
+    {
+      "slug": "adult-reconstruction-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Adult Reconstruction Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "extensor-mechanism",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Knee Extensor Mechanism",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
     {
       "slug": "extensor-mechanism-failure",
       "entityType": "condition",
       "preferredLabel": "Extensor Mechanism Failure",
       "role": "primary_condition",
       "isPrimary": true,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 6
+    },
+    {
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
+      "role": "biomechanics",
+      "isPrimary": false,
       "inboundEdgeCount": 0,
       "outboundEdgeCount": 1
+    },
+    {
+      "slug": "patella",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Patella",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "patellar-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Patellar Tendon",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
     },
     {
       "slug": "patellar-tendon-rupture-tka",
@@ -22,16 +67,31 @@
       "isPrimary": false,
       "inboundEdgeCount": 1,
       "outboundEdgeCount": 0
+    },
+    {
+      "slug": "quadriceps-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Quadriceps Tendon",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
     }
   ],
-  "edgeCount": 1,
-  "claimCount": 1,
+  "edgeCount": 9,
+  "claimCount": 3,
   "decisionPointCount": 0,
   "roles": {
     "primary_condition": [
       "extensor-mechanism-failure"
     ],
-    "neighboring_anatomy": [],
+    "neighboring_anatomy": [
+      "adult-reconstruction-anatomy-hub",
+      "extensor-mechanism",
+      "patella",
+      "patellar-tendon",
+      "quadriceps-tendon"
+    ],
     "procedure": [],
     "classification": [],
     "imaging": [
@@ -40,7 +100,9 @@
     "complication": [],
     "decision_point_anchor": [],
     "claim_anchor": [],
-    "biomechanics": [],
+    "biomechanics": [
+      "implant-concepts-hub"
+    ],
     "fixation": [],
     "supporting": []
   }

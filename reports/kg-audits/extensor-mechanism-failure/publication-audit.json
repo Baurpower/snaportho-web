@@ -2,32 +2,31 @@
   "status": "NOT_READY",
   "ready": false,
   "blockers": [
-    "12 proposals still awaiting human review",
-    "9 items require attending review",
+    "10 proposals still awaiting human review",
+    "8 items require attending review",
     "Claims and DPs are draft-only — publication gate must block verified consumption.",
-    "No approved canonical entities in database yet — proposals remain offline/spec.",
-    "13 critical/high ontology gaps remain unresolved"
+    "14 critical/high ontology gaps remain unresolved"
   ],
   "currentLevel": 5,
   "requiredLevel": 7,
-  "score": 30,
+  "score": 43,
   "deductions": [
     {
-      "finding": "12 proposals still awaiting human review",
+      "finding": "10 proposals still awaiting human review",
       "evidence": "publication-readiness.json blockers",
       "reason": "Publication gate identified blocking condition.",
       "severity": "high",
       "category": "publication_readiness",
-      "suggestedFix": "[critical] Extensor Mechanism Failure neighborhood has 0/3 anatomy_structure entities.",
+      "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
       "impact": 8
     },
     {
-      "finding": "9 items require attending review",
+      "finding": "8 items require attending review",
       "evidence": "publication-readiness.json blockers",
       "reason": "Publication gate identified blocking condition.",
       "severity": "high",
       "category": "publication_readiness",
-      "suggestedFix": "[critical] Extensor Mechanism Failure neighborhood has 0/3 anatomy_structure entities.",
+      "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
       "impact": 8
     },
     {
@@ -36,25 +35,16 @@
       "reason": "Publication gate identified blocking condition.",
       "severity": "high",
       "category": "publication_readiness",
-      "suggestedFix": "[critical] Extensor Mechanism Failure neighborhood has 0/3 anatomy_structure entities.",
+      "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
       "impact": 8
     },
     {
-      "finding": "No approved canonical entities in database yet — proposals remain offline/spec.",
-      "evidence": "publication-readiness.json blockers",
-      "reason": "Publication gate identified blocking condition.",
-      "severity": "high",
-      "category": "publication_readiness",
-      "suggestedFix": "[critical] Extensor Mechanism Failure neighborhood has 0/3 anatomy_structure entities.",
-      "impact": 8
-    },
-    {
-      "finding": "13 critical/high ontology gaps remain unresolved",
+      "finding": "14 critical/high ontology gaps remain unresolved",
       "evidence": "publication-readiness.json blockers",
       "reason": "Publication gate identified blocking condition.",
       "severity": "critical",
       "category": "publication_readiness",
-      "suggestedFix": "[critical] Extensor Mechanism Failure neighborhood has 0/3 anatomy_structure entities.",
+      "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
       "impact": 15
     }
   ]

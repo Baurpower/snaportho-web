@@ -2,18 +2,20 @@
 
 Topic: **bearing-surface-selection**
 Framework: **1.0.0**
-Generated: 2026-07-05T23:31:27.017Z
+Generated: 2026-07-16T02:33:43.885Z
 
 ## Registry
 
 - Registered agents: 13
-- Gap-resolution assignments: 3
+- Gap-resolution assignments: 5
 - Unmet gap capabilities: 0
 
 ## Assignments
 
-- **Relationship Builder** (relationship-builder): 2 gap(s) [missing_relationship] — handles_gap_kind:missing_relationship
-- **Claim Builder** (claim-builder): 8 gap(s) [missing_claim] — handles_gap_kind:missing_claim
+- **Relationship Builder** (relationship-builder): 38 gap(s) [missing_relationship] — handles_gap_kind:missing_relationship
+- **Clinical Entity Builder** (clinical-entity-builder): 4 gap(s) [missing_entity] — handles_gap_kind:missing_entity; generic_fallback
+- **Claim Builder** (claim-builder): 14 gap(s) [missing_claim] — handles_gap_kind:missing_claim
+- **Metadata Builder** (metadata-builder): 2 gap(s) [missing_metadata] — handles_gap_kind:missing_metadata
 - **Asset Linker** (asset-linker): 2 gap(s) [missing_asset_link] — handles_gap_kind:missing_asset_link
 
 ## Contract guarantees

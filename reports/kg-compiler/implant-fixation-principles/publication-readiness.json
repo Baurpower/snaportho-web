@@ -1,7 +1,7 @@
 {
   "topicKey": "implant-fixation-principles",
   "pilotKey": "implant-fixation-principles-neighborhood",
-  "generatedAt": "2026-07-05T23:29:15.209Z",
+  "generatedAt": "2026-07-16T02:41:49.407Z",
   "currentLevel": 5,
   "requiredLevel": 8,
   "ready": false,
@@ -9,9 +9,17 @@
     "8 proposals still awaiting human review",
     "7 items require attending review",
     "Claims and DPs are draft-only — publication gate must block verified consumption.",
-    "No approved canonical entities in database yet — proposals remain offline/spec."
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "7 critical/high ontology gaps remain unresolved"
   ],
   "remainingWork": [
+    "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
+    "[critical] Total Hip Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Total Hip Arthroplasty missing outbound involves_anatomy (0/1).",
+    "[high] Total Hip Arthroplasty missing outbound at_risk_structure (0/1).",
+    "[critical] Total Knee Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Total Knee Arthroplasty missing outbound involves_anatomy (0/1).",
+    "[high] Total Knee Arthroplasty missing outbound at_risk_structure (0/1).",
     "Route ATTENDING_REVIEW queue to attending reviewer"
   ],
   "productReadiness": {
@@ -20,10 +28,10 @@
     "brobotReady": false
   },
   "estimatedEffort": {
-    "gapsRemaining": 15,
+    "gapsRemaining": 19,
     "humanReviewItems": 8,
     "attendingReviewItems": 7,
-    "effortBand": "low"
+    "effortBand": "high"
   },
   "dimensionScores": {
     "clinical": 1,

@@ -36,33 +36,34 @@
     "agentId": "relationship-builder",
     "assignmentId": "work-relationship-builder",
     "status": "completed",
-    "workload": 5,
+    "workload": 0,
     "successRate": 1,
     "averageConfidence": 0.85,
-    "proposalsGenerated": 5,
+    "proposalsGenerated": 0,
     "reviewBurden": 0,
     "evidenceUsage": 0,
-    "grade": "C",
+    "grade": "F",
     "strengths": [
-      "Completed without errors",
-      "Generated 5 proposals"
+      "Completed without errors"
     ],
-    "weaknesses": []
+    "weaknesses": [
+      "No proposals generated"
+    ]
   },
   {
     "agentId": "claim-builder",
     "assignmentId": "work-claim-builder",
     "status": "completed",
-    "workload": 8,
+    "workload": 9,
     "successRate": 1,
     "averageConfidence": 0.85,
-    "proposalsGenerated": 8,
+    "proposalsGenerated": 9,
     "reviewBurden": 0,
     "evidenceUsage": 0,
     "grade": "B",
     "strengths": [
       "Completed without errors",
-      "Generated 8 proposals"
+      "Generated 9 proposals"
     ],
     "weaknesses": []
   },
@@ -82,6 +83,24 @@
       "Generated 1 proposals"
     ],
     "weaknesses": []
+  },
+  {
+    "agentId": "metadata-builder",
+    "assignmentId": "work-metadata-builder",
+    "status": "completed",
+    "workload": 0,
+    "successRate": 1,
+    "averageConfidence": 0.85,
+    "proposalsGenerated": 0,
+    "reviewBurden": 0,
+    "evidenceUsage": 0,
+    "grade": "F",
+    "strengths": [
+      "Completed without errors"
+    ],
+    "weaknesses": [
+      "No proposals generated"
+    ]
   },
   {
     "agentId": "duplicate-detector",
@@ -135,16 +154,16 @@
     "agentId": "review-assistant",
     "assignmentId": "work-review-assistant",
     "status": "completed",
-    "workload": 87,
+    "workload": 88,
     "successRate": 1,
     "averageConfidence": 0.85,
-    "proposalsGenerated": 87,
+    "proposalsGenerated": 88,
     "reviewBurden": 0,
     "evidenceUsage": 0,
     "grade": "B",
     "strengths": [
       "Completed without errors",
-      "Generated 87 proposals"
+      "Generated 88 proposals"
     ],
     "weaknesses": []
   },

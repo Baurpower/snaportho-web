@@ -2,7 +2,7 @@
 
 Topic: **Surgical Approaches** (`surgical-approaches`)
 Packet ID: `ev-packet-c588b885`
-Generated: 2026-07-08T21:22:51.538Z
+Generated: 2026-07-09T04:26:52.175Z
 Version: 1.0.0 | Ontology: 2026-07-05
 
 ## Snapshot
@@ -10,11 +10,11 @@ Version: 1.0.0 | Ontology: 2026-07-05
 | Field | Value |
 |-------|------:|
 | Canonical source | spec |
-| Entities | 94 |
-| Relationships | 1083 |
-| Claims (draft) | 65 |
-| Decision points | 5 |
-| Proposals | 1248 |
+| Entities | 183 |
+| Relationships | 927 |
+| Claims (draft) | 28 |
+| Decision points | 16 |
+| Proposals | 1155 |
 | Gaps | 1 |
 | Warnings | 4 |
 
@@ -39,9 +39,20 @@ Version: 1.0.0 | Ontology: 2026-07-05
 
 - attending_gated_dp:dp-sa-select
 - attending_gated_dp:dp-sa-position
-- attending_gated_dp:dp-sa-nerve
-- attending_gated_dp:dp-sa-window
+- attending_gated_dp:dp-sa-carm
+- attending_gated_dp:dp-sa-landmark
+- attending_gated_dp:dp-sa-nv
+- attending_gated_dp:dp-sa-interval
+- attending_gated_dp:dp-sa-limits
+- attending_gated_dp:dp-sa-extensile
+- attending_gated_dp:dp-sa-bailout
+- attending_gated_dp:dp-sa-revision
 - attending_gated_dp:dp-sa-closure
+- attending_gated_dp:dp-sa-deltopectoral
+- attending_gated_dp:dp-sa-kl
+- attending_gated_dp:dp-sa-daa
+- attending_gated_dp:dp-sa-spine
+- attending_gated_dp:dp-sa-post-knee
 
 ## Top warnings
 

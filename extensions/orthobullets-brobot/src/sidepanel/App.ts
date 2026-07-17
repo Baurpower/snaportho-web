@@ -4,6 +4,7 @@ import type {
   ExtensionErrorCode,
   ExtensionMessage,
   ExtensionMessageResponse,
+  QuestionChangeMessage,
 } from '../shared/messages.js';
 import type {
   BrobotExplainResult,
@@ -25,18 +26,31 @@ import { isClinicallyImportantWarning, resolveCurriculumChatChips } from '../sha
 import { resolveTopicTutorChips } from '../shared/topic-tutor-chips.js';
 import {
   classifyPage,
-  hasReviewData,
+  inferQuestionState,
   isExplainEligible,
   isHintEligible,
   isPageUsable,
   isUnansweredQuestion,
   preferredBrobotMode,
+  resolveQuestionTutorPrimaryAction,
 } from '../shared/page-classification.js';
 import type { PageClassification } from '../shared/types.js';
+import { fingerprintFromPageContext } from '../shared/question-fingerprint.js';
+import type { QuestionRefreshDiagnostics, QuestionRefreshSource } from '../shared/question-fingerprint.js';
+import { hasVisibleReviewData, inferQuestionStateBlockedReason } from '../shared/question-review-state.js';
 import { renderCurriculumChatChips, renderCurriculumStudyPanel } from './explain-study-panel.js';
+import { QuestionTutorController } from './question-tutor-controller.js';
+import type { QuestionTutorViewState } from './question-session.js';
+import { appendQuestionTutorPanel, renderQuestionTutorLifecycleDebug } from './question-tutor-panel.js';
 import { renderTopicTutorPanel } from './topic-tutor-panel.js';
+import {
+  EXTENSION_BUILD_ID,
+  ROUTING_CONTRACT_VERSION,
+  SIDEPANEL_BUNDLE_VERSION,
+} from '../shared/build-info.js';
 
 const BROBOT_ICON_URL = chrome.runtime.getURL('icons/brobot-32.png');
+const SIDEPANEL_BUILD_ID_MARKER = '2026-07-12-rock-curriculum-routing-v3';
 const DEFAULT_FOLLOW_UP_PROMPTS = ['Why not the trap answer?', 'Make this simpler', 'Give me an Anki-style card'];
 const ERROR_COPY: Record<ExtensionErrorCode, { title: string; canRetry: boolean }> = {
   unsupported_page: { title: 'This page is not supported.', canRetry: false },
@@ -44,6 +58,10 @@ const ERROR_COPY: Record<ExtensionErrorCode, { title: string; canRetry: boolean 
   quota_exceeded: { title: 'Daily BroBot limit reached.', canRetry: false },
   disabled: { title: 'BroBot Orthobullets explanations are currently unavailable.', canRetry: false },
   invalid_request: { title: 'This page context could not be processed.', canRetry: true },
+  invalid_curriculum_request: { title: 'This curriculum page context could not be processed.', canRetry: true },
+  curriculum_content_missing: { title: 'Curriculum content was not readable.', canRetry: true },
+  curriculum_content_too_large: { title: 'Curriculum content is too large.', canRetry: true },
+  unsupported_provider: { title: 'This curriculum provider is not supported.', canRetry: false },
   api_failure: { title: 'BroBot could not generate an explanation.', canRetry: true },
   parse_failure: { title: "BroBot's response could not be parsed.", canRetry: true },
   extraction_failure: { title: 'Could not read this page.', canRetry: true },
@@ -135,6 +153,7 @@ function isLikelyCurrentTestUrl(url: string | null | undefined) {
 }
 
 function providerLabel(provider: string | null | undefined) {
+  if (provider === 'himalaya') return 'AAOS Himalaya';
   if (provider === 'rock') return 'ROCK';
   if (provider === 'orthobullets') return 'Orthobullets';
   return 'supported';
@@ -260,14 +279,35 @@ function renderHintCards(hints: OrthobulletsHintResponse[]) {
     .join('')}</section>`;
 }
 
+function renderLoadingSkeleton(label: string, detail: string) {
+  return `<div style="padding:12px;border-radius:14px;background:#f8fafc;border:1px solid #cbd5e1;display:grid;gap:8px;">
+    <p style="margin:0;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#0f766e;font-weight:700;">${escapeHtml(label)}</p>
+    <p style="margin:0;color:#384152;line-height:1.45;font-size:13px;">${escapeHtml(detail)}</p>
+    <div style="display:grid;gap:6px;">
+      <div style="height:10px;border-radius:999px;background:#e2e8f0;"></div>
+      <div style="height:10px;border-radius:999px;background:#e2e8f0;width:88%;"></div>
+      <div style="height:10px;border-radius:999px;background:#e2e8f0;width:72%;"></div>
+    </div>
+  </div>`;
+}
+
 function renderDebugSummary(input: {
   activePage: ActivePageState | null;
   diagnostics: OrthobulletsExtractionDiagnostics | null;
   fetchDiagnostics: ExtensionFetchDiagnostics | null;
   pageContext: OrthobulletsPageContext | null;
   errorCode: ExtensionErrorCode | null;
+  questionRefreshDiagnostics?: QuestionRefreshDiagnostics | null;
+  currentQuestionFingerprint?: string | null;
+  questionLifecycleDebug?: Record<string, unknown> | null;
+  routingDiagnostics?: Partial<ExtensionFetchDiagnostics> | null;
 }) {
   const summary = {
+    extensionBuildId: EXTENSION_BUILD_ID,
+    sidePanelBuildIdMarker: SIDEPANEL_BUILD_ID_MARKER,
+    routingContractVersion: ROUTING_CONTRACT_VERSION,
+    sidePanelBundleVersion: SIDEPANEL_BUNDLE_VERSION,
+    routingDiagnostics: input.routingDiagnostics ?? null,
     activeTabUrl: input.diagnostics?.activeTabUrl ?? input.activePage?.url ?? null,
     activeTabId: input.diagnostics?.activeTabId ?? input.activePage?.tabId ?? null,
     activeTabStatus: input.diagnostics?.activeTabStatus ?? null,
@@ -308,12 +348,18 @@ function renderDebugSummary(input: {
     matchedSelectors: input.pageContext?.debug?.matchedSelectors ?? {},
     classification: input.diagnostics?.classification ?? input.pageContext?.classification ?? null,
     lastErrorCode: input.errorCode,
+    currentQuestionFingerprint: input.currentQuestionFingerprint ?? null,
+    questionRefreshDiagnostics: input.questionRefreshDiagnostics ?? null,
+    questionTutorEngaged: input.questionRefreshDiagnostics?.questionTutorEngaged ?? null,
+    inferredQuestionState: input.questionRefreshDiagnostics?.inferredQuestionState ?? null,
+    primaryAction: input.questionRefreshDiagnostics?.primaryAction ?? null,
+    questionLifecycleDebug: input.questionLifecycleDebug ?? null,
   };
 
-  return `<details style="padding:12px;border-radius:14px;background:white;border:1px solid #ded7c8;">
+  return `<details style="width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow-x:hidden;padding:12px;border-radius:14px;background:white;border:1px solid #ded7c8;">
     <summary style="cursor:pointer;font-weight:700;color:#5c6574;">Developer debug</summary>
     <p style="margin:10px 0 8px;color:#5c6574;font-size:12px;">Extraction and messaging diagnostics for QA. Hidden by default for normal use.</p>
-    <pre style="white-space:pre-wrap;margin:0;font-size:12px;line-height:1.45;">${escapeHtml(JSON.stringify(summary, null, 2))}</pre>
+    <pre style="width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;margin:0;font-size:12px;line-height:1.45;">${escapeHtml(JSON.stringify(summary, null, 2))}</pre>
   </details>`;
 }
 
@@ -326,6 +372,8 @@ function getStatusCopy(input: {
   explanation: BrobotExplainResult | null;
   hints: OrthobulletsHintResponse[];
   error: { message: string; code: ExtensionErrorCode } | null;
+  questionPositionLabel?: string | null;
+  questionRefreshing?: boolean;
 }) {
   if (input.loading) {
     return { label: 'Loading', detail: 'Checking your extension state and active page.' };
@@ -335,6 +383,21 @@ function getStatusCopy(input: {
   }
   if (input.auth?.status !== 'linked') {
     return { label: 'Not linked', detail: 'Link the extension to your SnapOrtho account to use BroBot.' };
+  }
+  if (input.operation === 'extracting' || input.operation === 'explaining') {
+    if (input.questionRefreshing && input.questionPositionLabel) {
+      const normalized = input.questionPositionLabel.match(/question\s+\d+\s+of\s+\d+/i)?.[0] ?? input.questionPositionLabel;
+      return {
+        label: 'Refreshing question',
+        detail: `Loading question for ${normalized}...`,
+      };
+    }
+    if (input.questionRefreshing) {
+      return {
+        label: 'Refreshing question',
+        detail: 'Loading the new question...',
+      };
+    }
   }
   if (input.operation === 'extracting') {
     return { label: 'Extracting', detail: 'Reading the visible question stem, choices, and review context from this page.' };
@@ -364,6 +427,9 @@ function getStatusCopy(input: {
     return { label: 'Hint Mode ready', detail: 'This page looks unanswered, so you can ask for progressive hints before revealing the reasoning.' };
   }
   if (input.pageContext) {
+    if (input.pageContext.provider === 'himalaya' && input.pageContext.pageKind === 'results-overview') {
+      return { label: 'Himalaya results detected', detail: 'Select a question to review it with BroBot.' };
+    }
     const classification = getPageClassification(input.pageContext);
     if (classification?.pageKind === 'topic_page') {
       return {
@@ -378,13 +444,79 @@ function getStatusCopy(input: {
       return { label: 'Mixed page detected', detail: 'Question Tutor is available, and you can switch to Explain mode for the surrounding educational text.' };
     }
   }
-  if (input.pageContext && hasReviewData(input.pageContext)) {
+  if (input.pageContext && hasVisibleReviewData(input.pageContext)) {
     if (input.pageContext.mode === 'curriculum_content') {
       return { label: 'ROCK curriculum page detected', detail: 'Use Explain with BroBot for a resident-friendly teaching summary of this page.' };
     }
     return { label: `${providerLabel(input.pageContext.provider)} review data detected`, detail: 'Use Explain with BroBot for full reasoning.' };
   }
   return { label: 'Ready to explain', detail: 'Nothing is sent to SnapOrtho until you click a hint or explanation action.' };
+}
+
+function getQuestionTutorStatusCopy(input: {
+  loading: boolean;
+  activePage: ActivePageState | null;
+  auth: AuthState | null;
+  error: { message: string; code: ExtensionErrorCode } | null;
+  view: QuestionTutorViewState | null;
+}) {
+  if (input.loading) {
+    return { label: 'Loading', detail: 'Checking your extension state and active page.' };
+  }
+  if (!input.activePage?.supported) {
+    return { label: 'Open a supported question page', detail: 'Switch to an Orthobullets, ROCK, or AAOS Himalaya question tab, then reopen this panel.' };
+  }
+  if (input.auth?.status !== 'linked') {
+    return { label: 'Not linked', detail: 'Link the extension to your SnapOrtho account to use BroBot.' };
+  }
+  if (input.error?.code === 'quota_exceeded') {
+    return { label: 'Quota exceeded', detail: 'Your daily BroBot limit has been reached for now.' };
+  }
+  if (input.error) {
+    return { label: 'Error with retry', detail: input.error.message };
+  }
+
+  const view = input.view;
+  if (!view || view.showLoadingCurrentQuestion) {
+    const positionLabel = view?.session?.questionPositionLabel?.match(/question\s+\d+\s+of\s+\d+/i)?.[0];
+    return {
+      label: 'Refreshing question',
+      detail: positionLabel ? `Loading ${positionLabel}...` : 'Reading the visible question from this page.',
+    };
+  }
+
+  if (view.visiblePanelMode === 'hint_open' && view.hintsToRender.length) {
+    return {
+      label: 'Hint Mode active',
+      detail: 'BroBot is nudging your reasoning step by step without naming the answer choice.',
+    };
+  }
+
+  if (view.visiblePanelMode === 'explanation_open' && view.explanationToRender) {
+    return {
+      label: 'Explanation ready',
+      detail: 'BroBot has a structured teaching answer ready below.',
+    };
+  }
+
+  if (view.reviewState === 'unanswered') {
+    return {
+      label: 'Question ready',
+      detail: 'Ask for a hint when you want a reasoning nudge. BroBot will not reveal the answer until you submit one on the page.',
+    };
+  }
+
+  if (view.reviewState === 'answered_review') {
+    return {
+      label: 'Review ready',
+      detail: 'This question has visible review data. Use Explain with BroBot when you want the full teaching answer.',
+    };
+  }
+
+  return {
+    label: 'Question ready',
+    detail: 'Nothing is sent to SnapOrtho until you click Hint or Explain.',
+  };
 }
 
 export function mountSidePanelApp(root: HTMLElement) {
@@ -398,6 +530,7 @@ export function mountSidePanelApp(root: HTMLElement) {
     pageContext: OrthobulletsPageContext | null;
     extractionDiagnostics: OrthobulletsExtractionDiagnostics | null;
     fetchDiagnostics: ExtensionFetchDiagnostics | null;
+    routingDiagnostics: Partial<ExtensionFetchDiagnostics> | null;
     explanation: BrobotExplainResult | null;
     curriculumStudy: CurriculumStudyResponse | null;
     explainEmphasis: CurriculumExplainEmphasis;
@@ -414,6 +547,13 @@ export function mountSidePanelApp(root: HTMLElement) {
     topicChatDraft: string;
     topicChips: string[];
     topicInsufficientContent: boolean;
+    questionRefreshDiagnostics: QuestionRefreshDiagnostics | null;
+    questionPositionLabel: string | null;
+    currentQuestionFingerprint: string | null;
+    questionLifecycleGeneration: number;
+    questionTutorEngaged: boolean;
+    questionRefreshing: boolean;
+    questionRefreshSource: QuestionRefreshSource;
   } = {
     activePage: null,
     auth: null,
@@ -424,6 +564,12 @@ export function mountSidePanelApp(root: HTMLElement) {
     pageContext: null,
     extractionDiagnostics: null,
     fetchDiagnostics: null,
+    routingDiagnostics: {
+      extensionBuildId: EXTENSION_BUILD_ID,
+      sidePanelBuildIdMarker: SIDEPANEL_BUILD_ID_MARKER,
+      routingContractVersion: ROUTING_CONTRACT_VERSION,
+      sidePanelBundleVersion: SIDEPANEL_BUNDLE_VERSION,
+    },
     explanation: null,
     curriculumStudy: null,
     explainEmphasis: 'high_yield',
@@ -440,7 +586,100 @@ export function mountSidePanelApp(root: HTMLElement) {
     topicChatDraft: '',
     topicChips: [],
     topicInsufficientContent: false,
+    questionRefreshDiagnostics: null,
+    questionPositionLabel: null,
+    currentQuestionFingerprint: null,
+    questionLifecycleGeneration: 0,
+    questionTutorEngaged: false,
+    questionRefreshing: false,
+    questionRefreshSource: 'automatic',
   };
+
+  const questionTutorController = new QuestionTutorController({
+    sendMessage,
+    extractPageContext: (options) => extractPageContext(options),
+    onRender: () => render(),
+    getExplainEmphasis: () => state.explainEmphasis,
+  });
+
+  function bumpQuestionLifecycleGeneration() {
+    state.questionLifecycleGeneration += 1;
+  }
+
+  function isCurrentQuestionLifecycle(generation: number) {
+    return generation === state.questionLifecycleGeneration;
+  }
+
+  function clearQuestionSpecificContent() {
+    state.explanation = null;
+    state.curriculumStudy = null;
+    state.hints = [];
+    state.chatHistory = [];
+    state.chatDraft = '';
+    state.chatPrompts = [];
+    state.error = null;
+  }
+
+  function buildQuestionLifecycleDiagnostics(
+    message: QuestionChangeMessage | null,
+    pageContext: OrthobulletsPageContext | null,
+    refreshSource: QuestionRefreshSource = state.questionRefreshSource
+  ): QuestionRefreshDiagnostics {
+    const currentFingerprint = state.currentQuestionFingerprint;
+    const signals = pageContext?.questionReviewSignals;
+    const inferredQuestionState = inferQuestionState(pageContext);
+    return {
+      currentFingerprint,
+      previousFingerprint: message?.previousFingerprint ?? state.questionRefreshDiagnostics?.previousFingerprint ?? null,
+      questionRefreshReason: message?.reasonForRefresh ?? state.questionRefreshDiagnostics?.questionRefreshReason ?? null,
+      questionTutorEngaged: state.questionTutorEngaged,
+      hasSelectedAnswer: Boolean(pageContext?.selectedAnswerKey ?? pageContext?.selectedAnswer),
+      hasCorrectAnswer: Boolean(pageContext?.correctAnswerKey ?? pageContext?.correctAnswer),
+      hasExplanation: Boolean(pageContext?.explanationText ?? pageContext?.explanation),
+      hasVisibleExplanation: signals?.hasVisibleExplanation ?? false,
+      hasVisibleReviewMarker: signals?.hasVisibleReviewMarker ?? false,
+      hasSubmittedAnswerState: signals?.hasSubmittedAnswerState ?? false,
+      inferredQuestionState,
+      primaryAction: resolveQuestionTutorPrimaryAction(pageContext),
+      refreshSource,
+      autoStateBlockedReason: inferredQuestionState === 'unknown' ? inferQuestionStateBlockedReason(pageContext) : null,
+      previousQuestionId: message?.previousQuestionId ?? state.questionRefreshDiagnostics?.previousQuestionId ?? null,
+      newQuestionId: message?.questionId ?? pageContext?.questionId ?? null,
+      newFingerprint: message?.fingerprint ?? currentFingerprint,
+      reasonForRefresh: message?.reasonForRefresh ?? state.questionRefreshDiagnostics?.reasonForRefresh ?? '',
+      refreshTimestamp: message?.refreshTimestamp ?? new Date().toISOString(),
+    };
+  }
+
+  function enableQuestionTutorWatching() {
+    if (state.brobotMode === 'question_tutor' && state.activePage?.supported && state.auth?.status === 'linked') {
+      state.questionTutorEngaged = true;
+    }
+  }
+
+  async function handleQuestionChange(message: QuestionChangeMessage) {
+    if (message.tabId != null && message.tabId !== state.activePage?.tabId) return;
+    if (state.brobotMode !== 'question_tutor') return;
+    if (state.loading || state.auth?.status !== 'linked') return;
+
+    enableQuestionTutorWatching();
+    state.questionPositionLabel = message.questionPositionLabel;
+    state.currentQuestionFingerprint = message.fingerprint;
+    await questionTutorController.onQuestionChanged(message);
+    syncQuestionTutorShellState();
+  }
+
+  function syncQuestionTutorShellState() {
+    const diagnostics = questionTutorController.getDiagnosticsPayload();
+    state.pageContext = diagnostics.pageContext;
+    state.currentQuestionFingerprint = diagnostics.currentQuestionFingerprint;
+    state.explanation = null;
+    state.hints = [];
+    state.chatHistory = [];
+    state.chatDraft = '';
+    state.chatPrompts = [];
+    state.questionRefreshing = questionTutorController.store.deriveViewState().showLoadingCurrentQuestion;
+  }
 
   async function refreshBaseState() {
     state.loading = true;
@@ -470,6 +709,13 @@ export function mountSidePanelApp(root: HTMLElement) {
     state.operation = 'idle';
     if (pageContext) {
       state.brobotMode = state.forceQuestionMode ? 'question_tutor' : preferredBrobotMode(pageContext);
+      if (pageContext.mode === 'question' && state.brobotMode === 'question_tutor') {
+        enableQuestionTutorWatching();
+        await questionTutorController.onInitialPageContext(pageContext);
+        syncQuestionTutorShellState();
+      } else if (pageContext.mode === 'question') {
+        state.currentQuestionFingerprint = fingerprintFromPageContext(pageContext);
+      }
     }
     render();
   }
@@ -556,6 +802,9 @@ export function mountSidePanelApp(root: HTMLElement) {
     state.extractionDiagnostics = extractResult.diagnostics;
     state.fetchDiagnostics = null;
     state.brobotMode = state.forceQuestionMode ? 'question_tutor' : preferredBrobotMode(extractResult.pageContext);
+    if (extractResult.pageContext.mode === 'question') {
+      state.currentQuestionFingerprint = fingerprintFromPageContext(extractResult.pageContext);
+    }
 
     const usable = isPageUsable(extractResult.pageContext, { forceQuestionMode: state.forceQuestionMode });
     if (!usable && !options.allowPartial) {
@@ -576,6 +825,9 @@ export function mountSidePanelApp(root: HTMLElement) {
   }
 
   async function runHint(hintLevel: 1 | 2 | 3) {
+    bumpQuestionLifecycleGeneration();
+    const generation = state.questionLifecycleGeneration;
+    state.questionRefreshing = false;
     state.error = null;
     state.explanation = null;
     state.curriculumStudy = null;
@@ -586,6 +838,7 @@ export function mountSidePanelApp(root: HTMLElement) {
     render();
 
     const pageContext = await extractPageContext();
+    if (!isCurrentQuestionLifecycle(generation)) return;
     if (!pageContext) {
       state.operation = 'idle';
       render();
@@ -602,12 +855,26 @@ export function mountSidePanelApp(root: HTMLElement) {
     state.operation = 'hinting';
     render();
 
+    state.routingDiagnostics = {
+      extensionBuildId: EXTENSION_BUILD_ID,
+      sidePanelBuildIdMarker: SIDEPANEL_BUILD_ID_MARKER,
+      routingContractVersion: ROUTING_CONTRACT_VERSION,
+      sidePanelBundleVersion: SIDEPANEL_BUNDLE_VERSION,
+      messageType: 'brobot:request',
+      requestedTask: 'question_hint',
+      requestProvider: pageContext.provider,
+      requestPageKind: pageContext.pageKind,
+      requestPayloadKind: 'question',
+    };
     const hintResult = await sendMessage({
-      type: 'ob:hint',
+      type: 'brobot:request',
+      task: 'question_hint',
       pageContext,
       hintLevel,
       selectedAnswerKey: pageContext.selectedAnswerKey,
     });
+
+    if (!isCurrentQuestionLifecycle(generation)) return;
 
     if (!hintResult.ok || !('hint' in hintResult)) {
       state.operation = 'idle';
@@ -615,17 +882,23 @@ export function mountSidePanelApp(root: HTMLElement) {
         ? { message: 'Failed to generate hint.', code: 'unknown' }
         : { message: hintResult.error, code: hintResult.code ?? 'unknown' };
       state.fetchDiagnostics = !hintResult.ok && 'fetchDiagnostics' in hintResult ? hintResult.fetchDiagnostics ?? null : null;
+      state.routingDiagnostics = state.fetchDiagnostics ?? state.routingDiagnostics;
       render();
       return;
     }
 
     state.operation = 'idle';
     state.hints = [...state.hints.filter((hint) => hint.hintLevel < hintLevel), hintResult.hint];
+    state.fetchDiagnostics = hintResult.fetchDiagnostics ?? state.fetchDiagnostics;
+    state.routingDiagnostics = hintResult.fetchDiagnostics ?? state.routingDiagnostics;
     state.usage = hintResult.hint.usage ?? state.usage;
     render();
   }
 
   async function runExplain(options: { revealRequested?: boolean; emphasis?: CurriculumExplainEmphasis } = {}) {
+    bumpQuestionLifecycleGeneration();
+    const generation = state.questionLifecycleGeneration;
+    state.questionRefreshing = false;
     state.error = null;
     if (!options.emphasis) {
       state.explanation = null;
@@ -641,21 +914,52 @@ export function mountSidePanelApp(root: HTMLElement) {
     render();
 
     const pageContext = await extractPageContext({ forceQuestionMode: state.forceQuestionMode });
+    if (!isCurrentQuestionLifecycle(generation)) return;
     if (!pageContext) {
       state.operation = 'idle';
+      state.questionRefreshing = false;
       render();
       return;
     }
 
     state.brobotMode = state.forceQuestionMode ? 'question_tutor' : preferredBrobotMode(pageContext);
     state.operation = 'explaining';
+    const requestedTask = state.brobotMode === 'explain_page' || pageContext.mode === 'curriculum_content'
+      ? 'curriculum_explain'
+      : 'question_explain';
+    state.routingDiagnostics = {
+      extensionBuildId: EXTENSION_BUILD_ID,
+      sidePanelBuildIdMarker: SIDEPANEL_BUILD_ID_MARKER,
+      routingContractVersion: ROUTING_CONTRACT_VERSION,
+      sidePanelBundleVersion: SIDEPANEL_BUNDLE_VERSION,
+      messageType: 'brobot:request',
+      requestedTask,
+      requestProvider: pageContext.provider,
+      requestPageKind: pageContext.pageKind,
+      requestPayloadKind: requestedTask === 'curriculum_explain' ? 'curriculum' : 'question',
+      resolvedEndpoint:
+        requestedTask === 'curriculum_explain'
+          ? '/api/brobot/curriculum/explain'
+          : '/api/brobot/orthobullets/explain',
+    };
+    console.info('[BroBot curriculum click]', {
+      provider: pageContext.provider,
+      mode: pageContext.mode,
+      pageKind: pageContext.pageKind,
+      action: 'explain',
+      task: requestedTask,
+      extensionBuildId: EXTENSION_BUILD_ID,
+    });
     render();
 
     const explainResult = await sendMessage({
-      type: 'ob:explain',
+      type: 'brobot:request',
+      task: requestedTask,
       pageContext,
       emphasis: state.explainEmphasis,
     });
+
+    if (!isCurrentQuestionLifecycle(generation)) return;
 
     if (!explainResult.ok || !('explanation' in explainResult)) {
       state.operation = 'idle';
@@ -663,12 +967,16 @@ export function mountSidePanelApp(root: HTMLElement) {
         ? { message: 'Failed to explain page.', code: 'unknown' }
         : { message: explainResult.error, code: explainResult.code ?? 'unknown' };
       state.fetchDiagnostics = !explainResult.ok && 'fetchDiagnostics' in explainResult ? explainResult.fetchDiagnostics ?? null : null;
+      state.routingDiagnostics = state.fetchDiagnostics ?? state.routingDiagnostics;
       render();
       return;
     }
 
     state.operation = 'idle';
+    state.questionRefreshing = false;
     state.explanation = explainResult.explanation;
+    state.fetchDiagnostics = explainResult.fetchDiagnostics ?? state.fetchDiagnostics;
+    state.routingDiagnostics = explainResult.fetchDiagnostics ?? state.routingDiagnostics;
     state.curriculumStudy = isCurriculumStudyResponse(explainResult.explanation) ? explainResult.explanation : null;
     state.chatPrompts =
       state.brobotMode === 'explain_page' && state.pageContext
@@ -817,19 +1125,42 @@ export function mountSidePanelApp(root: HTMLElement) {
     await refreshBaseState();
   }
 
+  function syncQuestionTutorViewContext() {
+    if (state.brobotMode !== 'question_tutor') return;
+    const diagnostics = questionTutorController.getDiagnosticsPayload();
+    state.pageContext = diagnostics.pageContext;
+    state.currentQuestionFingerprint = diagnostics.currentQuestionFingerprint;
+    state.questionRefreshing = questionTutorController.store.deriveViewState().showLoadingCurrentQuestion;
+  }
+
   function render() {
     root.innerHTML = '';
+    syncQuestionTutorViewContext();
 
-    const status = getStatusCopy({
-      loading: state.loading,
-      activePage: state.activePage,
-      auth: state.auth,
-      operation: state.operation,
-      pageContext: state.pageContext,
-      explanation: state.explanation,
-      hints: state.hints,
-      error: state.error,
-    });
+    const questionTutorView =
+      state.brobotMode === 'question_tutor' ? questionTutorController.store.deriveViewState() : null;
+
+    const status =
+      state.brobotMode === 'question_tutor'
+        ? getQuestionTutorStatusCopy({
+            loading: state.loading,
+            activePage: state.activePage,
+            auth: state.auth,
+            error: state.error,
+            view: questionTutorView,
+          })
+        : getStatusCopy({
+            loading: state.loading,
+            activePage: state.activePage,
+            auth: state.auth,
+            operation: state.operation,
+            pageContext: state.pageContext,
+            explanation: state.explanation,
+            hints: state.hints,
+            error: state.error,
+            questionPositionLabel: state.questionPositionLabel,
+            questionRefreshing: state.questionRefreshing,
+          });
 
     const classification = getPageClassification(state.pageContext);
     const isEducationalPage = classification?.pageKind === 'educational_content';
@@ -837,12 +1168,20 @@ export function mountSidePanelApp(root: HTMLElement) {
     const isUnreadablePage = classification?.pageKind === 'unreadable';
     const isTopicPage = classification?.pageKind === 'topic_page' || state.brobotMode === 'topic_tutor';
     const isCurriculumPage = state.pageContext?.mode === 'curriculum_content' || isEducationalPage;
+    const primaryAction = resolveQuestionTutorPrimaryAction(state.pageContext);
     const pageLooksHintEligible =
       state.brobotMode === 'question_tutor' &&
-      (state.pageContext ? isHintEligible(state.pageContext) : isLikelyCurrentTestUrl(state.activePage?.url));
+      !state.explanation &&
+      (state.pageContext ? primaryAction === 'hint' : isLikelyCurrentTestUrl(state.activePage?.url));
     const pageLooksExplainEligible = state.pageContext
-      ? isExplainEligible(state.pageContext) || isEducationalPage || isMixedPage
+      ? primaryAction === 'explain' || isEducationalPage || isMixedPage
       : false;
+    const showPrimaryExplainControl =
+      Boolean(state.explanation) ||
+      state.brobotMode === 'explain_page' ||
+      isEducationalPage ||
+      isMixedPage ||
+      (state.brobotMode === 'question_tutor' && primaryAction === 'explain');
     const hintNextLevel = state.hints.length === 0 ? 1 : state.hints.length === 1 ? 2 : 3;
     const panelTitle =
       state.brobotMode === 'topic_tutor'
@@ -864,23 +1203,47 @@ export function mountSidePanelApp(root: HTMLElement) {
         </div>
       `,
     });
+    container.style.width = '100%';
+    container.style.maxWidth = '100%';
+    container.style.minWidth = '0';
+    container.style.boxSizing = 'border-box';
+    container.style.overflowX = 'hidden';
 
     const content = createElement('div');
     content.style.padding = '0 18px 18px';
     content.style.display = 'grid';
     content.style.gap = '14px';
+    content.style.width = '100%';
+    content.style.maxWidth = '100%';
+    content.style.minWidth = '0';
+    content.style.boxSizing = 'border-box';
+    content.style.overflowX = 'hidden';
 
-    content.appendChild(
-      createElement('div', {
-        html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:8px;">
+    const statusCard = createElement('div', {
+      html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:8px;">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
             <p style="margin:0;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#0f766e;font-weight:700;">${escapeHtml(status.label)}</p>
-            ${state.usage ? `<p style="margin:0;font-size:12px;color:#5c6574;">${escapeHtml(getUsageLabel(state.usage) ?? '')}</p>` : ''}
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              ${
+                state.brobotMode === 'question_tutor' && state.auth?.status === 'linked' && state.activePage?.supported
+                  ? `<button id="refresh-question" title="Re-check this question" ${state.operation !== 'idle' ? 'disabled' : ''} style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:6px 10px;font-weight:700;font-size:12px;cursor:${state.operation !== 'idle' ? 'default' : 'pointer'};">Refresh</button>`
+                  : ''
+              }
+              ${state.usage ? `<p style="margin:0;font-size:12px;color:#5c6574;">${escapeHtml(getUsageLabel(state.usage) ?? '')}</p>` : ''}
+            </div>
           </div>
           <p style="margin:0;color:#384152;line-height:1.5;">${escapeHtml(status.detail)}</p>
+          ${
+            state.brobotMode === 'question_tutor' && state.auth?.status === 'linked'
+              ? '<p style="margin:0;font-size:12px;color:#5c6574;">Use Refresh to re-check this question if the Hint/Explain action looks wrong.</p>'
+              : ''
+          }
         </div>`,
-      })
-    );
+    });
+    content.appendChild(statusCard);
+    statusCard.querySelector('#refresh-question')?.addEventListener('click', () => {
+      void questionTutorController.onManualRefresh().then(() => syncQuestionTutorShellState());
+    });
 
     if (state.loading) {
       content.appendChild(
@@ -892,7 +1255,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       content.appendChild(
         createElement('div', {
           html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;">
-            Open an Orthobullets or ROCK question page, then reopen this side panel.
+            Open an Orthobullets, ROCK, or AAOS Himalaya question page, then reopen this panel.
           </div>`,
         })
       );
@@ -910,6 +1273,15 @@ export function mountSidePanelApp(root: HTMLElement) {
       card.querySelector('#start-link')?.addEventListener('click', () => {
         void startLinkFlow();
       });
+    } else if (state.pageContext?.provider === 'himalaya' && state.pageContext.pageKind === 'results-overview') {
+      content.appendChild(
+        createElement('div', {
+          html: `<div style="padding:14px;border-radius:16px;background:#f0fdfa;border:1px solid #99f6e4;display:grid;gap:8px;">
+            <p style="margin:0;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#0f766e;font-weight:700;">AAOS Himalaya</p>
+            <p style="margin:0;color:#384152;line-height:1.5;">Select a question to review it with BroBot.</p>
+          </div>`,
+        })
+      );
     } else if (isTopicPage) {
       renderTopicTutorPanel(content, state, {
         runTopicTutorTurn: (input) => void runTopicTutorTurn(input),
@@ -919,6 +1291,34 @@ export function mountSidePanelApp(root: HTMLElement) {
         },
         unlink: () => void unlink(),
         isBusy: state.operation !== 'idle',
+      });
+    } else if (state.brobotMode === 'question_tutor' && questionTutorView) {
+      const isBusy = questionTutorController.store.inFlightRequests > 0;
+      appendQuestionTutorPanel(content, {
+        view: questionTutorView,
+        activePageTitle: state.activePage?.title ?? null,
+        activePageUrl: state.activePage?.url ?? null,
+        provider: state.activePage?.provider ?? null,
+        isBusy,
+        error: state.error,
+        hooks: {
+          onHintClick: () => questionTutorController.openHint(),
+          onExplainClick: () => questionTutorController.openExplain(),
+          onRefreshClick: () => void questionTutorController.onManualRefresh().then(() => syncQuestionTutorShellState()),
+          onUnlink: () => void unlink(),
+          onChatDraftChange: (value) => questionTutorController.setChatDraft(value),
+          onChatSubmit: () => void questionTutorController.submitFollowUp(),
+          onChatPromptClick: (prompt) => void questionTutorController.submitFollowUp(prompt),
+        },
+        renderers: {
+          escapeHtml,
+          renderHintCards,
+          renderExplanation,
+          renderChatTranscript,
+          renderCurriculumChatChips,
+          renderLoadingSkeleton,
+          providerLabel,
+        },
       });
     } else {
       const isBusy = state.operation !== 'idle';
@@ -954,6 +1354,10 @@ export function mountSidePanelApp(root: HTMLElement) {
           state.forceQuestionMode = true;
           state.brobotMode = 'question_tutor';
           const pageContext = await extractPageContext({ forceQuestionMode: true });
+          if (pageContext?.mode === 'question') {
+            await questionTutorController.onInitialPageContext(pageContext);
+            syncQuestionTutorShellState();
+          }
           if (!pageContext) {
             const nextClassification = getPageClassification(state.pageContext);
             state.error = {
@@ -988,7 +1392,7 @@ export function mountSidePanelApp(root: HTMLElement) {
           state.operation === 'hinting'
             ? 'Getting hint...'
             : hintNextLevel === 1
-              ? 'Get Hint 1'
+              ? 'Hint with BroBot'
               : hintNextLevel === 2
                 ? 'Next Hint'
                 : 'Final Hint';
@@ -1022,7 +1426,7 @@ export function mountSidePanelApp(root: HTMLElement) {
         );
       }
 
-      if (!isEducationalPage || state.explanation || pageLooksHintEligible) {
+      if (showPrimaryExplainControl) {
         const controls = createElement('div', {
           html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:10px;">
             <p style="margin:0;color:#5c6574;line-height:1.45;">Active page: ${escapeHtml(state.activePage.title ?? state.activePage.url ?? providerLabel(state.activePage.provider))}</p>
@@ -1035,7 +1439,7 @@ export function mountSidePanelApp(root: HTMLElement) {
                 ? 'Explain mode teaches the visible page content with high-yield clinical framing.'
                 : pageLooksExplainEligible
                   ? 'Review data detected. Use Explain with BroBot for full reasoning.'
-                  : 'Use Explain with BroBot for full review-mode reasoning. Hint Mode stays answer-sparing until you explicitly reveal.'
+                  : 'Use Explain with BroBot for full review-mode reasoning.'
             }</p>
           </div>`,
         });
@@ -1075,7 +1479,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       });
     }
 
-    if (state.hints.length) {
+    if (state.brobotMode !== 'question_tutor' && state.hints.length) {
       content.appendChild(createElement('div', { html: renderHintCards(state.hints) }));
 
       if (!state.explanation) {
@@ -1089,7 +1493,15 @@ export function mountSidePanelApp(root: HTMLElement) {
       }
     }
 
-    if (state.pageContext && !state.explanation && !state.error && !isTopicPage && hasReviewData(state.pageContext) && state.pageContext.mode !== 'curriculum_content') {
+    if (
+      state.brobotMode !== 'question_tutor' &&
+      state.pageContext &&
+      !state.explanation &&
+      !state.error &&
+      !isTopicPage &&
+      hasVisibleReviewData(state.pageContext) &&
+      state.pageContext.mode !== 'curriculum_content'
+    ) {
       content.appendChild(
         createElement('div', {
           html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:8px;">
@@ -1100,7 +1512,16 @@ export function mountSidePanelApp(root: HTMLElement) {
       );
     }
 
-    if (state.pageContext && !state.explanation && !state.error && !isTopicPage && !hasReviewData(state.pageContext) && !pageLooksHintEligible && state.pageContext.mode !== 'curriculum_content') {
+    if (
+      state.brobotMode !== 'question_tutor' &&
+      state.pageContext &&
+      !state.explanation &&
+      !state.error &&
+      !isTopicPage &&
+      !hasVisibleReviewData(state.pageContext) &&
+      !pageLooksHintEligible &&
+      state.pageContext.mode !== 'curriculum_content'
+    ) {
       content.appendChild(
         createElement('div', {
           html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:8px;">
@@ -1111,7 +1532,27 @@ export function mountSidePanelApp(root: HTMLElement) {
       );
     }
 
-    if (state.explanation) {
+    if (state.brobotMode !== 'question_tutor' && state.questionRefreshing && state.operation === 'extracting') {
+      const refreshStatus = getStatusCopy({
+        loading: false,
+        activePage: state.activePage,
+        auth: state.auth,
+        operation: state.operation,
+        pageContext: state.pageContext,
+        explanation: null,
+        hints: [],
+        error: null,
+        questionPositionLabel: state.questionPositionLabel,
+        questionRefreshing: true,
+      });
+      content.appendChild(
+        createElement('div', {
+          html: renderLoadingSkeleton(refreshStatus.label, refreshStatus.detail),
+        })
+      );
+    }
+
+    if (state.explanation && !state.questionRefreshing && state.brobotMode !== 'question_tutor') {
       if (state.brobotMode === 'explain_page' && state.curriculumStudy && state.pageContext) {
         const studyPanel = createElement('div', {
           html: renderCurriculumStudyPanel(state.curriculumStudy, state.pageContext),
@@ -1189,16 +1630,23 @@ export function mountSidePanelApp(root: HTMLElement) {
       });
     }
 
-    if (state.pageContext || state.extractionDiagnostics || state.fetchDiagnostics) {
+    if (state.pageContext || state.extractionDiagnostics || state.fetchDiagnostics || questionTutorView) {
+      const lifecycleDebug = questionTutorView?.debug ?? null;
       content.appendChild(
         createElement('div', {
-          html: renderDebugSummary({
-            activePage: state.activePage,
-            diagnostics: state.extractionDiagnostics,
-            fetchDiagnostics: state.fetchDiagnostics,
-            pageContext: state.pageContext,
-            errorCode: state.error?.code ?? null,
-          }),
+          html:
+            renderDebugSummary({
+              activePage: state.activePage,
+              diagnostics: state.extractionDiagnostics,
+              fetchDiagnostics: state.fetchDiagnostics,
+              pageContext: state.pageContext,
+              errorCode: state.error?.code ?? null,
+              questionRefreshDiagnostics: state.questionRefreshDiagnostics,
+              currentQuestionFingerprint: state.currentQuestionFingerprint,
+              questionLifecycleDebug: lifecycleDebug,
+              routingDiagnostics: state.routingDiagnostics,
+            }) +
+            (lifecycleDebug ? renderQuestionTutorLifecycleDebug(lifecycleDebug, escapeHtml) : ''),
         })
       );
     }
@@ -1206,6 +1654,12 @@ export function mountSidePanelApp(root: HTMLElement) {
     root.appendChild(container);
     root.appendChild(content);
   }
+
+  chrome.runtime.onMessage.addListener((message: QuestionChangeMessage) => {
+    if (message?.type === 'ob:question-changed') {
+      void handleQuestionChange(message);
+    }
+  });
 
   void refreshBaseState();
 }

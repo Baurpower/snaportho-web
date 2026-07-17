@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-05T23:32:00.861Z",
+  "generatedAt": "2026-07-16T03:33:39.556Z",
   "auditorVersion": "1.0.0",
   "topicKey": "aseptic-loosening-tka",
   "pilotKey": "aseptic-loosening-tka-neighborhood",
   "displayName": "Aseptic Loosening of TKA",
   "dataSource": {
-    "neighborhood": "merged_draft",
+    "neighborhood": "database",
     "reportsLoaded": [
       "ontology-compiler-plan.json",
       "ontology-gap-report.json",
@@ -19,58 +19,59 @@
       "agent-assignment-plan.json",
       "ontology-neighborhood-plan.json",
       "evidence-packet.json",
-      "database-proposals"
+      "database-proposals",
+      "database-neighborhood-snapshot",
+      "publication-readiness-database-state-reconciled"
     ],
     "reportsMissing": []
   },
-  "overallScore": 80,
+  "overallScore": 78,
   "categories": {
-    "ontology_completeness": 46,
+    "ontology_completeness": 27,
     "evidence_quality": 85,
-    "graph_integrity": 76,
-    "shared_knowledge_reuse": 98,
+    "graph_integrity": 100,
+    "shared_knowledge_reuse": 100,
     "relationship_quality": 42,
-    "claim_quality": 84,
-    "decision_point_quality": 69,
-    "metadata_quality": 92,
-    "provenance_quality": 100,
+    "claim_quality": 76,
+    "decision_point_quality": 85,
+    "metadata_quality": 86,
+    "provenance_quality": 96,
     "review_calibration": 100,
     "agent_performance": 92,
     "compiler_quality": 83,
-    "educational_quality": 90,
-    "cross_neighborhood_consistency": 96,
-    "publication_readiness": 30
+    "educational_quality": 72,
+    "cross_neighborhood_consistency": 100,
+    "publication_readiness": 28
   },
   "publication": {
     "status": "NOT_READY",
     "ready": false,
     "blockers": [
-      "12 proposals still awaiting human review",
-      "10 items require attending review",
+      "11 proposals still awaiting human review",
+      "9 items require attending review",
       "Claims and DPs are draft-only — publication gate must block verified consumption.",
-      "No approved canonical entities in database yet — proposals remain offline/spec.",
-      "13 critical/high ontology gaps remain unresolved"
+      "15 critical/high ontology gaps remain unresolved"
     ],
     "currentLevel": 5,
     "requiredLevel": 7,
-    "score": 30,
+    "score": 28,
     "deductions": [
       {
-        "finding": "12 proposals still awaiting human review",
+        "finding": "11 proposals still awaiting human review",
         "evidence": "publication-readiness.json blockers",
         "reason": "Publication gate identified blocking condition.",
         "severity": "high",
         "category": "publication_readiness",
-        "suggestedFix": "[critical] Aseptic Loosening of TKA neighborhood has 0/3 anatomy_structure entities.",
+        "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
         "impact": 8
       },
       {
-        "finding": "10 items require attending review",
+        "finding": "9 items require attending review",
         "evidence": "publication-readiness.json blockers",
         "reason": "Publication gate identified blocking condition.",
         "severity": "high",
         "category": "publication_readiness",
-        "suggestedFix": "[critical] Aseptic Loosening of TKA neighborhood has 0/3 anatomy_structure entities.",
+        "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
         "impact": 8
       },
       {
@@ -79,33 +80,24 @@
         "reason": "Publication gate identified blocking condition.",
         "severity": "high",
         "category": "publication_readiness",
-        "suggestedFix": "[critical] Aseptic Loosening of TKA neighborhood has 0/3 anatomy_structure entities.",
+        "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
         "impact": 8
       },
       {
-        "finding": "No approved canonical entities in database yet — proposals remain offline/spec.",
-        "evidence": "publication-readiness.json blockers",
-        "reason": "Publication gate identified blocking condition.",
-        "severity": "high",
-        "category": "publication_readiness",
-        "suggestedFix": "[critical] Aseptic Loosening of TKA neighborhood has 0/3 anatomy_structure entities.",
-        "impact": 8
-      },
-      {
-        "finding": "13 critical/high ontology gaps remain unresolved",
+        "finding": "15 critical/high ontology gaps remain unresolved",
         "evidence": "publication-readiness.json blockers",
         "reason": "Publication gate identified blocking condition.",
         "severity": "critical",
         "category": "publication_readiness",
-        "suggestedFix": "[critical] Aseptic Loosening of TKA neighborhood has 0/3 anatomy_structure entities.",
+        "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
         "impact": 15
       }
     ]
   },
   "topFindings": [
     {
-      "finding": "6 critical ontology gaps remain",
-      "evidence": "ontology-gap-report.json: gap-entity-neighbor-1, gap-rel-4, gap-rel-7",
+      "finding": "8 critical ontology gaps remain",
+      "evidence": "ontology-gap-report.json: gap-entity-neighbor-2, gap-rel-5, gap-rel-7",
       "reason": "Required entities, relationships, claims, or decision points are missing per CKO §8–§9.",
       "severity": "critical",
       "category": "ontology_completeness",
@@ -113,8 +105,20 @@
       "impact": 15
     },
     {
+      "finding": "Only 1 anatomy structures (minimum 3 required)",
+      "evidence": "Entity slugs: adult-reconstruction-anatomy-hub",
+      "reason": "Condition neighborhoods require regional anatomy per condition.anatomy.min_structures.",
+      "severity": "critical",
+      "category": "ontology_completeness",
+      "affectedSlugs": [
+        "aseptic-loosening-tka"
+      ],
+      "suggestedFix": "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
+      "impact": 15
+    },
+    {
       "finding": "Low evidence coverage (0% of proposals cite evidence)",
-      "evidence": "0/15 proposals have evidence_refs",
+      "evidence": "0/14 proposals have evidence_refs",
       "reason": "Every proposal should cite supporting evidence per factory contract.",
       "severity": "critical",
       "category": "evidence_quality",
@@ -146,26 +150,26 @@
       "impact": 15
     },
     {
-      "finding": "Missing decision point pattern: emergency_escalation",
-      "evidence": "0 decision points with pattern emergency_escalation",
-      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
+      "finding": "No decision points in neighborhood",
+      "evidence": "merged draft decisionPointCount = 0",
+      "reason": "Decision points support clinical reasoning and operative safety pathways.",
       "severity": "critical",
       "category": "decision_point_quality",
-      "suggestedFix": "Add emergency_escalation decision point with attending-gated review.",
+      "suggestedFix": "Run decision-point-builder for operative_indication and nonoperative_eligible patterns.",
       "impact": 15
     },
     {
-      "finding": "13 critical/high ontology gaps remain unresolved",
+      "finding": "15 critical/high ontology gaps remain unresolved",
       "evidence": "publication-readiness.json blockers",
       "reason": "Publication gate identified blocking condition.",
       "severity": "critical",
       "category": "publication_readiness",
-      "suggestedFix": "[critical] Aseptic Loosening of TKA neighborhood has 0/3 anatomy_structure entities.",
+      "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
       "impact": 15
     },
     {
       "finding": "7 high-priority ontology gaps",
-      "evidence": "Gap kinds: missing_entity, missing_relationship, missing_claim",
+      "evidence": "Gap kinds: missing_relationship, missing_entity, missing_claim",
       "reason": "High-priority gaps block maturity level advancement.",
       "severity": "high",
       "category": "ontology_completeness",
@@ -173,13 +177,22 @@
       "suggestedFix": "Schedule gap-resolution work items from ontology-work-plan.json."
     },
     {
-      "finding": "Missing relationship requirements (8)",
-      "evidence": "8 gaps of kind missing_relationship",
+      "finding": "Missing relationship requirements (11)",
+      "evidence": "11 gaps of kind missing_relationship",
       "reason": "Ontology contract requires complete relationship coverage.",
       "severity": "high",
       "category": "ontology_completeness",
       "impact": 8,
       "suggestedFix": "Run the matching builder agent for missing_relationship."
+    },
+    {
+      "finding": "Missing claim requirements (9)",
+      "evidence": "9 gaps of kind missing_claim",
+      "reason": "Ontology contract requires complete claim coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 8,
+      "suggestedFix": "Run the matching builder agent for missing_claim."
     },
     {
       "finding": "No classification system present",
@@ -188,126 +201,6 @@
       "severity": "high",
       "category": "ontology_completeness",
       "suggestedFix": "Link has_classification and has_grade edges to a classification system.",
-      "impact": 8
-    },
-    {
-      "finding": "57 orphan entities with no relationships",
-      "evidence": "Slugs: acetabulum, calcar, collateral-ligaments, common-peroneal-nerve, cruciate-ligaments, distal-femur, extensor-mechanism, femoral-condyles, femoral-diaphysis, femoral-head, femoral-neck, femoral-nerve, femur, gluteus-medius, gluteus-minimus, greater-trochanter, hip-capsule, hip-joint, intertrochanteric-region, lesser-trochanter, medial-femoral-circumflex-artery, patella, patellar-tendon, pelvis, popliteal-artery, proximal-femur, proximal-femur-anatomy-hub, quadriceps-tendon, sciatic-nerve, short-external-rotators, tibia, tibial-plateau, bearing-surface-selection, compartment-syndrome, distal-femur-fracture, femoral-neck-fracture, femoral-shaft-fracture, hip-prosthetic-joint-infection, intertrochanteric-fracture, knee-osteoarthritis, knee-prosthetic-joint-infection, periprosthetic-joint-infection, subtrochanteric-fracture, tibial-shaft-fracture, cement-mantle, cemented-fixation, press-fit-fixation, acetabular-component, femoral-stem, patellar-component, polyethylene-liner, tibial-insert, adverse-local-tissue-reaction, polyethylene-wear-osteolysis, total-hip-arthroplasty, total-knee-arthroplasty, unicompartmental-knee-arthroplasty",
-      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
-      "severity": "high",
-      "category": "graph_integrity",
-      "affectedSlugs": [
-        "acetabulum",
-        "calcar",
-        "collateral-ligaments",
-        "common-peroneal-nerve",
-        "cruciate-ligaments",
-        "distal-femur",
-        "extensor-mechanism",
-        "femoral-condyles",
-        "femoral-diaphysis",
-        "femoral-head",
-        "femoral-neck",
-        "femoral-nerve",
-        "femur",
-        "gluteus-medius",
-        "gluteus-minimus",
-        "greater-trochanter",
-        "hip-capsule",
-        "hip-joint",
-        "intertrochanteric-region",
-        "lesser-trochanter",
-        "medial-femoral-circumflex-artery",
-        "patella",
-        "patellar-tendon",
-        "pelvis",
-        "popliteal-artery",
-        "proximal-femur",
-        "proximal-femur-anatomy-hub",
-        "quadriceps-tendon",
-        "sciatic-nerve",
-        "short-external-rotators",
-        "tibia",
-        "tibial-plateau",
-        "bearing-surface-selection",
-        "compartment-syndrome",
-        "distal-femur-fracture",
-        "femoral-neck-fracture",
-        "femoral-shaft-fracture",
-        "hip-prosthetic-joint-infection",
-        "intertrochanteric-fracture",
-        "knee-osteoarthritis",
-        "knee-prosthetic-joint-infection",
-        "periprosthetic-joint-infection",
-        "subtrochanteric-fracture",
-        "tibial-shaft-fracture",
-        "cement-mantle",
-        "cemented-fixation",
-        "press-fit-fixation",
-        "acetabular-component",
-        "femoral-stem",
-        "patellar-component",
-        "polyethylene-liner",
-        "tibial-insert",
-        "adverse-local-tissue-reaction",
-        "polyethylene-wear-osteolysis",
-        "total-hip-arthroplasty",
-        "total-knee-arthroplasty",
-        "unicompartmental-knee-arthroplasty"
-      ],
-      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
-      "impact": 8
-    },
-    {
-      "finding": "32 disconnected anatomy structures",
-      "evidence": "Disconnected: acetabulum, calcar, collateral-ligaments, common-peroneal-nerve, cruciate-ligaments, distal-femur, extensor-mechanism, femoral-condyles, femoral-diaphysis, femoral-head, femoral-neck, femoral-nerve, femur, gluteus-medius, gluteus-minimus, greater-trochanter, hip-capsule, hip-joint, intertrochanteric-region, lesser-trochanter, medial-femoral-circumflex-artery, patella, patellar-tendon, pelvis, popliteal-artery, proximal-femur, proximal-femur-anatomy-hub, quadriceps-tendon, sciatic-nerve, short-external-rotators, tibia, tibial-plateau",
-      "reason": "Anatomy must connect to the condition graph for educational traversal.",
-      "severity": "high",
-      "category": "graph_integrity",
-      "affectedSlugs": [
-        "acetabulum",
-        "calcar",
-        "collateral-ligaments",
-        "common-peroneal-nerve",
-        "cruciate-ligaments",
-        "distal-femur",
-        "extensor-mechanism",
-        "femoral-condyles",
-        "femoral-diaphysis",
-        "femoral-head",
-        "femoral-neck",
-        "femoral-nerve",
-        "femur",
-        "gluteus-medius",
-        "gluteus-minimus",
-        "greater-trochanter",
-        "hip-capsule",
-        "hip-joint",
-        "intertrochanteric-region",
-        "lesser-trochanter",
-        "medial-femoral-circumflex-artery",
-        "patella",
-        "patellar-tendon",
-        "pelvis",
-        "popliteal-artery",
-        "proximal-femur",
-        "proximal-femur-anatomy-hub",
-        "quadriceps-tendon",
-        "sciatic-nerve",
-        "short-external-rotators",
-        "tibia",
-        "tibial-plateau"
-      ],
-      "suggestedFix": "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
-      "impact": 8
-    },
-    {
-      "finding": "1 merge conflicts detected",
-      "evidence": "conflict-report.json: Duplicate claim text: claim-aseptic-loosening-tka-board_trap-aseptic-tka-loosening-pr vs claim-aseptic-loosening-tka-fact-aseptic-tka-loosening-pr",
-      "reason": "Unresolved merge conflicts indicate inconsistent agent outputs.",
-      "severity": "high",
-      "category": "graph_integrity",
-      "suggestedFix": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
       "impact": 8
     },
     {
@@ -345,6 +238,15 @@
       ],
       "suggestedFix": "Add has_complication relationship via relationship-builder agent.",
       "impact": 8
+    },
+    {
+      "finding": "Only 0 L1 (board-critical) claims",
+      "evidence": "L1 count 0, recommended minimum 3",
+      "reason": "L1 claims anchor board-relevant learning objectives.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Promote high-yield Orthobullets and Anki signals to L1 claims.",
+      "impact": 8
     }
   ],
   "prioritizedRecommendations": [
@@ -352,61 +254,61 @@
       "priority": 1,
       "action": "Resolve critical gaps via assigned factory agents before publication review.",
       "category": "ontology_completeness",
-      "impact": "6 critical ontology gaps remain"
+      "impact": "8 critical ontology gaps remain"
     },
     {
       "priority": 2,
+      "action": "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
+      "category": "ontology_completeness",
+      "impact": "Only 1 anatomy structures (minimum 3 required)"
+    },
+    {
+      "priority": 3,
       "action": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
       "category": "evidence_quality",
       "impact": "Low evidence coverage (0% of proposals cite evidence)"
     },
     {
-      "priority": 3,
+      "priority": 4,
       "action": "Add injured_in relationship via relationship-builder agent.",
       "category": "relationship_quality",
       "impact": "Missing clinical edge: injured_in"
     },
     {
-      "priority": 4,
+      "priority": 5,
       "action": "Add has_classification relationship via relationship-builder agent.",
       "category": "relationship_quality",
       "impact": "Missing clinical edge: has_classification"
     },
     {
-      "priority": 5,
-      "action": "Add emergency_escalation decision point with attending-gated review.",
-      "category": "decision_point_quality",
-      "impact": "Missing decision point pattern: emergency_escalation"
-    },
-    {
       "priority": 6,
-      "action": "[critical] Aseptic Loosening of TKA neighborhood has 0/3 anatomy_structure entities.",
-      "category": "publication_readiness",
-      "impact": "13 critical/high ontology gaps remain unresolved"
+      "action": "Run decision-point-builder for operative_indication and nonoperative_eligible patterns.",
+      "category": "decision_point_quality",
+      "impact": "No decision points in neighborhood"
     },
     {
       "priority": 7,
+      "action": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
+      "category": "publication_readiness",
+      "impact": "15 critical/high ontology gaps remain unresolved"
+    },
+    {
+      "priority": 8,
       "action": "Schedule gap-resolution work items from ontology-work-plan.json.",
       "category": "ontology_completeness",
       "impact": "7 high-priority ontology gaps"
     },
     {
-      "priority": 8,
+      "priority": 9,
       "action": "Run the matching builder agent for missing_relationship.",
       "category": "ontology_completeness",
-      "impact": "Missing relationship requirements (8)"
-    },
-    {
-      "priority": 9,
-      "action": "Link has_classification and has_grade edges to a classification system.",
-      "category": "ontology_completeness",
-      "impact": "No classification system present"
+      "impact": "Missing relationship requirements (11)"
     },
     {
       "priority": 10,
-      "action": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
-      "category": "graph_integrity",
-      "impact": "57 orphan entities with no relationships"
+      "action": "Run the matching builder agent for missing_claim.",
+      "category": "ontology_completeness",
+      "impact": "Missing claim requirements (9)"
     }
   ],
   "databaseModified": false

@@ -1,0 +1,74 @@
+[
+  {
+    "entity": "Collateral Ligaments",
+    "slug": "collateral-ligaments",
+    "current_type": "anatomy_structure",
+    "why_orphaned": "orphan_entity",
+    "final_disposition": "valid_staging_defer",
+    "canonical_owner": "canonical-hand-anatomy-backbone",
+    "canonical_slug": "collateral-ligaments",
+    "staging_blocker": false,
+    "publication_blocker": true,
+    "proposed_linkage_or_removal": "Ligament identities are shared anatomy. Local topics add injury, instability, or at-risk semantics only with valid predicates. Staging may reference this shared object; publication waits for canonical-hand-anatomy-backbone reconciliation."
+  },
+  {
+    "entity": "Median Nerve Compression",
+    "slug": "median-nerve-compression",
+    "current_type": "condition",
+    "why_orphaned": "orphan_entity",
+    "final_disposition": "auto_resolved_remove_from_staging",
+    "canonical_owner": null,
+    "canonical_slug": "median-nerve-compression",
+    "staging_blocker": false,
+    "publication_blocker": false,
+    "proposed_linkage_or_removal": "Stale rejected differential/identity artifact; omit from staged CTS neighborhood unless explicitly linked by a reviewed future model."
+  },
+  {
+    "entity": "Trigger Finger",
+    "slug": "trigger-finger",
+    "current_type": "condition",
+    "why_orphaned": "orphan_entity",
+    "final_disposition": "auto_resolved_remove_from_staging",
+    "canonical_owner": null,
+    "canonical_slug": "trigger-finger",
+    "staging_blocker": false,
+    "publication_blocker": false,
+    "proposed_linkage_or_removal": "Stale rejected differential/identity artifact; omit from staged CTS neighborhood unless explicitly linked by a reviewed future model."
+  },
+  {
+    "entity": "Distal Radius Fracture",
+    "slug": "distal-radius-fracture",
+    "current_type": "condition",
+    "why_orphaned": "orphan_entity",
+    "final_disposition": "auto_resolved_remove_from_staging",
+    "canonical_owner": null,
+    "canonical_slug": "distal-radius-fracture",
+    "staging_blocker": false,
+    "publication_blocker": false,
+    "proposed_linkage_or_removal": "Stale rejected differential/identity artifact; omit from staged CTS neighborhood unless explicitly linked by a reviewed future model."
+  },
+  {
+    "entity": "Abductor Pollicis Brevis",
+    "slug": "abductor-pollicis-brevis",
+    "current_type": "anatomy_structure",
+    "why_orphaned": "orphan_entity",
+    "final_disposition": "cross_neighborhood_reference",
+    "canonical_owner": "canonical-hand-anatomy-backbone",
+    "canonical_slug": "abductor-pollicis-brevis",
+    "staging_blocker": false,
+    "publication_blocker": true,
+    "proposed_linkage_or_removal": "Intrinsic hand muscles are real canonical anatomy owned by the Hand anatomy backbone. Condition topics may reference them for exam/EDX concepts without owning their full hierarchy. Staging may reference this shared object; publication waits for canonical-hand-anatomy-backbone reconciliation."
+  },
+  {
+    "entity": "Needle Electromyography",
+    "slug": "needle-electromyography",
+    "current_type": "diagnostic_test",
+    "why_orphaned": "orphan_entity",
+    "final_disposition": "valid_staging_defer",
+    "canonical_owner": "hand-electrodiagnostics",
+    "canonical_slug": "needle-electromyography",
+    "staging_blocker": false,
+    "publication_blocker": true,
+    "proposed_linkage_or_removal": "EDX tests are shared diagnostic assets; condition topics reference them but do not own complete EDX vocabulary. Staging may reference this shared object; publication waits for hand-electrodiagnostics reconciliation."
+  }
+]

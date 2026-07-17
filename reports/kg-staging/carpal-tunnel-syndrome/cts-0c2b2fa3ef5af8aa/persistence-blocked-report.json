@@ -1,0 +1,50 @@
+{
+  "ok": false,
+  "operation": "persist_finalized_kg_staging_packet",
+  "batchKey": "cts-0c2b2fa3ef5af8aa",
+  "packetHash": "a8db440851cd7742871e81a4292c2a0af0cbf9005e7e12e64d5e5745d9d35c13",
+  "expectedProposalCount": 207,
+  "persistedProposalCount": 0,
+  "canonicalMutationOccurred": false,
+  "guardResult": "allowlisted staging project reached",
+  "blocker": "149 active semantic proposal fingerprints already belong to other neighborhood batches; the active-fingerprint uniqueness constraint prevents inserting CTS batch rows, while the existing persistence implementation would overwrite those rows and their metadata.",
+  "collisionSummary": [
+    {
+      "owner": "middle-phalanx-fracture-neighborhood",
+      "count": 136,
+      "states": {
+        "approved": 136
+      }
+    },
+    {
+      "owner": "surgical-approaches-neighborhood",
+      "count": 10,
+      "states": {
+        "applied": 10
+      }
+    },
+    {
+      "owner": "imaging-radiographic-measurements-neighborhood",
+      "count": 1,
+      "states": {
+        "applied": 1
+      }
+    },
+    {
+      "owner": "lunate-dislocation-neighborhood",
+      "count": 1,
+      "states": {
+        "applied": 1
+      }
+    },
+    {
+      "owner": "carpal-instability-neighborhood",
+      "count": 1,
+      "states": {
+        "applied": 1
+      }
+    }
+  ],
+  "safetyDisposition": "Persistence aborted before persistProposals and before any canonical mutation. Guarded dry run, real apply, strict reload, and strict audit were not run because they require exact persisted batch membership.",
+  "requiredDecision": "The current schema has no non-destructive way to associate an existing semantic proposal fingerprint with an additional batch. Completing the lifecycle requires explicit authorization for a minimal batch-membership representation or an explicit waiver permitting prior proposal rows to be reassigned; reassignment is not recommended."
+}

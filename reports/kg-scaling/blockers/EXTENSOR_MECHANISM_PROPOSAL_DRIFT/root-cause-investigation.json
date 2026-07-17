@@ -1,0 +1,1226 @@
+{
+  "generatedAt": "2026-07-16T03:24:40.615Z",
+  "blockerId": "EXTENSOR_MECHANISM_PROPOSAL_DRIFT",
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "fingerprint": "create|anatomy_structure|extensor-mechanism",
+  "classification": "historical_proposal_metadata_drift",
+  "safeAutomaticNormalization": true,
+  "findings": {
+    "singleCanonicalTarget": true,
+    "canonicalTargetIsKneeSpecific": true,
+    "singleActiveSemanticProposal": true,
+    "activeProposalUsesStaleGenericLabel": true,
+    "allPacketShapesResolveToOneKneeIdentity": true,
+    "kneeSpecificRelationshipContextPresent": true,
+    "competingCanonicalRowsWithSameSlug": 0,
+    "relatedButDistinctCanonicalRows": [
+      {
+        "id": "9f0eb6da-e098-4aed-be1a-9c6fc38ff083",
+        "slug": "extensor-mechanism-disruption",
+        "entityType": "complication",
+        "label": "Extensor Mechanism Disruption"
+      },
+      {
+        "id": "26d426b7-6e38-4339-b805-96584d48f5bc",
+        "slug": "extensor-mechanism-failure",
+        "entityType": "condition",
+        "label": "Extensor Mechanism Failure"
+      }
+    ],
+    "membershipCount": 1,
+    "blockedNeighborhoodCount": 14
+  },
+  "canonicalCandidates": [
+    {
+      "id": "d22f71b0-9268-4174-9946-5d80791e1e1f",
+      "source_concept_id": null,
+      "entity_type": "anatomy_structure",
+      "preferred_label": "Knee Extensor Mechanism",
+      "normalized_label": "knee extensor mechanism",
+      "slug": "extensor-mechanism",
+      "description": null,
+      "status": "reviewed",
+      "review_status": "approved",
+      "created_from_source_id": null,
+      "replacement_entity_id": null,
+      "deprecated_at": null,
+      "metadata": {
+        "slug": "extensor-mechanism",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:31:52.770Z",
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|extensor-mechanism"
+      },
+      "comments": "Staging apply — auto-approved low-risk entity (not clinical verification).",
+      "is_active": true,
+      "created_at": "2026-07-05T22:32:15.421001+00:00",
+      "updated_at": "2026-07-05T22:32:15.421001+00:00"
+    },
+    {
+      "id": "9f0eb6da-e098-4aed-be1a-9c6fc38ff083",
+      "source_concept_id": null,
+      "entity_type": "complication",
+      "preferred_label": "Extensor Mechanism Disruption",
+      "normalized_label": "extensor mechanism disruption",
+      "slug": "extensor-mechanism-disruption",
+      "description": null,
+      "status": "reviewed",
+      "review_status": "approved",
+      "created_from_source_id": null,
+      "replacement_entity_id": null,
+      "deprecated_at": null,
+      "metadata": {
+        "slug": "extensor-mechanism-disruption",
+        "pilot": "patella-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:40:11.140Z",
+        "description": "Loss of active knee extension after patella fracture displacement or failed healing.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:patella-fracture-neighborhood",
+        "review_packet_label": "Patella Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|extensor-mechanism-disruption"
+      },
+      "comments": "Staging apply — auto-approved low-risk entity (not clinical verification).",
+      "is_active": true,
+      "created_at": "2026-07-05T22:40:27.887814+00:00",
+      "updated_at": "2026-07-05T22:40:27.887814+00:00"
+    },
+    {
+      "id": "26d426b7-6e38-4339-b805-96584d48f5bc",
+      "source_concept_id": null,
+      "entity_type": "condition",
+      "preferred_label": "Extensor Mechanism Failure",
+      "normalized_label": "extensor mechanism failure",
+      "slug": "extensor-mechanism-failure",
+      "description": null,
+      "status": "reviewed",
+      "review_status": "approved",
+      "created_from_source_id": null,
+      "replacement_entity_id": null,
+      "deprecated_at": null,
+      "metadata": {
+        "slug": "extensor-mechanism-failure",
+        "pilot": "extensor-mechanism-failure-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:14:03.770Z",
+        "description": "Quadriceps or patellar tendon disruption compromising active extension.",
+        "clinical_kind": "arthroplasty",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:extensor-mechanism-failure-neighborhood",
+        "review_packet_label": "Extensor Mechanism Failure Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|extensor-mechanism-failure"
+      },
+      "comments": "Staging apply — auto-approved low-risk entity (not clinical verification).",
+      "is_active": true,
+      "created_at": "2026-07-05T23:15:20.552555+00:00",
+      "updated_at": "2026-07-05T23:15:20.552555+00:00"
+    }
+  ],
+  "activeSemanticProposals": [
+    {
+      "id": "f5b526c1-6856-43dc-8df5-b0188ffc8fa5",
+      "proposal_fingerprint": "create|anatomy_structure|extensor-mechanism",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "surgical-approaches",
+        "surgical-approaches"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "anatomy_structure",
+      "proposed_entity_label": "Extensor Mechanism",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "surgical_approaches_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Extensor Mechanism",
+      "supporting_card_count": 0,
+      "supporting_question_count": 0,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-09T04:35:56.09+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "extensor-mechanism",
+        "pilot": "surgical-approaches-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-09T04:27:27.998Z",
+        "description": "Quadriceps-patella-tendon apparatus of the knee.",
+        "neighborhood": "surgical-approaches",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "reused_identity": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:surgical-approaches-neighborhood",
+        "review_packet_label": "Surgical Approaches Neighborhood",
+        "source_neighborhood": "orthopaedic-anatomy",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T22:30:04.359481+00:00",
+      "updated_at": "2026-07-09T04:35:56.18456+00:00"
+    }
+  ],
+  "inactiveSemanticProposals": [],
+  "memberships": [
+    {
+      "id": "1e5ad790-daf5-4def-a267-8f00a766b44a",
+      "proposal_id": "f5b526c1-6856-43dc-8df5-b0188ffc8fa5",
+      "batch_key": "surgical-approaches-neighborhood",
+      "topic_slug": "surgical-approaches-neighborhood",
+      "packet_hash": null,
+      "graph_hash": null,
+      "packet_state": "approved",
+      "apply_disposition": "already_applied",
+      "canonical_target_table": null,
+      "canonical_target_id": null,
+      "included_at": "2026-07-05T22:30:04.359481+00:00",
+      "applied_at": "2026-07-09T04:35:56.09+00:00",
+      "created_at": "2026-07-05T22:30:04.359481+00:00",
+      "updated_at": "2026-07-16T02:30:53.525266+00:00"
+    }
+  ],
+  "aliases": [],
+  "relationshipContext": [
+    {
+      "id": "e77ef5fd-c685-4d0a-94c5-a0da050d6dd5",
+      "subject": {
+        "id": "d22f71b0-9268-4174-9946-5d80791e1e1f",
+        "slug": "extensor-mechanism",
+        "entity_type": "anatomy_structure",
+        "preferred_label": "Knee Extensor Mechanism",
+        "is_active": true
+      },
+      "predicate": "part_of",
+      "object": {
+        "id": "b1479705-294b-4d3a-8f76-dbcd3f625327",
+        "slug": "lower-extremity-trauma-anatomy-hub",
+        "entity_type": "anatomy_structure",
+        "preferred_label": "Lower Extremity Trauma Anatomy Hub",
+        "is_active": true
+      },
+      "reviewStatus": "approved",
+      "provenanceStatus": "reviewed",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "knee"
+        },
+        "created_from_proposal_fingerprint": "rel|extensor-mechanism|part_of|lower-extremity-trauma-anatomy-hub"
+      }
+    },
+    {
+      "id": "eb6134e5-6fb1-4138-92c9-06fc681834fd",
+      "subject": {
+        "id": "7b3d603f-9fb2-47b3-bd5e-553187064918",
+        "slug": "patella",
+        "entity_type": "anatomy_structure",
+        "preferred_label": "Patella",
+        "is_active": true
+      },
+      "predicate": "part_of",
+      "object": {
+        "id": "d22f71b0-9268-4174-9946-5d80791e1e1f",
+        "slug": "extensor-mechanism",
+        "entity_type": "anatomy_structure",
+        "preferred_label": "Knee Extensor Mechanism",
+        "is_active": true
+      },
+      "reviewStatus": "approved",
+      "provenanceStatus": "reviewed",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "extensor"
+        },
+        "created_from_proposal_fingerprint": "rel|patella|part_of|extensor-mechanism"
+      }
+    },
+    {
+      "id": "968a14d3-0f4d-4692-9aba-ba149e27401d",
+      "subject": {
+        "id": "9d6f244d-ff9d-4d46-932a-5bd2591a51c0",
+        "slug": "patella-fracture",
+        "entity_type": "condition",
+        "preferred_label": "Patella Fracture",
+        "is_active": true
+      },
+      "predicate": "involves_anatomy",
+      "object": {
+        "id": "d22f71b0-9268-4174-9946-5d80791e1e1f",
+        "slug": "extensor-mechanism",
+        "entity_type": "anatomy_structure",
+        "preferred_label": "Knee Extensor Mechanism",
+        "is_active": true
+      },
+      "reviewStatus": "approved",
+      "provenanceStatus": "reviewed",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "function",
+          "clinical_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|patella-fracture|involves_anatomy|extensor-mechanism"
+      }
+    },
+    {
+      "id": "551596eb-90bb-4d45-b472-c60cf840c64d",
+      "subject": {
+        "id": "1ad8280b-74e5-416c-b8fb-06c7d9cc0d0a",
+        "slug": "patellar-instability",
+        "entity_type": "condition",
+        "preferred_label": "Patellar Instability",
+        "is_active": true
+      },
+      "predicate": "involves_anatomy",
+      "object": {
+        "id": "d22f71b0-9268-4174-9946-5d80791e1e1f",
+        "slug": "extensor-mechanism",
+        "entity_type": "anatomy_structure",
+        "preferred_label": "Knee Extensor Mechanism",
+        "is_active": true
+      },
+      "reviewStatus": "approved",
+      "provenanceStatus": "reviewed",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "pathoanatomy",
+          "clinical_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|patellar-instability|involves_anatomy|extensor-mechanism"
+      }
+    },
+    {
+      "id": "2166326d-1326-4f7f-be8b-9d156c7b4e24",
+      "subject": {
+        "id": "d22f71b0-9268-4174-9946-5d80791e1e1f",
+        "slug": "extensor-mechanism",
+        "entity_type": "anatomy_structure",
+        "preferred_label": "Knee Extensor Mechanism",
+        "is_active": true
+      },
+      "predicate": "part_of",
+      "object": {
+        "id": "5b18cda4-caa0-45fb-a032-ad7d5b391a3b",
+        "slug": "orthopaedic-anatomy",
+        "entity_type": "anatomy_structure",
+        "preferred_label": "Orthopaedic Anatomy",
+        "is_active": true
+      },
+      "reviewStatus": "approved",
+      "provenanceStatus": "reviewed",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "hierarchy": true,
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "operative_planning",
+          "context_relevance": [
+            "or",
+            "call",
+            "oite"
+          ]
+        },
+        "created_from_proposal_fingerprint": "rel|extensor-mechanism|part_of|orthopaedic-anatomy"
+      }
+    },
+    {
+      "id": "09d15abb-931e-4634-8556-ba9dcd04f319",
+      "subject": {
+        "id": "26d426b7-6e38-4339-b805-96584d48f5bc",
+        "slug": "extensor-mechanism-failure",
+        "entity_type": "condition",
+        "preferred_label": "Extensor Mechanism Failure",
+        "is_active": true
+      },
+      "predicate": "involves_anatomy",
+      "object": {
+        "id": "d22f71b0-9268-4174-9946-5d80791e1e1f",
+        "slug": "extensor-mechanism",
+        "entity_type": "anatomy_structure",
+        "preferred_label": "Knee Extensor Mechanism",
+        "is_active": true
+      },
+      "reviewStatus": "approved",
+      "provenanceStatus": "reviewed",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "cross_cluster": "lower-extremity-trauma-cluster-shared",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|extensor-mechanism-failure|involves_anatomy|extensor-mechanism"
+      }
+    },
+    {
+      "id": "acb77c88-bccb-417c-b939-0bff89a0ef5f",
+      "subject": {
+        "id": "d22f71b0-9268-4174-9946-5d80791e1e1f",
+        "slug": "extensor-mechanism",
+        "entity_type": "anatomy_structure",
+        "preferred_label": "Knee Extensor Mechanism",
+        "is_active": true
+      },
+      "predicate": "prerequisite_for",
+      "object": {
+        "id": "126c952c-a601-4415-ae25-50838698eeb2",
+        "slug": "medial-parapatellar-approach",
+        "entity_type": "surgical_approach",
+        "preferred_label": "Medial Parapatellar Approach",
+        "is_active": true
+      },
+      "reviewStatus": "approved",
+      "provenanceStatus": "reviewed",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "at_risk",
+          "review_status": "unreviewed",
+          "safety_critical": true,
+          "relevance_reason": "operative_planning",
+          "context_relevance": [
+            "or",
+            "call",
+            "oite"
+          ],
+          "clinical_importance": "critical",
+          "requires_attending_review": true
+        },
+        "created_from_proposal_fingerprint": "rel|extensor-mechanism|prerequisite_for|medial-parapatellar-approach"
+      }
+    },
+    {
+      "id": "e3aa1b4e-50c4-4390-87d7-aa77f1de3c27",
+      "subject": {
+        "id": "d22f71b0-9268-4174-9946-5d80791e1e1f",
+        "slug": "extensor-mechanism",
+        "entity_type": "anatomy_structure",
+        "preferred_label": "Knee Extensor Mechanism",
+        "is_active": true
+      },
+      "predicate": "prerequisite_for",
+      "object": {
+        "id": "229243c3-301d-494b-ad76-08084f49e543",
+        "slug": "subvastus-approach",
+        "entity_type": "surgical_approach",
+        "preferred_label": "Subvastus Approach",
+        "is_active": true
+      },
+      "reviewStatus": "approved",
+      "provenanceStatus": "reviewed",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "at_risk",
+          "review_status": "unreviewed",
+          "safety_critical": true,
+          "relevance_reason": "operative_planning",
+          "context_relevance": [
+            "or",
+            "call",
+            "oite"
+          ],
+          "clinical_importance": "critical",
+          "requires_attending_review": true
+        },
+        "created_from_proposal_fingerprint": "rel|extensor-mechanism|prerequisite_for|subvastus-approach"
+      }
+    },
+    {
+      "id": "d078b0de-4aea-4c7b-84e5-50985d5dd4ba",
+      "subject": {
+        "id": "d22f71b0-9268-4174-9946-5d80791e1e1f",
+        "slug": "extensor-mechanism",
+        "entity_type": "anatomy_structure",
+        "preferred_label": "Knee Extensor Mechanism",
+        "is_active": true
+      },
+      "predicate": "prerequisite_for",
+      "object": {
+        "id": "3ac4ed87-861e-4875-b1ee-3e92d0fb4524",
+        "slug": "midvastus-approach",
+        "entity_type": "surgical_approach",
+        "preferred_label": "Midvastus Approach",
+        "is_active": true
+      },
+      "reviewStatus": "approved",
+      "provenanceStatus": "reviewed",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "at_risk",
+          "review_status": "unreviewed",
+          "safety_critical": true,
+          "relevance_reason": "operative_planning",
+          "context_relevance": [
+            "or",
+            "call",
+            "oite"
+          ],
+          "clinical_importance": "critical",
+          "requires_attending_review": true
+        },
+        "created_from_proposal_fingerprint": "rel|extensor-mechanism|prerequisite_for|midvastus-approach"
+      }
+    }
+  ],
+  "kneeContextRelationships": [
+    {
+      "id": "eb6134e5-6fb1-4138-92c9-06fc681834fd",
+      "subject": {
+        "id": "7b3d603f-9fb2-47b3-bd5e-553187064918",
+        "slug": "patella",
+        "entity_type": "anatomy_structure",
+        "preferred_label": "Patella",
+        "is_active": true
+      },
+      "predicate": "part_of",
+      "object": {
+        "id": "d22f71b0-9268-4174-9946-5d80791e1e1f",
+        "slug": "extensor-mechanism",
+        "entity_type": "anatomy_structure",
+        "preferred_label": "Knee Extensor Mechanism",
+        "is_active": true
+      },
+      "reviewStatus": "approved",
+      "provenanceStatus": "reviewed",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "extensor"
+        },
+        "created_from_proposal_fingerprint": "rel|patella|part_of|extensor-mechanism"
+      }
+    }
+  ],
+  "localPacketSummary": {
+    "references": 39,
+    "uniqueShapes": [
+      {
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism"
+      },
+      {
+        "label": "Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism"
+      }
+    ],
+    "packets": [
+      {
+        "file": "reports/kg-pilots/acetabular-fracture-curated-proposals.json",
+        "topic": "acetabular-fracture",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "acetabular-fracture-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/acl-tear-curated-proposals.json",
+        "topic": "acl-tear",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "acl-tear-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage in patellar instability."
+      },
+      {
+        "file": "reports/kg-pilots/adverse-local-tissue-reaction-curated-proposals.json",
+        "topic": "adverse-local-tissue-reaction",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "adverse-local-tissue-reaction-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/aseptic-loosening-tha-curated-proposals.json",
+        "topic": "aseptic-loosening-tha",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "aseptic-loosening-tha-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/aseptic-loosening-tka-curated-proposals.json",
+        "topic": "aseptic-loosening-tka",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "aseptic-loosening-tka-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/bearing-surface-selection-curated-proposals.json",
+        "topic": "bearing-surface-selection",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "bearing-surface-selection-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/bone-loss-revision-arthroplasty-curated-proposals.json",
+        "topic": "bone-loss-revision-arthroplasty",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "bone-loss-revision-arthroplasty-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/calcaneus-fracture-curated-proposals.json",
+        "topic": "calcaneus-fracture",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "calcaneus-fracture-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/distal-femur-fracture-curated-proposals.json",
+        "topic": "distal-femur-fracture",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "distal-femur-fracture-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/extensor-mechanism-failure-curated-proposals.json",
+        "topic": "extensor-mechanism-failure",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "extensor-mechanism-failure-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/femoral-neck-fracture-adult-recon-curated-proposals.json",
+        "topic": "femoral-neck-fracture-adult-recon",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "femoral-neck-fracture-adult-recon-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/femoral-shaft-fracture-curated-proposals.json",
+        "topic": "femoral-shaft-fracture",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "femoral-shaft-fracture-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/hip-instability-after-tha-curated-proposals.json",
+        "topic": "hip-instability-after-tha",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "hip-instability-after-tha-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/hip-osteoarthritis-curated-proposals.json",
+        "topic": "hip-osteoarthritis",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "hip-osteoarthritis-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/hip-prosthetic-joint-infection-curated-proposals.json",
+        "topic": "hip-prosthetic-joint-infection",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "hip-prosthetic-joint-infection-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/imaging-radiographic-measurements-curated-proposals.json",
+        "topic": "imaging-radiographic-measurements",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "packetPilot": "imaging-radiographic-measurements-neighborhood",
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/implant-fixation-principles-curated-proposals.json",
+        "topic": "implant-fixation-principles",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "implant-fixation-principles-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/knee-instability-after-tka-curated-proposals.json",
+        "topic": "knee-instability-after-tka",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "knee-instability-after-tka-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/knee-osteoarthritis-curated-proposals.json",
+        "topic": "knee-osteoarthritis",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "knee-osteoarthritis-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/knee-prosthetic-joint-infection-curated-proposals.json",
+        "topic": "knee-prosthetic-joint-infection",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "knee-prosthetic-joint-infection-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/lisfranc-injury-curated-proposals.json",
+        "topic": "lisfranc-injury",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "lisfranc-injury-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/meniscus-tear-curated-proposals.json",
+        "topic": "meniscus-tear",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "meniscus-tear-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage in patellar instability."
+      },
+      {
+        "file": "reports/kg-pilots/multiligament-knee-injury-curated-proposals.json",
+        "topic": "multiligament-knee-injury",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "multiligament-knee-injury-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage in patellar instability."
+      },
+      {
+        "file": "reports/kg-pilots/orthopaedic-anatomy-curated-proposals.json",
+        "topic": "orthopaedic-anatomy",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "packetPilot": "lower-extremity-trauma-cluster-shared",
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/osteochondral-defect-knee-curated-proposals.json",
+        "topic": "osteochondral-defect-knee",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "osteochondral-defect-knee-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage in patellar instability."
+      },
+      {
+        "file": "reports/kg-pilots/patella-fracture-curated-proposals.json",
+        "topic": "patella-fracture",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "patella-fracture-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/patellar-instability-curated-proposals.json",
+        "topic": "patellar-instability",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "patellar-instability-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage in patellar instability."
+      },
+      {
+        "file": "reports/kg-pilots/patellofemoral-arthroplasty-curated-proposals.json",
+        "topic": "patellofemoral-arthroplasty",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "patellofemoral-arthroplasty-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/pcl-injury-curated-proposals.json",
+        "topic": "pcl-injury",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "pcl-injury-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage in patellar instability."
+      },
+      {
+        "file": "reports/kg-pilots/pelvic-ring-injury-curated-proposals.json",
+        "topic": "pelvic-ring-injury",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "packetPilot": "lower-extremity-trauma-cluster-shared",
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/periprosthetic-femur-fracture-curated-proposals.json",
+        "topic": "periprosthetic-femur-fracture",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "periprosthetic-femur-fracture-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/periprosthetic-joint-infection-curated-proposals.json",
+        "topic": "periprosthetic-joint-infection",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "periprosthetic-joint-infection-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/periprosthetic-knee-fracture-curated-proposals.json",
+        "topic": "periprosthetic-knee-fracture",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "periprosthetic-knee-fracture-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/pilon-fracture-curated-proposals.json",
+        "topic": "pilon-fracture",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "pilon-fracture-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/polyethylene-wear-osteolysis-curated-proposals.json",
+        "topic": "polyethylene-wear-osteolysis",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "polyethylene-wear-osteolysis-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/surgical-approaches-curated-proposals.json",
+        "topic": "surgical-approaches",
+        "label": "Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "packetPilot": "surgical-approaches-neighborhood",
+        "description": "Quadriceps-patella-tendon apparatus of the knee.",
+        "sourceNeighborhood": "orthopaedic-anatomy"
+      },
+      {
+        "file": "reports/kg-pilots/talus-fracture-curated-proposals.json",
+        "topic": "talus-fracture",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "talus-fracture-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/tibial-plateau-fracture-curated-proposals.json",
+        "topic": "tibial-plateau-fracture",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "tibial-plateau-fracture-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      },
+      {
+        "file": "reports/kg-pilots/unicompartmental-knee-arthritis-curated-proposals.json",
+        "topic": "unicompartmental-knee-arthritis",
+        "label": "Knee Extensor Mechanism",
+        "entityType": "anatomy_structure",
+        "slug": "extensor-mechanism",
+        "reviewStatus": "approved",
+        "reviewedBy": null,
+        "reviewedAt": null,
+        "ownerPilot": "lower-extremity-trauma-cluster-shared",
+        "packetPilot": "unicompartmental-knee-arthritis-neighborhood",
+        "sharedReference": true,
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "region": "knee"
+      }
+    ]
+  },
+  "blockedNeighborhoods": [
+    "acetabular-fracture",
+    "calcaneus-fracture",
+    "distal-femur-fracture",
+    "femoral-shaft-fracture",
+    "knee-instability-after-tka",
+    "knee-osteoarthritis",
+    "patella-fracture",
+    "patellofemoral-arthroplasty",
+    "periprosthetic-femur-fracture",
+    "periprosthetic-knee-fracture",
+    "pilon-fracture",
+    "polyethylene-wear-osteolysis",
+    "talus-fracture",
+    "unicompartmental-knee-arthritis"
+  ],
+  "reviewHistory": [
+    {
+      "id": "f5b526c1-6856-43dc-8df5-b0188ffc8fa5",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewerNotes": null,
+      "appliedAt": "2026-07-09T04:35:56.09+00:00"
+    }
+  ],
+  "recommendedResolution": "Normalize only the active semantic proposal label to Knee Extensor Mechanism; preserve the original label in resolution metadata; do not alter or merge canonical entities."
+}

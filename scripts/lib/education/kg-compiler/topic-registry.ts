@@ -232,6 +232,42 @@ import {
   ORTHOPAEDIC_ANATOMY_SOURCE_IDS,
   activeOrthopaedicAnatomyRelationships,
 } from "../kg-orthopaedic-anatomy-pilot-spec.ts";
+import {
+  IMAGING_MEASUREMENTS_ASSET_COUNTS,
+  IMAGING_MEASUREMENTS_CLAIM_DRAFTS,
+  IMAGING_MEASUREMENTS_DECISION_POINT_DRAFTS,
+  IMAGING_MEASUREMENTS_ENTITIES,
+  IMAGING_MEASUREMENTS_PILOT_KEY,
+  IMAGING_MEASUREMENTS_SOURCE_IDS,
+  activeImagingMeasurementsRelationships,
+} from "../kg-imaging-radiographic-measurements-pilot-spec.ts";
+import {
+  IMPLANTS_INSTRUMENTS_ASSET_COUNTS,
+  IMPLANTS_INSTRUMENTS_CLAIM_DRAFTS,
+  IMPLANTS_INSTRUMENTS_DECISION_POINT_DRAFTS,
+  IMPLANTS_INSTRUMENTS_ENTITIES,
+  IMPLANTS_INSTRUMENTS_PILOT_KEY,
+  IMPLANTS_INSTRUMENTS_SOURCE_IDS,
+  activeImplantsInstrumentsRelationships,
+} from "../kg-implants-instruments-pilot-spec.ts";
+import {
+  COMPLICATIONS_ASSET_COUNTS,
+  COMPLICATIONS_CLAIM_DRAFTS,
+  COMPLICATIONS_DECISION_POINT_DRAFTS,
+  COMPLICATIONS_ENTITIES,
+  COMPLICATIONS_PILOT_KEY,
+  COMPLICATIONS_SOURCE_IDS,
+  activeComplicationsRelationships,
+} from "../kg-complications-pilot-spec.ts";
+import {
+  POSTOPERATIVE_PROTOCOLS_ASSET_COUNTS,
+  POSTOPERATIVE_PROTOCOLS_CLAIM_DRAFTS,
+  POSTOPERATIVE_PROTOCOLS_DECISION_POINT_DRAFTS,
+  POSTOPERATIVE_PROTOCOLS_ENTITIES,
+  POSTOPERATIVE_PROTOCOLS_PILOT_KEY,
+  POSTOPERATIVE_PROTOCOLS_SOURCE_IDS,
+  activePostoperativeProtocolsRelationships,
+} from "../kg-postoperative-protocols-pilot-spec.ts";
 
 export type TopicDefinition = {
   topicKey: string;
@@ -392,6 +428,129 @@ const TOPIC_REGISTRY: TopicDefinition[] = [
     buildProposals: async () => {
       const { buildTraumaFundamentalsProposalPacket } = await import("../kg-factory/proposal-builder.ts");
       return buildTraumaFundamentalsProposalPacket().proposals;
+    },
+  },
+  {
+    topicKey: "imaging-radiographic-measurements",
+    pilotKey: IMAGING_MEASUREMENTS_PILOT_KEY,
+    displayName: "Imaging & Radiographic Measurements",
+    primaryEntitySlug: "imaging-radiographic-measurements",
+    targetMaturityLevel: 7,
+    aliases: [
+      "imaging measurements",
+      "radiographic measurements",
+      "orthopaedic imaging backbone",
+      "imaging and radiographic measurements",
+    ],
+    sources: IMAGING_MEASUREMENTS_SOURCE_IDS,
+    loadSnapshot: () =>
+      buildSnapshotFromSpec({
+        topicKey: "imaging-radiographic-measurements",
+        pilotKey: IMAGING_MEASUREMENTS_PILOT_KEY,
+        displayName: "Imaging & Radiographic Measurements",
+        primaryEntitySlug: "imaging-radiographic-measurements",
+        targetMaturityLevel: 7,
+        entities: IMAGING_MEASUREMENTS_ENTITIES,
+        relationships: activeImagingMeasurementsRelationships(),
+        claims: IMAGING_MEASUREMENTS_CLAIM_DRAFTS,
+        decisionPoints: IMAGING_MEASUREMENTS_DECISION_POINT_DRAFTS,
+        assetCounts: IMAGING_MEASUREMENTS_ASSET_COUNTS,
+        sources: IMAGING_MEASUREMENTS_SOURCE_IDS,
+      }),
+    buildProposals: async () => {
+      const { buildImagingMeasurementsProposalPacket } = await import("../kg-factory/proposal-builder.ts");
+      return buildImagingMeasurementsProposalPacket().proposals;
+    },
+  },
+  {
+    topicKey: "implants-instruments",
+    pilotKey: IMPLANTS_INSTRUMENTS_PILOT_KEY,
+    displayName: "Implants & Instruments",
+    primaryEntitySlug: "implants-instruments",
+    targetMaturityLevel: 7,
+    aliases: [
+      "implants and instruments",
+      "fixation constructs",
+      "orthopaedic implants",
+      "instrumentation backbone",
+    ],
+    sources: IMPLANTS_INSTRUMENTS_SOURCE_IDS,
+    loadSnapshot: () =>
+      buildSnapshotFromSpec({
+        topicKey: "implants-instruments",
+        pilotKey: IMPLANTS_INSTRUMENTS_PILOT_KEY,
+        displayName: "Implants & Instruments",
+        primaryEntitySlug: "implants-instruments",
+        targetMaturityLevel: 7,
+        entities: IMPLANTS_INSTRUMENTS_ENTITIES,
+        relationships: activeImplantsInstrumentsRelationships(),
+        claims: IMPLANTS_INSTRUMENTS_CLAIM_DRAFTS,
+        decisionPoints: IMPLANTS_INSTRUMENTS_DECISION_POINT_DRAFTS,
+        assetCounts: IMPLANTS_INSTRUMENTS_ASSET_COUNTS,
+        sources: IMPLANTS_INSTRUMENTS_SOURCE_IDS,
+      }),
+    buildProposals: async () => {
+      const { buildImplantsInstrumentsProposalPacket } = await import("../kg-factory/proposal-builder.ts");
+      return buildImplantsInstrumentsProposalPacket().proposals;
+    },
+  },
+  {
+    topicKey: "complications",
+    pilotKey: COMPLICATIONS_PILOT_KEY,
+    displayName: "Complications",
+    primaryEntitySlug: "orthopaedic-complications",
+    targetMaturityLevel: 7,
+    aliases: [
+      "orthopaedic complications",
+      "complication backbone",
+      "failure modes",
+      "orthopaedic failure modes",
+    ],
+    sources: COMPLICATIONS_SOURCE_IDS,
+    loadSnapshot: () =>
+      buildSnapshotFromSpec({
+        topicKey: "complications",
+        pilotKey: COMPLICATIONS_PILOT_KEY,
+        displayName: "Complications",
+        primaryEntitySlug: "orthopaedic-complications",
+        targetMaturityLevel: 7,
+        entities: COMPLICATIONS_ENTITIES,
+        relationships: activeComplicationsRelationships(),
+        claims: COMPLICATIONS_CLAIM_DRAFTS,
+        decisionPoints: COMPLICATIONS_DECISION_POINT_DRAFTS,
+        assetCounts: COMPLICATIONS_ASSET_COUNTS,
+        sources: COMPLICATIONS_SOURCE_IDS,
+      }),
+    buildProposals: async () => {
+      const { buildComplicationsProposalPacket } = await import("../kg-factory/proposal-builder.ts");
+      return buildComplicationsProposalPacket().proposals;
+    },
+  },
+  {
+    topicKey: "postoperative-protocols",
+    pilotKey: POSTOPERATIVE_PROTOCOLS_PILOT_KEY,
+    displayName: "Postoperative Protocols",
+    primaryEntitySlug: "postoperative-protocols",
+    targetMaturityLevel: 7,
+    aliases: ["post-op protocols", "postoperative recovery", "rehabilitation protocols", "postoperative surveillance"],
+    sources: POSTOPERATIVE_PROTOCOLS_SOURCE_IDS,
+    loadSnapshot: () =>
+      buildSnapshotFromSpec({
+        topicKey: "postoperative-protocols",
+        pilotKey: POSTOPERATIVE_PROTOCOLS_PILOT_KEY,
+        displayName: "Postoperative Protocols",
+        primaryEntitySlug: "postoperative-protocols",
+        targetMaturityLevel: 7,
+        entities: POSTOPERATIVE_PROTOCOLS_ENTITIES,
+        relationships: activePostoperativeProtocolsRelationships(),
+        claims: POSTOPERATIVE_PROTOCOLS_CLAIM_DRAFTS,
+        decisionPoints: POSTOPERATIVE_PROTOCOLS_DECISION_POINT_DRAFTS,
+        assetCounts: POSTOPERATIVE_PROTOCOLS_ASSET_COUNTS,
+        sources: POSTOPERATIVE_PROTOCOLS_SOURCE_IDS,
+      }),
+    buildProposals: async () => {
+      const { buildPostoperativeProtocolsProposalPacket } = await import("../kg-factory/proposal-builder.ts");
+      return buildPostoperativeProtocolsProposalPacket().proposals;
     },
   },
   {

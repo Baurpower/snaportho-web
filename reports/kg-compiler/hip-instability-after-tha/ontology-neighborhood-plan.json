@@ -3,8 +3,26 @@
   "pilotKey": "hip-instability-after-tha-neighborhood",
   "primaryEntitySlug": "hip-instability-after-tha",
   "displayName": "Hip Instability After THA",
-  "generatedAt": "2026-07-05T22:55:55.468Z",
+  "generatedAt": "2026-07-16T02:41:08.196Z",
   "nodes": [
+    {
+      "slug": "adult-reconstruction-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Adult Reconstruction Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "hip-capsule",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hip Capsule",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
     {
       "slug": "hip-center-of-rotation",
       "entityType": "biomechanics_concept",
@@ -20,6 +38,15 @@
       "preferredLabel": "Hip Instability After THA",
       "role": "primary_condition",
       "isPrimary": true,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
+      "role": "biomechanics",
+      "isPrimary": false,
       "inboundEdgeCount": 0,
       "outboundEdgeCount": 1
     },
@@ -31,17 +58,41 @@
       "isPrimary": false,
       "inboundEdgeCount": 1,
       "outboundEdgeCount": 0
+    },
+    {
+      "slug": "short-external-rotators",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Short External Rotators",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "total-hip-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Total Hip Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
     }
   ],
-  "edgeCount": 1,
+  "edgeCount": 7,
   "claimCount": 2,
   "decisionPointCount": 0,
   "roles": {
     "primary_condition": [
       "hip-instability-after-tha"
     ],
-    "neighboring_anatomy": [],
-    "procedure": [],
+    "neighboring_anatomy": [
+      "adult-reconstruction-anatomy-hub",
+      "hip-capsule",
+      "short-external-rotators"
+    ],
+    "procedure": [
+      "total-hip-arthroplasty"
+    ],
     "classification": [],
     "imaging": [
       "malpositioned-acetabular-component"
@@ -50,7 +101,8 @@
     "decision_point_anchor": [],
     "claim_anchor": [],
     "biomechanics": [
-      "hip-center-of-rotation"
+      "hip-center-of-rotation",
+      "implant-concepts-hub"
     ],
     "fixation": [],
     "supporting": []

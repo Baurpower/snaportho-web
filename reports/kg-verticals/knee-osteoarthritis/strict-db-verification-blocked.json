@@ -1,0 +1,50 @@
+{
+  "ok": false,
+  "runDate": "2026-07-16",
+  "topicKey": "knee-osteoarthritis",
+  "displayName": "Knee Osteoarthritis",
+  "pilotKey": "knee-osteoarthritis-neighborhood",
+  "priorState": "staging_applied",
+  "resultingState": "database_verification_blocked",
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "blockerClass": "human_review_required",
+  "automaticRepairAttempted": false,
+  "quarantinedPartialMemberships": 0,
+  "batchKey": "legacy-knee-osteoarthritis-528d9621baeee631",
+  "packetHash": "528d9621baeee631da4141b1ba9a4a2a3c353b63a76766200e9064b23904c9e2",
+  "expected": {
+    "approvedLoaded": 73,
+    "structuralProposals": 72,
+    "entities": 65,
+    "relationships": 6,
+    "curriculumBridges": 1,
+    "draftClaims": 1,
+    "draftDecisionPoints": 0
+  },
+  "resolved": {
+    "entities": 64,
+    "relationships": 6,
+    "curriculumBridges": 0
+  },
+  "discrepancyCount": 2,
+  "discrepancies": [
+    {
+      "fingerprint": "create|anatomy_structure|labrum",
+      "kind": "canonical_identity_mismatch",
+      "expected": "anatomy_structure/Acetabular Labrum",
+      "observed": "anatomy_structure/Glenoid Labrum"
+    },
+    {
+      "fingerprint": "bridge|adult-recon-knee-osteoarthritis|knee-osteoarthritis",
+      "kind": "bridge_endpoint_cardinality",
+      "expected": "one curriculum node adult-recon-knee-osteoarthritis and one entity knee-osteoarthritis",
+      "observed": "0 node(s), 1 entity row(s)"
+    }
+  ],
+  "exactNextAction": "resolve_canonical_identity",
+  "evidence": {
+    "applyPath": "reports/kg-pilots/knee-osteoarthritis-staging-apply-result.json",
+    "curatedPath": "reports/kg-pilots/knee-osteoarthritis-curated-proposals.json"
+  }
+}

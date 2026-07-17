@@ -3,16 +3,61 @@
   "pilotKey": "patellofemoral-arthroplasty-neighborhood",
   "primaryEntitySlug": "patellofemoral-arthroplasty",
   "displayName": "Patellofemoral Arthroplasty",
-  "generatedAt": "2026-07-05T23:18:36.878Z",
+  "generatedAt": "2026-07-16T02:53:50.249Z",
   "nodes": [
+    {
+      "slug": "adult-reconstruction-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Adult Reconstruction Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "knee-osteoarthritis",
+      "entityType": "condition",
+      "preferredLabel": "Knee Osteoarthritis",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "patella",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Patella",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "patellar-component",
+      "entityType": "implant",
+      "preferredLabel": "Patellar Component",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
     {
       "slug": "patellofemoral-arthroplasty",
       "entityType": "procedure",
       "preferredLabel": "Patellofemoral Arthroplasty",
       "role": "primary_condition",
       "isPrimary": true,
-      "inboundEdgeCount": 0,
-      "outboundEdgeCount": 0
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 2
     },
     {
       "slug": "patellofemoral-tracking",
@@ -24,24 +69,32 @@
       "outboundEdgeCount": 0
     }
   ],
-  "edgeCount": 0,
-  "claimCount": 2,
+  "edgeCount": 9,
+  "claimCount": 6,
   "decisionPointCount": 0,
   "roles": {
     "primary_condition": [
       "patellofemoral-arthroplasty"
     ],
-    "neighboring_anatomy": [],
+    "neighboring_anatomy": [
+      "adult-reconstruction-anatomy-hub",
+      "patella"
+    ],
     "procedure": [],
     "classification": [],
     "imaging": [],
     "complication": [],
     "decision_point_anchor": [],
-    "claim_anchor": [],
+    "claim_anchor": [
+      "knee-osteoarthritis"
+    ],
     "biomechanics": [
+      "implant-concepts-hub",
       "patellofemoral-tracking"
     ],
-    "fixation": [],
+    "fixation": [
+      "patellar-component"
+    ],
     "supporting": []
   }
 }

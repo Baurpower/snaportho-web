@@ -1,7 +1,7 @@
 {
   "category": "relationship_quality",
   "label": "Relationship Quality",
-  "score": 49,
+  "score": 53,
   "deductions": [
     {
       "finding": "Missing clinical edge: injured_in",
@@ -62,20 +62,11 @@
       ],
       "suggestedFix": "Add has_complication relationship via relationship-builder agent.",
       "impact": 8
-    },
-    {
-      "finding": "Low relationship density",
-      "evidence": "7 relationships / 66 entities = 0.11",
-      "reason": "Sparse graphs limit educational traversal and reasoning support.",
-      "severity": "medium",
-      "category": "relationship_quality",
-      "suggestedFix": "Add metadata-rich clinical and anatomy edges to improve connectivity.",
-      "impact": 4
     }
   ],
   "metrics": {
-    "relationshipCount": 7,
-    "relationshipDensity": 0.10606060606060606,
+    "relationshipCount": 11,
+    "relationshipDensity": 1.5714285714285714,
     "missingClinicalEdgeCount": 5,
     "highRiskUnreviewedCount": 0,
     "predicateCorrectness": 1

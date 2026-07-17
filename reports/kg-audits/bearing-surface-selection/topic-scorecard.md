@@ -1,28 +1,28 @@
 # BEARING SURFACE SELECTION — Knowledge Factory Audit
 
-Generated: 2026-07-05T23:32:00.879Z
+Generated: 2026-07-16T03:33:40.227Z
 Auditor: KF-018 v1.0.0
 
 ## Overall
 
 | Metric | Score |
 |--------|------:|
-| **Overall** | **81** |
-| Ontology Completeness | 82 |
+| **Overall** | **76** |
+| Ontology Completeness | 45 |
 | Evidence Quality | 85 |
-| Graph Integrity | 84 |
+| Graph Integrity | 76 |
 | Shared Knowledge Reuse | 98 |
 | Relationship Quality | 34 |
-| Claim Quality | 76 |
-| Decision Points | 69 |
-| Metadata Quality | 92 |
-| Provenance Quality | 100 |
+| Claim Quality | 84 |
+| Decision Points | 85 |
+| Metadata Quality | 86 |
+| Provenance Quality | 96 |
 | Review Calibration | 100 |
 | Agent Performance | 92 |
-| Compiler Quality | 90 |
-| Educational Quality | 74 |
-| Cross-Neighborhood Consistency | 96 |
-| Publication Readiness | 68 |
+| Compiler Quality | 73 |
+| Educational Quality | 68 |
+| Cross-Neighborhood Consistency | 100 |
+| Publication Readiness | 28 |
 | Publication | Blocked |
 
 ## Publication
@@ -32,16 +32,23 @@ Auditor: KF-018 v1.0.0
 
 ### Blockers
 
-- 9 proposals still awaiting human review
-- 3 items require attending review
+- 12 proposals still awaiting human review
+- 6 items require attending review
 - Claims and DPs are draft-only — publication gate must block verified consumption.
-- No approved canonical entities in database yet — proposals remain offline/spec.
+- 32 critical/high ontology gaps remain unresolved
 
 ## Top Findings
 
+### [CRITICAL] 8 critical ontology gaps remain
+
+- **Evidence:** ontology-gap-report.json: gap-entity-neighbor-7, gap-rel-8, gap-entity-neighbor-15
+- **Reason:** Required entities, relationships, claims, or decision points are missing per CKO §8–§9.
+- **Impact:** -15
+- **Fix:** Resolve critical gaps via assigned factory agents before publication review.
+
 ### [CRITICAL] Low evidence coverage (0% of proposals cite evidence)
 
-- **Evidence:** 0/78 proposals have evidence_refs
+- **Evidence:** 0/49 proposals have evidence_refs
 - **Reason:** Every proposal should cite supporting evidence per factory contract.
 - **Impact:** -15
 - **Fix:** Ensure claim/relationship builders attach evidence_refs from the evidence packet.
@@ -60,58 +67,51 @@ Auditor: KF-018 v1.0.0
 - **Impact:** -15
 - **Fix:** Add has_classification relationship via relationship-builder agent.
 
-### [CRITICAL] Missing decision point pattern: emergency_escalation
+### [CRITICAL] No decision points in neighborhood
 
-- **Evidence:** 0 decision points with pattern emergency_escalation
-- **Reason:** Fracture neighborhoods require branching operative vs nonoperative pathways.
+- **Evidence:** merged draft decisionPointCount = 0
+- **Reason:** Decision points support clinical reasoning and operative safety pathways.
 - **Impact:** -15
-- **Fix:** Add emergency_escalation decision point with attending-gated review.
+- **Fix:** Run decision-point-builder for operative_indication and nonoperative_eligible patterns.
 
-### [HIGH] Missing claim requirements (8)
+### [CRITICAL] 32 critical/high ontology gaps remain unresolved
 
-- **Evidence:** 8 gaps of kind missing_claim
-- **Reason:** Ontology contract requires complete claim coverage.
+- **Evidence:** publication-readiness.json blockers
+- **Reason:** Publication gate identified blocking condition.
+- **Impact:** -15
+- **Fix:** [high] Calcar missing outbound part_of (0/1).
+
+### [HIGH] 24 high-priority ontology gaps
+
+- **Evidence:** Gap kinds: missing_relationship
+- **Reason:** High-priority gaps block maturity level advancement.
+- **Impact:** -12
+- **Fix:** Schedule gap-resolution work items from ontology-work-plan.json.
+
+### [HIGH] Missing relationship requirements (38)
+
+- **Evidence:** 38 gaps of kind missing_relationship
+- **Reason:** Ontology contract requires complete relationship coverage.
 - **Impact:** -8
-- **Fix:** Run the matching builder agent for missing_claim.
-
-### [HIGH] No classification system present
-
-- **Evidence:** 0 classification entities in merged draft
-- **Reason:** Fracture diagnoses require classification when one exists clinically.
-- **Impact:** -8
-- **Fix:** Link has_classification and has_grade edges to a classification system.
-
-### [HIGH] 57 orphan entities with no relationships
-
-- **Evidence:** Slugs: cross-linked-polyethylene, ceramic-on-ceramic-bearing, acetabulum, calcar, collateral-ligaments, common-peroneal-nerve, cruciate-ligaments, distal-femur, extensor-mechanism, femoral-condyles, femoral-diaphysis, femoral-head, femoral-neck, femoral-nerve, femur, gluteus-medius, gluteus-minimus, greater-trochanter, hip-capsule, hip-joint, intertrochanteric-region, labrum, lesser-trochanter, medial-femoral-circumflex-artery, patella, patellar-tendon, pelvis, popliteal-artery, proximal-femur, proximal-femur-anatomy-hub, quadriceps-tendon, sciatic-nerve, short-external-rotators, tibia, tibial-plateau, compartment-syndrome, distal-femur-fracture, femoral-neck-fracture, femoral-shaft-fracture, hip-prosthetic-joint-infection, intertrochanteric-fracture, knee-osteoarthritis, knee-prosthetic-joint-infection, periprosthetic-joint-infection, subtrochanteric-fracture, tibial-shaft-fracture, cement-mantle, cemented-fixation, press-fit-fixation, acetabular-component, femoral-component, femoral-stem, patellar-component, tibial-baseplate, tibial-insert, revision-arthroplasty, unicompartmental-knee-arthroplasty
-- **Reason:** Orphan entities cannot be traversed by products and indicate incomplete graph wiring.
-- **Impact:** -8
-- **Fix:** Add inbound or outbound clinical/anatomy edges, or merge duplicates.
-
-### [HIGH] 33 disconnected anatomy structures
-
-- **Evidence:** Disconnected: acetabulum, calcar, collateral-ligaments, common-peroneal-nerve, cruciate-ligaments, distal-femur, extensor-mechanism, femoral-condyles, femoral-diaphysis, femoral-head, femoral-neck, femoral-nerve, femur, gluteus-medius, gluteus-minimus, greater-trochanter, hip-capsule, hip-joint, intertrochanteric-region, labrum, lesser-trochanter, medial-femoral-circumflex-artery, patella, patellar-tendon, pelvis, popliteal-artery, proximal-femur, proximal-femur-anatomy-hub, quadriceps-tendon, sciatic-nerve, short-external-rotators, tibia, tibial-plateau
-- **Reason:** Anatomy must connect to the condition graph for educational traversal.
-- **Impact:** -8
-- **Fix:** Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.
+- **Fix:** Run the matching builder agent for missing_relationship.
 
 ## Prioritized Recommendations
 
-1. **[Evidence Quality]** Ensure claim/relationship builders attach evidence_refs from the evidence packet. — _Low evidence coverage (0% of proposals cite evidence)_
-2. **[Relationship Quality]** Add injured_in relationship via relationship-builder agent. — _Missing clinical edge: injured_in_
-3. **[Relationship Quality]** Add has_classification relationship via relationship-builder agent. — _Missing clinical edge: has_classification_
-4. **[Decision Points]** Add emergency_escalation decision point with attending-gated review. — _Missing decision point pattern: emergency_escalation_
-5. **[Ontology Completeness]** Run the matching builder agent for missing_claim. — _Missing claim requirements (8)_
-6. **[Ontology Completeness]** Link has_classification and has_grade edges to a classification system. — _No classification system present_
-7. **[Graph Integrity]** Add inbound or outbound clinical/anatomy edges, or merge duplicates. — _57 orphan entities with no relationships_
-8. **[Graph Integrity]** Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors. — _33 disconnected anatomy structures_
-9. **[Relationship Quality]** Add has_imaging_finding relationship via relationship-builder agent. — _Missing clinical edge: has_imaging_finding_
-10. **[Relationship Quality]** Add at_risk_structure relationship via relationship-builder agent. — _Missing clinical edge: at_risk_structure_
+1. **[Ontology Completeness]** Resolve critical gaps via assigned factory agents before publication review. — _8 critical ontology gaps remain_
+2. **[Evidence Quality]** Ensure claim/relationship builders attach evidence_refs from the evidence packet. — _Low evidence coverage (0% of proposals cite evidence)_
+3. **[Relationship Quality]** Add injured_in relationship via relationship-builder agent. — _Missing clinical edge: injured_in_
+4. **[Relationship Quality]** Add has_classification relationship via relationship-builder agent. — _Missing clinical edge: has_classification_
+5. **[Decision Points]** Run decision-point-builder for operative_indication and nonoperative_eligible patterns. — _No decision points in neighborhood_
+6. **[Publication Readiness]** [high] Calcar missing outbound part_of (0/1). — _32 critical/high ontology gaps remain unresolved_
+7. **[Ontology Completeness]** Schedule gap-resolution work items from ontology-work-plan.json. — _24 high-priority ontology gaps_
+8. **[Ontology Completeness]** Run the matching builder agent for missing_relationship. — _Missing relationship requirements (38)_
+9. **[Ontology Completeness]** Run the matching builder agent for missing_claim. — _Missing claim requirements (14)_
+10. **[Ontology Completeness]** Link has_classification and has_grade edges to a classification system. — _No classification system present_
 
 ## Data Source
 
-- Neighborhood: merged_draft
-- Reports loaded: 13
+- Neighborhood: database
+- Reports loaded: 15
 - Reports missing: none
 
 ## Constraints

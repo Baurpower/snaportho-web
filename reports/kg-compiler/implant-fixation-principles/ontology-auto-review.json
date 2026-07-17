@@ -1,15 +1,15 @@
 {
   "topicKey": "implant-fixation-principles",
   "pilotKey": "implant-fixation-principles-neighborhood",
-  "generatedAt": "2026-07-05T23:29:15.207Z",
+  "generatedAt": "2026-07-16T02:41:49.405Z",
   "summary": {
-    "AUTO_APPROVE": 83,
+    "AUTO_APPROVE": 81,
     "SAFE_REVIEW": 1,
     "EXPERT_REVIEW": 7,
     "REJECT": 0
   },
-  "humanReviewPercent": 8.8,
-  "autoApprovedPercent": 91.2,
+  "humanReviewPercent": 9,
+  "autoApprovedPercent": 91,
   "decisions": [
     {
       "proposal_fingerprint": "bridge|adult-recon-implant-fixation|implant-fixation-principles",
@@ -33,7 +33,7 @@
       ]
     },
     {
-      "proposal_fingerprint": "claim|claim-implant-fixation-principles-anatomy_pearl-extensor-mechanism",
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa",
       "proposal_type": "propose_educational_claim",
       "category": "AUTO_APPROVE",
       "curationRoute": "AUTO_APPROVED_LOW_RISK",
@@ -54,7 +54,7 @@
       ]
     },
     {
-      "proposal_fingerprint": "claim|claim-implant-fixation-principles-anatomy_pearl-hip-and-knee-joint-surfa",
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-implant-concepts-hub",
       "proposal_type": "propose_educational_claim",
       "category": "AUTO_APPROVE",
       "curationRoute": "AUTO_APPROVED_LOW_RISK",
@@ -75,7 +75,7 @@
       ]
     },
     {
-      "proposal_fingerprint": "claim|claim-implant-fixation-principles-anatomy_pearl-implant-bone-interfaces",
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-shared-adult-reconstruct",
       "proposal_type": "propose_educational_claim",
       "category": "AUTO_APPROVE",
       "curationRoute": "AUTO_APPROVED_LOW_RISK",
@@ -96,7 +96,7 @@
       ]
     },
     {
-      "proposal_fingerprint": "claim|claim-implant-fixation-principles-anatomy_pearl-implant-concepts-hub",
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-trauma-neighborhood-brid",
       "proposal_type": "propose_educational_claim",
       "category": "AUTO_APPROVE",
       "curationRoute": "AUTO_APPROVED_LOW_RISK",
@@ -117,45 +117,87 @@
       ]
     },
     {
-      "proposal_fingerprint": "claim|claim-implant-fixation-principles-anatomy_pearl-shared-adult-reconstruct",
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-fact-cross-neighborhood-traum",
       "proposal_type": "propose_educational_claim",
-      "category": "AUTO_APPROVE",
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
       "confidence": 0.7941250000000001,
       "evidenceQuality": 0.5,
       "ontologyConsistency": 0.9,
       "relationshipValidity": 1,
       "duplicateProbability": 0,
       "safetyCriticality": 0.1,
-      "publicationReadiness": 0.7040000000000001,
-      "humanReviewerType": "none",
+      "publicationReadiness": 0.41825,
+      "humanReviewerType": "curator",
       "rationale": [
-        "Rule: anatomy_pearl_on_hub",
+        "Rule: l1_management_fact",
         "Composite confidence 0.794 from explainable dimensions"
       ],
       "rulesTriggered": [
-        "anatomy_pearl_on_hub"
+        "l1_management_fact"
       ]
     },
     {
-      "proposal_fingerprint": "claim|claim-implant-fixation-principles-anatomy_pearl-trauma-neighborhood-brid",
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-fact-implant-and-fixation-voc",
       "proposal_type": "propose_educational_claim",
-      "category": "AUTO_APPROVE",
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
       "confidence": 0.7941250000000001,
       "evidenceQuality": 0.5,
       "ontologyConsistency": 0.9,
       "relationshipValidity": 1,
       "duplicateProbability": 0,
       "safetyCriticality": 0.1,
-      "publicationReadiness": 0.7040000000000001,
-      "humanReviewerType": "none",
+      "publicationReadiness": 0.41825,
+      "humanReviewerType": "curator",
       "rationale": [
-        "Rule: anatomy_pearl_on_hub",
+        "Rule: l1_management_fact",
         "Composite confidence 0.794 from explainable dimensions"
       ],
       "rulesTriggered": [
-        "anatomy_pearl_on_hub"
+        "l1_management_fact"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-fact-implant-fixation-balance",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.41825,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: l1_management_fact",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l1_management_fact"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-fact-implant-fixation-princip",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.41825,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: l1_management_fact",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l1_management_fact"
       ]
     },
     {
@@ -195,90 +237,6 @@
       "rationale": [
         "Rule: l1_management_fact",
         "Composite confidence 0.853 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "l1_management_fact"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-implant-fixation-principles-fact-cross-neighborhood-traum",
-      "proposal_type": "propose_educational_claim",
-      "category": "EXPERT_REVIEW",
-      "curationRoute": "HUMAN_REVIEW",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.41825,
-      "humanReviewerType": "curator",
-      "rationale": [
-        "Rule: l1_management_fact",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "l1_management_fact"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-implant-fixation-principles-fact-implant-and-fixation-voc",
-      "proposal_type": "propose_educational_claim",
-      "category": "EXPERT_REVIEW",
-      "curationRoute": "HUMAN_REVIEW",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.41825,
-      "humanReviewerType": "curator",
-      "rationale": [
-        "Rule: l1_management_fact",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "l1_management_fact"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-implant-fixation-principles-fact-implant-fixation-balance",
-      "proposal_type": "propose_educational_claim",
-      "category": "EXPERT_REVIEW",
-      "curationRoute": "HUMAN_REVIEW",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.41825,
-      "humanReviewerType": "curator",
-      "rationale": [
-        "Rule: l1_management_fact",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "l1_management_fact"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-implant-fixation-principles-fact-implant-fixation-princip",
-      "proposal_type": "propose_educational_claim",
-      "category": "EXPERT_REVIEW",
-      "curationRoute": "HUMAN_REVIEW",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.41825,
-      "humanReviewerType": "curator",
-      "rationale": [
-        "Rule: l1_management_fact",
-        "Composite confidence 0.794 from explainable dimensions"
       ],
       "rulesTriggered": [
         "l1_management_fact"

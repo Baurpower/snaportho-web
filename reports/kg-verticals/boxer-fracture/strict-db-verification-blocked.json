@@ -1,0 +1,41 @@
+{
+  "ok": false,
+  "runDate": "2026-07-16",
+  "topicKey": "boxer-fracture",
+  "displayName": "Boxer Fracture",
+  "pilotKey": "boxer-fracture-neighborhood",
+  "priorState": "staging_applied",
+  "resultingState": "database_verification_blocked",
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "blockerClass": "staging_integrity_failure",
+  "automaticRepairAttempted": false,
+  "expected": {
+    "approvedLoaded": 157,
+    "structuralProposals": 156,
+    "entities": 70,
+    "relationships": 85,
+    "curriculumBridges": 1,
+    "draftClaims": 1,
+    "draftDecisionPoints": 0
+  },
+  "resolved": {
+    "entities": 70,
+    "relationships": 85,
+    "curriculumBridges": 0
+  },
+  "discrepancyCount": 1,
+  "discrepancies": [
+    {
+      "fingerprint": "bridge|hand-boxer-fracture|boxer-fracture",
+      "kind": "bridge_endpoint_cardinality",
+      "expected": "one curriculum node hand-boxer-fracture and one entity boxer-fracture",
+      "observed": "0 node(s), 1 entity row(s)"
+    }
+  ],
+  "exactNextAction": "restore_or_adjudicate_curriculum_node_bridge",
+  "evidence": {
+    "applyPath": "reports/kg-pilots/boxer-fracture-staging-apply-result.json",
+    "curatedPath": "reports/kg-pilots/boxer-fracture-curated-proposals.json"
+  }
+}

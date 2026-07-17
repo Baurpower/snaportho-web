@@ -1,0 +1,215 @@
+{
+  "topicKey": "complications",
+  "pilotKey": "complications-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 291,
+  "applied": {
+    "entities": 79,
+    "relationships": 166,
+    "bridges": 0,
+    "claims_draft": 0,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 291
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|complication|loss-of-reduction",
+      "reason": "entity exists: loss-of-reduction"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-diaphysis",
+      "reason": "entity exists: femoral-diaphysis"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|hip-joint",
+      "reason": "entity exists: hip-joint"
+    },
+    {
+      "fingerprint": "create|complication|fracture-nonunion",
+      "reason": "entity exists: fracture-nonunion"
+    },
+    {
+      "fingerprint": "create|complication|fracture-malunion",
+      "reason": "entity exists: fracture-malunion"
+    },
+    {
+      "fingerprint": "create|condition|acute-compartment-syndrome",
+      "reason": "entity exists: acute-compartment-syndrome"
+    },
+    {
+      "fingerprint": "create|diagnostic_test|compartment-pressure-measurement",
+      "reason": "entity exists: compartment-pressure-measurement"
+    },
+    {
+      "fingerprint": "create|procedure|total-hip-arthroplasty",
+      "reason": "entity exists: total-hip-arthroplasty"
+    },
+    {
+      "fingerprint": "create|procedure|total-knee-arthroplasty",
+      "reason": "entity exists: total-knee-arthroplasty"
+    },
+    {
+      "fingerprint": "create|procedure|emergent-fasciotomy",
+      "reason": "entity exists: emergent-fasciotomy"
+    },
+    {
+      "fingerprint": "create|condition|open-fracture",
+      "reason": "entity exists: open-fracture"
+    },
+    {
+      "fingerprint": "create|condition|periprosthetic-joint-infection",
+      "reason": "entity exists: periprosthetic-joint-infection"
+    },
+    {
+      "fingerprint": "create|condition|aseptic-loosening-tha",
+      "reason": "entity exists: aseptic-loosening-tha"
+    },
+    {
+      "fingerprint": "create|complication|extensor-mechanism-disruption",
+      "reason": "entity exists: extensor-mechanism-disruption"
+    },
+    {
+      "fingerprint": "create|condition|aseptic-loosening-tka",
+      "reason": "entity exists: aseptic-loosening-tka"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-head",
+      "reason": "entity exists: femoral-head"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sciatic-nerve",
+      "reason": "entity exists: sciatic-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-condyles",
+      "reason": "entity exists: femoral-condyles"
+    },
+    {
+      "fingerprint": "create|complication|delayed-union",
+      "reason": "entity exists: delayed-union"
+    },
+    {
+      "fingerprint": "create|procedure|irrigation-and-debridement-open-fracture",
+      "reason": "entity exists: irrigation-and-debridement-open-fracture"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|common-peroneal-nerve",
+      "reason": "entity exists: common-peroneal-nerve"
+    },
+    {
+      "fingerprint": "create|complication|fracture-related-infection",
+      "reason": "entity exists: fracture-related-infection"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|humeral-head",
+      "reason": "entity exists: humeral-head"
+    },
+    {
+      "fingerprint": "create|complication|venous-thromboembolism",
+      "reason": "entity exists: venous-thromboembolism"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|radial-nerve",
+      "reason": "entity exists: radial-nerve"
+    },
+    {
+      "fingerprint": "create|complication|crps",
+      "reason": "entity exists: crps"
+    },
+    {
+      "fingerprint": "create|complication|osteolysis",
+      "reason": "entity exists: osteolysis"
+    },
+    {
+      "fingerprint": "create|complication|fat-embolism",
+      "reason": "entity exists: fat-embolism"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|median-nerve",
+      "reason": "entity exists: median-nerve"
+    },
+    {
+      "fingerprint": "create|complication|median-neuropathy",
+      "reason": "entity exists: median-neuropathy"
+    },
+    {
+      "fingerprint": "create|complication|talar-avn",
+      "reason": "entity exists: talar-avn"
+    },
+    {
+      "fingerprint": "create|complication|avascular-necrosis",
+      "reason": "entity exists: avascular-necrosis"
+    },
+    {
+      "fingerprint": "create|complication|muscle-necrosis",
+      "reason": "entity exists: muscle-necrosis"
+    },
+    {
+      "fingerprint": "create|complication|rhabdomyolysis",
+      "reason": "entity exists: rhabdomyolysis"
+    },
+    {
+      "fingerprint": "create|complication|limb-amputation",
+      "reason": "entity exists: limb-amputation"
+    },
+    {
+      "fingerprint": "create|complication|radial-nerve-palsy",
+      "reason": "entity exists: radial-nerve-palsy"
+    },
+    {
+      "fingerprint": "create|complication|volkmann-contracture",
+      "reason": "entity exists: volkmann-contracture"
+    },
+    {
+      "fingerprint": "create|complication|stem-loosening",
+      "reason": "entity exists: stem-loosening"
+    },
+    {
+      "fingerprint": "create|complication|post-traumatic-ankle-arthritis",
+      "reason": "entity exists: post-traumatic-ankle-arthritis"
+    },
+    {
+      "fingerprint": "create|complication|humeral-head-avn",
+      "reason": "entity exists: humeral-head-avn"
+    },
+    {
+      "fingerprint": "create|complication|extensor-mechanism-failure",
+      "reason": "entity exists: extensor-mechanism-failure"
+    },
+    {
+      "fingerprint": "create|exam_maneuver|serial-neurovascular-examinations",
+      "reason": "entity exists: serial-neurovascular-examinations"
+    },
+    {
+      "fingerprint": "create|procedure|two-stage-revision-arthroplasty",
+      "reason": "entity exists: two-stage-revision-arthroplasty"
+    },
+    {
+      "fingerprint": "rel|open-fracture|has_complication|fracture-related-infection",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|irrigation-and-debridement-open-fracture|has_complication|fracture-related-infection",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "bridge|orthopaedic-complications|orthopaedic-complications",
+      "reason": "curriculum node not found"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 0,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

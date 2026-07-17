@@ -1,0 +1,1023 @@
+[
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|durkan-carpal-compression-test",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "carpal-tunnel-syndrome -[tested_by]-> durkan-carpal-compression-test",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "durkan-carpal-compression-test",
+      "subject_slug": "carpal-tunnel-syndrome",
+      "review_reason": "Valid provocative-test relationship.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "HUMAN_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "exam_maneuver",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "condition",
+      "auto_review_category": "SAFE_REVIEW",
+      "auto_review_rationale": [
+        "Rule: default_human_review",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|durkan-carpal-compression-test"
+      },
+      "review_decision_applied": true,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|electrodiagnostic-testing-carpal-tunnel-syndrome",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "carpal-tunnel-syndrome -[tested_by]-> electrodiagnostic-testing-carpal-tunnel-syndrome",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "electrodiagnostic-testing-carpal-tunnel-syndrome",
+      "subject_slug": "carpal-tunnel-syndrome",
+      "review_reason": "Valid selective EDX wrapper relationship.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "HUMAN_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "diagnostic_test",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "condition",
+      "auto_review_category": "SAFE_REVIEW",
+      "auto_review_rationale": [
+        "Rule: default_human_review",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "curation_route": "EDX_SPECIALIST_REVIEW",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|electrodiagnostic-testing-carpal-tunnel-syndrome"
+      },
+      "review_decision_applied": true,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|nerve-conduction-study",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "carpal-tunnel-syndrome -[tested_by]-> nerve-conduction-study",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "nerve-conduction-study",
+      "subject_slug": "carpal-tunnel-syndrome",
+      "review_reason": "Valid NCS diagnostic-test relationship.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "HUMAN_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "diagnostic_test",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "condition",
+      "auto_review_category": "SAFE_REVIEW",
+      "auto_review_rationale": [
+        "Rule: default_human_review",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "curation_route": "EDX_SPECIALIST_REVIEW",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|nerve-conduction-study"
+      },
+      "review_decision_applied": true,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|phalen-test",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "carpal-tunnel-syndrome -[tested_by]-> phalen-test",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "phalen-test",
+      "subject_slug": "carpal-tunnel-syndrome",
+      "review_reason": "Valid provocative-test relationship.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "HUMAN_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "exam_maneuver",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "condition",
+      "auto_review_category": "SAFE_REVIEW",
+      "auto_review_rationale": [
+        "Rule: default_human_review",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|phalen-test"
+      },
+      "review_decision_applied": true,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|tinel-sign-carpal-tunnel",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "carpal-tunnel-syndrome -[tested_by]-> tinel-sign-carpal-tunnel",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "tinel-sign-carpal-tunnel",
+      "subject_slug": "carpal-tunnel-syndrome",
+      "review_reason": "Valid provocative/sign relationship.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "HUMAN_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "exam_maneuver",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "condition",
+      "auto_review_category": "SAFE_REVIEW",
+      "auto_review_rationale": [
+        "Rule: default_human_review",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|tinel-sign-carpal-tunnel"
+      },
+      "review_decision_applied": true,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "carpal-tunnel-syndrome -[treated_by]-> corticosteroid-injection-for-cts",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "corticosteroid-injection-for-cts",
+      "subject_slug": "carpal-tunnel-syndrome",
+      "review_reason": "Valid treatment edge with short-term symptom-relief qualifier and no durable-cure implication.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE_WITH_REVISION",
+      "auto_review_route": "ATTENDING_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "procedure",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "condition",
+      "auto_review_category": "EXPERT_REVIEW",
+      "auto_review_rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts"
+      },
+      "review_decision_applied": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "carpal-tunnel-syndrome -[treated_by]-> endoscopic-carpal-tunnel-release",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "endoscopic-carpal-tunnel-release",
+      "subject_slug": "carpal-tunnel-syndrome",
+      "review_reason": "Valid named surgical treatment option.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "ATTENDING_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "procedure",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "condition",
+      "auto_review_category": "EXPERT_REVIEW",
+      "auto_review_rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release"
+      },
+      "review_decision_applied": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "carpal-tunnel-syndrome -[treated_by]-> neutral-wrist-night-orthosis-for-cts",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "neutral-wrist-night-orthosis-for-cts",
+      "subject_slug": "carpal-tunnel-syndrome",
+      "review_reason": "Valid nonoperative treatment option.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "ATTENDING_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "treatment_principle",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "condition",
+      "auto_review_category": "EXPERT_REVIEW",
+      "auto_review_rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts"
+      },
+      "review_decision_applied": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "carpal-tunnel-syndrome -[treated_by]-> open-carpal-tunnel-release",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "open-carpal-tunnel-release",
+      "subject_slug": "carpal-tunnel-syndrome",
+      "review_reason": "Valid named surgical treatment option.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "ATTENDING_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "procedure",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "condition",
+      "auto_review_category": "EXPERT_REVIEW",
+      "auto_review_rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release"
+      },
+      "review_decision_applied": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|corticosteroid-injection-for-cts|at_risk_structure|median-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "corticosteroid-injection-for-cts -[at_risk_structure]-> median-nerve",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "median-nerve",
+      "subject_slug": "corticosteroid-injection-for-cts",
+      "review_reason": "Valid procedure-to-risk-anatomy relationship.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "ATTENDING_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "anatomy_structure",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "procedure",
+      "auto_review_category": "EXPERT_REVIEW",
+      "auto_review_rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|corticosteroid-injection-for-cts|at_risk_structure|median-nerve"
+      },
+      "review_decision_applied": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|endoscopic-carpal-tunnel-release|at_risk_structure|median-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "endoscopic-carpal-tunnel-release -[at_risk_structure]-> median-nerve",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "median-nerve",
+      "subject_slug": "endoscopic-carpal-tunnel-release",
+      "review_reason": "Valid procedure-to-risk-anatomy relationship.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "ATTENDING_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "anatomy_structure",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "procedure",
+      "auto_review_category": "EXPERT_REVIEW",
+      "auto_review_rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|endoscopic-carpal-tunnel-release|at_risk_structure|median-nerve"
+      },
+      "review_decision_applied": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|endoscopic-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "endoscopic-carpal-tunnel-release -[at_risk_structure]-> recurrent-motor-branch-median-nerve",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "recurrent-motor-branch-median-nerve",
+      "subject_slug": "endoscopic-carpal-tunnel-release",
+      "review_reason": "Valid procedure-to-risk-anatomy relationship.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "ATTENDING_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "anatomy_structure",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "procedure",
+      "auto_review_category": "EXPERT_REVIEW",
+      "auto_review_rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|endoscopic-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve"
+      },
+      "review_decision_applied": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|endoscopic-carpal-tunnel-release|uses_approach|endoscopic-carpal-tunnel-approach",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "endoscopic-carpal-tunnel-release -[uses_approach]-> endoscopic-carpal-tunnel-approach",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "endoscopic-carpal-tunnel-approach",
+      "subject_slug": "endoscopic-carpal-tunnel-release",
+      "review_reason": "Valid procedure-to-approach relationship.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "HUMAN_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "surgical_approach",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "procedure",
+      "auto_review_category": "SAFE_REVIEW",
+      "auto_review_rationale": [
+        "Rule: default_human_review",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|endoscopic-carpal-tunnel-release|uses_approach|endoscopic-carpal-tunnel-approach"
+      },
+      "review_decision_applied": true,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|median-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "open-carpal-tunnel-release -[at_risk_structure]-> median-nerve",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "median-nerve",
+      "subject_slug": "open-carpal-tunnel-release",
+      "review_reason": "Valid procedure-to-risk-anatomy relationship.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "ATTENDING_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "anatomy_structure",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "procedure",
+      "auto_review_category": "EXPERT_REVIEW",
+      "auto_review_rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|median-nerve"
+      },
+      "review_decision_applied": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|palmar-cutaneous-branch-median-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "open-carpal-tunnel-release -[at_risk_structure]-> palmar-cutaneous-branch-median-nerve",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "palmar-cutaneous-branch-median-nerve",
+      "subject_slug": "open-carpal-tunnel-release",
+      "review_reason": "Valid procedure-to-risk-anatomy relationship.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "ATTENDING_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "anatomy_structure",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "procedure",
+      "auto_review_category": "EXPERT_REVIEW",
+      "auto_review_rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|palmar-cutaneous-branch-median-nerve"
+      },
+      "review_decision_applied": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "open-carpal-tunnel-release -[at_risk_structure]-> recurrent-motor-branch-median-nerve",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "recurrent-motor-branch-median-nerve",
+      "subject_slug": "open-carpal-tunnel-release",
+      "review_reason": "Valid procedure-to-risk-anatomy relationship.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "ATTENDING_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "anatomy_structure",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "procedure",
+      "auto_review_category": "EXPERT_REVIEW",
+      "auto_review_rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve"
+      },
+      "review_decision_applied": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|open-carpal-tunnel-release|uses_approach|open-carpal-tunnel-approach",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "open-carpal-tunnel-release -[uses_approach]-> open-carpal-tunnel-approach",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "open-carpal-tunnel-approach",
+      "subject_slug": "open-carpal-tunnel-release",
+      "review_reason": "Valid procedure-to-approach relationship.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "HUMAN_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "surgical_approach",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "procedure",
+      "auto_review_category": "SAFE_REVIEW",
+      "auto_review_rationale": [
+        "Rule: default_human_review",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|open-carpal-tunnel-release|uses_approach|open-carpal-tunnel-approach"
+      },
+      "review_decision_applied": true,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-16T02:38:20.565Z",
+      "verified": false
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|revision-carpal-tunnel-release|at_risk_structure|median-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "revision-carpal-tunnel-release -[at_risk_structure]-> median-nerve",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.84,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Finalized post-review CTS graph",
+    "metadata": {
+      "pilot": "carpal-tunnel-syndrome-neighborhood",
+      "object_slug": "median-nerve",
+      "subject_slug": "revision-carpal-tunnel-release",
+      "review_reason": "Valid revision procedure-to-risk-anatomy relationship.",
+      "adapter_version": "cts-finalized-staging-v1",
+      "factory_version": "kf-016",
+      "review_decision": "APPROVE",
+      "auto_review_route": "ATTENDING_REVIEW",
+      "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+      "staging_batch_key": "cts-0c2b2fa3ef5af8aa",
+      "object_entity_type": "anatomy_structure",
+      "review_packet_label": "Carpal Tunnel Syndrome Finalized Neighborhood",
+      "reviewer_role_label": "clinical_curator",
+      "subject_entity_type": "procedure",
+      "auto_review_category": "EXPERT_REVIEW",
+      "auto_review_rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|revision-carpal-tunnel-release|at_risk_structure|median-nerve"
+      },
+      "review_decision_applied": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-16T02:38:20.566Z",
+      "verified": false
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  }
+]

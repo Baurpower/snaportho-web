@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "runDate": "2026-07-16",
+  "topicKey": "femoral-shaft-fracture",
+  "displayName": "Femoral Shaft Fracture",
+  "pilotKey": "femoral-shaft-fracture-neighborhood",
+  "batchKey": "legacy-femoral-shaft-fracture-20a786a4e9a00e4a",
+  "packetHash": "20a786a4e9a00e4aa341ed40884c7c1ee27391b3f80be76d0334ed233105020f",
+  "graphHash": "9f6b5b998ed9be96fcc4b371c8d7a65d035793e88e25bcc4c05cbafacf4745ca",
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "dryRun": true,
+  "exactAppliedMembershipReconstructed": true,
+  "counts": {
+    "approvedLoaded": 82,
+    "structuralProposals": 81,
+    "entities": 38,
+    "relationships": 42,
+    "curriculumBridges": 1,
+    "draftClaimsExcluded": 1,
+    "draftDecisionPointsExcluded": 0
+  },
+  "repairs": {
+    "insertedSemantic": 0,
+    "reusedSemantic": 0,
+    "proposalStatesRepaired": 0,
+    "insertedMemberships": 0,
+    "reusedMemberships": 0,
+    "reactivatedMemberships": 0
+  },
+  "discrepancyCount": 0,
+  "exactNextAction": "repair_batch_membership"
+}

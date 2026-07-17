@@ -1,6 +1,6 @@
 # Reviewer Burden Estimate
 
-Generated: 2026-07-05T23:18:36.892Z
+Generated: 2026-07-16T02:53:50.268Z
 
 ## Summary
 
@@ -25,9 +25,9 @@ Generated: 2026-07-05T23:18:36.892Z
 
 ## Agent work plan
 
-- **Clinical Entity Builder** (clinical-entity-builder): 1 gap(s), reviewer=clinical_expert
-- **Relationship Builder** (relationship-builder): 4 gap(s), reviewer=attending
-- **Claim Builder** (claim-builder): 4 gap(s), reviewer=clinical_expert
+- **Relationship Builder** (relationship-builder): 6 gap(s), reviewer=attending
+- **Claim Builder** (claim-builder): 8 gap(s), reviewer=clinical_expert
+- **Metadata Builder** (metadata-builder): 1 gap(s), reviewer=none
 - **Asset Linker** (asset-linker): 2 gap(s), reviewer=none
 - **Conflict Resolver** (duplicate-detector): 0 gap(s), reviewer=none
 - **Quality Scorer** (quality-scorer): 0 gap(s), reviewer=none

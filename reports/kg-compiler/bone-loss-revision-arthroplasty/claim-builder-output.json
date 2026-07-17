@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-07-05T23:26:40.648Z",
+  "generatedAt": "2026-07-16T02:40:22.025Z",
   "agentId": "claim-builder",
   "agentVersion": "2.0.0",
   "evidencePacketId": "ev-packet-ec458bb6",
-  "gapsAddressed": 5,
-  "gapsScheduled": 5,
-  "claimsGenerated": 8,
+  "gapsAddressed": 7,
+  "gapsScheduled": 9,
+  "claimsGenerated": 9,
   "claimsRejected": 6,
   "redirectedToDecisionPoint": 4,
   "candidates": [
     {
-      "draftId": "claim-bone-loss-revision-arthroplasty-anatomy_pearl-hip-and-knee-joint-surfa",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa",
       "claimText": "Hip and knee joint surfaces.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "bone-loss-revision-arthroplasty",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -26,16 +26,17 @@
         "ev-static-prepare-2a1709c6"
       ],
       "section": "deep.anatomy",
+      "gapId": "gap-claim-21",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-bone-loss-revision-arthroplasty-anatomy_pearl-extensor-mechanism",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-extensor-mechanism",
       "claimText": "Extensor mechanism.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "bone-loss-revision-arthroplasty",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -48,16 +49,17 @@
         "ev-static-prepare-2a1709c6"
       ],
       "section": "deep.anatomy",
+      "gapId": "gap-claim-21",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-bone-loss-revision-arthroplasty-anatomy_pearl-implant-bone-interfaces",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-implant-bone-interfaces",
       "claimText": "Implant-bone interfaces.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "bone-loss-revision-arthroplasty",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -70,6 +72,7 @@
         "ev-static-prepare-2a1709c6"
       ],
       "section": "deep.anatomy",
+      "gapId": "gap-claim-21",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -92,7 +95,7 @@
         "ev-static-prepare-2a1709c6"
       ],
       "section": "deep.classification",
-      "gapId": "gap-claim-13",
+      "gapId": "gap-claim-12",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -115,7 +118,7 @@
         "ev-static-prepare-2a1709c6"
       ],
       "section": "deep.imaging",
-      "gapId": "gap-claim-13",
+      "gapId": "gap-claim-12",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -138,7 +141,7 @@
         "ev-static-prepare-2a1709c6"
       ],
       "section": "deep.imaging",
-      "gapId": "gap-claim-13",
+      "gapId": "gap-claim-12",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -161,7 +164,7 @@
         "ev-static-prepare-2a1709c6"
       ],
       "section": "deep.boardPearls",
-      "gapId": "gap-claim-13",
+      "gapId": "gap-claim-12",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
       "confidence": 0.7915,
@@ -184,7 +187,7 @@
         "ev-static-prepare-2a1709c6"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-13",
+      "gapId": "gap-claim-12",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -207,7 +210,7 @@
         "ev-static-prepare-2a1709c6"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-13",
+      "gapId": "gap-claim-12",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -230,7 +233,7 @@
         "ev-static-prepare-2a1709c6"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-13",
+      "gapId": "gap-claim-12",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -253,7 +256,7 @@
         "ev-static-prepare-2a1709c6"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-13",
+      "gapId": "gap-claim-12",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -277,7 +280,7 @@
         "ev-static-prepare-2a182052"
       ],
       "section": "fast.mustKnow",
-      "gapId": "gap-claim-13",
+      "gapId": "gap-claim-12",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -301,7 +304,7 @@
         "ev-static-prepare-2a182052"
       ],
       "section": "fast.mustKnow",
-      "gapId": "gap-claim-13",
+      "gapId": "gap-claim-12",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -325,17 +328,17 @@
         "ev-static-prepare-2a182052"
       ],
       "section": "fast.mustKnow",
-      "gapId": "gap-claim-13",
+      "gapId": "gap-claim-12",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-bone-loss-revision-arthroplasty-anatomy_pearl-shared-adult-reconstruct",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-shared-adult-reconstruct",
       "claimText": "Shared adult reconstruction anatomy hub.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "bone-loss-revision-arthroplasty",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "anatomical_reasoning"
@@ -349,16 +352,17 @@
         "ev-static-prepare-2a182052"
       ],
       "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-21",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-bone-loss-revision-arthroplasty-anatomy_pearl-implant-concepts-hub",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-implant-concepts-hub",
       "claimText": "Implant concepts hub.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "bone-loss-revision-arthroplasty",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -372,16 +376,17 @@
         "ev-static-prepare-2a182052"
       ],
       "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-21",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-bone-loss-revision-arthroplasty-anatomy_pearl-trauma-neighborhood-brid",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-trauma-neighborhood-brid",
       "claimText": "Trauma neighborhood bridges.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "bone-loss-revision-arthroplasty",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -395,6 +400,7 @@
         "ev-static-prepare-2a182052"
       ],
       "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-21",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -418,7 +424,7 @@
         "ev-static-prepare-2a182052"
       ],
       "section": "fast.oneLiner",
-      "gapId": "gap-claim-13",
+      "gapId": "gap-claim-12",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -444,7 +450,7 @@
         "ev-static-prepare-2a182052"
       ],
       "section": "fast.orSurvivalTips",
-      "gapId": "gap-claim-13",
+      "gapId": "gap-claim-12",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
       "confidence": 0.7915,
@@ -470,7 +476,7 @@
         "ev-static-prepare-2a182052"
       ],
       "section": "fast.orSurvivalTips",
-      "gapId": "gap-claim-13",
+      "gapId": "gap-claim-12",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
       "confidence": 0.7915,
@@ -519,7 +525,7 @@
         "ev-static-prepare-2a182052"
       ],
       "section": "fast.caseSteps",
-      "gapId": "gap-claim-13",
+      "gapId": "gap-claim-12",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -590,17 +596,17 @@
         "ev-static-prepare-87852e45"
       ],
       "section": "learning_objectives",
-      "gapId": "gap-claim-13",
+      "gapId": "gap-claim-12",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-bone-loss-revision-arthroplasty-anatomy_pearl-connect-bone-loss-in-rev",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-connect-bone-loss-in-rev",
       "claimText": "Connect Bone Loss in Revision Arthroplasty to shared anatomy, implant concepts, and trauma neighborhoods.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "bone-loss-revision-arthroplasty",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "anatomical_reasoning"
@@ -613,6 +619,7 @@
         "ev-static-prepare-87852e45"
       ],
       "section": "learning_objectives",
+      "gapId": "gap-claim-21",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -749,31 +756,42 @@
       "verified": false
     },
     {
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-2a1709c6"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-extensor-mechanism",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-extensor-mechanism",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-2a1709c6"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-implant-bone-interfaces",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-implant-bone-interfaces",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-2a1709c6"
+      ],
+      "verified": false
+    },
+    {
       "proposalFingerprint": "claim|claim-bone-loss-revision-arthroplasty-imaging_point-periprosthetic-lucency-a",
       "draftId": "claim-bone-loss-revision-arthroplasty-imaging_point-periprosthetic-lucency-a",
       "claimType": "imaging_point",
-      "importanceLevel": "L2",
-      "reviewRoute": "HUMAN_REVIEW",
-      "evidenceItemIds": [
-        "ev-static-prepare-2a1709c6"
-      ],
-      "verified": false
-    },
-    {
-      "proposalFingerprint": "claim|claim-bone-loss-revision-arthroplasty-fact-loosening",
-      "draftId": "claim-bone-loss-revision-arthroplasty-fact-loosening",
-      "claimType": "fact",
-      "importanceLevel": "L2",
-      "reviewRoute": "HUMAN_REVIEW",
-      "evidenceItemIds": [
-        "ev-static-prepare-2a1709c6"
-      ],
-      "verified": false
-    },
-    {
-      "proposalFingerprint": "claim|claim-bone-loss-revision-arthroplasty-fact-instability",
-      "draftId": "claim-bone-loss-revision-arthroplasty-fact-instability",
-      "claimType": "fact",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
       "evidenceItemIds": [

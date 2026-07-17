@@ -50,22 +50,42 @@ export async function loadDbNeighborhoodSnapshot(
     sources: Record<string, string>;
     loadSnapshot: () => NeighborhoodSnapshot;
   },
-  proposals: ProposalRecord[]
+  proposals: ProposalRecord[],
+  options: { strictDb?: boolean; batchKey?: string } = {}
 ): Promise<DbSnapshotLoadResult> {
   const fallback = topic.loadSnapshot();
 
   try {
     const supabase = createServiceRoleClient();
 
-    const { data: entities, error: entityError } = await supabase
+    const scopedProposals = proposals;
+    const expectedSlugs = new Set<string>();
+    const canonicalProposals = scopedProposals.filter((proposal) => ["approved", "applied"].includes(proposal.review_status));
+    const expectedTripleKeys = new Set(canonicalProposals
+      .filter((proposal) => proposal.proposal_type === "add_canonical_relationship")
+      .map((proposal) => `${proposal.metadata?.subject_slug}|${proposal.proposed_predicate}|${proposal.metadata?.object_slug}`));
+    for (const proposal of canonicalProposals) {
+      if (proposal.proposal_type === "create_canonical_entity") expectedSlugs.add(String(proposal.metadata?.slug ?? ""));
+      if (proposal.proposal_type === "add_canonical_relationship") {
+        expectedSlugs.add(String(proposal.metadata?.subject_slug ?? ""));
+        expectedSlugs.add(String(proposal.metadata?.object_slug ?? ""));
+      }
+      if (proposal.proposal_type === "link_curriculum_node_to_entity") expectedSlugs.add(String(proposal.metadata?.primary_entity_slug ?? ""));
+    }
+    expectedSlugs.delete("");
+    let entityQuery = supabase
       .from("canonical_entities")
       .select("id,entity_type,preferred_label,slug,metadata,description")
-      .contains("metadata", { pilot: topic.pilotKey })
       .eq("is_active", true);
+    entityQuery = expectedSlugs.size > 0
+      ? entityQuery.in("slug", [...expectedSlugs])
+      : entityQuery.contains("metadata", { pilot: topic.pilotKey });
+    const { data: entities, error: entityError } = await entityQuery;
 
     if (entityError) throw entityError;
 
     if (!entities?.length) {
+      if (options.strictDb) throw new Error(`Strict DB reload failed: no canonical entities for ${topic.topicKey}`);
       return {
         loaded: false,
         source: "spec_fallback",
@@ -113,6 +133,7 @@ export async function loadDbNeighborhoodSnapshot(
       .eq("subject_entity_type", "canonical_entity")
       .eq("object_entity_type", "canonical_entity")
       .in("subject_entity_id", entityIds)
+      .in("object_entity_id", entityIds)
       .eq("is_active", true);
 
     if (relError) throw relError;
@@ -137,12 +158,14 @@ export async function loadDbNeighborhoodSnapshot(
           };
         }
       )
-      .filter(Boolean) as NeighborhoodRelationship[];
+      .filter(Boolean)
+      .filter((relationship: NeighborhoodRelationship) => !options.batchKey || expectedTripleKeys.has(`${relationship.subjectSlug}|${relationship.predicate}|${relationship.objectSlug}`)) as NeighborhoodRelationship[];
 
     let claims: NeighborhoodClaim[] = [];
     let decisionPoints: NeighborhoodDecisionPoint[] = [];
 
     try {
+      if (options.batchKey) throw new Error("Batch packet contains no canonical claim or decision-point proposal types");
       const { data: claimRows } = await supabase
         .from("educational_claims")
         .select("id,primary_entity_id,claim_text,claim_type,importance_level,content_source,review_status,metadata")
@@ -203,18 +226,8 @@ export async function loadDbNeighborhoodSnapshot(
       // claims/DP tables may be empty pre-apply
     }
 
-    const { count: proposalCount } = await supabase
-      .from("kg_automation_proposals")
-      .select("id", { count: "exact", head: true })
-      .contains("metadata", { pilot: topic.pilotKey })
-      .eq("is_active", true);
-
-    const { count: approvedCount } = await supabase
-      .from("kg_automation_proposals")
-      .select("id", { count: "exact", head: true })
-      .contains("metadata", { pilot: topic.pilotKey })
-      .eq("is_active", true)
-      .in("review_status", ["approved", "applied"]);
+    const proposalCount = proposals.length;
+    const approvedCount = proposals.filter((proposal) => ["approved", "applied"].includes(proposal.review_status)).length;
 
     const snapshot: NeighborhoodSnapshot = {
       topicKey: topic.topicKey,
@@ -230,6 +243,17 @@ export async function loadDbNeighborhoodSnapshot(
       sources: topic.sources,
     };
 
+    if (options.strictDb && expectedSlugs.size > 0) {
+      const actualSlugs = new Set(neighborhoodEntities.map((entity) => entity.slug));
+      const missingSlugs = [...expectedSlugs].filter((slug) => !actualSlugs.has(slug));
+      const expectedTriples = canonicalProposals.filter((proposal) => proposal.proposal_type === "add_canonical_relationship");
+      const actualTriples = new Set(relationships.map((relationship) => `${relationship.subjectSlug}|${relationship.predicate}|${relationship.objectSlug}`));
+      const missingTriples = expectedTriples.filter((proposal) => !actualTriples.has(`${proposal.metadata?.subject_slug}|${proposal.proposed_predicate}|${proposal.metadata?.object_slug}`));
+      if (missingSlugs.length || missingTriples.length) {
+        throw new Error(`Strict DB reload mismatch: missing slugs=${missingSlugs.join(",") || "none"}; missing triples=${missingTriples.map((p) => p.proposal_fingerprint).join(",") || "none"}`);
+      }
+    }
+
     return {
       loaded: true,
       source: "database",
@@ -244,6 +268,7 @@ export async function loadDbNeighborhoodSnapshot(
       },
     };
   } catch (error) {
+    if (options.strictDb) throw error;
     if (isMissingRelationError(error, "canonical_entities")) {
       return {
         loaded: false,

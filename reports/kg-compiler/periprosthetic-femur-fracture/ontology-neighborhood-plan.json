@@ -3,25 +3,70 @@
   "pilotKey": "periprosthetic-femur-fracture-neighborhood",
   "primaryEntitySlug": "periprosthetic-femur-fracture",
   "displayName": "Periprosthetic Femur Fracture",
-  "generatedAt": "2026-07-05T22:49:07.616Z",
+  "generatedAt": "2026-07-16T02:54:04.790Z",
   "nodes": [
+    {
+      "slug": "adult-reconstruction-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Adult Reconstruction Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "femoral-diaphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Diaphysis",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-shaft-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Femoral Shaft Fracture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "femoral-stem",
+      "entityType": "implant",
+      "preferredLabel": "Femoral Stem",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
     {
       "slug": "periprosthetic-femur-fracture",
       "entityType": "condition",
       "preferredLabel": "Periprosthetic Femur Fracture",
       "role": "primary_condition",
       "isPrimary": true,
-      "inboundEdgeCount": 0,
-      "outboundEdgeCount": 1
+      "inboundEdgeCount": 5,
+      "outboundEdgeCount": 3
     },
     {
-      "slug": "stem-loosening",
-      "entityType": "complication",
-      "preferredLabel": "Femoral Stem Loosening",
-      "role": "complication",
+      "slug": "total-hip-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Total Hip Arthroplasty",
+      "role": "procedure",
       "isPrimary": false,
       "inboundEdgeCount": 0,
-      "outboundEdgeCount": 0
+      "outboundEdgeCount": 1
     },
     {
       "slug": "vancouver-classification",
@@ -33,26 +78,35 @@
       "outboundEdgeCount": 0
     }
   ],
-  "edgeCount": 1,
+  "edgeCount": 9,
   "claimCount": 2,
   "decisionPointCount": 0,
   "roles": {
     "primary_condition": [
       "periprosthetic-femur-fracture"
     ],
-    "neighboring_anatomy": [],
-    "procedure": [],
+    "neighboring_anatomy": [
+      "adult-reconstruction-anatomy-hub",
+      "femoral-diaphysis"
+    ],
+    "procedure": [
+      "total-hip-arthroplasty"
+    ],
     "classification": [
       "vancouver-classification"
     ],
     "imaging": [],
-    "complication": [
-      "stem-loosening"
-    ],
+    "complication": [],
     "decision_point_anchor": [],
     "claim_anchor": [],
-    "biomechanics": [],
-    "fixation": [],
-    "supporting": []
+    "biomechanics": [
+      "implant-concepts-hub"
+    ],
+    "fixation": [
+      "femoral-stem"
+    ],
+    "supporting": [
+      "femoral-shaft-fracture"
+    ]
   }
 }

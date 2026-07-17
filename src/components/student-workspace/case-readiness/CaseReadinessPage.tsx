@@ -1,18 +1,19 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { buildCaseReadinessHref } from "@/components/student-workspace/prepare/prepare-routes";
 import { CasePrepStatusBanner } from "@/components/student-workspace/case-readiness/CasePrepStatusBanner";
 import { CaseReadinessHeader } from "@/components/student-workspace/case-readiness/CaseReadinessHeader";
 import { CaseReadinessProgress } from "@/components/student-workspace/case-readiness/CaseReadinessProgress";
-import { SurvivalSectionsPanel } from "@/components/student-workspace/case-readiness/SurvivalSectionsPanel";
 import { ReadinessConfidenceWidget } from "@/components/student-workspace/case-readiness/ReadinessConfidenceWidget";
 import { ReadinessObjectiveCard } from "@/components/student-workspace/case-readiness/ReadinessObjectiveCard";
-import { TopicBrobotActionsPanel } from "@/components/student-workspace/case-readiness/TopicBrobotActionsPanel";
 import { CuratedCasePrepDocument } from "@/components/student-workspace/case-readiness/CuratedCasePrepDocument";
 import { StudentWorkspaceChrome } from "@/components/student-workspace/shell/StudentWorkspaceChrome";
-import type { CaseReadinessSession } from "@/lib/student-curriculum";
+import {
+  normalizeStudyGuideCompletionIds,
+  type CaseReadinessSession,
+} from "@/lib/student-curriculum";
 
 async function persistProgress(payload: {
   topicId: string;
@@ -50,11 +51,19 @@ export function CaseReadinessPage({
   session: CaseReadinessSession | null;
   initialCompletedObjectiveIds?: string[];
 }) {
+  const validInitialCompletedIds = useMemo(
+    () =>
+      normalizeStudyGuideCompletionIds(
+        initialCompletedObjectiveIds,
+        session?.studyGuideSections ?? []
+      ),
+    [initialCompletedObjectiveIds, session]
+  );
   const [completedIds, setCompletedIds] = useState<string[]>(
-    initialCompletedObjectiveIds
+    validInitialCompletedIds
   );
   const [expandedIds, setExpandedIds] = useState<string[]>(
-    session?.objectives[0] ? [session.objectives[0].id] : []
+    session?.studyGuideSections[0] ? [session.studyGuideSections[0].id] : []
   );
   const [saveError, setSaveError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -70,6 +79,10 @@ export function CaseReadinessPage({
       options?: { incrementBrobotSessions?: boolean }
     ) => {
       if (!session) return;
+      const validCompletedIds = normalizeStudyGuideCompletionIds(
+        nextCompletedIds,
+        session.studyGuideSections
+      );
       setIsSaving(true);
       setSaveError(null);
       try {
@@ -78,8 +91,8 @@ export function CaseReadinessPage({
           trackId: session.track.id,
           studyMode: session.mode,
           selectedMinutes: session.selectedMinutes,
-          completedObjectiveIds: nextCompletedIds,
-          totalObjectives: session.objectives.length,
+          completedObjectiveIds: validCompletedIds,
+          totalObjectives: session.studyGuideSections.length,
           incrementBrobotSessions: options?.incrementBrobotSessions,
         });
       } catch (error) {
@@ -95,8 +108,9 @@ export function CaseReadinessPage({
 
   useEffect(() => {
     if (!session) return;
-    void syncProgress(initialCompletedObjectiveIds);
-  }, [session, initialCompletedObjectiveIds, syncProgress]);
+    setCompletedIds(validInitialCompletedIds);
+    void syncProgress(validInitialCompletedIds);
+  }, [session, validInitialCompletedIds, syncProgress]);
 
   if (!session) {
     return (
@@ -144,12 +158,8 @@ export function CaseReadinessPage({
 
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div className="grid gap-4">
-            {session.casePrepContext.status !== "certified" ? (
-              <SurvivalSectionsPanel sections={session.survivalSections} />
-            ) : null}
-
             {session.casePrepContext.status !== "certified"
-              ? session.objectives.map((objective) => (
+              ? session.studyGuideSections.map((objective) => (
               <ReadinessObjectiveCard
                 key={objective.id}
                 objective={objective}
@@ -184,7 +194,7 @@ export function CaseReadinessPage({
             />
             <CaseReadinessProgress
               completedCount={completedIds.length}
-              totalCount={session.objectives.length}
+              totalCount={session.studyGuideSections.length}
               persisted
               isSaving={isSaving}
             />
@@ -193,11 +203,6 @@ export function CaseReadinessPage({
                 {saveError}
               </p>
             ) : null}
-
-            <TopicBrobotActionsPanel
-              actions={session.topicBrobotActions}
-              onActionLaunch={() => void syncProgress(completedIds, { incrementBrobotSessions: true })}
-            />
 
             <section className="rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-sm">
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">

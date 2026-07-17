@@ -1,0 +1,41 @@
+{
+  "ok": false,
+  "runDate": "2026-07-16",
+  "topicKey": "periprosthetic-joint-infection",
+  "displayName": "Periprosthetic Joint Infection",
+  "pilotKey": "periprosthetic-joint-infection-neighborhood",
+  "priorState": "staging_applied",
+  "resultingState": "database_verification_blocked",
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "blockerClass": "staging_integrity_failure",
+  "automaticRepairAttempted": false,
+  "expected": {
+    "approvedLoaded": 72,
+    "structuralProposals": 62,
+    "entities": 61,
+    "relationships": 0,
+    "curriculumBridges": 1,
+    "draftClaims": 1,
+    "draftDecisionPoints": 0
+  },
+  "resolved": {
+    "entities": 61,
+    "relationships": 0,
+    "curriculumBridges": 0
+  },
+  "discrepancyCount": 1,
+  "discrepancies": [
+    {
+      "fingerprint": "bridge|adult-recon-periprosthetic-joint-infection|periprosthetic-joint-infection",
+      "kind": "bridge_endpoint_cardinality",
+      "expected": "one curriculum node adult-recon-periprosthetic-joint-infection and one entity periprosthetic-joint-infection",
+      "observed": "0 node(s), 1 entity row(s)"
+    }
+  ],
+  "exactNextAction": "restore_or_adjudicate_curriculum_node_bridge",
+  "evidence": {
+    "applyPath": "reports/kg-pilots/periprosthetic-joint-infection-staging-apply-result.json",
+    "curatedPath": "reports/kg-pilots/periprosthetic-joint-infection-curated-proposals.json"
+  }
+}

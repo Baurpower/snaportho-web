@@ -28,6 +28,8 @@ export type LoadAuditInputOptions = {
   evidenceDir?: string;
   pilotDir?: string;
   dbBacked?: boolean;
+  strictDb?: boolean;
+  batchKey?: string;
 };
 
 const COMPILER_ARTIFACTS = [
@@ -111,7 +113,7 @@ export async function loadAuditInput(options: LoadAuditInputOptions): Promise<Au
   const workPlan = loadArtifact<WorkPlan>("ontology-work-plan.json");
   const agentExecution = loadArtifact<AgentExecutionReport>("agent-execution-report.json");
   const mergedDraft = loadArtifact<MergedNeighborhoodDraft>("merged-neighborhood-draft.json");
-  const publication =
+  let publication =
     loadArtifact<PublicationReadinessResult>("publication-readiness.json") ??
     loadArtifact<PublicationReadinessResult>("ontology-publication-readiness.json");
   const autoReview = loadArtifact<AutoReviewReport>("ontology-auto-review.json");
@@ -131,11 +133,12 @@ export async function loadAuditInput(options: LoadAuditInputOptions): Promise<Au
 
   let proposals: ProposalRecord[] = [];
   if (options.dbBacked) {
-    const fromDb = await loadPilotProposals(topicDef.pilotKey);
+    const fromDb = await loadPilotProposals(topicDef.pilotKey, options.batchKey);
     if (fromDb.length > 0) {
       proposals = fromDb;
       reportsLoaded.push("database-proposals");
     }
+    if (options.strictDb && fromDb.length === 0) throw new Error(`Strict DB audit requires persisted proposals for ${topicDef.topicKey}`);
   }
   if (proposals.length === 0 && evidencePacket?.existingProposals.length) {
     proposals = evidencePacket.existingProposals;
@@ -156,16 +159,25 @@ export async function loadAuditInput(options: LoadAuditInputOptions): Promise<Au
   let resolvedDraft = mergedDraft;
   let dataSource: AuditInputBundle["dataSource"] = "merged_draft";
 
-  if (!resolvedDraft) {
-    if (options.dbBacked) {
-      const dbSnapshot = await loadDbNeighborhoodSnapshot(topicDef, proposals);
+  if (options.dbBacked) {
+      const dbSnapshot = await loadDbNeighborhoodSnapshot(topicDef, proposals, { strictDb: options.strictDb, batchKey: options.batchKey });
       if (dbSnapshot.loaded) {
         resolvedDraft = snapshotToMergedDraft(topicDef.topicKey, topicDef.pilotKey, dbSnapshot.snapshot);
         dataSource = "database";
         reportsLoaded.push("database-neighborhood-snapshot");
+        if (publication && dbSnapshot.snapshot.entities.length > 0) {
+          const blockers = publication.blockers.filter(
+            (blocker) => blocker !== "No approved canonical entities in database yet — proposals remain offline/spec."
+          );
+          if (blockers.length !== publication.blockers.length) {
+            publication = { ...publication, blockers };
+            reportsLoaded.push("publication-readiness-database-state-reconciled");
+          }
+        }
       }
-    }
   }
+
+  if (options.strictDb && dataSource !== "database") throw new Error(`Strict DB audit refused file/spec fallback for ${topicDef.topicKey}`);
 
   if (!resolvedDraft) {
     const snapshot = topicDef.loadSnapshot();

@@ -1,0 +1,83 @@
+{
+  "mode": "dry_run_normalized_post_review_input",
+  "source_decisions": "reports/kg-verticals/carpal-tunnel-syndrome/dry-run-manufacture/cts-final-review-decisions.json",
+  "source_overlay": "reports/kg-verticals/carpal-tunnel-syndrome/dry-run-manufacture/cts-post-review-draft-overlay.json",
+  "clinical_review_status": {
+    "total_fingerprints": 45,
+    "approved": 19,
+    "approved_with_revision": 15,
+    "rejected": 11,
+    "human_exceptions": 0
+  },
+  "normalized_counts": {
+    "entities": 92,
+    "relationships_before_review": 123,
+    "relationship_removals": 9,
+    "relationship_additions": 1,
+    "relationships_after_review": 115,
+    "claims": 8,
+    "decision_points": 8
+  },
+  "entities_add": [],
+  "entities_omit_from_staging": [
+    {
+      "slug": "carpal-tunnel-release-instrument-set",
+      "reason": "Typed as implant in dry-run draft, but an instrument set is not an implant. Omit until instrument/tooling vocabulary exists."
+    },
+    {
+      "slug": "failed-release-evaluation-pathway",
+      "reason": "Workflow/pathway wording is represented as decision-point metadata, not a canonical entity."
+    },
+    {
+      "slug": "diagnostically-confirmed-recurrent-compression",
+      "reason": "Diagnostic confirmation state is represented as metadata on recurrent CTS decision point, not a separate condition."
+    }
+  ],
+  "relationships_remove": [
+    "carpal-tunnel-syndrome|at_risk_structure|median-nerve",
+    "carpal-tunnel-syndrome|differential_for|distal-radius-fracture",
+    "carpal-tunnel-syndrome|differential_for|median-nerve-compression",
+    "carpal-tunnel-syndrome|differential_for|trigger-finger",
+    "carpal-tunnel-syndrome|tested_by|needle-electromyography",
+    "endoscopic-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+    "open-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+    "persistent-carpal-tunnel-syndrome-after-release|treated_by|revision-carpal-tunnel-release",
+    "recurrent-carpal-tunnel-syndrome|treated_by|revision-carpal-tunnel-release"
+  ],
+  "relationships_add": [
+    {
+      "subject_slug": "carpal-tunnel-syndrome",
+      "predicate": "involves_anatomy",
+      "object_slug": "median-nerve",
+      "relationship_metadata": {
+        "relationship_strength": "core",
+        "relevance_reason": "cts_pathophysiology",
+        "review_status": "needs_review"
+      }
+    }
+  ],
+  "claims_revised": [
+    "claim-carpal-tunnel-syndrome-complications",
+    "claim-carpal-tunnel-syndrome-oite-trap",
+    "claim-carpal-tunnel-syndrome-postoperative",
+    "claim-carpal-tunnel-syndrome-testing",
+    "claim-carpal-tunnel-syndrome-treatment-options"
+  ],
+  "decision_points_revised": [
+    "dp-carpal-tunnel-syndrome-approach-choice",
+    "dp-carpal-tunnel-syndrome-endoscopic-bailout",
+    "dp-carpal-tunnel-syndrome-nonoperative",
+    "dp-carpal-tunnel-syndrome-operative",
+    "dp-carpal-tunnel-syndrome-persistent-symptoms",
+    "dp-carpal-tunnel-syndrome-postoperative-escalation",
+    "dp-carpal-tunnel-syndrome-recurrent-symptoms",
+    "dp-carpal-tunnel-syndrome-testing"
+  ],
+  "rejected_fingerprints_absent": true,
+  "undefined_targets_removed": true,
+  "invalid_differentials_removed": true,
+  "instrument_sets_not_typed_as_implants": true,
+  "persistent_recurrent_revision_model": "decision_point_metadata_only",
+  "original_queue_unchanged": true,
+  "compiler_ingestion_status": "blocked_no_existing_cli_accepts_this_normalized_overlay"
+}

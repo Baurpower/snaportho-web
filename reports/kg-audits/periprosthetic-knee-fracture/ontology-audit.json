@@ -1,11 +1,11 @@
 {
   "category": "ontology_completeness",
   "label": "Ontology Completeness",
-  "score": 53,
+  "score": 35,
   "deductions": [
     {
       "finding": "6 critical ontology gaps remain",
-      "evidence": "ontology-gap-report.json: gap-entity-neighbor-1, gap-rel-4, gap-rel-8",
+      "evidence": "ontology-gap-report.json: gap-entity-neighbor-6, gap-rel-9, gap-rel-12",
       "reason": "Required entities, relationships, claims, or decision points are missing per CKO §8–§9.",
       "severity": "critical",
       "category": "ontology_completeness",
@@ -13,8 +13,8 @@
       "impact": 15
     },
     {
-      "finding": "8 high-priority ontology gaps",
-      "evidence": "Gap kinds: missing_entity, missing_relationship, missing_claim",
+      "finding": "7 high-priority ontology gaps",
+      "evidence": "Gap kinds: missing_relationship, missing_entity, missing_claim",
       "reason": "High-priority gaps block maturity level advancement.",
       "severity": "high",
       "category": "ontology_completeness",
@@ -40,12 +40,12 @@
       "suggestedFix": "Run the matching builder agent for missing_relationship."
     },
     {
-      "finding": "Missing claim requirements (5)",
-      "evidence": "5 gaps of kind missing_claim",
+      "finding": "Missing claim requirements (9)",
+      "evidence": "9 gaps of kind missing_claim",
       "reason": "Ontology contract requires complete claim coverage.",
       "severity": "high",
       "category": "ontology_completeness",
-      "impact": 5,
+      "impact": 8,
       "suggestedFix": "Run the matching builder agent for missing_claim."
     },
     {
@@ -56,21 +56,34 @@
       "category": "ontology_completeness",
       "impact": 3,
       "suggestedFix": "Run the matching builder agent for missing_decision_point."
+    },
+    {
+      "finding": "Only 1 anatomy structures (minimum 3 required)",
+      "evidence": "Entity slugs: adult-reconstruction-anatomy-hub",
+      "reason": "Condition neighborhoods require regional anatomy per condition.anatomy.min_structures.",
+      "severity": "critical",
+      "category": "ontology_completeness",
+      "affectedSlugs": [
+        "periprosthetic-knee-fracture"
+      ],
+      "suggestedFix": "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
+      "impact": 15
     }
   ],
   "metrics": {
-    "totalGaps": 22,
+    "totalGaps": 26,
     "criticalGaps": 6,
-    "highGaps": 8,
-    "anatomyStructures": 32,
+    "highGaps": 7,
+    "anatomyStructures": 1,
     "classificationEntities": 1,
-    "completenessRatio": 0.2666666666666667
+    "completenessRatio": 0.1333333333333333
   },
   "recommendations": [
     "Resolve critical gaps via assigned factory agents before publication review.",
     "Schedule gap-resolution work items from ontology-work-plan.json.",
     "Run the matching builder agent for missing_entity.",
     "Run the matching builder agent for missing_relationship.",
-    "Run the matching builder agent for missing_claim."
+    "Run the matching builder agent for missing_claim.",
+    "Add essential regional anatomy via anatomy builder or shared anatomy reuse."
   ]
 }

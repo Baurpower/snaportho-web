@@ -11,6 +11,48 @@
         background: #f5f2e8;
         color: #18202b;
       }
+      html, body, #app {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        overflow-x: hidden;
+      }
+      #app, #app * {
+        box-sizing: border-box;
+        min-width: 0;
+      }
+      #app > *,
+      #app div,
+      #app section,
+      #app article,
+      #app details,
+      #app form,
+      #app ul {
+        width: 100%;
+        max-width: 100%;
+      }
+      #app p,
+      #app li,
+      #app h1,
+      #app h2,
+      #app h3,
+      #app span,
+      #app button,
+      #app textarea {
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+      #app pre {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
     </style>
   </head>
   <body>

@@ -1,0 +1,42 @@
+{
+  "category": "relationship_quality",
+  "label": "Relationship Quality",
+  "score": 84,
+  "deductions": [
+    {
+      "finding": "Missing clinical edge: at_risk_structure",
+      "evidence": "0 outbound at_risk_structure edges from talus-fracture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "talus-fracture"
+      ],
+      "suggestedFix": "Add at_risk_structure relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: treated_by",
+      "evidence": "0 outbound treated_by edges from talus-fracture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "talus-fracture"
+      ],
+      "suggestedFix": "Add treated_by relationship via relationship-builder agent.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "relationshipCount": 33,
+    "relationshipDensity": 1.2222222222222223,
+    "missingClinicalEdgeCount": 2,
+    "highRiskUnreviewedCount": 0,
+    "predicateCorrectness": 1
+  },
+  "recommendations": [
+    "Add at_risk_structure relationship via relationship-builder agent.",
+    "Add treated_by relationship via relationship-builder agent."
+  ]
+}

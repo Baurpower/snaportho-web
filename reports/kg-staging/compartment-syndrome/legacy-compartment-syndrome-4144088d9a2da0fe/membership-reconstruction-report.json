@@ -1,0 +1,41 @@
+{
+  "ok": true,
+  "runDate": "2026-07-16",
+  "topicKey": "compartment-syndrome",
+  "displayName": "Compartment Syndrome",
+  "pilotKey": "compartment-syndrome-neighborhood",
+  "batchKey": "legacy-compartment-syndrome-4144088d9a2da0fe",
+  "packetHash": "4144088d9a2da0fef5c726bea48d4d4ecb21c494acca7bead27f6e60e2425f30",
+  "graphHash": "8e2213d58d9cdcba9c4ef916eaf7993a0089da4108dc157c53cfe7bacc601e87",
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "dryRun": false,
+  "exactAppliedMembershipReconstructed": true,
+  "aggregateCreatedReconstructed": true,
+  "counts": {
+    "approvedLoaded": 36,
+    "structuralProposals": 35,
+    "entities": 14,
+    "relationships": 20,
+    "curriculumBridges": 1,
+    "draftClaimsExcluded": 1,
+    "draftDecisionPointsExcluded": 0
+  },
+  "repairs": {
+    "insertedSemantic": 0,
+    "reusedSemantic": 35,
+    "proposalStatesRepaired": 0,
+    "insertedMemberships": 35,
+    "reusedMemberships": 0,
+    "reactivatedMemberships": 0
+  },
+  "discrepancyCount": 0,
+  "exactNextAction": "run_strict_db_reload"
+}

@@ -1,0 +1,79 @@
+{
+  "releaseId": "kg-beta-20260716-002",
+  "verifiedAt": "2026-07-16T13:46:39.289Z",
+  "status": "active",
+  "publicationStatus": "beta_active",
+  "reviewTier": "automated_beta",
+  "manifestHash": "a92b03551484f182f87c200708832cf6949552a06cb62dfc20e565afc3fa5647",
+  "migrationSha256": "6d2404cd284b45ee0ae5ab2921b47871c4236da8eade39df78dcb2a9368ca4b2",
+  "verificationHash": "6843b119c187cb987cd90c7612de3cd4944b257a965e85cdd5bf8836316e3f0d",
+  "passed": true,
+  "errors": [],
+  "graphCounts": {
+    "neighborhoods": 83,
+    "fullNeighborhoods": 19,
+    "partialNeighborhoods": 64,
+    "entities": 1023,
+    "relationships": 2187,
+    "curriculumBridges": 26,
+    "claims": 0,
+    "decisionPoints": 0,
+    "uniqueObjects": 3236,
+    "neighborhoodMemberships": 4147
+  },
+  "canonical": {
+    "entities": 1084,
+    "relationships": 2248,
+    "entitiesHash": "46c7d8ce5e0ac52ceba6f84faf22fd08",
+    "relationshipsHash": "4123635288b770d9f52bcca87ae7bdcf",
+    "unchanged": true
+  },
+  "pendingReviews": {
+    "unchanged": true,
+    "canonicalEntities": {
+      "approved": 1084
+    },
+    "canonicalRelationships": {
+      "approved": 2248
+    },
+    "curriculumBridges": {
+      "approved": 67
+    },
+    "claims": {
+      "unreviewed": 139
+    },
+    "decisionPoints": {},
+    "proposals": {
+      "applied": 3606,
+      "approved": 124,
+      "generated": 78,
+      "needs_review": 1149
+    }
+  },
+  "exclusions": {
+    "middlePhalanxVisible": false,
+    "claimsActive": 0,
+    "decisionPointsActive": 0,
+    "highRiskObjectsActive": 0,
+    "excludedTargetOverlap": 0
+  },
+  "integrity": {
+    "danglingCanonicalRelationships": 0,
+    "danglingProductRelationships": 0,
+    "duplicateReleaseObjects": 0,
+    "all83AuthenticatedNeighborhoodQueriesPassed": true,
+    "inactiveReleaseFilteringPassed": true,
+    "stagingOnlyFilteringPassed": true
+  },
+  "rollback": {
+    "passed": true,
+    "state": "tested",
+    "releaseRestored": true,
+    "deactivatedAt": null
+  },
+  "feedbackPipeline": {
+    "eventsTableActive": true,
+    "signalsTableActive": true,
+    "canonicalAutoPublicationEnabled": false
+  }
+}

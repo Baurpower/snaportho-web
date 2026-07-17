@@ -1,12 +1,25 @@
 {
   "category": "graph_integrity",
   "label": "Graph Integrity",
-  "score": 100,
-  "deductions": [],
+  "score": 96,
+  "deductions": [
+    {
+      "finding": "1 orphan entities with no relationships",
+      "evidence": "Slugs: pain-with-passive-stretch",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "medium",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "pain-with-passive-stretch"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 4
+    }
+  ],
   "metrics": {
     "entityCount": 14,
-    "relationshipCount": 22,
-    "orphanCount": 0,
+    "relationshipCount": 20,
+    "orphanCount": 1,
     "danglingEdgeCount": 0,
     "duplicateLabelGroups": 0,
     "invalidPredicateCount": 0,

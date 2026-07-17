@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OrthobulletsHintResponseSchema = exports.OrthobulletsChatResponseSchema = exports.OrthobulletsChatRequestSchema = exports.OrthobulletsChatTurnSchema = exports.OrthobulletsExplainResponseSchema = exports.OrthobulletsHintRequestSchema = exports.OrthobulletsExplainRequestSchema = exports.OrthobulletsPageContextSchema = void 0;
+exports.OrthobulletsHintResponseSchema = exports.OrthobulletsChatResponseSchema = exports.OrthobulletsChatRequestSchema = exports.OrthobulletsChatTurnSchema = exports.OrthobulletsExplainResponseSchema = exports.CurriculumExplainRequestSchema = exports.OrthobulletsHintRequestSchema = exports.OrthobulletsExplainRequestSchema = exports.OrthobulletsPageContextSchema = void 0;
 const zod_1 = require("zod");
 const curriculum_types_1 = require("./curriculum-types");
 const OrthobulletsChoiceSchema = zod_1.z.object({
@@ -32,8 +32,8 @@ const OrthobulletsDebugSchema = zod_1.z.object({
     extractorVersion: zod_1.z.string().trim().min(1).max(64),
 });
 exports.OrthobulletsPageContextSchema = zod_1.z.object({
-    source: zod_1.z.enum(['orthobullets', 'rock']).default('orthobullets'),
-    provider: zod_1.z.enum(['orthobullets', 'rock']).default('orthobullets'),
+    source: zod_1.z.enum(['orthobullets', 'rock', 'himalaya']).default('orthobullets'),
+    provider: zod_1.z.enum(['orthobullets', 'rock', 'himalaya']).default('orthobullets'),
     mode: zod_1.z.enum(['question', 'curriculum_content', 'topic_page']).default('question'),
     pageUrl: zod_1.z.string().trim().url(),
     sourceUrl: zod_1.z.string().trim().url().optional(),
@@ -68,6 +68,9 @@ exports.OrthobulletsPageContextSchema = zod_1.z.object({
     percentDistribution: zod_1.z.array(OrthobulletsPercentDistributionSchema).max(12).default([]),
     explanationText: zod_1.z.string().trim().min(1).max(16000).nullable().optional(),
     explanation: zod_1.z.string().trim().min(1).max(16000).nullable().optional(),
+    sourceExplanation: zod_1.z.string().trim().min(1).max(16000).nullable().optional(),
+    sourceKeyPoints: zod_1.z.string().trim().min(1).max(16000).nullable().optional(),
+    sourceReferences: zod_1.z.string().trim().min(1).max(16000).nullable().optional(),
     linkedConcepts: zod_1.z.array(OrthobulletsLinkedConceptSchema).max(20).default([]),
     images: zod_1.z.array(OrthobulletsImageMetadataSchema).max(20).default([]),
     raw: zod_1.z.object({
@@ -76,14 +79,120 @@ exports.OrthobulletsPageContextSchema = zod_1.z.object({
     extractionWarnings: zod_1.z.array(zod_1.z.string().trim().min(1).max(300)).max(20).default([]),
     debug: OrthobulletsDebugSchema.optional(),
 });
+function hasMatchingChoice(value, key) {
+    if (!key)
+        return true;
+    return value.answerChoices.some((choice) => choice.key === key || choice.label === key);
+}
+const StrictQuestionPageContextSchema = exports.OrthobulletsPageContextSchema.superRefine((value, ctx) => {
+    if (value.mode !== 'question') {
+        ctx.addIssue({
+            code: 'custom',
+            message: 'Question requests require question mode.',
+            path: ['mode'],
+        });
+    }
+    if (!value.stem?.trim()) {
+        ctx.addIssue({
+            code: 'custom',
+            message: 'Question requests require a visible stem.',
+            path: ['stem'],
+        });
+    }
+    if (value.answerChoices.length < 2) {
+        ctx.addIssue({
+            code: 'custom',
+            message: 'Question requests require at least two answer choices.',
+            path: ['answerChoices'],
+        });
+    }
+    if (!hasMatchingChoice(value, value.selectedAnswerKey)) {
+        ctx.addIssue({
+            code: 'custom',
+            message: 'Selected answer key does not match an answer choice.',
+            path: ['selectedAnswerKey'],
+        });
+    }
+    if (!hasMatchingChoice(value, value.correctAnswerKey)) {
+        ctx.addIssue({
+            code: 'custom',
+            message: 'Correct answer key does not match an answer choice.',
+            path: ['correctAnswerKey'],
+        });
+    }
+});
 exports.OrthobulletsExplainRequestSchema = zod_1.z.object({
-    pageContext: exports.OrthobulletsPageContextSchema,
+    task: zod_1.z.literal('question_explain').default('question_explain'),
+    pageContext: StrictQuestionPageContextSchema,
     emphasis: curriculum_types_1.CurriculumExplainEmphasisSchema.optional(),
 });
 exports.OrthobulletsHintRequestSchema = zod_1.z.object({
-    pageContext: exports.OrthobulletsPageContextSchema,
+    task: zod_1.z.literal('question_hint').default('question_hint'),
+    pageContext: StrictQuestionPageContextSchema,
     hintLevel: zod_1.z.union([zod_1.z.literal(1), zod_1.z.literal(2), zod_1.z.literal(3)]),
     selectedAnswerKey: zod_1.z.string().trim().min(1).max(32).optional(),
+});
+const CurriculumSectionSchema = zod_1.z.object({
+    id: zod_1.z.string().trim().min(1).max(120).optional(),
+    heading: zod_1.z.string().trim().min(1).max(240).optional(),
+    level: zod_1.z.number().int().min(1).max(6).optional(),
+    text: zod_1.z.string().trim().min(1).max(5000),
+});
+exports.CurriculumExplainRequestSchema = zod_1.z.object({
+    task: zod_1.z.literal('curriculum_explain'),
+    provider: zod_1.z.enum(['orthobullets', 'rock']),
+    sourceUrl: zod_1.z.string().trim().url(),
+    pageContext: exports.OrthobulletsPageContextSchema,
+    emphasis: curriculum_types_1.CurriculumExplainEmphasisSchema.default('high_yield'),
+    curriculum: zod_1.z.object({
+        title: zod_1.z.string().trim().min(1).max(300),
+        breadcrumbs: zod_1.z.array(zod_1.z.string().trim().min(1).max(200)).max(12).default([]).optional(),
+        sections: zod_1.z.array(CurriculumSectionSchema).max(30).default([]),
+        tables: zod_1.z.array(zod_1.z.object({
+            caption: zod_1.z.string().trim().min(1).max(240).optional(),
+            headers: zod_1.z.array(zod_1.z.string().trim().min(1).max(160)).max(12).optional(),
+            rows: zod_1.z.array(zod_1.z.array(zod_1.z.string().trim().min(1).max(1000)).max(12)).max(40),
+        })).max(8).default([]).optional(),
+        images: zod_1.z.array(zod_1.z.object({
+            src: zod_1.z.string().trim().max(2000).optional(),
+            alt: zod_1.z.string().trim().max(500).optional(),
+            caption: zod_1.z.string().trim().max(1000).optional(),
+        })).max(20).default([]).optional(),
+        authors: zod_1.z.array(zod_1.z.string().trim().min(1).max(200)).max(12).default([]).optional(),
+        date: zod_1.z.string().trim().min(1).max(120).nullable().optional(),
+        visibleText: zod_1.z.string().trim().min(1).max(18000).optional(),
+    }),
+}).superRefine((value, ctx) => {
+    if (value.pageContext.provider !== value.provider) {
+        ctx.addIssue({
+            code: 'custom',
+            message: 'Request provider must match page context provider.',
+            path: ['provider'],
+        });
+    }
+    if (value.pageContext.mode !== 'curriculum_content') {
+        ctx.addIssue({
+            code: 'custom',
+            message: 'Curriculum requests require curriculum content mode.',
+            path: ['pageContext', 'mode'],
+        });
+    }
+    const sectionTextLength = value.curriculum.sections.reduce((total, section) => total + section.text.trim().length, 0);
+    const visibleTextLength = value.curriculum.visibleText?.trim().length ?? 0;
+    if (sectionTextLength < 400 && visibleTextLength < 800) {
+        ctx.addIssue({
+            code: 'custom',
+            message: 'Curriculum content is missing or too short.',
+            path: ['curriculum', 'sections'],
+        });
+    }
+    if (JSON.stringify(value).length > 70000) {
+        ctx.addIssue({
+            code: 'custom',
+            message: 'Curriculum request is too large.',
+            path: ['curriculum'],
+        });
+    }
 });
 exports.OrthobulletsExplainResponseSchema = zod_1.z.object({
     explanationId: zod_1.z.string().uuid(),

@@ -1,6 +1,6 @@
 # PROXIMAL HUMERUS FRACTURE — Knowledge Factory Audit
 
-Generated: 2026-07-05T22:23:10.240Z
+Generated: 2026-07-16T03:40:16.722Z
 Auditor: KF-018 v1.0.0
 
 ## Overall
@@ -8,21 +8,21 @@ Auditor: KF-018 v1.0.0
 | Metric | Score |
 |--------|------:|
 | **Overall** | **83** |
-| Ontology Completeness | 38 |
+| Ontology Completeness | 53 |
 | Evidence Quality | 85 |
-| Graph Integrity | 77 |
-| Shared Knowledge Reuse | 100 |
-| Relationship Quality | 92 |
-| Claim Quality | 84 |
-| Decision Points | 69 |
-| Metadata Quality | 90 |
-| Provenance Quality | 100 |
+| Graph Integrity | 88 |
+| Shared Knowledge Reuse | 98 |
+| Relationship Quality | 84 |
+| Claim Quality | 85 |
+| Decision Points | 85 |
+| Metadata Quality | 88 |
+| Provenance Quality | 96 |
 | Review Calibration | 92 |
 | Agent Performance | 92 |
-| Compiler Quality | 81 |
-| Educational Quality | 96 |
-| Cross-Neighborhood Consistency | 92 |
-| Publication Readiness | 7 |
+| Compiler Quality | 82 |
+| Educational Quality | 72 |
+| Cross-Neighborhood Consistency | 100 |
+| Publication Readiness | 15 |
 | Publication | Blocked |
 
 ## Publication
@@ -36,7 +36,6 @@ Auditor: KF-018 v1.0.0
 - 13 items require attending review
 - Insufficient relationship metadata on essential edges
 - Claims and DPs are draft-only — publication gate must block verified consumption.
-- No approved canonical entities in database yet — proposals remain offline/spec.
 - 18 critical/high ontology gaps remain unresolved
 
 ## Top Findings
@@ -48,33 +47,26 @@ Auditor: KF-018 v1.0.0
 - **Impact:** -15
 - **Fix:** Resolve critical gaps via assigned factory agents before publication review.
 
-### [CRITICAL] Only 0 anatomy structures (minimum 3 required)
-
-- **Evidence:** Entity slugs: 
-- **Reason:** Condition neighborhoods require regional anatomy per condition.anatomy.min_structures.
-- **Impact:** -15
-- **Fix:** Add essential regional anatomy via anatomy builder or shared anatomy reuse.
-
 ### [CRITICAL] Low evidence coverage (0% of proposals cite evidence)
 
-- **Evidence:** 0/30 proposals have evidence_refs
+- **Evidence:** 0/63 proposals have evidence_refs
 - **Reason:** Every proposal should cite supporting evidence per factory contract.
 - **Impact:** -15
 - **Fix:** Ensure claim/relationship builders attach evidence_refs from the evidence packet.
 
-### [CRITICAL] 7 dangling edges reference missing entities
+### [CRITICAL] No educational claims in neighborhood
 
-- **Evidence:** proximal-humerus-fracture -[at_risk_structure]-> axillary-nerve; proximal-humerus-fracture -[injured_in]-> proximal-humerus; proximal-humerus-fracture -[injured_in]-> surgical-neck
-- **Reason:** Relationships must resolve to entities in the neighborhood graph.
+- **Evidence:** merged draft claimCount = 0
+- **Reason:** Claims are the primary educational content layer for products.
 - **Impact:** -15
-- **Fix:** Create missing entities or remove invalid relationship proposals.
+- **Fix:** Run claim-builder agent to generate evidence-backed atomic claims.
 
-### [CRITICAL] Missing decision point pattern: emergency_escalation
+### [CRITICAL] No decision points in neighborhood
 
-- **Evidence:** 0 decision points with pattern emergency_escalation
-- **Reason:** Fracture neighborhoods require branching operative vs nonoperative pathways.
+- **Evidence:** merged draft decisionPointCount = 0
+- **Reason:** Decision points support clinical reasoning and operative safety pathways.
 - **Impact:** -15
-- **Fix:** Add emergency_escalation decision point with attending-gated review.
+- **Fix:** Run decision-point-builder for operative_indication and nonoperative_eligible patterns.
 
 ### [CRITICAL] 18 critical/high ontology gaps remain unresolved
 
@@ -97,23 +89,30 @@ Auditor: KF-018 v1.0.0
 - **Impact:** -8
 - **Fix:** Run the matching builder agent for missing_relationship.
 
+### [HIGH] 1 merge conflicts detected
+
+- **Evidence:** conflict-report.json: Conflicting DP pattern proximal-humerus-fracture|operative_indication: dp-ph-hemiarthroplasty vs dp-ph-operative-orif
+- **Reason:** Unresolved merge conflicts indicate inconsistent agent outputs.
+- **Impact:** -8
+- **Fix:** Run conflict-resolver agent and reconcile metadata/text conflicts.
+
 ## Prioritized Recommendations
 
 1. **[Ontology Completeness]** Resolve critical gaps via assigned factory agents before publication review. — _9 critical ontology gaps remain_
-2. **[Ontology Completeness]** Add essential regional anatomy via anatomy builder or shared anatomy reuse. — _Only 0 anatomy structures (minimum 3 required)_
-3. **[Evidence Quality]** Ensure claim/relationship builders attach evidence_refs from the evidence packet. — _Low evidence coverage (0% of proposals cite evidence)_
-4. **[Graph Integrity]** Create missing entities or remove invalid relationship proposals. — _7 dangling edges reference missing entities_
-5. **[Decision Points]** Add emergency_escalation decision point with attending-gated review. — _Missing decision point pattern: emergency_escalation_
-6. **[Publication Readiness]** [critical] Proximal Humerus Fracture neighborhood has 0/3 anatomy_structure entities. — _18 critical/high ontology gaps remain unresolved_
-7. **[Ontology Completeness]** Schedule gap-resolution work items from ontology-work-plan.json. — _9 high-priority ontology gaps_
-8. **[Ontology Completeness]** Run the matching builder agent for missing_relationship. — _Missing relationship requirements (12)_
-9. **[Graph Integrity]** Run conflict-resolver agent and reconcile metadata/text conflicts. — _1 merge conflicts detected_
-10. **[Relationship Quality]** Route at_risk_structure, treated_by, and indicates_treatment edges to attending review. — _4 high-risk relationships lack approved review status_
+2. **[Evidence Quality]** Ensure claim/relationship builders attach evidence_refs from the evidence packet. — _Low evidence coverage (0% of proposals cite evidence)_
+3. **[Claim Quality]** Run claim-builder agent to generate evidence-backed atomic claims. — _No educational claims in neighborhood_
+4. **[Decision Points]** Run decision-point-builder for operative_indication and nonoperative_eligible patterns. — _No decision points in neighborhood_
+5. **[Publication Readiness]** [critical] Proximal Humerus Fracture neighborhood has 0/3 anatomy_structure entities. — _18 critical/high ontology gaps remain unresolved_
+6. **[Ontology Completeness]** Schedule gap-resolution work items from ontology-work-plan.json. — _9 high-priority ontology gaps_
+7. **[Ontology Completeness]** Run the matching builder agent for missing_relationship. — _Missing relationship requirements (12)_
+8. **[Graph Integrity]** Run conflict-resolver agent and reconcile metadata/text conflicts. — _1 merge conflicts detected_
+9. **[Relationship Quality]** Add at_risk_structure relationship via relationship-builder agent. — _Missing clinical edge: at_risk_structure_
+10. **[Relationship Quality]** Add treated_by relationship via relationship-builder agent. — _Missing clinical edge: treated_by_
 
 ## Data Source
 
-- Neighborhood: merged_draft
-- Reports loaded: 12
+- Neighborhood: database
+- Reports loaded: 15
 - Reports missing: none
 
 ## Constraints

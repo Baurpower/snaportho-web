@@ -1,7 +1,7 @@
 {
   "category": "ontology_completeness",
   "label": "Ontology Completeness",
-  "score": 31,
+  "score": 46,
   "deductions": [
     {
       "finding": "8 critical ontology gaps remain",
@@ -58,18 +58,6 @@
       "suggestedFix": "Run the matching builder agent for missing_decision_point."
     },
     {
-      "finding": "Only 0 anatomy structures (minimum 3 required)",
-      "evidence": "Entity slugs: ",
-      "reason": "Condition neighborhoods require regional anatomy per condition.anatomy.min_structures.",
-      "severity": "critical",
-      "category": "ontology_completeness",
-      "affectedSlugs": [
-        "clavicle-fracture"
-      ],
-      "suggestedFix": "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
-      "impact": 15
-    },
-    {
       "finding": "No classification system present",
       "evidence": "0 classification entities in merged draft",
       "reason": "Fracture diagnoses require classification when one exists clinically.",
@@ -83,7 +71,7 @@
     "totalGaps": 23,
     "criticalGaps": 8,
     "highGaps": 8,
-    "anatomyStructures": 0,
+    "anatomyStructures": 21,
     "classificationEntities": 0,
     "completenessRatio": 0.23333333333333328
   },
@@ -92,7 +80,6 @@
     "Schedule gap-resolution work items from ontology-work-plan.json.",
     "Run the matching builder agent for missing_relationship.",
     "Run the matching builder agent for missing_claim.",
-    "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
     "Link has_classification and has_grade edges to a classification system."
   ]
 }

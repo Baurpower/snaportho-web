@@ -1,5 +1,59 @@
 [
   {
+    "proposal_fingerprint": "claim|claim-implant-concepts-hub-fact-recognize-core-concepts-",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.7941250000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review",
+      "Composite confidence 0.794 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Generated from evidence items: ev-static-prepare-4be62dc2",
+    "metadata": {
+      "pilot": "patellofemoral-arthroplasty-neighborhood",
+      "draft_id": "claim-implant-concepts-hub-fact-recognize-core-concepts-",
+      "claim_type": "fact",
+      "claim_text": "Recognize core concepts in Patellofemoral Arthroplasty.",
+      "primary_entity_slug": "implant-concepts-hub",
+      "importance_level": "L3",
+      "content_source": "generated_draft",
+      "verified": false,
+      "why_it_matters": [
+        "clinical_reasoning"
+      ],
+      "context_relevance": [
+        "clinic"
+      ],
+      "learner_stage": "clerkship",
+      "evidence_item_ids": [
+        "ev-static-prepare-4be62dc2"
+      ],
+      "evidence_packet_id": "ev-packet-15432a11",
+      "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "review_route_hint": "HUMAN_REVIEW",
+      "generated_by": "claim-builder-v2",
+      "publication_eligible": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.8365,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-16T02:53:50.265Z"
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
     "proposal_fingerprint": "claim|claim-patellofemoral-arthroplasty-board-trap",
     "proposal_type": "propose_educational_claim",
     "route": "ATTENDING_REVIEW",
@@ -20,7 +74,7 @@
       "verified": false,
       "claim_text": "Board trap: oversimplifying patellofemoral arthroplasty without attending-level implant, fixation, or infection context.",
       "claim_type": "board_trap",
-      "curated_at": "2026-07-05T23:18:36.889Z",
+      "curated_at": "2026-07-16T02:53:50.265Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -65,7 +119,7 @@
       "verified": false,
       "claim_text": "PFA requires isolated patellofemoral disease without significant tibiofemoral OA.",
       "claim_type": "fact",
-      "curated_at": "2026-07-05T23:18:36.889Z",
+      "curated_at": "2026-07-16T02:53:50.265Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -111,7 +165,7 @@
       "verified": false,
       "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for patellofemoral arthroplasty.",
       "claim_type": "clinical_script",
-      "curated_at": "2026-07-05T23:18:36.889Z",
+      "curated_at": "2026-07-16T02:53:50.265Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -137,60 +191,6 @@
     "auto_review_category": "SAFE_REVIEW"
   },
   {
-    "proposal_fingerprint": "claim|claim-patellofemoral-tracking-fact-recognize-core-concepts-",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Auto-review: SAFE_REVIEW",
-    "confidence": 0.7941250000000001,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: default_human_review",
-      "Composite confidence 0.794 from explainable dimensions"
-    ],
-    "reviewer_decision_required": "Review propose_educational_claim (SAFE_REVIEW)",
-    "alternatives": [],
-    "evidence_summary": "Generated from evidence items: ev-static-prepare-4be62dc2",
-    "metadata": {
-      "pilot": "patellofemoral-arthroplasty-neighborhood",
-      "draft_id": "claim-patellofemoral-tracking-fact-recognize-core-concepts-",
-      "claim_type": "fact",
-      "claim_text": "Recognize core concepts in Patellofemoral Arthroplasty.",
-      "primary_entity_slug": "patellofemoral-tracking",
-      "importance_level": "L3",
-      "content_source": "generated_draft",
-      "verified": false,
-      "why_it_matters": [
-        "clinical_reasoning"
-      ],
-      "context_relevance": [
-        "clinic"
-      ],
-      "learner_stage": "clerkship",
-      "evidence_item_ids": [
-        "ev-static-prepare-4be62dc2"
-      ],
-      "evidence_packet_id": "ev-packet-15432a11",
-      "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
-      "review_route_hint": "HUMAN_REVIEW",
-      "generated_by": "claim-builder-v2",
-      "publication_eligible": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.8365,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "default_human_review"
-      ],
-      "curated_at": "2026-07-05T23:18:36.889Z"
-    },
-    "auto_review_category": "SAFE_REVIEW"
-  },
-  {
     "proposal_fingerprint": "dp|dp-patellofemoral-arthroplasty-operative",
     "proposal_type": "propose_decision_point",
     "route": "ATTENDING_REVIEW",
@@ -212,7 +212,7 @@
       "urgency": "routine",
       "draft_id": "dp-patellofemoral-arthroplasty-operative",
       "verified": false,
-      "curated_at": "2026-07-05T23:18:36.889Z",
+      "curated_at": "2026-07-16T02:53:50.265Z",
       "pattern_type": "operative_indication",
       "content_source": "generated_draft",
       "curation_route": "ATTENDING_REVIEW",

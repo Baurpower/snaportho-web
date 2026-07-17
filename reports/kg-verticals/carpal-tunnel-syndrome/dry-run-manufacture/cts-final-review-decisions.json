@@ -1,0 +1,336 @@
+[
+  {
+    "proposal_fingerprint": "claim|claim-carpal-tunnel-syndrome-clinical-pattern",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Accurate combined clinical-pattern, focused-exam, and selective-testing CTS teaching claim.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "claim|claim-carpal-tunnel-syndrome-complications",
+    "decision": "APPROVE_WITH_REVISION",
+    "reviewer": "clinical_curator",
+    "reason": "Approved after preserving separate post-release concepts without resolving median neuropathy versus iatrogenic nerve injury identity.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "claim|claim-carpal-tunnel-syndrome-exam",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Accurate CTS exam/localization claim with appropriate mimic framing.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "claim|claim-carpal-tunnel-syndrome-oite-trap",
+    "decision": "APPROVE_WITH_REVISION",
+    "reviewer": "clinical_curator",
+    "reason": "Approved after removing any implication of a fixed recurrent CTS interval.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "claim|claim-carpal-tunnel-syndrome-postoperative",
+    "decision": "APPROVE_WITH_REVISION",
+    "reviewer": "clinical_curator",
+    "reason": "Approved after replacing informal immobilization wording with CTS-specific postoperative guidance.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "claim|claim-carpal-tunnel-syndrome-testing",
+    "decision": "APPROVE_WITH_REVISION",
+    "reviewer": "clinical_curator",
+    "reason": "Approved after qualifying EDX, MRI, and radiograph language.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "claim|claim-carpal-tunnel-syndrome-treatment-options",
+    "decision": "APPROVE_WITH_REVISION",
+    "reviewer": "clinical_curator",
+    "reason": "Approved after clarifying injection time horizon and avoiding open/endoscopic superiority claims.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "dp|dp-carpal-tunnel-syndrome-approach-choice",
+    "decision": "APPROVE_WITH_REVISION",
+    "reviewer": "clinical_curator",
+    "reason": "Human exception resolved as equivalent_named_options; revised to state no default operative pathway.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "dp|dp-carpal-tunnel-syndrome-endoscopic-bailout",
+    "decision": "APPROVE_WITH_REVISION",
+    "reviewer": "clinical_curator",
+    "reason": "Human exception resolved as broad_stop_or_convert; revised to avoid mandatory conversion.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "dp|dp-carpal-tunnel-syndrome-nonoperative",
+    "decision": "APPROVE_WITH_REVISION",
+    "reviewer": "clinical_curator",
+    "reason": "Approved after clarifying exclusions and injection as short-term symptom relief.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "dp|dp-carpal-tunnel-syndrome-operative",
+    "decision": "APPROVE_WITH_REVISION",
+    "reviewer": "clinical_curator",
+    "reason": "Human exception resolved as expedited_non_emergent for thenar weakness, atrophy, or denervation; routine for persistent symptoms after failed nonoperative care.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "dp|dp-carpal-tunnel-syndrome-persistent-symptoms",
+    "decision": "APPROVE_WITH_REVISION",
+    "reviewer": "clinical_curator",
+    "reason": "Human exception resolved as no_fixed_interval; persistent CTS defined by inadequate postoperative improvement without requiring incomplete-release proof.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "dp|dp-carpal-tunnel-syndrome-postoperative-escalation",
+    "decision": "APPROVE_WITH_REVISION",
+    "reviewer": "clinical_curator",
+    "reason": "Approved after clarifying escalation to treating surgical team rather than encoding a universal protocol.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "dp|dp-carpal-tunnel-syndrome-recurrent-symptoms",
+    "decision": "APPROVE_WITH_REVISION",
+    "reviewer": "clinical_curator",
+    "reason": "Human exception resolved as improvement_no_fixed_interval; recurrence requires documented postoperative improvement before symptom return, with no required symptom-free interval.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "dp|dp-carpal-tunnel-syndrome-testing",
+    "decision": "APPROVE_WITH_REVISION",
+    "reviewer": "clinical_curator",
+    "reason": "Approved after narrowing to targeted electrodiagnostic testing and avoiding routine MRI/radiographs.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|at_risk_structure|median-nerve",
+    "decision": "APPROVE_WITH_REVISION",
+    "reviewer": "clinical_curator",
+    "reason": "Concept valid but predicate corrected from at_risk_structure to involves_anatomy.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|differential_for|distal-radius-fracture",
+    "decision": "REJECT",
+    "reviewer": "clinical_curator",
+    "reason": "Distal radius fracture is not a standard CTS differential; acute CTS with fracture is a separate association/emergency pathway.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|differential_for|median-nerve-compression",
+    "decision": "REJECT",
+    "reviewer": "clinical_curator",
+    "reason": "Median nerve compression is an identity/hierarchy issue, not a differential diagnosis.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|differential_for|trigger-finger",
+    "decision": "REJECT",
+    "reviewer": "clinical_curator",
+    "reason": "Trigger finger may coexist with CTS but is not a core CTS differential_for relationship.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|durkan-carpal-compression-test",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid provocative-test relationship.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|electrodiagnostic-testing-carpal-tunnel-syndrome",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid selective EDX wrapper relationship.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|needle-electromyography",
+    "decision": "REJECT",
+    "reviewer": "clinical_curator",
+    "reason": "Needle EMG should not be a direct standalone CTS tested_by edge; it is a component/specialist EDX concept.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|nerve-conduction-study",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid NCS diagnostic-test relationship.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|phalen-test",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid provocative-test relationship.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|tinel-sign-carpal-tunnel",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid provocative/sign relationship.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts",
+    "decision": "APPROVE_WITH_REVISION",
+    "reviewer": "clinical_curator",
+    "reason": "Valid treatment edge with short-term symptom-relief qualifier and no durable-cure implication.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid named surgical treatment option.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid nonoperative treatment option.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid named surgical treatment option.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|corticosteroid-injection-for-cts|at_risk_structure|median-nerve",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid procedure-to-risk-anatomy relationship.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|endoscopic-carpal-tunnel-release|at_risk_structure|median-nerve",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid procedure-to-risk-anatomy relationship.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|endoscopic-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid procedure-to-risk-anatomy relationship.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|endoscopic-carpal-tunnel-release|uses_approach|endoscopic-carpal-tunnel-approach",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid procedure-to-approach relationship.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|endoscopic-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+    "decision": "REJECT",
+    "reviewer": "clinical_curator",
+    "reason": "Instrument set is not an implant; reject rather than misuse implant vocabulary.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|median-nerve",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid procedure-to-risk-anatomy relationship.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|palmar-cutaneous-branch-median-nerve",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid procedure-to-risk-anatomy relationship.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid procedure-to-risk-anatomy relationship.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|open-carpal-tunnel-release|uses_approach|open-carpal-tunnel-approach",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid procedure-to-approach relationship.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|open-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+    "decision": "REJECT",
+    "reviewer": "clinical_curator",
+    "reason": "Instrument set is not an implant; reject rather than misuse implant vocabulary.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|persistent-carpal-tunnel-syndrome-after-release|treated_by|revision-carpal-tunnel-release",
+    "decision": "REJECT",
+    "reviewer": "clinical_curator",
+    "reason": "Human exception resolved as decision_point_only; remove direct treatment edge and route through failed-release evaluation pathway.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|recurrent-carpal-tunnel-syndrome|treated_by|revision-carpal-tunnel-release",
+    "decision": "REJECT",
+    "reviewer": "clinical_curator",
+    "reason": "Human exception resolved as requires_diagnostic_confirmation; remove unconditional treatment edge and route through evaluation/confirmation pathway.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|revision-carpal-tunnel-release|at_risk_structure|median-nerve",
+    "decision": "APPROVE",
+    "reviewer": "clinical_curator",
+    "reason": "Valid revision procedure-to-risk-anatomy relationship.",
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "create|classification_system|cts-6-clinical-diagnostic-tool",
+    "decision": "REJECT",
+    "reviewer": "ontology_curator",
+    "reviewer_id": "cts-staging-final-adjudication",
+    "reason": "Reject generic gap-filling abstraction. The overlay introduced CTS-6 to satisfy a classification-system count, but the reviewed record does not establish a sufficiently specific canonical identity distinct from its source-dependent diagnostic use.",
+    "evidence_basis": "AAOS CTS CPG evidence supports diagnostic use in context but does not require this generic abstraction as a canonical classification entity.",
+    "review_route": "ontology_identity_review",
+    "downstream_changes": [
+      "Reject dependent rel|carpal-tunnel-syndrome|has_classification|cts-6-clinical-diagnostic-tool",
+      "Remove the entity from normalized post-review additions"
+    ],
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel-syndrome|has_classification|cts-6-clinical-diagnostic-tool",
+    "decision": "REJECT",
+    "reviewer": "ontology_curator",
+    "reviewer_id": "cts-staging-final-adjudication",
+    "reason": "Reject because the proposed object entity is rejected; no supported replacement classification relationship is present in the existing ontology.",
+    "evidence_basis": "Dependent endpoint disposition and existing canonical relationship rules.",
+    "review_route": "ontology_relationship_review",
+    "downstream_changes": [
+      "Remove the relationship from normalized post-review additions"
+    ],
+    "applied": true
+  },
+  {
+    "proposal_fingerprint": "rel|carpal-tunnel|part_of|hand-wrist-anatomy-hub",
+    "decision": "REJECT",
+    "reviewer": "ontology_curator",
+    "reviewer_id": "cts-staging-final-adjudication",
+    "reason": "Reject because hand-wrist-anatomy-hub is a curricular/regional aggregation, not a canonical anatomical parent for a part_of edge. No existing replacement relationship is required for CTS staging.",
+    "evidence_basis": "Existing hand anatomy ownership policy and the critical-gap rule that rejects arbitrary parent edges for regional hubs.",
+    "review_route": "ontology_relationship_review",
+    "downstream_changes": [
+      "Remove the relationship from normalized post-review additions"
+    ],
+    "applied": true
+  }
+]

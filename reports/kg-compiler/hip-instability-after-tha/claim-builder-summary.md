@@ -1,6 +1,6 @@
 # Claim Builder Summary
 
-Generated: 2026-07-05T22:55:55.492Z
+Generated: 2026-07-16T02:41:08.220Z
 Agent: claim-builder v2.0.0
 Evidence packet: `ev-packet-fde8321b`
 
@@ -8,9 +8,9 @@ Evidence packet: `ev-packet-fde8321b`
 
 | Metric | Value |
 |--------|------:|
-| Gaps scheduled | 9 |
+| Gaps scheduled | 13 |
 | Gaps addressed | 8 |
-| Claims generated | 9 |
+| Claims generated | 13 |
 | Claims rejected | 6 |
 | Redirected to DP Builder | 4 |
 
@@ -25,6 +25,10 @@ Evidence packet: `ev-packet-fde8321b`
 - **cognitive_trap** (L1) → claim-hip-instability-after-tha-cognitive_trap-use-implant-component-vo [HUMAN_REVIEW] evidence: ev-static-prepare-94ffbaff
 - **fact** (L2) → claim-hip-center-of-rotation-fact-infection [HUMAN_REVIEW] evidence: ev-static-prepare-94fec56b
 - **anatomy_pearl** (L2) → claim-hip-center-of-rotation-anatomy_pearl-implant-bone-interfaces [HUMAN_REVIEW] evidence: ev-static-prepare-94fec56b
+- **fact** (L2) → claim-hip-center-of-rotation-fact-loosening [HUMAN_REVIEW] evidence: ev-static-prepare-94fec56b
+- **fact** (L2) → claim-hip-center-of-rotation-fact-instability [HUMAN_REVIEW] evidence: ev-static-prepare-94fec56b
+- **fact** (L2) → claim-hip-center-of-rotation-fact-periprosthetic-fracture [HUMAN_REVIEW] evidence: ev-static-prepare-94fec56b
+- **fact** (L1) → claim-hip-center-of-rotation-fact-hip-instability-after-th [HUMAN_REVIEW] evidence: ev-static-prepare-94ffbaff
 
 ## Rejected / redirected
 

@@ -1,0 +1,1399 @@
+{
+  "agent": "PublicationReadinessAgent",
+  "generatedAt": "2026-07-12T16:47:49.070Z",
+  "result": {
+    "approved": [],
+    "modified": [],
+    "rejected": [],
+    "escalations": [
+      {
+        "id": "publication-readiness-blocked",
+        "fingerprint": "publication|carpal-tunnel-syndrome",
+        "objectKind": "entity",
+        "agent": "PublicationReadinessAgent",
+        "severity": "blocker",
+        "reason": "Publication readiness blocked by 134 unresolved finalization issue(s).",
+        "reviewer": "curator",
+        "suggestedAction": "Resolve blocker_report entries before staged manufacture or publication."
+      }
+    ],
+    "warnings": [],
+    "metrics": {
+      "duplicatesPrevented": 0,
+      "relationshipsNormalized": 0,
+      "unsupportedEdgesRemoved": 0,
+      "reviewDecisionsInherited": 0,
+      "orphanEntitiesRepaired": 0,
+      "publicationBlockersDetected": 0
+    }
+  },
+  "artifacts": {
+    "publication_readiness": {
+      "neighborhoodId": "carpal-tunnel-syndrome",
+      "readyForPublication": false,
+      "readyForStagedManufacture": false,
+      "blockers": 134,
+      "warnings": 58,
+      "requiredChecks": {
+        "noOrphanEntities": false,
+        "noDanglingClassifications": true,
+        "noDuplicateIdentities": true,
+        "noUnsupportedRelationships": false,
+        "noInvalidPredicates": true
+      }
+    },
+    "blocker_report": [
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|radius|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|radius|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|ulna|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|ulna|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|interosseous-membrane|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|interosseous-membrane|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|druj|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|druj|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|pruj|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|pruj|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|distal-radius|part_of|radius",
+        "fingerprint": "relationship|distal-radius|part_of|radius",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|distal-ulna|part_of|ulna",
+        "fingerprint": "relationship|distal-ulna|part_of|ulna",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|scaphoid|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|scaphoid|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|lunate|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|lunate|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|triquetrum|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|triquetrum|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|pisiform|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|pisiform|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|trapezium|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|trapezium|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|trapezoid|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|trapezoid|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|capitate|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|capitate|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|hamate|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|hamate|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|scaphoid|articulates_with|lunate",
+        "fingerprint": "relationship|scaphoid|articulates_with|lunate",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|lunate|articulates_with|triquetrum",
+        "fingerprint": "relationship|lunate|articulates_with|triquetrum",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|scapholunate-ligament|inserts_on|scaphoid",
+        "fingerprint": "relationship|scapholunate-ligament|inserts_on|scaphoid",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|scapholunate-ligament|inserts_on|lunate",
+        "fingerprint": "relationship|scapholunate-ligament|inserts_on|lunate",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|lunotriquetral-ligament|inserts_on|lunate",
+        "fingerprint": "relationship|lunotriquetral-ligament|inserts_on|lunate",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|lunotriquetral-ligament|inserts_on|triquetrum",
+        "fingerprint": "relationship|lunotriquetral-ligament|inserts_on|triquetrum",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|tfcc|inserts_on|triquetrum",
+        "fingerprint": "relationship|tfcc|inserts_on|triquetrum",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|triquetrum|articulates_with|druj",
+        "fingerprint": "relationship|triquetrum|articulates_with|druj",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|first-metacarpal|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|first-metacarpal|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|second-metacarpal|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|second-metacarpal|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|third-metacarpal|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|third-metacarpal|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|fourth-metacarpal|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|fourth-metacarpal|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|fifth-metacarpal|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|fifth-metacarpal|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|proximal-phalanx|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|proximal-phalanx|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|middle-phalanx|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|middle-phalanx|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|distal-phalanx|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|distal-phalanx|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|mcp-joint|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|mcp-joint|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|pip-joint|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|pip-joint|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|dip-joint|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|dip-joint|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|cmc-joint|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|cmc-joint|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|first-metacarpal|articulates_with|trapezium",
+        "fingerprint": "relationship|first-metacarpal|articulates_with|trapezium",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|thumb-ucl|inserts_on|proximal-phalanx",
+        "fingerprint": "relationship|thumb-ucl|inserts_on|proximal-phalanx",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|volar-plate|inserts_on|proximal-phalanx",
+        "fingerprint": "relationship|volar-plate|inserts_on|proximal-phalanx",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|fpl|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|fpl|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|fdp|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|fdp|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|fds|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|fds|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|epl|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|epl|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|epb|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|epb|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|apl|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|apl|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|edc|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|edc|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|ecu|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|ecu|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|fcr|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|fcr|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|fcu|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|fcu|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|flexor-pulley-system|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|flexor-pulley-system|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|flexor-tendon-zones|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|flexor-tendon-zones|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|extensor-tendon-zones|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|extensor-tendon-zones|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|a1-pulley|part_of|flexor-pulley-system",
+        "fingerprint": "relationship|a1-pulley|part_of|flexor-pulley-system",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|a2-pulley|part_of|flexor-pulley-system",
+        "fingerprint": "relationship|a2-pulley|part_of|flexor-pulley-system",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|a3-pulley|part_of|flexor-pulley-system",
+        "fingerprint": "relationship|a3-pulley|part_of|flexor-pulley-system",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|a4-pulley|part_of|flexor-pulley-system",
+        "fingerprint": "relationship|a4-pulley|part_of|flexor-pulley-system",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|a5-pulley|part_of|flexor-pulley-system",
+        "fingerprint": "relationship|a5-pulley|part_of|flexor-pulley-system",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|c1-pulley|part_of|flexor-pulley-system",
+        "fingerprint": "relationship|c1-pulley|part_of|flexor-pulley-system",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|c2-pulley|part_of|flexor-pulley-system",
+        "fingerprint": "relationship|c2-pulley|part_of|flexor-pulley-system",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|c3-pulley|part_of|flexor-pulley-system",
+        "fingerprint": "relationship|c3-pulley|part_of|flexor-pulley-system",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|flexor-pulley-system|contains|fdp",
+        "fingerprint": "relationship|flexor-pulley-system|contains|fdp",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|flexor-pulley-system|contains|fds",
+        "fingerprint": "relationship|flexor-pulley-system|contains|fds",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|median-nerve|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|median-nerve|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|ulnar-nerve|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|ulnar-nerve|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|radial-nerve|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|radial-nerve|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|ain|part_of|median-nerve",
+        "fingerprint": "relationship|ain|part_of|median-nerve",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|pin|part_of|radial-nerve",
+        "fingerprint": "relationship|pin|part_of|radial-nerve",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|digital-nerves|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|digital-nerves|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|radial-artery|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|radial-artery|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|ulnar-artery|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|ulnar-artery|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|superficial-palmar-arch|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|superficial-palmar-arch|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|deep-palmar-arch|part_of|hand-wrist-anatomy-hub",
+        "fingerprint": "relationship|deep-palmar-arch|part_of|hand-wrist-anatomy-hub",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel|contains|median-nerve",
+        "fingerprint": "relationship|carpal-tunnel|contains|median-nerve",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel|contains|fds",
+        "fingerprint": "relationship|carpal-tunnel|contains|fds",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel|contains|fdp",
+        "fingerprint": "relationship|carpal-tunnel|contains|fdp",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|guyon-canal|contains|ulnar-nerve",
+        "fingerprint": "relationship|guyon-canal|contains|ulnar-nerve",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|guyon-canal|contains|ulnar-artery",
+        "fingerprint": "relationship|guyon-canal|contains|ulnar-artery",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|distal-radius|articulates_with|scaphoid",
+        "fingerprint": "relationship|distal-radius|articulates_with|scaphoid",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|distal-radius|articulates_with|lunate",
+        "fingerprint": "relationship|distal-radius|articulates_with|lunate",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|distal-radius|articulates_with|druj",
+        "fingerprint": "relationship|distal-radius|articulates_with|druj",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|distal-ulna|articulates_with|druj",
+        "fingerprint": "relationship|distal-ulna|articulates_with|druj",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|hand-wrist-anatomy-hub|prerequisite_for|carpal-tunnel-syndrome",
+        "fingerprint": "relationship|hand-wrist-anatomy-hub|prerequisite_for|carpal-tunnel-syndrome",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|involves_anatomy|median-nerve",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|involves_anatomy|median-nerve",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|injured_in|median-nerve",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|injured_in|median-nerve",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|involves_anatomy|carpal-tunnel",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|involves_anatomy|carpal-tunnel",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|injured_in|carpal-tunnel",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|injured_in|carpal-tunnel",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|involves_anatomy|fpl",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|involves_anatomy|fpl",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|injured_in|fpl",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|injured_in|fpl",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|differential_for|median-nerve-compression",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|differential_for|median-nerve-compression",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|differential_for|trigger-finger",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|differential_for|trigger-finger",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|differential_for|distal-radius-fracture",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|differential_for|distal-radius-fracture",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|recurrent-motor-branch-median-nerve|part_of|median-nerve",
+        "fingerprint": "relationship|recurrent-motor-branch-median-nerve|part_of|median-nerve",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|palmar-cutaneous-branch-median-nerve|part_of|median-nerve",
+        "fingerprint": "relationship|palmar-cutaneous-branch-median-nerve|part_of|median-nerve",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|tested_by|phalen-test",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|phalen-test",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|tested_by|tinel-sign-carpal-tunnel",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|tinel-sign-carpal-tunnel",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|tested_by|durkan-carpal-compression-test",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|durkan-carpal-compression-test",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|tested_by|electrodiagnostic-testing-carpal-tunnel-syndrome",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|electrodiagnostic-testing-carpal-tunnel-syndrome",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|tested_by|nerve-conduction-study",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|nerve-conduction-study",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|tested_by|needle-electromyography",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|needle-electromyography",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|corticosteroid-injection-for-cts|involves_anatomy|carpal-tunnel",
+        "fingerprint": "relationship|corticosteroid-injection-for-cts|involves_anatomy|carpal-tunnel",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|corticosteroid-injection-for-cts|at_risk_structure|median-nerve",
+        "fingerprint": "relationship|corticosteroid-injection-for-cts|at_risk_structure|median-nerve",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|open-carpal-tunnel-release|uses_approach|open-carpal-tunnel-approach",
+        "fingerprint": "relationship|open-carpal-tunnel-release|uses_approach|open-carpal-tunnel-approach",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|endoscopic-carpal-tunnel-release|uses_approach|endoscopic-carpal-tunnel-approach",
+        "fingerprint": "relationship|endoscopic-carpal-tunnel-release|uses_approach|endoscopic-carpal-tunnel-approach",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|open-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+        "fingerprint": "relationship|open-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|endoscopic-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+        "fingerprint": "relationship|endoscopic-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|open-carpal-tunnel-release|at_risk_structure|median-nerve",
+        "fingerprint": "relationship|open-carpal-tunnel-release|at_risk_structure|median-nerve",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|open-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+        "fingerprint": "relationship|open-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|open-carpal-tunnel-release|at_risk_structure|palmar-cutaneous-branch-median-nerve",
+        "fingerprint": "relationship|open-carpal-tunnel-release|at_risk_structure|palmar-cutaneous-branch-median-nerve",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|endoscopic-carpal-tunnel-release|at_risk_structure|median-nerve",
+        "fingerprint": "relationship|endoscopic-carpal-tunnel-release|at_risk_structure|median-nerve",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|endoscopic-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+        "fingerprint": "relationship|endoscopic-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|open-carpal-tunnel-release|has_complication|pillar-pain-after-carpal-tunnel-release",
+        "fingerprint": "relationship|open-carpal-tunnel-release|has_complication|pillar-pain-after-carpal-tunnel-release",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|open-carpal-tunnel-release|has_complication|incomplete-transverse-carpal-ligament-release",
+        "fingerprint": "relationship|open-carpal-tunnel-release|has_complication|incomplete-transverse-carpal-ligament-release",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|endoscopic-carpal-tunnel-release|has_complication|incomplete-transverse-carpal-ligament-release",
+        "fingerprint": "relationship|endoscopic-carpal-tunnel-release|has_complication|incomplete-transverse-carpal-ligament-release",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|persistent-carpal-tunnel-syndrome-after-release|treated_by|revision-carpal-tunnel-release",
+        "fingerprint": "relationship|persistent-carpal-tunnel-syndrome-after-release|treated_by|revision-carpal-tunnel-release",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|recurrent-carpal-tunnel-syndrome|treated_by|revision-carpal-tunnel-release",
+        "fingerprint": "relationship|recurrent-carpal-tunnel-syndrome|treated_by|revision-carpal-tunnel-release",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|open-carpal-tunnel-release|involves_anatomy|carpal-tunnel",
+        "fingerprint": "relationship|open-carpal-tunnel-release|involves_anatomy|carpal-tunnel",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|endoscopic-carpal-tunnel-release|involves_anatomy|carpal-tunnel",
+        "fingerprint": "relationship|endoscopic-carpal-tunnel-release|involves_anatomy|carpal-tunnel",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|revision-carpal-tunnel-release|involves_anatomy|carpal-tunnel",
+        "fingerprint": "relationship|revision-carpal-tunnel-release|involves_anatomy|carpal-tunnel",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|revision-carpal-tunnel-release|at_risk_structure|median-nerve",
+        "fingerprint": "relationship|revision-carpal-tunnel-release|at_risk_structure|median-nerve",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-relationship|carpal-tunnel-syndrome|at_risk_structure|median-nerve",
+        "fingerprint": "relationship|carpal-tunnel-syndrome|at_risk_structure|median-nerve",
+        "objectKind": "relationship",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-claim|claim-carpal-tunnel-syndrome-clinical-pattern|carpal-tunnel-syndrome|carpal tunnel syndrome evaluation combines the symptom pattern focused median nerve examination ",
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-clinical-pattern|carpal-tunnel-syndrome|carpal tunnel syndrome evaluation combines the symptom pattern focused median nerve examination ",
+        "objectKind": "claim",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-claim|claim-carpal-tunnel-syndrome-anatomy|median-nerve|carpal tunnel syndrome localizes to the median nerve within the carpal tunnel release planning a",
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-anatomy|median-nerve|carpal tunnel syndrome localizes to the median nerve within the carpal tunnel release planning a",
+        "objectKind": "claim",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-claim|claim-carpal-tunnel-syndrome-exam|carpal-tunnel-syndrome|document sensory distribution thenar motor findings and provocative maneuvers while considering ",
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-exam|carpal-tunnel-syndrome|document sensory distribution thenar motor findings and provocative maneuvers while considering ",
+        "objectKind": "claim",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-claim|claim-carpal-tunnel-syndrome-testing|carpal-tunnel-syndrome|electrodiagnostic testing is a selective diagnostic and severity tool mri and repeat radiographs",
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-testing|carpal-tunnel-syndrome|electrodiagnostic testing is a selective diagnostic and severity tool mri and repeat radiographs",
+        "objectKind": "claim",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-claim|claim-carpal-tunnel-syndrome-treatment-options|carpal-tunnel-syndrome|cts treatment planning distinguishes neutral position night splinting and corticosteroid injecti",
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-treatment-options|carpal-tunnel-syndrome|cts treatment planning distinguishes neutral position night splinting and corticosteroid injecti",
+        "objectKind": "claim",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-claim|claim-carpal-tunnel-syndrome-complications|carpal-tunnel-syndrome|persistent symptoms recurrent symptoms incomplete release pillar pain and iatrogenic nerve injur",
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-complications|carpal-tunnel-syndrome|persistent symptoms recurrent symptoms incomplete release pillar pain and iatrogenic nerve injur",
+        "objectKind": "claim",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-claim|claim-carpal-tunnel-syndrome-postoperative|carpal-tunnel-syndrome|post release activity therapy and return to work guidance should be individualized routine fract",
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-postoperative|carpal-tunnel-syndrome|post release activity therapy and return to work guidance should be individualized routine fract",
+        "objectKind": "claim",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "SourceProvenanceAgent",
+        "id": "provenance-claim|claim-carpal-tunnel-syndrome-oite-trap|carpal-tunnel-syndrome|oite content should distinguish palmar cutaneous and recurrent motor branch anatomy selective te",
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-oite-trap|carpal-tunnel-syndrome|oite content should distinguish palmar cutaneous and recurrent motor branch anatomy selective te",
+        "objectKind": "claim",
+        "severity": "blocker",
+        "reason": "Object is missing required source provenance or review-status metadata.",
+        "reviewer": "curator",
+        "suggestedAction": "Attach source identifier, confidence, and review status before publication."
+      },
+      {
+        "sourceAgent": "ConnectivityAgent",
+        "id": "connectivity-orphan-collateral-ligaments",
+        "fingerprint": "entity|anatomy_structure|collateral-ligaments",
+        "objectKind": "entity",
+        "severity": "blocker",
+        "reason": "Generated entity is isolated from the neighborhood graph.",
+        "reviewer": "curator",
+        "suggestedAction": "Add involves_anatomy, part_of, or at_risk_structure edge tying Collateral Ligaments into the neighborhood."
+      },
+      {
+        "sourceAgent": "ConnectivityAgent",
+        "id": "connectivity-orphan-abductor-pollicis-brevis",
+        "fingerprint": "entity|anatomy_structure|abductor-pollicis-brevis",
+        "objectKind": "entity",
+        "severity": "blocker",
+        "reason": "Generated entity is isolated from the neighborhood graph.",
+        "reviewer": "curator",
+        "suggestedAction": "Add involves_anatomy, part_of, or at_risk_structure edge tying Abductor Pollicis Brevis into the neighborhood."
+      },
+      {
+        "sourceAgent": "ConnectivityAgent",
+        "id": "connectivity-orphan-carpal-tunnel-release-postoperative-protocol",
+        "fingerprint": "entity|treatment_principle|carpal-tunnel-release-postoperative-protocol",
+        "objectKind": "entity",
+        "severity": "blocker",
+        "reason": "Generated entity is isolated from the neighborhood graph.",
+        "reviewer": "curator",
+        "suggestedAction": "Add a valid registry relationship connecting Carpal Tunnel Release Postoperative Protocol to an existing neighborhood anchor."
+      }
+    ],
+    "maturity_report": {
+      "estimatedMaturityLevel": 1,
+      "basis": "Deterministic finalization blockers and warnings over compiler draft artifacts.",
+      "blockers": 134,
+      "warnings": 58,
+      "limitations": [
+        "This is a report-only maturity estimate.",
+        "It does not certify clinical truth.",
+        "It does not mutate staging or production KG state."
+      ]
+    }
+  }
+}

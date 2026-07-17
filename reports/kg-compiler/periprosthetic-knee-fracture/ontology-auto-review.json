@@ -1,15 +1,15 @@
 {
   "topicKey": "periprosthetic-knee-fracture",
   "pilotKey": "periprosthetic-knee-fracture-neighborhood",
-  "generatedAt": "2026-07-05T23:04:58.203Z",
+  "generatedAt": "2026-07-16T02:54:52.454Z",
   "summary": {
-    "AUTO_APPROVE": 73,
-    "SAFE_REVIEW": 7,
+    "AUTO_APPROVE": 76,
+    "SAFE_REVIEW": 5,
     "EXPERT_REVIEW": 5,
     "REJECT": 0
   },
-  "humanReviewPercent": 14.1,
-  "autoApprovedPercent": 85.9,
+  "humanReviewPercent": 11.6,
+  "autoApprovedPercent": 88.4,
   "decisions": [
     {
       "proposal_fingerprint": "bridge|adult-recon-periprosthetic-knee-fracture|periprosthetic-knee-fracture",
@@ -30,6 +30,111 @@
       ],
       "rulesTriggered": [
         "deterministic_bridge"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-extensor-mechanism",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-implant-bone-interfaces",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-fact-infection",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "AUTO_REVISED",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: l2_fact_light_review",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l2_fact_light_review"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-fact-knee-reconstruction-clas",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "AUTO_REVISED",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: l2_fact_light_review",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l2_fact_light_review"
       ]
     },
     {
@@ -114,90 +219,6 @@
       ],
       "rulesTriggered": [
         "l1_management_fact"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-periprosthetic-knee-fracture-fact-infection",
-      "proposal_type": "propose_educational_claim",
-      "category": "SAFE_REVIEW",
-      "curationRoute": "AUTO_REVISED",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.627375,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: l2_fact_light_review",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "l2_fact_light_review"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-periprosthetic-knee-fracture-fact-instability",
-      "proposal_type": "propose_educational_claim",
-      "category": "SAFE_REVIEW",
-      "curationRoute": "AUTO_REVISED",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.627375,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: l2_fact_light_review",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "l2_fact_light_review"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-periprosthetic-knee-fracture-fact-knee-reconstruction-clas",
-      "proposal_type": "propose_educational_claim",
-      "category": "SAFE_REVIEW",
-      "curationRoute": "AUTO_REVISED",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.627375,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: l2_fact_light_review",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "l2_fact_light_review"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-periprosthetic-knee-fracture-fact-loosening",
-      "proposal_type": "propose_educational_claim",
-      "category": "SAFE_REVIEW",
-      "curationRoute": "AUTO_REVISED",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.627375,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: l2_fact_light_review",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "l2_fact_light_review"
       ]
     },
     {

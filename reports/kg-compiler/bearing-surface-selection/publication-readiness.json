@@ -1,17 +1,26 @@
 {
   "topicKey": "bearing-surface-selection",
   "pilotKey": "bearing-surface-selection-neighborhood",
-  "generatedAt": "2026-07-05T23:31:27.016Z",
+  "generatedAt": "2026-07-16T02:33:43.883Z",
   "currentLevel": 5,
   "requiredLevel": 8,
   "ready": false,
   "blockers": [
-    "9 proposals still awaiting human review",
-    "3 items require attending review",
+    "12 proposals still awaiting human review",
+    "6 items require attending review",
     "Claims and DPs are draft-only — publication gate must block verified consumption.",
-    "No approved canonical entities in database yet — proposals remain offline/spec."
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "32 critical/high ontology gaps remain unresolved"
   ],
   "remainingWork": [
+    "[high] Calcar missing outbound part_of (0/1).",
+    "[high] Intertrochanteric Region missing outbound part_of (0/1).",
+    "[high] Lesser Trochanter missing outbound part_of (0/1).",
+    "[high] Greater Trochanter missing outbound part_of (0/1).",
+    "[high] Tibial Plateau missing outbound part_of (0/1).",
+    "[high] Glenoid Labrum missing outbound part_of (0/1).",
+    "[critical] Revision Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Revision Arthroplasty missing outbound involves_anatomy (0/1).",
     "Route ATTENDING_REVIEW queue to attending reviewer"
   ],
   "productReadiness": {
@@ -20,10 +29,10 @@
     "brobotReady": false
   },
   "estimatedEffort": {
-    "gapsRemaining": 12,
-    "humanReviewItems": 9,
-    "attendingReviewItems": 3,
-    "effortBand": "medium"
+    "gapsRemaining": 60,
+    "humanReviewItems": 12,
+    "attendingReviewItems": 6,
+    "effortBand": "high"
   },
   "dimensionScores": {
     "clinical": 1,

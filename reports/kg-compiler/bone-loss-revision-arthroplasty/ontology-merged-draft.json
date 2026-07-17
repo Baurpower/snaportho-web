@@ -1,18 +1,58 @@
 {
   "topicKey": "bone-loss-revision-arthroplasty",
   "pilotKey": "bone-loss-revision-arthroplasty-neighborhood",
-  "generatedAt": "2026-07-05T23:26:40.651Z",
+  "generatedAt": "2026-07-16T02:40:22.029Z",
   "entities": [
     {
-      "slug": "paprosky-classification",
-      "entityType": "classification_system",
-      "preferredLabel": "Paprosky Classification",
+      "slug": "adult-reconstruction-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Adult Reconstruction Anatomy Hub",
       "metadata": {
-        "slug": "paprosky-classification",
+        "slug": "adult-reconstruction-anatomy-hub",
+        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
+        "region": "arthroplasty",
+        "cluster": "adult-reconstruction",
+        "verified": false,
+        "curated_at": "2026-07-16T02:40:22.027Z",
+        "description": "Composite hip and knee arthroplasty model linking joint surfaces, soft tissues, and implant interfaces.",
+        "owner_pilot": "adult-reconstruction-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:bone-loss-revision-arthroplasty-neighborhood",
+        "review_packet_label": "Bone Loss in Revision Arthroplasty Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|adult-reconstruction-anatomy-hub",
+        "canonical_entity_id": "14f44479-f605-46b6-ad3c-c6f451598bbe",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|adult-reconstruction-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "aori-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "AORI Classification",
+      "metadata": {
+        "slug": "aori-classification",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
-        "description": "Acetabular bone loss classification for revision THA.",
+        "curated_at": "2026-07-16T02:40:22.027Z",
+        "description": "Femoral and tibial metaphyseal bone loss classification for revision TKA.",
         "staging_apply": true,
         "curation_route": "AUTO_APPROVED_LOW_RISK",
         "curation_rules": [
@@ -30,10 +70,10 @@
         "review_packet_key": "pilot:bone-loss-revision-arthroplasty-neighborhood",
         "review_packet_label": "Bone Loss in Revision Arthroplasty Neighborhood",
         "clinical_verification": false,
-        "created_from_proposal_fingerprint": "create|classification_system|paprosky-classification",
-        "canonical_entity_id": "27e89b00-fbfb-41f0-b126-22ae8ce8fe3d",
+        "created_from_proposal_fingerprint": "create|classification_system|aori-classification",
+        "canonical_entity_id": "cceb7ffe-64d0-4591-b378-ba6e2fac0b4c",
         "applied_by_script": "apply-pilot-approved",
-        "_provenance_fingerprint": "create|classification_system|paprosky-classification"
+        "_provenance_fingerprint": "create|classification_system|aori-classification"
       },
       "source": "proposal"
     },
@@ -45,7 +85,7 @@
         "slug": "bone-loss-revision-arthroplasty",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Periprosthetic bone deficiency complicating revision implant fixation.",
         "clinical_kind": "arthroplasty",
         "staging_apply": true,
@@ -74,15 +114,54 @@
       "source": "proposal"
     },
     {
-      "slug": "aori-classification",
-      "entityType": "classification_system",
-      "preferredLabel": "AORI Classification",
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
       "metadata": {
-        "slug": "aori-classification",
+        "slug": "implant-concepts-hub",
+        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
+        "region": "arthroplasty",
+        "cluster": "adult-reconstruction",
+        "verified": false,
+        "curated_at": "2026-07-16T02:40:22.027Z",
+        "description": "Composite model of reusable THA and TKA implant components and fixation strategies.",
+        "owner_pilot": "adult-reconstruction-cluster-shared",
+        "implant_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:bone-loss-revision-arthroplasty-neighborhood",
+        "review_packet_label": "Bone Loss in Revision Arthroplasty Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|biomechanics_concept|implant-concepts-hub",
+        "canonical_entity_id": "0337b233-79f0-422e-8e06-510e4f029363",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|biomechanics_concept|implant-concepts-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "paprosky-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Paprosky Classification",
+      "metadata": {
+        "slug": "paprosky-classification",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
-        "description": "Femoral and tibial metaphyseal bone loss classification for revision TKA.",
+        "curated_at": "2026-07-16T02:40:22.027Z",
+        "description": "Acetabular bone loss classification for revision THA.",
         "staging_apply": true,
         "curation_route": "AUTO_APPROVED_LOW_RISK",
         "curation_rules": [
@@ -100,10 +179,84 @@
         "review_packet_key": "pilot:bone-loss-revision-arthroplasty-neighborhood",
         "review_packet_label": "Bone Loss in Revision Arthroplasty Neighborhood",
         "clinical_verification": false,
-        "created_from_proposal_fingerprint": "create|classification_system|aori-classification",
-        "canonical_entity_id": "cceb7ffe-64d0-4591-b378-ba6e2fac0b4c",
+        "created_from_proposal_fingerprint": "create|classification_system|paprosky-classification",
+        "canonical_entity_id": "27e89b00-fbfb-41f0-b126-22ae8ce8fe3d",
         "applied_by_script": "apply-pilot-approved",
-        "_provenance_fingerprint": "create|classification_system|aori-classification"
+        "_provenance_fingerprint": "create|classification_system|paprosky-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "polyethylene-wear-osteolysis",
+      "entityType": "procedure",
+      "preferredLabel": "Polyethylene Wear Osteolysis",
+      "metadata": {
+        "slug": "polyethylene-wear-osteolysis",
+        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-16T02:40:22.027Z",
+        "description": "Cross-neighborhood reference stub for polyethylene-wear-osteolysis.",
+        "owner_pilot": "polyethylene-wear-osteolysis-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:bone-loss-revision-arthroplasty-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Bone Loss in Revision Arthroplasty Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|polyethylene-wear-osteolysis",
+        "canonical_entity_id": "180fc926-c59a-4a61-a506-85bd9e7d9e2d",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|polyethylene-wear-osteolysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "revision-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Revision Arthroplasty",
+      "metadata": {
+        "slug": "revision-arthroplasty",
+        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-16T02:40:22.027Z",
+        "description": "Cross-neighborhood reference stub for revision-arthroplasty.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:bone-loss-revision-arthroplasty-neighborhood",
+        "review_packet_label": "Bone Loss in Revision Arthroplasty Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|revision-arthroplasty",
+        "canonical_entity_id": "500a344b-0803-4911-9e9c-91e3dc9572fa",
+        "owner_pilot": "revision-arthroplasty-neighborhood",
+        "shared_reference": true,
+        "applied_by_script": "apply-pilot-approved",
+        "cross_neighborhood": true,
+        "_provenance_fingerprint": "create|procedure|revision-arthroplasty"
       },
       "source": "proposal"
     },
@@ -117,7 +270,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Hip socket receiving the acetabular component; key for cup positioning and hip stability.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -147,45 +300,6 @@
       "source": "proposal"
     },
     {
-      "slug": "adult-reconstruction-anatomy-hub",
-      "entityType": "anatomy_structure",
-      "preferredLabel": "Adult Reconstruction Anatomy Hub",
-      "description": "Composite hip and knee arthroplasty model linking joint surfaces, soft tissues, and implant interfaces.",
-      "metadata": {
-        "slug": "adult-reconstruction-anatomy-hub",
-        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
-        "region": "arthroplasty",
-        "cluster": "adult-reconstruction",
-        "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
-        "description": "Composite hip and knee arthroplasty model linking joint surfaces, soft tissues, and implant interfaces.",
-        "owner_pilot": "adult-reconstruction-cluster-shared",
-        "anatomy_kind": "composite",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "confidence": 0.92,
-          "evidence": 0.74,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "hierarchy_level": "structure",
-        "shared_reference": true,
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:bone-loss-revision-arthroplasty-neighborhood",
-        "review_packet_label": "Bone Loss in Revision Arthroplasty Neighborhood",
-        "clinical_verification": false,
-        "_provenance_fingerprint": "create|anatomy_structure|adult-reconstruction-anatomy-hub"
-      },
-      "source": "proposal"
-    },
-    {
       "slug": "calcar",
       "entityType": "anatomy_structure",
       "preferredLabel": "Calcar",
@@ -195,7 +309,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Dense medial femoral neck cortical buttress supporting head-neck load transfer.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -234,7 +348,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Medial and lateral knee stabilizers balanced during TKA soft-tissue releases.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "ligament",
@@ -272,7 +386,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Lateral knee nerve at risk in tibial plateau and proximal fibular injuries.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "nerve",
@@ -310,7 +424,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "ACL and PCL influencing TKA constraint selection and balancing strategy.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "ligament",
@@ -348,7 +462,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Distal femoral metaphysis and condylar region forming the proximal knee.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "bone",
@@ -386,7 +500,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "composite",
@@ -424,7 +538,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Distal femoral articular surfaces resurfaced during TKA femoral component placement.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -462,7 +576,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "thigh",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Femoral shaft between proximal and distal metaphyseal regions.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "bone",
@@ -500,7 +614,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Articular femoral head supplied largely by retinacular and circumflex vessels.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -539,7 +653,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Intracapsular segment between femoral head and intertrochanteric region.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -578,7 +692,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Anterior hip nerve at risk during anterior approach THA exposure.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "nerve",
@@ -616,7 +730,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Thigh bone bearing femoral condyles and canal for arthroplasty stem fixation.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -654,7 +768,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Primary hip abductor; critical for gait and THA abductor repair integrity.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "muscle",
@@ -692,7 +806,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Deep hip abductor contributing to pelvic stability during gait.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "muscle",
@@ -730,7 +844,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Lateral proximal femur with abductor insertions; intertrochanteric fixation landmark.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -769,7 +883,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Periarticular soft tissue envelope influencing THA approach, stability, and dislocation risk.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "soft_tissue",
@@ -807,7 +921,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Ball-and-socket articulation between femoral head and acetabulum.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "joint",
@@ -846,7 +960,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Extracapsular metaphyseal zone between neck and subtrochanteric diaphysis.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -885,7 +999,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Fibrocartilaginous hip rim contributing to suction seal and joint stability.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "soft_tissue",
@@ -923,7 +1037,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Medial proximal femur attachment for iliopsoas; key subtrochanteric landmark.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -962,7 +1076,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Dominant retinacular blood supply to the femoral head; vulnerable in neck fractures.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "vessel",
@@ -1001,7 +1115,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Sesamoid bone within the extensor mechanism at the anterior knee.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "bone",
@@ -1039,7 +1153,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Distal extensor mechanism linkage vulnerable to rupture after TKA.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "tendon",
@@ -1077,7 +1191,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Bony pelvic ring anchoring the acetabulum and hip center of rotation.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -1116,7 +1230,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Major knee-region artery at risk in tibial plateau, distal femur, and knee dislocation trauma.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "vessel",
@@ -1154,7 +1268,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Femoral head, neck, trochanters, and calcar region relevant to THA stem fixation and offset.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -1193,7 +1307,7 @@
         "region": "hip",
         "cluster": "hip-fracture",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Composite proximal femur model linking head, neck, trochanters, calcar, and hip joint.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "composite",
@@ -1232,7 +1346,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Proximal extensor mechanism linkage at risk in TKA exposure and extensor failure.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "tendon",
@@ -1270,7 +1384,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Posterior hip nerve at risk during proximal femur exposure and reduction maneuvers.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "nerve",
@@ -1309,7 +1423,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Posterior hip soft tissue sleeve repaired after posterior THA approach.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "muscle",
@@ -1347,7 +1461,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Proximal tibial plateau and metaphysis receiving tibial baseplate in TKA.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -1385,7 +1499,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Proximal tibial articular surface bearing medial and lateral condylar load.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "bone",
@@ -1422,7 +1536,7 @@
         "slug": "bearing-surface-selection",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cross-neighborhood reference stub for bearing-surface-selection.",
         "owner_pilot": "bearing-surface-selection-neighborhood",
         "staging_apply": true,
@@ -1450,44 +1564,6 @@
       "source": "proposal"
     },
     {
-      "slug": "implant-concepts-hub",
-      "entityType": "biomechanics_concept",
-      "preferredLabel": "Arthroplasty Implant Concepts Hub",
-      "description": "Composite model of reusable THA and TKA implant components and fixation strategies.",
-      "metadata": {
-        "slug": "implant-concepts-hub",
-        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
-        "region": "arthroplasty",
-        "cluster": "adult-reconstruction",
-        "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
-        "description": "Composite model of reusable THA and TKA implant components and fixation strategies.",
-        "owner_pilot": "adult-reconstruction-cluster-shared",
-        "implant_kind": "composite",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "confidence": 0.92,
-          "evidence": 0.74,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "shared_reference": true,
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:bone-loss-revision-arthroplasty-neighborhood",
-        "review_packet_label": "Bone Loss in Revision Arthroplasty Neighborhood",
-        "clinical_verification": false,
-        "_provenance_fingerprint": "create|biomechanics_concept|implant-concepts-hub"
-      },
-      "source": "proposal"
-    },
-    {
       "slug": "compartment-syndrome",
       "entityType": "condition",
       "preferredLabel": "Compartment Syndrome",
@@ -1496,7 +1572,7 @@
         "slug": "compartment-syndrome",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cross-neighborhood reference stub for compartment-syndrome.",
         "owner_pilot": "compartment-syndrome-neighborhood",
         "staging_apply": true,
@@ -1532,7 +1608,7 @@
         "slug": "distal-femur-fracture",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cross-neighborhood reference stub for distal-femur-fracture.",
         "owner_pilot": "distal-femur-fracture-neighborhood",
         "staging_apply": true,
@@ -1568,7 +1644,7 @@
         "slug": "femoral-neck-fracture",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cross-neighborhood reference stub for femoral-neck-fracture.",
         "owner_pilot": "femoral-neck-fracture-neighborhood",
         "staging_apply": true,
@@ -1604,7 +1680,7 @@
         "slug": "femoral-shaft-fracture",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cross-neighborhood reference stub for femoral-shaft-fracture.",
         "owner_pilot": "femoral-shaft-fracture-neighborhood",
         "staging_apply": true,
@@ -1640,7 +1716,7 @@
         "slug": "hip-prosthetic-joint-infection",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cross-neighborhood reference stub for hip-prosthetic-joint-infection.",
         "owner_pilot": "hip-prosthetic-joint-infection-neighborhood",
         "staging_apply": true,
@@ -1676,7 +1752,7 @@
         "slug": "intertrochanteric-fracture",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cross-neighborhood reference stub for intertrochanteric-fracture.",
         "owner_pilot": "intertrochanteric-fracture-neighborhood",
         "staging_apply": true,
@@ -1712,7 +1788,7 @@
         "slug": "knee-osteoarthritis",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cross-neighborhood reference stub for knee-osteoarthritis.",
         "owner_pilot": "knee-osteoarthritis-neighborhood",
         "staging_apply": true,
@@ -1748,7 +1824,7 @@
         "slug": "knee-prosthetic-joint-infection",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cross-neighborhood reference stub for knee-prosthetic-joint-infection.",
         "owner_pilot": "knee-prosthetic-joint-infection-neighborhood",
         "staging_apply": true,
@@ -1784,7 +1860,7 @@
         "slug": "periprosthetic-joint-infection",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cross-neighborhood reference stub for periprosthetic-joint-infection.",
         "owner_pilot": "periprosthetic-joint-infection-neighborhood",
         "staging_apply": true,
@@ -1820,7 +1896,7 @@
         "slug": "subtrochanteric-fracture",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cross-neighborhood reference stub for subtrochanteric-fracture.",
         "owner_pilot": "subtrochanteric-fracture-neighborhood",
         "staging_apply": true,
@@ -1856,7 +1932,7 @@
         "slug": "tibial-shaft-fracture",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cross-neighborhood reference stub for tibial-shaft-fracture.",
         "owner_pilot": "tibial-shaft-fracture-neighborhood",
         "staging_apply": true,
@@ -1893,7 +1969,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "arthroplasty",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "PMMA interphase distributing load between implant and bone.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "fixation",
@@ -1930,7 +2006,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "arthroplasty",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "PMMA cement securing implant to bone for immediate stability.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "fixation",
@@ -1967,7 +2043,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "arthroplasty",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cementless implant stability achieved through interference fit and bone ingrowth.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "fixation",
@@ -2004,7 +2080,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "THA cup restoring acetabular coverage and hip center of rotation.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "component",
@@ -2041,7 +2117,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "TKA femoral resurfacing component restoring flexion-extension geometry.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "component",
@@ -2078,7 +2154,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "THA femoral canal implant transmitting load from head to diaphysis.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "component",
@@ -2115,7 +2191,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Resurfaced patellar button in select TKA and patellofemoral arthroplasty cases.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "component",
@@ -2152,7 +2228,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "arthroplasty",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Bearing insert articulating with femoral head or femoral component.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "bearing",
@@ -2189,7 +2265,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "TKA tibial tray fixed to proximal tibia receiving polyethylene insert.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "component",
@@ -2226,7 +2302,7 @@
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "TKA polyethylene bearing surface articulating with femoral component.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "bearing",
@@ -2262,7 +2338,7 @@
         "slug": "adverse-local-tissue-reaction",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cross-neighborhood reference stub for adverse-local-tissue-reaction.",
         "owner_pilot": "adverse-local-tissue-reaction-neighborhood",
         "staging_apply": true,
@@ -2290,78 +2366,6 @@
       "source": "proposal"
     },
     {
-      "slug": "polyethylene-wear-osteolysis",
-      "entityType": "procedure",
-      "preferredLabel": "Polyethylene Wear Osteolysis",
-      "description": "Cross-neighborhood reference stub for polyethylene-wear-osteolysis.",
-      "metadata": {
-        "slug": "polyethylene-wear-osteolysis",
-        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
-        "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
-        "description": "Cross-neighborhood reference stub for polyethylene-wear-osteolysis.",
-        "owner_pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "confidence": 0.92,
-          "evidence": 0.74,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "shared_reference": true,
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:bone-loss-revision-arthroplasty-neighborhood",
-        "cross_neighborhood": true,
-        "review_packet_label": "Bone Loss in Revision Arthroplasty Neighborhood",
-        "clinical_verification": false,
-        "_provenance_fingerprint": "create|procedure|polyethylene-wear-osteolysis"
-      },
-      "source": "proposal"
-    },
-    {
-      "slug": "revision-arthroplasty",
-      "entityType": "procedure",
-      "preferredLabel": "Revision Arthroplasty",
-      "description": "Cross-neighborhood reference stub for revision-arthroplasty.",
-      "metadata": {
-        "slug": "revision-arthroplasty",
-        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
-        "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
-        "description": "Cross-neighborhood reference stub for revision-arthroplasty.",
-        "owner_pilot": "revision-arthroplasty-neighborhood",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "confidence": 0.92,
-          "evidence": 0.74,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "shared_reference": true,
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:bone-loss-revision-arthroplasty-neighborhood",
-        "cross_neighborhood": true,
-        "review_packet_label": "Bone Loss in Revision Arthroplasty Neighborhood",
-        "clinical_verification": false,
-        "_provenance_fingerprint": "create|procedure|revision-arthroplasty"
-      },
-      "source": "proposal"
-    },
-    {
       "slug": "total-hip-arthroplasty",
       "entityType": "procedure",
       "preferredLabel": "Total Hip Arthroplasty",
@@ -2370,7 +2374,7 @@
         "slug": "total-hip-arthroplasty",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cross-neighborhood reference stub for total-hip-arthroplasty.",
         "owner_pilot": "total-hip-arthroplasty-neighborhood",
         "staging_apply": true,
@@ -2406,7 +2410,7 @@
         "slug": "total-knee-arthroplasty",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.650Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cross-neighborhood reference stub for total-knee-arthroplasty.",
         "owner_pilot": "total-knee-arthroplasty-neighborhood",
         "staging_apply": true,
@@ -2442,7 +2446,7 @@
         "slug": "unicompartmental-knee-arthroplasty",
         "pilot": "bone-loss-revision-arthroplasty-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:26:40.650Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "description": "Cross-neighborhood reference stub for unicompartmental-knee-arthroplasty.",
         "owner_pilot": "unicompartmental-knee-arthroplasty-neighborhood",
         "staging_apply": true,
@@ -2471,6 +2475,157 @@
     }
   ],
   "relationships": [
+    {
+      "subjectSlug": "polyethylene-wear-osteolysis",
+      "predicate": "involves_anatomy",
+      "objectSlug": "adult-reconstruction-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "relationship_strength": "core"
+        },
+        "created_from_proposal_fingerprint": "rel|polyethylene-wear-osteolysis|involves_anatomy|adult-reconstruction-anatomy-hub"
+      },
+      "source": "database"
+    },
+    {
+      "subjectSlug": "adult-reconstruction-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "polyethylene-wear-osteolysis",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "context_relevance": [
+            "clinic",
+            "or"
+          ],
+          "educational_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|adult-reconstruction-anatomy-hub|prerequisite_for|polyethylene-wear-osteolysis"
+      },
+      "source": "database"
+    },
+    {
+      "subjectSlug": "revision-arthroplasty",
+      "predicate": "prerequisite_for",
+      "objectSlug": "polyethylene-wear-osteolysis",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|revision-arthroplasty|prerequisite_for|polyethylene-wear-osteolysis"
+      },
+      "source": "database"
+    },
+    {
+      "subjectSlug": "implant-concepts-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "polyethylene-wear-osteolysis",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "implant_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "arthroplasty"
+        },
+        "created_from_proposal_fingerprint": "rel|implant-concepts-hub|prerequisite_for|polyethylene-wear-osteolysis"
+      },
+      "source": "database"
+    },
+    {
+      "subjectSlug": "adult-reconstruction-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "bone-loss-revision-arthroplasty",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "context_relevance": [
+            "clinic",
+            "or"
+          ],
+          "educational_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|adult-reconstruction-anatomy-hub|prerequisite_for|bone-loss-revision-arthroplasty",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "clinic",
+          "or"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|adult-reconstruction-anatomy-hub|prerequisite_for|bone-loss-revision-arthroplasty"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "bone-loss-revision-arthroplasty",
+      "predicate": "involves_anatomy",
+      "objectSlug": "adult-reconstruction-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "relationship_strength": "core"
+        },
+        "created_from_proposal_fingerprint": "rel|bone-loss-revision-arthroplasty|involves_anatomy|adult-reconstruction-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|bone-loss-revision-arthroplasty|involves_anatomy|adult-reconstruction-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "implant-concepts-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "bone-loss-revision-arthroplasty",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "implant_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "arthroplasty"
+        },
+        "created_from_proposal_fingerprint": "rel|implant-concepts-hub|prerequisite_for|bone-loss-revision-arthroplasty",
+        "anatomy_role": "supporting",
+        "implant_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "arthroplasty",
+        "_provenance_fingerprint": "rel|implant-concepts-hub|prerequisite_for|bone-loss-revision-arthroplasty"
+      },
+      "source": "proposal"
+    },
     {
       "subjectSlug": "bone-loss-revision-arthroplasty",
       "predicate": "has_classification",
@@ -2510,45 +2665,21 @@
       "source": "proposal"
     },
     {
-      "subjectSlug": "adult-reconstruction-anatomy-hub",
+      "subjectSlug": "revision-arthroplasty",
       "predicate": "prerequisite_for",
       "objectSlug": "bone-loss-revision-arthroplasty",
       "metadata": {
-        "anatomy_role": "essential",
-        "review_status": "unreviewed",
-        "relevance_reason": "diagnosis",
-        "context_relevance": [
-          "clinic",
-          "or"
-        ],
-        "educational_importance": "high",
-        "_provenance_fingerprint": "rel|adult-reconstruction-anatomy-hub|prerequisite_for|bone-loss-revision-arthroplasty"
-      },
-      "source": "proposal"
-    },
-    {
-      "subjectSlug": "bone-loss-revision-arthroplasty",
-      "predicate": "involves_anatomy",
-      "objectSlug": "adult-reconstruction-anatomy-hub",
-      "metadata": {
-        "anatomy_role": "essential",
-        "review_status": "unreviewed",
-        "relevance_reason": "diagnosis",
-        "relationship_strength": "core",
-        "_provenance_fingerprint": "rel|bone-loss-revision-arthroplasty|involves_anatomy|adult-reconstruction-anatomy-hub"
-      },
-      "source": "proposal"
-    },
-    {
-      "subjectSlug": "implant-concepts-hub",
-      "predicate": "prerequisite_for",
-      "objectSlug": "bone-loss-revision-arthroplasty",
-      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|revision-arthroplasty|prerequisite_for|bone-loss-revision-arthroplasty",
         "anatomy_role": "supporting",
-        "implant_role": "essential",
         "review_status": "unreviewed",
-        "relevance_reason": "arthroplasty",
-        "_provenance_fingerprint": "rel|implant-concepts-hub|prerequisite_for|bone-loss-revision-arthroplasty"
+        "_provenance_fingerprint": "rel|revision-arthroplasty|prerequisite_for|bone-loss-revision-arthroplasty"
       },
       "source": "proposal"
     },
@@ -2557,25 +2688,38 @@
       "predicate": "prerequisite_for",
       "objectSlug": "bone-loss-revision-arthroplasty",
       "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|polyethylene-wear-osteolysis|prerequisite_for|bone-loss-revision-arthroplasty",
         "anatomy_role": "supporting",
         "review_status": "unreviewed",
         "_provenance_fingerprint": "rel|polyethylene-wear-osteolysis|prerequisite_for|bone-loss-revision-arthroplasty"
       },
       "source": "proposal"
-    },
-    {
-      "subjectSlug": "revision-arthroplasty",
-      "predicate": "prerequisite_for",
-      "objectSlug": "bone-loss-revision-arthroplasty",
-      "metadata": {
-        "anatomy_role": "supporting",
-        "review_status": "unreviewed",
-        "_provenance_fingerprint": "rel|revision-arthroplasty|prerequisite_for|bone-loss-revision-arthroplasty"
-      },
-      "source": "proposal"
     }
   ],
   "claims": [
+    {
+      "draftId": "claim-polyethylene-wear-osteolysis-pearl",
+      "claimType": "anatomy_pearl",
+      "claimText": "Attending pearl: connect polyethylene wear osteolysis anatomy, implant interfaces, and shared trauma neighborhoods before operative planning.",
+      "primaryEntitySlug": "polyethylene-wear-osteolysis",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "unreviewed",
+      "metadata": {
+        "draft_id": "claim-polyethylene-wear-osteolysis-pearl",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false
+      }
+    },
     {
       "draftId": "claim-bone-loss-revision-arthroplasty-pearl",
       "claimType": "anatomy_pearl",
@@ -2635,7 +2779,7 @@
         "curation_rules": [
           "educational_judgment_claim"
         ],
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "_provenance_fingerprint": "claim|claim-bone-loss-revision-arthroplasty-board_trap-revision-arthroplasty-bo"
       }
     },
@@ -2653,7 +2797,7 @@
         "verified": false,
         "claim_text": "Board trap: oversimplifying bone loss revision arthroplasty without attending-level implant, fixation, or infection context.",
         "claim_type": "board_trap",
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "content_source": "generated_draft",
         "curation_route": "HUMAN_REVIEW",
         "curation_rules": [
@@ -2723,7 +2867,7 @@
         "curation_rules": [
           "educational_judgment_claim"
         ],
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "_provenance_fingerprint": "claim|claim-bone-loss-revision-arthroplasty-cognitive_trap-use-implant-component-vo"
       }
     },
@@ -2741,7 +2885,7 @@
         "verified": false,
         "claim_text": "Bone loss classification drives revision implant selection and augmentation strategy.",
         "claim_type": "fact",
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "content_source": "generated_draft",
         "curation_route": "HUMAN_REVIEW",
         "curation_rules": [
@@ -2809,102 +2953,8 @@
         "curation_rules": [
           "l2_fact_light_review"
         ],
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "_provenance_fingerprint": "claim|claim-bone-loss-revision-arthroplasty-fact-infection"
-      }
-    },
-    {
-      "draftId": "claim-bone-loss-revision-arthroplasty-fact-instability",
-      "claimType": "fact",
-      "claimText": "Instability.",
-      "primaryEntitySlug": "bone-loss-revision-arthroplasty",
-      "importanceLevel": "L2",
-      "contentSource": "generated_draft",
-      "reviewStatus": "needs_review",
-      "metadata": {
-        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
-        "draft_id": "claim-bone-loss-revision-arthroplasty-fact-instability",
-        "claim_type": "fact",
-        "claim_text": "Instability.",
-        "primary_entity_slug": "bone-loss-revision-arthroplasty",
-        "importance_level": "L2",
-        "content_source": "generated_draft",
-        "verified": false,
-        "why_it_matters": [
-          "changes_management"
-        ],
-        "context_relevance": [
-          "clinic"
-        ],
-        "learner_stage": "clerkship",
-        "evidence_item_ids": [
-          "ev-static-prepare-2a1709c6"
-        ],
-        "evidence_packet_id": "ev-packet-ec458bb6",
-        "uncertainty_note": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
-        "review_route_hint": "HUMAN_REVIEW",
-        "generated_by": "claim-builder-v2",
-        "publication_eligible": false,
-        "curation_route": "AUTO_REVISED",
-        "curation_scores": {
-          "confidence": 0.8365,
-          "evidence": 0.7,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.8
-        },
-        "curation_rules": [
-          "l2_fact_light_review"
-        ],
-        "curated_at": "2026-07-05T23:26:40.649Z",
-        "_provenance_fingerprint": "claim|claim-bone-loss-revision-arthroplasty-fact-instability"
-      }
-    },
-    {
-      "draftId": "claim-bone-loss-revision-arthroplasty-fact-loosening",
-      "claimType": "fact",
-      "claimText": "Loosening.",
-      "primaryEntitySlug": "bone-loss-revision-arthroplasty",
-      "importanceLevel": "L2",
-      "contentSource": "generated_draft",
-      "reviewStatus": "needs_review",
-      "metadata": {
-        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
-        "draft_id": "claim-bone-loss-revision-arthroplasty-fact-loosening",
-        "claim_type": "fact",
-        "claim_text": "Loosening.",
-        "primary_entity_slug": "bone-loss-revision-arthroplasty",
-        "importance_level": "L2",
-        "content_source": "generated_draft",
-        "verified": false,
-        "why_it_matters": [
-          "clinical_reasoning"
-        ],
-        "context_relevance": [
-          "clinic"
-        ],
-        "learner_stage": "clerkship",
-        "evidence_item_ids": [
-          "ev-static-prepare-2a1709c6"
-        ],
-        "evidence_packet_id": "ev-packet-ec458bb6",
-        "uncertainty_note": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
-        "review_route_hint": "HUMAN_REVIEW",
-        "generated_by": "claim-builder-v2",
-        "publication_eligible": false,
-        "curation_route": "AUTO_REVISED",
-        "curation_scores": {
-          "confidence": 0.8365,
-          "evidence": 0.7,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.8
-        },
-        "curation_rules": [
-          "l2_fact_light_review"
-        ],
-        "curated_at": "2026-07-05T23:26:40.649Z",
-        "_provenance_fingerprint": "claim|claim-bone-loss-revision-arthroplasty-fact-loosening"
       }
     },
     {
@@ -2950,7 +3000,7 @@
         "curation_rules": [
           "l2_fact_light_review"
         ],
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "_provenance_fingerprint": "claim|claim-bone-loss-revision-arthroplasty-fact-reconstruction-principle"
       }
     },
@@ -2997,7 +3047,7 @@
         "curation_rules": [
           "educational_judgment_claim"
         ],
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "_provenance_fingerprint": "claim|claim-bone-loss-revision-arthroplasty-imaging_point-periprosthetic-lucency-a"
       }
     },
@@ -3044,7 +3094,7 @@
         "curation_rules": [
           "educational_judgment_claim"
         ],
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "_provenance_fingerprint": "claim|claim-bone-loss-revision-arthroplasty-imaging_point-weight-bearing-radiograp"
       }
     },
@@ -3062,7 +3112,7 @@
         "verified": false,
         "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for bone loss revision arthroplasty.",
         "claim_type": "clinical_script",
-        "curated_at": "2026-07-05T23:26:40.649Z",
+        "curated_at": "2026-07-16T02:40:22.027Z",
         "content_source": "generated_draft",
         "curation_route": "HUMAN_REVIEW",
         "curation_rules": [
@@ -3086,6 +3136,147 @@
         "review_packet_label": "Bone Loss in Revision Arthroplasty Neighborhood",
         "_provenance_fingerprint": "claim|claim-bone-loss-revision-arthroplasty-script"
       }
+    },
+    {
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-extensor-mechanism",
+      "claimType": "anatomy_pearl",
+      "claimText": "Extensor mechanism.",
+      "primaryEntitySlug": "implant-concepts-hub",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
+        "draft_id": "claim-implant-concepts-hub-anatomy_pearl-extensor-mechanism",
+        "claim_type": "anatomy_pearl",
+        "claim_text": "Extensor mechanism.",
+        "primary_entity_slug": "implant-concepts-hub",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-2a1709c6"
+        ],
+        "evidence_packet_id": "ev-packet-ec458bb6",
+        "uncertainty_note": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curated_at": "2026-07-16T02:40:22.027Z",
+        "_provenance_fingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-extensor-mechanism"
+      }
+    },
+    {
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa",
+      "claimType": "anatomy_pearl",
+      "claimText": "Hip and knee joint surfaces.",
+      "primaryEntitySlug": "implant-concepts-hub",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
+        "draft_id": "claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa",
+        "claim_type": "anatomy_pearl",
+        "claim_text": "Hip and knee joint surfaces.",
+        "primary_entity_slug": "implant-concepts-hub",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-2a1709c6"
+        ],
+        "evidence_packet_id": "ev-packet-ec458bb6",
+        "uncertainty_note": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curated_at": "2026-07-16T02:40:22.027Z",
+        "_provenance_fingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa"
+      }
+    },
+    {
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-implant-bone-interfaces",
+      "claimType": "anatomy_pearl",
+      "claimText": "Implant-bone interfaces.",
+      "primaryEntitySlug": "implant-concepts-hub",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
+        "draft_id": "claim-implant-concepts-hub-anatomy_pearl-implant-bone-interfaces",
+        "claim_type": "anatomy_pearl",
+        "claim_text": "Implant-bone interfaces.",
+        "primary_entity_slug": "implant-concepts-hub",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-2a1709c6"
+        ],
+        "evidence_packet_id": "ev-packet-ec458bb6",
+        "uncertainty_note": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curated_at": "2026-07-16T02:40:22.027Z",
+        "_provenance_fingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-implant-bone-interfaces"
+      }
     }
   ],
   "decisionPoints": [
@@ -3103,13 +3294,13 @@
   "conflicts": [],
   "stats": {
     "entityCount": 66,
-    "relationshipCount": 7,
-    "claimCount": 12,
+    "relationshipCount": 11,
+    "claimCount": 14,
     "decisionPointCount": 1,
     "bridgeCount": 1,
-    "duplicateEntitiesResolved": 3,
+    "duplicateEntitiesResolved": 7,
     "conflictingRelationships": 0,
-    "metadataMerged": 5,
-    "provenanceAttached": 87
+    "metadataMerged": 14,
+    "provenanceAttached": 88
   }
 }

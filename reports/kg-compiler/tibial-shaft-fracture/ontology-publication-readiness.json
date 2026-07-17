@@ -1,20 +1,26 @@
 {
   "topicKey": "tibial-shaft-fracture",
   "pilotKey": "tibial-shaft-fracture-neighborhood",
-  "generatedAt": "2026-07-05T21:24:25.512Z",
+  "generatedAt": "2026-07-16T02:18:46.905Z",
   "currentLevel": 5,
   "requiredLevel": 7,
   "ready": false,
   "blockers": [
-    "17 proposals still awaiting human review",
+    "18 proposals still awaiting human review",
     "9 items require attending review",
     "Claims and DPs are draft-only — publication gate must block verified consumption.",
     "No approved canonical entities in database yet — proposals remain offline/spec.",
-    "2 critical/high ontology gaps remain unresolved"
+    "12 critical/high ontology gaps remain unresolved"
   ],
   "remainingWork": [
     "[high] Tibia Leg Anatomy Hub missing outbound part_of (0/1).",
     "[high] Tibial IM Nailing missing outbound at_risk_structure (0/1).",
+    "[high] Tibial Shaft Fracture neighborhood has 0/1 classification_system entities.",
+    "[high] Tibial Shaft Fracture missing outbound at_risk_structure (0/1).",
+    "[critical] Tibial Shaft Fracture missing outbound has_classification (0/1).",
+    "[high] Tibial Shaft Fracture missing outbound has_grade (0/1).",
+    "[high] Tibial Shaft Fracture missing outbound treated_by (0/1).",
+    "[high] Tibial Shaft Fracture has 0/3 L1 claims.",
     "Route ATTENDING_REVIEW queue to attending reviewer"
   ],
   "productReadiness": {
@@ -23,8 +29,8 @@
     "brobotReady": false
   },
   "estimatedEffort": {
-    "gapsRemaining": 11,
-    "humanReviewItems": 17,
+    "gapsRemaining": 25,
+    "humanReviewItems": 18,
     "attendingReviewItems": 9,
     "effortBand": "high"
   },

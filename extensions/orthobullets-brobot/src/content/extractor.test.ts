@@ -6,6 +6,8 @@ const { parseHTML } = require('linkedom');
 
 import {
   detectQuestionProvider,
+  extractHimalayaPageContext,
+  extractHimalayaQuestionSnapshot,
   extractOrthobulletsPageContext,
   extractOrthobulletsTopicPageContext,
   extractQuestionContext,
@@ -517,6 +519,94 @@ assert.ok(rockReferencesContext, 'ROCK references-heavy page should be detected'
 assert.equal(rockReferencesContext.mode, 'curriculum_content');
 assert.ok((rockReferencesContext.references ?? []).length >= 3);
 assert.equal(rockReferencesContext.classification?.pageKind, 'educational_content');
+
+const himalayaCorrectHtml = readFileSync(path.join(FIXTURES_DIR, 'himalaya-reviewed-correct.html'), 'utf8');
+assert.match(himalayaCorrectHtml, /Synthetic Himalaya Review Fixture/);
+const { document: himalayaCorrectDocument } = parseHTML(himalayaCorrectHtml);
+const himalayaCorrectContext = extractQuestionContext({
+  document: himalayaCorrectDocument,
+  pageUrl: 'https://learn.aaos.org/diweb/?wicket:interface=:3::::',
+});
+
+assert.ok(himalayaCorrectContext, 'Himalaya reviewed fixture should be detected');
+assert.equal(detectQuestionProvider({ document: himalayaCorrectDocument, pageUrl: 'https://learn.aaos.org/diweb/?wicket:interface=:3::::' }), 'himalaya');
+assert.equal(himalayaCorrectContext.provider, 'himalaya');
+assert.equal(himalayaCorrectContext.mode, 'question');
+assert.equal(himalayaCorrectContext.pageKind, 'review');
+assert.equal(himalayaCorrectContext.questionId, 'HIM-SYN-001');
+assert.match(himalayaCorrectContext.stem ?? '', /sanitized learner-facing stem/i);
+assert.equal(himalayaCorrectContext.answerChoices.length, 3);
+assert.equal(himalayaCorrectContext.selectedAnswerKey, 'B');
+assert.equal(himalayaCorrectContext.correctAnswerKey, 'B');
+assert.match(himalayaCorrectContext.sourceExplanation ?? '', /protected-motion/i);
+assert.match(himalayaCorrectContext.sourceKeyPoints ?? '', /supervised progression/i);
+assert.match(himalayaCorrectContext.sourceReferences ?? '', /Sanitized Journal/i);
+assert.equal(himalayaCorrectContext.questionReviewSignals?.hasSubmittedAnswerState, true);
+
+const himalayaIncorrectHtml = readFileSync(path.join(FIXTURES_DIR, 'himalaya-reviewed-incorrect-hidden-icons.html'), 'utf8');
+assert.match(himalayaIncorrectHtml, /Synthetic Himalaya Incorrect Review Fixture/);
+const { document: himalayaIncorrectDocument } = parseHTML(himalayaIncorrectHtml);
+const himalayaIncorrectContext = extractQuestionContext({
+  document: himalayaIncorrectDocument,
+  pageUrl: 'https://learn.aaos.org/diweb/review',
+});
+
+assert.ok(himalayaIncorrectContext, 'Himalaya incorrect fixture should be detected');
+assert.equal(himalayaIncorrectContext.provider, 'himalaya');
+assert.equal(himalayaIncorrectContext.selectedAnswerKey, 'A');
+assert.equal(himalayaIncorrectContext.correctAnswerKey, 'B');
+assert.equal(himalayaIncorrectContext.answerChoices.find((choice) => choice.key === 'C')?.isCorrect, null);
+assert.match(himalayaIncorrectContext.explanationText ?? '', /mechanical driver/i);
+assert.match(himalayaIncorrectContext.sourceKeyPoints ?? '', /cause rather than the symptom/i);
+
+const himalayaOverviewHtml = readFileSync(path.join(FIXTURES_DIR, 'himalaya-results-overview.html'), 'utf8');
+assert.match(himalayaOverviewHtml, /Results: Posttest: Synthetic/);
+const { document: himalayaOverviewDocument } = parseHTML(himalayaOverviewHtml);
+const himalayaOverviewContext = extractHimalayaPageContext({
+  document: himalayaOverviewDocument,
+  pageUrl: 'https://learn.aaos.org/diweb/?wicket:interface=:4::::',
+});
+
+assert.ok(himalayaOverviewContext, 'Himalaya overview should return an empty-state context');
+assert.equal(himalayaOverviewContext.provider, 'himalaya');
+assert.equal(himalayaOverviewContext.pageKind, 'results-overview');
+assert.equal(himalayaOverviewContext.answerChoices.length, 0);
+assert.equal(himalayaOverviewContext.questionCount, 3);
+assert.ok(himalayaOverviewContext.extractionWarnings.includes('himalaya_results_overview_no_active_question'));
+
+const himalayaMultiHtml = readFileSync(path.join(FIXTURES_DIR, 'himalaya-multiple-containers.html'), 'utf8');
+assert.match(himalayaMultiHtml, /Synthetic Himalaya Multiple Containers/);
+const { document: himalayaMultiDocument } = parseHTML(himalayaMultiHtml);
+const himalayaMultiContext = extractQuestionContext({
+  document: himalayaMultiDocument,
+  pageUrl: 'https://learn.aaos.org/diweb/review?question=3',
+});
+
+assert.ok(himalayaMultiContext, 'Himalaya active visible container should be detected');
+assert.equal(himalayaMultiContext.questionId, 'HIM-SYN-003');
+assert.match(himalayaMultiContext.stem ?? '', /visible active container/i);
+assert.doesNotMatch(himalayaMultiContext.stem ?? '', /Hidden stale/i);
+assert.equal(himalayaMultiContext.answerChoices.length, 2);
+
+const beforeReview = extractHimalayaQuestionSnapshot({
+  document: himalayaCorrectDocument,
+  pageUrl: 'https://learn.aaos.org/diweb/review',
+}).snapshot;
+const correctChoice = himalayaCorrectDocument.querySelector('.answer.correct');
+correctChoice?.setAttribute('class', 'answer your-answer correct selected-by-runtime');
+const feedback = himalayaCorrectDocument.querySelector('.feedback');
+feedback?.setAttribute('style', 'display:none');
+const afterReviewStateChange = extractHimalayaQuestionSnapshot({
+  document: himalayaCorrectDocument,
+  pageUrl: 'https://learn.aaos.org/diweb/review',
+}).snapshot;
+
+assert.ok(beforeReview?.fingerprint, 'Himalaya snapshot should include fingerprint');
+assert.equal(
+  afterReviewStateChange?.fingerprint,
+  beforeReview?.fingerprint,
+  'Himalaya fingerprint should not change when review markings or feedback visibility changes'
+);
 
 const rockTableHtml = readFileSync(path.join(FIXTURES_DIR, 'rock-curriculum-with-table.html'), 'utf8');
 const { document: rockTableDocument } = parseHTML(rockTableHtml);

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-05T23:26:40.651Z",
+  "generatedAt": "2026-07-16T02:40:22.029Z",
   "frameworkVersion": "1.0.0",
   "topicKey": "bone-loss-revision-arthroplasty",
   "pilotKey": "bone-loss-revision-arthroplasty-neighborhood",
@@ -9,6 +9,7 @@
     "work-relationship-builder",
     "work-claim-builder",
     "work-decision-point-builder",
+    "work-metadata-builder",
     "work-duplicate-detector",
     "work-quality-scorer",
     "work-conflict-resolver",
@@ -25,7 +26,8 @@
     ],
     [
       "work-claim-builder",
-      "work-decision-point-builder"
+      "work-decision-point-builder",
+      "work-metadata-builder"
     ],
     [
       "work-duplicate-detector"
@@ -49,7 +51,7 @@
       "agentId": "clinical-entity-builder",
       "status": "completed",
       "proposalCount": 34,
-      "executionTimeMs": 3,
+      "executionTimeMs": 2,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -70,7 +72,7 @@
       "assignmentId": "work-relationship-builder",
       "agentId": "relationship-builder",
       "status": "completed",
-      "proposalCount": 5,
+      "proposalCount": 0,
       "executionTimeMs": 0,
       "errors": [],
       "warnings": [],
@@ -81,7 +83,7 @@
       "assignmentId": "work-claim-builder",
       "agentId": "claim-builder",
       "status": "completed",
-      "proposalCount": 8,
+      "proposalCount": 9,
       "executionTimeMs": 3,
       "errors": [],
       "warnings": [],
@@ -100,11 +102,22 @@
       "timedOut": false
     },
     {
+      "assignmentId": "work-metadata-builder",
+      "agentId": "metadata-builder",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 0,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
       "assignmentId": "work-duplicate-detector",
       "agentId": "duplicate-detector",
       "status": "completed",
       "proposalCount": 0,
-      "executionTimeMs": 0,
+      "executionTimeMs": 1,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -136,8 +149,8 @@
       "assignmentId": "work-review-assistant",
       "agentId": "review-assistant",
       "status": "completed",
-      "proposalCount": 87,
-      "executionTimeMs": 1,
+      "proposalCount": 88,
+      "executionTimeMs": 2,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -155,9 +168,9 @@
       "timedOut": false
     }
   ],
-  "totalProposalsEmitted": 135,
-  "uniqueProposals": 87,
-  "completedAgents": 10,
+  "totalProposalsEmitted": 132,
+  "uniqueProposals": 88,
+  "completedAgents": 11,
   "failedAgents": 0,
   "partialAgents": 0,
   "skippedAgents": 0,

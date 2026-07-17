@@ -1,10 +1,19 @@
 {
-  "generatedAt": "2026-07-05T23:04:58.199Z",
+  "generatedAt": "2026-07-16T02:54:52.451Z",
   "evidencePacketId": "ev-packet-6fefb14e",
   "traces": [
     {
-      "draftId": "claim-periprosthetic-knee-fracture-fact-knee-reconstruction-clas",
-      "proposalFingerprint": "claim|claim-periprosthetic-knee-fracture-fact-knee-reconstruction-clas",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa",
+      "evidenceItemIds": [
+        "ev-static-prepare-244df1be"
+      ],
+      "claimType": "anatomy_pearl",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-implant-concepts-hub-fact-knee-reconstruction-clas",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-fact-knee-reconstruction-clas",
       "evidenceItemIds": [
         "ev-static-prepare-244df1be"
       ],
@@ -12,12 +21,21 @@
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-fact-infection",
-      "proposalFingerprint": "claim|claim-periprosthetic-knee-fracture-fact-infection",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-extensor-mechanism",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-extensor-mechanism",
       "evidenceItemIds": [
         "ev-static-prepare-244df1be"
       ],
-      "claimType": "fact",
+      "claimType": "anatomy_pearl",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-periprosthetic-knee-fracture-imaging_point-weight-bearing-radiograp",
+      "proposalFingerprint": "claim|claim-periprosthetic-knee-fracture-imaging_point-weight-bearing-radiograp",
+      "evidenceItemIds": [
+        "ev-static-prepare-244df1be"
+      ],
+      "claimType": "imaging_point",
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
@@ -30,8 +48,8 @@
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-imaging_point-weight-bearing-radiograp",
-      "proposalFingerprint": "claim|claim-periprosthetic-knee-fracture-imaging_point-weight-bearing-radiograp",
+      "draftId": "claim-periprosthetic-knee-fracture-imaging_point-periprosthetic-lucency-a",
+      "proposalFingerprint": "claim|claim-periprosthetic-knee-fracture-imaging_point-periprosthetic-lucency-a",
       "evidenceItemIds": [
         "ev-static-prepare-244df1be"
       ],
@@ -48,17 +66,8 @@
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-imaging_point-periprosthetic-lucency-a",
-      "proposalFingerprint": "claim|claim-periprosthetic-knee-fracture-imaging_point-periprosthetic-lucency-a",
-      "evidenceItemIds": [
-        "ev-static-prepare-244df1be"
-      ],
-      "claimType": "imaging_point",
-      "reviewRoute": "HUMAN_REVIEW"
-    },
-    {
-      "draftId": "claim-periprosthetic-knee-fracture-fact-loosening",
-      "proposalFingerprint": "claim|claim-periprosthetic-knee-fracture-fact-loosening",
+      "draftId": "claim-implant-concepts-hub-fact-infection",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-fact-infection",
       "evidenceItemIds": [
         "ev-static-prepare-244df1be"
       ],
@@ -66,12 +75,12 @@
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-fact-instability",
-      "proposalFingerprint": "claim|claim-periprosthetic-knee-fracture-fact-instability",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-implant-bone-interfaces",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-implant-bone-interfaces",
       "evidenceItemIds": [
         "ev-static-prepare-244df1be"
       ],
-      "claimType": "fact",
+      "claimType": "anatomy_pearl",
       "reviewRoute": "HUMAN_REVIEW"
     }
   ],

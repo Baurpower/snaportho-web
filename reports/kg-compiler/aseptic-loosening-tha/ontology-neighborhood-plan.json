@@ -3,16 +3,52 @@
   "pilotKey": "aseptic-loosening-tha-neighborhood",
   "primaryEntitySlug": "aseptic-loosening-tha",
   "displayName": "Aseptic Loosening of THA",
-  "generatedAt": "2026-07-05T22:53:45.311Z",
+  "generatedAt": "2026-07-16T02:32:31.851Z",
   "nodes": [
     {
-      "slug": "periprosthetic-radiolucency",
-      "entityType": "imaging_finding",
-      "preferredLabel": "Periprosthetic Radiolucency",
-      "role": "imaging",
+      "slug": "acetabular-component",
+      "entityType": "implant",
+      "preferredLabel": "Acetabular Component",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "adult-reconstruction-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Adult Reconstruction Anatomy Hub",
+      "role": "neighboring_anatomy",
       "isPrimary": false,
       "inboundEdgeCount": 1,
-      "outboundEdgeCount": 0
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "aseptic-loosening-tha",
+      "entityType": "condition",
+      "preferredLabel": "Aseptic Loosening of THA",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 5,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "femoral-stem",
+      "entityType": "implant",
+      "preferredLabel": "Femoral Stem",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
     },
     {
       "slug": "osteolysis",
@@ -24,24 +60,37 @@
       "outboundEdgeCount": 0
     },
     {
-      "slug": "aseptic-loosening-tha",
-      "entityType": "condition",
-      "preferredLabel": "Aseptic Loosening of THA",
-      "role": "primary_condition",
-      "isPrimary": true,
+      "slug": "periprosthetic-radiolucency",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Periprosthetic Radiolucency",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "revision-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Revision Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
       "inboundEdgeCount": 0,
-      "outboundEdgeCount": 2
+      "outboundEdgeCount": 1
     }
   ],
-  "edgeCount": 2,
+  "edgeCount": 8,
   "claimCount": 2,
   "decisionPointCount": 0,
   "roles": {
     "primary_condition": [
       "aseptic-loosening-tha"
     ],
-    "neighboring_anatomy": [],
-    "procedure": [],
+    "neighboring_anatomy": [
+      "adult-reconstruction-anatomy-hub"
+    ],
+    "procedure": [
+      "revision-arthroplasty"
+    ],
     "classification": [],
     "imaging": [
       "periprosthetic-radiolucency"
@@ -51,8 +100,13 @@
     ],
     "decision_point_anchor": [],
     "claim_anchor": [],
-    "biomechanics": [],
-    "fixation": [],
+    "biomechanics": [
+      "implant-concepts-hub"
+    ],
+    "fixation": [
+      "acetabular-component",
+      "femoral-stem"
+    ],
     "supporting": []
   }
 }

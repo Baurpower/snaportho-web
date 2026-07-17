@@ -39,7 +39,7 @@ export interface TopicSection {
 }
 
 export type OrthobulletsPageKind = 'review' | 'current_test' | 'topic' | 'unknown';
-export type QuestionProvider = 'orthobullets' | 'rock';
+export type QuestionProvider = 'orthobullets' | 'rock' | 'himalaya';
 export type ExtractedPageMode = 'question' | 'curriculum_content' | 'topic_page';
 export type ClassifiedPageKind = 'question' | 'educational_content' | 'mixed' | 'topic_page' | 'unreadable';
 export type ProviderDetectionStatus = QuestionProvider | 'unsupported' | 'readable_unrecognized';
@@ -101,6 +101,24 @@ export interface ExtensionFetchDiagnostics {
   responseBody: string | null;
   responseMessage: string | null;
   fetchFailedBeforeResponse: boolean;
+  extensionBuildId?: string;
+  sidePanelBuildIdMarker?: string;
+  routingContractVersion?: string;
+  backgroundHandlerVersion?: string;
+  sidePanelBundleVersion?: string;
+  messageType?: string;
+  loadedManifestVersion?: string | null;
+  requestedTask?: string;
+  resolvedEndpoint?: string;
+  requestProvider?: QuestionProvider;
+  requestPageKind?: string;
+  requestPayloadKind?: 'question' | 'curriculum';
+  curriculumSectionCount?: number;
+  curriculumContentCharCount?: number;
+  requestBodyCharCount?: number;
+  wasTruncated?: boolean;
+  omittedSectionCount?: number;
+  serverErrorCode?: string | null;
 }
 
 export interface OrthobulletsPageContext {
@@ -143,12 +161,32 @@ export interface OrthobulletsPageContext {
   percentDistribution: OrthobulletsPercentDistribution[];
   explanationText?: string | null;
   explanation?: string | null;
+  sourceExplanation?: string | null;
+  sourceKeyPoints?: string | null;
+  sourceReferences?: string | null;
   linkedConcepts: OrthobulletsLinkedConcept[];
   images: OrthobulletsImageMetadata[];
   raw?: {
     providerSpecific?: Record<string, unknown>;
   };
   extractionWarnings: string[];
+  questionReviewSignals?: {
+    hasVisibleExplanation: boolean;
+    hasVisibleReviewMarker: boolean;
+    hasSubmittedAnswerState: boolean;
+    visibleUnansweredPrompt: boolean;
+    unansweredOverrideApplied: boolean;
+    reviewScore: number;
+    unansweredScore: number;
+    reviewEvidence: string[];
+    unansweredEvidence: string[];
+    visiblePreferredResponseActive?: boolean;
+    visiblePreferredResponseEnabled?: boolean;
+    visibleExplanationTextLength?: number;
+    visibleSelectedAnswerReviewClass?: boolean;
+    visibleCorrectAnswerReviewClass?: boolean;
+    visibleDistributionRows?: number;
+  };
   debug?: {
     matchedSelectors: Record<string, string[]>;
     extractorVersion: string;

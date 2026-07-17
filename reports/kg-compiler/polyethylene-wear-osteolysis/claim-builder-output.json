@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-07-05T22:57:46.732Z",
+  "generatedAt": "2026-07-16T02:55:24.632Z",
   "agentId": "claim-builder",
   "agentVersion": "2.0.0",
   "evidencePacketId": "ev-packet-efa9d44b",
-  "gapsAddressed": 4,
-  "gapsScheduled": 4,
-  "claimsGenerated": 8,
+  "gapsAddressed": 2,
+  "gapsScheduled": 10,
+  "claimsGenerated": 10,
   "claimsRejected": 6,
   "redirectedToDecisionPoint": 4,
   "candidates": [
     {
-      "draftId": "claim-particulate-debris-fact-recognize-core-concepts-",
+      "draftId": "claim-bearing-surface-selection-fact-recognize-core-concepts-",
       "claimText": "Recognize core concepts in Polyethylene Wear and Osteolysis.",
       "claimType": "fact",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L3",
       "whyItMatters": [
         "clinical_reasoning"
@@ -26,17 +26,17 @@
         "ev-static-prepare-461482d8"
       ],
       "section": "learning_objectives",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-particulate-debris-anatomy_pearl-connect-polyethylene-wea",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-connect-polyethylene-wea",
       "claimText": "Connect Polyethylene Wear and Osteolysis to shared anatomy, implant concepts, and trauma neighborhoods.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "anatomical_reasoning"
@@ -49,7 +49,7 @@
         "ev-static-prepare-461482d8"
       ],
       "section": "learning_objectives",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -75,14 +75,14 @@
       "section": "learning_objectives",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
-      "confidence": 0.7865,
+      "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-particulate-debris-fact-polyethylene-wear-and-os",
+      "draftId": "claim-bearing-surface-selection-fact-polyethylene-wear-and-os",
       "claimText": "Polyethylene Wear and Osteolysis indication language.",
       "claimType": "fact",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -96,17 +96,17 @@
         "ev-static-prepare-547e3caf"
       ],
       "section": "fast.mustKnow",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-particulate-debris-fact-implant-and-fixation-voc",
+      "draftId": "claim-bearing-surface-selection-fact-implant-and-fixation-voc",
       "claimText": "Implant and fixation vocabulary.",
       "claimType": "fact",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -120,17 +120,17 @@
         "ev-static-prepare-547e3caf"
       ],
       "section": "fast.mustKnow",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-particulate-debris-fact-cross-neighborhood-traum",
+      "draftId": "claim-bearing-surface-selection-fact-cross-neighborhood-traum",
       "claimText": "Cross-neighborhood trauma links.",
       "claimType": "fact",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -144,17 +144,17 @@
         "ev-static-prepare-547e3caf"
       ],
       "section": "fast.mustKnow",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-particulate-debris-anatomy_pearl-shared-adult-reconstruct",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-shared-adult-reconstruct",
       "claimText": "Shared adult reconstruction anatomy hub.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "whyItMatters": [
         "anatomical_reasoning"
@@ -168,17 +168,17 @@
         "ev-static-prepare-547e3caf"
       ],
       "section": "fast.anatomyFocus",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-particulate-debris-anatomy_pearl-implant-concepts-hub",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-implant-concepts-hub",
       "claimText": "Implant concepts hub.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -192,17 +192,17 @@
         "ev-static-prepare-547e3caf"
       ],
       "section": "fast.anatomyFocus",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-particulate-debris-anatomy_pearl-trauma-neighborhood-brid",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-trauma-neighborhood-brid",
       "claimText": "Trauma neighborhood bridges.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -216,17 +216,17 @@
         "ev-static-prepare-547e3caf"
       ],
       "section": "fast.anatomyFocus",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-particulate-debris-fact-polyethylene-wear-genera",
+      "draftId": "claim-bearing-surface-selection-fact-polyethylene-wear-genera",
       "claimText": "Polyethylene wear generates particulate debris driving periprosthetic osteolysis and loosening.",
       "claimType": "fact",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -240,7 +240,7 @@
         "ev-static-prepare-547e3caf"
       ],
       "section": "fast.oneLiner",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -268,7 +268,7 @@
       "section": "fast.orSurvivalTips",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
-      "confidence": 0.7414999999999999,
+      "confidence": 0.7915,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
@@ -293,7 +293,7 @@
       "section": "fast.orSurvivalTips",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
-      "confidence": 0.7414999999999999,
+      "confidence": 0.7915,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
@@ -317,7 +317,7 @@
       "section": "fast.caseSteps",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
-      "confidence": 0.7865,
+      "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
@@ -341,7 +341,7 @@
       "section": "fast.caseSteps",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
-      "confidence": 0.7865,
+      "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
@@ -365,7 +365,7 @@
       "section": "fast.caseSteps",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
-      "confidence": 0.7865,
+      "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
@@ -389,14 +389,14 @@
       "section": "fast.caseSteps",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
-      "confidence": 0.7865,
+      "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-particulate-debris-anatomy_pearl-hip-and-knee-joint-surfa",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-hip-and-knee-joint-surfa",
       "claimText": "Hip and knee joint surfaces.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -409,17 +409,17 @@
         "ev-static-prepare-5481843b"
       ],
       "section": "deep.anatomy",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-particulate-debris-anatomy_pearl-extensor-mechanism",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-extensor-mechanism",
       "claimText": "Extensor mechanism.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -432,17 +432,17 @@
         "ev-static-prepare-5481843b"
       ],
       "section": "deep.anatomy",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-particulate-debris-anatomy_pearl-implant-bone-interfaces",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-implant-bone-interfaces",
       "claimText": "Implant-bone interfaces.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -455,17 +455,17 @@
         "ev-static-prepare-5481843b"
       ],
       "section": "deep.anatomy",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-particulate-debris-fact-hip-reconstruction-class",
+      "draftId": "claim-bearing-surface-selection-fact-hip-reconstruction-class",
       "claimText": "Hip Reconstruction classification frameworks.",
       "claimType": "fact",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -478,7 +478,7 @@
         "ev-static-prepare-5481843b"
       ],
       "section": "deep.classification",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -503,7 +503,7 @@
       "section": "deep.imaging",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
-      "confidence": 0.7865,
+      "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
@@ -525,7 +525,7 @@
       "section": "deep.imaging",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
-      "confidence": 0.7865,
+      "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
@@ -547,14 +547,14 @@
       "section": "deep.boardPearls",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
-      "confidence": 0.7414999999999999,
+      "confidence": 0.7915,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-particulate-debris-fact-infection",
+      "draftId": "claim-bearing-surface-selection-fact-infection",
       "claimText": "Infection.",
       "claimType": "fact",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -567,17 +567,17 @@
         "ev-static-prepare-5481843b"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-particulate-debris-fact-loosening",
+      "draftId": "claim-bearing-surface-selection-fact-loosening",
       "claimText": "Loosening.",
       "claimType": "fact",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -590,17 +590,17 @@
         "ev-static-prepare-5481843b"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-particulate-debris-fact-instability",
+      "draftId": "claim-bearing-surface-selection-fact-instability",
       "claimText": "Instability.",
       "claimType": "fact",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "changes_management"
@@ -613,17 +613,17 @@
         "ev-static-prepare-5481843b"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-particulate-debris-fact-periprosthetic-fracture",
+      "draftId": "claim-bearing-surface-selection-fact-periprosthetic-fracture",
       "claimText": "Periprosthetic fracture.",
       "claimType": "fact",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -636,7 +636,7 @@
         "ev-static-prepare-5481843b"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -695,8 +695,8 @@
   ],
   "proposals": [
     {
-      "proposalFingerprint": "claim|claim-particulate-debris-fact-recognize-core-concepts-",
-      "draftId": "claim-particulate-debris-fact-recognize-core-concepts-",
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-fact-recognize-core-concepts-",
+      "draftId": "claim-bearing-surface-selection-fact-recognize-core-concepts-",
       "claimType": "fact",
       "importanceLevel": "L3",
       "reviewRoute": "HUMAN_REVIEW",
@@ -706,8 +706,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-particulate-debris-fact-polyethylene-wear-and-os",
-      "draftId": "claim-particulate-debris-fact-polyethylene-wear-and-os",
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-fact-polyethylene-wear-and-os",
+      "draftId": "claim-bearing-surface-selection-fact-polyethylene-wear-and-os",
       "claimType": "fact",
       "importanceLevel": "L1",
       "reviewRoute": "HUMAN_REVIEW",
@@ -717,8 +717,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-particulate-debris-anatomy_pearl-connect-polyethylene-wea",
-      "draftId": "claim-particulate-debris-anatomy_pearl-connect-polyethylene-wea",
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-connect-polyethylene-wea",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-connect-polyethylene-wea",
       "claimType": "anatomy_pearl",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
@@ -728,8 +728,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-particulate-debris-fact-implant-and-fixation-voc",
-      "draftId": "claim-particulate-debris-fact-implant-and-fixation-voc",
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-fact-implant-and-fixation-voc",
+      "draftId": "claim-bearing-surface-selection-fact-implant-and-fixation-voc",
       "claimType": "fact",
       "importanceLevel": "L1",
       "reviewRoute": "HUMAN_REVIEW",
@@ -739,8 +739,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-particulate-debris-fact-cross-neighborhood-traum",
-      "draftId": "claim-particulate-debris-fact-cross-neighborhood-traum",
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-fact-cross-neighborhood-traum",
+      "draftId": "claim-bearing-surface-selection-fact-cross-neighborhood-traum",
       "claimType": "fact",
       "importanceLevel": "L1",
       "reviewRoute": "HUMAN_REVIEW",
@@ -750,8 +750,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-particulate-debris-anatomy_pearl-shared-adult-reconstruct",
-      "draftId": "claim-particulate-debris-anatomy_pearl-shared-adult-reconstruct",
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-shared-adult-reconstruct",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-shared-adult-reconstruct",
       "claimType": "anatomy_pearl",
       "importanceLevel": "L1",
       "reviewRoute": "HUMAN_REVIEW",
@@ -761,8 +761,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-particulate-debris-anatomy_pearl-implant-concepts-hub",
-      "draftId": "claim-particulate-debris-anatomy_pearl-implant-concepts-hub",
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-implant-concepts-hub",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-implant-concepts-hub",
       "claimType": "anatomy_pearl",
       "importanceLevel": "L1",
       "reviewRoute": "HUMAN_REVIEW",
@@ -772,13 +772,35 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-particulate-debris-anatomy_pearl-trauma-neighborhood-brid",
-      "draftId": "claim-particulate-debris-anatomy_pearl-trauma-neighborhood-brid",
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-trauma-neighborhood-brid",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-trauma-neighborhood-brid",
       "claimType": "anatomy_pearl",
       "importanceLevel": "L1",
       "reviewRoute": "HUMAN_REVIEW",
       "evidenceItemIds": [
         "ev-static-prepare-547e3caf"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-fact-polyethylene-wear-genera",
+      "draftId": "claim-bearing-surface-selection-fact-polyethylene-wear-genera",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-547e3caf"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-hip-and-knee-joint-surfa",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-hip-and-knee-joint-surfa",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-5481843b"
       ],
       "verified": false
     }

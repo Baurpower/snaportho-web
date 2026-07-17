@@ -1,0 +1,41 @@
+{
+  "ok": false,
+  "runDate": "2026-07-16",
+  "topicKey": "knee-prosthetic-joint-infection",
+  "displayName": "Knee Prosthetic Joint Infection",
+  "pilotKey": "knee-prosthetic-joint-infection-neighborhood",
+  "priorState": "staging_applied",
+  "resultingState": "database_verification_blocked",
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "blockerClass": "staging_integrity_failure",
+  "automaticRepairAttempted": false,
+  "expected": {
+    "approvedLoaded": 70,
+    "structuralProposals": 69,
+    "entities": 62,
+    "relationships": 6,
+    "curriculumBridges": 1,
+    "draftClaims": 1,
+    "draftDecisionPoints": 0
+  },
+  "resolved": {
+    "entities": 62,
+    "relationships": 6,
+    "curriculumBridges": 0
+  },
+  "discrepancyCount": 1,
+  "discrepancies": [
+    {
+      "fingerprint": "bridge|adult-recon-knee-pji|knee-prosthetic-joint-infection",
+      "kind": "bridge_endpoint_cardinality",
+      "expected": "one curriculum node adult-recon-knee-pji and one entity knee-prosthetic-joint-infection",
+      "observed": "0 node(s), 1 entity row(s)"
+    }
+  ],
+  "exactNextAction": "restore_or_adjudicate_curriculum_node_bridge",
+  "evidence": {
+    "applyPath": "reports/kg-pilots/knee-prosthetic-joint-infection-staging-apply-result.json",
+    "curatedPath": "reports/kg-pilots/knee-prosthetic-joint-infection-curated-proposals.json"
+  }
+}

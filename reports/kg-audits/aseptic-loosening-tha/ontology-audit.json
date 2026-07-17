@@ -1,11 +1,11 @@
 {
   "category": "ontology_completeness",
   "label": "Ontology Completeness",
-  "score": 48,
+  "score": 28,
   "deductions": [
     {
-      "finding": "6 critical ontology gaps remain",
-      "evidence": "ontology-gap-report.json: gap-entity-neighbor-1, gap-rel-3, gap-rel-6",
+      "finding": "8 critical ontology gaps remain",
+      "evidence": "ontology-gap-report.json: gap-entity-neighbor-2, gap-rel-4, gap-rel-6",
       "reason": "Required entities, relationships, claims, or decision points are missing per CKO §8–§9.",
       "severity": "critical",
       "category": "ontology_completeness",
@@ -14,7 +14,7 @@
     },
     {
       "finding": "7 high-priority ontology gaps",
-      "evidence": "Gap kinds: missing_entity, missing_relationship, missing_claim",
+      "evidence": "Gap kinds: missing_relationship, missing_entity, missing_claim",
       "reason": "High-priority gaps block maturity level advancement.",
       "severity": "high",
       "category": "ontology_completeness",
@@ -22,30 +22,30 @@
       "suggestedFix": "Schedule gap-resolution work items from ontology-work-plan.json."
     },
     {
-      "finding": "Missing entity requirements (2)",
-      "evidence": "2 gaps of kind missing_entity",
+      "finding": "Missing entity requirements (3)",
+      "evidence": "3 gaps of kind missing_entity",
       "reason": "Ontology contract requires complete entity coverage.",
       "severity": "medium",
       "category": "ontology_completeness",
-      "impact": 2,
+      "impact": 3,
       "suggestedFix": "Run the matching builder agent for missing_entity."
     },
     {
-      "finding": "Missing relationship requirements (7)",
-      "evidence": "7 gaps of kind missing_relationship",
+      "finding": "Missing relationship requirements (10)",
+      "evidence": "10 gaps of kind missing_relationship",
       "reason": "Ontology contract requires complete relationship coverage.",
       "severity": "high",
       "category": "ontology_completeness",
-      "impact": 7,
+      "impact": 8,
       "suggestedFix": "Run the matching builder agent for missing_relationship."
     },
     {
-      "finding": "Missing claim requirements (5)",
-      "evidence": "5 gaps of kind missing_claim",
+      "finding": "Missing claim requirements (9)",
+      "evidence": "9 gaps of kind missing_claim",
       "reason": "Ontology contract requires complete claim coverage.",
       "severity": "high",
       "category": "ontology_completeness",
-      "impact": 5,
+      "impact": 8,
       "suggestedFix": "Run the matching builder agent for missing_claim."
     },
     {
@@ -58,6 +58,18 @@
       "suggestedFix": "Run the matching builder agent for missing_decision_point."
     },
     {
+      "finding": "Only 1 anatomy structures (minimum 3 required)",
+      "evidence": "Entity slugs: adult-reconstruction-anatomy-hub",
+      "reason": "Condition neighborhoods require regional anatomy per condition.anatomy.min_structures.",
+      "severity": "critical",
+      "category": "ontology_completeness",
+      "affectedSlugs": [
+        "aseptic-loosening-tha"
+      ],
+      "suggestedFix": "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
+      "impact": 15
+    },
+    {
       "finding": "No classification system present",
       "evidence": "0 classification entities in merged draft",
       "reason": "Fracture diagnoses require classification when one exists clinically.",
@@ -68,18 +80,19 @@
     }
   ],
   "metrics": {
-    "totalGaps": 20,
-    "criticalGaps": 6,
+    "totalGaps": 28,
+    "criticalGaps": 8,
     "highGaps": 7,
-    "anatomyStructures": 32,
+    "anatomyStructures": 1,
     "classificationEntities": 0,
-    "completenessRatio": 0.33333333333333337
+    "completenessRatio": 0.06666666666666665
   },
   "recommendations": [
     "Resolve critical gaps via assigned factory agents before publication review.",
     "Schedule gap-resolution work items from ontology-work-plan.json.",
     "Run the matching builder agent for missing_relationship.",
     "Run the matching builder agent for missing_claim.",
+    "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
     "Link has_classification and has_grade edges to a classification system."
   ]
 }

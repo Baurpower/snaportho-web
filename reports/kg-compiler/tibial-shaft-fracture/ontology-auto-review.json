@@ -1,15 +1,15 @@
 {
   "topicKey": "tibial-shaft-fracture",
   "pilotKey": "tibial-shaft-fracture-neighborhood",
-  "generatedAt": "2026-07-05T21:24:25.510Z",
+  "generatedAt": "2026-07-16T02:18:46.903Z",
   "summary": {
-    "AUTO_APPROVE": 34,
-    "SAFE_REVIEW": 8,
+    "AUTO_APPROVE": 27,
+    "SAFE_REVIEW": 9,
     "EXPERT_REVIEW": 9,
     "REJECT": 0
   },
-  "humanReviewPercent": 33.3,
-  "autoApprovedPercent": 66.7,
+  "humanReviewPercent": 40,
+  "autoApprovedPercent": 60,
   "decisions": [
     {
       "proposal_fingerprint": "bridge|trauma-tibial-shaft-fractures|tibial-shaft-fracture",
@@ -117,27 +117,6 @@
       ]
     },
     {
-      "proposal_fingerprint": "claim|claim-tibial-blood-supply-fact-nonunion",
-      "proposal_type": "propose_educational_claim",
-      "category": "SAFE_REVIEW",
-      "curationRoute": "AUTO_REVISED",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.627375,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: l2_fact_light_review",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "l2_fact_light_review"
-      ]
-    },
-    {
       "proposal_fingerprint": "claim|claim-tibial-blood-supply-fact-open-versus-closed",
       "proposal_type": "propose_educational_claim",
       "category": "SAFE_REVIEW",
@@ -180,9 +159,30 @@
       ]
     },
     {
-      "proposal_fingerprint": "claim|claim-tibial-blood-supply-fact-soft-tissue-exam",
+      "proposal_fingerprint": "claim|claim-tibial-shaft-fracture-cognitive_trap-know-common-im-nail-star",
       "proposal_type": "propose_educational_claim",
       "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7828750000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.55,
+      "publicationReadiness": 0.39575,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.783 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-tibial-shaft-fracture-imaging_point-adjacent-joint-views",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
       "curationRoute": "HUMAN_REVIEW",
       "confidence": 0.7941250000000001,
       "evidenceQuality": 0.5,
@@ -190,14 +190,35 @@
       "relationshipValidity": 1,
       "duplicateProbability": 0,
       "safetyCriticality": 0.1,
-      "publicationReadiness": 0.41825,
+      "publicationReadiness": 0.627375,
       "humanReviewerType": "curator",
       "rationale": [
-        "Rule: l1_management_fact",
+        "Rule: educational_judgment_claim",
         "Composite confidence 0.794 from explainable dimensions"
       ],
       "rulesTriggered": [
-        "l1_management_fact"
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-tibial-shaft-fracture-imaging_point-full-length-tibia-fibula",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
       ]
     },
     {
@@ -348,91 +369,7 @@
       ]
     },
     {
-      "proposal_fingerprint": "create|anatomy_structure|anterior-compartment",
-      "proposal_type": "create_canonical_entity",
-      "category": "AUTO_APPROVE",
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "confidence": 0.9235,
-      "evidenceQuality": 0.9,
-      "ontologyConsistency": 0.98,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.782,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: spec_backed_entity_create",
-        "Composite confidence 0.923 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "spec_backed_entity_create"
-      ]
-    },
-    {
-      "proposal_fingerprint": "create|anatomy_structure|fibula",
-      "proposal_type": "create_canonical_entity",
-      "category": "AUTO_APPROVE",
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "confidence": 0.9235,
-      "evidenceQuality": 0.9,
-      "ontologyConsistency": 0.98,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.782,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: spec_backed_entity_create",
-        "Composite confidence 0.923 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "spec_backed_entity_create"
-      ]
-    },
-    {
-      "proposal_fingerprint": "create|anatomy_structure|leg-compartment-complex",
-      "proposal_type": "create_canonical_entity",
-      "category": "AUTO_APPROVE",
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "confidence": 0.9235,
-      "evidenceQuality": 0.9,
-      "ontologyConsistency": 0.98,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.782,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: spec_backed_entity_create",
-        "Composite confidence 0.923 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "spec_backed_entity_create"
-      ]
-    },
-    {
       "proposal_fingerprint": "create|anatomy_structure|tibia-leg-anatomy-hub",
-      "proposal_type": "create_canonical_entity",
-      "category": "AUTO_APPROVE",
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "confidence": 0.9235,
-      "evidenceQuality": 0.9,
-      "ontologyConsistency": 0.98,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.782,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: spec_backed_entity_create",
-        "Composite confidence 0.923 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "spec_backed_entity_create"
-      ]
-    },
-    {
-      "proposal_fingerprint": "create|anatomy_structure|tibial-shaft",
       "proposal_type": "create_canonical_entity",
       "category": "AUTO_APPROVE",
       "curationRoute": "AUTO_APPROVED_LOW_RISK",
@@ -537,48 +474,6 @@
       ]
     },
     {
-      "proposal_fingerprint": "create|condition|tibial-shaft-fracture",
-      "proposal_type": "create_canonical_entity",
-      "category": "AUTO_APPROVE",
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "confidence": 0.9235,
-      "evidenceQuality": 0.9,
-      "ontologyConsistency": 0.98,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.782,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: spec_backed_entity_create",
-        "Composite confidence 0.923 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "spec_backed_entity_create"
-      ]
-    },
-    {
-      "proposal_fingerprint": "create|fixation_method|im-nail-fixation",
-      "proposal_type": "create_canonical_entity",
-      "category": "AUTO_APPROVE",
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "confidence": 0.9235,
-      "evidenceQuality": 0.9,
-      "ontologyConsistency": 0.98,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.782,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: spec_backed_entity_create",
-        "Composite confidence 0.923 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "spec_backed_entity_create"
-      ]
-    },
-    {
       "proposal_fingerprint": "create|imaging_finding|segmental-tibial-fracture",
       "proposal_type": "create_canonical_entity",
       "category": "AUTO_APPROVE",
@@ -660,27 +555,6 @@
       ],
       "rulesTriggered": [
         "decision_point_requires_attending"
-      ]
-    },
-    {
-      "proposal_fingerprint": "rel|anterior-compartment|part_of|leg-compartment-complex",
-      "proposal_type": "add_canonical_relationship",
-      "category": "AUTO_APPROVE",
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "confidence": 0.8999999999999999,
-      "evidenceQuality": 0.9,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.782,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: deterministic_clinical_or_anatomy_predicate",
-        "Composite confidence 0.900 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "deterministic_clinical_or_anatomy_predicate"
       ]
     },
     {

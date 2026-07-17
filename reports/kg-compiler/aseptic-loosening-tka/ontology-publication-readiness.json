@@ -1,22 +1,22 @@
 {
   "topicKey": "aseptic-loosening-tka",
   "pilotKey": "aseptic-loosening-tka-neighborhood",
-  "generatedAt": "2026-07-05T23:09:48.688Z",
+  "generatedAt": "2026-07-16T02:33:03.959Z",
   "currentLevel": 5,
   "requiredLevel": 7,
   "ready": false,
   "blockers": [
-    "12 proposals still awaiting human review",
-    "10 items require attending review",
+    "11 proposals still awaiting human review",
+    "9 items require attending review",
     "Claims and DPs are draft-only — publication gate must block verified consumption.",
     "No approved canonical entities in database yet — proposals remain offline/spec.",
-    "13 critical/high ontology gaps remain unresolved"
+    "15 critical/high ontology gaps remain unresolved"
   ],
   "remainingWork": [
-    "[critical] Aseptic Loosening of TKA neighborhood has 0/3 anatomy_structure entities.",
+    "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
+    "[critical] Aseptic Loosening of TKA neighborhood has 1/3 anatomy_structure entities.",
     "[high] Aseptic Loosening of TKA neighborhood has 0/1 classification_system entities.",
     "[critical] Aseptic Loosening of TKA missing outbound injured_in (0/1).",
-    "[high] Aseptic Loosening of TKA missing outbound involves_anatomy (0/1).",
     "[high] Aseptic Loosening of TKA missing outbound at_risk_structure (0/1).",
     "[critical] Aseptic Loosening of TKA missing outbound has_classification (0/1).",
     "[high] Aseptic Loosening of TKA missing outbound has_grade (0/1).",
@@ -29,9 +29,9 @@
     "brobotReady": false
   },
   "estimatedEffort": {
-    "gapsRemaining": 22,
-    "humanReviewItems": 12,
-    "attendingReviewItems": 10,
+    "gapsRemaining": 30,
+    "humanReviewItems": 11,
+    "attendingReviewItems": 9,
     "effortBand": "high"
   },
   "dimensionScores": {

@@ -1,0 +1,80 @@
+{
+  "category": "ontology_completeness",
+  "label": "Ontology Completeness",
+  "score": 42,
+  "deductions": [
+    {
+      "finding": "8 critical ontology gaps remain",
+      "evidence": "ontology-gap-report.json: gap-entity-neighbor-1, gap-rel-2, gap-entity-neighbor-4",
+      "reason": "Required entities, relationships, claims, or decision points are missing per CKO §8–§9.",
+      "severity": "critical",
+      "category": "ontology_completeness",
+      "suggestedFix": "Resolve critical gaps via assigned factory agents before publication review.",
+      "impact": 15
+    },
+    {
+      "finding": "4 high-priority ontology gaps",
+      "evidence": "Gap kinds: missing_relationship",
+      "reason": "High-priority gaps block maturity level advancement.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 8,
+      "suggestedFix": "Schedule gap-resolution work items from ontology-work-plan.json."
+    },
+    {
+      "finding": "Missing entity requirements (4)",
+      "evidence": "4 gaps of kind missing_entity",
+      "reason": "Ontology contract requires complete entity coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 4,
+      "suggestedFix": "Run the matching builder agent for missing_entity."
+    },
+    {
+      "finding": "Missing relationship requirements (12)",
+      "evidence": "12 gaps of kind missing_relationship",
+      "reason": "Ontology contract requires complete relationship coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 8,
+      "suggestedFix": "Run the matching builder agent for missing_relationship."
+    },
+    {
+      "finding": "Only 0 anatomy structures (minimum 3 required)",
+      "evidence": "Entity slugs: ",
+      "reason": "Condition neighborhoods require regional anatomy per condition.anatomy.min_structures.",
+      "severity": "critical",
+      "category": "ontology_completeness",
+      "affectedSlugs": [
+        "postoperative-protocols"
+      ],
+      "suggestedFix": "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
+      "impact": 15
+    },
+    {
+      "finding": "No classification system present",
+      "evidence": "0 classification entities in merged draft",
+      "reason": "Fracture diagnoses require classification when one exists clinically.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "suggestedFix": "Link has_classification and has_grade edges to a classification system.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "totalGaps": 16,
+    "criticalGaps": 8,
+    "highGaps": 4,
+    "anatomyStructures": 0,
+    "classificationEntities": 0,
+    "completenessRatio": 0.4666666666666667
+  },
+  "recommendations": [
+    "Resolve critical gaps via assigned factory agents before publication review.",
+    "Schedule gap-resolution work items from ontology-work-plan.json.",
+    "Run the matching builder agent for missing_entity.",
+    "Run the matching builder agent for missing_relationship.",
+    "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
+    "Link has_classification and has_grade edges to a classification system."
+  ]
+}

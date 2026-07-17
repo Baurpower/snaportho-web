@@ -1,0 +1,1112 @@
+{
+  "topicKey": "imaging-radiographic-measurements",
+  "pilotKey": "imaging-radiographic-measurements-neighborhood",
+  "primaryEntitySlug": "imaging-radiographic-measurements",
+  "displayName": "Imaging & Radiographic Measurements",
+  "generatedAt": "2026-07-09T04:14:30.087Z",
+  "nodes": [
+    {
+      "slug": "imaging-radiographic-measurements",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Imaging & Radiographic Measurements",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 7,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "imaging-foundations",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Imaging Foundations",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 14,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "trauma-radiographic-measurements",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Trauma Radiographic Measurements",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 14,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "sports-medicine-radiographic-measurements",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Sports Medicine Radiographic Measurements",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 8,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "adult-reconstruction-radiographic-measurements",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Adult Reconstruction Radiographic Measurements",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 10,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "spine-radiographic-measurements",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Spine Radiographic Measurements",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 7,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pediatric-radiographic-measurements",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Pediatric Radiographic Measurements",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 7,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "imaging-measurement-reliability",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Imaging Measurement Reliability",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "standard-radiographic-views",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Standard Radiographic Views",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "additional-special-radiographic-views",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Additional and Special Radiographic Views",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 6,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fluoroscopic-views",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Fluoroscopic Views",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "weight-bearing-radiographs",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Weight-Bearing Radiographs",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "non-weight-bearing-radiographs",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Non-Weight-Bearing Radiographs",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "comparison-views",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Comparison Views",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "stress-radiographs",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Stress Radiographs",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ct-musculoskeletal-imaging",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "CT Musculoskeletal Imaging",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "mri-musculoskeletal-imaging",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "MRI Musculoskeletal Imaging",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "ultrasound-musculoskeletal-imaging",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Musculoskeletal Ultrasound",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "nuclear-musculoskeletal-imaging",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Nuclear Musculoskeletal Imaging",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "imaging-escalation-pathway",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Imaging Escalation Pathway",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 5
+    },
+    {
+      "slug": "population-specific-imaging-norms",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Population-Specific Imaging Norms",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "measurement-pitfalls",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Measurement Pitfalls",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "imaging-to-treatment-relationship",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Imaging-to-Treatment Relationship",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "observer-variability-imaging",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Observer Variability in Imaging Measurements",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ap-radiograph",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "AP Radiograph",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 9
+    },
+    {
+      "slug": "lateral-radiograph",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Lateral Radiograph",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 5
+    },
+    {
+      "slug": "oblique-radiograph",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Oblique Radiograph",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "mortise-view-ankle",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Ankle Mortise View",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "scapular-y-view",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Scapular Y View",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "axillary-lateral-shoulder",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Axillary Lateral Shoulder View",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "inlet-outlet-pelvis-views",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Pelvic Inlet and Outlet Views",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "judet-views",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Judet Views",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "sunrise-merchant-patellar-view",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Sunrise/Merchant Patellar View",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "full-length-alignment-radiographs",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Full-Length Alignment Radiographs",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "standing-spine-radiographs",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Standing Spine Radiographs",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 5
+    },
+    {
+      "slug": "bohler-angle",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Böhler Angle",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "gissane-angle",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Gissane Angle",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "baumann-angle",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Baumann Angle",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "anterior-humeral-line",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Anterior Humeral Line",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "radiocapitellar-line",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Radiocapitellar Line",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "ulnar-variance",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Ulnar Variance",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "volar-tilt",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Volar Tilt",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "radial-inclination",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Radial Inclination",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "radial-height",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Radial Height",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "tibiofibular-overlap",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Tibiofibular Overlap",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "tibiofibular-clear-space",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Tibiofibular Clear Space",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "medial-clear-space",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Medial Clear Space",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "mechanical-axis",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Mechanical Axis",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "alignment-measurements",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Alignment Measurements",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "insall-salvati-ratio",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Insall-Salvati Ratio",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "caton-deschamps-index",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Caton-Deschamps Index",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "tt-tg-distance",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "TT-TG Distance",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "alpha-angle-hip",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Alpha Angle",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "lateral-center-edge-angle",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Lateral Center-Edge Angle",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "tonnis-angle",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Tönnis Angle",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "acromiohumeral-interval",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Acromiohumeral Interval",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "critical-shoulder-angle",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Critical Shoulder Angle",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "leg-length-discrepancy-radiographic",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Leg Length Discrepancy (Radiographic)",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "femoral-offset",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Femoral Offset",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "cup-inclination",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Acetabular Cup Inclination",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "cup-anteversion",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Acetabular Cup Anteversion",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "hip-center-restoration",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Hip Center Restoration",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "mechanical-alignment-arthroplasty",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Mechanical Alignment (Arthroplasty)",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "joint-line-restoration",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Joint Line Restoration",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "coronal-alignment-measurements",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Coronal Alignment Measurements",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "cobb-angle",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Cobb Angle",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pelvic-incidence",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Pelvic Incidence",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "pelvic-tilt-spinopelvic",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Pelvic Tilt (Spinopelvic)",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "sacral-slope",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Sacral Slope",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "sagittal-vertical-axis",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Sagittal Vertical Axis",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "cervical-sagittal-alignment",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Cervical Sagittal Alignment",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "coronal-balance-spine",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Coronal Balance (Spine)",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "klein-line",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Klein Line",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "migration-percentage",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Migration Percentage (Reimers)",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "acetabular-index",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Acetabular Index",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "center-edge-angle-pediatric",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Center-Edge Angle (Pediatric Context)",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "growth-plate-relationships",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Growth Plate Relationships",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "decreased-bohler-angle",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Decreased Böhler Angle",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "widened-medial-clear-space",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Widened Medial Clear Space",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "widened-tibiofibular-clear-space",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Widened Tibiofibular Clear Space",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "positive-ulnar-variance",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Positive Ulnar Variance",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "dorsal-angulation-distal-radius",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Dorsal Angulation of Distal Radius",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "patella-alta",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Patella Alta",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "cam-morphology-alpha-angle",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Cam Morphology (Elevated Alpha Angle)",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "acetabular-undercoverage",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Acetabular Undercoverage",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "superior-humeral-migration",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Superior Humeral Migration",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "spinopelvic-mismatch",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Spinopelvic Mismatch",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "positive-klein-line",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Positive Klein Line (Trethowan)",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "radial-height-loss",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Radial Height Loss",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "mechanical-axis-knee",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Knee Mechanical Axis",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "post-reduction-radiographs",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Post-Reduction Radiographs",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "radiographic-anatomy-landmarks",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Imaging Anatomy Landmarks",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "upper-extremity-trauma-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Upper Extremity Trauma Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "proximal-humerus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Humerus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "distal-humerus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Humerus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lower-extremity-trauma-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lower Extremity Trauma Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "pelvis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pelvis",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 6,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "iliac-wing",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Iliac Wing",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "acetabulum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Acetabulum",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 7,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "distal-femur",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Femur",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "patella",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Patella",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "extensor-mechanism",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Knee Extensor Mechanism",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "calcaneus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "proximal-femur-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Femur Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-head",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Head",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 6,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "femoral-neck",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Neck",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "hip-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hip Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "hand-wrist-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hand & Wrist Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 192,
+  "claimCount": 28,
+  "decisionPointCount": 15,
+  "roles": {
+    "primary_condition": [
+      "imaging-radiographic-measurements"
+    ],
+    "neighboring_anatomy": [
+      "radiographic-anatomy-landmarks",
+      "upper-extremity-trauma-anatomy-hub",
+      "proximal-humerus",
+      "distal-humerus",
+      "lower-extremity-trauma-anatomy-hub",
+      "pelvis",
+      "iliac-wing",
+      "acetabulum",
+      "distal-femur",
+      "patella",
+      "extensor-mechanism",
+      "calcaneus",
+      "proximal-femur-anatomy-hub",
+      "femoral-head",
+      "femoral-neck",
+      "hip-joint",
+      "hand-wrist-anatomy-hub"
+    ],
+    "procedure": [],
+    "classification": [],
+    "imaging": [
+      "additional-special-radiographic-views",
+      "fluoroscopic-views",
+      "weight-bearing-radiographs",
+      "non-weight-bearing-radiographs",
+      "comparison-views",
+      "stress-radiographs",
+      "ct-musculoskeletal-imaging",
+      "ultrasound-musculoskeletal-imaging",
+      "nuclear-musculoskeletal-imaging",
+      "ap-radiograph",
+      "lateral-radiograph",
+      "oblique-radiograph",
+      "mortise-view-ankle",
+      "scapular-y-view",
+      "axillary-lateral-shoulder",
+      "inlet-outlet-pelvis-views",
+      "judet-views",
+      "sunrise-merchant-patellar-view",
+      "full-length-alignment-radiographs",
+      "standing-spine-radiographs",
+      "decreased-bohler-angle",
+      "widened-medial-clear-space",
+      "widened-tibiofibular-clear-space",
+      "positive-ulnar-variance",
+      "dorsal-angulation-distal-radius",
+      "patella-alta",
+      "cam-morphology-alpha-angle",
+      "acetabular-undercoverage",
+      "superior-humeral-migration",
+      "spinopelvic-mismatch",
+      "positive-klein-line",
+      "radial-height-loss",
+      "post-reduction-radiographs"
+    ],
+    "complication": [],
+    "decision_point_anchor": [
+      "standard-radiographic-views",
+      "mri-musculoskeletal-imaging",
+      "imaging-escalation-pathway",
+      "measurement-pitfalls",
+      "bohler-angle",
+      "anterior-humeral-line",
+      "volar-tilt",
+      "medial-clear-space",
+      "tt-tg-distance",
+      "lateral-center-edge-angle",
+      "cup-inclination",
+      "cobb-angle",
+      "sagittal-vertical-axis",
+      "klein-line",
+      "acetabular-index"
+    ],
+    "claim_anchor": [
+      "imaging-measurement-reliability",
+      "imaging-to-treatment-relationship"
+    ],
+    "biomechanics": [
+      "gissane-angle",
+      "baumann-angle",
+      "radiocapitellar-line",
+      "ulnar-variance",
+      "radial-inclination",
+      "radial-height",
+      "tibiofibular-overlap",
+      "tibiofibular-clear-space",
+      "mechanical-axis",
+      "alignment-measurements",
+      "insall-salvati-ratio",
+      "caton-deschamps-index",
+      "alpha-angle-hip",
+      "tonnis-angle",
+      "acromiohumeral-interval",
+      "critical-shoulder-angle",
+      "leg-length-discrepancy-radiographic",
+      "femoral-offset",
+      "cup-anteversion",
+      "hip-center-restoration",
+      "mechanical-alignment-arthroplasty",
+      "joint-line-restoration",
+      "coronal-alignment-measurements",
+      "pelvic-incidence",
+      "pelvic-tilt-spinopelvic",
+      "sacral-slope",
+      "cervical-sagittal-alignment",
+      "coronal-balance-spine",
+      "migration-percentage",
+      "center-edge-angle-pediatric",
+      "growth-plate-relationships",
+      "mechanical-axis-knee"
+    ],
+    "fixation": [],
+    "supporting": [
+      "imaging-foundations",
+      "trauma-radiographic-measurements",
+      "sports-medicine-radiographic-measurements",
+      "adult-reconstruction-radiographic-measurements",
+      "spine-radiographic-measurements",
+      "pediatric-radiographic-measurements",
+      "population-specific-imaging-norms",
+      "observer-variability-imaging"
+    ]
+  }
+}

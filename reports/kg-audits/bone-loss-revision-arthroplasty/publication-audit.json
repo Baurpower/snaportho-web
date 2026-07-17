@@ -2,23 +2,22 @@
   "status": "NOT_READY",
   "ready": false,
   "blockers": [
-    "12 proposals still awaiting human review",
+    "10 proposals still awaiting human review",
     "5 items require attending review",
     "Claims and DPs are draft-only — publication gate must block verified consumption.",
-    "No approved canonical entities in database yet — proposals remain offline/spec.",
-    "15 critical/high ontology gaps remain unresolved"
+    "18 critical/high ontology gaps remain unresolved"
   ],
   "currentLevel": 5,
   "requiredLevel": 8,
-  "score": 30,
+  "score": 28,
   "deductions": [
     {
-      "finding": "12 proposals still awaiting human review",
+      "finding": "10 proposals still awaiting human review",
       "evidence": "publication-readiness.json blockers",
       "reason": "Publication gate identified blocking condition.",
       "severity": "high",
       "category": "publication_readiness",
-      "suggestedFix": "[high] Paprosky Classification neighborhood has 0/2 classification_grade entities.",
+      "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
       "impact": 8
     },
     {
@@ -27,7 +26,7 @@
       "reason": "Publication gate identified blocking condition.",
       "severity": "high",
       "category": "publication_readiness",
-      "suggestedFix": "[high] Paprosky Classification neighborhood has 0/2 classification_grade entities.",
+      "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
       "impact": 8
     },
     {
@@ -36,25 +35,16 @@
       "reason": "Publication gate identified blocking condition.",
       "severity": "high",
       "category": "publication_readiness",
-      "suggestedFix": "[high] Paprosky Classification neighborhood has 0/2 classification_grade entities.",
+      "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
       "impact": 8
     },
     {
-      "finding": "No approved canonical entities in database yet — proposals remain offline/spec.",
-      "evidence": "publication-readiness.json blockers",
-      "reason": "Publication gate identified blocking condition.",
-      "severity": "high",
-      "category": "publication_readiness",
-      "suggestedFix": "[high] Paprosky Classification neighborhood has 0/2 classification_grade entities.",
-      "impact": 8
-    },
-    {
-      "finding": "15 critical/high ontology gaps remain unresolved",
+      "finding": "18 critical/high ontology gaps remain unresolved",
       "evidence": "publication-readiness.json blockers",
       "reason": "Publication gate identified blocking condition.",
       "severity": "critical",
       "category": "publication_readiness",
-      "suggestedFix": "[high] Paprosky Classification neighborhood has 0/2 classification_grade entities.",
+      "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
       "impact": 15
     }
   ]

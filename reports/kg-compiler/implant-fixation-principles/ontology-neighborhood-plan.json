@@ -3,55 +3,119 @@
   "pilotKey": "implant-fixation-principles-neighborhood",
   "primaryEntitySlug": "implant-fixation-principles",
   "displayName": "Implant Fixation Principles",
-  "generatedAt": "2026-07-05T23:29:15.191Z",
+  "generatedAt": "2026-07-16T02:41:49.378Z",
   "nodes": [
+    {
+      "slug": "adult-reconstruction-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Adult Reconstruction Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "cemented-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Cemented Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "cement-mantle",
+      "entityType": "fixation_method",
+      "preferredLabel": "Cement Mantle",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
     {
       "slug": "implant-fixation-principles",
       "entityType": "biomechanics_concept",
       "preferredLabel": "Implant Fixation Principles",
       "role": "primary_condition",
       "isPrimary": true,
-      "inboundEdgeCount": 0,
-      "outboundEdgeCount": 0
+      "inboundEdgeCount": 8,
+      "outboundEdgeCount": 1
     },
     {
-      "slug": "primary-stability",
-      "entityType": "biomechanics_concept",
-      "preferredLabel": "Primary Stability",
-      "role": "biomechanics",
+      "slug": "press-fit-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Press-Fit Fixation",
+      "role": "fixation",
       "isPrimary": false,
       "inboundEdgeCount": 0,
-      "outboundEdgeCount": 0
+      "outboundEdgeCount": 1
     },
     {
-      "slug": "bone-ingrowth",
-      "entityType": "biomechanics_concept",
-      "preferredLabel": "Bone Ingrowth",
-      "role": "biomechanics",
+      "slug": "tibial-shaft-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Tibial Shaft Fracture",
+      "role": "supporting",
       "isPrimary": false,
       "inboundEdgeCount": 0,
-      "outboundEdgeCount": 0
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "total-hip-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Total Hip Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "total-knee-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Total Knee Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
     }
   ],
-  "edgeCount": 0,
+  "edgeCount": 10,
   "claimCount": 2,
   "decisionPointCount": 0,
   "roles": {
     "primary_condition": [
       "implant-fixation-principles"
     ],
-    "neighboring_anatomy": [],
-    "procedure": [],
+    "neighboring_anatomy": [
+      "adult-reconstruction-anatomy-hub"
+    ],
+    "procedure": [
+      "total-hip-arthroplasty",
+      "total-knee-arthroplasty"
+    ],
     "classification": [],
     "imaging": [],
     "complication": [],
     "decision_point_anchor": [],
     "claim_anchor": [],
     "biomechanics": [
-      "primary-stability",
-      "bone-ingrowth"
+      "implant-concepts-hub"
     ],
-    "fixation": [],
-    "supporting": []
+    "fixation": [
+      "cemented-fixation",
+      "cement-mantle",
+      "press-fit-fixation"
+    ],
+    "supporting": [
+      "tibial-shaft-fracture"
+    ]
   }
 }

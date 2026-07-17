@@ -1,0 +1,232 @@
+{
+  "agent": "OntologyConstraintAgent",
+  "generatedAt": "2026-07-16T02:19:30.994Z",
+  "result": {
+    "approved": [
+      {
+        "fingerprint": "relationship|tibial-shaft-fracture|involves_anatomy|leg-compartment-complex",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|anterior-compartment|part_of|leg-compartment-complex",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|tibial-shaft|part_of|leg-compartment-complex",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|fibula|part_of|leg-compartment-complex",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|tibial-shaft-fracture|has_complication|tibial-infection",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|tibial-shaft-fracture|involves_anatomy|tibial-blood-supply",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|tibial-shaft-fracture|involves_anatomy|anterior-compartment",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|fibula|articulates_with|tibial-shaft",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|tibial-shaft-fracture|injured_in|tibial-shaft",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|tibial-im-nail|involves_anatomy|tibial-shaft",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|tibia-leg-anatomy-hub|prerequisite_for|tibial-shaft-fracture",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|tibial-shaft-fracture|involves_anatomy|tibia-leg-anatomy-hub",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|tibial-shaft|part_of|tibia-leg-anatomy-hub",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|fibula|part_of|tibia-leg-anatomy-hub",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|leg-compartment-complex|part_of|tibia-leg-anatomy-hub",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|tibial-shaft-fracture|has_imaging_finding|segmental-tibial-fracture",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|tibial-shaft-fracture|has_complication|tibial-nonunion",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|tibial-shaft-fracture|involves_anatomy|fibula",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|tibial-shaft-fracture|has_complication|tibial-malunion",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|segmental-tibial-fracture|indicates_treatment|tibial-im-nail",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      },
+      {
+        "fingerprint": "relationship|tibial-shaft-fracture|treated_by|tibial-im-nail",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Relationship satisfies the canonical predicate registry."
+      }
+    ],
+    "modified": [],
+    "rejected": [
+      {
+        "fingerprint": "relationship|tibial-shaft-fracture|uses_fixation|im-nail-fixation",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "reason": "Unknown object entity slug: im-nail-fixation",
+        "before": {
+          "subjectSlug": "tibial-shaft-fracture",
+          "predicate": "uses_fixation",
+          "objectSlug": "im-nail-fixation",
+          "metadata": {
+            "review_status": "unreviewed",
+            "context_relevance": [
+              "or",
+              "clinic"
+            ],
+            "management_importance": "high",
+            "_provenance_fingerprint": "rel|tibial-shaft-fracture|uses_fixation|im-nail-fixation"
+          },
+          "source": "proposal"
+        }
+      }
+    ],
+    "escalations": [
+      {
+        "id": "ontology-relationship|tibial-shaft-fracture|uses_fixation|im-nail-fixation",
+        "fingerprint": "relationship|tibial-shaft-fracture|uses_fixation|im-nail-fixation",
+        "objectKind": "relationship",
+        "agent": "OntologyConstraintAgent",
+        "severity": "HIGH",
+        "reason": "Illegal relationship triple must be removed, revised, or routed before publication.",
+        "reviewer": "curator",
+        "suggestedAction": "Revise predicate or endpoint identity/type; do not publish as-is."
+      }
+    ],
+    "warnings": [],
+    "metrics": {
+      "duplicatesPrevented": 0,
+      "relationshipsNormalized": 0,
+      "unsupportedEdgesRemoved": 0,
+      "reviewDecisionsInherited": 0,
+      "orphanEntitiesRepaired": 0,
+      "publicationBlockersDetected": 1
+    }
+  },
+  "artifacts": {
+    "illegal_triples": [
+      {
+        "fingerprint": "relationship|tibial-shaft-fracture|uses_fixation|im-nail-fixation",
+        "relationship": {
+          "subjectSlug": "tibial-shaft-fracture",
+          "predicate": "uses_fixation",
+          "objectSlug": "im-nail-fixation",
+          "metadata": {
+            "review_status": "unreviewed",
+            "context_relevance": [
+              "or",
+              "clinic"
+            ],
+            "management_importance": "high",
+            "_provenance_fingerprint": "rel|tibial-shaft-fracture|uses_fixation|im-nail-fixation"
+          },
+          "source": "proposal"
+        },
+        "subjectEntityType": "condition",
+        "objectEntityType": null,
+        "errors": [
+          "Unknown object entity slug: im-nail-fixation"
+        ]
+      }
+    ],
+    "type_violations": [
+      {
+        "fingerprint": "relationship|tibial-shaft-fracture|uses_fixation|im-nail-fixation",
+        "relationship": {
+          "subjectSlug": "tibial-shaft-fracture",
+          "predicate": "uses_fixation",
+          "objectSlug": "im-nail-fixation",
+          "metadata": {
+            "review_status": "unreviewed",
+            "context_relevance": [
+              "or",
+              "clinic"
+            ],
+            "management_importance": "high",
+            "_provenance_fingerprint": "rel|tibial-shaft-fracture|uses_fixation|im-nail-fixation"
+          },
+          "source": "proposal"
+        },
+        "subjectEntityType": "condition",
+        "objectEntityType": null,
+        "errors": [
+          "Unknown object entity slug: im-nail-fixation"
+        ]
+      }
+    ],
+    "predicate_violations": []
+  }
+}

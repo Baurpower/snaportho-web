@@ -1,0 +1,44 @@
+{
+  "ok": false,
+  "runDate": "2026-07-16",
+  "topicKey": "lt-ligament-injury",
+  "displayName": "LT Ligament Injury",
+  "pilotKey": "lt-ligament-injury-neighborhood",
+  "priorState": "staging_applied",
+  "resultingState": "database_verification_blocked",
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "blockerClass": "staging_integrity_failure",
+  "automaticRepairAttempted": false,
+  "quarantinedPartialMemberships": 0,
+  "batchKey": "legacy-lt-ligament-injury-194eab91aab911fa",
+  "packetHash": "194eab91aab911fa4fd0a9d9c00bab0d4ebc51c7ec8c17cebd1ce58b124b2735",
+  "expected": {
+    "approvedLoaded": 164,
+    "structuralProposals": 163,
+    "entities": 72,
+    "relationships": 90,
+    "curriculumBridges": 1,
+    "draftClaims": 1,
+    "draftDecisionPoints": 0
+  },
+  "resolved": {
+    "entities": 72,
+    "relationships": 90,
+    "curriculumBridges": 0
+  },
+  "discrepancyCount": 1,
+  "discrepancies": [
+    {
+      "fingerprint": "bridge|hand-lt-ligament-injury|lt-ligament-injury",
+      "kind": "bridge_endpoint_cardinality",
+      "expected": "one curriculum node hand-lt-ligament-injury and one entity lt-ligament-injury",
+      "observed": "0 node(s), 1 entity row(s)"
+    }
+  ],
+  "exactNextAction": "restore_or_adjudicate_curriculum_node_bridge",
+  "evidence": {
+    "applyPath": "reports/kg-pilots/lt-ligament-injury-staging-apply-result.json",
+    "curatedPath": "reports/kg-pilots/lt-ligament-injury-curated-proposals.json"
+  }
+}

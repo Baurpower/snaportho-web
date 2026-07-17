@@ -1,0 +1,54 @@
+[
+  {
+    "fingerprint": "relationship|carpal-tunnel-syndrome|differential_for|distal-radius-fracture",
+    "reason": "Fracture-style differential edge is unsafe/noisy for the CTS neighborhood.",
+    "relationship": {
+      "subjectSlug": "carpal-tunnel-syndrome",
+      "predicate": "differential_for",
+      "objectSlug": "distal-radius-fracture",
+      "metadata": {
+        "cross_neighborhood": true,
+        "cluster": "hand-wrist",
+        "relevance_reason": "clinical_association",
+        "educational_importance": "high",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|differential_for|distal-radius-fracture"
+      },
+      "source": "spec"
+    }
+  },
+  {
+    "fingerprint": "relationship|open-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+    "reason": "Instrument sets and operative tools are not implants.",
+    "relationship": {
+      "subjectSlug": "open-carpal-tunnel-release",
+      "predicate": "uses_implant",
+      "objectSlug": "carpal-tunnel-release-instrument-set",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|open-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set"
+      },
+      "source": "spec"
+    },
+    "subjectType": "procedure",
+    "objectType": "implant"
+  },
+  {
+    "fingerprint": "relationship|endoscopic-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+    "reason": "Instrument sets and operative tools are not implants.",
+    "relationship": {
+      "subjectSlug": "endoscopic-carpal-tunnel-release",
+      "predicate": "uses_implant",
+      "objectSlug": "carpal-tunnel-release-instrument-set",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|endoscopic-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set"
+      },
+      "source": "spec"
+    },
+    "subjectType": "procedure",
+    "objectType": "implant"
+  }
+]

@@ -1,25 +1,25 @@
 [
   {
-    "proposal_fingerprint": "claim|claim-tibial-blood-supply-fact-soft-tissue-exam",
+    "proposal_fingerprint": "claim|claim-tibial-shaft-fracture-cognitive_trap-know-common-im-nail-star",
     "proposal_type": "propose_educational_claim",
     "route": "ATTENDING_REVIEW",
     "target": "undefined -[null]-> undefined",
     "agent_recommendation": "Auto-review: EXPERT_REVIEW",
-    "confidence": 0.7941250000000001,
-    "safety_score": 0.1,
+    "confidence": 0.7828750000000001,
+    "safety_score": 0.55,
     "rationale": [
-      "Rule: l1_management_fact",
-      "Composite confidence 0.794 from explainable dimensions"
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.783 from explainable dimensions"
     ],
     "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
     "alternatives": [],
     "evidence_summary": "Generated from evidence items: ev-static-prepare-9e6dce6b",
     "metadata": {
       "pilot": "tibial-shaft-fracture-neighborhood",
-      "draft_id": "claim-tibial-blood-supply-fact-soft-tissue-exam",
-      "claim_type": "fact",
-      "claim_text": "Soft tissue exam.",
-      "primary_entity_slug": "tibial-blood-supply",
+      "draft_id": "claim-tibial-shaft-fracture-cognitive_trap-know-common-im-nail-star",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Know common IM nail starting point language.",
+      "primary_entity_slug": "tibial-shaft-fracture",
       "importance_level": "L1",
       "content_source": "generated_draft",
       "verified": false,
@@ -28,14 +28,70 @@
       ],
       "context_relevance": [
         "clinic",
-        "call"
+        "call",
+        "oite",
+        "or"
       ],
       "learner_stage": "clerkship",
       "evidence_item_ids": [
         "ev-static-prepare-9e6dce6b"
       ],
       "evidence_packet_id": "ev-packet-49d3928f",
-      "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "uncertainty_note": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "review_route_hint": "HUMAN_REVIEW",
+      "generated_by": "claim-builder-v2",
+      "publication_eligible": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.7915,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-16T02:18:46.903Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-tibial-shaft-fracture-imaging_point-adjacent-joint-views",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.7941250000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.794 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Generated from evidence items: ev-static-prepare-9e6cb3ff",
+    "metadata": {
+      "pilot": "tibial-shaft-fracture-neighborhood",
+      "draft_id": "claim-tibial-shaft-fracture-imaging_point-adjacent-joint-views",
+      "claim_type": "imaging_point",
+      "claim_text": "Adjacent joint views.",
+      "primary_entity_slug": "tibial-shaft-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "verified": false,
+      "why_it_matters": [
+        "clinical_reasoning"
+      ],
+      "context_relevance": [
+        "clinic"
+      ],
+      "learner_stage": "clerkship",
+      "evidence_item_ids": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "evidence_packet_id": "ev-packet-49d3928f",
+      "uncertainty_note": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
       "review_route_hint": "HUMAN_REVIEW",
       "generated_by": "claim-builder-v2",
       "publication_eligible": false,
@@ -48,11 +104,65 @@
         "completeness": 0.8
       },
       "curation_rules": [
-        "l1_management_fact"
+        "educational_judgment_claim"
       ],
-      "curated_at": "2026-07-05T21:24:25.509Z"
+      "curated_at": "2026-07-16T02:18:46.903Z"
     },
-    "auto_review_category": "EXPERT_REVIEW"
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-tibial-shaft-fracture-imaging_point-full-length-tibia-fibula",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.7941250000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.794 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Generated from evidence items: ev-static-prepare-9e6cb3ff",
+    "metadata": {
+      "pilot": "tibial-shaft-fracture-neighborhood",
+      "draft_id": "claim-tibial-shaft-fracture-imaging_point-full-length-tibia-fibula",
+      "claim_type": "imaging_point",
+      "claim_text": "Full-length tibia/fibula radiographs.",
+      "primary_entity_slug": "tibial-shaft-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "verified": false,
+      "why_it_matters": [
+        "clinical_reasoning"
+      ],
+      "context_relevance": [
+        "clinic"
+      ],
+      "learner_stage": "clerkship",
+      "evidence_item_ids": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "evidence_packet_id": "ev-packet-49d3928f",
+      "uncertainty_note": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "review_route_hint": "HUMAN_REVIEW",
+      "generated_by": "claim-builder-v2",
+      "publication_eligible": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.8365,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-16T02:18:46.903Z"
+    },
+    "auto_review_category": "SAFE_REVIEW"
   },
   {
     "proposal_fingerprint": "claim|claim-tsf-case-script",
@@ -75,7 +185,7 @@
       "verified": false,
       "claim_text": "Present wound status, compartment check, alignment, splint plan, and weight-bearing restrictions with explicit compartment surveillance.",
       "claim_type": "clinical_script",
-      "curated_at": "2026-07-05T21:24:25.509Z",
+      "curated_at": "2026-07-16T02:18:46.903Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -121,7 +231,7 @@
       "verified": false,
       "claim_text": "Serial compartment exams matter because compartment syndrome is a clinical diagnosis that can evolve after splinting.",
       "claim_type": "board_trap",
-      "curated_at": "2026-07-05T21:24:25.509Z",
+      "curated_at": "2026-07-16T02:18:46.903Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -167,7 +277,7 @@
       "verified": false,
       "claim_text": "Treating an open tibial shaft fracture like a routine closed injury without soft-tissue urgency and antibiotic planning.",
       "claim_type": "cognitive_trap",
-      "curated_at": "2026-07-05T21:24:25.509Z",
+      "curated_at": "2026-07-16T02:18:46.903Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -212,7 +322,7 @@
       "verified": false,
       "claim_text": "Segmental or highly comminuted tibial shaft patterns often signal instability and higher operative likelihood.",
       "claim_type": "imaging_point",
-      "curated_at": "2026-07-05T21:24:25.509Z",
+      "curated_at": "2026-07-16T02:18:46.903Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -257,7 +367,7 @@
       "verified": false,
       "claim_text": "Tibial shaft fractures are soft-tissue injuries first and bony injuries second.",
       "claim_type": "fact",
-      "curated_at": "2026-07-05T21:24:25.509Z",
+      "curated_at": "2026-07-16T02:18:46.903Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -304,7 +414,7 @@
       "urgency": "routine",
       "draft_id": "dp-tsf-nonoperative-cast",
       "verified": false,
-      "curated_at": "2026-07-05T21:24:25.509Z",
+      "curated_at": "2026-07-16T02:18:46.903Z",
       "pattern_type": "nonoperative_eligible",
       "content_source": "generated_draft",
       "curation_route": "ATTENDING_REVIEW",
@@ -349,7 +459,7 @@
       "urgency": "urgent",
       "draft_id": "dp-tsf-operative-nailing",
       "verified": false,
-      "curated_at": "2026-07-05T21:24:25.509Z",
+      "curated_at": "2026-07-16T02:18:46.903Z",
       "pattern_type": "operative_indication",
       "content_source": "generated_draft",
       "curation_route": "ATTENDING_REVIEW",
@@ -391,7 +501,7 @@
       "pilot": "tibial-shaft-fracture-neighborhood",
       "verified": false,
       "high_risk": true,
-      "curated_at": "2026-07-05T21:24:25.509Z",
+      "curated_at": "2026-07-16T02:18:46.903Z",
       "object_slug": "tibial-im-nail",
       "subject_slug": "segmental-tibial-fracture",
       "curation_route": "ATTENDING_REVIEW",
@@ -437,7 +547,7 @@
       "pilot": "tibial-shaft-fracture-neighborhood",
       "verified": false,
       "high_risk": true,
-      "curated_at": "2026-07-05T21:24:25.510Z",
+      "curated_at": "2026-07-16T02:18:46.903Z",
       "object_slug": "tibial-im-nail",
       "subject_slug": "tibial-shaft-fracture",
       "curation_route": "ATTENDING_REVIEW",
@@ -485,7 +595,7 @@
       "pilot": "tibial-shaft-fracture-neighborhood",
       "verified": false,
       "high_risk": true,
-      "curated_at": "2026-07-05T21:24:25.510Z",
+      "curated_at": "2026-07-16T02:18:46.903Z",
       "object_slug": "im-nail-fixation",
       "subject_slug": "tibial-shaft-fracture",
       "curation_route": "ATTENDING_REVIEW",

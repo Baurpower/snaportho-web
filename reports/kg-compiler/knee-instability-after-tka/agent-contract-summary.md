@@ -2,7 +2,7 @@
 
 Topic: **knee-instability-after-tka**
 Framework: **1.0.0**
-Generated: 2026-07-05T23:12:57.957Z
+Generated: 2026-07-16T02:53:18.224Z
 
 ## Registry
 
@@ -12,8 +12,8 @@ Generated: 2026-07-05T23:12:57.957Z
 
 ## Assignments
 
-- **Relationship Builder** (relationship-builder): 10 gap(s) [missing_relationship] — handles_gap_kind:missing_relationship
-- **Claim Builder** (claim-builder): 9 gap(s) [missing_claim] — handles_gap_kind:missing_claim
+- **Relationship Builder** (relationship-builder): 15 gap(s) [missing_relationship] — handles_gap_kind:missing_relationship
+- **Claim Builder** (claim-builder): 13 gap(s) [missing_claim] — handles_gap_kind:missing_claim
 - **Clinical Entity Builder** (clinical-entity-builder): 4 gap(s) [missing_entity] — handles_gap_kind:missing_entity; generic_fallback
 - **Decision Point Builder** (decision-point-builder): 3 gap(s) [missing_decision_point] — handles_gap_kind:missing_decision_point
 - **Asset Linker** (asset-linker): 2 gap(s) [missing_asset_link] — handles_gap_kind:missing_asset_link

@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "runDate": "2026-07-16",
+  "topicKey": "patella-fracture",
+  "displayName": "Patella Fracture",
+  "pilotKey": "patella-fracture-neighborhood",
+  "batchKey": "legacy-patella-fracture-c1ce098e7e4327e8",
+  "packetHash": "c1ce098e7e4327e81f9bbef7736a99cc9bb9d2e45d419998fffa0790660f4bc7",
+  "graphHash": "5762185dfaafdba273ccb3fee2d6c79375a6849c64082e8224ab01e552ac00bb",
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "dryRun": true,
+  "exactAppliedMembershipReconstructed": true,
+  "counts": {
+    "approvedLoaded": 61,
+    "structuralProposals": 60,
+    "entities": 27,
+    "relationships": 32,
+    "curriculumBridges": 1,
+    "draftClaimsExcluded": 1,
+    "draftDecisionPointsExcluded": 0
+  },
+  "repairs": {
+    "insertedSemantic": 0,
+    "reusedSemantic": 0,
+    "proposalStatesRepaired": 0,
+    "insertedMemberships": 0,
+    "reusedMemberships": 0,
+    "reactivatedMemberships": 0
+  },
+  "discrepancyCount": 0,
+  "exactNextAction": "repair_batch_membership"
+}

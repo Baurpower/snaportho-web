@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-07-05T23:04:58.199Z",
+  "generatedAt": "2026-07-16T02:54:52.451Z",
   "agentId": "claim-builder",
   "agentVersion": "2.0.0",
   "evidencePacketId": "ev-packet-6fefb14e",
-  "gapsAddressed": 5,
-  "gapsScheduled": 5,
-  "claimsGenerated": 8,
+  "gapsAddressed": 8,
+  "gapsScheduled": 9,
+  "claimsGenerated": 9,
   "claimsRejected": 6,
   "redirectedToDecisionPoint": 4,
   "candidates": [
     {
-      "draftId": "claim-periprosthetic-knee-fracture-anatomy_pearl-hip-and-knee-joint-surfa",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa",
       "claimText": "Hip and knee joint surfaces.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -26,16 +26,17 @@
         "ev-static-prepare-244df1be"
       ],
       "section": "deep.anatomy",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-anatomy_pearl-extensor-mechanism",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-extensor-mechanism",
       "claimText": "Extensor mechanism.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -48,16 +49,17 @@
         "ev-static-prepare-244df1be"
       ],
       "section": "deep.anatomy",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-anatomy_pearl-implant-bone-interfaces",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-implant-bone-interfaces",
       "claimText": "Implant-bone interfaces.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -70,16 +72,17 @@
         "ev-static-prepare-244df1be"
       ],
       "section": "deep.anatomy",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-fact-knee-reconstruction-clas",
+      "draftId": "claim-implant-concepts-hub-fact-knee-reconstruction-clas",
       "claimText": "Knee Reconstruction classification frameworks.",
       "claimType": "fact",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -92,7 +95,7 @@
         "ev-static-prepare-244df1be"
       ],
       "section": "deep.classification",
-      "gapId": "gap-claim-12",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -115,7 +118,7 @@
         "ev-static-prepare-244df1be"
       ],
       "section": "deep.imaging",
-      "gapId": "gap-claim-12",
+      "gapId": "gap-claim-15",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -138,7 +141,7 @@
         "ev-static-prepare-244df1be"
       ],
       "section": "deep.imaging",
-      "gapId": "gap-claim-12",
+      "gapId": "gap-claim-15",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -161,17 +164,17 @@
         "ev-static-prepare-244df1be"
       ],
       "section": "deep.boardPearls",
-      "gapId": "gap-claim-12",
+      "gapId": "gap-claim-15",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
       "confidence": 0.7915,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-fact-infection",
+      "draftId": "claim-implant-concepts-hub-fact-infection",
       "claimText": "Infection.",
       "claimType": "fact",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -184,17 +187,17 @@
         "ev-static-prepare-244df1be"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-12",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-fact-loosening",
+      "draftId": "claim-implant-concepts-hub-fact-loosening",
       "claimText": "Loosening.",
       "claimType": "fact",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -207,17 +210,17 @@
         "ev-static-prepare-244df1be"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-12",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-fact-instability",
+      "draftId": "claim-implant-concepts-hub-fact-instability",
       "claimText": "Instability.",
       "claimType": "fact",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "changes_management"
@@ -230,17 +233,17 @@
         "ev-static-prepare-244df1be"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-12",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-fact-periprosthetic-fracture",
+      "draftId": "claim-implant-concepts-hub-fact-periprosthetic-fracture",
       "claimText": "Periprosthetic fracture.",
       "claimType": "fact",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -253,17 +256,17 @@
         "ev-static-prepare-244df1be"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-12",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-fact-periprosthetic-knee-frac",
+      "draftId": "claim-implant-concepts-hub-fact-periprosthetic-knee-frac",
       "claimText": "Periprosthetic Knee Fracture indication language.",
       "claimType": "fact",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -277,17 +280,17 @@
         "ev-static-prepare-244f0c2a"
       ],
       "section": "fast.mustKnow",
-      "gapId": "gap-claim-12",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-fact-implant-and-fixation-voc",
+      "draftId": "claim-implant-concepts-hub-fact-implant-and-fixation-voc",
       "claimText": "Implant and fixation vocabulary.",
       "claimType": "fact",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -301,17 +304,17 @@
         "ev-static-prepare-244f0c2a"
       ],
       "section": "fast.mustKnow",
-      "gapId": "gap-claim-12",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-fact-cross-neighborhood-traum",
+      "draftId": "claim-implant-concepts-hub-fact-cross-neighborhood-traum",
       "claimText": "Cross-neighborhood trauma links.",
       "claimType": "fact",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -325,17 +328,17 @@
         "ev-static-prepare-244f0c2a"
       ],
       "section": "fast.mustKnow",
-      "gapId": "gap-claim-12",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-anatomy_pearl-shared-adult-reconstruct",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-shared-adult-reconstruct",
       "claimText": "Shared adult reconstruction anatomy hub.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "anatomical_reasoning"
@@ -349,16 +352,17 @@
         "ev-static-prepare-244f0c2a"
       ],
       "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-anatomy_pearl-implant-concepts-hub",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-implant-concepts-hub",
       "claimText": "Implant concepts hub.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -372,16 +376,17 @@
         "ev-static-prepare-244f0c2a"
       ],
       "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-anatomy_pearl-trauma-neighborhood-brid",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-trauma-neighborhood-brid",
       "claimText": "Trauma neighborhood bridges.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -395,16 +400,17 @@
         "ev-static-prepare-244f0c2a"
       ],
       "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-fact-periprosthetic-knee-frac",
+      "draftId": "claim-implant-concepts-hub-fact-periprosthetic-knee-frac",
       "claimText": "Periprosthetic knee fractures require Rorabeck/Su classification thinking about component stability.",
       "claimType": "fact",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -418,7 +424,7 @@
         "ev-static-prepare-244f0c2a"
       ],
       "section": "fast.oneLiner",
-      "gapId": "gap-claim-12",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -444,7 +450,7 @@
         "ev-static-prepare-244f0c2a"
       ],
       "section": "fast.orSurvivalTips",
-      "gapId": "gap-claim-12",
+      "gapId": "gap-claim-15",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
       "confidence": 0.7915,
@@ -470,7 +476,7 @@
         "ev-static-prepare-244f0c2a"
       ],
       "section": "fast.orSurvivalTips",
-      "gapId": "gap-claim-12",
+      "gapId": "gap-claim-15",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
       "confidence": 0.7915,
@@ -519,7 +525,7 @@
         "ev-static-prepare-244f0c2a"
       ],
       "section": "fast.caseSteps",
-      "gapId": "gap-claim-12",
+      "gapId": "gap-claim-15",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -574,10 +580,10 @@
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-fact-recognize-core-concepts-",
+      "draftId": "claim-implant-concepts-hub-fact-recognize-core-concepts-",
       "claimText": "Recognize core concepts in Periprosthetic Knee Fracture.",
       "claimType": "fact",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L3",
       "whyItMatters": [
         "clinical_reasoning"
@@ -590,17 +596,17 @@
         "ev-static-prepare-62c38abd"
       ],
       "section": "learning_objectives",
-      "gapId": "gap-claim-12",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-periprosthetic-knee-fracture-anatomy_pearl-connect-periprosthetic-k",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-connect-periprosthetic-k",
       "claimText": "Connect Periprosthetic Knee Fracture to shared anatomy, implant concepts, and trauma neighborhoods.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "periprosthetic-knee-fracture",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "anatomical_reasoning"
@@ -613,6 +619,7 @@
         "ev-static-prepare-62c38abd"
       ],
       "section": "learning_objectives",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -694,8 +701,19 @@
   ],
   "proposals": [
     {
-      "proposalFingerprint": "claim|claim-periprosthetic-knee-fracture-fact-knee-reconstruction-clas",
-      "draftId": "claim-periprosthetic-knee-fracture-fact-knee-reconstruction-clas",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-244df1be"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-fact-knee-reconstruction-clas",
+      "draftId": "claim-implant-concepts-hub-fact-knee-reconstruction-clas",
       "claimType": "fact",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
@@ -705,9 +723,20 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-periprosthetic-knee-fracture-fact-infection",
-      "draftId": "claim-periprosthetic-knee-fracture-fact-infection",
-      "claimType": "fact",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-extensor-mechanism",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-extensor-mechanism",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-244df1be"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-periprosthetic-knee-fracture-imaging_point-weight-bearing-radiograp",
+      "draftId": "claim-periprosthetic-knee-fracture-imaging_point-weight-bearing-radiograp",
+      "claimType": "imaging_point",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
       "evidenceItemIds": [
@@ -727,8 +756,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-periprosthetic-knee-fracture-imaging_point-weight-bearing-radiograp",
-      "draftId": "claim-periprosthetic-knee-fracture-imaging_point-weight-bearing-radiograp",
+      "proposalFingerprint": "claim|claim-periprosthetic-knee-fracture-imaging_point-periprosthetic-lucency-a",
+      "draftId": "claim-periprosthetic-knee-fracture-imaging_point-periprosthetic-lucency-a",
       "claimType": "imaging_point",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
@@ -749,19 +778,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-periprosthetic-knee-fracture-imaging_point-periprosthetic-lucency-a",
-      "draftId": "claim-periprosthetic-knee-fracture-imaging_point-periprosthetic-lucency-a",
-      "claimType": "imaging_point",
-      "importanceLevel": "L2",
-      "reviewRoute": "HUMAN_REVIEW",
-      "evidenceItemIds": [
-        "ev-static-prepare-244df1be"
-      ],
-      "verified": false
-    },
-    {
-      "proposalFingerprint": "claim|claim-periprosthetic-knee-fracture-fact-loosening",
-      "draftId": "claim-periprosthetic-knee-fracture-fact-loosening",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-fact-infection",
+      "draftId": "claim-implant-concepts-hub-fact-infection",
       "claimType": "fact",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
@@ -771,9 +789,9 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-periprosthetic-knee-fracture-fact-instability",
-      "draftId": "claim-periprosthetic-knee-fracture-fact-instability",
-      "claimType": "fact",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-implant-bone-interfaces",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-implant-bone-interfaces",
+      "claimType": "anatomy_pearl",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
       "evidenceItemIds": [

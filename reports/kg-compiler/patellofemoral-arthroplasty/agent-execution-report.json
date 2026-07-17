@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-05T23:18:36.891Z",
+  "generatedAt": "2026-07-16T02:53:50.267Z",
   "frameworkVersion": "1.0.0",
   "topicKey": "patellofemoral-arthroplasty",
   "pilotKey": "patellofemoral-arthroplasty-neighborhood",
   "executionOrder": [
-    "work-clinical-entity-builder",
     "work-asset-linker",
     "work-relationship-builder",
     "work-claim-builder",
+    "work-metadata-builder",
     "work-duplicate-detector",
     "work-quality-scorer",
     "work-conflict-resolver",
@@ -16,14 +16,12 @@
   ],
   "parallelLayers": [
     [
-      "work-clinical-entity-builder"
-    ],
-    [
       "work-asset-linker",
       "work-relationship-builder"
     ],
     [
-      "work-claim-builder"
+      "work-claim-builder",
+      "work-metadata-builder"
     ],
     [
       "work-duplicate-detector"
@@ -43,22 +41,11 @@
   ],
   "entries": [
     {
-      "assignmentId": "work-clinical-entity-builder",
-      "agentId": "clinical-entity-builder",
-      "status": "completed",
-      "proposalCount": 32,
-      "executionTimeMs": 1,
-      "errors": [],
-      "warnings": [],
-      "skipped": false,
-      "timedOut": false
-    },
-    {
       "assignmentId": "work-asset-linker",
       "agentId": "asset-linker",
       "status": "completed",
       "proposalCount": 0,
-      "executionTimeMs": 0,
+      "executionTimeMs": 1,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -68,8 +55,8 @@
       "assignmentId": "work-relationship-builder",
       "agentId": "relationship-builder",
       "status": "completed",
-      "proposalCount": 2,
-      "executionTimeMs": 0,
+      "proposalCount": 0,
+      "executionTimeMs": 1,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -80,7 +67,18 @@
       "agentId": "claim-builder",
       "status": "completed",
       "proposalCount": 8,
-      "executionTimeMs": 2,
+      "executionTimeMs": 3,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-metadata-builder",
+      "agentId": "metadata-builder",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 1,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -102,7 +100,7 @@
       "agentId": "quality-scorer",
       "status": "completed",
       "proposalCount": 0,
-      "executionTimeMs": 1,
+      "executionTimeMs": 0,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -124,7 +122,7 @@
       "agentId": "review-assistant",
       "status": "completed",
       "proposalCount": 83,
-      "executionTimeMs": 1,
+      "executionTimeMs": 2,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -142,7 +140,7 @@
       "timedOut": false
     }
   ],
-  "totalProposalsEmitted": 125,
+  "totalProposalsEmitted": 91,
   "uniqueProposals": 83,
   "completedAgents": 9,
   "failedAgents": 0,

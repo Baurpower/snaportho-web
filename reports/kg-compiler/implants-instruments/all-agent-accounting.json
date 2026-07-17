@@ -1,0 +1,78 @@
+{
+  "topicKey": "implants-instruments",
+  "manufacturedAt": "2026-07-08",
+  "assignedAgentsExecuted": 7,
+  "assignedAgentFailures": 0,
+  "agents": [
+    {
+      "agent": "anatomy-builder",
+      "status": "no_applicable_work",
+      "reason": "No anatomy construction gaps; implant neighborhood reuses anatomy-adjacent constructs without minting anatomy replacements."
+    },
+    {
+      "agent": "clinical-entity-builder",
+      "status": "no_applicable_work",
+      "reason": "Seed already contained required implant, fixation, and instrument entities; gap analysis assigned no missing-entity work."
+    },
+    {
+      "agent": "relationship-builder",
+      "status": "executed",
+      "reason": "Assigned relationship gaps; completed without error."
+    },
+    {
+      "agent": "claim-builder",
+      "status": "executed",
+      "reason": "Assigned claim gaps; completed without error."
+    },
+    {
+      "agent": "decision-point-builder",
+      "status": "no_applicable_work",
+      "reason": "Fifteen decision-point drafts covered construct-selection and failure pathways; no decision-point gap was assigned."
+    },
+    {
+      "agent": "metadata-builder",
+      "status": "no_applicable_work",
+      "reason": "Seed proposals included construct metadata, vendor-agnostic flags, and reuse provenance; no metadata gap was assigned."
+    },
+    {
+      "agent": "asset-linker",
+      "status": "no_applicable_work",
+      "reason": "No registered Anki, Orthobullets, or CasePrep mappings were available for this new cross-cutting topic."
+    },
+    {
+      "agent": "provenance-builder",
+      "status": "no_applicable_work",
+      "reason": "Evidence packet and proposal builder attached provenance to all proposals; no additional provenance work was assigned."
+    },
+    {
+      "agent": "duplicate-detector",
+      "status": "executed",
+      "reason": "Completed without error; staging apply prevented 36 existing implant/fixation identities from being re-minted."
+    },
+    {
+      "agent": "conflict-resolver",
+      "status": "executed",
+      "reason": "Completed without error; no relationship conflicts remained."
+    },
+    {
+      "agent": "quality-scorer",
+      "status": "executed",
+      "reason": "Completed without error."
+    },
+    {
+      "agent": "review-assistant",
+      "status": "executed",
+      "reason": "Routed all proposals through auto/human/attending review."
+    },
+    {
+      "agent": "publication-validator",
+      "status": "executed",
+      "reason": "Completed; publication remained blocked at maturity 5/7."
+    },
+    {
+      "agent": "neighborhood-qa",
+      "status": "executed",
+      "reason": "Independent auditor completed with NOT_READY status pending human/attending review."
+    }
+  ]
+}

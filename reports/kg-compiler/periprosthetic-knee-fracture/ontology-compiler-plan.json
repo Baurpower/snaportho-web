@@ -2,13 +2,13 @@
   "topicKey": "periprosthetic-knee-fracture",
   "pilotKey": "periprosthetic-knee-fracture-neighborhood",
   "displayName": "Periprosthetic Knee Fracture",
-  "generatedAt": "2026-07-05T23:04:58.207Z",
+  "generatedAt": "2026-07-16T02:54:52.456Z",
   "stages": [
     {
       "stage": 1,
       "name": "Neighborhood Resolution",
       "status": "completed",
-      "summary": "Resolved 2 entities from canonical DB for Periprosthetic Knee Fracture.",
+      "summary": "Resolved 8 entities from canonical DB for Periprosthetic Knee Fracture.",
       "outputs": [
         "neighborhood_plan"
       ]
@@ -26,7 +26,7 @@
       "stage": 3,
       "name": "Gap Analysis",
       "status": "completed",
-      "summary": "Identified 22 gaps across 5 kinds.",
+      "summary": "Identified 26 gaps across 5 kinds.",
       "outputs": [
         "ontology-gap-report.json"
       ]
@@ -48,7 +48,7 @@
       "stage": 5,
       "name": "Agent Orchestration",
       "status": "completed",
-      "summary": "Executed 10/10 agents; 85 unique proposals; 0 failed.",
+      "summary": "Executed 10/10 agents; 86 unique proposals; 0 failed.",
       "outputs": [
         "agent-execution-report.json",
         "agent-output-summary.md",
@@ -79,7 +79,7 @@
       "stage": 7,
       "name": "Intelligent Auto Review",
       "status": "completed",
-      "summary": "85.9% auto-approved; 14.1% escalated.",
+      "summary": "88.4% auto-approved; 11.6% escalated.",
       "outputs": [
         "ontology-auto-review.json"
       ]
@@ -104,32 +104,32 @@
     }
   ],
   "neighborhood": {
-    "entityCount": 2,
-    "relationshipCount": 1,
+    "entityCount": 8,
+    "relationshipCount": 8,
     "claimCount": 2,
     "decisionPointCount": 0
   },
   "gaps": {
-    "total": 22,
+    "total": 26,
     "byKind": {
-      "missing_entity": 4,
       "missing_relationship": 8,
-      "missing_claim": 5,
+      "missing_claim": 9,
+      "missing_entity": 4,
       "missing_decision_point": 3,
       "missing_asset_link": 2
     },
     "byPriority": {
-      "critical": 6,
-      "high": 8,
-      "medium": 8
+      "high": 7,
+      "medium": 13,
+      "critical": 6
     }
   },
   "workPlan": {
     "workItemCount": 10,
     "agentsRequired": [
-      "Clinical Entity Builder",
       "Relationship Builder",
       "Claim Builder",
+      "Clinical Entity Builder",
       "Decision Point Builder",
       "Asset Linker",
       "Conflict Resolver",
@@ -138,9 +138,9 @@
       "Publication Validator"
     ],
     "agentIds": [
-      "clinical-entity-builder",
       "relationship-builder",
       "claim-builder",
+      "clinical-entity-builder",
       "decision-point-builder",
       "asset-linker",
       "duplicate-detector",
@@ -457,10 +457,10 @@
     ]
   },
   "review": {
-    "totalProposals": 85,
-    "autoApproved": 73,
+    "totalProposals": 86,
+    "autoApproved": 76,
     "humanReview": 8,
-    "humanReviewPercent": 14.1
+    "humanReviewPercent": 11.6
   },
   "publication": {
     "currentMaturityLevel": 5,

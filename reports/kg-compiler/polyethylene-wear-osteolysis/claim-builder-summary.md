@@ -1,6 +1,6 @@
 # Claim Builder Summary
 
-Generated: 2026-07-05T22:57:46.732Z
+Generated: 2026-07-16T02:55:24.632Z
 Agent: claim-builder v2.0.0
 Evidence packet: `ev-packet-efa9d44b`
 
@@ -8,22 +8,24 @@ Evidence packet: `ev-packet-efa9d44b`
 
 | Metric | Value |
 |--------|------:|
-| Gaps scheduled | 4 |
-| Gaps addressed | 4 |
-| Claims generated | 8 |
+| Gaps scheduled | 10 |
+| Gaps addressed | 2 |
+| Claims generated | 10 |
 | Claims rejected | 6 |
 | Redirected to DP Builder | 4 |
 
 ## Generated claims
 
-- **fact** (L3) → claim-particulate-debris-fact-recognize-core-concepts- [HUMAN_REVIEW] evidence: ev-static-prepare-461482d8
-- **fact** (L1) → claim-particulate-debris-fact-polyethylene-wear-and-os [HUMAN_REVIEW] evidence: ev-static-prepare-547e3caf
-- **anatomy_pearl** (L2) → claim-particulate-debris-anatomy_pearl-connect-polyethylene-wea [HUMAN_REVIEW] evidence: ev-static-prepare-461482d8
-- **fact** (L1) → claim-particulate-debris-fact-implant-and-fixation-voc [HUMAN_REVIEW] evidence: ev-static-prepare-547e3caf
-- **fact** (L1) → claim-particulate-debris-fact-cross-neighborhood-traum [HUMAN_REVIEW] evidence: ev-static-prepare-547e3caf
-- **anatomy_pearl** (L1) → claim-particulate-debris-anatomy_pearl-shared-adult-reconstruct [HUMAN_REVIEW] evidence: ev-static-prepare-547e3caf
-- **anatomy_pearl** (L1) → claim-particulate-debris-anatomy_pearl-implant-concepts-hub [HUMAN_REVIEW] evidence: ev-static-prepare-547e3caf
-- **anatomy_pearl** (L1) → claim-particulate-debris-anatomy_pearl-trauma-neighborhood-brid [HUMAN_REVIEW] evidence: ev-static-prepare-547e3caf
+- **fact** (L3) → claim-bearing-surface-selection-fact-recognize-core-concepts- [HUMAN_REVIEW] evidence: ev-static-prepare-461482d8
+- **fact** (L1) → claim-bearing-surface-selection-fact-polyethylene-wear-and-os [HUMAN_REVIEW] evidence: ev-static-prepare-547e3caf
+- **anatomy_pearl** (L2) → claim-bearing-surface-selection-anatomy_pearl-connect-polyethylene-wea [HUMAN_REVIEW] evidence: ev-static-prepare-461482d8
+- **fact** (L1) → claim-bearing-surface-selection-fact-implant-and-fixation-voc [HUMAN_REVIEW] evidence: ev-static-prepare-547e3caf
+- **fact** (L1) → claim-bearing-surface-selection-fact-cross-neighborhood-traum [HUMAN_REVIEW] evidence: ev-static-prepare-547e3caf
+- **anatomy_pearl** (L1) → claim-bearing-surface-selection-anatomy_pearl-shared-adult-reconstruct [HUMAN_REVIEW] evidence: ev-static-prepare-547e3caf
+- **anatomy_pearl** (L1) → claim-bearing-surface-selection-anatomy_pearl-implant-concepts-hub [HUMAN_REVIEW] evidence: ev-static-prepare-547e3caf
+- **anatomy_pearl** (L1) → claim-bearing-surface-selection-anatomy_pearl-trauma-neighborhood-brid [HUMAN_REVIEW] evidence: ev-static-prepare-547e3caf
+- **fact** (L1) → claim-bearing-surface-selection-fact-polyethylene-wear-genera [HUMAN_REVIEW] evidence: ev-static-prepare-547e3caf
+- **anatomy_pearl** (L2) → claim-bearing-surface-selection-anatomy_pearl-hip-and-knee-joint-surfa [HUMAN_REVIEW] evidence: ev-static-prepare-5481843b
 
 ## Rejected / redirected
 

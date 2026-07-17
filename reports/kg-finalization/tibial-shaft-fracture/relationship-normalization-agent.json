@@ -1,0 +1,95 @@
+{
+  "agent": "RelationshipNormalizationAgent",
+  "generatedAt": "2026-07-16T02:19:30.995Z",
+  "result": {
+    "approved": [],
+    "modified": [
+      {
+        "fingerprint": "relationship|tibial-shaft-fracture|treated_by|tibial-im-nail",
+        "objectKind": "relationship",
+        "agent": "RelationshipNormalizationAgent",
+        "reason": "Added qualifier to broad treatment relationship.",
+        "before": {
+          "subjectSlug": "tibial-shaft-fracture",
+          "predicate": "treated_by",
+          "objectSlug": "tibial-im-nail",
+          "metadata": {
+            "review_status": "unreviewed",
+            "context_relevance": [
+              "or"
+            ],
+            "management_importance": "high",
+            "_provenance_fingerprint": "rel|tibial-shaft-fracture|treated_by|tibial-im-nail"
+          },
+          "source": "proposal"
+        },
+        "after": {
+          "subjectSlug": "tibial-shaft-fracture",
+          "predicate": "treated_by",
+          "objectSlug": "tibial-im-nail",
+          "metadata": {
+            "review_status": "needs_review",
+            "context_relevance": [
+              "or"
+            ],
+            "management_importance": "high",
+            "_provenance_fingerprint": "rel|tibial-shaft-fracture|treated_by|tibial-im-nail",
+            "finalization_qualifier": "Treatment relationship requires indication context and must not be interpreted as a default pathway."
+          },
+          "source": "proposal"
+        },
+        "confidence": 0.72
+      }
+    ],
+    "rejected": [],
+    "escalations": [],
+    "warnings": [],
+    "metrics": {
+      "duplicatesPrevented": 0,
+      "relationshipsNormalized": 1,
+      "unsupportedEdgesRemoved": 0,
+      "reviewDecisionsInherited": 0,
+      "orphanEntitiesRepaired": 0,
+      "publicationBlockersDetected": 0
+    }
+  },
+  "artifacts": {
+    "relationship_revisions": [
+      {
+        "fingerprint": "relationship|tibial-shaft-fracture|treated_by|tibial-im-nail",
+        "reason": "Broad treated_by edge retained only with explicit non-default pathway qualifier.",
+        "before": {
+          "subjectSlug": "tibial-shaft-fracture",
+          "predicate": "treated_by",
+          "objectSlug": "tibial-im-nail",
+          "metadata": {
+            "review_status": "unreviewed",
+            "context_relevance": [
+              "or"
+            ],
+            "management_importance": "high",
+            "_provenance_fingerprint": "rel|tibial-shaft-fracture|treated_by|tibial-im-nail"
+          },
+          "source": "proposal"
+        },
+        "after": {
+          "subjectSlug": "tibial-shaft-fracture",
+          "predicate": "treated_by",
+          "objectSlug": "tibial-im-nail",
+          "metadata": {
+            "review_status": "needs_review",
+            "context_relevance": [
+              "or"
+            ],
+            "management_importance": "high",
+            "_provenance_fingerprint": "rel|tibial-shaft-fracture|treated_by|tibial-im-nail",
+            "finalization_qualifier": "Treatment relationship requires indication context and must not be interpreted as a default pathway."
+          },
+          "source": "proposal"
+        }
+      }
+    ],
+    "decision_point_conversions": [],
+    "rejected_relationships": []
+  }
+}

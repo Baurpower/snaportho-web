@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-05T23:29:15.211Z",
+  "generatedAt": "2026-07-16T02:41:49.409Z",
   "frameworkVersion": "1.0.0",
   "topicKey": "implant-fixation-principles",
   "pilotKey": "implant-fixation-principles-neighborhood",
@@ -9,11 +9,17 @@
       "agentId": "relationship-builder",
       "agentName": "Relationship Builder",
       "type": "gap_resolution",
-      "gapCount": 3,
+      "gapCount": 9,
       "gapIds": [
         "gap-rel-1",
-        "gap-rel-4",
-        "gap-rel-8"
+        "gap-rel-2",
+        "gap-rel-6",
+        "gap-rel-10",
+        "gap-rel-11",
+        "gap-rel-13",
+        "gap-rel-14",
+        "gap-proc-approach-18",
+        "gap-proc-approach-19"
       ],
       "gapKinds": [
         "missing_relationship"
@@ -22,8 +28,8 @@
         "work-clinical-entity-builder",
         "work-anatomy-builder"
       ],
-      "estimatedConfidence": 0.92,
-      "requiredReviewer": "none",
+      "estimatedConfidence": 0.8888888888888888,
+      "requiredReviewer": "attending",
       "matchReasons": [
         "handles_gap_kind:missing_relationship"
       ]
@@ -33,18 +39,14 @@
       "agentId": "claim-builder",
       "agentName": "Claim Builder",
       "type": "gap_resolution",
-      "gapCount": 10,
+      "gapCount": 6,
       "gapIds": [
-        "gap-claim-2",
-        "gap-claim-type-3",
-        "gap-claim-5",
-        "gap-claim-type-6",
-        "gap-claim-type-7",
-        "gap-claim-9",
-        "gap-claim-type-10",
-        "gap-claim-type-11",
-        "gap-biomech-claim-14",
-        "gap-biomech-claim-15"
+        "gap-claim-3",
+        "gap-claim-type-4",
+        "gap-claim-type-5",
+        "gap-claim-7",
+        "gap-claim-type-8",
+        "gap-biomech-claim-17"
       ],
       "gapKinds": [
         "missing_claim"
@@ -52,10 +54,31 @@
       "dependencies": [
         "work-relationship-builder"
       ],
-      "estimatedConfidence": 0.8029999999999999,
+      "estimatedConfidence": 0.805,
       "requiredReviewer": "clinical_expert",
       "matchReasons": [
         "handles_gap_kind:missing_claim"
+      ]
+    },
+    {
+      "workItemId": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "agentName": "Clinical Entity Builder",
+      "type": "gap_resolution",
+      "gapCount": 2,
+      "gapIds": [
+        "gap-entity-neighbor-9",
+        "gap-entity-neighbor-12"
+      ],
+      "gapKinds": [
+        "missing_entity"
+      ],
+      "dependencies": [],
+      "estimatedConfidence": 0.95,
+      "requiredReviewer": "clinical_expert",
+      "matchReasons": [
+        "handles_gap_kind:missing_entity",
+        "generic_fallback"
       ]
     },
     {
@@ -65,8 +88,8 @@
       "type": "gap_resolution",
       "gapCount": 2,
       "gapIds": [
-        "gap-asset-card-12",
-        "gap-asset-question-13"
+        "gap-asset-card-15",
+        "gap-asset-question-16"
       ],
       "gapKinds": [
         "missing_asset_link"

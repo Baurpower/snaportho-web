@@ -2,18 +2,18 @@
   "status": "NOT_READY",
   "ready": false,
   "blockers": [
-    "17 proposals still awaiting human review",
+    "18 proposals still awaiting human review",
     "9 items require attending review",
     "Claims and DPs are draft-only — publication gate must block verified consumption.",
     "No approved canonical entities in database yet — proposals remain offline/spec.",
-    "2 critical/high ontology gaps remain unresolved"
+    "12 critical/high ontology gaps remain unresolved"
   ],
   "currentLevel": 5,
   "requiredLevel": 7,
-  "score": 60,
+  "score": 40,
   "deductions": [
     {
-      "finding": "17 proposals still awaiting human review",
+      "finding": "18 proposals still awaiting human review",
       "evidence": "publication-readiness.json blockers",
       "reason": "Publication gate identified blocking condition.",
       "severity": "high",
@@ -49,7 +49,7 @@
       "impact": 8
     },
     {
-      "finding": "2 critical/high ontology gaps remain unresolved",
+      "finding": "12 critical/high ontology gaps remain unresolved",
       "evidence": "publication-readiness.json blockers",
       "reason": "Publication gate identified blocking condition.",
       "severity": "critical",

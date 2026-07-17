@@ -8,7 +8,7 @@ type ChatCompletionMessage = {
 
 const EMPHASIS_GUIDANCE: Record<CurriculumExplainEmphasis, string> = {
   high_yield:
-    'Emphasis: HIGH YIELD — fastest useful review. Prioritize In 30 Seconds, Must Know, and Common Mistakes. Keep bullets ultra-scannable.',
+    'Emphasis: HIGH YIELD — fastest useful review. Prioritize In 30 Seconds, Must Know, and common learner traps. Keep bullets ultra-scannable.',
   clinical:
     'Emphasis: CLINICAL — real patient care and safety. Prioritize practical pearls, decision points, complications/danger zones, and attending-style questions.',
   boards:

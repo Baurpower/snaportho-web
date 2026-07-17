@@ -1,28 +1,28 @@
 # COMPARTMENT SYNDROME — Knowledge Factory Audit
 
-Generated: 2026-07-05T22:23:10.230Z
+Generated: 2026-07-16T03:37:03.978Z
 Auditor: KF-018 v1.0.0
 
 ## Overall
 
 | Metric | Score |
 |--------|------:|
-| **Overall** | **83** |
+| **Overall** | **80** |
 | Ontology Completeness | 44 |
 | Evidence Quality | 85 |
-| Graph Integrity | 100 |
+| Graph Integrity | 96 |
 | Shared Knowledge Reuse | 100 |
 | Relationship Quality | 46 |
-| Claim Quality | 84 |
-| Decision Points | 69 |
-| Metadata Quality | 90 |
-| Provenance Quality | 100 |
+| Claim Quality | 85 |
+| Decision Points | 85 |
+| Metadata Quality | 86 |
+| Provenance Quality | 96 |
 | Review Calibration | 100 |
 | Agent Performance | 92 |
-| Compiler Quality | 84 |
-| Educational Quality | 98 |
-| Cross-Neighborhood Consistency | 92 |
-| Publication Readiness | 30 |
+| Compiler Quality | 85 |
+| Educational Quality | 72 |
+| Cross-Neighborhood Consistency | 100 |
+| Publication Readiness | 38 |
 | Publication | Blocked |
 
 ## Publication
@@ -35,7 +35,6 @@ Auditor: KF-018 v1.0.0
 - 17 proposals still awaiting human review
 - 9 items require attending review
 - Claims and DPs are draft-only — publication gate must block verified consumption.
-- No approved canonical entities in database yet — proposals remain offline/spec.
 - 14 critical/high ontology gaps remain unresolved
 
 ## Top Findings
@@ -49,7 +48,7 @@ Auditor: KF-018 v1.0.0
 
 ### [CRITICAL] Low evidence coverage (0% of proposals cite evidence)
 
-- **Evidence:** 0/46 proposals have evidence_refs
+- **Evidence:** 0/35 proposals have evidence_refs
 - **Reason:** Every proposal should cite supporting evidence per factory contract.
 - **Impact:** -15
 - **Fix:** Ensure claim/relationship builders attach evidence_refs from the evidence packet.
@@ -68,12 +67,19 @@ Auditor: KF-018 v1.0.0
 - **Impact:** -15
 - **Fix:** Add has_classification relationship via relationship-builder agent.
 
-### [CRITICAL] Missing decision point pattern: emergency_escalation
+### [CRITICAL] No educational claims in neighborhood
 
-- **Evidence:** 0 decision points with pattern emergency_escalation
-- **Reason:** Fracture neighborhoods require branching operative vs nonoperative pathways.
+- **Evidence:** merged draft claimCount = 0
+- **Reason:** Claims are the primary educational content layer for products.
 - **Impact:** -15
-- **Fix:** Add emergency_escalation decision point with attending-gated review.
+- **Fix:** Run claim-builder agent to generate evidence-backed atomic claims.
+
+### [CRITICAL] No decision points in neighborhood
+
+- **Evidence:** merged draft decisionPointCount = 0
+- **Reason:** Decision points support clinical reasoning and operative safety pathways.
+- **Impact:** -15
+- **Fix:** Run decision-point-builder for operative_indication and nonoperative_eligible patterns.
 
 ### [CRITICAL] 14 critical/high ontology gaps remain unresolved
 
@@ -89,30 +95,23 @@ Auditor: KF-018 v1.0.0
 - **Impact:** -12
 - **Fix:** Schedule gap-resolution work items from ontology-work-plan.json.
 
-### [HIGH] Missing relationship requirements (9)
-
-- **Evidence:** 9 gaps of kind missing_relationship
-- **Reason:** Ontology contract requires complete relationship coverage.
-- **Impact:** -8
-- **Fix:** Run the matching builder agent for missing_relationship.
-
 ## Prioritized Recommendations
 
 1. **[Ontology Completeness]** Resolve critical gaps via assigned factory agents before publication review. — _6 critical ontology gaps remain_
 2. **[Evidence Quality]** Ensure claim/relationship builders attach evidence_refs from the evidence packet. — _Low evidence coverage (0% of proposals cite evidence)_
 3. **[Relationship Quality]** Add injured_in relationship via relationship-builder agent. — _Missing clinical edge: injured_in_
 4. **[Relationship Quality]** Add has_classification relationship via relationship-builder agent. — _Missing clinical edge: has_classification_
-5. **[Decision Points]** Add emergency_escalation decision point with attending-gated review. — _Missing decision point pattern: emergency_escalation_
-6. **[Publication Readiness]** [high] Leg Fasciotomy missing outbound at_risk_structure (0/1). — _14 critical/high ontology gaps remain unresolved_
-7. **[Ontology Completeness]** Schedule gap-resolution work items from ontology-work-plan.json. — _8 high-priority ontology gaps_
-8. **[Ontology Completeness]** Run the matching builder agent for missing_relationship. — _Missing relationship requirements (9)_
-9. **[Ontology Completeness]** Run the matching builder agent for missing_claim. — _Missing claim requirements (9)_
-10. **[Ontology Completeness]** Link has_classification and has_grade edges to a classification system. — _No classification system present_
+5. **[Claim Quality]** Run claim-builder agent to generate evidence-backed atomic claims. — _No educational claims in neighborhood_
+6. **[Decision Points]** Run decision-point-builder for operative_indication and nonoperative_eligible patterns. — _No decision points in neighborhood_
+7. **[Publication Readiness]** [high] Leg Fasciotomy missing outbound at_risk_structure (0/1). — _14 critical/high ontology gaps remain unresolved_
+8. **[Ontology Completeness]** Schedule gap-resolution work items from ontology-work-plan.json. — _8 high-priority ontology gaps_
+9. **[Ontology Completeness]** Run the matching builder agent for missing_relationship. — _Missing relationship requirements (9)_
+10. **[Ontology Completeness]** Run the matching builder agent for missing_claim. — _Missing claim requirements (9)_
 
 ## Data Source
 
-- Neighborhood: merged_draft
-- Reports loaded: 12
+- Neighborhood: database
+- Reports loaded: 15
 - Reports missing: none
 
 ## Constraints

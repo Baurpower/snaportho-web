@@ -1,5 +1,6 @@
 const ORTHOBULLETS_HOSTS = new Set(['orthobullets.com', 'www.orthobullets.com']);
 const ROCK_HOSTS = new Set(['rock.aaos.org', 'www.rock.aaos.org']);
+const HIMALAYA_HOSTS = new Set(['learn.aaos.org']);
 const SNAPORTHO_HOSTS = new Set(['localhost', '127.0.0.1', 'snaportho.com', 'www.snaportho.com', 'app.snaportho.com']);
 
 function isQuestionBankPermissionHost(hostname: string, pathname: string) {
@@ -7,6 +8,7 @@ function isQuestionBankPermissionHost(hostname: string, pathname: string) {
   return (
     ORTHOBULLETS_HOSTS.has(host) ||
     ROCK_HOSTS.has(host) ||
+    (HIMALAYA_HOSTS.has(host) && /\/diweb(?:\/|$)/i.test(pathname)) ||
     host.endsWith('.rock.aaos.org') ||
     host.includes('orthopaedicrock') ||
     (host.includes('aaos.org') && /\/rock\b/i.test(pathname))
@@ -67,9 +69,20 @@ export function isLikelyRockUrl(url: string | null | undefined) {
   }
 }
 
+export function isLikelyHimalayaUrl(url: string | null | undefined) {
+  if (!url) return false;
+  try {
+    const parsed = new URL(url);
+    return HIMALAYA_HOSTS.has(parsed.hostname.toLowerCase()) && /\/diweb(?:\/|$)/i.test(parsed.pathname);
+  } catch {
+    return /learn\.aaos\.org\/diweb/i.test(url);
+  }
+}
+
 export function detectSupportedQuestionProviderFromUrl(url: string | null | undefined) {
   if (isLikelyOrthobulletsUrl(url)) return 'orthobullets' as const;
   if (isLikelyRockUrl(url)) return 'rock' as const;
+  if (isLikelyHimalayaUrl(url)) return 'himalaya' as const;
   return null;
 }
 

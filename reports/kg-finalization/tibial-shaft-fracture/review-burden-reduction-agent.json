@@ -1,0 +1,35 @@
+{
+  "agent": "ReviewBurdenReductionAgent",
+  "generatedAt": "2026-07-16T02:19:30.996Z",
+  "result": {
+    "approved": [],
+    "modified": [],
+    "rejected": [],
+    "escalations": [],
+    "warnings": [],
+    "metrics": {
+      "duplicatesPrevented": 0,
+      "relationshipsNormalized": 0,
+      "unsupportedEdgesRemoved": 0,
+      "reviewDecisionsInherited": 0,
+      "orphanEntitiesRepaired": 0,
+      "publicationBlockersDetected": 0
+    }
+  },
+  "artifacts": {
+    "decision_inheritance": [],
+    "review_delta_report": {
+      "priorReviewDecisions": 0,
+      "generatedObjects": 54,
+      "exact_inheritance_count": 0,
+      "semantic_inheritance_count": 0,
+      "rejection_pattern_reuse_count": 0,
+      "exactFingerprintMatches": 0,
+      "semanticFingerprintMatches": 0,
+      "estimatedHumanReviewItemsAvoided": 0,
+      "estimatedRemainingReviewObjects": 54,
+      "delta_review_count": 54,
+      "inheritanceMode": "exact_and_safe_semantic"
+    }
+  }
+}

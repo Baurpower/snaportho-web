@@ -1,8 +1,85 @@
 {
   "topicKey": "polyethylene-wear-osteolysis",
   "pilotKey": "polyethylene-wear-osteolysis-neighborhood",
-  "generatedAt": "2026-07-05T22:57:46.738Z",
+  "generatedAt": "2026-07-16T02:55:24.638Z",
   "entities": [
+    {
+      "slug": "adult-reconstruction-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Adult Reconstruction Anatomy Hub",
+      "metadata": {
+        "slug": "adult-reconstruction-anatomy-hub",
+        "pilot": "polyethylene-wear-osteolysis-neighborhood",
+        "region": "arthroplasty",
+        "cluster": "adult-reconstruction",
+        "verified": false,
+        "curated_at": "2026-07-16T02:55:24.635Z",
+        "description": "Composite hip and knee arthroplasty model linking joint surfaces, soft tissues, and implant interfaces.",
+        "owner_pilot": "adult-reconstruction-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:polyethylene-wear-osteolysis-neighborhood",
+        "review_packet_label": "Polyethylene Wear and Osteolysis Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|adult-reconstruction-anatomy-hub",
+        "canonical_entity_id": "14f44479-f605-46b6-ad3c-c6f451598bbe",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|adult-reconstruction-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "bearing-surface-selection",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Bearing Surface Selection",
+      "metadata": {
+        "slug": "bearing-surface-selection",
+        "pilot": "polyethylene-wear-osteolysis-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-16T02:55:24.635Z",
+        "description": "Cross-neighborhood reference stub for bearing-surface-selection.",
+        "owner_pilot": "bearing-surface-selection-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:polyethylene-wear-osteolysis-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Polyethylene Wear and Osteolysis Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|biomechanics_concept|bearing-surface-selection",
+        "canonical_entity_id": "efa6c4c6-4f2f-491a-a86a-be7185b72ee8",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|biomechanics_concept|bearing-surface-selection"
+      },
+      "source": "proposal"
+    },
     {
       "slug": "focal-osteolysis",
       "entityType": "imaging_finding",
@@ -11,7 +88,7 @@
         "slug": "focal-osteolysis",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Localized bone loss adjacent to polyethylene bearing.",
         "staging_apply": true,
         "curation_route": "AUTO_APPROVED_LOW_RISK",
@@ -38,6 +115,45 @@
       "source": "proposal"
     },
     {
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
+      "metadata": {
+        "slug": "implant-concepts-hub",
+        "pilot": "polyethylene-wear-osteolysis-neighborhood",
+        "region": "arthroplasty",
+        "cluster": "adult-reconstruction",
+        "verified": false,
+        "curated_at": "2026-07-16T02:55:24.635Z",
+        "description": "Composite model of reusable THA and TKA implant components and fixation strategies.",
+        "owner_pilot": "adult-reconstruction-cluster-shared",
+        "implant_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:polyethylene-wear-osteolysis-neighborhood",
+        "review_packet_label": "Polyethylene Wear and Osteolysis Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|biomechanics_concept|implant-concepts-hub",
+        "canonical_entity_id": "0337b233-79f0-422e-8e06-510e4f029363",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|biomechanics_concept|implant-concepts-hub"
+      },
+      "source": "proposal"
+    },
+    {
       "slug": "particulate-debris",
       "entityType": "biomechanics_concept",
       "preferredLabel": "Particulate Debris",
@@ -45,7 +161,7 @@
         "slug": "particulate-debris",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Wear particles activating macrophage-mediated osteolysis.",
         "staging_apply": true,
         "curation_route": "AUTO_APPROVED_LOW_RISK",
@@ -72,6 +188,120 @@
       "source": "proposal"
     },
     {
+      "slug": "polyethylene-liner",
+      "entityType": "implant",
+      "preferredLabel": "Polyethylene Liner",
+      "metadata": {
+        "slug": "polyethylene-liner",
+        "pilot": "polyethylene-wear-osteolysis-neighborhood",
+        "region": "arthroplasty",
+        "verified": false,
+        "curated_at": "2026-07-16T02:55:24.635Z",
+        "description": "Bearing insert articulating with femoral head or femoral component.",
+        "owner_pilot": "adult-reconstruction-cluster-shared",
+        "implant_kind": "bearing",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:polyethylene-wear-osteolysis-neighborhood",
+        "review_packet_label": "Polyethylene Wear and Osteolysis Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|implant|polyethylene-liner",
+        "canonical_entity_id": "ea3e5bd7-6abb-40ac-b67e-0ef237de352c",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|implant|polyethylene-liner"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "polyethylene-wear-osteolysis",
+      "entityType": "procedure",
+      "preferredLabel": "Polyethylene Wear Osteolysis",
+      "metadata": {
+        "slug": "polyethylene-wear-osteolysis",
+        "pilot": "polyethylene-wear-osteolysis-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-16T02:55:24.635Z",
+        "description": "Cross-neighborhood reference stub for polyethylene-wear-osteolysis.",
+        "owner_pilot": "polyethylene-wear-osteolysis-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:polyethylene-wear-osteolysis-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Polyethylene Wear and Osteolysis Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|polyethylene-wear-osteolysis",
+        "canonical_entity_id": "180fc926-c59a-4a61-a506-85bd9e7d9e2d",
+        "clinical_kind": "arthroplasty",
+        "maturity_target": 6,
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|polyethylene-wear-osteolysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "revision-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Revision Arthroplasty",
+      "metadata": {
+        "slug": "revision-arthroplasty",
+        "pilot": "polyethylene-wear-osteolysis-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-16T02:55:24.635Z",
+        "description": "Cross-neighborhood reference stub for revision-arthroplasty.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:polyethylene-wear-osteolysis-neighborhood",
+        "review_packet_label": "Polyethylene Wear and Osteolysis Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|revision-arthroplasty",
+        "canonical_entity_id": "500a344b-0803-4911-9e9c-91e3dc9572fa",
+        "owner_pilot": "revision-arthroplasty-neighborhood",
+        "shared_reference": true,
+        "applied_by_script": "apply-pilot-approved",
+        "cross_neighborhood": true,
+        "_provenance_fingerprint": "create|procedure|revision-arthroplasty"
+      },
+      "source": "proposal"
+    },
+    {
       "slug": "acetabulum",
       "entityType": "anatomy_structure",
       "preferredLabel": "Acetabulum",
@@ -81,7 +311,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.634Z",
         "description": "Hip socket receiving the acetabular component; key for cup positioning and hip stability.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -111,45 +341,6 @@
       "source": "proposal"
     },
     {
-      "slug": "adult-reconstruction-anatomy-hub",
-      "entityType": "anatomy_structure",
-      "preferredLabel": "Adult Reconstruction Anatomy Hub",
-      "description": "Composite hip and knee arthroplasty model linking joint surfaces, soft tissues, and implant interfaces.",
-      "metadata": {
-        "slug": "adult-reconstruction-anatomy-hub",
-        "pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "region": "arthroplasty",
-        "cluster": "adult-reconstruction",
-        "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
-        "description": "Composite hip and knee arthroplasty model linking joint surfaces, soft tissues, and implant interfaces.",
-        "owner_pilot": "adult-reconstruction-cluster-shared",
-        "anatomy_kind": "composite",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "confidence": 0.92,
-          "evidence": 0.6799999999999999,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "hierarchy_level": "structure",
-        "shared_reference": true,
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:polyethylene-wear-osteolysis-neighborhood",
-        "review_packet_label": "Polyethylene Wear and Osteolysis Neighborhood",
-        "clinical_verification": false,
-        "_provenance_fingerprint": "create|anatomy_structure|adult-reconstruction-anatomy-hub"
-      },
-      "source": "proposal"
-    },
-    {
       "slug": "calcar",
       "entityType": "anatomy_structure",
       "preferredLabel": "Calcar",
@@ -159,7 +350,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Dense medial femoral neck cortical buttress supporting head-neck load transfer.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -198,7 +389,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Lateral knee nerve at risk in tibial plateau and proximal fibular injuries.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "nerve",
@@ -236,7 +427,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "ACL and PCL influencing TKA constraint selection and balancing strategy.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "ligament",
@@ -274,7 +465,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Distal femoral metaphysis and condylar region forming the proximal knee.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "bone",
@@ -312,7 +503,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "composite",
@@ -350,7 +541,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Distal femoral articular surfaces resurfaced during TKA femoral component placement.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -388,7 +579,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "thigh",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Femoral shaft between proximal and distal metaphyseal regions.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "bone",
@@ -426,7 +617,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Articular femoral head supplied largely by retinacular and circumflex vessels.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -465,7 +656,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Intracapsular segment between femoral head and intertrochanteric region.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -504,7 +695,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Anterior hip nerve at risk during anterior approach THA exposure.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "nerve",
@@ -542,7 +733,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Thigh bone bearing femoral condyles and canal for arthroplasty stem fixation.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -580,7 +771,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Primary hip abductor; critical for gait and THA abductor repair integrity.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "muscle",
@@ -618,7 +809,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Deep hip abductor contributing to pelvic stability during gait.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "muscle",
@@ -656,7 +847,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Lateral proximal femur with abductor insertions; intertrochanteric fixation landmark.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -695,7 +886,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Periarticular soft tissue envelope influencing THA approach, stability, and dislocation risk.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "soft_tissue",
@@ -733,7 +924,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Ball-and-socket articulation between femoral head and acetabulum.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "joint",
@@ -772,7 +963,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Extracapsular metaphyseal zone between neck and subtrochanteric diaphysis.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -811,7 +1002,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Fibrocartilaginous hip rim contributing to suction seal and joint stability.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "soft_tissue",
@@ -849,7 +1040,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Medial proximal femur attachment for iliopsoas; key subtrochanteric landmark.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -888,7 +1079,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Dominant retinacular blood supply to the femoral head; vulnerable in neck fractures.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "vessel",
@@ -927,7 +1118,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Sesamoid bone within the extensor mechanism at the anterior knee.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "bone",
@@ -965,7 +1156,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Distal extensor mechanism linkage vulnerable to rupture after TKA.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "tendon",
@@ -1003,7 +1194,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Bony pelvic ring anchoring the acetabulum and hip center of rotation.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -1042,7 +1233,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Major knee-region artery at risk in tibial plateau, distal femur, and knee dislocation trauma.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "vessel",
@@ -1080,7 +1271,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Femoral head, neck, trochanters, and calcar region relevant to THA stem fixation and offset.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -1119,7 +1310,7 @@
         "region": "hip",
         "cluster": "hip-fracture",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Composite proximal femur model linking head, neck, trochanters, calcar, and hip joint.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "composite",
@@ -1158,7 +1349,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Proximal extensor mechanism linkage at risk in TKA exposure and extensor failure.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "tendon",
@@ -1196,7 +1387,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Posterior hip nerve at risk during proximal femur exposure and reduction maneuvers.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "nerve",
@@ -1235,7 +1426,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Posterior hip soft tissue sleeve repaired after posterior THA approach.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "muscle",
@@ -1273,7 +1464,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Proximal tibial plateau and metaphysis receiving tibial baseplate in TKA.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -1311,7 +1502,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Proximal tibial articular surface bearing medial and lateral condylar load.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "bone",
@@ -1340,80 +1531,6 @@
       "source": "proposal"
     },
     {
-      "slug": "bearing-surface-selection",
-      "entityType": "biomechanics_concept",
-      "preferredLabel": "Bearing Surface Selection",
-      "description": "Cross-neighborhood reference stub for bearing-surface-selection.",
-      "metadata": {
-        "slug": "bearing-surface-selection",
-        "pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
-        "description": "Cross-neighborhood reference stub for bearing-surface-selection.",
-        "owner_pilot": "bearing-surface-selection-neighborhood",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "confidence": 0.92,
-          "evidence": 0.6799999999999999,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "shared_reference": true,
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:polyethylene-wear-osteolysis-neighborhood",
-        "cross_neighborhood": true,
-        "review_packet_label": "Polyethylene Wear and Osteolysis Neighborhood",
-        "clinical_verification": false,
-        "_provenance_fingerprint": "create|biomechanics_concept|bearing-surface-selection"
-      },
-      "source": "proposal"
-    },
-    {
-      "slug": "implant-concepts-hub",
-      "entityType": "biomechanics_concept",
-      "preferredLabel": "Arthroplasty Implant Concepts Hub",
-      "description": "Composite model of reusable THA and TKA implant components and fixation strategies.",
-      "metadata": {
-        "slug": "implant-concepts-hub",
-        "pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "region": "arthroplasty",
-        "cluster": "adult-reconstruction",
-        "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
-        "description": "Composite model of reusable THA and TKA implant components and fixation strategies.",
-        "owner_pilot": "adult-reconstruction-cluster-shared",
-        "implant_kind": "composite",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "confidence": 0.92,
-          "evidence": 0.6799999999999999,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "shared_reference": true,
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:polyethylene-wear-osteolysis-neighborhood",
-        "review_packet_label": "Polyethylene Wear and Osteolysis Neighborhood",
-        "clinical_verification": false,
-        "_provenance_fingerprint": "create|biomechanics_concept|implant-concepts-hub"
-      },
-      "source": "proposal"
-    },
-    {
       "slug": "compartment-syndrome",
       "entityType": "condition",
       "preferredLabel": "Compartment Syndrome",
@@ -1422,7 +1539,7 @@
         "slug": "compartment-syndrome",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Cross-neighborhood reference stub for compartment-syndrome.",
         "owner_pilot": "compartment-syndrome-neighborhood",
         "staging_apply": true,
@@ -1458,7 +1575,7 @@
         "slug": "distal-femur-fracture",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Cross-neighborhood reference stub for distal-femur-fracture.",
         "owner_pilot": "distal-femur-fracture-neighborhood",
         "staging_apply": true,
@@ -1494,7 +1611,7 @@
         "slug": "femoral-neck-fracture",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Cross-neighborhood reference stub for femoral-neck-fracture.",
         "owner_pilot": "femoral-neck-fracture-neighborhood",
         "staging_apply": true,
@@ -1530,7 +1647,7 @@
         "slug": "femoral-shaft-fracture",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Cross-neighborhood reference stub for femoral-shaft-fracture.",
         "owner_pilot": "femoral-shaft-fracture-neighborhood",
         "staging_apply": true,
@@ -1566,7 +1683,7 @@
         "slug": "hip-prosthetic-joint-infection",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Cross-neighborhood reference stub for hip-prosthetic-joint-infection.",
         "owner_pilot": "hip-prosthetic-joint-infection-neighborhood",
         "staging_apply": true,
@@ -1602,7 +1719,7 @@
         "slug": "intertrochanteric-fracture",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Cross-neighborhood reference stub for intertrochanteric-fracture.",
         "owner_pilot": "intertrochanteric-fracture-neighborhood",
         "staging_apply": true,
@@ -1638,7 +1755,7 @@
         "slug": "knee-osteoarthritis",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Cross-neighborhood reference stub for knee-osteoarthritis.",
         "owner_pilot": "knee-osteoarthritis-neighborhood",
         "staging_apply": true,
@@ -1674,7 +1791,7 @@
         "slug": "knee-prosthetic-joint-infection",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Cross-neighborhood reference stub for knee-prosthetic-joint-infection.",
         "owner_pilot": "knee-prosthetic-joint-infection-neighborhood",
         "staging_apply": true,
@@ -1710,7 +1827,7 @@
         "slug": "periprosthetic-joint-infection",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Cross-neighborhood reference stub for periprosthetic-joint-infection.",
         "owner_pilot": "periprosthetic-joint-infection-neighborhood",
         "staging_apply": true,
@@ -1738,44 +1855,6 @@
       "source": "proposal"
     },
     {
-      "slug": "polyethylene-wear-osteolysis",
-      "entityType": "condition",
-      "preferredLabel": "Polyethylene Wear and Osteolysis",
-      "description": "Bearing surface wear with particle-induced bone loss.",
-      "metadata": {
-        "slug": "polyethylene-wear-osteolysis",
-        "pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
-        "description": "Cross-neighborhood reference stub for polyethylene-wear-osteolysis.",
-        "clinical_kind": "arthroplasty",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "confidence": 0.92,
-          "evidence": 0.6799999999999999,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "maturity_target": 6,
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:polyethylene-wear-osteolysis-neighborhood",
-        "review_packet_label": "Polyethylene Wear and Osteolysis Neighborhood",
-        "clinical_verification": false,
-        "_provenance_fingerprint": "create|procedure|polyethylene-wear-osteolysis",
-        "owner_pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "shared_reference": true,
-        "cross_neighborhood": true
-      },
-      "source": "proposal"
-    },
-    {
       "slug": "subtrochanteric-fracture",
       "entityType": "condition",
       "preferredLabel": "Subtrochanteric Fracture",
@@ -1784,7 +1863,7 @@
         "slug": "subtrochanteric-fracture",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Cross-neighborhood reference stub for subtrochanteric-fracture.",
         "owner_pilot": "subtrochanteric-fracture-neighborhood",
         "staging_apply": true,
@@ -1820,7 +1899,7 @@
         "slug": "tibial-shaft-fracture",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Cross-neighborhood reference stub for tibial-shaft-fracture.",
         "owner_pilot": "tibial-shaft-fracture-neighborhood",
         "staging_apply": true,
@@ -1857,7 +1936,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "arthroplasty",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "PMMA interphase distributing load between implant and bone.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "fixation",
@@ -1894,7 +1973,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "arthroplasty",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "PMMA cement securing implant to bone for immediate stability.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "fixation",
@@ -1931,7 +2010,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "arthroplasty",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Cementless implant stability achieved through interference fit and bone ingrowth.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "fixation",
@@ -1968,7 +2047,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "THA cup restoring acetabular coverage and hip center of rotation.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "component",
@@ -2005,7 +2084,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "TKA femoral resurfacing component restoring flexion-extension geometry.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "component",
@@ -2042,7 +2121,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "THA femoral canal implant transmitting load from head to diaphysis.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "component",
@@ -2079,7 +2158,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Resurfaced patellar button in select TKA and patellofemoral arthroplasty cases.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "component",
@@ -2107,43 +2186,6 @@
       "source": "proposal"
     },
     {
-      "slug": "polyethylene-liner",
-      "entityType": "implant",
-      "preferredLabel": "Polyethylene Liner",
-      "description": "Bearing insert articulating with femoral head or femoral component.",
-      "metadata": {
-        "slug": "polyethylene-liner",
-        "pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "region": "arthroplasty",
-        "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
-        "description": "Bearing insert articulating with femoral head or femoral component.",
-        "owner_pilot": "adult-reconstruction-cluster-shared",
-        "implant_kind": "bearing",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_fallback"
-        ],
-        "curation_scores": {
-          "confidence": 0.92,
-          "evidence": 0.6799999999999999,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "shared_reference": true,
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:polyethylene-wear-osteolysis-neighborhood",
-        "review_packet_label": "Polyethylene Wear and Osteolysis Neighborhood",
-        "clinical_verification": false,
-        "_provenance_fingerprint": "create|implant|polyethylene-liner"
-      },
-      "source": "proposal"
-    },
-    {
       "slug": "tibial-baseplate",
       "entityType": "implant",
       "preferredLabel": "Tibial Baseplate",
@@ -2153,7 +2195,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "TKA tibial tray fixed to proximal tibia receiving polyethylene insert.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "component",
@@ -2190,7 +2232,7 @@
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "TKA polyethylene bearing surface articulating with femoral component.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "bearing",
@@ -2226,7 +2268,7 @@
         "slug": "adverse-local-tissue-reaction",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Cross-neighborhood reference stub for adverse-local-tissue-reaction.",
         "owner_pilot": "adverse-local-tissue-reaction-neighborhood",
         "staging_apply": true,
@@ -2254,42 +2296,6 @@
       "source": "proposal"
     },
     {
-      "slug": "revision-arthroplasty",
-      "entityType": "procedure",
-      "preferredLabel": "Revision Arthroplasty",
-      "description": "Cross-neighborhood reference stub for revision-arthroplasty.",
-      "metadata": {
-        "slug": "revision-arthroplasty",
-        "pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
-        "description": "Cross-neighborhood reference stub for revision-arthroplasty.",
-        "owner_pilot": "revision-arthroplasty-neighborhood",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "confidence": 0.92,
-          "evidence": 0.6799999999999999,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "shared_reference": true,
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:polyethylene-wear-osteolysis-neighborhood",
-        "cross_neighborhood": true,
-        "review_packet_label": "Polyethylene Wear and Osteolysis Neighborhood",
-        "clinical_verification": false,
-        "_provenance_fingerprint": "create|procedure|revision-arthroplasty"
-      },
-      "source": "proposal"
-    },
-    {
       "slug": "total-hip-arthroplasty",
       "entityType": "procedure",
       "preferredLabel": "Total Hip Arthroplasty",
@@ -2298,7 +2304,7 @@
         "slug": "total-hip-arthroplasty",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Cross-neighborhood reference stub for total-hip-arthroplasty.",
         "owner_pilot": "total-hip-arthroplasty-neighborhood",
         "staging_apply": true,
@@ -2334,7 +2340,7 @@
         "slug": "total-knee-arthroplasty",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Cross-neighborhood reference stub for total-knee-arthroplasty.",
         "owner_pilot": "total-knee-arthroplasty-neighborhood",
         "staging_apply": true,
@@ -2370,7 +2376,7 @@
         "slug": "unicompartmental-knee-arthroplasty",
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.635Z",
         "description": "Cross-neighborhood reference stub for unicompartmental-knee-arthroplasty.",
         "owner_pilot": "unicompartmental-knee-arthroplasty-neighborhood",
         "staging_apply": true,
@@ -2400,10 +2406,47 @@
   ],
   "relationships": [
     {
+      "subjectSlug": "polyethylene-wear-osteolysis",
+      "predicate": "involves_anatomy",
+      "objectSlug": "adult-reconstruction-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "relationship_strength": "core"
+        },
+        "created_from_proposal_fingerprint": "rel|polyethylene-wear-osteolysis|involves_anatomy|adult-reconstruction-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|polyethylene-wear-osteolysis|involves_anatomy|adult-reconstruction-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
       "subjectSlug": "adult-reconstruction-anatomy-hub",
       "predicate": "prerequisite_for",
       "objectSlug": "polyethylene-wear-osteolysis",
       "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "context_relevance": [
+            "clinic",
+            "or"
+          ],
+          "educational_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|adult-reconstruction-anatomy-hub|prerequisite_for|polyethylene-wear-osteolysis",
         "anatomy_role": "essential",
         "review_status": "unreviewed",
         "relevance_reason": "diagnosis",
@@ -2417,13 +2460,21 @@
       "source": "proposal"
     },
     {
-      "subjectSlug": "bearing-surface-selection",
+      "subjectSlug": "revision-arthroplasty",
       "predicate": "prerequisite_for",
       "objectSlug": "polyethylene-wear-osteolysis",
       "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|revision-arthroplasty|prerequisite_for|polyethylene-wear-osteolysis",
         "anatomy_role": "supporting",
         "review_status": "unreviewed",
-        "_provenance_fingerprint": "rel|bearing-surface-selection|prerequisite_for|polyethylene-wear-osteolysis"
+        "_provenance_fingerprint": "rel|revision-arthroplasty|prerequisite_for|polyethylene-wear-osteolysis"
       },
       "source": "proposal"
     },
@@ -2432,6 +2483,16 @@
       "predicate": "prerequisite_for",
       "objectSlug": "polyethylene-wear-osteolysis",
       "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "implant_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "arthroplasty"
+        },
+        "created_from_proposal_fingerprint": "rel|implant-concepts-hub|prerequisite_for|polyethylene-wear-osteolysis",
         "anatomy_role": "supporting",
         "implant_role": "essential",
         "review_status": "unreviewed",
@@ -2441,21 +2502,18 @@
       "source": "proposal"
     },
     {
-      "subjectSlug": "polyethylene-liner",
-      "predicate": "prerequisite_for",
-      "objectSlug": "polyethylene-wear-osteolysis",
-      "metadata": {
-        "anatomy_role": "supporting",
-        "review_status": "unreviewed",
-        "_provenance_fingerprint": "rel|polyethylene-liner|prerequisite_for|polyethylene-wear-osteolysis"
-      },
-      "source": "proposal"
-    },
-    {
       "subjectSlug": "polyethylene-wear-osteolysis",
       "predicate": "has_imaging_finding",
       "objectSlug": "focal-osteolysis",
       "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|polyethylene-wear-osteolysis|has_imaging_finding|focal-osteolysis",
         "anatomy_role": "supporting",
         "review_status": "unreviewed",
         "_provenance_fingerprint": "rel|polyethylene-wear-osteolysis|has_imaging_finding|focal-osteolysis"
@@ -2463,45 +2521,181 @@
       "source": "proposal"
     },
     {
-      "subjectSlug": "polyethylene-wear-osteolysis",
-      "predicate": "involves_anatomy",
-      "objectSlug": "adult-reconstruction-anatomy-hub",
+      "subjectSlug": "bearing-surface-selection",
+      "predicate": "prerequisite_for",
+      "objectSlug": "polyethylene-wear-osteolysis",
       "metadata": {
-        "anatomy_role": "essential",
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|bearing-surface-selection|prerequisite_for|polyethylene-wear-osteolysis",
+        "anatomy_role": "supporting",
         "review_status": "unreviewed",
-        "relevance_reason": "diagnosis",
-        "relationship_strength": "core",
-        "_provenance_fingerprint": "rel|polyethylene-wear-osteolysis|involves_anatomy|adult-reconstruction-anatomy-hub"
+        "_provenance_fingerprint": "rel|bearing-surface-selection|prerequisite_for|polyethylene-wear-osteolysis"
       },
       "source": "proposal"
     },
     {
-      "subjectSlug": "revision-arthroplasty",
+      "subjectSlug": "polyethylene-liner",
       "predicate": "prerequisite_for",
       "objectSlug": "polyethylene-wear-osteolysis",
       "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|polyethylene-liner|prerequisite_for|polyethylene-wear-osteolysis",
         "anatomy_role": "supporting",
         "review_status": "unreviewed",
-        "_provenance_fingerprint": "rel|revision-arthroplasty|prerequisite_for|polyethylene-wear-osteolysis"
+        "_provenance_fingerprint": "rel|polyethylene-liner|prerequisite_for|polyethylene-wear-osteolysis"
       },
       "source": "proposal"
+    },
+    {
+      "subjectSlug": "adult-reconstruction-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "bearing-surface-selection",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "context_relevance": [
+            "clinic",
+            "or"
+          ],
+          "educational_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|adult-reconstruction-anatomy-hub|prerequisite_for|bearing-surface-selection"
+      },
+      "source": "database"
+    },
+    {
+      "subjectSlug": "bearing-surface-selection",
+      "predicate": "involves_anatomy",
+      "objectSlug": "adult-reconstruction-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "relationship_strength": "core"
+        },
+        "created_from_proposal_fingerprint": "rel|bearing-surface-selection|involves_anatomy|adult-reconstruction-anatomy-hub"
+      },
+      "source": "database"
+    },
+    {
+      "subjectSlug": "implant-concepts-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "bearing-surface-selection",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "implant_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "arthroplasty"
+        },
+        "created_from_proposal_fingerprint": "rel|implant-concepts-hub|prerequisite_for|bearing-surface-selection"
+      },
+      "source": "database"
+    },
+    {
+      "subjectSlug": "polyethylene-liner",
+      "predicate": "prerequisite_for",
+      "objectSlug": "bearing-surface-selection",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|polyethylene-liner|prerequisite_for|bearing-surface-selection"
+      },
+      "source": "database"
+    },
+    {
+      "subjectSlug": "polyethylene-wear-osteolysis",
+      "predicate": "prerequisite_for",
+      "objectSlug": "bearing-surface-selection",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|polyethylene-wear-osteolysis|prerequisite_for|bearing-surface-selection"
+      },
+      "source": "database"
     }
   ],
   "claims": [
     {
-      "draftId": "claim-particulate-debris-anatomy_pearl-connect-polyethylene-wea",
+      "draftId": "claim-polyethylene-wear-osteolysis-pearl",
+      "claimType": "anatomy_pearl",
+      "claimText": "Attending pearl: connect polyethylene wear osteolysis anatomy, implant interfaces, and shared trauma neighborhoods before operative planning.",
+      "primaryEntitySlug": "polyethylene-wear-osteolysis",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "unreviewed",
+      "metadata": {
+        "draft_id": "claim-polyethylene-wear-osteolysis-pearl",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false
+      }
+    },
+    {
+      "draftId": "claim-bearing-surface-selection-pearl",
+      "claimType": "anatomy_pearl",
+      "claimText": "Attending pearl: connect bearing surface selection anatomy, implant interfaces, and shared trauma neighborhoods before operative planning.",
+      "primaryEntitySlug": "bearing-surface-selection",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "unreviewed",
+      "metadata": {
+        "draft_id": "claim-bearing-surface-selection-pearl",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false
+      }
+    },
+    {
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-connect-polyethylene-wea",
       "claimType": "anatomy_pearl",
       "claimText": "Connect Polyethylene Wear and Osteolysis to shared anatomy, implant concepts, and trauma neighborhoods.",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "contentSource": "generated_draft",
       "reviewStatus": "approved",
       "metadata": {
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "draft_id": "claim-particulate-debris-anatomy_pearl-connect-polyethylene-wea",
+        "draft_id": "claim-bearing-surface-selection-anatomy_pearl-connect-polyethylene-wea",
         "claim_type": "anatomy_pearl",
         "claim_text": "Connect Polyethylene Wear and Osteolysis to shared anatomy, implant concepts, and trauma neighborhoods.",
-        "primary_entity_slug": "particulate-debris",
+        "primary_entity_slug": "bearing-surface-selection",
         "importance_level": "L2",
         "content_source": "generated_draft",
         "verified": false,
@@ -2531,24 +2725,71 @@
         "curation_rules": [
           "anatomy_pearl_on_hub"
         ],
-        "curated_at": "2026-07-05T22:57:46.734Z",
-        "_provenance_fingerprint": "claim|claim-particulate-debris-anatomy_pearl-connect-polyethylene-wea"
+        "curated_at": "2026-07-16T02:55:24.634Z",
+        "_provenance_fingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-connect-polyethylene-wea"
       }
     },
     {
-      "draftId": "claim-particulate-debris-anatomy_pearl-implant-concepts-hub",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-hip-and-knee-joint-surfa",
+      "claimType": "anatomy_pearl",
+      "claimText": "Hip and knee joint surfaces.",
+      "primaryEntitySlug": "bearing-surface-selection",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "polyethylene-wear-osteolysis-neighborhood",
+        "draft_id": "claim-bearing-surface-selection-anatomy_pearl-hip-and-knee-joint-surfa",
+        "claim_type": "anatomy_pearl",
+        "claim_text": "Hip and knee joint surfaces.",
+        "primary_entity_slug": "bearing-surface-selection",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-5481843b"
+        ],
+        "evidence_packet_id": "ev-packet-efa9d44b",
+        "uncertainty_note": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curated_at": "2026-07-16T02:55:24.634Z",
+        "_provenance_fingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-hip-and-knee-joint-surfa"
+      }
+    },
+    {
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-implant-concepts-hub",
       "claimType": "anatomy_pearl",
       "claimText": "Implant concepts hub.",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "contentSource": "generated_draft",
       "reviewStatus": "approved",
       "metadata": {
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "draft_id": "claim-particulate-debris-anatomy_pearl-implant-concepts-hub",
+        "draft_id": "claim-bearing-surface-selection-anatomy_pearl-implant-concepts-hub",
         "claim_type": "anatomy_pearl",
         "claim_text": "Implant concepts hub.",
-        "primary_entity_slug": "particulate-debris",
+        "primary_entity_slug": "bearing-surface-selection",
         "importance_level": "L1",
         "content_source": "generated_draft",
         "verified": false,
@@ -2579,24 +2820,24 @@
         "curation_rules": [
           "anatomy_pearl_on_hub"
         ],
-        "curated_at": "2026-07-05T22:57:46.735Z",
-        "_provenance_fingerprint": "claim|claim-particulate-debris-anatomy_pearl-implant-concepts-hub"
+        "curated_at": "2026-07-16T02:55:24.634Z",
+        "_provenance_fingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-implant-concepts-hub"
       }
     },
     {
-      "draftId": "claim-particulate-debris-anatomy_pearl-shared-adult-reconstruct",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-shared-adult-reconstruct",
       "claimType": "anatomy_pearl",
       "claimText": "Shared adult reconstruction anatomy hub.",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "contentSource": "generated_draft",
       "reviewStatus": "approved",
       "metadata": {
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "draft_id": "claim-particulate-debris-anatomy_pearl-shared-adult-reconstruct",
+        "draft_id": "claim-bearing-surface-selection-anatomy_pearl-shared-adult-reconstruct",
         "claim_type": "anatomy_pearl",
         "claim_text": "Shared adult reconstruction anatomy hub.",
-        "primary_entity_slug": "particulate-debris",
+        "primary_entity_slug": "bearing-surface-selection",
         "importance_level": "L1",
         "content_source": "generated_draft",
         "verified": false,
@@ -2627,24 +2868,24 @@
         "curation_rules": [
           "anatomy_pearl_on_hub"
         ],
-        "curated_at": "2026-07-05T22:57:46.735Z",
-        "_provenance_fingerprint": "claim|claim-particulate-debris-anatomy_pearl-shared-adult-reconstruct"
+        "curated_at": "2026-07-16T02:55:24.634Z",
+        "_provenance_fingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-shared-adult-reconstruct"
       }
     },
     {
-      "draftId": "claim-particulate-debris-anatomy_pearl-trauma-neighborhood-brid",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-trauma-neighborhood-brid",
       "claimType": "anatomy_pearl",
       "claimText": "Trauma neighborhood bridges.",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "contentSource": "generated_draft",
       "reviewStatus": "approved",
       "metadata": {
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "draft_id": "claim-particulate-debris-anatomy_pearl-trauma-neighborhood-brid",
+        "draft_id": "claim-bearing-surface-selection-anatomy_pearl-trauma-neighborhood-brid",
         "claim_type": "anatomy_pearl",
         "claim_text": "Trauma neighborhood bridges.",
-        "primary_entity_slug": "particulate-debris",
+        "primary_entity_slug": "bearing-surface-selection",
         "importance_level": "L1",
         "content_source": "generated_draft",
         "verified": false,
@@ -2675,24 +2916,24 @@
         "curation_rules": [
           "anatomy_pearl_on_hub"
         ],
-        "curated_at": "2026-07-05T22:57:46.735Z",
-        "_provenance_fingerprint": "claim|claim-particulate-debris-anatomy_pearl-trauma-neighborhood-brid"
+        "curated_at": "2026-07-16T02:55:24.634Z",
+        "_provenance_fingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-trauma-neighborhood-brid"
       }
     },
     {
-      "draftId": "claim-particulate-debris-fact-cross-neighborhood-traum",
+      "draftId": "claim-bearing-surface-selection-fact-cross-neighborhood-traum",
       "claimType": "fact",
       "claimText": "Cross-neighborhood trauma links.",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "contentSource": "generated_draft",
       "reviewStatus": "needs_review",
       "metadata": {
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "draft_id": "claim-particulate-debris-fact-cross-neighborhood-traum",
+        "draft_id": "claim-bearing-surface-selection-fact-cross-neighborhood-traum",
         "claim_type": "fact",
         "claim_text": "Cross-neighborhood trauma links.",
-        "primary_entity_slug": "particulate-debris",
+        "primary_entity_slug": "bearing-surface-selection",
         "importance_level": "L1",
         "content_source": "generated_draft",
         "verified": false,
@@ -2723,24 +2964,24 @@
         "curation_rules": [
           "l1_management_fact"
         ],
-        "curated_at": "2026-07-05T22:57:46.735Z",
-        "_provenance_fingerprint": "claim|claim-particulate-debris-fact-cross-neighborhood-traum"
+        "curated_at": "2026-07-16T02:55:24.634Z",
+        "_provenance_fingerprint": "claim|claim-bearing-surface-selection-fact-cross-neighborhood-traum"
       }
     },
     {
-      "draftId": "claim-particulate-debris-fact-implant-and-fixation-voc",
+      "draftId": "claim-bearing-surface-selection-fact-implant-and-fixation-voc",
       "claimType": "fact",
       "claimText": "Implant and fixation vocabulary.",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "contentSource": "generated_draft",
       "reviewStatus": "needs_review",
       "metadata": {
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "draft_id": "claim-particulate-debris-fact-implant-and-fixation-voc",
+        "draft_id": "claim-bearing-surface-selection-fact-implant-and-fixation-voc",
         "claim_type": "fact",
         "claim_text": "Implant and fixation vocabulary.",
-        "primary_entity_slug": "particulate-debris",
+        "primary_entity_slug": "bearing-surface-selection",
         "importance_level": "L1",
         "content_source": "generated_draft",
         "verified": false,
@@ -2771,24 +3012,24 @@
         "curation_rules": [
           "l1_management_fact"
         ],
-        "curated_at": "2026-07-05T22:57:46.735Z",
-        "_provenance_fingerprint": "claim|claim-particulate-debris-fact-implant-and-fixation-voc"
+        "curated_at": "2026-07-16T02:55:24.634Z",
+        "_provenance_fingerprint": "claim|claim-bearing-surface-selection-fact-implant-and-fixation-voc"
       }
     },
     {
-      "draftId": "claim-particulate-debris-fact-polyethylene-wear-and-os",
+      "draftId": "claim-bearing-surface-selection-fact-polyethylene-wear-and-os",
       "claimType": "fact",
       "claimText": "Polyethylene Wear and Osteolysis indication language.",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "contentSource": "generated_draft",
       "reviewStatus": "needs_review",
       "metadata": {
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "draft_id": "claim-particulate-debris-fact-polyethylene-wear-and-os",
+        "draft_id": "claim-bearing-surface-selection-fact-polyethylene-wear-and-os",
         "claim_type": "fact",
         "claim_text": "Polyethylene Wear and Osteolysis indication language.",
-        "primary_entity_slug": "particulate-debris",
+        "primary_entity_slug": "bearing-surface-selection",
         "importance_level": "L1",
         "content_source": "generated_draft",
         "verified": false,
@@ -2819,24 +3060,72 @@
         "curation_rules": [
           "l1_management_fact"
         ],
-        "curated_at": "2026-07-05T22:57:46.735Z",
-        "_provenance_fingerprint": "claim|claim-particulate-debris-fact-polyethylene-wear-and-os"
+        "curated_at": "2026-07-16T02:55:24.634Z",
+        "_provenance_fingerprint": "claim|claim-bearing-surface-selection-fact-polyethylene-wear-and-os"
       }
     },
     {
-      "draftId": "claim-particulate-debris-fact-recognize-core-concepts-",
+      "draftId": "claim-bearing-surface-selection-fact-polyethylene-wear-genera",
+      "claimType": "fact",
+      "claimText": "Polyethylene wear generates particulate debris driving periprosthetic osteolysis and loosening.",
+      "primaryEntitySlug": "bearing-surface-selection",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "polyethylene-wear-osteolysis-neighborhood",
+        "draft_id": "claim-bearing-surface-selection-fact-polyethylene-wear-genera",
+        "claim_type": "fact",
+        "claim_text": "Polyethylene wear generates particulate debris driving periprosthetic osteolysis and loosening.",
+        "primary_entity_slug": "bearing-surface-selection",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-547e3caf"
+        ],
+        "evidence_packet_id": "ev-packet-efa9d44b",
+        "uncertainty_note": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-16T02:55:24.634Z",
+        "_provenance_fingerprint": "claim|claim-bearing-surface-selection-fact-polyethylene-wear-genera"
+      }
+    },
+    {
+      "draftId": "claim-bearing-surface-selection-fact-recognize-core-concepts-",
       "claimType": "fact",
       "claimText": "Recognize core concepts in Polyethylene Wear and Osteolysis.",
-      "primaryEntitySlug": "particulate-debris",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L3",
       "contentSource": "generated_draft",
       "reviewStatus": "needs_review",
       "metadata": {
         "pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "draft_id": "claim-particulate-debris-fact-recognize-core-concepts-",
+        "draft_id": "claim-bearing-surface-selection-fact-recognize-core-concepts-",
         "claim_type": "fact",
         "claim_text": "Recognize core concepts in Polyethylene Wear and Osteolysis.",
-        "primary_entity_slug": "particulate-debris",
+        "primary_entity_slug": "bearing-surface-selection",
         "importance_level": "L3",
         "content_source": "generated_draft",
         "verified": false,
@@ -2866,8 +3155,8 @@
         "curation_rules": [
           "default_human_review"
         ],
-        "curated_at": "2026-07-05T22:57:46.735Z",
-        "_provenance_fingerprint": "claim|claim-particulate-debris-fact-recognize-core-concepts-"
+        "curated_at": "2026-07-16T02:55:24.634Z",
+        "_provenance_fingerprint": "claim|claim-bearing-surface-selection-fact-recognize-core-concepts-"
       }
     },
     {
@@ -2884,7 +3173,7 @@
         "verified": false,
         "claim_text": "Board trap: oversimplifying polyethylene wear osteolysis without attending-level implant, fixation, or infection context.",
         "claim_type": "board_trap",
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.634Z",
         "content_source": "generated_draft",
         "curation_route": "HUMAN_REVIEW",
         "curation_rules": [
@@ -2922,7 +3211,7 @@
         "verified": false,
         "claim_text": "Polyethylene wear is a silent driver of late arthroplasty failure through osteolysis.",
         "claim_type": "fact",
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.634Z",
         "content_source": "generated_draft",
         "curation_route": "HUMAN_REVIEW",
         "curation_rules": [
@@ -2948,49 +3237,6 @@
       }
     },
     {
-      "draftId": "claim-polyethylene-wear-osteolysis-pearl",
-      "claimType": "anatomy_pearl",
-      "claimText": "Attending pearl: connect polyethylene wear osteolysis anatomy, implant interfaces, and shared trauma neighborhoods before operative planning.",
-      "primaryEntitySlug": "polyethylene-wear-osteolysis",
-      "importanceLevel": "L2",
-      "contentSource": "generated_draft",
-      "reviewStatus": "approved",
-      "metadata": {
-        "pilot": "polyethylene-wear-osteolysis-neighborhood",
-        "draft_id": "claim-polyethylene-wear-osteolysis-pearl",
-        "verified": false,
-        "claim_text": "Attending pearl: connect polyethylene wear osteolysis anatomy, implant interfaces, and shared trauma neighborhoods before operative planning.",
-        "claim_type": "anatomy_pearl",
-        "curated_at": "2026-07-05T22:57:46.735Z",
-        "staging_apply": true,
-        "content_source": "generated_draft",
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "anatomy_pearl_on_hub"
-        ],
-        "curation_scores": {
-          "confidence": 0.88,
-          "evidence": 0.6799999999999999,
-          "ambiguity": 0.2,
-          "safety": 0.15,
-          "completeness": 0.8
-        },
-        "factory_version": "kf-016",
-        "importance_level": "L2",
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "context_relevance": [
-          "or",
-          "clinic"
-        ],
-        "review_packet_key": "pilot:polyethylene-wear-osteolysis-neighborhood",
-        "primary_entity_slug": "polyethylene-wear-osteolysis",
-        "review_packet_label": "Polyethylene Wear and Osteolysis Neighborhood",
-        "clinical_verification": false,
-        "_provenance_fingerprint": "claim|claim-polyethylene-wear-osteolysis-pearl"
-      }
-    },
-    {
       "draftId": "claim-polyethylene-wear-osteolysis-script",
       "claimType": "clinical_script",
       "claimText": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for polyethylene wear osteolysis.",
@@ -3004,7 +3250,7 @@
         "verified": false,
         "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for polyethylene wear osteolysis.",
         "claim_type": "clinical_script",
-        "curated_at": "2026-07-05T22:57:46.735Z",
+        "curated_at": "2026-07-16T02:55:24.634Z",
         "content_source": "generated_draft",
         "curation_route": "HUMAN_REVIEW",
         "curation_rules": [
@@ -3045,18 +3291,18 @@
   "conflicts": [
     {
       "kind": "entity_label_conflict",
-      "description": "Conflicting labels for polyethylene-wear-osteolysis: \"Polyethylene Wear and Osteolysis\" vs \"Polyethylene Wear Osteolysis\""
+      "description": "Conflicting labels for polyethylene-wear-osteolysis: \"Polyethylene Wear Osteolysis\" vs \"Polyethylene Wear and Osteolysis\""
     }
   ],
   "stats": {
     "entityCount": 64,
-    "relationshipCount": 7,
-    "claimCount": 12,
+    "relationshipCount": 12,
+    "claimCount": 15,
     "decisionPointCount": 1,
     "bridgeCount": 1,
-    "duplicateEntitiesResolved": 3,
+    "duplicateEntitiesResolved": 9,
     "conflictingRelationships": 0,
-    "metadataMerged": 3,
-    "provenanceAttached": 86
+    "metadataMerged": 16,
+    "provenanceAttached": 88
   }
 }

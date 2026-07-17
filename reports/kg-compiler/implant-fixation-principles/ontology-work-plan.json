@@ -1,23 +1,29 @@
 {
   "topicKey": "implant-fixation-principles",
   "pilotKey": "implant-fixation-principles-neighborhood",
-  "generatedAt": "2026-07-05T23:29:15.193Z",
+  "generatedAt": "2026-07-16T02:41:49.383Z",
   "workItems": [
     {
       "id": "work-relationship-builder",
       "agentId": "relationship-builder",
       "agentFamily": "Relationship Builder",
-      "title": "Relationship Builder: resolve 3 gap(s)",
+      "title": "Relationship Builder: resolve 9 gap(s)",
       "gapIds": [
         "gap-rel-1",
-        "gap-rel-4",
-        "gap-rel-8"
+        "gap-rel-2",
+        "gap-rel-6",
+        "gap-rel-10",
+        "gap-rel-11",
+        "gap-rel-13",
+        "gap-rel-14",
+        "gap-proc-approach-18",
+        "gap-proc-approach-19"
       ],
       "dependencies": [
         "work-clinical-entity-builder",
         "work-anatomy-builder"
       ],
-      "estimatedConfidence": 0.92,
+      "estimatedConfidence": 0.8888888888888888,
       "requiredInputs": [
         "neighborhood_snapshot",
         "work_assignment",
@@ -34,33 +40,29 @@
         "duplicate_valid",
         "provenance_valid"
       ],
-      "priority": 55,
+      "priority": 115,
       "workType": "gap_resolution",
       "assignedAgentId": "relationship-builder",
-      "publicationImpact": 0.05000000000000001,
-      "requiredReviewer": "none"
+      "publicationImpact": 0.08888888888888889,
+      "requiredReviewer": "attending"
     },
     {
       "id": "work-claim-builder",
       "agentId": "claim-builder",
       "agentFamily": "Claim Builder",
-      "title": "Claim Builder: resolve 10 gap(s)",
+      "title": "Claim Builder: resolve 6 gap(s)",
       "gapIds": [
-        "gap-claim-2",
-        "gap-claim-type-3",
-        "gap-claim-5",
-        "gap-claim-type-6",
-        "gap-claim-type-7",
-        "gap-claim-9",
-        "gap-claim-type-10",
-        "gap-claim-type-11",
-        "gap-biomech-claim-14",
-        "gap-biomech-claim-15"
+        "gap-claim-3",
+        "gap-claim-type-4",
+        "gap-claim-type-5",
+        "gap-claim-7",
+        "gap-claim-type-8",
+        "gap-biomech-claim-17"
       ],
       "dependencies": [
         "work-relationship-builder"
       ],
-      "estimatedConfidence": 0.8029999999999999,
+      "estimatedConfidence": 0.805,
       "requiredInputs": [
         "neighborhood_snapshot",
         "canonical_objects",
@@ -84,13 +86,43 @@
       "requiredReviewer": "clinical_expert"
     },
     {
+      "id": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "agentFamily": "Clinical Entity Builder",
+      "title": "Clinical Entity Builder: resolve 2 gap(s)",
+      "gapIds": [
+        "gap-entity-neighbor-9",
+        "gap-entity-neighbor-12"
+      ],
+      "dependencies": [],
+      "estimatedConfidence": 0.95,
+      "requiredInputs": [
+        "neighborhood_snapshot",
+        "ontology_requirements",
+        "work_assignment"
+      ],
+      "requiredOutputs": [
+        "entities"
+      ],
+      "validationRules": [
+        "ontology_valid",
+        "schema_valid",
+        "duplicate_valid"
+      ],
+      "priority": 115,
+      "workType": "gap_resolution",
+      "assignedAgentId": "clinical-entity-builder",
+      "publicationImpact": 0.15,
+      "requiredReviewer": "clinical_expert"
+    },
+    {
       "id": "work-asset-linker",
       "agentId": "asset-linker",
       "agentFamily": "Asset Linker",
       "title": "Asset Linker: resolve 2 gap(s)",
       "gapIds": [
-        "gap-asset-card-12",
-        "gap-asset-question-13"
+        "gap-asset-card-15",
+        "gap-asset-question-16"
       ],
       "dependencies": [
         "work-clinical-entity-builder"
@@ -124,6 +156,7 @@
       "dependencies": [
         "work-relationship-builder",
         "work-claim-builder",
+        "work-clinical-entity-builder",
         "work-asset-linker"
       ],
       "estimatedConfidence": 0.9,
@@ -209,6 +242,7 @@
       "dependencies": [
         "work-relationship-builder",
         "work-claim-builder",
+        "work-clinical-entity-builder",
         "work-asset-linker",
         "work-conflict-resolver"
       ],
@@ -263,6 +297,7 @@
   "agentSummary": {
     "Relationship Builder": 1,
     "Claim Builder": 1,
+    "Clinical Entity Builder": 1,
     "Asset Linker": 1,
     "Conflict Resolver": 2,
     "Quality Scorer": 1,

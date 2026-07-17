@@ -1,0 +1,40 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 88,
+  "deductions": [
+    {
+      "finding": "1 orphan entities with no relationships",
+      "evidence": "Slugs: staged-pilon-protocol",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "medium",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "staged-pilon-protocol"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 4
+    },
+    {
+      "finding": "1 merge conflicts detected",
+      "evidence": "conflict-report.json: Conflicting DP pattern pilon-fracture|operative_indication: dp-pilon-definitive-orif vs dp-pilon-staged-spanning",
+      "reason": "Unresolved merge conflicts indicate inconsistent agent outputs.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "suggestedFix": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 31,
+    "relationshipCount": 37,
+    "orphanCount": 1,
+    "danglingEdgeCount": 0,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Run conflict-resolver agent and reconcile metadata/text conflicts."
+  ]
+}

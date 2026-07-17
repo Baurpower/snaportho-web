@@ -1,6 +1,6 @@
 [
   {
-    "proposal_fingerprint": "claim|claim-particulate-debris-fact-cross-neighborhood-traum",
+    "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-cross-neighborhood-traum",
     "proposal_type": "propose_educational_claim",
     "route": "ATTENDING_REVIEW",
     "target": "undefined -[null]-> undefined",
@@ -16,10 +16,10 @@
     "evidence_summary": "Generated from evidence items: ev-static-prepare-547e3caf",
     "metadata": {
       "pilot": "polyethylene-wear-osteolysis-neighborhood",
-      "draft_id": "claim-particulate-debris-fact-cross-neighborhood-traum",
+      "draft_id": "claim-bearing-surface-selection-fact-cross-neighborhood-traum",
       "claim_type": "fact",
       "claim_text": "Cross-neighborhood trauma links.",
-      "primary_entity_slug": "particulate-debris",
+      "primary_entity_slug": "bearing-surface-selection",
       "importance_level": "L1",
       "content_source": "generated_draft",
       "verified": false,
@@ -50,12 +50,12 @@
       "curation_rules": [
         "l1_management_fact"
       ],
-      "curated_at": "2026-07-05T22:57:46.735Z"
+      "curated_at": "2026-07-16T02:55:24.634Z"
     },
     "auto_review_category": "EXPERT_REVIEW"
   },
   {
-    "proposal_fingerprint": "claim|claim-particulate-debris-fact-implant-and-fixation-voc",
+    "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-implant-and-fixation-voc",
     "proposal_type": "propose_educational_claim",
     "route": "ATTENDING_REVIEW",
     "target": "undefined -[null]-> undefined",
@@ -71,10 +71,10 @@
     "evidence_summary": "Generated from evidence items: ev-static-prepare-547e3caf",
     "metadata": {
       "pilot": "polyethylene-wear-osteolysis-neighborhood",
-      "draft_id": "claim-particulate-debris-fact-implant-and-fixation-voc",
+      "draft_id": "claim-bearing-surface-selection-fact-implant-and-fixation-voc",
       "claim_type": "fact",
       "claim_text": "Implant and fixation vocabulary.",
-      "primary_entity_slug": "particulate-debris",
+      "primary_entity_slug": "bearing-surface-selection",
       "importance_level": "L1",
       "content_source": "generated_draft",
       "verified": false,
@@ -105,12 +105,12 @@
       "curation_rules": [
         "l1_management_fact"
       ],
-      "curated_at": "2026-07-05T22:57:46.735Z"
+      "curated_at": "2026-07-16T02:55:24.634Z"
     },
     "auto_review_category": "EXPERT_REVIEW"
   },
   {
-    "proposal_fingerprint": "claim|claim-particulate-debris-fact-polyethylene-wear-and-os",
+    "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-polyethylene-wear-and-os",
     "proposal_type": "propose_educational_claim",
     "route": "ATTENDING_REVIEW",
     "target": "undefined -[null]-> undefined",
@@ -126,10 +126,10 @@
     "evidence_summary": "Generated from evidence items: ev-static-prepare-547e3caf",
     "metadata": {
       "pilot": "polyethylene-wear-osteolysis-neighborhood",
-      "draft_id": "claim-particulate-debris-fact-polyethylene-wear-and-os",
+      "draft_id": "claim-bearing-surface-selection-fact-polyethylene-wear-and-os",
       "claim_type": "fact",
       "claim_text": "Polyethylene Wear and Osteolysis indication language.",
-      "primary_entity_slug": "particulate-debris",
+      "primary_entity_slug": "bearing-surface-selection",
       "importance_level": "L1",
       "content_source": "generated_draft",
       "verified": false,
@@ -160,12 +160,67 @@
       "curation_rules": [
         "l1_management_fact"
       ],
-      "curated_at": "2026-07-05T22:57:46.735Z"
+      "curated_at": "2026-07-16T02:55:24.634Z"
     },
     "auto_review_category": "EXPERT_REVIEW"
   },
   {
-    "proposal_fingerprint": "claim|claim-particulate-debris-fact-recognize-core-concepts-",
+    "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-polyethylene-wear-genera",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7941250000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.794 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Generated from evidence items: ev-static-prepare-547e3caf",
+    "metadata": {
+      "pilot": "polyethylene-wear-osteolysis-neighborhood",
+      "draft_id": "claim-bearing-surface-selection-fact-polyethylene-wear-genera",
+      "claim_type": "fact",
+      "claim_text": "Polyethylene wear generates particulate debris driving periprosthetic osteolysis and loosening.",
+      "primary_entity_slug": "bearing-surface-selection",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "verified": false,
+      "why_it_matters": [
+        "clinical_reasoning"
+      ],
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "learner_stage": "clerkship",
+      "evidence_item_ids": [
+        "ev-static-prepare-547e3caf"
+      ],
+      "evidence_packet_id": "ev-packet-efa9d44b",
+      "uncertainty_note": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "review_route_hint": "HUMAN_REVIEW",
+      "generated_by": "claim-builder-v2",
+      "publication_eligible": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.8365,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-16T02:55:24.634Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-recognize-core-concepts-",
     "proposal_type": "propose_educational_claim",
     "route": "HUMAN_REVIEW",
     "target": "undefined -[null]-> undefined",
@@ -181,10 +236,10 @@
     "evidence_summary": "Generated from evidence items: ev-static-prepare-461482d8",
     "metadata": {
       "pilot": "polyethylene-wear-osteolysis-neighborhood",
-      "draft_id": "claim-particulate-debris-fact-recognize-core-concepts-",
+      "draft_id": "claim-bearing-surface-selection-fact-recognize-core-concepts-",
       "claim_type": "fact",
       "claim_text": "Recognize core concepts in Polyethylene Wear and Osteolysis.",
-      "primary_entity_slug": "particulate-debris",
+      "primary_entity_slug": "bearing-surface-selection",
       "importance_level": "L3",
       "content_source": "generated_draft",
       "verified": false,
@@ -214,7 +269,7 @@
       "curation_rules": [
         "default_human_review"
       ],
-      "curated_at": "2026-07-05T22:57:46.735Z"
+      "curated_at": "2026-07-16T02:55:24.634Z"
     },
     "auto_review_category": "SAFE_REVIEW"
   },
@@ -239,7 +294,7 @@
       "verified": false,
       "claim_text": "Board trap: oversimplifying polyethylene wear osteolysis without attending-level implant, fixation, or infection context.",
       "claim_type": "board_trap",
-      "curated_at": "2026-07-05T22:57:46.735Z",
+      "curated_at": "2026-07-16T02:55:24.634Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -284,7 +339,7 @@
       "verified": false,
       "claim_text": "Polyethylene wear is a silent driver of late arthroplasty failure through osteolysis.",
       "claim_type": "fact",
-      "curated_at": "2026-07-05T22:57:46.735Z",
+      "curated_at": "2026-07-16T02:55:24.634Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -330,7 +385,7 @@
       "verified": false,
       "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for polyethylene wear osteolysis.",
       "claim_type": "clinical_script",
-      "curated_at": "2026-07-05T22:57:46.735Z",
+      "curated_at": "2026-07-16T02:55:24.634Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -377,7 +432,7 @@
       "urgency": "routine",
       "draft_id": "dp-polyethylene-wear-osteolysis-operative",
       "verified": false,
-      "curated_at": "2026-07-05T22:57:46.735Z",
+      "curated_at": "2026-07-16T02:55:24.635Z",
       "pattern_type": "operative_indication",
       "content_source": "generated_draft",
       "curation_route": "ATTENDING_REVIEW",

@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-05T22:23:10.240Z",
+  "generatedAt": "2026-07-16T03:40:16.722Z",
   "auditorVersion": "1.0.0",
   "topicKey": "proximal-humerus-fracture",
   "pilotKey": "proximal-humerus-fracture-neighborhood",
   "displayName": "Proximal Humerus Fracture",
   "dataSource": {
-    "neighborhood": "merged_draft",
+    "neighborhood": "database",
     "reportsLoaded": [
       "ontology-compiler-plan.json",
       "ontology-gap-report.json",
@@ -18,27 +18,30 @@
       "conflict-report.json",
       "agent-assignment-plan.json",
       "ontology-neighborhood-plan.json",
-      "evidence-packet.json"
+      "evidence-packet.json",
+      "database-proposals",
+      "database-neighborhood-snapshot",
+      "publication-readiness-database-state-reconciled"
     ],
     "reportsMissing": []
   },
   "overallScore": 83,
   "categories": {
-    "ontology_completeness": 38,
+    "ontology_completeness": 53,
     "evidence_quality": 85,
-    "graph_integrity": 77,
-    "shared_knowledge_reuse": 100,
-    "relationship_quality": 92,
-    "claim_quality": 84,
-    "decision_point_quality": 69,
-    "metadata_quality": 90,
-    "provenance_quality": 100,
+    "graph_integrity": 88,
+    "shared_knowledge_reuse": 98,
+    "relationship_quality": 84,
+    "claim_quality": 85,
+    "decision_point_quality": 85,
+    "metadata_quality": 88,
+    "provenance_quality": 96,
     "review_calibration": 92,
     "agent_performance": 92,
-    "compiler_quality": 81,
-    "educational_quality": 96,
-    "cross_neighborhood_consistency": 92,
-    "publication_readiness": 7
+    "compiler_quality": 82,
+    "educational_quality": 72,
+    "cross_neighborhood_consistency": 100,
+    "publication_readiness": 15
   },
   "publication": {
     "status": "NOT_READY",
@@ -48,12 +51,11 @@
       "13 items require attending review",
       "Insufficient relationship metadata on essential edges",
       "Claims and DPs are draft-only — publication gate must block verified consumption.",
-      "No approved canonical entities in database yet — proposals remain offline/spec.",
       "18 critical/high ontology gaps remain unresolved"
     ],
     "currentLevel": 5,
     "requiredLevel": 7,
-    "score": 7,
+    "score": 15,
     "deductions": [
       {
         "finding": "19 proposals still awaiting human review",
@@ -92,15 +94,6 @@
         "impact": 8
       },
       {
-        "finding": "No approved canonical entities in database yet — proposals remain offline/spec.",
-        "evidence": "publication-readiness.json blockers",
-        "reason": "Publication gate identified blocking condition.",
-        "severity": "high",
-        "category": "publication_readiness",
-        "suggestedFix": "[critical] Proximal Humerus Fracture neighborhood has 0/3 anatomy_structure entities.",
-        "impact": 8
-      },
-      {
         "finding": "18 critical/high ontology gaps remain unresolved",
         "evidence": "publication-readiness.json blockers",
         "reason": "Publication gate identified blocking condition.",
@@ -122,20 +115,8 @@
       "impact": 15
     },
     {
-      "finding": "Only 0 anatomy structures (minimum 3 required)",
-      "evidence": "Entity slugs: ",
-      "reason": "Condition neighborhoods require regional anatomy per condition.anatomy.min_structures.",
-      "severity": "critical",
-      "category": "ontology_completeness",
-      "affectedSlugs": [
-        "proximal-humerus-fracture"
-      ],
-      "suggestedFix": "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
-      "impact": 15
-    },
-    {
       "finding": "Low evidence coverage (0% of proposals cite evidence)",
-      "evidence": "0/30 proposals have evidence_refs",
+      "evidence": "0/63 proposals have evidence_refs",
       "reason": "Every proposal should cite supporting evidence per factory contract.",
       "severity": "critical",
       "category": "evidence_quality",
@@ -143,21 +124,21 @@
       "impact": 15
     },
     {
-      "finding": "7 dangling edges reference missing entities",
-      "evidence": "proximal-humerus-fracture -[at_risk_structure]-> axillary-nerve; proximal-humerus-fracture -[injured_in]-> proximal-humerus; proximal-humerus-fracture -[injured_in]-> surgical-neck",
-      "reason": "Relationships must resolve to entities in the neighborhood graph.",
+      "finding": "No educational claims in neighborhood",
+      "evidence": "merged draft claimCount = 0",
+      "reason": "Claims are the primary educational content layer for products.",
       "severity": "critical",
-      "category": "graph_integrity",
-      "suggestedFix": "Create missing entities or remove invalid relationship proposals.",
+      "category": "claim_quality",
+      "suggestedFix": "Run claim-builder agent to generate evidence-backed atomic claims.",
       "impact": 15
     },
     {
-      "finding": "Missing decision point pattern: emergency_escalation",
-      "evidence": "0 decision points with pattern emergency_escalation",
-      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
+      "finding": "No decision points in neighborhood",
+      "evidence": "merged draft decisionPointCount = 0",
+      "reason": "Decision points support clinical reasoning and operative safety pathways.",
       "severity": "critical",
       "category": "decision_point_quality",
-      "suggestedFix": "Add emergency_escalation decision point with attending-gated review.",
+      "suggestedFix": "Run decision-point-builder for operative_indication and nonoperative_eligible patterns.",
       "impact": 15
     },
     {
@@ -197,53 +178,32 @@
       "impact": 8
     },
     {
-      "finding": "4 high-risk relationships lack approved review status",
-      "evidence": "Predicates: indicates_treatment, at_risk_structure, treated_by",
-      "reason": "High-risk predicates require human review before publication.",
+      "finding": "Missing clinical edge: at_risk_structure",
+      "evidence": "0 outbound at_risk_structure edges from proximal-humerus-fracture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
       "severity": "high",
       "category": "relationship_quality",
-      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "affectedSlugs": [
+        "proximal-humerus-fracture"
+      ],
+      "suggestedFix": "Add at_risk_structure relationship via relationship-builder agent.",
       "impact": 8
     },
     {
-      "finding": "All claims remain generated_draft",
-      "evidence": "14/14 claims are unreviewed drafts",
-      "reason": "Draft claims cannot be consumed as verified educational content.",
+      "finding": "Missing clinical edge: treated_by",
+      "evidence": "0 outbound treated_by edges from proximal-humerus-fracture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
       "severity": "high",
-      "category": "claim_quality",
-      "suggestedFix": "Route claims through human review queue before publication.",
-      "impact": 8
-    },
-    {
-      "finding": "Insufficient evidence support on claim proposals",
-      "evidence": "0% of claim proposals cite evidence",
-      "reason": "Every claim should cite supporting evidence.",
-      "severity": "high",
-      "category": "claim_quality",
-      "suggestedFix": "Attach evidence_refs from evidence packet to each claim proposal.",
-      "impact": 8
-    },
-    {
-      "finding": "Missing decision point pattern: nonoperative_eligible",
-      "evidence": "Proximal Humerus Fracture missing decision point pattern: nonoperative_eligible.",
-      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
-      "severity": "high",
-      "category": "decision_point_quality",
-      "suggestedFix": "Add nonoperative_eligible decision point with attending-gated review.",
-      "impact": 8
-    },
-    {
-      "finding": "No emergent/high-safety decision pathways",
-      "evidence": "0 decision points with safetyCriticality=high or urgency=emergent",
-      "reason": "Trauma neighborhoods require emergency escalation pathways.",
-      "severity": "high",
-      "category": "decision_point_quality",
-      "suggestedFix": "Add emergency_escalation decision point for compartment syndrome, open fracture, etc.",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "proximal-humerus-fracture"
+      ],
+      "suggestedFix": "Add treated_by relationship via relationship-builder agent.",
       "impact": 8
     },
     {
       "finding": "Primary entity missing metadata: curriculum_tags, board_relevance",
-      "evidence": "Entity proximal-humerus-fracture metadata keys: slug, pilot, verified, curated_at, description, clinical_kind, staging_apply, curation_route, curation_rules, curation_scores, factory_version, maturity_target, staging_reviewer, review_packet_key, review_packet_label, clinical_verification, created_from_proposal_fingerprint, canonical_entity_id, applied_by_script, _provenance_fingerprint",
+      "evidence": "Entity proximal-humerus-fracture metadata keys: slug, pilot, verified, curated_at, description, clinical_kind, staging_apply, curation_route, curation_rules, curation_scores, factory_version, maturity_target, staging_reviewer, review_packet_key, review_packet_label, clinical_verification, created_from_proposal_fingerprint, canonical_entity_id",
       "reason": "Primary condition entities require educational and curriculum metadata.",
       "severity": "high",
       "category": "metadata_quality",
@@ -251,6 +211,42 @@
         "proximal-humerus-fracture"
       ],
       "suggestedFix": "Run metadata-builder to populate clinical_kind, curriculum_tags, board_relevance.",
+      "impact": 8
+    },
+    {
+      "finding": "8 underperforming agent(s)",
+      "evidence": "clinical-entity-builder (F), asset-linker (F), decision-point-builder (D), metadata-builder (F), duplicate-detector (F), quality-scorer (F), conflict-resolver (F), publication-validator (F)",
+      "reason": "Low-grading agents reduce neighborhood quality and increase review burden.",
+      "severity": "high",
+      "category": "agent_performance",
+      "suggestedFix": "Review agent report cards and address weaknesses per agent.",
+      "impact": 8
+    },
+    {
+      "finding": "1 merge conflicts",
+      "evidence": "conflict-report.json or merged draft conflicts array",
+      "reason": "Merge engine should resolve or surface all agent output conflicts.",
+      "severity": "high",
+      "category": "compiler_quality",
+      "suggestedFix": "Review conflict-report.json and re-run merge with conflict-resolver output.",
+      "impact": 8
+    },
+    {
+      "finding": "Insufficient primary-entity claims for learning progression",
+      "evidence": "0 claims anchored to proximal-humerus-fracture",
+      "reason": "Residents need a critical mass of claims to build mental models.",
+      "severity": "high",
+      "category": "educational_quality",
+      "suggestedFix": "Add L1–L3 claims covering diagnosis, classification, treatment, and complications.",
+      "impact": 8
+    },
+    {
+      "finding": "Weak reasoning support (claims + decision points)",
+      "evidence": "0 primary claims, 0 decision points",
+      "reason": "Effective learning requires both factual claims and branching clinical reasoning.",
+      "severity": "high",
+      "category": "educational_quality",
+      "suggestedFix": "Pair decision points with supporting claims for each branch.",
       "impact": 8
     }
   ],
@@ -263,57 +259,57 @@
     },
     {
       "priority": 2,
-      "action": "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
-      "category": "ontology_completeness",
-      "impact": "Only 0 anatomy structures (minimum 3 required)"
-    },
-    {
-      "priority": 3,
       "action": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
       "category": "evidence_quality",
       "impact": "Low evidence coverage (0% of proposals cite evidence)"
     },
     {
+      "priority": 3,
+      "action": "Run claim-builder agent to generate evidence-backed atomic claims.",
+      "category": "claim_quality",
+      "impact": "No educational claims in neighborhood"
+    },
+    {
       "priority": 4,
-      "action": "Create missing entities or remove invalid relationship proposals.",
-      "category": "graph_integrity",
-      "impact": "7 dangling edges reference missing entities"
+      "action": "Run decision-point-builder for operative_indication and nonoperative_eligible patterns.",
+      "category": "decision_point_quality",
+      "impact": "No decision points in neighborhood"
     },
     {
       "priority": 5,
-      "action": "Add emergency_escalation decision point with attending-gated review.",
-      "category": "decision_point_quality",
-      "impact": "Missing decision point pattern: emergency_escalation"
-    },
-    {
-      "priority": 6,
       "action": "[critical] Proximal Humerus Fracture neighborhood has 0/3 anatomy_structure entities.",
       "category": "publication_readiness",
       "impact": "18 critical/high ontology gaps remain unresolved"
     },
     {
-      "priority": 7,
+      "priority": 6,
       "action": "Schedule gap-resolution work items from ontology-work-plan.json.",
       "category": "ontology_completeness",
       "impact": "9 high-priority ontology gaps"
     },
     {
-      "priority": 8,
+      "priority": 7,
       "action": "Run the matching builder agent for missing_relationship.",
       "category": "ontology_completeness",
       "impact": "Missing relationship requirements (12)"
     },
     {
-      "priority": 9,
+      "priority": 8,
       "action": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
       "category": "graph_integrity",
       "impact": "1 merge conflicts detected"
     },
     {
-      "priority": 10,
-      "action": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "priority": 9,
+      "action": "Add at_risk_structure relationship via relationship-builder agent.",
       "category": "relationship_quality",
-      "impact": "4 high-risk relationships lack approved review status"
+      "impact": "Missing clinical edge: at_risk_structure"
+    },
+    {
+      "priority": 10,
+      "action": "Add treated_by relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: treated_by"
     }
   ],
   "databaseModified": false

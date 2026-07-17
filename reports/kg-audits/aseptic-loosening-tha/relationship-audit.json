@@ -53,7 +53,7 @@
     },
     {
       "finding": "Low relationship density",
-      "evidence": "8 relationships / 64 entities = 0.13",
+      "evidence": "8 relationships / 8 entities = 1.00",
       "reason": "Sparse graphs limit educational traversal and reasoning support.",
       "severity": "medium",
       "category": "relationship_quality",
@@ -63,7 +63,7 @@
   ],
   "metrics": {
     "relationshipCount": 8,
-    "relationshipDensity": 0.125,
+    "relationshipDensity": 1,
     "missingClinicalEdgeCount": 4,
     "highRiskUnreviewedCount": 0,
     "predicateCorrectness": 1

@@ -1,0 +1,84 @@
+{
+  "agent": "BackboneCoverageAgent",
+  "generatedAt": "2026-07-16T02:19:30.996Z",
+  "result": {
+    "approved": [],
+    "modified": [],
+    "rejected": [],
+    "escalations": [
+      {
+        "id": "coverage-missing-imaging",
+        "fingerprint": "coverage|imaging",
+        "objectKind": "entity",
+        "agent": "BackboneCoverageAgent",
+        "severity": "MODERATE",
+        "reason": "Expected neighborhood backbone domain is absent: imaging.",
+        "reviewer": "curator",
+        "suggestedAction": "Confirm whether this is a deliberate omission or missing generated content."
+      },
+      {
+        "id": "coverage-missing-classification",
+        "fingerprint": "coverage|classification",
+        "objectKind": "entity",
+        "agent": "BackboneCoverageAgent",
+        "severity": "MODERATE",
+        "reason": "Expected neighborhood backbone domain is absent: classification.",
+        "reviewer": "curator",
+        "suggestedAction": "Confirm whether this is a deliberate omission or missing generated content."
+      }
+    ],
+    "warnings": [],
+    "metrics": {
+      "duplicatesPrevented": 0,
+      "relationshipsNormalized": 0,
+      "unsupportedEdgesRemoved": 0,
+      "reviewDecisionsInherited": 0,
+      "orphanEntitiesRepaired": 0,
+      "publicationBlockersDetected": 0
+    }
+  },
+  "artifacts": {
+    "coverage_report": {
+      "neighborhoodId": "tibial-shaft-fracture",
+      "domains": [
+        {
+          "domain": "anatomy",
+          "present": true
+        },
+        {
+          "domain": "imaging",
+          "present": false
+        },
+        {
+          "domain": "classification",
+          "present": false
+        },
+        {
+          "domain": "treatment",
+          "present": true
+        },
+        {
+          "domain": "complications",
+          "present": true
+        }
+      ],
+      "presentDomains": 3,
+      "missingDomains": 2,
+      "weakDomains": 0,
+      "note": "Backbone coverage is an omission detector, not a template enforcer."
+    },
+    "missing_domains": [
+      {
+        "domain": "imaging",
+        "present": false,
+        "requiredAction": "Add or justify omitted backbone coverage before publication."
+      },
+      {
+        "domain": "classification",
+        "present": false,
+        "requiredAction": "Add or justify omitted backbone coverage before publication."
+      }
+    ],
+    "weak_domains": []
+  }
+}

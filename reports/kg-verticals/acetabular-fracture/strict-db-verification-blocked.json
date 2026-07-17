@@ -1,0 +1,44 @@
+{
+  "ok": false,
+  "runDate": "2026-07-16",
+  "topicKey": "acetabular-fracture",
+  "displayName": "Acetabular Fracture",
+  "pilotKey": "acetabular-fracture-neighborhood",
+  "priorState": "staging_applied",
+  "resultingState": "database_verification_blocked",
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "blockerClass": "human_review_required",
+  "automaticRepairAttempted": true,
+  "quarantinedPartialMemberships": 22,
+  "batchKey": "legacy-acetabular-fracture-dc9795f3ead252ce",
+  "packetHash": "dc9795f3ead252ce74c3482ec45e9060339dc5124553ff4abbe788cc32069cdf",
+  "expected": {
+    "approvedLoaded": 84,
+    "structuralProposals": 83,
+    "entities": 37,
+    "relationships": 45,
+    "curriculumBridges": 1,
+    "draftClaims": 1,
+    "draftDecisionPoints": 0
+  },
+  "resolved": {
+    "entities": 37,
+    "relationships": 45,
+    "curriculumBridges": 1
+  },
+  "discrepancyCount": 1,
+  "discrepancies": [
+    {
+      "fingerprint": "create|anatomy_structure|extensor-mechanism",
+      "kind": "competing_semantic_identity",
+      "expected": "{\"label\":\"Knee Extensor Mechanism\",\"proposal_type\":\"create_canonical_entity\",\"proposed_bridge_type\":null,\"proposed_entity_type\":\"anatomy_structure\",\"proposed_predicate\":null,\"slug\":\"extensor-mechanism\",\"source_signal_type\":\"reference_import\"}",
+      "observed": "{\"label\":\"Extensor Mechanism\",\"proposal_type\":\"create_canonical_entity\",\"proposed_bridge_type\":null,\"proposed_entity_type\":\"anatomy_structure\",\"proposed_predicate\":null,\"slug\":\"extensor-mechanism\",\"source_signal_type\":\"reference_import\"}"
+    }
+  ],
+  "exactNextAction": "resolve_canonical_identity",
+  "evidence": {
+    "applyPath": "reports/kg-pilots/acetabular-fracture-staging-apply-result.json",
+    "curatedPath": "reports/kg-pilots/acetabular-fracture-curated-proposals.json"
+  }
+}

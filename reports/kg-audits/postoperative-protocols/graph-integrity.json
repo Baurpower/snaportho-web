@@ -1,0 +1,28 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 85,
+  "deductions": [
+    {
+      "finding": "64 invalid relationship triples per ontology registry",
+      "evidence": "64/64 relationships fail validateRelationshipTriple",
+      "reason": "Invalid predicates or entity type pairings violate the relationship registry.",
+      "severity": "critical",
+      "category": "graph_integrity",
+      "suggestedFix": "Correct subject/object entity types or choose valid predicates.",
+      "impact": 15
+    }
+  ],
+  "metrics": {
+    "entityCount": 62,
+    "relationshipCount": 64,
+    "orphanCount": 0,
+    "danglingEdgeCount": 0,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 64,
+    "validationRate": 0
+  },
+  "recommendations": [
+    "Correct subject/object entity types or choose valid predicates."
+  ]
+}

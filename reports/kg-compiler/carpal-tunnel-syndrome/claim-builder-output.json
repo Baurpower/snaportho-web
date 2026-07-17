@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-07-16T02:46:42.102Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-6de8724c",
+  "gapsAddressed": 4,
+  "gapsScheduled": 5,
+  "claimsGenerated": 3,
+  "claimsRejected": 0,
+  "redirectedToDecisionPoint": 0,
+  "candidates": [],
+  "rejected": [],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-carpal-tunnel-syndrome-clinical-pattern",
+      "draftId": "claim-carpal-tunnel-syndrome-clinical-pattern",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-f560f589",
+        "ev-quality-signal-6ba83bb6",
+        "ev-quality-signal-bf9508ef"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-carpal-tunnel-syndrome-complications",
+      "draftId": "claim-carpal-tunnel-syndrome-complications",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-f560f589",
+        "ev-quality-signal-6ba83bb6",
+        "ev-quality-signal-bf9508ef"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-carpal-tunnel-syndrome-oite-trap",
+      "draftId": "claim-carpal-tunnel-syndrome-oite-trap",
+      "claimType": "board_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-f560f589",
+        "ev-quality-signal-6ba83bb6",
+        "ev-quality-signal-bf9508ef"
+      ],
+      "verified": false
+    }
+  ]
+}

@@ -2,15 +2,39 @@ import * as assert from 'node:assert/strict';
 
 import { resolveCurriculumChatChips } from './curriculum-chips.js';
 import {
+  buildReviewStateKey,
   classifyPage,
   hasReviewData,
+  inferQuestionState,
   isExplainEligible,
   isHintEligible,
   isPageUsable,
   isUnansweredQuestion,
   preferredBrobotMode,
+  resolveQuestionTutorPrimaryAction,
 } from './page-classification.js';
 import type { OrthobulletsPageContext } from './types.js';
+
+function withVisibleReviewSignals(
+  context: OrthobulletsPageContext,
+  overrides: Partial<NonNullable<OrthobulletsPageContext['questionReviewSignals']>> = {}
+): OrthobulletsPageContext {
+  return {
+    ...context,
+    questionReviewSignals: {
+      hasVisibleExplanation: true,
+      hasVisibleReviewMarker: true,
+      hasSubmittedAnswerState: true,
+      visibleUnansweredPrompt: false,
+      unansweredOverrideApplied: false,
+      reviewScore: 3,
+      unansweredScore: 0,
+      reviewEvidence: ['correct_answer_review_class', 'distribution_rows', 'explanation_text'],
+      unansweredEvidence: [],
+      ...overrides,
+    },
+  };
+}
 
 function createContext(overrides: Partial<OrthobulletsPageContext>): OrthobulletsPageContext {
   return {
@@ -41,28 +65,60 @@ assert.equal(hasReviewData(unansweredCurrentTest), false);
 assert.equal(isUnansweredQuestion(unansweredCurrentTest), true);
 assert.equal(isHintEligible(unansweredCurrentTest), true);
 assert.equal(isExplainEligible(unansweredCurrentTest), false);
+assert.equal(inferQuestionState(unansweredCurrentTest), 'unanswered');
+assert.equal(resolveQuestionTutorPrimaryAction(unansweredCurrentTest), 'hint');
+assert.equal(buildReviewStateKey(unansweredCurrentTest), 'unanswered:0:0:0:0:0:0:0:0');
 
-const currentTestWithReviewData = createContext({
-  correctAnswerKey: '2',
-  explanationText: 'Preferred response discusses instability and fixation choice.',
-  percentDistribution: [
-    { answerKey: '1', percent: 20 },
-    { answerKey: '2', percent: 55 },
-  ],
+const selectedOnly = createContext({
+  stem: 'A patient presents with an unstable fracture pattern.',
+  selectedAnswerKey: '1',
+  selectedAnswer: 'Choice 1',
+  questionReviewSignals: {
+    hasVisibleExplanation: false,
+    hasVisibleReviewMarker: false,
+    hasSubmittedAnswerState: false,
+    visibleUnansweredPrompt: false,
+    unansweredOverrideApplied: false,
+    reviewScore: 0,
+    unansweredScore: 4,
+    reviewEvidence: [],
+    unansweredEvidence: ['no_review_answer_styling', 'no_distribution_rows', 'preferred_response_disabled', 'no_explanation_text'],
+  },
 });
+assert.equal(buildReviewStateKey(selectedOnly), 'unanswered:0:4:0:0:0:0:0:0', 'selected answer alone should not change review state key');
+assert.equal(inferQuestionState(selectedOnly), 'unanswered');
+assert.equal(resolveQuestionTutorPrimaryAction(selectedOnly), 'hint');
+
+const currentTestWithReviewData = withVisibleReviewSignals(
+  createContext({
+    stem: 'A patient presents with an unstable fracture pattern.',
+    correctAnswerKey: '2',
+    explanationText: 'Preferred response discusses instability and fixation choice.',
+    percentDistribution: [
+      { answerKey: '1', percent: 20 },
+      { answerKey: '2', percent: 55 },
+    ],
+  })
+);
 
 assert.equal(hasReviewData(currentTestWithReviewData), true);
 assert.equal(isUnansweredQuestion(currentTestWithReviewData), false);
 assert.equal(isHintEligible(currentTestWithReviewData), false);
 assert.equal(isExplainEligible(currentTestWithReviewData), true);
+assert.equal(inferQuestionState(currentTestWithReviewData), 'answered_review');
+assert.equal(resolveQuestionTutorPrimaryAction(currentTestWithReviewData), 'explain');
+assert.equal(buildReviewStateKey(currentTestWithReviewData), 'answered_review:3:0:0:0:0:0:0:0');
 
-const reviewPage = createContext({
-  pageUrl: 'https://www.orthobullets.com/testview?qid=3794&ans=2',
-  pageKind: 'review',
-  selectedAnswerKey: '1',
-  correctAnswerKey: '2',
-  explanationText: 'Review explanation is visible.',
-});
+const reviewPage = withVisibleReviewSignals(
+  createContext({
+    stem: 'A patient presents with an unstable fracture pattern.',
+    pageUrl: 'https://www.orthobullets.com/testview?qid=3794&ans=2',
+    pageKind: 'review',
+    selectedAnswerKey: '1',
+    correctAnswerKey: '2',
+    explanationText: 'Review explanation is visible.',
+  })
+);
 
 assert.equal(hasReviewData(reviewPage), true);
 assert.equal(isUnansweredQuestion(reviewPage), false);
@@ -77,22 +133,36 @@ const rockUnanswered = createContext({
   sourceUrl: 'https://rock.aaos.org/questions/ROCK-SYN-001',
   pageKind: 'question',
   stem: 'A ROCK curriculum question stem.',
+  questionReviewSignals: {
+    hasVisibleExplanation: false,
+    hasVisibleReviewMarker: false,
+    hasSubmittedAnswerState: false,
+    visibleUnansweredPrompt: false,
+    unansweredOverrideApplied: false,
+    reviewScore: 0,
+    unansweredScore: 4,
+    reviewEvidence: [],
+    unansweredEvidence: ['no_review_answer_styling', 'no_distribution_rows', 'preferred_response_disabled', 'no_explanation_text'],
+  },
 });
 
 assert.equal(hasReviewData(rockUnanswered), false);
 assert.equal(isUnansweredQuestion(rockUnanswered), true);
 assert.equal(isHintEligible(rockUnanswered), true);
 
-const rockReview = createContext({
-  source: 'rock',
-  provider: 'rock',
-  mode: 'question',
-  pageUrl: 'https://rock.aaos.org/review/questions/ROCK-SYN-002',
-  sourceUrl: 'https://rock.aaos.org/review/questions/ROCK-SYN-002',
-  pageKind: 'review',
-  correctAnswer: 'Open reduction and internal fixation',
-  explanation: 'Rationale is visible.',
-});
+const rockReview = withVisibleReviewSignals(
+  createContext({
+    source: 'rock',
+    provider: 'rock',
+    mode: 'question',
+    pageUrl: 'https://rock.aaos.org/review/questions/ROCK-SYN-002',
+    sourceUrl: 'https://rock.aaos.org/review/questions/ROCK-SYN-002',
+    pageKind: 'review',
+    stem: 'A ROCK review question stem.',
+    correctAnswer: 'Open reduction and internal fixation',
+    explanation: 'Rationale is visible.',
+  })
+);
 
 assert.equal(hasReviewData(rockReview), true);
 assert.equal(isUnansweredQuestion(rockReview), false);

@@ -2,19 +2,21 @@
 
 Topic: **tibial-shaft-fracture**
 Framework: **1.0.0**
-Generated: 2026-07-05T21:24:25.513Z
+Generated: 2026-07-16T02:18:46.906Z
 
 ## Registry
 
 - Registered agents: 13
-- Gap-resolution assignments: 4
+- Gap-resolution assignments: 6
 - Unmet gap capabilities: 0
 
 ## Assignments
 
-- **Relationship Builder** (relationship-builder): 4 gap(s) [missing_relationship] — handles_gap_kind:missing_relationship
-- **Metadata Builder** (metadata-builder): 1 gap(s) [missing_metadata] — handles_gap_kind:missing_metadata
-- **Claim Builder** (claim-builder): 4 gap(s) [missing_claim] — handles_gap_kind:missing_claim
+- **Claim Builder** (claim-builder): 9 gap(s) [missing_claim] — handles_gap_kind:missing_claim
+- **Relationship Builder** (relationship-builder): 7 gap(s) [missing_relationship] — handles_gap_kind:missing_relationship
+- **Metadata Builder** (metadata-builder): 3 gap(s) [missing_metadata] — handles_gap_kind:missing_metadata
+- **Clinical Entity Builder** (clinical-entity-builder): 1 gap(s) [missing_entity] — handles_gap_kind:missing_entity; generic_fallback
+- **Decision Point Builder** (decision-point-builder): 3 gap(s) [missing_decision_point] — handles_gap_kind:missing_decision_point
 - **Asset Linker** (asset-linker): 2 gap(s) [missing_asset_link] — handles_gap_kind:missing_asset_link
 
 ## Contract guarantees

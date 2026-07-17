@@ -1,0 +1,44 @@
+{
+  "ok": false,
+  "runDate": "2026-07-16",
+  "topicKey": "talus-fracture",
+  "displayName": "Talus Fracture",
+  "pilotKey": "talus-fracture-neighborhood",
+  "priorState": "staging_applied",
+  "resultingState": "database_verification_blocked",
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "blockerClass": "human_review_required",
+  "automaticRepairAttempted": false,
+  "quarantinedPartialMemberships": 0,
+  "batchKey": "legacy-talus-fracture-c6a10240fdd1082a",
+  "packetHash": "c6a10240fdd1082af89fc5469a69919ac83f5361c1f43d1c61758671c923e300",
+  "expected": {
+    "approvedLoaded": 61,
+    "structuralProposals": 61,
+    "entities": 27,
+    "relationships": 33,
+    "curriculumBridges": 1,
+    "draftClaims": 0,
+    "draftDecisionPoints": 0
+  },
+  "resolved": {
+    "entities": 27,
+    "relationships": 33,
+    "curriculumBridges": 1
+  },
+  "discrepancyCount": 1,
+  "discrepancies": [
+    {
+      "fingerprint": "create|anatomy_structure|extensor-mechanism",
+      "kind": "competing_semantic_identity",
+      "expected": "{\"label\":\"Knee Extensor Mechanism\",\"proposal_type\":\"create_canonical_entity\",\"proposed_bridge_type\":null,\"proposed_entity_type\":\"anatomy_structure\",\"proposed_predicate\":null,\"slug\":\"extensor-mechanism\",\"source_signal_type\":\"reference_import\"}",
+      "observed": "{\"label\":\"Extensor Mechanism\",\"proposal_type\":\"create_canonical_entity\",\"proposed_bridge_type\":null,\"proposed_entity_type\":\"anatomy_structure\",\"proposed_predicate\":null,\"slug\":\"extensor-mechanism\",\"source_signal_type\":\"reference_import\"}"
+    }
+  ],
+  "exactNextAction": "resolve_canonical_identity",
+  "evidence": {
+    "applyPath": "reports/kg-pilots/talus-fracture-staging-apply-result.json",
+    "curatedPath": "reports/kg-pilots/talus-fracture-curated-proposals.json"
+  }
+}

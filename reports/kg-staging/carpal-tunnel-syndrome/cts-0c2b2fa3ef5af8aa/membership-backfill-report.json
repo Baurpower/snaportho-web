@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "migration": "supabase/migrations/20260715_120000_kg_proposal_batch_memberships.sql",
+  "activeSemanticProposalCount": 4899,
+  "membershipCountAfterBackfill": 4899,
+  "activeProposalsMissingMembership": 0,
+  "duplicateMemberships": 0,
+  "orphanMemberships": 0,
+  "unattributedLegacyMemberships": 212,
+  "unattributedLegacyDisposition": "Assigned to explicit legacy-unattributed sentinel batch; no ownership inferred",
+  "largestBatches": {
+    "surgical-approaches-neighborhood": 1155,
+    "implants-instruments-neighborhood": 410,
+    "imaging-radiographic-measurements-neighborhood": 339,
+    "complications-neighborhood": 326,
+    "legacy-unattributed": 212,
+    "middle-phalanx-fracture-neighborhood": 158
+  },
+  "appliedMembershipRule": "Legacy semantic review_status=applied backfilled as apply_disposition=already_applied",
+  "approvedUnappliedRule": "Other active legacy proposals backfilled as apply_disposition=pending",
+  "canonicalGraphMutationOccurred": false,
+  "rerunSafety": "Unique(proposal_id,batch_key) plus ON CONFLICT DO NOTHING"
+}

@@ -1,35 +1,22 @@
 {
   "category": "decision_point_quality",
   "label": "Decision Points",
-  "score": 77,
+  "score": 85,
   "deductions": [
     {
-      "finding": "Missing decision point pattern: emergency_escalation",
-      "evidence": "0 decision points with pattern emergency_escalation",
-      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
+      "finding": "No decision points in neighborhood",
+      "evidence": "merged draft decisionPointCount = 0",
+      "reason": "Decision points support clinical reasoning and operative safety pathways.",
       "severity": "critical",
       "category": "decision_point_quality",
-      "suggestedFix": "Add emergency_escalation decision point with attending-gated review.",
+      "suggestedFix": "Run decision-point-builder for operative_indication and nonoperative_eligible patterns.",
       "impact": 15
-    },
-    {
-      "finding": "No emergent/high-safety decision pathways",
-      "evidence": "0 decision points with safetyCriticality=high or urgency=emergent",
-      "reason": "Trauma neighborhoods require emergency escalation pathways.",
-      "severity": "high",
-      "category": "decision_point_quality",
-      "suggestedFix": "Add emergency_escalation decision point for compartment syndrome, open fracture, etc.",
-      "impact": 8
     }
   ],
   "metrics": {
-    "decisionPointCount": 2,
-    "patternCoverage": 2,
-    "attendingGatedCount": 2,
-    "safetyCriticalCount": 0
+    "decisionPointCount": 0
   },
   "recommendations": [
-    "Add emergency_escalation decision point with attending-gated review.",
-    "Add emergency_escalation decision point for compartment syndrome, open fracture, etc."
+    "Run decision-point-builder for operative_indication and nonoperative_eligible patterns."
   ]
 }

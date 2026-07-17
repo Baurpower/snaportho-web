@@ -1,0 +1,1253 @@
+{
+  "topicKey": "complications",
+  "pilotKey": "complications-neighborhood",
+  "primaryEntitySlug": "orthopaedic-complications",
+  "displayName": "Complications",
+  "generatedAt": "2026-07-09T04:17:27.134Z",
+  "nodes": [
+    {
+      "slug": "orthopaedic-complications",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Orthopaedic Complications",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 10,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "general-orthopaedic-complications",
+      "entityType": "treatment_principle",
+      "preferredLabel": "General Orthopaedic Complications",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "medical-complications",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Medical Complications",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 10,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "trauma-complications",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Trauma Complications",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 10,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "sports-medicine-complications",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Sports Medicine Complications",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 7,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "adult-reconstruction-complications",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Adult Reconstruction Complications",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 7,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "spine-complications",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Spine Complications",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 6,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pediatric-complications",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Pediatric Complications",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "complication-risk-factors",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Complication Risk Factors",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "complication-prevention",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Complication Prevention Strategies",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 5,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "early-recognition-of-complications",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Early Recognition of Complications",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "complication-diagnostic-workup",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Complication Diagnostic Workup",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "complication-management-principles",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Complication Management Principles",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "salvage-options-after-complications",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Salvage Options After Complications",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "long-term-complication-outcomes",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Long-term Complication Outcomes",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "infection-prevention",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Infection Prevention",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "vte-prophylaxis",
+      "entityType": "treatment_principle",
+      "preferredLabel": "VTE Prophylaxis",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "neurovascular-surveillance",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Neurovascular Surveillance",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "soft-tissue-protection",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Soft-Tissue Protection",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "construct-stability-principle",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Construct Stability Principle",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "open-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Open Fracture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "acute-compartment-syndrome",
+      "entityType": "condition",
+      "preferredLabel": "Acute Compartment Syndrome",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 9
+    },
+    {
+      "slug": "periprosthetic-joint-infection",
+      "entityType": "condition",
+      "preferredLabel": "Periprosthetic Joint Infection",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "aseptic-loosening-tha",
+      "entityType": "condition",
+      "preferredLabel": "Aseptic Loosening of THA",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "aseptic-loosening-tka",
+      "entityType": "condition",
+      "preferredLabel": "Aseptic Loosening of TKA",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "total-hip-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Total Hip Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 7
+    },
+    {
+      "slug": "total-knee-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Total Knee Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 7
+    },
+    {
+      "slug": "emergent-fasciotomy",
+      "entityType": "procedure",
+      "preferredLabel": "Emergent Fasciotomy",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "irrigation-and-debridement-open-fracture",
+      "entityType": "procedure",
+      "preferredLabel": "Open Fracture Irrigation and Debridement",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "revision-total-hip-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Revision Total Hip Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "revision-total-knee-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Revision Total Knee Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "femoral-head",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Head",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-head-blood-supply",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Head Blood Supply",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "humeral-head",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Humeral Head",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "radial-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radial Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "median-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Median Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "sciatic-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sciatic Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 5,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "spinal-cord",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Spinal Cord",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "physis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Physis",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "leg-anterior-compartment",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Compartment of the Leg",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "leg-deep-posterior-compartment",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Deep Posterior Compartment of the Leg",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "hip-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hip Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-condyles",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Condyles",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "joint-capsule",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Joint Capsule",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 7,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "common-peroneal-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Common Peroneal Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-diaphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Diaphysis",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "fracture-related-infection",
+      "entityType": "complication",
+      "preferredLabel": "Fracture-Related Infection",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "delayed-union",
+      "entityType": "complication",
+      "preferredLabel": "Delayed Union",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "fracture-nonunion",
+      "entityType": "complication",
+      "preferredLabel": "Fracture Nonunion",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "fracture-malunion",
+      "entityType": "complication",
+      "preferredLabel": "Fracture Malunion",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "venous-thromboembolism",
+      "entityType": "complication",
+      "preferredLabel": "Venous Thromboembolism",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "loss-of-reduction",
+      "entityType": "complication",
+      "preferredLabel": "Loss of Reduction",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "avascular-necrosis",
+      "entityType": "complication",
+      "preferredLabel": "Avascular Necrosis",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "crps",
+      "entityType": "complication",
+      "preferredLabel": "Complex Regional Pain Syndrome",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "osteolysis",
+      "entityType": "complication",
+      "preferredLabel": "Periprosthetic Osteolysis",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fat-embolism",
+      "entityType": "complication",
+      "preferredLabel": "Fat Embolism",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "muscle-necrosis",
+      "entityType": "complication",
+      "preferredLabel": "Muscle Necrosis",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "rhabdomyolysis",
+      "entityType": "complication",
+      "preferredLabel": "Rhabdomyolysis",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "limb-amputation",
+      "entityType": "complication",
+      "preferredLabel": "Limb Amputation",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "radial-nerve-palsy",
+      "entityType": "complication",
+      "preferredLabel": "Radial Nerve Palsy",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "median-neuropathy",
+      "entityType": "complication",
+      "preferredLabel": "Median Neuropathy",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "volkmann-contracture",
+      "entityType": "complication",
+      "preferredLabel": "Volkmann Contracture",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "extensor-mechanism-disruption",
+      "entityType": "complication",
+      "preferredLabel": "Extensor Mechanism Disruption",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "stem-loosening",
+      "entityType": "complication",
+      "preferredLabel": "Femoral Stem Loosening",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "post-traumatic-ankle-arthritis",
+      "entityType": "complication",
+      "preferredLabel": "Post-traumatic Ankle Arthritis",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "talar-avn",
+      "entityType": "complication",
+      "preferredLabel": "Talar Avascular Necrosis",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "humeral-head-avn",
+      "entityType": "complication",
+      "preferredLabel": "Humeral Head AVN",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "surgical-site-infection",
+      "entityType": "complication",
+      "preferredLabel": "Surgical Site Infection",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "wound-complication",
+      "entityType": "complication",
+      "preferredLabel": "Wound Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "hardware-failure",
+      "entityType": "complication",
+      "preferredLabel": "Hardware Failure",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "loss-of-fixation",
+      "entityType": "complication",
+      "preferredLabel": "Loss of Fixation",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "implant-loosening",
+      "entityType": "complication",
+      "preferredLabel": "Implant Loosening",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "implant-breakage",
+      "entityType": "complication",
+      "preferredLabel": "Implant Breakage",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "implant-prominence",
+      "entityType": "complication",
+      "preferredLabel": "Implant Prominence",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "arthrofibrosis",
+      "entityType": "complication",
+      "preferredLabel": "Arthrofibrosis",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "heterotopic-ossification",
+      "entityType": "complication",
+      "preferredLabel": "Heterotopic Ossification",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "neurovascular-injury",
+      "entityType": "complication",
+      "preferredLabel": "Neurovascular Injury",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "chronic-pain",
+      "entityType": "complication",
+      "preferredLabel": "Chronic Pain",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "reoperation",
+      "entityType": "complication",
+      "preferredLabel": "Reoperation",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "revision-surgery",
+      "entityType": "complication",
+      "preferredLabel": "Revision Surgery",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "deep-vein-thrombosis",
+      "entityType": "complication",
+      "preferredLabel": "Deep Vein Thrombosis",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "pulmonary-embolism",
+      "entityType": "complication",
+      "preferredLabel": "Pulmonary Embolism",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "postoperative-pneumonia",
+      "entityType": "complication",
+      "preferredLabel": "Postoperative Pneumonia",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "urinary-tract-infection",
+      "entityType": "complication",
+      "preferredLabel": "Urinary Tract Infection",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "postoperative-delirium",
+      "entityType": "complication",
+      "preferredLabel": "Postoperative Delirium",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "acute-kidney-injury",
+      "entityType": "complication",
+      "preferredLabel": "Acute Kidney Injury",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "cardiac-complication",
+      "entityType": "complication",
+      "preferredLabel": "Cardiac Complication",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "hospital-readmission",
+      "entityType": "complication",
+      "preferredLabel": "Hospital Readmission",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "perioperative-mortality",
+      "entityType": "complication",
+      "preferredLabel": "Perioperative Mortality",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "post-traumatic-arthritis",
+      "entityType": "complication",
+      "preferredLabel": "Post-traumatic Arthritis",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "malalignment",
+      "entityType": "complication",
+      "preferredLabel": "Malalignment",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "limb-shortening",
+      "entityType": "complication",
+      "preferredLabel": "Limb Shortening",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "rotational-deformity",
+      "entityType": "complication",
+      "preferredLabel": "Rotational Deformity",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "joint-stiffness",
+      "entityType": "complication",
+      "preferredLabel": "Joint Stiffness",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "recurrent-instability",
+      "entityType": "complication",
+      "preferredLabel": "Recurrent Instability",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "graft-failure",
+      "entityType": "complication",
+      "preferredLabel": "Graft Failure",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "graft-retear",
+      "entityType": "complication",
+      "preferredLabel": "Re-tear",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "persistent-pain",
+      "entityType": "complication",
+      "preferredLabel": "Persistent Pain",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "chondral-injury-progression",
+      "entityType": "complication",
+      "preferredLabel": "Chondral Injury Progression",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "prosthetic-instability",
+      "entityType": "complication",
+      "preferredLabel": "Prosthetic Instability",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "aseptic-loosening",
+      "entityType": "complication",
+      "preferredLabel": "Aseptic Loosening",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 5,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "polyethylene-wear",
+      "entityType": "complication",
+      "preferredLabel": "Polyethylene Wear",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "periprosthetic-fracture",
+      "entityType": "complication",
+      "preferredLabel": "Periprosthetic Fracture",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "extensor-mechanism-failure",
+      "entityType": "complication",
+      "preferredLabel": "Extensor Mechanism Failure",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "durotomy",
+      "entityType": "complication",
+      "preferredLabel": "Durotomy",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "neurologic-injury",
+      "entityType": "complication",
+      "preferredLabel": "Neurologic Injury",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "adjacent-segment-disease",
+      "entityType": "complication",
+      "preferredLabel": "Adjacent Segment Disease",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pseudarthrosis",
+      "entityType": "complication",
+      "preferredLabel": "Pseudarthrosis",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "junctional-failure",
+      "entityType": "complication",
+      "preferredLabel": "Junctional Failure",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "spine-hardware-failure",
+      "entityType": "complication",
+      "preferredLabel": "Spine Hardware Failure",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "growth-arrest",
+      "entityType": "complication",
+      "preferredLabel": "Growth Arrest",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "angular-deformity",
+      "entityType": "complication",
+      "preferredLabel": "Angular Deformity",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "leg-length-discrepancy",
+      "entityType": "complication",
+      "preferredLabel": "Leg Length Discrepancy",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "physeal-bar-formation",
+      "entityType": "complication",
+      "preferredLabel": "Physeal Bar Formation",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "infection-workup",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Infection Workup",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "vte-diagnostic-workup",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "VTE Diagnostic Workup",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "compartment-pressure-measurement",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Compartment Pressure Measurement",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "serial-neurovascular-examinations",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Serial Neurovascular Examinations",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "implant-removal",
+      "entityType": "procedure",
+      "preferredLabel": "Implant Removal",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "revision-internal-fixation",
+      "entityType": "procedure",
+      "preferredLabel": "Revision Internal Fixation",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "irrigation-and-debridement",
+      "entityType": "procedure",
+      "preferredLabel": "Irrigation and Debridement",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "two-stage-revision-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Two-Stage Revision Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    }
+  ],
+  "edgeCount": 197,
+  "claimCount": 24,
+  "decisionPointCount": 18,
+  "roles": {
+    "primary_condition": [
+      "orthopaedic-complications"
+    ],
+    "neighboring_anatomy": [
+      "femoral-head",
+      "femoral-head-blood-supply",
+      "humeral-head",
+      "radial-nerve",
+      "median-nerve",
+      "sciatic-nerve",
+      "spinal-cord",
+      "physis",
+      "leg-anterior-compartment",
+      "leg-deep-posterior-compartment",
+      "hip-joint",
+      "femoral-condyles",
+      "joint-capsule",
+      "common-peroneal-nerve",
+      "femoral-diaphysis"
+    ],
+    "procedure": [
+      "total-hip-arthroplasty",
+      "total-knee-arthroplasty",
+      "emergent-fasciotomy",
+      "irrigation-and-debridement-open-fracture",
+      "revision-total-hip-arthroplasty",
+      "revision-total-knee-arthroplasty",
+      "implant-removal",
+      "revision-internal-fixation",
+      "irrigation-and-debridement",
+      "two-stage-revision-arthroplasty"
+    ],
+    "classification": [],
+    "imaging": [
+      "infection-workup",
+      "vte-diagnostic-workup",
+      "compartment-pressure-measurement"
+    ],
+    "complication": [
+      "delayed-union",
+      "venous-thromboembolism",
+      "loss-of-reduction",
+      "crps",
+      "osteolysis",
+      "fat-embolism",
+      "muscle-necrosis",
+      "rhabdomyolysis",
+      "limb-amputation",
+      "radial-nerve-palsy",
+      "median-neuropathy",
+      "volkmann-contracture",
+      "extensor-mechanism-disruption",
+      "stem-loosening",
+      "post-traumatic-ankle-arthritis",
+      "talar-avn",
+      "humeral-head-avn",
+      "wound-complication",
+      "loss-of-fixation",
+      "implant-loosening",
+      "implant-breakage",
+      "implant-prominence",
+      "heterotopic-ossification",
+      "chronic-pain",
+      "reoperation",
+      "revision-surgery",
+      "deep-vein-thrombosis",
+      "postoperative-pneumonia",
+      "urinary-tract-infection",
+      "postoperative-delirium",
+      "acute-kidney-injury",
+      "post-traumatic-arthritis",
+      "malalignment",
+      "limb-shortening",
+      "rotational-deformity",
+      "joint-stiffness",
+      "recurrent-instability",
+      "graft-retear",
+      "persistent-pain",
+      "chondral-injury-progression",
+      "prosthetic-instability",
+      "polyethylene-wear",
+      "periprosthetic-fracture",
+      "extensor-mechanism-failure",
+      "durotomy",
+      "adjacent-segment-disease",
+      "pseudarthrosis",
+      "junctional-failure",
+      "spine-hardware-failure",
+      "growth-arrest",
+      "angular-deformity",
+      "leg-length-discrepancy"
+    ],
+    "decision_point_anchor": [
+      "acute-compartment-syndrome",
+      "periprosthetic-joint-infection",
+      "fracture-related-infection",
+      "fracture-nonunion",
+      "fracture-malunion",
+      "avascular-necrosis",
+      "surgical-site-infection",
+      "hardware-failure",
+      "arthrofibrosis",
+      "neurovascular-injury",
+      "pulmonary-embolism",
+      "cardiac-complication",
+      "hospital-readmission",
+      "perioperative-mortality",
+      "graft-failure",
+      "aseptic-loosening",
+      "neurologic-injury",
+      "physeal-bar-formation"
+    ],
+    "claim_anchor": [
+      "complication-prevention",
+      "early-recognition-of-complications",
+      "infection-prevention",
+      "vte-prophylaxis"
+    ],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "general-orthopaedic-complications",
+      "medical-complications",
+      "trauma-complications",
+      "sports-medicine-complications",
+      "adult-reconstruction-complications",
+      "spine-complications",
+      "pediatric-complications",
+      "complication-risk-factors",
+      "complication-diagnostic-workup",
+      "complication-management-principles",
+      "salvage-options-after-complications",
+      "long-term-complication-outcomes",
+      "neurovascular-surveillance",
+      "soft-tissue-protection",
+      "construct-stability-principle",
+      "open-fracture",
+      "aseptic-loosening-tha",
+      "aseptic-loosening-tka",
+      "serial-neurovascular-examinations"
+    ]
+  }
+}

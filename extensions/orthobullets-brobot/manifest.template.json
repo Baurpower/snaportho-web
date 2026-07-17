@@ -10,6 +10,7 @@
     "https://rock.aaos.org/*",
     "https://www.rock.aaos.org/*",
     "https://*.rock.aaos.org/*",
+    "https://learn.aaos.org/*",
     "__APP_ORIGIN__/*",
     "https://snaportho.com/*",
     "https://www.snaportho.com/*"
@@ -29,9 +30,15 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.orthobullets.com/*", "https://orthobullets.com/*", "https://rock.aaos.org/*", "https://www.rock.aaos.org/*", "https://*.rock.aaos.org/*"],
+      "matches": ["https://www.orthobullets.com/*", "https://orthobullets.com/*", "https://rock.aaos.org/*", "https://www.rock.aaos.org/*", "https://*.rock.aaos.org/*", "https://learn.aaos.org/diweb/*"],
       "js": ["__CONTENT_SCRIPT__"],
       "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["sidepanel.html", "sidepanel/*", "icons/*"],
+      "matches": ["https://learn.aaos.org/*"]
     }
   ],
   "action": {

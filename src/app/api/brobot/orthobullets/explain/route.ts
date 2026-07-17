@@ -6,11 +6,6 @@ import { getBroBotAccessGate } from '@/lib/brobot/brobot-entitlement-access';
 import { type Subject } from '@/lib/brobot/entitlements';
 import { recordSuccessfulAIUse, recordUsageEvent } from '@/lib/brobot/usage';
 import { authenticateDeviceLinkedRequest } from '@/lib/brobot/device-link';
-import { buildCurriculumExplainMessages } from '@/lib/brobot/orthobullets/curriculum-prompt-builder';
-import {
-  CurriculumParseError,
-  parseCurriculumStudyResponse,
-} from '@/lib/brobot/orthobullets/curriculum-response-parser';
 import { buildOrthobulletsExplainMessages } from '@/lib/brobot/orthobullets/prompt-builder';
 import { OrthobulletsParseError, parseOrthobulletsExplainResponse } from '@/lib/brobot/orthobullets/response-parser';
 import { resolveOrthobulletsContext } from '@/lib/brobot/orthobullets/context-resolver';
@@ -111,9 +106,6 @@ export async function POST(request: Request) {
     kgMatched: Boolean(kgLookup?.matchedQuestionId),
   });
 
-  const isCurriculum = resolvedContext.pageContext.mode === 'curriculum_content';
-  const emphasis = parsed.data.emphasis ?? 'high_yield';
-
   try {
     const completion = await getOpenAI().chat.completions.create({
       model: getAnswerModelForRoute({
@@ -124,9 +116,7 @@ export async function POST(request: Request) {
       }),
       temperature: 0.2,
       response_format: { type: 'json_object' },
-      messages: isCurriculum
-        ? buildCurriculumExplainMessages({ context: resolvedContext, emphasis })
-        : buildOrthobulletsExplainMessages(resolvedContext),
+      messages: buildOrthobulletsExplainMessages(resolvedContext),
     });
 
     const latencyMs = Date.now() - startedAt;
@@ -136,22 +126,13 @@ export async function POST(request: Request) {
         ? Math.max(0, entitlement.aiAccess.dailyCap - usedAfter)
         : null;
 
-    const response = isCurriculum
-      ? parseCurriculumStudyResponse({
-          raw: completion.choices[0]?.message?.content ?? '',
-          explanationId: crypto.randomUUID(),
-          emphasis,
-          remainingToday,
-          dailyCap: entitlement.aiAccess.dailyCap,
-          unlimited: entitlement.aiAccess.unlimited,
-        })
-      : parseOrthobulletsExplainResponse({
-          raw: completion.choices[0]?.message?.content ?? '',
-          explanationId: crypto.randomUUID(),
-          remainingToday,
-          dailyCap: entitlement.aiAccess.dailyCap,
-          unlimited: entitlement.aiAccess.unlimited,
-        });
+    const response = parseOrthobulletsExplainResponse({
+      raw: completion.choices[0]?.message?.content ?? '',
+      explanationId: crypto.randomUUID(),
+      remainingToday,
+      dailyCap: entitlement.aiAccess.dailyCap,
+      unlimited: entitlement.aiAccess.unlimited,
+    });
 
     console.log('[brobot-orthobullets] explain_success', {
       requestId,
@@ -176,7 +157,7 @@ export async function POST(request: Request) {
       error: error instanceof Error ? error.message : 'Unknown error',
     });
 
-    if (error instanceof OrthobulletsParseError || error instanceof CurriculumParseError) {
+    if (error instanceof OrthobulletsParseError) {
       return NextResponse.json(
         { error: 'parse_failure', message: "BroBot's response could not be parsed. Please try again." },
         { status: 502 }

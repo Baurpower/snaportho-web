@@ -1,28 +1,30 @@
 {
   "category": "graph_integrity",
   "label": "Graph Integrity",
-  "score": 85,
+  "score": 96,
   "deductions": [
     {
-      "finding": "6 dangling edges reference missing entities",
-      "evidence": "clavicle-fracture -[injured_in]-> clavicle; clavicle-fracture -[involves_anatomy]-> ac-joint; clavicle-fracture -[involves_anatomy]-> sternoclavicular-joint",
-      "reason": "Relationships must resolve to entities in the neighborhood graph.",
-      "severity": "critical",
+      "finding": "2 orphan entities with no relationships",
+      "evidence": "Slugs: clavicle-sling-immobilization, clavicle-orif",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "medium",
       "category": "graph_integrity",
-      "suggestedFix": "Create missing entities or remove invalid relationship proposals.",
-      "impact": 15
+      "affectedSlugs": [
+        "clavicle-sling-immobilization",
+        "clavicle-orif"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 4
     }
   ],
   "metrics": {
-    "entityCount": 6,
-    "relationshipCount": 12,
-    "orphanCount": 0,
-    "danglingEdgeCount": 6,
+    "entityCount": 27,
+    "relationshipCount": 27,
+    "orphanCount": 2,
+    "danglingEdgeCount": 0,
     "duplicateLabelGroups": 0,
     "invalidPredicateCount": 0,
     "validationRate": 1
   },
-  "recommendations": [
-    "Create missing entities or remove invalid relationship proposals."
-  ]
+  "recommendations": []
 }

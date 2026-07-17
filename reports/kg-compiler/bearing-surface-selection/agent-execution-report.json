@@ -1,12 +1,14 @@
 {
-  "generatedAt": "2026-07-05T23:31:27.016Z",
+  "generatedAt": "2026-07-16T02:33:43.883Z",
   "frameworkVersion": "1.0.0",
   "topicKey": "bearing-surface-selection",
   "pilotKey": "bearing-surface-selection-neighborhood",
   "executionOrder": [
+    "work-clinical-entity-builder",
     "work-asset-linker",
     "work-relationship-builder",
     "work-claim-builder",
+    "work-metadata-builder",
     "work-duplicate-detector",
     "work-quality-scorer",
     "work-conflict-resolver",
@@ -15,11 +17,15 @@
   ],
   "parallelLayers": [
     [
+      "work-clinical-entity-builder"
+    ],
+    [
       "work-asset-linker",
       "work-relationship-builder"
     ],
     [
-      "work-claim-builder"
+      "work-claim-builder",
+      "work-metadata-builder"
     ],
     [
       "work-duplicate-detector"
@@ -39,6 +45,17 @@
   ],
   "entries": [
     {
+      "assignmentId": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "status": "completed",
+      "proposalCount": 34,
+      "executionTimeMs": 1,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
       "assignmentId": "work-asset-linker",
       "agentId": "asset-linker",
       "status": "completed",
@@ -53,8 +70,8 @@
       "assignmentId": "work-relationship-builder",
       "agentId": "relationship-builder",
       "status": "completed",
-      "proposalCount": 0,
-      "executionTimeMs": 0,
+      "proposalCount": 1,
+      "executionTimeMs": 1,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -64,8 +81,19 @@
       "assignmentId": "work-claim-builder",
       "agentId": "claim-builder",
       "status": "completed",
-      "proposalCount": 8,
-      "executionTimeMs": 4,
+      "proposalCount": 14,
+      "executionTimeMs": 3,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-metadata-builder",
+      "agentId": "metadata-builder",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 0,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -108,8 +136,8 @@
       "assignmentId": "work-review-assistant",
       "agentId": "review-assistant",
       "status": "completed",
-      "proposalCount": 87,
-      "executionTimeMs": 3,
+      "proposalCount": 93,
+      "executionTimeMs": 2,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -120,16 +148,16 @@
       "agentId": "publication-validator",
       "status": "completed",
       "proposalCount": 0,
-      "executionTimeMs": 1,
+      "executionTimeMs": 0,
       "errors": [],
       "warnings": [],
       "skipped": false,
       "timedOut": false
     }
   ],
-  "totalProposalsEmitted": 95,
-  "uniqueProposals": 87,
-  "completedAgents": 8,
+  "totalProposalsEmitted": 142,
+  "uniqueProposals": 93,
+  "completedAgents": 10,
   "failedAgents": 0,
   "partialAgents": 0,
   "skippedAgents": 0,

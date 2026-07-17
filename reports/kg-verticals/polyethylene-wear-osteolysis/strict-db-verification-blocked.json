@@ -1,0 +1,68 @@
+{
+  "ok": false,
+  "runDate": "2026-07-16",
+  "topicKey": "polyethylene-wear-osteolysis",
+  "displayName": "Polyethylene Wear and Osteolysis",
+  "pilotKey": "polyethylene-wear-osteolysis-neighborhood",
+  "priorState": "staging_applied",
+  "resultingState": "database_verification_blocked",
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "blockerClass": "human_review_required",
+  "automaticRepairAttempted": false,
+  "quarantinedPartialMemberships": 0,
+  "batchKey": "legacy-polyethylene-wear-osteolysis-82504572484d8d09",
+  "packetHash": "82504572484d8d09e9eca9482cc7ed17bbadaf9e3cec10e30d055e4f1655ff32",
+  "expected": {
+    "approvedLoaded": 74,
+    "structuralProposals": 64,
+    "entities": 63,
+    "relationships": 0,
+    "curriculumBridges": 1,
+    "draftClaims": 1,
+    "draftDecisionPoints": 0
+  },
+  "resolved": {
+    "entities": 61,
+    "relationships": 0,
+    "curriculumBridges": 0
+  },
+  "discrepancyCount": 5,
+  "discrepancies": [
+    {
+      "fingerprint": "apply-report",
+      "kind": "aggregate_reconstruction_cardinality",
+      "expected": "{\"byType\":{\"add_canonical_relationship\":7,\"create_canonical_entity\":2,\"link_curriculum_node_to_entity\":0},\"total\":9}",
+      "observed": "{\"byType\":{\"add_canonical_relationship\":7,\"create_canonical_entity\":3,\"link_curriculum_node_to_entity\":0},\"total\":10,\"uniqueFingerprints\":10}"
+    },
+    {
+      "fingerprint": "apply-report",
+      "kind": "unreconstructable_created_structural_membership",
+      "expected": "fingerprint-level outcomes for every created structural object",
+      "observed": "9 created structural object(s) recorded only as aggregate counts"
+    },
+    {
+      "fingerprint": "create|condition|polyethylene-wear-osteolysis",
+      "kind": "canonical_identity_mismatch",
+      "expected": "condition/Polyethylene Wear and Osteolysis",
+      "observed": "procedure/Polyethylene Wear Osteolysis"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|labrum",
+      "kind": "canonical_identity_mismatch",
+      "expected": "anatomy_structure/Acetabular Labrum",
+      "observed": "anatomy_structure/Glenoid Labrum"
+    },
+    {
+      "fingerprint": "bridge|adult-recon-polyethylene-wear|polyethylene-wear-osteolysis",
+      "kind": "bridge_endpoint_cardinality",
+      "expected": "one curriculum node adult-recon-polyethylene-wear and one entity polyethylene-wear-osteolysis",
+      "observed": "0 node(s), 1 entity row(s)"
+    }
+  ],
+  "exactNextAction": "resolve_canonical_identity",
+  "evidence": {
+    "applyPath": "reports/kg-pilots/polyethylene-wear-osteolysis-staging-apply-result.json",
+    "curatedPath": "reports/kg-pilots/polyethylene-wear-osteolysis-curated-proposals.json"
+  }
+}

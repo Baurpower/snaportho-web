@@ -20,7 +20,7 @@
       "verified": false,
       "claim_text": "Board trap: oversimplifying bearing surface selection without attending-level implant, fixation, or infection context.",
       "claim_type": "board_trap",
-      "curated_at": "2026-07-05T23:31:27.013Z",
+      "curated_at": "2026-07-16T02:33:43.881Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -65,7 +65,7 @@
       "verified": false,
       "claim_text": "Bearing choice must account for wear, stability, patient age, and revision consequences.",
       "claim_type": "fact",
-      "curated_at": "2026-07-05T23:31:27.013Z",
+      "curated_at": "2026-07-16T02:33:43.881Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -91,6 +91,171 @@
     "auto_review_category": "EXPERT_REVIEW"
   },
   {
+    "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-bearing-surface-selectio",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7941250000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.794 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Generated from evidence items: ev-static-prepare-22390199",
+    "metadata": {
+      "pilot": "bearing-surface-selection-neighborhood",
+      "draft_id": "claim-bearing-surface-selection-fact-bearing-surface-selectio",
+      "claim_type": "fact",
+      "claim_text": "Bearing Surface Selection indication language.",
+      "primary_entity_slug": "bearing-surface-selection",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "verified": false,
+      "why_it_matters": [
+        "clinical_reasoning"
+      ],
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "learner_stage": "clerkship",
+      "evidence_item_ids": [
+        "ev-static-prepare-22390199"
+      ],
+      "evidence_packet_id": "ev-packet-85fc8dfd",
+      "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "review_route_hint": "HUMAN_REVIEW",
+      "generated_by": "claim-builder-v2",
+      "publication_eligible": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.8365,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-16T02:33:43.881Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-cross-neighborhood-traum",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7941250000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.794 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Generated from evidence items: ev-static-prepare-22390199",
+    "metadata": {
+      "pilot": "bearing-surface-selection-neighborhood",
+      "draft_id": "claim-bearing-surface-selection-fact-cross-neighborhood-traum",
+      "claim_type": "fact",
+      "claim_text": "Cross-neighborhood trauma links.",
+      "primary_entity_slug": "bearing-surface-selection",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "verified": false,
+      "why_it_matters": [
+        "clinical_reasoning"
+      ],
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "learner_stage": "clerkship",
+      "evidence_item_ids": [
+        "ev-static-prepare-22390199"
+      ],
+      "evidence_packet_id": "ev-packet-85fc8dfd",
+      "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "review_route_hint": "HUMAN_REVIEW",
+      "generated_by": "claim-builder-v2",
+      "publication_eligible": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.8365,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-16T02:33:43.881Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-implant-and-fixation-voc",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7941250000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.794 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Generated from evidence items: ev-static-prepare-22390199",
+    "metadata": {
+      "pilot": "bearing-surface-selection-neighborhood",
+      "draft_id": "claim-bearing-surface-selection-fact-implant-and-fixation-voc",
+      "claim_type": "fact",
+      "claim_text": "Implant and fixation vocabulary.",
+      "primary_entity_slug": "bearing-surface-selection",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "verified": false,
+      "why_it_matters": [
+        "clinical_reasoning"
+      ],
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "learner_stage": "clerkship",
+      "evidence_item_ids": [
+        "ev-static-prepare-22390199"
+      ],
+      "evidence_packet_id": "ev-packet-85fc8dfd",
+      "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "review_route_hint": "HUMAN_REVIEW",
+      "generated_by": "claim-builder-v2",
+      "publication_eligible": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.8365,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-16T02:33:43.881Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
     "proposal_fingerprint": "claim|claim-bearing-surface-selection-script",
     "proposal_type": "propose_educational_claim",
     "route": "HUMAN_REVIEW",
@@ -111,7 +276,7 @@
       "verified": false,
       "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for bearing surface selection.",
       "claim_type": "clinical_script",
-      "curated_at": "2026-07-05T23:31:27.013Z",
+      "curated_at": "2026-07-16T02:33:43.881Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -158,7 +323,7 @@
       "urgency": "routine",
       "draft_id": "dp-bearing-surface-selection-operative",
       "verified": false,
-      "curated_at": "2026-07-05T23:31:27.013Z",
+      "curated_at": "2026-07-16T02:33:43.881Z",
       "pattern_type": "operative_indication",
       "content_source": "generated_draft",
       "curation_route": "ATTENDING_REVIEW",

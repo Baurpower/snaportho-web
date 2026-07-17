@@ -1,33 +1,83 @@
 {
-  "generatedAt": "2026-07-05T23:18:36.891Z",
+  "generatedAt": "2026-07-16T02:53:50.268Z",
   "gaps": [
     {
-      "id": "gap-entity-neighbor-1",
-      "kind": "missing_entity",
-      "priority": "critical",
-      "confidence": 0.95,
-      "reason": "Patellofemoral Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
-      "requiredReviewer": "clinical_expert",
-      "maturityImpact": 0.15,
-      "ontologyRule": "procedure.anatomy",
-      "anchorEntitySlug": "patellofemoral-arthroplasty",
-      "entityType": "anatomy_structure"
+      "id": "gap-rel-1",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "anatomy.pred.hierarchy",
+      "anchorEntitySlug": "adult-reconstruction-anatomy-hub",
+      "subjectSlug": "adult-reconstruction-anatomy-hub",
+      "predicate": "part_of"
     },
     {
       "id": "gap-rel-2",
       "kind": "missing_relationship",
-      "priority": "critical",
+      "priority": "medium",
       "confidence": 0.92,
-      "reason": "Patellofemoral Arthroplasty missing outbound involves_anatomy (0/1).",
-      "requiredReviewer": "clinical_expert",
-      "maturityImpact": 0.15,
-      "ontologyRule": "procedure.pred.involves_anatomy",
-      "anchorEntitySlug": "patellofemoral-arthroplasty",
-      "subjectSlug": "patellofemoral-arthroplasty",
-      "predicate": "involves_anatomy"
+      "reason": "Arthroplasty Implant Concepts Hub missing inbound involves_anatomy (0/1).",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.inbound",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "predicate": "involves_anatomy",
+      "objectSlug": "implant-concepts-hub"
     },
     {
-      "id": "gap-rel-3",
+      "id": "gap-claim-3",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.88,
+      "reason": "Arthroplasty Implant Concepts Hub has 0/1 L1 claims.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "claimType": "fact|anatomy_pearl"
+    },
+    {
+      "id": "gap-claim-type-4",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Arthroplasty Implant Concepts Hub missing claim type: fact.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.fact",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-claim-type-5",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Arthroplasty Implant Concepts Hub missing claim type: anatomy_pearl.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.anatomy_pearl",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "claimType": "anatomy_pearl"
+    },
+    {
+      "id": "gap-rel-6",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Patella missing outbound part_of (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "anatomy.pred.hierarchy",
+      "anchorEntitySlug": "patella",
+      "subjectSlug": "patella",
+      "predicate": "part_of"
+    },
+    {
+      "id": "gap-rel-7",
       "kind": "missing_relationship",
       "priority": "high",
       "confidence": 0.92,
@@ -40,7 +90,20 @@
       "predicate": "at_risk_structure"
     },
     {
-      "id": "gap-rel-4",
+      "id": "gap-meta-rel-8",
+      "kind": "missing_metadata",
+      "priority": "medium",
+      "confidence": 0.9,
+      "reason": "2 context_relevance gaps on Patellofemoral Arthroplasty involves_anatomy/at_risk_structure edges.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.meta.context",
+      "anchorEntitySlug": "patellofemoral-arthroplasty",
+      "metadataField": "context_relevance",
+      "predicate": "involves_anatomy|at_risk_structure"
+    },
+    {
+      "id": "gap-rel-9",
       "kind": "missing_relationship",
       "priority": "medium",
       "confidence": 0.92,
@@ -53,7 +116,7 @@
       "objectSlug": "patellofemoral-tracking"
     },
     {
-      "id": "gap-claim-5",
+      "id": "gap-claim-10",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.88,
@@ -65,7 +128,7 @@
       "claimType": "fact|anatomy_pearl"
     },
     {
-      "id": "gap-claim-type-6",
+      "id": "gap-claim-type-11",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.75,
@@ -77,7 +140,7 @@
       "claimType": "fact"
     },
     {
-      "id": "gap-claim-type-7",
+      "id": "gap-claim-type-12",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.75,
@@ -89,7 +152,7 @@
       "claimType": "anatomy_pearl"
     },
     {
-      "id": "gap-asset-card-8",
+      "id": "gap-asset-card-13",
       "kind": "missing_asset_link",
       "priority": "medium",
       "confidence": 0.8,
@@ -100,7 +163,7 @@
       "anchorEntitySlug": "patellofemoral-arthroplasty"
     },
     {
-      "id": "gap-asset-question-9",
+      "id": "gap-asset-question-14",
       "kind": "missing_asset_link",
       "priority": "medium",
       "confidence": 0.8,
@@ -111,7 +174,19 @@
       "anchorEntitySlug": "patellofemoral-arthroplasty"
     },
     {
-      "id": "gap-biomech-claim-10",
+      "id": "gap-biomech-claim-15",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.82,
+      "reason": "Biomechanics concept Arthroplasty Implant Concepts Hub has no teaching claim (e.g., mortise instability).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-biomech-claim-16",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.82,
@@ -123,7 +198,7 @@
       "claimType": "fact"
     },
     {
-      "id": "gap-proc-approach-11",
+      "id": "gap-proc-approach-17",
       "kind": "missing_relationship",
       "priority": "medium",
       "confidence": 0.78,
@@ -137,17 +212,16 @@
     }
   ],
   "summary": {
-    "total": 11,
+    "total": 17,
     "byKind": {
-      "missing_entity": 1,
-      "missing_relationship": 4,
-      "missing_claim": 4,
+      "missing_relationship": 6,
+      "missing_claim": 8,
+      "missing_metadata": 1,
       "missing_asset_link": 2
     },
     "byPriority": {
-      "critical": 2,
-      "high": 1,
-      "medium": 8
+      "high": 3,
+      "medium": 14
     }
   }
 }

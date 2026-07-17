@@ -3,16 +3,52 @@
   "pilotKey": "periprosthetic-knee-fracture-neighborhood",
   "primaryEntitySlug": "periprosthetic-knee-fracture",
   "displayName": "Periprosthetic Knee Fracture",
-  "generatedAt": "2026-07-05T23:04:58.169Z",
+  "generatedAt": "2026-07-16T02:54:52.434Z",
   "nodes": [
+    {
+      "slug": "adult-reconstruction-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Adult Reconstruction Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "distal-femur-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Distal Femur Fracture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "femoral-component",
+      "entityType": "implant",
+      "preferredLabel": "Femoral Component",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
     {
       "slug": "periprosthetic-knee-fracture",
       "entityType": "condition",
       "preferredLabel": "Periprosthetic Knee Fracture",
       "role": "primary_condition",
       "isPrimary": true,
-      "inboundEdgeCount": 0,
-      "outboundEdgeCount": 1
+      "inboundEdgeCount": 6,
+      "outboundEdgeCount": 2
     },
     {
       "slug": "rorabeck-classification",
@@ -22,16 +58,36 @@
       "isPrimary": false,
       "inboundEdgeCount": 1,
       "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tibial-baseplate",
+      "entityType": "implant",
+      "preferredLabel": "Tibial Baseplate",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "tibial-shaft-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Tibial Shaft Fracture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
     }
   ],
-  "edgeCount": 1,
+  "edgeCount": 8,
   "claimCount": 2,
   "decisionPointCount": 0,
   "roles": {
     "primary_condition": [
       "periprosthetic-knee-fracture"
     ],
-    "neighboring_anatomy": [],
+    "neighboring_anatomy": [
+      "adult-reconstruction-anatomy-hub"
+    ],
     "procedure": [],
     "classification": [
       "rorabeck-classification"
@@ -40,8 +96,16 @@
     "complication": [],
     "decision_point_anchor": [],
     "claim_anchor": [],
-    "biomechanics": [],
-    "fixation": [],
-    "supporting": []
+    "biomechanics": [
+      "implant-concepts-hub"
+    ],
+    "fixation": [
+      "femoral-component",
+      "tibial-baseplate"
+    ],
+    "supporting": [
+      "distal-femur-fracture",
+      "tibial-shaft-fracture"
+    ]
   }
 }

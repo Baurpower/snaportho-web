@@ -1,0 +1,2735 @@
+[
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|postoperative-protocols",
+    "description": "Create treatment_principle: Postoperative Protocols",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Postoperative Protocols",
+      "slug": "postoperative-protocols",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "postoperative-protocols",
+        "description": "Canonical recovery, surveillance, and progression backbone for orthopaedic care.",
+        "neighborhood": "postoperative-protocols",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.985Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|non-weight-bearing",
+    "description": "Create treatment_principle: Non-Weight Bearing",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Non-Weight Bearing",
+      "slug": "non-weight-bearing",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "non-weight-bearing",
+        "description": "Protocol prohibiting operative-extremity weight bearing.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "weight_bearing",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|toe-touch-weight-bearing",
+    "description": "Create treatment_principle: Toe-Touch Weight Bearing",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Toe-Touch Weight Bearing",
+      "slug": "toe-touch-weight-bearing",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "toe-touch-weight-bearing",
+        "description": "Balance-only contact without meaningful limb loading.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "weight_bearing",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|partial-weight-bearing",
+    "description": "Create treatment_principle: Partial Weight Bearing",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Partial Weight Bearing",
+      "slug": "partial-weight-bearing",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "partial-weight-bearing",
+        "description": "Restricted loading expressed by proportion or force limit.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "weight_bearing",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|weight-bearing-as-tolerated",
+    "description": "Create treatment_principle: Weight Bearing as Tolerated",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Weight Bearing as Tolerated",
+      "slug": "weight-bearing-as-tolerated",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "weight-bearing-as-tolerated",
+        "description": "Loading advanced within symptoms and construct-specific safety.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "weight_bearing",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|protected-weight-bearing",
+    "description": "Create treatment_principle: Protected Weight Bearing",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Protected Weight Bearing",
+      "slug": "protected-weight-bearing",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "protected-weight-bearing",
+        "description": "Loading with an assistive device, orthosis, or other protection.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "weight_bearing",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|progressive-weight-bearing",
+    "description": "Create treatment_principle: Progressive Weight Bearing",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Progressive Weight Bearing",
+      "slug": "progressive-weight-bearing",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "progressive-weight-bearing",
+        "description": "Staged loading advanced by clinical and imaging milestones.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "weight_bearing",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|immediate-weight-bearing",
+    "description": "Create treatment_principle: Immediate Weight Bearing",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Immediate Weight Bearing",
+      "slug": "immediate-weight-bearing",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "immediate-weight-bearing",
+        "description": "Loading permitted immediately after treatment when the construct and patient permit.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "weight_bearing",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|construct-dependent-progression",
+    "description": "Create treatment_principle: Construct-Dependent Progression",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Construct-Dependent Progression",
+      "slug": "construct-dependent-progression",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "construct-dependent-progression",
+        "description": "Progression governed by fixation stability, biology, procedure, and patient context.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "weight_bearing",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|splinting-protocol",
+    "description": "Create treatment_principle: Splinting Protocol",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Splinting Protocol",
+      "slug": "splinting-protocol",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "splinting-protocol",
+        "description": "Temporary noncircumferential immobilization and surveillance plan.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "immobilization",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|casting-protocol",
+    "description": "Create treatment_principle: Casting Protocol",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Casting Protocol",
+      "slug": "casting-protocol",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "casting-protocol",
+        "description": "Circumferential immobilization with skin, fit, and neurovascular surveillance.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "immobilization",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|bracing-protocol",
+    "description": "Create treatment_principle: Bracing Protocol",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Bracing Protocol",
+      "slug": "bracing-protocol",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "bracing-protocol",
+        "description": "Orthosis selection, wear, removal, and progression plan.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "immobilization",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|hinged-bracing-protocol",
+    "description": "Create treatment_principle: Hinged Bracing Protocol",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Hinged Bracing Protocol",
+      "slug": "hinged-bracing-protocol",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "hinged-bracing-protocol",
+        "description": "Brace protocol with staged motion limits.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "immobilization",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|range-of-motion-restriction",
+    "description": "Create treatment_principle: Range-of-Motion Restriction",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Range-of-Motion Restriction",
+      "slug": "range-of-motion-restriction",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "range-of-motion-restriction",
+        "description": "Procedure- and repair-specific motion boundary.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "immobilization",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|motion-progression",
+    "description": "Create treatment_principle: Motion Progression",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Motion Progression",
+      "slug": "motion-progression",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "motion-progression",
+        "description": "Milestone-based progression of active and passive motion.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "rehabilitation",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|protection-period",
+    "description": "Create treatment_principle: Protection Period",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Protection Period",
+      "slug": "protection-period",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "protection-period",
+        "description": "Biology- and construct-dependent interval protecting a repair or reconstruction.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "immobilization",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|postoperative-wound-management",
+    "description": "Create treatment_principle: Postoperative Wound Management",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Postoperative Wound Management",
+      "slug": "postoperative-wound-management",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "postoperative-wound-management",
+        "description": "Dressing, drain, closure removal, incision, and infection-surveillance protocol.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "wound",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|dressing-change-protocol",
+    "description": "Create treatment_principle: Dressing Change Protocol",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Dressing Change Protocol",
+      "slug": "dressing-change-protocol",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "dressing-change-protocol",
+        "description": "Timing and technique for postoperative dressing changes.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "wound",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|drain-management-protocol",
+    "description": "Create treatment_principle: Drain Management Protocol",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Drain Management Protocol",
+      "slug": "drain-management-protocol",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "drain-management-protocol",
+        "description": "Output surveillance and criteria-based drain removal.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "wound",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|closure-removal-protocol",
+    "description": "Create treatment_principle: Suture and Staple Removal Protocol",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Suture and Staple Removal Protocol",
+      "slug": "closure-removal-protocol",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "closure-removal-protocol",
+        "description": "Wound-healing assessment before closure material removal.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "wound",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|incision-surveillance",
+    "description": "Create treatment_principle: Incision Surveillance",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Incision Surveillance",
+      "slug": "incision-surveillance",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "incision-surveillance",
+        "description": "Serial evaluation for healing and wound complications.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "wound",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|postoperative-follow-up-schedule",
+    "description": "Create treatment_principle: Postoperative Follow-Up Schedule",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Postoperative Follow-Up Schedule",
+      "slug": "postoperative-follow-up-schedule",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "postoperative-follow-up-schedule",
+        "description": "Early, radiographic, healing, implant, and long-term follow-up framework.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "surveillance",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|radiographic-follow-up",
+    "description": "Create treatment_principle: Radiographic Follow-Up",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Radiographic Follow-Up",
+      "slug": "radiographic-follow-up",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "radiographic-follow-up",
+        "description": "Context-specific imaging intervals and comparison strategy.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "surveillance",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|fracture-healing-surveillance",
+    "description": "Create treatment_principle: Fracture Healing Surveillance",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Fracture Healing Surveillance",
+      "slug": "fracture-healing-surveillance",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "fracture-healing-surveillance",
+        "description": "Serial clinical and radiographic assessment of union progression.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "trauma",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|implant-surveillance",
+    "description": "Create treatment_principle: Implant Surveillance",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Implant Surveillance",
+      "slug": "implant-surveillance",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "implant-surveillance",
+        "description": "Monitoring alignment, migration, wear, loosening, and construct integrity.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "surveillance",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|arthroplasty-surveillance",
+    "description": "Create treatment_principle: Arthroplasty Surveillance",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Arthroplasty Surveillance",
+      "slug": "arthroplasty-surveillance",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "arthroplasty-surveillance",
+        "description": "Longitudinal clinical and imaging review of joint replacement.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "adult_reconstruction",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|range-of-motion-milestones",
+    "description": "Create treatment_principle: Range-of-Motion Milestones",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Range-of-Motion Milestones",
+      "slug": "range-of-motion-milestones",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "range-of-motion-milestones",
+        "description": "Time- and achievement-dependent motion targets.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "rehabilitation",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|strength-progression",
+    "description": "Create treatment_principle: Strength Progression",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Strength Progression",
+      "slug": "strength-progression",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "strength-progression",
+        "description": "Staged activation, resistance, and kinetic-chain strengthening.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "rehabilitation",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|functional-milestones",
+    "description": "Create treatment_principle: Functional Milestones",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Functional Milestones",
+      "slug": "functional-milestones",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "functional-milestones",
+        "description": "Observable recovery achievements used to govern progression.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "rehabilitation",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|return-to-activity-progression",
+    "description": "Create treatment_principle: Return-to-Activity Progression",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Return-to-Activity Progression",
+      "slug": "return-to-activity-progression",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "return-to-activity-progression",
+        "description": "Criteria-based return to ADLs, work, sport, and unrestricted activity.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "rehabilitation",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|dvt-prophylaxis-protocol",
+    "description": "Create treatment_principle: DVT Prophylaxis Protocol",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "DVT Prophylaxis Protocol",
+      "slug": "dvt-prophylaxis-protocol",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "dvt-prophylaxis-protocol",
+        "description": "Risk-stratified mechanical and pharmacologic prophylaxis plan.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "medication",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|postoperative-antibiotic-protocol",
+    "description": "Create treatment_principle: Postoperative Antibiotic Protocol",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Postoperative Antibiotic Protocol",
+      "slug": "postoperative-antibiotic-protocol",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "postoperative-antibiotic-protocol",
+        "description": "Indication- and context-specific antimicrobial duration plan.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "medication",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|heterotopic-ossification-prophylaxis",
+    "description": "Create treatment_principle: Heterotopic Ossification Prophylaxis",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Heterotopic Ossification Prophylaxis",
+      "slug": "heterotopic-ossification-prophylaxis",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "heterotopic-ossification-prophylaxis",
+        "description": "Risk-based medication or radiation prophylaxis pathway.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "medication",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|multimodal-analgesia",
+    "description": "Create treatment_principle: Multimodal Analgesia",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Multimodal Analgesia",
+      "slug": "multimodal-analgesia",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "multimodal-analgesia",
+        "description": "Opioid-sparing pain strategy using complementary modalities.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "medication",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|delayed-union-pathway",
+    "description": "Create treatment_principle: Delayed Union Pathway",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Delayed Union Pathway",
+      "slug": "delayed-union-pathway",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "delayed-union-pathway",
+        "description": "Escalation pathway when fracture healing progresses more slowly than expected.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "trauma",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|nonunion-pathway",
+    "description": "Create treatment_principle: Nonunion Pathway",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Nonunion Pathway",
+      "slug": "nonunion-pathway",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "nonunion-pathway",
+        "description": "Mechanical, biologic, infectious, and host evaluation before intervention.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "trauma",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|dynamization-consideration",
+    "description": "Create treatment_principle: Dynamization Consideration",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Dynamization Consideration",
+      "slug": "dynamization-consideration",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "dynamization-consideration",
+        "description": "Construct-specific consideration of controlled load transfer.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "trauma",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|acl-rehabilitation-progression",
+    "description": "Create treatment_principle: ACL Rehabilitation Progression",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "ACL Rehabilitation Progression",
+      "slug": "acl-rehabilitation-progression",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "acl-rehabilitation-progression",
+        "description": "Criteria-based recovery after ACL reconstruction.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "sports",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|rotator-cuff-progression",
+    "description": "Create treatment_principle: Rotator Cuff Repair Progression",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Rotator Cuff Repair Progression",
+      "slug": "rotator-cuff-progression",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "rotator-cuff-progression",
+        "description": "Repair-size- and tissue-quality-dependent protection and motion progression.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "sports",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|meniscus-repair-restrictions",
+    "description": "Create treatment_principle: Meniscus Repair Restrictions",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Meniscus Repair Restrictions",
+      "slug": "meniscus-repair-restrictions",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "meniscus-repair-restrictions",
+        "description": "Tear- and repair-specific loading and motion restrictions.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "sports",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|tendon-repair-protection",
+    "description": "Create treatment_principle: Tendon Repair Protection",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Tendon Repair Protection",
+      "slug": "tendon-repair-protection",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "tendon-repair-protection",
+        "description": "Repair-specific protection before graduated loading.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "sports",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|tha-precautions",
+    "description": "Create treatment_principle: THA Precautions",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "THA Precautions",
+      "slug": "tha-precautions",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "tha-precautions",
+        "description": "Approach-, stability-, and patient-specific dislocation precautions.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "adult_reconstruction",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|tka-rehabilitation-milestones",
+    "description": "Create treatment_principle: TKA Rehabilitation Milestones",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "TKA Rehabilitation Milestones",
+      "slug": "tka-rehabilitation-milestones",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "tka-rehabilitation-milestones",
+        "description": "Motion, strength, gait, and function milestones after TKA.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "adult_reconstruction",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|spine-fusion-surveillance",
+    "description": "Create treatment_principle: Spine Fusion Surveillance",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Spine Fusion Surveillance",
+      "slug": "spine-fusion-surveillance",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "spine-fusion-surveillance",
+        "description": "Clinical and imaging assessment of fusion and hardware.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "spine",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|spine-return-to-work",
+    "description": "Create treatment_principle: Spine Return-to-Work Progression",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Spine Return-to-Work Progression",
+      "slug": "spine-return-to-work",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "spine-return-to-work",
+        "description": "Demand- and recovery-specific work progression after spine care.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "spine",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|pediatric-growth-surveillance",
+    "description": "Create treatment_principle: Pediatric Growth Surveillance",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Pediatric Growth Surveillance",
+      "slug": "pediatric-growth-surveillance",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "pediatric-growth-surveillance",
+        "description": "Longitudinal monitoring after physeal injury or intervention.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "pediatrics",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|physeal-monitoring",
+    "description": "Create treatment_principle: Physeal Monitoring",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Physeal Monitoring",
+      "slug": "physeal-monitoring",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "physeal-monitoring",
+        "description": "Serial assessment for growth arrest, angular deformity, and length discrepancy.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "pediatrics",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|hardware-removal-consideration",
+    "description": "Create treatment_principle: Hardware Removal Consideration",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Hardware Removal Consideration",
+      "slug": "hardware-removal-consideration",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "hardware-removal-consideration",
+        "description": "Symptom-, growth-, implant-, and risk-specific removal decision.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "pediatrics",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|failure-to-progress",
+    "description": "Create treatment_principle: Failure to Progress",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Failure to Progress",
+      "slug": "failure-to-progress",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "failure-to-progress",
+        "description": "Deviation from expected recovery prompting reassessment.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "cross_cutting",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|postoperative-red-flags",
+    "description": "Create treatment_principle: Postoperative Red Flags",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Postoperative Red Flags",
+      "slug": "postoperative-red-flags",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "postoperative-red-flags",
+        "description": "Findings requiring urgent or emergent escalation.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "cross_cutting",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|reoperation-triggers",
+    "description": "Create treatment_principle: Reoperation Triggers",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Reoperation Triggers",
+      "slug": "reoperation-triggers",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "reoperation-triggers",
+        "description": "Clinical or imaging thresholds prompting operative reassessment.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "cross_cutting",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|patient-reported-outcome-surveillance",
+    "description": "Create treatment_principle: Patient-Reported Outcome Surveillance",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Patient-Reported Outcome Surveillance",
+      "slug": "patient-reported-outcome-surveillance",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "patient-reported-outcome-surveillance",
+        "description": "Longitudinal symptom and function measurement.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "cross_cutting",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|treatment_principle|shared-decision-checkpoint",
+    "description": "Create treatment_principle: Shared Decision-Making Checkpoint",
+    "payload": {
+      "entity_type": "treatment_principle",
+      "preferred_label": "Shared Decision-Making Checkpoint",
+      "slug": "shared-decision-checkpoint",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "shared-decision-checkpoint",
+        "description": "Explicit point for aligning progression with risk, goals, and preferences.",
+        "neighborhood": "postoperative-protocols",
+        "domain": "cross_cutting",
+        "canonical_protocol": true,
+        "surgeon_variability": true,
+        "required_context": [
+          "patient_population",
+          "fixation_construct",
+          "procedure_type",
+          "clinical_context"
+        ],
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|complication|fracture-nonunion",
+    "description": "Create complication: Fracture Nonunion",
+    "payload": {
+      "entity_type": "complication",
+      "preferred_label": "Fracture Nonunion",
+      "slug": "fracture-nonunion",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "fracture-nonunion",
+        "description": "Existing canonical nonunion identity.",
+        "neighborhood": "postoperative-protocols",
+        "reused_identity": true,
+        "source_neighborhood": "complications",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|complication|delayed-union",
+    "description": "Create complication: Delayed Union",
+    "payload": {
+      "entity_type": "complication",
+      "preferred_label": "Delayed Union",
+      "slug": "delayed-union",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "delayed-union",
+        "description": "Existing canonical delayed-union identity.",
+        "neighborhood": "postoperative-protocols",
+        "reused_identity": true,
+        "source_neighborhood": "complications",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|complication|fracture-related-infection",
+    "description": "Create complication: Fracture-Related Infection",
+    "payload": {
+      "entity_type": "complication",
+      "preferred_label": "Fracture-Related Infection",
+      "slug": "fracture-related-infection",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "fracture-related-infection",
+        "description": "Existing canonical infection identity.",
+        "neighborhood": "postoperative-protocols",
+        "reused_identity": true,
+        "source_neighborhood": "complications",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|complication|venous-thromboembolism",
+    "description": "Create complication: Venous Thromboembolism",
+    "payload": {
+      "entity_type": "complication",
+      "preferred_label": "Venous Thromboembolism",
+      "slug": "venous-thromboembolism",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "venous-thromboembolism",
+        "description": "Existing canonical VTE identity.",
+        "neighborhood": "postoperative-protocols",
+        "reused_identity": true,
+        "source_neighborhood": "complications",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|complication|hardware-failure",
+    "description": "Create complication: Hardware Failure",
+    "payload": {
+      "entity_type": "complication",
+      "preferred_label": "Hardware Failure",
+      "slug": "hardware-failure",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "hardware-failure",
+        "description": "Existing canonical hardware-failure identity.",
+        "neighborhood": "postoperative-protocols",
+        "reused_identity": true,
+        "source_neighborhood": "complications",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|procedure|total-hip-arthroplasty",
+    "description": "Create procedure: Total Hip Arthroplasty",
+    "payload": {
+      "entity_type": "procedure",
+      "preferred_label": "Total Hip Arthroplasty",
+      "slug": "total-hip-arthroplasty",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "total-hip-arthroplasty",
+        "description": "Existing canonical THA identity.",
+        "neighborhood": "postoperative-protocols",
+        "reused_identity": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|procedure|total-knee-arthroplasty",
+    "description": "Create procedure: Total Knee Arthroplasty",
+    "payload": {
+      "entity_type": "procedure",
+      "preferred_label": "Total Knee Arthroplasty",
+      "slug": "total-knee-arthroplasty",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "total-knee-arthroplasty",
+        "description": "Existing canonical TKA identity.",
+        "neighborhood": "postoperative-protocols",
+        "reused_identity": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|procedure|acl-reconstruction",
+    "description": "Create procedure: ACL Reconstruction",
+    "payload": {
+      "entity_type": "procedure",
+      "preferred_label": "ACL Reconstruction",
+      "slug": "acl-reconstruction",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "acl-reconstruction",
+        "description": "Existing canonical ACL reconstruction identity.",
+        "neighborhood": "postoperative-protocols",
+        "reused_identity": true,
+        "source_neighborhood": "acl-tear",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|procedure|rotator-cuff-repair",
+    "description": "Create procedure: Rotator Cuff Repair",
+    "payload": {
+      "entity_type": "procedure",
+      "preferred_label": "Rotator Cuff Repair",
+      "slug": "rotator-cuff-repair",
+      "metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+        "review_packet_label": "Postoperative Protocols Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "rotator-cuff-repair",
+        "description": "Existing canonical rotator cuff repair identity.",
+        "neighborhood": "postoperative-protocols",
+        "reused_identity": true,
+        "source_neighborhood": "rotator-cuff-tear",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T04:28:49.986Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|toe-touch-weight-bearing|prerequisite_for|partial-weight-bearing",
+    "description": "toe-touch-weight-bearing -[prerequisite_for]-> partial-weight-bearing",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "toe-touch-weight-bearing",
+      "object_slug": "partial-weight-bearing",
+      "relationship_metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|partial-weight-bearing|prerequisite_for|progressive-weight-bearing",
+    "description": "partial-weight-bearing -[prerequisite_for]-> progressive-weight-bearing",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "partial-weight-bearing",
+      "object_slug": "progressive-weight-bearing",
+      "relationship_metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|protected-weight-bearing|prerequisite_for|weight-bearing-as-tolerated",
+    "description": "protected-weight-bearing -[prerequisite_for]-> weight-bearing-as-tolerated",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "protected-weight-bearing",
+      "object_slug": "weight-bearing-as-tolerated",
+      "relationship_metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|construct-dependent-progression|prerequisite_for|progressive-weight-bearing",
+    "description": "construct-dependent-progression -[prerequisite_for]-> progressive-weight-bearing",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "construct-dependent-progression",
+      "object_slug": "progressive-weight-bearing",
+      "relationship_metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|range-of-motion-restriction|prerequisite_for|motion-progression",
+    "description": "range-of-motion-restriction -[prerequisite_for]-> motion-progression",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "range-of-motion-restriction",
+      "object_slug": "motion-progression",
+      "relationship_metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|motion-progression|prerequisite_for|range-of-motion-milestones",
+    "description": "motion-progression -[prerequisite_for]-> range-of-motion-milestones",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "motion-progression",
+      "object_slug": "range-of-motion-milestones",
+      "relationship_metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|range-of-motion-milestones|prerequisite_for|strength-progression",
+    "description": "range-of-motion-milestones -[prerequisite_for]-> strength-progression",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "range-of-motion-milestones",
+      "object_slug": "strength-progression",
+      "relationship_metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|strength-progression|prerequisite_for|functional-milestones",
+    "description": "strength-progression -[prerequisite_for]-> functional-milestones",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "strength-progression",
+      "object_slug": "functional-milestones",
+      "relationship_metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|functional-milestones|prerequisite_for|return-to-activity-progression",
+    "description": "functional-milestones -[prerequisite_for]-> return-to-activity-progression",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "functional-milestones",
+      "object_slug": "return-to-activity-progression",
+      "relationship_metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|incision-surveillance|prerequisite_for|closure-removal-protocol",
+    "description": "incision-surveillance -[prerequisite_for]-> closure-removal-protocol",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "incision-surveillance",
+      "object_slug": "closure-removal-protocol",
+      "relationship_metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|fracture-healing-surveillance|prerequisite_for|delayed-union-pathway",
+    "description": "fracture-healing-surveillance -[prerequisite_for]-> delayed-union-pathway",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "fracture-healing-surveillance",
+      "object_slug": "delayed-union-pathway",
+      "relationship_metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|delayed-union-pathway|prerequisite_for|nonunion-pathway",
+    "description": "delayed-union-pathway -[prerequisite_for]-> nonunion-pathway",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "delayed-union-pathway",
+      "object_slug": "nonunion-pathway",
+      "relationship_metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|implant-surveillance|prerequisite_for|hardware-removal-consideration",
+    "description": "implant-surveillance -[prerequisite_for]-> hardware-removal-consideration",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "implant-surveillance",
+      "object_slug": "hardware-removal-consideration",
+      "relationship_metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|failure-to-progress|prerequisite_for|shared-decision-checkpoint",
+    "description": "failure-to-progress -[prerequisite_for]-> shared-decision-checkpoint",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "failure-to-progress",
+      "object_slug": "shared-decision-checkpoint",
+      "relationship_metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|postoperative-red-flags|prerequisite_for|reoperation-triggers",
+    "description": "postoperative-red-flags -[prerequisite_for]-> reoperation-triggers",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "postoperative-red-flags",
+      "object_slug": "reoperation-triggers",
+      "relationship_metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|patient-reported-outcome-surveillance|prerequisite_for|shared-decision-checkpoint",
+    "description": "patient-reported-outcome-surveillance -[prerequisite_for]-> shared-decision-checkpoint",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "patient-reported-outcome-surveillance",
+      "object_slug": "shared-decision-checkpoint",
+      "relationship_metadata": {
+        "pilot": "postoperative-protocols-neighborhood",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "bridge_create",
+    "proposal_fingerprint": "bridge|postoperative-protocols|postoperative-protocols",
+    "description": "Bridge postoperative-protocols -> postoperative-protocols",
+    "payload": {
+      "curriculum_node_slug": "postoperative-protocols",
+      "bridge_type": "primary_coverage"
+    }
+  }
+]

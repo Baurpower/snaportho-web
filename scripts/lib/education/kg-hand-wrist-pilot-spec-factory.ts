@@ -169,6 +169,108 @@ function buildCrossNeighborhoodRelationships(def: HandWristNeighborhoodDef): Pil
 function buildClaims(def: HandWristNeighborhoodDef): PilotClaimDraft[] {
   const slug = def.topicKey;
   const anatomyList = def.primaryAnatomySlugs.slice(0, 3).join(", ");
+
+  if (slug === "carpal-tunnel-syndrome") {
+    return [
+      {
+        draftId: `claim-${slug}-clinical-pattern`,
+        claimType: "fact",
+        claimText:
+          "Carpal tunnel syndrome evaluation combines the symptom pattern, focused median nerve examination, and selective diagnostic testing rather than relying on routine imaging.",
+        primaryEntitySlug: slug,
+        importanceLevel: "L1",
+        contentSource: "generated_draft",
+        reviewStatus: "needs_review",
+        sourceNote: "CTS vertical preparation; source before manufacture",
+        contextRelevance: ["clinic", "oite"],
+      },
+      {
+        draftId: `claim-${slug}-anatomy`,
+        claimType: "anatomy_pearl",
+        claimText:
+          "Carpal tunnel syndrome localizes to the median nerve within the carpal tunnel; release planning also requires review of median nerve branch anatomy.",
+        primaryEntitySlug: "median-nerve",
+        importanceLevel: "L1",
+        contentSource: "generated_draft",
+        reviewStatus: "needs_review",
+        sourceNote: "CTS vertical preparation; attending anatomy review required",
+        contextRelevance: ["clinic", "or", "oite"],
+      },
+      {
+        draftId: `claim-${slug}-exam`,
+        claimType: "clinical_script",
+        claimText:
+          "Document sensory distribution, thenar motor findings, and provocative maneuvers while considering proximal median neuropathy, cervical radiculopathy, and other mimics.",
+        primaryEntitySlug: slug,
+        importanceLevel: "L1",
+        contentSource: "generated_draft",
+        reviewStatus: "needs_review",
+        sourceNote: "CTS vertical preparation; source before manufacture",
+        contextRelevance: ["clinic", "oite"],
+      },
+      {
+        draftId: `claim-${slug}-testing`,
+        claimType: "diagnostic_point",
+        claimText:
+          "Electrodiagnostic testing is a selective diagnostic and severity tool; MRI and repeat radiographs are not routine CTS follow-up tests.",
+        primaryEntitySlug: slug,
+        importanceLevel: "L1",
+        contentSource: "generated_draft",
+        reviewStatus: "needs_review",
+        sourceNote: "CTS vertical preparation; EDX specialist review required",
+        contextRelevance: ["clinic", "oite"],
+      },
+      {
+        draftId: `claim-${slug}-treatment-options`,
+        claimType: "clinical_script",
+        claimText:
+          "CTS treatment planning distinguishes neutral-position night splinting and corticosteroid injection from named open and endoscopic release procedures.",
+        primaryEntitySlug: slug,
+        importanceLevel: "L1",
+        contentSource: "generated_draft",
+        reviewStatus: "needs_review",
+        sourceNote: "CTS vertical preparation; attending review required",
+        contextRelevance: ["clinic", "or"],
+      },
+      {
+        draftId: `claim-${slug}-complications`,
+        claimType: "cognitive_trap",
+        claimText:
+          "Persistent symptoms, recurrent symptoms, incomplete release, pillar pain, and iatrogenic nerve injury are distinct concepts and should not be collapsed into a generic complication.",
+        primaryEntitySlug: slug,
+        importanceLevel: "L1",
+        contentSource: "generated_draft",
+        reviewStatus: "needs_review",
+        sourceNote: "CTS vertical preparation; attending review required",
+        contextRelevance: ["clinic", "or", "oite"],
+      },
+      {
+        draftId: `claim-${slug}-postoperative`,
+        claimType: "rehab_pearl",
+        claimText:
+          "Post-release activity, therapy, and return-to-work guidance should be individualized; routine fracture-style immobilization and repeat radiographs do not apply.",
+        primaryEntitySlug: slug,
+        importanceLevel: "L2",
+        contentSource: "generated_draft",
+        reviewStatus: "needs_review",
+        sourceNote: "CTS vertical preparation; attending and rehabilitation review required",
+        contextRelevance: ["clinic"],
+      },
+      {
+        draftId: `claim-${slug}-oite-trap`,
+        claimType: "board_trap",
+        claimText:
+          "OITE content should distinguish palmar cutaneous and recurrent motor branch anatomy, selective test use, and persistent symptoms from recurrent disease and incomplete release.",
+        primaryEntitySlug: slug,
+        importanceLevel: "L1",
+        contentSource: "generated_draft",
+        reviewStatus: "needs_review",
+        sourceNote: "CTS vertical preparation; educator and domain review required",
+        contextRelevance: ["oite"],
+      },
+    ];
+  }
+
   return [
     {
       draftId: `claim-${slug}-mechanism`,
@@ -252,6 +354,127 @@ function buildClaims(def: HandWristNeighborhoodDef): PilotClaimDraft[] {
 
 function buildDecisionPoints(def: HandWristNeighborhoodDef): PilotDecisionPointDraft[] {
   const slug = def.topicKey;
+
+  if (slug === "carpal-tunnel-syndrome") {
+    return [
+      {
+        draftId: `dp-${slug}-testing`,
+        subjectEntitySlug: slug,
+        patternType: "diagnostic_escalation",
+        trigger:
+          "Atypical presentation, uncertain localization or severity, competing diagnosis, or a result expected to change management",
+        action:
+          "Consider targeted electrodiagnostic or other supported testing; do not default to routine radiographs or MRI",
+        urgency: "routine",
+        safetyCriticality: "moderate",
+        contentSource: "generated_draft",
+        reviewStatus: "needs_review",
+        sourceNote: "CTS vertical preparation; EDX specialist review required",
+        requiresAttendingReview: true,
+      },
+      {
+        draftId: `dp-${slug}-nonoperative`,
+        subjectEntitySlug: slug,
+        patternType: "nonoperative_eligible",
+        trigger:
+          "Presentation appropriate for an initial nonoperative pathway without an attending-reviewed escalation indication",
+        action:
+          "Discuss education, neutral-position night splinting, and/or corticosteroid injection with source-specific expectations and follow-up",
+        urgency: "routine",
+        safetyCriticality: "moderate",
+        contentSource: "generated_draft",
+        reviewStatus: "needs_review",
+        sourceNote: "CTS vertical preparation; attending review required",
+        requiresAttendingReview: true,
+      },
+      {
+        draftId: `dp-${slug}-operative`,
+        subjectEntitySlug: slug,
+        patternType: "operative_indication",
+        trigger:
+          "Persistent function-limiting symptoms after appropriate care, severe disease, or objective motor or denervation findings",
+        action:
+          "Discuss a named carpal tunnel release option after confirming diagnosis, severity, patient factors, and goals",
+        urgency: "urgent",
+        safetyCriticality: "moderate",
+        contentSource: "generated_draft",
+        reviewStatus: "needs_review",
+        sourceNote: "CTS vertical preparation; attending review required",
+        requiresAttendingReview: true,
+      },
+      {
+        draftId: `dp-${slug}-approach-choice`,
+        subjectEntitySlug: slug,
+        patternType: "operative_approach",
+        trigger:
+          "A reviewed surgical indication is present and open versus endoscopic technique is being selected",
+        action:
+          "Use shared decision-making informed by anatomy, prior surgery, risks, resources, patient preference, and surgeon expertise",
+        urgency: "routine",
+        safetyCriticality: "moderate",
+        contentSource: "generated_draft",
+        reviewStatus: "needs_review",
+        sourceNote: "CTS vertical preparation; attending review required",
+        requiresAttendingReview: true,
+      },
+      {
+        draftId: `dp-${slug}-endoscopic-bailout`,
+        subjectEntitySlug: "endoscopic-carpal-tunnel-release",
+        patternType: "operative_bailout",
+        trigger:
+          "Inadequate visualization, anomalous anatomy, bleeding, or another safety concern during endoscopic release",
+        action: "Stop or convert according to an attending-approved bailout protocol",
+        urgency: "urgent",
+        safetyCriticality: "high",
+        contentSource: "generated_draft",
+        reviewStatus: "needs_review",
+        sourceNote: "CTS vertical preparation; attending review required",
+        requiresAttendingReview: true,
+      },
+      {
+        draftId: `dp-${slug}-persistent-symptoms`,
+        subjectEntitySlug: "persistent-carpal-tunnel-syndrome-after-release",
+        patternType: "revision_evaluation",
+        trigger: "Symptoms do not adequately improve after carpal tunnel release",
+        action:
+          "Reassess diagnosis, localization, severity, and release completeness before considering revision",
+        urgency: "routine",
+        safetyCriticality: "moderate",
+        contentSource: "generated_draft",
+        reviewStatus: "needs_review",
+        sourceNote: "CTS vertical preparation; attending review required",
+        requiresAttendingReview: true,
+      },
+      {
+        draftId: `dp-${slug}-recurrent-symptoms`,
+        subjectEntitySlug: "recurrent-carpal-tunnel-syndrome",
+        patternType: "revision_evaluation",
+        trigger: "CTS symptoms return after a period of improvement following release",
+        action: "Evaluate recurrent compression and alternative causes before considering revision",
+        urgency: "routine",
+        safetyCriticality: "moderate",
+        contentSource: "generated_draft",
+        reviewStatus: "needs_review",
+        sourceNote: "CTS vertical preparation; attending review required",
+        requiresAttendingReview: true,
+      },
+      {
+        draftId: `dp-${slug}-postoperative-escalation`,
+        subjectEntitySlug: "carpal-tunnel-release-postoperative-protocol",
+        patternType: "postoperative_escalation",
+        trigger:
+          "Progressive neurologic deficit, vascular concern, wound concern, or severe unexpected postoperative pain",
+        action: "Obtain prompt surgical assessment under the treating team's protocol",
+        urgency: "urgent",
+        safetyCriticality: "high",
+        contentSource: "generated_draft",
+        reviewStatus: "needs_review",
+        sourceNote: "CTS vertical preparation; attending and rehabilitation review required",
+        requiresAttendingReview: true,
+      },
+    ];
+  }
+
   const isEmergency =
     def.category === "infection-emergency" ||
     def.clinicalKind === "emergency" ||
@@ -354,6 +577,283 @@ export function buildHandWristPilotSpec(def: HandWristNeighborhoodDef): HandWris
     if (def.crossClusterRefs?.includes("compartment-syndrome")) {
       relationships.push(...COMPARTMENT_SYNDROME_REFERENCE_RELATIONSHIPS);
     }
+  }
+
+  if (def.topicKey === "carpal-tunnel-syndrome") {
+    entities.push(
+      {
+        slug: "recurrent-motor-branch-median-nerve",
+        entityType: "anatomy_structure",
+        preferredLabel: "Recurrent Motor Branch of the Median Nerve",
+        description: "Median nerve motor branch relevant to thenar function and carpal tunnel release.",
+        metadata: { pilot: pilotKey, review_status: "needs_review", curation_route: "ATTENDING_REVIEW" },
+      },
+      {
+        slug: "palmar-cutaneous-branch-median-nerve",
+        entityType: "anatomy_structure",
+        preferredLabel: "Palmar Cutaneous Branch of the Median Nerve",
+        description: "Median nerve sensory branch relevant to localization and operative exposure.",
+        metadata: { pilot: pilotKey, review_status: "needs_review", curation_route: "ATTENDING_REVIEW" },
+      },
+      {
+        slug: "abductor-pollicis-brevis",
+        entityType: "anatomy_structure",
+        preferredLabel: "Abductor Pollicis Brevis",
+        description: "Thenar muscle used in focused median motor examination and electrodiagnostic assessment.",
+        metadata: { pilot: pilotKey, review_status: "needs_review" },
+      },
+      {
+        slug: "phalen-test",
+        entityType: "exam_maneuver",
+        preferredLabel: "Phalen Test",
+        description: "Provocative wrist-flexion maneuver used as one component of CTS assessment.",
+        metadata: { pilot: pilotKey, review_status: "needs_review" },
+      },
+      {
+        slug: "tinel-sign-carpal-tunnel",
+        entityType: "exam_maneuver",
+        preferredLabel: "Tinel Sign at the Carpal Tunnel",
+        description: "Median nerve percussion maneuver used as one component of CTS assessment.",
+        metadata: { pilot: pilotKey, review_status: "needs_review" },
+      },
+      {
+        slug: "durkan-carpal-compression-test",
+        entityType: "exam_maneuver",
+        preferredLabel: "Durkan Carpal Compression Test",
+        description: "Direct carpal tunnel compression maneuver used as one component of CTS assessment.",
+        metadata: { pilot: pilotKey, review_status: "needs_review" },
+      },
+      {
+        slug: "electrodiagnostic-testing-carpal-tunnel-syndrome",
+        entityType: "diagnostic_test",
+        preferredLabel: "Electrodiagnostic Testing for Carpal Tunnel Syndrome",
+        description: "Combined electrodiagnostic evaluation used selectively for CTS diagnosis, localization, and severity assessment.",
+        metadata: { pilot: pilotKey, review_status: "needs_review", curation_route: "EDX_SPECIALIST_REVIEW" },
+      },
+      {
+        slug: "nerve-conduction-study",
+        entityType: "diagnostic_test",
+        preferredLabel: "Nerve Conduction Study",
+        description: "Electrodiagnostic test measuring peripheral nerve conduction.",
+        metadata: { pilot: pilotKey, review_status: "needs_review", curation_route: "EDX_SPECIALIST_REVIEW" },
+      },
+      {
+        slug: "needle-electromyography",
+        entityType: "diagnostic_test",
+        preferredLabel: "Needle Electromyography",
+        description: "Needle examination of muscle electrical activity used as a component of electrodiagnostic evaluation.",
+        metadata: { pilot: pilotKey, review_status: "needs_review", curation_route: "EDX_SPECIALIST_REVIEW" },
+      },
+      {
+        slug: "neutral-wrist-night-orthosis-for-cts",
+        entityType: "treatment_principle",
+        preferredLabel: "Neutral Wrist Night Orthosis for CTS",
+        description: "CTS-specific nonoperative night orthosis principle, distinct from fracture immobilization.",
+        metadata: { pilot: pilotKey, review_status: "needs_review" },
+      },
+      {
+        slug: "corticosteroid-injection-for-cts",
+        entityType: "procedure",
+        preferredLabel: "Corticosteroid Injection for CTS",
+        description: "Local corticosteroid injection used for selected patients with CTS.",
+        metadata: { pilot: pilotKey, review_status: "needs_review" },
+      },
+      {
+        slug: "open-carpal-tunnel-release",
+        entityType: "procedure",
+        preferredLabel: "Open Carpal Tunnel Release",
+        description: "Open operative decompression procedure for CTS.",
+        metadata: { pilot: pilotKey, review_status: "needs_review", curation_route: "ATTENDING_REVIEW" },
+      },
+      {
+        slug: "endoscopic-carpal-tunnel-release",
+        entityType: "procedure",
+        preferredLabel: "Endoscopic Carpal Tunnel Release",
+        description: "Endoscopic operative decompression procedure for CTS.",
+        metadata: { pilot: pilotKey, review_status: "needs_review", curation_route: "ATTENDING_REVIEW" },
+      },
+      {
+        slug: "open-carpal-tunnel-approach",
+        entityType: "surgical_approach",
+        preferredLabel: "Open Carpal Tunnel Approach",
+        description: "Open palmar exposure for carpal tunnel release.",
+        metadata: { pilot: pilotKey, review_status: "needs_review", curation_route: "ATTENDING_REVIEW" },
+      },
+      {
+        slug: "endoscopic-carpal-tunnel-approach",
+        entityType: "surgical_approach",
+        preferredLabel: "Endoscopic Carpal Tunnel Approach",
+        description: "Endoscopic portal exposure for carpal tunnel release.",
+        metadata: { pilot: pilotKey, review_status: "needs_review", curation_route: "ATTENDING_REVIEW" },
+      },
+      {
+        slug: "carpal-tunnel-release-instrument-set",
+        entityType: "implant",
+        preferredLabel: "Carpal Tunnel Release Instrument Set",
+        description: "Technique-dependent instrument set for open or endoscopic carpal tunnel release.",
+        metadata: { pilot: pilotKey, review_status: "needs_review", curation_route: "ATTENDING_REVIEW" },
+      },
+      {
+        slug: "pillar-pain-after-carpal-tunnel-release",
+        entityType: "complication",
+        preferredLabel: "Pillar Pain After Carpal Tunnel Release",
+        description: "Postoperative pain localized around the carpal tunnel pillars after release.",
+        metadata: { pilot: pilotKey, review_status: "needs_review" },
+      },
+      {
+        slug: "incomplete-transverse-carpal-ligament-release",
+        entityType: "complication",
+        preferredLabel: "Incomplete Carpal Tunnel Release",
+        description: "Incomplete operative decompression considered during evaluation of persistent symptoms.",
+        metadata: { pilot: pilotKey, review_status: "needs_review", curation_route: "ATTENDING_REVIEW" },
+      },
+      {
+        slug: "persistent-carpal-tunnel-syndrome-after-release",
+        entityType: "condition",
+        preferredLabel: "Persistent Carpal Tunnel Syndrome After Release",
+        description: "CTS symptoms that do not adequately improve after release; distinct from recurrence after improvement.",
+        metadata: { pilot: pilotKey, review_status: "needs_review", curation_route: "ATTENDING_REVIEW" },
+      },
+      {
+        slug: "recurrent-carpal-tunnel-syndrome",
+        entityType: "condition",
+        preferredLabel: "Recurrent Carpal Tunnel Syndrome",
+        description: "Return of CTS symptoms after a period of improvement following release.",
+        metadata: { pilot: pilotKey, review_status: "needs_review", curation_route: "ATTENDING_REVIEW" },
+      },
+      {
+        slug: "revision-carpal-tunnel-release",
+        entityType: "procedure",
+        preferredLabel: "Revision Carpal Tunnel Release",
+        description: "Revision decompression procedure considered after source-supported evaluation of failed release.",
+        metadata: { pilot: pilotKey, review_status: "needs_review", curation_route: "ATTENDING_REVIEW" },
+      },
+      {
+        slug: "carpal-tunnel-release-postoperative-protocol",
+        entityType: "treatment_principle",
+        preferredLabel: "Carpal Tunnel Release Postoperative Protocol",
+        description: "Individualized postoperative care and rehabilitation framework after carpal tunnel release.",
+        metadata: { pilot: pilotKey, review_status: "needs_review", curation_route: "REHAB_REVIEW" },
+      }
+    );
+
+    relationships.push(
+      rel("recurrent-motor-branch-median-nerve", "part_of", "median-nerve", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("palmar-cutaneous-branch-median-nerve", "part_of", "median-nerve", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("carpal-tunnel-syndrome", "tested_by", "phalen-test", { review_status: "needs_review" }),
+      rel("carpal-tunnel-syndrome", "tested_by", "tinel-sign-carpal-tunnel", { review_status: "needs_review" }),
+      rel("carpal-tunnel-syndrome", "tested_by", "durkan-carpal-compression-test", { review_status: "needs_review" }),
+      rel("carpal-tunnel-syndrome", "tested_by", "electrodiagnostic-testing-carpal-tunnel-syndrome", {
+        review_status: "needs_review",
+        curation_route: "EDX_SPECIALIST_REVIEW",
+      }),
+      rel("carpal-tunnel-syndrome", "tested_by", "nerve-conduction-study", {
+        review_status: "needs_review",
+        curation_route: "EDX_SPECIALIST_REVIEW",
+      }),
+      rel("carpal-tunnel-syndrome", "tested_by", "needle-electromyography", {
+        review_status: "needs_review",
+        curation_route: "EDX_SPECIALIST_REVIEW",
+      }),
+      rel("carpal-tunnel-syndrome", "treated_by", "neutral-wrist-night-orthosis-for-cts", {
+        review_status: "needs_review",
+      }),
+      rel("carpal-tunnel-syndrome", "treated_by", "corticosteroid-injection-for-cts", {
+        review_status: "needs_review",
+      }),
+      rel("corticosteroid-injection-for-cts", "involves_anatomy", "carpal-tunnel", {
+        review_status: "needs_review",
+      }),
+      rel("corticosteroid-injection-for-cts", "at_risk_structure", "median-nerve", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("carpal-tunnel-syndrome", "treated_by", "open-carpal-tunnel-release", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("carpal-tunnel-syndrome", "treated_by", "endoscopic-carpal-tunnel-release", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("open-carpal-tunnel-release", "uses_approach", "open-carpal-tunnel-approach", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("endoscopic-carpal-tunnel-release", "uses_approach", "endoscopic-carpal-tunnel-approach", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("open-carpal-tunnel-release", "uses_implant", "carpal-tunnel-release-instrument-set", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("endoscopic-carpal-tunnel-release", "uses_implant", "carpal-tunnel-release-instrument-set", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("open-carpal-tunnel-release", "at_risk_structure", "median-nerve", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("open-carpal-tunnel-release", "at_risk_structure", "recurrent-motor-branch-median-nerve", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("open-carpal-tunnel-release", "at_risk_structure", "palmar-cutaneous-branch-median-nerve", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("endoscopic-carpal-tunnel-release", "at_risk_structure", "median-nerve", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("endoscopic-carpal-tunnel-release", "at_risk_structure", "recurrent-motor-branch-median-nerve", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("open-carpal-tunnel-release", "has_complication", "pillar-pain-after-carpal-tunnel-release", {
+        review_status: "needs_review",
+      }),
+      rel("open-carpal-tunnel-release", "has_complication", "incomplete-transverse-carpal-ligament-release", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("endoscopic-carpal-tunnel-release", "has_complication", "incomplete-transverse-carpal-ligament-release", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("persistent-carpal-tunnel-syndrome-after-release", "treated_by", "revision-carpal-tunnel-release", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("recurrent-carpal-tunnel-syndrome", "treated_by", "revision-carpal-tunnel-release", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("open-carpal-tunnel-release", "involves_anatomy", "carpal-tunnel", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("endoscopic-carpal-tunnel-release", "involves_anatomy", "carpal-tunnel", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("revision-carpal-tunnel-release", "involves_anatomy", "carpal-tunnel", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      }),
+      rel("revision-carpal-tunnel-release", "at_risk_structure", "median-nerve", {
+        review_status: "needs_review",
+        curation_route: "ATTENDING_REVIEW",
+      })
+    );
   }
 
   // Link extras to condition

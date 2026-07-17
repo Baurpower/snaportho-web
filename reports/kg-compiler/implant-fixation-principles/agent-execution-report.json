@@ -1,9 +1,10 @@
 {
-  "generatedAt": "2026-07-05T23:29:15.209Z",
+  "generatedAt": "2026-07-16T02:41:49.407Z",
   "frameworkVersion": "1.0.0",
   "topicKey": "implant-fixation-principles",
   "pilotKey": "implant-fixation-principles-neighborhood",
   "executionOrder": [
+    "work-clinical-entity-builder",
     "work-asset-linker",
     "work-relationship-builder",
     "work-claim-builder",
@@ -14,6 +15,9 @@
     "work-publication-validator"
   ],
   "parallelLayers": [
+    [
+      "work-clinical-entity-builder"
+    ],
     [
       "work-asset-linker",
       "work-relationship-builder"
@@ -39,11 +43,22 @@
   ],
   "entries": [
     {
+      "assignmentId": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "status": "completed",
+      "proposalCount": 34,
+      "executionTimeMs": 2,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
       "assignmentId": "work-asset-linker",
       "agentId": "asset-linker",
       "status": "completed",
       "proposalCount": 0,
-      "executionTimeMs": 1,
+      "executionTimeMs": 0,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -64,8 +79,8 @@
       "assignmentId": "work-claim-builder",
       "agentId": "claim-builder",
       "status": "completed",
-      "proposalCount": 10,
-      "executionTimeMs": 3,
+      "proposalCount": 8,
+      "executionTimeMs": 4,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -76,7 +91,7 @@
       "agentId": "duplicate-detector",
       "status": "completed",
       "proposalCount": 0,
-      "executionTimeMs": 1,
+      "executionTimeMs": 0,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -87,7 +102,7 @@
       "agentId": "quality-scorer",
       "status": "completed",
       "proposalCount": 0,
-      "executionTimeMs": 0,
+      "executionTimeMs": 1,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -108,7 +123,7 @@
       "assignmentId": "work-review-assistant",
       "agentId": "review-assistant",
       "status": "completed",
-      "proposalCount": 91,
+      "proposalCount": 89,
       "executionTimeMs": 3,
       "errors": [],
       "warnings": [],
@@ -127,9 +142,9 @@
       "timedOut": false
     }
   ],
-  "totalProposalsEmitted": 102,
-  "uniqueProposals": 91,
-  "completedAgents": 8,
+  "totalProposalsEmitted": 132,
+  "uniqueProposals": 89,
+  "completedAgents": 9,
   "failedAgents": 0,
   "partialAgents": 0,
   "skippedAgents": 0,

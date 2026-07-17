@@ -1,13 +1,13 @@
 # Knowledge Factory — Human Review Queue (Ankle)
 
-Generated: 2026-07-08T21:22:48.289Z
+Generated: 2026-07-09T04:27:28.226Z
 
-**Items requiring human judgment:** 70
-**Auto-curated (low-risk):** 1178
+**Items requiring human judgment:** 44
+**Auto-curated (low-risk):** 1111
 
 Everything else was classified and justified by the first-pass curator.
 
-## claim|claim-sa-plan
+## claim|claim-sa-backbone
 
 - **Type:** propose_educational_claim
 - **Route:** HUMAN_REVIEW
@@ -15,7 +15,20 @@ Everything else was classified and justified by the first-pass curator.
 - **Agent recommendation:** Curator review required
 - **Confidence:** 0.75
 - **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-plan
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-backbone
+
+**Rationale:**
+- Rule: l1_management_fact
+
+## claim|claim-sa-select
+
+- **Type:** propose_educational_claim
+- **Route:** HUMAN_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Curator review required
+- **Confidence:** 0.75
+- **Safety score:** 0.1
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-select
 
 **Rationale:**
 - Rule: l1_management_fact
@@ -33,19 +46,6 @@ Everything else was classified and justified by the first-pass curator.
 **Rationale:**
 - Rule: l1_management_fact
 
-## claim|claim-sa-fluoro
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-fluoro
-
-**Rationale:**
-- Rule: l1_management_fact
-
 ## claim|claim-sa-carm
 
 - **Type:** propose_educational_claim
@@ -59,7 +59,7 @@ Everything else was classified and justified by the first-pass curator.
 **Rationale:**
 - Rule: l1_management_fact
 
-## claim|claim-sa-tourniquet
+## claim|claim-sa-landmarks
 
 - **Type:** propose_educational_claim
 - **Route:** HUMAN_REVIEW
@@ -67,12 +67,12 @@ Everything else was classified and justified by the first-pass curator.
 - **Agent recommendation:** Curator review required
 - **Confidence:** 0.75
 - **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-tourniquet
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-landmarks
 
 **Rationale:**
 - Rule: l1_management_fact
 
-## claim|claim-sa-interval
+## claim|claim-sa-incision
 
 - **Type:** propose_educational_claim
 - **Route:** HUMAN_REVIEW
@@ -80,7 +80,72 @@ Everything else was classified and justified by the first-pass curator.
 - **Agent recommendation:** Curator review required
 - **Confidence:** 0.75
 - **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-interval
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-incision
+
+**Rationale:**
+- Rule: l1_management_fact
+
+## claim|claim-sa-internervous
+
+- **Type:** propose_educational_claim
+- **Route:** HUMAN_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Curator review required
+- **Confidence:** 0.75
+- **Safety score:** 0.1
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-internervous
+
+**Rationale:**
+- Rule: l1_management_fact
+
+## claim|claim-sa-intermuscular
+
+- **Type:** propose_educational_claim
+- **Route:** HUMAN_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Curator review required
+- **Confidence:** 0.75
+- **Safety score:** 0.1
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-intermuscular
+
+**Rationale:**
+- Rule: l1_management_fact
+
+## claim|claim-sa-deep
+
+- **Type:** propose_educational_claim
+- **Route:** HUMAN_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Curator review required
+- **Confidence:** 0.75
+- **Safety score:** 0.1
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-deep
+
+**Rationale:**
+- Rule: l1_management_fact
+
+## claim|claim-sa-limits
+
+- **Type:** propose_educational_claim
+- **Route:** HUMAN_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Curator review required
+- **Confidence:** 0.75
+- **Safety score:** 0.1
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-limits
+
+**Rationale:**
+- Rule: l1_management_fact
+
+## claim|claim-sa-protect
+
+- **Type:** propose_educational_claim
+- **Route:** HUMAN_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Curator review required
+- **Confidence:** 0.75
+- **Safety score:** 0.1
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-protect
 
 **Rationale:**
 - Rule: l1_management_fact
@@ -92,11 +157,11 @@ Everything else was classified and justified by the first-pass curator.
 - **Target:** undefined -[null]-> undefined
 - **Agent recommendation:** Curator review required
 - **Confidence:** 0.75
-- **Safety score:** 0.1
+- **Safety score:** 0.55
 - **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-nv
 
 **Rationale:**
-- Rule: l1_management_fact
+- Rule: educational_judgment_claim
 
 ## claim|claim-sa-extensile
 
@@ -111,7 +176,7 @@ Everything else was classified and justified by the first-pass curator.
 **Rationale:**
 - Rule: l1_management_fact
 
-## claim|claim-sa-windows
+## claim|claim-sa-bailout
 
 - **Type:** propose_educational_claim
 - **Route:** HUMAN_REVIEW
@@ -119,7 +184,7 @@ Everything else was classified and justified by the first-pass curator.
 - **Agent recommendation:** Curator review required
 - **Confidence:** 0.75
 - **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-windows
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-bailout
 
 **Rationale:**
 - Rule: l1_management_fact
@@ -137,7 +202,7 @@ Everything else was classified and justified by the first-pass curator.
 **Rationale:**
 - Rule: l1_management_fact
 
-## claim|claim-sa-deltopectoral-approach
+## claim|claim-sa-postop
 
 - **Type:** propose_educational_claim
 - **Route:** HUMAN_REVIEW
@@ -145,12 +210,38 @@ Everything else was classified and justified by the first-pass curator.
 - **Agent recommendation:** Curator review required
 - **Confidence:** 0.75
 - **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-deltopectoral-approach
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-postop
+
+**Rationale:**
+- Rule: l1_management_fact
+
+## claim|claim-sa-revision
+
+- **Type:** propose_educational_claim
+- **Route:** HUMAN_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Curator review required
+- **Confidence:** 0.75
+- **Safety score:** 0.1
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-revision
+
+**Rationale:**
+- Rule: l1_management_fact
+
+## claim|claim-sa-escalation
+
+- **Type:** propose_educational_claim
+- **Route:** HUMAN_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Curator review required
+- **Confidence:** 0.75
+- **Safety score:** 0.1
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-escalation
 
 **Rationale:**
 - Rule: educational_judgment_claim
 
-## claim|claim-sa-anterosuperior-shoulder-approach
+## claim|claim-sa-safezone
 
 - **Type:** propose_educational_claim
 - **Route:** HUMAN_REVIEW
@@ -158,12 +249,103 @@ Everything else was classified and justified by the first-pass curator.
 - **Agent recommendation:** Curator review required
 - **Confidence:** 0.75
 - **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-anterosuperior-shoulder-approach
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-safezone
+
+**Rationale:**
+- Rule: l1_management_fact
+
+## claim|claim-sa-complications
+
+- **Type:** propose_educational_claim
+- **Route:** HUMAN_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Curator review required
+- **Confidence:** 0.75
+- **Safety score:** 0.1
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-complications
+
+**Rationale:**
+- Rule: l1_management_fact
+
+## claim|claim-sa-deltopectoral
+
+- **Type:** propose_educational_claim
+- **Route:** HUMAN_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Curator review required
+- **Confidence:** 0.75
+- **Safety score:** 0.1
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-deltopectoral
+
+**Rationale:**
+- Rule: default_human_review
+
+## claim|claim-sa-henry
+
+- **Type:** propose_educational_claim
+- **Route:** HUMAN_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Curator review required
+- **Confidence:** 0.75
+- **Safety score:** 0.1
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-henry
+
+**Rationale:**
+- Rule: default_human_review
+
+## claim|claim-sa-kl
+
+- **Type:** propose_educational_claim
+- **Route:** HUMAN_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Curator review required
+- **Confidence:** 0.75
+- **Safety score:** 0.1
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-kl
+
+**Rationale:**
+- Rule: default_human_review
+
+## claim|claim-sa-daa
+
+- **Type:** propose_educational_claim
+- **Route:** HUMAN_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Curator review required
+- **Confidence:** 0.75
+- **Safety score:** 0.1
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-daa
+
+**Rationale:**
+- Rule: default_human_review
+
+## claim|claim-sa-mpp
+
+- **Type:** propose_educational_claim
+- **Route:** HUMAN_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Curator review required
+- **Confidence:** 0.75
+- **Safety score:** 0.1
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-mpp
+
+**Rationale:**
+- Rule: default_human_review
+
+## claim|claim-sa-spine-post
+
+- **Type:** propose_educational_claim
+- **Route:** HUMAN_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Curator review required
+- **Confidence:** 0.75
+- **Safety score:** 0.55
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-spine-post
 
 **Rationale:**
 - Rule: educational_judgment_claim
 
-## claim|claim-sa-superior-shoulder-approach
+## claim|claim-sa-xlif
 
 - **Type:** propose_educational_claim
 - **Route:** HUMAN_REVIEW
@@ -171,683 +353,20 @@ Everything else was classified and justified by the first-pass curator.
 - **Agent recommendation:** Curator review required
 - **Confidence:** 0.75
 - **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-superior-shoulder-approach
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-xlif
 
 **Rationale:**
-- Rule: educational_judgment_claim
+- Rule: l1_management_fact
 
-## claim|claim-sa-posterior-shoulder-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-posterior-shoulder-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-anterior-humerus-approach
+## claim|claim-sa-position-dup
 
 - **Type:** propose_educational_claim
 - **Route:** HUMAN_REVIEW
 - **Target:** undefined -[null]-> undefined
 - **Agent recommendation:** Curator review required
 - **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-anterior-humerus-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-anterolateral-humerus-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-anterolateral-humerus-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-posterior-humerus-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-posterior-humerus-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-kocher-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-kocher-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-kaplan-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-kaplan-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-bryan-morrey-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-bryan-morrey-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-olecranon-osteotomy-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-olecranon-osteotomy-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-volar-henry-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-volar-henry-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-dorsal-wrist-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-dorsal-wrist-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-extended-fcr-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-extended-fcr-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-dorsal-spanning-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-dorsal-spanning-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-radius-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-radius-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-ulna-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-ulna-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-carpal-tunnel-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-carpal-tunnel-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-trigger-finger-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-trigger-finger-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-thumb-ucl-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-thumb-ucl-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-finger-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-finger-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-pfannenstiel-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-pfannenstiel-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-stoppa-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-stoppa-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-ilioinguinal-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-ilioinguinal-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-kocher-langenbeck-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-kocher-langenbeck-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-smith-petersen-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-smith-petersen-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-posterior-hip-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-posterior-hip-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-direct-anterior-hip-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-direct-anterior-hip-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-direct-lateral-hip-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-direct-lateral-hip-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-anterolateral-hip-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-anterolateral-hip-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-surgical-hip-dislocation-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-surgical-hip-dislocation-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-lateral-femur-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-lateral-femur-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-distal-femur-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-distal-femur-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-medial-parapatellar-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-medial-parapatellar-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-subvastus-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-subvastus-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-midvastus-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-midvastus-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-posterior-knee-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-posterior-knee-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-anteromedial-tibia-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-anteromedial-tibia-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-anterolateral-tibia-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-anterolateral-tibia-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-posterolateral-tibia-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-posterolateral-tibia-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-posteromedial-tibia-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-posteromedial-tibia-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-anterior-ankle-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-anterior-ankle-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-lateral-ankle-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-lateral-ankle-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-posterior-ankle-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-posterior-ankle-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-dorsal-foot-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-dorsal-foot-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-medial-foot-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-medial-foot-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-lateral-foot-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-lateral-foot-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-plantar-foot-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-plantar-foot-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-posterior-cervical-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-posterior-cervical-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-acdf-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-acdf-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-posterior-thoracic-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-posterior-thoracic-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-posterior-lumbar-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-posterior-lumbar-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-tlif-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-tlif-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-alif-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-alif-approach
-
-**Rationale:**
-- Rule: educational_judgment_claim
-
-## claim|claim-sa-xlif-approach
-
-- **Type:** propose_educational_claim
-- **Route:** HUMAN_REVIEW
-- **Target:** undefined -[null]-> undefined
-- **Agent recommendation:** Curator review required
-- **Confidence:** 0.75
-- **Safety score:** 0.1
-- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-xlif-approach
+- **Safety score:** 0.55
+- **Decision required:** Confirm clinical accuracy and atomicity of claim: claim-sa-position-dup
 
 **Rationale:**
 - Rule: educational_judgment_claim
@@ -878,7 +397,7 @@ Everything else was classified and justified by the first-pass curator.
 **Rationale:**
 - Rule: decision_point_requires_attending
 
-## dp|dp-sa-nerve
+## dp|dp-sa-carm
 
 - **Type:** propose_decision_point
 - **Route:** ATTENDING_REVIEW
@@ -886,12 +405,12 @@ Everything else was classified and justified by the first-pass curator.
 - **Agent recommendation:** Attending review required
 - **Confidence:** 0.92
 - **Safety score:** 0.85
-- **Decision required:** Approve operative/management pathway: dp-sa-nerve
+- **Decision required:** Approve operative/management pathway: dp-sa-carm
 
 **Rationale:**
 - Rule: decision_point_requires_attending
 
-## dp|dp-sa-window
+## dp|dp-sa-landmark
 
 - **Type:** propose_decision_point
 - **Route:** ATTENDING_REVIEW
@@ -899,7 +418,85 @@ Everything else was classified and justified by the first-pass curator.
 - **Agent recommendation:** Attending review required
 - **Confidence:** 0.92
 - **Safety score:** 0.85
-- **Decision required:** Approve operative/management pathway: dp-sa-window
+- **Decision required:** Approve operative/management pathway: dp-sa-landmark
+
+**Rationale:**
+- Rule: decision_point_requires_attending
+
+## dp|dp-sa-nv
+
+- **Type:** propose_decision_point
+- **Route:** ATTENDING_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Attending review required
+- **Confidence:** 0.92
+- **Safety score:** 0.85
+- **Decision required:** Approve operative/management pathway: dp-sa-nv
+
+**Rationale:**
+- Rule: decision_point_requires_attending
+
+## dp|dp-sa-interval
+
+- **Type:** propose_decision_point
+- **Route:** ATTENDING_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Attending review required
+- **Confidence:** 0.92
+- **Safety score:** 0.85
+- **Decision required:** Approve operative/management pathway: dp-sa-interval
+
+**Rationale:**
+- Rule: decision_point_requires_attending
+
+## dp|dp-sa-limits
+
+- **Type:** propose_decision_point
+- **Route:** ATTENDING_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Attending review required
+- **Confidence:** 0.92
+- **Safety score:** 0.85
+- **Decision required:** Approve operative/management pathway: dp-sa-limits
+
+**Rationale:**
+- Rule: decision_point_requires_attending
+
+## dp|dp-sa-extensile
+
+- **Type:** propose_decision_point
+- **Route:** ATTENDING_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Attending review required
+- **Confidence:** 0.92
+- **Safety score:** 0.85
+- **Decision required:** Approve operative/management pathway: dp-sa-extensile
+
+**Rationale:**
+- Rule: decision_point_requires_attending
+
+## dp|dp-sa-bailout
+
+- **Type:** propose_decision_point
+- **Route:** ATTENDING_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Attending review required
+- **Confidence:** 0.92
+- **Safety score:** 0.85
+- **Decision required:** Approve operative/management pathway: dp-sa-bailout
+
+**Rationale:**
+- Rule: decision_point_requires_attending
+
+## dp|dp-sa-revision
+
+- **Type:** propose_decision_point
+- **Route:** ATTENDING_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Attending review required
+- **Confidence:** 0.92
+- **Safety score:** 0.85
+- **Decision required:** Approve operative/management pathway: dp-sa-revision
 
 **Rationale:**
 - Rule: decision_point_requires_attending
@@ -913,6 +510,71 @@ Everything else was classified and justified by the first-pass curator.
 - **Confidence:** 0.92
 - **Safety score:** 0.85
 - **Decision required:** Approve operative/management pathway: dp-sa-closure
+
+**Rationale:**
+- Rule: decision_point_requires_attending
+
+## dp|dp-sa-deltopectoral
+
+- **Type:** propose_decision_point
+- **Route:** ATTENDING_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Attending review required
+- **Confidence:** 0.92
+- **Safety score:** 0.85
+- **Decision required:** Approve operative/management pathway: dp-sa-deltopectoral
+
+**Rationale:**
+- Rule: decision_point_requires_attending
+
+## dp|dp-sa-kl
+
+- **Type:** propose_decision_point
+- **Route:** ATTENDING_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Attending review required
+- **Confidence:** 0.92
+- **Safety score:** 0.85
+- **Decision required:** Approve operative/management pathway: dp-sa-kl
+
+**Rationale:**
+- Rule: decision_point_requires_attending
+
+## dp|dp-sa-daa
+
+- **Type:** propose_decision_point
+- **Route:** ATTENDING_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Attending review required
+- **Confidence:** 0.92
+- **Safety score:** 0.85
+- **Decision required:** Approve operative/management pathway: dp-sa-daa
+
+**Rationale:**
+- Rule: decision_point_requires_attending
+
+## dp|dp-sa-spine
+
+- **Type:** propose_decision_point
+- **Route:** ATTENDING_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Attending review required
+- **Confidence:** 0.92
+- **Safety score:** 0.85
+- **Decision required:** Approve operative/management pathway: dp-sa-spine
+
+**Rationale:**
+- Rule: decision_point_requires_attending
+
+## dp|dp-sa-post-knee
+
+- **Type:** propose_decision_point
+- **Route:** ATTENDING_REVIEW
+- **Target:** undefined -[null]-> undefined
+- **Agent recommendation:** Attending review required
+- **Confidence:** 0.92
+- **Safety score:** 0.85
+- **Decision required:** Approve operative/management pathway: dp-sa-post-knee
 
 **Rationale:**
 - Rule: decision_point_requires_attending

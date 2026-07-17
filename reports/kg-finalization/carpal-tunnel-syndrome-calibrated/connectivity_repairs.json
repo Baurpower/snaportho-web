@@ -1,0 +1,38 @@
+[
+  {
+    "fingerprint": "entity|anatomy_structure|collateral-ligaments",
+    "repairType": "suggested_edge",
+    "suggestedFix": "Add involves_anatomy, part_of, or at_risk_structure edge tying Collateral Ligaments into the neighborhood.",
+    "autoApplied": false
+  },
+  {
+    "fingerprint": "entity|condition|median-nerve-compression",
+    "repairType": "suggested_edge",
+    "suggestedFix": "Add a valid registry relationship connecting Median Nerve Compression to an existing neighborhood anchor.",
+    "autoApplied": false
+  },
+  {
+    "fingerprint": "entity|condition|trigger-finger",
+    "repairType": "suggested_edge",
+    "suggestedFix": "Add a valid registry relationship connecting Trigger Finger to an existing neighborhood anchor.",
+    "autoApplied": false
+  },
+  {
+    "fingerprint": "entity|condition|distal-radius-fracture",
+    "repairType": "suggested_edge",
+    "suggestedFix": "Add a valid registry relationship connecting Distal Radius Fracture to an existing neighborhood anchor.",
+    "autoApplied": false
+  },
+  {
+    "fingerprint": "entity|anatomy_structure|abductor-pollicis-brevis",
+    "repairType": "suggested_edge",
+    "suggestedFix": "Add involves_anatomy, part_of, or at_risk_structure edge tying Abductor Pollicis Brevis into the neighborhood.",
+    "autoApplied": false
+  },
+  {
+    "fingerprint": "entity|diagnostic_test|needle-electromyography",
+    "repairType": "suggested_edge",
+    "suggestedFix": "Add tested_by/requires_imaging edge linking Needle Electromyography to carpal-tunnel-syndrome.",
+    "autoApplied": false
+  }
+]

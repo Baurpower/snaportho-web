@@ -1,0 +1,315 @@
+{
+  "generatedAt": "2026-07-09T04:30:10.627Z",
+  "auditorVersion": "1.0.0",
+  "topicKey": "implants-instruments",
+  "pilotKey": "implants-instruments-neighborhood",
+  "displayName": "Implants & Instruments",
+  "dataSource": {
+    "neighborhood": "merged_draft",
+    "reportsLoaded": [
+      "ontology-compiler-plan.json",
+      "ontology-gap-report.json",
+      "ontology-work-plan.json",
+      "agent-execution-report.json",
+      "merged-neighborhood-draft.json",
+      "publication-readiness.json",
+      "ontology-auto-review.json",
+      "ontology-human-review-queue.json",
+      "conflict-report.json",
+      "agent-assignment-plan.json",
+      "ontology-neighborhood-plan.json",
+      "evidence-packet.json"
+    ],
+    "reportsMissing": []
+  },
+  "overallScore": 81,
+  "categories": {
+    "ontology_completeness": 61,
+    "evidence_quality": 85,
+    "graph_integrity": 96,
+    "shared_knowledge_reuse": 100,
+    "relationship_quality": 38,
+    "claim_quality": 84,
+    "decision_point_quality": 69,
+    "metadata_quality": 90,
+    "provenance_quality": 100,
+    "review_calibration": 100,
+    "agent_performance": 92,
+    "compiler_quality": 75,
+    "educational_quality": 78,
+    "cross_neighborhood_consistency": 100,
+    "publication_readiness": 68
+  },
+  "publication": {
+    "status": "NOT_READY",
+    "ready": false,
+    "blockers": [
+      "65 proposals still awaiting human review",
+      "35 items require attending review",
+      "Claims and DPs are draft-only — publication gate must block verified consumption.",
+      "No approved canonical entities in database yet — proposals remain offline/spec."
+    ],
+    "currentLevel": 5,
+    "requiredLevel": 7,
+    "score": 68,
+    "deductions": [
+      {
+        "finding": "65 proposals still awaiting human review",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "Route ATTENDING_REVIEW queue to attending reviewer",
+        "impact": 8
+      },
+      {
+        "finding": "35 items require attending review",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "Route ATTENDING_REVIEW queue to attending reviewer",
+        "impact": 8
+      },
+      {
+        "finding": "Claims and DPs are draft-only — publication gate must block verified consumption.",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "Route ATTENDING_REVIEW queue to attending reviewer",
+        "impact": 8
+      },
+      {
+        "finding": "No approved canonical entities in database yet — proposals remain offline/spec.",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "Route ATTENDING_REVIEW queue to attending reviewer",
+        "impact": 8
+      }
+    ]
+  },
+  "topFindings": [
+    {
+      "finding": "Only 0 anatomy structures (minimum 3 required)",
+      "evidence": "Entity slugs: ",
+      "reason": "Condition neighborhoods require regional anatomy per condition.anatomy.min_structures.",
+      "severity": "critical",
+      "category": "ontology_completeness",
+      "affectedSlugs": [
+        "implants-instruments"
+      ],
+      "suggestedFix": "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
+      "impact": 15
+    },
+    {
+      "finding": "Low evidence coverage (0% of proposals cite evidence)",
+      "evidence": "0/411 proposals have evidence_refs",
+      "reason": "Every proposal should cite supporting evidence per factory contract.",
+      "severity": "critical",
+      "category": "evidence_quality",
+      "suggestedFix": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing clinical edge: injured_in",
+      "evidence": "0 outbound injured_in edges from implants-instruments",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "implants-instruments"
+      ],
+      "suggestedFix": "Add injured_in relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing clinical edge: has_classification",
+      "evidence": "0 outbound has_classification edges from implants-instruments",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "implants-instruments"
+      ],
+      "suggestedFix": "Add has_classification relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing decision point pattern: emergency_escalation",
+      "evidence": "0 decision points with pattern emergency_escalation",
+      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
+      "severity": "critical",
+      "category": "decision_point_quality",
+      "suggestedFix": "Add emergency_escalation decision point with attending-gated review.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing relationship requirements (28)",
+      "evidence": "28 gaps of kind missing_relationship",
+      "reason": "Ontology contract requires complete relationship coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 8,
+      "suggestedFix": "Run the matching builder agent for missing_relationship."
+    },
+    {
+      "finding": "Missing claim requirements (89)",
+      "evidence": "89 gaps of kind missing_claim",
+      "reason": "Ontology contract requires complete claim coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 8,
+      "suggestedFix": "Run the matching builder agent for missing_claim."
+    },
+    {
+      "finding": "No classification system present",
+      "evidence": "0 classification entities in merged draft",
+      "reason": "Fracture diagnoses require classification when one exists clinically.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "suggestedFix": "Link has_classification and has_grade edges to a classification system.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: has_imaging_finding",
+      "evidence": "0 outbound has_imaging_finding edges from implants-instruments",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "implants-instruments"
+      ],
+      "suggestedFix": "Add has_imaging_finding relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: at_risk_structure",
+      "evidence": "0 outbound at_risk_structure edges from implants-instruments",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "implants-instruments"
+      ],
+      "suggestedFix": "Add at_risk_structure relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: treated_by",
+      "evidence": "0 outbound treated_by edges from implants-instruments",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "implants-instruments"
+      ],
+      "suggestedFix": "Add treated_by relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: has_complication",
+      "evidence": "0 outbound has_complication edges from implants-instruments",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "implants-instruments"
+      ],
+      "suggestedFix": "Add has_complication relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "All claims remain generated_draft",
+      "evidence": "22/22 claims are unreviewed drafts",
+      "reason": "Draft claims cannot be consumed as verified educational content.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Route claims through human review queue before publication.",
+      "impact": 8
+    },
+    {
+      "finding": "Insufficient evidence support on claim proposals",
+      "evidence": "0% of claim proposals cite evidence",
+      "reason": "Every claim should cite supporting evidence.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Attach evidence_refs from evidence packet to each claim proposal.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing decision point pattern: operative_indication",
+      "evidence": "0 decision points with pattern operative_indication",
+      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
+      "severity": "high",
+      "category": "decision_point_quality",
+      "suggestedFix": "Add operative_indication decision point with attending-gated review.",
+      "impact": 8
+    }
+  ],
+  "prioritizedRecommendations": [
+    {
+      "priority": 1,
+      "action": "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
+      "category": "ontology_completeness",
+      "impact": "Only 0 anatomy structures (minimum 3 required)"
+    },
+    {
+      "priority": 2,
+      "action": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
+      "category": "evidence_quality",
+      "impact": "Low evidence coverage (0% of proposals cite evidence)"
+    },
+    {
+      "priority": 3,
+      "action": "Add injured_in relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: injured_in"
+    },
+    {
+      "priority": 4,
+      "action": "Add has_classification relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: has_classification"
+    },
+    {
+      "priority": 5,
+      "action": "Add emergency_escalation decision point with attending-gated review.",
+      "category": "decision_point_quality",
+      "impact": "Missing decision point pattern: emergency_escalation"
+    },
+    {
+      "priority": 6,
+      "action": "Run the matching builder agent for missing_relationship.",
+      "category": "ontology_completeness",
+      "impact": "Missing relationship requirements (28)"
+    },
+    {
+      "priority": 7,
+      "action": "Run the matching builder agent for missing_claim.",
+      "category": "ontology_completeness",
+      "impact": "Missing claim requirements (89)"
+    },
+    {
+      "priority": 8,
+      "action": "Link has_classification and has_grade edges to a classification system.",
+      "category": "ontology_completeness",
+      "impact": "No classification system present"
+    },
+    {
+      "priority": 9,
+      "action": "Add has_imaging_finding relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: has_imaging_finding"
+    },
+    {
+      "priority": 10,
+      "action": "Add at_risk_structure relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: at_risk_structure"
+    }
+  ],
+  "databaseModified": false
+}

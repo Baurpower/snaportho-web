@@ -1,0 +1,75 @@
+{
+  "category": "ontology_completeness",
+  "label": "Ontology Completeness",
+  "score": 54,
+  "deductions": [
+    {
+      "finding": "7 critical ontology gaps remain",
+      "evidence": "ontology-gap-report.json: gap-entity-neighbor-1, gap-rel-2, gap-dp-13",
+      "reason": "Required entities, relationships, claims, or decision points are missing per CKO §8–§9.",
+      "severity": "critical",
+      "category": "ontology_completeness",
+      "suggestedFix": "Resolve critical gaps via assigned factory agents before publication review.",
+      "impact": 15
+    },
+    {
+      "finding": "8 high-priority ontology gaps",
+      "evidence": "Gap kinds: missing_relationship, missing_claim, missing_entity",
+      "reason": "High-priority gaps block maturity level advancement.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 12,
+      "suggestedFix": "Schedule gap-resolution work items from ontology-work-plan.json."
+    },
+    {
+      "finding": "Missing entity requirements (3)",
+      "evidence": "3 gaps of kind missing_entity",
+      "reason": "Ontology contract requires complete entity coverage.",
+      "severity": "medium",
+      "category": "ontology_completeness",
+      "impact": 3,
+      "suggestedFix": "Run the matching builder agent for missing_entity."
+    },
+    {
+      "finding": "Missing relationship requirements (9)",
+      "evidence": "9 gaps of kind missing_relationship",
+      "reason": "Ontology contract requires complete relationship coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 8,
+      "suggestedFix": "Run the matching builder agent for missing_relationship."
+    },
+    {
+      "finding": "Missing claim requirements (5)",
+      "evidence": "5 gaps of kind missing_claim",
+      "reason": "Ontology contract requires complete claim coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 5,
+      "suggestedFix": "Run the matching builder agent for missing_claim."
+    },
+    {
+      "finding": "Missing decision_point requirements (3)",
+      "evidence": "3 gaps of kind missing_decision_point",
+      "reason": "Ontology contract requires complete decision_point coverage.",
+      "severity": "medium",
+      "category": "ontology_completeness",
+      "impact": 3,
+      "suggestedFix": "Run the matching builder agent for missing_decision_point."
+    }
+  ],
+  "metrics": {
+    "totalGaps": 23,
+    "criticalGaps": 7,
+    "highGaps": 8,
+    "anatomyStructures": 22,
+    "classificationEntities": 1,
+    "completenessRatio": 0.23333333333333328
+  },
+  "recommendations": [
+    "Resolve critical gaps via assigned factory agents before publication review.",
+    "Schedule gap-resolution work items from ontology-work-plan.json.",
+    "Run the matching builder agent for missing_relationship.",
+    "Run the matching builder agent for missing_claim."
+  ]
+}

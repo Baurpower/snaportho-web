@@ -1,0 +1,184 @@
+{
+  "mode": "dry_run_overlay_only",
+  "source_queue": "reports/kg-verticals/carpal-tunnel-syndrome/dry-run-manufacture/carpal-tunnel-syndrome/ontology-human-review-queue.json",
+  "source_adjudication": "reports/kg-verticals/carpal-tunnel-syndrome/dry-run-manufacture/agent-adjudicated-review.json",
+  "final_decisions": "reports/kg-verticals/carpal-tunnel-syndrome/dry-run-manufacture/cts-final-review-decisions.json",
+  "do_not_apply_to_staging": true,
+  "revised_claims": [
+    {
+      "draft_id": "claim-carpal-tunnel-syndrome-complications",
+      "claim_text": "Persistent symptoms after release, recurrent symptoms after a period of improvement, incomplete transverse carpal ligament release, pillar pain, and procedure-related median or branch nerve injury should be modeled as distinct post-release concepts unless curator review intentionally links or merges them."
+    },
+    {
+      "draft_id": "claim-carpal-tunnel-syndrome-oite-trap",
+      "claim_text": "OITE content should test median nerve branch anatomy, the limits of individual provocative maneuvers, NCS versus needle EMG roles, and the curriculum distinction between persistent symptoms, recurrent symptoms, and incomplete release without encoding an unsupported fixed recurrence interval."
+    },
+    {
+      "draft_id": "claim-carpal-tunnel-syndrome-postoperative",
+      "claim_text": "After carpal tunnel release, activity, therapy, and return-to-work guidance should be individualized; routine postoperative wrist immobilization, routine supervised therapy, and repeat radiographs are not default CTS follow-up requirements."
+    },
+    {
+      "draft_id": "claim-carpal-tunnel-syndrome-testing",
+      "claim_text": "Electrodiagnostic testing can help confirm CTS, localize competing diagnoses, and characterize severity when results will affect management; routine MRI or radiographs should not be presented as the standard CTS diagnostic or follow-up pathway."
+    },
+    {
+      "draft_id": "claim-carpal-tunnel-syndrome-treatment-options",
+      "claim_text": "CTS treatment planning should distinguish neutral-position night orthosis, corticosteroid injection with short-term rather than durable benefit framing, and named open or endoscopic carpal tunnel release procedures without implying universal superiority of either release technique."
+    }
+  ],
+  "revised_decision_points": [
+    {
+      "draft_id": "dp-carpal-tunnel-syndrome-approach-choice",
+      "trigger": "A reviewed surgical indication is present and open versus endoscopic technique is being selected.",
+      "action": "Teach open and endoscopic release as equivalent named treatment options; select through shared decision-making informed by anatomy, prior surgery, risks, resources, patient preference, and surgeon expertise. Do not encode a default operative pathway.",
+      "urgency": "routine"
+    },
+    {
+      "draft_id": "dp-carpal-tunnel-syndrome-endoscopic-bailout",
+      "trigger": "Visualization is inadequate or anatomy is unsafe or uncertain during endoscopic release.",
+      "action": "Stop further endoscopic release and convert to an open approach when appropriate according to local protocol and supervising surgeon judgment. Do not encode mandatory conversion.",
+      "urgency": "urgent"
+    },
+    {
+      "draft_id": "dp-carpal-tunnel-syndrome-nonoperative",
+      "trigger": "CTS presentation without progressive thenar weakness, denervation concern, acute traumatic compression, or another reviewed surgical escalation indication.",
+      "action": "Discuss education, neutral-position night orthosis, and/or corticosteroid injection using source-specific expectations and follow-up; frame injection as short-term symptom relief rather than durable disease modification.",
+      "urgency": "routine"
+    },
+    {
+      "draft_id": "dp-carpal-tunnel-syndrome-operative",
+      "trigger": "Persistent symptoms after failed nonoperative treatment, severe disease, or objective thenar weakness, thenar atrophy, or denervation findings.",
+      "action": "Discuss a named carpal tunnel release option after confirming diagnosis, severity, patient factors, and goals; use expedited non-emergent evaluation for thenar weakness, atrophy, or denervation findings, while persistent symptoms after failed nonoperative treatment remain a routine surgical discussion.",
+      "urgency": "expedited_non_emergent",
+      "guardrail": "Do not encode these findings as emergent or urgent surgery. Acute CTS remains a separate emergency pathway if modeled later."
+    },
+    {
+      "draft_id": "dp-carpal-tunnel-syndrome-persistent-symptoms",
+      "definition": "Persistent CTS after release is failure of symptoms to adequately improve following release.",
+      "trigger": "Failure of CTS symptoms to adequately improve following carpal tunnel release.",
+      "action": "Reassess diagnosis, localization, severity, and release completeness before considering revision. Do not require a minimum postoperative interval or proof of incomplete release.",
+      "urgency": "routine"
+    },
+    {
+      "draft_id": "dp-carpal-tunnel-syndrome-postoperative-escalation",
+      "trigger": "Progressive neurologic deficit, vascular concern, wound concern, or severe unexpected postoperative pain after carpal tunnel release.",
+      "action": "Escalate promptly to the treating surgical team for assessment under the local postoperative protocol.",
+      "urgency": "urgent"
+    },
+    {
+      "draft_id": "dp-carpal-tunnel-syndrome-recurrent-symptoms",
+      "definition": "Recurrent CTS after release is return of CTS symptoms following a documented period of postoperative improvement.",
+      "trigger": "CTS symptoms return after a documented period of postoperative improvement following release.",
+      "action": "Evaluate recurrent compression and alternative causes before considering revision. Do not require a fixed symptom-free interval.",
+      "urgency": "routine"
+    },
+    {
+      "draft_id": "dp-carpal-tunnel-syndrome-testing",
+      "trigger": "Atypical presentation, uncertain localization or severity, competing diagnosis, preoperative severity question, or a result expected to change management.",
+      "action": "Consider targeted electrodiagnostic testing and avoid defaulting to routine radiographs or MRI for typical CTS evaluation.",
+      "urgency": "routine"
+    }
+  ],
+  "relationship_removals": [
+    {
+      "subject_slug": "carpal-tunnel-syndrome",
+      "predicate": "at_risk_structure",
+      "object_slug": "median-nerve",
+      "replacement": {
+        "subject_slug": "carpal-tunnel-syndrome",
+        "predicate": "involves_anatomy",
+        "object_slug": "median-nerve"
+      }
+    },
+    {
+      "subject_slug": "carpal-tunnel-syndrome",
+      "predicate": "differential_for",
+      "object_slug": "distal-radius-fracture"
+    },
+    {
+      "subject_slug": "carpal-tunnel-syndrome",
+      "predicate": "differential_for",
+      "object_slug": "median-nerve-compression"
+    },
+    {
+      "subject_slug": "carpal-tunnel-syndrome",
+      "predicate": "differential_for",
+      "object_slug": "trigger-finger"
+    },
+    {
+      "subject_slug": "carpal-tunnel-syndrome",
+      "predicate": "tested_by",
+      "object_slug": "needle-electromyography"
+    },
+    {
+      "subject_slug": "endoscopic-carpal-tunnel-release",
+      "predicate": "uses_implant",
+      "object_slug": "carpal-tunnel-release-instrument-set"
+    },
+    {
+      "subject_slug": "open-carpal-tunnel-release",
+      "predicate": "uses_implant",
+      "object_slug": "carpal-tunnel-release-instrument-set"
+    },
+    {
+      "subject_slug": "persistent-carpal-tunnel-syndrome-after-release",
+      "predicate": "treated_by",
+      "object_slug": "revision-carpal-tunnel-release"
+    },
+    {
+      "subject_slug": "recurrent-carpal-tunnel-syndrome",
+      "predicate": "treated_by",
+      "object_slug": "revision-carpal-tunnel-release"
+    }
+  ],
+  "relationship_additions": [
+    {
+      "subject_slug": "carpal-tunnel-syndrome",
+      "predicate": "involves_anatomy",
+      "object_slug": "median-nerve",
+      "review_status": "needs_review",
+      "relationship_strength": "core"
+    },
+    {
+      "subject_slug": "persistent-carpal-tunnel-syndrome-after-release",
+      "predicate": "evaluated_by",
+      "object_slug": "failed-release-evaluation-pathway",
+      "review_status": "needs_review",
+      "overlay_note": "Predicate requested by final human decision; verify vocabulary support before staged manufacture."
+    },
+    {
+      "subject_slug": "failed-release-evaluation-pathway",
+      "predicate": "may_lead_to",
+      "object_slug": "revision-carpal-tunnel-release",
+      "review_status": "needs_review",
+      "overlay_note": "Predicate requested by final human decision; verify vocabulary support before staged manufacture."
+    },
+    {
+      "subject_slug": "recurrent-carpal-tunnel-syndrome",
+      "predicate": "evaluated_by",
+      "object_slug": "failed-release-evaluation-pathway",
+      "review_status": "needs_review",
+      "overlay_note": "Predicate requested by final human decision; verify vocabulary support before staged manufacture."
+    },
+    {
+      "subject_slug": "diagnostically-confirmed-recurrent-compression",
+      "predicate": "may_lead_to",
+      "object_slug": "revision-carpal-tunnel-release",
+      "review_status": "needs_review",
+      "overlay_note": "Predicate and entity requested by final human decision; verify vocabulary and identity support before staged manufacture."
+    }
+  ],
+  "relationship_metadata_revisions": [
+    {
+      "subject_slug": "carpal-tunnel-syndrome",
+      "predicate": "treated_by",
+      "object_slug": "corticosteroid-injection-for-cts",
+      "treatment_role": "short_term_symptom_relief",
+      "guardrail": "Do not imply durable cure or long-term disease modification."
+    }
+  ],
+  "accepted_without_revision": 19,
+  "accepted_with_revision": 15,
+  "rejected": 8,
+  "remaining_human_exceptions": 0
+}

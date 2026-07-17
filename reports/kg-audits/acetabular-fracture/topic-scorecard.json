@@ -1,0 +1,306 @@
+{
+  "generatedAt": "2026-07-16T03:33:39.993Z",
+  "auditorVersion": "1.0.0",
+  "topicKey": "acetabular-fracture",
+  "pilotKey": "acetabular-fracture-neighborhood",
+  "displayName": "Acetabular Fracture",
+  "dataSource": {
+    "neighborhood": "database",
+    "reportsLoaded": [
+      "ontology-compiler-plan.json",
+      "ontology-gap-report.json",
+      "ontology-work-plan.json",
+      "agent-execution-report.json",
+      "merged-neighborhood-draft.json",
+      "publication-readiness.json",
+      "ontology-auto-review.json",
+      "ontology-human-review-queue.json",
+      "conflict-report.json",
+      "agent-assignment-plan.json",
+      "ontology-neighborhood-plan.json",
+      "evidence-packet.json",
+      "database-proposals",
+      "database-neighborhood-snapshot",
+      "publication-readiness-database-state-reconciled"
+    ],
+    "reportsMissing": []
+  },
+  "overallScore": 84,
+  "categories": {
+    "ontology_completeness": 58,
+    "evidence_quality": 85,
+    "graph_integrity": 92,
+    "shared_knowledge_reuse": 98,
+    "relationship_quality": 84,
+    "claim_quality": 85,
+    "decision_point_quality": 85,
+    "metadata_quality": 88,
+    "provenance_quality": 96,
+    "review_calibration": 100,
+    "agent_performance": 92,
+    "compiler_quality": 85,
+    "educational_quality": 72,
+    "cross_neighborhood_consistency": 100,
+    "publication_readiness": 53
+  },
+  "publication": {
+    "status": "NOT_READY",
+    "ready": false,
+    "blockers": [
+      "17 proposals still awaiting human review",
+      "10 items require attending review",
+      "Claims and DPs are draft-only — publication gate must block verified consumption.",
+      "10 critical/high ontology gaps remain unresolved"
+    ],
+    "currentLevel": 5,
+    "requiredLevel": 7,
+    "score": 53,
+    "deductions": [
+      {
+        "finding": "17 proposals still awaiting human review",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[high] Lower Extremity Trauma Anatomy Hub missing outbound part_of (0/1).",
+        "impact": 8
+      },
+      {
+        "finding": "10 items require attending review",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[high] Lower Extremity Trauma Anatomy Hub missing outbound part_of (0/1).",
+        "impact": 8
+      },
+      {
+        "finding": "Claims and DPs are draft-only — publication gate must block verified consumption.",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[high] Lower Extremity Trauma Anatomy Hub missing outbound part_of (0/1).",
+        "impact": 8
+      },
+      {
+        "finding": "10 critical/high ontology gaps remain unresolved",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "critical",
+        "category": "publication_readiness",
+        "suggestedFix": "[high] Lower Extremity Trauma Anatomy Hub missing outbound part_of (0/1).",
+        "impact": 15
+      }
+    ]
+  },
+  "topFindings": [
+    {
+      "finding": "3 critical ontology gaps remain",
+      "evidence": "ontology-gap-report.json: gap-dp-10, gap-dp-pattern-11, gap-dp-pattern-12",
+      "reason": "Required entities, relationships, claims, or decision points are missing per CKO §8–§9.",
+      "severity": "critical",
+      "category": "ontology_completeness",
+      "suggestedFix": "Resolve critical gaps via assigned factory agents before publication review.",
+      "impact": 15
+    },
+    {
+      "finding": "Low evidence coverage (0% of proposals cite evidence)",
+      "evidence": "0/83 proposals have evidence_refs",
+      "reason": "Every proposal should cite supporting evidence per factory contract.",
+      "severity": "critical",
+      "category": "evidence_quality",
+      "suggestedFix": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
+      "impact": 15
+    },
+    {
+      "finding": "No educational claims in neighborhood",
+      "evidence": "merged draft claimCount = 0",
+      "reason": "Claims are the primary educational content layer for products.",
+      "severity": "critical",
+      "category": "claim_quality",
+      "suggestedFix": "Run claim-builder agent to generate evidence-backed atomic claims.",
+      "impact": 15
+    },
+    {
+      "finding": "No decision points in neighborhood",
+      "evidence": "merged draft decisionPointCount = 0",
+      "reason": "Decision points support clinical reasoning and operative safety pathways.",
+      "severity": "critical",
+      "category": "decision_point_quality",
+      "suggestedFix": "Run decision-point-builder for operative_indication and nonoperative_eligible patterns.",
+      "impact": 15
+    },
+    {
+      "finding": "10 critical/high ontology gaps remain unresolved",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "critical",
+      "category": "publication_readiness",
+      "suggestedFix": "[high] Lower Extremity Trauma Anatomy Hub missing outbound part_of (0/1).",
+      "impact": 15
+    },
+    {
+      "finding": "7 high-priority ontology gaps",
+      "evidence": "Gap kinds: missing_relationship, missing_claim, missing_entity",
+      "reason": "High-priority gaps block maturity level advancement.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 12,
+      "suggestedFix": "Schedule gap-resolution work items from ontology-work-plan.json."
+    },
+    {
+      "finding": "1 merge conflicts detected",
+      "evidence": "conflict-report.json: Conflicting DP pattern acetabular-fracture|operative_indication: dp-acet-displaced-orif vs dp-acet-posterior-wall-orif",
+      "reason": "Unresolved merge conflicts indicate inconsistent agent outputs.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "suggestedFix": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: at_risk_structure",
+      "evidence": "0 outbound at_risk_structure edges from acetabular-fracture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "acetabular-fracture"
+      ],
+      "suggestedFix": "Add at_risk_structure relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: treated_by",
+      "evidence": "0 outbound treated_by edges from acetabular-fracture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "acetabular-fracture"
+      ],
+      "suggestedFix": "Add treated_by relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Primary entity missing metadata: curriculum_tags, board_relevance",
+      "evidence": "Entity acetabular-fracture metadata keys: slug, pilot, verified, curated_at, description, clinical_kind, staging_apply, curation_route, curation_rules, curation_scores, factory_version, maturity_target, staging_reviewer, review_packet_key, review_packet_label, clinical_verification, created_from_proposal_fingerprint, canonical_entity_id",
+      "reason": "Primary condition entities require educational and curriculum metadata.",
+      "severity": "high",
+      "category": "metadata_quality",
+      "affectedSlugs": [
+        "acetabular-fracture"
+      ],
+      "suggestedFix": "Run metadata-builder to populate clinical_kind, curriculum_tags, board_relevance.",
+      "impact": 8
+    },
+    {
+      "finding": "8 underperforming agent(s)",
+      "evidence": "clinical-entity-builder (F), asset-linker (F), decision-point-builder (D), metadata-builder (F), duplicate-detector (F), quality-scorer (F), conflict-resolver (F), publication-validator (F)",
+      "reason": "Low-grading agents reduce neighborhood quality and increase review burden.",
+      "severity": "high",
+      "category": "agent_performance",
+      "suggestedFix": "Review agent report cards and address weaknesses per agent.",
+      "impact": 8
+    },
+    {
+      "finding": "1 merge conflicts",
+      "evidence": "conflict-report.json or merged draft conflicts array",
+      "reason": "Merge engine should resolve or surface all agent output conflicts.",
+      "severity": "high",
+      "category": "compiler_quality",
+      "suggestedFix": "Review conflict-report.json and re-run merge with conflict-resolver output.",
+      "impact": 8
+    },
+    {
+      "finding": "Insufficient primary-entity claims for learning progression",
+      "evidence": "0 claims anchored to acetabular-fracture",
+      "reason": "Residents need a critical mass of claims to build mental models.",
+      "severity": "high",
+      "category": "educational_quality",
+      "suggestedFix": "Add L1–L3 claims covering diagnosis, classification, treatment, and complications.",
+      "impact": 8
+    },
+    {
+      "finding": "Weak reasoning support (claims + decision points)",
+      "evidence": "0 primary claims, 0 decision points",
+      "reason": "Effective learning requires both factual claims and branching clinical reasoning.",
+      "severity": "high",
+      "category": "educational_quality",
+      "suggestedFix": "Pair decision points with supporting claims for each branch.",
+      "impact": 8
+    },
+    {
+      "finding": "17 proposals still awaiting human review",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "[high] Lower Extremity Trauma Anatomy Hub missing outbound part_of (0/1).",
+      "impact": 8
+    }
+  ],
+  "prioritizedRecommendations": [
+    {
+      "priority": 1,
+      "action": "Resolve critical gaps via assigned factory agents before publication review.",
+      "category": "ontology_completeness",
+      "impact": "3 critical ontology gaps remain"
+    },
+    {
+      "priority": 2,
+      "action": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
+      "category": "evidence_quality",
+      "impact": "Low evidence coverage (0% of proposals cite evidence)"
+    },
+    {
+      "priority": 3,
+      "action": "Run claim-builder agent to generate evidence-backed atomic claims.",
+      "category": "claim_quality",
+      "impact": "No educational claims in neighborhood"
+    },
+    {
+      "priority": 4,
+      "action": "Run decision-point-builder for operative_indication and nonoperative_eligible patterns.",
+      "category": "decision_point_quality",
+      "impact": "No decision points in neighborhood"
+    },
+    {
+      "priority": 5,
+      "action": "[high] Lower Extremity Trauma Anatomy Hub missing outbound part_of (0/1).",
+      "category": "publication_readiness",
+      "impact": "10 critical/high ontology gaps remain unresolved"
+    },
+    {
+      "priority": 6,
+      "action": "Schedule gap-resolution work items from ontology-work-plan.json.",
+      "category": "ontology_completeness",
+      "impact": "7 high-priority ontology gaps"
+    },
+    {
+      "priority": 7,
+      "action": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "category": "graph_integrity",
+      "impact": "1 merge conflicts detected"
+    },
+    {
+      "priority": 8,
+      "action": "Add at_risk_structure relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: at_risk_structure"
+    },
+    {
+      "priority": 9,
+      "action": "Add treated_by relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: treated_by"
+    },
+    {
+      "priority": 10,
+      "action": "Run metadata-builder to populate clinical_kind, curriculum_tags, board_relevance.",
+      "category": "metadata_quality",
+      "impact": "Primary entity missing metadata: curriculum_tags, board_relevance"
+    }
+  ],
+  "databaseModified": false
+}

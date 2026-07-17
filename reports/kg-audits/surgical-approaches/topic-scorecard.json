@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-08T21:23:42.612Z",
+  "generatedAt": "2026-07-09T04:37:57.423Z",
   "auditorVersion": "1.0.0",
   "topicKey": "surgical-approaches",
   "pilotKey": "surgical-approaches-neighborhood",
@@ -22,7 +22,7 @@
     ],
     "reportsMissing": []
   },
-  "overallScore": 84,
+  "overallScore": 85,
   "categories": {
     "ontology_completeness": 89,
     "evidence_quality": 85,
@@ -36,7 +36,7 @@
     "review_calibration": 100,
     "agent_performance": 92,
     "compiler_quality": 94,
-    "educational_quality": 76,
+    "educational_quality": 78,
     "cross_neighborhood_consistency": 100,
     "publication_readiness": 60
   },
@@ -44,8 +44,8 @@
     "status": "NOT_READY",
     "ready": false,
     "blockers": [
-      "70 proposals still awaiting human review",
-      "70 items require attending review",
+      "44 proposals still awaiting human review",
+      "44 items require attending review",
       "Claims and DPs are draft-only — publication gate must block verified consumption.",
       "No approved canonical entities in database yet — proposals remain offline/spec.",
       "1 critical/high ontology gaps remain unresolved"
@@ -55,21 +55,21 @@
     "score": 60,
     "deductions": [
       {
-        "finding": "70 proposals still awaiting human review",
+        "finding": "44 proposals still awaiting human review",
         "evidence": "publication-readiness.json blockers",
         "reason": "Publication gate identified blocking condition.",
         "severity": "high",
         "category": "publication_readiness",
-        "suggestedFix": "[high] Operative Anatomy Backbone missing outbound part_of (0/1).",
+        "suggestedFix": "[high] Orthopaedic Anatomy missing outbound part_of (0/1).",
         "impact": 8
       },
       {
-        "finding": "70 items require attending review",
+        "finding": "44 items require attending review",
         "evidence": "publication-readiness.json blockers",
         "reason": "Publication gate identified blocking condition.",
         "severity": "high",
         "category": "publication_readiness",
-        "suggestedFix": "[high] Operative Anatomy Backbone missing outbound part_of (0/1).",
+        "suggestedFix": "[high] Orthopaedic Anatomy missing outbound part_of (0/1).",
         "impact": 8
       },
       {
@@ -78,7 +78,7 @@
         "reason": "Publication gate identified blocking condition.",
         "severity": "high",
         "category": "publication_readiness",
-        "suggestedFix": "[high] Operative Anatomy Backbone missing outbound part_of (0/1).",
+        "suggestedFix": "[high] Orthopaedic Anatomy missing outbound part_of (0/1).",
         "impact": 8
       },
       {
@@ -87,7 +87,7 @@
         "reason": "Publication gate identified blocking condition.",
         "severity": "high",
         "category": "publication_readiness",
-        "suggestedFix": "[high] Operative Anatomy Backbone missing outbound part_of (0/1).",
+        "suggestedFix": "[high] Orthopaedic Anatomy missing outbound part_of (0/1).",
         "impact": 8
       },
       {
@@ -96,7 +96,7 @@
         "reason": "Publication gate identified blocking condition.",
         "severity": "critical",
         "category": "publication_readiness",
-        "suggestedFix": "[high] Operative Anatomy Backbone missing outbound part_of (0/1).",
+        "suggestedFix": "[high] Orthopaedic Anatomy missing outbound part_of (0/1).",
         "impact": 15
       }
     ]
@@ -104,7 +104,7 @@
   "topFindings": [
     {
       "finding": "Low evidence coverage (0% of proposals cite evidence)",
-      "evidence": "0/1248 proposals have evidence_refs",
+      "evidence": "0/1155 proposals have evidence_refs",
       "reason": "Every proposal should cite supporting evidence per factory contract.",
       "severity": "critical",
       "category": "evidence_quality",
@@ -150,7 +150,7 @@
       "reason": "Publication gate identified blocking condition.",
       "severity": "critical",
       "category": "publication_readiness",
-      "suggestedFix": "[high] Operative Anatomy Backbone missing outbound part_of (0/1).",
+      "suggestedFix": "[high] Orthopaedic Anatomy missing outbound part_of (0/1).",
       "impact": 15
     },
     {
@@ -212,7 +212,7 @@
     },
     {
       "finding": "All claims remain generated_draft",
-      "evidence": "65/65 claims are unreviewed drafts",
+      "evidence": "28/28 claims are unreviewed drafts",
       "reason": "Draft claims cannot be consumed as verified educational content.",
       "severity": "high",
       "category": "claim_quality",
@@ -248,7 +248,7 @@
     },
     {
       "finding": "Primary entity missing metadata: curriculum_tags, board_relevance",
-      "evidence": "Entity surgical-approaches metadata keys: pilot, neighborhood, clinical_kind, maturity_target, anatomy_kind, hierarchy_level, region, review_packet_key, review_packet_label, factory_version, slug, description, curation_route, curation_scores, curation_rules, curated_at, verified, _provenance_fingerprint",
+      "evidence": "Entity surgical-approaches metadata keys: pilot, neighborhood, clinical_kind, maturity_target, review_packet_key, review_packet_label, factory_version, slug, description, curation_route, curation_scores, curation_rules, curated_at, verified, _provenance_fingerprint",
       "reason": "Primary condition entities require educational and curriculum metadata.",
       "severity": "high",
       "category": "metadata_quality",
@@ -286,7 +286,7 @@
     },
     {
       "priority": 5,
-      "action": "[high] Operative Anatomy Backbone missing outbound part_of (0/1).",
+      "action": "[high] Orthopaedic Anatomy missing outbound part_of (0/1).",
       "category": "publication_readiness",
       "impact": "1 critical/high ontology gaps remain unresolved"
     },

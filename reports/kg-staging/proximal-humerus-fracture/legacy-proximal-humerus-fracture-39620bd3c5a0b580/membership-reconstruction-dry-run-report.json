@@ -1,0 +1,41 @@
+{
+  "ok": true,
+  "runDate": "2026-07-16",
+  "topicKey": "proximal-humerus-fracture",
+  "displayName": "Proximal Humerus Fracture",
+  "pilotKey": "proximal-humerus-fracture-neighborhood",
+  "batchKey": "legacy-proximal-humerus-fracture-39620bd3c5a0b580",
+  "packetHash": "39620bd3c5a0b5802c3a2ba819ce12544f145ae442a3dee5d30b7e868f136842",
+  "graphHash": "3f690149a8c3554c0492b0e56483ae48863e3c4ba411f575ff49d690b89ca27d",
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "dryRun": true,
+  "exactAppliedMembershipReconstructed": true,
+  "aggregateCreatedReconstructed": true,
+  "counts": {
+    "approvedLoaded": 64,
+    "structuralProposals": 63,
+    "entities": 28,
+    "relationships": 34,
+    "curriculumBridges": 1,
+    "draftClaimsExcluded": 1,
+    "draftDecisionPointsExcluded": 0
+  },
+  "repairs": {
+    "insertedSemantic": 0,
+    "reusedSemantic": 0,
+    "proposalStatesRepaired": 0,
+    "insertedMemberships": 0,
+    "reusedMemberships": 0,
+    "reactivatedMemberships": 0
+  },
+  "discrepancyCount": 0,
+  "exactNextAction": "repair_batch_membership"
+}

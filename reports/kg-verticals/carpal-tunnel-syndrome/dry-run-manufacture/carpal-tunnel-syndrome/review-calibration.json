@@ -1,0 +1,22 @@
+{
+  "category": "review_calibration",
+  "label": "Review Calibration",
+  "score": 92,
+  "deductions": [
+    {
+      "finding": "No auto-review calibration data",
+      "evidence": "ontology-auto-review.json missing",
+      "reason": "Cannot evaluate false positive/negative rates without review engine output.",
+      "severity": "high",
+      "category": "review_calibration",
+      "suggestedFix": "Run compiler to generate ontology-auto-review.json.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "autoReviewLoaded": false
+  },
+  "recommendations": [
+    "Run compiler to generate ontology-auto-review.json."
+  ]
+}

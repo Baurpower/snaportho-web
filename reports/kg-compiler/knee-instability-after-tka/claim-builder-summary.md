@@ -1,6 +1,6 @@
 # Claim Builder Summary
 
-Generated: 2026-07-05T23:12:57.952Z
+Generated: 2026-07-16T02:53:18.218Z
 Agent: claim-builder v2.0.0
 Evidence packet: `ev-packet-e6553aec`
 
@@ -8,9 +8,9 @@ Evidence packet: `ev-packet-e6553aec`
 
 | Metric | Value |
 |--------|------:|
-| Gaps scheduled | 9 |
+| Gaps scheduled | 13 |
 | Gaps addressed | 7 |
-| Claims generated | 9 |
+| Claims generated | 13 |
 | Claims rejected | 6 |
 | Redirected to DP Builder | 4 |
 
@@ -25,6 +25,10 @@ Evidence packet: `ev-packet-e6553aec`
 - **fact** (L1) → claim-flexion-extension-gap-balance-fact-cross-neighborhood-traum [HUMAN_REVIEW] evidence: ev-static-prepare-61685388
 - **anatomy_pearl** (L1) → claim-flexion-extension-gap-balance-anatomy_pearl-implant-concepts-hub [HUMAN_REVIEW] evidence: ev-static-prepare-61685388
 - **anatomy_pearl** (L1) → claim-flexion-extension-gap-balance-anatomy_pearl-trauma-neighborhood-brid [HUMAN_REVIEW] evidence: ev-static-prepare-61685388
+- **anatomy_pearl** (L1) → claim-flexion-extension-gap-balance-anatomy_pearl-post-tka-instability-ref [HUMAN_REVIEW] evidence: ev-static-prepare-61685388
+- **anatomy_pearl** (L2) → claim-flexion-extension-gap-balance-anatomy_pearl-hip-and-knee-joint-surfa [HUMAN_REVIEW] evidence: ev-static-prepare-6169491c
+- **anatomy_pearl** (L2) → claim-flexion-extension-gap-balance-anatomy_pearl-extensor-mechanism [HUMAN_REVIEW] evidence: ev-static-prepare-6169491c
+- **anatomy_pearl** (L2) → claim-flexion-extension-gap-balance-anatomy_pearl-implant-bone-interfaces [HUMAN_REVIEW] evidence: ev-static-prepare-6169491c
 
 ## Rejected / redirected
 

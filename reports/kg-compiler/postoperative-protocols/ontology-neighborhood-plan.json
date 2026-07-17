@@ -1,0 +1,651 @@
+{
+  "topicKey": "postoperative-protocols",
+  "pilotKey": "postoperative-protocols-neighborhood",
+  "primaryEntitySlug": "postoperative-protocols",
+  "displayName": "Postoperative Protocols",
+  "generatedAt": "2026-07-09T04:28:59.787Z",
+  "nodes": [
+    {
+      "slug": "postoperative-protocols",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Postoperative Protocols",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "non-weight-bearing",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Non-Weight Bearing",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "toe-touch-weight-bearing",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Toe-Touch Weight Bearing",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "partial-weight-bearing",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Partial Weight Bearing",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "weight-bearing-as-tolerated",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Weight Bearing as Tolerated",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "protected-weight-bearing",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Protected Weight Bearing",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "progressive-weight-bearing",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Progressive Weight Bearing",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "immediate-weight-bearing",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Immediate Weight Bearing",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "construct-dependent-progression",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Construct-Dependent Progression",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "splinting-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Splinting Protocol",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "casting-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Casting Protocol",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "bracing-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Bracing Protocol",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "hinged-bracing-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Hinged Bracing Protocol",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "range-of-motion-restriction",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Range-of-Motion Restriction",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "motion-progression",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Motion Progression",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "protection-period",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Protection Period",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "postoperative-wound-management",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Postoperative Wound Management",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "dressing-change-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Dressing Change Protocol",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "drain-management-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Drain Management Protocol",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "closure-removal-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Suture and Staple Removal Protocol",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "incision-surveillance",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Incision Surveillance",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "postoperative-follow-up-schedule",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Postoperative Follow-Up Schedule",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "radiographic-follow-up",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Radiographic Follow-Up",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "fracture-healing-surveillance",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Fracture Healing Surveillance",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "implant-surveillance",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Implant Surveillance",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "arthroplasty-surveillance",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Arthroplasty Surveillance",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "range-of-motion-milestones",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Range-of-Motion Milestones",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "strength-progression",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Strength Progression",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "functional-milestones",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Functional Milestones",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "return-to-activity-progression",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Return-to-Activity Progression",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "dvt-prophylaxis-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "DVT Prophylaxis Protocol",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "postoperative-antibiotic-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Postoperative Antibiotic Protocol",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "heterotopic-ossification-prophylaxis",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Heterotopic Ossification Prophylaxis",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "multimodal-analgesia",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Multimodal Analgesia",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "delayed-union-pathway",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Delayed Union Pathway",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "nonunion-pathway",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Nonunion Pathway",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "dynamization-consideration",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Dynamization Consideration",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "acl-rehabilitation-progression",
+      "entityType": "treatment_principle",
+      "preferredLabel": "ACL Rehabilitation Progression",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "rotator-cuff-progression",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Rotator Cuff Repair Progression",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "meniscus-repair-restrictions",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Meniscus Repair Restrictions",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tendon-repair-protection",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Tendon Repair Protection",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tha-precautions",
+      "entityType": "treatment_principle",
+      "preferredLabel": "THA Precautions",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tka-rehabilitation-milestones",
+      "entityType": "treatment_principle",
+      "preferredLabel": "TKA Rehabilitation Milestones",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "spine-fusion-surveillance",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Spine Fusion Surveillance",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "spine-return-to-work",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Spine Return-to-Work Progression",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "pediatric-growth-surveillance",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Pediatric Growth Surveillance",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "physeal-monitoring",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Physeal Monitoring",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "hardware-removal-consideration",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Hardware Removal Consideration",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "failure-to-progress",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Failure to Progress",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "postoperative-red-flags",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Postoperative Red Flags",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "reoperation-triggers",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Reoperation Triggers",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "patient-reported-outcome-surveillance",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Patient-Reported Outcome Surveillance",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "shared-decision-checkpoint",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Shared Decision-Making Checkpoint",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "fracture-nonunion",
+      "entityType": "complication",
+      "preferredLabel": "Fracture Nonunion",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "delayed-union",
+      "entityType": "complication",
+      "preferredLabel": "Delayed Union",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "fracture-related-infection",
+      "entityType": "complication",
+      "preferredLabel": "Fracture-Related Infection",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "venous-thromboembolism",
+      "entityType": "complication",
+      "preferredLabel": "Venous Thromboembolism",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "hardware-failure",
+      "entityType": "complication",
+      "preferredLabel": "Hardware Failure",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "total-hip-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Total Hip Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "total-knee-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Total Knee Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "acl-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "ACL Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "rotator-cuff-repair",
+      "entityType": "procedure",
+      "preferredLabel": "Rotator Cuff Repair",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 16,
+  "claimCount": 21,
+  "decisionPointCount": 10,
+  "roles": {
+    "primary_condition": [
+      "postoperative-protocols"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "total-hip-arthroplasty",
+      "total-knee-arthroplasty",
+      "acl-reconstruction",
+      "rotator-cuff-repair"
+    ],
+    "classification": [],
+    "imaging": [],
+    "complication": [
+      "fracture-nonunion",
+      "delayed-union",
+      "fracture-related-infection",
+      "venous-thromboembolism",
+      "hardware-failure"
+    ],
+    "decision_point_anchor": [
+      "construct-dependent-progression",
+      "implant-surveillance",
+      "return-to-activity-progression",
+      "dvt-prophylaxis-protocol",
+      "delayed-union-pathway",
+      "spine-fusion-surveillance",
+      "pediatric-growth-surveillance",
+      "failure-to-progress",
+      "postoperative-red-flags"
+    ],
+    "claim_anchor": [
+      "progressive-weight-bearing",
+      "motion-progression",
+      "protection-period",
+      "drain-management-protocol",
+      "incision-surveillance",
+      "postoperative-follow-up-schedule",
+      "radiographic-follow-up",
+      "postoperative-antibiotic-protocol",
+      "heterotopic-ossification-prophylaxis",
+      "dynamization-consideration",
+      "acl-rehabilitation-progression",
+      "rotator-cuff-progression",
+      "tha-precautions",
+      "shared-decision-checkpoint"
+    ],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "non-weight-bearing",
+      "toe-touch-weight-bearing",
+      "partial-weight-bearing",
+      "weight-bearing-as-tolerated",
+      "protected-weight-bearing",
+      "immediate-weight-bearing",
+      "splinting-protocol",
+      "casting-protocol",
+      "bracing-protocol",
+      "hinged-bracing-protocol",
+      "range-of-motion-restriction",
+      "postoperative-wound-management",
+      "dressing-change-protocol",
+      "closure-removal-protocol",
+      "fracture-healing-surveillance",
+      "arthroplasty-surveillance",
+      "range-of-motion-milestones",
+      "strength-progression",
+      "functional-milestones",
+      "multimodal-analgesia",
+      "nonunion-pathway",
+      "meniscus-repair-restrictions",
+      "tendon-repair-protection",
+      "tka-rehabilitation-milestones",
+      "spine-return-to-work",
+      "physeal-monitoring",
+      "hardware-removal-consideration",
+      "reoperation-triggers",
+      "patient-reported-outcome-surveillance"
+    ]
+  }
+}

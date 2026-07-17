@@ -1,0 +1,93 @@
+{
+  "requirementMatrix": [
+    {
+      "object_type": "entity",
+      "draft_minimum": [
+        "source_or_registry_marker",
+        "review_status_or_draft_marker"
+      ],
+      "staging_minimum": [
+        "source_or_registry_marker",
+        "identity_review_status"
+      ],
+      "publication_minimum": [
+        "source_type",
+        "source_identifier",
+        "source_title_or_path",
+        "evidence_confidence",
+        "approved_review_status"
+      ]
+    },
+    {
+      "object_type": "relationship",
+      "draft_minimum": [
+        "source_or_inherited_relationship",
+        "review_status_or_draft_marker"
+      ],
+      "staging_minimum": [
+        "source_or_inherited_relationship",
+        "evidence_class",
+        "review_status"
+      ],
+      "publication_minimum": [
+        "source_type",
+        "source_identifier",
+        "source_title_or_path",
+        "evidence_confidence",
+        "approved_review_status"
+      ]
+    },
+    {
+      "object_type": "claim",
+      "draft_minimum": [
+        "content_source",
+        "review_status"
+      ],
+      "staging_minimum": [
+        "source_identifier_or_content_source",
+        "evidence_confidence_or_draft_marker",
+        "review_status"
+      ],
+      "publication_minimum": [
+        "source_identifier",
+        "source_title_or_path",
+        "extraction_method",
+        "evidence_confidence",
+        "approved_review_status"
+      ]
+    },
+    {
+      "object_type": "decision_point",
+      "draft_minimum": [
+        "risk_classification_or_safety_marker",
+        "review_status_or_attending_flag"
+      ],
+      "staging_minimum": [
+        "supporting_source_or_review_overlay",
+        "risk_classification",
+        "clinical_review_status"
+      ],
+      "publication_minimum": [
+        "supporting_source_records",
+        "clinical_reviewer_approval",
+        "risk_classification",
+        "approved_review_status"
+      ]
+    }
+  ],
+  "totals": {
+    "entities": 12,
+    "relationships": 22,
+    "claims": 18,
+    "decisionPoints": 2,
+    "objectsMissingDraftMinimum": 3,
+    "objectsMissingPublicationMinimum": 54,
+    "orphanEvidence": 0
+  },
+  "byKind": {
+    "entity": 12,
+    "relationship": 22,
+    "claim": 18,
+    "decision_point": 2
+  }
+}

@@ -1,0 +1,725 @@
+{
+  "topicKey": "imaging-radiographic-measurements",
+  "pilotKey": "imaging-radiographic-measurements-neighborhood",
+  "generatedAt": "2026-07-09T04:14:30.091Z",
+  "workItems": [
+    {
+      "id": "work-relationship-builder",
+      "agentId": "relationship-builder",
+      "agentFamily": "Relationship Builder",
+      "title": "Relationship Builder: resolve 47 gap(s)",
+      "gapIds": [
+        "gap-rel-1",
+        "gap-rel-4",
+        "gap-rel-8",
+        "gap-rel-12",
+        "gap-rel-15",
+        "gap-rel-18",
+        "gap-rel-22",
+        "gap-rel-25",
+        "gap-rel-29",
+        "gap-rel-33",
+        "gap-rel-37",
+        "gap-rel-41",
+        "gap-rel-44",
+        "gap-rel-48",
+        "gap-rel-52",
+        "gap-rel-55",
+        "gap-rel-59",
+        "gap-rel-62",
+        "gap-rel-65",
+        "gap-rel-68",
+        "gap-rel-72",
+        "gap-rel-76",
+        "gap-rel-80",
+        "gap-rel-84",
+        "gap-rel-88",
+        "gap-rel-91",
+        "gap-rel-95",
+        "gap-rel-99",
+        "gap-rel-102",
+        "gap-rel-106",
+        "gap-rel-110",
+        "gap-rel-113",
+        "gap-rel-115",
+        "gap-rel-119",
+        "gap-rel-123",
+        "gap-rel-126",
+        "gap-rel-130",
+        "gap-rel-134",
+        "gap-rel-137",
+        "gap-rel-141",
+        "gap-rel-144",
+        "gap-rel-148",
+        "gap-rel-152",
+        "gap-rel-156",
+        "gap-rel-157",
+        "gap-rel-158",
+        "gap-rel-159"
+      ],
+      "dependencies": [
+        "work-clinical-entity-builder",
+        "work-anatomy-builder"
+      ],
+      "estimatedConfidence": 0.9200000000000012,
+      "requiredInputs": [
+        "neighborhood_snapshot",
+        "work_assignment",
+        "proposal_packets",
+        "canonical_objects"
+      ],
+      "requiredOutputs": [
+        "relationships"
+      ],
+      "validationRules": [
+        "ontology_valid",
+        "relationship_valid",
+        "metadata_valid",
+        "duplicate_valid",
+        "provenance_valid"
+      ],
+      "priority": 85,
+      "workType": "gap_resolution",
+      "assignedAgentId": "relationship-builder",
+      "publicationImpact": 0.054255319148936186,
+      "requiredReviewer": "none"
+    },
+    {
+      "id": "work-claim-builder",
+      "agentId": "claim-builder",
+      "agentFamily": "Claim Builder",
+      "title": "Claim Builder: resolve 137 gap(s)",
+      "gapIds": [
+        "gap-claim-type-2",
+        "gap-claim-type-3",
+        "gap-claim-5",
+        "gap-claim-type-6",
+        "gap-claim-type-7",
+        "gap-claim-9",
+        "gap-claim-type-10",
+        "gap-claim-type-11",
+        "gap-claim-type-13",
+        "gap-claim-type-14",
+        "gap-claim-type-16",
+        "gap-claim-type-17",
+        "gap-claim-19",
+        "gap-claim-type-20",
+        "gap-claim-type-21",
+        "gap-claim-type-23",
+        "gap-claim-type-24",
+        "gap-claim-26",
+        "gap-claim-type-27",
+        "gap-claim-type-28",
+        "gap-claim-30",
+        "gap-claim-type-31",
+        "gap-claim-type-32",
+        "gap-claim-34",
+        "gap-claim-type-35",
+        "gap-claim-type-36",
+        "gap-claim-38",
+        "gap-claim-type-39",
+        "gap-claim-type-40",
+        "gap-claim-type-42",
+        "gap-claim-type-43",
+        "gap-claim-45",
+        "gap-claim-type-46",
+        "gap-claim-type-47",
+        "gap-claim-49",
+        "gap-claim-type-50",
+        "gap-claim-type-51",
+        "gap-claim-type-53",
+        "gap-claim-type-54",
+        "gap-claim-56",
+        "gap-claim-type-57",
+        "gap-claim-type-58",
+        "gap-claim-type-60",
+        "gap-claim-type-61",
+        "gap-claim-type-63",
+        "gap-claim-type-64",
+        "gap-claim-type-66",
+        "gap-claim-type-67",
+        "gap-claim-69",
+        "gap-claim-type-70",
+        "gap-claim-type-71",
+        "gap-claim-73",
+        "gap-claim-type-74",
+        "gap-claim-type-75",
+        "gap-claim-77",
+        "gap-claim-type-78",
+        "gap-claim-type-79",
+        "gap-claim-81",
+        "gap-claim-type-82",
+        "gap-claim-type-83",
+        "gap-claim-85",
+        "gap-claim-type-86",
+        "gap-claim-type-87",
+        "gap-claim-type-89",
+        "gap-claim-type-90",
+        "gap-claim-92",
+        "gap-claim-type-93",
+        "gap-claim-type-94",
+        "gap-claim-96",
+        "gap-claim-type-97",
+        "gap-claim-type-98",
+        "gap-claim-type-100",
+        "gap-claim-type-101",
+        "gap-claim-103",
+        "gap-claim-type-104",
+        "gap-claim-type-105",
+        "gap-claim-107",
+        "gap-claim-type-108",
+        "gap-claim-type-109",
+        "gap-claim-type-111",
+        "gap-claim-type-112",
+        "gap-claim-type-114",
+        "gap-claim-116",
+        "gap-claim-type-117",
+        "gap-claim-type-118",
+        "gap-claim-120",
+        "gap-claim-type-121",
+        "gap-claim-type-122",
+        "gap-claim-type-124",
+        "gap-claim-type-125",
+        "gap-claim-127",
+        "gap-claim-type-128",
+        "gap-claim-type-129",
+        "gap-claim-131",
+        "gap-claim-type-132",
+        "gap-claim-type-133",
+        "gap-claim-type-135",
+        "gap-claim-type-136",
+        "gap-claim-138",
+        "gap-claim-type-139",
+        "gap-claim-type-140",
+        "gap-claim-type-142",
+        "gap-claim-type-143",
+        "gap-claim-145",
+        "gap-claim-type-146",
+        "gap-claim-type-147",
+        "gap-claim-149",
+        "gap-claim-type-150",
+        "gap-claim-type-151",
+        "gap-claim-153",
+        "gap-claim-type-154",
+        "gap-claim-type-155",
+        "gap-biomech-claim-160",
+        "gap-biomech-claim-161",
+        "gap-biomech-claim-162",
+        "gap-biomech-claim-163",
+        "gap-biomech-claim-164",
+        "gap-biomech-claim-165",
+        "gap-biomech-claim-166",
+        "gap-biomech-claim-167",
+        "gap-biomech-claim-168",
+        "gap-biomech-claim-169",
+        "gap-biomech-claim-170",
+        "gap-biomech-claim-171",
+        "gap-biomech-claim-172",
+        "gap-biomech-claim-173",
+        "gap-biomech-claim-174",
+        "gap-biomech-claim-175",
+        "gap-biomech-claim-176",
+        "gap-biomech-claim-177",
+        "gap-biomech-claim-178",
+        "gap-biomech-claim-179",
+        "gap-biomech-claim-180",
+        "gap-biomech-claim-181",
+        "gap-biomech-claim-182",
+        "gap-biomech-claim-183",
+        "gap-biomech-claim-184"
+      ],
+      "dependencies": [
+        "work-relationship-builder"
+      ],
+      "estimatedConfidence": 0.7883941605839403,
+      "requiredInputs": [
+        "neighborhood_snapshot",
+        "canonical_objects",
+        "work_assignment",
+        "proposal_packets",
+        "evidence_packets"
+      ],
+      "requiredOutputs": [
+        "claims"
+      ],
+      "validationRules": [
+        "schema_valid",
+        "safety_valid",
+        "publication_valid",
+        "provenance_valid"
+      ],
+      "priority": 55,
+      "workType": "gap_resolution",
+      "assignedAgentId": "claim-builder",
+      "publicationImpact": 0.04999999999999988,
+      "requiredReviewer": "clinical_expert"
+    },
+    {
+      "id": "work-duplicate-detector",
+      "agentId": "duplicate-detector",
+      "agentFamily": "Conflict Resolver",
+      "title": "Conflict Resolver: quality_scoring",
+      "gapIds": [],
+      "dependencies": [
+        "work-relationship-builder",
+        "work-claim-builder"
+      ],
+      "estimatedConfidence": 0.9,
+      "requiredInputs": [
+        "proposal_packets",
+        "neighborhood_snapshot",
+        "work_assignment"
+      ],
+      "requiredOutputs": [
+        "quality_metrics"
+      ],
+      "validationRules": [
+        "duplicate_valid"
+      ],
+      "priority": 85,
+      "workType": "quality_scoring",
+      "assignedAgentId": "duplicate-detector",
+      "publicationImpact": 0.2,
+      "requiredReviewer": "none"
+    },
+    {
+      "id": "work-quality-scorer",
+      "agentId": "quality-scorer",
+      "agentFamily": "Quality Scorer",
+      "title": "Quality Scorer: quality_scoring",
+      "gapIds": [],
+      "dependencies": [
+        "work-duplicate-detector"
+      ],
+      "estimatedConfidence": 0.92,
+      "requiredInputs": [
+        "neighborhood_snapshot",
+        "gap_report",
+        "proposal_packets",
+        "work_assignment"
+      ],
+      "requiredOutputs": [
+        "quality_metrics"
+      ],
+      "validationRules": [
+        "schema_valid"
+      ],
+      "priority": 86,
+      "workType": "quality_scoring",
+      "assignedAgentId": "quality-scorer",
+      "publicationImpact": 0.3,
+      "requiredReviewer": "none"
+    },
+    {
+      "id": "work-conflict-resolver",
+      "agentId": "conflict-resolver",
+      "agentFamily": "Conflict Resolver",
+      "title": "Conflict Resolver: quality_scoring",
+      "gapIds": [],
+      "dependencies": [
+        "work-quality-scorer"
+      ],
+      "estimatedConfidence": 0.88,
+      "requiredInputs": [
+        "proposal_packets",
+        "merged_neighborhood_draft",
+        "work_assignment"
+      ],
+      "requiredOutputs": [
+        "quality_metrics"
+      ],
+      "validationRules": [
+        "safety_valid",
+        "publication_valid"
+      ],
+      "priority": 87,
+      "workType": "quality_scoring",
+      "assignedAgentId": "conflict-resolver",
+      "publicationImpact": 0.4,
+      "requiredReviewer": "none"
+    },
+    {
+      "id": "work-review-assistant",
+      "agentId": "review-assistant",
+      "agentFamily": "Review Assistant",
+      "title": "Review Assistant: review",
+      "gapIds": [],
+      "dependencies": [
+        "work-relationship-builder",
+        "work-claim-builder",
+        "work-conflict-resolver"
+      ],
+      "estimatedConfidence": 0.95,
+      "requiredInputs": [
+        "proposal_packets",
+        "work_assignment"
+      ],
+      "requiredOutputs": [
+        "review_report"
+      ],
+      "validationRules": [
+        "explainable_scores",
+        "no_opaque_ai_score"
+      ],
+      "priority": 90,
+      "workType": "review",
+      "assignedAgentId": "review-assistant",
+      "publicationImpact": 0.5,
+      "requiredReviewer": "none"
+    },
+    {
+      "id": "work-publication-validator",
+      "agentId": "publication-validator",
+      "agentFamily": "Publication Validator",
+      "title": "Publication Validator: publication_validation",
+      "gapIds": [],
+      "dependencies": [
+        "work-review-assistant"
+      ],
+      "estimatedConfidence": 0.98,
+      "requiredInputs": [
+        "auto_review_report",
+        "gap_report",
+        "proposal_packets",
+        "work_assignment"
+      ],
+      "requiredOutputs": [
+        "publication_report"
+      ],
+      "validationRules": [
+        "no_auto_publish",
+        "draft_leak_blocked"
+      ],
+      "priority": 95,
+      "workType": "publication_validation",
+      "assignedAgentId": "publication-validator",
+      "publicationImpact": 1,
+      "requiredReviewer": "none"
+    }
+  ],
+  "agentSummary": {
+    "Relationship Builder": 1,
+    "Claim Builder": 1,
+    "Conflict Resolver": 2,
+    "Quality Scorer": 1,
+    "Review Assistant": 1,
+    "Publication Validator": 1
+  },
+  "executionOrder": [
+    "work-clinical-entity-builder",
+    "work-anatomy-builder",
+    "work-relationship-builder",
+    "work-claim-builder",
+    "work-duplicate-detector",
+    "work-quality-scorer",
+    "work-conflict-resolver",
+    "work-review-assistant",
+    "work-publication-validator"
+  ],
+  "registryDiscovery": [
+    {
+      "id": "anatomy-builder",
+      "name": "Anatomy Builder",
+      "version": "1.1.0",
+      "supportedOntologyVersion": "2026-07-05",
+      "produces": [
+        "entities"
+      ],
+      "consumes": [
+        "neighborhood_snapshot",
+        "ontology_requirements",
+        "work_assignment"
+      ],
+      "requires": [],
+      "handlesGapKinds": [
+        "missing_entity"
+      ],
+      "handlesEntityTypes": [
+        "anatomy_structure"
+      ],
+      "handlesOntologyRulePrefixes": [
+        "anatomy."
+      ],
+      "proposalTypes": [
+        "create_canonical_entity"
+      ]
+    },
+    {
+      "id": "clinical-entity-builder",
+      "name": "Clinical Entity Builder",
+      "version": "1.1.0",
+      "supportedOntologyVersion": "2026-07-05",
+      "produces": [
+        "entities"
+      ],
+      "consumes": [
+        "neighborhood_snapshot",
+        "ontology_requirements",
+        "work_assignment"
+      ],
+      "requires": [],
+      "handlesGapKinds": [
+        "missing_entity"
+      ],
+      "proposalTypes": [
+        "create_canonical_entity"
+      ],
+      "isGenericFallback": true
+    },
+    {
+      "id": "relationship-builder",
+      "name": "Relationship Builder",
+      "version": "1.1.0",
+      "supportedOntologyVersion": "2026-07-05",
+      "produces": [
+        "relationships"
+      ],
+      "consumes": [
+        "neighborhood_snapshot",
+        "work_assignment",
+        "proposal_packets",
+        "canonical_objects"
+      ],
+      "requires": [
+        "clinical-entity-builder",
+        "anatomy-builder"
+      ],
+      "handlesGapKinds": [
+        "missing_relationship"
+      ],
+      "proposalTypes": [
+        "add_canonical_relationship"
+      ],
+      "autoApprovalPatterns": [
+        "part_of",
+        "contains",
+        "articulates_with",
+        "inserts_on",
+        "prerequisite_for",
+        "has_classification",
+        "has_grade",
+        "injured_in",
+        "involves_anatomy"
+      ],
+      "escalationPatterns": [
+        "at_risk_structure",
+        "indicates_treatment",
+        "must_protect_during",
+        "treated_by",
+        "uses_fixation",
+        "explains_instability"
+      ]
+    },
+    {
+      "id": "claim-builder",
+      "name": "Claim Builder",
+      "supportedOntologyVersion": "2026-07-05",
+      "produces": [
+        "claims"
+      ],
+      "consumes": [
+        "neighborhood_snapshot",
+        "canonical_objects",
+        "work_assignment",
+        "proposal_packets",
+        "evidence_packets"
+      ],
+      "requires": [
+        "relationship-builder"
+      ],
+      "handlesGapKinds": [
+        "missing_claim"
+      ],
+      "proposalTypes": [
+        "propose_educational_claim"
+      ]
+    },
+    {
+      "id": "decision-point-builder",
+      "name": "Decision Point Builder",
+      "version": "1.1.0",
+      "supportedOntologyVersion": "2026-07-05",
+      "produces": [
+        "decision_points"
+      ],
+      "consumes": [
+        "neighborhood_snapshot",
+        "canonical_objects",
+        "work_assignment"
+      ],
+      "requires": [
+        "relationship-builder"
+      ],
+      "handlesGapKinds": [
+        "missing_decision_point"
+      ],
+      "proposalTypes": [
+        "propose_decision_point"
+      ]
+    },
+    {
+      "id": "metadata-builder",
+      "name": "Metadata Builder",
+      "version": "1.1.0",
+      "supportedOntologyVersion": "2026-07-05",
+      "produces": [
+        "metadata"
+      ],
+      "consumes": [
+        "neighborhood_snapshot",
+        "canonical_objects",
+        "work_assignment",
+        "proposal_packets"
+      ],
+      "requires": [
+        "relationship-builder"
+      ],
+      "handlesGapKinds": [
+        "missing_metadata"
+      ],
+      "proposalTypes": [
+        "add_canonical_relationship"
+      ]
+    },
+    {
+      "id": "asset-linker",
+      "name": "Asset Linker",
+      "version": "1.1.0",
+      "supportedOntologyVersion": "2026-07-05",
+      "produces": [
+        "asset_links"
+      ],
+      "consumes": [
+        "neighborhood_snapshot",
+        "canonical_objects",
+        "evidence_packets",
+        "work_assignment"
+      ],
+      "requires": [
+        "clinical-entity-builder"
+      ],
+      "handlesGapKinds": [
+        "missing_asset_link"
+      ],
+      "proposalTypes": [
+        "retarget_card_to_entity",
+        "retarget_question_to_entity"
+      ]
+    },
+    {
+      "id": "provenance-builder",
+      "name": "Provenance Builder",
+      "version": "1.1.0",
+      "supportedOntologyVersion": "2026-07-05",
+      "produces": [
+        "provenance"
+      ],
+      "consumes": [
+        "proposal_packets",
+        "work_assignment"
+      ],
+      "requires": [],
+      "handlesGapKinds": [
+        "missing_provenance"
+      ],
+      "proposalTypes": [
+        "add_provenance_record"
+      ]
+    },
+    {
+      "id": "duplicate-detector",
+      "name": "Duplicate Detector",
+      "version": "1.0.0",
+      "supportedOntologyVersion": "2026-07-05",
+      "produces": [
+        "quality_metrics"
+      ],
+      "consumes": [
+        "proposal_packets",
+        "neighborhood_snapshot",
+        "work_assignment"
+      ],
+      "requires": [],
+      "handlesGapKinds": [],
+      "proposalTypes": [
+        "flag_duplicate_entity",
+        "flag_ambiguous_mapping"
+      ]
+    },
+    {
+      "id": "quality-scorer",
+      "name": "Quality Scorer",
+      "version": "1.0.0",
+      "supportedOntologyVersion": "2026-07-05",
+      "produces": [
+        "quality_metrics"
+      ],
+      "consumes": [
+        "neighborhood_snapshot",
+        "gap_report",
+        "proposal_packets",
+        "work_assignment"
+      ],
+      "requires": [
+        "duplicate-detector"
+      ],
+      "handlesGapKinds": [],
+      "proposalTypes": []
+    },
+    {
+      "id": "conflict-resolver",
+      "name": "Conflict Resolver",
+      "version": "1.0.0",
+      "supportedOntologyVersion": "2026-07-05",
+      "produces": [
+        "quality_metrics"
+      ],
+      "consumes": [
+        "proposal_packets",
+        "merged_neighborhood_draft",
+        "work_assignment"
+      ],
+      "requires": [
+        "duplicate-detector"
+      ],
+      "handlesGapKinds": [],
+      "proposalTypes": []
+    },
+    {
+      "id": "review-assistant",
+      "name": "Review Assistant",
+      "version": "1.0.0",
+      "supportedOntologyVersion": "2026-07-05",
+      "produces": [
+        "review_report"
+      ],
+      "consumes": [
+        "proposal_packets",
+        "work_assignment"
+      ],
+      "requires": [],
+      "handlesGapKinds": [],
+      "proposalTypes": []
+    },
+    {
+      "id": "publication-validator",
+      "name": "Publication Validator",
+      "version": "1.0.0",
+      "supportedOntologyVersion": "2026-07-05",
+      "produces": [
+        "publication_report"
+      ],
+      "consumes": [
+        "auto_review_report",
+        "gap_report",
+        "proposal_packets",
+        "work_assignment"
+      ],
+      "requires": [
+        "review-assistant"
+      ],
+      "handlesGapKinds": [],
+      "proposalTypes": []
+    }
+  ]
+}

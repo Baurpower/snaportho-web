@@ -52,20 +52,23 @@
       "impact": 8
     },
     {
-      "finding": "1 high-risk relationships lack approved review status",
-      "evidence": "Predicates: treated_by",
-      "reason": "High-risk predicates require human review before publication.",
+      "finding": "Missing clinical edge: treated_by",
+      "evidence": "0 outbound treated_by edges from compartment-syndrome",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
       "severity": "high",
       "category": "relationship_quality",
-      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "affectedSlugs": [
+        "compartment-syndrome"
+      ],
+      "suggestedFix": "Add treated_by relationship via relationship-builder agent.",
       "impact": 8
     }
   ],
   "metrics": {
-    "relationshipCount": 22,
-    "relationshipDensity": 1.5714285714285714,
-    "missingClinicalEdgeCount": 4,
-    "highRiskUnreviewedCount": 1,
+    "relationshipCount": 20,
+    "relationshipDensity": 1.4285714285714286,
+    "missingClinicalEdgeCount": 5,
+    "highRiskUnreviewedCount": 0,
     "predicateCorrectness": 1
   },
   "recommendations": [
@@ -73,6 +76,6 @@
     "Add has_classification relationship via relationship-builder agent.",
     "Add has_imaging_finding relationship via relationship-builder agent.",
     "Add at_risk_structure relationship via relationship-builder agent.",
-    "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review."
+    "Add treated_by relationship via relationship-builder agent."
   ]
 }

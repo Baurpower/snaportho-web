@@ -247,6 +247,9 @@ export function buildOrthobulletsExplainMessages(
         `Correct answer: ${context.pageContext.correctAnswerKey ?? context.pageContext.correctAnswer ?? '(unknown)'}`,
         `Percent distribution:\n${renderDistribution(context)}`,
         `Explanation (background only — do not summarize or quote this; reason independently):\n${context.pageContext.explanationText ?? context.pageContext.explanation ?? '(missing)'}`,
+        `Source feedback/explanation shown on page:\n${context.pageContext.sourceExplanation ?? context.pageContext.explanationText ?? context.pageContext.explanation ?? '(missing)'}`,
+        `Source key reference points shown on page:\n${context.pageContext.sourceKeyPoints ?? '(missing)'}`,
+        `Source references shown on page:\n${renderSourceReferences(context)}`,
         `Linked concepts: ${
           context.pageContext.linkedConcepts.map((item) => item.label).join(', ') || '(none)'
         }`,
@@ -266,6 +269,10 @@ function renderKgNotes(context: ResolvedOrthobulletsContext) {
         `KG curriculum node: ${context.kgLookup.curriculumNodeTitle ?? context.kgLookup.curriculumNodeSlug ?? '(none)'}`,
       ].join('\n')
     : 'KG match: none';
+}
+
+function renderSourceReferences(context: ResolvedOrthobulletsContext) {
+  return context.pageContext.sourceReferences || (context.pageContext.references ?? []).join('\n') || '(missing)';
 }
 
 function renderChatHistory(history: OrthobulletsChatTurn[]) {
@@ -330,6 +337,9 @@ export function buildOrthobulletsChatMessages(input: {
             `Answer choices:\n${renderChoices(input.context)}`,
             `Selected answer: ${input.context.pageContext.selectedAnswerKey ?? input.context.pageContext.selectedAnswer ?? '(unknown)'}`,
             `Correct answer: ${input.context.pageContext.correctAnswerKey ?? input.context.pageContext.correctAnswer ?? '(unknown)'}`,
+            `Source feedback/explanation shown on page:\n${input.context.pageContext.sourceExplanation ?? input.context.pageContext.explanationText ?? input.context.pageContext.explanation ?? '(missing)'}`,
+            `Source key reference points shown on page:\n${input.context.pageContext.sourceKeyPoints ?? '(missing)'}`,
+            `Source references shown on page:\n${renderSourceReferences(input.context)}`,
             `Prior BroBot explanation:\n${renderPriorExplanation(input.explanation)}`,
             `Recent follow-up chat:\n${renderChatHistory(input.history)}`,
             `Resident follow-up: ${input.userMessage}`,
@@ -371,6 +381,8 @@ export function buildOrthobulletsHintMessages(input: {
         `Correct answer visibility on page: ${input.context.pageContext.correctAnswerKey || input.context.pageContext.correctAnswer ? 'visible' : 'not visible'}`,
         `Percent distribution:\n${renderDistribution(input.context)}`,
         `Visible explanation text (may be missing; do not quote it):\n${input.context.pageContext.explanationText ?? input.context.pageContext.explanation ?? '(missing)'}`,
+        `Source key reference points shown on page:\n${input.context.pageContext.sourceKeyPoints ?? '(missing)'}`,
+        `Source references shown on page:\n${renderSourceReferences(input.context)}`,
         `Linked concepts: ${input.context.pageContext.linkedConcepts.map((item) => item.label).join(', ') || '(none)'}`,
         `Image count: ${input.context.pageContext.images.length}`,
         renderKgNotes(input.context),

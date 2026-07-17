@@ -1,28 +1,28 @@
 # ASEPTIC LOOSENING OF TKA — Knowledge Factory Audit
 
-Generated: 2026-07-05T23:32:00.861Z
+Generated: 2026-07-16T03:33:39.556Z
 Auditor: KF-018 v1.0.0
 
 ## Overall
 
 | Metric | Score |
 |--------|------:|
-| **Overall** | **80** |
-| Ontology Completeness | 46 |
+| **Overall** | **78** |
+| Ontology Completeness | 27 |
 | Evidence Quality | 85 |
-| Graph Integrity | 76 |
-| Shared Knowledge Reuse | 98 |
+| Graph Integrity | 100 |
+| Shared Knowledge Reuse | 100 |
 | Relationship Quality | 42 |
-| Claim Quality | 84 |
-| Decision Points | 69 |
-| Metadata Quality | 92 |
-| Provenance Quality | 100 |
+| Claim Quality | 76 |
+| Decision Points | 85 |
+| Metadata Quality | 86 |
+| Provenance Quality | 96 |
 | Review Calibration | 100 |
 | Agent Performance | 92 |
 | Compiler Quality | 83 |
-| Educational Quality | 90 |
-| Cross-Neighborhood Consistency | 96 |
-| Publication Readiness | 30 |
+| Educational Quality | 72 |
+| Cross-Neighborhood Consistency | 100 |
+| Publication Readiness | 28 |
 | Publication | Blocked |
 
 ## Publication
@@ -32,24 +32,30 @@ Auditor: KF-018 v1.0.0
 
 ### Blockers
 
-- 12 proposals still awaiting human review
-- 10 items require attending review
+- 11 proposals still awaiting human review
+- 9 items require attending review
 - Claims and DPs are draft-only — publication gate must block verified consumption.
-- No approved canonical entities in database yet — proposals remain offline/spec.
-- 13 critical/high ontology gaps remain unresolved
+- 15 critical/high ontology gaps remain unresolved
 
 ## Top Findings
 
-### [CRITICAL] 6 critical ontology gaps remain
+### [CRITICAL] 8 critical ontology gaps remain
 
-- **Evidence:** ontology-gap-report.json: gap-entity-neighbor-1, gap-rel-4, gap-rel-7
+- **Evidence:** ontology-gap-report.json: gap-entity-neighbor-2, gap-rel-5, gap-rel-7
 - **Reason:** Required entities, relationships, claims, or decision points are missing per CKO §8–§9.
 - **Impact:** -15
 - **Fix:** Resolve critical gaps via assigned factory agents before publication review.
 
+### [CRITICAL] Only 1 anatomy structures (minimum 3 required)
+
+- **Evidence:** Entity slugs: adult-reconstruction-anatomy-hub
+- **Reason:** Condition neighborhoods require regional anatomy per condition.anatomy.min_structures.
+- **Impact:** -15
+- **Fix:** Add essential regional anatomy via anatomy builder or shared anatomy reuse.
+
 ### [CRITICAL] Low evidence coverage (0% of proposals cite evidence)
 
-- **Evidence:** 0/15 proposals have evidence_refs
+- **Evidence:** 0/14 proposals have evidence_refs
 - **Reason:** Every proposal should cite supporting evidence per factory contract.
 - **Impact:** -15
 - **Fix:** Ensure claim/relationship builders attach evidence_refs from the evidence packet.
@@ -68,51 +74,44 @@ Auditor: KF-018 v1.0.0
 - **Impact:** -15
 - **Fix:** Add has_classification relationship via relationship-builder agent.
 
-### [CRITICAL] Missing decision point pattern: emergency_escalation
+### [CRITICAL] No decision points in neighborhood
 
-- **Evidence:** 0 decision points with pattern emergency_escalation
-- **Reason:** Fracture neighborhoods require branching operative vs nonoperative pathways.
+- **Evidence:** merged draft decisionPointCount = 0
+- **Reason:** Decision points support clinical reasoning and operative safety pathways.
 - **Impact:** -15
-- **Fix:** Add emergency_escalation decision point with attending-gated review.
+- **Fix:** Run decision-point-builder for operative_indication and nonoperative_eligible patterns.
 
-### [CRITICAL] 13 critical/high ontology gaps remain unresolved
+### [CRITICAL] 15 critical/high ontology gaps remain unresolved
 
 - **Evidence:** publication-readiness.json blockers
 - **Reason:** Publication gate identified blocking condition.
 - **Impact:** -15
-- **Fix:** [critical] Aseptic Loosening of TKA neighborhood has 0/3 anatomy_structure entities.
+- **Fix:** [high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).
 
 ### [HIGH] 7 high-priority ontology gaps
 
-- **Evidence:** Gap kinds: missing_entity, missing_relationship, missing_claim
+- **Evidence:** Gap kinds: missing_relationship, missing_entity, missing_claim
 - **Reason:** High-priority gaps block maturity level advancement.
 - **Impact:** -12
 - **Fix:** Schedule gap-resolution work items from ontology-work-plan.json.
 
-### [HIGH] Missing relationship requirements (8)
-
-- **Evidence:** 8 gaps of kind missing_relationship
-- **Reason:** Ontology contract requires complete relationship coverage.
-- **Impact:** -8
-- **Fix:** Run the matching builder agent for missing_relationship.
-
 ## Prioritized Recommendations
 
-1. **[Ontology Completeness]** Resolve critical gaps via assigned factory agents before publication review. — _6 critical ontology gaps remain_
-2. **[Evidence Quality]** Ensure claim/relationship builders attach evidence_refs from the evidence packet. — _Low evidence coverage (0% of proposals cite evidence)_
-3. **[Relationship Quality]** Add injured_in relationship via relationship-builder agent. — _Missing clinical edge: injured_in_
-4. **[Relationship Quality]** Add has_classification relationship via relationship-builder agent. — _Missing clinical edge: has_classification_
-5. **[Decision Points]** Add emergency_escalation decision point with attending-gated review. — _Missing decision point pattern: emergency_escalation_
-6. **[Publication Readiness]** [critical] Aseptic Loosening of TKA neighborhood has 0/3 anatomy_structure entities. — _13 critical/high ontology gaps remain unresolved_
-7. **[Ontology Completeness]** Schedule gap-resolution work items from ontology-work-plan.json. — _7 high-priority ontology gaps_
-8. **[Ontology Completeness]** Run the matching builder agent for missing_relationship. — _Missing relationship requirements (8)_
-9. **[Ontology Completeness]** Link has_classification and has_grade edges to a classification system. — _No classification system present_
-10. **[Graph Integrity]** Add inbound or outbound clinical/anatomy edges, or merge duplicates. — _57 orphan entities with no relationships_
+1. **[Ontology Completeness]** Resolve critical gaps via assigned factory agents before publication review. — _8 critical ontology gaps remain_
+2. **[Ontology Completeness]** Add essential regional anatomy via anatomy builder or shared anatomy reuse. — _Only 1 anatomy structures (minimum 3 required)_
+3. **[Evidence Quality]** Ensure claim/relationship builders attach evidence_refs from the evidence packet. — _Low evidence coverage (0% of proposals cite evidence)_
+4. **[Relationship Quality]** Add injured_in relationship via relationship-builder agent. — _Missing clinical edge: injured_in_
+5. **[Relationship Quality]** Add has_classification relationship via relationship-builder agent. — _Missing clinical edge: has_classification_
+6. **[Decision Points]** Run decision-point-builder for operative_indication and nonoperative_eligible patterns. — _No decision points in neighborhood_
+7. **[Publication Readiness]** [high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1). — _15 critical/high ontology gaps remain unresolved_
+8. **[Ontology Completeness]** Schedule gap-resolution work items from ontology-work-plan.json. — _7 high-priority ontology gaps_
+9. **[Ontology Completeness]** Run the matching builder agent for missing_relationship. — _Missing relationship requirements (11)_
+10. **[Ontology Completeness]** Run the matching builder agent for missing_claim. — _Missing claim requirements (9)_
 
 ## Data Source
 
-- Neighborhood: merged_draft
-- Reports loaded: 13
+- Neighborhood: database
+- Reports loaded: 15
 - Reports missing: none
 
 ## Constraints

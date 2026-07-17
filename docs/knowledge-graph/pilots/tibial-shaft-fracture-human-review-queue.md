@@ -1,6 +1,6 @@
 # Knowledge Factory — Human Review Queue (Ankle)
 
-Generated: 2026-07-05T21:21:50.899Z
+Generated: 2026-07-16T02:19:29.609Z
 
 **Items requiring human judgment:** 10
 **Auto-curated (low-risk):** 32

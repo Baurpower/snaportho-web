@@ -1,0 +1,1562 @@
+{
+  "topicKey": "implants-instruments",
+  "pilotKey": "implants-instruments-neighborhood",
+  "primaryEntitySlug": "implants-instruments",
+  "displayName": "Implants & Instruments",
+  "generatedAt": "2026-07-09T04:25:10.931Z",
+  "nodes": [
+    {
+      "slug": "implants-instruments",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Implants & Instruments",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 12,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "fixation-principles",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Fixation Principles",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 15,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "screw-constructs",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Screw Constructs",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 13,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "plate-constructs",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Plate Constructs",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 12,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "intramedullary-fixation-module",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Intramedullary Fixation Module",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 11,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "wire-constructs",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Wire Constructs",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 5,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "external-fixation-module",
+      "entityType": "treatment_principle",
+      "preferredLabel": "External Fixation Module",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 6,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "arthroplasty-components-module",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Arthroplasty Components Module",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 15,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "sports-medicine-implants-module",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Sports Medicine Implants Module",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 6,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "spine-implants-module",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Spine Implants Module",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 6,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "operative-instrumentation-module",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Operative Instrumentation Module",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 22,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "construct-selection",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Construct Selection",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 5,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "implant-compatibility",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Implant Compatibility",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "salvage-strategies-implants",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Implant Salvage Strategies",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "revision-considerations-implants",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Implant Revision Considerations",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 5,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "compression-fixation-principle",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Compression Fixation",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "neutralization-principle",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Neutralization Fixation",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "buttress-fixation-principle",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Buttress Fixation",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "bridge-fixation-principle",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Bridge Fixation",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "load-sharing",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Load Sharing",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "load-bearing",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Load Bearing",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "working-length",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Working Length",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "plate-span-ratio",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Plate Span Ratio",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "strain-theory",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Strain Theory",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "biological-fixation",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Biological Fixation",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "indirect-reduction-principle",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Indirect Reduction",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "lag-technique-principle",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Lag Technique",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "tension-band-principle",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Tension Band Principle",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "cortex-screw",
+      "entityType": "implant",
+      "preferredLabel": "Cortex Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "cancellous-screw",
+      "entityType": "implant",
+      "preferredLabel": "Cancellous Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "partially-threaded-screw",
+      "entityType": "implant",
+      "preferredLabel": "Partially Threaded Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fully-threaded-screw",
+      "entityType": "implant",
+      "preferredLabel": "Fully Threaded Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "cannulated-screw",
+      "entityType": "implant",
+      "preferredLabel": "Cannulated Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "headless-compression-screw",
+      "entityType": "implant",
+      "preferredLabel": "Headless Compression Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "locking-screw",
+      "entityType": "implant",
+      "preferredLabel": "Locking Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "non-locking-screw",
+      "entityType": "implant",
+      "preferredLabel": "Non-Locking Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "positional-screw",
+      "entityType": "implant",
+      "preferredLabel": "Positional Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "lag-screw",
+      "entityType": "implant",
+      "preferredLabel": "Lag Screw",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "interfragmentary-screw",
+      "entityType": "implant",
+      "preferredLabel": "Interfragmentary Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "syndesmotic-screw",
+      "entityType": "implant",
+      "preferredLabel": "Syndesmotic Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "herbert-screw",
+      "entityType": "implant",
+      "preferredLabel": "Herbert Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "dynamic-compression-plate",
+      "entityType": "implant",
+      "preferredLabel": "Dynamic Compression Plate",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "limited-contact-dcp",
+      "entityType": "implant",
+      "preferredLabel": "Limited-Contact DCP",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "locking-compression-plate",
+      "entityType": "implant",
+      "preferredLabel": "Locking Compression Plate",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "reconstruction-plate",
+      "entityType": "implant",
+      "preferredLabel": "Reconstruction Plate",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "one-third-tubular-plate",
+      "entityType": "implant",
+      "preferredLabel": "One-Third Tubular Plate",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "t-plate",
+      "entityType": "implant",
+      "preferredLabel": "T Plate",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "buttress-plate",
+      "entityType": "implant",
+      "preferredLabel": "Buttress Plate",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "bridge-plate",
+      "entityType": "implant",
+      "preferredLabel": "Bridge Plate",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 5
+    },
+    {
+      "slug": "neutralization-plate",
+      "entityType": "implant",
+      "preferredLabel": "Neutralization Plate",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "hook-plate",
+      "entityType": "implant",
+      "preferredLabel": "Hook Plate",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "periarticular-plate",
+      "entityType": "implant",
+      "preferredLabel": "Periarticular Plate",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "antegrade-nail",
+      "entityType": "implant",
+      "preferredLabel": "Antegrade Nail",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "retrograde-nail",
+      "entityType": "implant",
+      "preferredLabel": "Retrograde Nail",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "reconstruction-nail",
+      "entityType": "implant",
+      "preferredLabel": "Reconstruction Nail",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "elastic-stable-im-nail",
+      "entityType": "implant",
+      "preferredLabel": "Elastic Stable Intramedullary Nailing",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "blocking-screw",
+      "entityType": "implant",
+      "preferredLabel": "Blocking Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "poller-screw",
+      "entityType": "implant",
+      "preferredLabel": "Poller Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "static-locking",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Static Locking",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "dynamic-locking",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Dynamic Locking",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "k-wire",
+      "entityType": "implant",
+      "preferredLabel": "Kirschner Wire",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "cerclage-wire",
+      "entityType": "implant",
+      "preferredLabel": "Cerclage Wire",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "tension-band-wire",
+      "entityType": "implant",
+      "preferredLabel": "Tension Band Wire",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "fiber-tension-band",
+      "entityType": "implant",
+      "preferredLabel": "FiberWire Tension Band",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "cable-fixation",
+      "entityType": "implant",
+      "preferredLabel": "Cable Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "monolateral-external-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Monolateral External Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "circular-external-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Circular External Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "hybrid-external-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Hybrid External Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "damage-control-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Damage Control Fixation",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "temporary-spanning-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Temporary Spanning Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "cementless-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Cementless Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "acetabular-shell",
+      "entityType": "implant",
+      "preferredLabel": "Acetabular Shell",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "femoral-head-arthroplasty",
+      "entityType": "implant",
+      "preferredLabel": "Femoral Head (Arthroplasty)",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "arthroplasty-constraint-options",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Constraint Options",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "interference-screw",
+      "entityType": "implant",
+      "preferredLabel": "Interference Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "suspensory-fixation",
+      "entityType": "implant",
+      "preferredLabel": "Suspensory Fixation",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "suture-anchor",
+      "entityType": "implant",
+      "preferredLabel": "Suture Anchor",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "knotless-anchor",
+      "entityType": "implant",
+      "preferredLabel": "Knotless Anchor",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "button-fixation",
+      "entityType": "implant",
+      "preferredLabel": "Button Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "meniscus-repair-implant",
+      "entityType": "implant",
+      "preferredLabel": "Meniscus Repair Implant",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pedicle-screw",
+      "entityType": "implant",
+      "preferredLabel": "Pedicle Screw",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "spinal-rod-construct",
+      "entityType": "implant",
+      "preferredLabel": "Spinal Rod Construct",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "interbody-cage",
+      "entityType": "implant",
+      "preferredLabel": "Interbody Cage",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "spinal-crosslink",
+      "entityType": "implant",
+      "preferredLabel": "Spinal Crosslink",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "spinal-hook",
+      "entityType": "implant",
+      "preferredLabel": "Spinal Hook",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "sublaminar-fixation",
+      "entityType": "implant",
+      "preferredLabel": "Sublaminar Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "reduction-clamp",
+      "entityType": "implant",
+      "preferredLabel": "Reduction Clamp",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "weber-clamp",
+      "entityType": "implant",
+      "preferredLabel": "Weber Clamp",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "pointed-reduction-clamp",
+      "entityType": "implant",
+      "preferredLabel": "Pointed Reduction Clamp",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "jungbluth-clamp",
+      "entityType": "implant",
+      "preferredLabel": "Jungbluth Clamp",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ball-spike-pusher",
+      "entityType": "implant",
+      "preferredLabel": "Ball Spike Pusher",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "bone-hook",
+      "entityType": "implant",
+      "preferredLabel": "Bone Hook",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "reduction-forceps",
+      "entityType": "implant",
+      "preferredLabel": "Reduction Forceps",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "k-wire-driver",
+      "entityType": "implant",
+      "preferredLabel": "K-Wire Driver",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "drill-guide",
+      "entityType": "implant",
+      "preferredLabel": "Drill Guide",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "depth-gauge",
+      "entityType": "implant",
+      "preferredLabel": "Depth Gauge",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "bone-tap",
+      "entityType": "implant",
+      "preferredLabel": "Tap",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "countersink",
+      "entityType": "implant",
+      "preferredLabel": "Countersink",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "reduction-joystick",
+      "entityType": "implant",
+      "preferredLabel": "Reduction Joystick",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "femoral-distractor",
+      "entityType": "implant",
+      "preferredLabel": "Femoral Distractor",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lamina-spreader",
+      "entityType": "implant",
+      "preferredLabel": "Lamina Spreader",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "external-distractor",
+      "entityType": "implant",
+      "preferredLabel": "External Distractor",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "bone-tamp",
+      "entityType": "implant",
+      "preferredLabel": "Bone Tamp",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "osteotome",
+      "entityType": "implant",
+      "preferredLabel": "Osteotome",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "curette",
+      "entityType": "implant",
+      "preferredLabel": "Curette",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "rongeur",
+      "entityType": "implant",
+      "preferredLabel": "Rongeur",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "gigli-saw",
+      "entityType": "implant",
+      "preferredLabel": "Gigli Saw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "power-instruments",
+      "entityType": "implant",
+      "preferredLabel": "Power Instruments",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "screw-backout",
+      "entityType": "complication",
+      "preferredLabel": "Screw Backout",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "plate-fatigue-failure",
+      "entityType": "complication",
+      "preferredLabel": "Plate Fatigue Failure",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "nail-breakage",
+      "entityType": "complication",
+      "preferredLabel": "Nail Breakage",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "cut-out-failure",
+      "entityType": "complication",
+      "preferredLabel": "Cut-Out Failure",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "anchor-pullout",
+      "entityType": "complication",
+      "preferredLabel": "Anchor Pullout",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "cage-subsidence",
+      "entityType": "complication",
+      "preferredLabel": "Cage Subsidence",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "implant-indication-principles",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Implant Indication Principles",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "implant-contraindication-principles",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Implant Contraindication Principles",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "absolute-stability",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Absolute Stability",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "relative-stability",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Relative Stability",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "interfragmentary-strain",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Interfragmentary Strain",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "primary-bone-healing",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Primary Bone Healing",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "secondary-bone-healing",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Secondary Bone Healing",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "lag-screw-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Lag Screw Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "plate-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Plate Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "intramedullary-nail-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Intramedullary Nail Fixation",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "temporary-external-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Temporary External Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "damage-control-orthopaedics",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Damage Control Orthopaedics",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fracture-stability",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Fracture Stability",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "cannulated-screw-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Cannulated Screw Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tension-band-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Tension Band Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "im-nail-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "IM Nail",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "cephalomedullary-nail",
+      "entityType": "implant",
+      "preferredLabel": "Cephalomedullary Nail",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "sliding-hip-screw",
+      "entityType": "implant",
+      "preferredLabel": "Sliding Hip Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "implant-fixation-principles",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Implant Fixation Principles",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "primary-stability",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Primary Stability",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "bone-ingrowth",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Bone Ingrowth",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "hardware-failure",
+      "entityType": "complication",
+      "preferredLabel": "Hardware Failure",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "loss-of-fixation",
+      "entityType": "complication",
+      "preferredLabel": "Loss of Fixation",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 5,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "implant-loosening",
+      "entityType": "complication",
+      "preferredLabel": "Implant Loosening",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 5,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "implant-breakage",
+      "entityType": "complication",
+      "preferredLabel": "Implant Breakage",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "revision-surgery",
+      "entityType": "complication",
+      "preferredLabel": "Revision Surgery",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fracture-nonunion",
+      "entityType": "complication",
+      "preferredLabel": "Fracture Nonunion",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "loss-of-reduction",
+      "entityType": "complication",
+      "preferredLabel": "Loss of Reduction",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "femoral-component",
+      "entityType": "implant",
+      "preferredLabel": "Femoral Component",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "acetabular-component",
+      "entityType": "implant",
+      "preferredLabel": "Acetabular Component",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "polyethylene-liner",
+      "entityType": "implant",
+      "preferredLabel": "Polyethylene Liner",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "femoral-stem",
+      "entityType": "implant",
+      "preferredLabel": "Femoral Stem",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "tibial-baseplate",
+      "entityType": "implant",
+      "preferredLabel": "Tibial Baseplate",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "tibial-insert",
+      "entityType": "implant",
+      "preferredLabel": "Tibial Insert",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "patellar-component",
+      "entityType": "implant",
+      "preferredLabel": "Patellar Component",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "cement-mantle",
+      "entityType": "fixation_method",
+      "preferredLabel": "Cement Mantle",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "press-fit-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Press-Fit Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "cemented-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Cemented Fixation",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    }
+  ],
+  "edgeCount": 220,
+  "claimCount": 22,
+  "decisionPointCount": 15,
+  "roles": {
+    "primary_condition": [
+      "implants-instruments"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [],
+    "complication": [
+      "screw-backout",
+      "plate-fatigue-failure",
+      "nail-breakage",
+      "anchor-pullout",
+      "cage-subsidence",
+      "loss-of-fixation",
+      "implant-loosening",
+      "implant-breakage",
+      "revision-surgery",
+      "fracture-nonunion",
+      "loss-of-reduction"
+    ],
+    "decision_point_anchor": [
+      "operative-instrumentation-module",
+      "construct-selection",
+      "implant-compatibility",
+      "revision-considerations-implants",
+      "lag-screw",
+      "locking-compression-plate",
+      "bridge-plate",
+      "static-locking",
+      "damage-control-fixation",
+      "suspensory-fixation",
+      "pedicle-screw",
+      "cut-out-failure",
+      "intramedullary-nail-fixation",
+      "hardware-failure",
+      "cemented-fixation"
+    ],
+    "claim_anchor": [
+      "sports-medicine-implants-module"
+    ],
+    "biomechanics": [
+      "compression-fixation-principle",
+      "neutralization-principle",
+      "buttress-fixation-principle",
+      "bridge-fixation-principle",
+      "load-sharing",
+      "load-bearing",
+      "working-length",
+      "plate-span-ratio",
+      "strain-theory",
+      "biological-fixation",
+      "indirect-reduction-principle",
+      "lag-technique-principle",
+      "tension-band-principle",
+      "dynamic-locking",
+      "arthroplasty-constraint-options",
+      "implant-indication-principles",
+      "implant-contraindication-principles",
+      "absolute-stability",
+      "relative-stability",
+      "interfragmentary-strain",
+      "primary-bone-healing",
+      "secondary-bone-healing",
+      "fracture-stability",
+      "implant-fixation-principles",
+      "primary-stability",
+      "bone-ingrowth",
+      "implant-concepts-hub"
+    ],
+    "fixation": [
+      "cortex-screw",
+      "cancellous-screw",
+      "partially-threaded-screw",
+      "fully-threaded-screw",
+      "cannulated-screw",
+      "headless-compression-screw",
+      "locking-screw",
+      "non-locking-screw",
+      "positional-screw",
+      "interfragmentary-screw",
+      "syndesmotic-screw",
+      "herbert-screw",
+      "dynamic-compression-plate",
+      "limited-contact-dcp",
+      "reconstruction-plate",
+      "one-third-tubular-plate",
+      "t-plate",
+      "buttress-plate",
+      "neutralization-plate",
+      "hook-plate",
+      "periarticular-plate",
+      "antegrade-nail",
+      "retrograde-nail",
+      "reconstruction-nail",
+      "elastic-stable-im-nail",
+      "blocking-screw",
+      "poller-screw",
+      "k-wire",
+      "cerclage-wire",
+      "tension-band-wire",
+      "fiber-tension-band",
+      "cable-fixation",
+      "monolateral-external-fixation",
+      "circular-external-fixation",
+      "hybrid-external-fixation",
+      "temporary-spanning-fixation",
+      "cementless-fixation",
+      "acetabular-shell",
+      "femoral-head-arthroplasty",
+      "interference-screw",
+      "suture-anchor",
+      "knotless-anchor",
+      "button-fixation",
+      "meniscus-repair-implant",
+      "spinal-rod-construct",
+      "interbody-cage",
+      "spinal-crosslink",
+      "spinal-hook",
+      "sublaminar-fixation",
+      "reduction-clamp",
+      "weber-clamp",
+      "pointed-reduction-clamp",
+      "jungbluth-clamp",
+      "ball-spike-pusher",
+      "bone-hook",
+      "reduction-forceps",
+      "k-wire-driver",
+      "drill-guide",
+      "depth-gauge",
+      "bone-tap",
+      "countersink",
+      "reduction-joystick",
+      "femoral-distractor",
+      "lamina-spreader",
+      "external-distractor",
+      "bone-tamp",
+      "osteotome",
+      "curette",
+      "rongeur",
+      "gigli-saw",
+      "power-instruments",
+      "lag-screw-fixation",
+      "plate-fixation",
+      "temporary-external-fixation",
+      "cannulated-screw-fixation",
+      "tension-band-fixation",
+      "im-nail-fixation",
+      "cephalomedullary-nail",
+      "sliding-hip-screw",
+      "femoral-component",
+      "acetabular-component",
+      "polyethylene-liner",
+      "femoral-stem",
+      "tibial-baseplate",
+      "tibial-insert",
+      "patellar-component",
+      "cement-mantle",
+      "press-fit-fixation"
+    ],
+    "supporting": [
+      "fixation-principles",
+      "screw-constructs",
+      "plate-constructs",
+      "intramedullary-fixation-module",
+      "wire-constructs",
+      "external-fixation-module",
+      "arthroplasty-components-module",
+      "spine-implants-module",
+      "salvage-strategies-implants",
+      "damage-control-orthopaedics"
+    ]
+  }
+}

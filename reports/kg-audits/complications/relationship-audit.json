@@ -1,0 +1,104 @@
+{
+  "category": "relationship_quality",
+  "label": "Relationship Quality",
+  "score": 30,
+  "deductions": [
+    {
+      "finding": "Missing clinical edge: injured_in",
+      "evidence": "0 outbound injured_in edges from orthopaedic-complications",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "orthopaedic-complications"
+      ],
+      "suggestedFix": "Add injured_in relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing clinical edge: has_classification",
+      "evidence": "0 outbound has_classification edges from orthopaedic-complications",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "orthopaedic-complications"
+      ],
+      "suggestedFix": "Add has_classification relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing clinical edge: has_imaging_finding",
+      "evidence": "0 outbound has_imaging_finding edges from orthopaedic-complications",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "orthopaedic-complications"
+      ],
+      "suggestedFix": "Add has_imaging_finding relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: at_risk_structure",
+      "evidence": "0 outbound at_risk_structure edges from orthopaedic-complications",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "orthopaedic-complications"
+      ],
+      "suggestedFix": "Add at_risk_structure relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: treated_by",
+      "evidence": "0 outbound treated_by edges from orthopaedic-complications",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "orthopaedic-complications"
+      ],
+      "suggestedFix": "Add treated_by relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: has_complication",
+      "evidence": "0 outbound has_complication edges from orthopaedic-complications",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "orthopaedic-complications"
+      ],
+      "suggestedFix": "Add has_complication relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "15 high-risk relationships lack approved review status",
+      "evidence": "Predicates: treated_by, at_risk_structure",
+      "reason": "High-risk predicates require human review before publication.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "relationshipCount": 197,
+    "relationshipDensity": 1.6147540983606556,
+    "missingClinicalEdgeCount": 6,
+    "highRiskUnreviewedCount": 15,
+    "predicateCorrectness": 1
+  },
+  "recommendations": [
+    "Add injured_in relationship via relationship-builder agent.",
+    "Add has_classification relationship via relationship-builder agent.",
+    "Add has_imaging_finding relationship via relationship-builder agent.",
+    "Add at_risk_structure relationship via relationship-builder agent.",
+    "Add treated_by relationship via relationship-builder agent.",
+    "Add has_complication relationship via relationship-builder agent.",
+    "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review."
+  ]
+}

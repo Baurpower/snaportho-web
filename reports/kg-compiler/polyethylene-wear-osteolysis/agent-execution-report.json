@@ -1,12 +1,14 @@
 {
-  "generatedAt": "2026-07-05T22:57:46.738Z",
+  "generatedAt": "2026-07-16T02:55:24.638Z",
   "frameworkVersion": "1.0.0",
   "topicKey": "polyethylene-wear-osteolysis",
   "pilotKey": "polyethylene-wear-osteolysis-neighborhood",
   "executionOrder": [
+    "work-clinical-entity-builder",
     "work-asset-linker",
     "work-relationship-builder",
     "work-claim-builder",
+    "work-metadata-builder",
     "work-duplicate-detector",
     "work-quality-scorer",
     "work-conflict-resolver",
@@ -15,11 +17,15 @@
   ],
   "parallelLayers": [
     [
+      "work-clinical-entity-builder"
+    ],
+    [
       "work-asset-linker",
       "work-relationship-builder"
     ],
     [
-      "work-claim-builder"
+      "work-claim-builder",
+      "work-metadata-builder"
     ],
     [
       "work-duplicate-detector"
@@ -39,11 +45,22 @@
   ],
   "entries": [
     {
+      "assignmentId": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "status": "completed",
+      "proposalCount": 33,
+      "executionTimeMs": 2,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
       "assignmentId": "work-asset-linker",
       "agentId": "asset-linker",
       "status": "completed",
       "proposalCount": 0,
-      "executionTimeMs": 1,
+      "executionTimeMs": 0,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -64,8 +81,19 @@
       "assignmentId": "work-claim-builder",
       "agentId": "claim-builder",
       "status": "completed",
-      "proposalCount": 8,
-      "executionTimeMs": 5,
+      "proposalCount": 10,
+      "executionTimeMs": 4,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-metadata-builder",
+      "agentId": "metadata-builder",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 0,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -108,7 +136,7 @@
       "assignmentId": "work-review-assistant",
       "agentId": "review-assistant",
       "status": "completed",
-      "proposalCount": 86,
+      "proposalCount": 88,
       "executionTimeMs": 3,
       "errors": [],
       "warnings": [],
@@ -127,9 +155,9 @@
       "timedOut": false
     }
   ],
-  "totalProposalsEmitted": 94,
-  "uniqueProposals": 86,
-  "completedAgents": 8,
+  "totalProposalsEmitted": 131,
+  "uniqueProposals": 88,
+  "completedAgents": 10,
   "failedAgents": 0,
   "partialAgents": 0,
   "skippedAgents": 0,

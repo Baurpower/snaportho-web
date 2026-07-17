@@ -1,8 +1,47 @@
 {
-  "generatedAt": "2026-07-05T23:12:57.957Z",
+  "generatedAt": "2026-07-16T02:53:18.224Z",
   "gaps": [
     {
       "id": "gap-rel-1",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "anatomy.pred.hierarchy",
+      "anchorEntitySlug": "adult-reconstruction-anatomy-hub",
+      "subjectSlug": "adult-reconstruction-anatomy-hub",
+      "predicate": "part_of"
+    },
+    {
+      "id": "gap-rel-2",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Collateral Ligaments missing outbound part_of (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "anatomy.pred.hierarchy",
+      "anchorEntitySlug": "collateral-ligaments",
+      "subjectSlug": "collateral-ligaments",
+      "predicate": "part_of"
+    },
+    {
+      "id": "gap-rel-3",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Cruciate Ligaments missing outbound part_of (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "anatomy.pred.hierarchy",
+      "anchorEntitySlug": "cruciate-ligaments",
+      "subjectSlug": "cruciate-ligaments",
+      "predicate": "part_of"
+    },
+    {
+      "id": "gap-rel-4",
       "kind": "missing_relationship",
       "priority": "medium",
       "confidence": 0.92,
@@ -15,7 +54,7 @@
       "objectSlug": "flexion-extension-gap-balance"
     },
     {
-      "id": "gap-claim-2",
+      "id": "gap-claim-5",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.88,
@@ -27,7 +66,7 @@
       "claimType": "fact|anatomy_pearl"
     },
     {
-      "id": "gap-claim-type-3",
+      "id": "gap-claim-type-6",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.75,
@@ -39,7 +78,7 @@
       "claimType": "fact"
     },
     {
-      "id": "gap-claim-type-4",
+      "id": "gap-claim-type-7",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.75,
@@ -51,19 +90,56 @@
       "claimType": "anatomy_pearl"
     },
     {
-      "id": "gap-entity-neighbor-5",
-      "kind": "missing_entity",
-      "priority": "critical",
-      "confidence": 0.95,
-      "reason": "Knee Instability After TKA neighborhood has 0/3 anatomy_structure entities.",
-      "requiredReviewer": "clinical_expert",
-      "maturityImpact": 0.15,
-      "ontologyRule": "condition.anatomy.min_structures",
-      "anchorEntitySlug": "knee-instability-after-tka",
-      "entityType": "anatomy_structure"
+      "id": "gap-rel-8",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.92,
+      "reason": "Arthroplasty Implant Concepts Hub missing inbound involves_anatomy (0/1).",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.inbound",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "predicate": "involves_anatomy",
+      "objectSlug": "implant-concepts-hub"
     },
     {
-      "id": "gap-entity-neighbor-6",
+      "id": "gap-claim-9",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.88,
+      "reason": "Arthroplasty Implant Concepts Hub has 0/1 L1 claims.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "claimType": "fact|anatomy_pearl"
+    },
+    {
+      "id": "gap-claim-type-10",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Arthroplasty Implant Concepts Hub missing claim type: fact.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.fact",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-claim-type-11",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Arthroplasty Implant Concepts Hub missing claim type: anatomy_pearl.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.anatomy_pearl",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "claimType": "anatomy_pearl"
+    },
+    {
+      "id": "gap-entity-neighbor-12",
       "kind": "missing_entity",
       "priority": "high",
       "confidence": 0.95,
@@ -75,7 +151,7 @@
       "entityType": "classification_system"
     },
     {
-      "id": "gap-entity-neighbor-7",
+      "id": "gap-entity-neighbor-13",
       "kind": "missing_entity",
       "priority": "high",
       "confidence": 0.95,
@@ -87,7 +163,7 @@
       "entityType": "imaging_finding"
     },
     {
-      "id": "gap-entity-neighbor-8",
+      "id": "gap-entity-neighbor-14",
       "kind": "missing_entity",
       "priority": "medium",
       "confidence": 0.95,
@@ -99,7 +175,7 @@
       "entityType": "complication"
     },
     {
-      "id": "gap-rel-9",
+      "id": "gap-rel-15",
       "kind": "missing_relationship",
       "priority": "critical",
       "confidence": 0.92,
@@ -112,20 +188,7 @@
       "predicate": "injured_in"
     },
     {
-      "id": "gap-rel-10",
-      "kind": "missing_relationship",
-      "priority": "high",
-      "confidence": 0.92,
-      "reason": "Knee Instability After TKA missing outbound involves_anatomy (0/1).",
-      "requiredReviewer": "curator",
-      "maturityImpact": 0.1,
-      "ontologyRule": "condition.pred.involves_anatomy",
-      "anchorEntitySlug": "knee-instability-after-tka",
-      "subjectSlug": "knee-instability-after-tka",
-      "predicate": "involves_anatomy"
-    },
-    {
-      "id": "gap-rel-11",
+      "id": "gap-rel-16",
       "kind": "missing_relationship",
       "priority": "high",
       "confidence": 0.92,
@@ -138,7 +201,7 @@
       "predicate": "at_risk_structure"
     },
     {
-      "id": "gap-rel-12",
+      "id": "gap-rel-17",
       "kind": "missing_relationship",
       "priority": "critical",
       "confidence": 0.92,
@@ -151,7 +214,7 @@
       "predicate": "has_classification"
     },
     {
-      "id": "gap-rel-13",
+      "id": "gap-rel-18",
       "kind": "missing_relationship",
       "priority": "high",
       "confidence": 0.92,
@@ -164,7 +227,7 @@
       "predicate": "has_grade"
     },
     {
-      "id": "gap-rel-14",
+      "id": "gap-rel-19",
       "kind": "missing_relationship",
       "priority": "critical",
       "confidence": 0.92,
@@ -177,7 +240,7 @@
       "predicate": "has_imaging_finding"
     },
     {
-      "id": "gap-rel-15",
+      "id": "gap-rel-20",
       "kind": "missing_relationship",
       "priority": "medium",
       "confidence": 0.92,
@@ -190,7 +253,7 @@
       "predicate": "has_complication"
     },
     {
-      "id": "gap-rel-16",
+      "id": "gap-rel-21",
       "kind": "missing_relationship",
       "priority": "high",
       "confidence": 0.92,
@@ -203,20 +266,7 @@
       "predicate": "treated_by"
     },
     {
-      "id": "gap-rel-17",
-      "kind": "missing_relationship",
-      "priority": "high",
-      "confidence": 0.92,
-      "reason": "Knee Instability After TKA missing inbound prerequisite_for (0/1).",
-      "requiredReviewer": "curator",
-      "maturityImpact": 0.1,
-      "ontologyRule": "condition.pred.prerequisite_for_inbound",
-      "anchorEntitySlug": "knee-instability-after-tka",
-      "predicate": "prerequisite_for",
-      "objectSlug": "knee-instability-after-tka"
-    },
-    {
-      "id": "gap-claim-18",
+      "id": "gap-claim-22",
       "kind": "missing_claim",
       "priority": "high",
       "confidence": 0.88,
@@ -228,7 +278,7 @@
       "claimType": "fact|board_trap|imaging_point|cognitive_trap"
     },
     {
-      "id": "gap-claim-type-19",
+      "id": "gap-claim-type-23",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.75,
@@ -240,7 +290,7 @@
       "claimType": "fact"
     },
     {
-      "id": "gap-claim-type-20",
+      "id": "gap-claim-type-24",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.75,
@@ -252,7 +302,7 @@
       "claimType": "board_trap"
     },
     {
-      "id": "gap-claim-type-21",
+      "id": "gap-claim-type-25",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.75,
@@ -264,7 +314,7 @@
       "claimType": "imaging_point"
     },
     {
-      "id": "gap-claim-type-22",
+      "id": "gap-claim-type-26",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.75,
@@ -276,7 +326,7 @@
       "claimType": "cognitive_trap"
     },
     {
-      "id": "gap-dp-23",
+      "id": "gap-dp-27",
       "kind": "missing_decision_point",
       "priority": "critical",
       "confidence": 0.9,
@@ -287,7 +337,7 @@
       "anchorEntitySlug": "knee-instability-after-tka"
     },
     {
-      "id": "gap-dp-pattern-24",
+      "id": "gap-dp-pattern-28",
       "kind": "missing_decision_point",
       "priority": "critical",
       "confidence": 0.85,
@@ -299,7 +349,7 @@
       "decisionPointPattern": "operative_indication"
     },
     {
-      "id": "gap-dp-pattern-25",
+      "id": "gap-dp-pattern-29",
       "kind": "missing_decision_point",
       "priority": "critical",
       "confidence": 0.85,
@@ -311,7 +361,45 @@
       "decisionPointPattern": "nonoperative_eligible"
     },
     {
-      "id": "gap-asset-card-26",
+      "id": "gap-entity-neighbor-30",
+      "kind": "missing_entity",
+      "priority": "critical",
+      "confidence": 0.95,
+      "reason": "Total Knee Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.anatomy",
+      "anchorEntitySlug": "total-knee-arthroplasty",
+      "entityType": "anatomy_structure"
+    },
+    {
+      "id": "gap-rel-31",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Total Knee Arthroplasty missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "total-knee-arthroplasty",
+      "subjectSlug": "total-knee-arthroplasty",
+      "predicate": "involves_anatomy"
+    },
+    {
+      "id": "gap-rel-32",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Total Knee Arthroplasty missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "total-knee-arthroplasty",
+      "subjectSlug": "total-knee-arthroplasty",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-asset-card-33",
       "kind": "missing_asset_link",
       "priority": "medium",
       "confidence": 0.8,
@@ -322,7 +410,7 @@
       "anchorEntitySlug": "knee-instability-after-tka"
     },
     {
-      "id": "gap-asset-question-27",
+      "id": "gap-asset-question-34",
       "kind": "missing_asset_link",
       "priority": "medium",
       "confidence": 0.8,
@@ -333,7 +421,7 @@
       "anchorEntitySlug": "knee-instability-after-tka"
     },
     {
-      "id": "gap-biomech-claim-28",
+      "id": "gap-biomech-claim-35",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.82,
@@ -343,21 +431,46 @@
       "ontologyRule": "biomechanics.claims",
       "anchorEntitySlug": "flexion-extension-gap-balance",
       "claimType": "fact"
+    },
+    {
+      "id": "gap-biomech-claim-36",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.82,
+      "reason": "Biomechanics concept Arthroplasty Implant Concepts Hub has no teaching claim (e.g., mortise instability).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-proc-approach-37",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Total Knee Arthroplasty missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "total-knee-arthroplasty",
+      "subjectSlug": "total-knee-arthroplasty",
+      "predicate": "uses_approach"
     }
   ],
   "summary": {
-    "total": 28,
+    "total": 37,
     "byKind": {
-      "missing_relationship": 10,
-      "missing_claim": 9,
+      "missing_relationship": 15,
+      "missing_claim": 13,
       "missing_entity": 4,
       "missing_decision_point": 3,
       "missing_asset_link": 2
     },
     "byPriority": {
-      "medium": 13,
-      "critical": 7,
-      "high": 8
+      "high": 10,
+      "medium": 19,
+      "critical": 8
     }
   }
 }

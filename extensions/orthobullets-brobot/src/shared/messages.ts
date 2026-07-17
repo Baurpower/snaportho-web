@@ -16,6 +16,7 @@ import type {
   ProviderDetectionStatus,
   QuestionProvider,
 } from './types.js';
+import type { BroBotTask } from './brobot-routing.js';
 
 export type ActivePageState = {
   tabId: number | null;
@@ -37,6 +38,36 @@ export type LinkStartResult = {
   expiresAt: string;
 };
 
+export type QuestionChangeMessage = {
+  type: 'ob:question-changed';
+  fingerprint: string;
+  questionId: string | null;
+  previousFingerprint: string | null;
+  previousQuestionId: string | null;
+  reasonForRefresh: string;
+  refreshTimestamp: string;
+  questionPositionLabel: string | null;
+  pageUrl: string;
+  tabId?: number;
+  visibleQuestionIdentity?: VisibleQuestionIdentity | null;
+  previousVisibleQuestionIdentity?: VisibleQuestionIdentity | null;
+  activeQuestionKey?: string | null;
+  previousActiveQuestionKey?: string | null;
+  questionChangeDetectedBy?: 'polling' | 'mutation' | 'url' | 'manual';
+  settleDelayMs?: number;
+};
+
+export type VisibleQuestionIdentity = {
+  questionPositionLabel: string | null;
+  questionNumber: number | null;
+  questionId: string | null;
+  testId: string | null;
+  day: string | null;
+  stemHash: string;
+  answerChoiceHash: string;
+  imageHash: string;
+};
+
 export type ExtensionMessage =
   | { type: 'ob:get-active-page-state' }
   | { type: 'ob:get-auth-state' }
@@ -44,6 +75,14 @@ export type ExtensionMessage =
   | { type: 'ob:poll-link'; linkCode: string }
   | { type: 'ob:clear-link' }
   | { type: 'ob:extract-page-context'; tabId: number }
+  | {
+      type: 'brobot:request';
+      task: BroBotTask;
+      pageContext: OrthobulletsPageContext;
+      emphasis?: CurriculumExplainEmphasis;
+      hintLevel?: 1 | 2 | 3;
+      selectedAnswerKey?: string | null;
+    }
   | {
       type: 'ob:hint';
       pageContext: OrthobulletsPageContext;
@@ -77,6 +116,10 @@ export type ExtensionErrorCode =
   | 'quota_exceeded'
   | 'disabled'
   | 'invalid_request'
+  | 'invalid_curriculum_request'
+  | 'curriculum_content_missing'
+  | 'curriculum_content_too_large'
+  | 'unsupported_provider'
   | 'api_failure'
   | 'parse_failure'
   | 'extraction_failure'
@@ -89,8 +132,8 @@ export type ExtensionMessageResponse =
   | { ok: true; link: LinkStartResult }
   | { ok: true; deviceToken: string }
   | { ok: true; pageContext: OrthobulletsPageContext; diagnostics: OrthobulletsExtractionDiagnostics }
-  | { ok: true; hint: OrthobulletsHintResponse }
-  | { ok: true; explanation: BrobotExplainResult }
+  | { ok: true; hint: OrthobulletsHintResponse; fetchDiagnostics?: ExtensionFetchDiagnostics }
+  | { ok: true; explanation: BrobotExplainResult; fetchDiagnostics?: ExtensionFetchDiagnostics }
   | { ok: true; chat: OrthobulletsChatResponse }
   | { ok: true; topicTurn: OrthobulletsTopicTutorResponse }
   | { ok: true; cleared: true }

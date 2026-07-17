@@ -1,6 +1,6 @@
 # Claim Builder Summary
 
-Generated: 2026-07-05T23:09:48.684Z
+Generated: 2026-07-16T02:33:03.955Z
 Agent: claim-builder v2.0.0
 Evidence packet: `ev-packet-457593cf`
 
@@ -8,9 +8,9 @@ Evidence packet: `ev-packet-457593cf`
 
 | Metric | Value |
 |--------|------:|
-| Gaps scheduled | 5 |
-| Gaps addressed | 5 |
-| Claims generated | 8 |
+| Gaps scheduled | 9 |
+| Gaps addressed | 7 |
+| Claims generated | 9 |
 | Claims rejected | 6 |
 | Redirected to DP Builder | 4 |
 
@@ -21,9 +21,10 @@ Evidence packet: `ev-packet-457593cf`
 - **board_trap** (L1) → claim-aseptic-loosening-tka-board_trap-aseptic-tka-loosening-pr [HUMAN_REVIEW] evidence: ev-static-prepare-d4063d3f
 - **imaging_point** (L1) → claim-aseptic-loosening-tka-imaging_point-review-imaging [HUMAN_REVIEW] evidence: ev-static-prepare-d40316ab
 - **cognitive_trap** (L1) → claim-aseptic-loosening-tka-cognitive_trap-use-implant-component-vo [HUMAN_REVIEW] evidence: ev-static-prepare-d40316ab
+- **anatomy_pearl** (L2) → claim-implant-concepts-hub-anatomy_pearl-connect-aseptic-loosenin [HUMAN_REVIEW] evidence: ev-static-prepare-24894c5c
+- **anatomy_pearl** (L1) → claim-implant-concepts-hub-anatomy_pearl-shared-adult-reconstruct [HUMAN_REVIEW] evidence: ev-static-prepare-d40316ab
 - **fact** (L1) → claim-aseptic-loosening-tka-fact-implant-and-fixation-voc [HUMAN_REVIEW] evidence: ev-static-prepare-d40316ab
 - **fact** (L1) → claim-aseptic-loosening-tka-fact-cross-neighborhood-traum [HUMAN_REVIEW] evidence: ev-static-prepare-d40316ab
-- **fact** (L1) → claim-aseptic-loosening-tka-fact-aseptic-tka-loosening-pr [HUMAN_REVIEW] evidence: ev-static-prepare-d40316ab
 
 ## Rejected / redirected
 

@@ -1,6 +1,6 @@
 # Agent Output Summary
 
-Generated: 2026-07-05T22:49:07.652Z
+Generated: 2026-07-16T02:54:04.820Z
 Topic: **periprosthetic-femur-fracture**
 Framework: **1.0.0**
 
@@ -13,8 +13,8 @@ Framework: **1.0.0**
 | Partial | 0 |
 | Failed | 0 |
 | Skipped | 0 |
-| Unique proposals | 85 |
-| Total proposals emitted | 133 |
+| Unique proposals | 86 |
+| Total proposals emitted | 128 |
 
 ## Parallel layers
 
@@ -31,14 +31,14 @@ Framework: **1.0.0**
 
 - **clinical-entity-builder** (work-clinical-entity-builder): completed, 32 proposal(s), 3ms
 - **asset-linker** (work-asset-linker): completed, 0 proposal(s), 0ms
-- **relationship-builder** (work-relationship-builder): completed, 7 proposal(s), 0ms
-- **claim-builder** (work-claim-builder): completed, 8 proposal(s), 5ms
+- **relationship-builder** (work-relationship-builder): completed, 0 proposal(s), 0ms
+- **claim-builder** (work-claim-builder): completed, 9 proposal(s), 4ms
 - **decision-point-builder** (work-decision-point-builder): completed, 1 proposal(s), 0ms
 - **duplicate-detector** (work-duplicate-detector): completed, 0 proposal(s), 1ms
-- **quality-scorer** (work-quality-scorer): completed, 0 proposal(s), 1ms
+- **quality-scorer** (work-quality-scorer): completed, 0 proposal(s), 0ms
 - **conflict-resolver** (work-conflict-resolver): completed, 0 proposal(s), 0ms
-- **review-assistant** (work-review-assistant): completed, 85 proposal(s), 3ms
-- **publication-validator** (work-publication-validator): completed, 0 proposal(s), 2ms
+- **review-assistant** (work-review-assistant): completed, 86 proposal(s), 3ms
+- **publication-validator** (work-publication-validator): completed, 0 proposal(s), 1ms
 
 ## Constraints
 

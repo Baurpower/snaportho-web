@@ -1,0 +1,37 @@
+{
+  "generatedAt": "2026-07-16T03:38:50Z",
+  "blockerId": "AC_JOINT_PROPOSAL_DRIFT",
+  "classification": "historical_proposal_metadata_drift",
+  "safeAutomaticNormalization": true,
+  "fingerprint": "create|anatomy_structure|ac-joint",
+  "canonicalEntity": {
+    "id": "f3be2d30-1e96-46b1-a056-935a05ac9924",
+    "slug": "ac-joint",
+    "entityType": "anatomy_structure",
+    "preferredLabel": "Acromioclavicular Joint",
+    "ownerPilot": "upper-extremity-trauma-cluster-shared",
+    "region": "shoulder"
+  },
+  "activeProposal": {
+    "id": "d4fdb42b-331f-4587-8a40-e17837c212a0",
+    "label": "Ac Joint",
+    "entityType": "anatomy_structure",
+    "ownerPilot": "upper-extremity-trauma-cluster-shared",
+    "crossCluster": "upper-extremity-trauma",
+    "reviewStatus": "applied"
+  },
+  "membership": {
+    "id": "79b682e1-fe91-43e0-baee-062fd87be19b",
+    "batchKey": "distal-biceps-tendon-rupture-neighborhood",
+    "targetTable": null,
+    "targetId": null,
+    "disposition": "already_applied"
+  },
+  "affectedNeighborhoods": ["proximal-humerus-fracture"],
+  "findings": [
+    "Exactly one active canonical row and one active semantic proposal use the same slug, entity type, owner, and upper-extremity context.",
+    "The canonical shared-anatomy registry and affected immutable packet use Acromioclavicular Joint; Ac Joint is an abbreviated historical proposal label, not a distinct clinical structure.",
+    "No canonical merge, relabel, ownership change, or graph write is required."
+  ],
+  "recommendedResolution": "Normalize only the active proposal label to Acromioclavicular Joint, preserve Ac Joint in identity-resolution metadata, and fill the existing membership's canonical target."
+}

@@ -1,0 +1,126 @@
+[
+  {
+    "gap_id": "gap-rel-1",
+    "original_reason": "Hand & Wrist Anatomy Hub missing outbound part_of (0/1).",
+    "disposition": "REJECTED_GAP",
+    "reason": "Root/regional anatomy hub should not require an outbound part_of edge to satisfy a child-to-parent anatomy rule; creating a self-edge or arbitrary parent would be misleading.",
+    "blocks_staging": false
+  },
+  {
+    "gap_id": "gap-rel-2",
+    "original_reason": "Scapholunate Ligament missing outbound part_of (0/1).",
+    "disposition": "VALID_DEFER",
+    "reason": "Scapholunate ligament hierarchy is not essential to the CTS vertical. Deferral does not alter CTS inference because this ligament is not used in CTS clinical claims, decisions, or relationships.",
+    "blocks_staging": false
+  },
+  {
+    "gap_id": "gap-rel-3",
+    "original_reason": "Lunotriquetral Ligament missing outbound part_of (0/1).",
+    "disposition": "VALID_DEFER",
+    "reason": "Lunotriquetral ligament hierarchy is not essential to the CTS vertical. Deferral does not create misleading CTS inference.",
+    "blocks_staging": false
+  },
+  {
+    "gap_id": "gap-rel-4",
+    "original_reason": "TFCC missing outbound part_of (0/1).",
+    "disposition": "VALID_DEFER",
+    "reason": "TFCC hierarchy is not essential to the CTS vertical. Deferral does not create misleading CTS inference.",
+    "blocks_staging": false
+  },
+  {
+    "gap_id": "gap-rel-5",
+    "original_reason": "Thumb UCL missing outbound part_of (0/1).",
+    "disposition": "VALID_DEFER",
+    "reason": "Thumb UCL hierarchy is not essential to the CTS vertical. Deferral does not create misleading CTS inference.",
+    "blocks_staging": false
+  },
+  {
+    "gap_id": "gap-rel-6",
+    "original_reason": "Volar Plate missing outbound part_of (0/1).",
+    "disposition": "VALID_DEFER",
+    "reason": "Volar plate hierarchy is not essential to the CTS vertical. Deferral does not create misleading CTS inference.",
+    "blocks_staging": false
+  },
+  {
+    "gap_id": "gap-rel-7",
+    "original_reason": "Collateral Ligaments missing outbound part_of (0/1).",
+    "disposition": "VALID_DEFER",
+    "reason": "Collateral ligament hierarchy is not essential to the CTS vertical. Deferral does not create misleading CTS inference.",
+    "blocks_staging": false
+  },
+  {
+    "gap_id": "gap-rel-8",
+    "original_reason": "Carpal Tunnel missing outbound part_of (0/1).",
+    "disposition": "RESOLVED",
+    "resolution": {
+      "subject_slug": "carpal-tunnel",
+      "predicate": "part_of",
+      "object_slug": "hand-wrist-anatomy-hub",
+      "relationship_metadata": {
+        "anatomy_role": "regional_container",
+        "relevance_reason": "cts_anatomy",
+        "review_status": "needs_review"
+      }
+    },
+    "reason": "Carpal tunnel is central CTS anatomy and can safely be attached to the hand/wrist anatomy hub.",
+    "blocks_staging": false
+  },
+  {
+    "gap_id": "gap-rel-9",
+    "original_reason": "Guyon Canal missing outbound part_of (0/1).",
+    "disposition": "VALID_DEFER",
+    "reason": "Guyon canal hierarchy is not essential to the CTS vertical. It is relevant to ulnar neuropathy/Guyon canal content, not core CTS staging.",
+    "blocks_staging": false
+  },
+  {
+    "gap_id": "gap-entity-neighbor-10",
+    "original_reason": "Carpal Tunnel Syndrome neighborhood has 0/1 classification_system entities.",
+    "disposition": "RESOLVED",
+    "resolution": {
+      "slug": "cts-6-clinical-diagnostic-tool",
+      "display_name": "CTS-6 Clinical Diagnostic Tool",
+      "entity_type": "classification_system",
+      "scope_note": "Clinical diagnostic scoring/tool concept for CTS probability; not a severity grade system.",
+      "relationship": {
+        "subject_slug": "carpal-tunnel-syndrome",
+        "predicate": "has_classification",
+        "object_slug": "cts-6-clinical-diagnostic-tool"
+      }
+    },
+    "reason": "Evidence packet cites AAOS use of CTS-6 in place of routine ultrasound or NCV/EMG for typical CTS evaluation.",
+    "blocks_staging": false
+  },
+  {
+    "gap_id": "gap-entity-neighbor-11",
+    "original_reason": "Carpal Tunnel Syndrome neighborhood has 0/1 imaging_finding entities.",
+    "disposition": "REJECTED_GAP",
+    "reason": "Routine imaging is not central to typical CTS diagnosis/follow-up; creating an imaging finding solely to satisfy a generic rule would create misleading inference.",
+    "blocks_staging": false
+  },
+  {
+    "gap_id": "gap-rel-13",
+    "original_reason": "Carpal Tunnel Syndrome missing outbound has_classification (0/1).",
+    "disposition": "RESOLVED",
+    "resolution": {
+      "subject_slug": "carpal-tunnel-syndrome",
+      "predicate": "has_classification",
+      "object_slug": "cts-6-clinical-diagnostic-tool"
+    },
+    "reason": "Resolved by the CTS-6 clinical diagnostic tool relationship in the normalized input.",
+    "blocks_staging": false
+  },
+  {
+    "gap_id": "gap-rel-14",
+    "original_reason": "Carpal Tunnel Syndrome missing outbound has_grade (0/1).",
+    "disposition": "REJECTED_GAP",
+    "reason": "No named CTS severity grade system was supplied or approved. The evidence packet explicitly says not to invent grades or universal EDX thresholds.",
+    "blocks_staging": false
+  },
+  {
+    "gap_id": "gap-rel-15",
+    "original_reason": "Carpal Tunnel Syndrome missing outbound has_imaging_finding (0/1).",
+    "disposition": "REJECTED_GAP",
+    "reason": "For typical CTS, a required imaging-finding edge would contradict the evidence packet's warning against routine imaging as the diagnostic/follow-up pathway.",
+    "blocks_staging": false
+  }
+]

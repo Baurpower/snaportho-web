@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "runDate": "2026-07-16",
+  "topicKey": "talus-fracture",
+  "displayName": "Talus Fracture",
+  "pilotKey": "talus-fracture-neighborhood",
+  "batchKey": "legacy-talus-fracture-c6a10240fdd1082a",
+  "packetHash": "c6a10240fdd1082af89fc5469a69919ac83f5361c1f43d1c61758671c923e300",
+  "graphHash": "7fb6e93548cad57e7e1b0c8b952e2adb7944701654f838ba2d806185306bc4b1",
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "dryRun": false,
+  "exactAppliedMembershipReconstructed": true,
+  "counts": {
+    "approvedLoaded": 61,
+    "structuralProposals": 61,
+    "entities": 27,
+    "relationships": 33,
+    "curriculumBridges": 1,
+    "draftClaimsExcluded": 0,
+    "draftDecisionPointsExcluded": 0
+  },
+  "repairs": {
+    "insertedSemantic": 0,
+    "reusedSemantic": 61,
+    "proposalStatesRepaired": 0,
+    "insertedMemberships": 61,
+    "reusedMemberships": 0,
+    "reactivatedMemberships": 0
+  },
+  "discrepancyCount": 0,
+  "exactNextAction": "run_strict_db_reload"
+}

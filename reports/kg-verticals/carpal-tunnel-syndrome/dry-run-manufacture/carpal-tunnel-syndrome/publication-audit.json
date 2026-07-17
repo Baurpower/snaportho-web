@@ -1,0 +1,21 @@
+{
+  "status": "NOT_READY",
+  "ready": false,
+  "blockers": [
+    "Publication readiness report missing"
+  ],
+  "currentLevel": 0,
+  "requiredLevel": 7,
+  "score": 0,
+  "deductions": [
+    {
+      "finding": "No publication readiness report",
+      "evidence": "publication-readiness.json missing",
+      "reason": "Cannot determine publication eligibility without compiler publication gate.",
+      "severity": "critical",
+      "category": "publication_readiness",
+      "suggestedFix": "Run compiler publication-validator stage.",
+      "impact": 15
+    }
+  ]
+}

@@ -24,23 +24,41 @@ const configuredAppOrigin =
 
 function buildClassicContentScriptBundle() {
   const selectorsPath = path.join(distDir, 'content', 'selectors.js');
+  const questionReviewStatePath = path.join(distDir, 'shared', 'question-review-state.js');
   const pageClassificationPath = path.join(distDir, 'shared', 'page-classification.js');
   const extractorPath = path.join(distDir, 'content', 'extractor.js');
+  const questionFingerprintPath = path.join(distDir, 'shared', 'question-fingerprint.js');
+  const himalayaDebugPath = path.join(distDir, 'providers', 'himalaya', 'himalaya-debug.js');
+  const himalayaExtractorPath = path.join(distDir, 'providers', 'himalaya', 'himalaya-extractor.js');
+  const himalayaProviderPath = path.join(distDir, 'providers', 'himalaya', 'himalaya-provider.js');
+  const questionLifecyclePath = path.join(distDir, 'content', 'question-lifecycle.js');
   const contentScriptPath = path.join(distDir, 'content', 'content-script.js');
 
   const selectorsSource = readFileSync(selectorsPath, 'utf8')
     .replace(/^export const SELECTOR_SET_VERSION =/m, 'const SELECTOR_SET_VERSION =')
     .replace(/^export const SELECTORS =/m, 'const SELECTORS =');
 
+  const questionReviewStateSource = readFileSync(questionReviewStatePath, 'utf8')
+    .replace(/^import\s+type\s+\{[^}]+\}\s+from\s+['"][^'"]+['"];\r?\n?/gm, '')
+    .replace(/^export\s+type\s+[^;]+;\r?\n?/gm, '')
+    .replace(/^export function /gm, 'function ');
+
   const pageClassificationSource = readFileSync(pageClassificationPath, 'utf8')
     .replace(/^import\s+type\s+\{[^}]+\}\s+from\s+['"][^'"]+['"];\r?\n?/gm, '')
+    .replace(/^import\s+\{[^}]+\}\s+from\s+['"]\.\/question-review-state\.js['"];\r?\n?/gm, '')
+    .replace(/^export\s+type\s+\{[^}]+\}\s+from\s+['"]\.\/question-review-state\.js['"];\r?\n?/gm, '')
+    .replace(/^export\s+\{[^}]+\}\s+from\s+['"]\.\/question-review-state\.js['"];\r?\n?/gm, '')
+    .replace(/^export\s+\{[^}]+\}\s*;\r?\n?/gm, '')
     .replace(/^export const /gm, 'const ')
     .replace(/^export function /gm, 'function ');
 
   const extractorSource = readFileSync(extractorPath, 'utf8')
     .replace(/^import\s+\{\s*SELECTOR_SET_VERSION,\s*SELECTORS\s*\}\s+from\s+['"]\.\/selectors\.js['"];\r?\n?/m, '')
     .replace(/^import\s+\{\s*classifyPage\s*\}\s+from\s+['"]\.\.\/shared\/page-classification\.js['"];\r?\n?/m, '')
+    .replace(/^import\s+\{[^}]+\}\s+from\s+['"]\.\.\/shared\/question-review-state\.js['"];\r?\n?/m, '')
+    .replace(/^import\s+\{[^}]+\}\s+from\s+['"]\.\.\/providers\/himalaya\/himalaya-provider\.js['"];\r?\n?/m, '')
     .replace(/^import\s+type\s+\{[^}]+\}\s+from\s+['"]\.\.\/shared\/types\.js['"];\r?\n?/m, '')
+    .replace(/^export\s+\{[^}]+\}\s+from\s+['"]\.\.\/providers\/himalaya\/himalaya-extractor\.js['"];\r?\n?/m, '')
     .replace(/^export const EXTRACTOR_VERSION =/m, 'const EXTRACTOR_VERSION =')
     .replace(/^export \{ SELECTOR_SET_VERSION \};\r?\n?/m, '')
     .replace(/^export function detectQuestionProvider\(/m, 'function detectQuestionProvider(')
@@ -50,16 +68,54 @@ function buildClassicContentScriptBundle() {
     .replace(/^export function extractRockPageContext\(/m, 'function extractRockPageContext(')
     .replace(/^export function extractQuestionContext\(/m, 'function extractQuestionContext(');
 
+  const questionFingerprintSource = readFileSync(questionFingerprintPath, 'utf8')
+    .replace(/^import\s+type\s+\{[^}]+\}\s+from\s+['"][^'"]+['"];\r?\n?/gm, '')
+    .replace(/^export\s+type\s+\{[^}]+\}[^;]*;\r?\n?/gm, '')
+    .replace(/^export\s+type\s+[^;]+;\r?\n?/gm, '')
+    .replace(/^export function /gm, 'function ');
+
+  const himalayaDebugSource = readFileSync(himalayaDebugPath, 'utf8')
+    .replace(/^import\s+type\s+\{[^}]+\}\s+from\s+['"][^'"]+['"];\r?\n?/gm, '')
+    .replace(/^export function /gm, 'function ');
+
+  const himalayaExtractorSource = readFileSync(himalayaExtractorPath, 'utf8')
+    .replace(/^import\s+type\s+\{[^}]+\}\s+from\s+['"][^'"]+['"];\r?\n?/gm, '')
+    .replace(/^import\s+\{[^}]+\}\s+from\s+['"]\.\.\/\.\.\/shared\/question-fingerprint\.js['"];\r?\n?/gm, '')
+    .replace(/^import\s+\{[^}]+\}\s+from\s+['"]\.\/himalaya-debug\.js['"];\r?\n?/gm, '')
+    .replace(/^export function /gm, 'function ');
+
+  const himalayaProviderSource = readFileSync(himalayaProviderPath, 'utf8')
+    .replace(/^import\s+type\s+\{[^}]+\}\s+from\s+['"][^'"]+['"];\r?\n?/gm, '')
+    .replace(/^import\s+\{[^}]+\}\s+from\s+['"]\.\/himalaya-extractor\.js['"];\r?\n?/gm, '')
+    .replace(/^export const /gm, 'const ')
+    .replace(/^export function /gm, 'function ');
+
+  const questionLifecycleSource = readFileSync(questionLifecyclePath, 'utf8')
+    .replace(/^import\s+.*from\s+['"][^'"]+['"];\r?\n?/gm, '')
+    .replace(/^export function /gm, 'function ');
+
   const contentScriptSource = readFileSync(contentScriptPath, 'utf8')
-    .replace(/^import\s+\{\s*detectQuestionProvider,\s*extractQuestionContext\s*\}\s+from\s+['"]\.\/extractor\.js['"];\r?\n?/m, '');
+    .replace(/^import\s+.*from\s+['"][^'"]+['"];\r?\n?/gm, '');
 
   const bundledSource = [
     '(() => {',
     selectorsSource.trim(),
     '',
+    questionReviewStateSource.trim(),
+    '',
     pageClassificationSource.trim(),
     '',
+    questionFingerprintSource.trim(),
+    '',
+    himalayaDebugSource.trim(),
+    '',
+    himalayaExtractorSource.trim(),
+    '',
+    himalayaProviderSource.trim(),
+    '',
     extractorSource.trim(),
+    '',
+    questionLifecycleSource.trim(),
     '',
     contentScriptSource.trim(),
     '})();',
@@ -124,6 +180,44 @@ for (const relativePath of requiredBuildArtifacts) {
     readFileSync(absolutePath, 'utf8');
   } catch (error) {
     console.error(`Missing expected extension build artifact: ${relativePath}`);
+    process.exit(1);
+  }
+}
+
+const generatedManifestPath = path.join(distDir, 'manifest.json');
+const generatedManifest = JSON.parse(readFileSync(generatedManifestPath, 'utf8'));
+const serviceWorkerPath = generatedManifest?.background?.service_worker;
+if (serviceWorkerPath !== builtPaths.backgroundServiceWorker) {
+  console.error(`Unexpected background service worker in generated manifest: ${serviceWorkerPath}`);
+  process.exit(1);
+}
+
+const generatedBackgroundPath = path.join(distDir, serviceWorkerPath);
+const generatedBackgroundSource = readFileSync(generatedBackgroundPath, 'utf8');
+const generatedRoutingSource = readFileSync(path.join(distDir, 'shared', 'brobot-routing.js'), 'utf8');
+const generatedBuildInfoSource = readFileSync(path.join(distDir, 'shared', 'build-info.js'), 'utf8');
+const generatedSidepanelSource = [
+  readFileSync(path.join(distDir, builtPaths.sidepanelEntry), 'utf8'),
+  readFileSync(path.join(distDir, 'sidepanel', 'App.js'), 'utf8'),
+  readFileSync(path.join(distDir, 'sidepanel', 'question-tutor-controller.js'), 'utf8'),
+].join('\n');
+
+const requiredGeneratedNeedles = [
+  ['background service worker', generatedBackgroundSource, '2026-07-12-rock-curriculum-routing-v3'],
+  ['background service worker', generatedBackgroundSource, 'brobot:request'],
+  ['background service worker', generatedBackgroundSource, 'endpoint_resolution'],
+  ['background service worker', generatedBackgroundSource, 'Routing invariant violated'],
+  ['routing helper', generatedRoutingSource, 'curriculum_explain'],
+  ['routing helper', generatedRoutingSource, '/api/brobot/curriculum/explain'],
+  ['build info', generatedBuildInfoSource, '2026-07-12-rock-curriculum-routing-v3'],
+  ['build info', generatedBuildInfoSource, 'curriculum-task-routing-v1'],
+  ['sidepanel entry', generatedSidepanelSource, 'brobot:request'],
+  ['sidepanel entry', generatedSidepanelSource, '2026-07-12-rock-curriculum-routing-v3'],
+];
+
+for (const [label, source, needle] of requiredGeneratedNeedles) {
+  if (!source.includes(needle)) {
+    console.error(`Generated ${label} is missing required marker: ${needle}`);
     process.exit(1);
   }
 }

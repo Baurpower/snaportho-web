@@ -1,0 +1,69 @@
+{
+  "agent": "IdentityReuseAgent",
+  "generatedAt": "2026-07-16T02:19:30.994Z",
+  "result": {
+    "approved": [],
+    "modified": [],
+    "rejected": [],
+    "escalations": [
+      {
+        "id": "identity-alias-tibial-shaft",
+        "fingerprint": "entity|anatomy_structure|tibial-shaft",
+        "objectKind": "entity",
+        "agent": "IdentityReuseAgent",
+        "severity": "MODERATE",
+        "reason": "Plausible alias or near-duplicate identity below auto-reuse threshold.",
+        "reviewer": "curator",
+        "suggestedAction": "Confirm alias mapping, merge, or keep as distinct identity."
+      },
+      {
+        "id": "identity-alias-tibial-shaft-fracture",
+        "fingerprint": "entity|condition|tibial-shaft-fracture",
+        "objectKind": "entity",
+        "agent": "IdentityReuseAgent",
+        "severity": "MODERATE",
+        "reason": "Plausible alias or near-duplicate identity below auto-reuse threshold.",
+        "reviewer": "curator",
+        "suggestedAction": "Confirm alias mapping, merge, or keep as distinct identity."
+      }
+    ],
+    "warnings": [],
+    "metrics": {
+      "duplicatesPrevented": 0,
+      "relationshipsNormalized": 0,
+      "unsupportedEdgesRemoved": 0,
+      "reviewDecisionsInherited": 0,
+      "orphanEntitiesRepaired": 0,
+      "publicationBlockersDetected": 0
+    }
+  },
+  "artifacts": {
+    "reuse_map": [],
+    "alias_candidates": [
+      {
+        "fingerprint": "entity|anatomy_structure|tibial-shaft",
+        "proposedSlug": "tibial-shaft",
+        "proposedLabel": "Tibial Shaft",
+        "proposedType": "anatomy_structure",
+        "canonicalSlug": "tibial-shaft-fracture",
+        "canonicalLabel": "Tibial Shaft Fracture",
+        "canonicalType": "condition",
+        "confidence": 0.86,
+        "action": "curator_confirm_alias_or_distinct_identity"
+      },
+      {
+        "fingerprint": "entity|condition|tibial-shaft-fracture",
+        "proposedSlug": "tibial-shaft-fracture",
+        "proposedLabel": "Tibial Shaft Fracture",
+        "proposedType": "condition",
+        "canonicalSlug": "tibial-shaft",
+        "canonicalLabel": "Tibial Shaft",
+        "canonicalType": "anatomy_structure",
+        "confidence": 0.86,
+        "action": "curator_confirm_alias_or_distinct_identity"
+      }
+    ],
+    "merge_candidates": [],
+    "identity_escalations": []
+  }
+}

@@ -1,0 +1,910 @@
+{
+  "topic": "carpal-tunnel-syndrome",
+  "pilotKey": "carpal-tunnel-syndrome-neighborhood",
+  "batchKey": "cts-0f75b7ab7ec364d9",
+  "adapterVersion": "cts-finalized-staging-v1",
+  "git": {
+    "commit": "fc173ffb9852a994f05f101397cd87a610df0c3c",
+    "dirty": true
+  },
+  "sourceArtifacts": [
+    {
+      "path": "/Users/alexbaur/snaportho_dev/snaportho-web/reports/kg-verticals/carpal-tunnel-syndrome/dry-run-manufacture/carpal-tunnel-syndrome/merged-neighborhood-draft.json",
+      "sha256": "ba9f0edef1d50c1b599465adc53e8da12a860c6c1ff34e260509ede9b684b3bc"
+    },
+    {
+      "path": "/Users/alexbaur/snaportho_dev/snaportho-web/reports/kg-verticals/carpal-tunnel-syndrome/final-readiness/normalized-post-review-input.json",
+      "sha256": "3d2188936c8c9132b9db85d57394ae4526755ed98f0c13c66571bbb8a0ecbe9c"
+    },
+    {
+      "path": "/Users/alexbaur/snaportho_dev/snaportho-web/reports/kg-verticals/carpal-tunnel-syndrome/dry-run-manufacture/cts-final-review-decisions.json",
+      "sha256": "94b6eead67d218ea21fbb3c1740699f45e94959600954d3f62f08350d0521349"
+    },
+    {
+      "path": "/Users/alexbaur/snaportho_dev/snaportho-web/reports/kg-verticals/carpal-tunnel-syndrome/dry-run-manufacture/carpal-tunnel-syndrome/ontology-auto-review.json",
+      "sha256": "cb2641e0b96bd0c7107b2298b19a93e5ebb50ac0ad35c5814d1aca53485eb991"
+    }
+  ],
+  "entities": [
+    {
+      "fingerprint": "create|anatomy_structure|a1-pulley",
+      "slug": "a1-pulley"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|a2-pulley",
+      "slug": "a2-pulley"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|a3-pulley",
+      "slug": "a3-pulley"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|a4-pulley",
+      "slug": "a4-pulley"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|a5-pulley",
+      "slug": "a5-pulley"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|abductor-pollicis-brevis",
+      "slug": "abductor-pollicis-brevis"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ain",
+      "slug": "ain"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|apl",
+      "slug": "apl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|c1-pulley",
+      "slug": "c1-pulley"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|c2-pulley",
+      "slug": "c2-pulley"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|c3-pulley",
+      "slug": "c3-pulley"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|capitate",
+      "slug": "capitate"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|carpal-tunnel",
+      "slug": "carpal-tunnel"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|cmc-joint",
+      "slug": "cmc-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|collateral-ligaments",
+      "slug": "collateral-ligaments"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|deep-palmar-arch",
+      "slug": "deep-palmar-arch"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|digital-nerves",
+      "slug": "digital-nerves"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|dip-joint",
+      "slug": "dip-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|distal-phalanx",
+      "slug": "distal-phalanx"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|distal-radius",
+      "slug": "distal-radius"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|distal-ulna",
+      "slug": "distal-ulna"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|druj",
+      "slug": "druj"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ecu",
+      "slug": "ecu"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|edc",
+      "slug": "edc"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|epb",
+      "slug": "epb"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|epl",
+      "slug": "epl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|extensor-tendon-zones",
+      "slug": "extensor-tendon-zones"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fcr",
+      "slug": "fcr"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fcu",
+      "slug": "fcu"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fdp",
+      "slug": "fdp"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fds",
+      "slug": "fds"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fifth-metacarpal",
+      "slug": "fifth-metacarpal"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|first-metacarpal",
+      "slug": "first-metacarpal"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|flexor-pulley-system",
+      "slug": "flexor-pulley-system"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|flexor-tendon-zones",
+      "slug": "flexor-tendon-zones"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fourth-metacarpal",
+      "slug": "fourth-metacarpal"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fpl",
+      "slug": "fpl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|guyon-canal",
+      "slug": "guyon-canal"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|hamate",
+      "slug": "hamate"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|hand-wrist-anatomy-hub",
+      "slug": "hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|interosseous-membrane",
+      "slug": "interosseous-membrane"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lunate",
+      "slug": "lunate"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lunotriquetral-ligament",
+      "slug": "lunotriquetral-ligament"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|mcp-joint",
+      "slug": "mcp-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|median-nerve",
+      "slug": "median-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|middle-phalanx",
+      "slug": "middle-phalanx"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|palmar-cutaneous-branch-median-nerve",
+      "slug": "palmar-cutaneous-branch-median-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pin",
+      "slug": "pin"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pip-joint",
+      "slug": "pip-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pisiform",
+      "slug": "pisiform"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|proximal-phalanx",
+      "slug": "proximal-phalanx"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pruj",
+      "slug": "pruj"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|radial-artery",
+      "slug": "radial-artery"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|radial-nerve",
+      "slug": "radial-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|radius",
+      "slug": "radius"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|recurrent-motor-branch-median-nerve",
+      "slug": "recurrent-motor-branch-median-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|scaphoid",
+      "slug": "scaphoid"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|scapholunate-ligament",
+      "slug": "scapholunate-ligament"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|second-metacarpal",
+      "slug": "second-metacarpal"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|superficial-palmar-arch",
+      "slug": "superficial-palmar-arch"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|tfcc",
+      "slug": "tfcc"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|third-metacarpal",
+      "slug": "third-metacarpal"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|thumb-ucl",
+      "slug": "thumb-ucl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|trapezium",
+      "slug": "trapezium"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|trapezoid",
+      "slug": "trapezoid"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|triquetrum",
+      "slug": "triquetrum"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ulna",
+      "slug": "ulna"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ulnar-artery",
+      "slug": "ulnar-artery"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ulnar-nerve",
+      "slug": "ulnar-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|volar-plate",
+      "slug": "volar-plate"
+    },
+    {
+      "fingerprint": "create|classification_system|cts-6-clinical-diagnostic-tool",
+      "slug": "cts-6-clinical-diagnostic-tool"
+    },
+    {
+      "fingerprint": "create|complication|incomplete-transverse-carpal-ligament-release",
+      "slug": "incomplete-transverse-carpal-ligament-release"
+    },
+    {
+      "fingerprint": "create|complication|pillar-pain-after-carpal-tunnel-release",
+      "slug": "pillar-pain-after-carpal-tunnel-release"
+    },
+    {
+      "fingerprint": "create|condition|carpal-tunnel-syndrome",
+      "slug": "carpal-tunnel-syndrome"
+    },
+    {
+      "fingerprint": "create|condition|distal-radius-fracture",
+      "slug": "distal-radius-fracture"
+    },
+    {
+      "fingerprint": "create|condition|median-nerve-compression",
+      "slug": "median-nerve-compression"
+    },
+    {
+      "fingerprint": "create|condition|persistent-carpal-tunnel-syndrome-after-release",
+      "slug": "persistent-carpal-tunnel-syndrome-after-release"
+    },
+    {
+      "fingerprint": "create|condition|recurrent-carpal-tunnel-syndrome",
+      "slug": "recurrent-carpal-tunnel-syndrome"
+    },
+    {
+      "fingerprint": "create|condition|trigger-finger",
+      "slug": "trigger-finger"
+    },
+    {
+      "fingerprint": "create|diagnostic_test|electrodiagnostic-testing-carpal-tunnel-syndrome",
+      "slug": "electrodiagnostic-testing-carpal-tunnel-syndrome"
+    },
+    {
+      "fingerprint": "create|diagnostic_test|needle-electromyography",
+      "slug": "needle-electromyography"
+    },
+    {
+      "fingerprint": "create|diagnostic_test|nerve-conduction-study",
+      "slug": "nerve-conduction-study"
+    },
+    {
+      "fingerprint": "create|exam_maneuver|durkan-carpal-compression-test",
+      "slug": "durkan-carpal-compression-test"
+    },
+    {
+      "fingerprint": "create|exam_maneuver|phalen-test",
+      "slug": "phalen-test"
+    },
+    {
+      "fingerprint": "create|exam_maneuver|tinel-sign-carpal-tunnel",
+      "slug": "tinel-sign-carpal-tunnel"
+    },
+    {
+      "fingerprint": "create|procedure|corticosteroid-injection-for-cts",
+      "slug": "corticosteroid-injection-for-cts"
+    },
+    {
+      "fingerprint": "create|procedure|endoscopic-carpal-tunnel-release",
+      "slug": "endoscopic-carpal-tunnel-release"
+    },
+    {
+      "fingerprint": "create|procedure|open-carpal-tunnel-release",
+      "slug": "open-carpal-tunnel-release"
+    },
+    {
+      "fingerprint": "create|procedure|revision-carpal-tunnel-release",
+      "slug": "revision-carpal-tunnel-release"
+    },
+    {
+      "fingerprint": "create|surgical_approach|endoscopic-carpal-tunnel-approach",
+      "slug": "endoscopic-carpal-tunnel-approach"
+    },
+    {
+      "fingerprint": "create|surgical_approach|open-carpal-tunnel-approach",
+      "slug": "open-carpal-tunnel-approach"
+    },
+    {
+      "fingerprint": "create|treatment_principle|carpal-tunnel-release-postoperative-protocol",
+      "slug": "carpal-tunnel-release-postoperative-protocol"
+    },
+    {
+      "fingerprint": "create|treatment_principle|neutral-wrist-night-orthosis-for-cts",
+      "slug": "neutral-wrist-night-orthosis-for-cts"
+    }
+  ],
+  "relationships": [
+    {
+      "fingerprint": "rel|a1-pulley|part_of|flexor-pulley-system",
+      "triple": "a1-pulley|part_of|flexor-pulley-system"
+    },
+    {
+      "fingerprint": "rel|a2-pulley|part_of|flexor-pulley-system",
+      "triple": "a2-pulley|part_of|flexor-pulley-system"
+    },
+    {
+      "fingerprint": "rel|a3-pulley|part_of|flexor-pulley-system",
+      "triple": "a3-pulley|part_of|flexor-pulley-system"
+    },
+    {
+      "fingerprint": "rel|a4-pulley|part_of|flexor-pulley-system",
+      "triple": "a4-pulley|part_of|flexor-pulley-system"
+    },
+    {
+      "fingerprint": "rel|a5-pulley|part_of|flexor-pulley-system",
+      "triple": "a5-pulley|part_of|flexor-pulley-system"
+    },
+    {
+      "fingerprint": "rel|ain|part_of|median-nerve",
+      "triple": "ain|part_of|median-nerve"
+    },
+    {
+      "fingerprint": "rel|apl|part_of|hand-wrist-anatomy-hub",
+      "triple": "apl|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|c1-pulley|part_of|flexor-pulley-system",
+      "triple": "c1-pulley|part_of|flexor-pulley-system"
+    },
+    {
+      "fingerprint": "rel|c2-pulley|part_of|flexor-pulley-system",
+      "triple": "c2-pulley|part_of|flexor-pulley-system"
+    },
+    {
+      "fingerprint": "rel|c3-pulley|part_of|flexor-pulley-system",
+      "triple": "c3-pulley|part_of|flexor-pulley-system"
+    },
+    {
+      "fingerprint": "rel|capitate|part_of|hand-wrist-anatomy-hub",
+      "triple": "capitate|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|has_classification|cts-6-clinical-diagnostic-tool",
+      "triple": "carpal-tunnel-syndrome|has_classification|cts-6-clinical-diagnostic-tool"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|injured_in|carpal-tunnel",
+      "triple": "carpal-tunnel-syndrome|injured_in|carpal-tunnel"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|injured_in|fpl",
+      "triple": "carpal-tunnel-syndrome|injured_in|fpl"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|injured_in|median-nerve",
+      "triple": "carpal-tunnel-syndrome|injured_in|median-nerve"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|involves_anatomy|carpal-tunnel",
+      "triple": "carpal-tunnel-syndrome|involves_anatomy|carpal-tunnel"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|involves_anatomy|fpl",
+      "triple": "carpal-tunnel-syndrome|involves_anatomy|fpl"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|involves_anatomy|median-nerve",
+      "triple": "carpal-tunnel-syndrome|involves_anatomy|median-nerve"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|tested_by|durkan-carpal-compression-test",
+      "triple": "carpal-tunnel-syndrome|tested_by|durkan-carpal-compression-test"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|tested_by|electrodiagnostic-testing-carpal-tunnel-syndrome",
+      "triple": "carpal-tunnel-syndrome|tested_by|electrodiagnostic-testing-carpal-tunnel-syndrome"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|tested_by|nerve-conduction-study",
+      "triple": "carpal-tunnel-syndrome|tested_by|nerve-conduction-study"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|tested_by|phalen-test",
+      "triple": "carpal-tunnel-syndrome|tested_by|phalen-test"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|tested_by|tinel-sign-carpal-tunnel",
+      "triple": "carpal-tunnel-syndrome|tested_by|tinel-sign-carpal-tunnel"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts",
+      "triple": "carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release",
+      "triple": "carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts",
+      "triple": "carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release",
+      "triple": "carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel|contains|fdp",
+      "triple": "carpal-tunnel|contains|fdp"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel|contains|fds",
+      "triple": "carpal-tunnel|contains|fds"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel|contains|median-nerve",
+      "triple": "carpal-tunnel|contains|median-nerve"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel|part_of|hand-wrist-anatomy-hub",
+      "triple": "carpal-tunnel|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|cmc-joint|part_of|hand-wrist-anatomy-hub",
+      "triple": "cmc-joint|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|corticosteroid-injection-for-cts|at_risk_structure|median-nerve",
+      "triple": "corticosteroid-injection-for-cts|at_risk_structure|median-nerve"
+    },
+    {
+      "fingerprint": "rel|corticosteroid-injection-for-cts|involves_anatomy|carpal-tunnel",
+      "triple": "corticosteroid-injection-for-cts|involves_anatomy|carpal-tunnel"
+    },
+    {
+      "fingerprint": "rel|deep-palmar-arch|part_of|hand-wrist-anatomy-hub",
+      "triple": "deep-palmar-arch|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|digital-nerves|part_of|hand-wrist-anatomy-hub",
+      "triple": "digital-nerves|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|dip-joint|part_of|hand-wrist-anatomy-hub",
+      "triple": "dip-joint|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|distal-phalanx|part_of|hand-wrist-anatomy-hub",
+      "triple": "distal-phalanx|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|distal-radius|articulates_with|druj",
+      "triple": "distal-radius|articulates_with|druj"
+    },
+    {
+      "fingerprint": "rel|distal-radius|articulates_with|lunate",
+      "triple": "distal-radius|articulates_with|lunate"
+    },
+    {
+      "fingerprint": "rel|distal-radius|articulates_with|scaphoid",
+      "triple": "distal-radius|articulates_with|scaphoid"
+    },
+    {
+      "fingerprint": "rel|distal-radius|part_of|radius",
+      "triple": "distal-radius|part_of|radius"
+    },
+    {
+      "fingerprint": "rel|distal-ulna|articulates_with|druj",
+      "triple": "distal-ulna|articulates_with|druj"
+    },
+    {
+      "fingerprint": "rel|distal-ulna|part_of|ulna",
+      "triple": "distal-ulna|part_of|ulna"
+    },
+    {
+      "fingerprint": "rel|druj|part_of|hand-wrist-anatomy-hub",
+      "triple": "druj|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|ecu|part_of|hand-wrist-anatomy-hub",
+      "triple": "ecu|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|edc|part_of|hand-wrist-anatomy-hub",
+      "triple": "edc|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|endoscopic-carpal-tunnel-release|at_risk_structure|median-nerve",
+      "triple": "endoscopic-carpal-tunnel-release|at_risk_structure|median-nerve"
+    },
+    {
+      "fingerprint": "rel|endoscopic-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+      "triple": "endoscopic-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve"
+    },
+    {
+      "fingerprint": "rel|endoscopic-carpal-tunnel-release|has_complication|incomplete-transverse-carpal-ligament-release",
+      "triple": "endoscopic-carpal-tunnel-release|has_complication|incomplete-transverse-carpal-ligament-release"
+    },
+    {
+      "fingerprint": "rel|endoscopic-carpal-tunnel-release|involves_anatomy|carpal-tunnel",
+      "triple": "endoscopic-carpal-tunnel-release|involves_anatomy|carpal-tunnel"
+    },
+    {
+      "fingerprint": "rel|endoscopic-carpal-tunnel-release|uses_approach|endoscopic-carpal-tunnel-approach",
+      "triple": "endoscopic-carpal-tunnel-release|uses_approach|endoscopic-carpal-tunnel-approach"
+    },
+    {
+      "fingerprint": "rel|epb|part_of|hand-wrist-anatomy-hub",
+      "triple": "epb|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|epl|part_of|hand-wrist-anatomy-hub",
+      "triple": "epl|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|extensor-tendon-zones|part_of|hand-wrist-anatomy-hub",
+      "triple": "extensor-tendon-zones|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|fcr|part_of|hand-wrist-anatomy-hub",
+      "triple": "fcr|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|fcu|part_of|hand-wrist-anatomy-hub",
+      "triple": "fcu|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|fdp|part_of|hand-wrist-anatomy-hub",
+      "triple": "fdp|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|fds|part_of|hand-wrist-anatomy-hub",
+      "triple": "fds|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|fifth-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "triple": "fifth-metacarpal|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|first-metacarpal|articulates_with|trapezium",
+      "triple": "first-metacarpal|articulates_with|trapezium"
+    },
+    {
+      "fingerprint": "rel|first-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "triple": "first-metacarpal|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|flexor-pulley-system|contains|fdp",
+      "triple": "flexor-pulley-system|contains|fdp"
+    },
+    {
+      "fingerprint": "rel|flexor-pulley-system|contains|fds",
+      "triple": "flexor-pulley-system|contains|fds"
+    },
+    {
+      "fingerprint": "rel|flexor-pulley-system|part_of|hand-wrist-anatomy-hub",
+      "triple": "flexor-pulley-system|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|flexor-tendon-zones|part_of|hand-wrist-anatomy-hub",
+      "triple": "flexor-tendon-zones|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|fourth-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "triple": "fourth-metacarpal|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|fpl|part_of|hand-wrist-anatomy-hub",
+      "triple": "fpl|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|guyon-canal|contains|ulnar-artery",
+      "triple": "guyon-canal|contains|ulnar-artery"
+    },
+    {
+      "fingerprint": "rel|guyon-canal|contains|ulnar-nerve",
+      "triple": "guyon-canal|contains|ulnar-nerve"
+    },
+    {
+      "fingerprint": "rel|hamate|part_of|hand-wrist-anatomy-hub",
+      "triple": "hamate|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|hand-wrist-anatomy-hub|prerequisite_for|carpal-tunnel-syndrome",
+      "triple": "hand-wrist-anatomy-hub|prerequisite_for|carpal-tunnel-syndrome"
+    },
+    {
+      "fingerprint": "rel|interosseous-membrane|part_of|hand-wrist-anatomy-hub",
+      "triple": "interosseous-membrane|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|lunate|articulates_with|triquetrum",
+      "triple": "lunate|articulates_with|triquetrum"
+    },
+    {
+      "fingerprint": "rel|lunate|part_of|hand-wrist-anatomy-hub",
+      "triple": "lunate|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|lunotriquetral-ligament|inserts_on|lunate",
+      "triple": "lunotriquetral-ligament|inserts_on|lunate"
+    },
+    {
+      "fingerprint": "rel|lunotriquetral-ligament|inserts_on|triquetrum",
+      "triple": "lunotriquetral-ligament|inserts_on|triquetrum"
+    },
+    {
+      "fingerprint": "rel|mcp-joint|part_of|hand-wrist-anatomy-hub",
+      "triple": "mcp-joint|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|median-nerve|part_of|hand-wrist-anatomy-hub",
+      "triple": "median-nerve|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|middle-phalanx|part_of|hand-wrist-anatomy-hub",
+      "triple": "middle-phalanx|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|median-nerve",
+      "triple": "open-carpal-tunnel-release|at_risk_structure|median-nerve"
+    },
+    {
+      "fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|palmar-cutaneous-branch-median-nerve",
+      "triple": "open-carpal-tunnel-release|at_risk_structure|palmar-cutaneous-branch-median-nerve"
+    },
+    {
+      "fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+      "triple": "open-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve"
+    },
+    {
+      "fingerprint": "rel|open-carpal-tunnel-release|has_complication|incomplete-transverse-carpal-ligament-release",
+      "triple": "open-carpal-tunnel-release|has_complication|incomplete-transverse-carpal-ligament-release"
+    },
+    {
+      "fingerprint": "rel|open-carpal-tunnel-release|has_complication|pillar-pain-after-carpal-tunnel-release",
+      "triple": "open-carpal-tunnel-release|has_complication|pillar-pain-after-carpal-tunnel-release"
+    },
+    {
+      "fingerprint": "rel|open-carpal-tunnel-release|involves_anatomy|carpal-tunnel",
+      "triple": "open-carpal-tunnel-release|involves_anatomy|carpal-tunnel"
+    },
+    {
+      "fingerprint": "rel|open-carpal-tunnel-release|uses_approach|open-carpal-tunnel-approach",
+      "triple": "open-carpal-tunnel-release|uses_approach|open-carpal-tunnel-approach"
+    },
+    {
+      "fingerprint": "rel|palmar-cutaneous-branch-median-nerve|part_of|median-nerve",
+      "triple": "palmar-cutaneous-branch-median-nerve|part_of|median-nerve"
+    },
+    {
+      "fingerprint": "rel|pin|part_of|radial-nerve",
+      "triple": "pin|part_of|radial-nerve"
+    },
+    {
+      "fingerprint": "rel|pip-joint|part_of|hand-wrist-anatomy-hub",
+      "triple": "pip-joint|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|pisiform|part_of|hand-wrist-anatomy-hub",
+      "triple": "pisiform|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|proximal-phalanx|part_of|hand-wrist-anatomy-hub",
+      "triple": "proximal-phalanx|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|pruj|part_of|hand-wrist-anatomy-hub",
+      "triple": "pruj|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|radial-artery|part_of|hand-wrist-anatomy-hub",
+      "triple": "radial-artery|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|radial-nerve|part_of|hand-wrist-anatomy-hub",
+      "triple": "radial-nerve|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|radius|part_of|hand-wrist-anatomy-hub",
+      "triple": "radius|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|recurrent-motor-branch-median-nerve|part_of|median-nerve",
+      "triple": "recurrent-motor-branch-median-nerve|part_of|median-nerve"
+    },
+    {
+      "fingerprint": "rel|revision-carpal-tunnel-release|at_risk_structure|median-nerve",
+      "triple": "revision-carpal-tunnel-release|at_risk_structure|median-nerve"
+    },
+    {
+      "fingerprint": "rel|revision-carpal-tunnel-release|involves_anatomy|carpal-tunnel",
+      "triple": "revision-carpal-tunnel-release|involves_anatomy|carpal-tunnel"
+    },
+    {
+      "fingerprint": "rel|scaphoid|articulates_with|lunate",
+      "triple": "scaphoid|articulates_with|lunate"
+    },
+    {
+      "fingerprint": "rel|scaphoid|part_of|hand-wrist-anatomy-hub",
+      "triple": "scaphoid|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|scapholunate-ligament|inserts_on|lunate",
+      "triple": "scapholunate-ligament|inserts_on|lunate"
+    },
+    {
+      "fingerprint": "rel|scapholunate-ligament|inserts_on|scaphoid",
+      "triple": "scapholunate-ligament|inserts_on|scaphoid"
+    },
+    {
+      "fingerprint": "rel|second-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "triple": "second-metacarpal|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|superficial-palmar-arch|part_of|hand-wrist-anatomy-hub",
+      "triple": "superficial-palmar-arch|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|tfcc|inserts_on|triquetrum",
+      "triple": "tfcc|inserts_on|triquetrum"
+    },
+    {
+      "fingerprint": "rel|third-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "triple": "third-metacarpal|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|thumb-ucl|inserts_on|proximal-phalanx",
+      "triple": "thumb-ucl|inserts_on|proximal-phalanx"
+    },
+    {
+      "fingerprint": "rel|trapezium|part_of|hand-wrist-anatomy-hub",
+      "triple": "trapezium|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|trapezoid|part_of|hand-wrist-anatomy-hub",
+      "triple": "trapezoid|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|triquetrum|articulates_with|druj",
+      "triple": "triquetrum|articulates_with|druj"
+    },
+    {
+      "fingerprint": "rel|triquetrum|part_of|hand-wrist-anatomy-hub",
+      "triple": "triquetrum|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|ulna|part_of|hand-wrist-anatomy-hub",
+      "triple": "ulna|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|ulnar-artery|part_of|hand-wrist-anatomy-hub",
+      "triple": "ulnar-artery|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|ulnar-nerve|part_of|hand-wrist-anatomy-hub",
+      "triple": "ulnar-nerve|part_of|hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|volar-plate|inserts_on|proximal-phalanx",
+      "triple": "volar-plate|inserts_on|proximal-phalanx"
+    }
+  ],
+  "proposalCounts": [
+    {
+      "key": "add_canonical_relationship:approved",
+      "count": 114
+    },
+    {
+      "key": "add_canonical_relationship:needs_review",
+      "count": 2
+    },
+    {
+      "key": "create_canonical_entity:approved",
+      "count": 92
+    },
+    {
+      "key": "create_canonical_entity:needs_review",
+      "count": 1
+    },
+    {
+      "key": "link_curriculum_node_to_entity:approved",
+      "count": 1
+    },
+    {
+      "key": "propose_decision_point:needs_review",
+      "count": 8
+    },
+    {
+      "key": "propose_educational_claim:needs_review",
+      "count": 8
+    }
+  ],
+  "omittedOrRejected": [
+    "rel|carpal-tunnel-syndrome|differential_for|distal-radius-fracture",
+    "rel|carpal-tunnel-syndrome|differential_for|median-nerve-compression",
+    "rel|carpal-tunnel-syndrome|differential_for|trigger-finger",
+    "rel|carpal-tunnel-syndrome|tested_by|needle-electromyography",
+    "rel|endoscopic-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+    "rel|open-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+    "rel|persistent-carpal-tunnel-syndrome-after-release|treated_by|revision-carpal-tunnel-release",
+    "rel|recurrent-carpal-tunnel-syndrome|treated_by|revision-carpal-tunnel-release"
+  ],
+  "semanticGraphHash": "0f75b7ab7ec364d9433df7d9efe07eae105615bfeca4979519e18db4a72f0eda",
+  "packetHash": "c613339eb7f01145fa86a218a9b82ee9c064ebbe29de562fd2a0d906d7af96d9"
+}

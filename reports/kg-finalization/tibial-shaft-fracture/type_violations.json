@@ -1,0 +1,25 @@
+[
+  {
+    "fingerprint": "relationship|tibial-shaft-fracture|uses_fixation|im-nail-fixation",
+    "relationship": {
+      "subjectSlug": "tibial-shaft-fracture",
+      "predicate": "uses_fixation",
+      "objectSlug": "im-nail-fixation",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or",
+          "clinic"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|tibial-shaft-fracture|uses_fixation|im-nail-fixation"
+      },
+      "source": "proposal"
+    },
+    "subjectEntityType": "condition",
+    "objectEntityType": null,
+    "errors": [
+      "Unknown object entity slug: im-nail-fixation"
+    ]
+  }
+]

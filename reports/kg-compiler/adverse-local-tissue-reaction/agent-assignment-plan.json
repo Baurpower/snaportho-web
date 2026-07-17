@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-05T23:00:26.089Z",
+  "generatedAt": "2026-07-16T02:31:42.967Z",
   "frameworkVersion": "1.0.0",
   "topicKey": "adverse-local-tissue-reaction",
   "pilotKey": "adverse-local-tissue-reaction-neighborhood",
@@ -9,9 +9,17 @@
       "agentId": "relationship-builder",
       "agentName": "Relationship Builder",
       "type": "gap_resolution",
-      "gapCount": 1,
+      "gapCount": 9,
       "gapIds": [
-        "gap-rel-1"
+        "gap-rel-1",
+        "gap-rel-2",
+        "gap-rel-4",
+        "gap-rel-7",
+        "gap-rel-11",
+        "gap-rel-16",
+        "gap-rel-17",
+        "gap-proc-approach-22",
+        "gap-proc-approach-23"
       ],
       "gapKinds": [
         "missing_relationship"
@@ -20,10 +28,31 @@
         "work-clinical-entity-builder",
         "work-anatomy-builder"
       ],
-      "estimatedConfidence": 0.92,
-      "requiredReviewer": "none",
+      "estimatedConfidence": 0.8888888888888888,
+      "requiredReviewer": "attending",
       "matchReasons": [
         "handles_gap_kind:missing_relationship"
+      ]
+    },
+    {
+      "workItemId": "work-metadata-builder",
+      "agentId": "metadata-builder",
+      "agentName": "Metadata Builder",
+      "type": "gap_resolution",
+      "gapCount": 1,
+      "gapIds": [
+        "gap-meta-rel-3"
+      ],
+      "gapKinds": [
+        "missing_metadata"
+      ],
+      "dependencies": [
+        "work-relationship-builder"
+      ],
+      "estimatedConfidence": 0.9,
+      "requiredReviewer": "none",
+      "matchReasons": [
+        "handles_gap_kind:missing_metadata"
       ]
     },
     {
@@ -31,12 +60,18 @@
       "agentId": "claim-builder",
       "agentName": "Claim Builder",
       "type": "gap_resolution",
-      "gapCount": 4,
+      "gapCount": 10,
       "gapIds": [
-        "gap-claim-2",
-        "gap-claim-type-3",
-        "gap-claim-type-4",
-        "gap-biomech-claim-7"
+        "gap-claim-5",
+        "gap-claim-type-6",
+        "gap-claim-8",
+        "gap-claim-type-9",
+        "gap-claim-type-10",
+        "gap-claim-12",
+        "gap-claim-type-13",
+        "gap-claim-type-14",
+        "gap-biomech-claim-20",
+        "gap-biomech-claim-21"
       ],
       "gapKinds": [
         "missing_claim"
@@ -44,10 +79,30 @@
       "dependencies": [
         "work-relationship-builder"
       ],
-      "estimatedConfidence": 0.7999999999999999,
+      "estimatedConfidence": 0.8029999999999999,
       "requiredReviewer": "clinical_expert",
       "matchReasons": [
         "handles_gap_kind:missing_claim"
+      ]
+    },
+    {
+      "workItemId": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "agentName": "Clinical Entity Builder",
+      "type": "gap_resolution",
+      "gapCount": 1,
+      "gapIds": [
+        "gap-entity-neighbor-15"
+      ],
+      "gapKinds": [
+        "missing_entity"
+      ],
+      "dependencies": [],
+      "estimatedConfidence": 0.95,
+      "requiredReviewer": "clinical_expert",
+      "matchReasons": [
+        "handles_gap_kind:missing_entity",
+        "generic_fallback"
       ]
     },
     {
@@ -57,8 +112,8 @@
       "type": "gap_resolution",
       "gapCount": 2,
       "gapIds": [
-        "gap-asset-card-5",
-        "gap-asset-question-6"
+        "gap-asset-card-18",
+        "gap-asset-question-19"
       ],
       "gapKinds": [
         "missing_asset_link"
@@ -77,6 +132,7 @@
     "work-clinical-entity-builder",
     "work-anatomy-builder",
     "work-relationship-builder",
+    "work-metadata-builder",
     "work-claim-builder",
     "work-asset-linker",
     "work-duplicate-detector",

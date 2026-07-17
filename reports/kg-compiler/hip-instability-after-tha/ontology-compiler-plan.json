@@ -2,13 +2,13 @@
   "topicKey": "hip-instability-after-tha",
   "pilotKey": "hip-instability-after-tha-neighborhood",
   "displayName": "Hip Instability After THA",
-  "generatedAt": "2026-07-05T22:55:55.498Z",
+  "generatedAt": "2026-07-16T02:41:08.227Z",
   "stages": [
     {
       "stage": 1,
       "name": "Neighborhood Resolution",
       "status": "completed",
-      "summary": "Resolved 3 entities from canonical DB for Hip Instability After THA.",
+      "summary": "Resolved 8 entities from canonical DB for Hip Instability After THA.",
       "outputs": [
         "neighborhood_plan"
       ]
@@ -26,7 +26,7 @@
       "stage": 3,
       "name": "Gap Analysis",
       "status": "completed",
-      "summary": "Identified 27 gaps across 6 kinds.",
+      "summary": "Identified 36 gaps across 6 kinds.",
       "outputs": [
         "ontology-gap-report.json"
       ]
@@ -48,7 +48,7 @@
       "stage": 5,
       "name": "Agent Orchestration",
       "status": "completed",
-      "summary": "Executed 11/11 agents; 86 unique proposals; 0 failed.",
+      "summary": "Executed 11/11 agents; 90 unique proposals; 0 failed.",
       "outputs": [
         "agent-execution-report.json",
         "agent-output-summary.md",
@@ -80,7 +80,7 @@
       "stage": 7,
       "name": "Intelligent Auto Review",
       "status": "completed",
-      "summary": "88.4% auto-approved; 11.6% escalated.",
+      "summary": "84.4% auto-approved; 15.6% escalated.",
       "outputs": [
         "ontology-auto-review.json"
       ]
@@ -89,7 +89,7 @@
       "stage": 8,
       "name": "Human Review Packet",
       "status": "completed",
-      "summary": "8 items in human queue.",
+      "summary": "9 items in human queue.",
       "outputs": [
         "human_review_packet"
       ]
@@ -105,25 +105,25 @@
     }
   ],
   "neighborhood": {
-    "entityCount": 3,
-    "relationshipCount": 1,
+    "entityCount": 8,
+    "relationshipCount": 7,
     "claimCount": 2,
     "decisionPointCount": 0
   },
   "gaps": {
-    "total": 27,
+    "total": 36,
     "byKind": {
-      "missing_relationship": 9,
-      "missing_claim": 9,
+      "missing_relationship": 14,
+      "missing_claim": 13,
       "missing_entity": 3,
       "missing_decision_point": 3,
       "missing_metadata": 1,
       "missing_asset_link": 2
     },
     "byPriority": {
-      "medium": 14,
-      "critical": 6,
-      "high": 7
+      "high": 9,
+      "medium": 20,
+      "critical": 7
     }
   },
   "workPlan": {
@@ -461,10 +461,10 @@
     ]
   },
   "review": {
-    "totalProposals": 86,
+    "totalProposals": 90,
     "autoApproved": 76,
-    "humanReview": 8,
-    "humanReviewPercent": 11.6
+    "humanReview": 9,
+    "humanReviewPercent": 15.6
   },
   "publication": {
     "currentMaturityLevel": 5,

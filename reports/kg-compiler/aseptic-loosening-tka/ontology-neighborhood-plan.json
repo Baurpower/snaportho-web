@@ -3,8 +3,62 @@
   "pilotKey": "aseptic-loosening-tka-neighborhood",
   "primaryEntitySlug": "aseptic-loosening-tka",
   "displayName": "Aseptic Loosening of TKA",
-  "generatedAt": "2026-07-05T23:09:48.667Z",
+  "generatedAt": "2026-07-16T02:33:03.939Z",
   "nodes": [
+    {
+      "slug": "adult-reconstruction-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Adult Reconstruction Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "aseptic-loosening-tka",
+      "entityType": "condition",
+      "preferredLabel": "Aseptic Loosening of TKA",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 5,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "femoral-component",
+      "entityType": "implant",
+      "preferredLabel": "Femoral Component",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "revision-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Revision Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "tibial-baseplate",
+      "entityType": "implant",
+      "preferredLabel": "Tibial Baseplate",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
     {
       "slug": "tibial-component-subsidence",
       "entityType": "imaging_finding",
@@ -13,26 +67,21 @@
       "isPrimary": false,
       "inboundEdgeCount": 1,
       "outboundEdgeCount": 0
-    },
-    {
-      "slug": "aseptic-loosening-tka",
-      "entityType": "condition",
-      "preferredLabel": "Aseptic Loosening of TKA",
-      "role": "primary_condition",
-      "isPrimary": true,
-      "inboundEdgeCount": 0,
-      "outboundEdgeCount": 1
     }
   ],
-  "edgeCount": 1,
+  "edgeCount": 7,
   "claimCount": 2,
   "decisionPointCount": 0,
   "roles": {
     "primary_condition": [
       "aseptic-loosening-tka"
     ],
-    "neighboring_anatomy": [],
-    "procedure": [],
+    "neighboring_anatomy": [
+      "adult-reconstruction-anatomy-hub"
+    ],
+    "procedure": [
+      "revision-arthroplasty"
+    ],
     "classification": [],
     "imaging": [
       "tibial-component-subsidence"
@@ -40,8 +89,13 @@
     "complication": [],
     "decision_point_anchor": [],
     "claim_anchor": [],
-    "biomechanics": [],
-    "fixation": [],
+    "biomechanics": [
+      "implant-concepts-hub"
+    ],
+    "fixation": [
+      "femoral-component",
+      "tibial-baseplate"
+    ],
     "supporting": []
   }
 }

@@ -1,5 +1,60 @@
 [
   {
+    "proposal_fingerprint": "claim|claim-hip-center-of-rotation-fact-hip-instability-after-th",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7941250000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.794 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Generated from evidence items: ev-static-prepare-94ffbaff",
+    "metadata": {
+      "pilot": "hip-instability-after-tha-neighborhood",
+      "draft_id": "claim-hip-center-of-rotation-fact-hip-instability-after-th",
+      "claim_type": "fact",
+      "claim_text": "Hip Instability After THA indication language.",
+      "primary_entity_slug": "hip-center-of-rotation",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "verified": false,
+      "why_it_matters": [
+        "changes_management"
+      ],
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "learner_stage": "clerkship",
+      "evidence_item_ids": [
+        "ev-static-prepare-94ffbaff"
+      ],
+      "evidence_packet_id": "ev-packet-fde8321b",
+      "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "review_route_hint": "HUMAN_REVIEW",
+      "generated_by": "claim-builder-v2",
+      "publication_eligible": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.8365,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-16T02:41:08.222Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
     "proposal_fingerprint": "claim|claim-hip-instability-after-tha-board_trap-post-tha-instability-ref",
     "proposal_type": "propose_educational_claim",
     "route": "ATTENDING_REVIEW",
@@ -50,7 +105,7 @@
       "curation_rules": [
         "educational_judgment_claim"
       ],
-      "curated_at": "2026-07-05T22:55:55.494Z"
+      "curated_at": "2026-07-16T02:41:08.222Z"
     },
     "auto_review_category": "EXPERT_REVIEW"
   },
@@ -75,7 +130,7 @@
       "verified": false,
       "claim_text": "Board trap: oversimplifying hip instability after tha without attending-level implant, fixation, or infection context.",
       "claim_type": "board_trap",
-      "curated_at": "2026-07-05T22:55:55.494Z",
+      "curated_at": "2026-07-16T02:41:08.222Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -152,7 +207,7 @@
       "curation_rules": [
         "educational_judgment_claim"
       ],
-      "curated_at": "2026-07-05T22:55:55.494Z"
+      "curated_at": "2026-07-16T02:41:08.222Z"
     },
     "auto_review_category": "EXPERT_REVIEW"
   },
@@ -177,7 +232,7 @@
       "verified": false,
       "claim_text": "THA instability workup must assess component position, soft tissues, and infection.",
       "claim_type": "fact",
-      "curated_at": "2026-07-05T22:55:55.494Z",
+      "curated_at": "2026-07-16T02:41:08.222Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -252,7 +307,7 @@
       "curation_rules": [
         "educational_judgment_claim"
       ],
-      "curated_at": "2026-07-05T22:55:55.494Z"
+      "curated_at": "2026-07-16T02:41:08.222Z"
     },
     "auto_review_category": "SAFE_REVIEW"
   },
@@ -306,7 +361,7 @@
       "curation_rules": [
         "educational_judgment_claim"
       ],
-      "curated_at": "2026-07-05T22:55:55.494Z"
+      "curated_at": "2026-07-16T02:41:08.222Z"
     },
     "auto_review_category": "SAFE_REVIEW"
   },
@@ -331,7 +386,7 @@
       "verified": false,
       "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for hip instability after tha.",
       "claim_type": "clinical_script",
-      "curated_at": "2026-07-05T22:55:55.494Z",
+      "curated_at": "2026-07-16T02:41:08.222Z",
       "content_source": "generated_draft",
       "curation_route": "HUMAN_REVIEW",
       "curation_rules": [
@@ -378,7 +433,7 @@
       "urgency": "routine",
       "draft_id": "dp-hip-instability-after-tha-operative",
       "verified": false,
-      "curated_at": "2026-07-05T22:55:55.494Z",
+      "curated_at": "2026-07-16T02:41:08.222Z",
       "pattern_type": "operative_indication",
       "content_source": "generated_draft",
       "curation_route": "ATTENDING_REVIEW",

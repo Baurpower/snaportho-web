@@ -1,0 +1,129 @@
+{
+  "agent": "ConnectivityAgent",
+  "generatedAt": "2026-07-16T02:19:30.995Z",
+  "result": {
+    "approved": [
+      {
+        "fingerprint": "entity|anatomy_structure|anterior-compartment",
+        "objectKind": "entity",
+        "agent": "ConnectivityAgent",
+        "reason": "Entity participates in the generated neighborhood graph."
+      },
+      {
+        "fingerprint": "entity|anatomy_structure|fibula",
+        "objectKind": "entity",
+        "agent": "ConnectivityAgent",
+        "reason": "Entity participates in the generated neighborhood graph."
+      },
+      {
+        "fingerprint": "entity|anatomy_structure|leg-compartment-complex",
+        "objectKind": "entity",
+        "agent": "ConnectivityAgent",
+        "reason": "Entity participates in the generated neighborhood graph."
+      },
+      {
+        "fingerprint": "entity|imaging_finding|segmental-tibial-fracture",
+        "objectKind": "entity",
+        "agent": "ConnectivityAgent",
+        "reason": "Entity participates in the generated neighborhood graph."
+      },
+      {
+        "fingerprint": "entity|biomechanics_concept|tibial-blood-supply",
+        "objectKind": "entity",
+        "agent": "ConnectivityAgent",
+        "reason": "Entity participates in the generated neighborhood graph."
+      },
+      {
+        "fingerprint": "entity|anatomy_structure|tibia-leg-anatomy-hub",
+        "objectKind": "entity",
+        "agent": "ConnectivityAgent",
+        "reason": "Entity participates in the generated neighborhood graph."
+      },
+      {
+        "fingerprint": "entity|procedure|tibial-im-nail",
+        "objectKind": "entity",
+        "agent": "ConnectivityAgent",
+        "reason": "Entity participates in the generated neighborhood graph."
+      },
+      {
+        "fingerprint": "entity|anatomy_structure|tibial-shaft",
+        "objectKind": "entity",
+        "agent": "ConnectivityAgent",
+        "reason": "Entity participates in the generated neighborhood graph."
+      },
+      {
+        "fingerprint": "entity|condition|tibial-shaft-fracture",
+        "objectKind": "entity",
+        "agent": "ConnectivityAgent",
+        "reason": "Entity participates in the generated neighborhood graph."
+      }
+    ],
+    "modified": [],
+    "rejected": [],
+    "escalations": [],
+    "warnings": [
+      {
+        "id": "connectivity-low-degree-tibial-infection",
+        "agent": "ConnectivityAgent",
+        "severity": "MODERATE",
+        "message": "Low-degree node may need another semantic anchor: Tibial Infection.",
+        "fingerprint": "entity|complication|tibial-infection"
+      },
+      {
+        "id": "connectivity-low-degree-tibial-malunion",
+        "agent": "ConnectivityAgent",
+        "severity": "MODERATE",
+        "message": "Low-degree node may need another semantic anchor: Tibial Malunion.",
+        "fingerprint": "entity|complication|tibial-malunion"
+      },
+      {
+        "id": "connectivity-low-degree-tibial-nonunion",
+        "agent": "ConnectivityAgent",
+        "severity": "MODERATE",
+        "message": "Low-degree node may need another semantic anchor: Tibial Nonunion.",
+        "fingerprint": "entity|complication|tibial-nonunion"
+      }
+    ],
+    "metrics": {
+      "duplicatesPrevented": 0,
+      "relationshipsNormalized": 0,
+      "unsupportedEdgesRemoved": 0,
+      "reviewDecisionsInherited": 0,
+      "orphanEntitiesRepaired": 0,
+      "publicationBlockersDetected": 0
+    }
+  },
+  "artifacts": {
+    "orphan_report": [],
+    "low_degree_report": [
+      {
+        "fingerprint": "entity|complication|tibial-infection",
+        "slug": "tibial-infection",
+        "label": "Tibial Infection",
+        "entityType": "complication",
+        "degree": 1,
+        "issue": "low_degree_node",
+        "suggestedFix": "Add a valid registry relationship connecting Tibial Infection to an existing neighborhood anchor."
+      },
+      {
+        "fingerprint": "entity|complication|tibial-malunion",
+        "slug": "tibial-malunion",
+        "label": "Tibial Malunion",
+        "entityType": "complication",
+        "degree": 1,
+        "issue": "low_degree_node",
+        "suggestedFix": "Add a valid registry relationship connecting Tibial Malunion to an existing neighborhood anchor."
+      },
+      {
+        "fingerprint": "entity|complication|tibial-nonunion",
+        "slug": "tibial-nonunion",
+        "label": "Tibial Nonunion",
+        "entityType": "complication",
+        "degree": 1,
+        "issue": "low_degree_node",
+        "suggestedFix": "Add a valid registry relationship connecting Tibial Nonunion to an existing neighborhood anchor."
+      }
+    ],
+    "connectivity_repairs": []
+  }
+}

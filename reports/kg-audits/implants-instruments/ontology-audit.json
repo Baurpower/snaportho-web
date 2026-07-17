@@ -1,0 +1,60 @@
+{
+  "category": "ontology_completeness",
+  "label": "Ontology Completeness",
+  "score": 61,
+  "deductions": [
+    {
+      "finding": "Missing relationship requirements (28)",
+      "evidence": "28 gaps of kind missing_relationship",
+      "reason": "Ontology contract requires complete relationship coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 8,
+      "suggestedFix": "Run the matching builder agent for missing_relationship."
+    },
+    {
+      "finding": "Missing claim requirements (89)",
+      "evidence": "89 gaps of kind missing_claim",
+      "reason": "Ontology contract requires complete claim coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 8,
+      "suggestedFix": "Run the matching builder agent for missing_claim."
+    },
+    {
+      "finding": "Only 0 anatomy structures (minimum 3 required)",
+      "evidence": "Entity slugs: ",
+      "reason": "Condition neighborhoods require regional anatomy per condition.anatomy.min_structures.",
+      "severity": "critical",
+      "category": "ontology_completeness",
+      "affectedSlugs": [
+        "implants-instruments"
+      ],
+      "suggestedFix": "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
+      "impact": 15
+    },
+    {
+      "finding": "No classification system present",
+      "evidence": "0 classification entities in merged draft",
+      "reason": "Fracture diagnoses require classification when one exists clinically.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "suggestedFix": "Link has_classification and has_grade edges to a classification system.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "totalGaps": 117,
+    "criticalGaps": 0,
+    "highGaps": 0,
+    "anatomyStructures": 0,
+    "classificationEntities": 0,
+    "completenessRatio": 0
+  },
+  "recommendations": [
+    "Run the matching builder agent for missing_relationship.",
+    "Run the matching builder agent for missing_claim.",
+    "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
+    "Link has_classification and has_grade edges to a classification system."
+  ]
+}

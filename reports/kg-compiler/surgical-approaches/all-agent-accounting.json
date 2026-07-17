@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-07-08T00:00:00.000Z",
+  "topicKey": "surgical-approaches",
+  "pilotKey": "surgical-approaches-neighborhood",
+  "agents": [
+    { "agent": "Anatomy Builder", "status": "no_applicable_work", "reason": "Reused anatomy seeded; no anatomy entity gaps assigned." },
+    { "agent": "Clinical Entity Builder", "status": "no_applicable_work", "reason": "No missing-entity gaps." },
+    { "agent": "Relationship Builder", "status": "executed", "reason": "Root anatomy part_of gap; no safe auto proposal." },
+    { "agent": "Claim Builder", "status": "no_applicable_work", "reason": "Claims already present." },
+    { "agent": "Decision Point Builder", "status": "no_applicable_work", "reason": "Decision points already present." },
+    { "agent": "Metadata Builder", "status": "no_applicable_work", "reason": "No metadata gaps." },
+    { "agent": "Asset Linker", "status": "no_applicable_work", "reason": "No asset mappings registered." },
+    { "agent": "Provenance Builder", "status": "no_applicable_work", "reason": "Provenance already attached." },
+    { "agent": "Duplicate Detector", "status": "executed", "reason": "Completed; duplicates prevented at apply." },
+    { "agent": "Conflict Resolver", "status": "executed", "reason": "Zero conflicts." },
+    { "agent": "Quality Scorer", "status": "executed", "reason": "Completed." },
+    { "agent": "Review Assistant", "status": "executed", "reason": "Routed 1155 proposals." },
+    { "agent": "Publication Validator", "status": "executed", "reason": "Blocked at 5/7." },
+    { "agent": "Neighborhood QA", "status": "executed", "reason": "Audit score 85; NOT_READY." }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "generatedAt": "2026-07-09T04:28:59.800Z",
+  "gaps": [
+    {
+      "id": "gap-entity-neighbor-1",
+      "kind": "missing_entity",
+      "priority": "critical",
+      "confidence": 0.95,
+      "reason": "Total Hip Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.anatomy",
+      "anchorEntitySlug": "total-hip-arthroplasty",
+      "entityType": "anatomy_structure"
+    },
+    {
+      "id": "gap-rel-2",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Total Hip Arthroplasty missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "total-hip-arthroplasty",
+      "subjectSlug": "total-hip-arthroplasty",
+      "predicate": "involves_anatomy"
+    },
+    {
+      "id": "gap-rel-3",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Total Hip Arthroplasty missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "total-hip-arthroplasty",
+      "subjectSlug": "total-hip-arthroplasty",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-entity-neighbor-4",
+      "kind": "missing_entity",
+      "priority": "critical",
+      "confidence": 0.95,
+      "reason": "Total Knee Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.anatomy",
+      "anchorEntitySlug": "total-knee-arthroplasty",
+      "entityType": "anatomy_structure"
+    },
+    {
+      "id": "gap-rel-5",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Total Knee Arthroplasty missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "total-knee-arthroplasty",
+      "subjectSlug": "total-knee-arthroplasty",
+      "predicate": "involves_anatomy"
+    },
+    {
+      "id": "gap-rel-6",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Total Knee Arthroplasty missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "total-knee-arthroplasty",
+      "subjectSlug": "total-knee-arthroplasty",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-entity-neighbor-7",
+      "kind": "missing_entity",
+      "priority": "critical",
+      "confidence": 0.95,
+      "reason": "ACL Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.anatomy",
+      "anchorEntitySlug": "acl-reconstruction",
+      "entityType": "anatomy_structure"
+    },
+    {
+      "id": "gap-rel-8",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "ACL Reconstruction missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "acl-reconstruction",
+      "subjectSlug": "acl-reconstruction",
+      "predicate": "involves_anatomy"
+    },
+    {
+      "id": "gap-rel-9",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "ACL Reconstruction missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "acl-reconstruction",
+      "subjectSlug": "acl-reconstruction",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-entity-neighbor-10",
+      "kind": "missing_entity",
+      "priority": "critical",
+      "confidence": 0.95,
+      "reason": "Rotator Cuff Repair neighborhood has 0/1 anatomy_structure entities.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.anatomy",
+      "anchorEntitySlug": "rotator-cuff-repair",
+      "entityType": "anatomy_structure"
+    },
+    {
+      "id": "gap-rel-11",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Rotator Cuff Repair missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "rotator-cuff-repair",
+      "subjectSlug": "rotator-cuff-repair",
+      "predicate": "involves_anatomy"
+    },
+    {
+      "id": "gap-rel-12",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Rotator Cuff Repair missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "rotator-cuff-repair",
+      "subjectSlug": "rotator-cuff-repair",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-proc-approach-13",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Total Hip Arthroplasty missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "total-hip-arthroplasty",
+      "subjectSlug": "total-hip-arthroplasty",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-14",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Total Knee Arthroplasty missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "total-knee-arthroplasty",
+      "subjectSlug": "total-knee-arthroplasty",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-15",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure ACL Reconstruction missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "acl-reconstruction",
+      "subjectSlug": "acl-reconstruction",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-16",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Rotator Cuff Repair missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "rotator-cuff-repair",
+      "subjectSlug": "rotator-cuff-repair",
+      "predicate": "uses_approach"
+    }
+  ],
+  "summary": {
+    "total": 16,
+    "byKind": {
+      "missing_entity": 4,
+      "missing_relationship": 12
+    },
+    "byPriority": {
+      "critical": 8,
+      "high": 4,
+      "medium": 4
+    }
+  }
+}

@@ -39,8 +39,8 @@ const OrthobulletsDebugSchema = z.object({
 });
 
 export const OrthobulletsPageContextSchema = z.object({
-  source: z.enum(['orthobullets', 'rock']).default('orthobullets'),
-  provider: z.enum(['orthobullets', 'rock']).default('orthobullets'),
+  source: z.enum(['orthobullets', 'rock', 'himalaya']).default('orthobullets'),
+  provider: z.enum(['orthobullets', 'rock', 'himalaya']).default('orthobullets'),
   mode: z.enum(['question', 'curriculum_content', 'topic_page']).default('question'),
   pageUrl: z.string().trim().url(),
   sourceUrl: z.string().trim().url().optional(),
@@ -75,6 +75,9 @@ export const OrthobulletsPageContextSchema = z.object({
   percentDistribution: z.array(OrthobulletsPercentDistributionSchema).max(12).default([]),
   explanationText: z.string().trim().min(1).max(16000).nullable().optional(),
   explanation: z.string().trim().min(1).max(16000).nullable().optional(),
+  sourceExplanation: z.string().trim().min(1).max(16000).nullable().optional(),
+  sourceKeyPoints: z.string().trim().min(1).max(16000).nullable().optional(),
+  sourceReferences: z.string().trim().min(1).max(16000).nullable().optional(),
   linkedConcepts: z.array(OrthobulletsLinkedConceptSchema).max(20).default([]),
   images: z.array(OrthobulletsImageMetadataSchema).max(20).default([]),
   raw: z.object({
@@ -84,15 +87,124 @@ export const OrthobulletsPageContextSchema = z.object({
   debug: OrthobulletsDebugSchema.optional(),
 });
 
+function hasMatchingChoice(value: z.infer<typeof OrthobulletsPageContextSchema>, key: string | null | undefined) {
+  if (!key) return true;
+  return value.answerChoices.some((choice) => choice.key === key || choice.label === key);
+}
+
+const StrictQuestionPageContextSchema = OrthobulletsPageContextSchema.superRefine((value, ctx) => {
+  if (value.mode !== 'question') {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Question requests require question mode.',
+      path: ['mode'],
+    });
+  }
+  if (!value.stem?.trim()) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Question requests require a visible stem.',
+      path: ['stem'],
+    });
+  }
+  if (value.answerChoices.length < 2) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Question requests require at least two answer choices.',
+      path: ['answerChoices'],
+    });
+  }
+  if (!hasMatchingChoice(value, value.selectedAnswerKey)) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Selected answer key does not match an answer choice.',
+      path: ['selectedAnswerKey'],
+    });
+  }
+  if (!hasMatchingChoice(value, value.correctAnswerKey)) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Correct answer key does not match an answer choice.',
+      path: ['correctAnswerKey'],
+    });
+  }
+});
+
 export const OrthobulletsExplainRequestSchema = z.object({
-  pageContext: OrthobulletsPageContextSchema,
+  task: z.literal('question_explain').default('question_explain'),
+  pageContext: StrictQuestionPageContextSchema,
   emphasis: CurriculumExplainEmphasisSchema.optional(),
 });
 
 export const OrthobulletsHintRequestSchema = z.object({
-  pageContext: OrthobulletsPageContextSchema,
+  task: z.literal('question_hint').default('question_hint'),
+  pageContext: StrictQuestionPageContextSchema,
   hintLevel: z.union([z.literal(1), z.literal(2), z.literal(3)]),
   selectedAnswerKey: z.string().trim().min(1).max(32).optional(),
+});
+
+const CurriculumSectionSchema = z.object({
+  id: z.string().trim().min(1).max(120).optional(),
+  heading: z.string().trim().min(1).max(240).optional(),
+  level: z.number().int().min(1).max(6).optional(),
+  text: z.string().trim().min(1).max(5000),
+});
+
+export const CurriculumExplainRequestSchema = z.object({
+  task: z.literal('curriculum_explain'),
+  provider: z.enum(['orthobullets', 'rock']),
+  sourceUrl: z.string().trim().url(),
+  pageContext: OrthobulletsPageContextSchema,
+  emphasis: CurriculumExplainEmphasisSchema.default('high_yield'),
+  curriculum: z.object({
+    title: z.string().trim().min(1).max(300),
+    breadcrumbs: z.array(z.string().trim().min(1).max(200)).max(12).default([]).optional(),
+    sections: z.array(CurriculumSectionSchema).max(30).default([]),
+    tables: z.array(z.object({
+      caption: z.string().trim().min(1).max(240).optional(),
+      headers: z.array(z.string().trim().min(1).max(160)).max(12).optional(),
+      rows: z.array(z.array(z.string().trim().min(1).max(1000)).max(12)).max(40),
+    })).max(8).default([]).optional(),
+    images: z.array(z.object({
+      src: z.string().trim().max(2000).optional(),
+      alt: z.string().trim().max(500).optional(),
+      caption: z.string().trim().max(1000).optional(),
+    })).max(20).default([]).optional(),
+    authors: z.array(z.string().trim().min(1).max(200)).max(12).default([]).optional(),
+    date: z.string().trim().min(1).max(120).nullable().optional(),
+    visibleText: z.string().trim().min(1).max(18000).optional(),
+  }),
+}).superRefine((value, ctx) => {
+  if (value.pageContext.provider !== value.provider) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Request provider must match page context provider.',
+      path: ['provider'],
+    });
+  }
+  if (value.pageContext.mode !== 'curriculum_content') {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Curriculum requests require curriculum content mode.',
+      path: ['pageContext', 'mode'],
+    });
+  }
+  const sectionTextLength = value.curriculum.sections.reduce((total, section) => total + section.text.trim().length, 0);
+  const visibleTextLength = value.curriculum.visibleText?.trim().length ?? 0;
+  if (sectionTextLength < 400 && visibleTextLength < 800) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Curriculum content is missing or too short.',
+      path: ['curriculum', 'sections'],
+    });
+  }
+  if (JSON.stringify(value).length > 70000) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Curriculum request is too large.',
+      path: ['curriculum'],
+    });
+  }
 });
 
 export const OrthobulletsExplainResponseSchema = z.object({
@@ -189,6 +301,7 @@ export type OrthobulletsExplainRequest = z.infer<typeof OrthobulletsExplainReque
 export type OrthobulletsExplainResponse = z.infer<typeof OrthobulletsExplainResponseSchema>;
 export type OrthobulletsHintRequest = z.infer<typeof OrthobulletsHintRequestSchema>;
 export type OrthobulletsHintResponse = z.infer<typeof OrthobulletsHintResponseSchema>;
+export type CurriculumExplainRequest = z.infer<typeof CurriculumExplainRequestSchema>;
 export type OrthobulletsChatTurn = z.infer<typeof OrthobulletsChatTurnSchema>;
 export type OrthobulletsChatRequest = z.infer<typeof OrthobulletsChatRequestSchema>;
 export type OrthobulletsChatResponse = z.infer<typeof OrthobulletsChatResponseSchema>;

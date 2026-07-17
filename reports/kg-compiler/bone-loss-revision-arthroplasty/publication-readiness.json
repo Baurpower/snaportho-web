@@ -1,23 +1,23 @@
 {
   "topicKey": "bone-loss-revision-arthroplasty",
   "pilotKey": "bone-loss-revision-arthroplasty-neighborhood",
-  "generatedAt": "2026-07-05T23:26:40.651Z",
+  "generatedAt": "2026-07-16T02:40:22.029Z",
   "currentLevel": 5,
   "requiredLevel": 8,
   "ready": false,
   "blockers": [
-    "12 proposals still awaiting human review",
+    "10 proposals still awaiting human review",
     "5 items require attending review",
     "Claims and DPs are draft-only — publication gate must block verified consumption.",
     "No approved canonical entities in database yet — proposals remain offline/spec.",
-    "15 critical/high ontology gaps remain unresolved"
+    "18 critical/high ontology gaps remain unresolved"
   ],
   "remainingWork": [
-    "[high] Paprosky Classification neighborhood has 0/2 classification_grade entities.",
-    "[critical] Bone Loss in Revision Arthroplasty neighborhood has 0/3 anatomy_structure entities.",
+    "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
+    "[high] AORI Classification neighborhood has 0/2 classification_grade entities.",
+    "[critical] Bone Loss in Revision Arthroplasty neighborhood has 1/3 anatomy_structure entities.",
     "[high] Bone Loss in Revision Arthroplasty neighborhood has 0/1 imaging_finding entities.",
     "[critical] Bone Loss in Revision Arthroplasty missing outbound injured_in (0/1).",
-    "[high] Bone Loss in Revision Arthroplasty missing outbound involves_anatomy (0/1).",
     "[high] Bone Loss in Revision Arthroplasty missing outbound at_risk_structure (0/1).",
     "[high] Bone Loss in Revision Arthroplasty missing outbound has_grade (0/1).",
     "[critical] Bone Loss in Revision Arthroplasty missing outbound has_imaging_finding (0/1).",
@@ -29,8 +29,8 @@
     "brobotReady": false
   },
   "estimatedEffort": {
-    "gapsRemaining": 23,
-    "humanReviewItems": 12,
+    "gapsRemaining": 34,
+    "humanReviewItems": 10,
     "attendingReviewItems": 5,
     "effortBand": "high"
   },

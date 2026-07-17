@@ -2,13 +2,13 @@
   "topicKey": "tibial-shaft-fracture",
   "pilotKey": "tibial-shaft-fracture-neighborhood",
   "displayName": "Tibial Shaft Fracture",
-  "generatedAt": "2026-07-05T21:24:25.513Z",
+  "generatedAt": "2026-07-16T02:18:46.906Z",
   "stages": [
     {
       "stage": 1,
       "name": "Neighborhood Resolution",
       "status": "completed",
-      "summary": "Resolved 10 entities from canonical DB for Tibial Shaft Fracture.",
+      "summary": "Resolved 12 entities from canonical DB for Tibial Shaft Fracture.",
       "outputs": [
         "neighborhood_plan"
       ]
@@ -26,7 +26,7 @@
       "stage": 3,
       "name": "Gap Analysis",
       "status": "completed",
-      "summary": "Identified 11 gaps across 4 kinds.",
+      "summary": "Identified 25 gaps across 6 kinds.",
       "outputs": [
         "ontology-gap-report.json"
       ]
@@ -35,7 +35,7 @@
       "stage": 4,
       "name": "Work Planning",
       "status": "completed",
-      "summary": "Scheduled 9 work items for 9 registered agents.",
+      "summary": "Scheduled 11 work items for 11 registered agents.",
       "outputs": [
         "ontology-work-plan.json",
         "agent-assignment-plan.json",
@@ -48,15 +48,16 @@
       "stage": 5,
       "name": "Agent Orchestration",
       "status": "completed",
-      "summary": "Executed 9/9 agents; 51 unique proposals; 0 failed.",
+      "summary": "Executed 11/11 agents; 45 unique proposals; 0 failed.",
       "outputs": [
         "agent-execution-report.json",
         "agent-output-summary.md",
         "work-clinical-entity-builder",
         "work-anatomy-builder",
         "work-relationship-builder",
-        "work-metadata-builder",
+        "work-decision-point-builder",
         "work-claim-builder",
+        "work-metadata-builder",
         "work-asset-linker",
         "work-duplicate-detector",
         "work-quality-scorer",
@@ -69,7 +70,7 @@
       "stage": 6,
       "name": "Merge",
       "status": "completed",
-      "summary": "Merged draft: 13 entities, 20 relationships; 0 conflicts.",
+      "summary": "Merged draft: 12 entities, 22 relationships; 0 conflicts.",
       "outputs": [
         "merged-neighborhood-draft.json",
         "conflict-report.json"
@@ -79,7 +80,7 @@
       "stage": 7,
       "name": "Intelligent Auto Review",
       "status": "completed",
-      "summary": "66.7% auto-approved; 33.3% escalated.",
+      "summary": "60% auto-approved; 40% escalated.",
       "outputs": [
         "ontology-auto-review.json"
       ]
@@ -88,7 +89,7 @@
       "stage": 8,
       "name": "Human Review Packet",
       "status": "completed",
-      "summary": "11 items in human queue.",
+      "summary": "13 items in human queue.",
       "outputs": [
         "human_review_packet"
       ]
@@ -104,30 +105,35 @@
     }
   ],
   "neighborhood": {
-    "entityCount": 10,
-    "relationshipCount": 4,
-    "claimCount": 2,
+    "entityCount": 12,
+    "relationshipCount": 19,
+    "claimCount": 5,
     "decisionPointCount": 0
   },
   "gaps": {
-    "total": 11,
+    "total": 25,
     "byKind": {
-      "missing_relationship": 4,
-      "missing_metadata": 1,
-      "missing_claim": 4,
+      "missing_claim": 9,
+      "missing_relationship": 7,
+      "missing_metadata": 3,
+      "missing_entity": 1,
+      "missing_decision_point": 3,
       "missing_asset_link": 2
     },
     "byPriority": {
-      "high": 2,
-      "medium": 9
+      "medium": 13,
+      "high": 8,
+      "critical": 4
     }
   },
   "workPlan": {
-    "workItemCount": 9,
+    "workItemCount": 11,
     "agentsRequired": [
+      "Claim Builder",
       "Relationship Builder",
       "Metadata Builder",
-      "Claim Builder",
+      "Clinical Entity Builder",
+      "Decision Point Builder",
       "Asset Linker",
       "Conflict Resolver",
       "Quality Scorer",
@@ -135,9 +141,11 @@
       "Publication Validator"
     ],
     "agentIds": [
+      "claim-builder",
       "relationship-builder",
       "metadata-builder",
-      "claim-builder",
+      "clinical-entity-builder",
+      "decision-point-builder",
       "asset-linker",
       "duplicate-detector",
       "quality-scorer",
@@ -453,10 +461,10 @@
     ]
   },
   "review": {
-    "totalProposals": 51,
-    "autoApproved": 34,
-    "humanReview": 11,
-    "humanReviewPercent": 33.3
+    "totalProposals": 45,
+    "autoApproved": 27,
+    "humanReview": 13,
+    "humanReviewPercent": 40
   },
   "publication": {
     "currentMaturityLevel": 5,

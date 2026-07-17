@@ -4,8 +4,8 @@
   "score": 42,
   "deductions": [
     {
-      "finding": "7 critical ontology gaps remain",
-      "evidence": "ontology-gap-report.json: gap-entity-neighbor-5, gap-rel-9, gap-rel-12",
+      "finding": "8 critical ontology gaps remain",
+      "evidence": "ontology-gap-report.json: gap-rel-15, gap-rel-17, gap-rel-19",
       "reason": "Required entities, relationships, claims, or decision points are missing per CKO §8–§9.",
       "severity": "critical",
       "category": "ontology_completeness",
@@ -13,8 +13,8 @@
       "impact": 15
     },
     {
-      "finding": "8 high-priority ontology gaps",
-      "evidence": "Gap kinds: missing_entity, missing_relationship, missing_claim",
+      "finding": "10 high-priority ontology gaps",
+      "evidence": "Gap kinds: missing_relationship, missing_entity, missing_claim",
       "reason": "High-priority gaps block maturity level advancement.",
       "severity": "high",
       "category": "ontology_completeness",
@@ -31,8 +31,8 @@
       "suggestedFix": "Run the matching builder agent for missing_entity."
     },
     {
-      "finding": "Missing relationship requirements (10)",
-      "evidence": "10 gaps of kind missing_relationship",
+      "finding": "Missing relationship requirements (15)",
+      "evidence": "15 gaps of kind missing_relationship",
       "reason": "Ontology contract requires complete relationship coverage.",
       "severity": "high",
       "category": "ontology_completeness",
@@ -40,8 +40,8 @@
       "suggestedFix": "Run the matching builder agent for missing_relationship."
     },
     {
-      "finding": "Missing claim requirements (9)",
-      "evidence": "9 gaps of kind missing_claim",
+      "finding": "Missing claim requirements (13)",
+      "evidence": "13 gaps of kind missing_claim",
       "reason": "Ontology contract requires complete claim coverage.",
       "severity": "high",
       "category": "ontology_completeness",
@@ -68,12 +68,12 @@
     }
   ],
   "metrics": {
-    "totalGaps": 28,
-    "criticalGaps": 7,
-    "highGaps": 8,
-    "anatomyStructures": 34,
+    "totalGaps": 37,
+    "criticalGaps": 8,
+    "highGaps": 10,
+    "anatomyStructures": 3,
     "classificationEntities": 0,
-    "completenessRatio": 0.06666666666666665
+    "completenessRatio": 0
   },
   "recommendations": [
     "Resolve critical gaps via assigned factory agents before publication review.",

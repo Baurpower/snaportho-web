@@ -1,0 +1,39 @@
+{
+  "ok": true,
+  "runDate": "2026-07-16",
+  "topicKey": "lisfranc-injury",
+  "displayName": "Lisfranc Injury",
+  "pilotKey": "lisfranc-injury-neighborhood",
+  "batchKey": "legacy-lisfranc-injury-bfb46d1e300ea92b",
+  "packetHash": "bfb46d1e300ea92b1221c1af8493a906dca1901f1b0efdfb6e750fe13eaece7e",
+  "graphHash": "a712e8d5e61a0f8f849b7d143572e17839dfcbe4c1c0ee53c232b15c9b8a7e37",
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "dryRun": false,
+  "exactAppliedMembershipReconstructed": true,
+  "counts": {
+    "approvedLoaded": 50,
+    "structuralProposals": 49,
+    "entities": 16,
+    "relationships": 32,
+    "curriculumBridges": 1,
+    "draftClaimsExcluded": 1,
+    "draftDecisionPointsExcluded": 0
+  },
+  "repairs": {
+    "insertedSemantic": 0,
+    "reusedSemantic": 49,
+    "proposalStatesRepaired": 0,
+    "insertedMemberships": 49,
+    "reusedMemberships": 0
+  },
+  "discrepancyCount": 0,
+  "exactNextAction": "run_strict_db_reload"
+}

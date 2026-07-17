@@ -1,0 +1,51 @@
+{
+  "ready_for_staged_manufacturing": false,
+  "staging_blockers": [
+    {
+      "blocker_id": "draft-traceability-missing",
+      "category": "ACTION_REQUIRED",
+      "severity": "HIGH",
+      "root_cause": "missing draft/staging traceability",
+      "affected_objects": 3,
+      "unique_underlying_problem": "Generated objects are missing lifecycle-minimum traceability fields needed before staging.",
+      "recommended_action": "Patch compiler/overlay export or source manifest ingestion so draft objects carry minimum traceability.",
+      "staging_blocker": true,
+      "publication_blocker": true,
+      "object_fingerprints": [
+        "relationship|anterior-compartment|part_of|leg-compartment-complex",
+        "relationship|tibial-shaft|part_of|leg-compartment-complex",
+        "relationship|fibula|part_of|leg-compartment-complex"
+      ]
+    },
+    {
+      "blocker_id": "illegal-ontology-triples",
+      "category": "ACTION_REQUIRED",
+      "severity": "CRITICAL",
+      "root_cause": "invalid or unsupported predicate",
+      "affected_objects": 1,
+      "unique_underlying_problem": "One or more relationships violate the canonical predicate registry.",
+      "recommended_action": "Revise predicate, endpoint type, or vocabulary before staging.",
+      "staging_blocker": true,
+      "publication_blocker": true,
+      "object_fingerprints": [
+        "relationship|tibial-shaft-fracture|uses_fixation|im-nail-fixation"
+      ]
+    },
+    {
+      "blocker_id": "review-overlay-not-consumed",
+      "category": "SYSTEM_BLOCKER",
+      "severity": "HIGH",
+      "root_cause": "unconsumed review overlay",
+      "affected_objects": 1,
+      "unique_underlying_problem": "Finalization input does not include prior review decisions or a post-review overlay marker.",
+      "recommended_action": "Run finalization with --post-review-input or --prior-review.",
+      "staging_blocker": true,
+      "publication_blocker": true,
+      "object_fingerprints": [
+        "neighborhood|tibial-shaft-fracture"
+      ]
+    }
+  ],
+  "unique_staging_blockers": 3,
+  "affected_objects": 5
+}

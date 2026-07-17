@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-07-05T23:31:27.011Z",
+  "generatedAt": "2026-07-16T02:33:43.879Z",
   "agentId": "claim-builder",
   "agentVersion": "2.0.0",
   "evidencePacketId": "ev-packet-85fc8dfd",
-  "gapsAddressed": 4,
-  "gapsScheduled": 8,
-  "claimsGenerated": 8,
+  "gapsAddressed": 2,
+  "gapsScheduled": 14,
+  "claimsGenerated": 14,
   "claimsRejected": 6,
   "redirectedToDecisionPoint": 4,
   "candidates": [
     {
-      "draftId": "claim-cross-linked-polyethylene-anatomy_pearl-hip-and-knee-joint-surfa",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-hip-and-knee-joint-surfa",
       "claimText": "Hip and knee joint surfaces.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -26,17 +26,17 @@
         "ev-static-prepare-2235ba0d"
       ],
       "section": "deep.anatomy",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-cross-linked-polyethylene-anatomy_pearl-extensor-mechanism",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-extensor-mechanism",
       "claimText": "Extensor mechanism.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -49,17 +49,17 @@
         "ev-static-prepare-2235ba0d"
       ],
       "section": "deep.anatomy",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-cross-linked-polyethylene-anatomy_pearl-implant-bone-interfaces",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-implant-bone-interfaces",
       "claimText": "Implant-bone interfaces.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -72,17 +72,17 @@
         "ev-static-prepare-2235ba0d"
       ],
       "section": "deep.anatomy",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-cross-linked-polyethylene-fact-reconstruction-principle",
+      "draftId": "claim-bearing-surface-selection-fact-reconstruction-principle",
       "claimText": "Reconstruction Principles classification frameworks.",
       "claimType": "fact",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -95,7 +95,7 @@
         "ev-static-prepare-2235ba0d"
       ],
       "section": "deep.classification",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -120,7 +120,7 @@
       "section": "deep.imaging",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
-      "confidence": 0.7865,
+      "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
@@ -142,7 +142,7 @@
       "section": "deep.imaging",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
-      "confidence": 0.7865,
+      "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
@@ -164,14 +164,14 @@
       "section": "deep.boardPearls",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
-      "confidence": 0.7414999999999999,
+      "confidence": 0.7915,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-cross-linked-polyethylene-fact-infection",
+      "draftId": "claim-bearing-surface-selection-fact-infection",
       "claimText": "Infection.",
       "claimType": "fact",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -184,17 +184,17 @@
         "ev-static-prepare-2235ba0d"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-cross-linked-polyethylene-fact-loosening",
+      "draftId": "claim-bearing-surface-selection-fact-loosening",
       "claimText": "Loosening.",
       "claimType": "fact",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -207,17 +207,17 @@
         "ev-static-prepare-2235ba0d"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-cross-linked-polyethylene-fact-instability",
+      "draftId": "claim-bearing-surface-selection-fact-instability",
       "claimText": "Instability.",
       "claimType": "fact",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "changes_management"
@@ -230,17 +230,17 @@
         "ev-static-prepare-2235ba0d"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-cross-linked-polyethylene-fact-periprosthetic-fracture",
+      "draftId": "claim-bearing-surface-selection-fact-periprosthetic-fracture",
       "claimText": "Periprosthetic fracture.",
       "claimType": "fact",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -253,17 +253,17 @@
         "ev-static-prepare-2235ba0d"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-cross-linked-polyethylene-fact-bearing-surface-selectio",
+      "draftId": "claim-bearing-surface-selection-fact-bearing-surface-selectio",
       "claimText": "Bearing Surface Selection indication language.",
       "claimType": "fact",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -277,17 +277,17 @@
         "ev-static-prepare-22390199"
       ],
       "section": "fast.mustKnow",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-cross-linked-polyethylene-fact-implant-and-fixation-voc",
+      "draftId": "claim-bearing-surface-selection-fact-implant-and-fixation-voc",
       "claimText": "Implant and fixation vocabulary.",
       "claimType": "fact",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -301,17 +301,17 @@
         "ev-static-prepare-22390199"
       ],
       "section": "fast.mustKnow",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-cross-linked-polyethylene-fact-cross-neighborhood-traum",
+      "draftId": "claim-bearing-surface-selection-fact-cross-neighborhood-traum",
       "claimText": "Cross-neighborhood trauma links.",
       "claimType": "fact",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -325,17 +325,17 @@
         "ev-static-prepare-22390199"
       ],
       "section": "fast.mustKnow",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-cross-linked-polyethylene-anatomy_pearl-shared-adult-reconstruct",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-shared-adult-reconstruct",
       "claimText": "Shared adult reconstruction anatomy hub.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "whyItMatters": [
         "anatomical_reasoning"
@@ -349,17 +349,17 @@
         "ev-static-prepare-22390199"
       ],
       "section": "fast.anatomyFocus",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-cross-linked-polyethylene-anatomy_pearl-implant-concepts-hub",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-implant-concepts-hub",
       "claimText": "Implant concepts hub.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -373,17 +373,17 @@
         "ev-static-prepare-22390199"
       ],
       "section": "fast.anatomyFocus",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-cross-linked-polyethylene-anatomy_pearl-trauma-neighborhood-brid",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-trauma-neighborhood-brid",
       "claimText": "Trauma neighborhood bridges.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -397,17 +397,17 @@
         "ev-static-prepare-22390199"
       ],
       "section": "fast.anatomyFocus",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-cross-linked-polyethylene-fact-bearing-surface-selectio",
+      "draftId": "claim-bearing-surface-selection-fact-bearing-surface-selectio",
       "claimText": "Bearing surface selection balances wear, stability, and patient activity in hip and knee arthroplasty.",
       "claimType": "fact",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -421,7 +421,7 @@
         "ev-static-prepare-22390199"
       ],
       "section": "fast.oneLiner",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -449,7 +449,7 @@
       "section": "fast.orSurvivalTips",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
-      "confidence": 0.7414999999999999,
+      "confidence": 0.7915,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
@@ -474,7 +474,7 @@
       "section": "fast.orSurvivalTips",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
-      "confidence": 0.7414999999999999,
+      "confidence": 0.7915,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
@@ -498,7 +498,7 @@
       "section": "fast.caseSteps",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
-      "confidence": 0.7865,
+      "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
@@ -522,7 +522,7 @@
       "section": "fast.caseSteps",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
-      "confidence": 0.7865,
+      "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
@@ -546,7 +546,7 @@
       "section": "fast.caseSteps",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
-      "confidence": 0.7865,
+      "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
@@ -570,14 +570,14 @@
       "section": "fast.caseSteps",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
-      "confidence": 0.7865,
+      "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-cross-linked-polyethylene-fact-recognize-core-concepts-",
+      "draftId": "claim-bearing-surface-selection-fact-recognize-core-concepts-",
       "claimText": "Recognize core concepts in Bearing Surface Selection.",
       "claimType": "fact",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L3",
       "whyItMatters": [
         "clinical_reasoning"
@@ -590,17 +590,17 @@
         "ev-static-prepare-c422bd6e"
       ],
       "section": "learning_objectives",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-cross-linked-polyethylene-anatomy_pearl-connect-bearing-surface-",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-connect-bearing-surface-",
       "claimText": "Connect Bearing Surface Selection to shared anatomy, implant concepts, and trauma neighborhoods.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "cross-linked-polyethylene",
+      "primaryEntitySlug": "bearing-surface-selection",
       "importanceLevel": "L2",
       "whyItMatters": [
         "anatomical_reasoning"
@@ -613,7 +613,7 @@
         "ev-static-prepare-c422bd6e"
       ],
       "section": "learning_objectives",
-      "gapId": "gap-claim-2",
+      "gapId": "gap-claim-11",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -639,7 +639,7 @@
       "section": "learning_objectives",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
-      "confidence": 0.7865,
+      "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     }
   ],
@@ -695,8 +695,8 @@
   ],
   "proposals": [
     {
-      "proposalFingerprint": "claim|claim-cross-linked-polyethylene-anatomy_pearl-hip-and-knee-joint-surfa",
-      "draftId": "claim-cross-linked-polyethylene-anatomy_pearl-hip-and-knee-joint-surfa",
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-hip-and-knee-joint-surfa",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-hip-and-knee-joint-surfa",
       "claimType": "anatomy_pearl",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
@@ -706,8 +706,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-cross-linked-polyethylene-fact-reconstruction-principle",
-      "draftId": "claim-cross-linked-polyethylene-fact-reconstruction-principle",
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-fact-reconstruction-principle",
+      "draftId": "claim-bearing-surface-selection-fact-reconstruction-principle",
       "claimType": "fact",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
@@ -717,8 +717,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-cross-linked-polyethylene-anatomy_pearl-extensor-mechanism",
-      "draftId": "claim-cross-linked-polyethylene-anatomy_pearl-extensor-mechanism",
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-extensor-mechanism",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-extensor-mechanism",
       "claimType": "anatomy_pearl",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
@@ -728,19 +728,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-cross-linked-polyethylene-fact-infection",
-      "draftId": "claim-cross-linked-polyethylene-fact-infection",
-      "claimType": "fact",
-      "importanceLevel": "L2",
-      "reviewRoute": "HUMAN_REVIEW",
-      "evidenceItemIds": [
-        "ev-static-prepare-2235ba0d"
-      ],
-      "verified": false
-    },
-    {
-      "proposalFingerprint": "claim|claim-cross-linked-polyethylene-anatomy_pearl-implant-bone-interfaces",
-      "draftId": "claim-cross-linked-polyethylene-anatomy_pearl-implant-bone-interfaces",
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-implant-bone-interfaces",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-implant-bone-interfaces",
       "claimType": "anatomy_pearl",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
@@ -750,8 +739,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-cross-linked-polyethylene-fact-loosening",
-      "draftId": "claim-cross-linked-polyethylene-fact-loosening",
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-fact-infection",
+      "draftId": "claim-bearing-surface-selection-fact-infection",
       "claimType": "fact",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
@@ -761,8 +750,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-cross-linked-polyethylene-fact-instability",
-      "draftId": "claim-cross-linked-polyethylene-fact-instability",
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-fact-loosening",
+      "draftId": "claim-bearing-surface-selection-fact-loosening",
       "claimType": "fact",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
@@ -772,13 +761,90 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-cross-linked-polyethylene-fact-periprosthetic-fracture",
-      "draftId": "claim-cross-linked-polyethylene-fact-periprosthetic-fracture",
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-fact-instability",
+      "draftId": "claim-bearing-surface-selection-fact-instability",
       "claimType": "fact",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
       "evidenceItemIds": [
         "ev-static-prepare-2235ba0d"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-fact-periprosthetic-fracture",
+      "draftId": "claim-bearing-surface-selection-fact-periprosthetic-fracture",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-2235ba0d"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-fact-bearing-surface-selectio",
+      "draftId": "claim-bearing-surface-selection-fact-bearing-surface-selectio",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-22390199"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-fact-implant-and-fixation-voc",
+      "draftId": "claim-bearing-surface-selection-fact-implant-and-fixation-voc",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-22390199"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-fact-cross-neighborhood-traum",
+      "draftId": "claim-bearing-surface-selection-fact-cross-neighborhood-traum",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-22390199"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-shared-adult-reconstruct",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-shared-adult-reconstruct",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-22390199"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-implant-concepts-hub",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-implant-concepts-hub",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-22390199"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-trauma-neighborhood-brid",
+      "draftId": "claim-bearing-surface-selection-anatomy_pearl-trauma-neighborhood-brid",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-22390199"
       ],
       "verified": false
     }

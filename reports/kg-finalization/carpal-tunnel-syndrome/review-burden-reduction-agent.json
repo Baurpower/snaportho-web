@@ -1,0 +1,542 @@
+{
+  "agent": "ReviewBurdenReductionAgent",
+  "generatedAt": "2026-07-12T16:47:49.070Z",
+  "result": {
+    "approved": [
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|differential_for|median-nerve-compression",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: REJECT.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|differential_for|trigger-finger",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: REJECT.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|differential_for|distal-radius-fracture",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: REJECT.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|phalen-test",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|tinel-sign-carpal-tunnel",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|durkan-carpal-compression-test",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|electrodiagnostic-testing-carpal-tunnel-syndrome",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|nerve-conduction-study",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|needle-electromyography",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: REJECT.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE_WITH_REVISION.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|corticosteroid-injection-for-cts|at_risk_structure|median-nerve",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|open-carpal-tunnel-release|uses_approach|open-carpal-tunnel-approach",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|endoscopic-carpal-tunnel-release|uses_approach|endoscopic-carpal-tunnel-approach",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|open-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: REJECT.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|endoscopic-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: REJECT.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|open-carpal-tunnel-release|at_risk_structure|median-nerve",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|open-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|open-carpal-tunnel-release|at_risk_structure|palmar-cutaneous-branch-median-nerve",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|endoscopic-carpal-tunnel-release|at_risk_structure|median-nerve",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|endoscopic-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|persistent-carpal-tunnel-syndrome-after-release|treated_by|revision-carpal-tunnel-release",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: REJECT.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|recurrent-carpal-tunnel-syndrome|treated_by|revision-carpal-tunnel-release",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: REJECT.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|revision-carpal-tunnel-release|at_risk_structure|median-nerve",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|at_risk_structure|median-nerve",
+        "objectKind": "relationship",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE_WITH_REVISION.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-clinical-pattern|carpal-tunnel-syndrome|carpal tunnel syndrome evaluation combines the symptom pattern focused median nerve examination ",
+        "objectKind": "claim",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-exam|carpal-tunnel-syndrome|document sensory distribution thenar motor findings and provocative maneuvers while considering ",
+        "objectKind": "claim",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-testing|carpal-tunnel-syndrome|electrodiagnostic testing is a selective diagnostic and severity tool mri and repeat radiographs",
+        "objectKind": "claim",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE_WITH_REVISION.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-treatment-options|carpal-tunnel-syndrome|cts treatment planning distinguishes neutral position night splinting and corticosteroid injecti",
+        "objectKind": "claim",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE_WITH_REVISION.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-complications|carpal-tunnel-syndrome|persistent symptoms recurrent symptoms incomplete release pillar pain and iatrogenic nerve injur",
+        "objectKind": "claim",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE_WITH_REVISION.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-postoperative|carpal-tunnel-syndrome|post release activity therapy and return to work guidance should be individualized routine fract",
+        "objectKind": "claim",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE_WITH_REVISION.",
+        "confidence": 0.9
+      },
+      {
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-oite-trap|carpal-tunnel-syndrome|oite content should distinguish palmar cutaneous and recurrent motor branch anatomy selective te",
+        "objectKind": "claim",
+        "agent": "ReviewBurdenReductionAgent",
+        "reason": "Inherited prior review decision: APPROVE_WITH_REVISION.",
+        "confidence": 0.9
+      }
+    ],
+    "modified": [],
+    "rejected": [],
+    "escalations": [],
+    "warnings": [],
+    "metrics": {
+      "duplicatesPrevented": 0,
+      "relationshipsNormalized": 0,
+      "unsupportedEdgesRemoved": 0,
+      "reviewDecisionsInherited": 34,
+      "orphanEntitiesRepaired": 0,
+      "publicationBlockersDetected": 0
+    }
+  },
+  "artifacts": {
+    "decision_inheritance": [
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|differential_for|median-nerve-compression",
+        "matchedPriorFingerprint": "rel|carpal-tunnel-syndrome|differential_for|median-nerve-compression",
+        "objectKind": "relationship",
+        "inheritedDecision": "REJECT",
+        "reviewer": "clinical_curator",
+        "reason": "Median nerve compression is an identity/hierarchy issue, not a differential diagnosis."
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|differential_for|trigger-finger",
+        "matchedPriorFingerprint": "rel|carpal-tunnel-syndrome|differential_for|trigger-finger",
+        "objectKind": "relationship",
+        "inheritedDecision": "REJECT",
+        "reviewer": "clinical_curator",
+        "reason": "Trigger finger may coexist with CTS but is not a core CTS differential_for relationship."
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|differential_for|distal-radius-fracture",
+        "matchedPriorFingerprint": "rel|carpal-tunnel-syndrome|differential_for|distal-radius-fracture",
+        "objectKind": "relationship",
+        "inheritedDecision": "REJECT",
+        "reviewer": "clinical_curator",
+        "reason": "Distal radius fracture is not a standard CTS differential; acute CTS with fracture is a separate association/emergency pathway."
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|phalen-test",
+        "matchedPriorFingerprint": "rel|carpal-tunnel-syndrome|tested_by|phalen-test",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid provocative-test relationship."
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|tinel-sign-carpal-tunnel",
+        "matchedPriorFingerprint": "rel|carpal-tunnel-syndrome|tested_by|tinel-sign-carpal-tunnel",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid provocative/sign relationship."
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|durkan-carpal-compression-test",
+        "matchedPriorFingerprint": "rel|carpal-tunnel-syndrome|tested_by|durkan-carpal-compression-test",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid provocative-test relationship."
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|electrodiagnostic-testing-carpal-tunnel-syndrome",
+        "matchedPriorFingerprint": "rel|carpal-tunnel-syndrome|tested_by|electrodiagnostic-testing-carpal-tunnel-syndrome",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid selective EDX wrapper relationship."
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|nerve-conduction-study",
+        "matchedPriorFingerprint": "rel|carpal-tunnel-syndrome|tested_by|nerve-conduction-study",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid NCS diagnostic-test relationship."
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|tested_by|needle-electromyography",
+        "matchedPriorFingerprint": "rel|carpal-tunnel-syndrome|tested_by|needle-electromyography",
+        "objectKind": "relationship",
+        "inheritedDecision": "REJECT",
+        "reviewer": "clinical_curator",
+        "reason": "Needle EMG should not be a direct standalone CTS tested_by edge; it is a component/specialist EDX concept."
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts",
+        "matchedPriorFingerprint": "rel|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid nonoperative treatment option."
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts",
+        "matchedPriorFingerprint": "rel|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE_WITH_REVISION",
+        "reviewer": "clinical_curator",
+        "reason": "Valid treatment edge with short-term symptom-relief qualifier and no durable-cure implication."
+      },
+      {
+        "fingerprint": "relationship|corticosteroid-injection-for-cts|at_risk_structure|median-nerve",
+        "matchedPriorFingerprint": "rel|corticosteroid-injection-for-cts|at_risk_structure|median-nerve",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid procedure-to-risk-anatomy relationship."
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release",
+        "matchedPriorFingerprint": "rel|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid named surgical treatment option."
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release",
+        "matchedPriorFingerprint": "rel|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid named surgical treatment option."
+      },
+      {
+        "fingerprint": "relationship|open-carpal-tunnel-release|uses_approach|open-carpal-tunnel-approach",
+        "matchedPriorFingerprint": "rel|open-carpal-tunnel-release|uses_approach|open-carpal-tunnel-approach",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid procedure-to-approach relationship."
+      },
+      {
+        "fingerprint": "relationship|endoscopic-carpal-tunnel-release|uses_approach|endoscopic-carpal-tunnel-approach",
+        "matchedPriorFingerprint": "rel|endoscopic-carpal-tunnel-release|uses_approach|endoscopic-carpal-tunnel-approach",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid procedure-to-approach relationship."
+      },
+      {
+        "fingerprint": "relationship|open-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+        "matchedPriorFingerprint": "rel|open-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+        "objectKind": "relationship",
+        "inheritedDecision": "REJECT",
+        "reviewer": "clinical_curator",
+        "reason": "Instrument set is not an implant; reject rather than misuse implant vocabulary."
+      },
+      {
+        "fingerprint": "relationship|endoscopic-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+        "matchedPriorFingerprint": "rel|endoscopic-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+        "objectKind": "relationship",
+        "inheritedDecision": "REJECT",
+        "reviewer": "clinical_curator",
+        "reason": "Instrument set is not an implant; reject rather than misuse implant vocabulary."
+      },
+      {
+        "fingerprint": "relationship|open-carpal-tunnel-release|at_risk_structure|median-nerve",
+        "matchedPriorFingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|median-nerve",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid procedure-to-risk-anatomy relationship."
+      },
+      {
+        "fingerprint": "relationship|open-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+        "matchedPriorFingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid procedure-to-risk-anatomy relationship."
+      },
+      {
+        "fingerprint": "relationship|open-carpal-tunnel-release|at_risk_structure|palmar-cutaneous-branch-median-nerve",
+        "matchedPriorFingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|palmar-cutaneous-branch-median-nerve",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid procedure-to-risk-anatomy relationship."
+      },
+      {
+        "fingerprint": "relationship|endoscopic-carpal-tunnel-release|at_risk_structure|median-nerve",
+        "matchedPriorFingerprint": "rel|endoscopic-carpal-tunnel-release|at_risk_structure|median-nerve",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid procedure-to-risk-anatomy relationship."
+      },
+      {
+        "fingerprint": "relationship|endoscopic-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+        "matchedPriorFingerprint": "rel|endoscopic-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid procedure-to-risk-anatomy relationship."
+      },
+      {
+        "fingerprint": "relationship|persistent-carpal-tunnel-syndrome-after-release|treated_by|revision-carpal-tunnel-release",
+        "matchedPriorFingerprint": "rel|persistent-carpal-tunnel-syndrome-after-release|treated_by|revision-carpal-tunnel-release",
+        "objectKind": "relationship",
+        "inheritedDecision": "REJECT",
+        "reviewer": "clinical_curator",
+        "reason": "Human exception resolved as decision_point_only; remove direct treatment edge and route through failed-release evaluation pathway."
+      },
+      {
+        "fingerprint": "relationship|recurrent-carpal-tunnel-syndrome|treated_by|revision-carpal-tunnel-release",
+        "matchedPriorFingerprint": "rel|recurrent-carpal-tunnel-syndrome|treated_by|revision-carpal-tunnel-release",
+        "objectKind": "relationship",
+        "inheritedDecision": "REJECT",
+        "reviewer": "clinical_curator",
+        "reason": "Human exception resolved as requires_diagnostic_confirmation; remove unconditional treatment edge and route through evaluation/confirmation pathway."
+      },
+      {
+        "fingerprint": "relationship|revision-carpal-tunnel-release|at_risk_structure|median-nerve",
+        "matchedPriorFingerprint": "rel|revision-carpal-tunnel-release|at_risk_structure|median-nerve",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Valid revision procedure-to-risk-anatomy relationship."
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|at_risk_structure|median-nerve",
+        "matchedPriorFingerprint": "rel|carpal-tunnel-syndrome|at_risk_structure|median-nerve",
+        "objectKind": "relationship",
+        "inheritedDecision": "APPROVE_WITH_REVISION",
+        "reviewer": "clinical_curator",
+        "reason": "Concept valid but predicate corrected from at_risk_structure to involves_anatomy."
+      },
+      {
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-clinical-pattern|carpal-tunnel-syndrome|carpal tunnel syndrome evaluation combines the symptom pattern focused median nerve examination ",
+        "matchedPriorFingerprint": "claim|claim-carpal-tunnel-syndrome-clinical-pattern",
+        "objectKind": "claim",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Accurate combined clinical-pattern, focused-exam, and selective-testing CTS teaching claim."
+      },
+      {
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-exam|carpal-tunnel-syndrome|document sensory distribution thenar motor findings and provocative maneuvers while considering ",
+        "matchedPriorFingerprint": "claim|claim-carpal-tunnel-syndrome-exam",
+        "objectKind": "claim",
+        "inheritedDecision": "APPROVE",
+        "reviewer": "clinical_curator",
+        "reason": "Accurate CTS exam/localization claim with appropriate mimic framing."
+      },
+      {
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-testing|carpal-tunnel-syndrome|electrodiagnostic testing is a selective diagnostic and severity tool mri and repeat radiographs",
+        "matchedPriorFingerprint": "claim|claim-carpal-tunnel-syndrome-testing",
+        "objectKind": "claim",
+        "inheritedDecision": "APPROVE_WITH_REVISION",
+        "reviewer": "clinical_curator",
+        "reason": "Approved after qualifying EDX, MRI, and radiograph language."
+      },
+      {
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-treatment-options|carpal-tunnel-syndrome|cts treatment planning distinguishes neutral position night splinting and corticosteroid injecti",
+        "matchedPriorFingerprint": "claim|claim-carpal-tunnel-syndrome-treatment-options",
+        "objectKind": "claim",
+        "inheritedDecision": "APPROVE_WITH_REVISION",
+        "reviewer": "clinical_curator",
+        "reason": "Approved after clarifying injection time horizon and avoiding open/endoscopic superiority claims."
+      },
+      {
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-complications|carpal-tunnel-syndrome|persistent symptoms recurrent symptoms incomplete release pillar pain and iatrogenic nerve injur",
+        "matchedPriorFingerprint": "claim|claim-carpal-tunnel-syndrome-complications",
+        "objectKind": "claim",
+        "inheritedDecision": "APPROVE_WITH_REVISION",
+        "reviewer": "clinical_curator",
+        "reason": "Approved after preserving separate post-release concepts without resolving median neuropathy versus iatrogenic nerve injury identity."
+      },
+      {
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-postoperative|carpal-tunnel-syndrome|post release activity therapy and return to work guidance should be individualized routine fract",
+        "matchedPriorFingerprint": "claim|claim-carpal-tunnel-syndrome-postoperative",
+        "objectKind": "claim",
+        "inheritedDecision": "APPROVE_WITH_REVISION",
+        "reviewer": "clinical_curator",
+        "reason": "Approved after replacing informal immobilization wording with CTS-specific postoperative guidance."
+      },
+      {
+        "fingerprint": "claim|claim-carpal-tunnel-syndrome-oite-trap|carpal-tunnel-syndrome|oite content should distinguish palmar cutaneous and recurrent motor branch anatomy selective te",
+        "matchedPriorFingerprint": "claim|claim-carpal-tunnel-syndrome-oite-trap",
+        "objectKind": "claim",
+        "inheritedDecision": "APPROVE_WITH_REVISION",
+        "reviewer": "clinical_curator",
+        "reason": "Approved after removing any implication of a fixed recurrent CTS interval."
+      }
+    ],
+    "review_delta_report": {
+      "priorReviewDecisions": 42,
+      "generatedObjects": 232,
+      "exactFingerprintMatches": 34,
+      "estimatedHumanReviewItemsAvoided": 34,
+      "estimatedRemainingReviewObjects": 198,
+      "inheritanceMode": "exact_fingerprint_only"
+    }
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "generatedAt": "2026-07-09T04:25:10.950Z",
+  "frameworkVersion": "1.0.0",
+  "topicKey": "implants-instruments",
+  "pilotKey": "implants-instruments-neighborhood",
+  "executionOrder": [
+    "work-relationship-builder",
+    "work-claim-builder",
+    "work-duplicate-detector",
+    "work-quality-scorer",
+    "work-conflict-resolver",
+    "work-review-assistant",
+    "work-publication-validator"
+  ],
+  "parallelLayers": [
+    [
+      "work-relationship-builder"
+    ],
+    [
+      "work-claim-builder"
+    ],
+    [
+      "work-duplicate-detector"
+    ],
+    [
+      "work-quality-scorer"
+    ],
+    [
+      "work-conflict-resolver"
+    ],
+    [
+      "work-review-assistant"
+    ],
+    [
+      "work-publication-validator"
+    ]
+  ],
+  "entries": [
+    {
+      "assignmentId": "work-relationship-builder",
+      "agentId": "relationship-builder",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 1,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-claim-builder",
+      "agentId": "claim-builder",
+      "status": "completed",
+      "proposalCount": 1,
+      "executionTimeMs": 6,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-duplicate-detector",
+      "agentId": "duplicate-detector",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 0,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-quality-scorer",
+      "agentId": "quality-scorer",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 0,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-conflict-resolver",
+      "agentId": "conflict-resolver",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 0,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-review-assistant",
+      "agentId": "review-assistant",
+      "status": "completed",
+      "proposalCount": 411,
+      "executionTimeMs": 5,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-publication-validator",
+      "agentId": "publication-validator",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 1,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    }
+  ],
+  "totalProposalsEmitted": 412,
+  "uniqueProposals": 411,
+  "completedAgents": 7,
+  "failedAgents": 0,
+  "partialAgents": 0,
+  "skippedAgents": 0,
+  "databaseModified": false
+}

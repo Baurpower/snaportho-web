@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "generatedAt": "2026-07-16T03:39:06.810Z",
+  "blockerId": "AC_JOINT_PROPOSAL_DRIFT",
+  "operation": "dry_run",
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "classification": "historical_proposal_metadata_drift",
+  "canonicalEntity": {
+    "id": "f3be2d30-1e96-46b1-a056-935a05ac9924",
+    "slug": "ac-joint",
+    "entityType": "anatomy_structure",
+    "preferredLabel": "Acromioclavicular Joint",
+    "ownerPilot": "upper-extremity-trauma-cluster-shared"
+  },
+  "proposalBefore": {
+    "id": "d4fdb42b-331f-4587-8a40-e17837c212a0",
+    "label": "Ac Joint",
+    "reviewStatus": "applied"
+  },
+  "proposalAfter": {
+    "id": "d4fdb42b-331f-4587-8a40-e17837c212a0",
+    "label": "Ac Joint",
+    "identityResolution": null
+  },
+  "membershipBefore": {
+    "id": "79b682e1-fe91-43e0-baee-062fd87be19b",
+    "batchKey": "distal-biceps-tendon-rupture-neighborhood",
+    "targetTable": null,
+    "targetId": null
+  },
+  "membershipAfter": {
+    "id": "79b682e1-fe91-43e0-baee-062fd87be19b",
+    "batchKey": "distal-biceps-tendon-rupture-neighborhood",
+    "targetTable": null,
+    "targetId": null
+  },
+  "canonicalCountsBefore": {
+    "entities": 1084,
+    "relationships": 2248
+  },
+  "canonicalCountsAfter": {
+    "entities": 1084,
+    "relationships": 2248
+  },
+  "canonicalRowsModified": 0,
+  "proposalRowsModified": 0,
+  "membershipRowsModified": 0
+}

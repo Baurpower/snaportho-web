@@ -1,7 +1,7 @@
 {
   "packetId": "ev-packet-49d3928f",
   "topicId": "tibial-shaft-fracture",
-  "createdAt": "2026-07-05T21:24:22.562Z",
+  "createdAt": "2026-07-16T02:18:33.835Z",
   "packetVersion": "1.0.0",
   "ontologyVersion": "2026-07-05",
   "compilerVersion": "1.0.0",
@@ -89,14 +89,15 @@
   ],
   "canonicalSnapshot": {
     "source": "database",
-    "entityCount": 10,
-    "relationshipCount": 4,
-    "claimCount": 2,
+    "entityCount": 12,
+    "relationshipCount": 19,
+    "claimCount": 5,
     "decisionPointCount": 0,
     "primaryEntitySlug": "tibial-shaft-fracture",
     "entitySlugs": [
+      "anterior-compartment",
       "fibula",
-      "im-nail-fixation",
+      "leg-compartment-complex",
       "segmental-tibial-fracture",
       "tibia-leg-anatomy-hub",
       "tibial-blood-supply",
@@ -104,7 +105,8 @@
       "tibial-infection",
       "tibial-malunion",
       "tibial-nonunion",
-      "tibial-shaft"
+      "tibial-shaft",
+      "tibial-shaft-fracture"
     ],
     "loaded": true
   },
@@ -133,7 +135,7 @@
         "asset_signal",
         "metadata_only"
       ],
-      "collectedAt": "2026-07-05T21:24:22.562Z"
+      "collectedAt": "2026-07-16T02:18:33.835Z"
     },
     {
       "evidenceId": "ev-anki-card-992c0276",
@@ -154,7 +156,7 @@
         "anki",
         "deck_hint"
       ],
-      "collectedAt": "2026-07-05T21:24:22.562Z"
+      "collectedAt": "2026-07-16T02:18:33.835Z"
     },
     {
       "evidenceId": "ev-canonical-snapshot-0d0e1263",
@@ -165,11 +167,12 @@
       "confidenceHint": 0.9,
       "provenanceHint": "entity_slugs:database",
       "label": "Entity slug index",
-      "summary": "10 entity slug(s) in neighborhood",
+      "summary": "12 entity slug(s) in neighborhood",
       "payload": {
         "entitySlugs": [
+          "anterior-compartment",
           "fibula",
-          "im-nail-fixation",
+          "leg-compartment-complex",
           "segmental-tibial-fracture",
           "tibia-leg-anatomy-hub",
           "tibial-blood-supply",
@@ -177,26 +180,29 @@
           "tibial-infection",
           "tibial-malunion",
           "tibial-nonunion",
-          "tibial-shaft"
+          "tibial-shaft",
+          "tibial-shaft-fracture"
         ],
         "entityTypes": {
-          "tibia-leg-anatomy-hub": "anatomy_structure",
-          "tibial-shaft": "anatomy_structure",
+          "anterior-compartment": "anatomy_structure",
           "fibula": "anatomy_structure",
-          "tibial-im-nail": "procedure",
+          "leg-compartment-complex": "anatomy_structure",
+          "segmental-tibial-fracture": "imaging_finding",
           "tibial-blood-supply": "biomechanics_concept",
-          "im-nail-fixation": "fixation_method",
+          "tibia-leg-anatomy-hub": "anatomy_structure",
+          "tibial-im-nail": "procedure",
+          "tibial-infection": "complication",
           "tibial-malunion": "complication",
           "tibial-nonunion": "complication",
-          "segmental-tibial-fracture": "imaging_finding",
-          "tibial-infection": "complication"
+          "tibial-shaft": "anatomy_structure",
+          "tibial-shaft-fracture": "condition"
         }
       },
       "tags": [
         "canonical",
         "entity_index"
       ],
-      "collectedAt": "2026-07-05T21:24:22.562Z"
+      "collectedAt": "2026-07-16T02:18:33.835Z"
     },
     {
       "evidenceId": "ev-canonical-snapshot-1b0c2488",
@@ -207,12 +213,12 @@
       "confidenceHint": 0.95,
       "provenanceHint": "canonical_snapshot:database",
       "label": "Neighborhood entity/relationship counts",
-      "summary": "10 entities, 4 relationships from database",
+      "summary": "12 entities, 19 relationships from database",
       "payload": {
         "source": "database",
-        "entityCount": 10,
-        "relationshipCount": 4,
-        "claimCount": 2,
+        "entityCount": 12,
+        "relationshipCount": 19,
+        "claimCount": 5,
         "decisionPointCount": 0,
         "primaryEntitySlug": "tibial-shaft-fracture",
         "verified": false
@@ -222,7 +228,7 @@
         "snapshot",
         "database"
       ],
-      "collectedAt": "2026-07-05T21:24:22.562Z"
+      "collectedAt": "2026-07-16T02:18:33.835Z"
     },
     {
       "evidenceId": "ev-curriculum-node-a2fa4ae3",
@@ -246,7 +252,7 @@
         "curriculum",
         "aliases"
       ],
-      "collectedAt": "2026-07-05T21:24:22.562Z"
+      "collectedAt": "2026-07-16T02:18:33.835Z"
     },
     {
       "evidenceId": "ev-curriculum-node-d06ee52a",
@@ -272,7 +278,7 @@
         "node_mapping",
         "tibial-shaft-fracture"
       ],
-      "collectedAt": "2026-07-05T21:24:22.562Z"
+      "collectedAt": "2026-07-16T02:18:33.835Z"
     },
     {
       "evidenceId": "ev-orthobullets-question-0a603fec",
@@ -298,7 +304,7 @@
         "metadata_only",
         "asset_signal"
       ],
-      "collectedAt": "2026-07-05T21:24:22.562Z"
+      "collectedAt": "2026-07-16T02:18:33.835Z"
     },
     {
       "evidenceId": "ev-proposal-history-bf1d264a",
@@ -309,19 +315,19 @@
       "confidenceHint": 0.9,
       "provenanceHint": "proposal_packet:database",
       "label": "Proposal packet summary",
-      "summary": "43 proposal(s) from database",
+      "summary": "36 proposal(s) from database",
       "payload": {
         "source": "database",
-        "totalProposals": 43,
+        "totalProposals": 36,
         "byType": {
-          "add_canonical_relationship": 20,
-          "create_canonical_entity": 13,
+          "add_canonical_relationship": 19,
+          "create_canonical_entity": 7,
           "propose_educational_claim": 7,
           "propose_decision_point": 2,
           "link_curriculum_node_to_entity": 1
         },
         "byStatus": {
-          "applied": 32,
+          "applied": 25,
           "needs_review": 11
         },
         "fingerprints": [
@@ -333,22 +339,15 @@
           "claim|claim-tsf-open-urgency",
           "claim|claim-tsf-segmental-instability",
           "claim|claim-tsf-soft-tissue-first",
-          "create|anatomy_structure|anterior-compartment",
-          "create|anatomy_structure|fibula",
-          "create|anatomy_structure|leg-compartment-complex",
           "create|anatomy_structure|tibia-leg-anatomy-hub",
-          "create|anatomy_structure|tibial-shaft",
           "create|biomechanics_concept|tibial-blood-supply",
           "create|complication|tibial-infection",
           "create|complication|tibial-malunion",
           "create|complication|tibial-nonunion",
-          "create|condition|tibial-shaft-fracture",
-          "create|fixation_method|im-nail-fixation",
           "create|imaging_finding|segmental-tibial-fracture",
           "create|procedure|tibial-im-nail",
           "dp|dp-tsf-nonoperative-cast",
           "dp|dp-tsf-operative-nailing",
-          "rel|anterior-compartment|part_of|leg-compartment-complex",
           "rel|fibula|articulates_with|tibial-shaft",
           "rel|fibula|part_of|tibia-leg-anatomy-hub",
           "rel|leg-compartment-complex|part_of|tibia-leg-anatomy-hub",
@@ -374,7 +373,7 @@
         "proposals",
         "history"
       ],
-      "collectedAt": "2026-07-05T21:24:22.562Z"
+      "collectedAt": "2026-07-16T02:18:33.835Z"
     },
     {
       "evidenceId": "ev-quality-signal-2ff8c38c",
@@ -385,67 +384,70 @@
       "confidenceHint": 0.9,
       "provenanceHint": "ontology_gaps:tibial-shaft-fracture-neighborhood",
       "label": "Ontology gap summary",
-      "summary": "11 gap(s) across 4 kind(s)",
+      "summary": "25 gap(s) across 6 kind(s)",
       "payload": {
-        "gapCount": 11,
+        "gapCount": 25,
         "gapsByKind": {
-          "missing_relationship": 4,
-          "missing_metadata": 1,
-          "missing_claim": 4,
+          "missing_claim": 9,
+          "missing_relationship": 7,
+          "missing_metadata": 3,
+          "missing_entity": 1,
+          "missing_decision_point": 3,
           "missing_asset_link": 2
         },
         "gapsByPriority": {
-          "high": 2,
-          "medium": 9
+          "medium": 13,
+          "high": 8,
+          "critical": 4
         },
         "topGaps": [
           {
-            "id": "gap-rel-1",
-            "kind": "missing_relationship",
-            "priority": "high",
-            "reason": "Tibia Leg Anatomy Hub missing outbound part_of (0/1)."
-          },
-          {
-            "id": "gap-rel-2",
-            "kind": "missing_relationship",
-            "priority": "high",
-            "reason": "Tibial IM Nailing missing outbound at_risk_structure (0/1)."
-          },
-          {
-            "id": "gap-meta-rel-3",
-            "kind": "missing_metadata",
-            "priority": "medium",
-            "reason": "1 context_relevance gaps on Tibial IM Nailing involves_anatomy/at_risk_structure edges."
-          },
-          {
-            "id": "gap-rel-4",
-            "kind": "missing_relationship",
-            "priority": "medium",
-            "reason": "Tibial Blood Supply missing inbound involves_anatomy (0/1)."
-          },
-          {
-            "id": "gap-claim-5",
+            "id": "gap-claim-1",
             "kind": "missing_claim",
             "priority": "medium",
             "reason": "Tibial Blood Supply has 0/1 L1 claims."
           },
           {
-            "id": "gap-claim-type-6",
+            "id": "gap-claim-type-2",
             "kind": "missing_claim",
             "priority": "medium",
             "reason": "Tibial Blood Supply missing claim type: fact."
           },
           {
-            "id": "gap-claim-type-7",
+            "id": "gap-claim-type-3",
             "kind": "missing_claim",
             "priority": "medium",
             "reason": "Tibial Blood Supply missing claim type: anatomy_pearl."
           },
           {
-            "id": "gap-asset-card-8",
-            "kind": "missing_asset_link",
+            "id": "gap-rel-4",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Tibia Leg Anatomy Hub missing outbound part_of (0/1)."
+          },
+          {
+            "id": "gap-rel-5",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Tibial IM Nailing missing outbound at_risk_structure (0/1)."
+          },
+          {
+            "id": "gap-meta-rel-6",
+            "kind": "missing_metadata",
             "priority": "medium",
-            "reason": "10 Anki mappings exist but no card link proposals in neighborhood."
+            "reason": "1 context_relevance gaps on Tibial IM Nailing involves_anatomy/at_risk_structure edges."
+          },
+          {
+            "id": "gap-entity-neighbor-7",
+            "kind": "missing_entity",
+            "priority": "high",
+            "reason": "Tibial Shaft Fracture neighborhood has 0/1 classification_system entities."
+          },
+          {
+            "id": "gap-rel-8",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Tibial Shaft Fracture missing outbound at_risk_structure (0/1)."
           }
         ]
       },
@@ -453,7 +455,7 @@
         "quality",
         "gaps"
       ],
-      "collectedAt": "2026-07-05T21:24:22.562Z"
+      "collectedAt": "2026-07-16T02:18:33.835Z"
     },
     {
       "evidenceId": "ev-review-history-8d228345",
@@ -464,14 +466,14 @@
       "confidenceHint": 0.92,
       "provenanceHint": "review_status:tibial-shaft-fracture-neighborhood",
       "label": "Review status distribution",
-      "summary": "0 reviewed, 0 pending of 43 proposals",
+      "summary": "0 reviewed, 0 pending of 36 proposals",
       "payload": {
-        "total": 43,
+        "total": 36,
         "reviewedCount": 0,
         "pendingCount": 0,
         "approvedCount": 0,
         "routes": {
-          "AUTO_APPROVED_LOW_RISK": 32,
+          "AUTO_APPROVED_LOW_RISK": 25,
           "ATTENDING_REVIEW": 5,
           "HUMAN_REVIEW": 5,
           "AUTO_REVISED": 1
@@ -481,7 +483,7 @@
         "review",
         "history"
       ],
-      "collectedAt": "2026-07-05T21:24:22.562Z"
+      "collectedAt": "2026-07-16T02:18:33.835Z"
     },
     {
       "evidenceId": "ev-static-prepare-7ae24b26",
@@ -512,7 +514,7 @@
         "internal_draft",
         "tibial-shaft-fracture"
       ],
-      "collectedAt": "2026-07-05T21:24:22.562Z"
+      "collectedAt": "2026-07-16T02:18:33.835Z"
     },
     {
       "evidenceId": "ev-static-prepare-9e6cb3ff",
@@ -567,7 +569,7 @@
         "internal_draft",
         "tibial-shaft-fracture"
       ],
-      "collectedAt": "2026-07-05T21:24:22.562Z"
+      "collectedAt": "2026-07-16T02:18:33.835Z"
     },
     {
       "evidenceId": "ev-static-prepare-9e6dce6b",
@@ -614,7 +616,7 @@
         "internal_draft",
         "tibial-shaft-fracture"
       ],
-      "collectedAt": "2026-07-05T21:24:22.562Z"
+      "collectedAt": "2026-07-16T02:18:33.835Z"
     },
     {
       "evidenceId": "ev-static-prepare-d1fad99c",
@@ -643,7 +645,7 @@
         "internal_draft",
         "tibial-shaft-fracture"
       ],
-      "collectedAt": "2026-07-05T21:24:22.562Z"
+      "collectedAt": "2026-07-16T02:18:33.835Z"
     }
   ],
   "extractedSignals": [
@@ -677,7 +679,7 @@
       "sourceEvidenceIds": [
         "ev-quality-signal-2ff8c38c"
       ],
-      "summary": "11 gap(s) across 4 kind(s)",
+      "summary": "25 gap(s) across 6 kind(s)",
       "strength": 0.9,
       "metadata": {
         "extractionMethod": "gap_summary"
@@ -771,71 +773,6 @@
       "updated_at": "2026-07-05T21:24:06.86938+00:00"
     },
     {
-      "id": "b5803144-58ac-4d24-acad-49266afcd75a",
-      "proposal_fingerprint": "create|condition|tibial-shaft-fracture",
-      "proposal_type": "create_canonical_entity",
-      "source_signal_type": "reference_import",
-      "source_signal_ids": [
-        "trauma-tibial-shaft-fractures",
-        "tibial-shaft-fracture"
-      ],
-      "specialty_id": null,
-      "proposed_entity_type": "condition",
-      "proposed_entity_label": "Tibial Shaft Fracture",
-      "proposed_existing_entity_id": null,
-      "proposed_subject_entity_id": null,
-      "proposed_predicate": null,
-      "proposed_object_entity_id": null,
-      "proposed_alias": null,
-      "proposed_bridge_type": null,
-      "confidence": 0.85,
-      "confidence_tier": "high",
-      "confidence_reason": "tibial_shaft_pilot_spec_v1",
-      "evidence_summary": "Pilot entity: Tibial Shaft Fracture",
-      "supporting_card_count": 10,
-      "supporting_question_count": 63,
-      "supporting_curriculum_node_count": 1,
-      "supporting_source_count": 2,
-      "conflict_count": 0,
-      "review_status": "applied",
-      "reviewed_by": null,
-      "reviewed_at": null,
-      "reviewer_notes": null,
-      "applied_at": "2026-07-05T21:24:06.877+00:00",
-      "superseded_by": null,
-      "metadata": {
-        "slug": "tibial-shaft-fracture",
-        "pilot": "tibial-shaft-fracture-neighborhood",
-        "verified": false,
-        "curated_at": "2026-07-05T21:21:50.716Z",
-        "description": "Diaphyseal fracture of the tibia, often with associated fibular injury and soft-tissue concerns.",
-        "clinical_kind": "fracture",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "safety": 0.1,
-          "evidence": 0.8,
-          "ambiguity": 0.2,
-          "confidence": 0.92,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "maturity_target": 6,
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:tibial-shaft-fracture-neighborhood",
-        "review_packet_label": "Tibial Shaft Fracture Neighborhood",
-        "clinical_verification": false
-      },
-      "comments": null,
-      "is_active": true,
-      "created_at": "2026-07-05T21:06:05.131705+00:00",
-      "updated_at": "2026-07-05T21:24:06.962815+00:00"
-    },
-    {
       "id": "c4d0554e-029d-4a7e-bf5d-27f0a7bb093a",
       "proposal_fingerprint": "create|procedure|tibial-im-nail",
       "proposal_type": "create_canonical_entity",
@@ -897,69 +834,6 @@
       "is_active": true,
       "created_at": "2026-07-05T21:21:54.171607+00:00",
       "updated_at": "2026-07-05T21:24:07.083352+00:00"
-    },
-    {
-      "id": "39ce7427-2835-4fa7-b343-07647bc17e36",
-      "proposal_fingerprint": "create|fixation_method|im-nail-fixation",
-      "proposal_type": "create_canonical_entity",
-      "source_signal_type": "reference_import",
-      "source_signal_ids": [
-        "trauma-tibial-shaft-fractures",
-        "tibial-shaft-fracture"
-      ],
-      "specialty_id": null,
-      "proposed_entity_type": "fixation_method",
-      "proposed_entity_label": "IM Nail",
-      "proposed_existing_entity_id": null,
-      "proposed_subject_entity_id": null,
-      "proposed_predicate": null,
-      "proposed_object_entity_id": null,
-      "proposed_alias": null,
-      "proposed_bridge_type": null,
-      "confidence": 0.85,
-      "confidence_tier": "high",
-      "confidence_reason": "tibial_shaft_pilot_spec_v1",
-      "evidence_summary": "Pilot entity: IM Nail",
-      "supporting_card_count": 10,
-      "supporting_question_count": 63,
-      "supporting_curriculum_node_count": 1,
-      "supporting_source_count": 2,
-      "conflict_count": 0,
-      "review_status": "applied",
-      "reviewed_by": null,
-      "reviewed_at": null,
-      "reviewer_notes": null,
-      "applied_at": "2026-07-05T21:24:07.09+00:00",
-      "superseded_by": null,
-      "metadata": {
-        "slug": "im-nail-fixation",
-        "pilot": "tibial-shaft-fracture-neighborhood",
-        "verified": false,
-        "curated_at": "2026-07-05T21:21:50.717Z",
-        "description": "Intramedullary fixation method for tibial shaft fractures.",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "safety": 0.1,
-          "evidence": 0.8,
-          "ambiguity": 0.2,
-          "confidence": 0.92,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:tibial-shaft-fracture-neighborhood",
-        "review_packet_label": "Tibial Shaft Fracture Neighborhood",
-        "clinical_verification": false
-      },
-      "comments": null,
-      "is_active": true,
-      "created_at": "2026-07-05T21:21:54.364637+00:00",
-      "updated_at": "2026-07-05T21:24:07.178344+00:00"
     },
     {
       "id": "c6be257b-358a-4891-9f83-85b63774ffe1",
@@ -1170,72 +1044,6 @@
       "is_active": true,
       "created_at": "2026-07-05T21:21:56.074074+00:00",
       "updated_at": "2026-07-05T21:24:07.464407+00:00"
-    },
-    {
-      "id": "000f4a9e-96f8-4370-91f4-98a18b6e0923",
-      "proposal_fingerprint": "create|anatomy_structure|fibula",
-      "proposal_type": "create_canonical_entity",
-      "source_signal_type": "reference_import",
-      "source_signal_ids": [
-        "trauma-tibial-shaft-fractures",
-        "tibial-shaft-fracture"
-      ],
-      "specialty_id": null,
-      "proposed_entity_type": "anatomy_structure",
-      "proposed_entity_label": "Fibula",
-      "proposed_existing_entity_id": null,
-      "proposed_subject_entity_id": null,
-      "proposed_predicate": null,
-      "proposed_object_entity_id": null,
-      "proposed_alias": null,
-      "proposed_bridge_type": null,
-      "confidence": 0.85,
-      "confidence_tier": "high",
-      "confidence_reason": "tibial_shaft_pilot_spec_v1",
-      "evidence_summary": "Pilot entity: Fibula",
-      "supporting_card_count": 10,
-      "supporting_question_count": 63,
-      "supporting_curriculum_node_count": 1,
-      "supporting_source_count": 2,
-      "conflict_count": 0,
-      "review_status": "applied",
-      "reviewed_by": null,
-      "reviewed_at": null,
-      "reviewer_notes": null,
-      "applied_at": "2026-07-05T21:24:07.522+00:00",
-      "superseded_by": null,
-      "metadata": {
-        "slug": "fibula",
-        "pilot": "tibial-shaft-fracture-neighborhood",
-        "region": "leg",
-        "verified": false,
-        "curated_at": "2026-07-05T21:21:50.717Z",
-        "description": "Lateral leg bone influencing alignment and length in tibial shaft injuries.",
-        "anatomy_kind": "bone",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "safety": 0.1,
-          "evidence": 0.8,
-          "ambiguity": 0.2,
-          "confidence": 0.92,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "hierarchy_level": "structure",
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:tibial-shaft-fracture-neighborhood",
-        "review_packet_label": "Tibial Shaft Fracture Neighborhood",
-        "clinical_verification": false
-      },
-      "comments": null,
-      "is_active": true,
-      "created_at": "2026-07-05T21:21:53.265613+00:00",
-      "updated_at": "2026-07-05T21:24:07.622939+00:00"
     },
     {
       "id": "3207f687-0bef-4802-a0e4-f7262a040cae",
@@ -1837,72 +1645,6 @@
       "updated_at": "2026-07-05T21:24:00.947656+00:00"
     },
     {
-      "id": "5a25fafe-f94c-4dab-bec4-57d6d93ffbb6",
-      "proposal_fingerprint": "create|anatomy_structure|tibial-shaft",
-      "proposal_type": "create_canonical_entity",
-      "source_signal_type": "reference_import",
-      "source_signal_ids": [
-        "trauma-tibial-shaft-fractures",
-        "tibial-shaft-fracture"
-      ],
-      "specialty_id": null,
-      "proposed_entity_type": "anatomy_structure",
-      "proposed_entity_label": "Tibial Shaft",
-      "proposed_existing_entity_id": null,
-      "proposed_subject_entity_id": null,
-      "proposed_predicate": null,
-      "proposed_object_entity_id": null,
-      "proposed_alias": null,
-      "proposed_bridge_type": null,
-      "confidence": 0.85,
-      "confidence_tier": "high",
-      "confidence_reason": "tibial_shaft_pilot_spec_v1",
-      "evidence_summary": "Pilot entity: Tibial Shaft",
-      "supporting_card_count": 10,
-      "supporting_question_count": 63,
-      "supporting_curriculum_node_count": 1,
-      "supporting_source_count": 2,
-      "conflict_count": 0,
-      "review_status": "applied",
-      "reviewed_by": null,
-      "reviewed_at": null,
-      "reviewer_notes": null,
-      "applied_at": "2026-07-05T21:24:08.166+00:00",
-      "superseded_by": null,
-      "metadata": {
-        "slug": "tibial-shaft",
-        "pilot": "tibial-shaft-fracture-neighborhood",
-        "region": "leg",
-        "verified": false,
-        "curated_at": "2026-07-05T21:21:50.717Z",
-        "description": "Subcutaneous tibial diaphysis with limited soft-tissue envelope.",
-        "anatomy_kind": "bone",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "safety": 0.1,
-          "evidence": 0.8,
-          "ambiguity": 0.2,
-          "confidence": 0.92,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "hierarchy_level": "structure",
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:tibial-shaft-fracture-neighborhood",
-        "review_packet_label": "Tibial Shaft Fracture Neighborhood",
-        "clinical_verification": false
-      },
-      "comments": null,
-      "is_active": true,
-      "created_at": "2026-07-05T21:21:53.010661+00:00",
-      "updated_at": "2026-07-05T21:24:08.252907+00:00"
-    },
-    {
       "id": "b93bc72e-7f84-478b-ab36-1dbf705a3ab1",
       "proposal_fingerprint": "rel|fibula|articulates_with|tibial-shaft",
       "proposal_type": "add_canonical_relationship",
@@ -2221,72 +1963,6 @@
       "is_active": true,
       "created_at": "2026-07-05T21:21:55.187004+00:00",
       "updated_at": "2026-07-05T21:24:08.742306+00:00"
-    },
-    {
-      "id": "e85dd512-47c4-42f4-9e6e-2c6d367e8d03",
-      "proposal_fingerprint": "create|anatomy_structure|anterior-compartment",
-      "proposal_type": "create_canonical_entity",
-      "source_signal_type": "reference_import",
-      "source_signal_ids": [
-        "trauma-tibial-shaft-fractures",
-        "tibial-shaft-fracture"
-      ],
-      "specialty_id": null,
-      "proposed_entity_type": "anatomy_structure",
-      "proposed_entity_label": "Anterior Compartment",
-      "proposed_existing_entity_id": null,
-      "proposed_subject_entity_id": null,
-      "proposed_predicate": null,
-      "proposed_object_entity_id": null,
-      "proposed_alias": null,
-      "proposed_bridge_type": null,
-      "confidence": 0.85,
-      "confidence_tier": "high",
-      "confidence_reason": "tibial_shaft_pilot_spec_v1",
-      "evidence_summary": "Pilot entity: Anterior Compartment",
-      "supporting_card_count": 10,
-      "supporting_question_count": 63,
-      "supporting_curriculum_node_count": 1,
-      "supporting_source_count": 2,
-      "conflict_count": 0,
-      "review_status": "applied",
-      "reviewed_by": null,
-      "reviewed_at": null,
-      "reviewer_notes": null,
-      "applied_at": "2026-07-05T21:24:08.84+00:00",
-      "superseded_by": null,
-      "metadata": {
-        "slug": "anterior-compartment",
-        "pilot": "tibial-shaft-fracture-neighborhood",
-        "region": "leg",
-        "verified": false,
-        "curated_at": "2026-07-05T21:21:50.717Z",
-        "description": "Anterior leg compartment at risk after tibial shaft injury.",
-        "anatomy_kind": "compartment",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "safety": 0.1,
-          "evidence": 0.8,
-          "ambiguity": 0.2,
-          "confidence": 0.92,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "hierarchy_level": "structure",
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:tibial-shaft-fracture-neighborhood",
-        "review_packet_label": "Tibial Shaft Fracture Neighborhood",
-        "clinical_verification": false
-      },
-      "comments": null,
-      "is_active": true,
-      "created_at": "2026-07-05T21:06:03.829827+00:00",
-      "updated_at": "2026-07-05T21:24:08.926243+00:00"
     },
     {
       "id": "b1215a56-2e5c-41d9-a26d-100f9ba56d7a",
@@ -2755,72 +2431,6 @@
       "is_active": true,
       "created_at": "2026-07-05T21:21:59.021446+00:00",
       "updated_at": "2026-07-05T21:24:08.027778+00:00"
-    },
-    {
-      "id": "62c00d49-d1d9-4f6c-b04f-5140dd4063a0",
-      "proposal_fingerprint": "create|anatomy_structure|leg-compartment-complex",
-      "proposal_type": "create_canonical_entity",
-      "source_signal_type": "reference_import",
-      "source_signal_ids": [
-        "trauma-tibial-shaft-fractures",
-        "tibial-shaft-fracture"
-      ],
-      "specialty_id": null,
-      "proposed_entity_type": "anatomy_structure",
-      "proposed_entity_label": "Leg Compartment Complex",
-      "proposed_existing_entity_id": null,
-      "proposed_subject_entity_id": null,
-      "proposed_predicate": null,
-      "proposed_object_entity_id": null,
-      "proposed_alias": null,
-      "proposed_bridge_type": null,
-      "confidence": 0.85,
-      "confidence_tier": "high",
-      "confidence_reason": "tibial_shaft_pilot_spec_v1",
-      "evidence_summary": "Pilot entity: Leg Compartment Complex",
-      "supporting_card_count": 10,
-      "supporting_question_count": 63,
-      "supporting_curriculum_node_count": 1,
-      "supporting_source_count": 2,
-      "conflict_count": 0,
-      "review_status": "applied",
-      "reviewed_by": null,
-      "reviewed_at": null,
-      "reviewer_notes": null,
-      "applied_at": "2026-07-05T21:24:09.396+00:00",
-      "superseded_by": null,
-      "metadata": {
-        "slug": "leg-compartment-complex",
-        "pilot": "tibial-shaft-fracture-neighborhood",
-        "region": "leg",
-        "verified": false,
-        "curated_at": "2026-07-05T21:21:50.717Z",
-        "description": "Four-compartment osteofascial model shared with compartment syndrome neighborhood.",
-        "anatomy_kind": "composite",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "safety": 0.1,
-          "evidence": 0.8,
-          "ambiguity": 0.2,
-          "confidence": 0.92,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "hierarchy_level": "structure",
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:tibial-shaft-fracture-neighborhood",
-        "review_packet_label": "Tibial Shaft Fracture Neighborhood",
-        "clinical_verification": false
-      },
-      "comments": null,
-      "is_active": true,
-      "created_at": "2026-07-05T21:06:03.631155+00:00",
-      "updated_at": "2026-07-05T21:24:09.481509+00:00"
     },
     {
       "id": "5b4b6366-8b66-4ea5-bd0d-5d57af150da0",
@@ -3493,74 +3103,6 @@
       "is_active": true,
       "created_at": "2026-07-05T21:21:55.471752+00:00",
       "updated_at": "2026-07-05T21:24:08.833555+00:00"
-    },
-    {
-      "id": "d885d219-dede-4b42-8165-8a95b4366e1c",
-      "proposal_fingerprint": "rel|anterior-compartment|part_of|leg-compartment-complex",
-      "proposal_type": "add_canonical_relationship",
-      "source_signal_type": "reference_import",
-      "source_signal_ids": [],
-      "specialty_id": null,
-      "proposed_entity_type": null,
-      "proposed_entity_label": null,
-      "proposed_existing_entity_id": null,
-      "proposed_subject_entity_id": null,
-      "proposed_predicate": "part_of",
-      "proposed_object_entity_id": null,
-      "proposed_alias": null,
-      "proposed_bridge_type": null,
-      "confidence": 0.85,
-      "confidence_tier": "high",
-      "confidence_reason": "tibial_shaft_pilot_spec_v1",
-      "evidence_summary": "Relationship part_of",
-      "supporting_card_count": 10,
-      "supporting_question_count": 63,
-      "supporting_curriculum_node_count": 1,
-      "supporting_source_count": 2,
-      "conflict_count": 0,
-      "review_status": "applied",
-      "reviewed_by": null,
-      "reviewed_at": null,
-      "reviewer_notes": null,
-      "applied_at": "2026-07-05T21:24:09.025+00:00",
-      "superseded_by": null,
-      "metadata": {
-        "pilot": "tibial-shaft-fracture-neighborhood",
-        "verified": false,
-        "high_risk": false,
-        "curated_at": "2026-07-05T21:21:50.717Z",
-        "object_slug": "leg-compartment-complex",
-        "subject_slug": "anterior-compartment",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "deterministic_clinical_or_anatomy_predicate"
-        ],
-        "curation_scores": {
-          "safety": 0.1,
-          "evidence": 0.8,
-          "ambiguity": 0.2,
-          "confidence": 0.92,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:tibial-shaft-fracture-neighborhood",
-        "object_entity_type": "anatomy_structure",
-        "review_packet_label": "Tibial Shaft Fracture Neighborhood",
-        "subject_entity_type": "anatomy_structure",
-        "clinical_verification": false,
-        "relationship_metadata": {
-          "anatomy_role": "essential",
-          "review_status": "unreviewed",
-          "relevance_reason": "compartment_risk"
-        }
-      },
-      "comments": null,
-      "is_active": true,
-      "created_at": "2026-07-05T21:06:06.09838+00:00",
-      "updated_at": "2026-07-05T21:24:09.110047+00:00"
     }
   ],
   "reviewHistory": [
@@ -3573,23 +3115,7 @@
       "clinicalVerification": false
     },
     {
-      "proposalFingerprint": "create|condition|tibial-shaft-fracture",
-      "reviewStatus": "applied",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "clinicalVerification": false
-    },
-    {
       "proposalFingerprint": "create|procedure|tibial-im-nail",
-      "reviewStatus": "applied",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "clinicalVerification": false
-    },
-    {
-      "proposalFingerprint": "create|fixation_method|im-nail-fixation",
       "reviewStatus": "applied",
       "reviewedBy": null,
       "reviewedAt": null,
@@ -3614,14 +3140,6 @@
     },
     {
       "proposalFingerprint": "rel|leg-compartment-complex|part_of|tibia-leg-anatomy-hub",
-      "reviewStatus": "applied",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "clinicalVerification": false
-    },
-    {
-      "proposalFingerprint": "create|anatomy_structure|fibula",
       "reviewStatus": "applied",
       "reviewedBy": null,
       "reviewedAt": null,
@@ -3701,14 +3219,6 @@
       "clinicalVerification": false
     },
     {
-      "proposalFingerprint": "create|anatomy_structure|tibial-shaft",
-      "reviewStatus": "applied",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "clinicalVerification": false
-    },
-    {
       "proposalFingerprint": "rel|fibula|articulates_with|tibial-shaft",
       "reviewStatus": "applied",
       "reviewedBy": null,
@@ -3742,14 +3252,6 @@
     },
     {
       "proposalFingerprint": "create|imaging_finding|segmental-tibial-fracture",
-      "reviewStatus": "applied",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "clinicalVerification": false
-    },
-    {
-      "proposalFingerprint": "create|anatomy_structure|anterior-compartment",
       "reviewStatus": "applied",
       "reviewedBy": null,
       "reviewedAt": null,
@@ -3806,14 +3308,6 @@
     },
     {
       "proposalFingerprint": "rel|tibial-shaft-fracture|has_complication|tibial-infection",
-      "reviewStatus": "applied",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "clinicalVerification": false
-    },
-    {
-      "proposalFingerprint": "create|anatomy_structure|leg-compartment-complex",
       "reviewStatus": "applied",
       "reviewedBy": null,
       "reviewedAt": null,
@@ -3894,14 +3388,6 @@
     },
     {
       "proposalFingerprint": "rel|tibial-shaft|part_of|tibia-leg-anatomy-hub",
-      "reviewStatus": "applied",
-      "reviewedBy": null,
-      "reviewedAt": null,
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "clinicalVerification": false
-    },
-    {
-      "proposalFingerprint": "rel|anterior-compartment|part_of|leg-compartment-complex",
       "reviewStatus": "applied",
       "reviewedBy": null,
       "reviewedAt": null,
@@ -4125,76 +3611,76 @@
   "auditTrail": [
     {
       "stage": "init",
-      "timestamp": "2026-07-05T21:24:22.562Z",
+      "timestamp": "2026-07-16T02:18:33.835Z",
       "action": "build_started",
       "detail": "tibial-shaft-fracture"
     },
     {
       "stage": "collect",
-      "timestamp": "2026-07-05T21:24:22.563Z",
+      "timestamp": "2026-07-16T02:18:33.836Z",
       "action": "collector_complete",
       "detail": "4 section(s) from src/lib/student-curriculum/curriculum-data.ts",
       "collectorId": "static-prepare-collector"
     },
     {
       "stage": "collect",
-      "timestamp": "2026-07-05T21:24:22.563Z",
+      "timestamp": "2026-07-16T02:18:33.836Z",
       "action": "collector_complete",
       "detail": "node=trauma-tibial-shaft-fractures",
       "collectorId": "curriculum-node-collector"
     },
     {
       "stage": "collect",
-      "timestamp": "2026-07-05T21:24:22.564Z",
+      "timestamp": "2026-07-16T02:18:33.836Z",
       "action": "collector_complete",
       "detail": "cards=10",
       "collectorId": "anki-signal-collector"
     },
     {
       "stage": "collect",
-      "timestamp": "2026-07-05T21:24:22.564Z",
+      "timestamp": "2026-07-16T02:18:33.836Z",
       "action": "collector_complete",
       "detail": "questions=63",
       "collectorId": "orthobullets-metadata-collector"
     },
     {
       "stage": "collect",
-      "timestamp": "2026-07-05T21:24:22.564Z",
+      "timestamp": "2026-07-16T02:18:33.836Z",
       "action": "collector_complete",
       "detail": "no mapping",
       "collectorId": "caseprep-link-collector"
     },
     {
       "stage": "collect",
-      "timestamp": "2026-07-05T21:24:23.457Z",
+      "timestamp": "2026-07-16T02:18:36.673Z",
       "action": "collector_complete",
-      "detail": "source=database entities=10",
+      "detail": "source=database entities=12",
       "collectorId": "canonical-snapshot-collector"
     },
     {
       "stage": "collect",
-      "timestamp": "2026-07-05T21:24:23.581Z",
+      "timestamp": "2026-07-16T02:18:36.837Z",
       "action": "collector_complete",
-      "detail": "proposals=43 source=database",
+      "detail": "proposals=36 source=database",
       "collectorId": "proposal-history-collector"
     },
     {
       "stage": "collect",
-      "timestamp": "2026-07-05T21:24:23.709Z",
+      "timestamp": "2026-07-16T02:18:36.985Z",
       "action": "collector_complete",
       "detail": "reviewed=0 pending=0",
       "collectorId": "review-history-collector"
     },
     {
       "stage": "collect",
-      "timestamp": "2026-07-05T21:24:24.417Z",
+      "timestamp": "2026-07-16T02:18:37.761Z",
       "action": "collector_complete",
-      "detail": "gaps=11 safety=0",
+      "detail": "gaps=25 safety=0",
       "collectorId": "quality-signal-collector"
     },
     {
       "stage": "assemble",
-      "timestamp": "2026-07-05T21:24:24.534Z",
+      "timestamp": "2026-07-16T02:18:37.893Z",
       "action": "packet_assembled",
       "detail": "14 items, 15 gaps"
     }

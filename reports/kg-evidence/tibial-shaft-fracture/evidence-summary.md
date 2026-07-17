@@ -2,7 +2,7 @@
 
 Topic: **Tibial Shaft Fracture** (`tibial-shaft-fracture`)
 Packet ID: `ev-packet-49d3928f`
-Generated: 2026-07-05T21:24:22.562Z
+Generated: 2026-07-16T02:18:33.835Z
 Version: 1.0.0 | Ontology: 2026-07-05
 
 ## Snapshot
@@ -10,11 +10,11 @@ Version: 1.0.0 | Ontology: 2026-07-05
 | Field | Value |
 |-------|------:|
 | Canonical source | database |
-| Entities | 10 |
-| Relationships | 4 |
-| Claims (draft) | 2 |
+| Entities | 12 |
+| Relationships | 19 |
+| Claims (draft) | 5 |
 | Decision points | 0 |
-| Proposals | 43 |
+| Proposals | 36 |
 | Gaps | 15 |
 | Warnings | 1 |
 

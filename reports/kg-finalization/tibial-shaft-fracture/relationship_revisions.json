@@ -1,0 +1,35 @@
+[
+  {
+    "fingerprint": "relationship|tibial-shaft-fracture|treated_by|tibial-im-nail",
+    "reason": "Broad treated_by edge retained only with explicit non-default pathway qualifier.",
+    "before": {
+      "subjectSlug": "tibial-shaft-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "tibial-im-nail",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|tibial-shaft-fracture|treated_by|tibial-im-nail"
+      },
+      "source": "proposal"
+    },
+    "after": {
+      "subjectSlug": "tibial-shaft-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "tibial-im-nail",
+      "metadata": {
+        "review_status": "needs_review",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|tibial-shaft-fracture|treated_by|tibial-im-nail",
+        "finalization_qualifier": "Treatment relationship requires indication context and must not be interpreted as a default pathway."
+      },
+      "source": "proposal"
+    }
+  }
+]

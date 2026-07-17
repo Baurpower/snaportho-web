@@ -1,0 +1,18 @@
+{
+  "status": "blocked_not_executed",
+  "reason": "Production deployment credentials, project identity, and authenticated test sessions are unavailable; intended code is not committed.",
+  "directTelemetryInsertsPerformed": false,
+  "tests": [
+    {"testId":"smoke-01","description":"covered orthopaedic retrieval","status":"not_run"},
+    {"testId":"smoke-02","description":"KG bypass","status":"not_run"},
+    {"testId":"smoke-03","description":"multiple plausible candidates","status":"not_run"},
+    {"testId":"smoke-04","description":"uncovered orthopaedic topic","status":"not_run"},
+    {"testId":"smoke-05","description":"equivalent repeated request and cache","status":"not_run"},
+    {"testId":"smoke-06","description":"controlled RPC failure","status":"not_run"},
+    {"testId":"smoke-07","description":"controlled retrieval timeout","status":"not_run"},
+    {"testId":"smoke-08","description":"privacy sanitization","status":"not_run"},
+    {"testId":"smoke-09","description":"first turn","status":"not_run"},
+    {"testId":"smoke-10","description":"follow-up turn","status":"not_run"}
+  ]
+}
+

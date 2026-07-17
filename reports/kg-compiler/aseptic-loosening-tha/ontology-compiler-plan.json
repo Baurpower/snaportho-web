@@ -2,13 +2,13 @@
   "topicKey": "aseptic-loosening-tha",
   "pilotKey": "aseptic-loosening-tha-neighborhood",
   "displayName": "Aseptic Loosening of THA",
-  "generatedAt": "2026-07-05T22:53:45.345Z",
+  "generatedAt": "2026-07-16T02:32:31.872Z",
   "stages": [
     {
       "stage": 1,
       "name": "Neighborhood Resolution",
       "status": "completed",
-      "summary": "Resolved 3 entities from canonical DB for Aseptic Loosening of THA.",
+      "summary": "Resolved 8 entities from canonical DB for Aseptic Loosening of THA.",
       "outputs": [
         "neighborhood_plan"
       ]
@@ -26,7 +26,7 @@
       "stage": 3,
       "name": "Gap Analysis",
       "status": "completed",
-      "summary": "Identified 20 gaps across 6 kinds.",
+      "summary": "Identified 28 gaps across 6 kinds.",
       "outputs": [
         "ontology-gap-report.json"
       ]
@@ -48,7 +48,7 @@
       "stage": 5,
       "name": "Agent Orchestration",
       "status": "completed",
-      "summary": "Executed 11/11 agents; 86 unique proposals; 0 failed.",
+      "summary": "Executed 11/11 agents; 87 unique proposals; 0 failed.",
       "outputs": [
         "agent-execution-report.json",
         "agent-output-summary.md",
@@ -70,7 +70,7 @@
       "stage": 6,
       "name": "Merge",
       "status": "completed",
-      "summary": "Merged draft: 64 entities, 8 relationships; 1 conflicts.",
+      "summary": "Merged draft: 64 entities, 8 relationships; 0 conflicts.",
       "outputs": [
         "merged-neighborhood-draft.json",
         "conflict-report.json"
@@ -80,7 +80,7 @@
       "stage": 7,
       "name": "Intelligent Auto Review",
       "status": "completed",
-      "summary": "86% auto-approved; 14% escalated.",
+      "summary": "87.4% auto-approved; 12.6% escalated.",
       "outputs": [
         "ontology-auto-review.json"
       ]
@@ -89,7 +89,7 @@
       "stage": 8,
       "name": "Human Review Packet",
       "status": "completed",
-      "summary": "12 items in human queue.",
+      "summary": "11 items in human queue.",
       "outputs": [
         "human_review_packet"
       ]
@@ -105,32 +105,32 @@
     }
   ],
   "neighborhood": {
-    "entityCount": 3,
-    "relationshipCount": 2,
+    "entityCount": 8,
+    "relationshipCount": 8,
     "claimCount": 2,
     "decisionPointCount": 0
   },
   "gaps": {
-    "total": 20,
+    "total": 28,
     "byKind": {
-      "missing_entity": 2,
-      "missing_relationship": 7,
-      "missing_claim": 5,
+      "missing_relationship": 10,
+      "missing_entity": 3,
+      "missing_claim": 9,
       "missing_decision_point": 3,
       "missing_metadata": 1,
       "missing_asset_link": 2
     },
     "byPriority": {
-      "critical": 6,
       "high": 7,
-      "medium": 7
+      "critical": 8,
+      "medium": 13
     }
   },
   "workPlan": {
     "workItemCount": 11,
     "agentsRequired": [
-      "Clinical Entity Builder",
       "Relationship Builder",
+      "Clinical Entity Builder",
       "Claim Builder",
       "Decision Point Builder",
       "Metadata Builder",
@@ -141,8 +141,8 @@
       "Publication Validator"
     ],
     "agentIds": [
-      "clinical-entity-builder",
       "relationship-builder",
+      "clinical-entity-builder",
       "claim-builder",
       "decision-point-builder",
       "metadata-builder",
@@ -461,10 +461,10 @@
     ]
   },
   "review": {
-    "totalProposals": 86,
-    "autoApproved": 74,
-    "humanReview": 12,
-    "humanReviewPercent": 14
+    "totalProposals": 87,
+    "autoApproved": 76,
+    "humanReview": 11,
+    "humanReviewPercent": 12.6
   },
   "publication": {
     "currentMaturityLevel": 5,

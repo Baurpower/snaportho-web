@@ -1,0 +1,84 @@
+{
+  "generatedAt": "2026-07-09T04:17:27.151Z",
+  "frameworkVersion": "1.0.0",
+  "topicKey": "complications",
+  "unmetCount": 0,
+  "unmetGaps": [],
+  "registeredCapabilities": [
+    {
+      "agentId": "anatomy-builder",
+      "handlesGapKinds": [
+        "missing_entity"
+      ],
+      "handlesEntityTypes": [
+        "anatomy_structure"
+      ],
+      "handlesOntologyRulePrefixes": [
+        "anatomy."
+      ]
+    },
+    {
+      "agentId": "clinical-entity-builder",
+      "handlesGapKinds": [
+        "missing_entity"
+      ],
+      "isGenericFallback": true
+    },
+    {
+      "agentId": "relationship-builder",
+      "handlesGapKinds": [
+        "missing_relationship"
+      ]
+    },
+    {
+      "agentId": "claim-builder",
+      "handlesGapKinds": [
+        "missing_claim"
+      ]
+    },
+    {
+      "agentId": "decision-point-builder",
+      "handlesGapKinds": [
+        "missing_decision_point"
+      ]
+    },
+    {
+      "agentId": "metadata-builder",
+      "handlesGapKinds": [
+        "missing_metadata"
+      ]
+    },
+    {
+      "agentId": "asset-linker",
+      "handlesGapKinds": [
+        "missing_asset_link"
+      ]
+    },
+    {
+      "agentId": "provenance-builder",
+      "handlesGapKinds": [
+        "missing_provenance"
+      ]
+    },
+    {
+      "agentId": "duplicate-detector",
+      "handlesGapKinds": []
+    },
+    {
+      "agentId": "quality-scorer",
+      "handlesGapKinds": []
+    },
+    {
+      "agentId": "conflict-resolver",
+      "handlesGapKinds": []
+    },
+    {
+      "agentId": "review-assistant",
+      "handlesGapKinds": []
+    },
+    {
+      "agentId": "publication-validator",
+      "handlesGapKinds": []
+    }
+  ]
+}

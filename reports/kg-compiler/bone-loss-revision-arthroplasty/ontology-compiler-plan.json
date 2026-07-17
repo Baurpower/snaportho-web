@@ -2,13 +2,13 @@
   "topicKey": "bone-loss-revision-arthroplasty",
   "pilotKey": "bone-loss-revision-arthroplasty-neighborhood",
   "displayName": "Bone Loss in Revision Arthroplasty",
-  "generatedAt": "2026-07-05T23:26:40.652Z",
+  "generatedAt": "2026-07-16T02:40:22.030Z",
   "stages": [
     {
       "stage": 1,
       "name": "Neighborhood Resolution",
       "status": "completed",
-      "summary": "Resolved 3 entities from canonical DB for Bone Loss in Revision Arthroplasty.",
+      "summary": "Resolved 7 entities from canonical DB for Bone Loss in Revision Arthroplasty.",
       "outputs": [
         "neighborhood_plan"
       ]
@@ -26,7 +26,7 @@
       "stage": 3,
       "name": "Gap Analysis",
       "status": "completed",
-      "summary": "Identified 23 gaps across 5 kinds.",
+      "summary": "Identified 34 gaps across 6 kinds.",
       "outputs": [
         "ontology-gap-report.json"
       ]
@@ -35,7 +35,7 @@
       "stage": 4,
       "name": "Work Planning",
       "status": "completed",
-      "summary": "Scheduled 10 work items for 10 registered agents.",
+      "summary": "Scheduled 11 work items for 11 registered agents.",
       "outputs": [
         "ontology-work-plan.json",
         "agent-assignment-plan.json",
@@ -48,7 +48,7 @@
       "stage": 5,
       "name": "Agent Orchestration",
       "status": "completed",
-      "summary": "Executed 10/10 agents; 87 unique proposals; 0 failed.",
+      "summary": "Executed 11/11 agents; 88 unique proposals; 0 failed.",
       "outputs": [
         "agent-execution-report.json",
         "agent-output-summary.md",
@@ -57,6 +57,7 @@
         "work-relationship-builder",
         "work-decision-point-builder",
         "work-claim-builder",
+        "work-metadata-builder",
         "work-asset-linker",
         "work-duplicate-detector",
         "work-quality-scorer",
@@ -69,7 +70,7 @@
       "stage": 6,
       "name": "Merge",
       "status": "completed",
-      "summary": "Merged draft: 66 entities, 7 relationships; 0 conflicts.",
+      "summary": "Merged draft: 66 entities, 11 relationships; 0 conflicts.",
       "outputs": [
         "merged-neighborhood-draft.json",
         "conflict-report.json"
@@ -79,7 +80,7 @@
       "stage": 7,
       "name": "Intelligent Auto Review",
       "status": "completed",
-      "summary": "86.2% auto-approved; 13.8% escalated.",
+      "summary": "88.6% auto-approved; 11.4% escalated.",
       "outputs": [
         "ontology-auto-review.json"
       ]
@@ -104,33 +105,35 @@
     }
   ],
   "neighborhood": {
-    "entityCount": 3,
-    "relationshipCount": 2,
-    "claimCount": 2,
+    "entityCount": 7,
+    "relationshipCount": 11,
+    "claimCount": 3,
     "decisionPointCount": 0
   },
   "gaps": {
-    "total": 23,
+    "total": 34,
     "byKind": {
-      "missing_entity": 5,
-      "missing_relationship": 8,
-      "missing_claim": 5,
+      "missing_relationship": 13,
+      "missing_entity": 6,
+      "missing_claim": 9,
       "missing_decision_point": 3,
+      "missing_metadata": 1,
       "missing_asset_link": 2
     },
     "byPriority": {
-      "high": 9,
-      "critical": 6,
-      "medium": 8
+      "high": 10,
+      "critical": 8,
+      "medium": 16
     }
   },
   "workPlan": {
-    "workItemCount": 10,
+    "workItemCount": 11,
     "agentsRequired": [
-      "Clinical Entity Builder",
       "Relationship Builder",
+      "Clinical Entity Builder",
       "Claim Builder",
       "Decision Point Builder",
+      "Metadata Builder",
       "Asset Linker",
       "Conflict Resolver",
       "Quality Scorer",
@@ -138,10 +141,11 @@
       "Publication Validator"
     ],
     "agentIds": [
-      "clinical-entity-builder",
       "relationship-builder",
+      "clinical-entity-builder",
       "claim-builder",
       "decision-point-builder",
+      "metadata-builder",
       "asset-linker",
       "duplicate-detector",
       "quality-scorer",
@@ -457,10 +461,10 @@
     ]
   },
   "review": {
-    "totalProposals": 87,
-    "autoApproved": 75,
+    "totalProposals": 88,
+    "autoApproved": 78,
     "humanReview": 8,
-    "humanReviewPercent": 13.8
+    "humanReviewPercent": 11.4
   },
   "publication": {
     "currentMaturityLevel": 5,

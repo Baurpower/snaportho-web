@@ -1,13 +1,13 @@
 # SURGICAL APPROACHES — Knowledge Factory Audit
 
-Generated: 2026-07-08T21:23:42.612Z
+Generated: 2026-07-09T04:37:57.423Z
 Auditor: KF-018 v1.0.0
 
 ## Overall
 
 | Metric | Score |
 |--------|------:|
-| **Overall** | **84** |
+| **Overall** | **85** |
 | Ontology Completeness | 89 |
 | Evidence Quality | 85 |
 | Graph Integrity | 100 |
@@ -20,7 +20,7 @@ Auditor: KF-018 v1.0.0
 | Review Calibration | 100 |
 | Agent Performance | 92 |
 | Compiler Quality | 94 |
-| Educational Quality | 76 |
+| Educational Quality | 78 |
 | Cross-Neighborhood Consistency | 100 |
 | Publication Readiness | 60 |
 | Publication | Blocked |
@@ -32,8 +32,8 @@ Auditor: KF-018 v1.0.0
 
 ### Blockers
 
-- 70 proposals still awaiting human review
-- 70 items require attending review
+- 44 proposals still awaiting human review
+- 44 items require attending review
 - Claims and DPs are draft-only — publication gate must block verified consumption.
 - No approved canonical entities in database yet — proposals remain offline/spec.
 - 1 critical/high ontology gaps remain unresolved
@@ -42,7 +42,7 @@ Auditor: KF-018 v1.0.0
 
 ### [CRITICAL] Low evidence coverage (0% of proposals cite evidence)
 
-- **Evidence:** 0/1248 proposals have evidence_refs
+- **Evidence:** 0/1155 proposals have evidence_refs
 - **Reason:** Every proposal should cite supporting evidence per factory contract.
 - **Impact:** -15
 - **Fix:** Ensure claim/relationship builders attach evidence_refs from the evidence packet.
@@ -73,7 +73,7 @@ Auditor: KF-018 v1.0.0
 - **Evidence:** publication-readiness.json blockers
 - **Reason:** Publication gate identified blocking condition.
 - **Impact:** -15
-- **Fix:** [high] Operative Anatomy Backbone missing outbound part_of (0/1).
+- **Fix:** [high] Orthopaedic Anatomy missing outbound part_of (0/1).
 
 ### [HIGH] No classification system present
 
@@ -102,7 +102,7 @@ Auditor: KF-018 v1.0.0
 2. **[Relationship Quality]** Add injured_in relationship via relationship-builder agent. — _Missing clinical edge: injured_in_
 3. **[Relationship Quality]** Add has_classification relationship via relationship-builder agent. — _Missing clinical edge: has_classification_
 4. **[Decision Points]** Add emergency_escalation decision point with attending-gated review. — _Missing decision point pattern: emergency_escalation_
-5. **[Publication Readiness]** [high] Operative Anatomy Backbone missing outbound part_of (0/1). — _1 critical/high ontology gaps remain unresolved_
+5. **[Publication Readiness]** [high] Orthopaedic Anatomy missing outbound part_of (0/1). — _1 critical/high ontology gaps remain unresolved_
 6. **[Ontology Completeness]** Link has_classification and has_grade edges to a classification system. — _No classification system present_
 7. **[Relationship Quality]** Add has_imaging_finding relationship via relationship-builder agent. — _Missing clinical edge: has_imaging_finding_
 8. **[Relationship Quality]** Add at_risk_structure relationship via relationship-builder agent. — _Missing clinical edge: at_risk_structure_

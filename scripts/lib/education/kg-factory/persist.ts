@@ -74,9 +74,16 @@ export async function persistProposals(proposals: ProposalRecord[]): Promise<Per
   return result;
 }
 
-export async function loadPilotProposals(pilotKey: string): Promise<ProposalRecord[]> {
+export async function loadPilotProposals(pilotKey: string, batchKey?: string): Promise<ProposalRecord[]> {
   try {
     const supabase = createServiceRoleClient();
+    if (batchKey) {
+      const { data, error } = await supabase.from("kg_proposal_batch_memberships")
+        .select("proposal:kg_automation_proposals(*)")
+        .eq("batch_key", batchKey).eq("topic_slug", pilotKey).eq("packet_state", "approved");
+      if (error) throw error;
+      return (data ?? []).map((row: any) => row.proposal).filter(Boolean) as ProposalRecord[];
+    }
     const { data, error } = await supabase
       .from("kg_automation_proposals")
       .select("*")

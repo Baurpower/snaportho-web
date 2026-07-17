@@ -2,13 +2,13 @@
   "topicKey": "surgical-approaches",
   "pilotKey": "surgical-approaches-neighborhood",
   "displayName": "Surgical Approaches",
-  "generatedAt": "2026-07-08T21:22:54.599Z",
+  "generatedAt": "2026-07-09T04:26:52.476Z",
   "stages": [
     {
       "stage": 1,
       "name": "Neighborhood Resolution",
       "status": "completed",
-      "summary": "Resolved 94 entities for Surgical Approaches.",
+      "summary": "Resolved 183 entities for Surgical Approaches.",
       "outputs": [
         "neighborhood_plan"
       ]
@@ -48,7 +48,7 @@
       "stage": 5,
       "name": "Agent Orchestration",
       "status": "completed",
-      "summary": "Executed 6/6 agents; 1248 unique proposals; 0 failed.",
+      "summary": "Executed 6/6 agents; 1155 unique proposals; 0 failed.",
       "outputs": [
         "agent-execution-report.json",
         "agent-output-summary.md",
@@ -66,7 +66,7 @@
       "stage": 6,
       "name": "Merge",
       "status": "completed",
-      "summary": "Merged draft: 94 entities, 1083 relationships; 0 conflicts.",
+      "summary": "Merged draft: 183 entities, 927 relationships; 0 conflicts.",
       "outputs": [
         "merged-neighborhood-draft.json",
         "conflict-report.json"
@@ -76,7 +76,7 @@
       "stage": 7,
       "name": "Intelligent Auto Review",
       "status": "completed",
-      "summary": "94.4% auto-approved; 5.6% escalated.",
+      "summary": "96.2% auto-approved; 3.8% escalated.",
       "outputs": [
         "ontology-auto-review.json"
       ]
@@ -85,7 +85,7 @@
       "stage": 8,
       "name": "Human Review Packet",
       "status": "completed",
-      "summary": "70 items in human queue.",
+      "summary": "44 items in human queue.",
       "outputs": [
         "human_review_packet"
       ]
@@ -101,10 +101,10 @@
     }
   ],
   "neighborhood": {
-    "entityCount": 94,
-    "relationshipCount": 1083,
-    "claimCount": 65,
-    "decisionPointCount": 5
+    "entityCount": 183,
+    "relationshipCount": 927,
+    "claimCount": 28,
+    "decisionPointCount": 16
   },
   "gaps": {
     "total": 1,
@@ -440,10 +440,10 @@
     ]
   },
   "review": {
-    "totalProposals": 1248,
-    "autoApproved": 1178,
-    "humanReview": 70,
-    "humanReviewPercent": 5.6
+    "totalProposals": 1155,
+    "autoApproved": 1111,
+    "humanReview": 44,
+    "humanReviewPercent": 3.8
   },
   "publication": {
     "currentMaturityLevel": 5,

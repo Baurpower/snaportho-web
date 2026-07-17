@@ -2,7 +2,7 @@
 
 Topic: **patellofemoral-arthroplasty**
 Framework: **1.0.0**
-Generated: 2026-07-05T23:18:36.892Z
+Generated: 2026-07-16T02:53:50.268Z
 
 ## Registry
 
@@ -12,9 +12,9 @@ Generated: 2026-07-05T23:18:36.892Z
 
 ## Assignments
 
-- **Clinical Entity Builder** (clinical-entity-builder): 1 gap(s) [missing_entity] — handles_gap_kind:missing_entity; generic_fallback
-- **Relationship Builder** (relationship-builder): 4 gap(s) [missing_relationship] — handles_gap_kind:missing_relationship
-- **Claim Builder** (claim-builder): 4 gap(s) [missing_claim] — handles_gap_kind:missing_claim
+- **Relationship Builder** (relationship-builder): 6 gap(s) [missing_relationship] — handles_gap_kind:missing_relationship
+- **Claim Builder** (claim-builder): 8 gap(s) [missing_claim] — handles_gap_kind:missing_claim
+- **Metadata Builder** (metadata-builder): 1 gap(s) [missing_metadata] — handles_gap_kind:missing_metadata
 - **Asset Linker** (asset-linker): 2 gap(s) [missing_asset_link] — handles_gap_kind:missing_asset_link
 
 ## Contract guarantees

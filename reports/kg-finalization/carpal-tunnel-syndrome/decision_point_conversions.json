@@ -1,0 +1,56 @@
+[
+  {
+    "fingerprint": "relationship|persistent-carpal-tunnel-syndrome-after-release|treated_by|revision-carpal-tunnel-release",
+    "reason": "Represent failed-release revision as a decision pathway instead of an unconditional treatment edge.",
+    "before": {
+      "subjectSlug": "persistent-carpal-tunnel-syndrome-after-release",
+      "predicate": "treated_by",
+      "objectSlug": "revision-carpal-tunnel-release",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|persistent-carpal-tunnel-syndrome-after-release|treated_by|revision-carpal-tunnel-release"
+      },
+      "source": "spec"
+    },
+    "after": [
+      {
+        "subjectSlug": "persistent-carpal-tunnel-syndrome-after-release",
+        "predicate": "evaluated_by",
+        "objectSlug": "failed-release-evaluation-pathway"
+      },
+      {
+        "subjectSlug": "failed-release-evaluation-pathway",
+        "predicate": "may_lead_to",
+        "objectSlug": "revision-carpal-tunnel-release"
+      }
+    ]
+  },
+  {
+    "fingerprint": "relationship|recurrent-carpal-tunnel-syndrome|treated_by|revision-carpal-tunnel-release",
+    "reason": "Represent failed-release revision as a decision pathway instead of an unconditional treatment edge.",
+    "before": {
+      "subjectSlug": "recurrent-carpal-tunnel-syndrome",
+      "predicate": "treated_by",
+      "objectSlug": "revision-carpal-tunnel-release",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|recurrent-carpal-tunnel-syndrome|treated_by|revision-carpal-tunnel-release"
+      },
+      "source": "spec"
+    },
+    "after": [
+      {
+        "subjectSlug": "recurrent-carpal-tunnel-syndrome",
+        "predicate": "evaluated_by",
+        "objectSlug": "failed-release-evaluation-pathway"
+      },
+      {
+        "subjectSlug": "failed-release-evaluation-pathway",
+        "predicate": "may_lead_to",
+        "objectSlug": "revision-carpal-tunnel-release"
+      }
+    ]
+  }
+]

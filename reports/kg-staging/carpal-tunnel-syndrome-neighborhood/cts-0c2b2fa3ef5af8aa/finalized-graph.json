@@ -1,0 +1,4631 @@
+{
+  "topicKey": "carpal-tunnel-syndrome",
+  "pilotKey": "carpal-tunnel-syndrome-neighborhood",
+  "generatedAt": "2026-07-09T14:21:18.860Z",
+  "entities": [
+    {
+      "slug": "hand-wrist-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hand & Wrist Anatomy Hub",
+      "description": "Composite forearm-to-fingertip model linking radius, ulna, carpus, metacarpals, digits, tendons, ligaments, nerves, and vessels for Prepare Hand rotation.",
+      "metadata": {
+        "anatomy_kind": "composite",
+        "hierarchy_level": "structure",
+        "region": "hand_wrist",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "cluster": "hand-wrist",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "hand-wrist-anatomy-hub",
+        "description": "Composite forearm-to-fingertip model linking radius, ulna, carpus, metacarpals, digits, tendons, ligaments, nerves, and vessels for Prepare Hand rotation.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "radius",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radius",
+      "description": "Lateral forearm bone forming the radial side of the wrist and radiocarpal articulation.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "forearm",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "radius",
+        "description": "Lateral forearm bone forming the radial side of the wrist and radiocarpal articulation.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|radius"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "ulna",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulna",
+      "description": "Medial forearm bone with distal ulnar head and styloid contributing to DRUJ stability.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "forearm",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "ulna",
+        "description": "Medial forearm bone with distal ulnar head and styloid contributing to DRUJ stability.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|ulna"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "interosseous-membrane",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Interosseous Membrane",
+      "description": "Forearm longitudinal fibrous linkage transmitting axial load between radius and ulna.",
+      "metadata": {
+        "anatomy_kind": "membrane",
+        "hierarchy_level": "structure",
+        "region": "forearm",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "interosseous-membrane",
+        "description": "Forearm longitudinal fibrous linkage transmitting axial load between radius and ulna.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|interosseous-membrane"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "druj",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "DRUJ",
+      "description": "Distal radioulnar joint stabilizers and ulnar-sided wrist linkage.",
+      "metadata": {
+        "anatomy_kind": "joint",
+        "hierarchy_level": "structure",
+        "region": "wrist",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "druj",
+        "description": "Distal radioulnar joint stabilizers and ulnar-sided wrist linkage.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|druj"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "pruj",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "PRUJ",
+      "description": "Proximal radioulnar joint enabling forearm rotation.",
+      "metadata": {
+        "anatomy_kind": "joint",
+        "hierarchy_level": "structure",
+        "region": "forearm",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "pruj",
+        "description": "Proximal radioulnar joint enabling forearm rotation.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pruj"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "distal-radius",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Radius",
+      "description": "Distal radial metaphysis and articular surface at the wrist.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "wrist",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "distal-radius",
+        "description": "Distal radial metaphysis and articular surface at the wrist.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|distal-radius"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "distal-ulna",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Ulna",
+      "description": "Ulnar head and styloid region at the ulnar wrist.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "wrist",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "distal-ulna",
+        "description": "Ulnar head and styloid region at the ulnar wrist.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|distal-ulna"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "scaphoid",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Scaphoid",
+      "description": "Radial-sided carpal bone with retrograde blood supply and snuffbox tenderness landmark.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "carpus",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "scaphoid",
+        "description": "Radial-sided carpal bone with retrograde blood supply and snuffbox tenderness landmark.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|scaphoid"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "lunate",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lunate",
+      "description": "Central proximal carpal bone in perilunate and lunate dislocation patterns.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "carpus",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "lunate",
+        "description": "Central proximal carpal bone in perilunate and lunate dislocation patterns.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lunate"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "triquetrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Triquetrum",
+      "description": "Ulnar-sided proximal carpal bone articulating with the lunate and TFCC.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "carpus",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "triquetrum",
+        "description": "Ulnar-sided proximal carpal bone articulating with the lunate and TFCC.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|triquetrum"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "pisiform",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pisiform",
+      "description": "Sesamoid bone within FCU tendon at the ulnar wrist.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "carpus",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "pisiform",
+        "description": "Sesamoid bone within FCU tendon at the ulnar wrist.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pisiform"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "trapezium",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Trapezium",
+      "description": "Radial-sided distal carpal bone articulating with the thumb metacarpal.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "carpus",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "trapezium",
+        "description": "Radial-sided distal carpal bone articulating with the thumb metacarpal.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|trapezium"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "trapezoid",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Trapezoid",
+      "description": "Distal carpal bone between trapezium and capitate.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "carpus",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "trapezoid",
+        "description": "Distal carpal bone between trapezium and capitate.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|trapezoid"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "capitate",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Capitate",
+      "description": "Central distal carpal bone linking proximal and distal carpal rows.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "carpus",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "capitate",
+        "description": "Central distal carpal bone linking proximal and distal carpal rows.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|capitate"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "hamate",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hamate",
+      "description": "Ulnar-sided distal carpal bone with hook for flexor tendon passage.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "carpus",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "hamate",
+        "description": "Ulnar-sided distal carpal bone with hook for flexor tendon passage.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|hamate"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "first-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "First Metacarpal",
+      "description": "Thumb metacarpal articulating with trapezium at the CMC joint.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "metacarpal",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "first-metacarpal",
+        "description": "Thumb metacarpal articulating with trapezium at the CMC joint.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|first-metacarpal"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "second-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Second Metacarpal",
+      "description": "Index metacarpal with stable CMC articulation.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "metacarpal",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "second-metacarpal",
+        "description": "Index metacarpal with stable CMC articulation.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|second-metacarpal"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "third-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Third Metacarpal",
+      "description": "Middle finger metacarpal forming the central hand column.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "metacarpal",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "third-metacarpal",
+        "description": "Middle finger metacarpal forming the central hand column.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|third-metacarpal"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "fourth-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Fourth Metacarpal",
+      "description": "Ring finger metacarpal.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "metacarpal",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "fourth-metacarpal",
+        "description": "Ring finger metacarpal.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|fourth-metacarpal"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "fifth-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Fifth Metacarpal",
+      "description": "Small finger metacarpal; common site of boxer fractures.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "metacarpal",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "fifth-metacarpal",
+        "description": "Small finger metacarpal; common site of boxer fractures.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|fifth-metacarpal"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "proximal-phalanx",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Phalanx",
+      "description": "Proximal segment of each digit articulating at MCP and PIP.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "digit",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "proximal-phalanx",
+        "description": "Proximal segment of each digit articulating at MCP and PIP.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|proximal-phalanx"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "middle-phalanx",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Middle Phalanx",
+      "description": "Middle segment of digits 2–5 between PIP and DIP.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "digit",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "middle-phalanx",
+        "description": "Middle segment of digits 2–5 between PIP and DIP.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|middle-phalanx"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "distal-phalanx",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Phalanx",
+      "description": "Terminal phalangeal segment bearing the nail bed.",
+      "metadata": {
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "digit",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "distal-phalanx",
+        "description": "Terminal phalangeal segment bearing the nail bed.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|distal-phalanx"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "dip-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "DIP Joint",
+      "description": "Distal interphalangeal articulation of digits 2–5 and IP of the thumb.",
+      "metadata": {
+        "anatomy_kind": "joint",
+        "hierarchy_level": "structure",
+        "region": "digit",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "dip-joint",
+        "description": "Distal interphalangeal articulation of digits 2–5 and IP of the thumb.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|dip-joint"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "pip-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "PIP Joint",
+      "description": "Proximal interphalangeal articulation governing finger flexion cascade.",
+      "metadata": {
+        "anatomy_kind": "joint",
+        "hierarchy_level": "structure",
+        "region": "digit",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "pip-joint",
+        "description": "Proximal interphalangeal articulation governing finger flexion cascade.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pip-joint"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "mcp-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "MCP Joint",
+      "description": "Metacarpophalangeal articulation linking metacarpal to proximal phalanx.",
+      "metadata": {
+        "anatomy_kind": "joint",
+        "hierarchy_level": "structure",
+        "region": "digit",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "mcp-joint",
+        "description": "Metacarpophalangeal articulation linking metacarpal to proximal phalanx.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|mcp-joint"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "cmc-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "CMC Joint",
+      "description": "Carpometacarpal articulation; thumb CMC is saddle-shaped and highly mobile.",
+      "metadata": {
+        "anatomy_kind": "joint",
+        "hierarchy_level": "structure",
+        "region": "digit",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "cmc-joint",
+        "description": "Carpometacarpal articulation; thumb CMC is saddle-shaped and highly mobile.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|cmc-joint"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "scapholunate-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Scapholunate Ligament",
+      "description": "Intrinsic ligament between scaphoid and lunate; SL injury drives carpal instability.",
+      "metadata": {
+        "anatomy_kind": "ligament",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "scapholunate-ligament",
+        "description": "Intrinsic ligament between scaphoid and lunate; SL injury drives carpal instability.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|scapholunate-ligament"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "lunotriquetral-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lunotriquetral Ligament",
+      "description": "Intrinsic ligament between lunate and triquetrum; LT injury contributes to ulnar-sided instability.",
+      "metadata": {
+        "anatomy_kind": "ligament",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "lunotriquetral-ligament",
+        "description": "Intrinsic ligament between lunate and triquetrum; LT injury contributes to ulnar-sided instability.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lunotriquetral-ligament"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "tfcc",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "TFCC",
+      "description": "Triangular fibrocartilage complex stabilizing the ulnar wrist and DRUJ.",
+      "metadata": {
+        "anatomy_kind": "ligament",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "tfcc",
+        "description": "Triangular fibrocartilage complex stabilizing the ulnar wrist and DRUJ.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|tfcc"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "thumb-ucl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Thumb UCL",
+      "description": "Ulnar collateral ligament of the thumb MCP joint; injured in skier/gamekeeper thumb.",
+      "metadata": {
+        "anatomy_kind": "ligament",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "thumb-ucl",
+        "description": "Ulnar collateral ligament of the thumb MCP joint; injured in skier/gamekeeper thumb.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|thumb-ucl"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "volar-plate",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Volar Plate",
+      "description": "Fibrocartilaginous volar restraint at PIP preventing hyperextension.",
+      "metadata": {
+        "anatomy_kind": "ligament",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "volar-plate",
+        "description": "Fibrocartilaginous volar restraint at PIP preventing hyperextension.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|volar-plate"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "collateral-ligaments",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Collateral Ligaments",
+      "description": "Radial and ulnar collateral ligaments stabilizing MCP and IP joints.",
+      "metadata": {
+        "anatomy_kind": "ligament",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "collateral-ligaments",
+        "description": "Radial and ulnar collateral ligaments stabilizing MCP and IP joints.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|collateral-ligaments"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "fpl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FPL",
+      "description": "Flexor pollicis longus tendon flexing the thumb IP joint.",
+      "metadata": {
+        "anatomy_kind": "tendon",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "fpl",
+        "description": "Flexor pollicis longus tendon flexing the thumb IP joint.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|fpl"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "fdp",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FDP",
+      "description": "Flexor digitorum profundus tendons flexing DIP joints; zone II no-man's land.",
+      "metadata": {
+        "anatomy_kind": "tendon",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "fdp",
+        "description": "Flexor digitorum profundus tendons flexing DIP joints; zone II no-man's land.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|fdp"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "fds",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FDS",
+      "description": "Flexor digitorum superficialis tendons flexing PIP joints.",
+      "metadata": {
+        "anatomy_kind": "tendon",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "fds",
+        "description": "Flexor digitorum superficialis tendons flexing PIP joints.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|fds"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "epl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "EPL",
+      "description": "Extensor pollicis longus tendon extending the thumb IP joint.",
+      "metadata": {
+        "anatomy_kind": "tendon",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "epl",
+        "description": "Extensor pollicis longus tendon extending the thumb IP joint.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|epl"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "epb",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "EPB",
+      "description": "Extensor pollicis brevis tendon extending the thumb MCP joint.",
+      "metadata": {
+        "anatomy_kind": "tendon",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "epb",
+        "description": "Extensor pollicis brevis tendon extending the thumb MCP joint.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|epb"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "apl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "APL",
+      "description": "Abductor pollicis longus tendon abducting and extending the thumb.",
+      "metadata": {
+        "anatomy_kind": "tendon",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "apl",
+        "description": "Abductor pollicis longus tendon abducting and extending the thumb.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|apl"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "edc",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "EDC",
+      "description": "Extensor digitorum communis tendons extending MCP and IP joints.",
+      "metadata": {
+        "anatomy_kind": "tendon",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "edc",
+        "description": "Extensor digitorum communis tendons extending MCP and IP joints.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|edc"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "ecu",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "ECU",
+      "description": "Extensor carpi ulnaris tendon depressor and ulnar deviator at the wrist.",
+      "metadata": {
+        "anatomy_kind": "tendon",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "ecu",
+        "description": "Extensor carpi ulnaris tendon depressor and ulnar deviator at the wrist.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|ecu"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "fcr",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FCR",
+      "description": "Flexor carpi radialis tendon; volar wrist approach interval landmark.",
+      "metadata": {
+        "anatomy_kind": "tendon",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "fcr",
+        "description": "Flexor carpi radialis tendon; volar wrist approach interval landmark.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|fcr"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "fcu",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FCU",
+      "description": "Flexor carpi ulnaris tendon inserting on pisiform and stabilizing ulnar wrist.",
+      "metadata": {
+        "anatomy_kind": "tendon",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "fcu",
+        "description": "Flexor carpi ulnaris tendon inserting on pisiform and stabilizing ulnar wrist.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|fcu"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "a1-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A1 Pulley",
+      "description": "Flexor tendon pulley A1 Pulley restraining flexor tendons against the phalanges.",
+      "metadata": {
+        "anatomy_kind": "pulley",
+        "hierarchy_level": "structure",
+        "region": "finger",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "a1-pulley",
+        "description": "Flexor tendon pulley A1 Pulley restraining flexor tendons against the phalanges.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|a1-pulley"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "a2-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A2 Pulley",
+      "description": "Flexor tendon pulley A2 Pulley restraining flexor tendons against the phalanges.",
+      "metadata": {
+        "anatomy_kind": "pulley",
+        "hierarchy_level": "structure",
+        "region": "finger",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "a2-pulley",
+        "description": "Flexor tendon pulley A2 Pulley restraining flexor tendons against the phalanges.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|a2-pulley"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "a3-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A3 Pulley",
+      "description": "Flexor tendon pulley A3 Pulley restraining flexor tendons against the phalanges.",
+      "metadata": {
+        "anatomy_kind": "pulley",
+        "hierarchy_level": "structure",
+        "region": "finger",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "a3-pulley",
+        "description": "Flexor tendon pulley A3 Pulley restraining flexor tendons against the phalanges.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|a3-pulley"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "a4-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A4 Pulley",
+      "description": "Flexor tendon pulley A4 Pulley restraining flexor tendons against the phalanges.",
+      "metadata": {
+        "anatomy_kind": "pulley",
+        "hierarchy_level": "structure",
+        "region": "finger",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "a4-pulley",
+        "description": "Flexor tendon pulley A4 Pulley restraining flexor tendons against the phalanges.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|a4-pulley"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "a5-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A5 Pulley",
+      "description": "Flexor tendon pulley A5 Pulley restraining flexor tendons against the phalanges.",
+      "metadata": {
+        "anatomy_kind": "pulley",
+        "hierarchy_level": "structure",
+        "region": "finger",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "a5-pulley",
+        "description": "Flexor tendon pulley A5 Pulley restraining flexor tendons against the phalanges.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|a5-pulley"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "c1-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "C1 Pulley",
+      "description": "Flexor tendon pulley C1 Pulley restraining flexor tendons against the phalanges.",
+      "metadata": {
+        "anatomy_kind": "pulley",
+        "hierarchy_level": "structure",
+        "region": "finger",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "c1-pulley",
+        "description": "Flexor tendon pulley C1 Pulley restraining flexor tendons against the phalanges.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|c1-pulley"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "c2-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "C2 Pulley",
+      "description": "Flexor tendon pulley C2 Pulley restraining flexor tendons against the phalanges.",
+      "metadata": {
+        "anatomy_kind": "pulley",
+        "hierarchy_level": "structure",
+        "region": "finger",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "c2-pulley",
+        "description": "Flexor tendon pulley C2 Pulley restraining flexor tendons against the phalanges.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|c2-pulley"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "c3-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "C3 Pulley",
+      "description": "Flexor tendon pulley C3 Pulley restraining flexor tendons against the phalanges.",
+      "metadata": {
+        "anatomy_kind": "pulley",
+        "hierarchy_level": "structure",
+        "region": "finger",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "c3-pulley",
+        "description": "Flexor tendon pulley C3 Pulley restraining flexor tendons against the phalanges.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|c3-pulley"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "flexor-pulley-system",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Flexor Pulley System",
+      "description": "Annular (A1–A5) and cruciate (C1–C3) pulleys preventing bowstringing of flexor tendons.",
+      "metadata": {
+        "anatomy_kind": "composite",
+        "hierarchy_level": "structure",
+        "region": "finger",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "flexor-pulley-system",
+        "description": "Annular (A1–A5) and cruciate (C1–C3) pulleys preventing bowstringing of flexor tendons.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|flexor-pulley-system"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "flexor-tendon-zones",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Flexor Tendon Zones",
+      "description": "Zone I–V flexor tendon anatomic divisions governing repair strategy and prognosis.",
+      "metadata": {
+        "anatomy_kind": "classification",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "flexor-tendon-zones",
+        "description": "Zone I–V flexor tendon anatomic divisions governing repair strategy and prognosis.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|flexor-tendon-zones"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "extensor-tendon-zones",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Extensor Tendon Zones",
+      "description": "Zone I–VIII extensor tendon anatomic divisions governing repair and splinting strategy.",
+      "metadata": {
+        "anatomy_kind": "classification",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "extensor-tendon-zones",
+        "description": "Zone I–VIII extensor tendon anatomic divisions governing repair and splinting strategy.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|extensor-tendon-zones"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "median-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Median Nerve",
+      "description": "Median nerve at risk in carpal tunnel and volar wrist surgery.",
+      "metadata": {
+        "anatomy_kind": "nerve",
+        "hierarchy_level": "structure",
+        "region": "wrist",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "median-nerve",
+        "description": "Median nerve at risk in carpal tunnel and volar wrist surgery.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|median-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "ulnar-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulnar Nerve",
+      "description": "Ulnar nerve at Guyon canal and cubital tunnel; digital branches in the hand.",
+      "metadata": {
+        "anatomy_kind": "nerve",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "ulnar-nerve",
+        "description": "Ulnar nerve at Guyon canal and cubital tunnel; digital branches in the hand.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|ulnar-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "radial-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radial Nerve",
+      "description": "Radial nerve and branches at the wrist and dorsum of the hand.",
+      "metadata": {
+        "anatomy_kind": "nerve",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "radial-nerve",
+        "description": "Radial nerve and branches at the wrist and dorsum of the hand.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|radial-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "ain",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "AIN",
+      "description": "Anterior interosseous nerve branch of median nerve; motor to FPL and index FDP.",
+      "metadata": {
+        "anatomy_kind": "nerve",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "ain",
+        "description": "Anterior interosseous nerve branch of median nerve; motor to FPL and index FDP.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|ain"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "pin",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "PIN",
+      "description": "Posterior interosseous nerve branch of radial nerve at the proximal forearm.",
+      "metadata": {
+        "anatomy_kind": "nerve",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "pin",
+        "description": "Posterior interosseous nerve branch of radial nerve at the proximal forearm.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pin"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "digital-nerves",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Digital Nerves",
+      "description": "Proper digital nerves supplying sensibility to the fingers.",
+      "metadata": {
+        "anatomy_kind": "nerve",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "digital-nerves",
+        "description": "Proper digital nerves supplying sensibility to the fingers.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|digital-nerves"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "radial-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radial Artery",
+      "description": "Radial artery at the wrist forming part of the deep arch.",
+      "metadata": {
+        "anatomy_kind": "vessel",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "radial-artery",
+        "description": "Radial artery at the wrist forming part of the deep arch.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|radial-artery"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "ulnar-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulnar Artery",
+      "description": "Ulnar artery at Guyon canal contributing to palmar arches.",
+      "metadata": {
+        "anatomy_kind": "vessel",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "ulnar-artery",
+        "description": "Ulnar artery at Guyon canal contributing to palmar arches.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|ulnar-artery"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "superficial-palmar-arch",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Superficial Palmar Arch",
+      "description": "Palmar arterial arcade primarily from ulnar artery.",
+      "metadata": {
+        "anatomy_kind": "vessel",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "superficial-palmar-arch",
+        "description": "Palmar arterial arcade primarily from ulnar artery.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|superficial-palmar-arch"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "deep-palmar-arch",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Deep Palmar Arch",
+      "description": "Deep palmar arterial arcade primarily from radial artery.",
+      "metadata": {
+        "anatomy_kind": "vessel",
+        "hierarchy_level": "structure",
+        "region": "hand",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "deep-palmar-arch",
+        "description": "Deep palmar arterial arcade primarily from radial artery.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|deep-palmar-arch"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "carpal-tunnel",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Carpal Tunnel",
+      "description": "Osteofibrous canal containing median nerve and flexor tendons beneath the transverse carpal ligament.",
+      "metadata": {
+        "anatomy_kind": "canal",
+        "hierarchy_level": "structure",
+        "region": "wrist",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "carpal-tunnel",
+        "description": "Osteofibrous canal containing median nerve and flexor tendons beneath the transverse carpal ligament.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|carpal-tunnel"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "guyon-canal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Guyon Canal",
+      "description": "Ulnar tunnel at the wrist containing ulnar nerve and artery.",
+      "metadata": {
+        "anatomy_kind": "canal",
+        "hierarchy_level": "structure",
+        "region": "wrist",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "shared_reference": true,
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "guyon-canal",
+        "description": "Ulnar tunnel at the wrist containing ulnar nerve and artery.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|guyon-canal"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "carpal-tunnel-syndrome",
+      "entityType": "condition",
+      "preferredLabel": "Carpal Tunnel Syndrome",
+      "description": "Prepare Hand rotation neighborhood for Carpal Tunnel Syndrome — Tendons & Nerves.",
+      "metadata": {
+        "clinical_kind": "nerve_compression",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "maturity_target": 6,
+        "cluster": "hand-wrist",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "carpal-tunnel-syndrome",
+        "description": "Prepare Hand rotation neighborhood for Carpal Tunnel Syndrome — Tendons & Nerves.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|condition|carpal-tunnel-syndrome"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "median-nerve-compression",
+      "entityType": "condition",
+      "preferredLabel": "Median Nerve Compression",
+      "description": "Cross-neighborhood reference stub for median-nerve-compression (owner: median-nerve-compression-neighborhood).",
+      "metadata": {
+        "shared_reference": true,
+        "cross_neighborhood": true,
+        "owner_pilot": "median-nerve-compression-neighborhood",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "median-nerve-compression",
+        "description": "Cross-neighborhood reference stub for median-nerve-compression (owner: median-nerve-compression-neighborhood).",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|condition|median-nerve-compression"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "trigger-finger",
+      "entityType": "condition",
+      "preferredLabel": "Trigger Finger",
+      "description": "Cross-neighborhood reference stub for trigger-finger (owner: trigger-finger-neighborhood).",
+      "metadata": {
+        "shared_reference": true,
+        "cross_neighborhood": true,
+        "owner_pilot": "trigger-finger-neighborhood",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "trigger-finger",
+        "description": "Cross-neighborhood reference stub for trigger-finger (owner: trigger-finger-neighborhood).",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|condition|trigger-finger"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "distal-radius-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Distal Radius Fracture",
+      "description": "Cross-neighborhood reference stub for distal-radius-fracture (owner: distal-radius-fracture-neighborhood).",
+      "metadata": {
+        "shared_reference": true,
+        "cross_neighborhood": true,
+        "owner_pilot": "distal-radius-fracture-neighborhood",
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "distal-radius-fracture",
+        "description": "Cross-neighborhood reference stub for distal-radius-fracture (owner: distal-radius-fracture-neighborhood).",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|condition|distal-radius-fracture"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "recurrent-motor-branch-median-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Recurrent Motor Branch of the Median Nerve",
+      "description": "Median nerve motor branch relevant to thenar function and carpal tunnel release.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "recurrent-motor-branch-median-nerve",
+        "description": "Median nerve motor branch relevant to thenar function and carpal tunnel release.",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|recurrent-motor-branch-median-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "palmar-cutaneous-branch-median-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Palmar Cutaneous Branch of the Median Nerve",
+      "description": "Median nerve sensory branch relevant to localization and operative exposure.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "palmar-cutaneous-branch-median-nerve",
+        "description": "Median nerve sensory branch relevant to localization and operative exposure.",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|palmar-cutaneous-branch-median-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "abductor-pollicis-brevis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Abductor Pollicis Brevis",
+      "description": "Thenar muscle used in focused median motor examination and electrodiagnostic assessment.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "abductor-pollicis-brevis",
+        "description": "Thenar muscle used in focused median motor examination and electrodiagnostic assessment.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|abductor-pollicis-brevis"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "phalen-test",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Phalen Test",
+      "description": "Provocative wrist-flexion maneuver used as one component of CTS assessment.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "phalen-test",
+        "description": "Provocative wrist-flexion maneuver used as one component of CTS assessment.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|exam_maneuver|phalen-test"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "tinel-sign-carpal-tunnel",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Tinel Sign at the Carpal Tunnel",
+      "description": "Median nerve percussion maneuver used as one component of CTS assessment.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "tinel-sign-carpal-tunnel",
+        "description": "Median nerve percussion maneuver used as one component of CTS assessment.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|exam_maneuver|tinel-sign-carpal-tunnel"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "durkan-carpal-compression-test",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Durkan Carpal Compression Test",
+      "description": "Direct carpal tunnel compression maneuver used as one component of CTS assessment.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "durkan-carpal-compression-test",
+        "description": "Direct carpal tunnel compression maneuver used as one component of CTS assessment.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|exam_maneuver|durkan-carpal-compression-test"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "electrodiagnostic-testing-carpal-tunnel-syndrome",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Electrodiagnostic Testing for Carpal Tunnel Syndrome",
+      "description": "Combined electrodiagnostic evaluation used selectively for CTS diagnosis, localization, and severity assessment.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "electrodiagnostic-testing-carpal-tunnel-syndrome",
+        "description": "Combined electrodiagnostic evaluation used selectively for CTS diagnosis, localization, and severity assessment.",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|diagnostic_test|electrodiagnostic-testing-carpal-tunnel-syndrome"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "nerve-conduction-study",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Nerve Conduction Study",
+      "description": "Electrodiagnostic test measuring peripheral nerve conduction.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "nerve-conduction-study",
+        "description": "Electrodiagnostic test measuring peripheral nerve conduction.",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|diagnostic_test|nerve-conduction-study"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "needle-electromyography",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Needle Electromyography",
+      "description": "Needle examination of muscle electrical activity used as a component of electrodiagnostic evaluation.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "needle-electromyography",
+        "description": "Needle examination of muscle electrical activity used as a component of electrodiagnostic evaluation.",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|diagnostic_test|needle-electromyography"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "neutral-wrist-night-orthosis-for-cts",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Neutral Wrist Night Orthosis for CTS",
+      "description": "CTS-specific nonoperative night orthosis principle, distinct from fracture immobilization.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "neutral-wrist-night-orthosis-for-cts",
+        "description": "CTS-specific nonoperative night orthosis principle, distinct from fracture immobilization.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|treatment_principle|neutral-wrist-night-orthosis-for-cts"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "corticosteroid-injection-for-cts",
+      "entityType": "procedure",
+      "preferredLabel": "Corticosteroid Injection for CTS",
+      "description": "Local corticosteroid injection used for selected patients with CTS.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "corticosteroid-injection-for-cts",
+        "description": "Local corticosteroid injection used for selected patients with CTS.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|procedure|corticosteroid-injection-for-cts"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "open-carpal-tunnel-release",
+      "entityType": "procedure",
+      "preferredLabel": "Open Carpal Tunnel Release",
+      "description": "Open operative decompression procedure for CTS.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "open-carpal-tunnel-release",
+        "description": "Open operative decompression procedure for CTS.",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|procedure|open-carpal-tunnel-release"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "endoscopic-carpal-tunnel-release",
+      "entityType": "procedure",
+      "preferredLabel": "Endoscopic Carpal Tunnel Release",
+      "description": "Endoscopic operative decompression procedure for CTS.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "endoscopic-carpal-tunnel-release",
+        "description": "Endoscopic operative decompression procedure for CTS.",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|procedure|endoscopic-carpal-tunnel-release"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "open-carpal-tunnel-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Open Carpal Tunnel Approach",
+      "description": "Open palmar exposure for carpal tunnel release.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "open-carpal-tunnel-approach",
+        "description": "Open palmar exposure for carpal tunnel release.",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|surgical_approach|open-carpal-tunnel-approach"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "endoscopic-carpal-tunnel-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Endoscopic Carpal Tunnel Approach",
+      "description": "Endoscopic portal exposure for carpal tunnel release.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "endoscopic-carpal-tunnel-approach",
+        "description": "Endoscopic portal exposure for carpal tunnel release.",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|surgical_approach|endoscopic-carpal-tunnel-approach"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "pillar-pain-after-carpal-tunnel-release",
+      "entityType": "complication",
+      "preferredLabel": "Pillar Pain After Carpal Tunnel Release",
+      "description": "Postoperative pain localized around the carpal tunnel pillars after release.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "pillar-pain-after-carpal-tunnel-release",
+        "description": "Postoperative pain localized around the carpal tunnel pillars after release.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|complication|pillar-pain-after-carpal-tunnel-release"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "incomplete-transverse-carpal-ligament-release",
+      "entityType": "complication",
+      "preferredLabel": "Incomplete Carpal Tunnel Release",
+      "description": "Incomplete operative decompression considered during evaluation of persistent symptoms.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "incomplete-transverse-carpal-ligament-release",
+        "description": "Incomplete operative decompression considered during evaluation of persistent symptoms.",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|complication|incomplete-transverse-carpal-ligament-release"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "persistent-carpal-tunnel-syndrome-after-release",
+      "entityType": "condition",
+      "preferredLabel": "Persistent Carpal Tunnel Syndrome After Release",
+      "description": "CTS symptoms that do not adequately improve after release; distinct from recurrence after improvement.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "persistent-carpal-tunnel-syndrome-after-release",
+        "description": "CTS symptoms that do not adequately improve after release; distinct from recurrence after improvement.",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|condition|persistent-carpal-tunnel-syndrome-after-release"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "recurrent-carpal-tunnel-syndrome",
+      "entityType": "condition",
+      "preferredLabel": "Recurrent Carpal Tunnel Syndrome",
+      "description": "Return of CTS symptoms after a period of improvement following release.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "recurrent-carpal-tunnel-syndrome",
+        "description": "Return of CTS symptoms after a period of improvement following release.",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|condition|recurrent-carpal-tunnel-syndrome"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "revision-carpal-tunnel-release",
+      "entityType": "procedure",
+      "preferredLabel": "Revision Carpal Tunnel Release",
+      "description": "Revision decompression procedure considered after source-supported evaluation of failed release.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "revision-carpal-tunnel-release",
+        "description": "Revision decompression procedure considered after source-supported evaluation of failed release.",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|procedure|revision-carpal-tunnel-release"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "carpal-tunnel-release-postoperative-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Carpal Tunnel Release Postoperative Protocol",
+      "description": "Individualized postoperative care and rehabilitation framework after carpal tunnel release.",
+      "metadata": {
+        "pilot": "carpal-tunnel-syndrome-neighborhood",
+        "review_status": "needs_review",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "review_packet_key": "pilot:carpal-tunnel-syndrome-neighborhood",
+        "review_packet_label": "Carpal Tunnel Syndrome Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "carpal-tunnel-release-postoperative-protocol",
+        "description": "Individualized postoperative care and rehabilitation framework after carpal tunnel release.",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-09T14:21:18.857Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|treatment_principle|carpal-tunnel-release-postoperative-protocol"
+      },
+      "source": "spec"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "radius",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "forearm",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|radius|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "ulna",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "forearm",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|ulna|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "interosseous-membrane",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "relevance_reason": "forearm_load",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|interosseous-membrane|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "druj",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "wrist_stability",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|druj|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "pruj",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "relevance_reason": "rotation",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|pruj|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "distal-radius",
+      "predicate": "part_of",
+      "objectSlug": "radius",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "wrist_articular",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|distal-radius|part_of|radius"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "distal-ulna",
+      "predicate": "part_of",
+      "objectSlug": "ulna",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "ulnar_wrist",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|distal-ulna|part_of|ulna"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "scaphoid",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "carpus",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|scaphoid|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "lunate",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "carpus",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|lunate|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "triquetrum",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "carpus",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|triquetrum|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "pisiform",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "relevance_reason": "ulnar_wrist",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|pisiform|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "trapezium",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "thumb_column",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|trapezium|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "trapezoid",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "relevance_reason": "carpus",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|trapezoid|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "capitate",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "carpus",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|capitate|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "hamate",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "carpus",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|hamate|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "scaphoid",
+      "predicate": "articulates_with",
+      "objectSlug": "lunate",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "proximal_row",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|scaphoid|articulates_with|lunate"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "lunate",
+      "predicate": "articulates_with",
+      "objectSlug": "triquetrum",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "proximal_row",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|lunate|articulates_with|triquetrum"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "scapholunate-ligament",
+      "predicate": "inserts_on",
+      "objectSlug": "scaphoid",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "sl_instability",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|scapholunate-ligament|inserts_on|scaphoid"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "scapholunate-ligament",
+      "predicate": "inserts_on",
+      "objectSlug": "lunate",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "sl_instability",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|scapholunate-ligament|inserts_on|lunate"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "lunotriquetral-ligament",
+      "predicate": "inserts_on",
+      "objectSlug": "lunate",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "lt_instability",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|lunotriquetral-ligament|inserts_on|lunate"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "lunotriquetral-ligament",
+      "predicate": "inserts_on",
+      "objectSlug": "triquetrum",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "lt_instability",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|lunotriquetral-ligament|inserts_on|triquetrum"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "tfcc",
+      "predicate": "inserts_on",
+      "objectSlug": "triquetrum",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "ulnar_wrist",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|tfcc|inserts_on|triquetrum"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "triquetrum",
+      "predicate": "articulates_with",
+      "objectSlug": "druj",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "ulnar_wrist",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|triquetrum|articulates_with|druj"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "first-metacarpal",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "thumb",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|first-metacarpal|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "second-metacarpal",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "digit",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|second-metacarpal|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "third-metacarpal",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "digit",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|third-metacarpal|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "fourth-metacarpal",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "digit",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|fourth-metacarpal|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "fifth-metacarpal",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "digit",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|fifth-metacarpal|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "proximal-phalanx",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "digit",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|proximal-phalanx|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "middle-phalanx",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "digit",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|middle-phalanx|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "distal-phalanx",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "digit",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|distal-phalanx|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "mcp-joint",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "digit",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|mcp-joint|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "pip-joint",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "digit",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|pip-joint|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "dip-joint",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "digit",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|dip-joint|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "cmc-joint",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "thumb",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|cmc-joint|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "first-metacarpal",
+      "predicate": "articulates_with",
+      "objectSlug": "trapezium",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "thumb_cmc",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|first-metacarpal|articulates_with|trapezium"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "thumb-ucl",
+      "predicate": "inserts_on",
+      "objectSlug": "proximal-phalanx",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "thumb_stability",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|thumb-ucl|inserts_on|proximal-phalanx"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "volar-plate",
+      "predicate": "inserts_on",
+      "objectSlug": "proximal-phalanx",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "pip_stability",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|volar-plate|inserts_on|proximal-phalanx"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "fpl",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "flexor",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|fpl|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "fdp",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "flexor",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|fdp|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "fds",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "flexor",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|fds|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "epl",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "extensor",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|epl|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "epb",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "extensor",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|epb|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "apl",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "extensor",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|apl|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "edc",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "extensor",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|edc|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "ecu",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "extensor",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|ecu|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "fcr",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "flexor",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|fcr|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "fcu",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "flexor",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|fcu|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "flexor-pulley-system",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "flexor",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|flexor-pulley-system|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "flexor-tendon-zones",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "tendon_repair",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|flexor-tendon-zones|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "extensor-tendon-zones",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "tendon_repair",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|extensor-tendon-zones|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "a1-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "pulley",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|a1-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "a2-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "pulley",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|a2-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "a3-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "relevance_reason": "pulley",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|a3-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "a4-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "pulley",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|a4-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "a5-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "relevance_reason": "pulley",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|a5-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "c1-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "relevance_reason": "pulley",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|c1-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "c2-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "relevance_reason": "pulley",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|c2-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "c3-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "relevance_reason": "pulley",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|c3-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "flexor-pulley-system",
+      "predicate": "contains",
+      "objectSlug": "fdp",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "zone_ii",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|flexor-pulley-system|contains|fdp"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "flexor-pulley-system",
+      "predicate": "contains",
+      "objectSlug": "fds",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "zone_ii",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|flexor-pulley-system|contains|fds"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "median-nerve",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "neurovascular",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|median-nerve|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "ulnar-nerve",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "neurovascular",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|ulnar-nerve|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "radial-nerve",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "neurovascular",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|radial-nerve|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "ain",
+      "predicate": "part_of",
+      "objectSlug": "median-nerve",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "relevance_reason": "motor_branch",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|ain|part_of|median-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "pin",
+      "predicate": "part_of",
+      "objectSlug": "radial-nerve",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "relevance_reason": "motor_branch",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|pin|part_of|radial-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "digital-nerves",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "sensibility",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|digital-nerves|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "radial-artery",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "vascular",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|radial-artery|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "ulnar-artery",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "vascular",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|ulnar-artery|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "superficial-palmar-arch",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "vascular",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|superficial-palmar-arch|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "deep-palmar-arch",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "vascular",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|deep-palmar-arch|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel",
+      "predicate": "contains",
+      "objectSlug": "median-nerve",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "compression",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|carpal-tunnel|contains|median-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel",
+      "predicate": "contains",
+      "objectSlug": "fds",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "flexor",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|carpal-tunnel|contains|fds"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel",
+      "predicate": "contains",
+      "objectSlug": "fdp",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "flexor",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|carpal-tunnel|contains|fdp"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "guyon-canal",
+      "predicate": "contains",
+      "objectSlug": "ulnar-nerve",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "compression",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|guyon-canal|contains|ulnar-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "guyon-canal",
+      "predicate": "contains",
+      "objectSlug": "ulnar-artery",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "vascular",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|guyon-canal|contains|ulnar-artery"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "distal-radius",
+      "predicate": "articulates_with",
+      "objectSlug": "scaphoid",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "radiocarpal",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|distal-radius|articulates_with|scaphoid"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "distal-radius",
+      "predicate": "articulates_with",
+      "objectSlug": "lunate",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "radiocarpal",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|distal-radius|articulates_with|lunate"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "distal-radius",
+      "predicate": "articulates_with",
+      "objectSlug": "druj",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "instability",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|distal-radius|articulates_with|druj"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "distal-ulna",
+      "predicate": "articulates_with",
+      "objectSlug": "druj",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "ulnar_wrist",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|distal-ulna|articulates_with|druj"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "hand-wrist-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "carpal-tunnel-syndrome",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "diagnosis",
+        "educational_importance": "high",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "call"
+        ],
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|hand-wrist-anatomy-hub|prerequisite_for|carpal-tunnel-syndrome"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel-syndrome",
+      "predicate": "involves_anatomy",
+      "objectSlug": "median-nerve",
+      "metadata": {
+        "relationship_strength": "core",
+        "relevance_reason": "cts_pathophysiology",
+        "review_status": "needs_review",
+        "source": "post_review_overlay"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "carpal-tunnel-syndrome",
+      "predicate": "injured_in",
+      "objectSlug": "median-nerve",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "anatomic_focus",
+        "clinical_importance": "high",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|injured_in|median-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel-syndrome",
+      "predicate": "involves_anatomy",
+      "objectSlug": "carpal-tunnel",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "clinical_importance": "high",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|involves_anatomy|carpal-tunnel"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel-syndrome",
+      "predicate": "injured_in",
+      "objectSlug": "carpal-tunnel",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "anatomic_focus",
+        "clinical_importance": "high",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|injured_in|carpal-tunnel"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel-syndrome",
+      "predicate": "involves_anatomy",
+      "objectSlug": "fpl",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "clinical_importance": "high",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|involves_anatomy|fpl"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel-syndrome",
+      "predicate": "injured_in",
+      "objectSlug": "fpl",
+      "metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "anatomic_focus",
+        "clinical_importance": "high",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|injured_in|fpl"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "recurrent-motor-branch-median-nerve",
+      "predicate": "part_of",
+      "objectSlug": "median-nerve",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "anatomy_role": "supporting",
+        "_provenance_fingerprint": "rel|recurrent-motor-branch-median-nerve|part_of|median-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "palmar-cutaneous-branch-median-nerve",
+      "predicate": "part_of",
+      "objectSlug": "median-nerve",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "anatomy_role": "supporting",
+        "_provenance_fingerprint": "rel|palmar-cutaneous-branch-median-nerve|part_of|median-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel-syndrome",
+      "predicate": "tested_by",
+      "objectSlug": "phalen-test",
+      "metadata": {
+        "review_status": "needs_review",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|phalen-test"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel-syndrome",
+      "predicate": "tested_by",
+      "objectSlug": "tinel-sign-carpal-tunnel",
+      "metadata": {
+        "review_status": "needs_review",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|tinel-sign-carpal-tunnel"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel-syndrome",
+      "predicate": "tested_by",
+      "objectSlug": "durkan-carpal-compression-test",
+      "metadata": {
+        "review_status": "needs_review",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|durkan-carpal-compression-test"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel-syndrome",
+      "predicate": "tested_by",
+      "objectSlug": "electrodiagnostic-testing-carpal-tunnel-syndrome",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "EDX_SPECIALIST_REVIEW",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|electrodiagnostic-testing-carpal-tunnel-syndrome"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel-syndrome",
+      "predicate": "tested_by",
+      "objectSlug": "nerve-conduction-study",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "EDX_SPECIALIST_REVIEW",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|tested_by|nerve-conduction-study"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel-syndrome",
+      "predicate": "treated_by",
+      "objectSlug": "neutral-wrist-night-orthosis-for-cts",
+      "metadata": {
+        "review_status": "needs_review",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel-syndrome",
+      "predicate": "treated_by",
+      "objectSlug": "corticosteroid-injection-for-cts",
+      "metadata": {
+        "review_status": "needs_review",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "corticosteroid-injection-for-cts",
+      "predicate": "involves_anatomy",
+      "objectSlug": "carpal-tunnel",
+      "metadata": {
+        "review_status": "needs_review",
+        "anatomy_role": "supporting",
+        "_provenance_fingerprint": "rel|corticosteroid-injection-for-cts|involves_anatomy|carpal-tunnel"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "corticosteroid-injection-for-cts",
+      "predicate": "at_risk_structure",
+      "objectSlug": "median-nerve",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|corticosteroid-injection-for-cts|at_risk_structure|median-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel-syndrome",
+      "predicate": "treated_by",
+      "objectSlug": "open-carpal-tunnel-release",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "carpal-tunnel-syndrome",
+      "predicate": "treated_by",
+      "objectSlug": "endoscopic-carpal-tunnel-release",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "open-carpal-tunnel-release",
+      "predicate": "uses_approach",
+      "objectSlug": "open-carpal-tunnel-approach",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|open-carpal-tunnel-release|uses_approach|open-carpal-tunnel-approach"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "endoscopic-carpal-tunnel-release",
+      "predicate": "uses_approach",
+      "objectSlug": "endoscopic-carpal-tunnel-approach",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|endoscopic-carpal-tunnel-release|uses_approach|endoscopic-carpal-tunnel-approach"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "open-carpal-tunnel-release",
+      "predicate": "at_risk_structure",
+      "objectSlug": "median-nerve",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|median-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "open-carpal-tunnel-release",
+      "predicate": "at_risk_structure",
+      "objectSlug": "recurrent-motor-branch-median-nerve",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "open-carpal-tunnel-release",
+      "predicate": "at_risk_structure",
+      "objectSlug": "palmar-cutaneous-branch-median-nerve",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|palmar-cutaneous-branch-median-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "endoscopic-carpal-tunnel-release",
+      "predicate": "at_risk_structure",
+      "objectSlug": "median-nerve",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|endoscopic-carpal-tunnel-release|at_risk_structure|median-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "endoscopic-carpal-tunnel-release",
+      "predicate": "at_risk_structure",
+      "objectSlug": "recurrent-motor-branch-median-nerve",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|endoscopic-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "open-carpal-tunnel-release",
+      "predicate": "has_complication",
+      "objectSlug": "pillar-pain-after-carpal-tunnel-release",
+      "metadata": {
+        "review_status": "needs_review",
+        "anatomy_role": "supporting",
+        "_provenance_fingerprint": "rel|open-carpal-tunnel-release|has_complication|pillar-pain-after-carpal-tunnel-release"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "open-carpal-tunnel-release",
+      "predicate": "has_complication",
+      "objectSlug": "incomplete-transverse-carpal-ligament-release",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "anatomy_role": "supporting",
+        "_provenance_fingerprint": "rel|open-carpal-tunnel-release|has_complication|incomplete-transverse-carpal-ligament-release"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "endoscopic-carpal-tunnel-release",
+      "predicate": "has_complication",
+      "objectSlug": "incomplete-transverse-carpal-ligament-release",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "anatomy_role": "supporting",
+        "_provenance_fingerprint": "rel|endoscopic-carpal-tunnel-release|has_complication|incomplete-transverse-carpal-ligament-release"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "open-carpal-tunnel-release",
+      "predicate": "involves_anatomy",
+      "objectSlug": "carpal-tunnel",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "anatomy_role": "supporting",
+        "_provenance_fingerprint": "rel|open-carpal-tunnel-release|involves_anatomy|carpal-tunnel"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "endoscopic-carpal-tunnel-release",
+      "predicate": "involves_anatomy",
+      "objectSlug": "carpal-tunnel",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "anatomy_role": "supporting",
+        "_provenance_fingerprint": "rel|endoscopic-carpal-tunnel-release|involves_anatomy|carpal-tunnel"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "revision-carpal-tunnel-release",
+      "predicate": "involves_anatomy",
+      "objectSlug": "carpal-tunnel",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "anatomy_role": "supporting",
+        "_provenance_fingerprint": "rel|revision-carpal-tunnel-release|involves_anatomy|carpal-tunnel"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "revision-carpal-tunnel-release",
+      "predicate": "at_risk_structure",
+      "objectSlug": "median-nerve",
+      "metadata": {
+        "review_status": "needs_review",
+        "curation_route": "ATTENDING_REVIEW",
+        "_provenance_fingerprint": "rel|revision-carpal-tunnel-release|at_risk_structure|median-nerve"
+      },
+      "source": "spec"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-carpal-tunnel-syndrome-clinical-pattern",
+      "claimType": "fact",
+      "claimText": "Carpal tunnel syndrome evaluation combines the symptom pattern, focused median nerve examination, and selective diagnostic testing rather than relying on routine imaging.",
+      "primaryEntitySlug": "carpal-tunnel-syndrome",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "clinic",
+          "oite"
+        ],
+        "sourceNote": "CTS vertical preparation; source before manufacture"
+      }
+    },
+    {
+      "draftId": "claim-carpal-tunnel-syndrome-anatomy",
+      "claimType": "anatomy_pearl",
+      "claimText": "Carpal tunnel syndrome localizes to the median nerve within the carpal tunnel; release planning also requires review of median nerve branch anatomy.",
+      "primaryEntitySlug": "median-nerve",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "clinic",
+          "or",
+          "oite"
+        ],
+        "sourceNote": "CTS vertical preparation; attending anatomy review required"
+      }
+    },
+    {
+      "draftId": "claim-carpal-tunnel-syndrome-exam",
+      "claimType": "clinical_script",
+      "claimText": "Document sensory distribution, thenar motor findings, and provocative maneuvers while considering proximal median neuropathy, cervical radiculopathy, and other mimics.",
+      "primaryEntitySlug": "carpal-tunnel-syndrome",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "clinic",
+          "oite"
+        ],
+        "sourceNote": "CTS vertical preparation; source before manufacture"
+      }
+    },
+    {
+      "draftId": "claim-carpal-tunnel-syndrome-testing",
+      "claimType": "diagnostic_point",
+      "claimText": "Electrodiagnostic testing can help confirm CTS, localize competing diagnoses, and characterize severity when results will affect management; routine MRI or radiographs should not be presented as the standard CTS diagnostic or follow-up pathway.",
+      "primaryEntitySlug": "carpal-tunnel-syndrome",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "clinic",
+          "oite"
+        ],
+        "sourceNote": "CTS vertical preparation; EDX specialist review required",
+        "post_review_revision_applied": true
+      }
+    },
+    {
+      "draftId": "claim-carpal-tunnel-syndrome-treatment-options",
+      "claimType": "clinical_script",
+      "claimText": "CTS treatment planning should distinguish neutral-position night orthosis, corticosteroid injection with short-term rather than durable benefit framing, and named open or endoscopic carpal tunnel release procedures without implying universal superiority of either release technique.",
+      "primaryEntitySlug": "carpal-tunnel-syndrome",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "clinic",
+          "or"
+        ],
+        "sourceNote": "CTS vertical preparation; attending review required",
+        "post_review_revision_applied": true
+      }
+    },
+    {
+      "draftId": "claim-carpal-tunnel-syndrome-complications",
+      "claimType": "cognitive_trap",
+      "claimText": "Persistent symptoms after release, recurrent symptoms after a period of improvement, incomplete transverse carpal ligament release, pillar pain, and procedure-related median or branch nerve injury should be modeled as distinct post-release concepts unless curator review intentionally links or merges them.",
+      "primaryEntitySlug": "carpal-tunnel-syndrome",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "clinic",
+          "or",
+          "oite"
+        ],
+        "sourceNote": "CTS vertical preparation; attending review required",
+        "post_review_revision_applied": true
+      }
+    },
+    {
+      "draftId": "claim-carpal-tunnel-syndrome-postoperative",
+      "claimType": "rehab_pearl",
+      "claimText": "After carpal tunnel release, activity, therapy, and return-to-work guidance should be individualized; routine postoperative wrist immobilization, routine supervised therapy, and repeat radiographs are not default CTS follow-up requirements.",
+      "primaryEntitySlug": "carpal-tunnel-syndrome",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "clinic"
+        ],
+        "sourceNote": "CTS vertical preparation; attending and rehabilitation review required",
+        "post_review_revision_applied": true
+      }
+    },
+    {
+      "draftId": "claim-carpal-tunnel-syndrome-oite-trap",
+      "claimType": "board_trap",
+      "claimText": "OITE content should test median nerve branch anatomy, the limits of individual provocative maneuvers, NCS versus needle EMG roles, and the curriculum distinction between persistent symptoms, recurrent symptoms, and incomplete release without encoding an unsupported fixed recurrence interval.",
+      "primaryEntitySlug": "carpal-tunnel-syndrome",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "oite"
+        ],
+        "sourceNote": "CTS vertical preparation; educator and domain review required",
+        "post_review_revision_applied": true
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-carpal-tunnel-syndrome-testing",
+      "subjectEntitySlug": "carpal-tunnel-syndrome",
+      "patternType": "diagnostic_escalation",
+      "trigger": "Atypical presentation, uncertain localization or severity, competing diagnosis, preoperative severity question, or a result expected to change management.",
+      "action": "Consider targeted electrodiagnostic testing and avoid defaulting to routine radiographs or MRI for typical CTS evaluation.",
+      "urgency": "routine",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-carpal-tunnel-syndrome-nonoperative",
+      "subjectEntitySlug": "carpal-tunnel-syndrome",
+      "patternType": "nonoperative_eligible",
+      "trigger": "CTS presentation without progressive thenar weakness, denervation concern, acute traumatic compression, or another reviewed surgical escalation indication.",
+      "action": "Discuss education, neutral-position night orthosis, and/or corticosteroid injection using source-specific expectations and follow-up; frame injection as short-term symptom relief rather than durable disease modification.",
+      "urgency": "routine",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-carpal-tunnel-syndrome-operative",
+      "subjectEntitySlug": "carpal-tunnel-syndrome",
+      "patternType": "operative_indication",
+      "trigger": "Persistent symptoms after failed nonoperative treatment, severe disease, or objective thenar weakness, thenar atrophy, or denervation findings.",
+      "action": "Discuss a named carpal tunnel release option after confirming diagnosis, severity, patient factors, and goals; use expedited non-emergent evaluation for thenar weakness, atrophy, or denervation findings, while persistent symptoms after failed nonoperative treatment remain a routine surgical discussion.",
+      "urgency": "expedited_non_emergent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-carpal-tunnel-syndrome-approach-choice",
+      "subjectEntitySlug": "carpal-tunnel-syndrome",
+      "patternType": "operative_approach",
+      "trigger": "A reviewed surgical indication is present and open versus endoscopic technique is being selected.",
+      "action": "Teach open and endoscopic release as equivalent named treatment options; select through shared decision-making informed by anatomy, prior surgery, risks, resources, patient preference, and surgeon expertise. Do not encode a default operative pathway.",
+      "urgency": "routine",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-carpal-tunnel-syndrome-endoscopic-bailout",
+      "subjectEntitySlug": "endoscopic-carpal-tunnel-release",
+      "patternType": "operative_bailout",
+      "trigger": "Visualization is inadequate or anatomy is unsafe or uncertain during endoscopic release.",
+      "action": "Stop further endoscopic release and convert to an open approach when appropriate according to local protocol and supervising surgeon judgment. Do not encode mandatory conversion.",
+      "urgency": "urgent",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-carpal-tunnel-syndrome-persistent-symptoms",
+      "subjectEntitySlug": "persistent-carpal-tunnel-syndrome-after-release",
+      "patternType": "revision_evaluation",
+      "trigger": "Failure of CTS symptoms to adequately improve following carpal tunnel release.",
+      "action": "Reassess diagnosis, localization, severity, and release completeness before considering revision. Do not require a minimum postoperative interval or proof of incomplete release.",
+      "urgency": "routine",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-carpal-tunnel-syndrome-recurrent-symptoms",
+      "subjectEntitySlug": "recurrent-carpal-tunnel-syndrome",
+      "patternType": "revision_evaluation",
+      "trigger": "CTS symptoms return after a documented period of postoperative improvement following release.",
+      "action": "Evaluate recurrent compression and alternative causes before considering revision. Do not require a fixed symptom-free interval.",
+      "urgency": "routine",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-carpal-tunnel-syndrome-postoperative-escalation",
+      "subjectEntitySlug": "carpal-tunnel-release-postoperative-protocol",
+      "patternType": "postoperative_escalation",
+      "trigger": "Progressive neurologic deficit, vascular concern, wound concern, or severe unexpected postoperative pain after carpal tunnel release.",
+      "action": "Escalate promptly to the treating surgical team for assessment under the local postoperative protocol.",
+      "urgency": "urgent",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [],
+  "stats": {
+    "entityCount": 92,
+    "relationshipCount": 114,
+    "claimCount": 8,
+    "decisionPointCount": 8,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 93,
+    "conflictingRelationships": 0,
+    "metadataMerged": 216,
+    "provenanceAttached": 233
+  }
+}

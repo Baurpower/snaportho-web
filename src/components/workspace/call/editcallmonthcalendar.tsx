@@ -2425,6 +2425,13 @@ export default function EditCallMonthCalendar({
         ) : null}
 
         <DndContext
+          id="call-month-editor"
+          accessibility={{
+            screenReaderInstructions: {
+              draggable:
+                "Press space to pick up a resident assignment. Use the arrow keys to move between call slots, press space to drop, or press escape to cancel.",
+            },
+          }}
           sensors={sensors}
           collisionDetection={(args) => {
             const pointerHits = pointerWithin(args);

@@ -1,7 +1,7 @@
 {
   "category": "ontology_completeness",
   "label": "Ontology Completeness",
-  "score": 38,
+  "score": 53,
   "deductions": [
     {
       "finding": "9 critical ontology gaps remain",
@@ -56,25 +56,13 @@
       "category": "ontology_completeness",
       "impact": 3,
       "suggestedFix": "Run the matching builder agent for missing_decision_point."
-    },
-    {
-      "finding": "Only 0 anatomy structures (minimum 3 required)",
-      "evidence": "Entity slugs: ",
-      "reason": "Condition neighborhoods require regional anatomy per condition.anatomy.min_structures.",
-      "severity": "critical",
-      "category": "ontology_completeness",
-      "affectedSlugs": [
-        "proximal-humerus-fracture"
-      ],
-      "suggestedFix": "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
-      "impact": 15
     }
   ],
   "metrics": {
     "totalGaps": 26,
     "criticalGaps": 9,
     "highGaps": 9,
-    "anatomyStructures": 0,
+    "anatomyStructures": 21,
     "classificationEntities": 1,
     "completenessRatio": 0.1333333333333333
   },
@@ -83,7 +71,6 @@
     "Schedule gap-resolution work items from ontology-work-plan.json.",
     "Run the matching builder agent for missing_entity.",
     "Run the matching builder agent for missing_relationship.",
-    "Run the matching builder agent for missing_claim.",
-    "Add essential regional anatomy via anatomy builder or shared anatomy reuse."
+    "Run the matching builder agent for missing_claim."
   ]
 }

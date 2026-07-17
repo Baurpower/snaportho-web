@@ -1,0 +1,53 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 84,
+  "deductions": [
+    {
+      "finding": "9 orphan entities with no relationships",
+      "evidence": "Slugs: distal-radius-fracture, collateral-ligaments, abductor-pollicis-brevis, carpal-tunnel-release-postoperative-protocol, median-nerve-compression, trigger-finger, persistent-carpal-tunnel-syndrome-after-release, needle-electromyography, recurrent-carpal-tunnel-syndrome",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "distal-radius-fracture",
+        "collateral-ligaments",
+        "abductor-pollicis-brevis",
+        "carpal-tunnel-release-postoperative-protocol",
+        "median-nerve-compression",
+        "trigger-finger",
+        "persistent-carpal-tunnel-syndrome-after-release",
+        "needle-electromyography",
+        "recurrent-carpal-tunnel-syndrome"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 8
+    },
+    {
+      "finding": "2 disconnected anatomy structures",
+      "evidence": "Disconnected: collateral-ligaments, abductor-pollicis-brevis",
+      "reason": "Anatomy must connect to the condition graph for educational traversal.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "collateral-ligaments",
+        "abductor-pollicis-brevis"
+      ],
+      "suggestedFix": "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 92,
+    "relationshipCount": 114,
+    "orphanCount": 9,
+    "danglingEdgeCount": 0,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+    "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors."
+  ]
+}

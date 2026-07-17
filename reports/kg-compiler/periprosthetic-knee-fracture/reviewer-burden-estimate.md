@@ -1,15 +1,15 @@
 # Reviewer Burden Estimate
 
-Generated: 2026-07-05T23:04:58.208Z
+Generated: 2026-07-16T02:54:52.457Z
 
 ## Summary
 
 | Metric | Value |
 |--------|------:|
-| Human review rate | 14.1% |
-| Auto-approved rate | 85.9% |
+| Human review rate | 11.6% |
+| Auto-approved rate | 88.4% |
 | Attending review items | 5 |
-| Curator review items | 11 |
+| Curator review items | 9 |
 | Rejected / conflict signals | 0 |
 | Gap-resolution work items | 5 |
 | Estimated burden band | **medium** |
@@ -18,16 +18,16 @@ Generated: 2026-07-05T23:04:58.208Z
 
 | Route | Count |
 |-------|------:|
-| AUTO_APPROVE | 73 |
-| SAFE_REVIEW | 7 |
+| AUTO_APPROVE | 76 |
+| SAFE_REVIEW | 5 |
 | EXPERT_REVIEW | 5 |
 | REJECT | 0 |
 
 ## Agent work plan
 
-- **Clinical Entity Builder** (clinical-entity-builder): 4 gap(s), reviewer=clinical_expert
 - **Relationship Builder** (relationship-builder): 8 gap(s), reviewer=attending
-- **Claim Builder** (claim-builder): 5 gap(s), reviewer=none
+- **Claim Builder** (claim-builder): 9 gap(s), reviewer=clinical_expert
+- **Clinical Entity Builder** (clinical-entity-builder): 4 gap(s), reviewer=clinical_expert
 - **Decision Point Builder** (decision-point-builder): 3 gap(s), reviewer=attending
 - **Asset Linker** (asset-linker): 2 gap(s), reviewer=none
 - **Conflict Resolver** (duplicate-detector): 0 gap(s), reviewer=none

@@ -1,15 +1,15 @@
 # Reviewer Burden Estimate
 
-Generated: 2026-07-08T21:22:54.599Z
+Generated: 2026-07-09T04:26:52.477Z
 
 ## Summary
 
 | Metric | Value |
 |--------|------:|
-| Human review rate | 5.6% |
-| Auto-approved rate | 94.4% |
-| Attending review items | 70 |
-| Curator review items | 65 |
+| Human review rate | 3.8% |
+| Auto-approved rate | 96.2% |
+| Attending review items | 44 |
+| Curator review items | 28 |
 | Rejected / conflict signals | 0 |
 | Gap-resolution work items | 1 |
 | Estimated burden band | **high** |
@@ -18,9 +18,9 @@ Generated: 2026-07-08T21:22:54.599Z
 
 | Route | Count |
 |-------|------:|
-| AUTO_APPROVE | 1178 |
+| AUTO_APPROVE | 1111 |
 | SAFE_REVIEW | 0 |
-| EXPERT_REVIEW | 70 |
+| EXPERT_REVIEW | 44 |
 | REJECT | 0 |
 
 ## Agent work plan

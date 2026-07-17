@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "topic": "carpal-tunnel-syndrome",
+  "pilotKey": "carpal-tunnel-syndrome-neighborhood",
+  "batchKey": "cts-0f75b7ab7ec364d9",
+  "counts": {
+    "entities": 93,
+    "relationships": 116,
+    "claims": 8,
+    "decisionPoints": 8,
+    "reviewDecisions": 42,
+    "proposals": 226
+  },
+  "packetHash": "c613339eb7f01145fa86a218a9b82ee9c064ebbe29de562fd2a0d906d7af96d9",
+  "rejected": [
+    "rel|carpal-tunnel-syndrome|differential_for|distal-radius-fracture",
+    "rel|carpal-tunnel-syndrome|differential_for|median-nerve-compression",
+    "rel|carpal-tunnel-syndrome|differential_for|trigger-finger",
+    "rel|carpal-tunnel-syndrome|tested_by|needle-electromyography",
+    "rel|endoscopic-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+    "rel|open-carpal-tunnel-release|uses_implant|carpal-tunnel-release-instrument-set",
+    "rel|persistent-carpal-tunnel-syndrome-after-release|treated_by|revision-carpal-tunnel-release",
+    "rel|recurrent-carpal-tunnel-syndrome|treated_by|revision-carpal-tunnel-release"
+  ],
+  "claimsAndDecisionPoints": "persisted_as_needs_review_proposals_not_canonical_apply"
+}

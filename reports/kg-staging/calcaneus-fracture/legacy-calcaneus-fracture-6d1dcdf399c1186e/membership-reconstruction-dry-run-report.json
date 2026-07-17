@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "runDate": "2026-07-16",
+  "topicKey": "calcaneus-fracture",
+  "displayName": "Calcaneus Fracture",
+  "pilotKey": "calcaneus-fracture-neighborhood",
+  "batchKey": "legacy-calcaneus-fracture-6d1dcdf399c1186e",
+  "packetHash": "6d1dcdf399c1186e8daef68db00413c1de03a257b4e599679fafe440029cede0",
+  "graphHash": "43597f84586f81481ccf9a0cc5970a86b4f98b4b5f9e2fd2fcac0c81ee7265a1",
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "dryRun": true,
+  "exactAppliedMembershipReconstructed": true,
+  "counts": {
+    "approvedLoaded": 63,
+    "structuralProposals": 62,
+    "entities": 27,
+    "relationships": 34,
+    "curriculumBridges": 1,
+    "draftClaimsExcluded": 1,
+    "draftDecisionPointsExcluded": 0
+  },
+  "repairs": {
+    "insertedSemantic": 0,
+    "reusedSemantic": 0,
+    "proposalStatesRepaired": 0,
+    "insertedMemberships": 0,
+    "reusedMemberships": 0,
+    "reactivatedMemberships": 0
+  },
+  "discrepancyCount": 0,
+  "exactNextAction": "repair_batch_membership"
+}

@@ -1,0 +1,152 @@
+{
+  "generatedAt": "2026-07-17T01:53:43.872Z",
+  "releaseId": "kg-beta-20260716-002",
+  "fixtureCount": 75,
+  "mandatoryRetrievalPrecision": 1,
+  "mandatoryRetrievalRecall": 0.828125,
+  "bypassPrecision": 0.5,
+  "bypassRecall": 1,
+  "top1NeighborhoodPrecision": null,
+  "top1EntityPrecision": 0.7666666666666667,
+  "candidateMissRate": 0.53125,
+  "emptyPacketRateAfterFiltering": 0.7169811320754716,
+  "retrievalP50Ms": 146.5,
+  "retrievalP95Ms": 154.13,
+  "retrievalP99Ms": 385.52,
+  "cacheHitRate": 0.018518518518518517,
+  "knownCacheHitVerified": true,
+  "rpcErrorRate": 0,
+  "timeoutRate": null,
+  "telemetryCompletionRate": null,
+  "privacyLeakageCount": null,
+  "inactiveObjectLeakageCount": 0,
+  "excludedObjectLeakageCount": 0,
+  "highRiskObjectLeakageCount": 0,
+  "userVisibleAnswerDifferenceCount": null,
+  "staticAnswerPathPacketReferences": 0,
+  "fixtureTelemetryWritesPerformed": false,
+  "breakdowns": {
+    "byMode": {
+      "or_prep": {
+        "count": 15,
+        "retrievals": 14,
+        "bypasses": 1,
+        "misses": 5
+      },
+      "oite": {
+        "count": 17,
+        "retrievals": 14,
+        "bypasses": 3,
+        "misses": 7
+      },
+      "clinic": {
+        "count": 11,
+        "retrievals": 8,
+        "bypasses": 3,
+        "misses": 4
+      },
+      "consult": {
+        "count": 15,
+        "retrievals": 13,
+        "bypasses": 2,
+        "misses": 6
+      },
+      "research": {
+        "count": 5,
+        "retrievals": 4,
+        "bypasses": 1,
+        "misses": 1
+      },
+      "general": {
+        "count": 12,
+        "retrievals": 0,
+        "bypasses": 12,
+        "misses": 0
+      }
+    },
+    "byDecision": {
+      "retrieval": {
+        "count": 53,
+        "retrievals": 53,
+        "bypasses": 0,
+        "candidatesFound": 30,
+        "errors": 0
+      },
+      "bypass": {
+        "count": 22,
+        "retrievals": 0,
+        "bypasses": 22,
+        "candidatesFound": 0,
+        "errors": 0
+      }
+    },
+    "byMatchType": {
+      "lexical": {
+        "count": 30,
+        "retrievals": 30,
+        "bypasses": 0,
+        "candidatesFound": 30,
+        "errors": 0
+      },
+      "no_candidate": {
+        "count": 45,
+        "retrievals": 23,
+        "bypasses": 22,
+        "candidatesFound": 0,
+        "errors": 0
+      }
+    },
+    "byTurn": {
+      "first_turn": {
+        "count": 65,
+        "retrievals": 49,
+        "bypasses": 16,
+        "candidatesFound": 30,
+        "errors": 0
+      },
+      "follow_up": {
+        "count": 10,
+        "retrievals": 4,
+        "bypasses": 6,
+        "candidatesFound": 0,
+        "errors": 0
+      }
+    },
+    "byCoverageExpectation": {
+      "covered_or_bypass": {
+        "count": 70,
+        "retrievals": 50,
+        "bypasses": 20,
+        "candidatesFound": 30,
+        "errors": 0
+      },
+      "uncovered": {
+        "count": 5,
+        "retrievals": 3,
+        "bypasses": 2,
+        "candidatesFound": 0,
+        "errors": 0
+      }
+    },
+    "byCache": {
+      "miss": {
+        "count": 53,
+        "retrievals": 53,
+        "bypasses": 0,
+        "candidatesFound": 30,
+        "errors": 0
+      },
+      "not_applicable": {
+        "count": 22,
+        "retrievals": 0,
+        "bypasses": 22,
+        "candidatesFound": 0,
+        "errors": 0
+      }
+    },
+    "semanticResolution": {
+      "supported": false,
+      "reason": "Phase 1 is lexical/alias only"
+    }
+  }
+}

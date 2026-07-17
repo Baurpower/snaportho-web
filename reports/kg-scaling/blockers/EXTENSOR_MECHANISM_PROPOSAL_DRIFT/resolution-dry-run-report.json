@@ -1,0 +1,63 @@
+{
+  "ok": true,
+  "generatedAt": "2026-07-16T03:26:25.036Z",
+  "blockerId": "EXTENSOR_MECHANISM_PROPOSAL_DRIFT",
+  "operation": "dry_run",
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "classification": "historical_proposal_metadata_drift",
+  "canonicalEntity": {
+    "id": "d22f71b0-9268-4174-9946-5d80791e1e1f",
+    "slug": "extensor-mechanism",
+    "entityType": "anatomy_structure",
+    "preferredLabel": "Knee Extensor Mechanism",
+    "ownerPilot": "lower-extremity-trauma-cluster-shared"
+  },
+  "proposalBefore": {
+    "id": "f5b526c1-6856-43dc-8df5-b0188ffc8fa5",
+    "label": "Extensor Mechanism",
+    "entityType": "anatomy_structure",
+    "reviewStatus": "applied",
+    "appliedAt": "2026-07-09T04:35:56.09+00:00"
+  },
+  "proposalAfter": {
+    "id": "f5b526c1-6856-43dc-8df5-b0188ffc8fa5",
+    "label": "Extensor Mechanism",
+    "entityType": "anatomy_structure",
+    "reviewStatus": "applied",
+    "appliedAt": "2026-07-09T04:35:56.09+00:00",
+    "identityResolution": null
+  },
+  "membershipBefore": {
+    "id": "1e5ad790-daf5-4def-a267-8f00a766b44a",
+    "batchKey": "surgical-approaches-neighborhood",
+    "targetTable": null,
+    "targetId": null,
+    "disposition": "already_applied"
+  },
+  "membershipAfter": {
+    "id": "1e5ad790-daf5-4def-a267-8f00a766b44a",
+    "batchKey": "surgical-approaches-neighborhood",
+    "targetTable": null,
+    "targetId": null,
+    "disposition": "already_applied"
+  },
+  "canonicalCountsBefore": {
+    "entities": 1084,
+    "relationships": 2248
+  },
+  "canonicalCountsAfter": {
+    "entities": 1084,
+    "relationships": 2248
+  },
+  "canonicalRowsModified": 0,
+  "proposalRowsModified": 0,
+  "membershipRowsModified": 0,
+  "aliasRowsModified": 0,
+  "note": "The historical generic label is preserved in proposal identity_resolution metadata. No source alias was inserted because the legacy proposal has no source_id."
+}

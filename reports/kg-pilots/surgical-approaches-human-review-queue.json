@@ -1,6 +1,6 @@
 [
   {
-    "proposal_fingerprint": "claim|claim-sa-plan",
+    "proposal_fingerprint": "claim|claim-sa-backbone",
     "proposal_type": "propose_educational_claim",
     "route": "HUMAN_REVIEW",
     "target": "undefined -[null]-> undefined",
@@ -10,17 +10,17 @@
     "rationale": [
       "Rule: l1_management_fact"
     ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-plan",
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-backbone",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
-      "draft_id": "claim-sa-plan",
+      "draft_id": "claim-sa-backbone",
       "claim_type": "fact",
-      "claim_text": "Approach selection begins with the required exposure, patient factors, prior incisions, soft-tissue condition, and structures at risk.",
+      "claim_text": "Surgical approaches form a reusable operative exposure backbone that links positioning, landmarks, intervals, protection, extensile options, bailout, and closure across specialties.",
       "primary_entity_slug": "surgical-approaches",
       "importance_level": "L1",
       "content_source": "generated_draft",
@@ -41,7 +41,52 @@
       "curation_rules": [
         "l1_management_fact"
       ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-sa-select",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-select",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-sa-select",
+      "claim_type": "fact",
+      "claim_text": "Approach selection is driven by the required target, soft-tissue condition, prior incisions, imaging needs, and defined extensile or bailout pathways—not implant brand preference.",
+      "primary_entity_slug": "approach-selection-principles",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or",
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
@@ -57,7 +102,7 @@
     ],
     "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-position",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
@@ -65,8 +110,8 @@
       "factory_version": "kf-016",
       "draft_id": "claim-sa-position",
       "claim_type": "fact",
-      "claim_text": "Positioning must permit the planned exposure, imaging, anesthesia access, and a safe extensile or bailout option.",
-      "primary_entity_slug": "operative-patient-positioning",
+      "claim_text": "Positioning must permit the planned exposure, fluoroscopy, anesthesia access, and a safe extensile or bailout option before prep and drape.",
+      "primary_entity_slug": "patient-positioning-principles",
       "importance_level": "L1",
       "content_source": "generated_draft",
       "context_relevance": [
@@ -86,52 +131,7 @@
       "curation_rules": [
         "l1_management_fact"
       ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-fluoro",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: l1_management_fact"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-fluoro",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-fluoro",
-      "claim_type": "fact",
-      "claim_text": "Fluoroscopic views should be reproducibly obtainable before preparation and draping obscure repositioning landmarks.",
-      "primary_entity_slug": "operative-fluoroscopy-positioning",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "l1_management_fact"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
@@ -147,7 +147,7 @@
     ],
     "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-carm",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
@@ -155,8 +155,8 @@
       "factory_version": "kf-016",
       "draft_id": "claim-sa-carm",
       "claim_type": "fact",
-      "claim_text": "The C-arm trajectory, sterile entry path, monitor position, and personnel movement should be planned before incision.",
-      "primary_entity_slug": "operative-c-arm-strategies",
+      "claim_text": "C-arm trajectory, sterile entry path, and monitor position should be verified before incision so imaging is not obstructed by drapes or equipment.",
+      "primary_entity_slug": "c-arm-positioning-principles",
       "importance_level": "L1",
       "content_source": "generated_draft",
       "context_relevance": [
@@ -176,11 +176,11 @@
       "curation_rules": [
         "l1_management_fact"
       ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
-    "proposal_fingerprint": "claim|claim-sa-tourniquet",
+    "proposal_fingerprint": "claim|claim-sa-landmarks",
     "proposal_type": "propose_educational_claim",
     "route": "HUMAN_REVIEW",
     "target": "undefined -[null]-> undefined",
@@ -190,18 +190,18 @@
     "rationale": [
       "Rule: l1_management_fact"
     ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-tourniquet",
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-landmarks",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
-      "draft_id": "claim-sa-tourniquet",
+      "draft_id": "claim-sa-landmarks",
       "claim_type": "fact",
-      "claim_text": "Tourniquet use requires an explicit indication, safe placement, pressure strategy, and time awareness.",
-      "primary_entity_slug": "operative-tourniquet-principles",
+      "claim_text": "Surface landmarks define incision placement and must be confirmed after positioning because landmarks shift with limb rotation and traction.",
+      "primary_entity_slug": "surface-landmark-principles",
       "importance_level": "L1",
       "content_source": "generated_draft",
       "context_relevance": [
@@ -221,11 +221,11 @@
       "curation_rules": [
         "l1_management_fact"
       ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
-    "proposal_fingerprint": "claim|claim-sa-interval",
+    "proposal_fingerprint": "claim|claim-sa-incision",
     "proposal_type": "propose_educational_claim",
     "route": "HUMAN_REVIEW",
     "target": "undefined -[null]-> undefined",
@@ -235,18 +235,18 @@
     "rationale": [
       "Rule: l1_management_fact"
     ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-interval",
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-incision",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
-      "draft_id": "claim-sa-interval",
+      "draft_id": "claim-sa-incision",
       "claim_type": "fact",
-      "claim_text": "A named approach is defined by its surface landmarks, incision, superficial and deep intervals, exposure limits, and at-risk structures.",
-      "primary_entity_slug": "surgical-approaches",
+      "claim_text": "Skin incision planning accounts for prior scars, extensile continuity, soft-tissue envelopes, and anticipated implant or reduction needs.",
+      "primary_entity_slug": "skin-incision-planning",
       "importance_level": "L1",
       "content_source": "generated_draft",
       "context_relevance": [
@@ -266,7 +266,232 @@
       "curation_rules": [
         "l1_management_fact"
       ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-sa-internervous",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-internervous",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-sa-internervous",
+      "claim_type": "fact",
+      "claim_text": "Internervous planes reduce denervation risk and should be recorded as reusable anatomy objects independent of any single named approach.",
+      "primary_entity_slug": "internervous-plane-principles",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or",
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-sa-intermuscular",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-intermuscular",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-sa-intermuscular",
+      "claim_type": "fact",
+      "claim_text": "Intermuscular planes define standard intervals and must be distinguished from improvised muscle-splitting paths.",
+      "primary_entity_slug": "intermuscular-plane-principles",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or",
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-sa-deep",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-deep",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-sa-deep",
+      "claim_type": "fact",
+      "claim_text": "Deep intervals complete exposure after the superficial plane and often determine whether the target is safely reached.",
+      "primary_entity_slug": "deep-interval-principles",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or",
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-sa-limits",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-limits",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-sa-limits",
+      "claim_type": "fact",
+      "claim_text": "Every named approach has exposure limits; exceeding them without a defined extensile pathway increases neurovascular and soft-tissue risk.",
+      "primary_entity_slug": "exposure-limit-principles",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or",
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-sa-protect",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-protect",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-sa-protect",
+      "claim_type": "fact",
+      "claim_text": "Structures requiring protection are identified before incision and rechecked during retraction, instrumentation, and closure.",
+      "primary_entity_slug": "structures-requiring-protection",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or",
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
@@ -276,22 +501,22 @@
     "target": "undefined -[null]-> undefined",
     "agent_recommendation": "Curator review required",
     "confidence": 0.75,
-    "safety_score": 0.1,
+    "safety_score": 0.55,
     "rationale": [
-      "Rule: l1_management_fact"
+      "Rule: educational_judgment_claim"
     ],
     "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-nv",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
       "draft_id": "claim-sa-nv",
-      "claim_type": "fact",
-      "claim_text": "Neurovascular structures at risk are identified before incision and protected throughout retraction, instrumentation, and closure.",
-      "primary_entity_slug": "approach-component-neurovascular-structures-at-risk",
+      "claim_type": "red_flag",
+      "claim_text": "Neurovascular structures at risk are approach-defining safety objects; loss of identification is a stop signal.",
+      "primary_entity_slug": "neurovascular-structures-at-risk",
       "importance_level": "L1",
       "content_source": "generated_draft",
       "context_relevance": [
@@ -304,14 +529,14 @@
       "curation_scores": {
         "confidence": 0.75,
         "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
+        "ambiguity": 0.35,
+        "safety": 0.55,
         "completeness": 0.8
       },
       "curation_rules": [
-        "l1_management_fact"
+        "educational_judgment_claim"
       ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
@@ -327,7 +552,7 @@
     ],
     "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-extensile",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
@@ -335,8 +560,8 @@
       "factory_version": "kf-016",
       "draft_id": "claim-sa-extensile",
       "claim_type": "fact",
-      "claim_text": "Extending an exposure should follow the approach's defined extensile pathway rather than an improvised dissection.",
-      "primary_entity_slug": "operative-extensile-exposure-principles",
+      "claim_text": "Extensile options are planned independently of the standard exposure so extension follows a defined pathway rather than ad hoc dissection.",
+      "primary_entity_slug": "extensile-exposure-principles",
       "importance_level": "L1",
       "content_source": "generated_draft",
       "context_relevance": [
@@ -356,11 +581,11 @@
       "curation_rules": [
         "l1_management_fact"
       ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
-    "proposal_fingerprint": "claim|claim-sa-windows",
+    "proposal_fingerprint": "claim|claim-sa-bailout",
     "proposal_type": "propose_educational_claim",
     "route": "HUMAN_REVIEW",
     "target": "undefined -[null]-> undefined",
@@ -370,18 +595,18 @@
     "rationale": [
       "Rule: l1_management_fact"
     ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-windows",
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-bailout",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
-      "draft_id": "claim-sa-windows",
+      "draft_id": "claim-sa-bailout",
       "claim_type": "fact",
-      "claim_text": "Separate surgical windows preserve intervening soft-tissue and neurovascular structures and should not be connected blindly.",
-      "primary_entity_slug": "operative-surgical-windows",
+      "claim_text": "Bailout strategies—alternate windows, staged exposure, or change of approach—are selected before incision when risk is high.",
+      "primary_entity_slug": "bailout-strategy-principles",
       "importance_level": "L1",
       "content_source": "generated_draft",
       "context_relevance": [
@@ -401,7 +626,7 @@
       "curation_rules": [
         "l1_management_fact"
       ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
@@ -417,7 +642,7 @@
     ],
     "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-closure",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
@@ -426,7 +651,7 @@
       "draft_id": "claim-sa-closure",
       "claim_type": "fact",
       "claim_text": "Closure restores released layers without entrapping protected structures and accounts for swelling, drains, and postoperative restrictions.",
-      "primary_entity_slug": "operative-closure-principles",
+      "primary_entity_slug": "closure-principles",
       "importance_level": "L1",
       "content_source": "generated_draft",
       "context_relevance": [
@@ -446,11 +671,101 @@
       "curation_rules": [
         "l1_management_fact"
       ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
-    "proposal_fingerprint": "claim|claim-sa-deltopectoral-approach",
+    "proposal_fingerprint": "claim|claim-sa-postop",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-postop",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-sa-postop",
+      "claim_type": "fact",
+      "claim_text": "Postoperative approach considerations include wound surveillance, motion or weight-bearing limits linked to the exposure, and approach-specific complication watch-outs.",
+      "primary_entity_slug": "postoperative-approach-considerations",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or",
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-sa-revision",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-revision",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-sa-revision",
+      "claim_type": "fact",
+      "claim_text": "Revision exposure reuses prior incisions when safe, but may require alternate windows when soft-tissue or neurovascular risk is elevated.",
+      "primary_entity_slug": "revision-exposure-principles",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or",
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-sa-escalation",
     "proposal_type": "propose_educational_claim",
     "route": "HUMAN_REVIEW",
     "target": "undefined -[null]-> undefined",
@@ -460,17 +775,152 @@
     "rationale": [
       "Rule: educational_judgment_claim"
     ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-deltopectoral-approach",
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-escalation",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
-      "draft_id": "claim-sa-deltopectoral-approach",
+      "draft_id": "claim-sa-escalation",
       "claim_type": "clinical_script",
-      "claim_text": "Deltopectoral Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
+      "claim_text": "If exposure is inadequate, escalate along defined extensile or bailout pathways rather than forcing the original window.",
+      "primary_entity_slug": "exposure-escalation-strategies",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or",
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-sa-safezone",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-safezone",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-sa-safezone",
+      "claim_type": "fact",
+      "claim_text": "Safe zones constrain implant and instrument trajectories relative to known neurovascular anatomy and should be treated as first-class operative objects.",
+      "primary_entity_slug": "safe-zone-principles",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or",
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-sa-complications",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-complications",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-sa-complications",
+      "claim_type": "fact",
+      "claim_text": "Approach-specific complications are linked to the exposure pathway and inform selection, counseling, and intraoperative protection priorities.",
+      "primary_entity_slug": "approach-specific-complication-principles",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or",
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-sa-deltopectoral",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-deltopectoral",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-sa-deltopectoral",
+      "claim_type": "operative_pearl",
+      "claim_text": "The deltopectoral approach uses the deltopectoral interval and prioritizes axillary nerve and cephalic vein protection.",
       "primary_entity_slug": "deltopectoral-approach",
       "importance_level": "L1",
       "content_source": "generated_draft",
@@ -489,13 +939,13 @@
         "completeness": 0.8
       },
       "curation_rules": [
-        "educational_judgment_claim"
+        "default_human_review"
       ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
-    "proposal_fingerprint": "claim|claim-sa-anterosuperior-shoulder-approach",
+    "proposal_fingerprint": "claim|claim-sa-henry",
     "proposal_type": "propose_educational_claim",
     "route": "HUMAN_REVIEW",
     "target": "undefined -[null]-> undefined",
@@ -503,469 +953,19 @@
     "confidence": 0.75,
     "safety_score": 0.1,
     "rationale": [
-      "Rule: educational_judgment_claim"
+      "Rule: default_human_review"
     ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-anterosuperior-shoulder-approach",
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-henry",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
-      "draft_id": "claim-sa-anterosuperior-shoulder-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Anterosuperior Shoulder Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "anterosuperior-shoulder-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-superior-shoulder-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-superior-shoulder-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-superior-shoulder-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Superior Shoulder Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "superior-shoulder-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-posterior-shoulder-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-posterior-shoulder-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-posterior-shoulder-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Posterior Shoulder Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "posterior-shoulder-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-anterior-humerus-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-anterior-humerus-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-anterior-humerus-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Anterior Humerus Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "anterior-humerus-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-anterolateral-humerus-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-anterolateral-humerus-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-anterolateral-humerus-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Anterolateral Humerus Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "anterolateral-humerus-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-posterior-humerus-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-posterior-humerus-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-posterior-humerus-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Posterior Humerus Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "posterior-humerus-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-kocher-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-kocher-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-kocher-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Kocher Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "kocher-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-kaplan-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-kaplan-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-kaplan-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Kaplan Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "kaplan-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-bryan-morrey-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-bryan-morrey-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-bryan-morrey-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Bryan-Morrey Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "bryan-morrey-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-olecranon-osteotomy-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-olecranon-osteotomy-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-olecranon-osteotomy-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Olecranon Osteotomy Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "olecranon-osteotomy-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-volar-henry-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-volar-henry-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-volar-henry-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Volar Henry Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
+      "draft_id": "claim-sa-henry",
+      "claim_type": "operative_pearl",
+      "claim_text": "The volar Henry approach follows the Henry interval with continuous protection of the radial artery and median nerve territories.",
       "primary_entity_slug": "volar-henry-approach",
       "importance_level": "L1",
       "content_source": "generated_draft",
@@ -984,13 +984,13 @@
         "completeness": 0.8
       },
       "curation_rules": [
-        "educational_judgment_claim"
+        "default_human_review"
       ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
-    "proposal_fingerprint": "claim|claim-sa-dorsal-wrist-approach",
+    "proposal_fingerprint": "claim|claim-sa-kl",
     "proposal_type": "propose_educational_claim",
     "route": "HUMAN_REVIEW",
     "target": "undefined -[null]-> undefined",
@@ -998,559 +998,19 @@
     "confidence": 0.75,
     "safety_score": 0.1,
     "rationale": [
-      "Rule: educational_judgment_claim"
+      "Rule: default_human_review"
     ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-dorsal-wrist-approach",
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-kl",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
-      "draft_id": "claim-sa-dorsal-wrist-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Dorsal Wrist Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "dorsal-wrist-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-extended-fcr-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-extended-fcr-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-extended-fcr-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Extended FCR Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "extended-fcr-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-dorsal-spanning-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-dorsal-spanning-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-dorsal-spanning-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Dorsal Spanning Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "dorsal-spanning-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-radius-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-radius-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-radius-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Radius Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "radius-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-ulna-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-ulna-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-ulna-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Ulna Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "ulna-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-carpal-tunnel-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-carpal-tunnel-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-carpal-tunnel-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Carpal Tunnel Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "carpal-tunnel-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-trigger-finger-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-trigger-finger-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-trigger-finger-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Trigger Finger Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "trigger-finger-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-thumb-ucl-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-thumb-ucl-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-thumb-ucl-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Thumb UCL Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "thumb-ucl-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-finger-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-finger-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-finger-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Finger Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "finger-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-pfannenstiel-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-pfannenstiel-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-pfannenstiel-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Pfannenstiel Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "pfannenstiel-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-stoppa-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-stoppa-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-stoppa-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Stoppa Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "stoppa-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-ilioinguinal-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-ilioinguinal-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-ilioinguinal-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Ilioinguinal Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "ilioinguinal-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-kocher-langenbeck-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-kocher-langenbeck-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-kocher-langenbeck-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Kocher-Langenbeck Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
+      "draft_id": "claim-sa-kl",
+      "claim_type": "operative_pearl",
+      "claim_text": "Kocher-Langenbeck exposure prioritizes sciatic nerve protection and medial femoral circumflex preservation for femoral head blood supply.",
       "primary_entity_slug": "kocher-langenbeck-approach",
       "importance_level": "L1",
       "content_source": "generated_draft",
@@ -1569,13 +1029,13 @@
         "completeness": 0.8
       },
       "curation_rules": [
-        "educational_judgment_claim"
+        "default_human_review"
       ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
-    "proposal_fingerprint": "claim|claim-sa-smith-petersen-approach",
+    "proposal_fingerprint": "claim|claim-sa-daa",
     "proposal_type": "propose_educational_claim",
     "route": "HUMAN_REVIEW",
     "target": "undefined -[null]-> undefined",
@@ -1583,109 +1043,19 @@
     "confidence": 0.75,
     "safety_score": 0.1,
     "rationale": [
-      "Rule: educational_judgment_claim"
+      "Rule: default_human_review"
     ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-smith-petersen-approach",
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-daa",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
-      "draft_id": "claim-sa-smith-petersen-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Smith-Petersen Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "smith-petersen-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-posterior-hip-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-posterior-hip-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-posterior-hip-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Posterior Hip Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "posterior-hip-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-direct-anterior-hip-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-direct-anterior-hip-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-direct-anterior-hip-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Direct Anterior Hip Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
+      "draft_id": "claim-sa-daa",
+      "claim_type": "operative_pearl",
+      "claim_text": "Direct anterior hip exposure uses the Smith-Petersen interval and requires attention to the lateral femoral cutaneous nerve and proximal femoral anatomy.",
       "primary_entity_slug": "direct-anterior-hip-approach",
       "importance_level": "L1",
       "content_source": "generated_draft",
@@ -1704,13 +1074,13 @@
         "completeness": 0.8
       },
       "curation_rules": [
-        "educational_judgment_claim"
+        "default_human_review"
       ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
-    "proposal_fingerprint": "claim|claim-sa-direct-lateral-hip-approach",
+    "proposal_fingerprint": "claim|claim-sa-mpp",
     "proposal_type": "propose_educational_claim",
     "route": "HUMAN_REVIEW",
     "target": "undefined -[null]-> undefined",
@@ -1718,244 +1088,19 @@
     "confidence": 0.75,
     "safety_score": 0.1,
     "rationale": [
-      "Rule: educational_judgment_claim"
+      "Rule: default_human_review"
     ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-direct-lateral-hip-approach",
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-mpp",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
-      "draft_id": "claim-sa-direct-lateral-hip-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Direct Lateral Hip Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "direct-lateral-hip-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-anterolateral-hip-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-anterolateral-hip-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-anterolateral-hip-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Anterolateral Hip Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "anterolateral-hip-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-surgical-hip-dislocation-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-surgical-hip-dislocation-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-surgical-hip-dislocation-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Surgical Hip Dislocation operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "surgical-hip-dislocation-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-lateral-femur-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-lateral-femur-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-lateral-femur-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Lateral Femur Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "lateral-femur-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-distal-femur-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-distal-femur-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-distal-femur-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Distal Femur Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "distal-femur-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-medial-parapatellar-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-medial-parapatellar-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-medial-parapatellar-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Medial Parapatellar Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
+      "draft_id": "claim-sa-mpp",
+      "claim_type": "operative_pearl",
+      "claim_text": "The medial parapatellar approach provides extensile knee exposure while protecting the extensor mechanism and planning for staged extension if needed.",
       "primary_entity_slug": "medial-parapatellar-approach",
       "importance_level": "L1",
       "content_source": "generated_draft",
@@ -1974,798 +1119,33 @@
         "completeness": 0.8
       },
       "curation_rules": [
-        "educational_judgment_claim"
+        "default_human_review"
       ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
-    "proposal_fingerprint": "claim|claim-sa-subvastus-approach",
+    "proposal_fingerprint": "claim|claim-sa-spine-post",
     "proposal_type": "propose_educational_claim",
     "route": "HUMAN_REVIEW",
     "target": "undefined -[null]-> undefined",
     "agent_recommendation": "Curator review required",
     "confidence": 0.75,
-    "safety_score": 0.1,
+    "safety_score": 0.55,
     "rationale": [
       "Rule: educational_judgment_claim"
     ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-subvastus-approach",
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-spine-post",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
-      "draft_id": "claim-sa-subvastus-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Subvastus Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "subvastus-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-midvastus-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-midvastus-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-midvastus-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Midvastus Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "midvastus-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-posterior-knee-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-posterior-knee-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-posterior-knee-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Posterior Knee Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "posterior-knee-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-anteromedial-tibia-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-anteromedial-tibia-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-anteromedial-tibia-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Anteromedial Tibia Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "anteromedial-tibia-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-anterolateral-tibia-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-anterolateral-tibia-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-anterolateral-tibia-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Anterolateral Tibia Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "anterolateral-tibia-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-posterolateral-tibia-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-posterolateral-tibia-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-posterolateral-tibia-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Posterolateral Tibia Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "posterolateral-tibia-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.256Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-posteromedial-tibia-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-posteromedial-tibia-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-posteromedial-tibia-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Posteromedial Tibia Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "posteromedial-tibia-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-anterior-ankle-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-anterior-ankle-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-anterior-ankle-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Anterior Ankle Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "anterior-ankle-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-lateral-ankle-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-lateral-ankle-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-lateral-ankle-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Lateral Ankle Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "lateral-ankle-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-posterior-ankle-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-posterior-ankle-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-posterior-ankle-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Posterior Ankle Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "posterior-ankle-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-dorsal-foot-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-dorsal-foot-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-dorsal-foot-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Dorsal Foot Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "dorsal-foot-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-medial-foot-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-medial-foot-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-medial-foot-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Medial Foot Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "medial-foot-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-lateral-foot-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-lateral-foot-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-lateral-foot-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Lateral Foot Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "lateral-foot-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-plantar-foot-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-plantar-foot-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-plantar-foot-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Plantar Foot Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "plantar-foot-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-posterior-cervical-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-posterior-cervical-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-posterior-cervical-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Posterior Cervical Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "posterior-cervical-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-acdf-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-acdf-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-acdf-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Anterior Cervical Discectomy and Fusion Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "acdf-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.45,
-        "safety": 0.1,
-        "completeness": 0.55
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-posterior-thoracic-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-posterior-thoracic-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-posterior-thoracic-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Posterior Thoracic Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "posterior-thoracic-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
-        "completeness": 0.8
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-posterior-lumbar-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-posterior-lumbar-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-posterior-lumbar-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Posterior Lumbar Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
+      "draft_id": "claim-sa-spine-post",
+      "claim_type": "red_flag",
+      "claim_text": "Posterior spine approaches require continuous orientation to the cord and nerve roots; unintended durotomy or neural injury is a stop-and-repair event.",
       "primary_entity_slug": "posterior-lumbar-approach",
       "importance_level": "L1",
       "content_source": "generated_draft",
@@ -2779,18 +1159,18 @@
       "curation_scores": {
         "confidence": 0.75,
         "evidence": 0.7,
-        "ambiguity": 0.2,
-        "safety": 0.1,
+        "ambiguity": 0.35,
+        "safety": 0.55,
         "completeness": 0.8
       },
       "curation_rules": [
         "educational_judgment_claim"
       ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
-    "proposal_fingerprint": "claim|claim-sa-tlif-approach",
+    "proposal_fingerprint": "claim|claim-sa-xlif",
     "proposal_type": "propose_educational_claim",
     "route": "HUMAN_REVIEW",
     "target": "undefined -[null]-> undefined",
@@ -2798,109 +1178,19 @@
     "confidence": 0.75,
     "safety_score": 0.1,
     "rationale": [
-      "Rule: educational_judgment_claim"
+      "Rule: l1_management_fact"
     ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-tlif-approach",
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-xlif",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
-      "draft_id": "claim-sa-tlif-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Transforaminal Lumbar Interbody Fusion Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "tlif-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.45,
-        "safety": 0.1,
-        "completeness": 0.55
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-alif-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-alif-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-alif-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Anterior Lumbar Interbody Fusion Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
-      "primary_entity_slug": "alif-approach",
-      "importance_level": "L1",
-      "content_source": "generated_draft",
-      "context_relevance": [
-        "or",
-        "call",
-        "oite"
-      ],
-      "verified": false,
-      "curation_route": "HUMAN_REVIEW",
-      "curation_scores": {
-        "confidence": 0.75,
-        "evidence": 0.7,
-        "ambiguity": 0.45,
-        "safety": 0.1,
-        "completeness": 0.55
-      },
-      "curation_rules": [
-        "educational_judgment_claim"
-      ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
-    }
-  },
-  {
-    "proposal_fingerprint": "claim|claim-sa-xlif-approach",
-    "proposal_type": "propose_educational_claim",
-    "route": "HUMAN_REVIEW",
-    "target": "undefined -[null]-> undefined",
-    "agent_recommendation": "Curator review required",
-    "confidence": 0.75,
-    "safety_score": 0.1,
-    "rationale": [
-      "Rule: educational_judgment_claim"
-    ],
-    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-xlif-approach",
-    "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
-    "metadata": {
-      "pilot": "surgical-approaches-neighborhood",
-      "review_packet_key": "pilot:surgical-approaches-neighborhood",
-      "review_packet_label": "Surgical Approaches Neighborhood",
-      "factory_version": "kf-016",
-      "draft_id": "claim-sa-xlif-approach",
-      "claim_type": "clinical_script",
-      "claim_text": "Lateral Lumbar Interbody Fusion Approach operative planning requires explicit documentation of indication, landmarks, intervals, structures at risk, exposure limits, extensile options, closure, and postoperative restrictions.",
+      "draft_id": "claim-sa-xlif",
+      "claim_type": "fact",
+      "claim_text": "Lateral lumbar approaches traverse the psoas corridor and require neuromonitoring attention to plexus risk.",
       "primary_entity_slug": "xlif-approach",
       "importance_level": "L1",
       "content_source": "generated_draft",
@@ -2914,14 +1204,59 @@
       "curation_scores": {
         "confidence": 0.75,
         "evidence": 0.7,
-        "ambiguity": 0.45,
+        "ambiguity": 0.2,
         "safety": 0.1,
-        "completeness": 0.55
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-sa-position-dup",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-sa-position-dup",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection claims require human review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-sa-position-dup",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Positioning objects are shared; do not mint approach-specific duplicate positioning identities for the same standard position.",
+      "primary_entity_slug": "patient-positioning-principles",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or",
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
       },
       "curation_rules": [
         "educational_judgment_claim"
       ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
@@ -2937,17 +1272,17 @@
     ],
     "reviewer_decision_required": "Approve operative/management pathway: dp-sa-select",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection and at-risk anatomy decisions require attending review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
       "draft_id": "dp-sa-select",
-      "subject_entity_slug": "surgical-approaches",
-      "pattern_type": "operative_safety",
-      "trigger": "The planned procedure requires operative exposure",
-      "action": "Select the approach whose safe window reaches the target while accounting for patient, injury, imaging, and extensile needs.",
+      "subject_entity_slug": "approach-selection-principles",
+      "pattern_type": "approach_selection",
+      "trigger": "Procedure requires operative exposure and multiple approaches are plausible",
+      "action": "Select the approach whose safe window reaches the target while accounting for soft tissue, prior incisions, imaging, and extensile/bailout needs",
       "urgency": "routine",
       "safety_criticality": "high",
       "content_source": "generated_draft",
@@ -2964,7 +1299,7 @@
       "curation_rules": [
         "decision_point_requires_attending"
       ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
@@ -2980,17 +1315,17 @@
     ],
     "reviewer_decision_required": "Approve operative/management pathway: dp-sa-position",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection and at-risk anatomy decisions require attending review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
       "draft_id": "dp-sa-position",
-      "subject_entity_slug": "operative-patient-positioning",
-      "pattern_type": "operative_safety",
+      "subject_entity_slug": "patient-positioning-principles",
+      "pattern_type": "positioning_safety",
       "trigger": "Positioning does not permit safe imaging, anesthesia access, or bailout exposure",
-      "action": "Reposition and verify all required access before preparation and incision.",
+      "action": "Reposition and verify all required access before preparation and incision",
       "urgency": "urgent",
       "safety_criticality": "high",
       "content_source": "generated_draft",
@@ -3007,11 +1342,11 @@
       "curation_rules": [
         "decision_point_requires_attending"
       ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
-    "proposal_fingerprint": "dp|dp-sa-nerve",
+    "proposal_fingerprint": "dp|dp-sa-carm",
     "proposal_type": "propose_decision_point",
     "route": "ATTENDING_REVIEW",
     "target": "undefined -[null]-> undefined",
@@ -3021,19 +1356,105 @@
     "rationale": [
       "Rule: decision_point_requires_attending"
     ],
-    "reviewer_decision_required": "Approve operative/management pathway: dp-sa-nerve",
+    "reviewer_decision_required": "Approve operative/management pathway: dp-sa-carm",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection and at-risk anatomy decisions require attending review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
-      "draft_id": "dp-sa-nerve",
-      "subject_entity_slug": "approach-component-neurovascular-structures-at-risk",
+      "draft_id": "dp-sa-carm",
+      "subject_entity_slug": "c-arm-positioning-principles",
+      "pattern_type": "imaging_access",
+      "trigger": "Required fluoroscopic views cannot be obtained after positioning",
+      "action": "Adjust table, C-arm, or patient position before prep rather than accepting inadequate imaging",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-sa-landmark",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-sa-landmark",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection and at-risk anatomy decisions require attending review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-sa-landmark",
+      "subject_entity_slug": "surface-landmark-principles",
+      "pattern_type": "incision_planning",
+      "trigger": "Surface landmarks are distorted by swelling, deformity, or obesity",
+      "action": "Confirm landmarks with imaging and extensile incision planning before committing the skin cut",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-sa-nv",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-sa-nv",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection and at-risk anatomy decisions require attending review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-sa-nv",
+      "subject_entity_slug": "neurovascular-structures-at-risk",
       "pattern_type": "operative_safety",
       "trigger": "A protected neurovascular structure cannot be identified or safely mobilized",
-      "action": "Stop blind progression, restore landmarks, extend the exposure safely, or change the approach.",
+      "action": "Stop blind progression, restore landmarks, extend along a defined pathway, or change approach",
       "urgency": "urgent",
       "safety_criticality": "emergency",
       "content_source": "generated_draft",
@@ -3050,11 +1471,11 @@
       "curation_rules": [
         "decision_point_requires_attending"
       ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
-    "proposal_fingerprint": "dp|dp-sa-window",
+    "proposal_fingerprint": "dp|dp-sa-interval",
     "proposal_type": "propose_decision_point",
     "route": "ATTENDING_REVIEW",
     "target": "undefined -[null]-> undefined",
@@ -3064,19 +1485,19 @@
     "rationale": [
       "Rule: decision_point_requires_attending"
     ],
-    "reviewer_decision_required": "Approve operative/management pathway: dp-sa-window",
+    "reviewer_decision_required": "Approve operative/management pathway: dp-sa-interval",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection and at-risk anatomy decisions require attending review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
-      "draft_id": "dp-sa-window",
-      "subject_entity_slug": "operative-surgical-windows",
-      "pattern_type": "operative_safety",
-      "trigger": "Exposure is inadequate through the planned window",
-      "action": "Use the defined extensile option or a separate safe window while preserving intervening structures.",
+      "draft_id": "dp-sa-interval",
+      "subject_entity_slug": "internervous-plane-principles",
+      "pattern_type": "plane_identification",
+      "trigger": "The planned internervous or intermuscular interval is not clearly identified",
+      "action": "Re-establish landmarks and interval identity before deep dissection",
       "urgency": "urgent",
       "safety_criticality": "high",
       "content_source": "generated_draft",
@@ -3093,7 +1514,179 @@
       "curation_rules": [
         "decision_point_requires_attending"
       ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-sa-limits",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-sa-limits",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection and at-risk anatomy decisions require attending review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-sa-limits",
+      "subject_entity_slug": "exposure-limit-principles",
+      "pattern_type": "exposure_adequacy",
+      "trigger": "Target anatomy cannot be reached within the approach exposure limits",
+      "action": "Invoke the predefined extensile option or bailout strategy rather than improvising",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-sa-extensile",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-sa-extensile",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection and at-risk anatomy decisions require attending review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-sa-extensile",
+      "subject_entity_slug": "extensile-exposure-principles",
+      "pattern_type": "exposure_escalation",
+      "trigger": "Additional exposure is required beyond the standard window",
+      "action": "Extend only along the defined extensile pathway while rechecking protected structures",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-sa-bailout",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-sa-bailout",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection and at-risk anatomy decisions require attending review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-sa-bailout",
+      "subject_entity_slug": "bailout-strategy-principles",
+      "pattern_type": "bailout",
+      "trigger": "The planned approach is unsafe or inadequate despite defined extension",
+      "action": "Execute the preplanned bailout: alternate window, staged exposure, or change of approach",
+      "urgency": "urgent",
+      "safety_criticality": "emergency",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-sa-revision",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-sa-revision",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection and at-risk anatomy decisions require attending review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-sa-revision",
+      "subject_entity_slug": "revision-exposure-principles",
+      "pattern_type": "revision_exposure",
+      "trigger": "Prior incisions, implants, or scarring alter standard intervals",
+      "action": "Choose re-entry versus alternate window with attending-level plan for neurovascular protection",
+      "urgency": "routine",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   },
   {
@@ -3109,17 +1702,17 @@
     ],
     "reviewer_decision_required": "Approve operative/management pathway: dp-sa-closure",
     "alternatives": [],
-    "evidence_summary": "Surgical Approaches manufacture scope; evidence packet required",
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection and at-risk anatomy decisions require attending review",
     "metadata": {
       "pilot": "surgical-approaches-neighborhood",
       "review_packet_key": "pilot:surgical-approaches-neighborhood",
       "review_packet_label": "Surgical Approaches Neighborhood",
       "factory_version": "kf-016",
       "draft_id": "dp-sa-closure",
-      "subject_entity_slug": "operative-closure-principles",
-      "pattern_type": "operative_safety",
-      "trigger": "Swelling, tissue viability, or tension makes primary closure unsafe",
-      "action": "Use the defined bailout closure strategy and postoperative soft-tissue plan.",
+      "subject_entity_slug": "closure-principles",
+      "pattern_type": "closure_safety",
+      "trigger": "Swelling, tissue viability, or tension makes layered primary closure unsafe",
+      "action": "Use defined bailout soft-tissue strategy and postoperative protection plan",
       "urgency": "urgent",
       "safety_criticality": "high",
       "content_source": "generated_draft",
@@ -3136,7 +1729,222 @@
       "curation_rules": [
         "decision_point_requires_attending"
       ],
-      "curated_at": "2026-07-08T21:22:45.257Z"
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-sa-deltopectoral",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-sa-deltopectoral",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection and at-risk anatomy decisions require attending review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-sa-deltopectoral",
+      "subject_entity_slug": "deltopectoral-approach",
+      "pattern_type": "approach_selection",
+      "trigger": "Anterior shoulder or proximal humerus exposure is required",
+      "action": "Use deltopectoral interval with axillary nerve protection and planned extensile option",
+      "urgency": "routine",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-sa-kl",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-sa-kl",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection and at-risk anatomy decisions require attending review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-sa-kl",
+      "subject_entity_slug": "kocher-langenbeck-approach",
+      "pattern_type": "approach_selection",
+      "trigger": "Posterior acetabular column or wall exposure is required",
+      "action": "Use KL pathway with sciatic protection and MFCA-aware dissection; escalate if visualization is inadequate",
+      "urgency": "routine",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-sa-daa",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-sa-daa",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection and at-risk anatomy decisions require attending review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-sa-daa",
+      "subject_entity_slug": "direct-anterior-hip-approach",
+      "pattern_type": "approach_selection",
+      "trigger": "Anterior hip arthroplasty or anterior hip exposure is planned",
+      "action": "Confirm table/positioning strategy and LFCN/femoral nerve protection before incision",
+      "urgency": "routine",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-sa-spine",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-sa-spine",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection and at-risk anatomy decisions require attending review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-sa-spine",
+      "subject_entity_slug": "posterior-lumbar-approach",
+      "pattern_type": "operative_safety",
+      "trigger": "Neural elements are not clearly visualized or protected during lumbar exposure",
+      "action": "Stop, reorient, improve exposure, and protect cord/roots before continuing instrumentation",
+      "urgency": "urgent",
+      "safety_criticality": "emergency",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-sa-post-knee",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-sa-post-knee",
+    "alternatives": [],
+    "evidence_summary": "Surgical Approaches manufacture; approach-selection and at-risk anatomy decisions require attending review",
+    "metadata": {
+      "pilot": "surgical-approaches-neighborhood",
+      "review_packet_key": "pilot:surgical-approaches-neighborhood",
+      "review_packet_label": "Surgical Approaches Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-sa-post-knee",
+      "subject_entity_slug": "posterior-knee-approach",
+      "pattern_type": "operative_safety",
+      "trigger": "Popliteal neurovascular structures are not controlled during posterior knee exposure",
+      "action": "Stop deep progression until popliteal vessels and nerves are identified and protected",
+      "urgency": "urgent",
+      "safety_criticality": "emergency",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:27:28.001Z"
     }
   }
 ]

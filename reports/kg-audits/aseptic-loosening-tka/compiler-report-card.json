@@ -1,26 +1,16 @@
 {
-  "gapDetectionScore": 56,
+  "gapDetectionScore": 40,
   "workPlanningScore": 100,
   "dependencyGraphScore": 95,
-  "mergeCorrectnessScore": 90,
-  "publicationBlockerScore": 75,
+  "mergeCorrectnessScore": 100,
+  "publicationBlockerScore": 80,
   "overallScore": 83,
-  "deductions": [
-    {
-      "finding": "1 merge conflicts",
-      "evidence": "conflict-report.json or merged draft conflicts array",
-      "reason": "Merge engine should resolve or surface all agent output conflicts.",
-      "severity": "high",
-      "category": "compiler_quality",
-      "suggestedFix": "Review conflict-report.json and re-run merge with conflict-resolver output.",
-      "impact": 8
-    }
-  ],
+  "deductions": [],
   "metrics": {
-    "gapCount": 22,
+    "gapCount": 30,
     "workItemCount": 11,
     "unmetGapCount": 0,
-    "mergeConflictCount": 1,
-    "publicationBlockerCount": 5
+    "mergeConflictCount": 0,
+    "publicationBlockerCount": 4
   }
 }

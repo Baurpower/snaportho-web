@@ -1,0 +1,44 @@
+{
+  "ok": false,
+  "runDate": "2026-07-16",
+  "topicKey": "compartment-syndrome",
+  "displayName": "Compartment Syndrome",
+  "pilotKey": "compartment-syndrome-neighborhood",
+  "priorState": "staging_applied",
+  "resultingState": "database_verification_blocked",
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "blockerClass": "staging_integrity_failure",
+  "automaticRepairAttempted": false,
+  "quarantinedPartialMemberships": 0,
+  "batchKey": "legacy-compartment-syndrome-4f53cda18c2baa0c",
+  "packetHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "expected": {
+    "approvedLoaded": 36,
+    "structuralProposals": 0,
+    "entities": 0,
+    "relationships": 0,
+    "curriculumBridges": 0,
+    "draftClaims": 1,
+    "draftDecisionPoints": 0
+  },
+  "resolved": {
+    "entities": 0,
+    "relationships": 0,
+    "curriculumBridges": 0
+  },
+  "discrepancyCount": 1,
+  "discrepancies": [
+    {
+      "fingerprint": "apply-report",
+      "kind": "unreconstructable_created_structural_membership",
+      "expected": "fingerprint-level outcomes for every created structural object",
+      "observed": "35 created structural object(s) recorded only as aggregate counts"
+    }
+  ],
+  "exactNextAction": "resolve_canonical_mismatch",
+  "evidence": {
+    "applyPath": "reports/kg-pilots/compartment-syndrome-staging-apply-result.json",
+    "curatedPath": "reports/kg-pilots/compartment-syndrome-curated-proposals.json"
+  }
+}

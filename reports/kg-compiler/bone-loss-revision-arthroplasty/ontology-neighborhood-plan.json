@@ -3,12 +3,21 @@
   "pilotKey": "bone-loss-revision-arthroplasty-neighborhood",
   "primaryEntitySlug": "bone-loss-revision-arthroplasty",
   "displayName": "Bone Loss in Revision Arthroplasty",
-  "generatedAt": "2026-07-05T23:26:40.619Z",
+  "generatedAt": "2026-07-16T02:40:22.006Z",
   "nodes": [
     {
-      "slug": "paprosky-classification",
+      "slug": "adult-reconstruction-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Adult Reconstruction Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "aori-classification",
       "entityType": "classification_system",
-      "preferredLabel": "Paprosky Classification",
+      "preferredLabel": "AORI Classification",
       "role": "classification",
       "isPrimary": false,
       "inboundEdgeCount": 1,
@@ -20,37 +29,71 @@
       "preferredLabel": "Bone Loss in Revision Arthroplasty",
       "role": "primary_condition",
       "isPrimary": true,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
+      "role": "biomechanics",
+      "isPrimary": false,
       "inboundEdgeCount": 0,
       "outboundEdgeCount": 2
     },
     {
-      "slug": "aori-classification",
+      "slug": "paprosky-classification",
       "entityType": "classification_system",
-      "preferredLabel": "AORI Classification",
+      "preferredLabel": "Paprosky Classification",
       "role": "classification",
       "isPrimary": false,
       "inboundEdgeCount": 1,
       "outboundEdgeCount": 0
+    },
+    {
+      "slug": "polyethylene-wear-osteolysis",
+      "entityType": "procedure",
+      "preferredLabel": "Polyethylene Wear Osteolysis",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "revision-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Revision Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
     }
   ],
-  "edgeCount": 2,
-  "claimCount": 2,
+  "edgeCount": 11,
+  "claimCount": 3,
   "decisionPointCount": 0,
   "roles": {
     "primary_condition": [
       "bone-loss-revision-arthroplasty"
     ],
-    "neighboring_anatomy": [],
-    "procedure": [],
+    "neighboring_anatomy": [
+      "adult-reconstruction-anatomy-hub"
+    ],
+    "procedure": [
+      "polyethylene-wear-osteolysis",
+      "revision-arthroplasty"
+    ],
     "classification": [
-      "paprosky-classification",
-      "aori-classification"
+      "aori-classification",
+      "paprosky-classification"
     ],
     "imaging": [],
     "complication": [],
     "decision_point_anchor": [],
     "claim_anchor": [],
-    "biomechanics": [],
+    "biomechanics": [
+      "implant-concepts-hub"
+    ],
     "fixation": [],
     "supporting": []
   }

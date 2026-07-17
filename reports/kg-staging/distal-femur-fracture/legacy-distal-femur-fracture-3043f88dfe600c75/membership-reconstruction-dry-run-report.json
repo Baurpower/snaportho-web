@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "runDate": "2026-07-16",
+  "topicKey": "distal-femur-fracture",
+  "displayName": "Distal Femur Fracture",
+  "pilotKey": "distal-femur-fracture-neighborhood",
+  "batchKey": "legacy-distal-femur-fracture-3043f88dfe600c75",
+  "packetHash": "3043f88dfe600c75ec735dfd2763cf2261f6e830bcb4955ec15ffc1273187ffd",
+  "graphHash": "7771b188bebbeca19eaf0885424569b5021029352a5d1b45f0f8f106c4bddbb7",
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "dryRun": true,
+  "exactAppliedMembershipReconstructed": true,
+  "counts": {
+    "approvedLoaded": 60,
+    "structuralProposals": 59,
+    "entities": 26,
+    "relationships": 32,
+    "curriculumBridges": 1,
+    "draftClaimsExcluded": 1,
+    "draftDecisionPointsExcluded": 0
+  },
+  "repairs": {
+    "insertedSemantic": 0,
+    "reusedSemantic": 0,
+    "proposalStatesRepaired": 0,
+    "insertedMemberships": 0,
+    "reusedMemberships": 0,
+    "reactivatedMemberships": 0
+  },
+  "discrepancyCount": 0,
+  "exactNextAction": "repair_batch_membership"
+}

@@ -1,46 +1,27 @@
 {
-  "generatedAt": "2026-07-05T23:09:48.690Z",
+  "generatedAt": "2026-07-16T02:33:03.961Z",
   "frameworkVersion": "1.0.0",
   "topicKey": "aseptic-loosening-tka",
   "pilotKey": "aseptic-loosening-tka-neighborhood",
   "assignments": [
     {
-      "workItemId": "work-clinical-entity-builder",
-      "agentId": "clinical-entity-builder",
-      "agentName": "Clinical Entity Builder",
-      "type": "gap_resolution",
-      "gapCount": 3,
-      "gapIds": [
-        "gap-entity-neighbor-1",
-        "gap-entity-neighbor-2",
-        "gap-entity-neighbor-3"
-      ],
-      "gapKinds": [
-        "missing_entity"
-      ],
-      "dependencies": [],
-      "estimatedConfidence": 0.9499999999999998,
-      "requiredReviewer": "clinical_expert",
-      "matchReasons": [
-        "handles_gap_kind:missing_entity",
-        "generic_fallback"
-      ]
-    },
-    {
       "workItemId": "work-relationship-builder",
       "agentId": "relationship-builder",
       "agentName": "Relationship Builder",
       "type": "gap_resolution",
-      "gapCount": 8,
+      "gapCount": 11,
       "gapIds": [
-        "gap-rel-4",
+        "gap-rel-1",
         "gap-rel-5",
         "gap-rel-6",
         "gap-rel-7",
         "gap-rel-8",
         "gap-rel-9",
         "gap-rel-10",
-        "gap-rel-11"
+        "gap-rel-20",
+        "gap-rel-25",
+        "gap-rel-26",
+        "gap-proc-approach-30"
       ],
       "gapKinds": [
         "missing_relationship"
@@ -49,10 +30,33 @@
         "work-clinical-entity-builder",
         "work-anatomy-builder"
       ],
-      "estimatedConfidence": 0.92,
+      "estimatedConfidence": 0.9072727272727273,
       "requiredReviewer": "attending",
       "matchReasons": [
         "handles_gap_kind:missing_relationship"
+      ]
+    },
+    {
+      "workItemId": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "agentName": "Clinical Entity Builder",
+      "type": "gap_resolution",
+      "gapCount": 4,
+      "gapIds": [
+        "gap-entity-neighbor-2",
+        "gap-entity-neighbor-3",
+        "gap-entity-neighbor-4",
+        "gap-entity-neighbor-24"
+      ],
+      "gapKinds": [
+        "missing_entity"
+      ],
+      "dependencies": [],
+      "estimatedConfidence": 0.95,
+      "requiredReviewer": "clinical_expert",
+      "matchReasons": [
+        "handles_gap_kind:missing_entity",
+        "generic_fallback"
       ]
     },
     {
@@ -60,13 +64,17 @@
       "agentId": "claim-builder",
       "agentName": "Claim Builder",
       "type": "gap_resolution",
-      "gapCount": 5,
+      "gapCount": 9,
       "gapIds": [
-        "gap-claim-12",
+        "gap-claim-11",
+        "gap-claim-type-12",
         "gap-claim-type-13",
         "gap-claim-type-14",
         "gap-claim-type-15",
-        "gap-claim-type-16"
+        "gap-claim-21",
+        "gap-claim-type-22",
+        "gap-claim-type-23",
+        "gap-biomech-claim-29"
       ],
       "gapKinds": [
         "missing_claim"
@@ -74,8 +82,8 @@
       "dependencies": [
         "work-relationship-builder"
       ],
-      "estimatedConfidence": 0.776,
-      "requiredReviewer": "none",
+      "estimatedConfidence": 0.7866666666666666,
+      "requiredReviewer": "clinical_expert",
       "matchReasons": [
         "handles_gap_kind:missing_claim"
       ]
@@ -87,9 +95,9 @@
       "type": "gap_resolution",
       "gapCount": 3,
       "gapIds": [
-        "gap-dp-17",
-        "gap-dp-pattern-18",
-        "gap-dp-pattern-19"
+        "gap-dp-16",
+        "gap-dp-pattern-17",
+        "gap-dp-pattern-18"
       ],
       "gapKinds": [
         "missing_decision_point"
@@ -110,7 +118,7 @@
       "type": "gap_resolution",
       "gapCount": 1,
       "gapIds": [
-        "gap-meta-rel-20"
+        "gap-meta-rel-19"
       ],
       "gapKinds": [
         "missing_metadata"
@@ -131,8 +139,8 @@
       "type": "gap_resolution",
       "gapCount": 2,
       "gapIds": [
-        "gap-asset-card-21",
-        "gap-asset-question-22"
+        "gap-asset-card-27",
+        "gap-asset-question-28"
       ],
       "gapKinds": [
         "missing_asset_link"

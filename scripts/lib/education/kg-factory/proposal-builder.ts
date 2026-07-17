@@ -229,6 +229,42 @@ import {
   ORTHOPAEDIC_ANATOMY_SOURCE_IDS,
   activeOrthopaedicAnatomyRelationships,
 } from "../kg-orthopaedic-anatomy-pilot-spec.ts";
+import {
+  IMAGING_MEASUREMENTS_ASSET_COUNTS,
+  IMAGING_MEASUREMENTS_CLAIM_DRAFTS,
+  IMAGING_MEASUREMENTS_DECISION_POINT_DRAFTS,
+  IMAGING_MEASUREMENTS_ENTITIES,
+  IMAGING_MEASUREMENTS_PILOT_KEY,
+  IMAGING_MEASUREMENTS_SOURCE_IDS,
+  activeImagingMeasurementsRelationships,
+} from "../kg-imaging-radiographic-measurements-pilot-spec.ts";
+import {
+  COMPLICATIONS_ASSET_COUNTS,
+  COMPLICATIONS_CLAIM_DRAFTS,
+  COMPLICATIONS_DECISION_POINT_DRAFTS,
+  COMPLICATIONS_ENTITIES,
+  COMPLICATIONS_PILOT_KEY,
+  COMPLICATIONS_SOURCE_IDS,
+  activeComplicationsRelationships,
+} from "../kg-complications-pilot-spec.ts";
+import {
+  POSTOPERATIVE_PROTOCOLS_ASSET_COUNTS,
+  POSTOPERATIVE_PROTOCOLS_CLAIM_DRAFTS,
+  POSTOPERATIVE_PROTOCOLS_DECISION_POINT_DRAFTS,
+  POSTOPERATIVE_PROTOCOLS_ENTITIES,
+  POSTOPERATIVE_PROTOCOLS_PILOT_KEY,
+  POSTOPERATIVE_PROTOCOLS_SOURCE_IDS,
+  activePostoperativeProtocolsRelationships,
+} from "../kg-postoperative-protocols-pilot-spec.ts";
+import {
+  IMPLANTS_INSTRUMENTS_ASSET_COUNTS,
+  IMPLANTS_INSTRUMENTS_CLAIM_DRAFTS,
+  IMPLANTS_INSTRUMENTS_DECISION_POINT_DRAFTS,
+  IMPLANTS_INSTRUMENTS_ENTITIES,
+  IMPLANTS_INSTRUMENTS_PILOT_KEY,
+  IMPLANTS_INSTRUMENTS_SOURCE_IDS,
+  activeImplantsInstrumentsRelationships,
+} from "../kg-implants-instruments-pilot-spec.ts";
 
 export function buildOrthopaedicAnatomyProposalPacket() {
   return buildPilotProposalPacket({
@@ -243,6 +279,70 @@ export function buildOrthopaedicAnatomyProposalPacket() {
     relationships: activeOrthopaedicAnatomyRelationships(),
     claimDrafts: ORTHOPAEDIC_ANATOMY_CLAIM_DRAFTS,
     decisionPointDrafts: ORTHOPAEDIC_ANATOMY_DECISION_POINT_DRAFTS,
+  });
+}
+
+export function buildImplantsInstrumentsProposalPacket() {
+  return buildPilotProposalPacket({
+    pilotKey: IMPLANTS_INSTRUMENTS_PILOT_KEY,
+    pilotPacketKey: "pilot:implants-instruments-neighborhood",
+    pilotPacketLabel: "Implants & Instruments Neighborhood",
+    specVersion: "implants_instruments_spec_v1",
+    primaryEntitySlug: "implants-instruments",
+    sourceIds: IMPLANTS_INSTRUMENTS_SOURCE_IDS,
+    assetCounts: IMPLANTS_INSTRUMENTS_ASSET_COUNTS,
+    entities: IMPLANTS_INSTRUMENTS_ENTITIES,
+    relationships: activeImplantsInstrumentsRelationships(),
+    claimDrafts: IMPLANTS_INSTRUMENTS_CLAIM_DRAFTS,
+    decisionPointDrafts: IMPLANTS_INSTRUMENTS_DECISION_POINT_DRAFTS,
+  });
+}
+
+export function buildImagingMeasurementsProposalPacket() {
+  return buildPilotProposalPacket({
+    pilotKey: IMAGING_MEASUREMENTS_PILOT_KEY,
+    pilotPacketKey: "pilot:imaging-radiographic-measurements-neighborhood",
+    pilotPacketLabel: "Imaging & Radiographic Measurements Neighborhood",
+    specVersion: "imaging_radiographic_measurements_spec_v1",
+    primaryEntitySlug: "imaging-radiographic-measurements",
+    sourceIds: IMAGING_MEASUREMENTS_SOURCE_IDS,
+    assetCounts: IMAGING_MEASUREMENTS_ASSET_COUNTS,
+    entities: IMAGING_MEASUREMENTS_ENTITIES,
+    relationships: activeImagingMeasurementsRelationships(),
+    claimDrafts: IMAGING_MEASUREMENTS_CLAIM_DRAFTS,
+    decisionPointDrafts: IMAGING_MEASUREMENTS_DECISION_POINT_DRAFTS,
+  });
+}
+
+export function buildComplicationsProposalPacket() {
+  return buildPilotProposalPacket({
+    pilotKey: COMPLICATIONS_PILOT_KEY,
+    pilotPacketKey: "pilot:complications-neighborhood",
+    pilotPacketLabel: "Complications Neighborhood",
+    specVersion: "complications_spec_v1",
+    primaryEntitySlug: "orthopaedic-complications",
+    sourceIds: COMPLICATIONS_SOURCE_IDS,
+    assetCounts: COMPLICATIONS_ASSET_COUNTS,
+    entities: COMPLICATIONS_ENTITIES,
+    relationships: activeComplicationsRelationships(),
+    claimDrafts: COMPLICATIONS_CLAIM_DRAFTS,
+    decisionPointDrafts: COMPLICATIONS_DECISION_POINT_DRAFTS,
+  });
+}
+
+export function buildPostoperativeProtocolsProposalPacket() {
+  return buildPilotProposalPacket({
+    pilotKey: POSTOPERATIVE_PROTOCOLS_PILOT_KEY,
+    pilotPacketKey: "pilot:postoperative-protocols-neighborhood",
+    pilotPacketLabel: "Postoperative Protocols Neighborhood",
+    specVersion: "postoperative_protocols_spec_v1",
+    primaryEntitySlug: "postoperative-protocols",
+    sourceIds: POSTOPERATIVE_PROTOCOLS_SOURCE_IDS,
+    assetCounts: POSTOPERATIVE_PROTOCOLS_ASSET_COUNTS,
+    entities: POSTOPERATIVE_PROTOCOLS_ENTITIES,
+    relationships: activePostoperativeProtocolsRelationships(),
+    claimDrafts: POSTOPERATIVE_PROTOCOLS_CLAIM_DRAFTS,
+    decisionPointDrafts: POSTOPERATIVE_PROTOCOLS_DECISION_POINT_DRAFTS,
   });
 }
 

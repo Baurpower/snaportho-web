@@ -1,0 +1,40 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 88,
+  "deductions": [
+    {
+      "finding": "1 orphan entities with no relationships",
+      "evidence": "Slugs: lisfranc-nonoperative-immobilization",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "medium",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "lisfranc-nonoperative-immobilization"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 4
+    },
+    {
+      "finding": "1 merge conflicts detected",
+      "evidence": "conflict-report.json: Conflicting DP pattern lisfranc-injury|operative_indication: dp-lisfranc-stable-immobilization vs dp-lisfranc-unstable-orif",
+      "reason": "Unresolved merge conflicts indicate inconsistent agent outputs.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "suggestedFix": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 27,
+    "relationshipCount": 32,
+    "orphanCount": 1,
+    "danglingEdgeCount": 0,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Run conflict-resolver agent and reconcile metadata/text conflicts."
+  ]
+}

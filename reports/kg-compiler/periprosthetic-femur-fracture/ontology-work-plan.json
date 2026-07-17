@@ -1,60 +1,32 @@
 {
   "topicKey": "periprosthetic-femur-fracture",
   "pilotKey": "periprosthetic-femur-fracture-neighborhood",
-  "generatedAt": "2026-07-05T22:49:07.621Z",
+  "generatedAt": "2026-07-16T02:54:04.795Z",
   "workItems": [
-    {
-      "id": "work-clinical-entity-builder",
-      "agentId": "clinical-entity-builder",
-      "agentFamily": "Clinical Entity Builder",
-      "title": "Clinical Entity Builder: resolve 4 gap(s)",
-      "gapIds": [
-        "gap-entity-neighbor-1",
-        "gap-entity-neighbor-2",
-        "gap-entity-neighbor-3",
-        "gap-entity-neighbor-20"
-      ],
-      "dependencies": [],
-      "estimatedConfidence": 0.95,
-      "requiredInputs": [
-        "neighborhood_snapshot",
-        "ontology_requirements",
-        "work_assignment"
-      ],
-      "requiredOutputs": [
-        "entities"
-      ],
-      "validationRules": [
-        "ontology_valid",
-        "schema_valid",
-        "duplicate_valid"
-      ],
-      "priority": 115,
-      "workType": "gap_resolution",
-      "assignedAgentId": "clinical-entity-builder",
-      "publicationImpact": 0.1,
-      "requiredReviewer": "clinical_expert"
-    },
     {
       "id": "work-relationship-builder",
       "agentId": "relationship-builder",
       "agentFamily": "Relationship Builder",
-      "title": "Relationship Builder: resolve 8 gap(s)",
+      "title": "Relationship Builder: resolve 12 gap(s)",
       "gapIds": [
-        "gap-rel-4",
-        "gap-rel-5",
-        "gap-rel-6",
-        "gap-rel-7",
-        "gap-rel-8",
-        "gap-rel-9",
+        "gap-rel-1",
+        "gap-rel-2",
+        "gap-rel-3",
         "gap-rel-10",
-        "gap-rel-11"
+        "gap-rel-11",
+        "gap-rel-12",
+        "gap-rel-13",
+        "gap-rel-14",
+        "gap-rel-15",
+        "gap-rel-25",
+        "gap-rel-26",
+        "gap-proc-approach-31"
       ],
       "dependencies": [
         "work-clinical-entity-builder",
         "work-anatomy-builder"
       ],
-      "estimatedConfidence": 0.92,
+      "estimatedConfidence": 0.9083333333333333,
       "requiredInputs": [
         "neighborhood_snapshot",
         "work_assignment",
@@ -74,25 +46,29 @@
       "priority": 115,
       "workType": "gap_resolution",
       "assignedAgentId": "relationship-builder",
-      "publicationImpact": 0.10625,
+      "publicationImpact": 0.10000000000000002,
       "requiredReviewer": "attending"
     },
     {
       "id": "work-claim-builder",
       "agentId": "claim-builder",
       "agentFamily": "Claim Builder",
-      "title": "Claim Builder: resolve 5 gap(s)",
+      "title": "Claim Builder: resolve 9 gap(s)",
       "gapIds": [
-        "gap-claim-12",
-        "gap-claim-type-13",
-        "gap-claim-type-14",
-        "gap-claim-type-15",
-        "gap-claim-type-16"
+        "gap-claim-4",
+        "gap-claim-type-5",
+        "gap-claim-type-6",
+        "gap-claim-16",
+        "gap-claim-type-17",
+        "gap-claim-type-18",
+        "gap-claim-type-19",
+        "gap-claim-type-20",
+        "gap-biomech-claim-30"
       ],
       "dependencies": [
         "work-relationship-builder"
       ],
-      "estimatedConfidence": 0.776,
+      "estimatedConfidence": 0.7866666666666666,
       "requiredInputs": [
         "neighborhood_snapshot",
         "canonical_objects",
@@ -112,8 +88,41 @@
       "priority": 85,
       "workType": "gap_resolution",
       "assignedAgentId": "claim-builder",
-      "publicationImpact": 0.06,
-      "requiredReviewer": "none"
+      "publicationImpact": 0.05555555555555555,
+      "requiredReviewer": "clinical_expert"
+    },
+    {
+      "id": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "agentFamily": "Clinical Entity Builder",
+      "title": "Clinical Entity Builder: resolve 5 gap(s)",
+      "gapIds": [
+        "gap-entity-neighbor-7",
+        "gap-entity-neighbor-8",
+        "gap-entity-neighbor-9",
+        "gap-entity-neighbor-24",
+        "gap-entity-neighbor-27"
+      ],
+      "dependencies": [],
+      "estimatedConfidence": 0.95,
+      "requiredInputs": [
+        "neighborhood_snapshot",
+        "ontology_requirements",
+        "work_assignment"
+      ],
+      "requiredOutputs": [
+        "entities"
+      ],
+      "validationRules": [
+        "ontology_valid",
+        "schema_valid",
+        "duplicate_valid"
+      ],
+      "priority": 115,
+      "workType": "gap_resolution",
+      "assignedAgentId": "clinical-entity-builder",
+      "publicationImpact": 0.10999999999999999,
+      "requiredReviewer": "clinical_expert"
     },
     {
       "id": "work-decision-point-builder",
@@ -121,9 +130,9 @@
       "agentFamily": "Decision Point Builder",
       "title": "Decision Point Builder: resolve 3 gap(s)",
       "gapIds": [
-        "gap-dp-17",
-        "gap-dp-pattern-18",
-        "gap-dp-pattern-19"
+        "gap-dp-21",
+        "gap-dp-pattern-22",
+        "gap-dp-pattern-23"
       ],
       "dependencies": [
         "work-relationship-builder"
@@ -154,8 +163,8 @@
       "agentFamily": "Asset Linker",
       "title": "Asset Linker: resolve 2 gap(s)",
       "gapIds": [
-        "gap-asset-card-21",
-        "gap-asset-question-22"
+        "gap-asset-card-28",
+        "gap-asset-question-29"
       ],
       "dependencies": [
         "work-clinical-entity-builder"
@@ -187,9 +196,9 @@
       "title": "Conflict Resolver: quality_scoring",
       "gapIds": [],
       "dependencies": [
-        "work-clinical-entity-builder",
         "work-relationship-builder",
         "work-claim-builder",
+        "work-clinical-entity-builder",
         "work-decision-point-builder",
         "work-asset-linker"
       ],
@@ -274,9 +283,9 @@
       "title": "Review Assistant: review",
       "gapIds": [],
       "dependencies": [
-        "work-clinical-entity-builder",
         "work-relationship-builder",
         "work-claim-builder",
+        "work-clinical-entity-builder",
         "work-decision-point-builder",
         "work-asset-linker",
         "work-conflict-resolver"
@@ -330,9 +339,9 @@
     }
   ],
   "agentSummary": {
-    "Clinical Entity Builder": 1,
     "Relationship Builder": 1,
     "Claim Builder": 1,
+    "Clinical Entity Builder": 1,
     "Decision Point Builder": 1,
     "Asset Linker": 1,
     "Conflict Resolver": 2,

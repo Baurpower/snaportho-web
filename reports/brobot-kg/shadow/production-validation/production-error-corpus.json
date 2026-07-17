@@ -1,0 +1,2569 @@
+{
+  "errors": [
+    {
+      "fixtureId": "or02",
+      "sanitizedPrompt": "Ankle fracture ORIF approach and syndesmotic checks.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [
+        {
+          "label": "ORIF",
+          "entityId": "7d8332ef-a3c6-4db0-9383-0b2a4c85b366",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "fixation_method",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "distal-radius-fracture"
+          ]
+        }
+      ],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:or_prep"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "empty_packet_after_filtering",
+          "normalizedConcept": "ankle ankle fracture orif approach and syndesmotic checks",
+          "candidateEntityId": "7d8332ef-a3c6-4db0-9383-0b2a4c85b366",
+          "candidateNeighborhood": "distal-radius-fracture",
+          "confidence": 0.85,
+          "reasons": [
+            "candidate_found_without_allowed_relationships"
+          ]
+        },
+        {
+          "gapType": "partial_neighborhood_coverage",
+          "normalizedConcept": "ankle ankle fracture orif approach and syndesmotic checks",
+          "candidateEntityId": "7d8332ef-a3c6-4db0-9383-0b2a4c85b366",
+          "candidateNeighborhood": "distal-radius-fracture",
+          "confidence": 0.9,
+          "reasons": [
+            "production_neighborhood_marked_partial"
+          ]
+        },
+        {
+          "gapType": "missing_predicate_family",
+          "normalizedConcept": "ankle ankle fracture orif approach and syndesmotic checks",
+          "candidateEntityId": "7d8332ef-a3c6-4db0-9383-0b2a4c85b366",
+          "candidateNeighborhood": "distal-radius-fracture",
+          "confidence": 0.65,
+          "reasons": [
+            "missing:uses_approach",
+            "missing:involves_anatomy",
+            "missing:at_risk_structure",
+            "missing:uses_implant",
+            "missing:uses_fixation",
+            "missing:requires_imaging",
+            "missing:has_complication",
+            "missing:indicated_for"
+          ]
+        },
+        {
+          "gapType": "missing_claim",
+          "normalizedConcept": "ankle ankle fracture orif approach and syndesmotic checks",
+          "candidateEntityId": "7d8332ef-a3c6-4db0-9383-0b2a4c85b366",
+          "candidateNeighborhood": "distal-radius-fracture",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_claims"
+          ]
+        },
+        {
+          "gapType": "missing_decision_point",
+          "normalizedConcept": "ankle ankle fracture orif approach and syndesmotic checks",
+          "candidateEntityId": "7d8332ef-a3c6-4db0-9383-0b2a4c85b366",
+          "candidateNeighborhood": "distal-radius-fracture",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_decision_points"
+          ]
+        }
+      ],
+      "rootCauseClassification": "true ranking defect",
+      "recommendedRemediation": "Review lexical/alias normalization and candidate score ordering."
+    },
+    {
+      "fixtureId": "or06",
+      "sanitizedPrompt": "Proximal humerus ORIF deltopectoral approach.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [
+        {
+          "label": "ORIF",
+          "entityId": "7d8332ef-a3c6-4db0-9383-0b2a4c85b366",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "fixation_method",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "distal-radius-fracture"
+          ]
+        },
+        {
+          "label": "Proximal Humerus",
+          "entityId": "57fb8c90-5bf2-4706-9bd0-fbf51586ad9a",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "anatomy_structure",
+          "finalScore": 0.804,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 1,
+          "neighborhoodSlugs": [
+            "clavicle-fracture"
+          ]
+        }
+      ],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:or_prep"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "empty_packet_after_filtering",
+          "normalizedConcept": "proximal humerus proximal humerus orif deltopectoral approach",
+          "candidateEntityId": "7d8332ef-a3c6-4db0-9383-0b2a4c85b366",
+          "candidateNeighborhood": "distal-radius-fracture",
+          "confidence": 0.85,
+          "reasons": [
+            "candidate_found_without_allowed_relationships"
+          ]
+        },
+        {
+          "gapType": "partial_neighborhood_coverage",
+          "normalizedConcept": "proximal humerus proximal humerus orif deltopectoral approach",
+          "candidateEntityId": "7d8332ef-a3c6-4db0-9383-0b2a4c85b366",
+          "candidateNeighborhood": "distal-radius-fracture",
+          "confidence": 0.9,
+          "reasons": [
+            "production_neighborhood_marked_partial"
+          ]
+        },
+        {
+          "gapType": "missing_predicate_family",
+          "normalizedConcept": "proximal humerus proximal humerus orif deltopectoral approach",
+          "candidateEntityId": "7d8332ef-a3c6-4db0-9383-0b2a4c85b366",
+          "candidateNeighborhood": "distal-radius-fracture",
+          "confidence": 0.65,
+          "reasons": [
+            "missing:uses_approach",
+            "missing:involves_anatomy",
+            "missing:at_risk_structure",
+            "missing:uses_implant",
+            "missing:uses_fixation",
+            "missing:requires_imaging",
+            "missing:has_complication",
+            "missing:indicated_for"
+          ]
+        },
+        {
+          "gapType": "missing_claim",
+          "normalizedConcept": "proximal humerus proximal humerus orif deltopectoral approach",
+          "candidateEntityId": "7d8332ef-a3c6-4db0-9383-0b2a4c85b366",
+          "candidateNeighborhood": "distal-radius-fracture",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_claims"
+          ]
+        },
+        {
+          "gapType": "missing_decision_point",
+          "normalizedConcept": "proximal humerus proximal humerus orif deltopectoral approach",
+          "candidateEntityId": "7d8332ef-a3c6-4db0-9383-0b2a4c85b366",
+          "candidateNeighborhood": "distal-radius-fracture",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_decision_points"
+          ]
+        }
+      ],
+      "rootCauseClassification": "true ranking defect",
+      "recommendedRemediation": "Review lexical/alias normalization and candidate score ordering."
+    },
+    {
+      "fixtureId": "or09",
+      "sanitizedPrompt": "ACL reconstruction graft fixation and tunnel pitfalls.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_task_facets",
+        "mode:or_prep"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "acl reconstruction acl reconstruction graft fixation and tunnel pitfalls",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "acl reconstruction acl reconstruction graft fixation and tunnel pitfalls",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "or10",
+      "sanitizedPrompt": "Pilon fracture fixation strategy and structures at risk.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [
+        {
+          "label": "Tibia",
+          "entityId": "0d9178bb-30a0-469d-a930-3e48aa2685a1",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "anatomy_structure",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "bearing-surface-selection"
+          ]
+        }
+      ],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:or_prep"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "empty_packet_after_filtering",
+          "normalizedConcept": "tibial pilon pilon fracture fixation strategy and structures at risk",
+          "candidateEntityId": "0d9178bb-30a0-469d-a930-3e48aa2685a1",
+          "candidateNeighborhood": "bearing-surface-selection",
+          "confidence": 0.85,
+          "reasons": [
+            "candidate_found_without_allowed_relationships"
+          ]
+        },
+        {
+          "gapType": "partial_neighborhood_coverage",
+          "normalizedConcept": "tibial pilon pilon fracture fixation strategy and structures at risk",
+          "candidateEntityId": "0d9178bb-30a0-469d-a930-3e48aa2685a1",
+          "candidateNeighborhood": "bearing-surface-selection",
+          "confidence": 0.9,
+          "reasons": [
+            "production_neighborhood_marked_partial"
+          ]
+        },
+        {
+          "gapType": "missing_predicate_family",
+          "normalizedConcept": "tibial pilon pilon fracture fixation strategy and structures at risk",
+          "candidateEntityId": "0d9178bb-30a0-469d-a930-3e48aa2685a1",
+          "candidateNeighborhood": "bearing-surface-selection",
+          "confidence": 0.65,
+          "reasons": [
+            "missing:uses_approach",
+            "missing:involves_anatomy",
+            "missing:at_risk_structure",
+            "missing:uses_implant",
+            "missing:uses_fixation",
+            "missing:requires_imaging",
+            "missing:has_complication",
+            "missing:indicated_for"
+          ]
+        },
+        {
+          "gapType": "missing_claim",
+          "normalizedConcept": "tibial pilon pilon fracture fixation strategy and structures at risk",
+          "candidateEntityId": "0d9178bb-30a0-469d-a930-3e48aa2685a1",
+          "candidateNeighborhood": "bearing-surface-selection",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_claims"
+          ]
+        },
+        {
+          "gapType": "missing_decision_point",
+          "normalizedConcept": "tibial pilon pilon fracture fixation strategy and structures at risk",
+          "candidateEntityId": "0d9178bb-30a0-469d-a930-3e48aa2685a1",
+          "candidateNeighborhood": "bearing-surface-selection",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_decision_points"
+          ]
+        }
+      ],
+      "rootCauseClassification": "true ranking defect",
+      "recommendedRemediation": "Review lexical/alias normalization and candidate score ordering."
+    },
+    {
+      "fixtureId": "oi02",
+      "sanitizedPrompt": "Weber ankle fracture classification and treatment implications.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [
+        {
+          "label": "Ankle Fracture",
+          "entityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "condition",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "osteochondral-lesion-talus"
+          ]
+        }
+      ],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:oite"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "empty_packet_after_filtering",
+          "normalizedConcept": "ankle weber ankle fracture classification and treatment implications",
+          "candidateEntityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "candidateNeighborhood": "osteochondral-lesion-talus",
+          "confidence": 0.85,
+          "reasons": [
+            "candidate_found_without_allowed_relationships"
+          ]
+        },
+        {
+          "gapType": "partial_neighborhood_coverage",
+          "normalizedConcept": "ankle weber ankle fracture classification and treatment implications",
+          "candidateEntityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "candidateNeighborhood": "osteochondral-lesion-talus",
+          "confidence": 0.9,
+          "reasons": [
+            "production_neighborhood_marked_partial"
+          ]
+        },
+        {
+          "gapType": "missing_predicate_family",
+          "normalizedConcept": "ankle weber ankle fracture classification and treatment implications",
+          "candidateEntityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "candidateNeighborhood": "osteochondral-lesion-talus",
+          "confidence": 0.65,
+          "reasons": [
+            "missing:has_classification",
+            "missing:has_grade",
+            "missing:explains_instability",
+            "missing:has_imaging_finding",
+            "missing:requires_imaging",
+            "missing:indicates_treatment",
+            "missing:treated_by",
+            "missing:has_complication"
+          ]
+        },
+        {
+          "gapType": "missing_claim",
+          "normalizedConcept": "ankle weber ankle fracture classification and treatment implications",
+          "candidateEntityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "candidateNeighborhood": "osteochondral-lesion-talus",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_claims"
+          ]
+        },
+        {
+          "gapType": "missing_decision_point",
+          "normalizedConcept": "ankle weber ankle fracture classification and treatment implications",
+          "candidateEntityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "candidateNeighborhood": "osteochondral-lesion-talus",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_decision_points"
+          ]
+        }
+      ],
+      "rootCauseClassification": "filtering removed all eligible evidence",
+      "recommendedRemediation": "Review mode predicate allowlists and production relationship coverage."
+    },
+    {
+      "fixtureId": "oi03",
+      "sanitizedPrompt": "Schatzker tibial plateau classification.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:oite"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "tibial plateau schatzker tibial plateau classification",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "tibial plateau schatzker tibial plateau classification",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "oi04",
+      "sanitizedPrompt": "Biomechanics of ankle syndesmotic instability.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_task_facets",
+        "mode:oite"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "ankle biomechanics of ankle syndesmotic instability",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "ankle biomechanics of ankle syndesmotic instability",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "oi05",
+      "sanitizedPrompt": "Radiographic measurements for developmental dysplasia of the hip.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_task_facets",
+        "mode:oite"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "hip radiographic measurements for developmental dysplasia of the hip",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "hip radiographic measurements for developmental dysplasia of the hip",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "oi06",
+      "sanitizedPrompt": "Talus fracture Hawkins classification and AVN risk.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [
+        {
+          "label": "Hawkins Classification",
+          "entityId": "8e41ae39-0b8a-4d22-ae8b-4948c7fbc090",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "classification_system",
+          "finalScore": 0.804,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 1,
+          "neighborhoodSlugs": [
+            "talus-fracture"
+          ]
+        },
+        {
+          "label": "Talus Fracture",
+          "entityId": "947c4718-8fbe-478b-b441-99e8f9726a02",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "condition",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "osteochondral-lesion-talus"
+          ]
+        },
+        {
+          "label": "Talus Fracture",
+          "entityId": "947c4718-8fbe-478b-b441-99e8f9726a02",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "condition",
+          "finalScore": 0.804,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 1,
+          "neighborhoodSlugs": [
+            "talus-fracture"
+          ]
+        }
+      ],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:oite"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "partial_neighborhood_coverage",
+          "normalizedConcept": "talus talus fracture hawkins classification and avn risk",
+          "candidateEntityId": "8e41ae39-0b8a-4d22-ae8b-4948c7fbc090",
+          "candidateNeighborhood": "talus-fracture",
+          "confidence": 0.9,
+          "reasons": [
+            "production_neighborhood_marked_partial"
+          ]
+        },
+        {
+          "gapType": "missing_claim",
+          "normalizedConcept": "talus talus fracture hawkins classification and avn risk",
+          "candidateEntityId": "8e41ae39-0b8a-4d22-ae8b-4948c7fbc090",
+          "candidateNeighborhood": "talus-fracture",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_claims"
+          ]
+        },
+        {
+          "gapType": "missing_decision_point",
+          "normalizedConcept": "talus talus fracture hawkins classification and avn risk",
+          "candidateEntityId": "8e41ae39-0b8a-4d22-ae8b-4948c7fbc090",
+          "candidateNeighborhood": "talus-fracture",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_decision_points"
+          ]
+        }
+      ],
+      "rootCauseClassification": "true ranking defect",
+      "recommendedRemediation": "Review lexical/alias normalization and candidate score ordering."
+    },
+    {
+      "fixtureId": "oi07",
+      "sanitizedPrompt": "Lisfranc injury imaging findings and treatment principles.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "lightweight_resolve",
+      "topCandidates": [
+        {
+          "label": "Lisfranc Injury",
+          "entityId": "292de1f8-7c53-4efc-b355-2736c5775cfb",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "condition",
+          "finalScore": 0.804,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 1,
+          "neighborhoodSlugs": [
+            "lisfranc-injury"
+          ]
+        }
+      ],
+      "decisionReasons": [
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:oite"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "empty_packet_after_filtering",
+          "normalizedConcept": "lisfranc injury imaging findings and treatment principles lisfranc injury imaging findings and treatment principles",
+          "candidateEntityId": "292de1f8-7c53-4efc-b355-2736c5775cfb",
+          "candidateNeighborhood": "lisfranc-injury",
+          "confidence": 0.85,
+          "reasons": [
+            "candidate_found_without_allowed_relationships"
+          ]
+        },
+        {
+          "gapType": "missing_predicate_family",
+          "normalizedConcept": "lisfranc injury imaging findings and treatment principles lisfranc injury imaging findings and treatment principles",
+          "candidateEntityId": "292de1f8-7c53-4efc-b355-2736c5775cfb",
+          "candidateNeighborhood": "lisfranc-injury",
+          "confidence": 0.65,
+          "reasons": [
+            "missing:has_classification",
+            "missing:has_grade",
+            "missing:explains_instability",
+            "missing:has_imaging_finding",
+            "missing:requires_imaging",
+            "missing:indicates_treatment",
+            "missing:treated_by",
+            "missing:has_complication"
+          ]
+        },
+        {
+          "gapType": "missing_claim",
+          "normalizedConcept": "lisfranc injury imaging findings and treatment principles lisfranc injury imaging findings and treatment principles",
+          "candidateEntityId": "292de1f8-7c53-4efc-b355-2736c5775cfb",
+          "candidateNeighborhood": "lisfranc-injury",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_claims"
+          ]
+        },
+        {
+          "gapType": "missing_decision_point",
+          "normalizedConcept": "lisfranc injury imaging findings and treatment principles lisfranc injury imaging findings and treatment principles",
+          "candidateEntityId": "292de1f8-7c53-4efc-b355-2736c5775cfb",
+          "candidateNeighborhood": "lisfranc-injury",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_decision_points"
+          ]
+        }
+      ],
+      "rootCauseClassification": "filtering removed all eligible evidence",
+      "recommendedRemediation": "Review mode predicate allowlists and production relationship coverage."
+    },
+    {
+      "fixtureId": "oi08",
+      "sanitizedPrompt": "Pauwels classification biomechanics.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:oite"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "pauwels classification biomechanics pauwels classification biomechanics",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "pauwels classification biomechanics pauwels classification biomechanics",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "oi10",
+      "sanitizedPrompt": "Common periprosthetic fracture classifications.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "lightweight_resolve",
+      "topCandidates": [
+        {
+          "label": "Periprosthetic Fracture",
+          "entityId": "59967264-9ac6-47e4-8b2c-0837b8328516",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "complication",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "complications"
+          ]
+        },
+        {
+          "label": "Periprosthetic Fracture",
+          "entityId": "59967264-9ac6-47e4-8b2c-0837b8328516",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "complication",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "surgical-approaches"
+          ]
+        }
+      ],
+      "decisionReasons": [
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:oite"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "empty_packet_after_filtering",
+          "normalizedConcept": "common periprosthetic fracture classifications common periprosthetic fracture classifications",
+          "candidateEntityId": "59967264-9ac6-47e4-8b2c-0837b8328516",
+          "candidateNeighborhood": "complications",
+          "confidence": 0.85,
+          "reasons": [
+            "candidate_found_without_allowed_relationships"
+          ]
+        },
+        {
+          "gapType": "partial_neighborhood_coverage",
+          "normalizedConcept": "common periprosthetic fracture classifications common periprosthetic fracture classifications",
+          "candidateEntityId": "59967264-9ac6-47e4-8b2c-0837b8328516",
+          "candidateNeighborhood": "complications",
+          "confidence": 0.9,
+          "reasons": [
+            "production_neighborhood_marked_partial"
+          ]
+        },
+        {
+          "gapType": "missing_predicate_family",
+          "normalizedConcept": "common periprosthetic fracture classifications common periprosthetic fracture classifications",
+          "candidateEntityId": "59967264-9ac6-47e4-8b2c-0837b8328516",
+          "candidateNeighborhood": "complications",
+          "confidence": 0.65,
+          "reasons": [
+            "missing:has_classification",
+            "missing:has_grade",
+            "missing:explains_instability",
+            "missing:has_imaging_finding",
+            "missing:requires_imaging",
+            "missing:indicates_treatment",
+            "missing:treated_by",
+            "missing:has_complication"
+          ]
+        },
+        {
+          "gapType": "missing_claim",
+          "normalizedConcept": "common periprosthetic fracture classifications common periprosthetic fracture classifications",
+          "candidateEntityId": "59967264-9ac6-47e4-8b2c-0837b8328516",
+          "candidateNeighborhood": "complications",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_claims"
+          ]
+        },
+        {
+          "gapType": "missing_decision_point",
+          "normalizedConcept": "common periprosthetic fracture classifications common periprosthetic fracture classifications",
+          "candidateEntityId": "59967264-9ac6-47e4-8b2c-0837b8328516",
+          "candidateNeighborhood": "complications",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_decision_points"
+          ]
+        }
+      ],
+      "rootCauseClassification": "filtering removed all eligible evidence",
+      "recommendedRemediation": "Review mode predicate allowlists and production relationship coverage."
+    },
+    {
+      "fixtureId": "cl02",
+      "sanitizedPrompt": "Shoulder pain differential and imaging.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:clinic"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "shoulder pain shoulder pain differential and imaging",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "shoulder pain shoulder pain differential and imaging",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "cl03",
+      "sanitizedPrompt": "Exam maneuvers for ACL injury.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "bypass",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_task_facets",
+        "mode:clinic",
+        "bypass:low_expected_utility"
+      ],
+      "filteringReasons": [],
+      "gapClassifications": [],
+      "rootCauseClassification": "true bypass-policy defect",
+      "recommendedRemediation": "Adjust the smallest deterministic policy rule or correct the fixture label after review."
+    },
+    {
+      "fixtureId": "cl06",
+      "sanitizedPrompt": "Differential for ulnar-sided wrist pain.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_task_facets",
+        "mode:clinic"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "wrist differential for ulnar sided wrist pain",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "wrist differential for ulnar sided wrist pain",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "cl07",
+      "sanitizedPrompt": "Workup for painful total knee arthroplasty.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:clinic"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "painful total knee arthroplasty workup for painful total knee arthroplasty",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "painful total knee arthroplasty workup for painful total knee arthroplasty",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "cl08",
+      "sanitizedPrompt": "Imaging findings in femoroacetabular impingement.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "lightweight_resolve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:clinic"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "imaging findings in femoroacetabular impingement imaging findings in femoroacetabular impingement",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "imaging findings in femoroacetabular impingement imaging findings in femoroacetabular impingement",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "cl09",
+      "sanitizedPrompt": "Treatment escalation for trigger finger.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [
+        {
+          "label": "Trigger Finger",
+          "entityId": "a3557866-6c88-4e23-8f00-4fdb6686714c",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "condition",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "carpal-tunnel-syndrome"
+          ]
+        }
+      ],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_task_facets",
+        "mode:clinic"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "empty_packet_after_filtering",
+          "normalizedConcept": "trigger finger treatment escalation for trigger finger",
+          "candidateEntityId": "a3557866-6c88-4e23-8f00-4fdb6686714c",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.85,
+          "reasons": [
+            "candidate_found_without_allowed_relationships"
+          ]
+        },
+        {
+          "gapType": "partial_neighborhood_coverage",
+          "normalizedConcept": "trigger finger treatment escalation for trigger finger",
+          "candidateEntityId": "a3557866-6c88-4e23-8f00-4fdb6686714c",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.9,
+          "reasons": [
+            "production_neighborhood_marked_partial"
+          ]
+        },
+        {
+          "gapType": "missing_predicate_family",
+          "normalizedConcept": "trigger finger treatment escalation for trigger finger",
+          "candidateEntityId": "a3557866-6c88-4e23-8f00-4fdb6686714c",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.65,
+          "reasons": [
+            "missing:tested_by",
+            "missing:examines",
+            "missing:requires_imaging",
+            "missing:has_imaging_finding",
+            "missing:differential_for",
+            "missing:treated_by",
+            "missing:has_complication"
+          ]
+        },
+        {
+          "gapType": "missing_claim",
+          "normalizedConcept": "trigger finger treatment escalation for trigger finger",
+          "candidateEntityId": "a3557866-6c88-4e23-8f00-4fdb6686714c",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_claims"
+          ]
+        },
+        {
+          "gapType": "missing_decision_point",
+          "normalizedConcept": "trigger finger treatment escalation for trigger finger",
+          "candidateEntityId": "a3557866-6c88-4e23-8f00-4fdb6686714c",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_decision_points"
+          ]
+        }
+      ],
+      "rootCauseClassification": "filtering removed all eligible evidence",
+      "recommendedRemediation": "Review mode predicate allowlists and production relationship coverage."
+    },
+    {
+      "fixtureId": "cl10",
+      "sanitizedPrompt": "Complications after rotator cuff repair.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "bypass",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_task_facets",
+        "mode:clinic",
+        "bypass:low_expected_utility"
+      ],
+      "filteringReasons": [],
+      "gapClassifications": [],
+      "rootCauseClassification": "true bypass-policy defect",
+      "recommendedRemediation": "Adjust the smallest deterministic policy rule or correct the fixture label after review."
+    },
+    {
+      "fixtureId": "co01",
+      "sanitizedPrompt": "Closed ankle fracture consult imaging and temporizing plan.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [
+        {
+          "label": "Ankle Fracture",
+          "entityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "condition",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "osteochondral-lesion-talus"
+          ]
+        }
+      ],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:consult",
+        "patient_specificity_guard"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "empty_packet_after_filtering",
+          "normalizedConcept": "ankle closed ankle fracture consult imaging and temporizing plan",
+          "candidateEntityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "candidateNeighborhood": "osteochondral-lesion-talus",
+          "confidence": 0.85,
+          "reasons": [
+            "candidate_found_without_allowed_relationships"
+          ]
+        },
+        {
+          "gapType": "partial_neighborhood_coverage",
+          "normalizedConcept": "ankle closed ankle fracture consult imaging and temporizing plan",
+          "candidateEntityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "candidateNeighborhood": "osteochondral-lesion-talus",
+          "confidence": 0.9,
+          "reasons": [
+            "production_neighborhood_marked_partial"
+          ]
+        },
+        {
+          "gapType": "missing_predicate_family",
+          "normalizedConcept": "ankle closed ankle fracture consult imaging and temporizing plan",
+          "candidateEntityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "candidateNeighborhood": "osteochondral-lesion-talus",
+          "confidence": 0.65,
+          "reasons": [
+            "missing:involves_anatomy",
+            "missing:at_risk_structure",
+            "missing:requires_imaging",
+            "missing:has_imaging_finding",
+            "missing:treated_by",
+            "missing:has_complication",
+            "missing:indicates_treatment"
+          ]
+        },
+        {
+          "gapType": "missing_claim",
+          "normalizedConcept": "ankle closed ankle fracture consult imaging and temporizing plan",
+          "candidateEntityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "candidateNeighborhood": "osteochondral-lesion-talus",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_claims"
+          ]
+        },
+        {
+          "gapType": "missing_decision_point",
+          "normalizedConcept": "ankle closed ankle fracture consult imaging and temporizing plan",
+          "candidateEntityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "candidateNeighborhood": "osteochondral-lesion-talus",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_decision_points"
+          ]
+        }
+      ],
+      "rootCauseClassification": "filtering removed all eligible evidence",
+      "recommendedRemediation": "Review mode predicate allowlists and production relationship coverage."
+    },
+    {
+      "fixtureId": "co03",
+      "sanitizedPrompt": "Hip fracture consult classification and treatment principles.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:consult",
+        "patient_specificity_guard"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "hip hip fracture consult classification and treatment principles",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "hip hip fracture consult classification and treatment principles",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "co04",
+      "sanitizedPrompt": "Septic arthritis imaging and diagnostic tests.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:consult",
+        "patient_specificity_guard"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "septic arthritis septic arthritis imaging and diagnostic tests",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "septic arthritis septic arthritis imaging and diagnostic tests",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "co06",
+      "sanitizedPrompt": "Periprosthetic femur fracture imaging and classification.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "lightweight_resolve",
+      "topCandidates": [
+        {
+          "label": "Femur",
+          "entityId": "4e4b8e3d-0cb6-4497-bbdc-f4b55103925a",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "anatomy_structure",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "bearing-surface-selection"
+          ]
+        },
+        {
+          "label": "Periprosthetic Femur Fracture",
+          "entityId": "70b1495f-a6df-4d91-8889-ec2b2433e53f",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "condition",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "periprosthetic-femur-fracture"
+          ]
+        }
+      ],
+      "decisionReasons": [
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:consult",
+        "patient_specificity_guard"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "empty_packet_after_filtering",
+          "normalizedConcept": "periprosthetic femur fracture imaging and classification periprosthetic femur fracture imaging and classification",
+          "candidateEntityId": "4e4b8e3d-0cb6-4497-bbdc-f4b55103925a",
+          "candidateNeighborhood": "bearing-surface-selection",
+          "confidence": 0.85,
+          "reasons": [
+            "candidate_found_without_allowed_relationships"
+          ]
+        },
+        {
+          "gapType": "partial_neighborhood_coverage",
+          "normalizedConcept": "periprosthetic femur fracture imaging and classification periprosthetic femur fracture imaging and classification",
+          "candidateEntityId": "4e4b8e3d-0cb6-4497-bbdc-f4b55103925a",
+          "candidateNeighborhood": "bearing-surface-selection",
+          "confidence": 0.9,
+          "reasons": [
+            "production_neighborhood_marked_partial"
+          ]
+        },
+        {
+          "gapType": "missing_predicate_family",
+          "normalizedConcept": "periprosthetic femur fracture imaging and classification periprosthetic femur fracture imaging and classification",
+          "candidateEntityId": "4e4b8e3d-0cb6-4497-bbdc-f4b55103925a",
+          "candidateNeighborhood": "bearing-surface-selection",
+          "confidence": 0.65,
+          "reasons": [
+            "missing:involves_anatomy",
+            "missing:at_risk_structure",
+            "missing:requires_imaging",
+            "missing:has_imaging_finding",
+            "missing:treated_by",
+            "missing:has_complication",
+            "missing:indicates_treatment"
+          ]
+        },
+        {
+          "gapType": "missing_claim",
+          "normalizedConcept": "periprosthetic femur fracture imaging and classification periprosthetic femur fracture imaging and classification",
+          "candidateEntityId": "4e4b8e3d-0cb6-4497-bbdc-f4b55103925a",
+          "candidateNeighborhood": "bearing-surface-selection",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_claims"
+          ]
+        },
+        {
+          "gapType": "missing_decision_point",
+          "normalizedConcept": "periprosthetic femur fracture imaging and classification periprosthetic femur fracture imaging and classification",
+          "candidateEntityId": "4e4b8e3d-0cb6-4497-bbdc-f4b55103925a",
+          "candidateNeighborhood": "bearing-surface-selection",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_decision_points"
+          ]
+        }
+      ],
+      "rootCauseClassification": "filtering removed all eligible evidence",
+      "recommendedRemediation": "Review mode predicate allowlists and production relationship coverage."
+    },
+    {
+      "fixtureId": "co07",
+      "sanitizedPrompt": "Pediatric supracondylar fracture structures at risk.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "lightweight_resolve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:consult",
+        "patient_specificity_guard"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "pediatric supracondylar fracture structures at risk pediatric supracondylar fracture structures at risk",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "pediatric supracondylar fracture structures at risk pediatric supracondylar fracture structures at risk",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "co08",
+      "sanitizedPrompt": "Cauda equina syndrome diagnostic imaging.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "lightweight_resolve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:consult",
+        "patient_specificity_guard"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "cauda equina syndrome diagnostic imaging cauda equina syndrome diagnostic imaging",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "cauda equina syndrome diagnostic imaging cauda equina syndrome diagnostic imaging",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "co09",
+      "sanitizedPrompt": "Postoperative wound drainage after TKA complications.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [
+        {
+          "label": "AIN",
+          "entityId": "af6c70a5-1667-4548-92a7-7bd81c387c57",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "anatomy_structure",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "carpal-tunnel-syndrome"
+          ]
+        }
+      ],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:consult",
+        "patient_specificity_guard"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "empty_packet_after_filtering",
+          "normalizedConcept": "total knee arthroplasty postoperative wound drainage after tka complications",
+          "candidateEntityId": "af6c70a5-1667-4548-92a7-7bd81c387c57",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.85,
+          "reasons": [
+            "candidate_found_without_allowed_relationships"
+          ]
+        },
+        {
+          "gapType": "partial_neighborhood_coverage",
+          "normalizedConcept": "total knee arthroplasty postoperative wound drainage after tka complications",
+          "candidateEntityId": "af6c70a5-1667-4548-92a7-7bd81c387c57",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.9,
+          "reasons": [
+            "production_neighborhood_marked_partial"
+          ]
+        },
+        {
+          "gapType": "missing_predicate_family",
+          "normalizedConcept": "total knee arthroplasty postoperative wound drainage after tka complications",
+          "candidateEntityId": "af6c70a5-1667-4548-92a7-7bd81c387c57",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.65,
+          "reasons": [
+            "missing:involves_anatomy",
+            "missing:at_risk_structure",
+            "missing:requires_imaging",
+            "missing:has_imaging_finding",
+            "missing:treated_by",
+            "missing:has_complication",
+            "missing:indicates_treatment"
+          ]
+        },
+        {
+          "gapType": "missing_claim",
+          "normalizedConcept": "total knee arthroplasty postoperative wound drainage after tka complications",
+          "candidateEntityId": "af6c70a5-1667-4548-92a7-7bd81c387c57",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_claims"
+          ]
+        },
+        {
+          "gapType": "missing_decision_point",
+          "normalizedConcept": "total knee arthroplasty postoperative wound drainage after tka complications",
+          "candidateEntityId": "af6c70a5-1667-4548-92a7-7bd81c387c57",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_decision_points"
+          ]
+        }
+      ],
+      "rootCauseClassification": "true ranking defect",
+      "recommendedRemediation": "Review lexical/alias normalization and candidate score ordering."
+    },
+    {
+      "fixtureId": "co10",
+      "sanitizedPrompt": "Shoulder dislocation anatomy at risk and imaging.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:consult",
+        "patient_specificity_guard"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "shoulder shoulder dislocation anatomy at risk and imaging",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "shoulder shoulder dislocation anatomy at risk and imaging",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "re01",
+      "sanitizedPrompt": "Expand search terms for distal radius fracture fixation.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [
+        {
+          "label": "Distal Radius Fracture",
+          "entityId": "c9095783-a8a3-4062-ab65-eb8605a215ef",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "condition",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "carpal-tunnel-syndrome"
+          ]
+        },
+        {
+          "label": "Distal Radius Fracture",
+          "entityId": "c9095783-a8a3-4062-ab65-eb8605a215ef",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "condition",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "carpal-instability"
+          ]
+        }
+      ],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:research"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "empty_packet_after_filtering",
+          "normalizedConcept": "distal radius expand search terms for distal radius fracture fixation",
+          "candidateEntityId": "c9095783-a8a3-4062-ab65-eb8605a215ef",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.85,
+          "reasons": [
+            "candidate_found_without_allowed_relationships"
+          ]
+        },
+        {
+          "gapType": "partial_neighborhood_coverage",
+          "normalizedConcept": "distal radius expand search terms for distal radius fracture fixation",
+          "candidateEntityId": "c9095783-a8a3-4062-ab65-eb8605a215ef",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.9,
+          "reasons": [
+            "production_neighborhood_marked_partial"
+          ]
+        },
+        {
+          "gapType": "missing_predicate_family",
+          "normalizedConcept": "distal radius expand search terms for distal radius fracture fixation",
+          "candidateEntityId": "c9095783-a8a3-4062-ab65-eb8605a215ef",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.65,
+          "reasons": [
+            "missing:treated_by",
+            "missing:treats",
+            "missing:commonly_confused_with",
+            "missing:differential_for",
+            "missing:uses_implant"
+          ]
+        },
+        {
+          "gapType": "missing_claim",
+          "normalizedConcept": "distal radius expand search terms for distal radius fracture fixation",
+          "candidateEntityId": "c9095783-a8a3-4062-ab65-eb8605a215ef",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_claims"
+          ]
+        },
+        {
+          "gapType": "missing_decision_point",
+          "normalizedConcept": "distal radius expand search terms for distal radius fracture fixation",
+          "candidateEntityId": "c9095783-a8a3-4062-ab65-eb8605a215ef",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_decision_points"
+          ]
+        }
+      ],
+      "rootCauseClassification": "filtering removed all eligible evidence",
+      "recommendedRemediation": "Review mode predicate allowlists and production relationship coverage."
+    },
+    {
+      "fixtureId": "re02",
+      "sanitizedPrompt": "Canonical terms related to total ankle arthroplasty.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "mode:research"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "ankle canonical terms related to total ankle arthroplasty",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "ankle canonical terms related to total ankle arthroplasty",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "re03",
+      "sanitizedPrompt": "Related concepts for periprosthetic joint infection literature search.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "lightweight_resolve",
+      "topCandidates": [
+        {
+          "label": "Periprosthetic Joint Infection",
+          "entityId": "1d4a7b0f-c283-4c01-a624-6414577f14a8",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "condition",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "hip-prosthetic-joint-infection"
+          ]
+        },
+        {
+          "label": "Periprosthetic Joint Infection",
+          "entityId": "1d4a7b0f-c283-4c01-a624-6414577f14a8",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "condition",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "complications"
+          ]
+        }
+      ],
+      "decisionReasons": [
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:research"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "empty_packet_after_filtering",
+          "normalizedConcept": "related concepts for periprosthetic joint infection literature search related concepts for periprosthetic joint infection literature search",
+          "candidateEntityId": "1d4a7b0f-c283-4c01-a624-6414577f14a8",
+          "candidateNeighborhood": "hip-prosthetic-joint-infection",
+          "confidence": 0.85,
+          "reasons": [
+            "candidate_found_without_allowed_relationships"
+          ]
+        },
+        {
+          "gapType": "partial_neighborhood_coverage",
+          "normalizedConcept": "related concepts for periprosthetic joint infection literature search related concepts for periprosthetic joint infection literature search",
+          "candidateEntityId": "1d4a7b0f-c283-4c01-a624-6414577f14a8",
+          "candidateNeighborhood": "hip-prosthetic-joint-infection",
+          "confidence": 0.9,
+          "reasons": [
+            "production_neighborhood_marked_partial"
+          ]
+        },
+        {
+          "gapType": "missing_predicate_family",
+          "normalizedConcept": "related concepts for periprosthetic joint infection literature search related concepts for periprosthetic joint infection literature search",
+          "candidateEntityId": "1d4a7b0f-c283-4c01-a624-6414577f14a8",
+          "candidateNeighborhood": "hip-prosthetic-joint-infection",
+          "confidence": 0.65,
+          "reasons": [
+            "missing:treated_by",
+            "missing:treats",
+            "missing:commonly_confused_with",
+            "missing:differential_for",
+            "missing:uses_implant"
+          ]
+        },
+        {
+          "gapType": "missing_claim",
+          "normalizedConcept": "related concepts for periprosthetic joint infection literature search related concepts for periprosthetic joint infection literature search",
+          "candidateEntityId": "1d4a7b0f-c283-4c01-a624-6414577f14a8",
+          "candidateNeighborhood": "hip-prosthetic-joint-infection",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_claims"
+          ]
+        },
+        {
+          "gapType": "missing_decision_point",
+          "normalizedConcept": "related concepts for periprosthetic joint infection literature search related concepts for periprosthetic joint infection literature search",
+          "candidateEntityId": "1d4a7b0f-c283-4c01-a624-6414577f14a8",
+          "candidateNeighborhood": "hip-prosthetic-joint-infection",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_decision_points"
+          ]
+        }
+      ],
+      "rootCauseClassification": "filtering removed all eligible evidence",
+      "recommendedRemediation": "Review mode predicate allowlists and production relationship coverage."
+    },
+    {
+      "fixtureId": "re04",
+      "sanitizedPrompt": "Normalize search terminology for rotator cuff repair failure.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "bypass",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_task_facets",
+        "mode:research",
+        "bypass:low_expected_utility"
+      ],
+      "filteringReasons": [],
+      "gapClassifications": [],
+      "rootCauseClassification": "true bypass-policy defect",
+      "recommendedRemediation": "Adjust the smallest deterministic policy rule or correct the fixture label after review."
+    },
+    {
+      "fixtureId": "re05",
+      "sanitizedPrompt": "Related conditions for hip instability after THA.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [
+        {
+          "label": "Total Hip Arthroplasty",
+          "entityId": "7dcf3b4a-01d4-469d-92c0-3996fcd122ff",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "procedure",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "complications"
+          ]
+        },
+        {
+          "label": "Total Hip Arthroplasty",
+          "entityId": "7dcf3b4a-01d4-469d-92c0-3996fcd122ff",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "procedure",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "bearing-surface-selection"
+          ]
+        }
+      ],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "mode:research"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "empty_packet_after_filtering",
+          "normalizedConcept": "total hip arthroplasty related conditions for hip instability after tha",
+          "candidateEntityId": "7dcf3b4a-01d4-469d-92c0-3996fcd122ff",
+          "candidateNeighborhood": "complications",
+          "confidence": 0.85,
+          "reasons": [
+            "candidate_found_without_allowed_relationships"
+          ]
+        },
+        {
+          "gapType": "partial_neighborhood_coverage",
+          "normalizedConcept": "total hip arthroplasty related conditions for hip instability after tha",
+          "candidateEntityId": "7dcf3b4a-01d4-469d-92c0-3996fcd122ff",
+          "candidateNeighborhood": "complications",
+          "confidence": 0.9,
+          "reasons": [
+            "production_neighborhood_marked_partial"
+          ]
+        },
+        {
+          "gapType": "missing_predicate_family",
+          "normalizedConcept": "total hip arthroplasty related conditions for hip instability after tha",
+          "candidateEntityId": "7dcf3b4a-01d4-469d-92c0-3996fcd122ff",
+          "candidateNeighborhood": "complications",
+          "confidence": 0.65,
+          "reasons": [
+            "missing:treated_by",
+            "missing:treats",
+            "missing:commonly_confused_with",
+            "missing:differential_for",
+            "missing:uses_implant"
+          ]
+        },
+        {
+          "gapType": "missing_claim",
+          "normalizedConcept": "total hip arthroplasty related conditions for hip instability after tha",
+          "candidateEntityId": "7dcf3b4a-01d4-469d-92c0-3996fcd122ff",
+          "candidateNeighborhood": "complications",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_claims"
+          ]
+        },
+        {
+          "gapType": "missing_decision_point",
+          "normalizedConcept": "total hip arthroplasty related conditions for hip instability after tha",
+          "candidateEntityId": "7dcf3b4a-01d4-469d-92c0-3996fcd122ff",
+          "candidateNeighborhood": "complications",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_decision_points"
+          ]
+        }
+      ],
+      "rootCauseClassification": "true ranking defect",
+      "recommendedRemediation": "Review lexical/alias normalization and candidate score ordering."
+    },
+    {
+      "fixtureId": "am01",
+      "sanitizedPrompt": "What about the nerve risk?",
+      "expectedBehavior": "lightweight_resolve",
+      "actualBehavior": "lightweight_resolve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:or_prep"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "what about the nerve risk what about the nerve risk",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "what about the nerve risk what about the nerve risk",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "am02",
+      "sanitizedPrompt": "And the classification?",
+      "expectedBehavior": "lightweight_resolve",
+      "actualBehavior": "lightweight_resolve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:oite"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "and the classification and the classification",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "and the classification and the classification",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "am03",
+      "sanitizedPrompt": "What imaging next?",
+      "expectedBehavior": "lightweight_resolve",
+      "actualBehavior": "lightweight_resolve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:consult",
+        "patient_specificity_guard"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "what imaging next what imaging next",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "what imaging next what imaging next",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "am04",
+      "sanitizedPrompt": "What is the bailout?",
+      "expectedBehavior": "lightweight_resolve",
+      "actualBehavior": "bypass",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_task_facets",
+        "mode:or_prep",
+        "bypass:low_expected_utility"
+      ],
+      "filteringReasons": [],
+      "gapClassifications": [],
+      "rootCauseClassification": "true bypass-policy defect",
+      "recommendedRemediation": "Adjust the smallest deterministic policy rule or correct the fixture label after review."
+    },
+    {
+      "fixtureId": "am06",
+      "sanitizedPrompt": "Why is that unstable?",
+      "expectedBehavior": "lightweight_resolve",
+      "actualBehavior": "bypass",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_task_facets",
+        "mode:oite",
+        "bypass:low_expected_utility"
+      ],
+      "filteringReasons": [],
+      "gapClassifications": [],
+      "rootCauseClassification": "true bypass-policy defect",
+      "recommendedRemediation": "Adjust the smallest deterministic policy rule or correct the fixture label after review."
+    },
+    {
+      "fixtureId": "am07",
+      "sanitizedPrompt": "What would you tell the attending?",
+      "expectedBehavior": "lightweight_resolve",
+      "actualBehavior": "bypass",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_task_facets",
+        "mode:consult",
+        "patient_specificity_guard",
+        "bypass:low_expected_utility"
+      ],
+      "filteringReasons": [],
+      "gapClassifications": [],
+      "rootCauseClassification": "true bypass-policy defect",
+      "recommendedRemediation": "Adjust the smallest deterministic policy rule or correct the fixture label after review."
+    },
+    {
+      "fixtureId": "am08",
+      "sanitizedPrompt": "Which implant?",
+      "expectedBehavior": "lightweight_resolve",
+      "actualBehavior": "lightweight_resolve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:or_prep"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "which implant which implant",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "which implant which implant",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "am09",
+      "sanitizedPrompt": "What is the exam trap?",
+      "expectedBehavior": "lightweight_resolve",
+      "actualBehavior": "bypass",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_task_facets",
+        "mode:oite",
+        "bypass:low_expected_utility"
+      ],
+      "filteringReasons": [],
+      "gapClassifications": [],
+      "rootCauseClassification": "true bypass-policy defect",
+      "recommendedRemediation": "Adjust the smallest deterministic policy rule or correct the fixture label after review."
+    },
+    {
+      "fixtureId": "am10",
+      "sanitizedPrompt": "And rehab?",
+      "expectedBehavior": "lightweight_resolve",
+      "actualBehavior": "bypass",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_language",
+        "bypass:low_expected_utility"
+      ],
+      "filteringReasons": [],
+      "gapClassifications": [],
+      "rootCauseClassification": "true bypass-policy defect",
+      "recommendedRemediation": "Adjust the smallest deterministic policy rule or correct the fixture label after review."
+    },
+    {
+      "fixtureId": "gp01",
+      "sanitizedPrompt": "Classification-linked decision point for a novel fracture subtype.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "lightweight_resolve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:oite"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "classification linked decision point for a novel fracture subtype classification linked decision point for a novel fracture subtype",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "classification linked decision point for a novel fracture subtype classification linked decision point for a novel fracture subtype",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing KG coverage",
+      "recommendedRemediation": "Route the observed concept to the governed KG growth queue; do not mutate canonical content automatically."
+    },
+    {
+      "fixtureId": "gp02",
+      "sanitizedPrompt": "Attending-specific bailout relationship for an unmodeled approach.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:or_prep"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "unmodeled approach attending specific bailout relationship for an unmodeled approach",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "unmodeled approach attending specific bailout relationship for an unmodeled approach",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing KG coverage",
+      "recommendedRemediation": "Route the observed concept to the governed KG growth queue; do not mutate canonical content automatically."
+    },
+    {
+      "fixtureId": "gp03",
+      "sanitizedPrompt": "Named postoperative protocol not present in the graph.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "bypass",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_task_facets",
+        "mode:clinic",
+        "bypass:low_expected_utility"
+      ],
+      "filteringReasons": [],
+      "gapClassifications": [],
+      "rootCauseClassification": "true bypass-policy defect",
+      "recommendedRemediation": "Adjust the smallest deterministic policy rule or correct the fixture label after review."
+    },
+    {
+      "fixtureId": "gp04",
+      "sanitizedPrompt": "Rare implant alias ZX-unknown plate.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "lightweight_resolve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:or_prep"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "rare implant alias zx unknown plate rare implant alias zx unknown plate",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "rare implant alias zx unknown plate rare implant alias zx unknown plate",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing KG coverage",
+      "recommendedRemediation": "Route the observed concept to the governed KG growth queue; do not mutate canonical content automatically."
+    },
+    {
+      "fixtureId": "gp05",
+      "sanitizedPrompt": "Decision threshold absent for obscure instability concept.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "bypass",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_task_facets",
+        "mode:oite",
+        "bypass:low_expected_utility"
+      ],
+      "filteringReasons": [],
+      "gapClassifications": [],
+      "rootCauseClassification": "true bypass-policy defect",
+      "recommendedRemediation": "Adjust the smallest deterministic policy rule or correct the fixture label after review."
+    },
+    {
+      "fixtureId": "hr01",
+      "sanitizedPrompt": "Use any excluded high-risk object for this consult.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "bypass",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_task_facets",
+        "mode:consult",
+        "patient_specificity_guard",
+        "bypass:low_expected_utility"
+      ],
+      "filteringReasons": [],
+      "gapClassifications": [],
+      "rootCauseClassification": "true bypass-policy defect",
+      "recommendedRemediation": "Adjust the smallest deterministic policy rule or correct the fixture label after review."
+    },
+    {
+      "fixtureId": "hr02",
+      "sanitizedPrompt": "Return inactive deprecated fracture entities.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "lightweight_resolve",
+      "topCandidates": [],
+      "decisionReasons": [
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:oite"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "missing_entity",
+          "normalizedConcept": "return inactive deprecated fracture entities return inactive deprecated fracture entities",
+          "confidence": 0.8,
+          "reasons": [
+            "graph_eligible_query_without_candidate"
+          ]
+        },
+        {
+          "gapType": "missing_neighborhood",
+          "normalizedConcept": "return inactive deprecated fracture entities return inactive deprecated fracture entities",
+          "confidence": 0.55,
+          "reasons": [
+            "no_candidate_neighborhood"
+          ]
+        }
+      ],
+      "rootCauseClassification": "missing alias or entity normalization",
+      "recommendedRemediation": "Review a governed alias proposal for an existing production entity."
+    },
+    {
+      "fixtureId": "hr03",
+      "sanitizedPrompt": "Show graph claims for ankle fracture.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "retrieve",
+      "topCandidates": [
+        {
+          "label": "Ankle Fracture",
+          "entityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "condition",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "osteochondral-lesion-talus"
+          ]
+        }
+      ],
+      "decisionReasons": [
+        "detected_clinical_entity",
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:oite"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "empty_packet_after_filtering",
+          "normalizedConcept": "ankle show graph claims for ankle fracture",
+          "candidateEntityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "candidateNeighborhood": "osteochondral-lesion-talus",
+          "confidence": 0.85,
+          "reasons": [
+            "candidate_found_without_allowed_relationships"
+          ]
+        },
+        {
+          "gapType": "partial_neighborhood_coverage",
+          "normalizedConcept": "ankle show graph claims for ankle fracture",
+          "candidateEntityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "candidateNeighborhood": "osteochondral-lesion-talus",
+          "confidence": 0.9,
+          "reasons": [
+            "production_neighborhood_marked_partial"
+          ]
+        },
+        {
+          "gapType": "missing_predicate_family",
+          "normalizedConcept": "ankle show graph claims for ankle fracture",
+          "candidateEntityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "candidateNeighborhood": "osteochondral-lesion-talus",
+          "confidence": 0.65,
+          "reasons": [
+            "missing:has_classification",
+            "missing:has_grade",
+            "missing:explains_instability",
+            "missing:has_imaging_finding",
+            "missing:requires_imaging",
+            "missing:indicates_treatment",
+            "missing:treated_by",
+            "missing:has_complication"
+          ]
+        },
+        {
+          "gapType": "missing_claim",
+          "normalizedConcept": "ankle show graph claims for ankle fracture",
+          "candidateEntityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "candidateNeighborhood": "osteochondral-lesion-talus",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_claims"
+          ]
+        },
+        {
+          "gapType": "missing_decision_point",
+          "normalizedConcept": "ankle show graph claims for ankle fracture",
+          "candidateEntityId": "def42a4b-0799-4f21-8e08-64f0919dfbb7",
+          "candidateNeighborhood": "osteochondral-lesion-talus",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_decision_points"
+          ]
+        }
+      ],
+      "rootCauseClassification": "filtering removed all eligible evidence",
+      "recommendedRemediation": "Review mode predicate allowlists and production relationship coverage."
+    },
+    {
+      "fixtureId": "hr05",
+      "sanitizedPrompt": "Give patient-specific certainty for an emergency fracture.",
+      "expectedBehavior": "retrieve",
+      "actualBehavior": "lightweight_resolve",
+      "topCandidates": [
+        {
+          "label": "AIN",
+          "entityId": "af6c70a5-1667-4548-92a7-7bd81c387c57",
+          "modeScore": 1,
+          "aliasScore": 0,
+          "entityType": "anatomy_structure",
+          "finalScore": 0.759,
+          "lexicalScore": 0.72,
+          "sessionScore": 0,
+          "coverageScore": 0.7,
+          "neighborhoodSlugs": [
+            "carpal-tunnel-syndrome"
+          ]
+        }
+      ],
+      "decisionReasons": [
+        "clinical_language",
+        "clinical_task_facets",
+        "mode:consult",
+        "patient_specificity_guard"
+      ],
+      "filteringReasons": [
+        "Claims and decision points are excluded from shadow retrieval.",
+        "High-risk and production-excluded objects are excluded."
+      ],
+      "gapClassifications": [
+        {
+          "gapType": "empty_packet_after_filtering",
+          "normalizedConcept": "give patient specific certainty for an emergency fracture give patient specific certainty for an emergency fracture",
+          "candidateEntityId": "af6c70a5-1667-4548-92a7-7bd81c387c57",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.85,
+          "reasons": [
+            "candidate_found_without_allowed_relationships"
+          ]
+        },
+        {
+          "gapType": "partial_neighborhood_coverage",
+          "normalizedConcept": "give patient specific certainty for an emergency fracture give patient specific certainty for an emergency fracture",
+          "candidateEntityId": "af6c70a5-1667-4548-92a7-7bd81c387c57",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.9,
+          "reasons": [
+            "production_neighborhood_marked_partial"
+          ]
+        },
+        {
+          "gapType": "missing_predicate_family",
+          "normalizedConcept": "give patient specific certainty for an emergency fracture give patient specific certainty for an emergency fracture",
+          "candidateEntityId": "af6c70a5-1667-4548-92a7-7bd81c387c57",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.65,
+          "reasons": [
+            "missing:involves_anatomy",
+            "missing:at_risk_structure",
+            "missing:requires_imaging",
+            "missing:has_imaging_finding",
+            "missing:treated_by",
+            "missing:has_complication",
+            "missing:indicates_treatment"
+          ]
+        },
+        {
+          "gapType": "missing_claim",
+          "normalizedConcept": "give patient specific certainty for an emergency fracture give patient specific certainty for an emergency fracture",
+          "candidateEntityId": "af6c70a5-1667-4548-92a7-7bd81c387c57",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_claims"
+          ]
+        },
+        {
+          "gapType": "missing_decision_point",
+          "normalizedConcept": "give patient specific certainty for an emergency fracture give patient specific certainty for an emergency fracture",
+          "candidateEntityId": "af6c70a5-1667-4548-92a7-7bd81c387c57",
+          "candidateNeighborhood": "carpal-tunnel-syndrome",
+          "confidence": 0.5,
+          "reasons": [
+            "active_release_has_zero_decision_points"
+          ]
+        }
+      ],
+      "rootCauseClassification": "true ranking defect",
+      "recommendedRemediation": "Review lexical/alias normalization and candidate score ordering."
+    }
+  ]
+}

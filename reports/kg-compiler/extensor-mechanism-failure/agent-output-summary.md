@@ -1,6 +1,6 @@
 # Agent Output Summary
 
-Generated: 2026-07-05T23:15:39.263Z
+Generated: 2026-07-16T02:40:53.954Z
 Topic: **extensor-mechanism-failure**
 Framework: **1.0.0**
 
@@ -13,8 +13,8 @@ Framework: **1.0.0**
 | Partial | 0 |
 | Failed | 0 |
 | Skipped | 0 |
-| Unique proposals | 87 |
-| Total proposals emitted | 137 |
+| Unique proposals | 88 |
+| Total proposals emitted | 98 |
 
 ## Parallel layers
 
@@ -29,16 +29,16 @@ Framework: **1.0.0**
 
 ## Per-agent results
 
-- **clinical-entity-builder** (work-clinical-entity-builder): completed, 34 proposal(s), 2ms
-- **asset-linker** (work-asset-linker): completed, 0 proposal(s), 0ms
-- **relationship-builder** (work-relationship-builder): completed, 7 proposal(s), 0ms
-- **claim-builder** (work-claim-builder): completed, 8 proposal(s), 4ms
+- **clinical-entity-builder** (work-clinical-entity-builder): completed, 0 proposal(s), 1ms
+- **asset-linker** (work-asset-linker): completed, 0 proposal(s), 1ms
+- **relationship-builder** (work-relationship-builder): completed, 0 proposal(s), 0ms
+- **claim-builder** (work-claim-builder): completed, 9 proposal(s), 5ms
 - **decision-point-builder** (work-decision-point-builder): completed, 1 proposal(s), 1ms
 - **metadata-builder** (work-metadata-builder): completed, 0 proposal(s), 1ms
 - **duplicate-detector** (work-duplicate-detector): completed, 0 proposal(s), 0ms
 - **quality-scorer** (work-quality-scorer): completed, 0 proposal(s), 0ms
 - **conflict-resolver** (work-conflict-resolver): completed, 0 proposal(s), 0ms
-- **review-assistant** (work-review-assistant): completed, 87 proposal(s), 2ms
+- **review-assistant** (work-review-assistant): completed, 88 proposal(s), 3ms
 - **publication-validator** (work-publication-validator): completed, 0 proposal(s), 1ms
 
 ## Constraints

@@ -1,20 +1,83 @@
 {
-  "generatedAt": "2026-07-05T22:49:07.654Z",
+  "generatedAt": "2026-07-16T02:54:04.822Z",
   "frameworkVersion": "1.0.0",
   "topicKey": "periprosthetic-femur-fracture",
   "pilotKey": "periprosthetic-femur-fracture-neighborhood",
   "assignments": [
     {
+      "workItemId": "work-relationship-builder",
+      "agentId": "relationship-builder",
+      "agentName": "Relationship Builder",
+      "type": "gap_resolution",
+      "gapCount": 12,
+      "gapIds": [
+        "gap-rel-1",
+        "gap-rel-2",
+        "gap-rel-3",
+        "gap-rel-10",
+        "gap-rel-11",
+        "gap-rel-12",
+        "gap-rel-13",
+        "gap-rel-14",
+        "gap-rel-15",
+        "gap-rel-25",
+        "gap-rel-26",
+        "gap-proc-approach-31"
+      ],
+      "gapKinds": [
+        "missing_relationship"
+      ],
+      "dependencies": [
+        "work-clinical-entity-builder",
+        "work-anatomy-builder"
+      ],
+      "estimatedConfidence": 0.9083333333333333,
+      "requiredReviewer": "attending",
+      "matchReasons": [
+        "handles_gap_kind:missing_relationship"
+      ]
+    },
+    {
+      "workItemId": "work-claim-builder",
+      "agentId": "claim-builder",
+      "agentName": "Claim Builder",
+      "type": "gap_resolution",
+      "gapCount": 9,
+      "gapIds": [
+        "gap-claim-4",
+        "gap-claim-type-5",
+        "gap-claim-type-6",
+        "gap-claim-16",
+        "gap-claim-type-17",
+        "gap-claim-type-18",
+        "gap-claim-type-19",
+        "gap-claim-type-20",
+        "gap-biomech-claim-30"
+      ],
+      "gapKinds": [
+        "missing_claim"
+      ],
+      "dependencies": [
+        "work-relationship-builder"
+      ],
+      "estimatedConfidence": 0.7866666666666666,
+      "requiredReviewer": "clinical_expert",
+      "matchReasons": [
+        "handles_gap_kind:missing_claim"
+      ]
+    },
+    {
       "workItemId": "work-clinical-entity-builder",
       "agentId": "clinical-entity-builder",
       "agentName": "Clinical Entity Builder",
       "type": "gap_resolution",
-      "gapCount": 4,
+      "gapCount": 5,
       "gapIds": [
-        "gap-entity-neighbor-1",
-        "gap-entity-neighbor-2",
-        "gap-entity-neighbor-3",
-        "gap-entity-neighbor-20"
+        "gap-entity-neighbor-7",
+        "gap-entity-neighbor-8",
+        "gap-entity-neighbor-9",
+        "gap-entity-neighbor-24",
+        "gap-entity-neighbor-27"
       ],
       "gapKinds": [
         "missing_entity"
@@ -28,69 +91,15 @@
       ]
     },
     {
-      "workItemId": "work-relationship-builder",
-      "agentId": "relationship-builder",
-      "agentName": "Relationship Builder",
-      "type": "gap_resolution",
-      "gapCount": 8,
-      "gapIds": [
-        "gap-rel-4",
-        "gap-rel-5",
-        "gap-rel-6",
-        "gap-rel-7",
-        "gap-rel-8",
-        "gap-rel-9",
-        "gap-rel-10",
-        "gap-rel-11"
-      ],
-      "gapKinds": [
-        "missing_relationship"
-      ],
-      "dependencies": [
-        "work-clinical-entity-builder",
-        "work-anatomy-builder"
-      ],
-      "estimatedConfidence": 0.92,
-      "requiredReviewer": "attending",
-      "matchReasons": [
-        "handles_gap_kind:missing_relationship"
-      ]
-    },
-    {
-      "workItemId": "work-claim-builder",
-      "agentId": "claim-builder",
-      "agentName": "Claim Builder",
-      "type": "gap_resolution",
-      "gapCount": 5,
-      "gapIds": [
-        "gap-claim-12",
-        "gap-claim-type-13",
-        "gap-claim-type-14",
-        "gap-claim-type-15",
-        "gap-claim-type-16"
-      ],
-      "gapKinds": [
-        "missing_claim"
-      ],
-      "dependencies": [
-        "work-relationship-builder"
-      ],
-      "estimatedConfidence": 0.776,
-      "requiredReviewer": "none",
-      "matchReasons": [
-        "handles_gap_kind:missing_claim"
-      ]
-    },
-    {
       "workItemId": "work-decision-point-builder",
       "agentId": "decision-point-builder",
       "agentName": "Decision Point Builder",
       "type": "gap_resolution",
       "gapCount": 3,
       "gapIds": [
-        "gap-dp-17",
-        "gap-dp-pattern-18",
-        "gap-dp-pattern-19"
+        "gap-dp-21",
+        "gap-dp-pattern-22",
+        "gap-dp-pattern-23"
       ],
       "gapKinds": [
         "missing_decision_point"
@@ -111,8 +120,8 @@
       "type": "gap_resolution",
       "gapCount": 2,
       "gapIds": [
-        "gap-asset-card-21",
-        "gap-asset-question-22"
+        "gap-asset-card-28",
+        "gap-asset-question-29"
       ],
       "gapKinds": [
         "missing_asset_link"

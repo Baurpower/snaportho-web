@@ -1,33 +1,33 @@
 # Reviewer Burden Estimate
 
-Generated: 2026-07-05T22:53:45.346Z
+Generated: 2026-07-16T02:32:31.873Z
 
 ## Summary
 
 | Metric | Value |
 |--------|------:|
-| Human review rate | 14% |
-| Auto-approved rate | 86% |
-| Attending review items | 10 |
-| Curator review items | 11 |
+| Human review rate | 12.6% |
+| Auto-approved rate | 87.4% |
+| Attending review items | 9 |
+| Curator review items | 10 |
 | Rejected / conflict signals | 0 |
 | Gap-resolution work items | 6 |
-| Estimated burden band | **high** |
+| Estimated burden band | **medium** |
 
 ## Route distribution
 
 | Route | Count |
 |-------|------:|
-| AUTO_APPROVE | 74 |
+| AUTO_APPROVE | 76 |
 | SAFE_REVIEW | 2 |
-| EXPERT_REVIEW | 10 |
+| EXPERT_REVIEW | 9 |
 | REJECT | 0 |
 
 ## Agent work plan
 
-- **Clinical Entity Builder** (clinical-entity-builder): 2 gap(s), reviewer=clinical_expert
-- **Relationship Builder** (relationship-builder): 7 gap(s), reviewer=attending
-- **Claim Builder** (claim-builder): 5 gap(s), reviewer=none
+- **Relationship Builder** (relationship-builder): 10 gap(s), reviewer=attending
+- **Clinical Entity Builder** (clinical-entity-builder): 3 gap(s), reviewer=clinical_expert
+- **Claim Builder** (claim-builder): 9 gap(s), reviewer=clinical_expert
 - **Decision Point Builder** (decision-point-builder): 3 gap(s), reviewer=attending
 - **Metadata Builder** (metadata-builder): 1 gap(s), reviewer=none
 - **Asset Linker** (asset-linker): 2 gap(s), reviewer=none

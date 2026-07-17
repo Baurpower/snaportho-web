@@ -1,0 +1,2725 @@
+{
+  "operation": "apply",
+  "success": true,
+  "partialFailure": false,
+  "topicKey": "carpal-tunnel-syndrome",
+  "pilotKey": "carpal-tunnel-syndrome-neighborhood",
+  "batchKey": "cts-0c2b2fa3ef5af8aa",
+  "dryRun": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "git": {
+    "commit": "fc173ffb9852a994f05f101397cd87a610df0c3c",
+    "dirty": true
+  },
+  "proposalManifestHash": "4f0570bc57425c827146a46033753908a5da9da343216056705940e252482f38",
+  "proposalPacketHash": "d3aae9a48db4bcbd84946818e2b5f10c60e16f5e0978ef6e0b9c9108a764324a",
+  "selectedProposals": [
+    {
+      "id": "1cec2868-c6b4-46b9-9761-b1d81ae05b8b",
+      "fingerprint": "create|anatomy_structure|a1-pulley",
+      "priorState": "approved"
+    },
+    {
+      "id": "02d868b2-cb50-421f-b108-08b191e6293b",
+      "fingerprint": "create|anatomy_structure|a2-pulley",
+      "priorState": "approved"
+    },
+    {
+      "id": "c39b0556-4a2d-4521-89a8-b58efa153416",
+      "fingerprint": "create|anatomy_structure|a3-pulley",
+      "priorState": "approved"
+    },
+    {
+      "id": "349ece16-a864-4066-93ec-789ab941b479",
+      "fingerprint": "create|anatomy_structure|a4-pulley",
+      "priorState": "approved"
+    },
+    {
+      "id": "5c466f97-e8e8-4ab8-be06-87aa61742a1c",
+      "fingerprint": "create|anatomy_structure|a5-pulley",
+      "priorState": "approved"
+    },
+    {
+      "id": "1e4e42ca-4ee6-406c-9bcb-42613b4d59ac",
+      "fingerprint": "create|anatomy_structure|abductor-pollicis-brevis",
+      "priorState": "approved"
+    },
+    {
+      "id": "f3b4cf1d-4296-4f1a-8cff-00ce02b15d66",
+      "fingerprint": "create|anatomy_structure|ain",
+      "priorState": "approved"
+    },
+    {
+      "id": "e78b7f22-14c8-42fb-9b1c-48b222f32f4b",
+      "fingerprint": "create|anatomy_structure|apl",
+      "priorState": "approved"
+    },
+    {
+      "id": "089e3c4f-89b1-4815-a640-8133815ac2ae",
+      "fingerprint": "create|anatomy_structure|c1-pulley",
+      "priorState": "approved"
+    },
+    {
+      "id": "2c1b094e-1197-465a-80f5-af4b2bb52c76",
+      "fingerprint": "create|anatomy_structure|c2-pulley",
+      "priorState": "approved"
+    },
+    {
+      "id": "90afb00a-aa55-478c-bac6-6e20a1c99b73",
+      "fingerprint": "create|anatomy_structure|c3-pulley",
+      "priorState": "approved"
+    },
+    {
+      "id": "c4d0ed4c-6229-407d-89ce-3aa85219848c",
+      "fingerprint": "create|anatomy_structure|capitate",
+      "priorState": "approved"
+    },
+    {
+      "id": "a49d7d65-82d8-41a3-bb20-cb3a3f828f99",
+      "fingerprint": "create|anatomy_structure|carpal-tunnel",
+      "priorState": "approved"
+    },
+    {
+      "id": "dc09d236-87c2-483a-ad05-4265ca7f9c91",
+      "fingerprint": "create|treatment_principle|carpal-tunnel-release-postoperative-protocol",
+      "priorState": "approved"
+    },
+    {
+      "id": "383c75a0-9b30-4c24-af33-62d421375cea",
+      "fingerprint": "create|condition|carpal-tunnel-syndrome",
+      "priorState": "applied"
+    },
+    {
+      "id": "49d2ea45-6d5a-40ba-b100-b84ccce01124",
+      "fingerprint": "create|anatomy_structure|cmc-joint",
+      "priorState": "applied"
+    },
+    {
+      "id": "bc3c280c-f6d2-4759-8fbc-2e78b9c9b50a",
+      "fingerprint": "create|anatomy_structure|collateral-ligaments",
+      "priorState": "approved"
+    },
+    {
+      "id": "943d319e-27ef-45aa-810c-c1a23493524c",
+      "fingerprint": "create|diagnostic_test|electrodiagnostic-testing-carpal-tunnel-syndrome",
+      "priorState": "approved"
+    },
+    {
+      "id": "d2a5d4ad-fef1-4967-b5f6-c1d318a79991",
+      "fingerprint": "create|complication|incomplete-transverse-carpal-ligament-release",
+      "priorState": "approved"
+    },
+    {
+      "id": "171c23c6-9884-4520-b397-e0959affd8d0",
+      "fingerprint": "create|anatomy_structure|interosseous-membrane",
+      "priorState": "approved"
+    },
+    {
+      "id": "370a3cf7-8bc0-4a24-bddd-bfbf6bc0cab4",
+      "fingerprint": "create|anatomy_structure|lunate",
+      "priorState": "approved"
+    },
+    {
+      "id": "b69d3aa7-0cf7-46a2-adc8-0792b6f7cee4",
+      "fingerprint": "create|anatomy_structure|lunotriquetral-ligament",
+      "priorState": "approved"
+    },
+    {
+      "id": "7d759f90-8f93-4fb0-bcd9-5404e2481ce0",
+      "fingerprint": "create|anatomy_structure|mcp-joint",
+      "priorState": "approved"
+    },
+    {
+      "id": "f833431e-1886-4254-90f8-2581a1a77ba3",
+      "fingerprint": "create|anatomy_structure|median-nerve",
+      "priorState": "applied"
+    },
+    {
+      "id": "1bfcb3cf-854c-419a-b2a1-42c666685654",
+      "fingerprint": "create|diagnostic_test|nerve-conduction-study",
+      "priorState": "approved"
+    },
+    {
+      "id": "1de55aaa-7df2-461d-be07-4c39271a3887",
+      "fingerprint": "create|procedure|open-carpal-tunnel-release",
+      "priorState": "approved"
+    },
+    {
+      "id": "7c413be3-1fb9-4114-9476-827cb7c0d6d2",
+      "fingerprint": "create|exam_maneuver|phalen-test",
+      "priorState": "approved"
+    },
+    {
+      "id": "42457dc0-2f2c-4451-9f2f-0eb22bcb2f84",
+      "fingerprint": "create|anatomy_structure|recurrent-motor-branch-median-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "067d26f8-74a1-426d-a777-ccc697d78742",
+      "fingerprint": "create|condition|trigger-finger",
+      "priorState": "approved"
+    },
+    {
+      "id": "705123f2-2570-4cbb-97be-87cd9f326d81",
+      "fingerprint": "create|anatomy_structure|triquetrum",
+      "priorState": "approved"
+    },
+    {
+      "id": "f278a5c6-d8e1-4f8c-9076-e0fb21e98b72",
+      "fingerprint": "create|anatomy_structure|ulna",
+      "priorState": "approved"
+    },
+    {
+      "id": "2a332c6e-2cbb-4d46-a451-030a6b6c4c21",
+      "fingerprint": "create|anatomy_structure|ulnar-artery",
+      "priorState": "applied"
+    },
+    {
+      "id": "15037a48-e4a8-4e3d-aa2b-4b1c50485250",
+      "fingerprint": "create|anatomy_structure|ulnar-nerve",
+      "priorState": "applied"
+    },
+    {
+      "id": "134ffcd0-a961-4350-82ea-4c4610461d8c",
+      "fingerprint": "create|anatomy_structure|volar-plate",
+      "priorState": "approved"
+    },
+    {
+      "id": "86976f1e-d563-421f-b087-4a91f220d15a",
+      "fingerprint": "rel|a1-pulley|part_of|flexor-pulley-system",
+      "priorState": "approved"
+    },
+    {
+      "id": "30ec2fc4-5d9e-46f0-a567-bb134a629d37",
+      "fingerprint": "rel|a2-pulley|part_of|flexor-pulley-system",
+      "priorState": "approved"
+    },
+    {
+      "id": "891bebd1-0de9-489f-87e1-0b90dccfccff",
+      "fingerprint": "rel|a3-pulley|part_of|flexor-pulley-system",
+      "priorState": "approved"
+    },
+    {
+      "id": "8aa67d3e-df0b-42f6-a4cc-f0428f356a43",
+      "fingerprint": "rel|a4-pulley|part_of|flexor-pulley-system",
+      "priorState": "approved"
+    },
+    {
+      "id": "f9795a72-30a9-48d6-a2cb-93c4bc64710a",
+      "fingerprint": "rel|a5-pulley|part_of|flexor-pulley-system",
+      "priorState": "approved"
+    },
+    {
+      "id": "4a00ca37-4785-408c-a86b-7451b2eb4dc5",
+      "fingerprint": "rel|ain|part_of|median-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "a25e5221-cad9-4e73-a05e-53cb9496d901",
+      "fingerprint": "rel|c1-pulley|part_of|flexor-pulley-system",
+      "priorState": "approved"
+    },
+    {
+      "id": "f4d94df6-57f2-4579-a800-018d108776a3",
+      "fingerprint": "rel|c2-pulley|part_of|flexor-pulley-system",
+      "priorState": "approved"
+    },
+    {
+      "id": "3915cb58-1935-4e42-b475-ab714bf2ab75",
+      "fingerprint": "create|procedure|corticosteroid-injection-for-cts",
+      "priorState": "approved"
+    },
+    {
+      "id": "a74bb9e7-a33a-44dc-b70b-db07c65367ea",
+      "fingerprint": "create|anatomy_structure|deep-palmar-arch",
+      "priorState": "approved"
+    },
+    {
+      "id": "7a7964c1-4e53-47aa-9830-c4cd39e080f9",
+      "fingerprint": "create|anatomy_structure|digital-nerves",
+      "priorState": "applied"
+    },
+    {
+      "id": "0ceb2508-f388-4028-979f-95936e71f937",
+      "fingerprint": "create|anatomy_structure|dip-joint",
+      "priorState": "applied"
+    },
+    {
+      "id": "99f0e668-f1b0-441a-8d1f-aeea21af4590",
+      "fingerprint": "create|anatomy_structure|distal-phalanx",
+      "priorState": "approved"
+    },
+    {
+      "id": "bee33ca8-fa03-4b76-955c-1ec48fa7c9e2",
+      "fingerprint": "create|anatomy_structure|distal-radius",
+      "priorState": "approved"
+    },
+    {
+      "id": "afaee7f6-a0ad-46fd-bdff-0b3fc4bd2bea",
+      "fingerprint": "create|condition|distal-radius-fracture",
+      "priorState": "applied"
+    },
+    {
+      "id": "ed2613fa-e52c-4643-bad9-10c1cde5cdf4",
+      "fingerprint": "create|anatomy_structure|distal-ulna",
+      "priorState": "approved"
+    },
+    {
+      "id": "4f4f3e3c-e5cb-4bc9-87bc-3a455c8f2a4d",
+      "fingerprint": "create|anatomy_structure|druj",
+      "priorState": "approved"
+    },
+    {
+      "id": "5c633eb1-e3b4-4764-901f-fd3ee218a5b7",
+      "fingerprint": "create|surgical_approach|endoscopic-carpal-tunnel-approach",
+      "priorState": "approved"
+    },
+    {
+      "id": "6f15a0e2-998c-4466-8da0-7f6215b78449",
+      "fingerprint": "create|condition|median-nerve-compression",
+      "priorState": "approved"
+    },
+    {
+      "id": "ff5a166e-1b56-49dd-83da-3392880a4836",
+      "fingerprint": "create|anatomy_structure|middle-phalanx",
+      "priorState": "approved"
+    },
+    {
+      "id": "6089b8c4-dc70-4294-aa63-642781eeb9e2",
+      "fingerprint": "create|treatment_principle|neutral-wrist-night-orthosis-for-cts",
+      "priorState": "approved"
+    },
+    {
+      "id": "be4c4ddc-236e-4c9b-902b-56915c61dcf5",
+      "fingerprint": "create|anatomy_structure|palmar-cutaneous-branch-median-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "13657912-1c01-4773-b9cf-94b146c63b9c",
+      "fingerprint": "create|complication|pillar-pain-after-carpal-tunnel-release",
+      "priorState": "approved"
+    },
+    {
+      "id": "4308dac3-124b-4113-8081-04dc0098209e",
+      "fingerprint": "create|anatomy_structure|pin",
+      "priorState": "approved"
+    },
+    {
+      "id": "850faf4f-e630-4805-9868-e8bc5e6e98fe",
+      "fingerprint": "create|anatomy_structure|pip-joint",
+      "priorState": "applied"
+    },
+    {
+      "id": "3ba0c432-17f9-467a-9e1f-e9ccfaaabea3",
+      "fingerprint": "create|anatomy_structure|pisiform",
+      "priorState": "approved"
+    },
+    {
+      "id": "dca6c6cf-9656-4d20-b512-e59dcc678de8",
+      "fingerprint": "create|anatomy_structure|proximal-phalanx",
+      "priorState": "approved"
+    },
+    {
+      "id": "7545590b-0b83-4067-84dc-bd955288c22f",
+      "fingerprint": "create|anatomy_structure|pruj",
+      "priorState": "approved"
+    },
+    {
+      "id": "a6606f87-fb7e-45df-bbb4-d929493b3a7d",
+      "fingerprint": "create|anatomy_structure|radial-artery",
+      "priorState": "applied"
+    },
+    {
+      "id": "c0bcda8c-718f-4709-a3f7-a9ce8a39e65c",
+      "fingerprint": "create|anatomy_structure|radial-nerve",
+      "priorState": "applied"
+    },
+    {
+      "id": "21cdf43e-418f-4a74-885c-d9ce8855104f",
+      "fingerprint": "create|anatomy_structure|radius",
+      "priorState": "approved"
+    },
+    {
+      "id": "9f9bb2c0-e2f2-4a35-921d-71461652d7a8",
+      "fingerprint": "create|procedure|revision-carpal-tunnel-release",
+      "priorState": "approved"
+    },
+    {
+      "id": "48db4d47-6c29-4603-9b13-6e4b1bc1a187",
+      "fingerprint": "create|anatomy_structure|scaphoid",
+      "priorState": "approved"
+    },
+    {
+      "id": "b30cf3b1-bb38-4158-ac7e-3610631aef85",
+      "fingerprint": "create|anatomy_structure|scapholunate-ligament",
+      "priorState": "approved"
+    },
+    {
+      "id": "9ac6118a-19b5-483c-8153-0f4a5a4146d7",
+      "fingerprint": "create|anatomy_structure|second-metacarpal",
+      "priorState": "approved"
+    },
+    {
+      "id": "44a5e3fc-102a-4993-98de-537ec033af31",
+      "fingerprint": "create|exam_maneuver|durkan-carpal-compression-test",
+      "priorState": "approved"
+    },
+    {
+      "id": "f4a238e7-afb1-4f16-afb1-69ae42bdbed4",
+      "fingerprint": "create|anatomy_structure|ecu",
+      "priorState": "approved"
+    },
+    {
+      "id": "6cca3201-0c65-4743-987d-7fbda1436ca0",
+      "fingerprint": "create|anatomy_structure|edc",
+      "priorState": "approved"
+    },
+    {
+      "id": "70cdc1de-57e4-49de-ab04-e1654216f343",
+      "fingerprint": "create|procedure|endoscopic-carpal-tunnel-release",
+      "priorState": "approved"
+    },
+    {
+      "id": "cf525d94-8b0d-470c-bfad-4942960f45df",
+      "fingerprint": "create|anatomy_structure|epb",
+      "priorState": "approved"
+    },
+    {
+      "id": "95e6e65d-fa3a-4be1-8360-5c247e5585f9",
+      "fingerprint": "create|anatomy_structure|epl",
+      "priorState": "approved"
+    },
+    {
+      "id": "eaf42897-9018-4c82-b786-a172c8431484",
+      "fingerprint": "create|anatomy_structure|extensor-tendon-zones",
+      "priorState": "applied"
+    },
+    {
+      "id": "17c38f87-b703-4f90-ad54-3f134d114f91",
+      "fingerprint": "create|anatomy_structure|fcr",
+      "priorState": "approved"
+    },
+    {
+      "id": "be62fdc0-a117-4a4e-8d2b-98c62524fcb0",
+      "fingerprint": "create|anatomy_structure|fcu",
+      "priorState": "approved"
+    },
+    {
+      "id": "40b5b446-9168-4183-8f8e-511e9b1f18cf",
+      "fingerprint": "create|anatomy_structure|fdp",
+      "priorState": "approved"
+    },
+    {
+      "id": "8ee1395c-0362-4aff-90bb-19394fe649d0",
+      "fingerprint": "create|anatomy_structure|fds",
+      "priorState": "approved"
+    },
+    {
+      "id": "13f869f5-000f-4de4-9cd3-78789e31e945",
+      "fingerprint": "create|anatomy_structure|fifth-metacarpal",
+      "priorState": "approved"
+    },
+    {
+      "id": "4c254ac6-7b5a-4275-9aa0-d4c613b09992",
+      "fingerprint": "create|anatomy_structure|first-metacarpal",
+      "priorState": "approved"
+    },
+    {
+      "id": "cbf853b0-f475-4d03-bee9-7e7573761fec",
+      "fingerprint": "create|anatomy_structure|flexor-pulley-system",
+      "priorState": "approved"
+    },
+    {
+      "id": "1895685a-7e95-4b91-98e2-0143846e95a1",
+      "fingerprint": "create|anatomy_structure|flexor-tendon-zones",
+      "priorState": "approved"
+    },
+    {
+      "id": "ae511397-810a-407f-acc7-151678ddde52",
+      "fingerprint": "create|anatomy_structure|fourth-metacarpal",
+      "priorState": "approved"
+    },
+    {
+      "id": "ffd6659f-f380-4d9f-b23d-014fea994a48",
+      "fingerprint": "create|anatomy_structure|fpl",
+      "priorState": "approved"
+    },
+    {
+      "id": "749e736f-2eda-4318-b32a-d7652f5f4e90",
+      "fingerprint": "create|anatomy_structure|guyon-canal",
+      "priorState": "approved"
+    },
+    {
+      "id": "579c464c-8a18-4fe9-bd8f-f779b991aab5",
+      "fingerprint": "create|anatomy_structure|hamate",
+      "priorState": "approved"
+    },
+    {
+      "id": "ceaa9875-dd4a-4666-bc83-bf2f7f2bf5e1",
+      "fingerprint": "create|anatomy_structure|hand-wrist-anatomy-hub",
+      "priorState": "applied"
+    },
+    {
+      "id": "da40f5c5-ba9a-4b86-b635-21124f2e8011",
+      "fingerprint": "create|diagnostic_test|needle-electromyography",
+      "priorState": "approved"
+    },
+    {
+      "id": "f1cfd163-a500-4215-91e7-e01b1c9e0f82",
+      "fingerprint": "create|surgical_approach|open-carpal-tunnel-approach",
+      "priorState": "approved"
+    },
+    {
+      "id": "62ff3852-c3af-43ab-9a92-73e4f6cdea61",
+      "fingerprint": "create|condition|persistent-carpal-tunnel-syndrome-after-release",
+      "priorState": "approved"
+    },
+    {
+      "id": "5293ba07-732a-4a9a-b261-d7db0b65b29b",
+      "fingerprint": "create|condition|recurrent-carpal-tunnel-syndrome",
+      "priorState": "approved"
+    },
+    {
+      "id": "a16c783a-27d7-4921-8f56-d408fe9dffd2",
+      "fingerprint": "create|exam_maneuver|tinel-sign-carpal-tunnel",
+      "priorState": "approved"
+    },
+    {
+      "id": "e87ce645-43c1-4709-bca2-4725232c6619",
+      "fingerprint": "create|anatomy_structure|trapezium",
+      "priorState": "approved"
+    },
+    {
+      "id": "dac477c4-73f2-4d2d-bef9-e5dc46e7e416",
+      "fingerprint": "create|anatomy_structure|trapezoid",
+      "priorState": "approved"
+    },
+    {
+      "id": "669cb499-ed5c-45cc-9c41-a705d996668b",
+      "fingerprint": "create|anatomy_structure|superficial-palmar-arch",
+      "priorState": "approved"
+    },
+    {
+      "id": "7e4c3635-fcdf-45a1-8ddb-baf92f567e4c",
+      "fingerprint": "create|anatomy_structure|tfcc",
+      "priorState": "approved"
+    },
+    {
+      "id": "c5723204-6c9a-46e1-ac2e-b445d58bee5f",
+      "fingerprint": "create|anatomy_structure|third-metacarpal",
+      "priorState": "approved"
+    },
+    {
+      "id": "0d94cb5d-519b-4586-a0e2-be95db653d08",
+      "fingerprint": "create|anatomy_structure|thumb-ucl",
+      "priorState": "approved"
+    },
+    {
+      "id": "dbea2895-7023-4078-b129-2e8a7db96530",
+      "fingerprint": "rel|apl|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "19486b01-0a0b-47ff-8aea-156ba9a7f5d7",
+      "fingerprint": "rel|carpal-tunnel-syndrome|injured_in|fpl",
+      "priorState": "approved"
+    },
+    {
+      "id": "a41dcdd5-03d9-486b-b90e-1f8e81855ec6",
+      "fingerprint": "rel|carpal-tunnel-syndrome|involves_anatomy|fpl",
+      "priorState": "approved"
+    },
+    {
+      "id": "2e855142-6777-4d99-8e93-ff126eeb9d28",
+      "fingerprint": "rel|carpal-tunnel-syndrome|tested_by|electrodiagnostic-testing-carpal-tunnel-syndrome",
+      "priorState": "approved"
+    },
+    {
+      "id": "257ae9be-7d1d-4219-9bbe-9d0de8ea923e",
+      "fingerprint": "rel|carpal-tunnel-syndrome|tested_by|tinel-sign-carpal-tunnel",
+      "priorState": "approved"
+    },
+    {
+      "id": "3f099c30-7834-44ff-9b2f-d7e444c32328",
+      "fingerprint": "rel|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts",
+      "priorState": "approved"
+    },
+    {
+      "id": "b3710554-f48a-4a5b-8679-7b4922763e23",
+      "fingerprint": "rel|corticosteroid-injection-for-cts|involves_anatomy|carpal-tunnel",
+      "priorState": "approved"
+    },
+    {
+      "id": "fc3fe0b2-4eca-42cb-9cb1-dbe5a6eca8e9",
+      "fingerprint": "rel|deep-palmar-arch|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "9756b428-8367-4d94-a4f3-611f0b0f2039",
+      "fingerprint": "rel|digital-nerves|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "55618a55-a351-46ee-b1ff-2066a9630671",
+      "fingerprint": "rel|dip-joint|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "d2a5df88-2b1f-4f18-add4-599e91db61da",
+      "fingerprint": "rel|distal-phalanx|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "fc6babf6-19de-40aa-97ba-6fba5554b61a",
+      "fingerprint": "rel|distal-radius|articulates_with|druj",
+      "priorState": "approved"
+    },
+    {
+      "id": "5812ba59-12ed-41da-9447-dcf706e79010",
+      "fingerprint": "rel|distal-radius|articulates_with|lunate",
+      "priorState": "approved"
+    },
+    {
+      "id": "7318741e-6ea7-40e9-b7fa-e9261331ae8a",
+      "fingerprint": "rel|distal-radius|articulates_with|scaphoid",
+      "priorState": "approved"
+    },
+    {
+      "id": "2c8e9ed4-4c01-4a6b-96bc-dfaa6b7bfe9f",
+      "fingerprint": "rel|distal-radius|part_of|radius",
+      "priorState": "approved"
+    },
+    {
+      "id": "a806f3c1-d8f0-4637-b5ea-a06d1fde20ab",
+      "fingerprint": "rel|distal-ulna|articulates_with|druj",
+      "priorState": "approved"
+    },
+    {
+      "id": "29918dfe-52a9-4ece-aa97-e48a50318024",
+      "fingerprint": "rel|distal-ulna|part_of|ulna",
+      "priorState": "approved"
+    },
+    {
+      "id": "636f53eb-aff5-4a05-b25a-7d1e3ab7e0fb",
+      "fingerprint": "rel|druj|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "ec597d46-0129-412e-bcfb-fb6fb327150f",
+      "fingerprint": "rel|ecu|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "a721e045-3dd5-4c3a-98e7-8886ec905dbd",
+      "fingerprint": "rel|edc|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "503ebbb1-7a88-46c0-a796-a2794044d99a",
+      "fingerprint": "rel|endoscopic-carpal-tunnel-release|has_complication|incomplete-transverse-carpal-ligament-release",
+      "priorState": "approved"
+    },
+    {
+      "id": "1a90904e-5d54-4d9d-8dc1-4f6a976a3273",
+      "fingerprint": "rel|hand-wrist-anatomy-hub|prerequisite_for|carpal-tunnel-syndrome",
+      "priorState": "approved"
+    },
+    {
+      "id": "572e8833-14e6-4721-b4a5-6f94b4d6ba7a",
+      "fingerprint": "rel|interosseous-membrane|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "a3cf5ca4-ca44-4cea-973b-1c821c0178a9",
+      "fingerprint": "rel|c3-pulley|part_of|flexor-pulley-system",
+      "priorState": "approved"
+    },
+    {
+      "id": "d847f7df-a26d-4d19-b30b-2f580f10b2b0",
+      "fingerprint": "rel|capitate|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "bf15b82f-c80e-4297-b9e4-79a895070718",
+      "fingerprint": "rel|carpal-tunnel-syndrome|injured_in|median-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "43aa7833-9a56-4ea2-8483-bce07f691409",
+      "fingerprint": "rel|carpal-tunnel-syndrome|involves_anatomy|median-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "30113d7d-6c10-4317-ae68-daacff388d21",
+      "fingerprint": "rel|carpal-tunnel-syndrome|tested_by|nerve-conduction-study",
+      "priorState": "approved"
+    },
+    {
+      "id": "e1373a20-39d7-483d-aed8-1676e34f0adb",
+      "fingerprint": "rel|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts",
+      "priorState": "approved"
+    },
+    {
+      "id": "d115af9f-6ff2-46ad-9370-6c7ad4862281",
+      "fingerprint": "rel|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release",
+      "priorState": "approved"
+    },
+    {
+      "id": "d5b04cb8-df70-4d92-babf-9d302d257958",
+      "fingerprint": "rel|carpal-tunnel|contains|fdp",
+      "priorState": "approved"
+    },
+    {
+      "id": "08d48b65-9d91-43c2-90eb-1b99e2a0770c",
+      "fingerprint": "rel|carpal-tunnel|contains|fds",
+      "priorState": "approved"
+    },
+    {
+      "id": "16a4b1cc-6caf-4c90-9ca2-98f69aa14a61",
+      "fingerprint": "rel|carpal-tunnel|contains|median-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "030546b5-3c9f-4328-8fb5-e787a04008dd",
+      "fingerprint": "rel|cmc-joint|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "8289581f-c49a-43fa-a583-d60c244f56e8",
+      "fingerprint": "rel|endoscopic-carpal-tunnel-release|at_risk_structure|median-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "214432a9-42a9-47ca-93fe-8f446481877e",
+      "fingerprint": "rel|endoscopic-carpal-tunnel-release|involves_anatomy|carpal-tunnel",
+      "priorState": "approved"
+    },
+    {
+      "id": "2ec6900f-c85a-4471-96ec-3caf1d2adea8",
+      "fingerprint": "rel|lunate|articulates_with|triquetrum",
+      "priorState": "approved"
+    },
+    {
+      "id": "53fd6144-4995-4819-8419-391cee2ea818",
+      "fingerprint": "rel|lunate|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "c53b1bc0-4161-4694-a64d-85d9bc0b3681",
+      "fingerprint": "rel|lunotriquetral-ligament|inserts_on|lunate",
+      "priorState": "approved"
+    },
+    {
+      "id": "9e499d50-6bc4-4f1b-9d54-4c3da817c331",
+      "fingerprint": "rel|lunotriquetral-ligament|inserts_on|triquetrum",
+      "priorState": "approved"
+    },
+    {
+      "id": "c7bd7619-444a-493c-89ea-f447f231abce",
+      "fingerprint": "rel|mcp-joint|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "968ae746-60cb-4198-8a33-36dcd83aca2d",
+      "fingerprint": "rel|median-nerve|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "302a62fe-059e-475a-b636-22e22cdfac7d",
+      "fingerprint": "rel|middle-phalanx|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "b172a084-de20-4723-9a18-aa70ef63cae5",
+      "fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|median-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "d02aa9dc-393b-446c-b1e0-ece124289048",
+      "fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|palmar-cutaneous-branch-median-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "1b7f2b9a-d17f-49fe-b966-b3965268582c",
+      "fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "7eac52c8-7bd5-467f-bf15-361c75b367b0",
+      "fingerprint": "rel|open-carpal-tunnel-release|has_complication|incomplete-transverse-carpal-ligament-release",
+      "priorState": "approved"
+    },
+    {
+      "id": "1057aed1-e8b3-474f-a27f-bf7c2dcf32ca",
+      "fingerprint": "rel|open-carpal-tunnel-release|has_complication|pillar-pain-after-carpal-tunnel-release",
+      "priorState": "approved"
+    },
+    {
+      "id": "f81b4023-7490-4d6b-9807-2434637f4f6c",
+      "fingerprint": "rel|open-carpal-tunnel-release|involves_anatomy|carpal-tunnel",
+      "priorState": "approved"
+    },
+    {
+      "id": "c30df565-4b76-44b1-9856-0027be097143",
+      "fingerprint": "rel|open-carpal-tunnel-release|uses_approach|open-carpal-tunnel-approach",
+      "priorState": "approved"
+    },
+    {
+      "id": "5a0fbd30-fcd4-4086-bdec-4932a065445c",
+      "fingerprint": "rel|carpal-tunnel-syndrome|injured_in|carpal-tunnel",
+      "priorState": "approved"
+    },
+    {
+      "id": "8747add7-24f5-4641-918c-807a239783b6",
+      "fingerprint": "rel|carpal-tunnel-syndrome|involves_anatomy|carpal-tunnel",
+      "priorState": "approved"
+    },
+    {
+      "id": "dcfbfb2d-7dd2-416c-ae4c-5be892481d60",
+      "fingerprint": "rel|carpal-tunnel-syndrome|tested_by|durkan-carpal-compression-test",
+      "priorState": "approved"
+    },
+    {
+      "id": "e0dbcaff-1061-45c7-a822-c8ad07ec4ec7",
+      "fingerprint": "rel|carpal-tunnel-syndrome|tested_by|phalen-test",
+      "priorState": "approved"
+    },
+    {
+      "id": "e92c20ae-e351-46ba-a383-dd88bde040f8",
+      "fingerprint": "rel|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release",
+      "priorState": "approved"
+    },
+    {
+      "id": "824cb100-797f-46af-af2b-963e630c92b9",
+      "fingerprint": "rel|corticosteroid-injection-for-cts|at_risk_structure|median-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "d712a401-2ba5-4ffe-91bf-7a686946f8c2",
+      "fingerprint": "rel|endoscopic-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "6bf77993-dbb8-43a4-b3aa-5c454b7f104e",
+      "fingerprint": "rel|endoscopic-carpal-tunnel-release|uses_approach|endoscopic-carpal-tunnel-approach",
+      "priorState": "approved"
+    },
+    {
+      "id": "f4295c81-1f15-4443-a8e5-1dbadebfdbc8",
+      "fingerprint": "rel|epb|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "653ad42c-367c-4508-b9c9-80834e3e5eff",
+      "fingerprint": "rel|epl|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "8c86bd0a-f284-4a08-932e-25341cc462dc",
+      "fingerprint": "rel|extensor-tendon-zones|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "4ad26a1d-befe-4556-98b4-7121c74b2930",
+      "fingerprint": "rel|fcr|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "1a81b525-ad10-44e9-a95f-a349b15ba7c0",
+      "fingerprint": "rel|fcu|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "64e6f05f-369f-404a-9615-30b4153a238c",
+      "fingerprint": "rel|fdp|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "02a952ec-ead6-41ee-8119-44a61c3de63c",
+      "fingerprint": "rel|fds|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "7609dd8d-6fd8-43f5-9020-8439bc003483",
+      "fingerprint": "rel|fifth-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "04ba4b54-965c-481a-aa31-3779497e7531",
+      "fingerprint": "rel|first-metacarpal|articulates_with|trapezium",
+      "priorState": "approved"
+    },
+    {
+      "id": "7dbcd521-1c67-4286-a907-d668c30be745",
+      "fingerprint": "rel|first-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "fb2ce9b2-e097-480b-803a-1fe3a50956af",
+      "fingerprint": "rel|flexor-pulley-system|contains|fdp",
+      "priorState": "approved"
+    },
+    {
+      "id": "2d09cd30-1d35-4985-9aa2-74d1ed5052e7",
+      "fingerprint": "rel|flexor-pulley-system|contains|fds",
+      "priorState": "approved"
+    },
+    {
+      "id": "121a0800-1f87-4c93-bd48-2665f18c0187",
+      "fingerprint": "rel|flexor-pulley-system|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "55bae60b-4172-43ff-abc1-e84e1b9cd338",
+      "fingerprint": "rel|flexor-tendon-zones|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "d2509b44-aebe-41b4-a62b-f57ec0cea8dc",
+      "fingerprint": "rel|fourth-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "2ba5de1c-2797-4049-aa84-bf38b4f0c21b",
+      "fingerprint": "rel|fpl|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "07af43f1-8b9b-4c43-b3af-5980948bf732",
+      "fingerprint": "rel|guyon-canal|contains|ulnar-artery",
+      "priorState": "approved"
+    },
+    {
+      "id": "e1d9c19b-1e73-4b99-aee5-c6434af9779a",
+      "fingerprint": "rel|guyon-canal|contains|ulnar-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "149e125b-f975-4d3a-b0c0-cff179107a45",
+      "fingerprint": "rel|hamate|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "5cd31dd8-a8a1-4778-973e-de5718c48503",
+      "fingerprint": "rel|palmar-cutaneous-branch-median-nerve|part_of|median-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "bee37bf5-ae8c-45d8-a28a-5ca1d4af6634",
+      "fingerprint": "rel|pin|part_of|radial-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "8c65485a-8d81-415b-8597-34634767455a",
+      "fingerprint": "rel|pip-joint|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "3173ec00-fbd8-4e10-91e8-5cc4d591ab7b",
+      "fingerprint": "rel|pisiform|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "b2660f95-7001-472f-a0df-e68cdd7d0ed8",
+      "fingerprint": "rel|proximal-phalanx|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "07de5628-ff66-4d5f-ba02-b15406063e66",
+      "fingerprint": "rel|pruj|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "8e928199-3f19-4eff-a1d0-50d99bfce676",
+      "fingerprint": "rel|radial-artery|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "9ba37b74-0f53-4a82-9748-1b957f5d5b51",
+      "fingerprint": "rel|radial-nerve|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "522b4e1b-6f1c-4456-abc7-46e9f54c22d8",
+      "fingerprint": "rel|radius|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "ecb0b0d2-17c8-4db1-bd0b-13354fb51be8",
+      "fingerprint": "rel|scapholunate-ligament|inserts_on|lunate",
+      "priorState": "approved"
+    },
+    {
+      "id": "4ce4f08d-0e04-4037-af07-8ff18dd0cd81",
+      "fingerprint": "rel|scapholunate-ligament|inserts_on|scaphoid",
+      "priorState": "approved"
+    },
+    {
+      "id": "95298ab3-05b1-42c7-935f-1291fadc2387",
+      "fingerprint": "rel|second-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "16e5a8eb-f285-4157-b90e-92e759deba50",
+      "fingerprint": "bridge|hand-carpal-tunnel-syndrome|carpal-tunnel-syndrome",
+      "priorState": "approved"
+    },
+    {
+      "id": "64b765a7-f53d-4d39-8c5d-a1ded7d994bf",
+      "fingerprint": "rel|recurrent-motor-branch-median-nerve|part_of|median-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "458a558c-664b-49e1-a358-b508d80c9cd1",
+      "fingerprint": "rel|scaphoid|articulates_with|lunate",
+      "priorState": "approved"
+    },
+    {
+      "id": "b1632289-e88c-43a0-94bb-b2ce1eead929",
+      "fingerprint": "rel|superficial-palmar-arch|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "f8dbcdc3-1798-4208-9ad3-21273530188c",
+      "fingerprint": "rel|tfcc|inserts_on|triquetrum",
+      "priorState": "approved"
+    },
+    {
+      "id": "46d5f189-6059-47d9-96ef-95d8f51e9eea",
+      "fingerprint": "rel|third-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "71777f1f-3f9f-4f3a-9fdb-77ca3bff10f8",
+      "fingerprint": "rel|thumb-ucl|inserts_on|proximal-phalanx",
+      "priorState": "approved"
+    },
+    {
+      "id": "ea8b2e8c-f49a-48f2-bbba-de4636c1043a",
+      "fingerprint": "rel|trapezium|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "eaba1964-aaa7-426e-bbb2-8b15eae20670",
+      "fingerprint": "rel|trapezoid|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "bba1a6a0-5f84-41ac-bf01-04ff45f1e08c",
+      "fingerprint": "rel|triquetrum|articulates_with|druj",
+      "priorState": "approved"
+    },
+    {
+      "id": "1b15035c-186a-481b-9e36-1f24ebafeb5d",
+      "fingerprint": "rel|triquetrum|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "22481b84-71ac-4bee-a4a6-011a0728a20f",
+      "fingerprint": "rel|ulna|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "057519c7-9023-4fe0-bc88-c11eee0b21f6",
+      "fingerprint": "rel|ulnar-artery|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "9361d95c-d9cc-4f35-857a-81126beae494",
+      "fingerprint": "rel|ulnar-nerve|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    },
+    {
+      "id": "ce3b2737-9dd8-4b3a-9a7a-9530b8f13f0b",
+      "fingerprint": "rel|volar-plate|inserts_on|proximal-phalanx",
+      "priorState": "approved"
+    },
+    {
+      "id": "df23f8bd-1714-48ac-b181-bda8b09baf27",
+      "fingerprint": "rel|revision-carpal-tunnel-release|at_risk_structure|median-nerve",
+      "priorState": "approved"
+    },
+    {
+      "id": "c35b3e2f-0a5b-415c-8207-edd01e5379c7",
+      "fingerprint": "rel|revision-carpal-tunnel-release|involves_anatomy|carpal-tunnel",
+      "priorState": "approved"
+    },
+    {
+      "id": "541ec250-7292-4c27-82b3-613f86300bab",
+      "fingerprint": "rel|scaphoid|part_of|hand-wrist-anatomy-hub",
+      "priorState": "approved"
+    }
+  ],
+  "outcomes": [
+    {
+      "fingerprint": "create|anatomy_structure|a1-pulley",
+      "proposalId": "1cec2868-c6b4-46b9-9761-b1d81ae05b8b",
+      "kind": "reused",
+      "canonicalId": "edfbad8c-78d7-4e0b-be60-1ffef2f5042c",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|a2-pulley",
+      "proposalId": "02d868b2-cb50-421f-b108-08b191e6293b",
+      "kind": "reused",
+      "canonicalId": "17a8bfda-2bad-4a05-aef6-2c34973d219e",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|a3-pulley",
+      "proposalId": "c39b0556-4a2d-4521-89a8-b58efa153416",
+      "kind": "reused",
+      "canonicalId": "6372a209-9c7e-42fb-b1c1-2d091bbcb9c7",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|a4-pulley",
+      "proposalId": "349ece16-a864-4066-93ec-789ab941b479",
+      "kind": "reused",
+      "canonicalId": "37b0a933-a5ca-4209-976a-a3d03b679dd1",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|a5-pulley",
+      "proposalId": "5c466f97-e8e8-4ab8-be06-87aa61742a1c",
+      "kind": "reused",
+      "canonicalId": "7d2431eb-cbfc-4b0b-ac17-2757fc08139a",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|abductor-pollicis-brevis",
+      "proposalId": "1e4e42ca-4ee6-406c-9bcb-42613b4d59ac",
+      "kind": "created",
+      "canonicalId": "34287f2c-339e-4115-a559-bf2f830fd38f",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ain",
+      "proposalId": "f3b4cf1d-4296-4f1a-8cff-00ce02b15d66",
+      "kind": "reused",
+      "canonicalId": "af6c70a5-1667-4548-92a7-7bd81c387c57",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|apl",
+      "proposalId": "e78b7f22-14c8-42fb-9b1c-48b222f32f4b",
+      "kind": "reused",
+      "canonicalId": "43338fc5-c58e-4ab7-85b1-601eaf289df1",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|c1-pulley",
+      "proposalId": "089e3c4f-89b1-4815-a640-8133815ac2ae",
+      "kind": "reused",
+      "canonicalId": "b027c2ba-ef80-4ccd-88c6-52eaf461519c",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|c2-pulley",
+      "proposalId": "2c1b094e-1197-465a-80f5-af4b2bb52c76",
+      "kind": "reused",
+      "canonicalId": "db37ce0e-d396-4c52-88ea-7450de58ee63",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|c3-pulley",
+      "proposalId": "90afb00a-aa55-478c-bac6-6e20a1c99b73",
+      "kind": "reused",
+      "canonicalId": "d4be0263-3e47-468d-8826-7b58cd9fd12b",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|capitate",
+      "proposalId": "c4d0ed4c-6229-407d-89ce-3aa85219848c",
+      "kind": "reused",
+      "canonicalId": "8b635965-b793-4718-a334-b7527c5fca30",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|carpal-tunnel",
+      "proposalId": "a49d7d65-82d8-41a3-bb20-cb3a3f828f99",
+      "kind": "reused",
+      "canonicalId": "98af62be-ff52-4178-955e-acbaaae3f3a6",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|treatment_principle|carpal-tunnel-release-postoperative-protocol",
+      "proposalId": "dc09d236-87c2-483a-ad05-4265ca7f9c91",
+      "kind": "created",
+      "canonicalId": "4f4bbb59-64b3-45e8-bf24-ef4e6ddd913f",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|condition|carpal-tunnel-syndrome",
+      "proposalId": "383c75a0-9b30-4c24-af33-62d421375cea",
+      "kind": "previously_applied",
+      "canonicalId": "2726050c-8d05-48f6-95ed-a07a0d55f39e",
+      "priorState": "applied",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|cmc-joint",
+      "proposalId": "49d2ea45-6d5a-40ba-b100-b84ccce01124",
+      "kind": "previously_applied",
+      "canonicalId": "34b0bbc5-3fba-4a0c-9f3c-3a3ffef22b7f",
+      "priorState": "applied",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|collateral-ligaments",
+      "proposalId": "bc3c280c-f6d2-4759-8fbc-2e78b9c9b50a",
+      "kind": "reused",
+      "canonicalId": "a39bf748-9bf2-4477-98bc-620c66eb38e3",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|diagnostic_test|electrodiagnostic-testing-carpal-tunnel-syndrome",
+      "proposalId": "943d319e-27ef-45aa-810c-c1a23493524c",
+      "kind": "created",
+      "canonicalId": "81d48401-d0c4-427a-bd7d-4d47afaba3a5",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|complication|incomplete-transverse-carpal-ligament-release",
+      "proposalId": "d2a5d4ad-fef1-4967-b5f6-c1d318a79991",
+      "kind": "created",
+      "canonicalId": "aa41d47b-1843-4bd4-9305-e8be2149f771",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|interosseous-membrane",
+      "proposalId": "171c23c6-9884-4520-b397-e0959affd8d0",
+      "kind": "reused",
+      "canonicalId": "33c820ef-8fcc-4962-90a6-36a95624ec05",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lunate",
+      "proposalId": "370a3cf7-8bc0-4a24-bddd-bfbf6bc0cab4",
+      "kind": "reused",
+      "canonicalId": "56229d10-d49a-400b-bd28-1f9ad30ff338",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lunotriquetral-ligament",
+      "proposalId": "b69d3aa7-0cf7-46a2-adc8-0792b6f7cee4",
+      "kind": "reused",
+      "canonicalId": "d6c1a299-65b7-449c-9d87-ff7a9a7c85cc",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|mcp-joint",
+      "proposalId": "7d759f90-8f93-4fb0-bcd9-5404e2481ce0",
+      "kind": "reused",
+      "canonicalId": "3e644b34-d2d8-4ea6-9670-d6e15aa94e84",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|median-nerve",
+      "proposalId": "f833431e-1886-4254-90f8-2581a1a77ba3",
+      "kind": "previously_applied",
+      "canonicalId": "b8c22ec6-1383-4b7e-ae89-a4e598722eb6",
+      "priorState": "applied",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|diagnostic_test|nerve-conduction-study",
+      "proposalId": "1bfcb3cf-854c-419a-b2a1-42c666685654",
+      "kind": "created",
+      "canonicalId": "2b7c9600-2785-483f-b33a-67d28a26288d",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|procedure|open-carpal-tunnel-release",
+      "proposalId": "1de55aaa-7df2-461d-be07-4c39271a3887",
+      "kind": "created",
+      "canonicalId": "1d0d1cb0-8d61-4ed3-bd6c-f07285f6acd5",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|exam_maneuver|phalen-test",
+      "proposalId": "7c413be3-1fb9-4114-9476-827cb7c0d6d2",
+      "kind": "created",
+      "canonicalId": "890b54f5-3f99-4d9b-9da4-d55f69ea8aba",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|recurrent-motor-branch-median-nerve",
+      "proposalId": "42457dc0-2f2c-4451-9f2f-0eb22bcb2f84",
+      "kind": "created",
+      "canonicalId": "c5e07daf-00d5-49a9-b22b-41e533843d0e",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|condition|trigger-finger",
+      "proposalId": "067d26f8-74a1-426d-a777-ccc697d78742",
+      "kind": "created",
+      "canonicalId": "a3557866-6c88-4e23-8f00-4fdb6686714c",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|triquetrum",
+      "proposalId": "705123f2-2570-4cbb-97be-87cd9f326d81",
+      "kind": "reused",
+      "canonicalId": "0865d9ca-50e9-4757-99ed-a7cc1fb22e84",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ulna",
+      "proposalId": "f278a5c6-d8e1-4f8c-9076-e0fb21e98b72",
+      "kind": "reused",
+      "canonicalId": "92b2818e-6005-40ab-81bd-b007ab18529e",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ulnar-artery",
+      "proposalId": "2a332c6e-2cbb-4d46-a451-030a6b6c4c21",
+      "kind": "previously_applied",
+      "canonicalId": "6446696e-9fdc-41a3-90b8-9bd504960474",
+      "priorState": "applied",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ulnar-nerve",
+      "proposalId": "15037a48-e4a8-4e3d-aa2b-4b1c50485250",
+      "kind": "previously_applied",
+      "canonicalId": "cd78780a-9a5d-4838-aa0b-fe8d0a642a06",
+      "priorState": "applied",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|volar-plate",
+      "proposalId": "134ffcd0-a961-4350-82ea-4c4610461d8c",
+      "kind": "reused",
+      "canonicalId": "402b1c8d-e7f0-42ae-8521-0633bc1b61d0",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|procedure|corticosteroid-injection-for-cts",
+      "proposalId": "3915cb58-1935-4e42-b475-ab714bf2ab75",
+      "kind": "created",
+      "canonicalId": "e8848dd4-1cef-4c60-94e3-7d9246f4f3d9",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|deep-palmar-arch",
+      "proposalId": "a74bb9e7-a33a-44dc-b70b-db07c65367ea",
+      "kind": "reused",
+      "canonicalId": "ba51473e-6fad-44f4-8dd8-73fe2822df9b",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|digital-nerves",
+      "proposalId": "7a7964c1-4e53-47aa-9830-c4cd39e080f9",
+      "kind": "previously_applied",
+      "canonicalId": "bee1bcf3-b105-4ce8-94d4-bd3464205055",
+      "priorState": "applied",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|dip-joint",
+      "proposalId": "0ceb2508-f388-4028-979f-95936e71f937",
+      "kind": "previously_applied",
+      "canonicalId": "90319a67-5bac-4a99-be74-82afa0696b5a",
+      "priorState": "applied",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|distal-phalanx",
+      "proposalId": "99f0e668-f1b0-441a-8d1f-aeea21af4590",
+      "kind": "reused",
+      "canonicalId": "28208dd2-5e55-4ef3-9e13-3e8cdc041a15",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|distal-radius",
+      "proposalId": "bee33ca8-fa03-4b76-955c-1ec48fa7c9e2",
+      "kind": "reused",
+      "canonicalId": "1ef6f9d7-5fd3-49b5-b669-0b70bdeec64f",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|condition|distal-radius-fracture",
+      "proposalId": "afaee7f6-a0ad-46fd-bdff-0b3fc4bd2bea",
+      "kind": "previously_applied",
+      "canonicalId": "c9095783-a8a3-4062-ab65-eb8605a215ef",
+      "priorState": "applied",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|distal-ulna",
+      "proposalId": "ed2613fa-e52c-4643-bad9-10c1cde5cdf4",
+      "kind": "reused",
+      "canonicalId": "41ba04e2-e819-475e-ab97-91d31ed0ca3e",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|druj",
+      "proposalId": "4f4f3e3c-e5cb-4bc9-87bc-3a455c8f2a4d",
+      "kind": "reused",
+      "canonicalId": "9648cf12-8362-49ff-b281-d3e0eabd77af",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|surgical_approach|endoscopic-carpal-tunnel-approach",
+      "proposalId": "5c633eb1-e3b4-4764-901f-fd3ee218a5b7",
+      "kind": "created",
+      "canonicalId": "d334096d-98f4-448d-9faa-70d28f2aa7ca",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|condition|median-nerve-compression",
+      "proposalId": "6f15a0e2-998c-4466-8da0-7f6215b78449",
+      "kind": "created",
+      "canonicalId": "ae6c0f48-8697-4bb5-b7f9-ca0893a8254a",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|middle-phalanx",
+      "proposalId": "ff5a166e-1b56-49dd-83da-3392880a4836",
+      "kind": "reused",
+      "canonicalId": "f6c55355-6880-48e7-b0f5-ea0a21c11624",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|treatment_principle|neutral-wrist-night-orthosis-for-cts",
+      "proposalId": "6089b8c4-dc70-4294-aa63-642781eeb9e2",
+      "kind": "created",
+      "canonicalId": "a2e434a9-c11f-4da6-ae32-532ed845faf0",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|palmar-cutaneous-branch-median-nerve",
+      "proposalId": "be4c4ddc-236e-4c9b-902b-56915c61dcf5",
+      "kind": "created",
+      "canonicalId": "cc63571f-fb66-4f4a-bde2-3482d1ecd2b8",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|complication|pillar-pain-after-carpal-tunnel-release",
+      "proposalId": "13657912-1c01-4773-b9cf-94b146c63b9c",
+      "kind": "created",
+      "canonicalId": "3ed4e595-a1e5-4784-8483-0d696221fe6f",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pin",
+      "proposalId": "4308dac3-124b-4113-8081-04dc0098209e",
+      "kind": "reused",
+      "canonicalId": "72031bf2-a184-4835-88c9-117c16a3f69b",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pip-joint",
+      "proposalId": "850faf4f-e630-4805-9868-e8bc5e6e98fe",
+      "kind": "previously_applied",
+      "canonicalId": "a184740e-c683-491b-836e-d92041e48f7a",
+      "priorState": "applied",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pisiform",
+      "proposalId": "3ba0c432-17f9-467a-9e1f-e9ccfaaabea3",
+      "kind": "reused",
+      "canonicalId": "4961e82a-8719-4623-877a-99c4f1130938",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|proximal-phalanx",
+      "proposalId": "dca6c6cf-9656-4d20-b512-e59dcc678de8",
+      "kind": "reused",
+      "canonicalId": "7174f760-664c-4873-8778-fc7c36db796d",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pruj",
+      "proposalId": "7545590b-0b83-4067-84dc-bd955288c22f",
+      "kind": "reused",
+      "canonicalId": "da0c0274-88a1-4707-ae89-421e96a9562a",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|radial-artery",
+      "proposalId": "a6606f87-fb7e-45df-bbb4-d929493b3a7d",
+      "kind": "previously_applied",
+      "canonicalId": "7cfd1ce5-a53b-402d-af13-ad726b259ad5",
+      "priorState": "applied",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|radial-nerve",
+      "proposalId": "c0bcda8c-718f-4709-a3f7-a9ce8a39e65c",
+      "kind": "previously_applied",
+      "canonicalId": "ff8baba6-3fc7-477b-a6a7-d9ec99589349",
+      "priorState": "applied",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|radius",
+      "proposalId": "21cdf43e-418f-4a74-885c-d9ce8855104f",
+      "kind": "reused",
+      "canonicalId": "d0cf6589-20f9-42dc-a127-0e9aef1e5371",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|procedure|revision-carpal-tunnel-release",
+      "proposalId": "9f9bb2c0-e2f2-4a35-921d-71461652d7a8",
+      "kind": "created",
+      "canonicalId": "6df8aac8-5ff5-4cd7-a34b-18c5ecf6aaa0",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|scaphoid",
+      "proposalId": "48db4d47-6c29-4603-9b13-6e4b1bc1a187",
+      "kind": "reused",
+      "canonicalId": "2aa3df65-9ff3-4517-876f-f5d3122a25b0",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|scapholunate-ligament",
+      "proposalId": "b30cf3b1-bb38-4158-ac7e-3610631aef85",
+      "kind": "reused",
+      "canonicalId": "40a022f2-55cf-4783-b0f2-2068c22c7bb0",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|second-metacarpal",
+      "proposalId": "9ac6118a-19b5-483c-8153-0f4a5a4146d7",
+      "kind": "reused",
+      "canonicalId": "95c8fe7e-311f-4883-b99f-c043e0452c01",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|exam_maneuver|durkan-carpal-compression-test",
+      "proposalId": "44a5e3fc-102a-4993-98de-537ec033af31",
+      "kind": "created",
+      "canonicalId": "05b6554f-97cd-4de1-a588-617427cfcd0a",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ecu",
+      "proposalId": "f4a238e7-afb1-4f16-afb1-69ae42bdbed4",
+      "kind": "reused",
+      "canonicalId": "40a424b0-9add-40f7-b141-8ca3b548ed15",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|edc",
+      "proposalId": "6cca3201-0c65-4743-987d-7fbda1436ca0",
+      "kind": "reused",
+      "canonicalId": "37dae424-d31c-4154-b7ba-fac556bff24e",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|procedure|endoscopic-carpal-tunnel-release",
+      "proposalId": "70cdc1de-57e4-49de-ab04-e1654216f343",
+      "kind": "created",
+      "canonicalId": "88fbb9c8-038b-4452-86b7-9afe1bb102d1",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|epb",
+      "proposalId": "cf525d94-8b0d-470c-bfad-4942960f45df",
+      "kind": "reused",
+      "canonicalId": "12584ec2-1bc8-4746-a5f5-a0a08b66cc4e",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|epl",
+      "proposalId": "95e6e65d-fa3a-4be1-8360-5c247e5585f9",
+      "kind": "reused",
+      "canonicalId": "314387d0-0c00-4515-b01e-f333e9b0a38f",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|extensor-tendon-zones",
+      "proposalId": "eaf42897-9018-4c82-b786-a172c8431484",
+      "kind": "previously_applied",
+      "canonicalId": "e9310217-b7cf-4e65-87b6-e1929adc51c3",
+      "priorState": "applied",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fcr",
+      "proposalId": "17c38f87-b703-4f90-ad54-3f134d114f91",
+      "kind": "reused",
+      "canonicalId": "5f3c0369-f4e6-4438-903c-57bf479ba633",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fcu",
+      "proposalId": "be62fdc0-a117-4a4e-8d2b-98c62524fcb0",
+      "kind": "reused",
+      "canonicalId": "52df6b06-b4c2-484c-9bbd-fb7765763097",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fdp",
+      "proposalId": "40b5b446-9168-4183-8f8e-511e9b1f18cf",
+      "kind": "reused",
+      "canonicalId": "f7b1d430-204f-40a3-b926-c9412a1bf23b",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fds",
+      "proposalId": "8ee1395c-0362-4aff-90bb-19394fe649d0",
+      "kind": "reused",
+      "canonicalId": "a61498d3-73af-40bc-839e-0ab4d0f6682b",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fifth-metacarpal",
+      "proposalId": "13f869f5-000f-4de4-9cd3-78789e31e945",
+      "kind": "reused",
+      "canonicalId": "1203c213-061d-4499-9aec-a7268655b004",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|first-metacarpal",
+      "proposalId": "4c254ac6-7b5a-4275-9aa0-d4c613b09992",
+      "kind": "reused",
+      "canonicalId": "003ee1e7-bc76-4243-9692-900d71f5f638",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|flexor-pulley-system",
+      "proposalId": "cbf853b0-f475-4d03-bee9-7e7573761fec",
+      "kind": "reused",
+      "canonicalId": "8a9a0988-3b5c-4ed6-8135-07848c236c8e",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|flexor-tendon-zones",
+      "proposalId": "1895685a-7e95-4b91-98e2-0143846e95a1",
+      "kind": "reused",
+      "canonicalId": "a473da3a-00c6-405c-aad0-52365e80ffdf",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fourth-metacarpal",
+      "proposalId": "ae511397-810a-407f-acc7-151678ddde52",
+      "kind": "reused",
+      "canonicalId": "1e4844af-a7b7-47c0-af17-7516a6d9451b",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fpl",
+      "proposalId": "ffd6659f-f380-4d9f-b23d-014fea994a48",
+      "kind": "reused",
+      "canonicalId": "3bf359b0-93d2-4772-86f7-1c0a73a29e7e",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|guyon-canal",
+      "proposalId": "749e736f-2eda-4318-b32a-d7652f5f4e90",
+      "kind": "reused",
+      "canonicalId": "9dcd4740-c967-4671-b921-e1fbde8c9e7a",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|hamate",
+      "proposalId": "579c464c-8a18-4fe9-bd8f-f779b991aab5",
+      "kind": "reused",
+      "canonicalId": "ed1c9277-4eb6-48a5-beae-fc218d0abe41",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|hand-wrist-anatomy-hub",
+      "proposalId": "ceaa9875-dd4a-4666-bc83-bf2f7f2bf5e1",
+      "kind": "previously_applied",
+      "canonicalId": "0881f88a-0c58-47e8-8277-c1fef78bf31b",
+      "priorState": "applied",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|diagnostic_test|needle-electromyography",
+      "proposalId": "da40f5c5-ba9a-4b86-b635-21124f2e8011",
+      "kind": "created",
+      "canonicalId": "de7b5333-13b3-4e96-a81e-fc9d0eef1fa4",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|surgical_approach|open-carpal-tunnel-approach",
+      "proposalId": "f1cfd163-a500-4215-91e7-e01b1c9e0f82",
+      "kind": "created",
+      "canonicalId": "c2d0be7e-67af-41e7-84d4-9d153c56c589",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|condition|persistent-carpal-tunnel-syndrome-after-release",
+      "proposalId": "62ff3852-c3af-43ab-9a92-73e4f6cdea61",
+      "kind": "created",
+      "canonicalId": "b650e52d-3e4a-47bc-aab9-7e2703463e4e",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|condition|recurrent-carpal-tunnel-syndrome",
+      "proposalId": "5293ba07-732a-4a9a-b261-d7db0b65b29b",
+      "kind": "created",
+      "canonicalId": "40c3d09d-f58f-46bb-943d-b1852f34e958",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|exam_maneuver|tinel-sign-carpal-tunnel",
+      "proposalId": "a16c783a-27d7-4921-8f56-d408fe9dffd2",
+      "kind": "created",
+      "canonicalId": "3653a59d-2cf7-41ae-abae-78acecf00d8e",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|trapezium",
+      "proposalId": "e87ce645-43c1-4709-bca2-4725232c6619",
+      "kind": "reused",
+      "canonicalId": "babc6fd0-ca9c-44f7-95d9-ab237365c25a",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|trapezoid",
+      "proposalId": "dac477c4-73f2-4d2d-bef9-e5dc46e7e416",
+      "kind": "reused",
+      "canonicalId": "9f8ea87d-2bc9-4ec2-85ad-2f5c4e2b5386",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|superficial-palmar-arch",
+      "proposalId": "669cb499-ed5c-45cc-9c41-a705d996668b",
+      "kind": "reused",
+      "canonicalId": "bcfa3dac-d90c-46d4-ae70-708e09bbbd2d",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|tfcc",
+      "proposalId": "7e4c3635-fcdf-45a1-8ddb-baf92f567e4c",
+      "kind": "reused",
+      "canonicalId": "862e0154-07b9-4d0e-b290-f14e3c202b70",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|third-metacarpal",
+      "proposalId": "c5723204-6c9a-46e1-ac2e-b445d58bee5f",
+      "kind": "reused",
+      "canonicalId": "d2ca3969-8b4f-46fd-a189-61f078fc1b12",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|thumb-ucl",
+      "proposalId": "0d94cb5d-519b-4586-a0e2-be95db653d08",
+      "kind": "reused",
+      "canonicalId": "6d10114a-2182-47ad-8f3c-a89f22ebea69",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|a1-pulley|part_of|flexor-pulley-system",
+      "proposalId": "86976f1e-d563-421f-b087-4a91f220d15a",
+      "kind": "already_present",
+      "canonicalId": "cfd0c898-3ba4-4b22-832f-06653b9acb4c",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|a2-pulley|part_of|flexor-pulley-system",
+      "proposalId": "30ec2fc4-5d9e-46f0-a567-bb134a629d37",
+      "kind": "already_present",
+      "canonicalId": "811b2b7e-6de4-4587-80a7-be29decd32ab",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|a3-pulley|part_of|flexor-pulley-system",
+      "proposalId": "891bebd1-0de9-489f-87e1-0b90dccfccff",
+      "kind": "already_present",
+      "canonicalId": "52646bf4-665a-45da-ba90-42b02b5f7532",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|a4-pulley|part_of|flexor-pulley-system",
+      "proposalId": "8aa67d3e-df0b-42f6-a4cc-f0428f356a43",
+      "kind": "already_present",
+      "canonicalId": "6ddc66a1-2eec-403f-9a63-c7c3045a850c",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|a5-pulley|part_of|flexor-pulley-system",
+      "proposalId": "f9795a72-30a9-48d6-a2cb-93c4bc64710a",
+      "kind": "already_present",
+      "canonicalId": "8dee3b88-93b3-4dfd-892c-b183cca4056b",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|ain|part_of|median-nerve",
+      "proposalId": "4a00ca37-4785-408c-a86b-7451b2eb4dc5",
+      "kind": "already_present",
+      "canonicalId": "2507b313-20ef-4165-abc7-c42b4521ea97",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|c1-pulley|part_of|flexor-pulley-system",
+      "proposalId": "a25e5221-cad9-4e73-a05e-53cb9496d901",
+      "kind": "already_present",
+      "canonicalId": "c1f39caa-4c50-4983-ac28-befb603c52f8",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|c2-pulley|part_of|flexor-pulley-system",
+      "proposalId": "f4d94df6-57f2-4579-a800-018d108776a3",
+      "kind": "already_present",
+      "canonicalId": "18110bfd-09af-4f3f-b6b6-330f3ded5add",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|apl|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "dbea2895-7023-4078-b129-2e8a7db96530",
+      "kind": "already_present",
+      "canonicalId": "3580d860-6aeb-4f70-9014-e78f60f34575",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|injured_in|fpl",
+      "proposalId": "19486b01-0a0b-47ff-8aea-156ba9a7f5d7",
+      "kind": "created",
+      "canonicalId": "95bfc6f8-727b-4b8d-8800-e2b2ddf593a5",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|involves_anatomy|fpl",
+      "proposalId": "a41dcdd5-03d9-486b-b90e-1f8e81855ec6",
+      "kind": "created",
+      "canonicalId": "88790459-7c87-4466-a1b7-1dabd5430d9b",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|tested_by|electrodiagnostic-testing-carpal-tunnel-syndrome",
+      "proposalId": "2e855142-6777-4d99-8e93-ff126eeb9d28",
+      "kind": "created",
+      "canonicalId": "e2b43aea-be5d-4ff2-ae9b-10b6df5a8952",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|tested_by|tinel-sign-carpal-tunnel",
+      "proposalId": "257ae9be-7d1d-4219-9bbe-9d0de8ea923e",
+      "kind": "created",
+      "canonicalId": "3e0b2f26-6220-43c2-93a4-4bfcc7a758a3",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts",
+      "proposalId": "3f099c30-7834-44ff-9b2f-d7e444c32328",
+      "kind": "created",
+      "canonicalId": "ffef6d7d-03e2-4cf3-9d06-8685f5771b84",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|corticosteroid-injection-for-cts|involves_anatomy|carpal-tunnel",
+      "proposalId": "b3710554-f48a-4a5b-8679-7b4922763e23",
+      "kind": "created",
+      "canonicalId": "405b046c-765a-405d-b3d8-b3f0e1eb1559",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|deep-palmar-arch|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "fc3fe0b2-4eca-42cb-9cb1-dbe5a6eca8e9",
+      "kind": "already_present",
+      "canonicalId": "c886c749-355c-4de8-b061-fd4e7870bc60",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|digital-nerves|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "9756b428-8367-4d94-a4f3-611f0b0f2039",
+      "kind": "already_present",
+      "canonicalId": "0e02545d-8e81-4261-b1b8-3073d735598f",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|dip-joint|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "55618a55-a351-46ee-b1ff-2066a9630671",
+      "kind": "already_present",
+      "canonicalId": "94bc6cc1-5664-497f-a6ee-a79c4aa87fce",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|distal-phalanx|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "d2a5df88-2b1f-4f18-add4-599e91db61da",
+      "kind": "already_present",
+      "canonicalId": "ecb94fd3-3599-4518-94af-e86e4a087776",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|distal-radius|articulates_with|druj",
+      "proposalId": "fc6babf6-19de-40aa-97ba-6fba5554b61a",
+      "kind": "already_present",
+      "canonicalId": "c2c199a6-a7e3-4f75-9a3a-9499e36e3cb4",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|distal-radius|articulates_with|lunate",
+      "proposalId": "5812ba59-12ed-41da-9447-dcf706e79010",
+      "kind": "already_present",
+      "canonicalId": "4bb774b6-c32e-4879-a481-14f496f35e80",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|distal-radius|articulates_with|scaphoid",
+      "proposalId": "7318741e-6ea7-40e9-b7fa-e9261331ae8a",
+      "kind": "already_present",
+      "canonicalId": "bb82a225-afee-4aa1-b429-2c12823805e2",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|distal-radius|part_of|radius",
+      "proposalId": "2c8e9ed4-4c01-4a6b-96bc-dfaa6b7bfe9f",
+      "kind": "already_present",
+      "canonicalId": "796a66ec-c5f1-4f2f-9701-247ad95dd65a",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|distal-ulna|articulates_with|druj",
+      "proposalId": "a806f3c1-d8f0-4637-b5ea-a06d1fde20ab",
+      "kind": "already_present",
+      "canonicalId": "b7d5507f-b5ce-4561-a5d0-37879d79a0a1",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|distal-ulna|part_of|ulna",
+      "proposalId": "29918dfe-52a9-4ece-aa97-e48a50318024",
+      "kind": "already_present",
+      "canonicalId": "26e3a315-af73-4238-a13b-d17e10264f23",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|druj|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "636f53eb-aff5-4a05-b25a-7d1e3ab7e0fb",
+      "kind": "already_present",
+      "canonicalId": "e1b7d738-d0d2-439f-b90b-2dc6e1bc1f19",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|ecu|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "ec597d46-0129-412e-bcfb-fb6fb327150f",
+      "kind": "already_present",
+      "canonicalId": "ec76291a-68bf-4739-95ee-ece858f20f7b",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|edc|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "a721e045-3dd5-4c3a-98e7-8886ec905dbd",
+      "kind": "already_present",
+      "canonicalId": "ad1352ef-b39d-408f-8700-a2fde377d3d4",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|endoscopic-carpal-tunnel-release|has_complication|incomplete-transverse-carpal-ligament-release",
+      "proposalId": "503ebbb1-7a88-46c0-a796-a2794044d99a",
+      "kind": "created",
+      "canonicalId": "063ef05c-96fb-4f7a-9870-8a1958e9e89c",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|hand-wrist-anatomy-hub|prerequisite_for|carpal-tunnel-syndrome",
+      "proposalId": "1a90904e-5d54-4d9d-8dc1-4f6a976a3273",
+      "kind": "created",
+      "canonicalId": "59a8f315-ce45-4506-9222-c29deb2083c0",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|interosseous-membrane|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "572e8833-14e6-4721-b4a5-6f94b4d6ba7a",
+      "kind": "already_present",
+      "canonicalId": "9c6b3369-be93-44ec-abb6-220380011516",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|c3-pulley|part_of|flexor-pulley-system",
+      "proposalId": "a3cf5ca4-ca44-4cea-973b-1c821c0178a9",
+      "kind": "already_present",
+      "canonicalId": "a7eb4543-23bc-429e-a8a5-01822b13fb41",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|capitate|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "d847f7df-a26d-4d19-b30b-2f580f10b2b0",
+      "kind": "already_present",
+      "canonicalId": "823a6de5-f0df-4a59-9785-b5ba5a511f04",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|injured_in|median-nerve",
+      "proposalId": "bf15b82f-c80e-4297-b9e4-79a895070718",
+      "kind": "created",
+      "canonicalId": "b5bdc986-a7cc-467a-8add-e1d886982b15",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|involves_anatomy|median-nerve",
+      "proposalId": "43aa7833-9a56-4ea2-8483-bce07f691409",
+      "kind": "created",
+      "canonicalId": "09f00ca8-622d-403c-8c3e-38dc5d298aa1",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|tested_by|nerve-conduction-study",
+      "proposalId": "30113d7d-6c10-4317-ae68-daacff388d21",
+      "kind": "created",
+      "canonicalId": "7a43b2b1-23a7-431c-bb8b-7b77399f315f",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts",
+      "proposalId": "e1373a20-39d7-483d-aed8-1676e34f0adb",
+      "kind": "created",
+      "canonicalId": "8ff94aa9-b01a-4457-a4a6-2d7bc85b7e76",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release",
+      "proposalId": "d115af9f-6ff2-46ad-9370-6c7ad4862281",
+      "kind": "created",
+      "canonicalId": "87e2ad9d-9889-4ed7-945a-e9f83ed57fd8",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel|contains|fdp",
+      "proposalId": "d5b04cb8-df70-4d92-babf-9d302d257958",
+      "kind": "already_present",
+      "canonicalId": "ceef3a7f-b8e3-4158-879b-c86402bb5d52",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel|contains|fds",
+      "proposalId": "08d48b65-9d91-43c2-90eb-1b99e2a0770c",
+      "kind": "already_present",
+      "canonicalId": "2ab83ace-f7e1-403e-936c-8e2f7c477ce6",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel|contains|median-nerve",
+      "proposalId": "16a4b1cc-6caf-4c90-9ca2-98f69aa14a61",
+      "kind": "already_present",
+      "canonicalId": "1e7b9d87-36b7-4735-9f5f-d914da9a85ba",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|cmc-joint|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "030546b5-3c9f-4328-8fb5-e787a04008dd",
+      "kind": "already_present",
+      "canonicalId": "378444ad-2a92-4d40-a9d1-39c7a9dec32e",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|endoscopic-carpal-tunnel-release|at_risk_structure|median-nerve",
+      "proposalId": "8289581f-c49a-43fa-a583-d60c244f56e8",
+      "kind": "created",
+      "canonicalId": "a5fdf33c-d8b5-443a-9302-b0e98f8404ef",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|endoscopic-carpal-tunnel-release|involves_anatomy|carpal-tunnel",
+      "proposalId": "214432a9-42a9-47ca-93fe-8f446481877e",
+      "kind": "created",
+      "canonicalId": "9045b35c-0ad7-4d20-8ba0-253724da0072",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|lunate|articulates_with|triquetrum",
+      "proposalId": "2ec6900f-c85a-4471-96ec-3caf1d2adea8",
+      "kind": "already_present",
+      "canonicalId": "d9c1af9c-d0ac-4416-88d4-b9cdcecb5c8b",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|lunate|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "53fd6144-4995-4819-8419-391cee2ea818",
+      "kind": "already_present",
+      "canonicalId": "e7c28a3a-4802-45eb-8f99-b0dfbe5575da",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|lunotriquetral-ligament|inserts_on|lunate",
+      "proposalId": "c53b1bc0-4161-4694-a64d-85d9bc0b3681",
+      "kind": "already_present",
+      "canonicalId": "ba341ebd-6769-406b-b39f-b93760537e35",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|lunotriquetral-ligament|inserts_on|triquetrum",
+      "proposalId": "9e499d50-6bc4-4f1b-9d54-4c3da817c331",
+      "kind": "already_present",
+      "canonicalId": "1f7ace6f-65ea-49b0-89d7-24516d6c5621",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|mcp-joint|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "c7bd7619-444a-493c-89ea-f447f231abce",
+      "kind": "already_present",
+      "canonicalId": "e4951a34-e623-4b16-b416-c4078aa7bb2c",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|median-nerve|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "968ae746-60cb-4198-8a33-36dcd83aca2d",
+      "kind": "already_present",
+      "canonicalId": "432321b4-6094-47c3-99d0-7bce5499e7cb",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|middle-phalanx|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "302a62fe-059e-475a-b636-22e22cdfac7d",
+      "kind": "already_present",
+      "canonicalId": "bd077633-6aba-4c2e-a8de-e30ea20f2cac",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|median-nerve",
+      "proposalId": "b172a084-de20-4723-9a18-aa70ef63cae5",
+      "kind": "created",
+      "canonicalId": "6f2025e7-b673-4e2d-9a8f-81e15e4c8316",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|palmar-cutaneous-branch-median-nerve",
+      "proposalId": "d02aa9dc-393b-446c-b1e0-ece124289048",
+      "kind": "created",
+      "canonicalId": "2739deb2-460a-4df5-b208-8feca320589d",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|open-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+      "proposalId": "1b7f2b9a-d17f-49fe-b966-b3965268582c",
+      "kind": "created",
+      "canonicalId": "625a12b7-2ec2-4156-8d40-15724c559e20",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|open-carpal-tunnel-release|has_complication|incomplete-transverse-carpal-ligament-release",
+      "proposalId": "7eac52c8-7bd5-467f-bf15-361c75b367b0",
+      "kind": "created",
+      "canonicalId": "7bcd8eb0-96c1-42a9-9038-79c58a305a83",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|open-carpal-tunnel-release|has_complication|pillar-pain-after-carpal-tunnel-release",
+      "proposalId": "1057aed1-e8b3-474f-a27f-bf7c2dcf32ca",
+      "kind": "created",
+      "canonicalId": "4a0cabfa-bf27-4c61-8321-4dd8aca16949",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|open-carpal-tunnel-release|involves_anatomy|carpal-tunnel",
+      "proposalId": "f81b4023-7490-4d6b-9807-2434637f4f6c",
+      "kind": "created",
+      "canonicalId": "0307e9dc-e2e7-4498-acbc-b59713bb812f",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|open-carpal-tunnel-release|uses_approach|open-carpal-tunnel-approach",
+      "proposalId": "c30df565-4b76-44b1-9856-0027be097143",
+      "kind": "created",
+      "canonicalId": "9e379381-481e-4d02-8800-2a5df8ae6c6d",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|injured_in|carpal-tunnel",
+      "proposalId": "5a0fbd30-fcd4-4086-bdec-4932a065445c",
+      "kind": "created",
+      "canonicalId": "268146ec-0288-4258-ae95-ee209b2a71bc",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|involves_anatomy|carpal-tunnel",
+      "proposalId": "8747add7-24f5-4641-918c-807a239783b6",
+      "kind": "created",
+      "canonicalId": "b839ac83-ae7e-425e-bb87-6be061e72a9d",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|tested_by|durkan-carpal-compression-test",
+      "proposalId": "dcfbfb2d-7dd2-416c-ae4c-5be892481d60",
+      "kind": "created",
+      "canonicalId": "41066daa-a384-4275-9690-53241aaccb01",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|tested_by|phalen-test",
+      "proposalId": "e0dbcaff-1061-45c7-a822-c8ad07ec4ec7",
+      "kind": "created",
+      "canonicalId": "1e71c44f-39b2-4902-bdff-cde5b41fb8ae",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release",
+      "proposalId": "e92c20ae-e351-46ba-a383-dd88bde040f8",
+      "kind": "created",
+      "canonicalId": "2d827f18-71f1-47a9-a3a5-f84fe1b67957",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|corticosteroid-injection-for-cts|at_risk_structure|median-nerve",
+      "proposalId": "824cb100-797f-46af-af2b-963e630c92b9",
+      "kind": "created",
+      "canonicalId": "fe00f4d1-e64a-4584-ad2a-cde0e96bd1e3",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|endoscopic-carpal-tunnel-release|at_risk_structure|recurrent-motor-branch-median-nerve",
+      "proposalId": "d712a401-2ba5-4ffe-91bf-7a686946f8c2",
+      "kind": "created",
+      "canonicalId": "99b64be9-4a65-4174-9ef2-fb08424aaae6",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|endoscopic-carpal-tunnel-release|uses_approach|endoscopic-carpal-tunnel-approach",
+      "proposalId": "6bf77993-dbb8-43a4-b3aa-5c454b7f104e",
+      "kind": "created",
+      "canonicalId": "d15d7f2b-4f96-438d-81f1-22d59e2e3441",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|epb|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "f4295c81-1f15-4443-a8e5-1dbadebfdbc8",
+      "kind": "already_present",
+      "canonicalId": "d73fba60-47e3-41f1-9d56-5d76ceeed714",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|epl|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "653ad42c-367c-4508-b9c9-80834e3e5eff",
+      "kind": "already_present",
+      "canonicalId": "57b551d6-a461-45be-a78d-c26ba362f3f8",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|extensor-tendon-zones|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "8c86bd0a-f284-4a08-932e-25341cc462dc",
+      "kind": "already_present",
+      "canonicalId": "0f728d6d-acd0-455e-b147-aa25634fef15",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|fcr|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "4ad26a1d-befe-4556-98b4-7121c74b2930",
+      "kind": "already_present",
+      "canonicalId": "b931aade-5b38-4493-835b-58af48cc528e",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|fcu|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "1a81b525-ad10-44e9-a95f-a349b15ba7c0",
+      "kind": "already_present",
+      "canonicalId": "967b20f8-89bf-424b-b1f5-6eb45f28bfb1",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|fdp|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "64e6f05f-369f-404a-9615-30b4153a238c",
+      "kind": "already_present",
+      "canonicalId": "177581b8-16fd-472c-8770-086dc2aba928",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|fds|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "02a952ec-ead6-41ee-8119-44a61c3de63c",
+      "kind": "already_present",
+      "canonicalId": "fcb546db-b336-4669-8b71-451bb5f43fa2",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|fifth-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "7609dd8d-6fd8-43f5-9020-8439bc003483",
+      "kind": "already_present",
+      "canonicalId": "a9a48774-02d9-4ff8-ad8c-04a3667d2f22",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|first-metacarpal|articulates_with|trapezium",
+      "proposalId": "04ba4b54-965c-481a-aa31-3779497e7531",
+      "kind": "already_present",
+      "canonicalId": "c2966718-6400-4176-a182-457d83ae4c94",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|first-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "7dbcd521-1c67-4286-a907-d668c30be745",
+      "kind": "already_present",
+      "canonicalId": "6efa28d5-e33c-4869-a4ff-141163180435",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|flexor-pulley-system|contains|fdp",
+      "proposalId": "fb2ce9b2-e097-480b-803a-1fe3a50956af",
+      "kind": "already_present",
+      "canonicalId": "fb767605-50dc-469f-9aca-094ddeef0943",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|flexor-pulley-system|contains|fds",
+      "proposalId": "2d09cd30-1d35-4985-9aa2-74d1ed5052e7",
+      "kind": "already_present",
+      "canonicalId": "84827888-5500-4131-b7d6-97a69cd486a9",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|flexor-pulley-system|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "121a0800-1f87-4c93-bd48-2665f18c0187",
+      "kind": "already_present",
+      "canonicalId": "274bbe16-ae26-47ad-b8c8-0dd18fca4ef7",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|flexor-tendon-zones|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "55bae60b-4172-43ff-abc1-e84e1b9cd338",
+      "kind": "already_present",
+      "canonicalId": "d03513cd-6e5d-47cc-ae59-08add1f36c60",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|fourth-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "d2509b44-aebe-41b4-a62b-f57ec0cea8dc",
+      "kind": "already_present",
+      "canonicalId": "36be4701-db84-44cc-b3ed-06aa954f6f11",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|fpl|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "2ba5de1c-2797-4049-aa84-bf38b4f0c21b",
+      "kind": "already_present",
+      "canonicalId": "37aa5e29-c9a2-4d0e-b22d-ac56dfc951bc",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|guyon-canal|contains|ulnar-artery",
+      "proposalId": "07af43f1-8b9b-4c43-b3af-5980948bf732",
+      "kind": "already_present",
+      "canonicalId": "f77066c5-cb9a-43d6-ae65-b29d82daa03e",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|guyon-canal|contains|ulnar-nerve",
+      "proposalId": "e1d9c19b-1e73-4b99-aee5-c6434af9779a",
+      "kind": "already_present",
+      "canonicalId": "f89c2ad2-4fa7-4788-91c8-1fd29bee2855",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|hamate|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "149e125b-f975-4d3a-b0c0-cff179107a45",
+      "kind": "already_present",
+      "canonicalId": "0e07b9d3-f17a-45e0-88e0-2a0dca7d3afd",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|palmar-cutaneous-branch-median-nerve|part_of|median-nerve",
+      "proposalId": "5cd31dd8-a8a1-4778-973e-de5718c48503",
+      "kind": "created",
+      "canonicalId": "f40a896b-a7ef-434f-8527-a0b087c82d58",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|pin|part_of|radial-nerve",
+      "proposalId": "bee37bf5-ae8c-45d8-a28a-5ca1d4af6634",
+      "kind": "already_present",
+      "canonicalId": "9c5fa48f-6b25-4d6b-8372-12e35d270013",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|pip-joint|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "8c65485a-8d81-415b-8597-34634767455a",
+      "kind": "already_present",
+      "canonicalId": "1717785f-b59b-4900-92e2-685628be7776",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|pisiform|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "3173ec00-fbd8-4e10-91e8-5cc4d591ab7b",
+      "kind": "already_present",
+      "canonicalId": "245dad40-1923-4605-8f84-b22e676d9b99",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|proximal-phalanx|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "b2660f95-7001-472f-a0df-e68cdd7d0ed8",
+      "kind": "already_present",
+      "canonicalId": "e5cdaebf-8bb7-4d9c-b64c-5db11d919ac6",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|pruj|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "07de5628-ff66-4d5f-ba02-b15406063e66",
+      "kind": "already_present",
+      "canonicalId": "91f58816-195a-4a1f-a9b2-4e09589f209a",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|radial-artery|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "8e928199-3f19-4eff-a1d0-50d99bfce676",
+      "kind": "already_present",
+      "canonicalId": "2fa14bb8-b54b-4e17-906f-df5a3074e8ec",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|radial-nerve|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "9ba37b74-0f53-4a82-9748-1b957f5d5b51",
+      "kind": "already_present",
+      "canonicalId": "11376272-9022-426c-865e-d451eadca409",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|radius|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "522b4e1b-6f1c-4456-abc7-46e9f54c22d8",
+      "kind": "already_present",
+      "canonicalId": "dc102607-f8ab-4cf5-a4d2-e49945dacc99",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|scapholunate-ligament|inserts_on|lunate",
+      "proposalId": "ecb0b0d2-17c8-4db1-bd0b-13354fb51be8",
+      "kind": "already_present",
+      "canonicalId": "2cad3987-0163-4ae4-bc69-48511e1087a3",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|scapholunate-ligament|inserts_on|scaphoid",
+      "proposalId": "4ce4f08d-0e04-4037-af07-8ff18dd0cd81",
+      "kind": "already_present",
+      "canonicalId": "bcead238-fbdb-4eb2-95e5-2c13f301b4de",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|second-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "95298ab3-05b1-42c7-935f-1291fadc2387",
+      "kind": "already_present",
+      "canonicalId": "10f8cc7c-c66a-4f29-9a9d-5f49bf77dcb4",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|recurrent-motor-branch-median-nerve|part_of|median-nerve",
+      "proposalId": "64b765a7-f53d-4d39-8c5d-a1ded7d994bf",
+      "kind": "created",
+      "canonicalId": "662c762b-224f-4bc0-bf71-066644450187",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|scaphoid|articulates_with|lunate",
+      "proposalId": "458a558c-664b-49e1-a358-b508d80c9cd1",
+      "kind": "already_present",
+      "canonicalId": "8c1e589e-fd3a-415d-8dc2-8d8aa9cbfba3",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|superficial-palmar-arch|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "b1632289-e88c-43a0-94bb-b2ce1eead929",
+      "kind": "already_present",
+      "canonicalId": "82cc89a2-8640-40af-b6b5-e95791bcc09b",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|tfcc|inserts_on|triquetrum",
+      "proposalId": "f8dbcdc3-1798-4208-9ad3-21273530188c",
+      "kind": "already_present",
+      "canonicalId": "a47b7dc9-381b-4ed5-8189-91bd940f80af",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|third-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "46d5f189-6059-47d9-96ef-95d8f51e9eea",
+      "kind": "already_present",
+      "canonicalId": "424557af-a25c-4f69-90ee-d605a31084b5",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|thumb-ucl|inserts_on|proximal-phalanx",
+      "proposalId": "71777f1f-3f9f-4f3a-9fdb-77ca3bff10f8",
+      "kind": "already_present",
+      "canonicalId": "ec2408e5-f218-4ca3-ba37-eea9b15dc693",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|trapezium|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "ea8b2e8c-f49a-48f2-bbba-de4636c1043a",
+      "kind": "already_present",
+      "canonicalId": "c9f51753-a9ae-4caf-9420-e31b69ff92bd",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|trapezoid|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "eaba1964-aaa7-426e-bbb2-8b15eae20670",
+      "kind": "already_present",
+      "canonicalId": "0899488b-7533-48f9-b2b2-e2e5b68ab3f8",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|triquetrum|articulates_with|druj",
+      "proposalId": "bba1a6a0-5f84-41ac-bf01-04ff45f1e08c",
+      "kind": "already_present",
+      "canonicalId": "e4a7ee3a-8d6a-46f3-b2f9-c72c010275e2",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|triquetrum|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "1b15035c-186a-481b-9e36-1f24ebafeb5d",
+      "kind": "already_present",
+      "canonicalId": "41bb376d-252d-4da3-95e1-bc5c5d62a8be",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|ulna|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "22481b84-71ac-4bee-a4a6-011a0728a20f",
+      "kind": "already_present",
+      "canonicalId": "cb403537-50de-4903-b5f5-398f4b165fa4",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|ulnar-artery|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "057519c7-9023-4fe0-bc88-c11eee0b21f6",
+      "kind": "already_present",
+      "canonicalId": "d0732405-1934-42e2-add4-a354172aa3bf",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|ulnar-nerve|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "9361d95c-d9cc-4f35-857a-81126beae494",
+      "kind": "already_present",
+      "canonicalId": "76a39a9c-a147-4952-83dc-cb55a02c36fc",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|volar-plate|inserts_on|proximal-phalanx",
+      "proposalId": "ce3b2737-9dd8-4b3a-9a7a-9530b8f13f0b",
+      "kind": "already_present",
+      "canonicalId": "1d5799a2-54af-4f2a-8df6-d6b2529ea183",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|revision-carpal-tunnel-release|at_risk_structure|median-nerve",
+      "proposalId": "df23f8bd-1714-48ac-b181-bda8b09baf27",
+      "kind": "created",
+      "canonicalId": "f8d70875-2b31-43d2-95ef-c3061c346ba5",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|revision-carpal-tunnel-release|involves_anatomy|carpal-tunnel",
+      "proposalId": "c35b3e2f-0a5b-415c-8207-edd01e5379c7",
+      "kind": "created",
+      "canonicalId": "9addd3a7-151a-4c8f-8165-c1ebac384ca0",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "rel|scaphoid|part_of|hand-wrist-anatomy-hub",
+      "proposalId": "541ec250-7292-4c27-82b3-613f86300bab",
+      "kind": "already_present",
+      "canonicalId": "45947ab7-ab20-4983-835b-94fccf8180cf",
+      "priorState": "approved",
+      "finalState": "applied"
+    },
+    {
+      "fingerprint": "bridge|hand-carpal-tunnel-syndrome|carpal-tunnel-syndrome",
+      "proposalId": "16e5a8eb-f285-4157-b90e-92e759deba50",
+      "kind": "created",
+      "canonicalId": "f168dbfe-e495-4cd6-b5c5-da9b684d91d3",
+      "priorState": "approved",
+      "finalState": "applied"
+    }
+  ],
+  "mutationCounts": {
+    "reused": 56,
+    "created": 58,
+    "previously_applied": 13,
+    "already_present": 80
+  },
+  "rollbackCommand": "KG_TARGET_ENV=staging npm run kg:pilot:apply-approved -- --topic carpal-tunnel-syndrome --rollback cts-0c2b2fa3ef5af8aa --dry-run",
+  "reportPayloadHash": "d5590a2a9a7d7c64708c04e9b7695c738a6a055fd81470eaec16c22c62e66126"
+}

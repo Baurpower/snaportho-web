@@ -14,6 +14,7 @@ import {
   buildBroBotMetadataMessages,
   buildBroBotRevisionMessages,
   buildBroBotAnswerContext,
+  buildBroBotClinicalContextFromIntent,
   buildUncoveredFacetChips,
   buildBroBotIntentExpansionMessages,
   fallbackBroBotIntentExpansion,
@@ -35,6 +36,13 @@ import {
   type BroBotModelMessage,
   type BroBotAnswerContext,
 } from '@/lib/brobot/chat';
+import {
+  BroBotStageTimer,
+  attachBroBotKgAnswerOutcome,
+  persistBroBotKgShadowTrace,
+  retrieveBroBotKgShadow,
+  type BroBotKgShadowResult,
+} from '@/lib/brobot/kg';
 import {
   normalizeResearchSubmode,
   routeResearchSubmode,
@@ -1473,6 +1481,7 @@ type BroBotPipelineResult = {
   revisionModel?: string | null;
   revisionUsage?: unknown;
   originalAnswerBeforeRevision?: string | null;
+  stageTimingsMs: Record<string, number>;
 };
 
 function shouldBypassRevisionPass(intent: BroBotChatIntent) {
@@ -1579,6 +1588,7 @@ async function generateBroBotPipelineResult(params: {
   onAnswerText?: (answer: string) => void;
   preserveStreamedAnswer?: boolean;
 }) : Promise<BroBotPipelineResult> {
+  const pipelineStageTimingsMs: Record<string, number> = {};
   const selectedBranch =
     params.body.selectedBranchId || params.body.selectedBranchLabel
       ? {
@@ -1625,6 +1635,7 @@ async function generateBroBotPipelineResult(params: {
     responseDepth: params.body.responseDepth,
     subintent: params.intent.subintent,
   });
+  const answerGenerationStartedAt = performance.now();
   const answerCompletion = await runJsonCompletion({
     openai: params.openai,
     model: answerModel,
@@ -1632,11 +1643,14 @@ async function generateBroBotPipelineResult(params: {
     signal: params.signal,
     onAnswerText: params.onAnswerText,
   });
+  pipelineStageTimingsMs.answer_generation =
+    Math.round((performance.now() - answerGenerationStartedAt) * 100) / 100;
 
   let parsedOutput = parseBroBotChatResponse(answerCompletion.rawContent, {
     fallbackMode: params.intent.mode,
     fallbackAnswer: 'BroBot could not format a structured response. Please try again.',
   });
+  const qualityGateStartedAt = performance.now();
   let qualityGate = runBroBotQualityGate({
     answer: parsedOutput.answer,
     mode: params.intent.mode,
@@ -1649,6 +1663,8 @@ async function generateBroBotPipelineResult(params: {
     answerRoute,
     clinicalContext: answerContext.clinicalContext,
   });
+  pipelineStageTimingsMs.quality_gate =
+    Math.round((performance.now() - qualityGateStartedAt) * 100) / 100;
   const qualityGateWarningsBeforeRevision = [...qualityGate.warnings];
   let revisionTriggered = false;
   let revisionModel: string | null = null;
@@ -1661,6 +1677,7 @@ async function generateBroBotPipelineResult(params: {
     !shouldBypassRevisionPass(params.intent) &&
     !params.preserveStreamedAnswer
   ) {
+    const revisionStartedAt = performance.now();
     originalAnswerBeforeRevision = parsedOutput.answer;
     revisionModel = getRevisionModel(params.intent.mode);
     const revisionCompletion = await runJsonCompletion({
@@ -1717,6 +1734,8 @@ async function generateBroBotPipelineResult(params: {
       originalAnswer: originalAnswerBeforeRevision,
       revisedAnswer: parsedOutput.answer,
     });
+    pipelineStageTimingsMs.revision =
+      Math.round((performance.now() - revisionStartedAt) * 100) / 100;
   }
 
   if (params.preserveStreamedAnswer && qualityGate.warnings.length > 0) {
@@ -1754,6 +1773,7 @@ async function generateBroBotPipelineResult(params: {
   let metadataUsage: unknown = null;
 
   if (BROBOT_SEPARATE_METADATA_PASS) {
+    const metadataStartedAt = performance.now();
     metadataModel = getMetadataModel();
     // The metadata pass only augments suggestedQuestions/nextLearningBranches/tags.
     // It must never take down an already-generated answer: on any failure
@@ -1795,6 +1815,9 @@ async function generateBroBotPipelineResult(params: {
         ...safeErrorPayload(error),
       });
       metadataModel = null;
+    } finally {
+      pipelineStageTimingsMs.metadata_generation =
+        Math.round((performance.now() - metadataStartedAt) * 100) / 100;
     }
   }
 
@@ -1864,6 +1887,7 @@ async function generateBroBotPipelineResult(params: {
     revisionModel,
     revisionUsage,
     originalAnswerBeforeRevision,
+    stageTimingsMs: pipelineStageTimingsMs,
   };
 }
 
@@ -2104,6 +2128,7 @@ async function handleGuestChat(params: {
 export async function POST(request: Request) {
   const startedAt = Date.now();
   const requestId = crypto.randomUUID();
+  const stageTimer = new BroBotStageTimer();
 
   let subject: Subject | null = null;
   let guestCookieToSet: string | null = null;
@@ -2126,6 +2151,7 @@ export async function POST(request: Request) {
       return invalidRequestResponse('Please enter a BroBot question.');
     }
     const parsed = BroBotChatRequestSchema.safeParse(normalizedPayload.normalized);
+    stageTimer.mark('request_normalization', Date.now() - startedAt);
 
     if (!parsed.success) {
       logBroBotChat400({
@@ -2146,8 +2172,9 @@ export async function POST(request: Request) {
     }
 
     body = parsed.data;
+    const validatedBody = parsed.data;
     step = 'auth';
-    const auth = await getAuthContext(request);
+    const auth = await stageTimer.measure('authentication', () => getAuthContext(request));
 
     if (!auth.user && auth.hasBearerToken) {
       return unauthorizedResponse();
@@ -2178,11 +2205,16 @@ export async function POST(request: Request) {
     }
 
     userId = auth.user.id;
+    const authenticatedUserId = auth.user.id;
     subject = { type: 'user', id: userId };
+    const authenticatedSubject = subject;
     const persistence = createAdminClient();
 
     step = 'quota_check';
-    const gate = await getBroBotAccessGate(subject);
+    const gate = await stageTimer.measure(
+      'entitlement_quota',
+      () => getBroBotAccessGate(authenticatedSubject)
+    );
     const limit = gate.dailyCap;
     const remainingBefore = gate.remainingToday;
     const usedBefore =
@@ -2213,6 +2245,7 @@ export async function POST(request: Request) {
       return limitReachedResponse(limit);
     }
 
+    const conversationPersistenceStartedAt = performance.now();
     if (body.conversationId) {
       step = 'load_conversation';
       const { data: existingConversation, error } = await persistence
@@ -2265,6 +2298,10 @@ export async function POST(request: Request) {
 
       conversationId = createdConversation.id;
     }
+    stageTimer.mark(
+      'conversation_lookup_or_creation',
+      performance.now() - conversationPersistenceStartedAt
+    );
 
     const persistedConversationId = conversationId;
     if (!persistedConversationId) {
@@ -2294,7 +2331,7 @@ export async function POST(request: Request) {
       body.source === 'answer_now'
     ) {
       await recordChatAnalyticsEvent({
-        userId,
+        userId: authenticatedUserId,
         conversationId: persistedConversationId,
         messageId: body.sourceMessageId ?? null,
         eventType:
@@ -2362,19 +2399,23 @@ export async function POST(request: Request) {
     }
 
     step = 'create_user_message';
-    const { data: createdUserMessage, error: userMessageError } = await persistence
-      .from('brobot_messages')
-      .insert({
-        conversation_id: persistedConversationId,
-        user_id: userId,
-        role: 'user',
-        content: body.message,
-        structured_json: null,
-        mode: body.mode,
-        response_depth: body.responseDepth,
-      })
-      .select('id')
-      .single();
+    const { data: createdUserMessage, error: userMessageError } = await stageTimer.measure(
+      'user_message_persistence',
+      () =>
+        persistence
+          .from('brobot_messages')
+          .insert({
+            conversation_id: persistedConversationId,
+            user_id: authenticatedUserId,
+            role: 'user',
+            content: validatedBody.message,
+            structured_json: null,
+            mode: validatedBody.mode,
+            response_depth: validatedBody.responseDepth,
+          })
+          .select('id')
+          .single()
+    );
 
     if (userMessageError || !createdUserMessage) {
       logChatStepError({
@@ -2391,11 +2432,13 @@ export async function POST(request: Request) {
     userMessageId = createdUserMessage.id;
 
     step = 'load_history';
-    const history = await loadConversationHistory({
-      supabase: persistence,
-      conversationId: persistedConversationId,
-      userId,
-    });
+    const history = await stageTimer.measure('conversation_history', () =>
+      loadConversationHistory({
+        supabase: persistence,
+        conversationId: persistedConversationId,
+        userId: authenticatedUserId,
+      })
+    );
 
     let openai: OpenAI;
     try {
@@ -2417,9 +2460,10 @@ export async function POST(request: Request) {
       );
     }
 
-    const acceptedIntent = buildAcceptedIntent(body);
-    let intent: BroBotChatIntent = acceptedIntent ?? fallbackBroBotIntentExpansion(body.message, body.mode);
-    const intentSource = body.intentSource ?? (acceptedIntent ? 'local' : 'fallback');
+    const intentStartedAt = performance.now();
+    const acceptedIntent = buildAcceptedIntent(validatedBody);
+    let intent: BroBotChatIntent = acceptedIntent ?? fallbackBroBotIntentExpansion(validatedBody.message, validatedBody.mode);
+    const intentSource = validatedBody.intentSource ?? (acceptedIntent ? 'local' : 'fallback');
 
     if (!acceptedIntent) {
       try {
@@ -2453,6 +2497,7 @@ export async function POST(request: Request) {
         intent = fallbackBroBotIntentExpansion(body.message, body.mode);
       }
     }
+    stageTimer.mark('intent_resolution', performance.now() - intentStartedAt);
 
     const researchSubmodeRoute = resolveResearchSubmode({
       message: body.message,
@@ -2481,6 +2526,31 @@ export async function POST(request: Request) {
       });
     }
 
+    const clinicalContext = await stageTimer.measure('clinical_context_extraction', () =>
+      buildBroBotClinicalContextFromIntent({
+        message: validatedBody.message,
+        intent,
+        selectedBranch:
+          validatedBody.selectedBranchId || validatedBody.selectedBranchLabel
+            ? { id: validatedBody.selectedBranchId, label: validatedBody.selectedBranchLabel }
+            : undefined,
+      })
+    );
+    const kgShadowPromise: Promise<BroBotKgShadowResult> = retrieveBroBotKgShadow({
+      requestId,
+      query: validatedBody.message,
+      intent,
+      clinicalContext,
+      responseDepth: validatedBody.responseDepth,
+      trainingLevel: validatedBody.trainingLevel,
+      selectedBranch:
+        validatedBody.selectedBranchId || validatedBody.selectedBranchLabel
+          ? { id: validatedBody.selectedBranchId, label: validatedBody.selectedBranchLabel }
+          : undefined,
+      conversationTopic: history.length ? resolveTopicFromHistory({ message: validatedBody.message, history }) : null,
+    });
+
+    const branchReadsStartedAt = performance.now();
     const fingerprint = await loadLearningFingerprint({ userId });
     const baseRankingContext: BranchRankingContext = {
       userMessage: body.message,
@@ -2514,6 +2584,7 @@ export async function POST(request: Request) {
       .sort((a, b) => (b.rankScore ?? 0) - (a.rankScore ?? 0))
       .slice(0, 12);
     learningBranches.branches = databaseBranchOptions;
+    stageTimer.mark('branch_and_fingerprint_reads', performance.now() - branchReadsStartedAt);
 
     if (databaseBranchOptions.length > 0) {
       intent = {
@@ -2567,19 +2638,38 @@ export async function POST(request: Request) {
           : undefined,
     });
 
-    const answerContext = await buildBroBotAnswerContext({
-      message: body.message,
-      intent,
-      selectedBranch:
-        body.selectedBranchId || body.selectedBranchLabel
-          ? {
-              id: body.selectedBranchId,
-              label: body.selectedBranchLabel,
-            }
-          : undefined,
-      responseDepth: body.responseDepth,
-      trainingLevel: body.trainingLevel,
-      history,
+    const answerContext = await stageTimer.measure('caseprep_and_answer_context', () =>
+      buildBroBotAnswerContext({
+        message: validatedBody.message,
+        intent,
+        selectedBranch:
+          validatedBody.selectedBranchId || validatedBody.selectedBranchLabel
+            ? {
+                id: validatedBody.selectedBranchId,
+                label: validatedBody.selectedBranchLabel,
+              }
+            : undefined,
+        responseDepth: validatedBody.responseDepth,
+        trainingLevel: validatedBody.trainingLevel,
+        history,
+      }),
+      'parallel_context'
+    );
+    const kgShadow = await kgShadowPromise;
+    for (const [name, duration] of Object.entries(kgShadow.trace.stageTimingsMs)) {
+      stageTimer.mark(name, duration);
+    }
+    void persistBroBotKgShadowTrace({
+      result: kgShadow,
+      query: validatedBody.message,
+      userId,
+      conversationId: persistedConversationId,
+      messageId: createdUserMessage.id,
+      mode: intent.mode,
+      subintent: intent.subintent,
+      trainingLevel: validatedBody.trainingLevel,
+      responseDepth: validatedBody.responseDepth,
+      isFollowUp: history.filter((message) => message.role === 'user').length > 1,
     });
 
     if (body.stream || BROBOT_STREAMING_ENABLED) {
@@ -2609,17 +2699,19 @@ export async function POST(request: Request) {
     let pipelineResult: BroBotPipelineResult;
     try {
       step = 'openai_completion';
-      pipelineResult = await generateBroBotPipelineResult({
-        openai,
-        persistence,
-        body,
-        intent,
-        answerContext,
-        history,
-        learningBranches,
-        databaseBranchOptions,
-        rankingContext,
-      });
+      pipelineResult = await stageTimer.measure('answer_generation_pipeline', () =>
+        generateBroBotPipelineResult({
+          openai,
+          persistence,
+          body: validatedBody,
+          intent,
+          answerContext,
+          history,
+          learningBranches,
+          databaseBranchOptions,
+          rankingContext,
+        })
+      );
     } catch (error) {
       logChatStepError({
         requestId,
@@ -2654,8 +2746,16 @@ export async function POST(request: Request) {
     }
 
     const latencyMs = Date.now() - startedAt;
+    for (const [name, duration] of Object.entries(pipelineResult.stageTimingsMs)) {
+      stageTimer.mark(name, duration);
+    }
+    stageTimer.mark('total_request', latencyMs);
     const brobotOutput = pipelineResult.brobotOutput;
     const qualityGate = pipelineResult.qualityGate;
+    void attachBroBotKgAnswerOutcome({
+      requestId,
+      qualityGateWarnings: qualityGate.warnings,
+    });
 
     if (!qualityGate.passed) {
       void recordChatAnalyticsEvent({
@@ -2793,19 +2893,23 @@ export async function POST(request: Request) {
     }
 
     step = 'create_assistant_message';
-    const { data: assistantMessage, error: assistantMessageError } = await persistence
-      .from('brobot_messages')
-      .insert({
-        conversation_id: persistedConversationId,
-        user_id: userId,
-        role: 'assistant',
-        content: brobotOutput.answer,
-        structured_json: { ...brobotOutput, answerRoute: pipelineResult.answerRoute },
-        mode: brobotOutput.detectedMode,
-        response_depth: body.responseDepth,
-      })
-      .select('id')
-      .single();
+    const { data: assistantMessage, error: assistantMessageError } = await stageTimer.measure(
+      'assistant_message_persistence',
+      () =>
+        persistence
+          .from('brobot_messages')
+          .insert({
+            conversation_id: persistedConversationId,
+            user_id: userId,
+            role: 'assistant',
+            content: brobotOutput.answer,
+            structured_json: { ...brobotOutput, answerRoute: pipelineResult.answerRoute },
+            mode: brobotOutput.detectedMode,
+            response_depth: validatedBody.responseDepth,
+          })
+          .select('id')
+          .single()
+    );
 
     if (assistantMessageError || !assistantMessage) {
       logChatStepError({
@@ -3020,6 +3124,9 @@ export async function POST(request: Request) {
         tokenUsage: pipelineResult.answerUsage ?? null,
         revisionTokenUsage: pipelineResult.revisionUsage ?? null,
         metadataTokenUsage: pipelineResult.metadataUsage ?? null,
+        stageTimings: stageTimer.snapshot(),
+        kgShadowStatus: kgShadow.trace.status,
+        kgRetrievalId: kgShadow.trace.retrievalId,
         ...researchSubmodeMetadata(researchSubmodeRoute),
       },
     });

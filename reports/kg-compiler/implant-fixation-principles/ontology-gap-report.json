@@ -1,8 +1,70 @@
 {
-  "generatedAt": "2026-07-05T23:29:15.210Z",
+  "generatedAt": "2026-07-16T02:41:49.409Z",
   "gaps": [
     {
       "id": "gap-rel-1",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "anatomy.pred.hierarchy",
+      "anchorEntitySlug": "adult-reconstruction-anatomy-hub",
+      "subjectSlug": "adult-reconstruction-anatomy-hub",
+      "predicate": "part_of"
+    },
+    {
+      "id": "gap-rel-2",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.92,
+      "reason": "Arthroplasty Implant Concepts Hub missing inbound involves_anatomy (0/1).",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.inbound",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "predicate": "involves_anatomy",
+      "objectSlug": "implant-concepts-hub"
+    },
+    {
+      "id": "gap-claim-3",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.88,
+      "reason": "Arthroplasty Implant Concepts Hub has 0/1 L1 claims.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "claimType": "fact|anatomy_pearl"
+    },
+    {
+      "id": "gap-claim-type-4",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Arthroplasty Implant Concepts Hub missing claim type: fact.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.fact",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-claim-type-5",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Arthroplasty Implant Concepts Hub missing claim type: anatomy_pearl.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.anatomy_pearl",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "claimType": "anatomy_pearl"
+    },
+    {
+      "id": "gap-rel-6",
       "kind": "missing_relationship",
       "priority": "medium",
       "confidence": 0.92,
@@ -15,7 +77,7 @@
       "objectSlug": "implant-fixation-principles"
     },
     {
-      "id": "gap-claim-2",
+      "id": "gap-claim-7",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.88,
@@ -27,7 +89,7 @@
       "claimType": "fact|anatomy_pearl"
     },
     {
-      "id": "gap-claim-type-3",
+      "id": "gap-claim-type-8",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.75,
@@ -39,105 +101,83 @@
       "claimType": "fact"
     },
     {
-      "id": "gap-rel-4",
+      "id": "gap-entity-neighbor-9",
+      "kind": "missing_entity",
+      "priority": "critical",
+      "confidence": 0.95,
+      "reason": "Total Hip Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.anatomy",
+      "anchorEntitySlug": "total-hip-arthroplasty",
+      "entityType": "anatomy_structure"
+    },
+    {
+      "id": "gap-rel-10",
       "kind": "missing_relationship",
-      "priority": "medium",
+      "priority": "critical",
       "confidence": 0.92,
-      "reason": "Primary Stability missing inbound involves_anatomy (0/1).",
-      "requiredReviewer": "none",
-      "maturityImpact": 0.05,
-      "ontologyRule": "biomechanics.inbound",
-      "anchorEntitySlug": "primary-stability",
-      "predicate": "involves_anatomy",
-      "objectSlug": "primary-stability"
+      "reason": "Total Hip Arthroplasty missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "total-hip-arthroplasty",
+      "subjectSlug": "total-hip-arthroplasty",
+      "predicate": "involves_anatomy"
     },
     {
-      "id": "gap-claim-5",
-      "kind": "missing_claim",
-      "priority": "medium",
-      "confidence": 0.88,
-      "reason": "Primary Stability has 0/1 L1 claims.",
-      "requiredReviewer": "none",
-      "maturityImpact": 0.05,
-      "ontologyRule": "biomechanics.claims",
-      "anchorEntitySlug": "primary-stability",
-      "claimType": "fact|anatomy_pearl"
-    },
-    {
-      "id": "gap-claim-type-6",
-      "kind": "missing_claim",
-      "priority": "medium",
-      "confidence": 0.75,
-      "reason": "Primary Stability missing claim type: fact.",
-      "requiredReviewer": "none",
-      "maturityImpact": 0.05,
-      "ontologyRule": "biomechanics.claims.fact",
-      "anchorEntitySlug": "primary-stability",
-      "claimType": "fact"
-    },
-    {
-      "id": "gap-claim-type-7",
-      "kind": "missing_claim",
-      "priority": "medium",
-      "confidence": 0.75,
-      "reason": "Primary Stability missing claim type: anatomy_pearl.",
-      "requiredReviewer": "none",
-      "maturityImpact": 0.05,
-      "ontologyRule": "biomechanics.claims.anatomy_pearl",
-      "anchorEntitySlug": "primary-stability",
-      "claimType": "anatomy_pearl"
-    },
-    {
-      "id": "gap-rel-8",
+      "id": "gap-rel-11",
       "kind": "missing_relationship",
-      "priority": "medium",
+      "priority": "high",
       "confidence": 0.92,
-      "reason": "Bone Ingrowth missing inbound involves_anatomy (0/1).",
-      "requiredReviewer": "none",
-      "maturityImpact": 0.05,
-      "ontologyRule": "biomechanics.inbound",
-      "anchorEntitySlug": "bone-ingrowth",
-      "predicate": "involves_anatomy",
-      "objectSlug": "bone-ingrowth"
+      "reason": "Total Hip Arthroplasty missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "total-hip-arthroplasty",
+      "subjectSlug": "total-hip-arthroplasty",
+      "predicate": "at_risk_structure"
     },
     {
-      "id": "gap-claim-9",
-      "kind": "missing_claim",
-      "priority": "medium",
-      "confidence": 0.88,
-      "reason": "Bone Ingrowth has 0/1 L1 claims.",
-      "requiredReviewer": "none",
-      "maturityImpact": 0.05,
-      "ontologyRule": "biomechanics.claims",
-      "anchorEntitySlug": "bone-ingrowth",
-      "claimType": "fact|anatomy_pearl"
+      "id": "gap-entity-neighbor-12",
+      "kind": "missing_entity",
+      "priority": "critical",
+      "confidence": 0.95,
+      "reason": "Total Knee Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.anatomy",
+      "anchorEntitySlug": "total-knee-arthroplasty",
+      "entityType": "anatomy_structure"
     },
     {
-      "id": "gap-claim-type-10",
-      "kind": "missing_claim",
-      "priority": "medium",
-      "confidence": 0.75,
-      "reason": "Bone Ingrowth missing claim type: fact.",
-      "requiredReviewer": "none",
-      "maturityImpact": 0.05,
-      "ontologyRule": "biomechanics.claims.fact",
-      "anchorEntitySlug": "bone-ingrowth",
-      "claimType": "fact"
+      "id": "gap-rel-13",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Total Knee Arthroplasty missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "total-knee-arthroplasty",
+      "subjectSlug": "total-knee-arthroplasty",
+      "predicate": "involves_anatomy"
     },
     {
-      "id": "gap-claim-type-11",
-      "kind": "missing_claim",
-      "priority": "medium",
-      "confidence": 0.75,
-      "reason": "Bone Ingrowth missing claim type: anatomy_pearl.",
-      "requiredReviewer": "none",
-      "maturityImpact": 0.05,
-      "ontologyRule": "biomechanics.claims.anatomy_pearl",
-      "anchorEntitySlug": "bone-ingrowth",
-      "claimType": "anatomy_pearl"
+      "id": "gap-rel-14",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Total Knee Arthroplasty missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "total-knee-arthroplasty",
+      "subjectSlug": "total-knee-arthroplasty",
+      "predicate": "at_risk_structure"
     },
     {
-      "id": "gap-asset-card-12",
+      "id": "gap-asset-card-15",
       "kind": "missing_asset_link",
       "priority": "medium",
       "confidence": 0.8,
@@ -148,7 +188,7 @@
       "anchorEntitySlug": "implant-fixation-principles"
     },
     {
-      "id": "gap-asset-question-13",
+      "id": "gap-asset-question-16",
       "kind": "missing_asset_link",
       "priority": "medium",
       "confidence": 0.8,
@@ -159,39 +199,56 @@
       "anchorEntitySlug": "implant-fixation-principles"
     },
     {
-      "id": "gap-biomech-claim-14",
+      "id": "gap-biomech-claim-17",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.82,
-      "reason": "Biomechanics concept Primary Stability has no teaching claim (e.g., mortise instability).",
+      "reason": "Biomechanics concept Arthroplasty Implant Concepts Hub has no teaching claim (e.g., mortise instability).",
       "requiredReviewer": "clinical_expert",
       "maturityImpact": 0.05,
       "ontologyRule": "biomechanics.claims",
-      "anchorEntitySlug": "primary-stability",
+      "anchorEntitySlug": "implant-concepts-hub",
       "claimType": "fact"
     },
     {
-      "id": "gap-biomech-claim-15",
-      "kind": "missing_claim",
+      "id": "gap-proc-approach-18",
+      "kind": "missing_relationship",
       "priority": "medium",
-      "confidence": 0.82,
-      "reason": "Biomechanics concept Bone Ingrowth has no teaching claim (e.g., mortise instability).",
+      "confidence": 0.78,
+      "reason": "Procedure Total Hip Arthroplasty missing uses_approach edge.",
       "requiredReviewer": "clinical_expert",
       "maturityImpact": 0.05,
-      "ontologyRule": "biomechanics.claims",
-      "anchorEntitySlug": "bone-ingrowth",
-      "claimType": "fact"
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "total-hip-arthroplasty",
+      "subjectSlug": "total-hip-arthroplasty",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-19",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Total Knee Arthroplasty missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "total-knee-arthroplasty",
+      "subjectSlug": "total-knee-arthroplasty",
+      "predicate": "uses_approach"
     }
   ],
   "summary": {
-    "total": 15,
+    "total": 19,
     "byKind": {
-      "missing_relationship": 3,
-      "missing_claim": 10,
+      "missing_relationship": 9,
+      "missing_claim": 6,
+      "missing_entity": 2,
       "missing_asset_link": 2
     },
     "byPriority": {
-      "medium": 15
+      "high": 3,
+      "medium": 12,
+      "critical": 4
     }
   }
 }

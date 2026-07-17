@@ -1,0 +1,44 @@
+{
+  "ok": false,
+  "runDate": "2026-07-16",
+  "topicKey": "middle-phalanx-fracture",
+  "displayName": "Middle Phalanx Fracture",
+  "pilotKey": "middle-phalanx-fracture-neighborhood",
+  "priorState": "staging_applied",
+  "resultingState": "database_verification_blocked",
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "blockerClass": "staging_integrity_failure",
+  "automaticRepairAttempted": false,
+  "quarantinedPartialMemberships": 0,
+  "batchKey": "legacy-middle-phalanx-fracture-a3782b2e9af85ce2",
+  "packetHash": "a3782b2e9af85ce23dcec55c7c093ed1c94d5fd663e089bc24f9865681c6f9a9",
+  "expected": {
+    "approvedLoaded": 160,
+    "structuralProposals": 149,
+    "entities": 68,
+    "relationships": 80,
+    "curriculumBridges": 1,
+    "draftClaims": 1,
+    "draftDecisionPoints": 0
+  },
+  "resolved": {
+    "entities": 68,
+    "relationships": 80,
+    "curriculumBridges": 0
+  },
+  "discrepancyCount": 1,
+  "discrepancies": [
+    {
+      "fingerprint": "bridge|hand-middle-phalanx-fracture|middle-phalanx-fracture",
+      "kind": "bridge_endpoint_cardinality",
+      "expected": "one curriculum node hand-middle-phalanx-fracture and one entity middle-phalanx-fracture",
+      "observed": "0 node(s), 1 entity row(s)"
+    }
+  ],
+  "exactNextAction": "restore_or_adjudicate_curriculum_node_bridge",
+  "evidence": {
+    "applyPath": "reports/kg-pilots/middle-phalanx-fracture-staging-apply-result.json",
+    "curatedPath": "reports/kg-pilots/middle-phalanx-fracture-curated-proposals.json"
+  }
+}

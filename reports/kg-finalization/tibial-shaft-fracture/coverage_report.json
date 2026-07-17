@@ -1,0 +1,29 @@
+{
+  "neighborhoodId": "tibial-shaft-fracture",
+  "domains": [
+    {
+      "domain": "anatomy",
+      "present": true
+    },
+    {
+      "domain": "imaging",
+      "present": false
+    },
+    {
+      "domain": "classification",
+      "present": false
+    },
+    {
+      "domain": "treatment",
+      "present": true
+    },
+    {
+      "domain": "complications",
+      "present": true
+    }
+  ],
+  "presentDomains": 3,
+  "missingDomains": 2,
+  "weakDomains": 0,
+  "note": "Backbone coverage is an omission detector, not a template enforcer."
+}

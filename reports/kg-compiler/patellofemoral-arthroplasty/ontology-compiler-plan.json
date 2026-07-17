@@ -2,13 +2,13 @@
   "topicKey": "patellofemoral-arthroplasty",
   "pilotKey": "patellofemoral-arthroplasty-neighborhood",
   "displayName": "Patellofemoral Arthroplasty",
-  "generatedAt": "2026-07-05T23:18:36.891Z",
+  "generatedAt": "2026-07-16T02:53:50.268Z",
   "stages": [
     {
       "stage": 1,
       "name": "Neighborhood Resolution",
       "status": "completed",
-      "summary": "Resolved 2 entities from canonical DB for Patellofemoral Arthroplasty.",
+      "summary": "Resolved 7 entities from canonical DB for Patellofemoral Arthroplasty.",
       "outputs": [
         "neighborhood_plan"
       ]
@@ -26,7 +26,7 @@
       "stage": 3,
       "name": "Gap Analysis",
       "status": "completed",
-      "summary": "Identified 11 gaps across 4 kinds.",
+      "summary": "Identified 17 gaps across 4 kinds.",
       "outputs": [
         "ontology-gap-report.json"
       ]
@@ -56,6 +56,7 @@
         "work-anatomy-builder",
         "work-relationship-builder",
         "work-claim-builder",
+        "work-metadata-builder",
         "work-asset-linker",
         "work-duplicate-detector",
         "work-quality-scorer",
@@ -68,7 +69,7 @@
       "stage": 6,
       "name": "Merge",
       "status": "completed",
-      "summary": "Merged draft: 63 entities, 6 relationships; 0 conflicts.",
+      "summary": "Merged draft: 63 entities, 9 relationships; 0 conflicts.",
       "outputs": [
         "merged-neighborhood-draft.json",
         "conflict-report.json"
@@ -103,31 +104,30 @@
     }
   ],
   "neighborhood": {
-    "entityCount": 2,
-    "relationshipCount": 0,
-    "claimCount": 2,
+    "entityCount": 7,
+    "relationshipCount": 9,
+    "claimCount": 6,
     "decisionPointCount": 0
   },
   "gaps": {
-    "total": 11,
+    "total": 17,
     "byKind": {
-      "missing_entity": 1,
-      "missing_relationship": 4,
-      "missing_claim": 4,
+      "missing_relationship": 6,
+      "missing_claim": 8,
+      "missing_metadata": 1,
       "missing_asset_link": 2
     },
     "byPriority": {
-      "critical": 2,
-      "high": 1,
-      "medium": 8
+      "high": 3,
+      "medium": 14
     }
   },
   "workPlan": {
     "workItemCount": 9,
     "agentsRequired": [
-      "Clinical Entity Builder",
       "Relationship Builder",
       "Claim Builder",
+      "Metadata Builder",
       "Asset Linker",
       "Conflict Resolver",
       "Quality Scorer",
@@ -135,9 +135,9 @@
       "Publication Validator"
     ],
     "agentIds": [
-      "clinical-entity-builder",
       "relationship-builder",
       "claim-builder",
+      "metadata-builder",
       "asset-linker",
       "duplicate-detector",
       "quality-scorer",

@@ -1,0 +1,43 @@
+{
+  "topicKey": "imaging-radiographic-measurements",
+  "pilotKey": "imaging-radiographic-measurements-neighborhood",
+  "generatedAt": "2026-07-09T04:14:30.106Z",
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "ready": false,
+  "blockers": [
+    "67 proposals still awaiting human review",
+    "49 items require attending review",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "4 critical/high ontology gaps remain unresolved"
+  ],
+  "remainingWork": [
+    "[high] Upper Extremity Trauma Anatomy Hub missing outbound part_of (0/1).",
+    "[high] Lower Extremity Trauma Anatomy Hub missing outbound part_of (0/1).",
+    "[high] Proximal Femur Anatomy Hub missing outbound part_of (0/1).",
+    "[high] Hand & Wrist Anatomy Hub missing outbound part_of (0/1).",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "productReadiness": {
+    "traversalSmokeTest": true,
+    "prepareReady": false,
+    "brobotReady": false
+  },
+  "estimatedEffort": {
+    "gapsRemaining": 184,
+    "humanReviewItems": 67,
+    "attendingReviewItems": 49,
+    "effortBand": "high"
+  },
+  "dimensionScores": {
+    "clinical": 1,
+    "relationship": 1,
+    "educational": 1,
+    "reasoning": 1,
+    "anatomical": 1,
+    "review": 0,
+    "graph": 1,
+    "asset": 1
+  }
+}

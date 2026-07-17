@@ -1,0 +1,56 @@
+{
+  "neighborhoodId": "carpal-tunnel-syndrome",
+  "generatedAt": "2026-07-12T16:47:49.070Z",
+  "mode": "report_only_finalization",
+  "sourceArtifactsPreserved": true,
+  "agentOrder": [
+    "IdentityReuseAgent",
+    "OntologyConstraintAgent",
+    "RelationshipNormalizationAgent",
+    "SourceProvenanceAgent",
+    "ConnectivityAgent",
+    "CrossNeighborhoodLinkingAgent",
+    "ReviewBurdenReductionAgent",
+    "BackboneCoverageAgent",
+    "PublicationReadinessAgent"
+  ],
+  "counts": {
+    "entities": 93,
+    "relationships": 123,
+    "claims": 8,
+    "decisionPoints": 8,
+    "priorReviewDecisions": 42
+  },
+  "metrics": {
+    "duplicatesPrevented": 0,
+    "relationshipsNormalized": 9,
+    "unsupportedEdgesRemoved": 126,
+    "reviewDecisionsInherited": 34,
+    "orphanEntitiesRepaired": 3,
+    "publicationBlockersDetected": 134
+  },
+  "publicationReadiness": {
+    "neighborhoodId": "carpal-tunnel-syndrome",
+    "readyForPublication": false,
+    "readyForStagedManufacture": false,
+    "blockers": 134,
+    "warnings": 58,
+    "requiredChecks": {
+      "noOrphanEntities": false,
+      "noDanglingClassifications": true,
+      "noDuplicateIdentities": true,
+      "noUnsupportedRelationships": false,
+      "noInvalidPredicates": true
+    }
+  },
+  "reviewDelta": {
+    "priorReviewDecisions": 42,
+    "generatedObjects": 232,
+    "exactFingerprintMatches": 34,
+    "estimatedHumanReviewItemsAvoided": 34,
+    "estimatedRemainingReviewObjects": 198,
+    "inheritanceMode": "exact_fingerprint_only"
+  },
+  "warnings": 58,
+  "escalations": 267
+}

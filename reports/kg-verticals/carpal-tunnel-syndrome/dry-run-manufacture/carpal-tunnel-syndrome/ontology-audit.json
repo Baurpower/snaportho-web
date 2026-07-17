@@ -1,0 +1,37 @@
+{
+  "category": "ontology_completeness",
+  "label": "Ontology Completeness",
+  "score": 84,
+  "deductions": [
+    {
+      "finding": "No compiler gap report available",
+      "evidence": "ontology-gap-report.json missing from reports/kg-compiler",
+      "reason": "Auditor cannot verify ontology completeness without compiler gap analysis.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "suggestedFix": "Run npm run kg:compile -- --topic <topic> to generate gap report.",
+      "impact": 8
+    },
+    {
+      "finding": "No classification system present",
+      "evidence": "0 classification entities in merged draft",
+      "reason": "Fracture diagnoses require classification when one exists clinically.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "suggestedFix": "Link has_classification and has_grade edges to a classification system.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "totalGaps": 0,
+    "criticalGaps": 0,
+    "highGaps": 0,
+    "anatomyStructures": 70,
+    "classificationEntities": 0,
+    "completenessRatio": 1
+  },
+  "recommendations": [
+    "Run npm run kg:compile -- --topic <topic> to generate gap report.",
+    "Link has_classification and has_grade edges to a classification system."
+  ]
+}

@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-07-05T23:18:36.888Z",
+  "generatedAt": "2026-07-16T02:53:50.263Z",
   "agentId": "claim-builder",
   "agentVersion": "2.0.0",
   "evidencePacketId": "ev-packet-15432a11",
   "gapsAddressed": 4,
-  "gapsScheduled": 4,
+  "gapsScheduled": 8,
   "claimsGenerated": 8,
   "claimsRejected": 6,
   "redirectedToDecisionPoint": 4,
   "candidates": [
     {
-      "draftId": "claim-patellofemoral-tracking-fact-recognize-core-concepts-",
+      "draftId": "claim-implant-concepts-hub-fact-recognize-core-concepts-",
       "claimText": "Recognize core concepts in Patellofemoral Arthroplasty.",
       "claimType": "fact",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L3",
       "whyItMatters": [
         "clinical_reasoning"
@@ -26,17 +26,17 @@
         "ev-static-prepare-4be62dc2"
       ],
       "section": "learning_objectives",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-patellofemoral-tracking-anatomy_pearl-connect-patellofemoral-a",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-connect-patellofemoral-a",
       "claimText": "Connect Patellofemoral Arthroplasty to shared anatomy, implant concepts, and trauma neighborhoods.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "anatomical_reasoning"
@@ -49,7 +49,7 @@
         "ev-static-prepare-4be62dc2"
       ],
       "section": "learning_objectives",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -79,10 +79,10 @@
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-patellofemoral-tracking-anatomy_pearl-hip-and-knee-joint-surfa",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa",
       "claimText": "Hip and knee joint surfaces.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -95,17 +95,17 @@
         "ev-static-prepare-d693f7e1"
       ],
       "section": "deep.anatomy",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-patellofemoral-tracking-anatomy_pearl-extensor-mechanism",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-extensor-mechanism",
       "claimText": "Extensor mechanism.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -118,17 +118,17 @@
         "ev-static-prepare-d693f7e1"
       ],
       "section": "deep.anatomy",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-patellofemoral-tracking-anatomy_pearl-implant-bone-interfaces",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-implant-bone-interfaces",
       "claimText": "Implant-bone interfaces.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -141,17 +141,17 @@
         "ev-static-prepare-d693f7e1"
       ],
       "section": "deep.anatomy",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-patellofemoral-tracking-fact-knee-reconstruction-clas",
+      "draftId": "claim-implant-concepts-hub-fact-knee-reconstruction-clas",
       "claimText": "Knee Reconstruction classification frameworks.",
       "claimType": "fact",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -164,7 +164,7 @@
         "ev-static-prepare-d693f7e1"
       ],
       "section": "deep.classification",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -237,10 +237,10 @@
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-patellofemoral-tracking-fact-infection",
+      "draftId": "claim-implant-concepts-hub-fact-infection",
       "claimText": "Infection.",
       "claimType": "fact",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -253,17 +253,17 @@
         "ev-static-prepare-d693f7e1"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-patellofemoral-tracking-fact-loosening",
+      "draftId": "claim-implant-concepts-hub-fact-loosening",
       "claimText": "Loosening.",
       "claimType": "fact",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -276,17 +276,17 @@
         "ev-static-prepare-d693f7e1"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-patellofemoral-tracking-fact-instability",
+      "draftId": "claim-implant-concepts-hub-fact-instability",
       "claimText": "Instability.",
       "claimType": "fact",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "changes_management"
@@ -299,17 +299,17 @@
         "ev-static-prepare-d693f7e1"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-patellofemoral-tracking-fact-periprosthetic-fracture",
+      "draftId": "claim-implant-concepts-hub-fact-periprosthetic-fracture",
       "claimText": "Periprosthetic fracture.",
       "claimType": "fact",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L2",
       "whyItMatters": [
         "clinical_reasoning"
@@ -322,17 +322,17 @@
         "ev-static-prepare-d693f7e1"
       ],
       "section": "deep.complications",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-patellofemoral-tracking-fact-patellofemoral-arthropla",
+      "draftId": "claim-implant-concepts-hub-fact-patellofemoral-arthropla",
       "claimText": "Patellofemoral Arthroplasty indication language.",
       "claimType": "fact",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -346,17 +346,17 @@
         "ev-static-prepare-d6971e75"
       ],
       "section": "fast.mustKnow",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-patellofemoral-tracking-fact-implant-and-fixation-voc",
+      "draftId": "claim-implant-concepts-hub-fact-implant-and-fixation-voc",
       "claimText": "Implant and fixation vocabulary.",
       "claimType": "fact",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -370,17 +370,17 @@
         "ev-static-prepare-d6971e75"
       ],
       "section": "fast.mustKnow",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-patellofemoral-tracking-fact-cross-neighborhood-traum",
+      "draftId": "claim-implant-concepts-hub-fact-cross-neighborhood-traum",
       "claimText": "Cross-neighborhood trauma links.",
       "claimType": "fact",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -394,17 +394,17 @@
         "ev-static-prepare-d6971e75"
       ],
       "section": "fast.mustKnow",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-patellofemoral-tracking-anatomy_pearl-shared-adult-reconstruct",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-shared-adult-reconstruct",
       "claimText": "Shared adult reconstruction anatomy hub.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "anatomical_reasoning"
@@ -418,17 +418,17 @@
         "ev-static-prepare-d6971e75"
       ],
       "section": "fast.anatomyFocus",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-patellofemoral-tracking-anatomy_pearl-implant-concepts-hub",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-implant-concepts-hub",
       "claimText": "Implant concepts hub.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -442,17 +442,17 @@
         "ev-static-prepare-d6971e75"
       ],
       "section": "fast.anatomyFocus",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-patellofemoral-tracking-anatomy_pearl-trauma-neighborhood-brid",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-trauma-neighborhood-brid",
       "claimText": "Trauma neighborhood bridges.",
       "claimType": "anatomy_pearl",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -466,17 +466,17 @@
         "ev-static-prepare-d6971e75"
       ],
       "section": "fast.anatomyFocus",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
       "confidence": 0.8365,
       "reviewRoute": "HUMAN_REVIEW"
     },
     {
-      "draftId": "claim-patellofemoral-tracking-fact-patellofemoral-arthropla",
+      "draftId": "claim-implant-concepts-hub-fact-patellofemoral-arthropla",
       "claimText": "Patellofemoral arthroplasty targets isolated anterior knee OA in carefully selected patients.",
       "claimType": "fact",
-      "primaryEntitySlug": "patellofemoral-tracking",
+      "primaryEntitySlug": "implant-concepts-hub",
       "importanceLevel": "L1",
       "whyItMatters": [
         "clinical_reasoning"
@@ -490,7 +490,7 @@
         "ev-static-prepare-d6971e75"
       ],
       "section": "fast.oneLiner",
-      "gapId": "gap-claim-5",
+      "gapId": "gap-claim-3",
       "atomicityScore": 1,
       "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
       "confidence": 0.8365,
@@ -695,8 +695,8 @@
   ],
   "proposals": [
     {
-      "proposalFingerprint": "claim|claim-patellofemoral-tracking-fact-recognize-core-concepts-",
-      "draftId": "claim-patellofemoral-tracking-fact-recognize-core-concepts-",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-fact-recognize-core-concepts-",
+      "draftId": "claim-implant-concepts-hub-fact-recognize-core-concepts-",
       "claimType": "fact",
       "importanceLevel": "L3",
       "reviewRoute": "HUMAN_REVIEW",
@@ -706,8 +706,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-patellofemoral-tracking-fact-knee-reconstruction-clas",
-      "draftId": "claim-patellofemoral-tracking-fact-knee-reconstruction-clas",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-fact-knee-reconstruction-clas",
+      "draftId": "claim-implant-concepts-hub-fact-knee-reconstruction-clas",
       "claimType": "fact",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
@@ -717,8 +717,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-patellofemoral-tracking-anatomy_pearl-connect-patellofemoral-a",
-      "draftId": "claim-patellofemoral-tracking-anatomy_pearl-connect-patellofemoral-a",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-connect-patellofemoral-a",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-connect-patellofemoral-a",
       "claimType": "anatomy_pearl",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
@@ -728,8 +728,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-patellofemoral-tracking-fact-infection",
-      "draftId": "claim-patellofemoral-tracking-fact-infection",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-fact-infection",
+      "draftId": "claim-implant-concepts-hub-fact-infection",
       "claimType": "fact",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
@@ -739,8 +739,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-patellofemoral-tracking-anatomy_pearl-hip-and-knee-joint-surfa",
-      "draftId": "claim-patellofemoral-tracking-anatomy_pearl-hip-and-knee-joint-surfa",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa",
       "claimType": "anatomy_pearl",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
@@ -750,8 +750,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-patellofemoral-tracking-anatomy_pearl-extensor-mechanism",
-      "draftId": "claim-patellofemoral-tracking-anatomy_pearl-extensor-mechanism",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-extensor-mechanism",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-extensor-mechanism",
       "claimType": "anatomy_pearl",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
@@ -761,8 +761,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-patellofemoral-tracking-anatomy_pearl-implant-bone-interfaces",
-      "draftId": "claim-patellofemoral-tracking-anatomy_pearl-implant-bone-interfaces",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-implant-bone-interfaces",
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-implant-bone-interfaces",
       "claimType": "anatomy_pearl",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",
@@ -772,8 +772,8 @@
       "verified": false
     },
     {
-      "proposalFingerprint": "claim|claim-patellofemoral-tracking-fact-loosening",
-      "draftId": "claim-patellofemoral-tracking-fact-loosening",
+      "proposalFingerprint": "claim|claim-implant-concepts-hub-fact-loosening",
+      "draftId": "claim-implant-concepts-hub-fact-loosening",
       "claimType": "fact",
       "importanceLevel": "L2",
       "reviewRoute": "HUMAN_REVIEW",

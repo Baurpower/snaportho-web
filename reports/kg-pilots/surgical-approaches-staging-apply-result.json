@@ -1,0 +1,227 @@
+{
+  "topicKey": "surgical-approaches",
+  "pilotKey": "surgical-approaches-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 1000,
+  "applied": {
+    "entities": 134,
+    "relationships": 817,
+    "bridges": 0,
+    "claims_draft": 0,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 1000
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|anatomy_structure|humeral-head",
+      "reason": "entity exists: humeral-head"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|acetabulum",
+      "reason": "entity exists: acetabulum"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lisfranc-joint",
+      "reason": "entity exists: lisfranc-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|extensor-tendon-zones",
+      "reason": "entity exists: extensor-tendon-zones"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|popliteal-artery",
+      "reason": "entity exists: popliteal-artery"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ulnar-nerve",
+      "reason": "entity exists: ulnar-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|digital-nerves",
+      "reason": "entity exists: digital-nerves"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pip-joint",
+      "reason": "entity exists: pip-joint"
+    },
+    {
+      "fingerprint": "create|complication|hardware-failure",
+      "reason": "entity exists: hardware-failure"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-condyles",
+      "reason": "entity exists: femoral-condyles"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|extensor-mechanism",
+      "reason": "entity exists: extensor-mechanism"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|elbow-joint",
+      "reason": "entity exists: elbow-joint"
+    },
+    {
+      "fingerprint": "create|complication|median-neuropathy",
+      "reason": "entity exists: median-neuropathy"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|leg-anterior-compartment",
+      "reason": "entity exists: leg-anterior-compartment"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|leg-deep-posterior-compartment",
+      "reason": "entity exists: leg-deep-posterior-compartment"
+    },
+    {
+      "fingerprint": "create|complication|radial-nerve-palsy",
+      "reason": "entity exists: radial-nerve-palsy"
+    },
+    {
+      "fingerprint": "create|complication|chronic-pain",
+      "reason": "entity exists: chronic-pain"
+    },
+    {
+      "fingerprint": "create|complication|periprosthetic-fracture",
+      "reason": "entity exists: periprosthetic-fracture"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|spinal-cord",
+      "reason": "entity exists: spinal-cord"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ulnar-artery",
+      "reason": "entity exists: ulnar-artery"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-diaphysis",
+      "reason": "entity exists: femoral-diaphysis"
+    },
+    {
+      "fingerprint": "create|complication|neurologic-injury",
+      "reason": "entity exists: neurologic-injury"
+    },
+    {
+      "fingerprint": "create|complication|prosthetic-instability",
+      "reason": "entity exists: prosthetic-instability"
+    },
+    {
+      "fingerprint": "create|complication|pseudarthrosis",
+      "reason": "entity exists: pseudarthrosis"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|axillary-nerve",
+      "reason": "entity exists: axillary-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|median-nerve",
+      "reason": "entity exists: median-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sciatic-nerve",
+      "reason": "entity exists: sciatic-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|brachial-artery",
+      "reason": "entity exists: brachial-artery"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|radial-nerve",
+      "reason": "entity exists: radial-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|common-peroneal-nerve",
+      "reason": "entity exists: common-peroneal-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|radial-artery",
+      "reason": "entity exists: radial-artery"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|medial-femoral-circumflex-artery",
+      "reason": "entity exists: medial-femoral-circumflex-artery"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|hip-joint",
+      "reason": "entity exists: hip-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|iliac-wing",
+      "reason": "entity exists: iliac-wing"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|subtalar-joint",
+      "reason": "entity exists: subtalar-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|cmc-joint",
+      "reason": "entity exists: cmc-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|dip-joint",
+      "reason": "entity exists: dip-joint"
+    },
+    {
+      "fingerprint": "create|complication|neurovascular-injury",
+      "reason": "entity exists: neurovascular-injury"
+    },
+    {
+      "fingerprint": "create|complication|surgical-site-infection",
+      "reason": "entity exists: surgical-site-infection"
+    },
+    {
+      "fingerprint": "create|complication|wound-complication",
+      "reason": "entity exists: wound-complication"
+    },
+    {
+      "fingerprint": "create|complication|arthrofibrosis",
+      "reason": "entity exists: arthrofibrosis"
+    },
+    {
+      "fingerprint": "create|complication|avascular-necrosis",
+      "reason": "entity exists: avascular-necrosis"
+    },
+    {
+      "fingerprint": "create|complication|implant-prominence",
+      "reason": "entity exists: implant-prominence"
+    },
+    {
+      "fingerprint": "create|complication|extensor-mechanism-failure",
+      "reason": "entity exists: extensor-mechanism-failure"
+    },
+    {
+      "fingerprint": "create|complication|joint-stiffness",
+      "reason": "entity exists: joint-stiffness"
+    },
+    {
+      "fingerprint": "create|complication|heterotopic-ossification",
+      "reason": "entity exists: heterotopic-ossification"
+    },
+    {
+      "fingerprint": "create|complication|tendon-irritation",
+      "reason": "entity exists: tendon-irritation"
+    },
+    {
+      "fingerprint": "create|complication|recurrent-instability",
+      "reason": "entity exists: recurrent-instability"
+    },
+    {
+      "fingerprint": "create|complication|durotomy",
+      "reason": "entity exists: durotomy"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 0,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

@@ -2,7 +2,7 @@
 
 Topic: **hip-instability-after-tha**
 Framework: **1.0.0**
-Generated: 2026-07-05T22:55:55.499Z
+Generated: 2026-07-16T02:41:08.227Z
 
 ## Registry
 
@@ -12,8 +12,8 @@ Generated: 2026-07-05T22:55:55.499Z
 
 ## Assignments
 
-- **Relationship Builder** (relationship-builder): 9 gap(s) [missing_relationship] — handles_gap_kind:missing_relationship
-- **Claim Builder** (claim-builder): 9 gap(s) [missing_claim] — handles_gap_kind:missing_claim
+- **Relationship Builder** (relationship-builder): 14 gap(s) [missing_relationship] — handles_gap_kind:missing_relationship
+- **Claim Builder** (claim-builder): 13 gap(s) [missing_claim] — handles_gap_kind:missing_claim
 - **Clinical Entity Builder** (clinical-entity-builder): 3 gap(s) [missing_entity] — handles_gap_kind:missing_entity; generic_fallback
 - **Decision Point Builder** (decision-point-builder): 3 gap(s) [missing_decision_point] — handles_gap_kind:missing_decision_point
 - **Metadata Builder** (metadata-builder): 1 gap(s) [missing_metadata] — handles_gap_kind:missing_metadata

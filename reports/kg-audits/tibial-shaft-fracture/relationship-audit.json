@@ -28,25 +28,28 @@
       "impact": 8
     },
     {
-      "finding": "3 high-risk relationships lack approved review status",
-      "evidence": "Predicates: indicates_treatment, treated_by, uses_fixation",
-      "reason": "High-risk predicates require human review before publication.",
+      "finding": "Missing clinical edge: treated_by",
+      "evidence": "0 outbound treated_by edges from tibial-shaft-fracture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
       "severity": "high",
       "category": "relationship_quality",
-      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "affectedSlugs": [
+        "tibial-shaft-fracture"
+      ],
+      "suggestedFix": "Add treated_by relationship via relationship-builder agent.",
       "impact": 8
     }
   ],
   "metrics": {
-    "relationshipCount": 20,
-    "relationshipDensity": 1.5384615384615385,
-    "missingClinicalEdgeCount": 2,
-    "highRiskUnreviewedCount": 3,
+    "relationshipCount": 19,
+    "relationshipDensity": 1.5833333333333333,
+    "missingClinicalEdgeCount": 3,
+    "highRiskUnreviewedCount": 0,
     "predicateCorrectness": 1
   },
   "recommendations": [
     "Add has_classification relationship via relationship-builder agent.",
     "Add at_risk_structure relationship via relationship-builder agent.",
-    "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review."
+    "Add treated_by relationship via relationship-builder agent."
   ]
 }

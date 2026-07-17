@@ -27,6 +27,8 @@ function parseArgs(argv: string[]) {
   let topic = "";
   let outDir = "reports/kg-compiler";
   let dbBacked = false;
+  let strictDb = false;
+  let batchKey = "";
   let useEvidence = false;
   let evidencePath = "";
 
@@ -40,6 +42,12 @@ function parseArgs(argv: string[]) {
       i += 1;
     } else if (arg === "--db-backed") {
       dbBacked = true;
+    } else if (arg === "--strict-db") {
+      dbBacked = true;
+      strictDb = true;
+    } else if (arg === "--batch-key") {
+      batchKey = argv[i + 1] ?? "";
+      i += 1;
     } else if (arg === "--use-evidence") {
       useEvidence = true;
     } else if (arg === "--evidence") {
@@ -50,7 +58,7 @@ function parseArgs(argv: string[]) {
     }
   }
 
-  return { topic, outDir, dbBacked, useEvidence, evidencePath };
+  return { topic, outDir, dbBacked, strictDb, batchKey, useEvidence, evidencePath };
 }
 
 function buildSummaryMarkdown(result: Awaited<ReturnType<typeof compileNeighborhood>>) {
@@ -133,7 +141,7 @@ async function main() {
   if (!args.topic || args.topic === "__help__") {
     console.log(
       [
-        "Usage: npm run kg:compile -- --topic <topic-key> [--db-backed] [--use-evidence] [--evidence <path>]",
+        "Usage: npm run kg:compile -- --topic <topic-key> [--db-backed] [--strict-db] [--batch-key <key>] [--use-evidence] [--evidence <path>]",
         "",
         "Registered topics:",
         ...listRegisteredTopics().map((t) => `  - ${t.topicKey} (${t.displayName})`),
@@ -146,6 +154,8 @@ async function main() {
   const result = await compileNeighborhood({
     topic: args.topic,
     dbBacked: args.dbBacked,
+    strictDb: args.strictDb,
+    batchKey: args.batchKey || undefined,
     useEvidence: args.useEvidence,
     evidencePath: args.evidencePath || undefined,
   });

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-05T23:31:27.017Z",
+  "generatedAt": "2026-07-16T02:33:43.885Z",
   "frameworkVersion": "1.0.0",
   "topicKey": "bearing-surface-selection",
   "pilotKey": "bearing-surface-selection-neighborhood",
@@ -9,10 +9,46 @@
       "agentId": "relationship-builder",
       "agentName": "Relationship Builder",
       "type": "gap_resolution",
-      "gapCount": 2,
+      "gapCount": 38,
       "gapIds": [
         "gap-rel-1",
-        "gap-rel-5"
+        "gap-rel-2",
+        "gap-rel-3",
+        "gap-rel-4",
+        "gap-rel-5",
+        "gap-rel-6",
+        "gap-rel-8",
+        "gap-rel-9",
+        "gap-rel-10",
+        "gap-rel-13",
+        "gap-rel-16",
+        "gap-rel-17",
+        "gap-rel-18",
+        "gap-rel-21",
+        "gap-rel-22",
+        "gap-rel-24",
+        "gap-rel-25",
+        "gap-rel-26",
+        "gap-rel-27",
+        "gap-rel-28",
+        "gap-rel-29",
+        "gap-rel-30",
+        "gap-rel-34",
+        "gap-rel-35",
+        "gap-rel-36",
+        "gap-rel-37",
+        "gap-rel-38",
+        "gap-rel-39",
+        "gap-rel-40",
+        "gap-rel-41",
+        "gap-rel-42",
+        "gap-rel-46",
+        "gap-proc-approach-55",
+        "gap-proc-approach-56",
+        "gap-proc-approach-57",
+        "gap-proc-approach-58",
+        "gap-proc-approach-59",
+        "gap-proc-approach-60"
       ],
       "gapKinds": [
         "missing_relationship"
@@ -21,10 +57,33 @@
         "work-clinical-entity-builder",
         "work-anatomy-builder"
       ],
-      "estimatedConfidence": 0.92,
-      "requiredReviewer": "none",
+      "estimatedConfidence": 0.8978947368421061,
+      "requiredReviewer": "attending",
       "matchReasons": [
         "handles_gap_kind:missing_relationship"
+      ]
+    },
+    {
+      "workItemId": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "agentName": "Clinical Entity Builder",
+      "type": "gap_resolution",
+      "gapCount": 4,
+      "gapIds": [
+        "gap-entity-neighbor-7",
+        "gap-entity-neighbor-15",
+        "gap-entity-neighbor-20",
+        "gap-entity-neighbor-23"
+      ],
+      "gapKinds": [
+        "missing_entity"
+      ],
+      "dependencies": [],
+      "estimatedConfidence": 0.95,
+      "requiredReviewer": "clinical_expert",
+      "matchReasons": [
+        "handles_gap_kind:missing_entity",
+        "generic_fallback"
       ]
     },
     {
@@ -32,16 +91,22 @@
       "agentId": "claim-builder",
       "agentName": "Claim Builder",
       "type": "gap_resolution",
-      "gapCount": 8,
+      "gapCount": 14,
       "gapIds": [
-        "gap-claim-2",
-        "gap-claim-type-3",
-        "gap-claim-type-4",
-        "gap-claim-6",
-        "gap-claim-type-7",
-        "gap-claim-type-8",
-        "gap-biomech-claim-11",
-        "gap-biomech-claim-12"
+        "gap-claim-11",
+        "gap-claim-type-12",
+        "gap-claim-31",
+        "gap-claim-type-32",
+        "gap-claim-type-33",
+        "gap-claim-43",
+        "gap-claim-type-44",
+        "gap-claim-type-45",
+        "gap-claim-47",
+        "gap-claim-type-48",
+        "gap-claim-type-49",
+        "gap-biomech-claim-52",
+        "gap-biomech-claim-53",
+        "gap-biomech-claim-54"
       ],
       "gapKinds": [
         "missing_claim"
@@ -49,10 +114,32 @@
       "dependencies": [
         "work-relationship-builder"
       ],
-      "estimatedConfidence": 0.8,
+      "estimatedConfidence": 0.8021428571428572,
       "requiredReviewer": "clinical_expert",
       "matchReasons": [
         "handles_gap_kind:missing_claim"
+      ]
+    },
+    {
+      "workItemId": "work-metadata-builder",
+      "agentId": "metadata-builder",
+      "agentName": "Metadata Builder",
+      "type": "gap_resolution",
+      "gapCount": 2,
+      "gapIds": [
+        "gap-meta-rel-14",
+        "gap-meta-rel-19"
+      ],
+      "gapKinds": [
+        "missing_metadata"
+      ],
+      "dependencies": [
+        "work-relationship-builder"
+      ],
+      "estimatedConfidence": 0.9,
+      "requiredReviewer": "none",
+      "matchReasons": [
+        "handles_gap_kind:missing_metadata"
       ]
     },
     {
@@ -62,8 +149,8 @@
       "type": "gap_resolution",
       "gapCount": 2,
       "gapIds": [
-        "gap-asset-card-9",
-        "gap-asset-question-10"
+        "gap-asset-card-50",
+        "gap-asset-question-51"
       ],
       "gapKinds": [
         "missing_asset_link"
@@ -83,6 +170,7 @@
     "work-anatomy-builder",
     "work-relationship-builder",
     "work-claim-builder",
+    "work-metadata-builder",
     "work-asset-linker",
     "work-duplicate-detector",
     "work-quality-scorer",

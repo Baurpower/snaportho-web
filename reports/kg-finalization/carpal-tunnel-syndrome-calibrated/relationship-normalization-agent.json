@@ -1,0 +1,246 @@
+{
+  "agent": "RelationshipNormalizationAgent",
+  "generatedAt": "2026-07-12T23:55:30.740Z",
+  "result": {
+    "approved": [],
+    "modified": [
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts",
+        "objectKind": "relationship",
+        "agent": "RelationshipNormalizationAgent",
+        "reason": "Added qualifier to broad treatment relationship.",
+        "before": {
+          "subjectSlug": "carpal-tunnel-syndrome",
+          "predicate": "treated_by",
+          "objectSlug": "neutral-wrist-night-orthosis-for-cts",
+          "metadata": {
+            "review_status": "needs_review",
+            "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts"
+          },
+          "source": "spec"
+        },
+        "after": {
+          "subjectSlug": "carpal-tunnel-syndrome",
+          "predicate": "treated_by",
+          "objectSlug": "neutral-wrist-night-orthosis-for-cts",
+          "metadata": {
+            "review_status": "needs_review",
+            "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts",
+            "finalization_qualifier": "Treatment relationship requires indication context and must not be interpreted as a default pathway."
+          },
+          "source": "spec"
+        },
+        "confidence": 0.72
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts",
+        "objectKind": "relationship",
+        "agent": "RelationshipNormalizationAgent",
+        "reason": "Added qualifier to broad treatment relationship.",
+        "before": {
+          "subjectSlug": "carpal-tunnel-syndrome",
+          "predicate": "treated_by",
+          "objectSlug": "corticosteroid-injection-for-cts",
+          "metadata": {
+            "review_status": "needs_review",
+            "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts"
+          },
+          "source": "spec"
+        },
+        "after": {
+          "subjectSlug": "carpal-tunnel-syndrome",
+          "predicate": "treated_by",
+          "objectSlug": "corticosteroid-injection-for-cts",
+          "metadata": {
+            "review_status": "needs_review",
+            "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts",
+            "finalization_qualifier": "Treatment relationship requires indication context and must not be interpreted as a default pathway."
+          },
+          "source": "spec"
+        },
+        "confidence": 0.72
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release",
+        "objectKind": "relationship",
+        "agent": "RelationshipNormalizationAgent",
+        "reason": "Added qualifier to broad treatment relationship.",
+        "before": {
+          "subjectSlug": "carpal-tunnel-syndrome",
+          "predicate": "treated_by",
+          "objectSlug": "open-carpal-tunnel-release",
+          "metadata": {
+            "review_status": "needs_review",
+            "curation_route": "ATTENDING_REVIEW",
+            "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release"
+          },
+          "source": "spec"
+        },
+        "after": {
+          "subjectSlug": "carpal-tunnel-syndrome",
+          "predicate": "treated_by",
+          "objectSlug": "open-carpal-tunnel-release",
+          "metadata": {
+            "review_status": "needs_review",
+            "curation_route": "ATTENDING_REVIEW",
+            "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release",
+            "finalization_qualifier": "Treatment relationship requires indication context and must not be interpreted as a default pathway."
+          },
+          "source": "spec"
+        },
+        "confidence": 0.72
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release",
+        "objectKind": "relationship",
+        "agent": "RelationshipNormalizationAgent",
+        "reason": "Added qualifier to broad treatment relationship.",
+        "before": {
+          "subjectSlug": "carpal-tunnel-syndrome",
+          "predicate": "treated_by",
+          "objectSlug": "endoscopic-carpal-tunnel-release",
+          "metadata": {
+            "review_status": "needs_review",
+            "curation_route": "ATTENDING_REVIEW",
+            "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release"
+          },
+          "source": "spec"
+        },
+        "after": {
+          "subjectSlug": "carpal-tunnel-syndrome",
+          "predicate": "treated_by",
+          "objectSlug": "endoscopic-carpal-tunnel-release",
+          "metadata": {
+            "review_status": "needs_review",
+            "curation_route": "ATTENDING_REVIEW",
+            "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release",
+            "finalization_qualifier": "Treatment relationship requires indication context and must not be interpreted as a default pathway."
+          },
+          "source": "spec"
+        },
+        "confidence": 0.72
+      }
+    ],
+    "rejected": [],
+    "escalations": [],
+    "warnings": [],
+    "metrics": {
+      "duplicatesPrevented": 0,
+      "relationshipsNormalized": 4,
+      "unsupportedEdgesRemoved": 0,
+      "reviewDecisionsInherited": 0,
+      "orphanEntitiesRepaired": 0,
+      "publicationBlockersDetected": 0
+    }
+  },
+  "artifacts": {
+    "relationship_revisions": [
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts",
+        "reason": "Broad treated_by edge retained only with explicit non-default pathway qualifier.",
+        "before": {
+          "subjectSlug": "carpal-tunnel-syndrome",
+          "predicate": "treated_by",
+          "objectSlug": "neutral-wrist-night-orthosis-for-cts",
+          "metadata": {
+            "review_status": "needs_review",
+            "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts"
+          },
+          "source": "spec"
+        },
+        "after": {
+          "subjectSlug": "carpal-tunnel-syndrome",
+          "predicate": "treated_by",
+          "objectSlug": "neutral-wrist-night-orthosis-for-cts",
+          "metadata": {
+            "review_status": "needs_review",
+            "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts",
+            "finalization_qualifier": "Treatment relationship requires indication context and must not be interpreted as a default pathway."
+          },
+          "source": "spec"
+        }
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts",
+        "reason": "Broad treated_by edge retained only with explicit non-default pathway qualifier.",
+        "before": {
+          "subjectSlug": "carpal-tunnel-syndrome",
+          "predicate": "treated_by",
+          "objectSlug": "corticosteroid-injection-for-cts",
+          "metadata": {
+            "review_status": "needs_review",
+            "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts"
+          },
+          "source": "spec"
+        },
+        "after": {
+          "subjectSlug": "carpal-tunnel-syndrome",
+          "predicate": "treated_by",
+          "objectSlug": "corticosteroid-injection-for-cts",
+          "metadata": {
+            "review_status": "needs_review",
+            "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts",
+            "finalization_qualifier": "Treatment relationship requires indication context and must not be interpreted as a default pathway."
+          },
+          "source": "spec"
+        }
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release",
+        "reason": "Broad treated_by edge retained only with explicit non-default pathway qualifier.",
+        "before": {
+          "subjectSlug": "carpal-tunnel-syndrome",
+          "predicate": "treated_by",
+          "objectSlug": "open-carpal-tunnel-release",
+          "metadata": {
+            "review_status": "needs_review",
+            "curation_route": "ATTENDING_REVIEW",
+            "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release"
+          },
+          "source": "spec"
+        },
+        "after": {
+          "subjectSlug": "carpal-tunnel-syndrome",
+          "predicate": "treated_by",
+          "objectSlug": "open-carpal-tunnel-release",
+          "metadata": {
+            "review_status": "needs_review",
+            "curation_route": "ATTENDING_REVIEW",
+            "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release",
+            "finalization_qualifier": "Treatment relationship requires indication context and must not be interpreted as a default pathway."
+          },
+          "source": "spec"
+        }
+      },
+      {
+        "fingerprint": "relationship|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release",
+        "reason": "Broad treated_by edge retained only with explicit non-default pathway qualifier.",
+        "before": {
+          "subjectSlug": "carpal-tunnel-syndrome",
+          "predicate": "treated_by",
+          "objectSlug": "endoscopic-carpal-tunnel-release",
+          "metadata": {
+            "review_status": "needs_review",
+            "curation_route": "ATTENDING_REVIEW",
+            "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release"
+          },
+          "source": "spec"
+        },
+        "after": {
+          "subjectSlug": "carpal-tunnel-syndrome",
+          "predicate": "treated_by",
+          "objectSlug": "endoscopic-carpal-tunnel-release",
+          "metadata": {
+            "review_status": "needs_review",
+            "curation_route": "ATTENDING_REVIEW",
+            "_provenance_fingerprint": "rel|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release",
+            "finalization_qualifier": "Treatment relationship requires indication context and must not be interpreted as a default pathway."
+          },
+          "source": "spec"
+        }
+      }
+    ],
+    "decision_point_conversions": [],
+    "rejected_relationships": []
+  }
+}

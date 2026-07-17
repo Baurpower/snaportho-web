@@ -2,7 +2,7 @@
 
 Topic: **periprosthetic-knee-fracture**
 Framework: **1.0.0**
-Generated: 2026-07-05T23:04:58.208Z
+Generated: 2026-07-16T02:54:52.457Z
 
 ## Registry
 
@@ -12,9 +12,9 @@ Generated: 2026-07-05T23:04:58.208Z
 
 ## Assignments
 
-- **Clinical Entity Builder** (clinical-entity-builder): 4 gap(s) [missing_entity] — handles_gap_kind:missing_entity; generic_fallback
 - **Relationship Builder** (relationship-builder): 8 gap(s) [missing_relationship] — handles_gap_kind:missing_relationship
-- **Claim Builder** (claim-builder): 5 gap(s) [missing_claim] — handles_gap_kind:missing_claim
+- **Claim Builder** (claim-builder): 9 gap(s) [missing_claim] — handles_gap_kind:missing_claim
+- **Clinical Entity Builder** (clinical-entity-builder): 4 gap(s) [missing_entity] — handles_gap_kind:missing_entity; generic_fallback
 - **Decision Point Builder** (decision-point-builder): 3 gap(s) [missing_decision_point] — handles_gap_kind:missing_decision_point
 - **Asset Linker** (asset-linker): 2 gap(s) [missing_asset_link] — handles_gap_kind:missing_asset_link
 

@@ -1,0 +1,1481 @@
+[
+  {
+    "proposal_fingerprint": "claim|claim-pop-context",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Human review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-pop-context",
+      "claim_type": "fact",
+      "claim_text": "A postoperative recommendation is incomplete without patient population, fixation construct, procedure type, and clinical context.",
+      "primary_entity_slug": "postoperative-protocols",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-wb-variable",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Weight-bearing recommendation: human review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-wb-variable",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Weight-bearing labels are not universal prescriptions; progression depends on construct stability, biology, procedure, soft tissues, and patient factors.",
+      "primary_entity_slug": "construct-dependent-progression",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-wb-progression",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Weight-bearing and time-dependent recommendation: human review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-wb-progression",
+      "claim_type": "fact",
+      "claim_text": "Progressive loading should be governed by explicit clinical, functional, and imaging milestones rather than time alone.",
+      "primary_entity_slug": "progressive-weight-bearing",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-immobilization",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Time-dependent recommendation: human review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-immobilization",
+      "claim_type": "fact",
+      "claim_text": "Immobilization balances protection against stiffness, skin injury, deconditioning, and thromboembolic risk.",
+      "primary_entity_slug": "protection-period",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-wound",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Human review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-wound",
+      "claim_type": "red_flag",
+      "claim_text": "Persistent drainage, spreading erythema, dehiscence, fever, or increasing pain requires prompt wound and infection reassessment.",
+      "primary_entity_slug": "incision-surveillance",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-drain",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Time-dependent recommendation: human review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-drain",
+      "claim_type": "fact",
+      "claim_text": "Drain removal should use the procedure-specific plan, output trend, wound status, and attending preference.",
+      "primary_entity_slug": "drain-management-protocol",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-follow-up",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Time-dependent recommendation: human review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-follow-up",
+      "claim_type": "fact",
+      "claim_text": "Follow-up cadence should match the risk window for wound failure, loss of reduction, healing failure, and implant complications.",
+      "primary_entity_slug": "postoperative-follow-up-schedule",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-imaging",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Human review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-imaging",
+      "claim_type": "fact",
+      "claim_text": "Surveillance imaging is interpreted against prior studies and the expected trajectory for the procedure and construct.",
+      "primary_entity_slug": "radiographic-follow-up",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-rom",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Time-dependent recommendation: human review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-rom",
+      "claim_type": "fact",
+      "claim_text": "Range-of-motion progression must respect tissue healing, repair security, fixation stability, and procedure-specific restrictions.",
+      "primary_entity_slug": "motion-progression",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-return",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Time-dependent recommendation: human review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-return",
+      "claim_type": "fact",
+      "claim_text": "Return to work and sport should be criteria-based and account for task demands, symptoms, strength, motion, confidence, and reinjury risk.",
+      "primary_entity_slug": "return-to-activity-progression",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-dvt",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Medication-duration recommendation: attending review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-dvt",
+      "claim_type": "fact",
+      "claim_text": "DVT prophylaxis agent and duration require patient-, procedure-, mobility-, and bleeding-risk stratification.",
+      "primary_entity_slug": "dvt-prophylaxis-protocol",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-antibiotic",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Medication-duration recommendation: attending review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-antibiotic",
+      "claim_type": "fact",
+      "claim_text": "Postoperative antibiotic duration depends on indication, contamination, cultures, source control, and institutional practice.",
+      "primary_entity_slug": "postoperative-antibiotic-protocol",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-ho",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Medication-duration recommendation: attending review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-ho",
+      "claim_type": "fact",
+      "claim_text": "Heterotopic ossification prophylaxis is reserved for context-specific risk and must consider medication or radiation harms.",
+      "primary_entity_slug": "heterotopic-ossification-prophylaxis",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-trauma",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Attending review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-trauma",
+      "claim_type": "fact",
+      "claim_text": "Failure of fracture healing progression prompts reassessment of mechanics, biology, infection, host factors, and adherence.",
+      "primary_entity_slug": "failure-to-progress",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-dynamization",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Weight-bearing/construct recommendation: attending review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-dynamization",
+      "claim_type": "fact",
+      "claim_text": "Dynamization is a construct- and fracture-specific intervention, not a routine response to every slow-healing fracture.",
+      "primary_entity_slug": "dynamization-consideration",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-acl",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Time-dependent recommendation: human review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-acl",
+      "claim_type": "fact",
+      "claim_text": "ACL rehabilitation progression integrates effusion control, motion, strength, movement quality, and graft/meniscus constraints.",
+      "primary_entity_slug": "acl-rehabilitation-progression",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-cuff",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Time-dependent recommendation: human review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-cuff",
+      "claim_type": "fact",
+      "claim_text": "Rotator cuff progression varies with tear size, tissue quality, repair security, concomitant procedures, and patient factors.",
+      "primary_entity_slug": "rotator-cuff-progression",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-tha",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Time-dependent recommendation: human review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-tha",
+      "claim_type": "fact",
+      "claim_text": "THA precautions vary with approach, stability, soft-tissue repair, component position, and patient risk.",
+      "primary_entity_slug": "tha-precautions",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-spine",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Time-dependent recommendation: specialist review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-spine",
+      "claim_type": "fact",
+      "claim_text": "Fusion surveillance and activity progression account for symptoms, neurologic status, imaging, construct, bone health, and work demands.",
+      "primary_entity_slug": "spine-fusion-surveillance",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-peds",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Pediatric growth/remodeling pathway: specialist review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-peds",
+      "claim_type": "fact",
+      "claim_text": "Skeletally immature patients may need longitudinal growth and physeal surveillance beyond apparent injury healing.",
+      "primary_entity_slug": "pediatric-growth-surveillance",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-shared",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7925000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.793 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Human review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-shared",
+      "claim_type": "clinical_script",
+      "claim_text": "When evidence and surgeon preferences permit multiple safe pathways, document uncertainty and use shared decision-making.",
+      "primary_entity_slug": "shared-decision-checkpoint",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or",
+        "floor",
+        "caseprep",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|dp-wb-advance",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.78,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.780 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Human review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-wb-advance",
+      "subject_entity_slug": "construct-dependent-progression",
+      "pattern_type": "milestone_progression",
+      "trigger": "Patient reaches planned clinical, imaging, and functional criteria for loading progression",
+      "action": "Confirm construct/procedure constraints and advance loading with explicit protection and regression instructions",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": false,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|dp-wb-fail",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.78,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.780 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Attending review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-wb-fail",
+      "subject_entity_slug": "failure-to-progress",
+      "pattern_type": "failure_to_progress",
+      "trigger": "Pain, swelling, function, or imaging fails to follow the expected trajectory",
+      "action": "Pause progression and reassess diagnosis, adherence, construct, biology, infection, and rehabilitation plan",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|dp-wound",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.78,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.780 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Attending review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-wound",
+      "subject_entity_slug": "postoperative-red-flags",
+      "pattern_type": "wound_escalation",
+      "trigger": "Persistent drainage, dehiscence, spreading erythema, systemic symptoms, or rapidly increasing pain",
+      "action": "Arrange urgent examination and infection workup; escalate for source control when indicated",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|dp-neurovascular",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.78,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.780 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Attending review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-neurovascular",
+      "subject_entity_slug": "postoperative-red-flags",
+      "pattern_type": "limb_threat",
+      "trigger": "New motor/sensory deficit, loss of perfusion, uncontrolled pain, or compartment concern",
+      "action": "Remove external constriction as appropriate and obtain immediate surgical evaluation",
+      "urgency": "emergent",
+      "safety_criticality": "emergency",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|dp-healing",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.78,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.780 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Attending review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-healing",
+      "subject_entity_slug": "delayed-union-pathway",
+      "pattern_type": "healing_surveillance",
+      "trigger": "Serial assessment shows inadequate fracture-healing progression",
+      "action": "Evaluate mechanics, biology, infection, medications, nutrition, nicotine exposure, and construct before intervention",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|dp-hardware",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.78,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.780 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Attending review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-hardware",
+      "subject_entity_slug": "implant-surveillance",
+      "pattern_type": "construct_failure",
+      "trigger": "Migration, breakage, loss of alignment, or symptomatic prominence is detected",
+      "action": "Protect the reconstruction and obtain attending review for observation, revision, or removal",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|dp-return",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.78,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.780 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Human review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-return",
+      "subject_entity_slug": "return-to-activity-progression",
+      "pattern_type": "functional_clearance",
+      "trigger": "Patient requests return to work, sport, or unrestricted activity",
+      "action": "Compare objective milestones and task demands, discuss residual risk, and document shared decision",
+      "urgency": "routine",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": false,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|dp-medication",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.78,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.780 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Attending review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-medication",
+      "subject_entity_slug": "dvt-prophylaxis-protocol",
+      "pattern_type": "medication_duration",
+      "trigger": "Planned prophylaxis duration is reached or bleeding/thrombotic risk changes",
+      "action": "Reassess patient, procedure, mobility, and competing risks before stopping or extending prophylaxis",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|dp-peds",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.78,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.780 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Specialist review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-peds",
+      "subject_entity_slug": "pediatric-growth-surveillance",
+      "pattern_type": "growth_disturbance",
+      "trigger": "Growth asymmetry, angular change, length discrepancy, or physeal bar is suspected",
+      "action": "Obtain longitudinal measurements and pediatric orthopaedic review for remaining-growth strategy",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|dp-spine",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.78,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.780 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Specialist review required. Population, fixation construct, procedure type, and clinical context must be recorded; preserve surgeon variability.",
+    "metadata": {
+      "pilot": "postoperative-protocols-neighborhood",
+      "review_packet_key": "pilot:postoperative-protocols-neighborhood",
+      "review_packet_label": "Postoperative Protocols Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-spine",
+      "subject_entity_slug": "spine-fusion-surveillance",
+      "pattern_type": "neurologic_escalation",
+      "trigger": "New neurologic deficit, bowel/bladder change, or rapidly worsening axial/radicular symptoms",
+      "action": "Initiate urgent spine evaluation and appropriate imaging",
+      "urgency": "emergent",
+      "safety_criticality": "emergency",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:28:59.792Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  }
+]

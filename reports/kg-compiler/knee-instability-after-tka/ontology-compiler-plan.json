@@ -2,13 +2,13 @@
   "topicKey": "knee-instability-after-tka",
   "pilotKey": "knee-instability-after-tka-neighborhood",
   "displayName": "Knee Instability After TKA",
-  "generatedAt": "2026-07-05T23:12:57.957Z",
+  "generatedAt": "2026-07-16T02:53:18.224Z",
   "stages": [
     {
       "stage": 1,
       "name": "Neighborhood Resolution",
       "status": "completed",
-      "summary": "Resolved 2 entities from canonical DB for Knee Instability After TKA.",
+      "summary": "Resolved 7 entities from canonical DB for Knee Instability After TKA.",
       "outputs": [
         "neighborhood_plan"
       ]
@@ -26,7 +26,7 @@
       "stage": 3,
       "name": "Gap Analysis",
       "status": "completed",
-      "summary": "Identified 28 gaps across 5 kinds.",
+      "summary": "Identified 37 gaps across 5 kinds.",
       "outputs": [
         "ontology-gap-report.json"
       ]
@@ -48,7 +48,7 @@
       "stage": 5,
       "name": "Agent Orchestration",
       "status": "completed",
-      "summary": "Executed 10/10 agents; 86 unique proposals; 0 failed.",
+      "summary": "Executed 10/10 agents; 90 unique proposals; 0 failed.",
       "outputs": [
         "agent-execution-report.json",
         "agent-output-summary.md",
@@ -79,7 +79,7 @@
       "stage": 7,
       "name": "Intelligent Auto Review",
       "status": "completed",
-      "summary": "88.4% auto-approved; 11.6% escalated.",
+      "summary": "88.9% auto-approved; 11.1% escalated.",
       "outputs": [
         "ontology-auto-review.json"
       ]
@@ -104,24 +104,24 @@
     }
   ],
   "neighborhood": {
-    "entityCount": 2,
-    "relationshipCount": 0,
+    "entityCount": 7,
+    "relationshipCount": 6,
     "claimCount": 2,
     "decisionPointCount": 0
   },
   "gaps": {
-    "total": 28,
+    "total": 37,
     "byKind": {
-      "missing_relationship": 10,
-      "missing_claim": 9,
+      "missing_relationship": 15,
+      "missing_claim": 13,
       "missing_entity": 4,
       "missing_decision_point": 3,
       "missing_asset_link": 2
     },
     "byPriority": {
-      "medium": 13,
-      "critical": 7,
-      "high": 8
+      "high": 10,
+      "medium": 19,
+      "critical": 8
     }
   },
   "workPlan": {
@@ -457,10 +457,10 @@
     ]
   },
   "review": {
-    "totalProposals": 86,
-    "autoApproved": 76,
+    "totalProposals": 90,
+    "autoApproved": 80,
     "humanReview": 10,
-    "humanReviewPercent": 11.6
+    "humanReviewPercent": 11.1
   },
   "publication": {
     "currentMaturityLevel": 5,

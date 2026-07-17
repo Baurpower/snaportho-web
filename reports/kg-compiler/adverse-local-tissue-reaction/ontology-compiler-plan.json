@@ -2,13 +2,13 @@
   "topicKey": "adverse-local-tissue-reaction",
   "pilotKey": "adverse-local-tissue-reaction-neighborhood",
   "displayName": "Adverse Local Tissue Reaction (Metal Reaction)",
-  "generatedAt": "2026-07-05T23:00:26.088Z",
+  "generatedAt": "2026-07-16T02:31:42.966Z",
   "stages": [
     {
       "stage": 1,
       "name": "Neighborhood Resolution",
       "status": "completed",
-      "summary": "Resolved 2 entities from canonical DB for Adverse Local Tissue Reaction (Metal Reaction).",
+      "summary": "Resolved 8 entities from canonical DB for Adverse Local Tissue Reaction (Metal Reaction).",
       "outputs": [
         "neighborhood_plan"
       ]
@@ -26,7 +26,7 @@
       "stage": 3,
       "name": "Gap Analysis",
       "status": "completed",
-      "summary": "Identified 7 gaps across 3 kinds.",
+      "summary": "Identified 23 gaps across 5 kinds.",
       "outputs": [
         "ontology-gap-report.json"
       ]
@@ -35,7 +35,7 @@
       "stage": 4,
       "name": "Work Planning",
       "status": "completed",
-      "summary": "Scheduled 8 work items for 8 registered agents.",
+      "summary": "Scheduled 10 work items for 10 registered agents.",
       "outputs": [
         "ontology-work-plan.json",
         "agent-assignment-plan.json",
@@ -48,13 +48,14 @@
       "stage": 5,
       "name": "Agent Orchestration",
       "status": "completed",
-      "summary": "Executed 8/8 agents; 88 unique proposals; 0 failed.",
+      "summary": "Executed 10/10 agents; 90 unique proposals; 0 failed.",
       "outputs": [
         "agent-execution-report.json",
         "agent-output-summary.md",
         "work-clinical-entity-builder",
         "work-anatomy-builder",
         "work-relationship-builder",
+        "work-metadata-builder",
         "work-claim-builder",
         "work-asset-linker",
         "work-duplicate-detector",
@@ -68,7 +69,7 @@
       "stage": 6,
       "name": "Merge",
       "status": "completed",
-      "summary": "Merged draft: 65 entities, 7 relationships; 0 conflicts.",
+      "summary": "Merged draft: 65 entities, 12 relationships; 0 conflicts.",
       "outputs": [
         "merged-neighborhood-draft.json",
         "conflict-report.json"
@@ -78,7 +79,7 @@
       "stage": 7,
       "name": "Intelligent Auto Review",
       "status": "completed",
-      "summary": "89.8% auto-approved; 10.2% escalated.",
+      "summary": "88.9% auto-approved; 11.1% escalated.",
       "outputs": [
         "ontology-auto-review.json"
       ]
@@ -87,7 +88,7 @@
       "stage": 8,
       "name": "Human Review Packet",
       "status": "completed",
-      "summary": "9 items in human queue.",
+      "summary": "10 items in human queue.",
       "outputs": [
         "human_review_packet"
       ]
@@ -103,27 +104,33 @@
     }
   ],
   "neighborhood": {
-    "entityCount": 2,
-    "relationshipCount": 0,
-    "claimCount": 0,
+    "entityCount": 8,
+    "relationshipCount": 12,
+    "claimCount": 4,
     "decisionPointCount": 0
   },
   "gaps": {
-    "total": 7,
+    "total": 23,
     "byKind": {
-      "missing_relationship": 1,
-      "missing_claim": 4,
+      "missing_relationship": 9,
+      "missing_metadata": 1,
+      "missing_claim": 10,
+      "missing_entity": 1,
       "missing_asset_link": 2
     },
     "byPriority": {
-      "medium": 7
+      "high": 3,
+      "medium": 18,
+      "critical": 2
     }
   },
   "workPlan": {
-    "workItemCount": 8,
+    "workItemCount": 10,
     "agentsRequired": [
       "Relationship Builder",
+      "Metadata Builder",
       "Claim Builder",
+      "Clinical Entity Builder",
       "Asset Linker",
       "Conflict Resolver",
       "Quality Scorer",
@@ -132,7 +139,9 @@
     ],
     "agentIds": [
       "relationship-builder",
+      "metadata-builder",
       "claim-builder",
+      "clinical-entity-builder",
       "asset-linker",
       "duplicate-detector",
       "quality-scorer",
@@ -448,16 +457,16 @@
     ]
   },
   "review": {
-    "totalProposals": 88,
-    "autoApproved": 79,
-    "humanReview": 9,
-    "humanReviewPercent": 10.2
+    "totalProposals": 90,
+    "autoApproved": 80,
+    "humanReview": 10,
+    "humanReviewPercent": 11.1
   },
   "publication": {
     "currentMaturityLevel": 5,
     "requiredMaturityLevel": 7,
     "ready": false,
-    "blockerCount": 4
+    "blockerCount": 5
   },
   "constraints": {
     "databaseModified": false,

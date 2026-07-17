@@ -1,0 +1,287 @@
+{
+  "generatedAt": "2026-07-09T14:21:25.677Z",
+  "auditorVersion": "1.0.0",
+  "topicKey": "carpal-tunnel-syndrome",
+  "pilotKey": "carpal-tunnel-syndrome-neighborhood",
+  "displayName": "Carpal Tunnel Syndrome",
+  "dataSource": {
+    "neighborhood": "compiler_snapshot",
+    "reportsLoaded": [
+      "evidence-packet.json"
+    ],
+    "reportsMissing": [
+      "ontology-compiler-plan.json",
+      "ontology-gap-report.json",
+      "ontology-work-plan.json",
+      "agent-execution-report.json",
+      "merged-neighborhood-draft.json",
+      "publication-readiness.json",
+      "ontology-publication-readiness.json",
+      "ontology-auto-review.json",
+      "ontology-human-review-queue.json",
+      "conflict-report.json",
+      "agent-assignment-plan.json",
+      "ontology-neighborhood-plan.json"
+    ]
+  },
+  "overallScore": 87,
+  "categories": {
+    "ontology_completeness": 84,
+    "evidence_quality": 85,
+    "graph_integrity": 84,
+    "shared_knowledge_reuse": 98,
+    "relationship_quality": 57,
+    "claim_quality": 84,
+    "decision_point_quality": 85,
+    "metadata_quality": 88,
+    "provenance_quality": 100,
+    "review_calibration": 92,
+    "agent_performance": 92,
+    "compiler_quality": 84,
+    "educational_quality": 94,
+    "cross_neighborhood_consistency": 100,
+    "publication_readiness": 0
+  },
+  "publication": {
+    "status": "NOT_READY",
+    "ready": false,
+    "blockers": [
+      "Publication readiness report missing"
+    ],
+    "currentLevel": 0,
+    "requiredLevel": 7,
+    "score": 0,
+    "deductions": [
+      {
+        "finding": "No publication readiness report",
+        "evidence": "publication-readiness.json missing",
+        "reason": "Cannot determine publication eligibility without compiler publication gate.",
+        "severity": "critical",
+        "category": "publication_readiness",
+        "suggestedFix": "Run compiler publication-validator stage.",
+        "impact": 15
+      }
+    ]
+  },
+  "topFindings": [
+    {
+      "finding": "Low evidence coverage (0% of proposals cite evidence)",
+      "evidence": "0/234 proposals have evidence_refs",
+      "reason": "Every proposal should cite supporting evidence per factory contract.",
+      "severity": "critical",
+      "category": "evidence_quality",
+      "suggestedFix": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing clinical edge: has_classification",
+      "evidence": "0 outbound has_classification edges from carpal-tunnel-syndrome",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "carpal-tunnel-syndrome"
+      ],
+      "suggestedFix": "Add has_classification relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing decision point pattern: emergency_escalation",
+      "evidence": "0 decision points with pattern emergency_escalation",
+      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
+      "severity": "critical",
+      "category": "decision_point_quality",
+      "suggestedFix": "Add emergency_escalation decision point with attending-gated review.",
+      "impact": 15
+    },
+    {
+      "finding": "No publication readiness report",
+      "evidence": "publication-readiness.json missing",
+      "reason": "Cannot determine publication eligibility without compiler publication gate.",
+      "severity": "critical",
+      "category": "publication_readiness",
+      "suggestedFix": "Run compiler publication-validator stage.",
+      "impact": 15
+    },
+    {
+      "finding": "No compiler gap report available",
+      "evidence": "ontology-gap-report.json missing from reports/kg-compiler",
+      "reason": "Auditor cannot verify ontology completeness without compiler gap analysis.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "suggestedFix": "Run npm run kg:compile -- --topic <topic> to generate gap report.",
+      "impact": 8
+    },
+    {
+      "finding": "No classification system present",
+      "evidence": "0 classification entities in merged draft",
+      "reason": "Fracture diagnoses require classification when one exists clinically.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "suggestedFix": "Link has_classification and has_grade edges to a classification system.",
+      "impact": 8
+    },
+    {
+      "finding": "3 orphan entities with no relationships",
+      "evidence": "Slugs: collateral-ligaments, abductor-pollicis-brevis, carpal-tunnel-release-postoperative-protocol",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "collateral-ligaments",
+        "abductor-pollicis-brevis",
+        "carpal-tunnel-release-postoperative-protocol"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 8
+    },
+    {
+      "finding": "2 disconnected anatomy structures",
+      "evidence": "Disconnected: collateral-ligaments, abductor-pollicis-brevis",
+      "reason": "Anatomy must connect to the condition graph for educational traversal.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "collateral-ligaments",
+        "abductor-pollicis-brevis"
+      ],
+      "suggestedFix": "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: has_imaging_finding",
+      "evidence": "0 outbound has_imaging_finding edges from carpal-tunnel-syndrome",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "carpal-tunnel-syndrome"
+      ],
+      "suggestedFix": "Add has_imaging_finding relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: has_complication",
+      "evidence": "0 outbound has_complication edges from carpal-tunnel-syndrome",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "carpal-tunnel-syndrome"
+      ],
+      "suggestedFix": "Add has_complication relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "14 high-risk relationships lack approved review status",
+      "evidence": "Predicates: treated_by, at_risk_structure",
+      "reason": "High-risk predicates require human review before publication.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "impact": 8
+    },
+    {
+      "finding": "All claims remain generated_draft",
+      "evidence": "8/8 claims are unreviewed drafts",
+      "reason": "Draft claims cannot be consumed as verified educational content.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Route claims through human review queue before publication.",
+      "impact": 8
+    },
+    {
+      "finding": "Insufficient evidence support on claim proposals",
+      "evidence": "0% of claim proposals cite evidence",
+      "reason": "Every claim should cite supporting evidence.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Attach evidence_refs from evidence packet to each claim proposal.",
+      "impact": 8
+    },
+    {
+      "finding": "Primary entity missing metadata: curriculum_tags, board_relevance",
+      "evidence": "Entity carpal-tunnel-syndrome metadata keys: clinical_kind, pilot, maturity_target, cluster, review_packet_key, review_packet_label, factory_version, slug, description, _provenance_fingerprint",
+      "reason": "Primary condition entities require educational and curriculum metadata.",
+      "severity": "high",
+      "category": "metadata_quality",
+      "affectedSlugs": [
+        "carpal-tunnel-syndrome"
+      ],
+      "suggestedFix": "Run metadata-builder to populate clinical_kind, curriculum_tags, board_relevance.",
+      "impact": 8
+    },
+    {
+      "finding": "No auto-review calibration data",
+      "evidence": "ontology-auto-review.json missing",
+      "reason": "Cannot evaluate false positive/negative rates without review engine output.",
+      "severity": "high",
+      "category": "review_calibration",
+      "suggestedFix": "Run compiler to generate ontology-auto-review.json.",
+      "impact": 8
+    }
+  ],
+  "prioritizedRecommendations": [
+    {
+      "priority": 1,
+      "action": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
+      "category": "evidence_quality",
+      "impact": "Low evidence coverage (0% of proposals cite evidence)"
+    },
+    {
+      "priority": 2,
+      "action": "Add has_classification relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: has_classification"
+    },
+    {
+      "priority": 3,
+      "action": "Add emergency_escalation decision point with attending-gated review.",
+      "category": "decision_point_quality",
+      "impact": "Missing decision point pattern: emergency_escalation"
+    },
+    {
+      "priority": 4,
+      "action": "Run compiler publication-validator stage.",
+      "category": "publication_readiness",
+      "impact": "No publication readiness report"
+    },
+    {
+      "priority": 5,
+      "action": "Run npm run kg:compile -- --topic <topic> to generate gap report.",
+      "category": "ontology_completeness",
+      "impact": "No compiler gap report available"
+    },
+    {
+      "priority": 6,
+      "action": "Link has_classification and has_grade edges to a classification system.",
+      "category": "ontology_completeness",
+      "impact": "No classification system present"
+    },
+    {
+      "priority": 7,
+      "action": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "category": "graph_integrity",
+      "impact": "3 orphan entities with no relationships"
+    },
+    {
+      "priority": 8,
+      "action": "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
+      "category": "graph_integrity",
+      "impact": "2 disconnected anatomy structures"
+    },
+    {
+      "priority": 9,
+      "action": "Add has_imaging_finding relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: has_imaging_finding"
+    },
+    {
+      "priority": 10,
+      "action": "Add has_complication relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: has_complication"
+    }
+  ],
+  "databaseModified": false
+}

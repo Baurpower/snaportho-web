@@ -1,0 +1,47 @@
+{
+  "topicKey": "postoperative-protocols",
+  "pilotKey": "postoperative-protocols-neighborhood",
+  "generatedAt": "2026-07-09T04:28:59.799Z",
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "ready": false,
+  "blockers": [
+    "31 proposals still awaiting human review",
+    "31 items require attending review",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "12 critical/high ontology gaps remain unresolved"
+  ],
+  "remainingWork": [
+    "[critical] Total Hip Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Total Hip Arthroplasty missing outbound involves_anatomy (0/1).",
+    "[high] Total Hip Arthroplasty missing outbound at_risk_structure (0/1).",
+    "[critical] Total Knee Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Total Knee Arthroplasty missing outbound involves_anatomy (0/1).",
+    "[high] Total Knee Arthroplasty missing outbound at_risk_structure (0/1).",
+    "[critical] ACL Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] ACL Reconstruction missing outbound involves_anatomy (0/1).",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "productReadiness": {
+    "traversalSmokeTest": true,
+    "prepareReady": false,
+    "brobotReady": false
+  },
+  "estimatedEffort": {
+    "gapsRemaining": 16,
+    "humanReviewItems": 31,
+    "attendingReviewItems": 31,
+    "effortBand": "high"
+  },
+  "dimensionScores": {
+    "clinical": 1,
+    "relationship": 1,
+    "educational": 1,
+    "reasoning": 1,
+    "anatomical": 1,
+    "review": 0,
+    "graph": 1,
+    "asset": 1
+  }
+}

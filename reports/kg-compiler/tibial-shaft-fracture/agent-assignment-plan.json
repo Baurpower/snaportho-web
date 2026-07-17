@@ -1,20 +1,52 @@
 {
-  "generatedAt": "2026-07-05T21:24:25.513Z",
+  "generatedAt": "2026-07-16T02:18:46.906Z",
   "frameworkVersion": "1.0.0",
   "topicKey": "tibial-shaft-fracture",
   "pilotKey": "tibial-shaft-fracture-neighborhood",
   "assignments": [
     {
+      "workItemId": "work-claim-builder",
+      "agentId": "claim-builder",
+      "agentName": "Claim Builder",
+      "type": "gap_resolution",
+      "gapCount": 9,
+      "gapIds": [
+        "gap-claim-1",
+        "gap-claim-type-2",
+        "gap-claim-type-3",
+        "gap-claim-12",
+        "gap-claim-type-13",
+        "gap-claim-type-14",
+        "gap-claim-type-15",
+        "gap-claim-type-16",
+        "gap-biomech-claim-24"
+      ],
+      "gapKinds": [
+        "missing_claim"
+      ],
+      "dependencies": [
+        "work-relationship-builder"
+      ],
+      "estimatedConfidence": 0.7866666666666666,
+      "requiredReviewer": "clinical_expert",
+      "matchReasons": [
+        "handles_gap_kind:missing_claim"
+      ]
+    },
+    {
       "workItemId": "work-relationship-builder",
       "agentId": "relationship-builder",
       "agentName": "Relationship Builder",
       "type": "gap_resolution",
-      "gapCount": 4,
+      "gapCount": 7,
       "gapIds": [
-        "gap-rel-1",
-        "gap-rel-2",
         "gap-rel-4",
-        "gap-proc-approach-11"
+        "gap-rel-5",
+        "gap-rel-8",
+        "gap-rel-9",
+        "gap-rel-10",
+        "gap-rel-11",
+        "gap-proc-approach-25"
       ],
       "gapKinds": [
         "missing_relationship"
@@ -23,7 +55,7 @@
         "work-clinical-entity-builder",
         "work-anatomy-builder"
       ],
-      "estimatedConfidence": 0.885,
+      "estimatedConfidence": 0.9000000000000001,
       "requiredReviewer": "attending",
       "matchReasons": [
         "handles_gap_kind:missing_relationship"
@@ -34,9 +66,11 @@
       "agentId": "metadata-builder",
       "agentName": "Metadata Builder",
       "type": "gap_resolution",
-      "gapCount": 1,
+      "gapCount": 3,
       "gapIds": [
-        "gap-meta-rel-3"
+        "gap-meta-rel-6",
+        "gap-meta-entity-20",
+        "gap-meta-rel-21"
       ],
       "gapKinds": [
         "missing_metadata"
@@ -44,34 +78,53 @@
       "dependencies": [
         "work-relationship-builder"
       ],
-      "estimatedConfidence": 0.9,
+      "estimatedConfidence": 0.9266666666666666,
       "requiredReviewer": "none",
       "matchReasons": [
         "handles_gap_kind:missing_metadata"
       ]
     },
     {
-      "workItemId": "work-claim-builder",
-      "agentId": "claim-builder",
-      "agentName": "Claim Builder",
+      "workItemId": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "agentName": "Clinical Entity Builder",
       "type": "gap_resolution",
-      "gapCount": 4,
+      "gapCount": 1,
       "gapIds": [
-        "gap-claim-5",
-        "gap-claim-type-6",
-        "gap-claim-type-7",
-        "gap-biomech-claim-10"
+        "gap-entity-neighbor-7"
       ],
       "gapKinds": [
-        "missing_claim"
+        "missing_entity"
+      ],
+      "dependencies": [],
+      "estimatedConfidence": 0.95,
+      "requiredReviewer": "none",
+      "matchReasons": [
+        "handles_gap_kind:missing_entity",
+        "generic_fallback"
+      ]
+    },
+    {
+      "workItemId": "work-decision-point-builder",
+      "agentId": "decision-point-builder",
+      "agentName": "Decision Point Builder",
+      "type": "gap_resolution",
+      "gapCount": 3,
+      "gapIds": [
+        "gap-dp-17",
+        "gap-dp-pattern-18",
+        "gap-dp-pattern-19"
+      ],
+      "gapKinds": [
+        "missing_decision_point"
       ],
       "dependencies": [
         "work-relationship-builder"
       ],
-      "estimatedConfidence": 0.7999999999999999,
-      "requiredReviewer": "clinical_expert",
+      "estimatedConfidence": 0.8666666666666667,
+      "requiredReviewer": "attending",
       "matchReasons": [
-        "handles_gap_kind:missing_claim"
+        "handles_gap_kind:missing_decision_point"
       ]
     },
     {
@@ -81,8 +134,8 @@
       "type": "gap_resolution",
       "gapCount": 2,
       "gapIds": [
-        "gap-asset-card-8",
-        "gap-asset-question-9"
+        "gap-asset-card-22",
+        "gap-asset-question-23"
       ],
       "gapKinds": [
         "missing_asset_link"
@@ -101,8 +154,9 @@
     "work-clinical-entity-builder",
     "work-anatomy-builder",
     "work-relationship-builder",
-    "work-metadata-builder",
+    "work-decision-point-builder",
     "work-claim-builder",
+    "work-metadata-builder",
     "work-asset-linker",
     "work-duplicate-detector",
     "work-quality-scorer",

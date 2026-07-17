@@ -1,0 +1,37 @@
+{
+  "category": "ontology_completeness",
+  "label": "Ontology Completeness",
+  "score": 84,
+  "deductions": [
+    {
+      "finding": "Missing relationship requirements (10)",
+      "evidence": "10 gaps of kind missing_relationship",
+      "reason": "Ontology contract requires complete relationship coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 8,
+      "suggestedFix": "Run the matching builder agent for missing_relationship."
+    },
+    {
+      "finding": "No classification system present",
+      "evidence": "0 classification entities in merged draft",
+      "reason": "Fracture diagnoses require classification when one exists clinically.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "suggestedFix": "Link has_classification and has_grade edges to a classification system.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "totalGaps": 10,
+    "criticalGaps": 0,
+    "highGaps": 0,
+    "anatomyStructures": 15,
+    "classificationEntities": 0,
+    "completenessRatio": 0.6666666666666667
+  },
+  "recommendations": [
+    "Run the matching builder agent for missing_relationship.",
+    "Link has_classification and has_grade edges to a classification system."
+  ]
+}

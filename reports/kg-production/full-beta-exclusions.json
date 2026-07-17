@@ -1,0 +1,1650 @@
+{
+  "releaseId": "kg-beta-20260716-002",
+  "manifestHash": "a92b03551484f182f87c200708832cf6949552a06cb62dfc20e565afc3fa5647",
+  "generatedAt": "2026-07-16T13:25:08.927Z",
+  "exclusions": [
+    {
+      "topic": "carpal-tunnel-syndrome",
+      "sourceBatchKey": "cts-0c2b2fa3ef5af8aa",
+      "sourceProposalId": "e1373a20-39d7-483d-aed8-1676e34f0adb",
+      "proposalFingerprint": "rel|carpal-tunnel-syndrome|treated_by|corticosteroid-injection-for-cts",
+      "targetTable": "canonical_relationships",
+      "targetId": "8ff94aa9-b01a-4457-a4a6-2d7bc85b7e76",
+      "riskTier": "high",
+      "reason": "HIGH_RISK_DIRECT_PROVENANCE_INCOMPLETE",
+      "details": {},
+      "verificationHash": "4fd9795093708ca3f63880edb8ee552325d0346256b8aa21be02550cf2fd92f3"
+    },
+    {
+      "topic": "carpal-tunnel-syndrome",
+      "sourceBatchKey": "cts-0c2b2fa3ef5af8aa",
+      "sourceProposalId": "e92c20ae-e351-46ba-a383-dd88bde040f8",
+      "proposalFingerprint": "rel|carpal-tunnel-syndrome|treated_by|endoscopic-carpal-tunnel-release",
+      "targetTable": "canonical_relationships",
+      "targetId": "2d827f18-71f1-47a9-a3a5-f84fe1b67957",
+      "riskTier": "high",
+      "reason": "HIGH_RISK_DIRECT_PROVENANCE_INCOMPLETE",
+      "details": {},
+      "verificationHash": "9f7eca7171f5755f41eafe881f5d5d03e9442556c9b2744d0dfc88f041ca7c2d"
+    },
+    {
+      "topic": "carpal-tunnel-syndrome",
+      "sourceBatchKey": "cts-0c2b2fa3ef5af8aa",
+      "sourceProposalId": "3f099c30-7834-44ff-9b2f-d7e444c32328",
+      "proposalFingerprint": "rel|carpal-tunnel-syndrome|treated_by|neutral-wrist-night-orthosis-for-cts",
+      "targetTable": "canonical_relationships",
+      "targetId": "ffef6d7d-03e2-4cf3-9d06-8685f5771b84",
+      "riskTier": "high",
+      "reason": "HIGH_RISK_DIRECT_PROVENANCE_INCOMPLETE",
+      "details": {},
+      "verificationHash": "b93ab1025b29699b97e5d99415a1db590ab9f009ae62771595b5be28d260574b"
+    },
+    {
+      "topic": "carpal-tunnel-syndrome",
+      "sourceBatchKey": "cts-0c2b2fa3ef5af8aa",
+      "sourceProposalId": "d115af9f-6ff2-46ad-9370-6c7ad4862281",
+      "proposalFingerprint": "rel|carpal-tunnel-syndrome|treated_by|open-carpal-tunnel-release",
+      "targetTable": "canonical_relationships",
+      "targetId": "87e2ad9d-9889-4ed7-945a-e9f83ed57fd8",
+      "riskTier": "high",
+      "reason": "HIGH_RISK_DIRECT_PROVENANCE_INCOMPLETE",
+      "details": {},
+      "verificationHash": "55d191412ee79d042180c2796e58f86966b988874307a078d03448d0cc710613"
+    },
+    {
+      "topic": "adverse-local-tissue-reaction",
+      "sourceBatchKey": "adverse-local-tissue-reaction-neighborhood",
+      "sourceProposalId": "f5a21cab-16b6-48e6-b57f-7225dc4c4f72",
+      "proposalFingerprint": "bridge|adult-recon-altr|adverse-local-tissue-reaction",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "20e638100705f4199cffc9d08f721f46204ecbd4d81eac83f95194943d742e03"
+    },
+    {
+      "topic": "adverse-local-tissue-reaction",
+      "sourceBatchKey": "adverse-local-tissue-reaction-neighborhood",
+      "sourceProposalId": "ac08eeec-639a-4077-929c-df14deb1edd2",
+      "proposalFingerprint": "create|condition|adverse-local-tissue-reaction",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_IDENTITY_MISMATCH",
+      "details": {},
+      "verificationHash": "8ee046cb1977f318f6911b02b24d10de3cebc4a2297d1c665123b7c6135ed8e8"
+    },
+    {
+      "topic": "adverse-local-tissue-reaction",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 4,
+      "verificationHash": "e62edfe7736462cbad6620034fbe9c8199e1da0621270a5074b96c7a152452ab"
+    },
+    {
+      "topic": "aseptic-loosening-tha",
+      "sourceBatchKey": "aseptic-loosening-tha-neighborhood",
+      "sourceProposalId": "1c0885cc-6816-4017-90da-2fe046c950c5",
+      "proposalFingerprint": "bridge|adult-recon-aseptic-loosening-tha|aseptic-loosening-tha",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "b559215a2b9cfcfa787493c2c2bd8240101baaecf82caf2602387aba8890071f"
+    },
+    {
+      "topic": "aseptic-loosening-tha",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 2,
+      "verificationHash": "c80c46e528aae307b6c1b9810d038d1d3a402a271026dfa92eeb4b6ff924efca"
+    },
+    {
+      "topic": "aseptic-loosening-tka",
+      "sourceBatchKey": "aseptic-loosening-tka-neighborhood",
+      "sourceProposalId": "9b36cedd-98e7-4dce-9d28-1040293fecd7",
+      "proposalFingerprint": "bridge|adult-recon-aseptic-loosening-tka|aseptic-loosening-tka",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "6f393e6f330c60ac566a0b8c6e89a856fc6eced59a79cef842435b04d2a116ae"
+    },
+    {
+      "topic": "aseptic-loosening-tka",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 2,
+      "verificationHash": "57d0d33803f08931f8b9703b73161ce72f1bdedbd4e1a712ffa015d99c5a1813"
+    },
+    {
+      "topic": "bearing-surface-selection",
+      "sourceBatchKey": "bearing-surface-selection-neighborhood",
+      "sourceProposalId": "ec79ce4c-16c1-4423-ae77-e0c8ca950d57",
+      "proposalFingerprint": "bridge|adult-recon-bearing-surfaces|bearing-surface-selection",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "632c54f935ac1c43e2e32f1e61e981f164c60579fad912e843213f633a88d8fe"
+    },
+    {
+      "topic": "bearing-surface-selection",
+      "sourceBatchKey": "bearing-surface-selection-neighborhood",
+      "sourceProposalId": "8906166c-7543-4623-be6b-9cbd5dbea242",
+      "proposalFingerprint": "create|anatomy_structure|labrum",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_IDENTITY_MISMATCH",
+      "details": {},
+      "verificationHash": "a1041956ec5d29d8ce7994f6a2f686d27912b0ce7396107bc563590d5a83f39e"
+    },
+    {
+      "topic": "bearing-surface-selection",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 16,
+      "verificationHash": "3b604cc729e9e41355ceab9ccfc934252c8c75fb7c001803c35004e4bfb79012"
+    },
+    {
+      "topic": "bone-loss-revision-arthroplasty",
+      "sourceBatchKey": "bone-loss-revision-arthroplasty-neighborhood",
+      "sourceProposalId": "38b6cf37-6ff4-4b8b-aeb7-a2146816585e",
+      "proposalFingerprint": "bridge|adult-recon-bone-loss-revision|bone-loss-revision-arthroplasty",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "11d4b45dd678a48a179308ea7b77d1f9528f87b48865492eb645c24940b43e59"
+    },
+    {
+      "topic": "bone-loss-revision-arthroplasty",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 3,
+      "verificationHash": "a2c51d2c493140f0ed9e8541979f0766fc56ff38181656dc386c73937bfdf475"
+    },
+    {
+      "topic": "extensor-mechanism-failure",
+      "sourceBatchKey": "extensor-mechanism-failure-neighborhood",
+      "sourceProposalId": "d6be7f9a-f05c-46ee-ba45-0badc73af30a",
+      "proposalFingerprint": "bridge|adult-recon-extensor-mechanism-failure|extensor-mechanism-failure",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "d945fc3e8ba3bf96f30ed24f14908f28eedaccd3335d7d55945afb7721fa8c88"
+    },
+    {
+      "topic": "extensor-mechanism-failure",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 3,
+      "verificationHash": "9124d42bbdd9ae4191003d3874e9af687cd170bfca3dd03da973d947185636fd"
+    },
+    {
+      "topic": "hip-instability-after-tha",
+      "sourceBatchKey": "hip-instability-after-tha-neighborhood",
+      "sourceProposalId": "e51a8d12-63d6-4ce0-b14f-ef0aff5bc17d",
+      "proposalFingerprint": "bridge|adult-recon-hip-instability|hip-instability-after-tha",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "1cff2fe528bc829cf9730f32fe2ed5b1a71d824471b86e3ef3a206b333a18d09"
+    },
+    {
+      "topic": "hip-instability-after-tha",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 2,
+      "verificationHash": "01d0a0a92a46ee86d0e02c9c82018a64187b113f249da40b56b2931bc8313547"
+    },
+    {
+      "topic": "implant-fixation-principles",
+      "sourceBatchKey": "implant-fixation-principles-neighborhood",
+      "sourceProposalId": "f6793006-8331-4644-9f8f-1fca6b32186c",
+      "proposalFingerprint": "bridge|adult-recon-implant-fixation|implant-fixation-principles",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "e39781bf496f3067d13fcf04f309a52e483a3104f2dc41f25652be698d54d1c0"
+    },
+    {
+      "topic": "implant-fixation-principles",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 2,
+      "verificationHash": "9511d6b63434e68b2d4465c1bd9125a6ef536e60611612cfbd1ca258b04f6c8f"
+    },
+    {
+      "topic": "patella-fracture",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 2,
+      "verificationHash": "100925cc11ea90fb17de3ba7b27445c96faf5cb742a3e0af2d96145cb05c7038"
+    },
+    {
+      "topic": "compartment-syndrome",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 1,
+      "verificationHash": "db0521b6c8e4486987a715fc56e2fdd119b73cf2c3079245c44edb37982f17f7"
+    },
+    {
+      "topic": "knee-instability-after-tka",
+      "sourceBatchKey": "knee-instability-after-tka-neighborhood",
+      "sourceProposalId": "549dff72-52ce-486a-8dd8-5c0f40fc2867",
+      "proposalFingerprint": "bridge|adult-recon-knee-instability|knee-instability-after-tka",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "65afd559b82c532865e6a737b62cfacec35e860c2011318e5668bd53b5ec2c87"
+    },
+    {
+      "topic": "knee-instability-after-tka",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 2,
+      "verificationHash": "9cbd023a27b6086b9f489a70d6c9091a6d058a6dfe0341e2671da8ab75f31439"
+    },
+    {
+      "topic": "patellofemoral-arthroplasty",
+      "sourceBatchKey": "patellofemoral-arthroplasty-neighborhood",
+      "sourceProposalId": "d841b1cc-ae4a-4791-9eee-f79dbd783a18",
+      "proposalFingerprint": "bridge|adult-recon-patellofemoral-arthroplasty|patellofemoral-arthroplasty",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "2a676934513eb7d4b77fde4463108379a7959055dd873b2d224c2462a11c18b6"
+    },
+    {
+      "topic": "patellofemoral-arthroplasty",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 6,
+      "verificationHash": "0f364186ebbeb9630a9a97a807ed074038bcc539a94556927916fe2cf9fae442"
+    },
+    {
+      "topic": "periprosthetic-femur-fracture",
+      "sourceBatchKey": "periprosthetic-femur-fracture-neighborhood",
+      "sourceProposalId": "16d239f4-f9d5-4de5-819f-1bb5d3e855cd",
+      "proposalFingerprint": "bridge|adult-recon-periprosthetic-femur-fracture|periprosthetic-femur-fracture",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "cd110985fc820eed80ccf12718090db2ad050a3486251580e675a2646497764a"
+    },
+    {
+      "topic": "periprosthetic-femur-fracture",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 2,
+      "verificationHash": "85c22770a9db5010fc410f7a4aaaf28ea814f969f03b282a180fd41572b3228d"
+    },
+    {
+      "topic": "periprosthetic-knee-fracture",
+      "sourceBatchKey": "periprosthetic-knee-fracture-neighborhood",
+      "sourceProposalId": "15eb94e3-5063-400c-9d11-0457da58aa42",
+      "proposalFingerprint": "bridge|adult-recon-periprosthetic-knee-fracture|periprosthetic-knee-fracture",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "ae4c05792e5c7a76ad5cfa9f7206f7bd93cd1b1b968309a14cccbc83f5d0d48b"
+    },
+    {
+      "topic": "periprosthetic-knee-fracture",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 2,
+      "verificationHash": "8bb5f655cb829d45b3b56e15f69216101358603a779caa206ffdf33599c37b7f"
+    },
+    {
+      "topic": "polyethylene-wear-osteolysis",
+      "sourceBatchKey": "polyethylene-wear-osteolysis-neighborhood",
+      "sourceProposalId": "6fd0b2d1-6ff8-4a8a-a966-a5076dc9f656",
+      "proposalFingerprint": "bridge|adult-recon-polyethylene-wear|polyethylene-wear-osteolysis",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "940e97efa68d9cfb0e84ba6c17166a9855b8fe36feda24bad41de12ec7fcd294"
+    },
+    {
+      "topic": "polyethylene-wear-osteolysis",
+      "sourceBatchKey": "polyethylene-wear-osteolysis-neighborhood",
+      "sourceProposalId": "815995a1-9f6c-45fc-8078-165bee93a937",
+      "proposalFingerprint": "create|condition|polyethylene-wear-osteolysis",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "a56bb034479123995f03d79ee1aaf17b227ad27abc7fcab92bc5e18f34a3bd65"
+    },
+    {
+      "topic": "polyethylene-wear-osteolysis",
+      "sourceBatchKey": "polyethylene-wear-osteolysis-neighborhood",
+      "sourceProposalId": "a4c3c595-1ff7-4426-86fd-c4ea3cab451d",
+      "proposalFingerprint": "rel|adult-reconstruction-anatomy-hub|prerequisite_for|polyethylene-wear-osteolysis",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "17488e3ddfd2346ce849bfb1d0c4ee72c45c0239dd21fd708dfd67117db1c0e0"
+    },
+    {
+      "topic": "polyethylene-wear-osteolysis",
+      "sourceBatchKey": "polyethylene-wear-osteolysis-neighborhood",
+      "sourceProposalId": "28b67868-2cca-41cf-ba26-d42748514e3e",
+      "proposalFingerprint": "rel|bearing-surface-selection|prerequisite_for|polyethylene-wear-osteolysis",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "d17490d45f4c2ad97280f77775051fae05f68af513ee1c9393817699bfb3d7ec"
+    },
+    {
+      "topic": "polyethylene-wear-osteolysis",
+      "sourceBatchKey": "polyethylene-wear-osteolysis-neighborhood",
+      "sourceProposalId": "3fdb97bb-e7eb-4744-926b-75c0d846b370",
+      "proposalFingerprint": "rel|implant-concepts-hub|prerequisite_for|polyethylene-wear-osteolysis",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "dd6e85ce47a4d4f208b9c95833e05f1c7cc03284cb3c08bc592f9fd1c62fd6b9"
+    },
+    {
+      "topic": "polyethylene-wear-osteolysis",
+      "sourceBatchKey": "polyethylene-wear-osteolysis-neighborhood",
+      "sourceProposalId": "5b0995a4-23c7-4de8-bb16-ec604b4e4f0e",
+      "proposalFingerprint": "rel|polyethylene-liner|prerequisite_for|polyethylene-wear-osteolysis",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "0f9c7e1d62287b75989ca9d9423501aa664818f03b8cd697d4dd39f7300d9435"
+    },
+    {
+      "topic": "polyethylene-wear-osteolysis",
+      "sourceBatchKey": "polyethylene-wear-osteolysis-neighborhood",
+      "sourceProposalId": "c9a2a03f-cb25-4f05-99cf-a65c6eb796d2",
+      "proposalFingerprint": "rel|polyethylene-wear-osteolysis|has_imaging_finding|focal-osteolysis",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "1db6e36173a246ad15c281b3d3a30a27e5368b342bd47c45c5cfc1cd0250848c"
+    },
+    {
+      "topic": "polyethylene-wear-osteolysis",
+      "sourceBatchKey": "polyethylene-wear-osteolysis-neighborhood",
+      "sourceProposalId": "150734dd-6214-4be6-9f46-fe1b8c12b928",
+      "proposalFingerprint": "rel|polyethylene-wear-osteolysis|involves_anatomy|adult-reconstruction-anatomy-hub",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "d52e5016bc0956271c925af6a382d3930a7e611e7c912c6a067701d706161549"
+    },
+    {
+      "topic": "polyethylene-wear-osteolysis",
+      "sourceBatchKey": "polyethylene-wear-osteolysis-neighborhood",
+      "sourceProposalId": "256c1924-e82a-4759-a095-ece1f19bbc63",
+      "proposalFingerprint": "rel|revision-arthroplasty|prerequisite_for|polyethylene-wear-osteolysis",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "2e52b5ad3b274bd8d4ebff5901ff8a330b89e97d4d17d56b2168c942ac02d3db"
+    },
+    {
+      "topic": "polyethylene-wear-osteolysis",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 3,
+      "verificationHash": "85b164d671814d11b9be4c39bf07540bb709e15ed070e9dc0f3ab1b9f49fa446"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "3c198212-977f-4904-9da5-b642ee4734ea",
+      "proposalFingerprint": "bridge|adult-recon-hip-osteoarthritis|hip-osteoarthritis",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "63f412446a874bcdb69fd543f06b9205c412258b80d87896814493b441cb3a57"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "4bd88b98-5eed-4230-bab4-82eecf394f85",
+      "proposalFingerprint": "rel|adult-reconstruction-anatomy-hub|prerequisite_for|hip-osteoarthritis",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "96dede68458eea37e17ef1eb15456cb66fcafffe8db896640997db5dd5388916"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "7ddeede0-7e3f-403c-9018-2c1a1960c330",
+      "proposalFingerprint": "rel|collateral-ligaments|part_of|adult-reconstruction-anatomy-hub",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "334c792f48604104af3941285ac2ad4ef105fa48790413c2f37b0b2681b7f7ec"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "015edacc-e6ad-4857-bc88-45dcf98d1ad9",
+      "proposalFingerprint": "rel|cruciate-ligaments|part_of|adult-reconstruction-anatomy-hub",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "2f21fccf83a953de55be0438bf4364fe78b9109503b3795cb14bfcea39c256cb"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "0b96ee36-2c9e-4c42-a48d-a106d34ef770",
+      "proposalFingerprint": "rel|femoral-condyles|part_of|femur",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "1eee84f0e49907ff0b4a5f7a8a6223d3d5350578b628a1a38a51e2ca18068589"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "ded97f8e-df6a-4ef3-84aa-2d5e0a4c2e59",
+      "proposalFingerprint": "rel|femoral-nerve|part_of|adult-reconstruction-anatomy-hub",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "50e6be47f6a64383d55a43ef4b8276439e2947d027d68dca2ac314383f5d3fcd"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "79bd1ec7-5a0d-4123-b442-7e529d67bf1e",
+      "proposalFingerprint": "rel|femur|part_of|adult-reconstruction-anatomy-hub",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "826c0186e21516667d6f0ed49410d84ab595d5e13ae517e0d67ac2eb60f57b33"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "516ff1c2-7deb-4eea-9753-ced58dfa1dc5",
+      "proposalFingerprint": "rel|gluteus-medius|part_of|adult-reconstruction-anatomy-hub",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "05c5127b3444277f20c9889cd4a05447824f229a6c176a6b2eea676a117cfea4"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "2dfc6bf0-4e68-44ba-8509-57e7612194c0",
+      "proposalFingerprint": "rel|gluteus-minimus|part_of|gluteus-medius",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "377ec258613ecf956bf910e940a4d91c7f89ab1bf7de75ce9feb1337745b3688"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "a38e0b29-e4c0-4806-90f2-4c28d3dac1bb",
+      "proposalFingerprint": "rel|hip-capsule|part_of|adult-reconstruction-anatomy-hub",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "49fb57098eb488c5c5854949f082d3f3bee17d43caf8d1346dc9cc2194edbf9d"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "e02227bb-bcf0-4ac2-93b1-b923d7d0f4db",
+      "proposalFingerprint": "rel|hip-osteoarthritis|involves_anatomy|adult-reconstruction-anatomy-hub",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "4f86b88fd2603844526c28e0f5db73a219249d3c117a44d6d0a2bb0cb0ace4f5"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "b598c2c1-ea22-406c-96bf-7385dfc3e02b",
+      "proposalFingerprint": "rel|implant-concepts-hub|prerequisite_for|acetabular-component",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "68d97f0e24d7b123146da7e1404cd1e2eec0032f242e6f3e700692a4445661e6"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "292ed05d-0bf1-4a24-aee6-a3540a28ed5b",
+      "proposalFingerprint": "rel|implant-concepts-hub|prerequisite_for|cemented-fixation",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "81c35beff423748e3e2f2ac986d89499a1f0c71bb0b7003921c5676a3cd47b26"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "ecfad151-3ad7-4aef-9a62-45d38e41131e",
+      "proposalFingerprint": "rel|implant-concepts-hub|prerequisite_for|cement-mantle",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "510e8213ac27bb8419085079b2293742235fabb0cdb5d09de95e24fb0b1f6a08"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "b8c56455-8fa6-4ec7-8baf-09f75b4cc013",
+      "proposalFingerprint": "rel|implant-concepts-hub|prerequisite_for|femoral-component",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "8a08fb188ed1d3ed30350860c5db21b6a3531deb65b1c9ab3dc2a7c6cc9ecffd"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "e7fd242d-e686-4580-8470-db160dca8a8d",
+      "proposalFingerprint": "rel|implant-concepts-hub|prerequisite_for|femoral-stem",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "fe0ec07d4db887d77bcae4a6b1e675b3202f5914608be750ba3437a2eb8c373c"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "d733d950-6e34-4b44-9265-3401a9d149e5",
+      "proposalFingerprint": "rel|implant-concepts-hub|prerequisite_for|hip-osteoarthritis",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "3fb5b7a503a5aa7ffd8cf4134e7125e3f66441a23abe6467809a8015adcb2ec2"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "0609390d-9b7e-4719-9091-b1d4302b9437",
+      "proposalFingerprint": "rel|implant-concepts-hub|prerequisite_for|patellar-component",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "73d435f8643ead5c9a4b8a7afc346c137883a5dae645fc8d98482886bfb9fd61"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "7a5c5efc-29f5-42a4-8c8e-bbda77db163e",
+      "proposalFingerprint": "rel|implant-concepts-hub|prerequisite_for|polyethylene-liner",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "ed93a2bf44b4defe36b2ee8fb90592bd04ae6a130c59ea411dbdd4ce62ff213e"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "f31e60e3-afd2-446d-b71d-1ee7c694b7a9",
+      "proposalFingerprint": "rel|implant-concepts-hub|prerequisite_for|press-fit-fixation",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "fc89e9931d410ace39979c83b93ccd6d8f1d3d10bf520793484afd440bcc587f"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "22f8d7e0-1036-4e71-a1b3-109f8c238ba6",
+      "proposalFingerprint": "rel|implant-concepts-hub|prerequisite_for|tibial-baseplate",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "7edbd33be3bea4798b1bb820c29ce62d5442dcd06c7eaecc7089ab34688d0314"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "1d8fb87a-b1ff-40b6-995a-e9e0172c7302",
+      "proposalFingerprint": "rel|implant-concepts-hub|prerequisite_for|tibial-insert",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "d6f50850f480b1c9dabbb8bf20bfccff1b2367b078528e88937f562cf85ea868"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "7b94801d-7d71-4200-abc2-d59bb37ab3a9",
+      "proposalFingerprint": "rel|patellar-tendon|part_of|extensor-mechanism",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "60ca1474d49fda345c63f5bff688b53e8144955c322232a5b9e0563a68b5fe37"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "7fc35b2e-17f1-4bf2-8baf-459a643eae21",
+      "proposalFingerprint": "rel|pelvis|part_of|adult-reconstruction-anatomy-hub",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "9abd8461c0ebe7f503fa49d8a4055988a460b4d3a31977b8c6fde8a44586d825"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "6bce915b-08c2-4760-a5d0-bf7fc57ac5ca",
+      "proposalFingerprint": "rel|proximal-femur|part_of|adult-reconstruction-anatomy-hub",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "b4b3188499e31774df92c8f7b6761fa02f005bd6aba157f695e91ce1dcd84e94"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "ead6f52f-2af7-4df6-a38b-5b626c583b4c",
+      "proposalFingerprint": "rel|quadriceps-tendon|part_of|extensor-mechanism",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "43188aab0272924cb58caf8ffec5342da7f7c255d7cf4174037ae019de76ba20"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "5babc794-25ae-4c34-a600-f58926286fca",
+      "proposalFingerprint": "rel|short-external-rotators|part_of|adult-reconstruction-anatomy-hub",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "5d870ef8115bbcb9335e10847c1164e69db54e859ffc3d6b68fd69551303c73b"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "sourceBatchKey": "hip-osteoarthritis-neighborhood",
+      "sourceProposalId": "44fd6820-cc9e-4aa0-b976-5279cee4c391",
+      "proposalFingerprint": "rel|tibia|part_of|adult-reconstruction-anatomy-hub",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "f00fd6750cb75c9bdb5b53089a5e3896aaa45d67b0af2a51bdb69dd37f574736"
+    },
+    {
+      "topic": "hip-osteoarthritis",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 2,
+      "verificationHash": "20120a6c3a1416a67b7089292daba4797fa409f22b4f6fe46dfdb592847bf21e"
+    },
+    {
+      "topic": "hip-prosthetic-joint-infection",
+      "sourceBatchKey": "hip-prosthetic-joint-infection-neighborhood",
+      "sourceProposalId": "70919d62-7372-4828-a4ca-e2bc922b9223",
+      "proposalFingerprint": "bridge|adult-recon-hip-pji|hip-prosthetic-joint-infection",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "678a68c0a278a4ffa84099b92bd114c758d770ce5c794f8c9ab3b17f86da79e8"
+    },
+    {
+      "topic": "knee-prosthetic-joint-infection",
+      "sourceBatchKey": "knee-prosthetic-joint-infection-neighborhood",
+      "sourceProposalId": "1c384ae3-3f64-4a35-bd2a-6be04b17af11",
+      "proposalFingerprint": "bridge|adult-recon-knee-pji|knee-prosthetic-joint-infection",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "29a19a244371eaa07848d5795d675cb4d9d8feabfaaf0c7ef271add0433d551f"
+    },
+    {
+      "topic": "periprosthetic-joint-infection",
+      "sourceBatchKey": "periprosthetic-joint-infection-neighborhood",
+      "sourceProposalId": "0d5e9699-00b8-4149-b471-72e29b033446",
+      "proposalFingerprint": "bridge|adult-recon-periprosthetic-joint-infection|periprosthetic-joint-infection",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "6c4907d954ed29b2569510792046cd11901e1ea4a64011a15936b1faa9ebce61"
+    },
+    {
+      "topic": "unicompartmental-knee-arthritis",
+      "sourceBatchKey": "unicompartmental-knee-arthritis-neighborhood",
+      "sourceProposalId": "30be3c2b-0311-4574-b9bc-3260ab2978cf",
+      "proposalFingerprint": "bridge|adult-recon-unicompartmental-knee|unicompartmental-knee-arthritis",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "77b1baea9300e7eb163c88a3acc3406be50062d5c95d880662a081a76bc055f8"
+    },
+    {
+      "topic": "unicompartmental-knee-arthritis",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 2,
+      "verificationHash": "b24cffd56d1d5389b6afadcfcc46cacd2ec334354ad527ba2d19f02590237e2d"
+    },
+    {
+      "topic": "knee-osteoarthritis",
+      "sourceBatchKey": "knee-osteoarthritis-neighborhood",
+      "sourceProposalId": "5a0248e1-75c1-46df-98cf-577ae8f1462d",
+      "proposalFingerprint": "bridge|adult-recon-knee-osteoarthritis|knee-osteoarthritis",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "2e346e7c851b787a09b86d45e69c4f232e992344fde18f8828a1a310f6f8c429"
+    },
+    {
+      "topic": "femoral-neck-fracture-adult-recon",
+      "sourceBatchKey": "femoral-neck-fracture-adult-recon-neighborhood",
+      "sourceProposalId": "51056281-2077-4ac3-8565-49342e258da9",
+      "proposalFingerprint": "bridge|adult-recon-femoral-neck-fracture|femoral-neck-fracture-adult-recon",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "ad7736edc4dafd75f93ba89fdc51e760672fe6aceda307f3058efcf2bff98494"
+    },
+    {
+      "topic": "femoral-neck-fracture-adult-recon",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 2,
+      "verificationHash": "cd6f301e3f4809d80c315cc004cc53dda6eefc562f00c9f071be71e50ef50c2d"
+    },
+    {
+      "topic": "boxer-fracture",
+      "sourceBatchKey": "boxer-fracture-neighborhood",
+      "sourceProposalId": "4ff2e238-8893-4636-9bc5-f008f8378356",
+      "proposalFingerprint": "bridge|hand-boxer-fracture|boxer-fracture",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "c3218846bbec670bc10ed1c118637d6c02265c6602995e5303d2c1a3d191eaee"
+    },
+    {
+      "topic": "middle-phalanx-fracture",
+      "riskTier": "low",
+      "reason": "NO_APPLIED_STRUCTURAL_BATCH",
+      "verificationHash": "57a12bec05eaea7bc1c2621e00791cab6fec5b03dfdbc8bb71a0e62992799bcb"
+    },
+    {
+      "topic": "lt-ligament-injury",
+      "sourceBatchKey": "lt-ligament-injury-neighborhood",
+      "sourceProposalId": "28a2a60a-903a-40db-bac0-6d496c067469",
+      "proposalFingerprint": "bridge|hand-lt-ligament-injury|lt-ligament-injury",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "moderate",
+      "reason": "ACTIVE_IDENTITY_OWNERSHIP_OR_BRIDGE_BLOCKER",
+      "verificationHash": "dbbfc7d83e5bb6113660ebbbfd676711d0e969bde7ecabd704ac5421e3ab4b5d"
+    },
+    {
+      "topic": "proximal-phalanx-fracture",
+      "sourceBatchKey": "proximal-phalanx-fracture-neighborhood",
+      "sourceProposalId": "ba41eecb-98c0-4f4e-88ea-14d1bc9e2251",
+      "proposalFingerprint": "bridge|hand-proximal-phalanx-fracture|proximal-phalanx-fracture",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "2b069ce8b10bb094ed9e1d6ae7617f8af1546bc3f914c1aee301e747b81d5052"
+    },
+    {
+      "topic": "subtrochanteric-fracture",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 3,
+      "verificationHash": "c5b7f8f02fc0dfcaa66f823b296c1cef5e7a3ba42b329e4f2267c32c261661ae"
+    },
+    {
+      "topic": "carpal-instability",
+      "sourceBatchKey": "carpal-instability-neighborhood",
+      "sourceProposalId": "78c8f39c-29fd-43d4-b8bd-de7f728f2a0b",
+      "proposalFingerprint": "bridge|hand-carpal-instability|carpal-instability",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "546649ebb65ff0d914149ee245ba245874404afd47fa9e74fc6cd3cf8f31d744"
+    },
+    {
+      "topic": "cmc-dislocations",
+      "sourceBatchKey": "cmc-dislocations-neighborhood",
+      "sourceProposalId": "c2ec689a-1a4d-4d52-b7f4-c77423a54eff",
+      "proposalFingerprint": "bridge|hand-cmc-dislocations|cmc-dislocations",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "15138fe7040cadd40347bb121967d630ef1252f5c9e464d599d3f5ccc48be741"
+    },
+    {
+      "topic": "essex-lopresti-injury",
+      "sourceBatchKey": "essex-lopresti-injury-neighborhood",
+      "sourceProposalId": "6aa313b5-0ba0-45d1-aaf2-5607936d8f69",
+      "proposalFingerprint": "bridge|hand-essex-lopresti-injury|essex-lopresti-injury",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "b8201f4d5ef4ff08f622f4ab6c4989d26b6f100f5fe87c8fdeffbfa64ad16027"
+    },
+    {
+      "topic": "essex-lopresti-injury",
+      "sourceBatchKey": "essex-lopresti-injury-neighborhood",
+      "sourceProposalId": "ceba0492-9aa1-4a28-babd-8235cb133244",
+      "proposalFingerprint": "create|condition|essex-lopresti-injury",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_IDENTITY_MISMATCH",
+      "details": {},
+      "verificationHash": "ce224272cf3abd6332bacf85c79f811941ca42bc4bf8976a2318501ca3f138aa"
+    },
+    {
+      "topic": "lunate-fracture",
+      "sourceBatchKey": "lunate-fracture-neighborhood",
+      "sourceProposalId": "ab699f2d-8cd7-44bc-a384-0f5f40dd67dc",
+      "proposalFingerprint": "bridge|hand-lunate-fracture|lunate-fracture",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "a8fdd8ebf561b1fb97cb343b98f09f52df131ffb01671ef444eacfa9b3412e38"
+    },
+    {
+      "topic": "ulnar-styloid-fracture",
+      "sourceBatchKey": "ulnar-styloid-fracture-neighborhood",
+      "sourceProposalId": "77073b2e-c523-435e-8c3c-838c4b4cfbea",
+      "proposalFingerprint": "bridge|hand-ulnar-styloid-fracture|ulnar-styloid-fracture",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "cedc302077c6408688bbd67dcb7ffa80c5c89ef65ab378f3a8adc555dad702cc"
+    },
+    {
+      "topic": "lunate-dislocation",
+      "sourceBatchKey": "lunate-dislocation-neighborhood",
+      "sourceProposalId": "5350a2ea-b90f-484d-8586-c21a40ff0130",
+      "proposalFingerprint": "bridge|hand-lunate-dislocation|lunate-dislocation",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "297abda3c04b387a2706d28c2a85a098b69dab11464e4a2e1d2dcd2f417d0769"
+    },
+    {
+      "topic": "metacarpal-fracture",
+      "sourceBatchKey": "metacarpal-fracture-neighborhood",
+      "sourceProposalId": "4179d7f8-6508-4a08-a035-3cd8cb53556d",
+      "proposalFingerprint": "bridge|hand-metacarpal-fracture|metacarpal-fracture",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "4dcc4153fd1e8abee882d6f6416e0560c1747c8a0433b9d2950bcac09d300b9f"
+    },
+    {
+      "topic": "pelvic-ring-injury",
+      "sourceBatchKey": "pelvic-ring-injury-neighborhood",
+      "sourceProposalId": "67086b56-726c-43b1-913a-c03424105f69",
+      "proposalFingerprint": "rel|lower-extremity-trauma-anatomy-hub|prerequisite_for|pelvic-ring-injury",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "415054bd696c24d75a9b01cd0ff3a5adfc931faee5380b23bf223bb4345031b7"
+    },
+    {
+      "topic": "pelvic-ring-injury",
+      "sourceBatchKey": "pelvic-ring-injury-neighborhood",
+      "sourceProposalId": "4f065443-f09c-49a8-b7ca-22044a6f8ae1",
+      "proposalFingerprint": "rel|pelvic-external-fixation|involves_anatomy|pelvis",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "31830c4a8b523ddc8c5f4dddb57a00aeddc2a475833ae7054bac7e9ffae900ae"
+    },
+    {
+      "topic": "pelvic-ring-injury",
+      "sourceBatchKey": "pelvic-ring-injury-neighborhood",
+      "sourceProposalId": "3bb787b7-dbcc-45a1-86df-90902f5d74d5",
+      "proposalFingerprint": "rel|pelvic-ring-injury|injured_in|pelvis",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "7489bd64e7e44b0f0c7d72f3dcc09010b224f2b57424d3aab8849685760023ec"
+    },
+    {
+      "topic": "pelvic-ring-injury",
+      "sourceBatchKey": "pelvic-ring-injury-neighborhood",
+      "sourceProposalId": "d86296ee-2488-41ae-be84-14124b9b714a",
+      "proposalFingerprint": "rel|pelvic-ring-injury|injured_in|sacroiliac-joint",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "e08ef90360b3debe6c7a5a8ce1bae9c14e565f4cb07f45bdcfa4b3fbce99fd8c"
+    },
+    {
+      "topic": "pelvic-ring-injury",
+      "sourceBatchKey": "pelvic-ring-injury-neighborhood",
+      "sourceProposalId": "718a7543-c3e7-421d-85c2-d3bdc2ebe91f",
+      "proposalFingerprint": "rel|pelvic-ring-injury|injured_in|sacrum",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "a7eb2b01e31dab4d1c42a1861e9b020741bdc76002cc9eca4cd4b187821d239b"
+    },
+    {
+      "topic": "pelvic-ring-injury",
+      "sourceBatchKey": "pelvic-ring-injury-neighborhood",
+      "sourceProposalId": "49a0d0d4-8399-4ee7-9f55-678523970cab",
+      "proposalFingerprint": "rel|pelvic-ring-injury|involves_anatomy|lower-extremity-trauma-anatomy-hub",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "5fd86cf867960082fed6b0003c4d4193b5179591172e50fc35fc43fbf29e3df3"
+    },
+    {
+      "topic": "pelvic-ring-injury",
+      "sourceBatchKey": "pelvic-ring-injury-neighborhood",
+      "sourceProposalId": "a2d4e248-c8ef-4bb0-b3a7-9845a0bd4943",
+      "proposalFingerprint": "rel|pelvic-ring-injury|involves_anatomy|pubic-symphysis",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "b96d44cb14a1b36932f4e95e109ce32fb26ccf1c93ab70371eb199063d6559d2"
+    },
+    {
+      "topic": "rolando-fracture",
+      "sourceBatchKey": "rolando-fracture-neighborhood",
+      "sourceProposalId": "bbb1db33-4ed2-49d9-aa0a-87f2c0898750",
+      "proposalFingerprint": "bridge|hand-rolando-fracture|rolando-fracture",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "3ed76c1510535d9f7650393750d70e0d55bc9c9e161a2446995b24ca28e99e80"
+    },
+    {
+      "topic": "wrist-dislocation",
+      "sourceBatchKey": "wrist-dislocation-neighborhood",
+      "sourceProposalId": "1db16521-3b39-4d1f-b467-47faa3cce697",
+      "proposalFingerprint": "bridge|hand-wrist-dislocation|wrist-dislocation",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "99a98700d6339f971f80d56564d5e90244249302c0ffa57a1211c4ae4d83bf12"
+    },
+    {
+      "topic": "bennett-fracture",
+      "sourceBatchKey": "bennett-fracture-neighborhood",
+      "sourceProposalId": "e5504b0d-8190-441b-8612-6ccf38e140e0",
+      "proposalFingerprint": "bridge|hand-bennett-fracture|bennett-fracture",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "41c6b70abc15dc2eac4efcd8cfefb5be5c8e28228221c66c7df53f9456f2a0d3"
+    },
+    {
+      "topic": "distal-ulna-fracture",
+      "sourceBatchKey": "distal-ulna-fracture-neighborhood",
+      "sourceProposalId": "c09888a7-b9f1-4343-851d-26f42a219035",
+      "proposalFingerprint": "bridge|hand-distal-ulna-fracture|distal-ulna-fracture",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "29fd65587668d99386e7b35521025f47f144feb4c8f293781b2eb5b5e9030528"
+    },
+    {
+      "topic": "distal-ulna-fracture",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 2,
+      "verificationHash": "66b10caaeedaebd35f24ad1e4b1a98868bc18695106df75ba998e552dcab6fcd"
+    },
+    {
+      "topic": "druj-instability",
+      "sourceBatchKey": "druj-instability-neighborhood",
+      "sourceProposalId": "af0f6fbf-6a41-4a60-8375-f5949f10e37a",
+      "proposalFingerprint": "bridge|hand-druj-instability|druj-instability",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "91463947a9ba9e6573c1734b1f908487da1fb486cba118043153e05eb43a4ce6"
+    },
+    {
+      "topic": "galeazzi-fracture",
+      "sourceBatchKey": "galeazzi-fracture-neighborhood",
+      "sourceProposalId": "d4c7a34d-c400-40bb-adfb-b634717ab660",
+      "proposalFingerprint": "bridge|hand-galeazzi-fracture|galeazzi-fracture",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "249f8d77d36b1ee94fe952cbf2501953c193eba87afe4b5819eec731eb1d360c"
+    },
+    {
+      "topic": "perilunate-dislocation",
+      "sourceBatchKey": "perilunate-dislocation-neighborhood",
+      "sourceProposalId": "ec6567ad-453a-4078-b8ac-cae9afd3a9c4",
+      "proposalFingerprint": "bridge|hand-perilunate-dislocation|perilunate-dislocation",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "ae48eaf3c61b3878d3c44fe99373b251eefa77da74b41b16f2a002138a8976fd"
+    },
+    {
+      "topic": "scaphoid-nonunion",
+      "sourceBatchKey": "scaphoid-nonunion-neighborhood",
+      "sourceProposalId": "2143ac57-bd5f-4eca-abf5-4d0ba198cdf6",
+      "proposalFingerprint": "bridge|hand-scaphoid-nonunion|scaphoid-nonunion",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "13a7d5a39e92aeea86bd4db3b2d2679ff870edabc5667be95e277f19e4c03d1a"
+    },
+    {
+      "topic": "sl-ligament-injury",
+      "sourceBatchKey": "sl-ligament-injury-neighborhood",
+      "sourceProposalId": "5c8173e2-4de1-4c90-a4ce-1aea39e25edc",
+      "proposalFingerprint": "bridge|hand-sl-ligament-injury|sl-ligament-injury",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "d9f238e9a277ca1a31463b376240205a03f7c60e34343104abe48830670b9a42"
+    },
+    {
+      "topic": "supracondylar-humerus-fracture",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 4,
+      "verificationHash": "5dfff1084f97a8912d679f5cd2fb3ecb8a30b0ff7b78d375336933ecd68a0e6b"
+    },
+    {
+      "topic": "chronic-lateral-ankle-instability",
+      "sourceBatchKey": "chronic-lateral-ankle-instability-neighborhood",
+      "sourceProposalId": "bf1c9561-af3d-4e21-a5e1-60ede6878059",
+      "proposalFingerprint": "bridge|foot-ankle-chronic-lateral-ankle-instability|chronic-lateral-ankle-instability",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "677e90a2a5a4ff438cfd3d0c59d36ee4dae946baad72bdff29ae7f15cac9f717"
+    },
+    {
+      "topic": "distal-biceps-tendon-rupture",
+      "sourceBatchKey": "distal-biceps-tendon-rupture-neighborhood",
+      "sourceProposalId": "e1a0ed99-9da5-498e-8bfa-5cf8165bdf56",
+      "proposalFingerprint": "bridge|shoulder-elbow-distal-biceps-tendon-rupture|distal-biceps-tendon-rupture",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "f0ecbc30f84f6326079b3c55981689ade225afe979fa80769dc52c6aa7b5c564"
+    },
+    {
+      "topic": "osteochondral-defect-knee",
+      "sourceBatchKey": "osteochondral-defect-knee-neighborhood",
+      "sourceProposalId": "0b9ed2f1-099d-4a8f-a944-53d1fa43a63f",
+      "proposalFingerprint": "bridge|knee-sports-osteochondral-defect-knee|osteochondral-defect-knee",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "49cbab95e47d3feaa0396a689f2f505839f4b6caec07ee1d85c5ee9524b7e048"
+    },
+    {
+      "topic": "osteochondral-defect-knee",
+      "sourceBatchKey": "osteochondral-defect-knee-neighborhood",
+      "sourceProposalId": "d7d67982-ddb1-4245-b28f-7b79a7e5cf4a",
+      "proposalFingerprint": "create|condition|osteochondral-defect-knee",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_IDENTITY_MISMATCH",
+      "details": {},
+      "verificationHash": "ffbf12b203ad9a732e7cd24238a1d8b99ec06ee99b6c904941072ee1863bc386"
+    },
+    {
+      "topic": "proximal-biceps-tendon-pathology",
+      "sourceBatchKey": "proximal-biceps-tendon-pathology-neighborhood",
+      "sourceProposalId": "a93f8c25-fcfc-43e6-8193-ef27d759c9c4",
+      "proposalFingerprint": "bridge|shoulder-elbow-proximal-biceps-tendon-pathology|proximal-biceps-tendon-pathology",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "9c980d3818a34bfd07e203859fd9ee9b81fc5e6f00b0ec0fe86fd577414f09f5"
+    },
+    {
+      "topic": "rotator-cuff-tear",
+      "sourceBatchKey": "rotator-cuff-tear-neighborhood",
+      "sourceProposalId": "7c29aa26-4063-492c-81c1-13607c942c1b",
+      "proposalFingerprint": "bridge|shoulder-elbow-rotator-cuff-tear|rotator-cuff-tear",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "77d5b8ba19c2f979bb6d06464a783fe0fb8364881fb539902b4b470787856ff0"
+    },
+    {
+      "topic": "ucl-injury",
+      "sourceBatchKey": "ucl-injury-neighborhood",
+      "sourceProposalId": "ed278e3d-078d-4fc3-9e38-b9da2223d18c",
+      "proposalFingerprint": "bridge|shoulder-elbow-ucl-injury|ucl-injury",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "be74bf5ed496088c6a2bdf94daebf4e37ec4f11a8a1e21dbc81a00a73b119a8b"
+    },
+    {
+      "topic": "ac-joint-separation",
+      "sourceBatchKey": "ac-joint-separation-neighborhood",
+      "sourceProposalId": "a90214b7-5558-446e-bc50-5dd57ad0767a",
+      "proposalFingerprint": "bridge|shoulder-elbow-ac-joint-separation|ac-joint-separation",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "e4e28c599fb11801a0190955f9350a3b1c8ab3c65f46a767081be1cd4ffd90fe"
+    },
+    {
+      "topic": "anterior-shoulder-instability",
+      "sourceBatchKey": "anterior-shoulder-instability-neighborhood",
+      "sourceProposalId": "419ae3ff-204e-4bff-b527-c92021b8b226",
+      "proposalFingerprint": "bridge|shoulder-elbow-anterior-shoulder-instability|anterior-shoulder-instability",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "6b63bcef0856dd92a0600ce81469956b439eff9d7a4c92c20fd473e67c77c1da"
+    },
+    {
+      "topic": "meniscus-tear",
+      "sourceBatchKey": "meniscus-tear-neighborhood",
+      "sourceProposalId": "59175998-eee6-4044-897b-24e6da910e03",
+      "proposalFingerprint": "bridge|knee-sports-meniscus-tear|meniscus-tear",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "554aea99fc7ab9a33b38406904a8c6313f7a1656713d05f9aa4b3eaeebf57cde"
+    },
+    {
+      "topic": "osteochondral-lesion-talus",
+      "sourceBatchKey": "osteochondral-lesion-talus-neighborhood",
+      "sourceProposalId": "274dcd77-3c29-4411-bcf8-0ab795dde480",
+      "proposalFingerprint": "bridge|foot-ankle-osteochondral-lesion-talus|osteochondral-lesion-talus",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "cf3a8770ac60613e1a4dc621c8707978f67528821f00ad7383de52a318cdae05"
+    },
+    {
+      "topic": "osteochondral-lesion-talus",
+      "sourceBatchKey": "osteochondral-lesion-talus-neighborhood",
+      "sourceProposalId": "82dcced9-0bf2-459f-88d6-f1c5483b205f",
+      "proposalFingerprint": "create|condition|osteochondral-lesion-talus",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_IDENTITY_MISMATCH",
+      "details": {},
+      "verificationHash": "88c489eae31b899bdabec61ecc318bd01d753f96e8442d164ef8c905f51cbd9d"
+    },
+    {
+      "topic": "slap-tear",
+      "sourceBatchKey": "slap-tear-neighborhood",
+      "sourceProposalId": "9f207bbc-85f9-41b8-8c51-4fe5d1cae4f7",
+      "proposalFingerprint": "bridge|shoulder-elbow-slap-tear|slap-tear",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "d98180f74f774e12aa48d0afd15e051c64e5891ef577ed10d156a4a26d1b681b"
+    },
+    {
+      "topic": "syndesmotic-sprain",
+      "sourceBatchKey": "syndesmotic-sprain-neighborhood",
+      "sourceProposalId": "b7d7e9fc-f2c4-4485-b60d-d71333c77293",
+      "proposalFingerprint": "bridge|foot-ankle-syndesmotic-sprain|syndesmotic-sprain",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "e8038fa4319ad12fb270d24481fec960e550272224f9100555e10637c3bc6481"
+    },
+    {
+      "topic": "multiligament-knee-injury",
+      "sourceBatchKey": "multiligament-knee-injury-neighborhood",
+      "sourceProposalId": "d11dafcd-b7cf-4a6e-b59b-802d92f14e31",
+      "proposalFingerprint": "bridge|knee-sports-multiligament-knee-injury|multiligament-knee-injury",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "9b8fdd5af6c7b10940b5b2c23e248a1ddfe6d652be9db2b6b2c886d08d8edafe"
+    },
+    {
+      "topic": "distal-radius-fracture",
+      "sourceBatchKey": "distal-radius-fracture-neighborhood",
+      "sourceProposalId": "522aa5e6-69e3-45b8-931a-068fa9fe27b8",
+      "proposalFingerprint": "rel|distal-radius-fracture|involves_anatomy|hand-wrist-anatomy-hub",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "920f09069788c814d617cb35a4d6fc4cef2507a1cf930643a1889abd3ae2aca5"
+    },
+    {
+      "topic": "distal-radius-fracture",
+      "sourceBatchKey": "distal-radius-fracture-neighborhood",
+      "sourceProposalId": "3b446c1e-57de-4903-b987-22acb33da577",
+      "proposalFingerprint": "rel|distal-radius-fracture|involves_anatomy|tfcc",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "3e17a553b07d90b3b3e042ee6efeefab7404c30fee03cc5868ef137a560ce3a4"
+    },
+    {
+      "topic": "distal-radius-fracture",
+      "sourceBatchKey": "distal-radius-fracture-neighborhood",
+      "sourceProposalId": "6d9ce85b-0af6-42bb-a49c-f2c8d7699d29",
+      "proposalFingerprint": "rel|hand-wrist-anatomy-hub|prerequisite_for|distal-radius-fracture",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_RELATIONSHIP_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "acc54f6babd88eb62dbf9393a11d6787563c534a2f7d395d04ba25b4a66cc915"
+    },
+    {
+      "topic": "distal-radius-fracture",
+      "riskTier": "high",
+      "reason": "CLAIMS_EXCLUDED_FROM_FIRST_BROAD_RELEASE",
+      "count": 3,
+      "verificationHash": "cb729e2cb7dbc53198742c9751250f78fa885abab812b7604d3d2b723aeaba8a"
+    },
+    {
+      "topic": "complications",
+      "sourceBatchKey": "complications-neighborhood",
+      "sourceProposalId": "f174ca93-9ec9-4c91-8d6b-bc4c9fbaf6cd",
+      "proposalFingerprint": "bridge|orthopaedic-complications|orthopaedic-complications",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "540ad00e1e00dccdbfbaf1f7b3a79b0e1425a33cf517b87d45e7088d8a7c6f10"
+    },
+    {
+      "topic": "complications",
+      "sourceBatchKey": "complications-neighborhood",
+      "sourceProposalId": "4d59d16d-894e-44eb-b93d-70654f3cb4d9",
+      "proposalFingerprint": "create|complication|crps",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_IDENTITY_MISMATCH",
+      "details": {},
+      "verificationHash": "e9d96bc1614fc1639f2d1976dcea085a8d14a49acd675f00beb8e3aca1c0beab"
+    },
+    {
+      "topic": "imaging-radiographic-measurements",
+      "sourceBatchKey": "imaging-radiographic-measurements-neighborhood",
+      "sourceProposalId": "b2616a53-0060-4fac-a259-98ad50efd801",
+      "proposalFingerprint": "bridge|imaging-radiographic-measurements|imaging-radiographic-measurements",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "d19cd72f9a8845b3f4f0fa32b7a18864ae43c9efa9b45aba899c1c474454826d"
+    },
+    {
+      "topic": "implants-instruments",
+      "sourceBatchKey": "implants-instruments-neighborhood",
+      "sourceProposalId": "2ca0f926-286b-4fb2-bded-3d4880924ca8",
+      "proposalFingerprint": "bridge|implants-instruments|implants-instruments",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "ae071231b5f738639ca2e86f3a715c0c1ff96a3015420c0a0b1ac02c4f569f25"
+    },
+    {
+      "topic": "surgical-approaches",
+      "sourceBatchKey": "surgical-approaches-neighborhood",
+      "sourceProposalId": "db03536b-6966-49e9-b2b3-3b1dba635d5f",
+      "proposalFingerprint": "create|complication|extensor-mechanism-failure",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CANONICAL_IDENTITY_MISMATCH",
+      "details": {},
+      "verificationHash": "bc7cee6ec7559f2dce9017cd3bed3aca2fdfba54d2e6d5a7eb6f14cc5d53a828"
+    },
+    {
+      "topic": "trauma-fundamentals",
+      "sourceBatchKey": "trauma-fundamentals-neighborhood",
+      "sourceProposalId": "c1d34480-5f82-4d1a-9bf3-dff6335ef2af",
+      "proposalFingerprint": "bridge|trauma-fundamentals|trauma-fundamentals",
+      "targetTable": null,
+      "targetId": null,
+      "riskTier": "low",
+      "reason": "CURRICULUM_BRIDGE_CARDINALITY",
+      "details": {
+        "matches": 0
+      },
+      "verificationHash": "822f1a50e19fa17c94f7f72607f13e5c1464536cf432ac765cfdf0fd0f9a32cb"
+    }
+  ]
+}

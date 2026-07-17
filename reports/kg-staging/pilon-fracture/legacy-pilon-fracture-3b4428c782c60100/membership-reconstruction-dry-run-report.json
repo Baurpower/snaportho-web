@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "runDate": "2026-07-16",
+  "topicKey": "pilon-fracture",
+  "displayName": "Pilon Fracture",
+  "pilotKey": "pilon-fracture-neighborhood",
+  "batchKey": "legacy-pilon-fracture-3b4428c782c60100",
+  "packetHash": "3b4428c782c601006b3861bad4157724190abe40f899959f19e8ac70859a1092",
+  "graphHash": "ca1cd652cdb8b70101ac125d2257636c1fcd66545ad66fd55b473b5cfb2e5b4b",
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "dryRun": true,
+  "exactAppliedMembershipReconstructed": true,
+  "counts": {
+    "approvedLoaded": 70,
+    "structuralProposals": 69,
+    "entities": 31,
+    "relationships": 37,
+    "curriculumBridges": 1,
+    "draftClaimsExcluded": 1,
+    "draftDecisionPointsExcluded": 0
+  },
+  "repairs": {
+    "insertedSemantic": 0,
+    "reusedSemantic": 0,
+    "proposalStatesRepaired": 0,
+    "insertedMemberships": 0,
+    "reusedMemberships": 0,
+    "reactivatedMemberships": 0
+  },
+  "discrepancyCount": 0,
+  "exactNextAction": "repair_batch_membership"
+}

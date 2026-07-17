@@ -3,8 +3,35 @@
   "pilotKey": "knee-instability-after-tka-neighborhood",
   "primaryEntitySlug": "knee-instability-after-tka",
   "displayName": "Knee Instability After TKA",
-  "generatedAt": "2026-07-05T23:12:57.937Z",
+  "generatedAt": "2026-07-16T02:53:18.196Z",
   "nodes": [
+    {
+      "slug": "adult-reconstruction-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Adult Reconstruction Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "collateral-ligaments",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Collateral Ligaments",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "cruciate-ligaments",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Cruciate Ligaments",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
     {
       "slug": "flexion-extension-gap-balance",
       "entityType": "biomechanics_concept",
@@ -15,31 +42,56 @@
       "outboundEdgeCount": 0
     },
     {
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
       "slug": "knee-instability-after-tka",
       "entityType": "condition",
       "preferredLabel": "Knee Instability After TKA",
       "role": "primary_condition",
       "isPrimary": true,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "total-knee-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Total Knee Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
       "inboundEdgeCount": 0,
-      "outboundEdgeCount": 0
+      "outboundEdgeCount": 1
     }
   ],
-  "edgeCount": 0,
+  "edgeCount": 6,
   "claimCount": 2,
   "decisionPointCount": 0,
   "roles": {
     "primary_condition": [
       "knee-instability-after-tka"
     ],
-    "neighboring_anatomy": [],
-    "procedure": [],
+    "neighboring_anatomy": [
+      "adult-reconstruction-anatomy-hub",
+      "collateral-ligaments",
+      "cruciate-ligaments"
+    ],
+    "procedure": [
+      "total-knee-arthroplasty"
+    ],
     "classification": [],
     "imaging": [],
     "complication": [],
     "decision_point_anchor": [],
     "claim_anchor": [],
     "biomechanics": [
-      "flexion-extension-gap-balance"
+      "flexion-extension-gap-balance",
+      "implant-concepts-hub"
     ],
     "fixation": [],
     "supporting": []

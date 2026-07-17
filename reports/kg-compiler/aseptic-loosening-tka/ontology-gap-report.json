@@ -1,12 +1,25 @@
 {
-  "generatedAt": "2026-07-05T23:09:48.690Z",
+  "generatedAt": "2026-07-16T02:33:03.960Z",
   "gaps": [
     {
-      "id": "gap-entity-neighbor-1",
+      "id": "gap-rel-1",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "anatomy.pred.hierarchy",
+      "anchorEntitySlug": "adult-reconstruction-anatomy-hub",
+      "subjectSlug": "adult-reconstruction-anatomy-hub",
+      "predicate": "part_of"
+    },
+    {
+      "id": "gap-entity-neighbor-2",
       "kind": "missing_entity",
       "priority": "critical",
       "confidence": 0.95,
-      "reason": "Aseptic Loosening of TKA neighborhood has 0/3 anatomy_structure entities.",
+      "reason": "Aseptic Loosening of TKA neighborhood has 1/3 anatomy_structure entities.",
       "requiredReviewer": "clinical_expert",
       "maturityImpact": 0.15,
       "ontologyRule": "condition.anatomy.min_structures",
@@ -14,7 +27,7 @@
       "entityType": "anatomy_structure"
     },
     {
-      "id": "gap-entity-neighbor-2",
+      "id": "gap-entity-neighbor-3",
       "kind": "missing_entity",
       "priority": "high",
       "confidence": 0.95,
@@ -26,7 +39,7 @@
       "entityType": "classification_system"
     },
     {
-      "id": "gap-entity-neighbor-3",
+      "id": "gap-entity-neighbor-4",
       "kind": "missing_entity",
       "priority": "medium",
       "confidence": 0.95,
@@ -38,7 +51,7 @@
       "entityType": "complication"
     },
     {
-      "id": "gap-rel-4",
+      "id": "gap-rel-5",
       "kind": "missing_relationship",
       "priority": "critical",
       "confidence": 0.92,
@@ -49,19 +62,6 @@
       "anchorEntitySlug": "aseptic-loosening-tka",
       "subjectSlug": "aseptic-loosening-tka",
       "predicate": "injured_in"
-    },
-    {
-      "id": "gap-rel-5",
-      "kind": "missing_relationship",
-      "priority": "high",
-      "confidence": 0.92,
-      "reason": "Aseptic Loosening of TKA missing outbound involves_anatomy (0/1).",
-      "requiredReviewer": "curator",
-      "maturityImpact": 0.1,
-      "ontologyRule": "condition.pred.involves_anatomy",
-      "anchorEntitySlug": "aseptic-loosening-tka",
-      "subjectSlug": "aseptic-loosening-tka",
-      "predicate": "involves_anatomy"
     },
     {
       "id": "gap-rel-6",
@@ -129,20 +129,7 @@
       "predicate": "treated_by"
     },
     {
-      "id": "gap-rel-11",
-      "kind": "missing_relationship",
-      "priority": "high",
-      "confidence": 0.92,
-      "reason": "Aseptic Loosening of TKA missing inbound prerequisite_for (0/1).",
-      "requiredReviewer": "curator",
-      "maturityImpact": 0.1,
-      "ontologyRule": "condition.pred.prerequisite_for_inbound",
-      "anchorEntitySlug": "aseptic-loosening-tka",
-      "predicate": "prerequisite_for",
-      "objectSlug": "aseptic-loosening-tka"
-    },
-    {
-      "id": "gap-claim-12",
+      "id": "gap-claim-11",
       "kind": "missing_claim",
       "priority": "high",
       "confidence": 0.88,
@@ -154,7 +141,7 @@
       "claimType": "fact|board_trap|imaging_point|cognitive_trap"
     },
     {
-      "id": "gap-claim-type-13",
+      "id": "gap-claim-type-12",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.75,
@@ -166,7 +153,7 @@
       "claimType": "fact"
     },
     {
-      "id": "gap-claim-type-14",
+      "id": "gap-claim-type-13",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.75,
@@ -178,7 +165,7 @@
       "claimType": "board_trap"
     },
     {
-      "id": "gap-claim-type-15",
+      "id": "gap-claim-type-14",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.75,
@@ -190,7 +177,7 @@
       "claimType": "imaging_point"
     },
     {
-      "id": "gap-claim-type-16",
+      "id": "gap-claim-type-15",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.75,
@@ -202,7 +189,7 @@
       "claimType": "cognitive_trap"
     },
     {
-      "id": "gap-dp-17",
+      "id": "gap-dp-16",
       "kind": "missing_decision_point",
       "priority": "critical",
       "confidence": 0.9,
@@ -213,7 +200,7 @@
       "anchorEntitySlug": "aseptic-loosening-tka"
     },
     {
-      "id": "gap-dp-pattern-18",
+      "id": "gap-dp-pattern-17",
       "kind": "missing_decision_point",
       "priority": "critical",
       "confidence": 0.85,
@@ -225,7 +212,7 @@
       "decisionPointPattern": "operative_indication"
     },
     {
-      "id": "gap-dp-pattern-19",
+      "id": "gap-dp-pattern-18",
       "kind": "missing_decision_point",
       "priority": "critical",
       "confidence": 0.85,
@@ -237,7 +224,7 @@
       "decisionPointPattern": "nonoperative_eligible"
     },
     {
-      "id": "gap-meta-rel-20",
+      "id": "gap-meta-rel-19",
       "kind": "missing_metadata",
       "priority": "medium",
       "confidence": 0.9,
@@ -250,7 +237,94 @@
       "predicate": "injured_in|has_imaging_finding|at_risk_structure"
     },
     {
-      "id": "gap-asset-card-21",
+      "id": "gap-rel-20",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.92,
+      "reason": "Arthroplasty Implant Concepts Hub missing inbound involves_anatomy (0/1).",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.inbound",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "predicate": "involves_anatomy",
+      "objectSlug": "implant-concepts-hub"
+    },
+    {
+      "id": "gap-claim-21",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.88,
+      "reason": "Arthroplasty Implant Concepts Hub has 0/1 L1 claims.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "claimType": "fact|anatomy_pearl"
+    },
+    {
+      "id": "gap-claim-type-22",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Arthroplasty Implant Concepts Hub missing claim type: fact.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.fact",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-claim-type-23",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Arthroplasty Implant Concepts Hub missing claim type: anatomy_pearl.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.anatomy_pearl",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "claimType": "anatomy_pearl"
+    },
+    {
+      "id": "gap-entity-neighbor-24",
+      "kind": "missing_entity",
+      "priority": "critical",
+      "confidence": 0.95,
+      "reason": "Revision Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.anatomy",
+      "anchorEntitySlug": "revision-arthroplasty",
+      "entityType": "anatomy_structure"
+    },
+    {
+      "id": "gap-rel-25",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Revision Arthroplasty missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "revision-arthroplasty",
+      "subjectSlug": "revision-arthroplasty",
+      "predicate": "involves_anatomy"
+    },
+    {
+      "id": "gap-rel-26",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Revision Arthroplasty missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "revision-arthroplasty",
+      "subjectSlug": "revision-arthroplasty",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-asset-card-27",
       "kind": "missing_asset_link",
       "priority": "medium",
       "confidence": 0.8,
@@ -261,7 +335,7 @@
       "anchorEntitySlug": "aseptic-loosening-tka"
     },
     {
-      "id": "gap-asset-question-22",
+      "id": "gap-asset-question-28",
       "kind": "missing_asset_link",
       "priority": "medium",
       "confidence": 0.8,
@@ -270,22 +344,47 @@
       "maturityImpact": 0.05,
       "ontologyRule": "neighborhood.assets.questions",
       "anchorEntitySlug": "aseptic-loosening-tka"
+    },
+    {
+      "id": "gap-biomech-claim-29",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.82,
+      "reason": "Biomechanics concept Arthroplasty Implant Concepts Hub has no teaching claim (e.g., mortise instability).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "implant-concepts-hub",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-proc-approach-30",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Revision Arthroplasty missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "revision-arthroplasty",
+      "subjectSlug": "revision-arthroplasty",
+      "predicate": "uses_approach"
     }
   ],
   "summary": {
-    "total": 22,
+    "total": 30,
     "byKind": {
-      "missing_entity": 3,
-      "missing_relationship": 8,
-      "missing_claim": 5,
+      "missing_relationship": 11,
+      "missing_entity": 4,
+      "missing_claim": 9,
       "missing_decision_point": 3,
       "missing_metadata": 1,
       "missing_asset_link": 2
     },
     "byPriority": {
-      "critical": 6,
       "high": 7,
-      "medium": 9
+      "critical": 8,
+      "medium": 15
     }
   }
 }

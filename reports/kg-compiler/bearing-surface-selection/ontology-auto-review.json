@@ -1,15 +1,15 @@
 {
   "topicKey": "bearing-surface-selection",
   "pilotKey": "bearing-surface-selection-neighborhood",
-  "generatedAt": "2026-07-05T23:31:27.014Z",
+  "generatedAt": "2026-07-16T02:33:43.882Z",
   "summary": {
-    "AUTO_APPROVE": 78,
+    "AUTO_APPROVE": 81,
     "SAFE_REVIEW": 6,
-    "EXPERT_REVIEW": 3,
+    "EXPERT_REVIEW": 6,
     "REJECT": 0
   },
-  "humanReviewPercent": 10.3,
-  "autoApprovedPercent": 89.7,
+  "humanReviewPercent": 12.9,
+  "autoApprovedPercent": 87.1,
   "decisions": [
     {
       "proposal_fingerprint": "bridge|adult-recon-bearing-surfaces|bearing-surface-selection",
@@ -30,6 +30,132 @@
       ],
       "rulesTriggered": [
         "deterministic_bridge"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-extensor-mechanism",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-hip-and-knee-joint-surfa",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-implant-bone-interfaces",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-implant-concepts-hub",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-shared-adult-reconstruct",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-trauma-neighborhood-brid",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
       ]
     },
     {
@@ -75,6 +201,174 @@
       ]
     },
     {
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-bearing-surface-selectio",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.41825,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: l1_management_fact",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l1_management_fact"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-cross-neighborhood-traum",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.41825,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: l1_management_fact",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l1_management_fact"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-implant-and-fixation-voc",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.41825,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: l1_management_fact",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l1_management_fact"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-infection",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "AUTO_REVISED",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: l2_fact_light_review",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l2_fact_light_review"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-instability",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "AUTO_REVISED",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: l2_fact_light_review",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l2_fact_light_review"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-loosening",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "AUTO_REVISED",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: l2_fact_light_review",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l2_fact_light_review"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-periprosthetic-fracture",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "AUTO_REVISED",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: l2_fact_light_review",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l2_fact_light_review"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-reconstruction-principle",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "AUTO_REVISED",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: l2_fact_light_review",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l2_fact_light_review"
+      ]
+    },
+    {
       "proposal_fingerprint": "claim|claim-bearing-surface-selection-pearl",
       "proposal_type": "propose_educational_claim",
       "category": "AUTO_APPROVE",
@@ -114,174 +408,6 @@
       ],
       "rulesTriggered": [
         "educational_judgment_claim"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-cross-linked-polyethylene-anatomy_pearl-extensor-mechanism",
-      "proposal_type": "propose_educational_claim",
-      "category": "AUTO_APPROVE",
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.7040000000000001,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: anatomy_pearl_on_hub",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "anatomy_pearl_on_hub"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-cross-linked-polyethylene-anatomy_pearl-hip-and-knee-joint-surfa",
-      "proposal_type": "propose_educational_claim",
-      "category": "AUTO_APPROVE",
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.7040000000000001,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: anatomy_pearl_on_hub",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "anatomy_pearl_on_hub"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-cross-linked-polyethylene-anatomy_pearl-implant-bone-interfaces",
-      "proposal_type": "propose_educational_claim",
-      "category": "AUTO_APPROVE",
-      "curationRoute": "AUTO_APPROVED_LOW_RISK",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.7040000000000001,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: anatomy_pearl_on_hub",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "anatomy_pearl_on_hub"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-cross-linked-polyethylene-fact-infection",
-      "proposal_type": "propose_educational_claim",
-      "category": "SAFE_REVIEW",
-      "curationRoute": "AUTO_REVISED",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.627375,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: l2_fact_light_review",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "l2_fact_light_review"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-cross-linked-polyethylene-fact-instability",
-      "proposal_type": "propose_educational_claim",
-      "category": "SAFE_REVIEW",
-      "curationRoute": "AUTO_REVISED",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.627375,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: l2_fact_light_review",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "l2_fact_light_review"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-cross-linked-polyethylene-fact-loosening",
-      "proposal_type": "propose_educational_claim",
-      "category": "SAFE_REVIEW",
-      "curationRoute": "AUTO_REVISED",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.627375,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: l2_fact_light_review",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "l2_fact_light_review"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-cross-linked-polyethylene-fact-periprosthetic-fracture",
-      "proposal_type": "propose_educational_claim",
-      "category": "SAFE_REVIEW",
-      "curationRoute": "AUTO_REVISED",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.627375,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: l2_fact_light_review",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "l2_fact_light_review"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-cross-linked-polyethylene-fact-reconstruction-principle",
-      "proposal_type": "propose_educational_claim",
-      "category": "SAFE_REVIEW",
-      "curationRoute": "AUTO_REVISED",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.627375,
-      "humanReviewerType": "none",
-      "rationale": [
-        "Rule: l2_fact_light_review",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "l2_fact_light_review"
       ]
     },
     {

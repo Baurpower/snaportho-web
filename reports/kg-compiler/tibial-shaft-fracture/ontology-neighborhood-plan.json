@@ -3,24 +3,15 @@
   "pilotKey": "tibial-shaft-fracture-neighborhood",
   "primaryEntitySlug": "tibial-shaft-fracture",
   "displayName": "Tibial Shaft Fracture",
-  "generatedAt": "2026-07-05T21:24:25.483Z",
+  "generatedAt": "2026-07-16T02:18:46.881Z",
   "nodes": [
     {
-      "slug": "tibia-leg-anatomy-hub",
+      "slug": "anterior-compartment",
       "entityType": "anatomy_structure",
-      "preferredLabel": "Tibia Leg Anatomy Hub",
+      "preferredLabel": "Anterior Compartment",
       "role": "neighboring_anatomy",
       "isPrimary": false,
-      "inboundEdgeCount": 2,
-      "outboundEdgeCount": 0
-    },
-    {
-      "slug": "tibial-shaft",
-      "entityType": "anatomy_structure",
-      "preferredLabel": "Tibial Shaft",
-      "role": "neighboring_anatomy",
-      "isPrimary": false,
-      "inboundEdgeCount": 2,
+      "inboundEdgeCount": 1,
       "outboundEdgeCount": 1
     },
     {
@@ -29,8 +20,44 @@
       "preferredLabel": "Fibula",
       "role": "neighboring_anatomy",
       "isPrimary": false,
-      "inboundEdgeCount": 0,
-      "outboundEdgeCount": 2
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "leg-compartment-complex",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Leg Compartment Complex",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "segmental-tibial-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Segmental Tibial Fracture Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tibial-blood-supply",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Tibial Blood Supply",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tibia-leg-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Tibia Leg Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 1
     },
     {
       "slug": "tibial-im-nail",
@@ -42,21 +69,12 @@
       "outboundEdgeCount": 1
     },
     {
-      "slug": "tibial-blood-supply",
-      "entityType": "biomechanics_concept",
-      "preferredLabel": "Tibial Blood Supply",
-      "role": "biomechanics",
+      "slug": "tibial-infection",
+      "entityType": "complication",
+      "preferredLabel": "Tibial Infection",
+      "role": "complication",
       "isPrimary": false,
-      "inboundEdgeCount": 0,
-      "outboundEdgeCount": 0
-    },
-    {
-      "slug": "im-nail-fixation",
-      "entityType": "fixation_method",
-      "preferredLabel": "IM Nail",
-      "role": "fixation",
-      "isPrimary": false,
-      "inboundEdgeCount": 0,
+      "inboundEdgeCount": 1,
       "outboundEdgeCount": 0
     },
     {
@@ -65,7 +83,7 @@
       "preferredLabel": "Tibial Malunion",
       "role": "complication",
       "isPrimary": false,
-      "inboundEdgeCount": 0,
+      "inboundEdgeCount": 1,
       "outboundEdgeCount": 0
     },
     {
@@ -74,37 +92,41 @@
       "preferredLabel": "Tibial Nonunion",
       "role": "complication",
       "isPrimary": false,
-      "inboundEdgeCount": 0,
+      "inboundEdgeCount": 1,
       "outboundEdgeCount": 0
     },
     {
-      "slug": "segmental-tibial-fracture",
-      "entityType": "imaging_finding",
-      "preferredLabel": "Segmental Tibial Fracture Pattern",
-      "role": "imaging",
+      "slug": "tibial-shaft",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Tibial Shaft",
+      "role": "neighboring_anatomy",
       "isPrimary": false,
-      "inboundEdgeCount": 0,
-      "outboundEdgeCount": 0
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 2
     },
     {
-      "slug": "tibial-infection",
-      "entityType": "complication",
-      "preferredLabel": "Tibial Infection",
-      "role": "complication",
-      "isPrimary": false,
-      "inboundEdgeCount": 0,
-      "outboundEdgeCount": 0
+      "slug": "tibial-shaft-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Tibial Shaft Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 10
     }
   ],
-  "edgeCount": 4,
-  "claimCount": 2,
+  "edgeCount": 19,
+  "claimCount": 5,
   "decisionPointCount": 0,
   "roles": {
-    "primary_condition": [],
+    "primary_condition": [
+      "tibial-shaft-fracture"
+    ],
     "neighboring_anatomy": [
+      "anterior-compartment",
+      "fibula",
+      "leg-compartment-complex",
       "tibia-leg-anatomy-hub",
-      "tibial-shaft",
-      "fibula"
+      "tibial-shaft"
     ],
     "procedure": [
       "tibial-im-nail"
@@ -114,18 +136,16 @@
       "segmental-tibial-fracture"
     ],
     "complication": [
+      "tibial-infection",
       "tibial-malunion",
-      "tibial-nonunion",
-      "tibial-infection"
+      "tibial-nonunion"
     ],
     "decision_point_anchor": [],
     "claim_anchor": [],
     "biomechanics": [
       "tibial-blood-supply"
     ],
-    "fixation": [
-      "im-nail-fixation"
-    ],
+    "fixation": [],
     "supporting": []
   }
 }

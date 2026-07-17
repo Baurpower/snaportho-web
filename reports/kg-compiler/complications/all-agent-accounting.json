@@ -1,0 +1,77 @@
+{
+  "generatedAt": "2026-07-08T00:00:00.000Z",
+  "topicKey": "complications",
+  "pilotKey": "complications-neighborhood",
+  "agents": [
+    {
+      "agent": "Anatomy Builder",
+      "status": "no_applicable_work",
+      "reason": "No anatomy-prefixed entity gaps after reused anatomy cross-refs were seeded."
+    },
+    {
+      "agent": "Clinical Entity Builder",
+      "status": "no_applicable_work_iteration_2",
+      "reason": "No missing-entity gaps remained after iteration-2 seed closure; iteration 1 executed this agent."
+    },
+    {
+      "agent": "Relationship Builder",
+      "status": "executed",
+      "reason": "Assigned medium uses_approach gaps; no safe automatic proposals emitted."
+    },
+    {
+      "agent": "Claim Builder",
+      "status": "no_applicable_work",
+      "reason": "Claim drafts already present; no claim gaps assigned."
+    },
+    {
+      "agent": "Decision Point Builder",
+      "status": "no_applicable_work",
+      "reason": "Decision-point drafts already present; no DP gaps assigned."
+    },
+    {
+      "agent": "Metadata Builder",
+      "status": "no_applicable_work",
+      "reason": "No metadata gaps assigned."
+    },
+    {
+      "agent": "Asset Linker",
+      "status": "no_applicable_work",
+      "reason": "No Anki/Orthobullets/CasePrep mappings registered for this topic."
+    },
+    {
+      "agent": "Provenance Builder",
+      "status": "no_applicable_work",
+      "reason": "Provenance already attached via evidence packet and proposal builder."
+    },
+    {
+      "agent": "Duplicate Detector",
+      "status": "executed",
+      "reason": "Completed; staging apply reused existing identities."
+    },
+    {
+      "agent": "Conflict Resolver",
+      "status": "executed",
+      "reason": "Completed; zero conflicts."
+    },
+    {
+      "agent": "Quality Scorer",
+      "status": "executed",
+      "reason": "Completed without error."
+    },
+    {
+      "agent": "Review Assistant",
+      "status": "executed",
+      "reason": "Routed 362 proposals."
+    },
+    {
+      "agent": "Publication Validator",
+      "status": "executed",
+      "reason": "Publication blocked at maturity 5/7."
+    },
+    {
+      "agent": "Neighborhood QA",
+      "status": "executed",
+      "reason": "Independent audit score 84; NOT_READY."
+    }
+  ]
+}

@@ -1,18 +1,22 @@
 {
   "topicKey": "aseptic-loosening-tka",
   "pilotKey": "aseptic-loosening-tka-neighborhood",
-  "generatedAt": "2026-07-05T23:09:48.689Z",
+  "generatedAt": "2026-07-16T02:33:03.959Z",
   "entities": [
     {
-      "slug": "tibial-component-subsidence",
-      "entityType": "imaging_finding",
-      "preferredLabel": "Tibial Component Subsidence",
+      "slug": "adult-reconstruction-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Adult Reconstruction Anatomy Hub",
       "metadata": {
-        "slug": "tibial-component-subsidence",
+        "slug": "adult-reconstruction-anatomy-hub",
         "pilot": "aseptic-loosening-tka-neighborhood",
+        "region": "arthroplasty",
+        "cluster": "adult-reconstruction",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
-        "description": "Progressive tibial tray settling indicating loosening.",
+        "curated_at": "2026-07-16T02:33:03.957Z",
+        "description": "Composite hip and knee arthroplasty model linking joint surfaces, soft tissues, and implant interfaces.",
+        "owner_pilot": "adult-reconstruction-cluster-shared",
+        "anatomy_kind": "composite",
         "staging_apply": true,
         "curation_route": "AUTO_APPROVED_LOW_RISK",
         "curation_rules": [
@@ -26,14 +30,16 @@
           "completeness": 0.85
         },
         "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
         "staging_reviewer": "staging_test_reviewer_not_clinical",
         "review_packet_key": "pilot:aseptic-loosening-tka-neighborhood",
         "review_packet_label": "Aseptic Loosening of TKA Neighborhood",
         "clinical_verification": false,
-        "created_from_proposal_fingerprint": "create|imaging_finding|tibial-component-subsidence",
-        "canonical_entity_id": "697da6f8-1891-4dfb-b0e0-0c4150c13191",
+        "created_from_proposal_fingerprint": "create|anatomy_structure|adult-reconstruction-anatomy-hub",
+        "canonical_entity_id": "14f44479-f605-46b6-ad3c-c6f451598bbe",
         "applied_by_script": "apply-pilot-approved",
-        "_provenance_fingerprint": "create|imaging_finding|tibial-component-subsidence"
+        "_provenance_fingerprint": "create|anatomy_structure|adult-reconstruction-anatomy-hub"
       },
       "source": "proposal"
     },
@@ -45,7 +51,7 @@
         "slug": "aseptic-loosening-tka",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Mechanical failure of TKA fixation without infection.",
         "clinical_kind": "arthroplasty",
         "staging_apply": true,
@@ -74,6 +80,192 @@
       "source": "proposal"
     },
     {
+      "slug": "femoral-component",
+      "entityType": "implant",
+      "preferredLabel": "Femoral Component",
+      "metadata": {
+        "slug": "femoral-component",
+        "pilot": "aseptic-loosening-tka-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-16T02:33:03.957Z",
+        "description": "TKA femoral resurfacing component restoring flexion-extension geometry.",
+        "owner_pilot": "adult-reconstruction-cluster-shared",
+        "implant_kind": "component",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:aseptic-loosening-tka-neighborhood",
+        "review_packet_label": "Aseptic Loosening of TKA Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|implant|femoral-component",
+        "canonical_entity_id": "452b95e6-c6c7-4a5a-95bb-284b36e269a3",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|implant|femoral-component"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
+      "metadata": {
+        "slug": "implant-concepts-hub",
+        "pilot": "aseptic-loosening-tka-neighborhood",
+        "region": "arthroplasty",
+        "cluster": "adult-reconstruction",
+        "verified": false,
+        "curated_at": "2026-07-16T02:33:03.957Z",
+        "description": "Composite model of reusable THA and TKA implant components and fixation strategies.",
+        "owner_pilot": "adult-reconstruction-cluster-shared",
+        "implant_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:aseptic-loosening-tka-neighborhood",
+        "review_packet_label": "Aseptic Loosening of TKA Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|biomechanics_concept|implant-concepts-hub",
+        "canonical_entity_id": "0337b233-79f0-422e-8e06-510e4f029363",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|biomechanics_concept|implant-concepts-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "revision-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Revision Arthroplasty",
+      "metadata": {
+        "slug": "revision-arthroplasty",
+        "pilot": "aseptic-loosening-tka-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-16T02:33:03.957Z",
+        "description": "Cross-neighborhood reference stub for revision-arthroplasty.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:aseptic-loosening-tka-neighborhood",
+        "review_packet_label": "Aseptic Loosening of TKA Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|revision-arthroplasty",
+        "canonical_entity_id": "500a344b-0803-4911-9e9c-91e3dc9572fa",
+        "owner_pilot": "revision-arthroplasty-neighborhood",
+        "shared_reference": true,
+        "applied_by_script": "apply-pilot-approved",
+        "cross_neighborhood": true,
+        "_provenance_fingerprint": "create|procedure|revision-arthroplasty"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "tibial-baseplate",
+      "entityType": "implant",
+      "preferredLabel": "Tibial Baseplate",
+      "metadata": {
+        "slug": "tibial-baseplate",
+        "pilot": "aseptic-loosening-tka-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-16T02:33:03.957Z",
+        "description": "TKA tibial tray fixed to proximal tibia receiving polyethylene insert.",
+        "owner_pilot": "adult-reconstruction-cluster-shared",
+        "implant_kind": "component",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:aseptic-loosening-tka-neighborhood",
+        "review_packet_label": "Aseptic Loosening of TKA Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|implant|tibial-baseplate",
+        "canonical_entity_id": "64605702-c420-40f3-953a-2310dc0a55da",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|implant|tibial-baseplate"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "tibial-component-subsidence",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Tibial Component Subsidence",
+      "metadata": {
+        "slug": "tibial-component-subsidence",
+        "pilot": "aseptic-loosening-tka-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-16T02:33:03.957Z",
+        "description": "Progressive tibial tray settling indicating loosening.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:aseptic-loosening-tka-neighborhood",
+        "review_packet_label": "Aseptic Loosening of TKA Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|tibial-component-subsidence",
+        "canonical_entity_id": "697da6f8-1891-4dfb-b0e0-0c4150c13191",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|tibial-component-subsidence"
+      },
+      "source": "proposal"
+    },
+    {
       "slug": "acetabulum",
       "entityType": "anatomy_structure",
       "preferredLabel": "Acetabulum",
@@ -83,7 +275,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Hip socket receiving the acetabular component; key for cup positioning and hip stability.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -113,45 +305,6 @@
       "source": "proposal"
     },
     {
-      "slug": "adult-reconstruction-anatomy-hub",
-      "entityType": "anatomy_structure",
-      "preferredLabel": "Adult Reconstruction Anatomy Hub",
-      "description": "Composite hip and knee arthroplasty model linking joint surfaces, soft tissues, and implant interfaces.",
-      "metadata": {
-        "slug": "adult-reconstruction-anatomy-hub",
-        "pilot": "aseptic-loosening-tka-neighborhood",
-        "region": "arthroplasty",
-        "cluster": "adult-reconstruction",
-        "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
-        "description": "Composite hip and knee arthroplasty model linking joint surfaces, soft tissues, and implant interfaces.",
-        "owner_pilot": "adult-reconstruction-cluster-shared",
-        "anatomy_kind": "composite",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "confidence": 0.92,
-          "evidence": 0.7,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "hierarchy_level": "structure",
-        "shared_reference": true,
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:aseptic-loosening-tka-neighborhood",
-        "review_packet_label": "Aseptic Loosening of TKA Neighborhood",
-        "clinical_verification": false,
-        "_provenance_fingerprint": "create|anatomy_structure|adult-reconstruction-anatomy-hub"
-      },
-      "source": "proposal"
-    },
-    {
       "slug": "calcar",
       "entityType": "anatomy_structure",
       "preferredLabel": "Calcar",
@@ -161,7 +314,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Dense medial femoral neck cortical buttress supporting head-neck load transfer.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -200,7 +353,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Medial and lateral knee stabilizers balanced during TKA soft-tissue releases.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "ligament",
@@ -238,7 +391,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Lateral knee nerve at risk in tibial plateau and proximal fibular injuries.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "nerve",
@@ -276,7 +429,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "ACL and PCL influencing TKA constraint selection and balancing strategy.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "ligament",
@@ -314,7 +467,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Distal femoral metaphysis and condylar region forming the proximal knee.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "bone",
@@ -352,7 +505,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "composite",
@@ -390,7 +543,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Distal femoral articular surfaces resurfaced during TKA femoral component placement.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -428,7 +581,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "thigh",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Femoral shaft between proximal and distal metaphyseal regions.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "bone",
@@ -466,7 +619,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Articular femoral head supplied largely by retinacular and circumflex vessels.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -505,7 +658,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Intracapsular segment between femoral head and intertrochanteric region.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -544,7 +697,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Anterior hip nerve at risk during anterior approach THA exposure.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "nerve",
@@ -582,7 +735,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Thigh bone bearing femoral condyles and canal for arthroplasty stem fixation.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -620,7 +773,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Primary hip abductor; critical for gait and THA abductor repair integrity.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "muscle",
@@ -658,7 +811,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Deep hip abductor contributing to pelvic stability during gait.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "muscle",
@@ -696,7 +849,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Lateral proximal femur with abductor insertions; intertrochanteric fixation landmark.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -735,7 +888,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Periarticular soft tissue envelope influencing THA approach, stability, and dislocation risk.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "soft_tissue",
@@ -773,7 +926,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Ball-and-socket articulation between femoral head and acetabulum.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "joint",
@@ -812,7 +965,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Extracapsular metaphyseal zone between neck and subtrochanteric diaphysis.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -851,7 +1004,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Medial proximal femur attachment for iliopsoas; key subtrochanteric landmark.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "bone",
@@ -890,7 +1043,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Dominant retinacular blood supply to the femoral head; vulnerable in neck fractures.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "vessel",
@@ -929,7 +1082,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Sesamoid bone within the extensor mechanism at the anterior knee.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "bone",
@@ -967,7 +1120,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Distal extensor mechanism linkage vulnerable to rupture after TKA.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "tendon",
@@ -1005,7 +1158,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Bony pelvic ring anchoring the acetabulum and hip center of rotation.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -1044,7 +1197,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Major knee-region artery at risk in tibial plateau, distal femur, and knee dislocation trauma.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "vessel",
@@ -1082,7 +1235,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Femoral head, neck, trochanters, and calcar region relevant to THA stem fixation and offset.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -1121,7 +1274,7 @@
         "region": "hip",
         "cluster": "hip-fracture",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Composite proximal femur model linking head, neck, trochanters, calcar, and hip joint.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "composite",
@@ -1160,7 +1313,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Proximal extensor mechanism linkage at risk in TKA exposure and extensor failure.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "tendon",
@@ -1198,7 +1351,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Posterior hip nerve at risk during proximal femur exposure and reduction maneuvers.",
         "owner_pilot": "hip-fracture-cluster-shared",
         "anatomy_kind": "nerve",
@@ -1237,7 +1390,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Posterior hip soft tissue sleeve repaired after posterior THA approach.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "muscle",
@@ -1275,7 +1428,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Proximal tibial plateau and metaphysis receiving tibial baseplate in TKA.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "anatomy_kind": "bone",
@@ -1313,7 +1466,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Proximal tibial articular surface bearing medial and lateral condylar load.",
         "owner_pilot": "lower-extremity-trauma-cluster-shared",
         "anatomy_kind": "bone",
@@ -1350,7 +1503,7 @@
         "slug": "bearing-surface-selection",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for bearing-surface-selection.",
         "owner_pilot": "bearing-surface-selection-neighborhood",
         "staging_apply": true,
@@ -1378,44 +1531,6 @@
       "source": "proposal"
     },
     {
-      "slug": "implant-concepts-hub",
-      "entityType": "biomechanics_concept",
-      "preferredLabel": "Arthroplasty Implant Concepts Hub",
-      "description": "Composite model of reusable THA and TKA implant components and fixation strategies.",
-      "metadata": {
-        "slug": "implant-concepts-hub",
-        "pilot": "aseptic-loosening-tka-neighborhood",
-        "region": "arthroplasty",
-        "cluster": "adult-reconstruction",
-        "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
-        "description": "Composite model of reusable THA and TKA implant components and fixation strategies.",
-        "owner_pilot": "adult-reconstruction-cluster-shared",
-        "implant_kind": "composite",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "confidence": 0.92,
-          "evidence": 0.7,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "shared_reference": true,
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:aseptic-loosening-tka-neighborhood",
-        "review_packet_label": "Aseptic Loosening of TKA Neighborhood",
-        "clinical_verification": false,
-        "_provenance_fingerprint": "create|biomechanics_concept|implant-concepts-hub"
-      },
-      "source": "proposal"
-    },
-    {
       "slug": "compartment-syndrome",
       "entityType": "condition",
       "preferredLabel": "Compartment Syndrome",
@@ -1424,7 +1539,7 @@
         "slug": "compartment-syndrome",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for compartment-syndrome.",
         "owner_pilot": "compartment-syndrome-neighborhood",
         "staging_apply": true,
@@ -1460,7 +1575,7 @@
         "slug": "distal-femur-fracture",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for distal-femur-fracture.",
         "owner_pilot": "distal-femur-fracture-neighborhood",
         "staging_apply": true,
@@ -1496,7 +1611,7 @@
         "slug": "femoral-neck-fracture",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for femoral-neck-fracture.",
         "owner_pilot": "femoral-neck-fracture-neighborhood",
         "staging_apply": true,
@@ -1532,7 +1647,7 @@
         "slug": "femoral-shaft-fracture",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for femoral-shaft-fracture.",
         "owner_pilot": "femoral-shaft-fracture-neighborhood",
         "staging_apply": true,
@@ -1568,7 +1683,7 @@
         "slug": "hip-prosthetic-joint-infection",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for hip-prosthetic-joint-infection.",
         "owner_pilot": "hip-prosthetic-joint-infection-neighborhood",
         "staging_apply": true,
@@ -1604,7 +1719,7 @@
         "slug": "intertrochanteric-fracture",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for intertrochanteric-fracture.",
         "owner_pilot": "intertrochanteric-fracture-neighborhood",
         "staging_apply": true,
@@ -1640,7 +1755,7 @@
         "slug": "knee-osteoarthritis",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for knee-osteoarthritis.",
         "owner_pilot": "knee-osteoarthritis-neighborhood",
         "staging_apply": true,
@@ -1676,7 +1791,7 @@
         "slug": "knee-prosthetic-joint-infection",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for knee-prosthetic-joint-infection.",
         "owner_pilot": "knee-prosthetic-joint-infection-neighborhood",
         "staging_apply": true,
@@ -1712,7 +1827,7 @@
         "slug": "periprosthetic-joint-infection",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for periprosthetic-joint-infection.",
         "owner_pilot": "periprosthetic-joint-infection-neighborhood",
         "staging_apply": true,
@@ -1748,7 +1863,7 @@
         "slug": "subtrochanteric-fracture",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for subtrochanteric-fracture.",
         "owner_pilot": "subtrochanteric-fracture-neighborhood",
         "staging_apply": true,
@@ -1784,7 +1899,7 @@
         "slug": "tibial-shaft-fracture",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for tibial-shaft-fracture.",
         "owner_pilot": "tibial-shaft-fracture-neighborhood",
         "staging_apply": true,
@@ -1821,7 +1936,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "arthroplasty",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "PMMA interphase distributing load between implant and bone.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "fixation",
@@ -1858,7 +1973,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "arthroplasty",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "PMMA cement securing implant to bone for immediate stability.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "fixation",
@@ -1895,7 +2010,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "arthroplasty",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cementless implant stability achieved through interference fit and bone ingrowth.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "fixation",
@@ -1932,7 +2047,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "THA cup restoring acetabular coverage and hip center of rotation.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "component",
@@ -1960,43 +2075,6 @@
       "source": "proposal"
     },
     {
-      "slug": "femoral-component",
-      "entityType": "implant",
-      "preferredLabel": "Femoral Component",
-      "description": "TKA femoral resurfacing component restoring flexion-extension geometry.",
-      "metadata": {
-        "slug": "femoral-component",
-        "pilot": "aseptic-loosening-tka-neighborhood",
-        "region": "knee",
-        "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
-        "description": "TKA femoral resurfacing component restoring flexion-extension geometry.",
-        "owner_pilot": "adult-reconstruction-cluster-shared",
-        "implant_kind": "component",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_fallback"
-        ],
-        "curation_scores": {
-          "confidence": 0.92,
-          "evidence": 0.7,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "shared_reference": true,
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:aseptic-loosening-tka-neighborhood",
-        "review_packet_label": "Aseptic Loosening of TKA Neighborhood",
-        "clinical_verification": false,
-        "_provenance_fingerprint": "create|implant|femoral-component"
-      },
-      "source": "proposal"
-    },
-    {
       "slug": "femoral-stem",
       "entityType": "implant",
       "preferredLabel": "Femoral Stem",
@@ -2006,7 +2084,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "hip",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "THA femoral canal implant transmitting load from head to diaphysis.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "component",
@@ -2043,7 +2121,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Resurfaced patellar button in select TKA and patellofemoral arthroplasty cases.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "component",
@@ -2080,7 +2158,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "arthroplasty",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Bearing insert articulating with femoral head or femoral component.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "bearing",
@@ -2108,43 +2186,6 @@
       "source": "proposal"
     },
     {
-      "slug": "tibial-baseplate",
-      "entityType": "implant",
-      "preferredLabel": "Tibial Baseplate",
-      "description": "TKA tibial tray fixed to proximal tibia receiving polyethylene insert.",
-      "metadata": {
-        "slug": "tibial-baseplate",
-        "pilot": "aseptic-loosening-tka-neighborhood",
-        "region": "knee",
-        "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
-        "description": "TKA tibial tray fixed to proximal tibia receiving polyethylene insert.",
-        "owner_pilot": "adult-reconstruction-cluster-shared",
-        "implant_kind": "component",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_fallback"
-        ],
-        "curation_scores": {
-          "confidence": 0.92,
-          "evidence": 0.7,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "shared_reference": true,
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:aseptic-loosening-tka-neighborhood",
-        "review_packet_label": "Aseptic Loosening of TKA Neighborhood",
-        "clinical_verification": false,
-        "_provenance_fingerprint": "create|implant|tibial-baseplate"
-      },
-      "source": "proposal"
-    },
-    {
       "slug": "tibial-insert",
       "entityType": "implant",
       "preferredLabel": "Tibial Insert",
@@ -2154,7 +2195,7 @@
         "pilot": "aseptic-loosening-tka-neighborhood",
         "region": "knee",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "TKA polyethylene bearing surface articulating with femoral component.",
         "owner_pilot": "adult-reconstruction-cluster-shared",
         "implant_kind": "bearing",
@@ -2190,7 +2231,7 @@
         "slug": "adverse-local-tissue-reaction",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for adverse-local-tissue-reaction.",
         "owner_pilot": "adverse-local-tissue-reaction-neighborhood",
         "staging_apply": true,
@@ -2226,7 +2267,7 @@
         "slug": "polyethylene-wear-osteolysis",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for polyethylene-wear-osteolysis.",
         "owner_pilot": "polyethylene-wear-osteolysis-neighborhood",
         "staging_apply": true,
@@ -2254,42 +2295,6 @@
       "source": "proposal"
     },
     {
-      "slug": "revision-arthroplasty",
-      "entityType": "procedure",
-      "preferredLabel": "Revision Arthroplasty",
-      "description": "Cross-neighborhood reference stub for revision-arthroplasty.",
-      "metadata": {
-        "slug": "revision-arthroplasty",
-        "pilot": "aseptic-loosening-tka-neighborhood",
-        "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
-        "description": "Cross-neighborhood reference stub for revision-arthroplasty.",
-        "owner_pilot": "revision-arthroplasty-neighborhood",
-        "staging_apply": true,
-        "curation_route": "AUTO_APPROVED_LOW_RISK",
-        "curation_rules": [
-          "spec_backed_entity_create"
-        ],
-        "curation_scores": {
-          "confidence": 0.92,
-          "evidence": 0.7,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.85
-        },
-        "factory_version": "kf-016",
-        "shared_reference": true,
-        "staging_reviewer": "staging_test_reviewer_not_clinical",
-        "applied_by_script": "apply-pilot-approved",
-        "review_packet_key": "pilot:aseptic-loosening-tka-neighborhood",
-        "cross_neighborhood": true,
-        "review_packet_label": "Aseptic Loosening of TKA Neighborhood",
-        "clinical_verification": false,
-        "_provenance_fingerprint": "create|procedure|revision-arthroplasty"
-      },
-      "source": "proposal"
-    },
-    {
       "slug": "total-hip-arthroplasty",
       "entityType": "procedure",
       "preferredLabel": "Total Hip Arthroplasty",
@@ -2298,7 +2303,7 @@
         "slug": "total-hip-arthroplasty",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for total-hip-arthroplasty.",
         "owner_pilot": "total-hip-arthroplasty-neighborhood",
         "staging_apply": true,
@@ -2334,7 +2339,7 @@
         "slug": "total-knee-arthroplasty",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for total-knee-arthroplasty.",
         "owner_pilot": "total-knee-arthroplasty-neighborhood",
         "staging_apply": true,
@@ -2370,7 +2375,7 @@
         "slug": "unicompartmental-knee-arthroplasty",
         "pilot": "aseptic-loosening-tka-neighborhood",
         "verified": false,
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "description": "Cross-neighborhood reference stub for unicompartmental-knee-arthroplasty.",
         "owner_pilot": "unicompartmental-knee-arthroplasty-neighborhood",
         "staging_apply": true,
@@ -2400,6 +2405,117 @@
   ],
   "relationships": [
     {
+      "subjectSlug": "femoral-component",
+      "predicate": "prerequisite_for",
+      "objectSlug": "aseptic-loosening-tka",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|femoral-component|prerequisite_for|aseptic-loosening-tka",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|femoral-component|prerequisite_for|aseptic-loosening-tka"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "adult-reconstruction-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "aseptic-loosening-tka",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "context_relevance": [
+            "clinic",
+            "or"
+          ],
+          "educational_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|adult-reconstruction-anatomy-hub|prerequisite_for|aseptic-loosening-tka",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "clinic",
+          "or"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|adult-reconstruction-anatomy-hub|prerequisite_for|aseptic-loosening-tka"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-baseplate",
+      "predicate": "prerequisite_for",
+      "objectSlug": "aseptic-loosening-tka",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|tibial-baseplate|prerequisite_for|aseptic-loosening-tka",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|tibial-baseplate|prerequisite_for|aseptic-loosening-tka"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "revision-arthroplasty",
+      "predicate": "prerequisite_for",
+      "objectSlug": "aseptic-loosening-tka",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|revision-arthroplasty|prerequisite_for|aseptic-loosening-tka",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|revision-arthroplasty|prerequisite_for|aseptic-loosening-tka"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "aseptic-loosening-tka",
+      "predicate": "involves_anatomy",
+      "objectSlug": "adult-reconstruction-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "relationship_strength": "core"
+        },
+        "created_from_proposal_fingerprint": "rel|aseptic-loosening-tka|involves_anatomy|adult-reconstruction-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|aseptic-loosening-tka|involves_anatomy|adult-reconstruction-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
       "subjectSlug": "aseptic-loosening-tka",
       "predicate": "has_imaging_finding",
       "objectSlug": "tibial-component-subsidence",
@@ -2419,78 +2535,25 @@
       "source": "proposal"
     },
     {
-      "subjectSlug": "adult-reconstruction-anatomy-hub",
-      "predicate": "prerequisite_for",
-      "objectSlug": "aseptic-loosening-tka",
-      "metadata": {
-        "anatomy_role": "essential",
-        "review_status": "unreviewed",
-        "relevance_reason": "diagnosis",
-        "context_relevance": [
-          "clinic",
-          "or"
-        ],
-        "educational_importance": "high",
-        "_provenance_fingerprint": "rel|adult-reconstruction-anatomy-hub|prerequisite_for|aseptic-loosening-tka"
-      },
-      "source": "proposal"
-    },
-    {
-      "subjectSlug": "aseptic-loosening-tka",
-      "predicate": "involves_anatomy",
-      "objectSlug": "adult-reconstruction-anatomy-hub",
-      "metadata": {
-        "anatomy_role": "essential",
-        "review_status": "unreviewed",
-        "relevance_reason": "diagnosis",
-        "relationship_strength": "core",
-        "_provenance_fingerprint": "rel|aseptic-loosening-tka|involves_anatomy|adult-reconstruction-anatomy-hub"
-      },
-      "source": "proposal"
-    },
-    {
-      "subjectSlug": "femoral-component",
-      "predicate": "prerequisite_for",
-      "objectSlug": "aseptic-loosening-tka",
-      "metadata": {
-        "anatomy_role": "supporting",
-        "review_status": "unreviewed",
-        "_provenance_fingerprint": "rel|femoral-component|prerequisite_for|aseptic-loosening-tka"
-      },
-      "source": "proposal"
-    },
-    {
       "subjectSlug": "implant-concepts-hub",
       "predicate": "prerequisite_for",
       "objectSlug": "aseptic-loosening-tka",
       "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "implant_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "arthroplasty"
+        },
+        "created_from_proposal_fingerprint": "rel|implant-concepts-hub|prerequisite_for|aseptic-loosening-tka",
         "anatomy_role": "supporting",
         "implant_role": "essential",
         "review_status": "unreviewed",
         "relevance_reason": "arthroplasty",
         "_provenance_fingerprint": "rel|implant-concepts-hub|prerequisite_for|aseptic-loosening-tka"
-      },
-      "source": "proposal"
-    },
-    {
-      "subjectSlug": "revision-arthroplasty",
-      "predicate": "prerequisite_for",
-      "objectSlug": "aseptic-loosening-tka",
-      "metadata": {
-        "anatomy_role": "supporting",
-        "review_status": "unreviewed",
-        "_provenance_fingerprint": "rel|revision-arthroplasty|prerequisite_for|aseptic-loosening-tka"
-      },
-      "source": "proposal"
-    },
-    {
-      "subjectSlug": "tibial-baseplate",
-      "predicate": "prerequisite_for",
-      "objectSlug": "aseptic-loosening-tka",
-      "metadata": {
-        "anatomy_role": "supporting",
-        "review_status": "unreviewed",
-        "_provenance_fingerprint": "rel|tibial-baseplate|prerequisite_for|aseptic-loosening-tka"
       },
       "source": "proposal"
     }
@@ -2555,7 +2618,7 @@
         "curation_rules": [
           "educational_judgment_claim"
         ],
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "_provenance_fingerprint": "claim|claim-aseptic-loosening-tka-board_trap-aseptic-tka-loosening-pr"
       }
     },
@@ -2573,7 +2636,7 @@
         "verified": false,
         "claim_text": "Board trap: oversimplifying aseptic loosening tka without attending-level implant, fixation, or infection context.",
         "claim_type": "board_trap",
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "content_source": "generated_draft",
         "curation_route": "HUMAN_REVIEW",
         "curation_rules": [
@@ -2643,7 +2706,7 @@
         "curation_rules": [
           "educational_judgment_claim"
         ],
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "_provenance_fingerprint": "claim|claim-aseptic-loosening-tka-cognitive_trap-use-implant-component-vo"
       }
     },
@@ -2661,7 +2724,7 @@
         "verified": false,
         "claim_text": "Exclude infection before diagnosing aseptic TKA loosening.",
         "claim_type": "fact",
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "content_source": "generated_draft",
         "curation_route": "HUMAN_REVIEW",
         "curation_rules": [
@@ -2730,56 +2793,8 @@
         "curation_rules": [
           "l1_management_fact"
         ],
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "_provenance_fingerprint": "claim|claim-aseptic-loosening-tka-fact-aseptic-loosening-of-tka"
-      }
-    },
-    {
-      "draftId": "claim-aseptic-loosening-tka-fact-aseptic-tka-loosening-pr",
-      "claimType": "fact",
-      "claimText": "Aseptic TKA loosening presents with progressive pain and radiographic component migration.",
-      "primaryEntitySlug": "aseptic-loosening-tka",
-      "importanceLevel": "L1",
-      "contentSource": "generated_draft",
-      "reviewStatus": "needs_review",
-      "metadata": {
-        "pilot": "aseptic-loosening-tka-neighborhood",
-        "draft_id": "claim-aseptic-loosening-tka-fact-aseptic-tka-loosening-pr",
-        "claim_type": "fact",
-        "claim_text": "Aseptic TKA loosening presents with progressive pain and radiographic component migration.",
-        "primary_entity_slug": "aseptic-loosening-tka",
-        "importance_level": "L1",
-        "content_source": "generated_draft",
-        "verified": false,
-        "why_it_matters": [
-          "clinical_reasoning"
-        ],
-        "context_relevance": [
-          "clinic",
-          "call"
-        ],
-        "learner_stage": "clerkship",
-        "evidence_item_ids": [
-          "ev-static-prepare-d40316ab"
-        ],
-        "evidence_packet_id": "ev-packet-457593cf",
-        "uncertainty_note": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
-        "review_route_hint": "HUMAN_REVIEW",
-        "generated_by": "claim-builder-v2",
-        "publication_eligible": false,
-        "curation_route": "HUMAN_REVIEW",
-        "curation_scores": {
-          "confidence": 0.8365,
-          "evidence": 0.7,
-          "ambiguity": 0.2,
-          "safety": 0.1,
-          "completeness": 0.8
-        },
-        "curation_rules": [
-          "l1_management_fact"
-        ],
-        "curated_at": "2026-07-05T23:09:48.686Z",
-        "_provenance_fingerprint": "claim|claim-aseptic-loosening-tka-fact-aseptic-tka-loosening-pr"
       }
     },
     {
@@ -2826,7 +2841,7 @@
         "curation_rules": [
           "l1_management_fact"
         ],
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "_provenance_fingerprint": "claim|claim-aseptic-loosening-tka-fact-cross-neighborhood-traum"
       }
     },
@@ -2874,7 +2889,7 @@
         "curation_rules": [
           "l1_management_fact"
         ],
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "_provenance_fingerprint": "claim|claim-aseptic-loosening-tka-fact-implant-and-fixation-voc"
       }
     },
@@ -2921,7 +2936,7 @@
         "curation_rules": [
           "default_human_review"
         ],
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "_provenance_fingerprint": "claim|claim-aseptic-loosening-tka-fact-recognize-core-concepts-"
       }
     },
@@ -2970,7 +2985,7 @@
         "curation_rules": [
           "educational_judgment_claim"
         ],
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "_provenance_fingerprint": "claim|claim-aseptic-loosening-tka-imaging_point-review-imaging"
       }
     },
@@ -2988,7 +3003,7 @@
         "verified": false,
         "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for aseptic loosening tka.",
         "claim_type": "clinical_script",
-        "curated_at": "2026-07-05T23:09:48.686Z",
+        "curated_at": "2026-07-16T02:33:03.957Z",
         "content_source": "generated_draft",
         "curation_route": "HUMAN_REVIEW",
         "curation_rules": [
@@ -3012,6 +3027,101 @@
         "review_packet_label": "Aseptic Loosening of TKA Neighborhood",
         "_provenance_fingerprint": "claim|claim-aseptic-loosening-tka-script"
       }
+    },
+    {
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-connect-aseptic-loosenin",
+      "claimType": "anatomy_pearl",
+      "claimText": "Connect Aseptic Loosening of TKA to shared anatomy, implant concepts, and trauma neighborhoods.",
+      "primaryEntitySlug": "implant-concepts-hub",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "aseptic-loosening-tka-neighborhood",
+        "draft_id": "claim-implant-concepts-hub-anatomy_pearl-connect-aseptic-loosenin",
+        "claim_type": "anatomy_pearl",
+        "claim_text": "Connect Aseptic Loosening of TKA to shared anatomy, implant concepts, and trauma neighborhoods.",
+        "primary_entity_slug": "implant-concepts-hub",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "anatomical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-24894c5c"
+        ],
+        "evidence_packet_id": "ev-packet-457593cf",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curated_at": "2026-07-16T02:33:03.957Z",
+        "_provenance_fingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-connect-aseptic-loosenin"
+      }
+    },
+    {
+      "draftId": "claim-implant-concepts-hub-anatomy_pearl-shared-adult-reconstruct",
+      "claimType": "anatomy_pearl",
+      "claimText": "Shared adult reconstruction anatomy hub.",
+      "primaryEntitySlug": "implant-concepts-hub",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "aseptic-loosening-tka-neighborhood",
+        "draft_id": "claim-implant-concepts-hub-anatomy_pearl-shared-adult-reconstruct",
+        "claim_type": "anatomy_pearl",
+        "claim_text": "Shared adult reconstruction anatomy hub.",
+        "primary_entity_slug": "implant-concepts-hub",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "anatomical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-d40316ab"
+        ],
+        "evidence_packet_id": "ev-packet-457593cf",
+        "uncertainty_note": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curated_at": "2026-07-16T02:33:03.957Z",
+        "_provenance_fingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-shared-adult-reconstruct"
+      }
     }
   ],
   "decisionPoints": [
@@ -3026,21 +3136,16 @@
       "requiresAttendingReview": true
     }
   ],
-  "conflicts": [
-    {
-      "kind": "claim_text_conflict",
-      "description": "Duplicate claim text: claim-aseptic-loosening-tka-board_trap-aseptic-tka-loosening-pr vs claim-aseptic-loosening-tka-fact-aseptic-tka-loosening-pr"
-    }
-  ],
+  "conflicts": [],
   "stats": {
     "entityCount": 64,
     "relationshipCount": 7,
-    "claimCount": 12,
+    "claimCount": 13,
     "decisionPointCount": 1,
     "bridgeCount": 1,
-    "duplicateEntitiesResolved": 2,
+    "duplicateEntitiesResolved": 7,
     "conflictingRelationships": 0,
-    "metadataMerged": 3,
-    "provenanceAttached": 85
+    "metadataMerged": 14,
+    "provenanceAttached": 86
   }
 }

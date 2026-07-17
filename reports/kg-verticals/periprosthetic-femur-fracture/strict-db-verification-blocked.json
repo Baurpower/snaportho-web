@@ -1,0 +1,50 @@
+{
+  "ok": false,
+  "runDate": "2026-07-16",
+  "topicKey": "periprosthetic-femur-fracture",
+  "displayName": "Periprosthetic Femur Fracture",
+  "pilotKey": "periprosthetic-femur-fracture-neighborhood",
+  "priorState": "staging_applied",
+  "resultingState": "database_verification_blocked",
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "blockerClass": "human_review_required",
+  "automaticRepairAttempted": false,
+  "quarantinedPartialMemberships": 0,
+  "batchKey": "legacy-periprosthetic-femur-fracture-f5a9048adae97728",
+  "packetHash": "f5a9048adae97728f9fc9befee22bd23e0ecad46f803c5bf933998a7ddde3e6f",
+  "expected": {
+    "approvedLoaded": 73,
+    "structuralProposals": 72,
+    "entities": 63,
+    "relationships": 8,
+    "curriculumBridges": 1,
+    "draftClaims": 1,
+    "draftDecisionPoints": 0
+  },
+  "resolved": {
+    "entities": 62,
+    "relationships": 8,
+    "curriculumBridges": 0
+  },
+  "discrepancyCount": 2,
+  "discrepancies": [
+    {
+      "fingerprint": "create|anatomy_structure|labrum",
+      "kind": "canonical_identity_mismatch",
+      "expected": "anatomy_structure/Acetabular Labrum",
+      "observed": "anatomy_structure/Glenoid Labrum"
+    },
+    {
+      "fingerprint": "bridge|adult-recon-periprosthetic-femur-fracture|periprosthetic-femur-fracture",
+      "kind": "bridge_endpoint_cardinality",
+      "expected": "one curriculum node adult-recon-periprosthetic-femur-fracture and one entity periprosthetic-femur-fracture",
+      "observed": "0 node(s), 1 entity row(s)"
+    }
+  ],
+  "exactNextAction": "resolve_canonical_identity",
+  "evidence": {
+    "applyPath": "reports/kg-pilots/periprosthetic-femur-fracture-staging-apply-result.json",
+    "curatedPath": "reports/kg-pilots/periprosthetic-femur-fracture-curated-proposals.json"
+  }
+}

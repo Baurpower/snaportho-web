@@ -1,5 +1,8 @@
 import { SELECTOR_SET_VERSION, SELECTORS } from './selectors.js';
 import { classifyPage } from '../shared/page-classification.js';
+import { attachQuestionReviewSignals, firstVisibleText, isElementVisible } from '../shared/question-review-state.js';
+import { extractHimalayaProviderContext, detectHimalayaProvider } from '../providers/himalaya/himalaya-provider.js';
+export { extractHimalayaPageContext, extractHimalayaQuestionSnapshot } from '../providers/himalaya/himalaya-extractor.js';
 import type {
   OrthobulletsChoice,
   OrthobulletsImageMetadata,
@@ -123,6 +126,7 @@ function detectProviderFromUrl(url: string): QuestionProvider | null {
   try {
     const parsed = new URL(url);
     const host = parsed.hostname.toLowerCase();
+    if (detectHimalayaProvider(url)) return 'himalaya';
     if (host === 'orthobullets.com' || host === 'www.orthobullets.com') return 'orthobullets';
     if (
       host === 'rock.aaos.org' ||
@@ -200,7 +204,9 @@ function extractChoices(
   // Section-level data-correct attribute is the most reliable correctness
   // signal — it's set whether or not the user answered correctly, unlike
   // the per-row `right` class which only appears on the selected choice.
-  const correctSection = root.querySelector(SELECTORS.correctAnswerSection);
+  const correctSectionNode = root.querySelector(SELECTORS.correctAnswerSection);
+  const correctSection =
+    correctSectionNode && isElementVisible(correctSectionNode) ? correctSectionNode : null;
   const correctAnswerNumber = normalizeWhitespace(correctSection?.getAttribute('data-correct'));
   if (correctSection) {
     matched.correctAnswerSection = [...(matched.correctAnswerSection ?? []), SELECTORS.correctAnswerSection];
@@ -226,20 +232,30 @@ function extractChoices(
       node.querySelector('input[type="checkbox"]:checked, input:checked') != null;
     const isCorrect =
       SELECTORS.correctAnswerClassNames.some((name) => className.includes(name)) ||
-      (Boolean(correctAnswerNumber) && answerNumber === correctAnswerNumber);
+      (Boolean(correctSection) && Boolean(correctAnswerNumber) && answerNumber === correctAnswerNumber);
 
-    const scopedPercentText = firstMatchingText(node, SELECTORS.choicePercent);
-    if (scopedPercentText) matched.choicePercent = [...(matched.choicePercent ?? []), SELECTORS.choicePercent[0]];
-    const percent = detectPercent(scopedPercentText ?? text);
+    let scopedPercentText: string | undefined;
+    for (const selector of SELECTORS.choicePercent) {
+      const percentNode = node.querySelector(selector);
+      if (percentNode && isElementVisible(percentNode)) {
+        scopedPercentText = textOf(percentNode);
+        if (scopedPercentText) {
+          matched.choicePercent = [...(matched.choicePercent ?? []), selector];
+          break;
+        }
+      }
+    }
+    const percentSource = scopedPercentText || (isElementVisible(node) ? text : undefined);
+    const percent = percentSource ? detectPercent(percentSource) : undefined;
 
     answerChoices.push({
       key,
       text,
       isSelected,
-      isCorrect,
+      isCorrect: isElementVisible(node) ? isCorrect : false,
     });
 
-    if (percent != null) {
+    if (percent != null && scopedPercentText) {
       percentDistribution.push({
         answerKey: key,
         label: key,
@@ -249,16 +265,21 @@ function extractChoices(
   });
 
   if (percentDistribution.length === 0) {
-    const distributionTexts = collectTexts(root, SELECTORS.distributionRows, 'distributionRows', matched);
-    distributionTexts.forEach((text, index) => {
-      const percent = detectPercent(text);
-      if (percent == null) return;
-      percentDistribution.push({
-        answerKey: answerChoices[index]?.key,
-        label: answerChoices[index]?.key,
-        percent,
+    for (const selector of SELECTORS.distributionRows) {
+      const nodes = Array.from(root.querySelectorAll(selector)).filter((node) => isElementVisible(node));
+      if (!nodes.length) continue;
+      matched.distributionRows = [...(matched.distributionRows ?? []), selector];
+      nodes.forEach((node, index) => {
+        const percent = detectPercent(textOf(node));
+        if (percent == null) return;
+        percentDistribution.push({
+          answerKey: answerChoices[index]?.key,
+          label: answerChoices[index]?.key,
+          percent,
+        });
       });
-    });
+      break;
+    }
   }
 
   const selected = answerChoices.find((choice) => choice.isSelected)?.key;
@@ -408,12 +429,16 @@ export function extractOrthobulletsPageContext(input: {
   const matchedSelectors: Record<string, string[]> = {};
   const breadcrumbs = collectTexts(input.document, SELECTORS.breadcrumbs, 'breadcrumbs', matchedSelectors);
   const stem = firstText(input.document, SELECTORS.stem, 'stem', matchedSelectors);
-  const explanationText = firstText(
-    input.document,
-    SELECTORS.explanation,
-    'explanation',
-    matchedSelectors
-  );
+  const explanationText = firstVisibleText(input.document, SELECTORS.explanation);
+  if (explanationText) {
+    for (const selector of SELECTORS.explanation) {
+      const nodes = Array.from(input.document.querySelectorAll(selector));
+      if (nodes.some((node) => isElementVisible(node) && textOf(node) === explanationText)) {
+        matchedSelectors.explanation = [...(matchedSelectors.explanation ?? []), selector];
+        break;
+      }
+    }
+  }
   const linkedConcepts = extractLinkedConcepts(input.document, matchedSelectors);
   const images = extractImages(input.document, matchedSelectors);
   const choices = extractChoices(input.document, matchedSelectors);
@@ -477,10 +502,10 @@ export function extractOrthobulletsPageContext(input: {
     },
   };
 
-  return {
+  return attachQuestionReviewSignals(input.document, {
     ...draftContext,
     classification: classifyPage(draftContext),
-  };
+  });
 }
 
 const ROCK_SELECTORS = {
@@ -1177,7 +1202,7 @@ export function extractRockPageContext(input: {
     : { text: undefined, strategy: 'skipped_non_question_page' as const };
   const explanationResult = firstTextWithStrategy(root, ROCK_SELECTORS.explanation, 'explanation', 'explanationStrategy', matchedSelectors);
   const stem = stemResult.text;
-  const explanationText = explanationResult.text || null;
+  const explanationText = firstVisibleText(root, ROCK_SELECTORS.explanation) || explanationResult.text || null;
   const choicesResult = extractRockChoices(root, pageUrl, matchedSelectors);
   const answerChoices = choicesResult.choices;
   const selectedChoice = answerChoices.find((choice) => choice.isSelected);
@@ -1269,10 +1294,10 @@ export function extractRockPageContext(input: {
     },
   };
 
-  return {
+  return attachQuestionReviewSignals(input.document, {
     ...draftContext,
     classification: classifyPage(draftContext),
-  };
+  });
 }
 
 const MIN_TOPIC_CONTENT_CHARS = 80;
@@ -1428,6 +1453,7 @@ export function extractQuestionContext(input: {
   pageUrl?: string;
 }): OrthobulletsPageContext | null {
   const provider = detectQuestionProvider(input);
+  if (provider === 'himalaya') return extractHimalayaProviderContext(input);
   if (provider === 'orthobullets') {
     const pageUrl = input.pageUrl ?? input.document.locationHref ?? '';
     if (isLikelyOrthobulletsTopicUrl(pageUrl)) {

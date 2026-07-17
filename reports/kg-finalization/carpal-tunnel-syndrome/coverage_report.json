@@ -1,0 +1,29 @@
+{
+  "neighborhoodId": "carpal-tunnel-syndrome",
+  "domains": [
+    {
+      "domain": "anatomy",
+      "present": true
+    },
+    {
+      "domain": "imaging",
+      "present": true
+    },
+    {
+      "domain": "classification",
+      "present": false
+    },
+    {
+      "domain": "treatment",
+      "present": true
+    },
+    {
+      "domain": "complications",
+      "present": true
+    }
+  ],
+  "presentDomains": 4,
+  "missingDomains": 1,
+  "weakDomains": 0,
+  "note": "Backbone coverage is an omission detector, not a template enforcer."
+}

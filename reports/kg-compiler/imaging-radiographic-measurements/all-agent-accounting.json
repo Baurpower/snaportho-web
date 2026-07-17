@@ -1,0 +1,78 @@
+{
+  "topicKey": "imaging-radiographic-measurements",
+  "manufacturedAt": "2026-07-08",
+  "assignedAgentsExecuted": 7,
+  "assignedAgentFailures": 0,
+  "agents": [
+    {
+      "agent": "anatomy-builder",
+      "status": "no_applicable_work",
+      "reason": "Reused anatomy identities were imported from shared anatomy modules; gap analysis assigned no new anatomy-construction work."
+    },
+    {
+      "agent": "clinical-entity-builder",
+      "status": "no_applicable_work",
+      "reason": "Seed already contained required clinical/imaging entities; gap analysis assigned no missing-entity work."
+    },
+    {
+      "agent": "relationship-builder",
+      "status": "executed",
+      "reason": "Assigned relationship gaps; completed without error."
+    },
+    {
+      "agent": "claim-builder",
+      "status": "executed",
+      "reason": "Assigned claim gaps; completed without error (0 additional safe claims auto-emitted beyond seed drafts)."
+    },
+    {
+      "agent": "decision-point-builder",
+      "status": "no_applicable_work",
+      "reason": "Fifteen decision-point drafts already covered priority imaging thresholds; gap analysis assigned no decision-point gap."
+    },
+    {
+      "agent": "metadata-builder",
+      "status": "no_applicable_work",
+      "reason": "Seed proposals included units, population context, source version, and measurement metadata; no metadata gap was assigned."
+    },
+    {
+      "agent": "asset-linker",
+      "status": "no_applicable_work",
+      "reason": "No registered Anki, Orthobullets, or CasePrep mappings were available for this new cross-cutting topic."
+    },
+    {
+      "agent": "provenance-builder",
+      "status": "no_applicable_work",
+      "reason": "Evidence packet and proposal builder attached provenance to all proposals; no additional provenance work was assigned."
+    },
+    {
+      "agent": "duplicate-detector",
+      "status": "executed",
+      "reason": "Completed without error; staging apply prevented 18 existing identities from being re-minted."
+    },
+    {
+      "agent": "conflict-resolver",
+      "status": "executed",
+      "reason": "Completed without error; no relationship conflicts remained."
+    },
+    {
+      "agent": "quality-scorer",
+      "status": "executed",
+      "reason": "Completed without error."
+    },
+    {
+      "agent": "review-assistant",
+      "status": "executed",
+      "reason": "Routed all proposals through auto/human/attending review."
+    },
+    {
+      "agent": "publication-validator",
+      "status": "executed",
+      "reason": "Completed; publication remained blocked at maturity 5/7."
+    },
+    {
+      "agent": "neighborhood-qa",
+      "status": "executed",
+      "reason": "Independent auditor completed with score 80 and NOT_READY status."
+    }
+  ]
+}

@@ -77,7 +77,7 @@
     },
     {
       "finding": "High relationship density may indicate overlinking",
-      "evidence": "Density 11.52 exceeds recommended threshold of 4.0",
+      "evidence": "Density 5.07 exceeds recommended threshold of 4.0",
       "reason": "Unnecessary edges increase review burden without educational gain.",
       "severity": "low",
       "category": "relationship_quality",
@@ -86,8 +86,8 @@
     }
   ],
   "metrics": {
-    "relationshipCount": 1083,
-    "relationshipDensity": 11.52127659574468,
+    "relationshipCount": 927,
+    "relationshipDensity": 5.065573770491803,
     "missingClinicalEdgeCount": 6,
     "highRiskUnreviewedCount": 0,
     "predicateCorrectness": 1

@@ -1,0 +1,63 @@
+{
+  "releaseId": "kg-beta-20260716-001",
+  "manifestHash": "e948ee17868ef5a5e36035ad3e8ff4ec79aa0f6fbb87232fc2b603ae636fbf51",
+  "generatedAt": "2026-07-16T04:12:44.837Z",
+  "readyBeforeActivation": true,
+  "scope": [
+    {
+      "topic": "carpal-tunnel-syndrome",
+      "membershipCount": 203
+    },
+    {
+      "topic": "calcaneus-fracture",
+      "membershipCount": 62
+    },
+    {
+      "topic": "patella-fracture",
+      "membershipCount": 60
+    },
+    {
+      "topic": "acetabular-fracture",
+      "membershipCount": 83
+    },
+    {
+      "topic": "clavicle-fracture",
+      "membershipCount": 34
+    },
+    {
+      "topic": "distal-femur-fracture",
+      "membershipCount": 59
+    },
+    {
+      "topic": "lisfranc-injury",
+      "membershipCount": 49
+    },
+    {
+      "topic": "pilon-fracture",
+      "membershipCount": 69
+    },
+    {
+      "topic": "talus-fracture",
+      "membershipCount": 61
+    },
+    {
+      "topic": "compartment-syndrome",
+      "membershipCount": 35
+    },
+    {
+      "topic": "femoral-shaft-fracture",
+      "membershipCount": 81
+    },
+    {
+      "topic": "proximal-humerus-fracture",
+      "membershipCount": 63
+    }
+  ],
+  "operations": [
+    "Set kg_production_memberships.is_active=false and revoked_at for the release/neighborhood.",
+    "Set kg_production_neighborhoods.lifecycle_state=revoked and revoked_at.",
+    "Set kg_production_releases.status=rolled_back when no active neighborhoods remain.",
+    "Do not mutate or delete canonical entities, relationships, proposals, provenance, or review assignments."
+  ],
+  "command": "KG_PRODUCTION_CONFIRM=kg-beta-20260716-001 node --experimental-strip-types scripts/kg-beta-production-release.ts rollback-dry-run"
+}

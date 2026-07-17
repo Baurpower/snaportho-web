@@ -27,6 +27,8 @@ function parseArgs(argv: string[]) {
   let batch = "";
   let all = false;
   let dbBacked = false;
+  let strictDb = false;
+  let batchKey = "";
   let outDir = "reports/kg-audits";
 
   for (let i = 2; i < argv.length; i += 1) {
@@ -41,6 +43,12 @@ function parseArgs(argv: string[]) {
       all = true;
     } else if (arg === "--db-backed") {
       dbBacked = true;
+    } else if (arg === "--strict-db") {
+      dbBacked = true;
+      strictDb = true;
+    } else if (arg === "--batch-key") {
+      batchKey = argv[i + 1] ?? "";
+      i += 1;
     } else if (arg === "--out-dir") {
       outDir = argv[i + 1] ?? outDir;
       i += 1;
@@ -49,7 +57,7 @@ function parseArgs(argv: string[]) {
     }
   }
 
-  return { topic, batch, all, dbBacked, outDir };
+  return { topic, batch, all, dbBacked, strictDb, batchKey, outDir };
 }
 
 function printHelp() {
@@ -64,6 +72,8 @@ function printHelp() {
       "",
       "Options:",
       "  --db-backed    Prefer DB-backed neighborhood and proposals (read-only)",
+      "  --strict-db    Require DB neighborhood; prohibit file/spec fallback",
+      "  --batch-key    Restrict proposal-driven membership to a staging batch",
       "  --out-dir      Output directory (default: reports/kg-audits)",
       "",
       "Registered topics:",
@@ -81,7 +91,7 @@ function printHelp() {
 
 async function auditTopics(
   topicKeys: string[],
-  options: { dbBacked: boolean; outDir: string; crossNeighborhoodInputs?: boolean }
+  options: { dbBacked: boolean; strictDb?: boolean; batchKey?: string; outDir: string; crossNeighborhoodInputs?: boolean }
 ): Promise<TopicAuditArtifacts[]> {
   const inputs = [];
   for (const topicKey of topicKeys) {
@@ -89,6 +99,8 @@ async function auditTopics(
       await loadAuditInput({
         topic: topicKey,
         dbBacked: options.dbBacked,
+        strictDb: options.strictDb,
+        batchKey: options.batchKey,
       })
     );
   }
@@ -124,6 +136,8 @@ async function main() {
   if (args.topic) {
     const artifacts = await auditTopics([args.topic], {
       dbBacked: args.dbBacked,
+      strictDb: args.strictDb,
+      batchKey: args.batchKey || undefined,
       outDir,
     });
     const scorecard = artifacts[0].scorecard;

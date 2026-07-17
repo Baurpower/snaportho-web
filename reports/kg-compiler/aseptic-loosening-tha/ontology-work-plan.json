@@ -1,57 +1,30 @@
 {
   "topicKey": "aseptic-loosening-tha",
   "pilotKey": "aseptic-loosening-tha-neighborhood",
-  "generatedAt": "2026-07-05T22:53:45.318Z",
+  "generatedAt": "2026-07-16T02:32:31.855Z",
   "workItems": [
-    {
-      "id": "work-clinical-entity-builder",
-      "agentId": "clinical-entity-builder",
-      "agentFamily": "Clinical Entity Builder",
-      "title": "Clinical Entity Builder: resolve 2 gap(s)",
-      "gapIds": [
-        "gap-entity-neighbor-1",
-        "gap-entity-neighbor-2"
-      ],
-      "dependencies": [],
-      "estimatedConfidence": 0.95,
-      "requiredInputs": [
-        "neighborhood_snapshot",
-        "ontology_requirements",
-        "work_assignment"
-      ],
-      "requiredOutputs": [
-        "entities"
-      ],
-      "validationRules": [
-        "ontology_valid",
-        "schema_valid",
-        "duplicate_valid"
-      ],
-      "priority": 115,
-      "workType": "gap_resolution",
-      "assignedAgentId": "clinical-entity-builder",
-      "publicationImpact": 0.125,
-      "requiredReviewer": "clinical_expert"
-    },
     {
       "id": "work-relationship-builder",
       "agentId": "relationship-builder",
       "agentFamily": "Relationship Builder",
-      "title": "Relationship Builder: resolve 7 gap(s)",
+      "title": "Relationship Builder: resolve 10 gap(s)",
       "gapIds": [
-        "gap-rel-3",
+        "gap-rel-1",
         "gap-rel-4",
         "gap-rel-5",
         "gap-rel-6",
         "gap-rel-7",
         "gap-rel-8",
-        "gap-rel-9"
+        "gap-rel-18",
+        "gap-rel-23",
+        "gap-rel-24",
+        "gap-proc-approach-28"
       ],
       "dependencies": [
         "work-clinical-entity-builder",
         "work-anatomy-builder"
       ],
-      "estimatedConfidence": 0.92,
+      "estimatedConfidence": 0.906,
       "requiredInputs": [
         "neighborhood_snapshot",
         "work_assignment",
@@ -71,25 +44,60 @@
       "priority": 115,
       "workType": "gap_resolution",
       "assignedAgentId": "relationship-builder",
-      "publicationImpact": 0.11428571428571428,
+      "publicationImpact": 0.10500000000000001,
       "requiredReviewer": "attending"
+    },
+    {
+      "id": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "agentFamily": "Clinical Entity Builder",
+      "title": "Clinical Entity Builder: resolve 3 gap(s)",
+      "gapIds": [
+        "gap-entity-neighbor-2",
+        "gap-entity-neighbor-3",
+        "gap-entity-neighbor-22"
+      ],
+      "dependencies": [],
+      "estimatedConfidence": 0.9499999999999998,
+      "requiredInputs": [
+        "neighborhood_snapshot",
+        "ontology_requirements",
+        "work_assignment"
+      ],
+      "requiredOutputs": [
+        "entities"
+      ],
+      "validationRules": [
+        "ontology_valid",
+        "schema_valid",
+        "duplicate_valid"
+      ],
+      "priority": 115,
+      "workType": "gap_resolution",
+      "assignedAgentId": "clinical-entity-builder",
+      "publicationImpact": 0.13333333333333333,
+      "requiredReviewer": "clinical_expert"
     },
     {
       "id": "work-claim-builder",
       "agentId": "claim-builder",
       "agentFamily": "Claim Builder",
-      "title": "Claim Builder: resolve 5 gap(s)",
+      "title": "Claim Builder: resolve 9 gap(s)",
       "gapIds": [
-        "gap-claim-10",
+        "gap-claim-9",
+        "gap-claim-type-10",
         "gap-claim-type-11",
         "gap-claim-type-12",
         "gap-claim-type-13",
-        "gap-claim-type-14"
+        "gap-claim-19",
+        "gap-claim-type-20",
+        "gap-claim-type-21",
+        "gap-biomech-claim-27"
       ],
       "dependencies": [
         "work-relationship-builder"
       ],
-      "estimatedConfidence": 0.776,
+      "estimatedConfidence": 0.7866666666666666,
       "requiredInputs": [
         "neighborhood_snapshot",
         "canonical_objects",
@@ -109,8 +117,8 @@
       "priority": 85,
       "workType": "gap_resolution",
       "assignedAgentId": "claim-builder",
-      "publicationImpact": 0.06,
-      "requiredReviewer": "none"
+      "publicationImpact": 0.05555555555555555,
+      "requiredReviewer": "clinical_expert"
     },
     {
       "id": "work-decision-point-builder",
@@ -118,9 +126,9 @@
       "agentFamily": "Decision Point Builder",
       "title": "Decision Point Builder: resolve 3 gap(s)",
       "gapIds": [
-        "gap-dp-15",
-        "gap-dp-pattern-16",
-        "gap-dp-pattern-17"
+        "gap-dp-14",
+        "gap-dp-pattern-15",
+        "gap-dp-pattern-16"
       ],
       "dependencies": [
         "work-relationship-builder"
@@ -151,7 +159,7 @@
       "agentFamily": "Metadata Builder",
       "title": "Metadata Builder: resolve 1 gap(s)",
       "gapIds": [
-        "gap-meta-rel-18"
+        "gap-meta-rel-17"
       ],
       "dependencies": [
         "work-relationship-builder"
@@ -182,8 +190,8 @@
       "agentFamily": "Asset Linker",
       "title": "Asset Linker: resolve 2 gap(s)",
       "gapIds": [
-        "gap-asset-card-19",
-        "gap-asset-question-20"
+        "gap-asset-card-25",
+        "gap-asset-question-26"
       ],
       "dependencies": [
         "work-clinical-entity-builder"
@@ -215,8 +223,8 @@
       "title": "Conflict Resolver: quality_scoring",
       "gapIds": [],
       "dependencies": [
-        "work-clinical-entity-builder",
         "work-relationship-builder",
+        "work-clinical-entity-builder",
         "work-claim-builder",
         "work-decision-point-builder",
         "work-metadata-builder",
@@ -303,8 +311,8 @@
       "title": "Review Assistant: review",
       "gapIds": [],
       "dependencies": [
-        "work-clinical-entity-builder",
         "work-relationship-builder",
+        "work-clinical-entity-builder",
         "work-claim-builder",
         "work-decision-point-builder",
         "work-metadata-builder",
@@ -360,8 +368,8 @@
     }
   ],
   "agentSummary": {
-    "Clinical Entity Builder": 1,
     "Relationship Builder": 1,
+    "Clinical Entity Builder": 1,
     "Claim Builder": 1,
     "Decision Point Builder": 1,
     "Metadata Builder": 1,

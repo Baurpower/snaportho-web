@@ -1,0 +1,41 @@
+{
+  "field_resolution": {
+    "current_slug": "abductor-pollicis-brevis",
+    "canonical_slug": "abductor-pollicis-brevis",
+    "entity_type": "anatomy_structure",
+    "owner_neighborhood": "canonical-hand-anatomy-backbone",
+    "disposition": "CROSS_NEIGHBORHOOD_REFERENCE",
+    "canonical_relationships": [
+      {
+        "subject": "abductor-pollicis-brevis",
+        "predicate": "part_of",
+        "object": "canonical-hand-anatomy-backbone",
+        "status": "deferred_to_hand_anatomy_backbone"
+      }
+    ],
+    "cts_local_reference": "CTS may reference APB through thenar motor examination, thenar weakness/atrophy, denervation, and EDX teaching; no direct CTS disease-to-muscle edge is created.",
+    "staging_effect": "Satisfies staging connectivity as an explicit cross-neighborhood shared anatomy reference.",
+    "publication_effect": "Publication remains deferred until Hand anatomy backbone identity/provenance reconciliation is complete."
+  },
+  "audit": {
+    "why_generated": "Thenar muscle used in focused median motor examination and electrodiagnostic assessment.",
+    "referenced_by_claims": [
+      "claim-carpal-tunnel-syndrome-clinical-pattern",
+      "claim-carpal-tunnel-syndrome-anatomy",
+      "claim-carpal-tunnel-syndrome-exam",
+      "claim-carpal-tunnel-syndrome-testing",
+      "claim-carpal-tunnel-syndrome-complications",
+      "claim-carpal-tunnel-syndrome-oite-trap"
+    ],
+    "referenced_by_decision_points": [
+      "dp-carpal-tunnel-syndrome-testing",
+      "dp-carpal-tunnel-syndrome-nonoperative",
+      "dp-carpal-tunnel-syndrome-operative"
+    ],
+    "local_relationship_references": [],
+    "equivalent_canonical_identity": {
+      "found": false,
+      "note": "No alternate canonical slug was present in the supplied registry; current slug is retained as the proposed canonical Hand anatomy identity."
+    }
+  }
+}

@@ -2,7 +2,58 @@
 
 import { ChevronDown, Circle, CircleCheckBig } from "lucide-react";
 import { CaseReadinessActions } from "@/components/student-workspace/case-readiness/CaseReadinessActions";
-import type { CaseReadinessObjective } from "@/lib/student-curriculum";
+import type {
+  CaseReadinessObjective,
+  StudyGuideBlockKind,
+} from "@/lib/student-curriculum";
+
+const BLOCK_STYLES: Record<
+  StudyGuideBlockKind,
+  { border: string; background: string; label: string; marker: string }
+> = {
+  "key-concepts": {
+    border: "border-slate-200",
+    background: "bg-white",
+    label: "text-slate-700",
+    marker: "bg-slate-400",
+  },
+  recognize: {
+    border: "border-sky-200",
+    background: "bg-sky-50",
+    label: "text-sky-900",
+    marker: "bg-sky-500",
+  },
+  "say-out-loud": {
+    border: "border-indigo-200",
+    background: "bg-indigo-50",
+    label: "text-indigo-900",
+    marker: "bg-indigo-500",
+  },
+  application: {
+    border: "border-emerald-200",
+    background: "bg-emerald-50",
+    label: "text-emerald-900",
+    marker: "bg-emerald-500",
+  },
+  "common-confusion": {
+    border: "border-amber-200",
+    background: "bg-amber-50",
+    label: "text-amber-900",
+    marker: "bg-amber-500",
+  },
+  "numbers-classifications": {
+    border: "border-violet-200",
+    background: "bg-violet-50",
+    label: "text-violet-900",
+    marker: "bg-violet-500",
+  },
+  "self-check": {
+    border: "border-rose-200",
+    background: "bg-rose-50",
+    label: "text-rose-900",
+    marker: "bg-rose-500",
+  },
+};
 
 export function ReadinessObjectiveCard({
   objective,
@@ -49,11 +100,12 @@ export function ReadinessObjectiveCard({
                 {objective.description}
               </p>
               <div className="mt-2 flex flex-wrap gap-2">
-                {objective.estimatedMinutes ? (
-                  <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600">
-                    {objective.estimatedMinutes} min
-                  </span>
-                ) : null}
+                <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600">
+                  {objective.estimatedMinutes} min
+                </span>
+                <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600">
+                  {objective.importance.replace("-", " ")}
+                </span>
                 {objective.completionLabel ? (
                   <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600">
                     {objective.completionLabel}
@@ -81,36 +133,45 @@ export function ReadinessObjectiveCard({
 
           {expanded ? (
             <div className="mt-4 border-t border-slate-200 pt-4">
-              <ul className="space-y-2">
-                {objective.bullets.map((bullet) => (
-                  <li key={bullet} className="flex gap-2 text-sm leading-6 text-slate-700">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400" />
-                    <span>{bullet}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className="mb-4 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-800">
+                  Learning objective
+                </p>
+                <p className="mt-1 text-sm leading-6 text-sky-950">
+                  {objective.learningObjective}
+                </p>
+              </div>
 
-              {objective.pearl ? (
-                <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-800">
-                    Pearl
-                  </p>
-                  <p className="mt-1 text-sm leading-6 text-emerald-950">
-                    {objective.pearl}
-                  </p>
-                </div>
-              ) : null}
-
-              {objective.commonMistake ? (
-                <div className="mt-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-amber-800">
-                    Common mistake
-                  </p>
-                  <p className="mt-1 text-sm leading-6 text-amber-950">
-                    {objective.commonMistake}
-                  </p>
-                </div>
-              ) : null}
+              <div className="grid gap-3">
+                {objective.content.map((contentBlock) => {
+                  const style = BLOCK_STYLES[contentBlock.kind];
+                  return (
+                    <section
+                      key={`${objective.id}-${contentBlock.kind}-${contentBlock.title}`}
+                      className={`rounded-2xl border ${style.border} ${style.background} px-4 py-3`}
+                    >
+                      <h4
+                        className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${style.label}`}
+                      >
+                        {contentBlock.title}
+                      </h4>
+                      <ul className="mt-2 space-y-2">
+                        {contentBlock.items.map((item) => (
+                          <li
+                            key={item}
+                            className="flex gap-2 text-sm leading-6 text-slate-700"
+                          >
+                            <span
+                              className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${style.marker}`}
+                            />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  );
+                })}
+              </div>
 
               <div className="mt-4">
                 <CaseReadinessActions

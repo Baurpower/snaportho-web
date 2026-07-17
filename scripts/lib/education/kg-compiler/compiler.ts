@@ -25,6 +25,10 @@ export type CompileOptions = {
   topic: string;
   /** When true, prefer canonical DB neighborhood over spec fallback. */
   dbBacked?: boolean;
+  /** Fail instead of using the specification when DB state is missing or incomplete. */
+  strictDb?: boolean;
+  /** Optional staging batch used to reconstruct proposal-driven membership. */
+  batchKey?: string;
   /** Load pre-built evidence packet from default path (reports/kg-evidence/<topic>/). */
   useEvidence?: boolean;
   /** Explicit path to evidence-packet.json. */
@@ -43,10 +47,11 @@ export type CompilerResultWithSource = CompilerResult & {
 
 async function loadProposals(
   topic: TopicDefinition,
-  preferDb: boolean
+  preferDb: boolean,
+  batchKey?: string
 ): Promise<{ proposals: ProposalRecord[]; source: "database" | "spec" }> {
   if (preferDb) {
-    const fromDb = await loadPilotProposals(topic.pilotKey);
+    const fromDb = await loadPilotProposals(topic.pilotKey, batchKey);
     if (fromDb.length > 0) {
       return { proposals: fromDb, source: "database" };
     }
@@ -73,7 +78,7 @@ export async function compileNeighborhood(
       useEvidence: options.useEvidence,
     });
 
-  let { proposals: seedProposals, source: proposalSource } = await loadProposals(topic, preferDb);
+  let { proposals: seedProposals, source: proposalSource } = await loadProposals(topic, preferDb, options.batchKey);
   if (evidencePacket?.existingProposals.length) {
     seedProposals = evidencePacket.existingProposals;
     proposalSource = evidencePacket.canonicalSnapshot.source === "database" ? "database" : proposalSource;
@@ -84,10 +89,20 @@ export async function compileNeighborhood(
   let dbSnapshot: DbSnapshotLoadResult | undefined;
 
   if (preferDb) {
-    dbSnapshot = await loadDbNeighborhoodSnapshot(topic, seedProposals);
+    const dbProposals = await loadPilotProposals(topic.pilotKey, options.batchKey);
+    if (options.strictDb && dbProposals.length === 0) {
+      throw new Error(`Strict DB mode requires persisted proposals for ${topic.topicKey}`);
+    }
+    dbSnapshot = await loadDbNeighborhoodSnapshot(topic, dbProposals.length ? dbProposals : seedProposals, {
+      strictDb: options.strictDb,
+      batchKey: options.batchKey,
+    });
     if (dbSnapshot.loaded) {
       snapshot = dbSnapshot.snapshot;
       neighborhoodSource = "database";
+    }
+    if (options.strictDb && neighborhoodSource !== "database") {
+      throw new Error(`Strict DB mode refused spec fallback for ${topic.topicKey}`);
     }
   }
 

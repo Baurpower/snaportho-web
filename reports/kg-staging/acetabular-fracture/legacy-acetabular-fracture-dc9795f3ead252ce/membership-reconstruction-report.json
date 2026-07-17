@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "runDate": "2026-07-16",
+  "topicKey": "acetabular-fracture",
+  "displayName": "Acetabular Fracture",
+  "pilotKey": "acetabular-fracture-neighborhood",
+  "batchKey": "legacy-acetabular-fracture-dc9795f3ead252ce",
+  "packetHash": "dc9795f3ead252ce74c3482ec45e9060339dc5124553ff4abbe788cc32069cdf",
+  "graphHash": "c8f08f706f388c00c2a04e1d0094cb6774e6f01aa9db621a5c0bea1278c26c2c",
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "dryRun": false,
+  "exactAppliedMembershipReconstructed": true,
+  "counts": {
+    "approvedLoaded": 84,
+    "structuralProposals": 83,
+    "entities": 37,
+    "relationships": 45,
+    "curriculumBridges": 1,
+    "draftClaimsExcluded": 1,
+    "draftDecisionPointsExcluded": 0
+  },
+  "repairs": {
+    "insertedSemantic": 0,
+    "reusedSemantic": 83,
+    "proposalStatesRepaired": 0,
+    "insertedMemberships": 61,
+    "reusedMemberships": 0,
+    "reactivatedMemberships": 22
+  },
+  "discrepancyCount": 0,
+  "exactNextAction": "run_strict_db_reload"
+}

@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "batchKey": "cts-0c2b2fa3ef5af8aa",
+  "packetHash": "a8db440851cd7742871e81a4292c2a0af0cbf9005e7e12e64d5e5745d9d35c13",
+  "graphHash": "0c2b2fa3ef5af8aa31e6be37c4cf7aec9ec3b37d6cb7c6fc30193e48051830a1",
+  "membership": {
+    "count": 207,
+    "missing": [],
+    "unexpected": [],
+    "incomplete": 0,
+    "inserted": 58,
+    "reusedOrVerified": 149
+  },
+  "canonical": {
+    "entities": 92,
+    "relationships": 114,
+    "relationshipTriplesVerified": 114,
+    "duplicateSlugs": [],
+    "curriculumBridges": 1
+  },
+  "rejectedObjectsAbsent": true,
+  "provenance": {
+    "insertedTargetsComplete": true,
+    "packetMembershipProvenanceComplete": true
+  },
+  "globalMembershipIntegrity": {
+    "activeSemanticProposals": 4957,
+    "memberships": 5106,
+    "orphanMemberships": 0
+  },
+  "productSmokeTests": {
+    "primaryEntityLoad": true,
+    "curriculumBridgeLoad": true,
+    "relationshipNeighborhoodLoad": true
+  },
+  "failures": []
+}

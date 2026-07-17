@@ -1,4 +1,13 @@
 import type { OrthobulletsPageContext, PageClassification } from './types.js';
+import {
+  buildReviewStateKey,
+  hasVisibleReviewData,
+  inferQuestionState,
+  resolveQuestionTutorPrimaryAction,
+} from './question-review-state.js';
+
+export type { InferredQuestionState, QuestionTutorPrimaryAction } from './question-review-state.js';
+export { buildReviewStateKey, inferQuestionState, resolveQuestionTutorPrimaryAction };
 
 const MIN_EDUCATIONAL_TEXT_CHARS = 500;
 const MIN_REFERENCES_HEAVY_TEXT_CHARS = 180;
@@ -11,16 +20,17 @@ export function hasReviewData(context: OrthobulletsPageContext) {
 
 export function isUnansweredQuestion(context: OrthobulletsPageContext) {
   if (context.mode !== 'question') return false;
-  return (context.pageKind === 'current_test' || context.pageKind === 'question') && !hasReviewData(context) && !context.selectedAnswerKey && !context.selectedAnswer;
+  return inferQuestionState(context) === 'unanswered';
 }
 
 export function isHintEligible(context: OrthobulletsPageContext) {
   if (context.mode !== 'question') return false;
-  return !hasReviewData(context);
+  return inferQuestionState(context) === 'unanswered';
 }
 
 export function isExplainEligible(context: OrthobulletsPageContext) {
-  return context.mode === 'curriculum_content' || hasReviewData(context);
+  if (context.mode === 'curriculum_content') return true;
+  return inferQuestionState(context) === 'answered_review';
 }
 
 export function getReadableTextLength(context: OrthobulletsPageContext) {

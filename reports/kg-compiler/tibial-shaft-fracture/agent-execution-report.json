@@ -1,12 +1,14 @@
 {
-  "generatedAt": "2026-07-05T21:24:25.512Z",
+  "generatedAt": "2026-07-16T02:18:46.905Z",
   "frameworkVersion": "1.0.0",
   "topicKey": "tibial-shaft-fracture",
   "pilotKey": "tibial-shaft-fracture-neighborhood",
   "executionOrder": [
+    "work-clinical-entity-builder",
     "work-asset-linker",
     "work-relationship-builder",
     "work-claim-builder",
+    "work-decision-point-builder",
     "work-metadata-builder",
     "work-duplicate-detector",
     "work-quality-scorer",
@@ -16,11 +18,15 @@
   ],
   "parallelLayers": [
     [
+      "work-clinical-entity-builder"
+    ],
+    [
       "work-asset-linker",
       "work-relationship-builder"
     ],
     [
       "work-claim-builder",
+      "work-decision-point-builder",
       "work-metadata-builder"
     ],
     [
@@ -40,6 +46,17 @@
     ]
   ],
   "entries": [
+    {
+      "assignmentId": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 1,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
     {
       "assignmentId": "work-asset-linker",
       "agentId": "asset-linker",
@@ -66,8 +83,19 @@
       "assignmentId": "work-claim-builder",
       "agentId": "claim-builder",
       "status": "completed",
-      "proposalCount": 8,
-      "executionTimeMs": 6,
+      "proposalCount": 9,
+      "executionTimeMs": 3,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-decision-point-builder",
+      "agentId": "decision-point-builder",
+      "status": "completed",
+      "proposalCount": 2,
+      "executionTimeMs": 0,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -78,7 +106,7 @@
       "agentId": "metadata-builder",
       "status": "completed",
       "proposalCount": 0,
-      "executionTimeMs": 1,
+      "executionTimeMs": 0,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -111,7 +139,7 @@
       "agentId": "conflict-resolver",
       "status": "completed",
       "proposalCount": 0,
-      "executionTimeMs": 1,
+      "executionTimeMs": 0,
       "errors": [],
       "warnings": [],
       "skipped": false,
@@ -121,7 +149,7 @@
       "assignmentId": "work-review-assistant",
       "agentId": "review-assistant",
       "status": "completed",
-      "proposalCount": 51,
+      "proposalCount": 45,
       "executionTimeMs": 2,
       "errors": [],
       "warnings": [],
@@ -140,9 +168,9 @@
       "timedOut": false
     }
   ],
-  "totalProposalsEmitted": 63,
-  "uniqueProposals": 51,
-  "completedAgents": 9,
+  "totalProposalsEmitted": 60,
+  "uniqueProposals": 45,
+  "completedAgents": 11,
   "failedAgents": 0,
   "partialAgents": 0,
   "skippedAgents": 0,

@@ -20,26 +20,19 @@ export {
 export { searchCurriculumTopics } from '@/lib/student-curriculum/curriculum-search';
 export {
   buildCaseReadinessSession,
+  normalizeStudyGuideCompletionIds,
   resolveCaseReadinessMinutes,
 } from '@/lib/student-curriculum/case-readiness-builder';
 export { buildLearningPathView, getLearningPathWeeks } from '@/lib/student-curriculum/learning-paths';
 export { buildTodaysPreparationCards } from '@/lib/student-curriculum/prep-recommendations';
 export { buildRotationPrepProfile } from '@/lib/student-curriculum/rotation-prep-profile';
 export { getCasePrepSlugForTopic } from '@/lib/student-curriculum/caseprep-topic-mapping';
-export { buildProcedurePrepModules } from '@/lib/student-curriculum/procedure-prep-modules';
 export {
-  buildSurvivalSections,
-  detectTopicType,
-  SURVIVAL_SECTION_IDS,
-  SURVIVAL_SECTION_GROUPS,
-  TOPIC_TYPES,
-} from '@/lib/student-curriculum/survival-sections';
-export type {
-  SurvivalSection,
-  SurvivalSectionId,
-  SurvivalSectionGroup,
-  TopicType,
-} from '@/lib/student-curriculum/survival-sections';
+  detectStudyGuideTopicType,
+  STUDY_GUIDE_IMPORTANCE_LEVELS,
+  STUDY_GUIDE_SECTION_KINDS,
+  STUDY_GUIDE_TOPIC_TYPES,
+} from '@/lib/student-curriculum/case-readiness-builder';
 export { getStudentCasePrepContext } from '@/lib/student-curriculum/student-caseprep-context';
 export type {
   CurriculumCommonStudentCase,
@@ -76,6 +69,12 @@ export type {
   CaseReadinessObjectiveKind,
   CaseReadinessSourceField,
   CaseReadinessSession,
+  StudyGuideBlockKind,
+  StudyGuideContentBlock,
+  StudyGuideImportance,
+  StudyGuideSection,
+  StudyGuideSectionKind,
+  StudyGuideTopicType,
 } from '@/lib/student-curriculum/case-readiness-builder';
 export {
   CURRICULUM_RECOMMENDATION_REASON_CODES,

@@ -502,7 +502,9 @@ export const HAND_WRIST_NEIGHBORHOODS: HandWristNeighborhoodDef[] = [
     relatedTopicKeys: ["median-nerve-compression", "trigger-finger", "distal-radius-fracture"],
     ankiCardMappings: 4,
     orthobulletsQuestionMappings: 44,
-    extraEntityKinds: ["procedure", "complication"],
+    // Named release techniques and complications are supplied by the CTS
+    // manufacturing input package; generic placeholders are unsafe here.
+    extraEntityKinds: [],
   },
   {
     topicKey: "cubital-tunnel-syndrome",

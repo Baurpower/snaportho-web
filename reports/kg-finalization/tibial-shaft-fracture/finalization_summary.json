@@ -1,0 +1,515 @@
+{
+  "neighborhoodId": "tibial-shaft-fracture",
+  "generatedAt": "2026-07-16T02:19:30.996Z",
+  "mode": "report_only_finalization",
+  "sourceArtifactsPreserved": true,
+  "agentOrder": [
+    "IdentityReuseAgent",
+    "OntologyConstraintAgent",
+    "RelationshipNormalizationAgent",
+    "SourceProvenanceAgent",
+    "ConnectivityAgent",
+    "CrossNeighborhoodLinkingAgent",
+    "ReviewBurdenReductionAgent",
+    "BackboneCoverageAgent",
+    "PublicationReadinessAgent"
+  ],
+  "counts": {
+    "entities": 12,
+    "relationships": 22,
+    "claims": 18,
+    "decisionPoints": 2,
+    "priorReviewDecisions": 0
+  },
+  "metrics": {
+    "duplicatesPrevented": 0,
+    "relationshipsNormalized": 1,
+    "unsupportedEdgesRemoved": 0,
+    "reviewDecisionsInherited": 0,
+    "orphanEntitiesRepaired": 0,
+    "publicationBlockersDetected": 9
+  },
+  "decisionReadyCounts": {
+    "draftObjectsInspected": 54,
+    "issuesAutoResolved": 1,
+    "priorDecisionsInherited": 0,
+    "semanticDecisionsInherited": 0,
+    "relationshipsNormalized": 1,
+    "objectsRequiringClinicalReview": 0,
+    "objectsRequiringOntologyReview": 9,
+    "systemBlockers": 1,
+    "uniqueStagingBlockers": 3,
+    "uniquePublicationBlockers": 5,
+    "warnings": 4,
+    "validDeferrals": 51
+  },
+  "publicationReadiness": {
+    "ready_for_publication": false,
+    "ready_for_staged_manufacturing": false,
+    "staging_blockers": [
+      {
+        "blocker_id": "draft-traceability-missing",
+        "category": "ACTION_REQUIRED",
+        "severity": "HIGH",
+        "root_cause": "missing draft/staging traceability",
+        "affected_objects": 3,
+        "unique_underlying_problem": "Generated objects are missing lifecycle-minimum traceability fields needed before staging.",
+        "recommended_action": "Patch compiler/overlay export or source manifest ingestion so draft objects carry minimum traceability.",
+        "staging_blocker": true,
+        "publication_blocker": true,
+        "object_fingerprints": [
+          "relationship|anterior-compartment|part_of|leg-compartment-complex",
+          "relationship|tibial-shaft|part_of|leg-compartment-complex",
+          "relationship|fibula|part_of|leg-compartment-complex"
+        ]
+      },
+      {
+        "blocker_id": "illegal-ontology-triples",
+        "category": "ACTION_REQUIRED",
+        "severity": "CRITICAL",
+        "root_cause": "invalid or unsupported predicate",
+        "affected_objects": 1,
+        "unique_underlying_problem": "One or more relationships violate the canonical predicate registry.",
+        "recommended_action": "Revise predicate, endpoint type, or vocabulary before staging.",
+        "staging_blocker": true,
+        "publication_blocker": true,
+        "object_fingerprints": [
+          "relationship|tibial-shaft-fracture|uses_fixation|im-nail-fixation"
+        ]
+      },
+      {
+        "blocker_id": "review-overlay-not-consumed",
+        "category": "SYSTEM_BLOCKER",
+        "severity": "HIGH",
+        "root_cause": "unconsumed review overlay",
+        "affected_objects": 1,
+        "unique_underlying_problem": "Finalization input does not include prior review decisions or a post-review overlay marker.",
+        "recommended_action": "Run finalization with --post-review-input or --prior-review.",
+        "staging_blocker": true,
+        "publication_blocker": true,
+        "object_fingerprints": [
+          "neighborhood|tibial-shaft-fracture"
+        ]
+      }
+    ],
+    "publication_blockers": [
+      {
+        "blocker_id": "draft-traceability-missing",
+        "category": "ACTION_REQUIRED",
+        "severity": "HIGH",
+        "root_cause": "missing draft/staging traceability",
+        "affected_objects": 3,
+        "unique_underlying_problem": "Generated objects are missing lifecycle-minimum traceability fields needed before staging.",
+        "recommended_action": "Patch compiler/overlay export or source manifest ingestion so draft objects carry minimum traceability.",
+        "staging_blocker": true,
+        "publication_blocker": true,
+        "object_fingerprints": [
+          "relationship|anterior-compartment|part_of|leg-compartment-complex",
+          "relationship|tibial-shaft|part_of|leg-compartment-complex",
+          "relationship|fibula|part_of|leg-compartment-complex"
+        ]
+      },
+      {
+        "blocker_id": "illegal-ontology-triples",
+        "category": "ACTION_REQUIRED",
+        "severity": "CRITICAL",
+        "root_cause": "invalid or unsupported predicate",
+        "affected_objects": 1,
+        "unique_underlying_problem": "One or more relationships violate the canonical predicate registry.",
+        "recommended_action": "Revise predicate, endpoint type, or vocabulary before staging.",
+        "staging_blocker": true,
+        "publication_blocker": true,
+        "object_fingerprints": [
+          "relationship|tibial-shaft-fracture|uses_fixation|im-nail-fixation"
+        ]
+      },
+      {
+        "blocker_id": "record-level-publication-provenance-missing",
+        "category": "SYSTEM_BLOCKER",
+        "severity": "HIGH",
+        "root_cause": "missing publication provenance",
+        "affected_objects": 54,
+        "unique_underlying_problem": "Compiler/finalization artifacts preserve aggregate or draft provenance but not complete record-level publication provenance.",
+        "recommended_action": "Export source identifiers, source titles/paths, extraction method, evidence confidence, and approval status before publication.",
+        "staging_blocker": false,
+        "publication_blocker": true,
+        "object_fingerprints": [
+          "entity|anatomy_structure|anterior-compartment",
+          "entity|anatomy_structure|fibula",
+          "entity|anatomy_structure|leg-compartment-complex",
+          "entity|imaging_finding|segmental-tibial-fracture",
+          "entity|biomechanics_concept|tibial-blood-supply",
+          "entity|anatomy_structure|tibia-leg-anatomy-hub",
+          "entity|procedure|tibial-im-nail",
+          "entity|complication|tibial-infection",
+          "entity|complication|tibial-malunion",
+          "entity|complication|tibial-nonunion",
+          "entity|anatomy_structure|tibial-shaft",
+          "entity|condition|tibial-shaft-fracture",
+          "relationship|tibial-shaft-fracture|involves_anatomy|leg-compartment-complex",
+          "relationship|anterior-compartment|part_of|leg-compartment-complex",
+          "relationship|tibial-shaft|part_of|leg-compartment-complex",
+          "relationship|fibula|part_of|leg-compartment-complex",
+          "relationship|tibial-shaft-fracture|has_complication|tibial-infection",
+          "relationship|tibial-shaft-fracture|involves_anatomy|tibial-blood-supply",
+          "relationship|tibial-shaft-fracture|involves_anatomy|anterior-compartment",
+          "relationship|fibula|articulates_with|tibial-shaft",
+          "relationship|tibial-shaft-fracture|injured_in|tibial-shaft",
+          "relationship|tibial-im-nail|involves_anatomy|tibial-shaft",
+          "relationship|tibia-leg-anatomy-hub|prerequisite_for|tibial-shaft-fracture",
+          "relationship|tibial-shaft-fracture|involves_anatomy|tibia-leg-anatomy-hub",
+          "relationship|tibial-shaft|part_of|tibia-leg-anatomy-hub",
+          "relationship|fibula|part_of|tibia-leg-anatomy-hub",
+          "relationship|leg-compartment-complex|part_of|tibia-leg-anatomy-hub",
+          "relationship|tibial-shaft-fracture|has_imaging_finding|segmental-tibial-fracture",
+          "relationship|tibial-shaft-fracture|has_complication|tibial-nonunion",
+          "relationship|tibial-shaft-fracture|involves_anatomy|fibula",
+          "relationship|tibial-shaft-fracture|has_complication|tibial-malunion",
+          "relationship|segmental-tibial-fracture|indicates_treatment|tibial-im-nail",
+          "relationship|tibial-shaft-fracture|treated_by|tibial-im-nail",
+          "relationship|tibial-shaft-fracture|uses_fixation|im-nail-fixation",
+          "claim|claim-cs-four-compartments|leg-compartment-complex|leg compartment syndrome requires understanding all four osteofascial compartments anterior late",
+          "claim|claim-tsf-im-entry-anatomy|tibial-shaft|proximal tibial entry point landmarks and nail starting point language are core or survival know",
+          "claim|claim-pilon-fibula-length|fibula|fibular length and lateral column restoration support ankle alignment during pilon reconstructio",
+          "claim|claim-tibial-blood-supply-anatomy_pearl-proximal-distal-metaphys|tibial-blood-supply|proximal distal metaphyseal challenges",
+          "claim|claim-tibial-blood-supply-anatomy_pearl-subcutaneous-tibial-cres|tibial-blood-supply|subcutaneous tibial crest",
+          "claim|claim-tibial-blood-supply-fact-infection|tibial-blood-supply|infection",
+          "claim|claim-tibial-blood-supply-fact-malunion|tibial-blood-supply|malunion",
+          "claim|claim-tibial-blood-supply-fact-open-versus-closed|tibial-blood-supply|open versus closed",
+          "claim|claim-tibial-blood-supply-fact-simple-versus-segmental-|tibial-blood-supply|simple versus segmental comminuted",
+          "claim|claim-tibial-shaft-fracture-cognitive_trap-know-common-im-nail-star|tibial-shaft-fracture|know common im nail starting point language",
+          "claim|claim-tibial-shaft-fracture-imaging_point-adjacent-joint-views|tibial-shaft-fracture|adjacent joint views",
+          "claim|claim-tibial-shaft-fracture-imaging_point-full-length-tibia-fibula|tibial-shaft-fracture|full length tibia fibula radiographs",
+          "claim|claim-tsf-case-script|tibial-shaft-fracture|present wound status compartment check alignment splint plan and weight bearing restrictions wit",
+          "claim|claim-tsf-compartment-serial-exams|tibial-shaft-fracture|serial compartment exams matter because compartment syndrome is a clinical diagnosis that can ev",
+          "claim|claim-tsf-fibula-alignment|fibula|fibula status can influence tibial alignment and length goals during fracture management",
+          "claim|claim-tsf-open-urgency|tibial-shaft-fracture|treating an open tibial shaft fracture like a routine closed injury without soft tissue urgency ",
+          "claim|claim-tsf-segmental-instability|segmental-tibial-fracture|segmental or highly comminuted tibial shaft patterns often signal instability and higher operati",
+          "claim|claim-tsf-soft-tissue-first|tibial-shaft-fracture|tibial shaft fractures are soft tissue injuries first and bony injuries second",
+          "decision_point|dp-tsf-nonoperative-cast|tibial-shaft-fracture|closed injury with acceptable alignment in patient suitable for ",
+          "decision_point|dp-tsf-operative-nailing|tibial-shaft-fracture|unstable alignment open injury segmental comminuted pattern or u"
+        ]
+      },
+      {
+        "blocker_id": "identityreuseagent-action",
+        "category": "ACTION_REQUIRED",
+        "severity": "MODERATE",
+        "root_cause": "Plausible alias or near-duplicate identity below auto-reuse threshold.",
+        "affected_objects": 2,
+        "unique_underlying_problem": "Plausible alias or near-duplicate identity below auto-reuse threshold.",
+        "recommended_action": "Confirm alias mapping, merge, or keep as distinct identity.",
+        "staging_blocker": false,
+        "publication_blocker": true,
+        "object_fingerprints": [
+          "entity|anatomy_structure|tibial-shaft",
+          "entity|condition|tibial-shaft-fracture"
+        ]
+      },
+      {
+        "blocker_id": "backbonecoverageagent-action",
+        "category": "ACTION_REQUIRED",
+        "severity": "MODERATE",
+        "root_cause": "Expected neighborhood backbone domain is absent: imaging.",
+        "affected_objects": 2,
+        "unique_underlying_problem": "Expected neighborhood backbone domain is absent: imaging.",
+        "recommended_action": "Confirm whether this is a deliberate omission or missing generated content.",
+        "staging_blocker": false,
+        "publication_blocker": true,
+        "object_fingerprints": [
+          "coverage|imaging",
+          "coverage|classification"
+        ]
+      }
+    ],
+    "unique_publication_blockers": 5,
+    "affected_objects": 62
+  },
+  "stagingReadiness": {
+    "ready_for_staged_manufacturing": false,
+    "staging_blockers": [
+      {
+        "blocker_id": "draft-traceability-missing",
+        "category": "ACTION_REQUIRED",
+        "severity": "HIGH",
+        "root_cause": "missing draft/staging traceability",
+        "affected_objects": 3,
+        "unique_underlying_problem": "Generated objects are missing lifecycle-minimum traceability fields needed before staging.",
+        "recommended_action": "Patch compiler/overlay export or source manifest ingestion so draft objects carry minimum traceability.",
+        "staging_blocker": true,
+        "publication_blocker": true,
+        "object_fingerprints": [
+          "relationship|anterior-compartment|part_of|leg-compartment-complex",
+          "relationship|tibial-shaft|part_of|leg-compartment-complex",
+          "relationship|fibula|part_of|leg-compartment-complex"
+        ]
+      },
+      {
+        "blocker_id": "illegal-ontology-triples",
+        "category": "ACTION_REQUIRED",
+        "severity": "CRITICAL",
+        "root_cause": "invalid or unsupported predicate",
+        "affected_objects": 1,
+        "unique_underlying_problem": "One or more relationships violate the canonical predicate registry.",
+        "recommended_action": "Revise predicate, endpoint type, or vocabulary before staging.",
+        "staging_blocker": true,
+        "publication_blocker": true,
+        "object_fingerprints": [
+          "relationship|tibial-shaft-fracture|uses_fixation|im-nail-fixation"
+        ]
+      },
+      {
+        "blocker_id": "review-overlay-not-consumed",
+        "category": "SYSTEM_BLOCKER",
+        "severity": "HIGH",
+        "root_cause": "unconsumed review overlay",
+        "affected_objects": 1,
+        "unique_underlying_problem": "Finalization input does not include prior review decisions or a post-review overlay marker.",
+        "recommended_action": "Run finalization with --post-review-input or --prior-review.",
+        "staging_blocker": true,
+        "publication_blocker": true,
+        "object_fingerprints": [
+          "neighborhood|tibial-shaft-fracture"
+        ]
+      }
+    ],
+    "unique_staging_blockers": 3,
+    "affected_objects": 5
+  },
+  "blockerRootCauses": [
+    {
+      "blocker_id": "draft-traceability-missing",
+      "category": "ACTION_REQUIRED",
+      "severity": "HIGH",
+      "root_cause": "missing draft/staging traceability",
+      "affected_objects": 3,
+      "unique_underlying_problem": "Generated objects are missing lifecycle-minimum traceability fields needed before staging.",
+      "recommended_action": "Patch compiler/overlay export or source manifest ingestion so draft objects carry minimum traceability.",
+      "staging_blocker": true,
+      "publication_blocker": true,
+      "object_fingerprints": [
+        "relationship|anterior-compartment|part_of|leg-compartment-complex",
+        "relationship|tibial-shaft|part_of|leg-compartment-complex",
+        "relationship|fibula|part_of|leg-compartment-complex"
+      ]
+    },
+    {
+      "blocker_id": "illegal-ontology-triples",
+      "category": "ACTION_REQUIRED",
+      "severity": "CRITICAL",
+      "root_cause": "invalid or unsupported predicate",
+      "affected_objects": 1,
+      "unique_underlying_problem": "One or more relationships violate the canonical predicate registry.",
+      "recommended_action": "Revise predicate, endpoint type, or vocabulary before staging.",
+      "staging_blocker": true,
+      "publication_blocker": true,
+      "object_fingerprints": [
+        "relationship|tibial-shaft-fracture|uses_fixation|im-nail-fixation"
+      ]
+    },
+    {
+      "blocker_id": "record-level-publication-provenance-missing",
+      "category": "SYSTEM_BLOCKER",
+      "severity": "HIGH",
+      "root_cause": "missing publication provenance",
+      "affected_objects": 54,
+      "unique_underlying_problem": "Compiler/finalization artifacts preserve aggregate or draft provenance but not complete record-level publication provenance.",
+      "recommended_action": "Export source identifiers, source titles/paths, extraction method, evidence confidence, and approval status before publication.",
+      "staging_blocker": false,
+      "publication_blocker": true,
+      "object_fingerprints": [
+        "entity|anatomy_structure|anterior-compartment",
+        "entity|anatomy_structure|fibula",
+        "entity|anatomy_structure|leg-compartment-complex",
+        "entity|imaging_finding|segmental-tibial-fracture",
+        "entity|biomechanics_concept|tibial-blood-supply",
+        "entity|anatomy_structure|tibia-leg-anatomy-hub",
+        "entity|procedure|tibial-im-nail",
+        "entity|complication|tibial-infection",
+        "entity|complication|tibial-malunion",
+        "entity|complication|tibial-nonunion",
+        "entity|anatomy_structure|tibial-shaft",
+        "entity|condition|tibial-shaft-fracture",
+        "relationship|tibial-shaft-fracture|involves_anatomy|leg-compartment-complex",
+        "relationship|anterior-compartment|part_of|leg-compartment-complex",
+        "relationship|tibial-shaft|part_of|leg-compartment-complex",
+        "relationship|fibula|part_of|leg-compartment-complex",
+        "relationship|tibial-shaft-fracture|has_complication|tibial-infection",
+        "relationship|tibial-shaft-fracture|involves_anatomy|tibial-blood-supply",
+        "relationship|tibial-shaft-fracture|involves_anatomy|anterior-compartment",
+        "relationship|fibula|articulates_with|tibial-shaft",
+        "relationship|tibial-shaft-fracture|injured_in|tibial-shaft",
+        "relationship|tibial-im-nail|involves_anatomy|tibial-shaft",
+        "relationship|tibia-leg-anatomy-hub|prerequisite_for|tibial-shaft-fracture",
+        "relationship|tibial-shaft-fracture|involves_anatomy|tibia-leg-anatomy-hub",
+        "relationship|tibial-shaft|part_of|tibia-leg-anatomy-hub",
+        "relationship|fibula|part_of|tibia-leg-anatomy-hub",
+        "relationship|leg-compartment-complex|part_of|tibia-leg-anatomy-hub",
+        "relationship|tibial-shaft-fracture|has_imaging_finding|segmental-tibial-fracture",
+        "relationship|tibial-shaft-fracture|has_complication|tibial-nonunion",
+        "relationship|tibial-shaft-fracture|involves_anatomy|fibula",
+        "relationship|tibial-shaft-fracture|has_complication|tibial-malunion",
+        "relationship|segmental-tibial-fracture|indicates_treatment|tibial-im-nail",
+        "relationship|tibial-shaft-fracture|treated_by|tibial-im-nail",
+        "relationship|tibial-shaft-fracture|uses_fixation|im-nail-fixation",
+        "claim|claim-cs-four-compartments|leg-compartment-complex|leg compartment syndrome requires understanding all four osteofascial compartments anterior late",
+        "claim|claim-tsf-im-entry-anatomy|tibial-shaft|proximal tibial entry point landmarks and nail starting point language are core or survival know",
+        "claim|claim-pilon-fibula-length|fibula|fibular length and lateral column restoration support ankle alignment during pilon reconstructio",
+        "claim|claim-tibial-blood-supply-anatomy_pearl-proximal-distal-metaphys|tibial-blood-supply|proximal distal metaphyseal challenges",
+        "claim|claim-tibial-blood-supply-anatomy_pearl-subcutaneous-tibial-cres|tibial-blood-supply|subcutaneous tibial crest",
+        "claim|claim-tibial-blood-supply-fact-infection|tibial-blood-supply|infection",
+        "claim|claim-tibial-blood-supply-fact-malunion|tibial-blood-supply|malunion",
+        "claim|claim-tibial-blood-supply-fact-open-versus-closed|tibial-blood-supply|open versus closed",
+        "claim|claim-tibial-blood-supply-fact-simple-versus-segmental-|tibial-blood-supply|simple versus segmental comminuted",
+        "claim|claim-tibial-shaft-fracture-cognitive_trap-know-common-im-nail-star|tibial-shaft-fracture|know common im nail starting point language",
+        "claim|claim-tibial-shaft-fracture-imaging_point-adjacent-joint-views|tibial-shaft-fracture|adjacent joint views",
+        "claim|claim-tibial-shaft-fracture-imaging_point-full-length-tibia-fibula|tibial-shaft-fracture|full length tibia fibula radiographs",
+        "claim|claim-tsf-case-script|tibial-shaft-fracture|present wound status compartment check alignment splint plan and weight bearing restrictions wit",
+        "claim|claim-tsf-compartment-serial-exams|tibial-shaft-fracture|serial compartment exams matter because compartment syndrome is a clinical diagnosis that can ev",
+        "claim|claim-tsf-fibula-alignment|fibula|fibula status can influence tibial alignment and length goals during fracture management",
+        "claim|claim-tsf-open-urgency|tibial-shaft-fracture|treating an open tibial shaft fracture like a routine closed injury without soft tissue urgency ",
+        "claim|claim-tsf-segmental-instability|segmental-tibial-fracture|segmental or highly comminuted tibial shaft patterns often signal instability and higher operati",
+        "claim|claim-tsf-soft-tissue-first|tibial-shaft-fracture|tibial shaft fractures are soft tissue injuries first and bony injuries second",
+        "decision_point|dp-tsf-nonoperative-cast|tibial-shaft-fracture|closed injury with acceptable alignment in patient suitable for ",
+        "decision_point|dp-tsf-operative-nailing|tibial-shaft-fracture|unstable alignment open injury segmental comminuted pattern or u"
+      ]
+    },
+    {
+      "blocker_id": "identityreuseagent-action",
+      "category": "ACTION_REQUIRED",
+      "severity": "MODERATE",
+      "root_cause": "Plausible alias or near-duplicate identity below auto-reuse threshold.",
+      "affected_objects": 2,
+      "unique_underlying_problem": "Plausible alias or near-duplicate identity below auto-reuse threshold.",
+      "recommended_action": "Confirm alias mapping, merge, or keep as distinct identity.",
+      "staging_blocker": false,
+      "publication_blocker": true,
+      "object_fingerprints": [
+        "entity|anatomy_structure|tibial-shaft",
+        "entity|condition|tibial-shaft-fracture"
+      ]
+    },
+    {
+      "blocker_id": "backbonecoverageagent-action",
+      "category": "ACTION_REQUIRED",
+      "severity": "MODERATE",
+      "root_cause": "Expected neighborhood backbone domain is absent: imaging.",
+      "affected_objects": 2,
+      "unique_underlying_problem": "Expected neighborhood backbone domain is absent: imaging.",
+      "recommended_action": "Confirm whether this is a deliberate omission or missing generated content.",
+      "staging_blocker": false,
+      "publication_blocker": true,
+      "object_fingerprints": [
+        "coverage|imaging",
+        "coverage|classification"
+      ]
+    }
+  ],
+  "provenanceReport": {
+    "requirementMatrix": [
+      {
+        "object_type": "entity",
+        "draft_minimum": [
+          "source_or_registry_marker",
+          "review_status_or_draft_marker"
+        ],
+        "staging_minimum": [
+          "source_or_registry_marker",
+          "identity_review_status"
+        ],
+        "publication_minimum": [
+          "source_type",
+          "source_identifier",
+          "source_title_or_path",
+          "evidence_confidence",
+          "approved_review_status"
+        ]
+      },
+      {
+        "object_type": "relationship",
+        "draft_minimum": [
+          "source_or_inherited_relationship",
+          "review_status_or_draft_marker"
+        ],
+        "staging_minimum": [
+          "source_or_inherited_relationship",
+          "evidence_class",
+          "review_status"
+        ],
+        "publication_minimum": [
+          "source_type",
+          "source_identifier",
+          "source_title_or_path",
+          "evidence_confidence",
+          "approved_review_status"
+        ]
+      },
+      {
+        "object_type": "claim",
+        "draft_minimum": [
+          "content_source",
+          "review_status"
+        ],
+        "staging_minimum": [
+          "source_identifier_or_content_source",
+          "evidence_confidence_or_draft_marker",
+          "review_status"
+        ],
+        "publication_minimum": [
+          "source_identifier",
+          "source_title_or_path",
+          "extraction_method",
+          "evidence_confidence",
+          "approved_review_status"
+        ]
+      },
+      {
+        "object_type": "decision_point",
+        "draft_minimum": [
+          "risk_classification_or_safety_marker",
+          "review_status_or_attending_flag"
+        ],
+        "staging_minimum": [
+          "supporting_source_or_review_overlay",
+          "risk_classification",
+          "clinical_review_status"
+        ],
+        "publication_minimum": [
+          "supporting_source_records",
+          "clinical_reviewer_approval",
+          "risk_classification",
+          "approved_review_status"
+        ]
+      }
+    ],
+    "totals": {
+      "entities": 12,
+      "relationships": 22,
+      "claims": 18,
+      "decisionPoints": 2,
+      "objectsMissingDraftMinimum": 3,
+      "objectsMissingPublicationMinimum": 54,
+      "orphanEvidence": 0
+    },
+    "byKind": {
+      "entity": 12,
+      "relationship": 22,
+      "claim": 18,
+      "decision_point": 2
+    }
+  },
+  "reviewDelta": {
+    "priorReviewDecisions": 0,
+    "generatedObjects": 54,
+    "exact_inheritance_count": 0,
+    "semantic_inheritance_count": 0,
+    "rejection_pattern_reuse_count": 0,
+    "exactFingerprintMatches": 0,
+    "semanticFingerprintMatches": 0,
+    "estimatedHumanReviewItemsAvoided": 0,
+    "estimatedRemainingReviewObjects": 54,
+    "delta_review_count": 54,
+    "inheritanceMode": "exact_and_safe_semantic"
+  },
+  "warnings": 55,
+  "escalations": 9
+}

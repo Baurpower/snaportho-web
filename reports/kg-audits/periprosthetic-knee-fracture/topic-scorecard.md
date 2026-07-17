@@ -1,27 +1,27 @@
 # PERIPROSTHETIC KNEE FRACTURE — Knowledge Factory Audit
 
-Generated: 2026-07-05T23:32:00.856Z
+Generated: 2026-07-16T02:55:38.027Z
 Auditor: KF-018 v1.0.0
 
 ## Overall
 
 | Metric | Score |
 |--------|------:|
-| **Overall** | **81** |
-| Ontology Completeness | 53 |
+| **Overall** | **79** |
+| Ontology Completeness | 35 |
 | Evidence Quality | 85 |
-| Graph Integrity | 84 |
-| Shared Knowledge Reuse | 98 |
+| Graph Integrity | 100 |
+| Shared Knowledge Reuse | 100 |
 | Relationship Quality | 49 |
-| Claim Quality | 84 |
-| Decision Points | 69 |
-| Metadata Quality | 92 |
-| Provenance Quality | 100 |
+| Claim Quality | 76 |
+| Decision Points | 85 |
+| Metadata Quality | 86 |
+| Provenance Quality | 96 |
 | Review Calibration | 100 |
 | Agent Performance | 92 |
-| Compiler Quality | 85 |
-| Educational Quality | 86 |
-| Cross-Neighborhood Consistency | 96 |
+| Compiler Quality | 84 |
+| Educational Quality | 72 |
+| Cross-Neighborhood Consistency | 100 |
 | Publication Readiness | 30 |
 | Publication | Blocked |
 
@@ -32,20 +32,27 @@ Auditor: KF-018 v1.0.0
 
 ### Blockers
 
-- 12 proposals still awaiting human review
+- 10 proposals still awaiting human review
 - 5 items require attending review
 - Claims and DPs are draft-only — publication gate must block verified consumption.
 - No approved canonical entities in database yet — proposals remain offline/spec.
-- 14 critical/high ontology gaps remain unresolved
+- 13 critical/high ontology gaps remain unresolved
 
 ## Top Findings
 
 ### [CRITICAL] 6 critical ontology gaps remain
 
-- **Evidence:** ontology-gap-report.json: gap-entity-neighbor-1, gap-rel-4, gap-rel-8
+- **Evidence:** ontology-gap-report.json: gap-entity-neighbor-6, gap-rel-9, gap-rel-12
 - **Reason:** Required entities, relationships, claims, or decision points are missing per CKO §8–§9.
 - **Impact:** -15
 - **Fix:** Resolve critical gaps via assigned factory agents before publication review.
+
+### [CRITICAL] Only 1 anatomy structures (minimum 3 required)
+
+- **Evidence:** Entity slugs: adult-reconstruction-anatomy-hub
+- **Reason:** Condition neighborhoods require regional anatomy per condition.anatomy.min_structures.
+- **Impact:** -15
+- **Fix:** Add essential regional anatomy via anatomy builder or shared anatomy reuse.
 
 ### [CRITICAL] Low evidence coverage (0% of proposals cite evidence)
 
@@ -61,23 +68,23 @@ Auditor: KF-018 v1.0.0
 - **Impact:** -15
 - **Fix:** Add injured_in relationship via relationship-builder agent.
 
-### [CRITICAL] Missing decision point pattern: emergency_escalation
+### [CRITICAL] No decision points in neighborhood
 
-- **Evidence:** 0 decision points with pattern emergency_escalation
-- **Reason:** Fracture neighborhoods require branching operative vs nonoperative pathways.
+- **Evidence:** merged draft decisionPointCount = 0
+- **Reason:** Decision points support clinical reasoning and operative safety pathways.
 - **Impact:** -15
-- **Fix:** Add emergency_escalation decision point with attending-gated review.
+- **Fix:** Run decision-point-builder for operative_indication and nonoperative_eligible patterns.
 
-### [CRITICAL] 14 critical/high ontology gaps remain unresolved
+### [CRITICAL] 13 critical/high ontology gaps remain unresolved
 
 - **Evidence:** publication-readiness.json blockers
 - **Reason:** Publication gate identified blocking condition.
 - **Impact:** -15
-- **Fix:** [critical] Periprosthetic Knee Fracture neighborhood has 0/3 anatomy_structure entities.
+- **Fix:** [high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).
 
-### [HIGH] 8 high-priority ontology gaps
+### [HIGH] 7 high-priority ontology gaps
 
-- **Evidence:** Gap kinds: missing_entity, missing_relationship, missing_claim
+- **Evidence:** Gap kinds: missing_relationship, missing_entity, missing_claim
 - **Reason:** High-priority gaps block maturity level advancement.
 - **Impact:** -12
 - **Fix:** Schedule gap-resolution work items from ontology-work-plan.json.
@@ -89,30 +96,23 @@ Auditor: KF-018 v1.0.0
 - **Impact:** -8
 - **Fix:** Run the matching builder agent for missing_relationship.
 
-### [HIGH] 55 orphan entities with no relationships
-
-- **Evidence:** Slugs: acetabulum, calcar, collateral-ligaments, common-peroneal-nerve, cruciate-ligaments, distal-femur, extensor-mechanism, femoral-diaphysis, femoral-head, femoral-neck, femoral-nerve, femur, gluteus-medius, gluteus-minimus, greater-trochanter, hip-capsule, hip-joint, intertrochanteric-region, lesser-trochanter, medial-femoral-circumflex-artery, patella, patellar-tendon, pelvis, popliteal-artery, proximal-femur, proximal-femur-anatomy-hub, quadriceps-tendon, sciatic-nerve, short-external-rotators, tibia, tibial-plateau, bearing-surface-selection, compartment-syndrome, femoral-neck-fracture, femoral-shaft-fracture, hip-prosthetic-joint-infection, intertrochanteric-fracture, knee-osteoarthritis, knee-prosthetic-joint-infection, periprosthetic-joint-infection, subtrochanteric-fracture, cement-mantle, cemented-fixation, press-fit-fixation, acetabular-component, femoral-stem, patellar-component, polyethylene-liner, tibial-insert, adverse-local-tissue-reaction, polyethylene-wear-osteolysis, revision-arthroplasty, total-hip-arthroplasty, total-knee-arthroplasty, unicompartmental-knee-arthroplasty
-- **Reason:** Orphan entities cannot be traversed by products and indicate incomplete graph wiring.
-- **Impact:** -8
-- **Fix:** Add inbound or outbound clinical/anatomy edges, or merge duplicates.
-
 ## Prioritized Recommendations
 
 1. **[Ontology Completeness]** Resolve critical gaps via assigned factory agents before publication review. — _6 critical ontology gaps remain_
-2. **[Evidence Quality]** Ensure claim/relationship builders attach evidence_refs from the evidence packet. — _Low evidence coverage (0% of proposals cite evidence)_
-3. **[Relationship Quality]** Add injured_in relationship via relationship-builder agent. — _Missing clinical edge: injured_in_
-4. **[Decision Points]** Add emergency_escalation decision point with attending-gated review. — _Missing decision point pattern: emergency_escalation_
-5. **[Publication Readiness]** [critical] Periprosthetic Knee Fracture neighborhood has 0/3 anatomy_structure entities. — _14 critical/high ontology gaps remain unresolved_
-6. **[Ontology Completeness]** Schedule gap-resolution work items from ontology-work-plan.json. — _8 high-priority ontology gaps_
-7. **[Ontology Completeness]** Run the matching builder agent for missing_relationship. — _Missing relationship requirements (8)_
-8. **[Graph Integrity]** Add inbound or outbound clinical/anatomy edges, or merge duplicates. — _55 orphan entities with no relationships_
-9. **[Graph Integrity]** Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors. — _31 disconnected anatomy structures_
+2. **[Ontology Completeness]** Add essential regional anatomy via anatomy builder or shared anatomy reuse. — _Only 1 anatomy structures (minimum 3 required)_
+3. **[Evidence Quality]** Ensure claim/relationship builders attach evidence_refs from the evidence packet. — _Low evidence coverage (0% of proposals cite evidence)_
+4. **[Relationship Quality]** Add injured_in relationship via relationship-builder agent. — _Missing clinical edge: injured_in_
+5. **[Decision Points]** Run decision-point-builder for operative_indication and nonoperative_eligible patterns. — _No decision points in neighborhood_
+6. **[Publication Readiness]** [high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1). — _13 critical/high ontology gaps remain unresolved_
+7. **[Ontology Completeness]** Schedule gap-resolution work items from ontology-work-plan.json. — _7 high-priority ontology gaps_
+8. **[Ontology Completeness]** Run the matching builder agent for missing_relationship. — _Missing relationship requirements (8)_
+9. **[Ontology Completeness]** Run the matching builder agent for missing_claim. — _Missing claim requirements (9)_
 10. **[Relationship Quality]** Add has_imaging_finding relationship via relationship-builder agent. — _Missing clinical edge: has_imaging_finding_
 
 ## Data Source
 
-- Neighborhood: merged_draft
-- Reports loaded: 13
+- Neighborhood: database
+- Reports loaded: 14
 - Reports missing: none
 
 ## Constraints

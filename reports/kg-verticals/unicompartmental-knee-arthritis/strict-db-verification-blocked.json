@@ -1,0 +1,50 @@
+{
+  "ok": false,
+  "runDate": "2026-07-16",
+  "topicKey": "unicompartmental-knee-arthritis",
+  "displayName": "Unicompartmental Knee Arthritis",
+  "pilotKey": "unicompartmental-knee-arthritis-neighborhood",
+  "priorState": "staging_applied",
+  "resultingState": "database_verification_blocked",
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "blockerClass": "human_review_required",
+  "automaticRepairAttempted": false,
+  "quarantinedPartialMemberships": 0,
+  "batchKey": "legacy-unicompartmental-knee-arthritis-6c93788f4a5dba28",
+  "packetHash": "6c93788f4a5dba2885521d4f62271ef9e29ee0e18799c635f4c6706fe1875559",
+  "expected": {
+    "approvedLoaded": 72,
+    "structuralProposals": 71,
+    "entities": 64,
+    "relationships": 6,
+    "curriculumBridges": 1,
+    "draftClaims": 1,
+    "draftDecisionPoints": 0
+  },
+  "resolved": {
+    "entities": 63,
+    "relationships": 6,
+    "curriculumBridges": 0
+  },
+  "discrepancyCount": 2,
+  "discrepancies": [
+    {
+      "fingerprint": "create|anatomy_structure|labrum",
+      "kind": "canonical_identity_mismatch",
+      "expected": "anatomy_structure/Acetabular Labrum",
+      "observed": "anatomy_structure/Glenoid Labrum"
+    },
+    {
+      "fingerprint": "bridge|adult-recon-unicompartmental-knee|unicompartmental-knee-arthritis",
+      "kind": "bridge_endpoint_cardinality",
+      "expected": "one curriculum node adult-recon-unicompartmental-knee and one entity unicompartmental-knee-arthritis",
+      "observed": "0 node(s), 1 entity row(s)"
+    }
+  ],
+  "exactNextAction": "resolve_canonical_identity",
+  "evidence": {
+    "applyPath": "reports/kg-pilots/unicompartmental-knee-arthritis-staging-apply-result.json",
+    "curatedPath": "reports/kg-pilots/unicompartmental-knee-arthritis-curated-proposals.json"
+  }
+}

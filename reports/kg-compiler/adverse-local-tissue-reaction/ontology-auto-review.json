@@ -1,15 +1,15 @@
 {
   "topicKey": "adverse-local-tissue-reaction",
   "pilotKey": "adverse-local-tissue-reaction-neighborhood",
-  "generatedAt": "2026-07-05T23:00:26.086Z",
+  "generatedAt": "2026-07-16T02:31:42.963Z",
   "summary": {
-    "AUTO_APPROVE": 79,
+    "AUTO_APPROVE": 80,
     "SAFE_REVIEW": 3,
-    "EXPERT_REVIEW": 6,
+    "EXPERT_REVIEW": 7,
     "REJECT": 0
   },
-  "humanReviewPercent": 10.2,
-  "autoApprovedPercent": 89.8,
+  "humanReviewPercent": 11.1,
+  "autoApprovedPercent": 88.9,
   "decisions": [
     {
       "proposal_fingerprint": "bridge|adult-recon-altr|adverse-local-tissue-reaction",
@@ -117,7 +117,7 @@
       ]
     },
     {
-      "proposal_fingerprint": "claim|claim-metal-ion-elevation-anatomy_pearl-connect-adverse-local-ti",
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-connect-adverse-local-ti",
       "proposal_type": "propose_educational_claim",
       "category": "AUTO_APPROVE",
       "curationRoute": "AUTO_APPROVED_LOW_RISK",
@@ -138,7 +138,7 @@
       ]
     },
     {
-      "proposal_fingerprint": "claim|claim-metal-ion-elevation-anatomy_pearl-implant-concepts-hub",
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-hip-and-knee-joint-surfa",
       "proposal_type": "propose_educational_claim",
       "category": "AUTO_APPROVE",
       "curationRoute": "AUTO_APPROVED_LOW_RISK",
@@ -159,7 +159,7 @@
       ]
     },
     {
-      "proposal_fingerprint": "claim|claim-metal-ion-elevation-anatomy_pearl-shared-adult-reconstruct",
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-implant-concepts-hub",
       "proposal_type": "propose_educational_claim",
       "category": "AUTO_APPROVE",
       "curationRoute": "AUTO_APPROVED_LOW_RISK",
@@ -180,7 +180,7 @@
       ]
     },
     {
-      "proposal_fingerprint": "claim|claim-metal-ion-elevation-anatomy_pearl-trauma-neighborhood-brid",
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-shared-adult-reconstruct",
       "proposal_type": "propose_educational_claim",
       "category": "AUTO_APPROVE",
       "curationRoute": "AUTO_APPROVED_LOW_RISK",
@@ -201,7 +201,28 @@
       ]
     },
     {
-      "proposal_fingerprint": "claim|claim-metal-ion-elevation-fact-adverse-local-tissue-rea",
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-anatomy_pearl-trauma-neighborhood-brid",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-adverse-local-tissue-rea",
       "proposal_type": "propose_educational_claim",
       "category": "EXPERT_REVIEW",
       "curationRoute": "HUMAN_REVIEW",
@@ -222,7 +243,7 @@
       ]
     },
     {
-      "proposal_fingerprint": "claim|claim-metal-ion-elevation-fact-cross-neighborhood-traum",
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-altr-from-metal-on-metal",
       "proposal_type": "propose_educational_claim",
       "category": "EXPERT_REVIEW",
       "curationRoute": "HUMAN_REVIEW",
@@ -243,7 +264,7 @@
       ]
     },
     {
-      "proposal_fingerprint": "claim|claim-metal-ion-elevation-fact-implant-and-fixation-voc",
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-cross-neighborhood-traum",
       "proposal_type": "propose_educational_claim",
       "category": "EXPERT_REVIEW",
       "curationRoute": "HUMAN_REVIEW",
@@ -264,7 +285,28 @@
       ]
     },
     {
-      "proposal_fingerprint": "claim|claim-metal-ion-elevation-fact-recognize-core-concepts-",
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-implant-and-fixation-voc",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.41825,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: l1_management_fact",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l1_management_fact"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-bearing-surface-selection-fact-recognize-core-concepts-",
       "proposal_type": "propose_educational_claim",
       "category": "SAFE_REVIEW",
       "curationRoute": "HUMAN_REVIEW",

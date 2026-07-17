@@ -1,0 +1,694 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Prepare Study Guide Verification</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: #f8fafc;
+        color: #0f172a;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      .page {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 300px;
+        gap: 24px;
+        padding: 34px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .main { max-width: 920px; }
+      .eyebrow {
+        margin: 0;
+        color: #64748b;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+      h1 {
+        margin: 8px 0 6px;
+        font-size: 34px;
+        line-height: 1.05;
+        letter-spacing: 0;
+      }
+      .subtitle {
+        margin: 0 0 18px;
+        color: #475569;
+        font-size: 14px;
+        line-height: 1.55;
+        max-width: 760px;
+      }
+      .cards { display: grid; gap: 14px; }
+      .card {
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        background: #fff;
+        box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
+        padding: 18px;
+      }
+      .card-top {
+        display: grid;
+        grid-template-columns: 26px 1fr;
+        gap: 12px;
+      }
+      .check {
+        width: 24px;
+        height: 24px;
+        border: 2px solid #0284c7;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        color: #0284c7;
+        font-size: 14px;
+        font-weight: 900;
+      }
+      h3 { margin: 0; font-size: 17px; letter-spacing: 0; }
+      .card p { margin: 6px 0 0; color: #475569; font-size: 13px; line-height: 1.55; }
+      .meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+      .meta span {
+        border-radius: 999px;
+        background: #f1f5f9;
+        padding: 5px 9px;
+        color: #475569;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .objective {
+        margin-top: 14px;
+        border: 1px solid #bae6fd;
+        background: #f0f9ff;
+        border-radius: 14px;
+        padding: 12px;
+        color: #082f49;
+        font-size: 13px;
+        line-height: 1.55;
+      }
+      .objective span {
+        display: block;
+        margin-bottom: 4px;
+        color: #075985;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+      .blocks { display: grid; gap: 10px; margin-top: 12px; }
+      .block {
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 11px 12px;
+        background: #fff;
+      }
+      .block-recognize { background: #f0f9ff; border-color: #bae6fd; }
+      .block-application { background: #ecfdf5; border-color: #a7f3d0; }
+      .block-common-confusion { background: #fffbeb; border-color: #fde68a; }
+      .block-self-check { background: #fff1f2; border-color: #fecdd3; }
+      .block-title {
+        margin: 0 0 6px !important;
+        color: #334155 !important;
+        font-size: 10px !important;
+        font-weight: 900;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+      ul { margin: 0; padding-left: 18px; color: #334155; font-size: 13px; line-height: 1.55; }
+      aside {
+        align-self: start;
+        position: sticky;
+        top: 24px;
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        background: #fff;
+        padding: 18px;
+      }
+      .progress {
+        height: 10px;
+        margin: 14px 0 10px;
+        border-radius: 999px;
+        background: #e2e8f0;
+        overflow: hidden;
+      }
+      .progress span {
+        display: block;
+        width: 25%;
+        height: 100%;
+        background: #0284c7;
+      }
+      aside strong { display: block; font-size: 20px; }
+      aside p:not(.eyebrow) { color: #64748b; font-size: 13px; }
+      @media (max-width: 800px) {
+        .page { grid-template-columns: 1fr; padding: 18px; }
+        aside { position: static; }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="page" id="fracture-healing">
+      <div class="main">
+        <p class="eyebrow">Case Readiness</p>
+        <h1>Fracture Healing</h1>
+        <p class="subtitle">Fast study guide for a 15-minute pass. Focus on recognition, explanation, and the next useful action for this basic-science topic.</p>
+        <div class="cards">
+        <article class="card expanded">
+          <div class="card-top">
+            <div class="check">✓</div>
+            <div>
+              <h3>Distinguish primary from secondary bone healing</h3>
+              <p>This is the language that connects fixation stability to what kind of healing you expect to see.</p>
+              <div class="meta">
+                <span>4 min</span>
+                <span>must know</span>
+                <span>I can compare primary and secondary healing</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Explain when fracture healing occurs with direct remodeling versus callus formation.
+          </div>
+          <div class="blocks">
+            <div class="block block-key-concepts">
+              <p class="block-title">Key concepts</p>
+              <ul>
+                <li>Primary healing occurs with very low strain and stable compression; there is little visible callus.</li><li>Secondary healing occurs with relative stability; callus bridges the fracture through staged repair.</li><li>The fixation construct changes the biology you expect to see on follow-up films.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-say-out-loud">
+              <p class="block-title">What to say out loud</p>
+              <ul>
+                <li>Primary healing is direct bone remodeling across a stable fracture gap.</li><li>Secondary healing uses callus because controlled motion stimulates endochondral repair.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-common-confusion">
+              <p class="block-title">Common confusion</p>
+              <ul>
+                <li>No callus after rigid compression is not automatically failure; it may reflect primary healing.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      
+        <article class="card ">
+          <div class="card-top">
+            <div class="check"></div>
+            <div>
+              <h3>Sequence the stages of secondary healing</h3>
+              <p>The stages explain why fracture appearance and mechanical strength change over time.</p>
+              <div class="meta">
+                <span>4 min</span>
+                <span>must know</span>
+                <span>I can sequence secondary healing</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Describe inflammation, soft callus, hard callus, and remodeling in order.
+          </div>
+          <div class="blocks">
+            <div class="block block-key-concepts">
+              <p class="block-title">Key concepts</p>
+              <ul>
+                <li>Inflammation recruits cells and creates the early repair environment.</li><li>Soft callus provides early bridging but is not mechanically mature.</li><li>Hard callus mineralizes and increases stability.</li><li>Remodeling reshapes bone along stress over months to years.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-recognize">
+              <p class="block-title">What to recognize</p>
+              <ul>
+                <li>Early x-rays may lag behind symptoms and biology.</li><li>Bridging callus across cortices is more reassuring than callus in only one view.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-self-check">
+              <p class="block-title">Self-check question</p>
+              <ul>
+                <li>Why might a fracture feel better before the x-ray looks fully healed?</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      
+        <article class="card ">
+          <div class="card-top">
+            <div class="check"></div>
+            <div>
+              <h3>Explain why excessive strain prevents bone formation</h3>
+              <p>Mechanical environment is the bridge between fracture biology and fixation decisions.</p>
+              <div class="meta">
+                <span>4 min</span>
+                <span>must know</span>
+                <span>I can connect strain to union</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Connect stability, gap size, and interfragmentary strain to union or nonunion.
+          </div>
+          <div class="blocks">
+            <div class="block block-key-concepts">
+              <p class="block-title">Key concepts</p>
+              <ul>
+                <li>Bone formation tolerates less strain than fibrous tissue.</li><li>Large gaps and unstable constructs can keep strain too high for mineralized callus.</li><li>Relative stability is useful when motion is controlled, not uncontrolled.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-application">
+              <p class="block-title">Clinical application</p>
+              <ul>
+                <li>Hypertrophic nonunion suggests biology is present but stability is inadequate.</li><li>Atrophic nonunion suggests biology, blood supply, or infection must be addressed.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      
+        <article class="card ">
+          <div class="card-top">
+            <div class="check"></div>
+            <div>
+              <h3>Recognize delayed union, nonunion, and malunion</h3>
+              <p>These failure states are the clinical reason fracture-healing biology matters.</p>
+              <div class="meta">
+                <span>3 min</span>
+                <span>core</span>
+                <span>I can recognize healing failure states</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Define the major healing failure states and the first question each should trigger.
+          </div>
+          <div class="blocks">
+            <div class="block block-recognize">
+              <p class="block-title">What to recognize</p>
+              <ul>
+                <li>Delayed union means healing is slower than expected but still progressing.</li><li>Nonunion means progression has stalled and needs a mechanical or biologic explanation.</li><li>Malunion means the fracture healed in an unacceptable position.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-say-out-loud">
+              <p class="block-title">What to say out loud</p>
+              <ul>
+                <li>For nonunion, ask whether the problem is stability, biology, infection, or host factors.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-self-check">
+              <p class="block-title">Self-check question</p>
+              <ul>
+                <li>Which is more likely to need improved stability: hypertrophic or atrophic nonunion?</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+      </div>
+      <aside>
+        <p class="eyebrow">Progress</p>
+        <div class="progress"><span></span></div>
+        <strong>1 / 4 reviewed</strong>
+        <p>basic-science guide · 15 min</p>
+      </aside>
+    </section>
+  
+    <section class="page" id="carpal-tunnel-syndrome">
+      <div class="main">
+        <p class="eyebrow">Case Readiness</p>
+        <h1>Carpal Tunnel Syndrome</h1>
+        <p class="subtitle">Fast study guide for a 15-minute pass. Focus on recognition, explanation, and the next useful action for this clinic topic.</p>
+        <div class="cards">
+        <article class="card expanded">
+          <div class="card-top">
+            <div class="check">✓</div>
+            <div>
+              <h3>Recognize the median-nerve symptom pattern</h3>
+              <p>CTS is usually a clinical diagnosis, so the history has to come first.</p>
+              <div class="meta">
+                <span>4 min</span>
+                <span>must know</span>
+                <span>I can recognize CTS symptoms</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Identify classic carpal tunnel symptoms and severity clues.
+          </div>
+          <div class="blocks">
+            <div class="block block-recognize">
+              <p class="block-title">What to recognize</p>
+              <ul>
+                <li>Numbness and paresthesias in the thumb, index, middle, and radial ring finger.</li><li>Night symptoms or shaking the hand out are classic.</li><li>Thenar weakness or atrophy suggests more advanced compression.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-common-confusion">
+              <p class="block-title">Common confusion</p>
+              <ul>
+                <li>Whole-hand numbness, neck pain, or ulnar-sided symptoms should make you consider mimics.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      
+        <article class="card ">
+          <div class="card-top">
+            <div class="check"></div>
+            <div>
+              <h3>Perform a focused CTS exam</h3>
+              <p>The exam should confirm distribution, severity, and alternate diagnoses.</p>
+              <div class="meta">
+                <span>4 min</span>
+                <span>must know</span>
+                <span>I can examine CTS</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Describe the exam maneuvers and motor findings that matter for CTS.
+          </div>
+          <div class="blocks">
+            <div class="block block-key-concepts">
+              <p class="block-title">Key concepts</p>
+              <ul>
+                <li>Check median sensory distribution and compare sides.</li><li>Assess thenar bulk and thumb abduction strength.</li><li>Use provocative maneuvers as supporting data, not the whole diagnosis.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-say-out-loud">
+              <p class="block-title">What to say out loud</p>
+              <ul>
+                <li>I would document sensation, thenar strength/atrophy, and provocative testing, then screen for cervical or ulnar mimics.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      
+        <article class="card ">
+          <div class="card-top">
+            <div class="check"></div>
+            <div>
+              <h3>Know when electrodiagnostics help</h3>
+              <p>Testing is most useful when the diagnosis is unclear, severity matters, or surgery is being considered.</p>
+              <div class="meta">
+                <span>2 min</span>
+                <span>core</span>
+                <span>I can use electrodiagnostics appropriately</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Explain when EMG/NCS is helpful in CTS workup.
+          </div>
+          <div class="blocks">
+            <div class="block block-key-concepts">
+              <p class="block-title">Key concepts</p>
+              <ul>
+                <li>Many classic cases are diagnosed clinically.</li><li>Electrodiagnostics can confirm diagnosis, grade severity, and evaluate mimics.</li><li>Severe findings or denervation support urgency of decompression.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-self-check">
+              <p class="block-title">Self-check question</p>
+              <ul>
+                <li>When would you order EMG before treating CTS?</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      
+        <article class="card ">
+          <div class="card-top">
+            <div class="check"></div>
+            <div>
+              <h3>Explain indications for carpal tunnel release</h3>
+              <p>Treatment should follow severity, chronicity, and failure of nonoperative care.</p>
+              <div class="meta">
+                <span>4 min</span>
+                <span>must know</span>
+                <span>I can explain release indications</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Distinguish splinting/injection candidates from patients who need release.
+          </div>
+          <div class="blocks">
+            <div class="block block-key-concepts">
+              <p class="block-title">Key concepts</p>
+              <ul>
+                <li>Night splinting is common first-line treatment for mild symptoms.</li><li>Injection can be diagnostic and therapeutic in selected patients.</li><li>Thenar weakness, atrophy, severe studies, or persistent symptoms despite nonoperative care support release.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-say-out-loud">
+              <p class="block-title">What to say out loud</p>
+              <ul>
+                <li>Surgery is to decompress the median nerve by releasing the transverse carpal ligament.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      
+        <article class="card ">
+          <div class="card-top">
+            <div class="check"></div>
+            <div>
+              <h3>Identify structures released during carpal tunnel surgery</h3>
+              <p>You do not need every technical detail, but you should know the target and what must be protected.</p>
+              <div class="meta">
+                <span>1 min</span>
+                <span>core</span>
+                <span>I can describe release anatomy</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Describe the goal of carpal tunnel release and the key structure at risk.
+          </div>
+          <div class="blocks">
+            <div class="block block-application">
+              <p class="block-title">Clinical or operative application</p>
+              <ul>
+                <li>The transverse carpal ligament is released to decompress the median nerve.</li><li>The recurrent motor branch is a key danger structure.</li><li>Persistent symptoms, pillar pain, and nerve injury are complications to remember.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-common-confusion">
+              <p class="block-title">Common confusion</p>
+              <ul>
+                <li>The operation is not a tendon release; the goal is median nerve decompression.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+      </div>
+      <aside>
+        <p class="eyebrow">Progress</p>
+        <div class="progress"><span></span></div>
+        <strong>1 / 5 reviewed</strong>
+        <p>clinic guide · 15 min</p>
+      </aside>
+    </section>
+  
+    <section class="page" id="posterior-hip-approach">
+      <div class="main">
+        <p class="eyebrow">Case Readiness</p>
+        <h1>Posterior Hip Approach</h1>
+        <p class="subtitle">Fast study guide for a 15-minute pass. Focus on recognition, explanation, and the next useful action for this approach topic.</p>
+        <div class="cards">
+        <article class="card expanded">
+          <div class="card-top">
+            <div class="check">✓</div>
+            <div>
+              <h3>Set up lateral positioning and posterior landmarks</h3>
+              <p>Positioning and landmarks determine whether the rest of the exposure makes sense.</p>
+              <div class="meta">
+                <span>3 min</span>
+                <span>must know</span>
+                <span>I can orient the approach</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Describe lateral positioning and the surface landmarks for the posterior hip approach.
+          </div>
+          <div class="blocks">
+            <div class="block block-key-concepts">
+              <p class="block-title">Key concepts</p>
+              <ul>
+                <li>Patient is commonly positioned lateral decubitus.</li><li>Greater trochanter is the key bony landmark.</li><li>Incision and deep work orient around the posterior aspect of the greater trochanter.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-application">
+              <p class="block-title">Clinical or operative application</p>
+              <ul>
+                <li>Watch how the pelvis is stabilized before prepping and draping.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      
+        <article class="card ">
+          <div class="card-top">
+            <div class="check"></div>
+            <div>
+              <h3>Follow superficial and deep exposure</h3>
+              <p>The approach becomes less mysterious when each layer is tied to its purpose.</p>
+              <div class="meta">
+                <span>3 min</span>
+                <span>must know</span>
+                <span>I can follow the exposure</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Walk through gluteus maximus split, short external rotator release, and capsulotomy.
+          </div>
+          <div class="blocks">
+            <div class="block block-application">
+              <p class="block-title">Clinical or operative application</p>
+              <ul>
+                <li>Split gluteus maximus in line with fibers.</li><li>Identify, release, and tag short external rotators.</li><li>Open the posterior capsule to access the hip joint.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-say-out-loud">
+              <p class="block-title">What to say out loud</p>
+              <ul>
+                <li>The tagged rotators and capsule are important because they are repaired later for stability.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      
+        <article class="card ">
+          <div class="card-top">
+            <div class="check"></div>
+            <div>
+              <h3>Identify short external rotators and capsule</h3>
+              <p>These structures are not trivia; they are the soft-tissue repair that helps posterior stability.</p>
+              <div class="meta">
+                <span>3 min</span>
+                <span>must know</span>
+                <span>I can name the released structures</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Name the posterior soft tissues released and repaired during the approach.
+          </div>
+          <div class="blocks">
+            <div class="block block-key-concepts">
+              <p class="block-title">Key concepts</p>
+              <ul>
+                <li>Piriformis and the short external rotators are posterior landmarks.</li><li>The posterior capsule is opened for access and commonly repaired.</li><li>Tagging sutures help find and repair these structures at closure.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-common-confusion">
+              <p class="block-title">Common confusion</p>
+              <ul>
+                <li>The posterior approach does not mean cutting the abductors as the main exposure.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      
+        <article class="card ">
+          <div class="card-top">
+            <div class="check"></div>
+            <div>
+              <h3>Protect the sciatic nerve danger zone</h3>
+              <p>The sciatic nerve is the must-not-miss danger structure for a posterior hip approach.</p>
+              <div class="meta">
+                <span>3 min</span>
+                <span>must know</span>
+                <span>I can identify the danger zone</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Explain where the sciatic nerve is at risk and how the team avoids injuring it.
+          </div>
+          <div class="blocks">
+            <div class="block block-recognize">
+              <p class="block-title">What to recognize</p>
+              <ul>
+                <li>The sciatic nerve lies posterior and medial relative to the short external rotator region.</li><li>Blind medial dissection and aggressive retraction increase risk.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-say-out-loud">
+              <p class="block-title">What to say out loud</p>
+              <ul>
+                <li>I am watching the relationship between the short external rotators and sciatic nerve before deep medial work.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      
+        <article class="card ">
+          <div class="card-top">
+            <div class="check"></div>
+            <div>
+              <h3>Connect closure to posterior stability</h3>
+              <p>Closure is part of the operation's stability strategy, not just the end of the case.</p>
+              <div class="meta">
+                <span>3 min</span>
+                <span>core</span>
+                <span>I can explain posterior repair</span>
+              </div>
+            </div>
+          </div>
+          <div class="objective">
+            <span>Learning objective</span>
+            Explain why posterior capsule and rotator repair matter after posterior approach THA.
+          </div>
+          <div class="blocks">
+            <div class="block block-application">
+              <p class="block-title">Clinical or operative application</p>
+              <ul>
+                <li>Posterior capsule and short external rotators are repaired when possible.</li><li>Soft-tissue tension, component position, and precautions all affect stability.</li><li>Posterior dislocation risk is the complication to connect back to closure.</li>
+              </ul>
+            </div>
+          
+            <div class="block block-self-check">
+              <p class="block-title">Self-check question</p>
+              <ul>
+                <li>Why does posterior repair matter after the implants are already in?</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+      </div>
+      <aside>
+        <p class="eyebrow">Progress</p>
+        <div class="progress"><span></span></div>
+        <strong>1 / 5 reviewed</strong>
+        <p>approach guide · 15 min</p>
+      </aside>
+    </section>
+  </body>
+</html>

@@ -1,6 +1,6 @@
 # Claim Builder Summary
 
-Generated: 2026-07-05T23:29:15.204Z
+Generated: 2026-07-16T02:41:49.402Z
 Agent: claim-builder v2.0.0
 Evidence packet: `ev-packet-352f0710`
 
@@ -8,24 +8,22 @@ Evidence packet: `ev-packet-352f0710`
 
 | Metric | Value |
 |--------|------:|
-| Gaps scheduled | 10 |
-| Gaps addressed | 2 |
-| Claims generated | 10 |
+| Gaps scheduled | 6 |
+| Gaps addressed | 4 |
+| Claims generated | 8 |
 | Claims rejected | 6 |
 | Redirected to DP Builder | 4 |
 
 ## Generated claims
 
-- **fact** (L1) → claim-implant-fixation-principles-fact-implant-fixation-princip [HUMAN_REVIEW] evidence: ev-static-prepare-27fcdc74
-- **fact** (L1) → claim-implant-fixation-principles-fact-implant-and-fixation-voc [HUMAN_REVIEW] evidence: ev-static-prepare-27fcdc74
-- **fact** (L1) → claim-implant-fixation-principles-fact-cross-neighborhood-traum [HUMAN_REVIEW] evidence: ev-static-prepare-27fcdc74
-- **anatomy_pearl** (L1) → claim-implant-fixation-principles-anatomy_pearl-shared-adult-reconstruct [HUMAN_REVIEW] evidence: ev-static-prepare-27fcdc74
-- **anatomy_pearl** (L1) → claim-implant-fixation-principles-anatomy_pearl-implant-concepts-hub [HUMAN_REVIEW] evidence: ev-static-prepare-27fcdc74
-- **anatomy_pearl** (L1) → claim-implant-fixation-principles-anatomy_pearl-trauma-neighborhood-brid [HUMAN_REVIEW] evidence: ev-static-prepare-27fcdc74
-- **fact** (L1) → claim-implant-fixation-principles-fact-implant-fixation-balance [HUMAN_REVIEW] evidence: ev-static-prepare-27fcdc74
-- **anatomy_pearl** (L2) → claim-implant-fixation-principles-anatomy_pearl-hip-and-knee-joint-surfa [HUMAN_REVIEW] evidence: ev-static-prepare-27fdf6e0
-- **anatomy_pearl** (L2) → claim-implant-fixation-principles-anatomy_pearl-extensor-mechanism [HUMAN_REVIEW] evidence: ev-static-prepare-27fdf6e0
-- **anatomy_pearl** (L2) → claim-implant-fixation-principles-anatomy_pearl-implant-bone-interfaces [HUMAN_REVIEW] evidence: ev-static-prepare-27fdf6e0
+- **fact** (L1) → claim-implant-concepts-hub-fact-implant-fixation-princip [HUMAN_REVIEW] evidence: ev-static-prepare-27fcdc74
+- **fact** (L1) → claim-implant-concepts-hub-fact-implant-and-fixation-voc [HUMAN_REVIEW] evidence: ev-static-prepare-27fcdc74
+- **anatomy_pearl** (L1) → claim-implant-concepts-hub-anatomy_pearl-shared-adult-reconstruct [HUMAN_REVIEW] evidence: ev-static-prepare-27fcdc74
+- **fact** (L1) → claim-implant-concepts-hub-fact-cross-neighborhood-traum [HUMAN_REVIEW] evidence: ev-static-prepare-27fcdc74
+- **anatomy_pearl** (L1) → claim-implant-concepts-hub-anatomy_pearl-implant-concepts-hub [HUMAN_REVIEW] evidence: ev-static-prepare-27fcdc74
+- **anatomy_pearl** (L1) → claim-implant-concepts-hub-anatomy_pearl-trauma-neighborhood-brid [HUMAN_REVIEW] evidence: ev-static-prepare-27fcdc74
+- **fact** (L1) → claim-implant-concepts-hub-fact-implant-fixation-balance [HUMAN_REVIEW] evidence: ev-static-prepare-27fcdc74
+- **anatomy_pearl** (L2) → claim-implant-concepts-hub-anatomy_pearl-hip-and-knee-joint-surfa [HUMAN_REVIEW] evidence: ev-static-prepare-27fdf6e0
 
 ## Rejected / redirected
 

@@ -3,8 +3,341 @@
   "pilotKey": "bearing-surface-selection-neighborhood",
   "primaryEntitySlug": "bearing-surface-selection",
   "displayName": "Bearing Surface Selection",
-  "generatedAt": "2026-07-05T23:31:26.990Z",
+  "generatedAt": "2026-07-16T02:33:43.862Z",
   "nodes": [
+    {
+      "slug": "tibial-shaft-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Tibial Shaft Fracture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "compartment-syndrome",
+      "entityType": "condition",
+      "preferredLabel": "Compartment Syndrome",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "femoral-neck-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Femoral Neck Fracture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "calcar",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcar",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "intertrochanteric-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Intertrochanteric Fracture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "intertrochanteric-region",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Intertrochanteric Region",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "lesser-trochanter",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lesser Trochanter",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "subtrochanteric-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Subtrochanteric Fracture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "greater-trochanter",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Greater Trochanter",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tibial-plateau",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Tibial Plateau",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-shaft-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Femoral Shaft Fracture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "distal-femur-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Distal Femur Fracture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "labrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Glenoid Labrum",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "revision-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Revision Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "hip-prosthetic-joint-infection",
+      "entityType": "condition",
+      "preferredLabel": "Hip Prosthetic Joint Infection",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "knee-prosthetic-joint-infection",
+      "entityType": "condition",
+      "preferredLabel": "Knee Prosthetic Joint Infection",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "knee-osteoarthritis",
+      "entityType": "condition",
+      "preferredLabel": "Knee Osteoarthritis",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "bearing-surface-selection",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Bearing Surface Selection",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 7,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "adverse-local-tissue-reaction",
+      "entityType": "procedure",
+      "preferredLabel": "Adverse Local Tissue Reaction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 5,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "unicompartmental-knee-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Unicompartmental Knee Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "polyethylene-wear-osteolysis",
+      "entityType": "procedure",
+      "preferredLabel": "Polyethylene Wear Osteolysis",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 5,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "total-hip-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Total Hip Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "total-knee-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Total Knee Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "patellar-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Patellar Tendon",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "gluteus-minimus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Gluteus Minimus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "polyethylene-liner",
+      "entityType": "implant",
+      "preferredLabel": "Polyethylene Liner",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "femur",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femur",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 6
+    },
+    {
+      "slug": "proximal-femur",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Femur",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "hip-capsule",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hip Capsule",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "adult-reconstruction-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Adult Reconstruction Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 6,
+      "outboundEdgeCount": 6
+    },
+    {
+      "slug": "quadriceps-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Quadriceps Tendon",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "cruciate-ligaments",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Cruciate Ligaments",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "short-external-rotators",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Short External Rotators",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tibia",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Tibia",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "gluteus-medius",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Gluteus Medius",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
     {
       "slug": "cross-linked-polyethylene",
       "entityType": "biomechanics_concept",
@@ -24,23 +357,66 @@
       "outboundEdgeCount": 0
     }
   ],
-  "edgeCount": 0,
-  "claimCount": 0,
+  "edgeCount": 41,
+  "claimCount": 16,
   "decisionPointCount": 0,
   "roles": {
-    "primary_condition": [],
-    "neighboring_anatomy": [],
-    "procedure": [],
+    "primary_condition": [
+      "bearing-surface-selection"
+    ],
+    "neighboring_anatomy": [
+      "calcar",
+      "intertrochanteric-region",
+      "lesser-trochanter",
+      "greater-trochanter",
+      "tibial-plateau",
+      "labrum",
+      "patellar-tendon",
+      "gluteus-minimus",
+      "femoral-nerve",
+      "femur",
+      "proximal-femur",
+      "hip-capsule",
+      "adult-reconstruction-anatomy-hub",
+      "quadriceps-tendon",
+      "cruciate-ligaments",
+      "short-external-rotators",
+      "tibia",
+      "gluteus-medius"
+    ],
+    "procedure": [
+      "revision-arthroplasty",
+      "adverse-local-tissue-reaction",
+      "unicompartmental-knee-arthroplasty",
+      "polyethylene-wear-osteolysis",
+      "total-hip-arthroplasty",
+      "total-knee-arthroplasty"
+    ],
     "classification": [],
     "imaging": [],
     "complication": [],
     "decision_point_anchor": [],
-    "claim_anchor": [],
+    "claim_anchor": [
+      "hip-prosthetic-joint-infection",
+      "knee-prosthetic-joint-infection",
+      "knee-osteoarthritis"
+    ],
     "biomechanics": [
+      "implant-concepts-hub",
       "cross-linked-polyethylene",
       "ceramic-on-ceramic-bearing"
     ],
-    "fixation": [],
-    "supporting": []
+    "fixation": [
+      "polyethylene-liner"
+    ],
+    "supporting": [
+      "tibial-shaft-fracture",
+      "compartment-syndrome",
+      "femoral-neck-fracture",
+      "intertrochanteric-fracture",
+      "subtrochanteric-fracture",
+      "femoral-shaft-fracture",
+      "distal-femur-fracture"
+    ]
   }
 }

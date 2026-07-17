@@ -1,0 +1,28 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 92,
+  "deductions": [
+    {
+      "finding": "1 merge conflicts detected",
+      "evidence": "conflict-report.json: Conflicting DP pattern talus-fracture|operative_indication: dp-talus-avn-surveillance vs dp-talus-urgent-orif",
+      "reason": "Unresolved merge conflicts indicate inconsistent agent outputs.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "suggestedFix": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 27,
+    "relationshipCount": 33,
+    "orphanCount": 0,
+    "danglingEdgeCount": 0,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Run conflict-resolver agent and reconcile metadata/text conflicts."
+  ]
+}

@@ -1,0 +1,3091 @@
+[
+  {
+    "proposal_fingerprint": "rel|deep-vein-thrombosis|commonly_confused_with|pulmonary-embolism",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "deep-vein-thrombosis -[commonly_confused_with]-> pulmonary-embolism",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|deep-vein-thrombosis|commonly_confused_with|pulmonary-embolism",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "deep-vein-thrombosis",
+      "subject_entity_type": "complication",
+      "object_slug": "pulmonary-embolism",
+      "object_entity_type": "complication",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|fracture-malunion|commonly_confused_with|malalignment",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "fracture-malunion -[commonly_confused_with]-> malalignment",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|fracture-malunion|commonly_confused_with|malalignment",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "fracture-malunion",
+      "subject_entity_type": "complication",
+      "object_slug": "malalignment",
+      "object_entity_type": "complication",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|delayed-union|commonly_confused_with|fracture-nonunion",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "delayed-union -[commonly_confused_with]-> fracture-nonunion",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|delayed-union|commonly_confused_with|fracture-nonunion",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "delayed-union",
+      "subject_entity_type": "complication",
+      "object_slug": "fracture-nonunion",
+      "object_entity_type": "complication",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|fracture-nonunion|commonly_confused_with|delayed-union",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "fracture-nonunion -[commonly_confused_with]-> delayed-union",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|fracture-nonunion|commonly_confused_with|delayed-union",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "fracture-nonunion",
+      "subject_entity_type": "complication",
+      "object_slug": "delayed-union",
+      "object_entity_type": "complication",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|graft-failure|commonly_confused_with|graft-retear",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "graft-failure -[commonly_confused_with]-> graft-retear",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|graft-failure|commonly_confused_with|graft-retear",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "graft-failure",
+      "subject_entity_type": "complication",
+      "object_slug": "graft-retear",
+      "object_entity_type": "complication",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|joint-stiffness|commonly_confused_with|arthrofibrosis",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "joint-stiffness -[commonly_confused_with]-> arthrofibrosis",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|joint-stiffness|commonly_confused_with|arthrofibrosis",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "joint-stiffness",
+      "subject_entity_type": "complication",
+      "object_slug": "arthrofibrosis",
+      "object_entity_type": "complication",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|extensor-mechanism-disruption|commonly_confused_with|extensor-mechanism-failure",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "extensor-mechanism-disruption -[commonly_confused_with]-> extensor-mechanism-failure",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|extensor-mechanism-disruption|commonly_confused_with|extensor-mechanism-failure",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "extensor-mechanism-disruption",
+      "subject_entity_type": "complication",
+      "object_slug": "extensor-mechanism-failure",
+      "object_entity_type": "complication",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|implant-loosening|commonly_confused_with|aseptic-loosening",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "implant-loosening -[commonly_confused_with]-> aseptic-loosening",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|implant-loosening|commonly_confused_with|aseptic-loosening",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "implant-loosening",
+      "subject_entity_type": "complication",
+      "object_slug": "aseptic-loosening",
+      "object_entity_type": "complication",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|spine-hardware-failure|commonly_confused_with|hardware-failure",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "spine-hardware-failure -[commonly_confused_with]-> hardware-failure",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|spine-hardware-failure|commonly_confused_with|hardware-failure",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "spine-hardware-failure",
+      "subject_entity_type": "complication",
+      "object_slug": "hardware-failure",
+      "object_entity_type": "complication",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|pseudarthrosis|commonly_confused_with|fracture-nonunion",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "pseudarthrosis -[commonly_confused_with]-> fracture-nonunion",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|pseudarthrosis|commonly_confused_with|fracture-nonunion",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "pseudarthrosis",
+      "subject_entity_type": "complication",
+      "object_slug": "fracture-nonunion",
+      "object_entity_type": "complication",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|periprosthetic-joint-infection|treated_by|irrigation-and-debridement",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "periprosthetic-joint-infection -[treated_by]-> irrigation-and-debridement",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|periprosthetic-joint-infection|treated_by|irrigation-and-debridement",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "periprosthetic-joint-infection",
+      "subject_entity_type": "condition",
+      "object_slug": "irrigation-and-debridement",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "management_importance": "critical",
+        "management_changing": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|periprosthetic-joint-infection|treated_by|two-stage-revision-arthroplasty",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "periprosthetic-joint-infection -[treated_by]-> two-stage-revision-arthroplasty",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|periprosthetic-joint-infection|treated_by|two-stage-revision-arthroplasty",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "periprosthetic-joint-infection",
+      "subject_entity_type": "condition",
+      "object_slug": "two-stage-revision-arthroplasty",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "management_importance": "critical",
+        "management_changing": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|acute-compartment-syndrome|treated_by|emergent-fasciotomy",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "acute-compartment-syndrome -[treated_by]-> emergent-fasciotomy",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|acute-compartment-syndrome|treated_by|emergent-fasciotomy",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "acute-compartment-syndrome",
+      "subject_entity_type": "condition",
+      "object_slug": "emergent-fasciotomy",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "management_importance": "critical",
+        "time_sensitive": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|aseptic-loosening-tha|treated_by|revision-total-hip-arthroplasty",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "aseptic-loosening-tha -[treated_by]-> revision-total-hip-arthroplasty",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|aseptic-loosening-tha|treated_by|revision-total-hip-arthroplasty",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "aseptic-loosening-tha",
+      "subject_entity_type": "condition",
+      "object_slug": "revision-total-hip-arthroplasty",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "management_changing": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|aseptic-loosening-tka|treated_by|revision-total-knee-arthroplasty",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "aseptic-loosening-tka -[treated_by]-> revision-total-knee-arthroplasty",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|aseptic-loosening-tka|treated_by|revision-total-knee-arthroplasty",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "aseptic-loosening-tka",
+      "subject_entity_type": "condition",
+      "object_slug": "revision-total-knee-arthroplasty",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "management_changing": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|periprosthetic-joint-infection|tested_by|infection-workup",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "periprosthetic-joint-infection -[tested_by]-> infection-workup",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|periprosthetic-joint-infection|tested_by|infection-workup",
+    "alternatives": [],
+    "evidence_summary": "Relationship tested_by",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "periprosthetic-joint-infection",
+      "subject_entity_type": "condition",
+      "object_slug": "infection-workup",
+      "object_entity_type": "diagnostic_test",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "clinical_importance": "critical",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|acute-compartment-syndrome|tested_by|compartment-pressure-measurement",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "acute-compartment-syndrome -[tested_by]-> compartment-pressure-measurement",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|acute-compartment-syndrome|tested_by|compartment-pressure-measurement",
+    "alternatives": [],
+    "evidence_summary": "Relationship tested_by",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "acute-compartment-syndrome",
+      "subject_entity_type": "condition",
+      "object_slug": "compartment-pressure-measurement",
+      "object_entity_type": "diagnostic_test",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|serial-neurovascular-examinations|examines|acute-compartment-syndrome",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "serial-neurovascular-examinations -[examines]-> acute-compartment-syndrome",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|serial-neurovascular-examinations|examines|acute-compartment-syndrome",
+    "alternatives": [],
+    "evidence_summary": "Relationship examines",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "serial-neurovascular-examinations",
+      "subject_entity_type": "exam_maneuver",
+      "object_slug": "acute-compartment-syndrome",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|reoperation|commonly_confused_with|revision-surgery",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "reoperation -[commonly_confused_with]-> revision-surgery",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|reoperation|commonly_confused_with|revision-surgery",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "reoperation",
+      "subject_entity_type": "complication",
+      "object_slug": "revision-surgery",
+      "object_entity_type": "complication",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|total-hip-arthroplasty|at_risk_structure|sciatic-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "total-hip-arthroplasty -[at_risk_structure]-> sciatic-nerve",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|total-hip-arthroplasty|at_risk_structure|sciatic-nerve",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "total-hip-arthroplasty",
+      "subject_entity_type": "procedure",
+      "object_slug": "sciatic-nerve",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "clinical_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|total-knee-arthroplasty|at_risk_structure|common-peroneal-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "total-knee-arthroplasty -[at_risk_structure]-> common-peroneal-nerve",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|total-knee-arthroplasty|at_risk_structure|common-peroneal-nerve",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "total-knee-arthroplasty",
+      "subject_entity_type": "procedure",
+      "object_slug": "common-peroneal-nerve",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "clinical_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|emergent-fasciotomy|at_risk_structure|common-peroneal-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "emergent-fasciotomy -[at_risk_structure]-> common-peroneal-nerve",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|emergent-fasciotomy|at_risk_structure|common-peroneal-nerve",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "emergent-fasciotomy",
+      "subject_entity_type": "procedure",
+      "object_slug": "common-peroneal-nerve",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|irrigation-and-debridement-open-fracture|at_risk_structure|radial-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "irrigation-and-debridement-open-fracture -[at_risk_structure]-> radial-nerve",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|irrigation-and-debridement-open-fracture|at_risk_structure|radial-nerve",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "irrigation-and-debridement-open-fracture",
+      "subject_entity_type": "procedure",
+      "object_slug": "radial-nerve",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|revision-total-hip-arthroplasty|at_risk_structure|sciatic-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "revision-total-hip-arthroplasty -[at_risk_structure]-> sciatic-nerve",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|revision-total-hip-arthroplasty|at_risk_structure|sciatic-nerve",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "revision-total-hip-arthroplasty",
+      "subject_entity_type": "procedure",
+      "object_slug": "sciatic-nerve",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|revision-total-knee-arthroplasty|at_risk_structure|common-peroneal-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "revision-total-knee-arthroplasty -[at_risk_structure]-> common-peroneal-nerve",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|revision-total-knee-arthroplasty|at_risk_structure|common-peroneal-nerve",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "revision-total-knee-arthroplasty",
+      "subject_entity_type": "procedure",
+      "object_slug": "common-peroneal-nerve",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|implant-removal|at_risk_structure|radial-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "implant-removal -[at_risk_structure]-> radial-nerve",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|implant-removal|at_risk_structure|radial-nerve",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "implant-removal",
+      "subject_entity_type": "procedure",
+      "object_slug": "radial-nerve",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|revision-internal-fixation|at_risk_structure|radial-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "revision-internal-fixation -[at_risk_structure]-> radial-nerve",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|revision-internal-fixation|at_risk_structure|radial-nerve",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "revision-internal-fixation",
+      "subject_entity_type": "procedure",
+      "object_slug": "radial-nerve",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|irrigation-and-debridement|at_risk_structure|sciatic-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "irrigation-and-debridement -[at_risk_structure]-> sciatic-nerve",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|irrigation-and-debridement|at_risk_structure|sciatic-nerve",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "irrigation-and-debridement",
+      "subject_entity_type": "procedure",
+      "object_slug": "sciatic-nerve",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|two-stage-revision-arthroplasty|at_risk_structure|sciatic-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "two-stage-revision-arthroplasty -[at_risk_structure]-> sciatic-nerve",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|two-stage-revision-arthroplasty|at_risk_structure|sciatic-nerve",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "two-stage-revision-arthroplasty",
+      "subject_entity_type": "procedure",
+      "object_slug": "sciatic-nerve",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "relevance_reason": "complications_backbone",
+        "context_relevance": [
+          "call",
+          "or",
+          "clinic",
+          "oite"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-backbone",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-backbone",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-backbone",
+      "claim_type": "fact",
+      "claim_text": "Orthopaedic complications form a reusable failure-mode backbone that links prevention, early recognition, workup, management, and salvage across specialties.",
+      "primary_entity_slug": "orthopaedic-complications",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite",
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-prevention-chain",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-prevention-chain",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-prevention-chain",
+      "claim_type": "fact",
+      "claim_text": "Effective complication care starts with risk-factor recognition and prevention rather than reactive management alone.",
+      "primary_entity_slug": "complication-prevention",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or",
+        "clinic",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-infection-prevention",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-infection-prevention",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-infection-prevention",
+      "claim_type": "fact",
+      "claim_text": "Infection prevention combines host optimization, soft-tissue protection, timely antibiotics when indicated, and sterile technique.",
+      "primary_entity_slug": "infection-prevention",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-ssi-workup",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-ssi-workup",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-ssi-workup",
+      "claim_type": "clinical_script",
+      "claim_text": "Suspected surgical site or implant infection requires structured workup before escalating to reoperation or revision.",
+      "primary_entity_slug": "infection-workup",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-open-fri",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-open-fri",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-open-fri",
+      "claim_type": "fact",
+      "claim_text": "Open fractures carry elevated risk of fracture-related infection and require early antibiotics, soft-tissue care, and debridement principles.",
+      "primary_entity_slug": "fracture-related-infection",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-nonunion-eval",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-nonunion-eval",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-nonunion-eval",
+      "claim_type": "fact",
+      "claim_text": "Nonunion evaluation addresses mechanical stability, biology, infection, host factors, and time course before revision fixation.",
+      "primary_entity_slug": "fracture-nonunion",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-delayed-vs-nonunion",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-delayed-vs-nonunion",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-delayed-vs-nonunion",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Delayed union and nonunion are related but not interchangeable; progression timeline and intervention threshold matter.",
+      "primary_entity_slug": "delayed-union",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-loss-fixation",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-loss-fixation",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-loss-fixation",
+      "claim_type": "fact",
+      "claim_text": "Loss of fixation and hardware failure often reflect construct stability mismatch, bone quality, reduction quality, or load-sharing failure.",
+      "primary_entity_slug": "loss-of-fixation",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-compartment",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-compartment",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-compartment",
+      "claim_type": "board_trap",
+      "claim_text": "Preserved distal pulses do not exclude acute compartment syndrome; pain out of proportion and passive stretch pain remain central.",
+      "primary_entity_slug": "acute-compartment-syndrome",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-vte",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-vte",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; incidence estimates require source provenance before publication",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-vte",
+      "claim_type": "fact",
+      "claim_text": "Venous thromboembolism risk after major orthopaedic injury or arthroplasty is mitigated by risk-stratified prophylaxis and early mobilization when safe.",
+      "primary_entity_slug": "vte-prophylaxis",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "floor",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-dvt-pe",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-dvt-pe",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-dvt-pe",
+      "claim_type": "fact",
+      "claim_text": "Deep vein thrombosis and pulmonary embolism are linked VTE events with distinct diagnostic urgency and treatment thresholds.",
+      "primary_entity_slug": "pulmonary-embolism",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-pji",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-pji",
+    "alternatives": [],
+    "evidence_summary": "Management-changing claim; attending review required",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-pji",
+      "claim_type": "fact",
+      "claim_text": "Prosthetic joint infection management depends on timing, organism, implant stability, and host status; options range from debridement to staged revision.",
+      "primary_entity_slug": "periprosthetic-joint-infection",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-aseptic-vs-septic",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-aseptic-vs-septic",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-aseptic-vs-septic",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Aseptic loosening and periprosthetic infection can present similarly; infection must be excluded before revision for loosening.",
+      "primary_entity_slug": "aseptic-loosening",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-avn",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-avn",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-avn",
+      "claim_type": "fact",
+      "claim_text": "Avascular necrosis risk tracks vascular disruption of the femoral head, talus, or humeral head after injury or treatment.",
+      "primary_entity_slug": "avascular-necrosis",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-arthrofibrosis",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-arthrofibrosis",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-arthrofibrosis",
+      "claim_type": "fact",
+      "claim_text": "Arthrofibrosis and joint stiffness require early recognition of motion loss and coordinated therapy before advanced salvage.",
+      "primary_entity_slug": "arthrofibrosis",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "sports"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-graft-fail",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-graft-fail",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-graft-fail",
+      "claim_type": "fact",
+      "claim_text": "Graft failure and re-tear after soft-tissue reconstruction may reflect technical, biologic, rehabilitation, or re-injury factors.",
+      "primary_entity_slug": "graft-failure",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "sports",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-spine-neuro",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-spine-neuro",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-spine-neuro",
+      "claim_type": "red_flag",
+      "claim_text": "New or progressive neurologic deficit after spine injury or surgery is time-sensitive and requires immediate evaluation.",
+      "primary_entity_slug": "neurologic-injury",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-physeal",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-physeal",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-physeal",
+      "claim_type": "fact",
+      "claim_text": "Physeal bar formation can produce growth arrest, angular deformity, and leg-length discrepancy in skeletally immature patients.",
+      "primary_entity_slug": "physeal-bar-formation",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "pediatrics",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-reoperation",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-reoperation",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-reoperation",
+      "claim_type": "clinical_script",
+      "claim_text": "Counsel that reoperation and revision surgery are management-changing endpoints requiring diagnosis of the failure mode before salvage selection.",
+      "primary_entity_slug": "revision-surgery",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "or"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-comp-early-recognition",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-comp-early-recognition",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture scope; incidence/threshold claims require provenance and human review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-comp-early-recognition",
+      "claim_type": "fact",
+      "claim_text": "Early recognition of complications depends on serial examination, expected recovery trajectories, and explicit escalation thresholds.",
+      "primary_entity_slug": "early-recognition-of-complications",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "floor",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-ssi",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-ssi",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-ssi",
+      "subject_entity_slug": "surgical-site-infection",
+      "pattern_type": "infection_escalation",
+      "trigger": "Wound erythema, drainage, fever, or rising inflammatory markers after orthopaedic surgery",
+      "action": "Initiate infection workup, hold nonessential antibiotics when cultures are planned, and escalate for possible operative debridement",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-fri",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-fri",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-fri",
+      "subject_entity_slug": "fracture-related-infection",
+      "pattern_type": "infection_escalation",
+      "trigger": "Suspected infection after fracture fixation with wound issues, nonunion, or systemic signs",
+      "action": "Obtain targeted workup and plan debridement with implant retention versus removal based on stability and timing",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-compartment",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-compartment",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-compartment",
+      "subject_entity_slug": "acute-compartment-syndrome",
+      "pattern_type": "emergent_intervention",
+      "trigger": "Clinical findings concerning for evolving acute compartment syndrome",
+      "action": "Remove constriction, perform serial examination, and escalate for emergent fasciotomy without delaying for imaging alone",
+      "urgency": "emergent",
+      "safety_criticality": "emergency",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-pe",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-pe",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-pe",
+      "subject_entity_slug": "pulmonary-embolism",
+      "pattern_type": "medical_emergency",
+      "trigger": "Acute dyspnea, hypoxia, chest pain, or hemodynamic change with VTE risk",
+      "action": "Activate urgent medical evaluation and diagnostic pathway for pulmonary embolism while supporting oxygenation and circulation",
+      "urgency": "emergent",
+      "safety_criticality": "emergency",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-neuro",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-neuro",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-neuro",
+      "subject_entity_slug": "neurologic-injury",
+      "pattern_type": "neurologic_deterioration",
+      "trigger": "New or progressive motor, sensory, or bowel/bladder deficit after spine injury or surgery",
+      "action": "Perform immediate neurologic examination, protect the spine as indicated, and escalate for urgent imaging and specialist intervention",
+      "urgency": "emergent",
+      "safety_criticality": "emergency",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-nv-injury",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-nv-injury",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-nv-injury",
+      "subject_entity_slug": "neurovascular-injury",
+      "pattern_type": "limb_threat",
+      "trigger": "Loss of pulse, expanding hematoma, progressive neurologic deficit, or threatened limb perfusion",
+      "action": "Document status, reduce gross deformity when appropriate, and escalate immediately for vascular or nerve evaluation",
+      "urgency": "emergent",
+      "safety_criticality": "emergency",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-pji",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-pji",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-pji",
+      "subject_entity_slug": "periprosthetic-joint-infection",
+      "pattern_type": "operative_indication",
+      "trigger": "Suspected prosthetic joint infection with pain, effusion, wound drainage, or abnormal labs",
+      "action": "Complete infection workup before revision and select DAIR, one-stage, or two-stage strategy with attending input",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-loosening",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-loosening",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-loosening",
+      "subject_entity_slug": "aseptic-loosening",
+      "pattern_type": "revision_threshold",
+      "trigger": "Progressive pain, radiographic lucency, or implant migration after infection is excluded",
+      "action": "Plan revision arthroplasty strategy based on bone loss, implant track record, and host factors",
+      "urgency": "routine",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-hardware",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-hardware",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-hardware",
+      "subject_entity_slug": "hardware-failure",
+      "pattern_type": "fixation_failure",
+      "trigger": "Broken implant, loss of alignment, or construct failure on surveillance imaging",
+      "action": "Protect the limb, obtain comparison imaging, and plan revision fixation or alternative construct",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-nonunion",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-nonunion",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-nonunion",
+      "subject_entity_slug": "fracture-nonunion",
+      "pattern_type": "healing_failure",
+      "trigger": "Failure of expected clinical or radiographic progression toward union",
+      "action": "Evaluate infection, stability, biology, and host factors before selecting revision or biologic augmentation",
+      "urgency": "routine",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-malunion",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-malunion",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-malunion",
+      "subject_entity_slug": "fracture-malunion",
+      "pattern_type": "deformity_threshold",
+      "trigger": "Healed fracture with functionally significant malalignment, shortening, or rotation",
+      "action": "Quantify deformity and discuss osteotomy, revision, or accept-and-adapt pathways with attending",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-avn",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-avn",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-avn",
+      "subject_entity_slug": "avascular-necrosis",
+      "pattern_type": "joint_preservation",
+      "trigger": "Suspected AVN after femoral neck, talar, or proximal humerus injury",
+      "action": "Obtain dedicated imaging and counsel joint-preservation versus arthroplasty options by stage and joint",
+      "urgency": "routine",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-stiffness",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-stiffness",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-stiffness",
+      "subject_entity_slug": "arthrofibrosis",
+      "pattern_type": "motion_loss",
+      "trigger": "Early progressive motion loss after fracture care or soft-tissue reconstruction",
+      "action": "Intensify supervised therapy, exclude infection or mechanical block, and escalate for lysis/MUA when indicated",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-graft",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-graft",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-graft",
+      "subject_entity_slug": "graft-failure",
+      "pattern_type": "reconstruction_failure",
+      "trigger": "Recurrent instability or imaging evidence of graft failure after ligament reconstruction",
+      "action": "Assess tunnel position, graft integrity, alignment, and rehabilitation before revision reconstruction planning",
+      "urgency": "routine",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-physeal",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-physeal",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-physeal",
+      "subject_entity_slug": "physeal-bar-formation",
+      "pattern_type": "growth_disturbance",
+      "trigger": "Asymmetric growth, angular deformity, or LLD after physeal injury",
+      "action": "Image the physis, quantify bar and remaining growth, and plan bar resection versus guided growth/osteotomy",
+      "urgency": "routine",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-cardiac",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-cardiac",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-cardiac",
+      "subject_entity_slug": "cardiac-complication",
+      "pattern_type": "medical_emergency",
+      "trigger": "Chest pain, arrhythmia, hypotension, or suspected ACS after orthopaedic surgery",
+      "action": "Activate medical emergency response and stabilize while pausing nonessential orthopaedic progression",
+      "urgency": "emergent",
+      "safety_criticality": "emergency",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-mortality",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-mortality",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-mortality",
+      "subject_entity_slug": "perioperative-mortality",
+      "pattern_type": "goals_of_care",
+      "trigger": "Life-threatening decompensation or expected high mortality trajectory after major orthopaedic injury/surgery",
+      "action": "Escalate critical care, clarify goals of care, and coordinate multidisciplinary decision-making",
+      "urgency": "emergent",
+      "safety_criticality": "emergency",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-comp-readmit",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-comp-readmit",
+    "alternatives": [],
+    "evidence_summary": "Complications manufacture; management-changing and time-sensitive items require attending review",
+    "metadata": {
+      "pilot": "complications-neighborhood",
+      "review_packet_key": "pilot:complications-neighborhood",
+      "review_packet_label": "Complications Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-comp-readmit",
+      "subject_entity_slug": "hospital-readmission",
+      "pattern_type": "disposition_risk",
+      "trigger": "Early post-discharge wound, VTE, infection, or medical warning signs",
+      "action": "Expedite evaluation, risk-stratify for ED/readmission, and address root cause before discharge planning",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": false,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:18:01.819Z"
+    }
+  }
+]

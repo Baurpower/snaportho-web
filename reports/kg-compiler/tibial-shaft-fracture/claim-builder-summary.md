@@ -1,6 +1,6 @@
 # Claim Builder Summary
 
-Generated: 2026-07-05T21:24:25.507Z
+Generated: 2026-07-16T02:18:46.901Z
 Agent: claim-builder v2.0.0
 Evidence packet: `ev-packet-49d3928f`
 
@@ -8,9 +8,9 @@ Evidence packet: `ev-packet-49d3928f`
 
 | Metric | Value |
 |--------|------:|
-| Gaps scheduled | 4 |
-| Gaps addressed | 4 |
-| Claims generated | 8 |
+| Gaps scheduled | 9 |
+| Gaps addressed | 7 |
+| Claims generated | 9 |
 | Claims rejected | 7 |
 | Redirected to DP Builder | 5 |
 
@@ -19,11 +19,12 @@ Evidence packet: `ev-packet-49d3928f`
 - **anatomy_pearl** (L2) → claim-tibial-blood-supply-anatomy_pearl-subcutaneous-tibial-cres [HUMAN_REVIEW] evidence: ev-static-prepare-9e6cb3ff
 - **fact** (L2) → claim-tibial-blood-supply-fact-open-versus-closed [HUMAN_REVIEW] evidence: ev-static-prepare-9e6cb3ff
 - **anatomy_pearl** (L2) → claim-tibial-blood-supply-anatomy_pearl-proximal-distal-metaphys [HUMAN_REVIEW] evidence: ev-static-prepare-9e6cb3ff
+- **imaging_point** (L2) → claim-tibial-shaft-fracture-imaging_point-full-length-tibia-fibula [HUMAN_REVIEW] evidence: ev-static-prepare-9e6cb3ff
+- **imaging_point** (L2) → claim-tibial-shaft-fracture-imaging_point-adjacent-joint-views [HUMAN_REVIEW] evidence: ev-static-prepare-9e6cb3ff
+- **cognitive_trap** (L1) → claim-tibial-shaft-fracture-cognitive_trap-know-common-im-nail-star [HUMAN_REVIEW] evidence: ev-static-prepare-9e6dce6b
 - **fact** (L2) → claim-tibial-blood-supply-fact-simple-versus-segmental- [HUMAN_REVIEW] evidence: ev-static-prepare-9e6cb3ff
 - **fact** (L2) → claim-tibial-blood-supply-fact-malunion [HUMAN_REVIEW] evidence: ev-static-prepare-9e6cb3ff
 - **fact** (L2) → claim-tibial-blood-supply-fact-infection [HUMAN_REVIEW] evidence: ev-static-prepare-9e6cb3ff
-- **fact** (L2) → claim-tibial-blood-supply-fact-nonunion [HUMAN_REVIEW] evidence: ev-static-prepare-9e6cb3ff
-- **fact** (L1) → claim-tibial-blood-supply-fact-soft-tissue-exam [HUMAN_REVIEW] evidence: ev-static-prepare-9e6dce6b
 
 ## Rejected / redirected
 

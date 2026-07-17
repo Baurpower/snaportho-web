@@ -1,0 +1,963 @@
+{
+  "topicKey": "carpal-tunnel-syndrome",
+  "pilotKey": "carpal-tunnel-syndrome-neighborhood",
+  "primaryEntitySlug": "carpal-tunnel-syndrome",
+  "displayName": "Carpal Tunnel Syndrome",
+  "generatedAt": "2026-07-09T14:21:18.845Z",
+  "nodes": [
+    {
+      "slug": "hand-wrist-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hand & Wrist Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 46,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "radius",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radius",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ulna",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulna",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "interosseous-membrane",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Interosseous Membrane",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "druj",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "DRUJ",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pruj",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "PRUJ",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "distal-radius",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Radius",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "distal-ulna",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Ulna",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "scaphoid",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Scaphoid",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "lunate",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lunate",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "triquetrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Triquetrum",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "pisiform",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pisiform",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "trapezium",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Trapezium",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "trapezoid",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Trapezoid",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "capitate",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Capitate",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "hamate",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hamate",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "first-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "First Metacarpal",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "second-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Second Metacarpal",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "third-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Third Metacarpal",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fourth-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Fourth Metacarpal",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fifth-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Fifth Metacarpal",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "proximal-phalanx",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Phalanx",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "middle-phalanx",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Middle Phalanx",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "distal-phalanx",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Phalanx",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "dip-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "DIP Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pip-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "PIP Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "mcp-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "MCP Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "cmc-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "CMC Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "scapholunate-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Scapholunate Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "lunotriquetral-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lunotriquetral Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "tfcc",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "TFCC",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "thumb-ucl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Thumb UCL",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "volar-plate",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Volar Plate",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "collateral-ligaments",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Collateral Ligaments",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "fpl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FPL",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fdp",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FDP",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fds",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FDS",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "epl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "EPL",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "epb",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "EPB",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "apl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "APL",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "edc",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "EDC",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ecu",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "ECU",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fcr",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FCR",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fcu",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FCU",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "a1-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A1 Pulley",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "a2-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A2 Pulley",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "a3-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A3 Pulley",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "a4-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A4 Pulley",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "a5-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A5 Pulley",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "c1-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "C1 Pulley",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "c2-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "C2 Pulley",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "c3-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "C3 Pulley",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "flexor-pulley-system",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Flexor Pulley System",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 8,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "flexor-tendon-zones",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Flexor Tendon Zones",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "extensor-tendon-zones",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Extensor Tendon Zones",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "median-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Median Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 12,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ulnar-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulnar Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "radial-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radial Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ain",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "AIN",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pin",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "PIN",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "digital-nerves",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Digital Nerves",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "radial-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radial Artery",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ulnar-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulnar Artery",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "superficial-palmar-arch",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Superficial Palmar Arch",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "deep-palmar-arch",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Deep Palmar Arch",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "carpal-tunnel",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Carpal Tunnel",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 6,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "guyon-canal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Guyon Canal",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "carpal-tunnel-syndrome",
+      "entityType": "condition",
+      "preferredLabel": "Carpal Tunnel Syndrome",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 21
+    },
+    {
+      "slug": "median-nerve-compression",
+      "entityType": "condition",
+      "preferredLabel": "Median Nerve Compression",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "trigger-finger",
+      "entityType": "condition",
+      "preferredLabel": "Trigger Finger",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "distal-radius-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Distal Radius Fracture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "recurrent-motor-branch-median-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Recurrent Motor Branch of the Median Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "palmar-cutaneous-branch-median-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Palmar Cutaneous Branch of the Median Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "abductor-pollicis-brevis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Abductor Pollicis Brevis",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "phalen-test",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Phalen Test",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tinel-sign-carpal-tunnel",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Tinel Sign at the Carpal Tunnel",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "durkan-carpal-compression-test",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Durkan Carpal Compression Test",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "electrodiagnostic-testing-carpal-tunnel-syndrome",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Electrodiagnostic Testing for Carpal Tunnel Syndrome",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "nerve-conduction-study",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Nerve Conduction Study",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "needle-electromyography",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Needle Electromyography",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "neutral-wrist-night-orthosis-for-cts",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Neutral Wrist Night Orthosis for CTS",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "corticosteroid-injection-for-cts",
+      "entityType": "procedure",
+      "preferredLabel": "Corticosteroid Injection for CTS",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "open-carpal-tunnel-release",
+      "entityType": "procedure",
+      "preferredLabel": "Open Carpal Tunnel Release",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 8
+    },
+    {
+      "slug": "endoscopic-carpal-tunnel-release",
+      "entityType": "procedure",
+      "preferredLabel": "Endoscopic Carpal Tunnel Release",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 6
+    },
+    {
+      "slug": "open-carpal-tunnel-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Open Carpal Tunnel Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "endoscopic-carpal-tunnel-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Endoscopic Carpal Tunnel Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "carpal-tunnel-release-instrument-set",
+      "entityType": "implant",
+      "preferredLabel": "Carpal Tunnel Release Instrument Set",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "pillar-pain-after-carpal-tunnel-release",
+      "entityType": "complication",
+      "preferredLabel": "Pillar Pain After Carpal Tunnel Release",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "incomplete-transverse-carpal-ligament-release",
+      "entityType": "complication",
+      "preferredLabel": "Incomplete Carpal Tunnel Release",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "persistent-carpal-tunnel-syndrome-after-release",
+      "entityType": "condition",
+      "preferredLabel": "Persistent Carpal Tunnel Syndrome After Release",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "recurrent-carpal-tunnel-syndrome",
+      "entityType": "condition",
+      "preferredLabel": "Recurrent Carpal Tunnel Syndrome",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "revision-carpal-tunnel-release",
+      "entityType": "procedure",
+      "preferredLabel": "Revision Carpal Tunnel Release",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "carpal-tunnel-release-postoperative-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Carpal Tunnel Release Postoperative Protocol",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 124,
+  "claimCount": 8,
+  "decisionPointCount": 8,
+  "roles": {
+    "primary_condition": [
+      "carpal-tunnel-syndrome"
+    ],
+    "neighboring_anatomy": [
+      "hand-wrist-anatomy-hub",
+      "radius",
+      "ulna",
+      "interosseous-membrane",
+      "druj",
+      "pruj",
+      "distal-radius",
+      "distal-ulna",
+      "scaphoid",
+      "lunate",
+      "triquetrum",
+      "pisiform",
+      "trapezium",
+      "trapezoid",
+      "capitate",
+      "hamate",
+      "first-metacarpal",
+      "second-metacarpal",
+      "third-metacarpal",
+      "fourth-metacarpal",
+      "fifth-metacarpal",
+      "proximal-phalanx",
+      "middle-phalanx",
+      "distal-phalanx",
+      "dip-joint",
+      "pip-joint",
+      "mcp-joint",
+      "cmc-joint",
+      "scapholunate-ligament",
+      "lunotriquetral-ligament",
+      "tfcc",
+      "thumb-ucl",
+      "volar-plate",
+      "collateral-ligaments",
+      "fpl",
+      "fdp",
+      "fds",
+      "epl",
+      "epb",
+      "apl",
+      "edc",
+      "ecu",
+      "fcr",
+      "fcu",
+      "a1-pulley",
+      "a2-pulley",
+      "a3-pulley",
+      "a4-pulley",
+      "a5-pulley",
+      "c1-pulley",
+      "c2-pulley",
+      "c3-pulley",
+      "flexor-pulley-system",
+      "flexor-tendon-zones",
+      "extensor-tendon-zones",
+      "median-nerve",
+      "ulnar-nerve",
+      "radial-nerve",
+      "ain",
+      "pin",
+      "digital-nerves",
+      "radial-artery",
+      "ulnar-artery",
+      "superficial-palmar-arch",
+      "deep-palmar-arch",
+      "carpal-tunnel",
+      "guyon-canal",
+      "recurrent-motor-branch-median-nerve",
+      "palmar-cutaneous-branch-median-nerve",
+      "abductor-pollicis-brevis"
+    ],
+    "procedure": [
+      "corticosteroid-injection-for-cts",
+      "open-carpal-tunnel-release",
+      "open-carpal-tunnel-approach",
+      "endoscopic-carpal-tunnel-approach",
+      "revision-carpal-tunnel-release"
+    ],
+    "classification": [],
+    "imaging": [
+      "electrodiagnostic-testing-carpal-tunnel-syndrome",
+      "nerve-conduction-study",
+      "needle-electromyography"
+    ],
+    "complication": [
+      "pillar-pain-after-carpal-tunnel-release",
+      "incomplete-transverse-carpal-ligament-release"
+    ],
+    "decision_point_anchor": [
+      "endoscopic-carpal-tunnel-release",
+      "persistent-carpal-tunnel-syndrome-after-release",
+      "recurrent-carpal-tunnel-syndrome",
+      "carpal-tunnel-release-postoperative-protocol"
+    ],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [
+      "carpal-tunnel-release-instrument-set"
+    ],
+    "supporting": [
+      "median-nerve-compression",
+      "trigger-finger",
+      "distal-radius-fracture",
+      "phalen-test",
+      "tinel-sign-carpal-tunnel",
+      "durkan-carpal-compression-test",
+      "neutral-wrist-night-orthosis-for-cts"
+    ]
+  }
+}

@@ -45,11 +45,6 @@ function limitReachedResponse(dailyCap: number | null) {
   );
 }
 
-function requestHasReviewData(input: { mode?: string; correctAnswerKey?: string | null; correctAnswer?: string | null; explanationText?: string | null; explanation?: string | null; percentDistribution: unknown[] }) {
-  if (input.mode === 'curriculum_content') return true;
-  return Boolean(input.correctAnswerKey ?? input.correctAnswer) || Boolean(input.explanationText ?? input.explanation) || input.percentDistribution.length > 0;
-}
-
 export async function POST(request: Request) {
   if (!BROBOT_CONFIG.ENABLED || !BROBOT_CONFIG.ORTHOBULLETS_ENABLED) {
     return disabledResponse();
@@ -70,16 +65,6 @@ export async function POST(request: Request) {
   if (!parsed.success) {
     return NextResponse.json(
       { error: 'invalid_request', message: 'Invalid Orthobullets hint request.' },
-      { status: 400 }
-    );
-  }
-
-  if (requestHasReviewData(parsed.data.pageContext)) {
-    return NextResponse.json(
-      {
-        error: 'invalid_request',
-        message: 'Review data detected. Use Explain with BroBot for full reasoning.',
-      },
       { status: 400 }
     );
   }
@@ -107,8 +92,21 @@ export async function POST(request: Request) {
         questionId: parsed.data.pageContext.questionId,
       })
     : null;
+  // Hints are derived only from the question itself. Extractors can retain hidden
+  // review markup, so remove it here instead of rejecting an otherwise valid hint.
+  const hintPageContext = {
+    ...parsed.data.pageContext,
+    selectedAnswerKey: null,
+    correctAnswerKey: null,
+    selectedAnswer: null,
+    correctAnswer: null,
+    percentDistribution: [],
+    explanationText: null,
+    explanation: null,
+    questionReviewSignals: undefined,
+  };
   const resolvedContext = resolveOrthobulletsContext({
-    pageContext: parsed.data.pageContext,
+    pageContext: hintPageContext,
     kgLookup,
   });
 

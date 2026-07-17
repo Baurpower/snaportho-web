@@ -1,0 +1,47 @@
+{
+  "generatedAt": "2026-07-16T03:41:49Z",
+  "baseline": {
+    "neighborhoods": 113,
+    "stagingApplied": 49,
+    "databaseVerified": 11,
+    "databaseVerificationBlocked": 24,
+    "publicationBlocked": 11,
+    "publicationReady": 0,
+    "productionActive": 0
+  },
+  "current": {
+    "neighborhoods": 113,
+    "stagingApplied": 49,
+    "databaseVerified": 20,
+    "databaseVerificationBlocked": 15,
+    "publicationBlocked": 20,
+    "publicationReady": 0,
+    "productionActive": 0
+  },
+  "gains": {
+    "neighborhoodsUnlocked": 9,
+    "databaseVerifiedGained": 9,
+    "publicationReadyGained": 0,
+    "productionActiveGained": 0
+  },
+  "highestLeverageResolvedBlocker": {
+    "blockerId": "EXTENSOR_MECHANISM_PROPOSAL_DRIFT",
+    "affectedNeighborhoods": 14,
+    "databaseVerifiedGained": 7,
+    "canonicalRowsModified": 0
+  },
+  "otherResolvedSystemicBlockers": [
+    { "blockerId": "PUBLICATION_DATABASE_STATE_STALE", "affectedNeighborhoods": 20, "lifecycleTransitions": 0 },
+    { "blockerId": "AC_JOINT_PROPOSAL_DRIFT", "affectedNeighborhoods": 1, "canonicalRowsModified": 0 },
+    { "blockerId": "AGGREGATE_APPLY_PROVENANCE_GAP", "resolvedNeighborhoods": 2, "remainingNeighborhoods": 1 }
+  ],
+  "recommendedNextBlocker": {
+    "blockerId": "CURRICULUM_BRIDGE_NODE_MISSING",
+    "priorityScore": 79,
+    "affectedNeighborhoods": 14,
+    "estimatedDatabaseVerifiedUnlocks": 8,
+    "stopReason": "Curriculum-owner adjudication is required before mapping, creating, or rejecting missing nodes."
+  },
+  "registry": "reports/kg-scaling/blocker-registry.json",
+  "queue": "reports/kg-scaling/vertical-completion-queue.json"
+}

@@ -1,26 +1,42 @@
 {
   "category": "relationship_quality",
   "label": "Relationship Quality",
-  "score": 92,
+  "score": 84,
   "deductions": [
     {
-      "finding": "4 high-risk relationships lack approved review status",
-      "evidence": "Predicates: indicates_treatment, at_risk_structure, treated_by",
-      "reason": "High-risk predicates require human review before publication.",
+      "finding": "Missing clinical edge: at_risk_structure",
+      "evidence": "0 outbound at_risk_structure edges from proximal-humerus-fracture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
       "severity": "high",
       "category": "relationship_quality",
-      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "affectedSlugs": [
+        "proximal-humerus-fracture"
+      ],
+      "suggestedFix": "Add at_risk_structure relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: treated_by",
+      "evidence": "0 outbound treated_by edges from proximal-humerus-fracture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "proximal-humerus-fracture"
+      ],
+      "suggestedFix": "Add treated_by relationship via relationship-builder agent.",
       "impact": 8
     }
   ],
   "metrics": {
-    "relationshipCount": 14,
-    "relationshipDensity": 2,
-    "missingClinicalEdgeCount": 0,
-    "highRiskUnreviewedCount": 4,
-    "predicateCorrectness": 0.5
+    "relationshipCount": 34,
+    "relationshipDensity": 1.2142857142857142,
+    "missingClinicalEdgeCount": 2,
+    "highRiskUnreviewedCount": 0,
+    "predicateCorrectness": 1
   },
   "recommendations": [
-    "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review."
+    "Add at_risk_structure relationship via relationship-builder agent.",
+    "Add treated_by relationship via relationship-builder agent."
   ]
 }

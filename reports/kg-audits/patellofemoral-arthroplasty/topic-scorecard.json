@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-05T23:32:00.868Z",
+  "generatedAt": "2026-07-16T02:54:21.315Z",
   "auditorVersion": "1.0.0",
   "topicKey": "patellofemoral-arthroplasty",
   "pilotKey": "patellofemoral-arthroplasty-neighborhood",
   "displayName": "Patellofemoral Arthroplasty",
   "dataSource": {
-    "neighborhood": "merged_draft",
+    "neighborhood": "database",
     "reportsLoaded": [
       "ontology-compiler-plan.json",
       "ontology-gap-report.json",
@@ -19,27 +19,28 @@
       "agent-assignment-plan.json",
       "ontology-neighborhood-plan.json",
       "evidence-packet.json",
-      "database-proposals"
+      "database-proposals",
+      "database-neighborhood-snapshot"
     ],
     "reportsMissing": []
   },
-  "overallScore": 80,
+  "overallScore": 81,
   "categories": {
-    "ontology_completeness": 66,
+    "ontology_completeness": 57,
     "evidence_quality": 85,
-    "graph_integrity": 84,
-    "shared_knowledge_reuse": 98,
-    "relationship_quality": 34,
+    "graph_integrity": 96,
+    "shared_knowledge_reuse": 100,
+    "relationship_quality": 38,
     "claim_quality": 76,
-    "decision_point_quality": 69,
-    "metadata_quality": 92,
-    "provenance_quality": 100,
+    "decision_point_quality": 85,
+    "metadata_quality": 86,
+    "provenance_quality": 96,
     "review_calibration": 100,
     "agent_performance": 92,
-    "compiler_quality": 90,
-    "educational_quality": 78,
-    "cross_neighborhood_consistency": 96,
-    "publication_readiness": 50
+    "compiler_quality": 87,
+    "educational_quality": 76,
+    "cross_neighborhood_consistency": 100,
+    "publication_readiness": 60
   },
   "publication": {
     "status": "NOT_READY",
@@ -53,7 +54,7 @@
     ],
     "currentLevel": 5,
     "requiredLevel": 6,
-    "score": 50,
+    "score": 60,
     "deductions": [
       {
         "finding": "8 proposals still awaiting human review",
@@ -61,7 +62,7 @@
         "reason": "Publication gate identified blocking condition.",
         "severity": "high",
         "category": "publication_readiness",
-        "suggestedFix": "[critical] Patellofemoral Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+        "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
         "impact": 8
       },
       {
@@ -70,7 +71,7 @@
         "reason": "Publication gate identified blocking condition.",
         "severity": "high",
         "category": "publication_readiness",
-        "suggestedFix": "[critical] Patellofemoral Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+        "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
         "impact": 8
       },
       {
@@ -79,7 +80,7 @@
         "reason": "Publication gate identified blocking condition.",
         "severity": "high",
         "category": "publication_readiness",
-        "suggestedFix": "[critical] Patellofemoral Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+        "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
         "impact": 8
       },
       {
@@ -88,7 +89,7 @@
         "reason": "Publication gate identified blocking condition.",
         "severity": "high",
         "category": "publication_readiness",
-        "suggestedFix": "[critical] Patellofemoral Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+        "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
         "impact": 8
       },
       {
@@ -97,19 +98,22 @@
         "reason": "Publication gate identified blocking condition.",
         "severity": "critical",
         "category": "publication_readiness",
-        "suggestedFix": "[critical] Patellofemoral Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+        "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
         "impact": 15
       }
     ]
   },
   "topFindings": [
     {
-      "finding": "2 critical ontology gaps remain",
-      "evidence": "ontology-gap-report.json: gap-entity-neighbor-1, gap-rel-2",
-      "reason": "Required entities, relationships, claims, or decision points are missing per CKO §8–§9.",
+      "finding": "Only 2 anatomy structures (minimum 3 required)",
+      "evidence": "Entity slugs: adult-reconstruction-anatomy-hub, patella",
+      "reason": "Condition neighborhoods require regional anatomy per condition.anatomy.min_structures.",
       "severity": "critical",
       "category": "ontology_completeness",
-      "suggestedFix": "Resolve critical gaps via assigned factory agents before publication review.",
+      "affectedSlugs": [
+        "patellofemoral-arthroplasty"
+      ],
+      "suggestedFix": "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
       "impact": 15
     },
     {
@@ -146,12 +150,12 @@
       "impact": 15
     },
     {
-      "finding": "Missing decision point pattern: emergency_escalation",
-      "evidence": "0 decision points with pattern emergency_escalation",
-      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
+      "finding": "No decision points in neighborhood",
+      "evidence": "merged draft decisionPointCount = 0",
+      "reason": "Decision points support clinical reasoning and operative safety pathways.",
       "severity": "critical",
       "category": "decision_point_quality",
-      "suggestedFix": "Add emergency_escalation decision point with attending-gated review.",
+      "suggestedFix": "Run decision-point-builder for operative_indication and nonoperative_eligible patterns.",
       "impact": 15
     },
     {
@@ -160,8 +164,17 @@
       "reason": "Publication gate identified blocking condition.",
       "severity": "critical",
       "category": "publication_readiness",
-      "suggestedFix": "[critical] Patellofemoral Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+      "suggestedFix": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
       "impact": 15
+    },
+    {
+      "finding": "Missing claim requirements (8)",
+      "evidence": "8 gaps of kind missing_claim",
+      "reason": "Ontology contract requires complete claim coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 8,
+      "suggestedFix": "Run the matching builder agent for missing_claim."
     },
     {
       "finding": "No classification system present",
@@ -170,115 +183,6 @@
       "severity": "high",
       "category": "ontology_completeness",
       "suggestedFix": "Link has_classification and has_grade edges to a classification system.",
-      "impact": 8
-    },
-    {
-      "finding": "57 orphan entities with no relationships",
-      "evidence": "Slugs: patellofemoral-tracking, acetabulum, calcar, common-peroneal-nerve, cruciate-ligaments, distal-femur, extensor-mechanism, femoral-condyles, femoral-diaphysis, femoral-head, femoral-neck, femoral-nerve, femur, gluteus-medius, gluteus-minimus, greater-trochanter, hip-capsule, hip-joint, intertrochanteric-region, lesser-trochanter, medial-femoral-circumflex-artery, patellar-tendon, pelvis, popliteal-artery, proximal-femur, proximal-femur-anatomy-hub, quadriceps-tendon, sciatic-nerve, short-external-rotators, tibia, tibial-plateau, bearing-surface-selection, compartment-syndrome, distal-femur-fracture, femoral-neck-fracture, femoral-shaft-fracture, hip-prosthetic-joint-infection, intertrochanteric-fracture, knee-prosthetic-joint-infection, periprosthetic-joint-infection, subtrochanteric-fracture, tibial-shaft-fracture, cement-mantle, cemented-fixation, press-fit-fixation, acetabular-component, femoral-component, femoral-stem, polyethylene-liner, tibial-baseplate, tibial-insert, adverse-local-tissue-reaction, polyethylene-wear-osteolysis, revision-arthroplasty, total-hip-arthroplasty, total-knee-arthroplasty, unicompartmental-knee-arthroplasty",
-      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
-      "severity": "high",
-      "category": "graph_integrity",
-      "affectedSlugs": [
-        "patellofemoral-tracking",
-        "acetabulum",
-        "calcar",
-        "common-peroneal-nerve",
-        "cruciate-ligaments",
-        "distal-femur",
-        "extensor-mechanism",
-        "femoral-condyles",
-        "femoral-diaphysis",
-        "femoral-head",
-        "femoral-neck",
-        "femoral-nerve",
-        "femur",
-        "gluteus-medius",
-        "gluteus-minimus",
-        "greater-trochanter",
-        "hip-capsule",
-        "hip-joint",
-        "intertrochanteric-region",
-        "lesser-trochanter",
-        "medial-femoral-circumflex-artery",
-        "patellar-tendon",
-        "pelvis",
-        "popliteal-artery",
-        "proximal-femur",
-        "proximal-femur-anatomy-hub",
-        "quadriceps-tendon",
-        "sciatic-nerve",
-        "short-external-rotators",
-        "tibia",
-        "tibial-plateau",
-        "bearing-surface-selection",
-        "compartment-syndrome",
-        "distal-femur-fracture",
-        "femoral-neck-fracture",
-        "femoral-shaft-fracture",
-        "hip-prosthetic-joint-infection",
-        "intertrochanteric-fracture",
-        "knee-prosthetic-joint-infection",
-        "periprosthetic-joint-infection",
-        "subtrochanteric-fracture",
-        "tibial-shaft-fracture",
-        "cement-mantle",
-        "cemented-fixation",
-        "press-fit-fixation",
-        "acetabular-component",
-        "femoral-component",
-        "femoral-stem",
-        "polyethylene-liner",
-        "tibial-baseplate",
-        "tibial-insert",
-        "adverse-local-tissue-reaction",
-        "polyethylene-wear-osteolysis",
-        "revision-arthroplasty",
-        "total-hip-arthroplasty",
-        "total-knee-arthroplasty",
-        "unicompartmental-knee-arthroplasty"
-      ],
-      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
-      "impact": 8
-    },
-    {
-      "finding": "30 disconnected anatomy structures",
-      "evidence": "Disconnected: acetabulum, calcar, common-peroneal-nerve, cruciate-ligaments, distal-femur, extensor-mechanism, femoral-condyles, femoral-diaphysis, femoral-head, femoral-neck, femoral-nerve, femur, gluteus-medius, gluteus-minimus, greater-trochanter, hip-capsule, hip-joint, intertrochanteric-region, lesser-trochanter, medial-femoral-circumflex-artery, patellar-tendon, pelvis, popliteal-artery, proximal-femur, proximal-femur-anatomy-hub, quadriceps-tendon, sciatic-nerve, short-external-rotators, tibia, tibial-plateau",
-      "reason": "Anatomy must connect to the condition graph for educational traversal.",
-      "severity": "high",
-      "category": "graph_integrity",
-      "affectedSlugs": [
-        "acetabulum",
-        "calcar",
-        "common-peroneal-nerve",
-        "cruciate-ligaments",
-        "distal-femur",
-        "extensor-mechanism",
-        "femoral-condyles",
-        "femoral-diaphysis",
-        "femoral-head",
-        "femoral-neck",
-        "femoral-nerve",
-        "femur",
-        "gluteus-medius",
-        "gluteus-minimus",
-        "greater-trochanter",
-        "hip-capsule",
-        "hip-joint",
-        "intertrochanteric-region",
-        "lesser-trochanter",
-        "medial-femoral-circumflex-artery",
-        "patellar-tendon",
-        "pelvis",
-        "popliteal-artery",
-        "proximal-femur",
-        "proximal-femur-anatomy-hub",
-        "quadriceps-tendon",
-        "sciatic-nerve",
-        "short-external-rotators",
-        "tibia",
-        "tibial-plateau"
-      ],
-      "suggestedFix": "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
       "impact": 8
     },
     {
@@ -340,20 +244,29 @@
     },
     {
       "finding": "All claims remain generated_draft",
-      "evidence": "12/12 claims are unreviewed drafts",
+      "evidence": "6/6 claims are unreviewed drafts",
       "reason": "Draft claims cannot be consumed as verified educational content.",
       "severity": "high",
       "category": "claim_quality",
       "suggestedFix": "Route claims through human review queue before publication.",
+      "impact": 8
+    },
+    {
+      "finding": "Insufficient evidence support on claim proposals",
+      "evidence": "0% of claim proposals cite evidence",
+      "reason": "Every claim should cite supporting evidence.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Attach evidence_refs from evidence packet to each claim proposal.",
       "impact": 8
     }
   ],
   "prioritizedRecommendations": [
     {
       "priority": 1,
-      "action": "Resolve critical gaps via assigned factory agents before publication review.",
+      "action": "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
       "category": "ontology_completeness",
-      "impact": "2 critical ontology gaps remain"
+      "impact": "Only 2 anatomy structures (minimum 3 required)"
     },
     {
       "priority": 2,
@@ -375,39 +288,39 @@
     },
     {
       "priority": 5,
-      "action": "Add emergency_escalation decision point with attending-gated review.",
+      "action": "Run decision-point-builder for operative_indication and nonoperative_eligible patterns.",
       "category": "decision_point_quality",
-      "impact": "Missing decision point pattern: emergency_escalation"
+      "impact": "No decision points in neighborhood"
     },
     {
       "priority": 6,
-      "action": "[critical] Patellofemoral Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+      "action": "[high] Adult Reconstruction Anatomy Hub missing outbound part_of (0/1).",
       "category": "publication_readiness",
       "impact": "3 critical/high ontology gaps remain unresolved"
     },
     {
       "priority": 7,
+      "action": "Run the matching builder agent for missing_claim.",
+      "category": "ontology_completeness",
+      "impact": "Missing claim requirements (8)"
+    },
+    {
+      "priority": 8,
       "action": "Link has_classification and has_grade edges to a classification system.",
       "category": "ontology_completeness",
       "impact": "No classification system present"
     },
     {
-      "priority": 8,
-      "action": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
-      "category": "graph_integrity",
-      "impact": "57 orphan entities with no relationships"
-    },
-    {
       "priority": 9,
-      "action": "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
-      "category": "graph_integrity",
-      "impact": "30 disconnected anatomy structures"
-    },
-    {
-      "priority": 10,
       "action": "Add has_imaging_finding relationship via relationship-builder agent.",
       "category": "relationship_quality",
       "impact": "Missing clinical edge: has_imaging_finding"
+    },
+    {
+      "priority": 10,
+      "action": "Add at_risk_structure relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: at_risk_structure"
     }
   ],
   "databaseModified": false

@@ -1,0 +1,52 @@
+{
+  "agent": "BackboneCoverageAgent",
+  "generatedAt": "2026-07-12T23:55:30.745Z",
+  "result": {
+    "approved": [],
+    "modified": [],
+    "rejected": [],
+    "escalations": [],
+    "warnings": [],
+    "metrics": {
+      "duplicatesPrevented": 0,
+      "relationshipsNormalized": 0,
+      "unsupportedEdgesRemoved": 0,
+      "reviewDecisionsInherited": 0,
+      "orphanEntitiesRepaired": 0,
+      "publicationBlockersDetected": 0
+    }
+  },
+  "artifacts": {
+    "coverage_report": {
+      "neighborhoodId": "carpal-tunnel-syndrome",
+      "domains": [
+        {
+          "domain": "anatomy",
+          "present": true
+        },
+        {
+          "domain": "imaging",
+          "present": true
+        },
+        {
+          "domain": "classification",
+          "present": true
+        },
+        {
+          "domain": "treatment",
+          "present": true
+        },
+        {
+          "domain": "complications",
+          "present": true
+        }
+      ],
+      "presentDomains": 5,
+      "missingDomains": 0,
+      "weakDomains": 0,
+      "note": "Backbone coverage is an omission detector, not a template enforcer."
+    },
+    "missing_domains": [],
+    "weak_domains": []
+  }
+}

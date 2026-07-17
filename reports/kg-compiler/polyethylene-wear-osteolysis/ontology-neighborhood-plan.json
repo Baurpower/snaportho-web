@@ -3,16 +3,43 @@
   "pilotKey": "polyethylene-wear-osteolysis-neighborhood",
   "primaryEntitySlug": "polyethylene-wear-osteolysis",
   "displayName": "Polyethylene Wear and Osteolysis",
-  "generatedAt": "2026-07-05T22:57:46.711Z",
+  "generatedAt": "2026-07-16T02:55:24.610Z",
   "nodes": [
+    {
+      "slug": "adult-reconstruction-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Adult Reconstruction Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "bearing-surface-selection",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Bearing Surface Selection",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 2
+    },
     {
       "slug": "focal-osteolysis",
       "entityType": "imaging_finding",
       "preferredLabel": "Focal Periprosthetic Osteolysis",
       "role": "imaging",
       "isPrimary": false,
-      "inboundEdgeCount": 0,
+      "inboundEdgeCount": 1,
       "outboundEdgeCount": 0
+    },
+    {
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
     },
     {
       "slug": "particulate-debris",
@@ -22,15 +49,48 @@
       "isPrimary": false,
       "inboundEdgeCount": 0,
       "outboundEdgeCount": 0
+    },
+    {
+      "slug": "polyethylene-liner",
+      "entityType": "implant",
+      "preferredLabel": "Polyethylene Liner",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "polyethylene-wear-osteolysis",
+      "entityType": "procedure",
+      "preferredLabel": "Polyethylene Wear Osteolysis",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 5,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "revision-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Revision Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
     }
   ],
-  "edgeCount": 0,
-  "claimCount": 0,
+  "edgeCount": 12,
+  "claimCount": 3,
   "decisionPointCount": 0,
   "roles": {
-    "primary_condition": [],
-    "neighboring_anatomy": [],
-    "procedure": [],
+    "primary_condition": [
+      "polyethylene-wear-osteolysis"
+    ],
+    "neighboring_anatomy": [
+      "adult-reconstruction-anatomy-hub"
+    ],
+    "procedure": [
+      "revision-arthroplasty"
+    ],
     "classification": [],
     "imaging": [
       "focal-osteolysis"
@@ -39,9 +99,13 @@
     "decision_point_anchor": [],
     "claim_anchor": [],
     "biomechanics": [
+      "bearing-surface-selection",
+      "implant-concepts-hub",
       "particulate-debris"
     ],
-    "fixation": [],
+    "fixation": [
+      "polyethylene-liner"
+    ],
     "supporting": []
   }
 }

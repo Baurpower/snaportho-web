@@ -1,15 +1,15 @@
 {
   "topicKey": "hip-instability-after-tha",
   "pilotKey": "hip-instability-after-tha-neighborhood",
-  "generatedAt": "2026-07-05T22:55:55.495Z",
+  "generatedAt": "2026-07-16T02:41:08.223Z",
   "summary": {
     "AUTO_APPROVE": 76,
-    "SAFE_REVIEW": 5,
-    "EXPERT_REVIEW": 5,
+    "SAFE_REVIEW": 8,
+    "EXPERT_REVIEW": 6,
     "REJECT": 0
   },
-  "humanReviewPercent": 11.6,
-  "autoApprovedPercent": 88.4,
+  "humanReviewPercent": 15.6,
+  "autoApprovedPercent": 84.4,
   "decisions": [
     {
       "proposal_fingerprint": "bridge|adult-recon-hip-instability|hip-instability-after-tha",
@@ -96,6 +96,27 @@
       ]
     },
     {
+      "proposal_fingerprint": "claim|claim-hip-center-of-rotation-fact-hip-instability-after-th",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.41825,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: l1_management_fact",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l1_management_fact"
+      ]
+    },
+    {
       "proposal_fingerprint": "claim|claim-hip-center-of-rotation-fact-hip-reconstruction-class",
       "proposal_type": "propose_educational_claim",
       "category": "SAFE_REVIEW",
@@ -118,6 +139,69 @@
     },
     {
       "proposal_fingerprint": "claim|claim-hip-center-of-rotation-fact-infection",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "AUTO_REVISED",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: l2_fact_light_review",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l2_fact_light_review"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-hip-center-of-rotation-fact-instability",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "AUTO_REVISED",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: l2_fact_light_review",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l2_fact_light_review"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-hip-center-of-rotation-fact-loosening",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "AUTO_REVISED",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: l2_fact_light_review",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l2_fact_light_review"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-hip-center-of-rotation-fact-periprosthetic-fracture",
       "proposal_type": "propose_educational_claim",
       "category": "SAFE_REVIEW",
       "curationRoute": "AUTO_REVISED",

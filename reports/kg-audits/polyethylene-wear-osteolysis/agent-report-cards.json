@@ -1,5 +1,22 @@
 [
   {
+    "agentId": "clinical-entity-builder",
+    "assignmentId": "work-clinical-entity-builder",
+    "status": "completed",
+    "workload": 33,
+    "successRate": 1,
+    "averageConfidence": 0.85,
+    "proposalsGenerated": 33,
+    "reviewBurden": 0,
+    "evidenceUsage": 0,
+    "grade": "B",
+    "strengths": [
+      "Completed without errors",
+      "Generated 33 proposals"
+    ],
+    "weaknesses": []
+  },
+  {
     "agentId": "asset-linker",
     "assignmentId": "work-asset-linker",
     "status": "completed",
@@ -37,18 +54,36 @@
     "agentId": "claim-builder",
     "assignmentId": "work-claim-builder",
     "status": "completed",
-    "workload": 8,
+    "workload": 10,
     "successRate": 1,
     "averageConfidence": 0.85,
-    "proposalsGenerated": 8,
+    "proposalsGenerated": 10,
     "reviewBurden": 0,
     "evidenceUsage": 0,
     "grade": "B",
     "strengths": [
       "Completed without errors",
-      "Generated 8 proposals"
+      "Generated 10 proposals"
     ],
     "weaknesses": []
+  },
+  {
+    "agentId": "metadata-builder",
+    "assignmentId": "work-metadata-builder",
+    "status": "completed",
+    "workload": 0,
+    "successRate": 1,
+    "averageConfidence": 0.85,
+    "proposalsGenerated": 0,
+    "reviewBurden": 0,
+    "evidenceUsage": 0,
+    "grade": "F",
+    "strengths": [
+      "Completed without errors"
+    ],
+    "weaknesses": [
+      "No proposals generated"
+    ]
   },
   {
     "agentId": "duplicate-detector",
@@ -102,16 +137,16 @@
     "agentId": "review-assistant",
     "assignmentId": "work-review-assistant",
     "status": "completed",
-    "workload": 86,
+    "workload": 88,
     "successRate": 1,
     "averageConfidence": 0.85,
-    "proposalsGenerated": 86,
+    "proposalsGenerated": 88,
     "reviewBurden": 0,
     "evidenceUsage": 0,
     "grade": "B",
     "strengths": [
       "Completed without errors",
-      "Generated 86 proposals"
+      "Generated 88 proposals"
     ],
     "weaknesses": []
   },

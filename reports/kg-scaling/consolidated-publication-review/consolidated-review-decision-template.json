@@ -1,0 +1,1944 @@
+{
+  "generatedAt": "2026-07-16T02:43:34.839Z",
+  "packetId": "adult-reconstruction-publication-review-wave-1",
+  "neighborhoods": [
+    "adverse-local-tissue-reaction",
+    "aseptic-loosening-tha",
+    "aseptic-loosening-tka",
+    "bearing-surface-selection",
+    "bone-loss-revision-arthroplasty",
+    "extensor-mechanism-failure",
+    "hip-instability-after-tha",
+    "implant-fixation-principles"
+  ],
+  "summary": {
+    "neighborhoodsCovered": 8,
+    "totalItems": 32,
+    "clinicalCuratorItems": 24,
+    "attendingItems": 8,
+    "priorApplicableDecisionsFound": 0,
+    "separatePacketsAvoided": 7,
+    "automaticDecisionInheritanceApplied": 0
+  },
+  "decisionContract": {
+    "allowed": [
+      "APPROVE",
+      "APPROVE_WITH_REVISION",
+      "REJECT",
+      "DEFER",
+      "ESCALATE"
+    ],
+    "requiredForSubmission": [
+      "stable_item_id",
+      "decision",
+      "reviewer",
+      "rationale"
+    ]
+  },
+  "items": [
+    {
+      "stable_item_id": "claim|claim-adverse-local-tissue-reaction-core",
+      "neighborhood": "adverse-local-tissue-reaction",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "core_clinical_claim",
+      "proposed_object": {
+        "pilot": "adverse-local-tissue-reaction-neighborhood",
+        "review_packet_key": "pilot:adverse-local-tissue-reaction-neighborhood",
+        "review_packet_label": "Adverse Local Tissue Reaction (Metal Reaction) Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-adverse-local-tissue-reaction-core",
+        "claim_type": "fact",
+        "claim_text": "ALTR requires metal ion workup and soft tissue assessment before revision planning.",
+        "primary_entity_slug": "adverse-local-tissue-reaction",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6599999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:58:48.551Z"
+      },
+      "clinical_statement": "ALTR requires metal ion workup and soft tissue assessment before revision planning.",
+      "supporting_evidence": {
+        "summary": "curriculum-data.ts + adult-reconstruction cluster seed",
+        "evidence_packet": "reports/kg-evidence/adverse-local-tissue-reaction/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-adverse-local-tissue-reaction-core",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "not_inheritable_without_separate_clinical_adjudication",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-adverse-local-tissue-reaction-board-trap",
+      "neighborhood": "adverse-local-tissue-reaction",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "educational_trap_wording",
+      "proposed_object": {
+        "pilot": "adverse-local-tissue-reaction-neighborhood",
+        "review_packet_key": "pilot:adverse-local-tissue-reaction-neighborhood",
+        "review_packet_label": "Adverse Local Tissue Reaction (Metal Reaction) Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-adverse-local-tissue-reaction-board-trap",
+        "claim_type": "board_trap",
+        "claim_text": "Board trap: oversimplifying adverse local tissue reaction without attending-level implant, fixation, or infection context.",
+        "primary_entity_slug": "adverse-local-tissue-reaction",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "oite"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6599999999999999,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:58:48.551Z"
+      },
+      "clinical_statement": "Board trap: oversimplifying adverse local tissue reaction without attending-level implant, fixation, or infection context.",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/adverse-local-tissue-reaction/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-adverse-local-tissue-reaction-board-trap",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "batch_reviewable_pattern_but_disposition_remains_topic_specific",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-adverse-local-tissue-reaction-script",
+      "neighborhood": "adverse-local-tissue-reaction",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "case_presentation_script",
+      "proposed_object": {
+        "pilot": "adverse-local-tissue-reaction-neighborhood",
+        "review_packet_key": "pilot:adverse-local-tissue-reaction-neighborhood",
+        "review_packet_label": "Adverse Local Tissue Reaction (Metal Reaction) Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-adverse-local-tissue-reaction-script",
+        "claim_type": "clinical_script",
+        "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for adverse local tissue reaction.",
+        "primary_entity_slug": "adverse-local-tissue-reaction",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6599999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:58:48.551Z"
+      },
+      "clinical_statement": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for adverse local tissue reaction.",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/adverse-local-tissue-reaction/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-adverse-local-tissue-reaction-script",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "batch_reviewable_pattern_but_disposition_remains_topic_specific",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "dp|dp-adverse-local-tissue-reaction-operative",
+      "neighborhood": "adverse-local-tissue-reaction",
+      "reviewer_role": "attending",
+      "object_type": "decision_point",
+      "review_group": "operative_management_pathway",
+      "proposed_object": {
+        "pilot": "adverse-local-tissue-reaction-neighborhood",
+        "review_packet_key": "pilot:adverse-local-tissue-reaction-neighborhood",
+        "review_packet_label": "Adverse Local Tissue Reaction (Metal Reaction) Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "dp-adverse-local-tissue-reaction-operative",
+        "subject_entity_slug": "adverse-local-tissue-reaction",
+        "pattern_type": "operative_indication",
+        "trigger": "Painful MoM THA with elevated metal ions or pseudotumor",
+        "action": "Discuss revision to alternate bearing with attending and assess soft tissue destruction",
+        "urgency": "routine",
+        "safety_criticality": "moderate",
+        "content_source": "generated_draft",
+        "requires_attending_review": true,
+        "verified": false,
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6599999999999999,
+          "ambiguity": 0.4,
+          "safety": 0.85,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curated_at": "2026-07-05T22:58:48.551Z"
+      },
+      "clinical_statement": "Approve operative/management pathway: dp-adverse-local-tissue-reaction-operative",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/adverse-local-tissue-reaction/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.92,
+      "reason_for_review": "Approve operative/management pathway: dp-adverse-local-tissue-reaction-operative",
+      "safety_level": "management_changing",
+      "downstream_effect": "Controls whether the operative pathway may leave draft-only status.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "not_inheritable_without_separate_clinical_adjudication",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-aseptic-loosening-tha-core",
+      "neighborhood": "aseptic-loosening-tha",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "core_clinical_claim",
+      "proposed_object": {
+        "pilot": "aseptic-loosening-tha-neighborhood",
+        "review_packet_key": "pilot:aseptic-loosening-tha-neighborhood",
+        "review_packet_label": "Aseptic Loosening of THA Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-aseptic-loosening-tha-core",
+        "claim_type": "fact",
+        "claim_text": "Rule out infection before attributing painful THA to aseptic loosening.",
+        "primary_entity_slug": "aseptic-loosening-tha",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:52:18.109Z"
+      },
+      "clinical_statement": "Rule out infection before attributing painful THA to aseptic loosening.",
+      "supporting_evidence": {
+        "summary": "curriculum-data.ts + adult-reconstruction cluster seed",
+        "evidence_packet": "reports/kg-evidence/aseptic-loosening-tha/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-aseptic-loosening-tha-core",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "candidate_shared_principle_requires_explicit_THA_and_TKA_context_review",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-aseptic-loosening-tha-board-trap",
+      "neighborhood": "aseptic-loosening-tha",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "educational_trap_wording",
+      "proposed_object": {
+        "pilot": "aseptic-loosening-tha-neighborhood",
+        "review_packet_key": "pilot:aseptic-loosening-tha-neighborhood",
+        "review_packet_label": "Aseptic Loosening of THA Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-aseptic-loosening-tha-board-trap",
+        "claim_type": "board_trap",
+        "claim_text": "Board trap: oversimplifying aseptic loosening tha without attending-level implant, fixation, or infection context.",
+        "primary_entity_slug": "aseptic-loosening-tha",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "oite"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:52:18.109Z"
+      },
+      "clinical_statement": "Board trap: oversimplifying aseptic loosening tha without attending-level implant, fixation, or infection context.",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/aseptic-loosening-tha/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-aseptic-loosening-tha-board-trap",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "batch_reviewable_pattern_but_disposition_remains_topic_specific",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-aseptic-loosening-tha-script",
+      "neighborhood": "aseptic-loosening-tha",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "case_presentation_script",
+      "proposed_object": {
+        "pilot": "aseptic-loosening-tha-neighborhood",
+        "review_packet_key": "pilot:aseptic-loosening-tha-neighborhood",
+        "review_packet_label": "Aseptic Loosening of THA Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-aseptic-loosening-tha-script",
+        "claim_type": "clinical_script",
+        "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for aseptic loosening tha.",
+        "primary_entity_slug": "aseptic-loosening-tha",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:52:18.109Z"
+      },
+      "clinical_statement": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for aseptic loosening tha.",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/aseptic-loosening-tha/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-aseptic-loosening-tha-script",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "batch_reviewable_pattern_but_disposition_remains_topic_specific",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "dp|dp-aseptic-loosening-tha-operative",
+      "neighborhood": "aseptic-loosening-tha",
+      "reviewer_role": "attending",
+      "object_type": "decision_point",
+      "review_group": "operative_management_pathway",
+      "proposed_object": {
+        "pilot": "aseptic-loosening-tha-neighborhood",
+        "review_packet_key": "pilot:aseptic-loosening-tha-neighborhood",
+        "review_packet_label": "Aseptic Loosening of THA Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "dp-aseptic-loosening-tha-operative",
+        "subject_entity_slug": "aseptic-loosening-tha",
+        "pattern_type": "operative_indication",
+        "trigger": "Painful THA with progressive lucency and excluded infection",
+        "action": "Discuss revision THA with attending including bone loss and fixation strategy",
+        "urgency": "routine",
+        "safety_criticality": "moderate",
+        "content_source": "generated_draft",
+        "requires_attending_review": true,
+        "verified": false,
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.4,
+          "safety": 0.85,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curated_at": "2026-07-05T22:52:18.109Z"
+      },
+      "clinical_statement": "Approve operative/management pathway: dp-aseptic-loosening-tha-operative",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/aseptic-loosening-tha/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.92,
+      "reason_for_review": "Approve operative/management pathway: dp-aseptic-loosening-tha-operative",
+      "safety_level": "management_changing",
+      "downstream_effect": "Controls whether the operative pathway may leave draft-only status.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "not_inheritable_without_separate_clinical_adjudication",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-aseptic-loosening-tka-core",
+      "neighborhood": "aseptic-loosening-tka",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "core_clinical_claim",
+      "proposed_object": {
+        "pilot": "aseptic-loosening-tka-neighborhood",
+        "review_packet_key": "pilot:aseptic-loosening-tka-neighborhood",
+        "review_packet_label": "Aseptic Loosening of TKA Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-aseptic-loosening-tka-core",
+        "claim_type": "fact",
+        "claim_text": "Exclude infection before diagnosing aseptic TKA loosening.",
+        "primary_entity_slug": "aseptic-loosening-tka",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T23:08:07.083Z"
+      },
+      "clinical_statement": "Exclude infection before diagnosing aseptic TKA loosening.",
+      "supporting_evidence": {
+        "summary": "curriculum-data.ts + adult-reconstruction cluster seed",
+        "evidence_packet": "reports/kg-evidence/aseptic-loosening-tka/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-aseptic-loosening-tka-core",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "candidate_shared_principle_requires_explicit_THA_and_TKA_context_review",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-aseptic-loosening-tka-board-trap",
+      "neighborhood": "aseptic-loosening-tka",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "educational_trap_wording",
+      "proposed_object": {
+        "pilot": "aseptic-loosening-tka-neighborhood",
+        "review_packet_key": "pilot:aseptic-loosening-tka-neighborhood",
+        "review_packet_label": "Aseptic Loosening of TKA Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-aseptic-loosening-tka-board-trap",
+        "claim_type": "board_trap",
+        "claim_text": "Board trap: oversimplifying aseptic loosening tka without attending-level implant, fixation, or infection context.",
+        "primary_entity_slug": "aseptic-loosening-tka",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "oite"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T23:08:07.083Z"
+      },
+      "clinical_statement": "Board trap: oversimplifying aseptic loosening tka without attending-level implant, fixation, or infection context.",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/aseptic-loosening-tka/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-aseptic-loosening-tka-board-trap",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "batch_reviewable_pattern_but_disposition_remains_topic_specific",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-aseptic-loosening-tka-script",
+      "neighborhood": "aseptic-loosening-tka",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "case_presentation_script",
+      "proposed_object": {
+        "pilot": "aseptic-loosening-tka-neighborhood",
+        "review_packet_key": "pilot:aseptic-loosening-tka-neighborhood",
+        "review_packet_label": "Aseptic Loosening of TKA Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-aseptic-loosening-tka-script",
+        "claim_type": "clinical_script",
+        "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for aseptic loosening tka.",
+        "primary_entity_slug": "aseptic-loosening-tka",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T23:08:07.083Z"
+      },
+      "clinical_statement": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for aseptic loosening tka.",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/aseptic-loosening-tka/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-aseptic-loosening-tka-script",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "batch_reviewable_pattern_but_disposition_remains_topic_specific",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "dp|dp-aseptic-loosening-tka-operative",
+      "neighborhood": "aseptic-loosening-tka",
+      "reviewer_role": "attending",
+      "object_type": "decision_point",
+      "review_group": "operative_management_pathway",
+      "proposed_object": {
+        "pilot": "aseptic-loosening-tka-neighborhood",
+        "review_packet_key": "pilot:aseptic-loosening-tka-neighborhood",
+        "review_packet_label": "Aseptic Loosening of TKA Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "dp-aseptic-loosening-tka-operative",
+        "subject_entity_slug": "aseptic-loosening-tka",
+        "pattern_type": "operative_indication",
+        "trigger": "Painful TKA with progressive subsidence and excluded infection",
+        "action": "Discuss revision TKA with attending including constraint and bone loss",
+        "urgency": "routine",
+        "safety_criticality": "moderate",
+        "content_source": "generated_draft",
+        "requires_attending_review": true,
+        "verified": false,
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.4,
+          "safety": 0.85,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curated_at": "2026-07-05T23:08:07.083Z"
+      },
+      "clinical_statement": "Approve operative/management pathway: dp-aseptic-loosening-tka-operative",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/aseptic-loosening-tka/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.92,
+      "reason_for_review": "Approve operative/management pathway: dp-aseptic-loosening-tka-operative",
+      "safety_level": "management_changing",
+      "downstream_effect": "Controls whether the operative pathway may leave draft-only status.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "not_inheritable_without_separate_clinical_adjudication",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-bearing-surface-selection-core",
+      "neighborhood": "bearing-surface-selection",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "core_clinical_claim",
+      "proposed_object": {
+        "pilot": "bearing-surface-selection-neighborhood",
+        "review_packet_key": "pilot:bearing-surface-selection-neighborhood",
+        "review_packet_label": "Bearing Surface Selection Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-bearing-surface-selection-core",
+        "claim_type": "fact",
+        "claim_text": "Bearing choice must account for wear, stability, patient age, and revision consequences.",
+        "primary_entity_slug": "bearing-surface-selection",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T23:30:17.121Z"
+      },
+      "clinical_statement": "Bearing choice must account for wear, stability, patient age, and revision consequences.",
+      "supporting_evidence": {
+        "summary": "curriculum-data.ts + adult-reconstruction cluster seed",
+        "evidence_packet": "reports/kg-evidence/bearing-surface-selection/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-bearing-surface-selection-core",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "not_inheritable_without_separate_clinical_adjudication",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-bearing-surface-selection-board-trap",
+      "neighborhood": "bearing-surface-selection",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "educational_trap_wording",
+      "proposed_object": {
+        "pilot": "bearing-surface-selection-neighborhood",
+        "review_packet_key": "pilot:bearing-surface-selection-neighborhood",
+        "review_packet_label": "Bearing Surface Selection Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-bearing-surface-selection-board-trap",
+        "claim_type": "board_trap",
+        "claim_text": "Board trap: oversimplifying bearing surface selection without attending-level implant, fixation, or infection context.",
+        "primary_entity_slug": "bearing-surface-selection",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "oite"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.72,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T23:30:17.121Z"
+      },
+      "clinical_statement": "Board trap: oversimplifying bearing surface selection without attending-level implant, fixation, or infection context.",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/bearing-surface-selection/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-bearing-surface-selection-board-trap",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "batch_reviewable_pattern_but_disposition_remains_topic_specific",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-bearing-surface-selection-script",
+      "neighborhood": "bearing-surface-selection",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "case_presentation_script",
+      "proposed_object": {
+        "pilot": "bearing-surface-selection-neighborhood",
+        "review_packet_key": "pilot:bearing-surface-selection-neighborhood",
+        "review_packet_label": "Bearing Surface Selection Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-bearing-surface-selection-script",
+        "claim_type": "clinical_script",
+        "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for bearing surface selection.",
+        "primary_entity_slug": "bearing-surface-selection",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T23:30:17.121Z"
+      },
+      "clinical_statement": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for bearing surface selection.",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/bearing-surface-selection/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-bearing-surface-selection-script",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "batch_reviewable_pattern_but_disposition_remains_topic_specific",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "dp|dp-bearing-surface-selection-operative",
+      "neighborhood": "bearing-surface-selection",
+      "reviewer_role": "attending",
+      "object_type": "decision_point",
+      "review_group": "operative_management_pathway",
+      "proposed_object": {
+        "pilot": "bearing-surface-selection-neighborhood",
+        "review_packet_key": "pilot:bearing-surface-selection-neighborhood",
+        "review_packet_label": "Bearing Surface Selection Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "dp-bearing-surface-selection-operative",
+        "subject_entity_slug": "bearing-surface-selection",
+        "pattern_type": "operative_indication",
+        "trigger": "Primary arthroplasty in young active patient",
+        "action": "Discuss bearing surface options with attending weighing wear versus complications",
+        "urgency": "routine",
+        "safety_criticality": "moderate",
+        "content_source": "generated_draft",
+        "requires_attending_review": true,
+        "verified": false,
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.4,
+          "safety": 0.85,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curated_at": "2026-07-05T23:30:17.121Z"
+      },
+      "clinical_statement": "Approve operative/management pathway: dp-bearing-surface-selection-operative",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/bearing-surface-selection/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.92,
+      "reason_for_review": "Approve operative/management pathway: dp-bearing-surface-selection-operative",
+      "safety_level": "management_changing",
+      "downstream_effect": "Controls whether the operative pathway may leave draft-only status.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "not_inheritable_without_separate_clinical_adjudication",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-bone-loss-revision-arthroplasty-core",
+      "neighborhood": "bone-loss-revision-arthroplasty",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "core_clinical_claim",
+      "proposed_object": {
+        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
+        "review_packet_key": "pilot:bone-loss-revision-arthroplasty-neighborhood",
+        "review_packet_label": "Bone Loss in Revision Arthroplasty Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-bone-loss-revision-arthroplasty-core",
+        "claim_type": "fact",
+        "claim_text": "Bone loss classification drives revision implant selection and augmentation strategy.",
+        "primary_entity_slug": "bone-loss-revision-arthroplasty",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T23:24:23.049Z"
+      },
+      "clinical_statement": "Bone loss classification drives revision implant selection and augmentation strategy.",
+      "supporting_evidence": {
+        "summary": "curriculum-data.ts + adult-reconstruction cluster seed",
+        "evidence_packet": "reports/kg-evidence/bone-loss-revision-arthroplasty/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-bone-loss-revision-arthroplasty-core",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "not_inheritable_without_separate_clinical_adjudication",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-bone-loss-revision-arthroplasty-board-trap",
+      "neighborhood": "bone-loss-revision-arthroplasty",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "educational_trap_wording",
+      "proposed_object": {
+        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
+        "review_packet_key": "pilot:bone-loss-revision-arthroplasty-neighborhood",
+        "review_packet_label": "Bone Loss in Revision Arthroplasty Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-bone-loss-revision-arthroplasty-board-trap",
+        "claim_type": "board_trap",
+        "claim_text": "Board trap: oversimplifying bone loss revision arthroplasty without attending-level implant, fixation, or infection context.",
+        "primary_entity_slug": "bone-loss-revision-arthroplasty",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "oite"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T23:24:23.049Z"
+      },
+      "clinical_statement": "Board trap: oversimplifying bone loss revision arthroplasty without attending-level implant, fixation, or infection context.",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/bone-loss-revision-arthroplasty/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-bone-loss-revision-arthroplasty-board-trap",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "batch_reviewable_pattern_but_disposition_remains_topic_specific",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-bone-loss-revision-arthroplasty-script",
+      "neighborhood": "bone-loss-revision-arthroplasty",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "case_presentation_script",
+      "proposed_object": {
+        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
+        "review_packet_key": "pilot:bone-loss-revision-arthroplasty-neighborhood",
+        "review_packet_label": "Bone Loss in Revision Arthroplasty Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-bone-loss-revision-arthroplasty-script",
+        "claim_type": "clinical_script",
+        "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for bone loss revision arthroplasty.",
+        "primary_entity_slug": "bone-loss-revision-arthroplasty",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T23:24:23.049Z"
+      },
+      "clinical_statement": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for bone loss revision arthroplasty.",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/bone-loss-revision-arthroplasty/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-bone-loss-revision-arthroplasty-script",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "batch_reviewable_pattern_but_disposition_remains_topic_specific",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "dp|dp-bone-loss-revision-arthroplasty-operative",
+      "neighborhood": "bone-loss-revision-arthroplasty",
+      "reviewer_role": "attending",
+      "object_type": "decision_point",
+      "review_group": "operative_management_pathway",
+      "proposed_object": {
+        "pilot": "bone-loss-revision-arthroplasty-neighborhood",
+        "review_packet_key": "pilot:bone-loss-revision-arthroplasty-neighborhood",
+        "review_packet_label": "Bone Loss in Revision Arthroplasty Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "dp-bone-loss-revision-arthroplasty-operative",
+        "subject_entity_slug": "bone-loss-revision-arthroplasty",
+        "pattern_type": "operative_indication",
+        "trigger": "Revision arthroplasty with significant acetabular or metaphyseal bone loss",
+        "action": "Classify bone loss with Paprosky/AORI and discuss augmentation options with attending",
+        "urgency": "routine",
+        "safety_criticality": "moderate",
+        "content_source": "generated_draft",
+        "requires_attending_review": true,
+        "verified": false,
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.4,
+          "safety": 0.85,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curated_at": "2026-07-05T23:24:23.049Z"
+      },
+      "clinical_statement": "Approve operative/management pathway: dp-bone-loss-revision-arthroplasty-operative",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/bone-loss-revision-arthroplasty/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.92,
+      "reason_for_review": "Approve operative/management pathway: dp-bone-loss-revision-arthroplasty-operative",
+      "safety_level": "management_changing",
+      "downstream_effect": "Controls whether the operative pathway may leave draft-only status.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "not_inheritable_without_separate_clinical_adjudication",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-extensor-mechanism-failure-core",
+      "neighborhood": "extensor-mechanism-failure",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "core_clinical_claim",
+      "proposed_object": {
+        "pilot": "extensor-mechanism-failure-neighborhood",
+        "review_packet_key": "pilot:extensor-mechanism-failure-neighborhood",
+        "review_packet_label": "Extensor Mechanism Failure Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-extensor-mechanism-failure-core",
+        "claim_type": "fact",
+        "claim_text": "Extensor lag after TKA demands extensor mechanism integrity assessment, not passive rehab alone.",
+        "primary_entity_slug": "extensor-mechanism-failure",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T23:14:03.770Z"
+      },
+      "clinical_statement": "Extensor lag after TKA demands extensor mechanism integrity assessment, not passive rehab alone.",
+      "supporting_evidence": {
+        "summary": "curriculum-data.ts + adult-reconstruction cluster seed",
+        "evidence_packet": "reports/kg-evidence/extensor-mechanism-failure/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-extensor-mechanism-failure-core",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "not_inheritable_without_separate_clinical_adjudication",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-extensor-mechanism-failure-board-trap",
+      "neighborhood": "extensor-mechanism-failure",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "educational_trap_wording",
+      "proposed_object": {
+        "pilot": "extensor-mechanism-failure-neighborhood",
+        "review_packet_key": "pilot:extensor-mechanism-failure-neighborhood",
+        "review_packet_label": "Extensor Mechanism Failure Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-extensor-mechanism-failure-board-trap",
+        "claim_type": "board_trap",
+        "claim_text": "Board trap: oversimplifying extensor mechanism failure without attending-level implant, fixation, or infection context.",
+        "primary_entity_slug": "extensor-mechanism-failure",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "oite"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T23:14:03.770Z"
+      },
+      "clinical_statement": "Board trap: oversimplifying extensor mechanism failure without attending-level implant, fixation, or infection context.",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/extensor-mechanism-failure/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-extensor-mechanism-failure-board-trap",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "batch_reviewable_pattern_but_disposition_remains_topic_specific",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-extensor-mechanism-failure-script",
+      "neighborhood": "extensor-mechanism-failure",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "case_presentation_script",
+      "proposed_object": {
+        "pilot": "extensor-mechanism-failure-neighborhood",
+        "review_packet_key": "pilot:extensor-mechanism-failure-neighborhood",
+        "review_packet_label": "Extensor Mechanism Failure Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-extensor-mechanism-failure-script",
+        "claim_type": "clinical_script",
+        "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for extensor mechanism failure.",
+        "primary_entity_slug": "extensor-mechanism-failure",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T23:14:03.770Z"
+      },
+      "clinical_statement": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for extensor mechanism failure.",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/extensor-mechanism-failure/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-extensor-mechanism-failure-script",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "batch_reviewable_pattern_but_disposition_remains_topic_specific",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "dp|dp-extensor-mechanism-failure-operative",
+      "neighborhood": "extensor-mechanism-failure",
+      "reviewer_role": "attending",
+      "object_type": "decision_point",
+      "review_group": "operative_management_pathway",
+      "proposed_object": {
+        "pilot": "extensor-mechanism-failure-neighborhood",
+        "review_packet_key": "pilot:extensor-mechanism-failure-neighborhood",
+        "review_packet_label": "Extensor Mechanism Failure Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "dp-extensor-mechanism-failure-operative",
+        "subject_entity_slug": "extensor-mechanism-failure",
+        "pattern_type": "operative_indication",
+        "trigger": "Extensor lag after TKA with suspected tendon disruption",
+        "action": "Urgent surgical consultation for extensor mechanism repair or reconstruction",
+        "urgency": "routine",
+        "safety_criticality": "moderate",
+        "content_source": "generated_draft",
+        "requires_attending_review": true,
+        "verified": false,
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6799999999999999,
+          "ambiguity": 0.4,
+          "safety": 0.85,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curated_at": "2026-07-05T23:14:03.770Z"
+      },
+      "clinical_statement": "Approve operative/management pathway: dp-extensor-mechanism-failure-operative",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/extensor-mechanism-failure/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.92,
+      "reason_for_review": "Approve operative/management pathway: dp-extensor-mechanism-failure-operative",
+      "safety_level": "management_changing",
+      "downstream_effect": "Controls whether the operative pathway may leave draft-only status.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "not_inheritable_without_separate_clinical_adjudication",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-hip-instability-after-tha-core",
+      "neighborhood": "hip-instability-after-tha",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "core_clinical_claim",
+      "proposed_object": {
+        "pilot": "hip-instability-after-tha-neighborhood",
+        "review_packet_key": "pilot:hip-instability-after-tha-neighborhood",
+        "review_packet_label": "Hip Instability After THA Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-hip-instability-after-tha-core",
+        "claim_type": "fact",
+        "claim_text": "THA instability workup must assess component position, soft tissues, and infection.",
+        "primary_entity_slug": "hip-instability-after-tha",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:54:47.781Z"
+      },
+      "clinical_statement": "THA instability workup must assess component position, soft tissues, and infection.",
+      "supporting_evidence": {
+        "summary": "curriculum-data.ts + adult-reconstruction cluster seed",
+        "evidence_packet": "reports/kg-evidence/hip-instability-after-tha/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-hip-instability-after-tha-core",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "not_inheritable_without_separate_clinical_adjudication",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-hip-instability-after-tha-board-trap",
+      "neighborhood": "hip-instability-after-tha",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "educational_trap_wording",
+      "proposed_object": {
+        "pilot": "hip-instability-after-tha-neighborhood",
+        "review_packet_key": "pilot:hip-instability-after-tha-neighborhood",
+        "review_packet_label": "Hip Instability After THA Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-hip-instability-after-tha-board-trap",
+        "claim_type": "board_trap",
+        "claim_text": "Board trap: oversimplifying hip instability after tha without attending-level implant, fixation, or infection context.",
+        "primary_entity_slug": "hip-instability-after-tha",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "oite"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:54:47.781Z"
+      },
+      "clinical_statement": "Board trap: oversimplifying hip instability after tha without attending-level implant, fixation, or infection context.",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/hip-instability-after-tha/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-hip-instability-after-tha-board-trap",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "batch_reviewable_pattern_but_disposition_remains_topic_specific",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-hip-instability-after-tha-script",
+      "neighborhood": "hip-instability-after-tha",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "case_presentation_script",
+      "proposed_object": {
+        "pilot": "hip-instability-after-tha-neighborhood",
+        "review_packet_key": "pilot:hip-instability-after-tha-neighborhood",
+        "review_packet_label": "Hip Instability After THA Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-hip-instability-after-tha-script",
+        "claim_type": "clinical_script",
+        "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for hip instability after tha.",
+        "primary_entity_slug": "hip-instability-after-tha",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:54:47.781Z"
+      },
+      "clinical_statement": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for hip instability after tha.",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/hip-instability-after-tha/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-hip-instability-after-tha-script",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "batch_reviewable_pattern_but_disposition_remains_topic_specific",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "dp|dp-hip-instability-after-tha-operative",
+      "neighborhood": "hip-instability-after-tha",
+      "reviewer_role": "attending",
+      "object_type": "decision_point",
+      "review_group": "operative_management_pathway",
+      "proposed_object": {
+        "pilot": "hip-instability-after-tha-neighborhood",
+        "review_packet_key": "pilot:hip-instability-after-tha-neighborhood",
+        "review_packet_label": "Hip Instability After THA Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "dp-hip-instability-after-tha-operative",
+        "subject_entity_slug": "hip-instability-after-tha",
+        "pattern_type": "operative_indication",
+        "trigger": "Recurrent THA dislocation after index procedure",
+        "action": "Review component position and discuss revision options with attending",
+        "urgency": "routine",
+        "safety_criticality": "moderate",
+        "content_source": "generated_draft",
+        "requires_attending_review": true,
+        "verified": false,
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.4,
+          "safety": 0.85,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curated_at": "2026-07-05T22:54:47.781Z"
+      },
+      "clinical_statement": "Approve operative/management pathway: dp-hip-instability-after-tha-operative",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/hip-instability-after-tha/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.92,
+      "reason_for_review": "Approve operative/management pathway: dp-hip-instability-after-tha-operative",
+      "safety_level": "management_changing",
+      "downstream_effect": "Controls whether the operative pathway may leave draft-only status.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "not_inheritable_without_separate_clinical_adjudication",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-implant-fixation-principles-core",
+      "neighborhood": "implant-fixation-principles",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "core_clinical_claim",
+      "proposed_object": {
+        "pilot": "implant-fixation-principles-neighborhood",
+        "review_packet_key": "pilot:implant-fixation-principles-neighborhood",
+        "review_packet_label": "Implant Fixation Principles Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-implant-fixation-principles-core",
+        "claim_type": "fact",
+        "claim_text": "Cementless fixation requires primary stability; cemented fixation relies on interlock and mantle quality.",
+        "primary_entity_slug": "implant-fixation-principles",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T23:27:51.486Z"
+      },
+      "clinical_statement": "Cementless fixation requires primary stability; cemented fixation relies on interlock and mantle quality.",
+      "supporting_evidence": {
+        "summary": "curriculum-data.ts + adult-reconstruction cluster seed",
+        "evidence_packet": "reports/kg-evidence/implant-fixation-principles/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-implant-fixation-principles-core",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "not_inheritable_without_separate_clinical_adjudication",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-implant-fixation-principles-board-trap",
+      "neighborhood": "implant-fixation-principles",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "educational_trap_wording",
+      "proposed_object": {
+        "pilot": "implant-fixation-principles-neighborhood",
+        "review_packet_key": "pilot:implant-fixation-principles-neighborhood",
+        "review_packet_label": "Implant Fixation Principles Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-implant-fixation-principles-board-trap",
+        "claim_type": "board_trap",
+        "claim_text": "Board trap: oversimplifying implant fixation principles without attending-level implant, fixation, or infection context.",
+        "primary_entity_slug": "implant-fixation-principles",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "oite"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T23:27:51.486Z"
+      },
+      "clinical_statement": "Board trap: oversimplifying implant fixation principles without attending-level implant, fixation, or infection context.",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/implant-fixation-principles/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-implant-fixation-principles-board-trap",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "batch_reviewable_pattern_but_disposition_remains_topic_specific",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "claim|claim-implant-fixation-principles-script",
+      "neighborhood": "implant-fixation-principles",
+      "reviewer_role": "clinical_curator",
+      "object_type": "claim",
+      "review_group": "case_presentation_script",
+      "proposed_object": {
+        "pilot": "implant-fixation-principles-neighborhood",
+        "review_packet_key": "pilot:implant-fixation-principles-neighborhood",
+        "review_packet_label": "Implant Fixation Principles Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "claim-implant-fixation-principles-script",
+        "claim_type": "clinical_script",
+        "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for implant fixation principles.",
+        "primary_entity_slug": "implant-fixation-principles",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "verified": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T23:27:51.486Z"
+      },
+      "clinical_statement": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for implant fixation principles.",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/implant-fixation-principles/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.75,
+      "reason_for_review": "Confirm clinical accuracy and atomicity of claim: claim-implant-fixation-principles-script",
+      "safety_level": "clinical_education",
+      "downstream_effect": "Controls whether the claim may enter an approved-only publication manifest.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "batch_reviewable_pattern_but_disposition_remains_topic_specific",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    },
+    {
+      "stable_item_id": "dp|dp-implant-fixation-principles-operative",
+      "neighborhood": "implant-fixation-principles",
+      "reviewer_role": "attending",
+      "object_type": "decision_point",
+      "review_group": "operative_management_pathway",
+      "proposed_object": {
+        "pilot": "implant-fixation-principles-neighborhood",
+        "review_packet_key": "pilot:implant-fixation-principles-neighborhood",
+        "review_packet_label": "Implant Fixation Principles Neighborhood",
+        "factory_version": "kf-016",
+        "draft_id": "dp-implant-fixation-principles-operative",
+        "subject_entity_slug": "implant-fixation-principles",
+        "pattern_type": "operative_indication",
+        "trigger": "Primary arthroplasty with poor bone quality or revision context",
+        "action": "Discuss cemented versus cementless fixation strategy with attending",
+        "urgency": "routine",
+        "safety_criticality": "moderate",
+        "content_source": "generated_draft",
+        "requires_attending_review": true,
+        "verified": false,
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.4,
+          "safety": 0.85,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curated_at": "2026-07-05T23:27:51.486Z"
+      },
+      "clinical_statement": "Approve operative/management pathway: dp-implant-fixation-principles-operative",
+      "supporting_evidence": {
+        "summary": "adult-reconstruction cluster manufacturing seed",
+        "evidence_packet": "reports/kg-evidence/implant-fixation-principles/evidence-packet.json",
+        "limitation": "Current queue cites curriculum/cluster manufacturing metadata; publication-grade record-level provenance is not yet demonstrated."
+      },
+      "confidence": 0.92,
+      "reason_for_review": "Approve operative/management pathway: dp-implant-fixation-principles-operative",
+      "safety_level": "management_changing",
+      "downstream_effect": "Controls whether the operative pathway may leave draft-only status.",
+      "recommended_disposition": "DEFER",
+      "recommendation_reason": "Defer until a reviewer confirms the statement and record-level source support is attached.",
+      "inheritance": "not_inheritable_without_separate_clinical_adjudication",
+      "available_actions": [
+        "APPROVE",
+        "APPROVE_WITH_REVISION",
+        "REJECT",
+        "DEFER",
+        "ESCALATE"
+      ],
+      "decision": null,
+      "revision": null,
+      "reviewer": null,
+      "rationale": null
+    }
+  ]
+}

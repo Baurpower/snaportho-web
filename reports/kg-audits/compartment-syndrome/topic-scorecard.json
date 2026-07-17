@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-05T22:23:10.230Z",
+  "generatedAt": "2026-07-16T03:37:03.978Z",
   "auditorVersion": "1.0.0",
   "topicKey": "compartment-syndrome",
   "pilotKey": "compartment-syndrome-neighborhood",
   "displayName": "Compartment Syndrome",
   "dataSource": {
-    "neighborhood": "merged_draft",
+    "neighborhood": "database",
     "reportsLoaded": [
       "ontology-compiler-plan.json",
       "ontology-gap-report.json",
@@ -18,27 +18,30 @@
       "conflict-report.json",
       "agent-assignment-plan.json",
       "ontology-neighborhood-plan.json",
-      "evidence-packet.json"
+      "evidence-packet.json",
+      "database-proposals",
+      "database-neighborhood-snapshot",
+      "publication-readiness-database-state-reconciled"
     ],
     "reportsMissing": []
   },
-  "overallScore": 83,
+  "overallScore": 80,
   "categories": {
     "ontology_completeness": 44,
     "evidence_quality": 85,
-    "graph_integrity": 100,
+    "graph_integrity": 96,
     "shared_knowledge_reuse": 100,
     "relationship_quality": 46,
-    "claim_quality": 84,
-    "decision_point_quality": 69,
-    "metadata_quality": 90,
-    "provenance_quality": 100,
+    "claim_quality": 85,
+    "decision_point_quality": 85,
+    "metadata_quality": 86,
+    "provenance_quality": 96,
     "review_calibration": 100,
     "agent_performance": 92,
-    "compiler_quality": 84,
-    "educational_quality": 98,
-    "cross_neighborhood_consistency": 92,
-    "publication_readiness": 30
+    "compiler_quality": 85,
+    "educational_quality": 72,
+    "cross_neighborhood_consistency": 100,
+    "publication_readiness": 38
   },
   "publication": {
     "status": "NOT_READY",
@@ -47,12 +50,11 @@
       "17 proposals still awaiting human review",
       "9 items require attending review",
       "Claims and DPs are draft-only — publication gate must block verified consumption.",
-      "No approved canonical entities in database yet — proposals remain offline/spec.",
       "14 critical/high ontology gaps remain unresolved"
     ],
     "currentLevel": 5,
     "requiredLevel": 7,
-    "score": 30,
+    "score": 38,
     "deductions": [
       {
         "finding": "17 proposals still awaiting human review",
@@ -74,15 +76,6 @@
       },
       {
         "finding": "Claims and DPs are draft-only — publication gate must block verified consumption.",
-        "evidence": "publication-readiness.json blockers",
-        "reason": "Publication gate identified blocking condition.",
-        "severity": "high",
-        "category": "publication_readiness",
-        "suggestedFix": "[high] Leg Fasciotomy missing outbound at_risk_structure (0/1).",
-        "impact": 8
-      },
-      {
-        "finding": "No approved canonical entities in database yet — proposals remain offline/spec.",
         "evidence": "publication-readiness.json blockers",
         "reason": "Publication gate identified blocking condition.",
         "severity": "high",
@@ -113,7 +106,7 @@
     },
     {
       "finding": "Low evidence coverage (0% of proposals cite evidence)",
-      "evidence": "0/46 proposals have evidence_refs",
+      "evidence": "0/35 proposals have evidence_refs",
       "reason": "Every proposal should cite supporting evidence per factory contract.",
       "severity": "critical",
       "category": "evidence_quality",
@@ -145,12 +138,21 @@
       "impact": 15
     },
     {
-      "finding": "Missing decision point pattern: emergency_escalation",
-      "evidence": "0 decision points with pattern emergency_escalation",
-      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
+      "finding": "No educational claims in neighborhood",
+      "evidence": "merged draft claimCount = 0",
+      "reason": "Claims are the primary educational content layer for products.",
+      "severity": "critical",
+      "category": "claim_quality",
+      "suggestedFix": "Run claim-builder agent to generate evidence-backed atomic claims.",
+      "impact": 15
+    },
+    {
+      "finding": "No decision points in neighborhood",
+      "evidence": "merged draft decisionPointCount = 0",
+      "reason": "Decision points support clinical reasoning and operative safety pathways.",
       "severity": "critical",
       "category": "decision_point_quality",
-      "suggestedFix": "Add emergency_escalation decision point with attending-gated review.",
+      "suggestedFix": "Run decision-point-builder for operative_indication and nonoperative_eligible patterns.",
       "impact": 15
     },
     {
@@ -223,30 +225,27 @@
       "impact": 8
     },
     {
-      "finding": "1 high-risk relationships lack approved review status",
-      "evidence": "Predicates: treated_by",
-      "reason": "High-risk predicates require human review before publication.",
+      "finding": "Missing clinical edge: treated_by",
+      "evidence": "0 outbound treated_by edges from compartment-syndrome",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
       "severity": "high",
       "category": "relationship_quality",
-      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "affectedSlugs": [
+        "compartment-syndrome"
+      ],
+      "suggestedFix": "Add treated_by relationship via relationship-builder agent.",
       "impact": 8
     },
     {
-      "finding": "All claims remain generated_draft",
-      "evidence": "16/16 claims are unreviewed drafts",
-      "reason": "Draft claims cannot be consumed as verified educational content.",
+      "finding": "Primary entity missing metadata: curriculum_tags, board_relevance",
+      "evidence": "Entity compartment-syndrome metadata keys: slug, pilot, verified, curated_at, description, clinical_kind, staging_apply, curation_route, curation_rules, curation_scores, factory_version, maturity_target, staging_reviewer, review_packet_key, review_packet_label, clinical_verification, created_from_proposal_fingerprint, canonical_entity_id",
+      "reason": "Primary condition entities require educational and curriculum metadata.",
       "severity": "high",
-      "category": "claim_quality",
-      "suggestedFix": "Route claims through human review queue before publication.",
-      "impact": 8
-    },
-    {
-      "finding": "Insufficient evidence support on claim proposals",
-      "evidence": "0% of claim proposals cite evidence",
-      "reason": "Every claim should cite supporting evidence.",
-      "severity": "high",
-      "category": "claim_quality",
-      "suggestedFix": "Attach evidence_refs from evidence packet to each claim proposal.",
+      "category": "metadata_quality",
+      "affectedSlugs": [
+        "compartment-syndrome"
+      ],
+      "suggestedFix": "Run metadata-builder to populate clinical_kind, curriculum_tags, board_relevance.",
       "impact": 8
     }
   ],
@@ -277,39 +276,39 @@
     },
     {
       "priority": 5,
-      "action": "Add emergency_escalation decision point with attending-gated review.",
-      "category": "decision_point_quality",
-      "impact": "Missing decision point pattern: emergency_escalation"
+      "action": "Run claim-builder agent to generate evidence-backed atomic claims.",
+      "category": "claim_quality",
+      "impact": "No educational claims in neighborhood"
     },
     {
       "priority": 6,
+      "action": "Run decision-point-builder for operative_indication and nonoperative_eligible patterns.",
+      "category": "decision_point_quality",
+      "impact": "No decision points in neighborhood"
+    },
+    {
+      "priority": 7,
       "action": "[high] Leg Fasciotomy missing outbound at_risk_structure (0/1).",
       "category": "publication_readiness",
       "impact": "14 critical/high ontology gaps remain unresolved"
     },
     {
-      "priority": 7,
+      "priority": 8,
       "action": "Schedule gap-resolution work items from ontology-work-plan.json.",
       "category": "ontology_completeness",
       "impact": "8 high-priority ontology gaps"
     },
     {
-      "priority": 8,
+      "priority": 9,
       "action": "Run the matching builder agent for missing_relationship.",
       "category": "ontology_completeness",
       "impact": "Missing relationship requirements (9)"
     },
     {
-      "priority": 9,
+      "priority": 10,
       "action": "Run the matching builder agent for missing_claim.",
       "category": "ontology_completeness",
       "impact": "Missing claim requirements (9)"
-    },
-    {
-      "priority": 10,
-      "action": "Link has_classification and has_grade edges to a classification system.",
-      "category": "ontology_completeness",
-      "impact": "No classification system present"
     }
   ],
   "databaseModified": false

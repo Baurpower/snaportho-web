@@ -1,0 +1,309 @@
+{
+  "generatedAt": "2026-07-16T03:33:40.166Z",
+  "auditorVersion": "1.0.0",
+  "topicKey": "femoral-shaft-fracture",
+  "pilotKey": "femoral-shaft-fracture-neighborhood",
+  "displayName": "Femoral Shaft Fracture",
+  "dataSource": {
+    "neighborhood": "database",
+    "reportsLoaded": [
+      "ontology-compiler-plan.json",
+      "ontology-gap-report.json",
+      "ontology-work-plan.json",
+      "agent-execution-report.json",
+      "merged-neighborhood-draft.json",
+      "publication-readiness.json",
+      "ontology-auto-review.json",
+      "ontology-human-review-queue.json",
+      "conflict-report.json",
+      "agent-assignment-plan.json",
+      "ontology-neighborhood-plan.json",
+      "evidence-packet.json",
+      "database-proposals",
+      "database-neighborhood-snapshot",
+      "publication-readiness-database-state-reconciled"
+    ],
+    "reportsMissing": []
+  },
+  "overallScore": 81,
+  "categories": {
+    "ontology_completeness": 46,
+    "evidence_quality": 85,
+    "graph_integrity": 88,
+    "shared_knowledge_reuse": 98,
+    "relationship_quality": 65,
+    "claim_quality": 85,
+    "decision_point_quality": 85,
+    "metadata_quality": 88,
+    "provenance_quality": 96,
+    "review_calibration": 100,
+    "agent_performance": 92,
+    "compiler_quality": 83,
+    "educational_quality": 72,
+    "cross_neighborhood_consistency": 100,
+    "publication_readiness": 28
+  },
+  "publication": {
+    "status": "NOT_READY",
+    "ready": false,
+    "blockers": [
+      "18 proposals still awaiting human review",
+      "14 items require attending review",
+      "Claims and DPs are draft-only — publication gate must block verified consumption.",
+      "16 critical/high ontology gaps remain unresolved"
+    ],
+    "currentLevel": 5,
+    "requiredLevel": 7,
+    "score": 28,
+    "deductions": [
+      {
+        "finding": "18 proposals still awaiting human review",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[critical] Femoral Shaft Fracture neighborhood has 0/3 anatomy_structure entities.",
+        "impact": 8
+      },
+      {
+        "finding": "14 items require attending review",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[critical] Femoral Shaft Fracture neighborhood has 0/3 anatomy_structure entities.",
+        "impact": 8
+      },
+      {
+        "finding": "Claims and DPs are draft-only — publication gate must block verified consumption.",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[critical] Femoral Shaft Fracture neighborhood has 0/3 anatomy_structure entities.",
+        "impact": 8
+      },
+      {
+        "finding": "16 critical/high ontology gaps remain unresolved",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "critical",
+        "category": "publication_readiness",
+        "suggestedFix": "[critical] Femoral Shaft Fracture neighborhood has 0/3 anatomy_structure entities.",
+        "impact": 15
+      }
+    ]
+  },
+  "topFindings": [
+    {
+      "finding": "8 critical ontology gaps remain",
+      "evidence": "ontology-gap-report.json: gap-entity-neighbor-1, gap-rel-3, gap-rel-6",
+      "reason": "Required entities, relationships, claims, or decision points are missing per CKO §8–§9.",
+      "severity": "critical",
+      "category": "ontology_completeness",
+      "suggestedFix": "Resolve critical gaps via assigned factory agents before publication review.",
+      "impact": 15
+    },
+    {
+      "finding": "Low evidence coverage (0% of proposals cite evidence)",
+      "evidence": "0/81 proposals have evidence_refs",
+      "reason": "Every proposal should cite supporting evidence per factory contract.",
+      "severity": "critical",
+      "category": "evidence_quality",
+      "suggestedFix": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing clinical edge: has_classification",
+      "evidence": "0 outbound has_classification edges from femoral-shaft-fracture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "femoral-shaft-fracture"
+      ],
+      "suggestedFix": "Add has_classification relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "No educational claims in neighborhood",
+      "evidence": "merged draft claimCount = 0",
+      "reason": "Claims are the primary educational content layer for products.",
+      "severity": "critical",
+      "category": "claim_quality",
+      "suggestedFix": "Run claim-builder agent to generate evidence-backed atomic claims.",
+      "impact": 15
+    },
+    {
+      "finding": "No decision points in neighborhood",
+      "evidence": "merged draft decisionPointCount = 0",
+      "reason": "Decision points support clinical reasoning and operative safety pathways.",
+      "severity": "critical",
+      "category": "decision_point_quality",
+      "suggestedFix": "Run decision-point-builder for operative_indication and nonoperative_eligible patterns.",
+      "impact": 15
+    },
+    {
+      "finding": "16 critical/high ontology gaps remain unresolved",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "critical",
+      "category": "publication_readiness",
+      "suggestedFix": "[critical] Femoral Shaft Fracture neighborhood has 0/3 anatomy_structure entities.",
+      "impact": 15
+    },
+    {
+      "finding": "8 high-priority ontology gaps",
+      "evidence": "Gap kinds: missing_entity, missing_relationship, missing_claim",
+      "reason": "High-priority gaps block maturity level advancement.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 12,
+      "suggestedFix": "Schedule gap-resolution work items from ontology-work-plan.json."
+    },
+    {
+      "finding": "Missing relationship requirements (10)",
+      "evidence": "10 gaps of kind missing_relationship",
+      "reason": "Ontology contract requires complete relationship coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 8,
+      "suggestedFix": "Run the matching builder agent for missing_relationship."
+    },
+    {
+      "finding": "No classification system present",
+      "evidence": "0 classification entities in merged draft",
+      "reason": "Fracture diagnoses require classification when one exists clinically.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "suggestedFix": "Link has_classification and has_grade edges to a classification system.",
+      "impact": 8
+    },
+    {
+      "finding": "1 merge conflicts detected",
+      "evidence": "conflict-report.json: Conflicting DP pattern femoral-shaft-fracture|operative_indication: dp-fsf-im-nail-operative vs dp-fsf-open-fracture",
+      "reason": "Unresolved merge conflicts indicate inconsistent agent outputs.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "suggestedFix": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: at_risk_structure",
+      "evidence": "0 outbound at_risk_structure edges from femoral-shaft-fracture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "femoral-shaft-fracture"
+      ],
+      "suggestedFix": "Add at_risk_structure relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: treated_by",
+      "evidence": "0 outbound treated_by edges from femoral-shaft-fracture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "femoral-shaft-fracture"
+      ],
+      "suggestedFix": "Add treated_by relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Primary entity missing metadata: curriculum_tags, board_relevance",
+      "evidence": "Entity femoral-shaft-fracture metadata keys: slug, pilot, verified, curated_at, description, clinical_kind, staging_apply, curation_route, curation_rules, curation_scores, factory_version, maturity_target, staging_reviewer, review_packet_key, review_packet_label, clinical_verification, created_from_proposal_fingerprint, canonical_entity_id",
+      "reason": "Primary condition entities require educational and curriculum metadata.",
+      "severity": "high",
+      "category": "metadata_quality",
+      "affectedSlugs": [
+        "femoral-shaft-fracture"
+      ],
+      "suggestedFix": "Run metadata-builder to populate clinical_kind, curriculum_tags, board_relevance.",
+      "impact": 8
+    },
+    {
+      "finding": "7 underperforming agent(s)",
+      "evidence": "asset-linker (F), decision-point-builder (D), metadata-builder (F), duplicate-detector (F), quality-scorer (F), conflict-resolver (F), publication-validator (F)",
+      "reason": "Low-grading agents reduce neighborhood quality and increase review burden.",
+      "severity": "high",
+      "category": "agent_performance",
+      "suggestedFix": "Review agent report cards and address weaknesses per agent.",
+      "impact": 8
+    },
+    {
+      "finding": "1 merge conflicts",
+      "evidence": "conflict-report.json or merged draft conflicts array",
+      "reason": "Merge engine should resolve or surface all agent output conflicts.",
+      "severity": "high",
+      "category": "compiler_quality",
+      "suggestedFix": "Review conflict-report.json and re-run merge with conflict-resolver output.",
+      "impact": 8
+    }
+  ],
+  "prioritizedRecommendations": [
+    {
+      "priority": 1,
+      "action": "Resolve critical gaps via assigned factory agents before publication review.",
+      "category": "ontology_completeness",
+      "impact": "8 critical ontology gaps remain"
+    },
+    {
+      "priority": 2,
+      "action": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
+      "category": "evidence_quality",
+      "impact": "Low evidence coverage (0% of proposals cite evidence)"
+    },
+    {
+      "priority": 3,
+      "action": "Add has_classification relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: has_classification"
+    },
+    {
+      "priority": 4,
+      "action": "Run claim-builder agent to generate evidence-backed atomic claims.",
+      "category": "claim_quality",
+      "impact": "No educational claims in neighborhood"
+    },
+    {
+      "priority": 5,
+      "action": "Run decision-point-builder for operative_indication and nonoperative_eligible patterns.",
+      "category": "decision_point_quality",
+      "impact": "No decision points in neighborhood"
+    },
+    {
+      "priority": 6,
+      "action": "[critical] Femoral Shaft Fracture neighborhood has 0/3 anatomy_structure entities.",
+      "category": "publication_readiness",
+      "impact": "16 critical/high ontology gaps remain unresolved"
+    },
+    {
+      "priority": 7,
+      "action": "Schedule gap-resolution work items from ontology-work-plan.json.",
+      "category": "ontology_completeness",
+      "impact": "8 high-priority ontology gaps"
+    },
+    {
+      "priority": 8,
+      "action": "Run the matching builder agent for missing_relationship.",
+      "category": "ontology_completeness",
+      "impact": "Missing relationship requirements (10)"
+    },
+    {
+      "priority": 9,
+      "action": "Link has_classification and has_grade edges to a classification system.",
+      "category": "ontology_completeness",
+      "impact": "No classification system present"
+    },
+    {
+      "priority": 10,
+      "action": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "category": "graph_integrity",
+      "impact": "1 merge conflicts detected"
+    }
+  ],
+  "databaseModified": false
+}

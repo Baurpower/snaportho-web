@@ -1,0 +1,3195 @@
+[
+  {
+    "proposal_fingerprint": "rel|weight-bearing-radiographs|commonly_confused_with|non-weight-bearing-radiographs",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "weight-bearing-radiographs -[commonly_confused_with]-> non-weight-bearing-radiographs",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|weight-bearing-radiographs|commonly_confused_with|non-weight-bearing-radiographs",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "weight-bearing-radiographs",
+      "subject_entity_type": "diagnostic_test",
+      "object_slug": "non-weight-bearing-radiographs",
+      "object_entity_type": "diagnostic_test",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|non-weight-bearing-radiographs|commonly_confused_with|weight-bearing-radiographs",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "non-weight-bearing-radiographs -[commonly_confused_with]-> weight-bearing-radiographs",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|non-weight-bearing-radiographs|commonly_confused_with|weight-bearing-radiographs",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "non-weight-bearing-radiographs",
+      "subject_entity_type": "diagnostic_test",
+      "object_slug": "weight-bearing-radiographs",
+      "object_entity_type": "diagnostic_test",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|bohler-angle|commonly_confused_with|gissane-angle",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "bohler-angle -[commonly_confused_with]-> gissane-angle",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|bohler-angle|commonly_confused_with|gissane-angle",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "bohler-angle",
+      "subject_entity_type": "biomechanics_concept",
+      "object_slug": "gissane-angle",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|gissane-angle|commonly_confused_with|bohler-angle",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "gissane-angle -[commonly_confused_with]-> bohler-angle",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|gissane-angle|commonly_confused_with|bohler-angle",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "gissane-angle",
+      "subject_entity_type": "biomechanics_concept",
+      "object_slug": "bohler-angle",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|tibiofibular-overlap|commonly_confused_with|tibiofibular-clear-space",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "tibiofibular-overlap -[commonly_confused_with]-> tibiofibular-clear-space",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|tibiofibular-overlap|commonly_confused_with|tibiofibular-clear-space",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "tibiofibular-overlap",
+      "subject_entity_type": "biomechanics_concept",
+      "object_slug": "tibiofibular-clear-space",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|tibiofibular-clear-space|commonly_confused_with|tibiofibular-overlap",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "tibiofibular-clear-space -[commonly_confused_with]-> tibiofibular-overlap",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|tibiofibular-clear-space|commonly_confused_with|tibiofibular-overlap",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "tibiofibular-clear-space",
+      "subject_entity_type": "biomechanics_concept",
+      "object_slug": "tibiofibular-overlap",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|radial-height|commonly_confused_with|radial-height-loss",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "radial-height -[commonly_confused_with]-> radial-height-loss",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|radial-height|commonly_confused_with|radial-height-loss",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "radial-height",
+      "subject_entity_type": "biomechanics_concept",
+      "object_slug": "radial-height-loss",
+      "object_entity_type": "imaging_finding",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|decreased-bohler-angle|explains_instability|bohler-angle",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "decreased-bohler-angle -[explains_instability]-> bohler-angle",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|decreased-bohler-angle|explains_instability|bohler-angle",
+    "alternatives": [],
+    "evidence_summary": "Relationship explains_instability",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "decreased-bohler-angle",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "bohler-angle",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|widened-medial-clear-space|explains_instability|medial-clear-space",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "widened-medial-clear-space -[explains_instability]-> medial-clear-space",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|widened-medial-clear-space|explains_instability|medial-clear-space",
+    "alternatives": [],
+    "evidence_summary": "Relationship explains_instability",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "widened-medial-clear-space",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "medial-clear-space",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|widened-tibiofibular-clear-space|explains_instability|tibiofibular-clear-space",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "widened-tibiofibular-clear-space -[explains_instability]-> tibiofibular-clear-space",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|widened-tibiofibular-clear-space|explains_instability|tibiofibular-clear-space",
+    "alternatives": [],
+    "evidence_summary": "Relationship explains_instability",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "widened-tibiofibular-clear-space",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "tibiofibular-clear-space",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|dorsal-angulation-distal-radius|explains_instability|volar-tilt",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "dorsal-angulation-distal-radius -[explains_instability]-> volar-tilt",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|dorsal-angulation-distal-radius|explains_instability|volar-tilt",
+    "alternatives": [],
+    "evidence_summary": "Relationship explains_instability",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "dorsal-angulation-distal-radius",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "volar-tilt",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|insall-salvati-ratio|commonly_confused_with|caton-deschamps-index",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "insall-salvati-ratio -[commonly_confused_with]-> caton-deschamps-index",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|insall-salvati-ratio|commonly_confused_with|caton-deschamps-index",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "insall-salvati-ratio",
+      "subject_entity_type": "biomechanics_concept",
+      "object_slug": "caton-deschamps-index",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|caton-deschamps-index|commonly_confused_with|insall-salvati-ratio",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "caton-deschamps-index -[commonly_confused_with]-> insall-salvati-ratio",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|caton-deschamps-index|commonly_confused_with|insall-salvati-ratio",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "caton-deschamps-index",
+      "subject_entity_type": "biomechanics_concept",
+      "object_slug": "insall-salvati-ratio",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|patella-alta|explains_instability|insall-salvati-ratio",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "patella-alta -[explains_instability]-> insall-salvati-ratio",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|patella-alta|explains_instability|insall-salvati-ratio",
+    "alternatives": [],
+    "evidence_summary": "Relationship explains_instability",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "patella-alta",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "insall-salvati-ratio",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|cam-morphology-alpha-angle|explains_instability|alpha-angle-hip",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "cam-morphology-alpha-angle -[explains_instability]-> alpha-angle-hip",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|cam-morphology-alpha-angle|explains_instability|alpha-angle-hip",
+    "alternatives": [],
+    "evidence_summary": "Relationship explains_instability",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "cam-morphology-alpha-angle",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "alpha-angle-hip",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|acetabular-undercoverage|explains_instability|lateral-center-edge-angle",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "acetabular-undercoverage -[explains_instability]-> lateral-center-edge-angle",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|acetabular-undercoverage|explains_instability|lateral-center-edge-angle",
+    "alternatives": [],
+    "evidence_summary": "Relationship explains_instability",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "acetabular-undercoverage",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "lateral-center-edge-angle",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|superior-humeral-migration|explains_instability|acromiohumeral-interval",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "superior-humeral-migration -[explains_instability]-> acromiohumeral-interval",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|superior-humeral-migration|explains_instability|acromiohumeral-interval",
+    "alternatives": [],
+    "evidence_summary": "Relationship explains_instability",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "superior-humeral-migration",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "acromiohumeral-interval",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|pelvic-incidence|commonly_confused_with|pelvic-tilt-spinopelvic",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "pelvic-incidence -[commonly_confused_with]-> pelvic-tilt-spinopelvic",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|pelvic-incidence|commonly_confused_with|pelvic-tilt-spinopelvic",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "pelvic-incidence",
+      "subject_entity_type": "biomechanics_concept",
+      "object_slug": "pelvic-tilt-spinopelvic",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|pelvic-tilt-spinopelvic|commonly_confused_with|pelvic-incidence",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "pelvic-tilt-spinopelvic -[commonly_confused_with]-> pelvic-incidence",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|pelvic-tilt-spinopelvic|commonly_confused_with|pelvic-incidence",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "pelvic-tilt-spinopelvic",
+      "subject_entity_type": "biomechanics_concept",
+      "object_slug": "pelvic-incidence",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|sacral-slope|commonly_confused_with|pelvic-tilt-spinopelvic",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "sacral-slope -[commonly_confused_with]-> pelvic-tilt-spinopelvic",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|sacral-slope|commonly_confused_with|pelvic-tilt-spinopelvic",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "sacral-slope",
+      "subject_entity_type": "biomechanics_concept",
+      "object_slug": "pelvic-tilt-spinopelvic",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|spinopelvic-mismatch|explains_instability|pelvic-incidence",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "spinopelvic-mismatch -[explains_instability]-> pelvic-incidence",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|spinopelvic-mismatch|explains_instability|pelvic-incidence",
+    "alternatives": [],
+    "evidence_summary": "Relationship explains_instability",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "spinopelvic-mismatch",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "pelvic-incidence",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:15:00.509Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|lateral-center-edge-angle|commonly_confused_with|center-edge-angle-pediatric",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "lateral-center-edge-angle -[commonly_confused_with]-> center-edge-angle-pediatric",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|lateral-center-edge-angle|commonly_confused_with|center-edge-angle-pediatric",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "lateral-center-edge-angle",
+      "subject_entity_type": "biomechanics_concept",
+      "object_slug": "center-edge-angle-pediatric",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|center-edge-angle-pediatric|commonly_confused_with|lateral-center-edge-angle",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "center-edge-angle-pediatric -[commonly_confused_with]-> lateral-center-edge-angle",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|center-edge-angle-pediatric|commonly_confused_with|lateral-center-edge-angle",
+    "alternatives": [],
+    "evidence_summary": "Relationship commonly_confused_with",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "center-edge-angle-pediatric",
+      "subject_entity_type": "biomechanics_concept",
+      "object_slug": "lateral-center-edge-angle",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|positive-klein-line|explains_instability|klein-line",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "positive-klein-line -[explains_instability]-> klein-line",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|positive-klein-line|explains_instability|klein-line",
+    "alternatives": [],
+    "evidence_summary": "Relationship explains_instability",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "positive-klein-line",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "klein-line",
+      "object_entity_type": "biomechanics_concept",
+      "relationship_metadata": {
+        "relevance_reason": "imaging_radiographic_measurements",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "oite",
+          "caseprep",
+          "brobot",
+          "trauma",
+          "sports",
+          "recon",
+          "peds",
+          "spine"
+        ],
+        "reusable": true,
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-orthogonal",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-orthogonal",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-orthogonal",
+      "claim_type": "imaging_point",
+      "claim_text": "Obtain adequate orthogonal radiographs before escalating to advanced imaging when the clinical question is osseous alignment or fracture pattern.",
+      "primary_entity_slug": "standard-radiographic-views",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-weight-bearing",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-weight-bearing",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-weight-bearing",
+      "claim_type": "imaging_point",
+      "claim_text": "Weight-bearing radiographs answer functional alignment questions that non-weight-bearing studies can understate.",
+      "primary_entity_slug": "weight-bearing-radiographs",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "oite",
+        "recon"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-stress",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-stress",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-stress",
+      "claim_type": "imaging_point",
+      "claim_text": "Stress radiographs are reserved for dynamic instability questions not answered by static views.",
+      "primary_entity_slug": "stress-radiographs",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "sports"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-escalation",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-escalation",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-escalation",
+      "claim_type": "fact",
+      "claim_text": "Imaging escalation is driven by the unresolved clinical question, not by modality availability alone.",
+      "primary_entity_slug": "imaging-escalation-pathway",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-ct",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-ct",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-ct",
+      "claim_type": "fact",
+      "claim_text": "CT is used for multiplanar osseous mapping and measurement when radiographs incompletely define articular or complex fracture morphology.",
+      "primary_entity_slug": "ct-musculoskeletal-imaging",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "or",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-mri",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-mri",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-mri",
+      "claim_type": "fact",
+      "claim_text": "MRI is preferred when soft-tissue, cartilage, marrow, or neural integrity changes management.",
+      "primary_entity_slug": "mri-musculoskeletal-imaging",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "sports",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-bohler",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-bohler",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-bohler",
+      "claim_type": "imaging_point",
+      "claim_text": "Böhler angle is measured on a true lateral hindfoot radiograph and reduced values support calcaneal compression assessment.",
+      "primary_entity_slug": "bohler-angle",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "trauma",
+        "oite",
+        "caseprep"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-gissane",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-gissane",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-gissane",
+      "claim_type": "imaging_point",
+      "claim_text": "Gissane angle complements Böhler angle for posterior facet geometry and should not be used interchangeably.",
+      "primary_entity_slug": "gissane-angle",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "trauma",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-ahl",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-ahl",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-ahl",
+      "claim_type": "imaging_point",
+      "claim_text": "On a true lateral pediatric elbow radiograph, the anterior humeral line relationship to the capitellum screens extension-type supracondylar displacement.",
+      "primary_entity_slug": "anterior-humeral-line",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "peds",
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-rcl",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-rcl",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-rcl",
+      "claim_type": "board_trap",
+      "claim_text": "The radiocapitellar line should intersect the capitellum on both AP and lateral views; a normal relationship on one view does not exclude dislocation.",
+      "primary_entity_slug": "radiocapitellar-line",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "peds",
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-dr-params",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-dr-params",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-dr-params",
+      "claim_type": "imaging_point",
+      "claim_text": "Distal radius radiographic assessment includes volar tilt, radial inclination, radial height, and ulnar variance with technique-matched normals.",
+      "primary_entity_slug": "volar-tilt",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "trauma",
+        "hand",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-mortise",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-mortise",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-mortise",
+      "claim_type": "imaging_point",
+      "claim_text": "Ankle mortise interpretation includes medial clear space, tibiofibular clear space, and tibiofibular overlap using consistent landmarks.",
+      "primary_entity_slug": "medial-clear-space",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "trauma",
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-is-cd",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-is-cd",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-is-cd",
+      "claim_type": "imaging_point",
+      "claim_text": "Patellar height ratios are method-specific; Insall-Salvati and Caton-Deschamps are not interchangeable without stating the method.",
+      "primary_entity_slug": "insall-salvati-ratio",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "sports",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-tttg",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-tttg",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-tttg",
+      "claim_type": "imaging_point",
+      "claim_text": "TT-TG distance requires standardized axial landmarks and should be interpreted with trochlear morphology and soft-tissue stabilizers.",
+      "primary_entity_slug": "tt-tg-distance",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "sports",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-alpha",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-alpha",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-alpha",
+      "claim_type": "imaging_point",
+      "claim_text": "Alpha angle thresholds are plane- and source-dependent; report the imaging plane with the numeric value.",
+      "primary_entity_slug": "alpha-angle-hip",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "sports",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-lcea",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-lcea",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-lcea",
+      "claim_type": "imaging_point",
+      "claim_text": "Lateral center-edge and Tönnis angles describe acetabular coverage and inclination and must use a standardized AP pelvis.",
+      "primary_entity_slug": "lateral-center-edge-angle",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "sports",
+        "recon",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-ahi",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-ahi",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-ahi",
+      "claim_type": "imaging_point",
+      "claim_text": "Reduced acromiohumeral interval supports superior humeral migration and massive cuff deficiency assessment, not isolated impingement diagnosis.",
+      "primary_entity_slug": "acromiohumeral-interval",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "sports",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-tha",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-tha",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-tha",
+      "claim_type": "imaging_point",
+      "claim_text": "THA radiographic quality metrics include cup inclination, cup anteversion, offset, hip center, and leg-length relationships.",
+      "primary_entity_slug": "cup-inclination",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "recon",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-tka-align",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-tka-align",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-tka-align",
+      "claim_type": "imaging_point",
+      "claim_text": "Mechanical alignment targets are planning philosophies; report the reference axis and component corridor used.",
+      "primary_entity_slug": "mechanical-alignment-arthroplasty",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "recon",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-cobb",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-cobb",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-cobb",
+      "claim_type": "imaging_point",
+      "claim_text": "Cobb angle requires identifiable end vertebrae on a standing radiograph and remains a draft threshold until specialist review.",
+      "primary_entity_slug": "cobb-angle",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "spine",
+        "peds",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-pi",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-pi",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-pi",
+      "claim_type": "fact",
+      "claim_text": "Pelvic incidence is a morphologic constant that frames pelvic tilt and sacral slope relationships in sagittal analysis.",
+      "primary_entity_slug": "pelvic-incidence",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "spine",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-sva",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-sva",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-sva",
+      "claim_type": "imaging_point",
+      "claim_text": "Sagittal vertical axis quantifies global sagittal alignment and must be age-contextualized before treatment thresholds are applied.",
+      "primary_entity_slug": "sagittal-vertical-axis",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "spine",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-klein",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-klein",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-klein",
+      "claim_type": "board_trap",
+      "claim_text": "A Klein line that misses the epiphysis is concerning for SCFE, but a normal Klein line does not exclude mild slip; use frog-lateral comparison.",
+      "primary_entity_slug": "klein-line",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "peds",
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-ai",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-ai",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-ai",
+      "claim_type": "imaging_point",
+      "claim_text": "Acetabular index norms are age-dependent; adult center-edge thresholds must not be applied to infants without adjustment.",
+      "primary_entity_slug": "acetabular-index",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "peds",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-reliability",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-reliability",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-reliability",
+      "claim_type": "fact",
+      "claim_text": "Quantitative thresholds require units, population context, measurement method, and source version before publication.",
+      "primary_entity_slug": "imaging-measurement-reliability",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite",
+        "brobot",
+        "caseprep"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-pitfalls",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-pitfalls",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-pitfalls",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Projection error, rotation, and nonstandard landmarks are common causes of false-positive measurement abnormalities.",
+      "primary_entity_slug": "measurement-pitfalls",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "oite",
+        "caseprep"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-irm-treatment",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-irm-treatment",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; numeric thresholds require human review; pediatric/spine thresholds require specialist review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-irm-treatment",
+      "claim_type": "clinical_script",
+      "claim_text": "State how each abnormal measurement changes the immediate plan: observe, protect, reduce, image further, or operate.",
+      "primary_entity_slug": "imaging-to-treatment-relationship",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "caseprep",
+        "brobot"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-irm-inadequate-views",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-irm-inadequate-views",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; thresholds and pediatric/spine routes require specialist/human review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-irm-inadequate-views",
+      "subject_entity_slug": "standard-radiographic-views",
+      "pattern_type": "imaging_adequacy",
+      "trigger": "Key anatomy is rotated, truncated, or not profiled on the initial radiographs",
+      "action": "Repeat orthogonal or indicated special views before definitive measurement or disposition",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-irm-escalate-ct",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-irm-escalate-ct",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; thresholds and pediatric/spine routes require specialist/human review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-irm-escalate-ct",
+      "subject_entity_slug": "imaging-escalation-pathway",
+      "pattern_type": "modality_escalation",
+      "trigger": "Radiographs leave articular surface, column, or multiplanar morphology unresolved and management depends on that detail",
+      "action": "Escalate to CT with multiplanar reconstruction and document the unanswered clinical question",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-irm-escalate-mri",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-irm-escalate-mri",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; thresholds and pediatric/spine routes require specialist/human review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-irm-escalate-mri",
+      "subject_entity_slug": "mri-musculoskeletal-imaging",
+      "pattern_type": "modality_escalation",
+      "trigger": "Soft-tissue, cartilage, neural, or occult injury findings would change immobilization, surgery, or clearance",
+      "action": "Obtain MRI when safe and available; do not delay limb- or cord-threatening care for elective advanced imaging",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-irm-bohler",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-irm-bohler",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; thresholds and pediatric/spine routes require specialist/human review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-irm-bohler",
+      "subject_entity_slug": "bohler-angle",
+      "pattern_type": "measurement_threshold",
+      "trigger": "True lateral hindfoot radiograph shows a decreased Böhler angle after calcaneal injury",
+      "action": "Treat as evidence of calcaneal compression; complete hindfoot series/CT as indicated and route numeric threshold confirmation to human review",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-irm-mortise",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-irm-mortise",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; thresholds and pediatric/spine routes require specialist/human review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-irm-mortise",
+      "subject_entity_slug": "medial-clear-space",
+      "pattern_type": "measurement_threshold",
+      "trigger": "Mortise radiograph shows widened medial clear space or syndesmotic parameters outside method-specific norms",
+      "action": "Protect the ankle, consider stress views or advanced imaging, and escalate for instability management after threshold review",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-irm-dr-instability",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-irm-dr-instability",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; thresholds and pediatric/spine routes require specialist/human review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-irm-dr-instability",
+      "subject_entity_slug": "volar-tilt",
+      "pattern_type": "measurement_threshold",
+      "trigger": "Distal radius parameters show dorsal angulation, height loss, or inclination change beyond accepted draft thresholds",
+      "action": "Assess stability criteria, obtain comparison/post-reduction films, and route numeric cutoffs to human review before publication",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-irm-ahl",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-irm-ahl",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; thresholds and pediatric/spine routes require specialist/human review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-irm-ahl",
+      "subject_entity_slug": "anterior-humeral-line",
+      "pattern_type": "pediatric_threshold",
+      "trigger": "Pediatric lateral elbow radiograph shows anterior humeral line not intersecting the expected capitellar third",
+      "action": "Treat as potential extension-type displacement, obtain adequate orthogonal views, and route to pediatric specialist review for threshold confirmation",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-irm-klein",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-irm-klein",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; thresholds and pediatric/spine routes require specialist/human review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-irm-klein",
+      "subject_entity_slug": "klein-line",
+      "pattern_type": "pediatric_threshold",
+      "trigger": "Klein line fails to intersect the lateral femoral epiphysis or frog-lateral comparison is concerning for SCFE",
+      "action": "Make the patient non-weight-bearing, obtain indicated orthogonal/frog-lateral imaging, and escalate urgently with pediatric specialist review",
+      "urgency": "emergent",
+      "safety_criticality": "emergency",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-irm-ddh",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-irm-ddh",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; thresholds and pediatric/spine routes require specialist/human review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-irm-ddh",
+      "subject_entity_slug": "acetabular-index",
+      "pattern_type": "pediatric_threshold",
+      "trigger": "Age-adjusted acetabular index or migration percentage exceeds draft surveillance thresholds",
+      "action": "Continue hip surveillance pathway and route all pediatric numeric thresholds to specialist review before treatment decisions are published",
+      "urgency": "routine",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-irm-tttg",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-irm-tttg",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; thresholds and pediatric/spine routes require specialist/human review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-irm-tttg",
+      "subject_entity_slug": "tt-tg-distance",
+      "pattern_type": "measurement_threshold",
+      "trigger": "Axial CT/MRI TT-TG exceeds draft method-specific risk thresholds in a patellar instability evaluation",
+      "action": "Interpret with trochlear dysplasia and soft-tissue factors; keep numeric cutoff under human review",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-irm-lcea",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-irm-lcea",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; thresholds and pediatric/spine routes require specialist/human review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-irm-lcea",
+      "subject_entity_slug": "lateral-center-edge-angle",
+      "pattern_type": "measurement_threshold",
+      "trigger": "AP pelvis shows reduced lateral center-edge angle or elevated Tönnis angle suggesting undercoverage",
+      "action": "Correlate with clinical impingement/instability exam and keep coverage thresholds under human review",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-irm-cup",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-irm-cup",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; thresholds and pediatric/spine routes require specialist/human review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-irm-cup",
+      "subject_entity_slug": "cup-inclination",
+      "pattern_type": "measurement_threshold",
+      "trigger": "Postoperative THA radiographs show cup inclination or anteversion outside the planned corridor",
+      "action": "Assess dislocation risk factors, obtain dedicated version imaging if needed, and keep safe-zone numbers under attending review",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-irm-cobb",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-irm-cobb",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; thresholds and pediatric/spine routes require specialist/human review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-irm-cobb",
+      "subject_entity_slug": "cobb-angle",
+      "pattern_type": "spine_threshold",
+      "trigger": "Standing spine radiograph demonstrates a curve magnitude near observation-versus-treatment draft thresholds",
+      "action": "Confirm end vertebrae, technique, and age context; route all spine thresholds to specialist review",
+      "urgency": "routine",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-irm-sva",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-irm-sva",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; thresholds and pediatric/spine routes require specialist/human review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-irm-sva",
+      "subject_entity_slug": "sagittal-vertical-axis",
+      "pattern_type": "spine_threshold",
+      "trigger": "Global sagittal parameters show positive sagittal imbalance relevant to reconstructive planning",
+      "action": "Complete spinopelvic set (PI, PT, SS, SVA) and require spine specialist review before publishing numeric targets",
+      "urgency": "routine",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-irm-pitfall",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-irm-pitfall",
+    "alternatives": [],
+    "evidence_summary": "Imaging & Radiographic Measurements manufacture; thresholds and pediatric/spine routes require specialist/human review",
+    "metadata": {
+      "pilot": "imaging-radiographic-measurements-neighborhood",
+      "review_packet_key": "pilot:imaging-radiographic-measurements-neighborhood",
+      "review_packet_label": "Imaging & Radiographic Measurements Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-irm-pitfall",
+      "subject_entity_slug": "measurement-pitfalls",
+      "pattern_type": "measurement_validity",
+      "trigger": "Measurement appears abnormal but projection, rotation, or landmark selection is nonstandard",
+      "action": "Reject the numeric result, repeat standardized imaging, and document why the measurement is invalid",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-09T04:15:00.510Z"
+    }
+  }
+]

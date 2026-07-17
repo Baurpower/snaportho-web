@@ -4,7 +4,7 @@ exports.buildCurriculumExplainMessages = buildCurriculumExplainMessages;
 exports.renderCurriculumPriorStudy = renderCurriculumPriorStudy;
 exports.buildCurriculumChatMessages = buildCurriculumChatMessages;
 const EMPHASIS_GUIDANCE = {
-    high_yield: 'Emphasis: HIGH YIELD — fastest useful review. Prioritize In 30 Seconds, Must Know, and Common Mistakes. Keep bullets ultra-scannable.',
+    high_yield: 'Emphasis: HIGH YIELD — fastest useful review. Prioritize In 30 Seconds, Must Know, and common learner traps. Keep bullets ultra-scannable.',
     clinical: 'Emphasis: CLINICAL — real patient care and safety. Prioritize practical pearls, decision points, complications/danger zones, and attending-style questions.',
     boards: 'Emphasis: BOARDS — OITE/boards style. Prioritize testable facts, common traps, and attending/boards-style questions.',
     or: 'Emphasis: OR — intraoperative relevance. Prioritize what attendings ask, resident role/scripts, and procedure/anesthesia implications.',

@@ -1,11 +1,20 @@
 {
   "category": "claim_quality",
   "label": "Claim Quality",
-  "score": 84,
+  "score": 76,
   "deductions": [
     {
+      "finding": "Only 0 L1 (board-critical) claims",
+      "evidence": "L1 count 0, recommended minimum 3",
+      "reason": "L1 claims anchor board-relevant learning objectives.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Promote high-yield Orthobullets and Anki signals to L1 claims.",
+      "impact": 8
+    },
+    {
       "finding": "All claims remain generated_draft",
-      "evidence": "12/12 claims are unreviewed drafts",
+      "evidence": "2/2 claims are unreviewed drafts",
       "reason": "Draft claims cannot be consumed as verified educational content.",
       "severity": "high",
       "category": "claim_quality",
@@ -23,13 +32,14 @@
     }
   ],
   "metrics": {
-    "claimCount": 12,
-    "l1ClaimCount": 9,
+    "claimCount": 2,
+    "l1ClaimCount": 0,
     "atomicityScore": 1,
     "ambiguityRate": 0,
     "evidenceSupportRate": 0
   },
   "recommendations": [
+    "Promote high-yield Orthobullets and Anki signals to L1 claims.",
     "Route claims through human review queue before publication.",
     "Attach evidence_refs from evidence packet to each claim proposal."
   ]

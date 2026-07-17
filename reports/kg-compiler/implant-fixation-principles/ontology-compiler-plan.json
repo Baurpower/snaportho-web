@@ -2,13 +2,13 @@
   "topicKey": "implant-fixation-principles",
   "pilotKey": "implant-fixation-principles-neighborhood",
   "displayName": "Implant Fixation Principles",
-  "generatedAt": "2026-07-05T23:29:15.210Z",
+  "generatedAt": "2026-07-16T02:41:49.409Z",
   "stages": [
     {
       "stage": 1,
       "name": "Neighborhood Resolution",
       "status": "completed",
-      "summary": "Resolved 3 entities from canonical DB for Implant Fixation Principles.",
+      "summary": "Resolved 9 entities from canonical DB for Implant Fixation Principles.",
       "outputs": [
         "neighborhood_plan"
       ]
@@ -26,7 +26,7 @@
       "stage": 3,
       "name": "Gap Analysis",
       "status": "completed",
-      "summary": "Identified 15 gaps across 3 kinds.",
+      "summary": "Identified 19 gaps across 4 kinds.",
       "outputs": [
         "ontology-gap-report.json"
       ]
@@ -35,7 +35,7 @@
       "stage": 4,
       "name": "Work Planning",
       "status": "completed",
-      "summary": "Scheduled 8 work items for 8 registered agents.",
+      "summary": "Scheduled 9 work items for 9 registered agents.",
       "outputs": [
         "ontology-work-plan.json",
         "agent-assignment-plan.json",
@@ -48,7 +48,7 @@
       "stage": 5,
       "name": "Agent Orchestration",
       "status": "completed",
-      "summary": "Executed 8/8 agents; 91 unique proposals; 0 failed.",
+      "summary": "Executed 9/9 agents; 89 unique proposals; 0 failed.",
       "outputs": [
         "agent-execution-report.json",
         "agent-output-summary.md",
@@ -68,7 +68,7 @@
       "stage": 6,
       "name": "Merge",
       "status": "completed",
-      "summary": "Merged draft: 66 entities, 9 relationships; 0 conflicts.",
+      "summary": "Merged draft: 66 entities, 10 relationships; 0 conflicts.",
       "outputs": [
         "merged-neighborhood-draft.json",
         "conflict-report.json"
@@ -78,7 +78,7 @@
       "stage": 7,
       "name": "Intelligent Auto Review",
       "status": "completed",
-      "summary": "91.2% auto-approved; 8.8% escalated.",
+      "summary": "91% auto-approved; 9% escalated.",
       "outputs": [
         "ontology-auto-review.json"
       ]
@@ -103,27 +103,31 @@
     }
   ],
   "neighborhood": {
-    "entityCount": 3,
-    "relationshipCount": 0,
+    "entityCount": 9,
+    "relationshipCount": 10,
     "claimCount": 2,
     "decisionPointCount": 0
   },
   "gaps": {
-    "total": 15,
+    "total": 19,
     "byKind": {
-      "missing_relationship": 3,
-      "missing_claim": 10,
+      "missing_relationship": 9,
+      "missing_claim": 6,
+      "missing_entity": 2,
       "missing_asset_link": 2
     },
     "byPriority": {
-      "medium": 15
+      "high": 3,
+      "medium": 12,
+      "critical": 4
     }
   },
   "workPlan": {
-    "workItemCount": 8,
+    "workItemCount": 9,
     "agentsRequired": [
       "Relationship Builder",
       "Claim Builder",
+      "Clinical Entity Builder",
       "Asset Linker",
       "Conflict Resolver",
       "Quality Scorer",
@@ -133,6 +137,7 @@
     "agentIds": [
       "relationship-builder",
       "claim-builder",
+      "clinical-entity-builder",
       "asset-linker",
       "duplicate-detector",
       "quality-scorer",
@@ -448,16 +453,16 @@
     ]
   },
   "review": {
-    "totalProposals": 91,
-    "autoApproved": 83,
+    "totalProposals": 89,
+    "autoApproved": 81,
     "humanReview": 8,
-    "humanReviewPercent": 8.8
+    "humanReviewPercent": 9
   },
   "publication": {
     "currentMaturityLevel": 5,
     "requiredMaturityLevel": 8,
     "ready": false,
-    "blockerCount": 4
+    "blockerCount": 5
   },
   "constraints": {
     "databaseModified": false,

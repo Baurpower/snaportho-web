@@ -1,26 +1,10 @@
 {
   "category": "cross_neighborhood_consistency",
   "label": "Cross-Neighborhood Consistency",
-  "score": 92,
-  "deductions": [
-    {
-      "finding": "1 duplicate concepts across neighborhoods",
-      "evidence": "\"orif\": ankle-fracture/ankle-orif-fixation, distal-radius-fracture/distal-radius-orif-fixation",
-      "reason": "Same anatomical/clinical concepts should use shared canonical slugs across neighborhoods.",
-      "severity": "high",
-      "category": "cross_neighborhood_consistency",
-      "suggestedFix": "Consolidate to shared anatomy hubs; reference rather than recreate entities.",
-      "impact": 8
-    }
-  ],
+  "score": 100,
+  "deductions": [],
   "metrics": {
-    "neighborhoodsCompared": 12,
-    "duplicateConceptCount": 1,
-    "sharedAnatomySlugCount": 13,
-    "crossNeighborhoodReuseRate": 0.20967741935483872,
-    "terminologyMismatchCount": 1
+    "neighborhoodsCompared": 1
   },
-  "recommendations": [
-    "Consolidate to shared anatomy hubs; reference rather than recreate entities."
-  ]
+  "recommendations": []
 }

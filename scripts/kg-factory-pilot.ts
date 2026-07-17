@@ -38,6 +38,10 @@ import {
   buildTraumaFundamentalsProposalPacket,
   buildSurgicalApproachesProposalPacket,
   buildOrthopaedicAnatomyProposalPacket,
+  buildImagingMeasurementsProposalPacket,
+  buildImplantsInstrumentsProposalPacket,
+  buildComplicationsProposalPacket,
+  buildPostoperativeProtocolsProposalPacket,
 } from "./lib/education/kg-factory/proposal-builder.ts";
 import { listAdultReconstructionTopicKeys } from "./lib/education/kg-adult-reconstruction-topic-registry.ts";
 import { listHandWristFactoryTopicKeys } from "./lib/education/kg-hand-wrist-pilot-spec.ts";
@@ -86,6 +90,14 @@ function buildProposalPacket(topicKey: string) {
       return buildOrthopaedicAnatomyProposalPacket();
     case "trauma-fundamentals":
       return buildTraumaFundamentalsProposalPacket();
+    case "imaging-radiographic-measurements":
+      return buildImagingMeasurementsProposalPacket();
+    case "implants-instruments":
+      return buildImplantsInstrumentsProposalPacket();
+    case "complications":
+      return buildComplicationsProposalPacket();
+    case "postoperative-protocols":
+      return buildPostoperativeProtocolsProposalPacket();
     case "ankle-fracture":
       return buildAnkleProposalPacket();
     case "compartment-syndrome":

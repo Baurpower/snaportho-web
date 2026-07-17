@@ -1,0 +1,50 @@
+{
+  "ok": false,
+  "runDate": "2026-07-16",
+  "topicKey": "patellofemoral-arthroplasty",
+  "displayName": "Patellofemoral Arthroplasty",
+  "pilotKey": "patellofemoral-arthroplasty-neighborhood",
+  "priorState": "staging_applied",
+  "resultingState": "database_verification_blocked",
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "blockerClass": "human_review_required",
+  "automaticRepairAttempted": false,
+  "quarantinedPartialMemberships": 0,
+  "batchKey": "legacy-patellofemoral-arthroplasty-c6b8f9c08d31c209",
+  "packetHash": "c6b8f9c08d31c20970af904b25a1b05be6fbb2bd03a7ddcb4d21b989b3ede42c",
+  "expected": {
+    "approvedLoaded": 72,
+    "structuralProposals": 71,
+    "entities": 64,
+    "relationships": 6,
+    "curriculumBridges": 1,
+    "draftClaims": 1,
+    "draftDecisionPoints": 0
+  },
+  "resolved": {
+    "entities": 63,
+    "relationships": 6,
+    "curriculumBridges": 0
+  },
+  "discrepancyCount": 2,
+  "discrepancies": [
+    {
+      "fingerprint": "create|anatomy_structure|labrum",
+      "kind": "canonical_identity_mismatch",
+      "expected": "anatomy_structure/Acetabular Labrum",
+      "observed": "anatomy_structure/Glenoid Labrum"
+    },
+    {
+      "fingerprint": "bridge|adult-recon-patellofemoral-arthroplasty|patellofemoral-arthroplasty",
+      "kind": "bridge_endpoint_cardinality",
+      "expected": "one curriculum node adult-recon-patellofemoral-arthroplasty and one entity patellofemoral-arthroplasty",
+      "observed": "0 node(s), 1 entity row(s)"
+    }
+  ],
+  "exactNextAction": "resolve_canonical_identity",
+  "evidence": {
+    "applyPath": "reports/kg-pilots/patellofemoral-arthroplasty-staging-apply-result.json",
+    "curatedPath": "reports/kg-pilots/patellofemoral-arthroplasty-curated-proposals.json"
+  }
+}

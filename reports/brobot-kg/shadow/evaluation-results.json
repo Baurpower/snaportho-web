@@ -1,0 +1,34 @@
+{
+  "determination": "BROBOT_KG_SHADOW_PARTIAL",
+  "releaseId": "kg-beta-20260716-002",
+  "featureMode": "shadow",
+  "fixtureCount": 75,
+  "localPolicyTests": {"status":"passed","mandatoryExamplesTested":1,"bypassExamplesTested":4},
+  "privacyTests": {"status":"passed"},
+  "cacheTests": {"status":"passed"},
+  "gapTests": {"status":"passed"},
+  "databaseEvaluation": {
+    "status": "pending_migration_application",
+    "mandatoryRetrievalPrecision": null,
+    "bypassPrecision": null,
+    "candidateMissRate": null,
+    "packetLimitCompliance": null,
+    "highRiskLeakageCount": null,
+    "inactiveObjectLeakageCount": null,
+    "claimsReturned": null,
+    "decisionPointsReturned": null,
+    "retrievalP50Ms": null,
+    "retrievalP95Ms": null,
+    "cacheHitRate": null,
+    "kgErrors": null,
+    "kgTimeouts": null
+  },
+  "answerDifferencesDetected": 0,
+  "canonicalMutations": 0,
+  "releaseMutations": 0,
+  "blockingGates": [
+    "Production RPC migration has not been applied by this implementation task.",
+    "Production precision and latency have not yet been measured.",
+    "Per-stage timing coverage is not yet complete for every revision/metadata/streaming branch."
+  ]
+}

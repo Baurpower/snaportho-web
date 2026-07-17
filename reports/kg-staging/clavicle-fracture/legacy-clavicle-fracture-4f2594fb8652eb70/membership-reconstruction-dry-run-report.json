@@ -1,0 +1,39 @@
+{
+  "ok": true,
+  "runDate": "2026-07-16",
+  "topicKey": "clavicle-fracture",
+  "displayName": "Clavicle Fracture",
+  "pilotKey": "clavicle-fracture-neighborhood",
+  "batchKey": "legacy-clavicle-fracture-4f2594fb8652eb70",
+  "packetHash": "4f2594fb8652eb70de56acd502c3170873ca185928e0d6e56257da9e89c27540",
+  "graphHash": "d42b847de28452f71fff4d1cea754197cd51b7240084ce139768635683880a84",
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "reloadSource": "database",
+  "fallbackUsed": false,
+  "dryRun": true,
+  "exactAppliedMembershipReconstructed": true,
+  "counts": {
+    "approvedLoaded": 40,
+    "structuralProposals": 34,
+    "entities": 6,
+    "relationships": 27,
+    "curriculumBridges": 1,
+    "draftClaimsExcluded": 0,
+    "draftDecisionPointsExcluded": 0
+  },
+  "repairs": {
+    "insertedSemantic": 0,
+    "reusedSemantic": 0,
+    "proposalStatesRepaired": 0,
+    "insertedMemberships": 0,
+    "reusedMemberships": 0
+  },
+  "discrepancyCount": 0,
+  "exactNextAction": "repair_batch_membership"
+}

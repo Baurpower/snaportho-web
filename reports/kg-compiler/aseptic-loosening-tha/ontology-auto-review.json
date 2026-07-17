@@ -1,15 +1,15 @@
 {
   "topicKey": "aseptic-loosening-tha",
   "pilotKey": "aseptic-loosening-tha-neighborhood",
-  "generatedAt": "2026-07-05T22:53:45.342Z",
+  "generatedAt": "2026-07-16T02:32:31.869Z",
   "summary": {
-    "AUTO_APPROVE": 74,
+    "AUTO_APPROVE": 76,
     "SAFE_REVIEW": 2,
-    "EXPERT_REVIEW": 10,
+    "EXPERT_REVIEW": 9,
     "REJECT": 0
   },
-  "humanReviewPercent": 14,
-  "autoApprovedPercent": 86,
+  "humanReviewPercent": 12.6,
+  "autoApprovedPercent": 87.4,
   "decisions": [
     {
       "proposal_fingerprint": "bridge|adult-recon-aseptic-loosening-tha|aseptic-loosening-tha",
@@ -118,27 +118,6 @@
     },
     {
       "proposal_fingerprint": "claim|claim-aseptic-loosening-tha-fact-aseptic-loosening-of-tha",
-      "proposal_type": "propose_educational_claim",
-      "category": "EXPERT_REVIEW",
-      "curationRoute": "HUMAN_REVIEW",
-      "confidence": 0.7941250000000001,
-      "evidenceQuality": 0.5,
-      "ontologyConsistency": 0.9,
-      "relationshipValidity": 1,
-      "duplicateProbability": 0,
-      "safetyCriticality": 0.1,
-      "publicationReadiness": 0.41825,
-      "humanReviewerType": "curator",
-      "rationale": [
-        "Rule: l1_management_fact",
-        "Composite confidence 0.794 from explainable dimensions"
-      ],
-      "rulesTriggered": [
-        "l1_management_fact"
-      ]
-    },
-    {
-      "proposal_fingerprint": "claim|claim-aseptic-loosening-tha-fact-aseptic-tha-loosening-pr",
       "proposal_type": "propose_educational_claim",
       "category": "EXPERT_REVIEW",
       "curationRoute": "HUMAN_REVIEW",
@@ -282,6 +261,48 @@
       ],
       "rulesTriggered": [
         "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-connect-aseptic-loosenin",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-shared-adult-reconstruct",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
       ]
     },
     {

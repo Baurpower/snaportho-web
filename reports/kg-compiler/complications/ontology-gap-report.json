@@ -1,0 +1,144 @@
+{
+  "generatedAt": "2026-07-09T04:17:27.151Z",
+  "gaps": [
+    {
+      "id": "gap-proc-approach-1",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Total Hip Arthroplasty missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "total-hip-arthroplasty",
+      "subjectSlug": "total-hip-arthroplasty",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-2",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Total Knee Arthroplasty missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "total-knee-arthroplasty",
+      "subjectSlug": "total-knee-arthroplasty",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-3",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Emergent Fasciotomy missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "emergent-fasciotomy",
+      "subjectSlug": "emergent-fasciotomy",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-4",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Open Fracture Irrigation and Debridement missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "irrigation-and-debridement-open-fracture",
+      "subjectSlug": "irrigation-and-debridement-open-fracture",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-5",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Revision Total Hip Arthroplasty missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "revision-total-hip-arthroplasty",
+      "subjectSlug": "revision-total-hip-arthroplasty",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-6",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Revision Total Knee Arthroplasty missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "revision-total-knee-arthroplasty",
+      "subjectSlug": "revision-total-knee-arthroplasty",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-7",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Implant Removal missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "implant-removal",
+      "subjectSlug": "implant-removal",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-8",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Revision Internal Fixation missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "revision-internal-fixation",
+      "subjectSlug": "revision-internal-fixation",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-9",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Irrigation and Debridement missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "irrigation-and-debridement",
+      "subjectSlug": "irrigation-and-debridement",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-10",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Two-Stage Revision Arthroplasty missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "two-stage-revision-arthroplasty",
+      "subjectSlug": "two-stage-revision-arthroplasty",
+      "predicate": "uses_approach"
+    }
+  ],
+  "summary": {
+    "total": 10,
+    "byKind": {
+      "missing_relationship": 10
+    },
+    "byPriority": {
+      "medium": 10
+    }
+  }
+}

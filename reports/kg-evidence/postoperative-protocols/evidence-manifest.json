@@ -1,0 +1,24 @@
+{
+  "packetId": "ev-packet-914f950b",
+  "topicId": "postoperative-protocols",
+  "createdAt": "2026-07-09T04:28:59.542Z",
+  "packetVersion": "1.0.0",
+  "sourceCount": 7,
+  "evidenceItemCount": 10,
+  "signalCount": 4,
+  "proposalCount": 110,
+  "gapCount": 16,
+  "warningCount": 4,
+  "collectorsRun": [
+    "static-prepare-collector",
+    "curriculum-node-collector",
+    "anki-signal-collector",
+    "orthobullets-metadata-collector",
+    "caseprep-link-collector",
+    "canonical-snapshot-collector",
+    "proposal-history-collector",
+    "review-history-collector",
+    "quality-signal-collector"
+  ],
+  "databaseModified": false
+}

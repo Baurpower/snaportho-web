@@ -1,8 +1,44 @@
 {
-  "generatedAt": "2026-07-05T21:24:25.513Z",
+  "generatedAt": "2026-07-16T02:18:46.906Z",
   "gaps": [
     {
-      "id": "gap-rel-1",
+      "id": "gap-claim-1",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.88,
+      "reason": "Tibial Blood Supply has 0/1 L1 claims.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "tibial-blood-supply",
+      "claimType": "fact|anatomy_pearl"
+    },
+    {
+      "id": "gap-claim-type-2",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Tibial Blood Supply missing claim type: fact.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.fact",
+      "anchorEntitySlug": "tibial-blood-supply",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-claim-type-3",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Tibial Blood Supply missing claim type: anatomy_pearl.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.anatomy_pearl",
+      "anchorEntitySlug": "tibial-blood-supply",
+      "claimType": "anatomy_pearl"
+    },
+    {
+      "id": "gap-rel-4",
       "kind": "missing_relationship",
       "priority": "high",
       "confidence": 0.92,
@@ -15,7 +51,7 @@
       "predicate": "part_of"
     },
     {
-      "id": "gap-rel-2",
+      "id": "gap-rel-5",
       "kind": "missing_relationship",
       "priority": "high",
       "confidence": 0.92,
@@ -28,7 +64,7 @@
       "predicate": "at_risk_structure"
     },
     {
-      "id": "gap-meta-rel-3",
+      "id": "gap-meta-rel-6",
       "kind": "missing_metadata",
       "priority": "medium",
       "confidence": 0.9,
@@ -41,56 +77,191 @@
       "predicate": "involves_anatomy|at_risk_structure"
     },
     {
-      "id": "gap-rel-4",
+      "id": "gap-entity-neighbor-7",
+      "kind": "missing_entity",
+      "priority": "high",
+      "confidence": 0.95,
+      "reason": "Tibial Shaft Fracture neighborhood has 0/1 classification_system entities.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.classification.system",
+      "anchorEntitySlug": "tibial-shaft-fracture",
+      "entityType": "classification_system"
+    },
+    {
+      "id": "gap-rel-8",
       "kind": "missing_relationship",
-      "priority": "medium",
+      "priority": "high",
       "confidence": 0.92,
-      "reason": "Tibial Blood Supply missing inbound involves_anatomy (0/1).",
-      "requiredReviewer": "none",
-      "maturityImpact": 0.05,
-      "ontologyRule": "biomechanics.inbound",
-      "anchorEntitySlug": "tibial-blood-supply",
-      "predicate": "involves_anatomy",
-      "objectSlug": "tibial-blood-supply"
+      "reason": "Tibial Shaft Fracture missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.pred.at_risk_structure",
+      "anchorEntitySlug": "tibial-shaft-fracture",
+      "subjectSlug": "tibial-shaft-fracture",
+      "predicate": "at_risk_structure"
     },
     {
-      "id": "gap-claim-5",
+      "id": "gap-rel-9",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Tibial Shaft Fracture missing outbound has_classification (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "condition.pred.has_classification",
+      "anchorEntitySlug": "tibial-shaft-fracture",
+      "subjectSlug": "tibial-shaft-fracture",
+      "predicate": "has_classification"
+    },
+    {
+      "id": "gap-rel-10",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Tibial Shaft Fracture missing outbound has_grade (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.pred.has_grade",
+      "anchorEntitySlug": "tibial-shaft-fracture",
+      "subjectSlug": "tibial-shaft-fracture",
+      "predicate": "has_grade"
+    },
+    {
+      "id": "gap-rel-11",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Tibial Shaft Fracture missing outbound treated_by (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.pred.treated_by",
+      "anchorEntitySlug": "tibial-shaft-fracture",
+      "subjectSlug": "tibial-shaft-fracture",
+      "predicate": "treated_by"
+    },
+    {
+      "id": "gap-claim-12",
       "kind": "missing_claim",
-      "priority": "medium",
+      "priority": "high",
       "confidence": 0.88,
-      "reason": "Tibial Blood Supply has 0/1 L1 claims.",
-      "requiredReviewer": "none",
-      "maturityImpact": 0.05,
-      "ontologyRule": "biomechanics.claims",
-      "anchorEntitySlug": "tibial-blood-supply",
-      "claimType": "fact|anatomy_pearl"
+      "reason": "Tibial Shaft Fracture has 0/3 L1 claims.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.claims.l1",
+      "anchorEntitySlug": "tibial-shaft-fracture",
+      "claimType": "fact|board_trap|imaging_point|cognitive_trap"
     },
     {
-      "id": "gap-claim-type-6",
+      "id": "gap-claim-type-13",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.75,
-      "reason": "Tibial Blood Supply missing claim type: fact.",
+      "reason": "Tibial Shaft Fracture missing claim type: fact.",
       "requiredReviewer": "none",
       "maturityImpact": 0.05,
-      "ontologyRule": "biomechanics.claims.fact",
-      "anchorEntitySlug": "tibial-blood-supply",
+      "ontologyRule": "condition.claims.l1.fact",
+      "anchorEntitySlug": "tibial-shaft-fracture",
       "claimType": "fact"
     },
     {
-      "id": "gap-claim-type-7",
+      "id": "gap-claim-type-14",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.75,
-      "reason": "Tibial Blood Supply missing claim type: anatomy_pearl.",
+      "reason": "Tibial Shaft Fracture missing claim type: board_trap.",
       "requiredReviewer": "none",
       "maturityImpact": 0.05,
-      "ontologyRule": "biomechanics.claims.anatomy_pearl",
-      "anchorEntitySlug": "tibial-blood-supply",
-      "claimType": "anatomy_pearl"
+      "ontologyRule": "condition.claims.l1.board_trap",
+      "anchorEntitySlug": "tibial-shaft-fracture",
+      "claimType": "board_trap"
     },
     {
-      "id": "gap-asset-card-8",
+      "id": "gap-claim-type-15",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Tibial Shaft Fracture missing claim type: imaging_point.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.imaging_point",
+      "anchorEntitySlug": "tibial-shaft-fracture",
+      "claimType": "imaging_point"
+    },
+    {
+      "id": "gap-claim-type-16",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Tibial Shaft Fracture missing claim type: cognitive_trap.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.cognitive_trap",
+      "anchorEntitySlug": "tibial-shaft-fracture",
+      "claimType": "cognitive_trap"
+    },
+    {
+      "id": "gap-dp-17",
+      "kind": "missing_decision_point",
+      "priority": "critical",
+      "confidence": 0.9,
+      "reason": "Tibial Shaft Fracture has 0/1 decision points.",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.15,
+      "ontologyRule": "condition.dp.management",
+      "anchorEntitySlug": "tibial-shaft-fracture"
+    },
+    {
+      "id": "gap-dp-pattern-18",
+      "kind": "missing_decision_point",
+      "priority": "critical",
+      "confidence": 0.85,
+      "reason": "Tibial Shaft Fracture missing decision point pattern: operative_indication.",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.15,
+      "ontologyRule": "condition.dp.management.operative_indication",
+      "anchorEntitySlug": "tibial-shaft-fracture",
+      "decisionPointPattern": "operative_indication"
+    },
+    {
+      "id": "gap-dp-pattern-19",
+      "kind": "missing_decision_point",
+      "priority": "critical",
+      "confidence": 0.85,
+      "reason": "Tibial Shaft Fracture missing decision point pattern: nonoperative_eligible.",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.15,
+      "ontologyRule": "condition.dp.management.nonoperative_eligible",
+      "anchorEntitySlug": "tibial-shaft-fracture",
+      "decisionPointPattern": "nonoperative_eligible"
+    },
+    {
+      "id": "gap-meta-entity-20",
+      "kind": "missing_metadata",
+      "priority": "high",
+      "confidence": 0.98,
+      "reason": "Entity Tibial Shaft Fracture missing metadata field: clinical_kind.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.meta.clinical_kind",
+      "anchorEntitySlug": "tibial-shaft-fracture",
+      "metadataField": "clinical_kind"
+    },
+    {
+      "id": "gap-meta-rel-21",
+      "kind": "missing_metadata",
+      "priority": "medium",
+      "confidence": 0.9,
+      "reason": "2 clinical_importance gaps on Tibial Shaft Fracture injured_in/has_imaging_finding/at_risk_structure edges.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.meta.clinical_importance",
+      "anchorEntitySlug": "tibial-shaft-fracture",
+      "metadataField": "clinical_importance",
+      "predicate": "injured_in|has_imaging_finding|at_risk_structure"
+    },
+    {
+      "id": "gap-asset-card-22",
       "kind": "missing_asset_link",
       "priority": "medium",
       "confidence": 0.8,
@@ -101,7 +272,7 @@
       "anchorEntitySlug": "tibial-shaft-fracture"
     },
     {
-      "id": "gap-asset-question-9",
+      "id": "gap-asset-question-23",
       "kind": "missing_asset_link",
       "priority": "medium",
       "confidence": 0.8,
@@ -112,7 +283,7 @@
       "anchorEntitySlug": "tibial-shaft-fracture"
     },
     {
-      "id": "gap-biomech-claim-10",
+      "id": "gap-biomech-claim-24",
       "kind": "missing_claim",
       "priority": "medium",
       "confidence": 0.82,
@@ -124,7 +295,7 @@
       "claimType": "fact"
     },
     {
-      "id": "gap-proc-approach-11",
+      "id": "gap-proc-approach-25",
       "kind": "missing_relationship",
       "priority": "medium",
       "confidence": 0.78,
@@ -138,16 +309,19 @@
     }
   ],
   "summary": {
-    "total": 11,
+    "total": 25,
     "byKind": {
-      "missing_relationship": 4,
-      "missing_metadata": 1,
-      "missing_claim": 4,
+      "missing_claim": 9,
+      "missing_relationship": 7,
+      "missing_metadata": 3,
+      "missing_entity": 1,
+      "missing_decision_point": 3,
       "missing_asset_link": 2
     },
     "byPriority": {
-      "high": 2,
-      "medium": 9
+      "medium": 13,
+      "high": 8,
+      "critical": 4
     }
   }
 }
