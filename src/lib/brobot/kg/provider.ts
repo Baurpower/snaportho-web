@@ -337,3 +337,41 @@ export async function retrieveBroBotKgShadow(
     });
   }
 }
+
+/**
+ * Builds a trace-compatible bypass result without touching cache or storage.
+ * The tiered fast path uses this so downstream telemetry contracts remain
+ * stable while KG work is moved to the durable enrichment queue.
+ */
+export function createBroBotKgBypassResult(
+  input: Omit<BroBotKgRetrievalInput, 'clinicalContext'> & {
+    clinicalContext?: BroBotKgRetrievalInput['clinicalContext'];
+  }
+): BroBotKgShadowResult {
+  const clinicalContext =
+    input.clinicalContext ??
+    buildBroBotClinicalContextFromIntent({
+      message: input.query,
+      intent: input.intent,
+      selectedBranch: input.selectedBranch,
+    });
+  const decision = decideBroBotKgRetrieval({
+    query: input.query,
+    mode: input.intent.mode,
+    intent: input.intent,
+    clinicalContext,
+    responseDepth: input.responseDepth,
+    selectedBranch: input.selectedBranch,
+    conversationTopic: input.conversationTopic,
+  });
+  return emptyResult({
+    requestId: input.requestId,
+    retrievalId: crypto.randomUUID(),
+    mode: getBroBotKgFeatureMode(),
+    decision: { ...decision, action: 'bypass', eligible: false, reasons: ['bypass:tier1_fast_path'] },
+    status: 'bypass',
+    failureReason: 'tier1_fast_path',
+    elapsedLatencyMs: 0,
+    timings: { kg_decision: 0 },
+  });
+}

@@ -64,6 +64,16 @@ type BroBotChatResponse = {
   assumedContext?: string;
   consultConfidence?: 'low' | 'moderate' | 'high';
   missingInformation?: string[];
+  tier?: 1 | 2 | 3;
+  status?: 'answer' | 'clarify';
+  directAnswer?: string;
+  keyPoints?: string[];
+  pearl?: string;
+  pitfall?: string;
+  clarifyingQuestion?: string;
+  specialty?: string;
+  resolvedTopic?: string;
+  entityResolutionState?: string;
 };
 
 type BranchOption = {
@@ -275,6 +285,18 @@ function normalizeChatResponse(value: unknown): BroBotChatResponse | null {
         ? candidate.consultConfidence
         : undefined,
     missingInformation: normalizeTextArray(candidate.missingInformation, 8),
+    tier: candidate.tier === 1 || candidate.tier === 2 || candidate.tier === 3 ? candidate.tier : undefined,
+    status: candidate.status === 'answer' || candidate.status === 'clarify' ? candidate.status : undefined,
+    directAnswer: typeof candidate.directAnswer === 'string' ? candidate.directAnswer : undefined,
+    keyPoints: normalizeTextArray(candidate.keyPoints, 5),
+    pearl: typeof candidate.pearl === 'string' ? candidate.pearl : undefined,
+    pitfall: typeof candidate.pitfall === 'string' ? candidate.pitfall : undefined,
+    clarifyingQuestion:
+      typeof candidate.clarifyingQuestion === 'string' ? candidate.clarifyingQuestion : undefined,
+    specialty: typeof candidate.specialty === 'string' ? candidate.specialty : undefined,
+    resolvedTopic: typeof candidate.resolvedTopic === 'string' ? candidate.resolvedTopic : undefined,
+    entityResolutionState:
+      typeof candidate.entityResolutionState === 'string' ? candidate.entityResolutionState : undefined,
   };
 }
 
@@ -621,6 +643,34 @@ export default function BroBotChatPage() {
     router.push(`/auth/sign-in?${params.toString()}`);
   }
 
+  async function pollForEnrichment(messageId: string) {
+    for (const delayMs of [5_000, 15_000, 30_000, 60_000, 90_000]) {
+      await new Promise((resolve) => window.setTimeout(resolve, delayMs));
+      const response = await fetch(`/api/brobot/messages/${messageId}/enrichment`, {
+        credentials: 'include',
+      }).catch(() => null);
+      if (!response?.ok) return;
+      const enrichment = await response.json().catch(() => null);
+      if (!enrichment || enrichment.status !== 'completed') continue;
+      setMessages((current) =>
+        current.map((message) =>
+          message.role === 'assistant' && message.response.messageId === messageId
+            ? {
+                ...message,
+                response: {
+                  ...message.response,
+                  suggestedQuestions: normalizeTextArray(enrichment.suggestedQuestions, 3),
+                  nextLearningBranches: normalizeBranchOptions(enrichment.nextLearningBranches),
+                  tags: normalizeTextArray(enrichment.tags, 6),
+                },
+              }
+            : message
+        )
+      );
+      return;
+    }
+  }
+
   async function sendMessage(
     rawMessage?: string,
     source: BroBotChatSource = 'manual',
@@ -802,6 +852,7 @@ export default function BroBotChatPage() {
         const decoder = new TextDecoder();
         let buffer = '';
         let didReceiveMetadata = false;
+        let enrichmentMessageId: string | null = null;
 
         while (true) {
           const { value, done } = await reader.read();
@@ -866,6 +917,7 @@ export default function BroBotChatPage() {
               const normalizedMetadata = normalizeChatResponse(streamEvent.data);
               if (!normalizedMetadata) continue;
               didReceiveMetadata = true;
+              enrichmentMessageId = normalizedMetadata.messageId;
 
               setConversationId(normalizedMetadata.conversationId);
               const remainingFreeUses = normalizedMetadata.remainingFreeUses;
@@ -939,6 +991,7 @@ export default function BroBotChatPage() {
         }
         setPendingIntent(null);
         setRequestState((current) => (current === 'error' ? current : 'complete'));
+        if (enrichmentMessageId) void pollForEnrichment(enrichmentMessageId);
         return;
       }
 
@@ -1053,6 +1106,7 @@ export default function BroBotChatPage() {
       });
       setPendingIntent(null);
       setRequestState('complete');
+      void pollForEnrichment(normalizedBody.messageId);
     } catch (caughtError) {
       if (caughtError instanceof DOMException && caughtError.name === 'AbortError') {
         return;

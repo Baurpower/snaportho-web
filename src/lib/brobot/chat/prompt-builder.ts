@@ -6,6 +6,7 @@ import type {
   BroBotResponseDepth,
   BroBotTrainingLevel,
 } from './types';
+import type { BroBotEntityResolution } from './types';
 import type { BroBotAnswerRoute } from './answer-router';
 import { formatRubricForPrompt, getAnswerRubric } from './answer-rubrics';
 import { buildAnswerPlanningBlock, buildQuizInstructions } from './answer-planner';
@@ -33,6 +34,7 @@ type PromptBuilderInput = {
   answerNow?: boolean;
   answerRoute?: BroBotAnswerRoute;
   includeProductMetadata?: boolean;
+  includeResidentsMiss?: boolean;
 };
 
 type MetadataPromptInput = {
@@ -316,6 +318,78 @@ export const BROBOT_METADATA_JSON_CONTRACT = `{
   "tags": string[]
 }`;
 
+export const BROBOT_TIER1_JSON_CONTRACT = `{
+  "status": "answer" | "clarify",
+  "directAnswer": string,
+  "keyPoints": string[],
+  "pearl": string,
+  "pitfall": string,
+  "suggestedFollowUps": string[],
+  "clarifyingQuestion": string
+}`;
+
+export function buildBroBotTier1Messages(input: {
+  message: string;
+  trainingLevel: BroBotTrainingLevel;
+  subintent: string;
+  procedureOrTopic: string;
+  entityResolution: BroBotEntityResolution;
+  history?: BroBotModelMessage[];
+}): BroBotModelMessage[] {
+  const entityText = input.entityResolution.entities
+    .map((entity) => `${entity.abbreviation} = ${entity.expansion} (${entity.type})`)
+    .join('; ');
+  const handCorrection = input.entityResolution.relationship?.includes('EIP opponensplasty')
+    ? [
+        'Hand-surgery correction: this is an EIP opponensplasty question.',
+        'Frame indications around restoration of thumb opposition when thenar motor function/APB is absent or irrecoverable and donor/recipient conditions are suitable.',
+        'Do not list ulnar nerve palsy as the primary indication for loss of APB function.',
+      ].join('\n')
+    : '';
+  const recentHistory = (input.history ?? [])
+    .slice(-2)
+    .map((message) => `${message.role}: ${message.content}`)
+    .join('\n')
+    .slice(0, 800);
+
+  return [
+    {
+      role: 'system',
+      content: `You are BroBot, a concise orthopaedic education assistant.
+Answer the narrow factual question in no more than 250 tokens.
+Return JSON only using this contract:
+${BROBOT_TIER1_JSON_CONTRACT}
+
+Rules:
+- Lead with the direct answer. Add 1-5 distinct key points.
+- Pearl and pitfall are optional; use an empty string when they add no value.
+- Return at most 3 meaningful suggested follow-ups; [] is valid.
+- Do not include a goal, assumption, confidence, knowledge gaps, generic framing, or "What Most Residents Miss".
+- If the entity relationship is materially ambiguous, set status "clarify", leave answer content minimal, and ask exactly one focused clarifyingQuestion.
+- Do not fabricate thresholds or citations.
+- Preserve the supplied abbreviation expansions and specialty routing.
+${handCorrection}`.trim(),
+    },
+    {
+      role: 'user',
+      content: [
+        `Training level: ${input.trainingLevel}`,
+        `Subintent: ${input.subintent}`,
+        `Topic: ${input.procedureOrTopic}`,
+        `Specialty: ${input.entityResolution.specialty}`,
+        entityText ? `Resolved entities: ${entityText}` : '',
+        input.entityResolution.relationship
+          ? `Resolved relationship: ${input.entityResolution.relationship}`
+          : '',
+        recentHistory ? `Minimal recent context:\n${recentHistory}` : '',
+        `Question: ${input.message}`,
+      ]
+        .filter(Boolean)
+        .join('\n'),
+    },
+  ];
+}
+
 const OR_PREP_EXEMPLAR = [
   'OR Prep exemplar:',
   'User: "Distal radius ORIF tomorrow. What do I need to know?"',
@@ -404,6 +478,7 @@ export function buildBroBotChatSystemPrompt(input: {
   answerNow?: boolean;
   answerRoute?: BroBotAnswerRoute;
   includeProductMetadata?: boolean;
+  includeResidentsMiss?: boolean;
 }) {
   const includeProductMetadata = input.includeProductMetadata ?? true;
   const detectedEntityTopic =
@@ -572,7 +647,10 @@ ${emptyCaveatBan}
 
 Output rules:
 - Return valid JSON only. No prose outside JSON. No markdown code fence.
-- The product response structure is: Your Goal, Direct Answer, Important Concepts, What Most Residents Miss, and Next Learning Branch.
+- Do not include Your Goal or a generic Assumption section in the visible answer.
+${input.includeResidentsMiss
+  ? '- whatMostResidentsMiss is allowed because the user explicitly requested attending/pimp/resident-miss teaching or selected deep OR prep.'
+  : '- Set whatMostResidentsMiss to []. Do not generate or display a resident-miss section for this response.'}
 - If a selected focus exists, start the answer field with "Focus: [selectedBranchLabel]" or "Focus: General framework" followed by the branch-specific answer.
 - Before answering, assess ambiguity. If the prompt is narrow and answerable, answer directly. If broad but answerable, state a useful assumption and answer. Clarify only when missing information would materially change the answer or a default answer would be generic.
 - If ambiguity is high: ask 1-3 clarifyingQuestions and give only a very brief safe best-guess answer if useful. If ambiguity is moderate: state assumedContext, answer using that assumption, set needsClarification false, and add follow-up chips. If ambiguity is low: set needsClarification false, clarifyingQuestions [], assumedContext "".
@@ -581,7 +659,7 @@ Output rules:
 - answer: 3-6 concise high-yield bullets max unless OR Prep depth asks for more, or a very short polished mini-outline if bullets would be awkward. Default to bullets. Directly answer the user. Use markdown sparingly: bold key terms and short bullets. Do NOT write paragraph-form answers unless the user explicitly asks for a narrative explanation. Do NOT include a generic intro such as "Here are the key points" or "Here is a concise overview." Do NOT include large headings. Do NOT include an "Ask Next" section. Do NOT include suggested questions. Do NOT duplicate content from priorityPoints or knowledgeGaps.
 - priorityPoints: powers the UI section titled "Important Concepts". Return 3-6 ranked concepts. Each item should be concise but clinically useful and should be the highest-yield things to understand for the selected mode and training level.
 - knowledgeGaps: powers the UI section titled "What to Learn Next?". Return 2-4 actionable, specific next learning targets. Identify what the user likely does not know yet without sounding shame-y. Help guide the next study branch.
-- whatMostResidentsMiss: 3-5 concrete misses, pitfalls, traps, or blind spots. This is a signature BroBot section.
+${input.includeResidentsMiss ? '- whatMostResidentsMiss: 3-5 concrete misses, pitfalls, traps, or blind spots.' : ''}
 - confidence: number from 0 to 1 reflecting educational confidence and uncertainty.
 - consultConfidence: for Consult mode only, estimate information completeness as low, moderate, or high; otherwise return null.
 - missingInformation: for Consult mode only, return 3-8 concrete missing clinical data points; otherwise return [].
@@ -628,6 +706,7 @@ export function buildBroBotChatMessages(input: PromptBuilderInput): BroBotModelM
         answerNow: input.answerNow,
         answerRoute: input.answerRoute,
         includeProductMetadata: input.includeProductMetadata,
+        includeResidentsMiss: input.includeResidentsMiss,
       }),
     },
     ...conversation.map((message) => ({

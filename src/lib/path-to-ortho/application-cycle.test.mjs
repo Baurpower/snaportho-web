@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 
 import {
+  DEFAULT_APPLICATION_CYCLE_DATES,
   createApplicationCycleConfig,
   daysBetweenDateOnly,
   formatDateOnly,
@@ -9,18 +10,20 @@ import {
   parseDateOnly,
 } from "./application-cycle.ts";
 
-const env = {
-  NEXT_PUBLIC_PATH_TO_ORTHO_ERAS_APPLICATION_OPEN_DATE: "2026-09-02",
-  NEXT_PUBLIC_PATH_TO_ORTHO_ERAS_PROGRAM_REVIEW_DATE: "2026-09-23",
-  NEXT_PUBLIC_PATH_TO_ORTHO_NRMP_REGISTRATION_OPEN_DATE: "2026-09-15",
-  NEXT_PUBLIC_PATH_TO_ORTHO_NRMP_REGISTRATION_CLOSE_DATE: "2027-01-29",
-  NEXT_PUBLIC_PATH_TO_ORTHO_NRMP_RANKING_OPEN_DATE: "2027-02-01",
-  NEXT_PUBLIC_PATH_TO_ORTHO_NRMP_RANKING_CLOSE_DATE: "2027-03-03",
-  NEXT_PUBLIC_PATH_TO_ORTHO_YES_NO_DAY_DATE: "2027-03-15",
-  NEXT_PUBLIC_PATH_TO_ORTHO_MATCH_DAY_DATE: "2027-03-19",
-};
+const config = createApplicationCycleConfig({});
 
-const config = createApplicationCycleConfig(env);
+// Missing deployment overrides resolve to the version-controlled cycle.
+for (const [field, date] of Object.entries(DEFAULT_APPLICATION_CYCLE_DATES)) {
+  assert.equal(config[field], date);
+}
+assert.equal(Object.values(DEFAULT_APPLICATION_CYCLE_DATES).every(Boolean), true);
+
+// A supplied value overrides only its corresponding built-in date.
+const overridden = createApplicationCycleConfig({
+  NEXT_PUBLIC_PATH_TO_ORTHO_MATCH_DAY_DATE: "2027-03-20",
+});
+assert.equal(overridden.matchDayDate, "2027-03-20");
+assert.equal(overridden.yesNoDayDate, DEFAULT_APPLICATION_CYCLE_DATES.yesNoDayDate);
 
 assert.deepEqual(
   config.milestones.map(({ date }) => date),
@@ -40,13 +43,12 @@ assert.equal(getApplicationCycleWindows(config, "2027-03-04").rankOrderListOpen,
 assert.equal(getApplicationCycleWindows(config, "2027-03-15").isYesNoDay, true);
 assert.equal(getApplicationCycleWindows(config, "2027-03-19").isMatchDay, true);
 
-assert.throws(() => createApplicationCycleConfig({}), /Missing Path to Ortho/);
 assert.throws(
-  () => createApplicationCycleConfig({ ...env, NEXT_PUBLIC_PATH_TO_ORTHO_MATCH_DAY_DATE: "2027-02-30" }),
-  /Invalid calendar date/
+  () => createApplicationCycleConfig({ NEXT_PUBLIC_PATH_TO_ORTHO_MATCH_DAY_DATE: "2027-02-30" }),
+  /Invalid Path to Ortho application-cycle override NEXT_PUBLIC_PATH_TO_ORTHO_MATCH_DAY_DATE: Invalid calendar date/
 );
 assert.throws(
-  () => createApplicationCycleConfig({ ...env, NEXT_PUBLIC_PATH_TO_ORTHO_MATCH_DAY_DATE: "2027-03-01" }),
+  () => createApplicationCycleConfig({ NEXT_PUBLIC_PATH_TO_ORTHO_MATCH_DAY_DATE: "2027-03-01" }),
   /must occur after/
 );
 assert.throws(() => parseDateOnly("09/02/2026"), /YYYY-MM-DD/);

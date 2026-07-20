@@ -17,6 +17,16 @@ type ParseOptions = {
   fallbackMode?: BroBotChatMode;
 };
 
+export type BroBotTier1ParsedOutput = {
+  status: 'answer' | 'clarify';
+  directAnswer: string;
+  keyPoints: string[];
+  pearl?: string;
+  pitfall?: string;
+  suggestedFollowUps: string[];
+  clarifyingQuestion?: string;
+};
+
 const STRUCTURE_FALLBACK =
   'BroBot generated a response, but it could not be structured cleanly. Please try again or rephrase your question.';
 const ROUTE_STRUCTURE_FALLBACK =
@@ -97,6 +107,28 @@ function parseRaw(raw: unknown): Record<string, unknown> | null {
 
 function normalizeString(value: unknown): string {
   return typeof value === 'string' ? stripCodeFence(value).trim() : '';
+}
+
+export function parseBroBotTier1Response(
+  raw: unknown,
+  fallback: { status?: 'answer' | 'clarify'; clarifyingQuestion?: string } = {}
+): BroBotTier1ParsedOutput {
+  const parsed = parseRaw(raw) ?? {};
+  const clarifyingQuestion =
+    normalizeString(parsed.clarifyingQuestion) || fallback.clarifyingQuestion || undefined;
+  const status =
+    fallback.status === 'clarify' || parsed.status === 'clarify' || clarifyingQuestion
+      ? 'clarify'
+      : 'answer';
+  return {
+    status,
+    directAnswer: normalizeString(parsed.directAnswer).slice(0, 1800),
+    keyPoints: normalizeArray(parsed.keyPoints, 5),
+    pearl: normalizeString(parsed.pearl) || undefined,
+    pitfall: normalizeString(parsed.pitfall) || undefined,
+    suggestedFollowUps: normalizeArray(parsed.suggestedFollowUps, 3),
+    clarifyingQuestion,
+  };
 }
 
 function stripArrayMarkdown(value: string): string {

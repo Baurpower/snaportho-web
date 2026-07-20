@@ -92,6 +92,33 @@ export const BROBOT_ENABLE_REVISION_PASS = readBooleanEnv(
   true
 );
 
+/** Rollout gate for the tiered answer-first orchestration. */
+export const BROBOT_TIERED_PIPELINE_ENABLED = readBooleanEnv(
+  'BROBOT_TIERED_PIPELINE_ENABLED',
+  false
+);
+
+/** Queue nonessential metadata and learning work after durable answer persistence. */
+export const BROBOT_ASYNC_ENRICHMENT_ENABLED = readBooleanEnv(
+  'BROBOT_ASYNC_ENRICHMENT_ENABLED',
+  false
+);
+
+export const BROBOT_TIER1_REVISION_ENABLED = readBooleanEnv(
+  'BROBOT_TIER1_REVISION_ENABLED',
+  false
+);
+
+export const BROBOT_TIER1_METADATA_LLM_ENABLED = readBooleanEnv(
+  'BROBOT_TIER1_METADATA_LLM_ENABLED',
+  false
+);
+
+export const BROBOT_TIER1_KG_ENABLED = readBooleanEnv(
+  'BROBOT_TIER1_KG_ENABLED',
+  false
+);
+
 const STRONG_MODES = new Set<BroBotChatMode>(['or_prep', 'consult', 'oite', 'research']);
 const STRONG_SUBINTENTS = new Set<BroBotChatSubintent>([
   'surgical_steps',

@@ -1,6 +1,8 @@
 {
   "status": "blocked_not_executed",
-  "reason": "Production deployment credentials, project identity, and authenticated test sessions are unavailable; intended code is not committed.",
+  "reason": "The public host and protected admin route are reachable, but deployment metadata, runtime environment access, and authenticated BroBot test sessions are unavailable.",
+  "publicHealthCheck": {"status":"passed","httpStatus":200,"host":"snap-ortho.com","provider":"Vercel"},
+  "unauthenticatedAdminCheck": {"status":"passed","httpStatus":401,"response":"Authentication required."},
   "directTelemetryInsertsPerformed": false,
   "tests": [
     {"testId":"smoke-01","description":"covered orthopaedic retrieval","status":"not_run"},
@@ -15,4 +17,3 @@
     {"testId":"smoke-10","description":"follow-up turn","status":"not_run"}
   ]
 }
-

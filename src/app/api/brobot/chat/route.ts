@@ -14,6 +14,8 @@ import {
   buildBroBotMetadataMessages,
   buildBroBotRevisionMessages,
   buildBroBotAnswerContext,
+  buildBroBotMinimalAnswerContext,
+  buildBroBotTier1Messages,
   buildBroBotClinicalContextFromIntent,
   buildUncoveredFacetChips,
   buildBroBotIntentExpansionMessages,
@@ -23,11 +25,17 @@ import {
   resolveTopicFromHistory,
   parseBroBotIntentExpansionResponse,
   parseBroBotChatResponse,
+  parseBroBotTier1Response,
   parseBroBotMetadataResponse,
   runBroBotQualityGate,
   buildBroBotRouteClarifyingQuestions,
   routeBroBotAnswer,
   enforceClarificationAnswerBrevity,
+  resolveBroBotEntities,
+  resolveBroBotResponseTier,
+  getDeterministicTierOneFollowUps,
+  shouldIncludeResidentsMissSection,
+  runTierAwareAnswerIntegrityChecks,
   type BroBotAnswerRoute,
   type BroBotChatIntent,
   type BroBotChatMode,
@@ -35,10 +43,13 @@ import {
   type BroBotBranchOption,
   type BroBotModelMessage,
   type BroBotAnswerContext,
+  type BroBotEntityResolution,
+  type BroBotResponseTier,
 } from '@/lib/brobot/chat';
 import {
   BroBotStageTimer,
   attachBroBotKgAnswerOutcome,
+  createBroBotKgBypassResult,
   persistBroBotKgShadowTrace,
   retrieveBroBotKgShadow,
   type BroBotKgShadowResult,
@@ -58,10 +69,16 @@ import {
 } from '@/lib/brobot/guest-session';
 import { recordSuccessfulAIUse, recordUsageEvent } from '@/lib/brobot/usage';
 import { enqueueBroBotEvaluationJob } from '@/lib/brobot/evaluator';
+import { enqueueBroBotEnrichmentJob } from '@/lib/brobot/enrichment';
 import {
   BROBOT_ENABLE_REVISION_PASS,
+  BROBOT_ASYNC_ENRICHMENT_ENABLED,
   BROBOT_INTENT_MODEL,
   BROBOT_SEPARATE_METADATA_PASS,
+  BROBOT_TIERED_PIPELINE_ENABLED,
+  BROBOT_TIER1_METADATA_LLM_ENABLED,
+  BROBOT_TIER1_KG_ENABLED,
+  BROBOT_TIER1_REVISION_ENABLED,
   getAnswerModelForRoute,
   getMetadataModel,
   getRevisionModel,
@@ -108,7 +125,32 @@ export type BroBotChatResponse = {
   consultConfidence?: 'low' | 'moderate' | 'high';
   missingInformation?: string[];
   researchSubmode?: string;
+  tier?: BroBotResponseTier;
+  status?: 'answer' | 'clarify';
+  directAnswer?: string;
+  keyPoints?: string[];
+  pearl?: string;
+  pitfall?: string;
+  clarifyingQuestion?: string;
+  specialty?: string;
+  resolvedTopic?: string;
+  entityResolutionState?: string;
 };
+
+function tierResponseFields(output: Record<string, unknown>) {
+  return {
+    tier: output.tier as BroBotResponseTier | undefined,
+    status: output.status as 'answer' | 'clarify' | undefined,
+    directAnswer: output.directAnswer as string | undefined,
+    keyPoints: output.keyPoints as string[] | undefined,
+    pearl: output.pearl as string | undefined,
+    pitfall: output.pitfall as string | undefined,
+    clarifyingQuestion: output.clarifyingQuestion as string | undefined,
+    specialty: output.specialty as string | undefined,
+    resolvedTopic: output.resolvedTopic as string | undefined,
+    entityResolutionState: output.entityResolutionState as string | undefined,
+  };
+}
 
 type AuthContext = {
   user: { id: string } | null;
@@ -1488,6 +1530,30 @@ function shouldBypassRevisionPass(intent: BroBotChatIntent) {
   return REVISION_BLOCKED_SUBINTENTS.has(intent.subintent);
 }
 
+const TIER_TWO_CRITICAL_REVISION_WARNINGS = new Set([
+  'entity_not_named',
+  'facet_consult_red_flags_missing',
+  'consult_framework_weak',
+  'empty_caveat_without_concrete_pivots',
+  'answer_does_not_address_question',
+  'unresolved_abbreviation_ambiguity',
+  'urgent_escalation_guidance_missing',
+  'laterality_mismatch',
+  'procedure_mismatch',
+]);
+
+function shouldRunTierAwareRevision(input: {
+  tier?: BroBotResponseTier;
+  warnings: string[];
+}) {
+  if (!BROBOT_TIERED_PIPELINE_ENABLED || input.tier == null) return input.warnings.length > 0;
+  if (input.tier === 1) return BROBOT_TIER1_REVISION_ENABLED && input.warnings.length > 0;
+  if (input.tier === 2) {
+    return input.warnings.some((warning) => TIER_TWO_CRITICAL_REVISION_WARNINGS.has(warning));
+  }
+  return input.warnings.length > 0;
+}
+
 async function runJsonCompletion(params: {
   openai: OpenAI;
   model: string;
@@ -1495,6 +1561,7 @@ async function runJsonCompletion(params: {
   temperature?: number;
   signal?: AbortSignal;
   onAnswerText?: (answer: string) => void;
+  maxCompletionTokens?: number;
 }) {
   if (params.onAnswerText) {
     const completion = await params.openai.chat.completions.create(
@@ -1505,6 +1572,7 @@ async function runJsonCompletion(params: {
         messages: params.messages,
         stream: true,
         stream_options: { include_usage: true },
+        max_completion_tokens: params.maxCompletionTokens,
       },
       { signal: params.signal }
     );
@@ -1524,6 +1592,7 @@ async function runJsonCompletion(params: {
     model: params.model,
     temperature: params.temperature ?? 0.2,
     response_format: { type: 'json_object' },
+    max_completion_tokens: params.maxCompletionTokens,
     messages: params.messages,
   }, { signal: params.signal });
 
@@ -1534,7 +1603,7 @@ async function runJsonCompletion(params: {
 }
 
 function extractAnswerFromStreamingJson(raw: string): string {
-  const match = /"answer"\s*:\s*"/.exec(raw);
+  const match = /"(?:answer|directAnswer)"\s*:\s*"/.exec(raw);
   if (!match) return '';
 
   let answer = '';
@@ -1587,6 +1656,9 @@ async function generateBroBotPipelineResult(params: {
   signal?: AbortSignal;
   onAnswerText?: (answer: string) => void;
   preserveStreamedAnswer?: boolean;
+  tier?: BroBotResponseTier;
+  entityResolution?: BroBotEntityResolution;
+  requestStartedAt?: number;
 }) : Promise<BroBotPipelineResult> {
   const pipelineStageTimingsMs: Record<string, number> = {};
   const selectedBranch =
@@ -1606,6 +1678,134 @@ async function generateBroBotPipelineResult(params: {
       trainingLevel: params.body.trainingLevel,
       history: params.history,
     }));
+
+  if (
+    BROBOT_TIERED_PIPELINE_ENABLED &&
+    params.tier === 1 &&
+    params.entityResolution &&
+    !BROBOT_TIER1_REVISION_ENABLED &&
+    !BROBOT_TIER1_METADATA_LLM_ENABLED
+  ) {
+    const entityResolution = params.entityResolution;
+    const clarification = entityResolution.state === 'ambiguous';
+    const answerModel = getAnswerModelForRoute({
+      mode: 'general',
+      ambiguity: clarification ? 'high' : 'low',
+      responseDepth: 'quick',
+      subintent: params.intent.subintent,
+    });
+    const answerGenerationStartedAt = performance.now();
+    let firstAnswerTokenRecorded = false;
+    const answerCompletion = clarification
+      ? { rawContent: '', usage: null }
+      : await runJsonCompletion({
+          openai: params.openai,
+          model: answerModel,
+          messages: buildBroBotTier1Messages({
+            message: params.body.message,
+            trainingLevel: params.body.trainingLevel,
+            subintent: params.intent.subintent,
+            procedureOrTopic: params.intent.procedureOrTopic,
+            entityResolution,
+            history: params.history.slice(-2),
+          }),
+          signal: params.signal,
+          onAnswerText(answer) {
+            if (!firstAnswerTokenRecorded && answer) {
+              firstAnswerTokenRecorded = true;
+              pipelineStageTimingsMs.first_answer_token =
+                Math.round((performance.now() - answerGenerationStartedAt) * 100) / 100;
+              if (params.requestStartedAt) {
+                pipelineStageTimingsMs.request_to_first_answer_token =
+                  Date.now() - params.requestStartedAt;
+              }
+            }
+            params.onAnswerText?.(answer);
+          },
+          maxCompletionTokens: 450,
+        });
+    pipelineStageTimingsMs.answer_generation =
+      Math.round((performance.now() - answerGenerationStartedAt) * 100) / 100;
+    const tier1 = parseBroBotTier1Response(answerCompletion.rawContent, {
+      status: clarification ? 'clarify' : 'answer',
+      clarifyingQuestion: entityResolution.clarifyingQuestion,
+    });
+    const rawVisibleAnswer = tier1.status === 'clarify'
+      ? tier1.clarifyingQuestion || 'Please clarify the anatomy or procedure you mean.'
+      : [
+          tier1.directAnswer,
+          tier1.keyPoints.length
+            ? `\n\n${tier1.keyPoints.map((point) => `- ${point}`).join('\n')}`
+            : '',
+          tier1.pearl ? `\n\n**Pearl:** ${tier1.pearl}` : '',
+          tier1.pitfall ? `\n\n**Pitfall:** ${tier1.pitfall}` : '',
+        ].join('').trim();
+    const visibleAnswer = rawVisibleAnswer.split(/\s+/).length > 250
+      ? `${rawVisibleAnswer.split(/\s+/).slice(0, 250).join(' ')}…`
+      : rawVisibleAnswer;
+    params.onAnswerText?.(visibleAnswer);
+    const answerRoute: BroBotAnswerRoute = tier1.status === 'clarify' ? 'ask_clarification' : 'answer_now';
+    const qualityGate = runBroBotQualityGate({
+      answer: visibleAnswer,
+      mode: params.intent.mode,
+      responseDepth: 'quick',
+      subintent: params.intent.subintent,
+      trainingLevel: params.body.trainingLevel,
+      procedureOrTopic: params.intent.procedureOrTopic,
+      answerRoute,
+      clinicalContext: answerContext.clinicalContext,
+    });
+    const deterministicFollowUps = mergeQuestions(
+      getDeterministicTierOneFollowUps({
+        subintent: params.intent.subintent,
+        topic: entityResolution.resolvedTopic || params.intent.procedureOrTopic,
+      }),
+      tier1.suggestedFollowUps
+    ).slice(0, 3);
+    const brobotOutput = {
+      tier: 1 as const,
+      status: tier1.status,
+      directAnswer: tier1.directAnswer,
+      keyPoints: tier1.keyPoints,
+      pearl: tier1.pearl,
+      pitfall: tier1.pitfall,
+      clarifyingQuestion: tier1.clarifyingQuestion,
+      specialty: entityResolution.specialty,
+      resolvedTopic: entityResolution.resolvedTopic || params.intent.procedureOrTopic,
+      entityResolutionState: entityResolution.state,
+      goal: '',
+      answer: visibleAnswer,
+      priorityPoints: [],
+      knowledgeGaps: [],
+      whatMostResidentsMiss: [],
+      suggestedQuestions: deterministicFollowUps,
+      nextLearningBranches: [],
+      tags: [],
+      detectedMode: params.intent.mode,
+      confidence: 1,
+      needsClarification: tier1.status === 'clarify',
+      clarifyingQuestions: tier1.clarifyingQuestion ? [tier1.clarifyingQuestion] : [],
+      assumedContext: '',
+      missingInformation: [],
+    };
+    return {
+      answerContext,
+      answerRoute,
+      brobotOutput,
+      answerModel,
+      answerUsage: answerCompletion.usage,
+      answerRawContent: answerCompletion.rawContent,
+      metadataModel: null,
+      metadataUsage: null,
+      qualityGate,
+      qualityGateWarningsBeforeRevision: qualityGate.warnings,
+      revisionTriggered: false,
+      revisionModel: null,
+      revisionUsage: null,
+      originalAnswerBeforeRevision: null,
+      stageTimingsMs: pipelineStageTimingsMs,
+    };
+  }
   const answerRoute = routeBroBotAnswer({
     message: params.body.message,
     intent: params.intent,
@@ -1627,7 +1827,19 @@ async function generateBroBotPipelineResult(params: {
     answerContext,
     answerNow: Boolean(params.body.answerNow),
     answerRoute,
-    includeProductMetadata: !BROBOT_SEPARATE_METADATA_PASS,
+    includeProductMetadata: !BROBOT_SEPARATE_METADATA_PASS || BROBOT_ASYNC_ENRICHMENT_ENABLED,
+    includeResidentsMiss: shouldIncludeResidentsMissSection({
+      message: params.body.message,
+      tier: params.tier ?? 3,
+      mode: params.intent.mode,
+      responseDepth: params.body.responseDepth,
+    }),
+  });
+  const includeResidentsMiss = shouldIncludeResidentsMissSection({
+    message: params.body.message,
+    tier: params.tier ?? 3,
+    mode: params.intent.mode,
+    responseDepth: params.body.responseDepth,
   });
   const answerModel = getAnswerModelForRoute({
     mode: params.intent.mode,
@@ -1636,12 +1848,26 @@ async function generateBroBotPipelineResult(params: {
     subintent: params.intent.subintent,
   });
   const answerGenerationStartedAt = performance.now();
+  let firstAnswerTokenRecorded = false;
   const answerCompletion = await runJsonCompletion({
     openai: params.openai,
     model: answerModel,
     messages: answerMessages,
     signal: params.signal,
-    onAnswerText: params.onAnswerText,
+    onAnswerText: params.onAnswerText
+      ? (answer) => {
+          if (!firstAnswerTokenRecorded && answer) {
+            firstAnswerTokenRecorded = true;
+            pipelineStageTimingsMs.first_answer_token =
+              Math.round((performance.now() - answerGenerationStartedAt) * 100) / 100;
+            if (params.requestStartedAt) {
+              pipelineStageTimingsMs.request_to_first_answer_token =
+                Date.now() - params.requestStartedAt;
+            }
+          }
+          params.onAnswerText?.(answer);
+        }
+      : undefined,
   });
   pipelineStageTimingsMs.answer_generation =
     Math.round((performance.now() - answerGenerationStartedAt) * 100) / 100;
@@ -1650,6 +1876,15 @@ async function generateBroBotPipelineResult(params: {
     fallbackMode: params.intent.mode,
     fallbackAnswer: 'BroBot could not format a structured response. Please try again.',
   });
+  if (BROBOT_TIERED_PIPELINE_ENABLED) {
+    parsedOutput = {
+      ...parsedOutput,
+      goal: '',
+      assumedContext: '',
+      knowledgeGaps: [],
+      whatMostResidentsMiss: includeResidentsMiss ? parsedOutput.whatMostResidentsMiss : [],
+    };
+  }
   const qualityGateStartedAt = performance.now();
   let qualityGate = runBroBotQualityGate({
     answer: parsedOutput.answer,
@@ -1663,6 +1898,17 @@ async function generateBroBotPipelineResult(params: {
     answerRoute,
     clinicalContext: answerContext.clinicalContext,
   });
+  if (BROBOT_TIERED_PIPELINE_ENABLED && params.tier && params.entityResolution) {
+    qualityGate.warnings.push(
+      ...runTierAwareAnswerIntegrityChecks({
+        tier: params.tier,
+        question: params.body.message,
+        answer: parsedOutput.answer,
+        entityResolution: params.entityResolution,
+      }).filter((warning) => !qualityGate.warnings.includes(warning))
+    );
+    qualityGate.passed = qualityGate.warnings.length === 0;
+  }
   pipelineStageTimingsMs.quality_gate =
     Math.round((performance.now() - qualityGateStartedAt) * 100) / 100;
   const qualityGateWarningsBeforeRevision = [...qualityGate.warnings];
@@ -1673,7 +1919,7 @@ async function generateBroBotPipelineResult(params: {
 
   if (
     BROBOT_ENABLE_REVISION_PASS &&
-    qualityGate.warnings.length > 0 &&
+    shouldRunTierAwareRevision({ tier: params.tier, warnings: qualityGate.warnings }) &&
     !shouldBypassRevisionPass(params.intent) &&
     !params.preserveStreamedAnswer
   ) {
@@ -1708,6 +1954,13 @@ async function generateBroBotPipelineResult(params: {
       suggestedQuestions: revisedOutput.suggestedQuestions,
       nextLearningBranches: revisedOutput.nextLearningBranches,
       tags: revisedOutput.tags,
+      goal: BROBOT_TIERED_PIPELINE_ENABLED ? '' : revisedOutput.goal,
+      assumedContext: BROBOT_TIERED_PIPELINE_ENABLED ? '' : revisedOutput.assumedContext,
+      knowledgeGaps: BROBOT_TIERED_PIPELINE_ENABLED ? [] : revisedOutput.knowledgeGaps,
+      whatMostResidentsMiss:
+        BROBOT_TIERED_PIPELINE_ENABLED && !includeResidentsMiss
+          ? []
+          : revisedOutput.whatMostResidentsMiss,
     };
     revisionTriggered = true;
     revisionUsage = revisionCompletion.usage;
@@ -1772,7 +2025,7 @@ async function generateBroBotPipelineResult(params: {
   let metadataModel: string | null = null;
   let metadataUsage: unknown = null;
 
-  if (BROBOT_SEPARATE_METADATA_PASS) {
+  if (BROBOT_SEPARATE_METADATA_PASS && !BROBOT_ASYNC_ENRICHMENT_ENABLED) {
     const metadataStartedAt = performance.now();
     metadataModel = getMetadataModel();
     // The metadata pass only augments suggestedQuestions/nextLearningBranches/tags.
@@ -1993,6 +2246,18 @@ async function handleGuestChat(params: {
     }
   }
 
+  const entityResolution = resolveBroBotEntities(body.message);
+  const responseTier = BROBOT_TIERED_PIPELINE_ENABLED
+    ? resolveBroBotResponseTier({
+        message: body.message,
+        mode: intent.mode,
+        subintent: intent.subintent,
+        responseDepth: body.responseDepth,
+        entityResolution,
+      })
+    : 3;
+  const tierOneFastPath = BROBOT_TIERED_PIPELINE_ENABLED && responseTier === 1;
+
   const baseRankingContext: BranchRankingContext = {
     userMessage: body.message,
     mode: intent.mode,
@@ -2002,19 +2267,19 @@ async function handleGuestChat(params: {
     fingerprint: null,
   };
 
-  const learningBranches = await loadRankedBranchQuestions({
-    persistence,
-    intent,
-    context: baseRankingContext,
-  });
-  const outcomePerformanceByBranchId = await loadBranchOutcomePerformance({
-    persistence,
-    branchQuestionIds: learningBranches.branches
-      .map((branch) => branch.branchQuestionId ?? branch.id)
-      .filter(isUuid),
-    mode: intent.mode,
-    trainingLevel: body.trainingLevel,
-  });
+  const learningBranches = tierOneFastPath
+    ? { topic: null, branches: [] as RankedBranchOption[] }
+    : await loadRankedBranchQuestions({ persistence, intent, context: baseRankingContext });
+  const outcomePerformanceByBranchId = tierOneFastPath
+    ? new Map<string, BranchOutcomePerformance>()
+    : await loadBranchOutcomePerformance({
+        persistence,
+        branchQuestionIds: learningBranches.branches
+          .map((branch) => branch.branchQuestionId ?? branch.id)
+          .filter(isUuid),
+        mode: intent.mode,
+        trainingLevel: body.trainingLevel,
+      });
   const rankingContext: BranchRankingContext = {
     ...baseRankingContext,
     outcomePerformanceByBranchId,
@@ -2051,6 +2316,8 @@ async function handleGuestChat(params: {
       limit,
       usedBefore,
       guestCookieToSet,
+      tier: responseTier,
+      entityResolution,
     });
   }
 
@@ -2063,6 +2330,18 @@ async function handleGuestChat(params: {
     learningBranches,
     databaseBranchOptions,
     rankingContext,
+    tier: responseTier,
+    entityResolution,
+    requestStartedAt: startedAt,
+    answerContext: tierOneFastPath
+      ? buildBroBotMinimalAnswerContext({
+          message: body.message,
+          intent,
+          trainingLevel: body.trainingLevel,
+          responseDepth: body.responseDepth,
+          history,
+        })
+      : undefined,
   });
   const latencyMs = Date.now() - startedAt;
   const brobotOutput = {
@@ -2100,6 +2379,7 @@ async function handleGuestChat(params: {
 
   return withGuestCookie(
     NextResponse.json({
+      ...tierResponseFields(brobotOutput),
       conversationId: body.conversationId ?? crypto.randomUUID(),
       messageId: crypto.randomUUID(),
       goal: brobotOutput.goal,
@@ -2526,6 +2806,18 @@ export async function POST(request: Request) {
       });
     }
 
+    const entityResolution = resolveBroBotEntities(validatedBody.message);
+    const responseTier = BROBOT_TIERED_PIPELINE_ENABLED
+      ? resolveBroBotResponseTier({
+          message: validatedBody.message,
+          mode: intent.mode,
+          subintent: intent.subintent,
+          responseDepth: validatedBody.responseDepth,
+          entityResolution,
+        })
+      : 3;
+    stageTimer.mark('tier_and_entity_resolution', performance.now() - intentStartedAt);
+
     const clinicalContext = await stageTimer.measure('clinical_context_extraction', () =>
       buildBroBotClinicalContextFromIntent({
         message: validatedBody.message,
@@ -2536,7 +2828,7 @@ export async function POST(request: Request) {
             : undefined,
       })
     );
-    const kgShadowPromise: Promise<BroBotKgShadowResult> = retrieveBroBotKgShadow({
+    const kgInput = {
       requestId,
       query: validatedBody.message,
       intent,
@@ -2548,10 +2840,15 @@ export async function POST(request: Request) {
           ? { id: validatedBody.selectedBranchId, label: validatedBody.selectedBranchLabel }
           : undefined,
       conversationTopic: history.length ? resolveTopicFromHistory({ message: validatedBody.message, history }) : null,
-    });
+    };
+    const tierOneFastPath = BROBOT_TIERED_PIPELINE_ENABLED && responseTier === 1;
+    const kgShadowPromise: Promise<BroBotKgShadowResult> =
+      tierOneFastPath && !BROBOT_TIER1_KG_ENABLED
+        ? Promise.resolve(createBroBotKgBypassResult(kgInput))
+        : retrieveBroBotKgShadow(kgInput);
 
     const branchReadsStartedAt = performance.now();
-    const fingerprint = await loadLearningFingerprint({ userId });
+    const fingerprint = tierOneFastPath ? null : await loadLearningFingerprint({ userId });
     const baseRankingContext: BranchRankingContext = {
       userMessage: body.message,
       mode: intent.mode,
@@ -2562,19 +2859,23 @@ export async function POST(request: Request) {
     };
 
     step = 'load_learning_branches';
-    const learningBranches = await loadRankedBranchQuestions({
-      persistence,
-      intent,
-      context: baseRankingContext,
-    });
-    const outcomePerformanceByBranchId = await loadBranchOutcomePerformance({
-      persistence,
-      branchQuestionIds: learningBranches.branches
-        .map((branch) => branch.branchQuestionId ?? branch.id)
-        .filter(isUuid),
-      mode: intent.mode,
-      trainingLevel: body.trainingLevel,
-    });
+    const learningBranches = tierOneFastPath
+      ? { topic: null, branches: [] as RankedBranchOption[] }
+      : await loadRankedBranchQuestions({
+          persistence,
+          intent,
+          context: baseRankingContext,
+        });
+    const outcomePerformanceByBranchId = tierOneFastPath
+      ? new Map<string, BranchOutcomePerformance>()
+      : await loadBranchOutcomePerformance({
+          persistence,
+          branchQuestionIds: learningBranches.branches
+            .map((branch) => branch.branchQuestionId ?? branch.id)
+            .filter(isUuid),
+          mode: intent.mode,
+          trainingLevel: body.trainingLevel,
+        });
     const rankingContext: BranchRankingContext = {
       ...baseRankingContext,
       outcomePerformanceByBranchId,
@@ -2626,20 +2927,22 @@ export async function POST(request: Request) {
       });
     }
 
-    await updateLearningFingerprint({
-      userId,
-      mode: intent.mode,
-      branch:
-        body.selectedBranchId && body.selectedBranchLabel
-          ? {
-              id: body.selectedBranchId,
-              label: body.selectedBranchLabel,
-            }
-          : undefined,
-    });
+    if (!tierOneFastPath) {
+      await updateLearningFingerprint({
+        userId,
+        mode: intent.mode,
+        branch:
+          body.selectedBranchId && body.selectedBranchLabel
+            ? {
+                id: body.selectedBranchId,
+                label: body.selectedBranchLabel,
+              }
+            : undefined,
+      });
+    }
 
     const answerContext = await stageTimer.measure('caseprep_and_answer_context', () =>
-      buildBroBotAnswerContext({
+      Promise.resolve((tierOneFastPath ? buildBroBotMinimalAnswerContext : buildBroBotAnswerContext)({
         message: validatedBody.message,
         intent,
         selectedBranch:
@@ -2652,25 +2955,27 @@ export async function POST(request: Request) {
         responseDepth: validatedBody.responseDepth,
         trainingLevel: validatedBody.trainingLevel,
         history,
-      }),
+      })),
       'parallel_context'
     );
     const kgShadow = await kgShadowPromise;
     for (const [name, duration] of Object.entries(kgShadow.trace.stageTimingsMs)) {
       stageTimer.mark(name, duration);
     }
-    const kgTelemetry = await persistBroBotKgShadowTrace({
-      result: kgShadow,
-      query: validatedBody.message,
-      userId,
-      conversationId: persistedConversationId,
-      messageId: createdUserMessage.id,
-      mode: intent.mode,
-      subintent: intent.subintent,
-      trainingLevel: validatedBody.trainingLevel,
-      responseDepth: validatedBody.responseDepth,
-      isFollowUp: history.filter((message) => message.role === 'user').length > 1,
-    });
+    const kgTelemetry = tierOneFastPath
+      ? { persisted: false, latencyMs: 0, errorCode: 'DEFERRED_TO_ENRICHMENT' }
+      : await persistBroBotKgShadowTrace({
+          result: kgShadow,
+          query: validatedBody.message,
+          userId,
+          conversationId: persistedConversationId,
+          messageId: createdUserMessage.id,
+          mode: intent.mode,
+          subintent: intent.subintent,
+          trainingLevel: validatedBody.trainingLevel,
+          responseDepth: validatedBody.responseDepth,
+          isFollowUp: history.filter((message) => message.role === 'user').length > 1,
+        });
     stageTimer.mark('kg_telemetry_persistence', kgTelemetry.latencyMs);
 
     if (body.stream || BROBOT_STREAMING_ENABLED) {
@@ -2693,7 +2998,9 @@ export async function POST(request: Request) {
         rankingContext,
         startedAt,
         limit,
-        usedBefore,
+          usedBefore,
+          tier: responseTier,
+          entityResolution,
       });
     }
 
@@ -2711,6 +3018,9 @@ export async function POST(request: Request) {
           learningBranches,
           databaseBranchOptions,
           rankingContext,
+          tier: responseTier,
+          entityResolution,
+          requestStartedAt: startedAt,
         })
       );
     } catch (error) {
@@ -2753,6 +3063,45 @@ export async function POST(request: Request) {
     stageTimer.mark('total_request', latencyMs);
     const brobotOutput = pipelineResult.brobotOutput;
     const qualityGate = pipelineResult.qualityGate;
+    if (
+      BROBOT_TIERED_PIPELINE_ENABLED &&
+      BROBOT_ASYNC_ENRICHMENT_ENABLED &&
+      responseTier === 1
+    ) {
+      const responsePayload = await persistTierOneFastOutput({
+        request,
+        requestId,
+        persistence,
+        subject: authenticatedSubject,
+        userId: authenticatedUserId,
+        conversationId: persistedConversationId,
+        userMessageId: createdUserMessage.id,
+        assistantMessageId: crypto.randomUUID(),
+        body: validatedBody,
+        intent,
+        intentSource,
+        answerContext,
+        answerModel: pipelineResult.answerModel,
+        revisionModel: pipelineResult.revisionModel,
+        metadataModel: pipelineResult.metadataModel,
+        brobotOutput,
+        learningBranches,
+        history,
+        latencyMs,
+        limit,
+        usedBefore,
+        answerUsage: pipelineResult.answerUsage,
+        revisionUsage: pipelineResult.revisionUsage,
+        metadataUsage: pipelineResult.metadataUsage,
+        qualityGateWarningsBeforeRevision: pipelineResult.qualityGateWarningsBeforeRevision,
+        revisionTriggered: false,
+        answerRoute: pipelineResult.answerRoute,
+        tier: responseTier,
+        entityResolution,
+        stageTimings: stageTimer.snapshot(),
+      });
+      return NextResponse.json(responsePayload);
+    }
     await attachBroBotKgAnswerOutcome({
       requestId,
       qualityGateWarnings: qualityGate.warnings,
@@ -2943,6 +3292,41 @@ export async function POST(request: Request) {
     }
 
     const assistantMessageId = assistantMessage.id;
+
+    if (BROBOT_ASYNC_ENRICHMENT_ENABLED) {
+      try {
+        await enqueueBroBotEnrichmentJob({
+          conversationId: persistedConversationId,
+          messageId: assistantMessageId,
+          userId,
+          payload: {
+            requestId,
+            question: body.message,
+            answer: brobotOutput.answer,
+            tier: responseTier,
+            model: pipelineResult.answerModel,
+            answerUsage: pipelineResult.answerUsage,
+            latencyMs,
+            intent,
+            entityResolution,
+            responseDepth: body.responseDepth,
+            trainingLevel: body.trainingLevel,
+            suggestedFollowUps: brobotOutput.suggestedQuestions.slice(0, 3),
+            stageTimings: stageTimer.snapshot(),
+          },
+        });
+      } catch (error) {
+        logChatStepError({
+          requestId,
+          category: 'database_error',
+          step: 'enqueue_async_enrichment',
+          error,
+          userId,
+          conversationId: persistedConversationId,
+          messageId: assistantMessageId,
+        });
+      }
+    }
 
     void enqueueBroBotEvaluationJob({
       conversationId: persistedConversationId,
@@ -3168,6 +3552,7 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({
+      ...tierResponseFields(brobotOutput),
       conversationId: persistedConversationId,
       messageId: assistantMessageId,
       goal: brobotOutput.goal,
@@ -3230,7 +3615,7 @@ export async function POST(request: Request) {
   }
 }
 
-async function persistCompletedBroBotOutput(params: {
+type PersistCompletedParams = {
   request: Request;
   requestId: string;
   persistence: BroBotDbClient;
@@ -3266,7 +3651,97 @@ async function persistCompletedBroBotOutput(params: {
   revisionTriggered?: boolean;
   answerRoute?: BroBotAnswerRoute;
   originalAnswerBeforeRevision?: string | null;
-}) {
+  tier?: BroBotResponseTier;
+  entityResolution?: BroBotEntityResolution;
+  stageTimings?: Record<string, unknown>;
+};
+
+async function persistTierOneFastOutput(params: PersistCompletedParams): Promise<BroBotChatResponse> {
+  const { data: assistantMessage, error } = await params.persistence
+    .from('brobot_messages')
+    .insert({
+      id: params.assistantMessageId,
+      conversation_id: params.conversationId,
+      user_id: params.userId,
+      role: 'assistant',
+      content: params.brobotOutput.answer,
+      structured_json: {
+        ...params.brobotOutput,
+        answerRoute: params.answerRoute ?? null,
+        enrichment: { status: 'pending' },
+      },
+      mode: params.brobotOutput.detectedMode,
+      response_depth: params.body.responseDepth,
+    })
+    .select('id')
+    .single();
+  if (error || !assistantMessage) throw new Error(error?.message ?? 'BroBot could not save this response.');
+
+  if (BROBOT_ASYNC_ENRICHMENT_ENABLED) {
+    try {
+      await enqueueBroBotEnrichmentJob({
+        conversationId: params.conversationId,
+        messageId: params.assistantMessageId,
+        userId: params.userId,
+        payload: {
+          requestId: params.requestId,
+          question: params.body.message,
+          answer: params.brobotOutput.answer,
+          tier: 1,
+          model: params.answerModel,
+          answerUsage: params.answerUsage,
+          latencyMs: params.latencyMs,
+          intent: params.intent,
+          entityResolution: params.entityResolution ?? {},
+          responseDepth: params.body.responseDepth,
+          trainingLevel: params.body.trainingLevel,
+          suggestedFollowUps: params.brobotOutput.suggestedQuestions.slice(0, 3),
+          stageTimings: params.stageTimings,
+        },
+      });
+    } catch (queueError) {
+      logChatStepError({
+        requestId: params.requestId,
+        category: 'database_error',
+        step: 'enqueue_async_enrichment',
+        error: queueError,
+        userId: params.userId,
+        conversationId: params.conversationId,
+        messageId: params.assistantMessageId,
+      });
+    }
+  }
+
+  const usedAfter = await recordSuccessfulAIUse(params.subject, params.latencyMs, {
+    ipHash: hashForLogging(getClientIp(params.request) ?? undefined),
+    userAgentHash: hashForLogging(params.request.headers.get('user-agent') ?? undefined),
+  });
+  return {
+    ...tierResponseFields(params.brobotOutput),
+    conversationId: params.conversationId,
+    messageId: params.assistantMessageId,
+    answer: params.brobotOutput.answer,
+    priorityPoints: [],
+    knowledgeGaps: [],
+    suggestedQuestions: params.brobotOutput.suggestedQuestions,
+    nextLearningBranches: [],
+    tags: [],
+    detectedMode: params.brobotOutput.detectedMode,
+    remainingFreeUses:
+      params.limit != null ? Math.max(0, params.limit - usedAfter) : null,
+    needsClarification: params.brobotOutput.needsClarification,
+    clarifyingQuestions: params.brobotOutput.clarifyingQuestions,
+  };
+}
+
+async function persistCompletedBroBotOutput(params: PersistCompletedParams) {
+  if (
+    BROBOT_TIERED_PIPELINE_ENABLED &&
+    BROBOT_ASYNC_ENRICHMENT_ENABLED &&
+    params.tier === 1
+  ) {
+    return persistTierOneFastOutput(params);
+  }
   const qualityGate = runBroBotQualityGate({
     answer: params.brobotOutput.answer,
     mode: params.intent.mode,
@@ -3439,6 +3914,40 @@ async function persistCompletedBroBotOutput(params: {
       messageId: params.userMessageId,
     });
     throw new Error('BroBot could not save this response.');
+  }
+
+  if (BROBOT_ASYNC_ENRICHMENT_ENABLED && params.tier !== 1) {
+    try {
+      await enqueueBroBotEnrichmentJob({
+        conversationId: params.conversationId,
+        messageId: params.assistantMessageId,
+        userId: params.userId,
+        payload: {
+          requestId: params.requestId,
+          question: params.body.message,
+          answer: params.brobotOutput.answer,
+          tier: params.tier ?? 3,
+          model: params.answerModel,
+          answerUsage: params.answerUsage,
+          latencyMs: params.latencyMs,
+          intent: params.intent,
+          entityResolution: params.entityResolution ?? {},
+          responseDepth: params.body.responseDepth,
+          trainingLevel: params.body.trainingLevel,
+          suggestedFollowUps: params.brobotOutput.suggestedQuestions.slice(0, 3),
+        },
+      });
+    } catch (error) {
+      logChatStepError({
+        requestId: params.requestId,
+        category: 'database_error',
+        step: 'enqueue_async_enrichment',
+        error,
+        userId: params.userId,
+        conversationId: params.conversationId,
+        messageId: params.assistantMessageId,
+      });
+    }
   }
 
   void enqueueBroBotEvaluationJob({
@@ -3638,6 +4147,7 @@ async function persistCompletedBroBotOutput(params: {
   });
 
   const responsePayload: BroBotChatResponse = {
+    ...tierResponseFields(params.brobotOutput),
     conversationId: params.conversationId,
     messageId: params.assistantMessageId,
     goal: params.brobotOutput.goal,
@@ -3679,6 +4189,8 @@ function createGuestStreamingChatResponse(params: {
   limit: number | null;
   usedBefore: number | null;
   guestCookieToSet: string | null;
+  tier: BroBotResponseTier;
+  entityResolution: BroBotEntityResolution;
 }) {
   const encoder = new TextEncoder();
   const conversationId = params.body.conversationId ?? crypto.randomUUID();
@@ -3697,12 +4209,25 @@ function createGuestStreamingChatResponse(params: {
           persistence: params.persistence,
           body: params.body,
           intent: params.intent,
+          answerContext:
+            params.tier === 1
+              ? buildBroBotMinimalAnswerContext({
+                  message: params.body.message,
+                  intent: params.intent,
+                  trainingLevel: params.body.trainingLevel,
+                  responseDepth: params.body.responseDepth,
+                  history: params.history,
+                })
+              : undefined,
           history: params.history,
           learningBranches: params.learningBranches,
           databaseBranchOptions: params.databaseBranchOptions,
           rankingContext: params.rankingContext,
           signal: params.request.signal,
           preserveStreamedAnswer: true,
+          tier: params.tier,
+          entityResolution: params.entityResolution,
+          requestStartedAt: params.startedAt,
           onAnswerText(answer) {
             if (
               params.request.signal.aborted ||
@@ -3725,6 +4250,7 @@ function createGuestStreamingChatResponse(params: {
           output.answer = streamedAnswer;
         }
         const responsePayload: BroBotChatResponse = {
+          ...tierResponseFields(output),
           conversationId,
           messageId: assistantMessageId,
           goal: output.goal,
@@ -3802,6 +4328,8 @@ function createStreamingChatResponse(params: {
   startedAt: number;
   limit: number | null;
   usedBefore: number | null;
+  tier: BroBotResponseTier;
+  entityResolution: BroBotEntityResolution;
 }) {
   const encoder = new TextEncoder();
   const assistantMessageId = crypto.randomUUID();
@@ -3846,6 +4374,9 @@ function createStreamingChatResponse(params: {
           rankingContext: params.rankingContext,
           signal: params.request.signal,
           preserveStreamedAnswer: true,
+          tier: params.tier,
+          entityResolution: params.entityResolution,
+          requestStartedAt: params.startedAt,
           onAnswerText(answer) {
             if (
               params.request.signal.aborted ||
@@ -3890,6 +4421,9 @@ function createStreamingChatResponse(params: {
           revisionTriggered: pipelineResult.revisionTriggered,
           answerRoute: pipelineResult.answerRoute,
           originalAnswerBeforeRevision: pipelineResult.originalAnswerBeforeRevision,
+          tier: params.tier,
+          entityResolution: params.entityResolution,
+          stageTimings: pipelineResult.stageTimingsMs,
         });
 
         // If the provider did not yield usable answer-field deltas, preserve a

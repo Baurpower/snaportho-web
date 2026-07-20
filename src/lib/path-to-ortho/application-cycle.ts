@@ -42,6 +42,19 @@ const ENV_FIELDS = [
   ["matchDayDate", "NEXT_PUBLIC_PATH_TO_ORTHO_MATCH_DAY_DATE"],
 ] as const;
 
+type ApplicationCycleDateFields = Exclude<keyof ApplicationCycleConfig, "milestones">;
+
+export const DEFAULT_APPLICATION_CYCLE_DATES = {
+  erasApplicationOpenDate: "2026-09-02",
+  erasProgramReviewDate: "2026-09-23",
+  nrmpRegistrationOpenDate: "2026-09-15",
+  nrmpRegistrationCloseDate: "2027-01-29",
+  nrmpRankingOpenDate: "2027-02-01",
+  nrmpRankingCloseDate: "2027-03-03",
+  yesNoDayDate: "2027-03-15",
+  matchDayDate: "2027-03-19",
+} as const satisfies Readonly<Record<ApplicationCycleDateFields, DateOnly>>;
+
 const LABELS: Record<(typeof ENV_FIELDS)[number][0], string> = {
   erasApplicationOpenDate: "ERAS Applications Open",
   erasProgramReviewDate: "Programs Begin Reviewing Applications",
@@ -137,29 +150,21 @@ export function getApplicationCycleWindows(config: ApplicationCycleConfig, today
 }
 
 export function createApplicationCycleConfig(
-  env: ApplicationCycleEnvironment
+  env: ApplicationCycleEnvironment = {}
 ): ApplicationCycleConfig {
-  const missing: string[] = [];
-  const values: Partial<Record<(typeof ENV_FIELDS)[number][0], DateOnly>> = {};
+  const values: Partial<Record<ApplicationCycleDateFields, DateOnly>> = {};
 
   for (const [field, envKey] of ENV_FIELDS) {
     const raw = env[envKey]?.trim();
-    if (!raw) {
-      missing.push(envKey);
-      continue;
-    }
+    const resolved = raw || DEFAULT_APPLICATION_CYCLE_DATES[field];
     try {
-      values[field] = parseDateOnly(raw);
+      values[field] = parseDateOnly(resolved);
     } catch (error) {
-      throw new Error(`${envKey}: ${(error as Error).message}`);
+      throw new Error(`Invalid Path to Ortho application-cycle override ${envKey}: ${(error as Error).message}`);
     }
   }
 
-  if (missing.length) {
-    throw new Error(`Missing Path to Ortho application-cycle environment variables: ${missing.join(", ")}`);
-  }
-
-  const dates = values as Record<(typeof ENV_FIELDS)[number][0], DateOnly>;
+  const dates = values as Record<ApplicationCycleDateFields, DateOnly>;
   const chronologicalKeys: (typeof ENV_FIELDS)[number][0][] = [
     "erasApplicationOpenDate",
     "nrmpRegistrationOpenDate",

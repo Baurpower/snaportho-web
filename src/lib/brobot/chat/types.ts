@@ -50,6 +50,18 @@ export type BroBotChatSource = z.infer<typeof BroBotChatSourceSchema>;
 export type BroBotIntentSource = z.infer<typeof BroBotIntentSourceSchema>;
 export type BroBotResearchSubmode = z.infer<typeof BroBotResearchSubmodeSchema>;
 
+export const BroBotResponseTierSchema = z.union([z.literal(1), z.literal(2), z.literal(3)]);
+export const BroBotAnswerStatusSchema = z.enum(['answer', 'clarify']);
+export const BroBotEntityResolutionStateSchema = z.enum([
+  'resolved',
+  'ambiguous',
+  'unresolved',
+]);
+
+export type BroBotResponseTier = z.infer<typeof BroBotResponseTierSchema>;
+export type BroBotAnswerStatus = z.infer<typeof BroBotAnswerStatusSchema>;
+export type BroBotEntityResolutionState = z.infer<typeof BroBotEntityResolutionStateSchema>;
+
 export const BroBotChatSubintentSchema = z.enum([
   'landmarks',
   'surgical_steps',
@@ -153,6 +165,16 @@ export const BroBotChatRequestSchema = z.object({
 export type BroBotChatRequest = z.infer<typeof BroBotChatRequestSchema>;
 
 export const BroBotChatOutputSchema = z.object({
+  tier: BroBotResponseTierSchema.optional(),
+  status: BroBotAnswerStatusSchema.optional(),
+  directAnswer: z.string().optional(),
+  keyPoints: z.array(z.string()).optional(),
+  pearl: z.string().optional(),
+  pitfall: z.string().optional(),
+  clarifyingQuestion: z.string().optional(),
+  specialty: z.string().optional(),
+  resolvedTopic: z.string().optional(),
+  entityResolutionState: BroBotEntityResolutionStateSchema.optional(),
   goal: z.string().optional(),
   selectedFocus: z.string().optional(),
   answer: z.string(),
@@ -173,6 +195,22 @@ export const BroBotChatOutputSchema = z.object({
 });
 
 export type BroBotChatOutput = z.infer<typeof BroBotChatOutputSchema>;
+
+export type BroBotResolvedEntity = {
+  abbreviation: string;
+  expansion: string;
+  type: 'tendon' | 'muscle' | 'nerve' | 'joint' | 'procedure' | 'anatomy';
+  specialty: 'hand_surgery' | 'orthopaedics';
+};
+
+export type BroBotEntityResolution = {
+  state: BroBotEntityResolutionState;
+  specialty: 'hand_surgery' | 'orthopaedics' | 'unknown';
+  resolvedTopic: string;
+  entities: BroBotResolvedEntity[];
+  relationship?: string;
+  clarifyingQuestion?: string;
+};
 
 export const BroBotMetadataOutputSchema = z.object({
   suggestedQuestions: z.array(z.string()),

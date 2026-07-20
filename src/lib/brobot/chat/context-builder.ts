@@ -41,6 +41,38 @@ export type BroBotAnswerContext = {
   clinicalContext: BroBotClinicalContext;
 };
 
+export function buildBroBotMinimalAnswerContext(input: {
+  message: string;
+  intent: BroBotChatIntent;
+  selectedBranch?: { id?: string; label?: string };
+  trainingLevel: BroBotTrainingLevel;
+  responseDepth: BroBotResponseDepth;
+  history: BroBotModelMessage[];
+}): BroBotAnswerContext {
+  return {
+    selectedBranch: input.selectedBranch,
+    mode: input.intent.mode,
+    subintent: input.intent.subintent,
+    procedureCategory: input.intent.procedureCategory,
+    procedureOrTopic: input.intent.procedureOrTopic,
+    trainingLevel: input.trainingLevel,
+    responseDepth: input.responseDepth,
+    recentConversationSummary: input.history
+      .slice(-2)
+      .map((message) => `${message.role}: ${message.content}`)
+      .join('\n')
+      .slice(0, 800),
+    certifiedContext: null,
+    orPrepProcedureMetadata: null,
+    oiteLearningMetadata: null,
+    clinicalContext: buildBroBotClinicalContextFromIntent({
+      message: input.message,
+      intent: input.intent,
+      selectedBranch: input.selectedBranch,
+    }),
+  };
+}
+
 export async function buildBroBotAnswerContext(input: {
   message?: string;
   intent: BroBotChatIntent;
