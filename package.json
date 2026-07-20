@@ -11,6 +11,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "test:vercel-crons": "node scripts/validate-vercel-crons.mjs",
     "brobot:test:chat": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/chat/prompt-builder.test.ts",
     "brobot:test:tiered": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/chat/tier-router.test.ts",
     "brobot:test:contract": "node --experimental-strip-types src/lib/brobot/chat/response-contract.test.ts",
