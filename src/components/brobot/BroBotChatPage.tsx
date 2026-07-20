@@ -837,7 +837,11 @@ export default function BroBotChatPage() {
 
       const res = await fetch('/api/brobot/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-SnapOrtho-Client': 'web',
+          'X-BroBot-Response-Version': '2',
+        },
         credentials: 'include',
         signal: requestController.signal,
         body: JSON.stringify(chatRequestBody),

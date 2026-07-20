@@ -1,0 +1,11 @@
+event: start
+data: {"assistantMessageId":"message-fixture","conversationId":"conversation-fixture"}
+
+event: delta
+data: {"content":"A sanitized BroBot answer."}
+
+event: metadata
+data: {"conversationId":"conversation-fixture","messageId":"message-fixture","answer":"A sanitized BroBot answer.","priorityPoints":[],"knowledgeGaps":[],"suggestedQuestions":[],"tags":[],"detectedMode":"general","remainingFreeUses":null,"responseVersion":2}
+
+event: done
+data: {"assistantMessageId":"message-fixture","conversationId":"conversation-fixture"}

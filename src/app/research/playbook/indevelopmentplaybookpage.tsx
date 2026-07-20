@@ -1,401 +1,50 @@
 'use client';
 
+import { useCallback, useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import {
-  FlaskConical,
-  BookOpen,
-  ClipboardList,
-  BarChart3,
-  FileSearch,
-  PencilRuler,
-  Files,
-  ArrowRight,
-} from 'lucide-react';
-import type React from 'react';
-
-const COLORS = {
-  bg: '#fbfaf7',                // warmer + “paper”
-  text: '#1f2937',
-  heading: '#2b2b2b',
-  headingSub: '#313131',
-  accent: '#3f6f67',            // green-teal (distinct from your Path to Ortho blue)
-  accent2: '#7c5b86',           // optional secondary (used subtly)
-  border: 'rgba(148,163,184,0.55)',
-  card: '#ffffff',
-  muted: '#6b7280',
-} as const;
-
-function Container({ children }: { children: React.ReactNode }) {
-  return <div className="mx-auto w-full max-w-6xl px-6 sm:px-8 lg:px-10">{children}</div>;
-}
-
-function Section({ children }: { children: React.ReactNode }) {
-  return <section className="py-12 sm:py-16 lg:py-20">{children}</section>;
-}
-
-function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return (
-    <div
-      className={`rounded-2xl border shadow-sm ${className}`}
-      style={{ borderColor: COLORS.border, background: COLORS.card }}
-    >
-      {children}
-    </div>
-  );
-}
-
-function CardHeader({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return <div className={`p-6 md:p-7 ${className}`}>{children}</div>;
-}
-
-function CardTitle({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return (
-    <h3 className={`text-base sm:text-lg font-semibold tracking-tight ${className}`} style={{ color: COLORS.headingSub }}>
-      {children}
-    </h3>
-  );
-}
-
-function CardContent({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return (
-    <div className={`px-6 md:px-7 pb-6 md:pb-7 text-sm leading-relaxed ${className}`} style={{ color: '#4b5563' }}>
-      {children}
-    </div>
-  );
-}
-
-function Eyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="mb-2 text-[11px] sm:text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: COLORS.muted }}>
-      {children}
-    </div>
-  );
-}
-
-function SectionHeading({ eyebrow, title, subtitle }: { eyebrow?: string; title: string; subtitle?: string }) {
-  return (
-    <div className="mb-6 sm:mb-8">
-      {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
-      <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight" style={{ color: COLORS.heading }}>
-        {title}
-      </h2>
-      {subtitle ? (
-        <p className="mt-3 max-w-2xl leading-relaxed" style={{ color: '#4b5563' }}>
-          {subtitle}
-        </p>
-      ) : null}
-    </div>
-  );
-}
-
-function Divider() {
-  return (
-    <div className="border-t" style={{ borderColor: 'rgba(148,163,184,0.35)' }}>
-      <Container>
-        <div className="h-0" />
-      </Container>
-    </div>
-  );
-}
-
-function PillLink({
-  href,
-  label,
-  icon,
-}: {
-  href: string;
-  label: string;
-  icon: React.ReactNode;
-}) {
-  return (
-    <Link
-      href={href}
-      className="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold transition hover:bg-black/[0.03]"
-      style={{ borderColor: COLORS.border, color: COLORS.headingSub }}
-    >
-      <span className="inline-flex items-center" style={{ color: COLORS.accent }}>
-        {icon}
-      </span>
-      {label}
-      <ArrowRight className="h-3.5 w-3.5 opacity-60" />
-    </Link>
-  );
-}
+import { ArrowRight, BookOpen, Compass, Lightbulb, PlayCircle } from 'lucide-react';
+import { ComingSoonModal } from './coming-soon-modal';
+import { ModuleCard } from './module-card';
+import { playbookModules, type PlaybookModule } from './playbook-modules';
 
 export default function InDevelopmentPlaybookPage() {
-  const title = 'Research Playbook'; // rename to any option you like
-  const subtitle =
-    'A practical, step-by-step system for turning an idea into a clean dataset, a strong manuscript, and a real submission.';
+  const [selectedModule, setSelectedModule] = useState<PlaybookModule | null>(null);
+  const closeModal = useCallback(() => setSelectedModule(null), []);
+  const ideaModule = playbookModules[0];
+  const currentModule = playbookModules.find((module) => module.status === 'in-progress');
 
   return (
-    <main className="min-h-screen" style={{ background: COLORS.bg, color: COLORS.text }}>
-      {/* Background glow + subtle “paper” vibe */}
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        <div
-          className="absolute left-1/2 top-[-16%] h-[54vh] w-[86vw] -translate-x-1/2 rounded-[999px] blur-3xl"
-          style={{ background: 'radial-gradient(ellipse at center, rgba(63,111,103,0.10), transparent 60%)' }}
-        />
-        <div
-          className="absolute right-[-14%] bottom-[-18%] h-[42vh] w-[52vw] rounded-[999px] blur-3xl"
-          style={{ background: 'radial-gradient(ellipse at center, rgba(124,91,134,0.06), transparent 60%)' }}
-        />
-        <div
-          className="absolute inset-0 opacity-[0.06]"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle at 1px 1px, rgba(31,41,55,0.6) 1px, transparent 0)',
-            backgroundSize: '22px 22px',
-          }}
-        />
-      </div>
-
-      {/* Hero */}
-      <Section>
-        <Container>
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
-            <div className="lg:col-span-7">
-              <motion.div
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.45 }}
-              >
-                <Eyebrow>Research · start here</Eyebrow>
-                <h1 className="text-4xl sm:text-5xl font-bold tracking-tight" style={{ color: COLORS.heading }}>
-                  {title.split(' ')[0]}{' '}
-                  <span style={{ color: COLORS.accent }}>{title.split(' ').slice(1).join(' ')}</span>
-                </h1>
-                <p className="mt-4 max-w-2xl leading-relaxed" style={{ color: '#4b5563' }}>
-                  {subtitle}
-                </p>
-
-                <div className="mt-6 flex flex-wrap gap-2">
-                  <PillLink href="/research/idea-to-irb" label="Idea → IRB" icon={<FlaskConical className="h-4 w-4" />} />
-                  <PillLink href="/research/lit-review" label="Literature Review" icon={<BookOpen className="h-4 w-4" />} />
-                  <PillLink href="/research/methods" label="Methods + Data" icon={<ClipboardList className="h-4 w-4" />} />
-                  <PillLink href="/research/stats" label="Stats Basics" icon={<BarChart3 className="h-4 w-4" />} />
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Quick Start card */}
-            <div className="lg:col-span-5">
-              <Card className="relative overflow-hidden">
-                <div
-                  className="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full"
-                  style={{ background: 'radial-gradient(ellipse at center, rgba(63,111,103,0.12), transparent 60%)' }}
-                />
-                <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-2">
-                    <FileSearch className="h-5 w-5" style={{ color: COLORS.accent }} />
-                    Quick Start (15 minutes)
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <ol className="space-y-3">
-                    {[
-                      { t: 'Pick your question', d: 'Use PICO and define your primary outcome.' },
-                      { t: 'Decide study type', d: 'Case series, retrospective, SR/MA, database study, etc.' },
-                      { t: 'Build the skeleton', d: 'Draft a 1-page protocol: methods, variables, analysis plan.' },
-                      { t: 'Start the writing early', d: 'Create the manuscript file before your dataset is “perfect.”' },
-                    ].map((x) => (
-                      <li key={x.t} className="flex gap-3">
-                        <span
-                          className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full border text-[11px] font-semibold"
-                          style={{ borderColor: COLORS.border, color: COLORS.accent }}
-                        >
-                          ✓
-                        </span>
-                        <div>
-                          <div className="font-medium" style={{ color: COLORS.headingSub }}>
-                            {x.t}
-                          </div>
-                          <div className="text-xs" style={{ color: COLORS.muted }}>
-                            {x.d}
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ol>
-
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    <Link
-                      href="/research/quickstart"
-                      className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-semibold transition hover:bg-black/[0.03]"
-                      style={{ borderColor: COLORS.border, color: COLORS.headingSub }}
-                    >
-                      Open Quickstart
-                      <ArrowRight className="h-4 w-4 opacity-60" />
-                    </Link>
-                    <span
-                      className="inline-flex items-center rounded-xl border px-3 py-2 text-xs font-semibold"
-                      style={{ borderColor: COLORS.border, color: COLORS.accent }}
-                    >
-                      Built for ortho projects
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+    <main className="min-h-screen bg-[#f8faf9] text-slate-950">
+      <section className="relative overflow-hidden border-b border-slate-200/70 bg-white">
+        <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(circle_at_75%_10%,rgba(13,148,136,0.09),transparent_30%),radial-gradient(circle_at_15%_90%,rgba(59,130,246,0.06),transparent_28%)]" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:px-8 sm:py-28 lg:px-10 lg:py-32">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-700">SnapOrtho Learning</p>
+          <h1 className="mt-5 max-w-4xl text-5xl font-semibold tracking-[-0.045em] text-slate-950 sm:text-6xl lg:text-7xl">Research Playbook</h1>
+          <p className="mt-7 max-w-2xl text-xl font-medium leading-8 text-slate-700">Learn how experienced researchers take an idea from concept to publication.</p>
+          <p className="mt-4 max-w-2xl leading-7 text-slate-600">Master literature reviews, manuscript writing, statistics, study design, and publication strategies through practical step-by-step modules.</p>
+          <div className="mt-10 flex max-w-md items-center gap-4 rounded-2xl border border-slate-200/80 bg-white/80 p-4 shadow-sm backdrop-blur">
+            <div className="relative h-11 w-11 rounded-full border-[3px] border-slate-200"><span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-slate-500">0%</span></div>
+            <div><p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Overall progress</p><p className="mt-1 text-sm font-semibold text-slate-900">0 / 6 modules complete</p></div>
           </div>
-        </Container>
-      </Section>
+        </div>
+      </section>
 
-      <Divider />
+      <section className="mx-auto max-w-6xl px-6 py-16 sm:px-8 sm:py-20 lg:px-10" aria-labelledby="getting-started-heading">
+        <div className="max-w-2xl"><p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">Choose your path</p><h2 id="getting-started-heading" className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Getting started</h2><p className="mt-4 leading-7 text-slate-600">Begin at the start, pick up where you left off, or explore the full curriculum.</p></div>
+        <div className="mt-9 grid gap-4 md:grid-cols-3">
+          <button type="button" onClick={() => setSelectedModule(ideaModule)} className="group rounded-2xl border border-slate-200 bg-white p-6 text-left transition hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"><Lightbulb aria-hidden="true" className="h-5 w-5 text-teal-700" /><h3 className="mt-5 font-semibold">New Research Project</h3><p className="mt-2 text-sm leading-6 text-slate-600">Learn how to build a project from scratch.</p><span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold">Start <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span></button>
+          {currentModule ? <Link href={currentModule.route} className="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"><PlayCircle aria-hidden="true" className="h-5 w-5 text-amber-600" /><h3 className="mt-5 font-semibold">Continue Learning</h3><p className="mt-2 text-sm leading-6 text-slate-600">Resume {currentModule.title}.</p><span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold">Continue <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span></Link> : null}
+          <Link href="#learning-modules" className="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"><Compass aria-hidden="true" className="h-5 w-5 text-blue-700" /><h3 className="mt-5 font-semibold">Browse Modules</h3><p className="mt-2 text-sm leading-6 text-slate-600">Jump into any topic in the curriculum.</p><span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold">Explore <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span></Link>
+        </div>
+      </section>
 
-      {/* Modules grid */}
-      <Section>
-        <Container>
-          <SectionHeading
-            title="Modules"
-            subtitle="Work top-to-bottom if you’re new. Jump around if you’re mid-project."
-          />
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                href: '/research/idea-to-irb',
-                icon: <FlaskConical className="h-5 w-5" />,
-                title: 'Module 1: Idea → Protocol',
-                badge: 'Start',
-                body: 'PICO, endpoints, feasibility checks, IRB basics, and a protocol template you can reuse.',
-              },
-              {
-                href: '/research/lit-review',
-                icon: <BookOpen className="h-5 w-5" />,
-                title: 'Module 2: Literature Review',
-                badge: 'Core',
-                body: 'Search strategy, screening workflow, citation hygiene, and how to avoid “narrative mush.”',
-              },
-              {
-                href: '/research/methods',
-                icon: <ClipboardList className="h-5 w-5" />,
-                title: 'Module 3: Methods + Data',
-                badge: 'Core',
-                body: 'Variable design, data dictionaries, cleaning, missingness, and reproducible exports.',
-              },
-              {
-                href: '/research/stats',
-                icon: <BarChart3 className="h-5 w-5" />,
-                title: 'Module 4: Stats Basics',
-                badge: 'Practical',
-                body: 'Choosing tests, regression intuition, interpreting effect sizes, and common pitfalls.',
-              },
-              {
-                href: '/research/writing',
-                icon: <PencilRuler className="h-5 w-5" />,
-                title: 'Module 5: Writing + Submission',
-                badge: 'Finish',
-                body: 'Manuscript structure, tables/figures, journal fit, cover letters, and revision strategy.',
-              },
-              {
-                href: '/research/systematic-reviews',
-                icon: <Files className="h-5 w-5" />,
-                title: 'Module 6: Systematic Reviews',
-                badge: 'Bonus',
-                body: 'PRISMA flow, risk of bias, extraction templates, and how to keep scope under control.',
-              },
-            ].map((m) => (
-              <Link key={m.href} href={m.href} className="block">
-                <Card className="h-full transition-transform hover:-translate-y-0.5 hover:shadow-md">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center gap-2">
-                      <span style={{ color: COLORS.accent }}>{m.icon}</span>
-                      {m.title}
-                      <span
-                        className="ml-2 inline-flex items-center rounded-md border px-1.5 py-0.5 text-[10px] font-semibold"
-                        style={{ borderColor: COLORS.border, color: COLORS.accent }}
-                      >
-                        {m.badge}
-                      </span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-0">{m.body}</CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      <Divider />
-
-      {/* Templates strip */}
-      <Section>
-        <Container>
-          <SectionHeading
-            eyebrow="Templates"
-            title="Copy, paste, and keep moving"
-            subtitle="Lightweight assets that save hours and keep projects consistent."
-          />
-
-          <div className="grid gap-6 md:grid-cols-3">
-            {[
-              {
-                href: '/research/templates/protocol',
-                title: '1-page Protocol Template',
-                body: 'A minimal protocol that prevents scope creep and makes IRB easier.',
-              },
-              {
-                href: '/research/templates/data-dictionary',
-                title: 'Data Dictionary Template',
-                body: 'Variable names, types, coding rules, and a “future you” sanity check.',
-              },
-              {
-                href: '/research/templates/manuscript',
-                title: 'Manuscript Skeleton',
-                body: 'Pre-built headings + table shells so writing starts on day one.',
-              },
-            ].map((t) => (
-              <Link key={t.href} href={t.href} className="block">
-                <Card className="h-full transition-transform hover:-translate-y-0.5 hover:shadow-md">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center justify-between gap-2">
-                      <span>{t.title}</span>
-                      <ArrowRight className="h-4 w-4 opacity-60" />
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-0 text-sm leading-relaxed">{t.body}</CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      <Divider />
-
-      {/* About */}
-      <Section>
-        <Container>
-          <SectionHeading eyebrow="Philosophy" title="Simple, repeatable, and actually usable" />
-
-          <Card className="relative overflow-hidden">
-            <div
-              className="pointer-events-none absolute -left-12 -bottom-12 h-56 w-56 rounded-full"
-              style={{ background: 'radial-gradient(ellipse at center, rgba(124,91,134,0.10), transparent 60%)' }}
-            />
-            <CardContent className="pt-6">
-              <div className="grid gap-4 sm:grid-cols-3">
-                {[
-                  { k: 'Practical', v: 'Built for real ortho projects with real constraints.' },
-                  { k: 'Reusable', v: 'Templates + workflows you can repeat every study.' },
-                  { k: 'Clean', v: 'Consistent style, minimal clutter, fast to navigate.' },
-                ].map((x) => (
-                  <div key={x.k} className="rounded-xl border p-4" style={{ borderColor: COLORS.border }}>
-                    <div className="font-medium" style={{ color: COLORS.headingSub }}>
-                      {x.k}
-                    </div>
-                    <div className="mt-1 text-xs" style={{ color: COLORS.muted }}>
-                      {x.v}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </Container>
-      </Section>
+      <section id="learning-modules" className="scroll-mt-8 border-t border-slate-200/70 bg-white" aria-labelledby="modules-heading">
+        <div className="mx-auto max-w-6xl px-6 py-16 sm:px-8 sm:py-24 lg:px-10">
+          <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end"><div className="max-w-2xl"><p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">The curriculum</p><h2 id="modules-heading" className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Learning modules</h2><p className="mt-4 leading-7 text-slate-600">Follow the research process in order or focus on what your project needs today.</p></div><div className="inline-flex items-center gap-2 text-sm font-medium text-slate-500"><BookOpen aria-hidden="true" className="h-4 w-4" />6 focused lessons</div></div>
+          <div className="mt-10 grid gap-5 md:grid-cols-2">{playbookModules.map((module) => <ModuleCard key={module.id} module={module} onComingSoon={setSelectedModule} />)}</div>
+        </div>
+      </section>
+      <ComingSoonModal module={selectedModule} onClose={closeModal} />
     </main>
   );
 }

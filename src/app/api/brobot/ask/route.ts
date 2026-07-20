@@ -14,6 +14,10 @@ import { type Subject } from '@/lib/brobot/entitlements';
 import { recordSuccessfulAIUse, recordUsageEvent } from '@/lib/brobot/usage';
 import { createClient } from '@/utils/supabase/server';
 import type { BroBotPayload } from '@/types/caseprep';
+import {
+  selectBroBotResponseContract,
+  shouldUseCasePrepV2Migration,
+} from '@/lib/brobot/chat/response-contract';
 
 const AskRequestSchema = z.object({
   prompt: z.string().trim().min(1),
@@ -163,6 +167,22 @@ async function getOptionalUser(request: Request) {
 export async function POST(request: Request) {
   const startedAt = Date.now();
   const requestId = crypto.randomUUID();
+  const contractSelection = selectBroBotResponseContract(request.headers);
+
+  if (!contractSelection.ok) {
+    return NextResponse.json(
+      {
+        error: 'unsupported_response_version',
+        message: `Unsupported BroBot response version: ${contractSelection.requestedVersion}`,
+      },
+      { status: 400 }
+    );
+  }
+  logBroBot('[BROBOT-RESPONSE-CONTRACT]', {
+    requestId,
+    response_contract: contractSelection.contract,
+    client_platform: contractSelection.clientPlatform,
+  });
 
   let subject: Subject | null = null;
   let guestCookieToSet: string | null = null;
@@ -191,7 +211,7 @@ export async function POST(request: Request) {
     }
 
     const { prompt } = parsed.data;
-    if (/\b(carpal tunnel (release|surgery)|ctr)\b/i.test(prompt)) {
+    if (shouldUseCasePrepV2Migration(contractSelection.contract, prompt)) {
       console.warn("[BROBOT-ASK-DEPRECATED-CASEPREP]", {
         requestId,
         procedure: "carpal_tunnel_release",

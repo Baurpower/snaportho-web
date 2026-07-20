@@ -99,7 +99,11 @@ export default function BroBotBasic() {
       // Phase 1: Route through our secure server proxy (auth + usage tracking + limits)
       const res = await fetch('/api/brobot/ask', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-SnapOrtho-Client': 'web',
+          'X-BroBot-Response-Version': '2',
+        },
         body: JSON.stringify({ prompt }),
       });
 

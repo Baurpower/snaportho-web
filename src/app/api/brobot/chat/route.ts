@@ -85,57 +85,21 @@ import {
 } from '@/lib/brobot/model-config';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient as createServerSupabaseClient } from '@/utils/supabase/server';
+import {
+  selectBroBotResponseContract,
+  encodeBroBotStreamEvent,
+  serializeBroBotResponse,
+  shouldStreamBroBotResponse,
+  type BroBotChatInternalResult,
+  type BroBotResponseContract,
+  type BroBotStreamEventName,
+} from '@/lib/brobot/chat/response-contract';
 
 const BROBOT_STREAMING_ENABLED = process.env.BROBOT_STREAMING_ENABLED === 'true';
 
 let openaiClient: OpenAI | null = null;
 
-type StreamEventName = 'start' | 'delta' | 'metadata' | 'done' | 'error';
-
-function encodeStreamEvent(event: StreamEventName, data: Record<string, unknown>) {
-  return `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
-}
-
-export type BroBotChatResponse = {
-  conversationId: string;
-  messageId: string;
-  goal?: string;
-  selectedFocus?: string;
-  answer: string;
-  priorityPoints: string[];
-  knowledgeGaps: string[];
-  whatMostResidentsMiss?: string[];
-  suggestedQuestions: string[];
-  nextLearningBranches?: Array<{
-    id: string;
-    label: string;
-    description?: string;
-    category?: string;
-    topicId?: string;
-    branchQuestionId?: string;
-    rankScore?: number;
-  }>;
-  tags: string[];
-  detectedMode: string;
-  remainingFreeUses?: number | null;
-  confidence?: number;
-  needsClarification?: boolean;
-  clarifyingQuestions?: string[];
-  assumedContext?: string;
-  consultConfidence?: 'low' | 'moderate' | 'high';
-  missingInformation?: string[];
-  researchSubmode?: string;
-  tier?: BroBotResponseTier;
-  status?: 'answer' | 'clarify';
-  directAnswer?: string;
-  keyPoints?: string[];
-  pearl?: string;
-  pitfall?: string;
-  clarifyingQuestion?: string;
-  specialty?: string;
-  resolvedTopic?: string;
-  entityResolutionState?: string;
-};
+export type BroBotChatResponse = BroBotChatInternalResult;
 
 function tierResponseFields(output: Record<string, unknown>) {
   return {
@@ -2175,6 +2139,7 @@ async function handleGuestChat(params: {
   body: BroBotChatRequest;
   subject: Subject;
   guestCookieToSet: string | null;
+  responseContract: BroBotResponseContract;
 }): Promise<Response> {
   const { request, requestId, startedAt, body, subject, guestCookieToSet } = params;
   const persistence = createAdminClient();
@@ -2299,7 +2264,11 @@ async function handleGuestChat(params: {
 
   intent = anchorIntentTopicToHistory(intent, body.message, history);
 
-  if (body.stream || BROBOT_STREAMING_ENABLED) {
+  if (shouldStreamBroBotResponse({
+    contract: params.responseContract,
+    requested: Boolean(body.stream),
+    serverEnabled: BROBOT_STREAMING_ENABLED,
+  })) {
     return createGuestStreamingChatResponse({
       request,
       requestId,
@@ -2318,6 +2287,7 @@ async function handleGuestChat(params: {
       guestCookieToSet,
       tier: responseTier,
       entityResolution,
+      responseContract: params.responseContract,
     });
   }
 
@@ -2378,7 +2348,7 @@ async function handleGuestChat(params: {
   });
 
   return withGuestCookie(
-    NextResponse.json({
+    NextResponse.json(serializeBroBotResponse(params.responseContract, {
       ...tierResponseFields(brobotOutput),
       conversationId: body.conversationId ?? crypto.randomUUID(),
       messageId: crypto.randomUUID(),
@@ -2400,7 +2370,7 @@ async function handleGuestChat(params: {
       consultConfidence: brobotOutput.consultConfidence,
       missingInformation: brobotOutput.missingInformation,
       researchSubmode: brobotOutput.researchSubmode,
-    } satisfies BroBotChatResponse),
+    } satisfies BroBotChatResponse)),
     guestCookieToSet
   );
 }
@@ -2409,6 +2379,23 @@ export async function POST(request: Request) {
   const startedAt = Date.now();
   const requestId = crypto.randomUUID();
   const stageTimer = new BroBotStageTimer();
+  const contractSelection = selectBroBotResponseContract(request.headers);
+
+  if (!contractSelection.ok) {
+    return NextResponse.json(
+      {
+        error: 'unsupported_response_version',
+        message: `Unsupported BroBot response version: ${contractSelection.requestedVersion}`,
+      },
+      { status: 400 }
+    );
+  }
+  const responseContract = contractSelection.contract;
+  logBroBot('[BROBOT-RESPONSE-CONTRACT]', {
+    requestId,
+    response_contract: responseContract,
+    client_platform: contractSelection.clientPlatform,
+  });
 
   let subject: Subject | null = null;
   let guestCookieToSet: string | null = null;
@@ -2481,6 +2468,7 @@ export async function POST(request: Request) {
         body,
         subject,
         guestCookieToSet,
+        responseContract,
       });
     }
 
@@ -2978,7 +2966,11 @@ export async function POST(request: Request) {
         });
     stageTimer.mark('kg_telemetry_persistence', kgTelemetry.latencyMs);
 
-    if (body.stream || BROBOT_STREAMING_ENABLED) {
+    if (shouldStreamBroBotResponse({
+      contract: responseContract,
+      requested: Boolean(body.stream),
+      serverEnabled: BROBOT_STREAMING_ENABLED,
+    })) {
       return createStreamingChatResponse({
         request,
         requestId,
@@ -2998,9 +2990,10 @@ export async function POST(request: Request) {
         rankingContext,
         startedAt,
         limit,
-          usedBefore,
-          tier: responseTier,
-          entityResolution,
+        usedBefore,
+        tier: responseTier,
+        entityResolution,
+        responseContract,
       });
     }
 
@@ -3551,7 +3544,7 @@ export async function POST(request: Request) {
       intentSource,
     });
 
-    return NextResponse.json({
+    return NextResponse.json(serializeBroBotResponse(responseContract, {
       ...tierResponseFields(brobotOutput),
       conversationId: persistedConversationId,
       messageId: assistantMessageId,
@@ -3573,7 +3566,7 @@ export async function POST(request: Request) {
       consultConfidence: brobotOutput.consultConfidence,
       missingInformation: brobotOutput.missingInformation,
       researchSubmode: brobotOutput.researchSubmode,
-    } satisfies BroBotChatResponse);
+    } satisfies BroBotChatResponse));
   } catch (error) {
     if (subject) {
       await recordUsageEvent({
@@ -4191,6 +4184,7 @@ function createGuestStreamingChatResponse(params: {
   guestCookieToSet: string | null;
   tier: BroBotResponseTier;
   entityResolution: BroBotEntityResolution;
+  responseContract: BroBotResponseContract;
 }) {
   const encoder = new TextEncoder();
   const conversationId = params.body.conversationId ?? crypto.randomUUID();
@@ -4198,8 +4192,8 @@ function createGuestStreamingChatResponse(params: {
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       let streamedAnswer = '';
-      const send = (event: StreamEventName, data: Record<string, unknown>) => {
-        controller.enqueue(encoder.encode(encodeStreamEvent(event, data)));
+      const send = (event: BroBotStreamEventName, data: Record<string, unknown>) => {
+        controller.enqueue(encoder.encode(encodeBroBotStreamEvent(event, data)));
       };
       send('start', { assistantMessageId, conversationId });
 
@@ -4273,7 +4267,7 @@ function createGuestStreamingChatResponse(params: {
           researchSubmode: output.researchSubmode,
         };
         if (!streamedAnswer) send('delta', { content: responsePayload.answer });
-        send('metadata', responsePayload);
+        send('metadata', serializeBroBotResponse(params.responseContract, responsePayload));
         send('done', { assistantMessageId, conversationId });
         if (isDevelopment) {
           console.log('[BROBOT-STREAM]', {
@@ -4330,6 +4324,7 @@ function createStreamingChatResponse(params: {
   usedBefore: number | null;
   tier: BroBotResponseTier;
   entityResolution: BroBotEntityResolution;
+  responseContract: BroBotResponseContract;
 }) {
   const encoder = new TextEncoder();
   const assistantMessageId = crypto.randomUUID();
@@ -4352,8 +4347,8 @@ function createStreamingChatResponse(params: {
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       let streamedAnswer = '';
-      const send = (event: StreamEventName, data: Record<string, unknown>) => {
-        controller.enqueue(encoder.encode(encodeStreamEvent(event, data)));
+      const send = (event: BroBotStreamEventName, data: Record<string, unknown>) => {
+        controller.enqueue(encoder.encode(encodeBroBotStreamEvent(event, data)));
       };
 
       send('start', {
@@ -4433,7 +4428,7 @@ function createStreamingChatResponse(params: {
             send('delta', { content: chunk });
           }
         }
-        send('metadata', responsePayload);
+        send('metadata', serializeBroBotResponse(params.responseContract, responsePayload));
         send('done', {
           assistantMessageId,
           conversationId: params.conversationId,
