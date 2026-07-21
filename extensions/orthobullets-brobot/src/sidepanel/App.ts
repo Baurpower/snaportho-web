@@ -50,7 +50,7 @@ import {
 } from '../shared/build-info.js';
 
 const BROBOT_ICON_URL = chrome.runtime.getURL('icons/brobot-32.png');
-const SIDEPANEL_BUILD_ID_MARKER = '2026-07-12-rock-curriculum-routing-v3';
+const SIDEPANEL_BUILD_ID_MARKER = '2026-07-19-rock-curriculum-contract-v2';
 const DEFAULT_FOLLOW_UP_PROMPTS = ['Why not the trap answer?', 'Make this simpler', 'Give me an Anki-style card'];
 const ERROR_COPY: Record<ExtensionErrorCode, { title: string; canRetry: boolean }> = {
   unsupported_page: { title: 'This page is not supported.', canRetry: false },
@@ -59,8 +59,11 @@ const ERROR_COPY: Record<ExtensionErrorCode, { title: string; canRetry: boolean 
   disabled: { title: 'BroBot Orthobullets explanations are currently unavailable.', canRetry: false },
   invalid_request: { title: 'This page context could not be processed.', canRetry: true },
   invalid_curriculum_request: { title: 'This curriculum page context could not be processed.', canRetry: true },
+  invalid_request_shape: { title: 'The extension and server curriculum formats do not match.', canRetry: false },
+  client_contract_validation_failed: { title: 'BroBot could not prepare this page because the extension and server formats do not match.', canRetry: false },
+  extension_update_required: { title: 'BroBot needs an extension update before it can explain this page.', canRetry: false },
   curriculum_content_missing: { title: 'Curriculum content was not readable.', canRetry: true },
-  curriculum_content_too_large: { title: 'Curriculum content is too large.', canRetry: true },
+  curriculum_content_too_large: { title: 'BroBot will prepare this page section by section.', canRetry: true },
   unsupported_provider: { title: 'This curriculum provider is not supported.', canRetry: false },
   api_failure: { title: 'BroBot could not generate an explanation.', canRetry: true },
   parse_failure: { title: "BroBot's response could not be parsed.", canRetry: true },
@@ -665,6 +668,19 @@ export function mountSidePanelApp(root: HTMLElement) {
     enableQuestionTutorWatching();
     state.questionPositionLabel = message.questionPositionLabel;
     state.currentQuestionFingerprint = message.fingerprint;
+    if (message.activeQuestionKey === 'himalaya:results-overview') {
+      bumpQuestionLifecycleGeneration();
+      clearQuestionSpecificContent();
+      questionTutorController.onQuestionClosed(message);
+      const overview = await extractPageContext({ allowPartial: true, preserveError: false });
+      if (overview?.provider === 'himalaya' && overview.pageKind === 'results-overview') {
+        state.pageContext = overview;
+        state.currentQuestionFingerprint = null;
+        state.questionRefreshing = false;
+      }
+      render();
+      return;
+    }
     await questionTutorController.onQuestionChanged(message);
     syncQuestionTutorShellState();
   }

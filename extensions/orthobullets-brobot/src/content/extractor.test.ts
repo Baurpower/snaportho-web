@@ -574,6 +574,24 @@ assert.equal(himalayaOverviewContext.answerChoices.length, 0);
 assert.equal(himalayaOverviewContext.questionCount, 3);
 assert.ok(himalayaOverviewContext.extractionWarnings.includes('himalaya_results_overview_no_active_question'));
 
+const himalayaModalHtml = readFileSync(path.join(FIXTURES_DIR, 'himalaya-results-review-modal.html'), 'utf8');
+const { document: himalayaModalDocument } = parseHTML(himalayaModalHtml);
+const himalayaModalContext = extractQuestionContext({
+  document: himalayaModalDocument,
+  pageUrl: 'https://learn.aaos.org/diweb/?wicket:interface=:4::::',
+});
+assert.ok(himalayaModalContext, 'an open review modal must override the results overview');
+assert.equal(himalayaModalContext.pageKind, 'review');
+assert.equal(himalayaModalContext.supportedPageKind, 'rock_himalaya_review');
+assert.equal(himalayaModalContext.questionId, 'HIM-REVIEW-006');
+assert.equal(himalayaModalContext.answerChoices.length, 5);
+assert.equal(himalayaModalContext.selectedAnswer, 'Superior gluteal artery');
+assert.equal(himalayaModalContext.correctAnswer, 'Superior gluteal nerve');
+assert.match(himalayaModalContext.explanationText ?? '', /exits above piriformis/i);
+assert.equal(himalayaModalContext.raw?.providerSpecific?.questionNumber, '6');
+assert.equal(himalayaModalContext.raw?.providerSpecific?.totalQuestions, '8');
+assert.equal(himalayaModalContext.classification?.pageKind, 'question');
+
 const himalayaMultiHtml = readFileSync(path.join(FIXTURES_DIR, 'himalaya-multiple-containers.html'), 'utf8');
 assert.match(himalayaMultiHtml, /Synthetic Himalaya Multiple Containers/);
 const { document: himalayaMultiDocument } = parseHTML(himalayaMultiHtml);

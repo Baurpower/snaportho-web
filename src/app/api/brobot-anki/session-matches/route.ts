@@ -62,6 +62,7 @@ export async function POST(request: Request) {
     }
 
     const rows = body.matches.map((match) => ({
+      user_id: userId,
       session_id: body.sessionId,
       raw_anki_card_id: match.rawAnkiCardId ?? null,
       raw_anki_note_id: match.rawAnkiNoteId ?? null,

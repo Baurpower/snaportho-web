@@ -48,4 +48,18 @@ const next = getVisibleQuestionIdentity(nextDocument, url);
 assert.ok(next);
 assert.notEqual(next.activeQuestionKey, first.activeQuestionKey, 'new stem and answers must change question identity');
 
+const himalayaUrl = 'https://learn.aaos.org/diweb/?wicket:interface=:4::::';
+const resultsDocument = load('himalaya-results-overview.html');
+const overview = getVisibleQuestionIdentity(resultsDocument, himalayaUrl);
+assert.equal(overview?.activeQuestionKey, 'himalaya:results-overview');
+
+const modalDocument = load('himalaya-results-review-modal.html');
+const reviewQuestion = getVisibleQuestionIdentity(modalDocument, himalayaUrl);
+assert.ok(reviewQuestion);
+assert.notEqual(reviewQuestion.activeQuestionKey, overview?.activeQuestionKey, 'opening a same-URL review modal must create a question identity');
+
+modalDocument.querySelector('[role="dialog"]')?.remove();
+const closedModal = getVisibleQuestionIdentity(modalDocument, himalayaUrl);
+assert.equal(closedModal?.activeQuestionKey, 'himalaya:results-overview', 'closing the modal must return to the waiting identity');
+
 console.log('Question lifecycle identity tests passed.');

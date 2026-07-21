@@ -1,0 +1,233 @@
+{
+  "pimpQuestions": [
+    "Q: What approach is best used for ORIF of distal radius fractures? A: Volar approach is best for volarly displaced fractures (Smith and volar Barton) and has also become standard for dorsally displaced fractures (Colles) and some intra-articular fractures.",
+    "Q: What are the acceptable reduction parameters of distal radius fractures? A: Radial shortening <3mm, Dorsal tilt <10 degrees, Intraarticular step-off less than 2mm.",
+    "Q: What is the most common complication following ORIF of distal radius fractures? A: Rupture of the FPL tendon.",
+    "Q: What is the most commonly used surgical approach to the distal radius? A: Volar Henry and its modifications (FCR approach)."
+  ],
+  "otherUsefulFacts": [
+    "Restoration of radial bow is paramount in fixation of radial shaft fractures to prevent pronation and supination loss.",
+    "Acceptable post-reduction parameters for treating a distal radius fracture nonoperatively include: Radial height: <5 mm of shortening, Volar tilt: Dorsal angulation <5° or within 20° of contralateral side, Radial inclination: <5° difference to contralateral, Articular step-off: <2 mm."
+  ],
+  "anatomy": {
+    "approachSelection": {
+      "selected": [
+        {
+          "id": "approach_wrist_volar_distal_henry",
+          "confidence": 0.95,
+          "rationale": "Volar wrist (distal Henry) approach is the standard approach for ORIF of distal radius fractures."
+        }
+      ],
+      "notes": "Only one allowed approach in catalog matches distal radius ORIF anatomy and surgical practice.",
+      "router": {
+        "case_family": "distal_radius_fracture_orif",
+        "selectionMode": "deterministic_router",
+        "allowedApproachIds": [
+          "approach_wrist_volar_distal_henry"
+        ],
+        "blockedApproachIds": [],
+        "routerRationale": ""
+      },
+      "validation": {
+        "valid_selected": [
+          "approach_wrist_volar_distal_henry"
+        ],
+        "removed": [],
+        "confidence_adjustment": "ok",
+        "notes": ""
+      }
+    },
+    "anatomyQuiz": {
+      "questions": [
+        {
+          "approach_id": "approach_wrist_volar_distal_henry",
+          "q": "Which two major structures are typically encountered first in the volar wrist (distal Henry) approach?",
+          "answer": "Median nerve and radial artery",
+          "tag": "anatomic_landmark",
+          "difficulty": 2
+        },
+        {
+          "approach_id": "approach_wrist_volar_distal_henry",
+          "q": "In the volar wrist (distal Henry) approach, which nerve is primarily at risk including its recurrent motor and palmar cutaneous branches?",
+          "answer": "Median nerve",
+          "tag": "structures_at_risk",
+          "difficulty": 3
+        },
+        {
+          "approach_id": "approach_wrist_volar_distal_henry",
+          "q": "When performing the volar wrist (distal Henry) approach, what is the primary clinical indication related to the distal radius?",
+          "answer": "Distal radius open reduction and internal fixation (ORIF)",
+          "tag": "clinical_indication",
+          "difficulty": 2
+        },
+        {
+          "approach_id": "approach_wrist_volar_distal_henry",
+          "q": "Is the volar wrist (distal Henry) approach considered to utilize an internervous plane?",
+          "answer": "No, it is not an internervous plane.",
+          "tag": "approach_characteristic",
+          "difficulty": 1
+        },
+        {
+          "approach_id": "approach_wrist_volar_distal_henry",
+          "q": "Which artery runs superficial and is encountered in the volar wrist (distal Henry) approach?",
+          "answer": "Radial artery",
+          "tag": "anatomic_landmark",
+          "difficulty": 2
+        },
+        {
+          "approach_id": "approach_wrist_volar_distal_henry",
+          "q": "Name the two specific branches of the median nerve that are at risk in the volar wrist (distal Henry) approach.",
+          "answer": "Recurrent motor branch and palmar cutaneous branch",
+          "tag": "structures_at_risk",
+          "difficulty": 3
+        },
+        {
+          "approach_id": "approach_wrist_volar_distal_henry",
+          "q": "In which anatomic region is the volar wrist (distal Henry) approach performed?",
+          "answer": "Wrist region of the upper extremity",
+          "tag": "anatomic_area",
+          "difficulty": 1
+        },
+        {
+          "approach_id": "approach_wrist_volar_distal_henry",
+          "q": "What surgical area related to nerve decompression can be accessed through the volar wrist (distal Henry) approach?",
+          "answer": "Carpal tunnel region",
+          "tag": "clinical_indication",
+          "difficulty": 2
+        }
+      ]
+    },
+    "router": {
+      "case_family": "distal_radius_fracture_orif",
+      "selectionMode": "deterministic_router",
+      "allowedApproachIds": [
+        "approach_wrist_volar_distal_henry"
+      ],
+      "blockedApproachIds": [],
+      "routerRationale": ""
+    }
+  },
+  "caseprep_version": "v1",
+  "engine": "legacy_rag_gpt",
+  "procedure_slug": null,
+  "content_status": "legacy",
+  "match_method": "none",
+  "ai_used": [
+    "query_refiner",
+    "snippet_filter",
+    "snippet_reformat",
+    "anatomy_pipeline"
+  ],
+  "rag_used": true,
+  "warnings": [],
+  "payload": {
+    "pimpQuestions": [
+      "Q: What approach is best used for ORIF of distal radius fractures? A: Volar approach is best for volarly displaced fractures (Smith and volar Barton) and has also become standard for dorsally displaced fractures (Colles) and some intra-articular fractures.",
+      "Q: What are the acceptable reduction parameters of distal radius fractures? A: Radial shortening <3mm, Dorsal tilt <10 degrees, Intraarticular step-off less than 2mm.",
+      "Q: What is the most common complication following ORIF of distal radius fractures? A: Rupture of the FPL tendon.",
+      "Q: What is the most commonly used surgical approach to the distal radius? A: Volar Henry and its modifications (FCR approach)."
+    ],
+    "otherUsefulFacts": [
+      "Restoration of radial bow is paramount in fixation of radial shaft fractures to prevent pronation and supination loss.",
+      "Acceptable post-reduction parameters for treating a distal radius fracture nonoperatively include: Radial height: <5 mm of shortening, Volar tilt: Dorsal angulation <5° or within 20° of contralateral side, Radial inclination: <5° difference to contralateral, Articular step-off: <2 mm."
+    ],
+    "anatomy": {
+      "approachSelection": {
+        "selected": [
+          {
+            "id": "approach_wrist_volar_distal_henry",
+            "confidence": 0.95,
+            "rationale": "Volar wrist (distal Henry) approach is the standard approach for ORIF of distal radius fractures."
+          }
+        ],
+        "notes": "Only one allowed approach in catalog matches distal radius ORIF anatomy and surgical practice.",
+        "router": {
+          "case_family": "distal_radius_fracture_orif",
+          "selectionMode": "deterministic_router",
+          "allowedApproachIds": [
+            "approach_wrist_volar_distal_henry"
+          ],
+          "blockedApproachIds": [],
+          "routerRationale": ""
+        },
+        "validation": {
+          "valid_selected": [
+            "approach_wrist_volar_distal_henry"
+          ],
+          "removed": [],
+          "confidence_adjustment": "ok",
+          "notes": ""
+        }
+      },
+      "anatomyQuiz": {
+        "questions": [
+          {
+            "approach_id": "approach_wrist_volar_distal_henry",
+            "q": "Which two major structures are typically encountered first in the volar wrist (distal Henry) approach?",
+            "answer": "Median nerve and radial artery",
+            "tag": "anatomic_landmark",
+            "difficulty": 2
+          },
+          {
+            "approach_id": "approach_wrist_volar_distal_henry",
+            "q": "In the volar wrist (distal Henry) approach, which nerve is primarily at risk including its recurrent motor and palmar cutaneous branches?",
+            "answer": "Median nerve",
+            "tag": "structures_at_risk",
+            "difficulty": 3
+          },
+          {
+            "approach_id": "approach_wrist_volar_distal_henry",
+            "q": "When performing the volar wrist (distal Henry) approach, what is the primary clinical indication related to the distal radius?",
+            "answer": "Distal radius open reduction and internal fixation (ORIF)",
+            "tag": "clinical_indication",
+            "difficulty": 2
+          },
+          {
+            "approach_id": "approach_wrist_volar_distal_henry",
+            "q": "Is the volar wrist (distal Henry) approach considered to utilize an internervous plane?",
+            "answer": "No, it is not an internervous plane.",
+            "tag": "approach_characteristic",
+            "difficulty": 1
+          },
+          {
+            "approach_id": "approach_wrist_volar_distal_henry",
+            "q": "Which artery runs superficial and is encountered in the volar wrist (distal Henry) approach?",
+            "answer": "Radial artery",
+            "tag": "anatomic_landmark",
+            "difficulty": 2
+          },
+          {
+            "approach_id": "approach_wrist_volar_distal_henry",
+            "q": "Name the two specific branches of the median nerve that are at risk in the volar wrist (distal Henry) approach.",
+            "answer": "Recurrent motor branch and palmar cutaneous branch",
+            "tag": "structures_at_risk",
+            "difficulty": 3
+          },
+          {
+            "approach_id": "approach_wrist_volar_distal_henry",
+            "q": "In which anatomic region is the volar wrist (distal Henry) approach performed?",
+            "answer": "Wrist region of the upper extremity",
+            "tag": "anatomic_area",
+            "difficulty": 1
+          },
+          {
+            "approach_id": "approach_wrist_volar_distal_henry",
+            "q": "What surgical area related to nerve decompression can be accessed through the volar wrist (distal Henry) approach?",
+            "answer": "Carpal tunnel region",
+            "tag": "clinical_indication",
+            "difficulty": 2
+          }
+        ]
+      },
+      "router": {
+        "case_family": "distal_radius_fracture_orif",
+        "selectionMode": "deterministic_router",
+        "allowedApproachIds": [
+          "approach_wrist_volar_distal_henry"
+        ],
+        "blockedApproachIds": [],
+        "routerRationale": ""
+      }
+    }
+  }
+}

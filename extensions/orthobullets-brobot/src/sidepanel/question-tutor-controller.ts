@@ -94,6 +94,15 @@ export class QuestionTutorController {
     });
   }
 
+  onQuestionClosed(message: QuestionChangeMessage) {
+    this.store.previousVisibleQuestionIdentity = message.previousVisibleQuestionIdentity ?? this.store.visibleQuestionIdentity;
+    this.store.previousActiveQuestionKey = message.previousActiveQuestionKey ?? this.store.activeQuestionKey;
+    this.store.questionChangeDetectedBy = message.questionChangeDetectedBy ?? 'mutation';
+    this.store.lastQuestionChangeAt = message.refreshTimestamp;
+    this.store.clearActiveQuestion('waiting_for_question_selection');
+    this.render();
+  }
+
   async onManualRefresh() {
     const fingerprint = this.store.activeFingerprint;
     if (!fingerprint) return;

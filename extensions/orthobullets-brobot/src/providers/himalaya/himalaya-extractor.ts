@@ -23,6 +23,11 @@ type DocumentLike = DomElementLike & {
 
 const HIMALAYA_SELECTORS = {
   questionContainer: [
+    '[role="dialog"]',
+    '[aria-modal="true"]',
+    '.modal.show',
+    '[class*="modal-dialog" i]',
+    '[class*="review-dialog" i]',
     '.question-attempt',
     '[data-testid*="question" i]',
     '[class*="question-attempt" i]',
@@ -35,6 +40,9 @@ const HIMALAYA_SELECTORS = {
     '[data-testid*="stem" i]',
     '[class*="question-text" i]',
     '[class*="questionText" i]',
+    '[class*="question-content" i]',
+    '[class*="questionContent" i]',
+    '.prompt',
   ],
   answers: [
     '.answers .answer',
@@ -49,6 +57,7 @@ const HIMALAYA_SELECTORS = {
   answerIndex: ['.answer-index', '[class*="answer-index" i]', '[class*="answerIndex" i]'],
   answerText: ['.answer-text', '[class*="answer-text" i]', '[class*="answerText" i]', 'p', 'span'],
   explanation: ['.feedback', '[class*="feedback" i]', '[data-testid*="feedback" i]'],
+  discussion: ['[role="tabpanel"][aria-label*="discussion" i]', '[class*="discussion" i]', '[data-testid*="discussion" i]'],
   keyReferencePoints: ['.keyReferencePoints', '[class*="keyReferencePoints" i]', '[class*="key-reference" i]'],
   references: ['.reference', '.references', '[class*="reference" i]', '[data-testid*="reference" i]'],
 } as const;
@@ -146,7 +155,7 @@ function detectHimalayaPageMode(documentRef: DocumentLike): HimalayaPageMode {
     return Boolean(stem && answers.length >= 2);
   });
   if (hasQuestion) {
-    if (bodyText.match(/\b(feedback|key reference points|references|correct|incorrect|your answer)\b/i)) {
+    if (bodyText.match(/\b(feedback|discussion|key reference points|references|correct|incorrect|your answer|show more)\b/i)) {
       return 'reviewed-question';
     }
     return 'active-question';
@@ -238,14 +247,15 @@ function detectAnswerState(node: DomElementLike) {
     /\b(your-answer|your answer|selected|you chose|chosen)\b/i.test(markerText) ||
     node.getAttribute('aria-checked') === 'true' ||
     node.querySelector('input:checked') != null;
-  const correct =
-    /\b(correct-answer|correct answer|right answer)\b/i.test(markerText) ||
-    /\b(correct|right)\b/i.test(className) ||
-    node.getAttribute('data-correct') === 'true' ||
-    visibleMarker(node, ['.fa-check-circle', '[class*="check" i]', '[aria-label*="correct" i]', '[title*="correct" i]']);
   const incorrect =
-    /\b(incorrect|wrong|times-circle)\b/i.test(markerText) ||
+    /(?:^|[\s_-])(incorrect|wrong|times-circle)(?:$|[\s_-])/i.test(markerText) ||
     visibleMarker(node, ['.fa-times-circle', '[class*="times-circle" i]', '[aria-label*="incorrect" i]', '[title*="incorrect" i]']);
+  const correct = !incorrect && (
+    /\b(correct-answer|correct answer|right answer)\b/i.test(markerText) ||
+    /(?:^|[\s_-])(correct|right)(?:$|[\s_-])/i.test(className) ||
+    node.getAttribute('data-correct') === 'true' ||
+    visibleMarker(node, ['.fa-check-circle', '[class*="check" i]', '[aria-label="correct" i]', '[title="correct" i]'])
+  );
   return { selected, correct: correct ? true : incorrect ? false : undefined };
 }
 
@@ -292,6 +302,19 @@ function questionNumberFromPage(container: DomElementLike, pageUrl: string) {
   return pageUrl.match(/[?&](?:question|questionNumber|qid)=([A-Za-z0-9.-]+)/i)?.[1];
 }
 
+function questionPositionFromPage(container: DomElementLike, documentRef: DocumentLike) {
+  const text = `${visibleText(container)} ${normalizeWhitespace(documentRef.body?.innerText)}`;
+  const match = text.match(/\bQuestion\s+(\d+)\s+(?:of|\/)\s*(\d+)\b/i);
+  return { questionNumber: match?.[1], totalQuestions: match?.[2] };
+}
+
+function extractAssessmentTitle(documentRef: DocumentLike) {
+  const bodyText = normalizeWhitespace(documentRef.body?.innerText);
+  return bodyText.match(/\bResults:\s*([^|]+?)(?=\s+Question\s+\d+\s+of\s+\d+|$)/i)?.[1]?.trim()
+    || normalizeWhitespace(documentRef.title)
+    || undefined;
+}
+
 function questionIdFromPage(container: DomElementLike, pageUrl: string) {
   const attrNode = container.querySelector('[data-question-id], [data-assessment-item-id], [id*="question" i]');
   const attr =
@@ -307,6 +330,7 @@ function buildFingerprint(input: {
   questionNumber?: string;
   stem: string;
   choices: HimalayaAnswerChoice[];
+  mode?: string;
 }) {
   const normalized = JSON.stringify({
     provider: 'himalaya',
@@ -317,6 +341,7 @@ function buildFingerprint(input: {
       label: choice.label ?? '',
       text: normalizeWhitespace(choice.text).toLowerCase(),
     })),
+    mode: input.mode ?? '',
   });
   return `himalaya:${hashText(normalized)}`;
 }
@@ -340,6 +365,7 @@ export function extractHimalayaQuestionSnapshot(input: {
     const stem = visibleText(queryFirstVisible(active, HIMALAYA_SELECTORS.stem));
     const choices = extractChoices(active);
     const explanation = extractSection(active, HIMALAYA_SELECTORS.explanation, /^(feedback|explanation)$/i);
+    const discussion = extractSection(active, HIMALAYA_SELECTORS.discussion, /^discussion$/i);
     const keyReferencePoints = extractSection(active, HIMALAYA_SELECTORS.keyReferencePoints, /^key reference points?$/i);
     const references = extractSection(active, HIMALAYA_SELECTORS.references, /^references?$/i);
     const answeredReview =
@@ -354,19 +380,23 @@ export function extractHimalayaQuestionSnapshot(input: {
           ? 'unanswered'
           : 'unknown';
     const questionId = questionIdFromPage(active, pageUrl);
-    const questionNumber = questionNumberFromPage(active, pageUrl);
+    const position = questionPositionFromPage(active, input.document);
+    const questionNumber = position.questionNumber ?? questionNumberFromPage(active, pageUrl);
     snapshot = {
       provider: 'himalaya',
       pageMode: answeredReview ? 'reviewed-question' : 'active-question',
       questionId,
       questionNumber,
+      totalQuestions: position.totalQuestions,
+      assessmentTitle: extractAssessmentTitle(input.document),
       stem,
       choices,
       explanation: explanation || undefined,
+      discussion: discussion || undefined,
       keyReferencePoints: keyReferencePoints || undefined,
       references: references || undefined,
       reviewState,
-      fingerprint: buildFingerprint({ questionId, questionNumber, stem, choices }),
+      fingerprint: buildFingerprint({ questionId, questionNumber, stem, choices, mode: answeredReview ? 'review' : 'live' }),
     };
   }
 
@@ -439,6 +469,7 @@ export function extractHimalayaPageContext(input: {
 
   const selectedChoice = snapshot.choices.find((choice) => choice.selected);
   const correctChoice = snapshot.choices.find((choice) => choice.correct === true);
+  const visibleTeachingText = snapshot.explanation ?? snapshot.discussion;
   const answerChoices = snapshot.choices.map((choice) => ({
     key: choice.id,
     label: choice.label ?? choice.id,
@@ -447,7 +478,7 @@ export function extractHimalayaPageContext(input: {
     isCorrect: choice.correct ?? null,
   }));
   const reviewSignals = {
-    hasVisibleExplanation: Boolean(snapshot.explanation || snapshot.keyReferencePoints),
+    hasVisibleExplanation: Boolean(visibleTeachingText || snapshot.keyReferencePoints),
     hasVisibleReviewMarker: snapshot.choices.some((choice) => choice.correct !== undefined),
     hasSubmittedAnswerState: snapshot.reviewState === 'answered_review',
     visibleUnansweredPrompt: snapshot.reviewState === 'unanswered',
@@ -456,13 +487,14 @@ export function extractHimalayaPageContext(input: {
     unansweredScore: snapshot.reviewState === 'unanswered' ? 3 : 0,
     reviewEvidence: [
       snapshot.explanation ? 'explanation_text' : '',
+      snapshot.discussion ? 'discussion_text' : '',
       snapshot.keyReferencePoints ? 'key_reference_points' : '',
       snapshot.choices.some((choice) => choice.correct !== undefined) ? 'answer_result_markers' : '',
     ].filter(Boolean),
     unansweredEvidence: snapshot.reviewState === 'unanswered' ? ['visible_answer_controls', 'no_review_markers', 'no_explanation_text'] : [],
-    visiblePreferredResponseActive: Boolean(snapshot.explanation),
-    visiblePreferredResponseEnabled: Boolean(snapshot.explanation),
-    visibleExplanationTextLength: snapshot.explanation?.length ?? 0,
+    visiblePreferredResponseActive: Boolean(visibleTeachingText),
+    visiblePreferredResponseEnabled: Boolean(visibleTeachingText),
+    visibleExplanationTextLength: visibleTeachingText?.length ?? 0,
     visibleSelectedAnswerReviewClass: snapshot.choices.some((choice) => choice.selected),
     visibleCorrectAnswerReviewClass: snapshot.choices.some((choice) => choice.correct === true),
     visibleDistributionRows: 0,
@@ -475,6 +507,7 @@ export function extractHimalayaPageContext(input: {
     pageUrl,
     sourceUrl: pageUrl,
     pageKind: snapshot.pageMode === 'reviewed-question' ? 'review' : 'current_test',
+    supportedPageKind: snapshot.pageMode === 'reviewed-question' ? 'rock_himalaya_review' : 'rock_himalaya_question',
     questionId: snapshot.questionId ?? snapshot.fingerprint,
     title: normalizeWhitespace(input.document.title) || 'AAOS Himalaya assessment',
     breadcrumbs: ['AAOS', 'Himalaya Assessment'],
@@ -485,7 +518,7 @@ export function extractHimalayaPageContext(input: {
     selectedAnswer: selectedChoice?.text ?? null,
     correctAnswer: correctChoice?.text ?? null,
     percentDistribution: [],
-    explanationText: snapshot.explanation ?? null,
+    explanationText: snapshot.explanation ?? snapshot.discussion ?? null,
     explanation: snapshot.explanation ?? null,
     sourceExplanation: snapshot.explanation ?? null,
     sourceKeyPoints: snapshot.keyReferencePoints ?? null,
@@ -500,6 +533,10 @@ export function extractHimalayaPageContext(input: {
         pageMode,
         reviewState: snapshot.reviewState,
         fingerprint: snapshot.fingerprint,
+        assessmentTitle: snapshot.assessmentTitle ?? null,
+        questionNumber: snapshot.questionNumber ?? null,
+        totalQuestions: snapshot.totalQuestions ?? null,
+        discussionText: snapshot.discussion ?? null,
         sourceMaterial: {
           explanation: snapshot.explanation ?? null,
           keyReferencePoints: snapshot.keyReferencePoints ?? null,

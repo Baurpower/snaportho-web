@@ -50,6 +50,7 @@ const curriculumPageContext = {
     extractionWarnings: [],
 };
 strict_1.default.equal(types_1.CurriculumExplainRequestSchema.safeParse({
+    contractVersion: 'curriculum-explain-v2',
     task: 'curriculum_explain',
     provider: 'rock',
     sourceUrl: curriculumPageContext.sourceUrl,
@@ -60,6 +61,34 @@ strict_1.default.equal(types_1.CurriculumExplainRequestSchema.safeParse({
         sections: [{ heading: 'Overview', text: 'Substantial hip anatomy curriculum content. '.repeat(30) }],
     },
 }).success, true, 'valid ROCK curriculum payload should pass without question fields');
+const longHipResurfacingPayload = {
+    contractVersion: 'curriculum-explain-v2',
+    task: 'curriculum_explain',
+    provider: 'rock',
+    sourceUrl: 'https://rock.aaos.org/courseContent.aspx?ID=6004018&currID=19&currTopID=24742&yearID=',
+    pageContext: {
+        ...curriculumPageContext,
+        pageUrl: 'https://rock.aaos.org/courseContent.aspx?ID=6004018&currID=19&currTopID=24742&yearID=',
+        sourceUrl: 'https://rock.aaos.org/courseContent.aspx?ID=6004018&currID=19&currTopID=24742&yearID=',
+        title: 'Alternative Implant Designs: Hip Resurfacing',
+        contentText: null,
+        contentMarkdown: null,
+        contentSections: [],
+    },
+    curriculum: {
+        title: 'Alternative Implant Designs: Hip Resurfacing',
+        breadcrumbs: ['Chapters', 'Hip and Knee | Hip'],
+        sections: Array.from({ length: 28 }, (_, index) => ({
+            id: `section-${index + 1}`,
+            heading: `Synthetic hip resurfacing section ${index + 1}`,
+            level: 2,
+            text: `Synthetic educational sentence for contract testing section ${index + 1}. `.repeat(20),
+        })),
+    },
+};
+strict_1.default.ok(JSON.stringify(longHipResurfacingPayload).length >= 25_000);
+const parsedLongHipPayload = types_1.CurriculumExplainRequestSchema.safeParse(longHipResurfacingPayload);
+strict_1.default.equal(parsedLongHipPayload.success, true, parsedLongHipPayload.success ? undefined : JSON.stringify(parsedLongHipPayload.error.issues));
 strict_1.default.equal(types_1.CurriculumExplainRequestSchema.safeParse({
     task: 'curriculum_explain',
     provider: 'rock',

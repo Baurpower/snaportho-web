@@ -21,6 +21,7 @@ import {
   type BroBotTask,
   resolveBroBotEndpoint,
   type BroBotExtensionRequest,
+  validateCurriculumExplainRequest,
 } from './shared/brobot-routing.js';
 import {
   BACKGROUND_HANDLER_VERSION,
@@ -36,7 +37,7 @@ import {
 const STORAGE_KEY = 'snaportho_extension_device_token';
 const EXTENSION_TOKEN_HEADER = 'x-snaportho-extension-token';
 const ADDON_BASE_URL_HEADER = 'x-snaportho-addon-base-url';
-const BACKGROUND_BUILD_ID_MARKER = '2026-07-12-rock-curriculum-routing-v3';
+const BACKGROUND_BUILD_ID_MARKER = '2026-07-19-rock-curriculum-contract-v2';
 
 // Server error codes (from explain/route.ts and friends) map 1:1 onto the
 // extension's own ExtensionErrorCode for known cases; anything else falls
@@ -46,6 +47,9 @@ const KNOWN_ERROR_CODES = new Set<ExtensionErrorCode>([
   'disabled',
   'invalid_request',
   'invalid_curriculum_request',
+  'invalid_request_shape',
+  'client_contract_validation_failed',
+  'extension_update_required',
   'curriculum_content_missing',
   'curriculum_content_too_large',
   'unsupported_provider',
@@ -251,6 +255,15 @@ function enrichPageContext(pageContext: OrthobulletsPageContext) {
 
 function isReadablePageContext(pageContext: OrthobulletsPageContext) {
   return isPageUsable(pageContext);
+}
+
+function extractionFailureCodeFor(pageContext: OrthobulletsPageContext): OrthobulletsExtractionDiagnostics['failureCode'] {
+  if (pageContext.provider === 'himalaya' && pageContext.pageKind === 'results-overview') {
+    return 'waiting_for_question_selection';
+  }
+  if (isReadablePageContext(pageContext)) return undefined;
+  if (pageContext.provider === 'himalaya') return 'question_content_not_found';
+  return 'page_not_readable';
 }
 
 async function sendExtractionMessage(tabId: number): Promise<{
@@ -459,7 +472,7 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage | { type: 'ob:qu
           activeTabStatus: tabSnapshot.status,
           contentScriptResponded: true,
           pageContext,
-          failureCode: isReadablePageContext(pageContext) ? undefined : 'page_not_readable',
+          failureCode: extractionFailureCodeFor(pageContext),
           sendMessageError,
           fallbackInjectionAttempted,
           injectionError,
@@ -494,6 +507,37 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage | { type: 'ob:qu
                 ...requestPayload,
                 emphasis: 'emphasis' in message ? message.emphasis : undefined,
               };
+        if (requestPayload.task === 'curriculum_explain') {
+          const contract = validateCurriculumExplainRequest(requestPayload);
+          if (!contract.success) {
+            console.warn('[snaportho-extension] client_contract_validation_failed', {
+              contractVersion: requestPayload.contractVersion,
+              issues: contract.issues,
+              sectionCount: requestPayload.curriculum.sections.length,
+              contentCharacters: requestPayload.curriculum.sections.reduce((sum, section) => sum + section.text.length, 0),
+            });
+            throw new CodedError(
+              'BroBot could not prepare this page because the extension and server formats do not match.',
+              'client_contract_validation_failed',
+              {
+                attemptedLinkUrl: `${getConfiguredAppOrigin()}${endpoint}`,
+                baseUrl: getConfiguredAppOrigin(),
+                httpStatus: null,
+                responseBody: null,
+                responseMessage: contract.issues.map((issue) => `${issue.path}: ${issue.message}`).join(' | '),
+                fetchFailedBeforeResponse: true,
+                requestedTask: requestPayload.task,
+                resolvedEndpoint: `${getConfiguredAppOrigin()}${endpoint}`,
+                requestProvider: requestPayload.provider,
+                requestPageKind: message.pageContext.pageKind,
+                requestPayloadKind: 'curriculum',
+                curriculumSectionCount: requestPayload.curriculum.sections.length,
+                curriculumContentCharCount: requestPayload.curriculum.sections.reduce((sum, section) => sum + section.text.length, 0),
+                requestBodyCharCount: JSON.stringify(requestBodyObject).length,
+              }
+            );
+          }
+        }
         const requestBody = JSON.stringify(requestBodyObject);
         let fetchDiagnostics: ExtensionFetchDiagnostics | undefined;
 

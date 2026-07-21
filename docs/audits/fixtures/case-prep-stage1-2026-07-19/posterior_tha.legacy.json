@@ -1,0 +1,237 @@
+{
+  "pimpQuestions": [
+    "Q: What complication is more common utilizing a posterior THA approach? A: Dislocation",
+    "Q: What are the steps involved in the posterior (Southern-Moore) approach to the hip? A: 1) Split the gluteus maximus (inferior gluteal nerve) 2) Retract the gluteus medius anteriorly 3) Identify piriformis and short external rotators 4) Detach external rotators 5) Dislocate the hip",
+    "Q: What is the femoral component of a THA implant should be placed with how much anteversion? A: 15°",
+    "Q: What are the three most common bearing combinations for THA? A: Ceramic on polyethylene, Ceramic on ceramic, Metal (cobalt-chrome) on polyethylene",
+    "Q: What symptoms suggest a loose femoral component following THA? A: Thigh pain, Start-up pain with walking"
+  ],
+  "otherUsefulFacts": [
+    "Pseudotumors are a complication seen with metal on metal THA bearing surfaces.",
+    "Excessively increased femoral head offset can lead to trochanteric bursitis.",
+    "The hip should be fused in 25-30 degrees of flexion, 0 degrees of abduction and rotation."
+  ],
+  "anatomy": {
+    "approachSelection": {
+      "selected": [
+        {
+          "id": "approach_lower_ext_hip_posterior_moore_southern",
+          "confidence": 0.99,
+          "rationale": "Posterior total hip arthroplasty is best performed using the posterior (Moore/Southern) approach, which provides direct access to the hip joint from the posterior side and is commonly used for this procedure."
+        }
+      ],
+      "notes": "Only one approach from the allowed set fits the posterior total hip arthroplasty anatomy and surgical goals.",
+      "router": {
+        "case_family": "tha_posterior",
+        "selectionMode": "deterministic_router",
+        "allowedApproachIds": [
+          "approach_lower_ext_hip_posterior_moore_southern"
+        ],
+        "blockedApproachIds": [],
+        "routerRationale": ""
+      },
+      "validation": {
+        "valid_selected": [
+          "approach_lower_ext_hip_posterior_moore_southern"
+        ],
+        "removed": [],
+        "confidence_adjustment": "ok",
+        "notes": ""
+      }
+    },
+    "anatomyQuiz": {
+      "questions": [
+        {
+          "approach_id": "approach_lower_ext_hip_posterior_moore_southern",
+          "q": "In the posterior hip (Moore/Southern) approach, what two structures define the superficial interval?",
+          "answer": "The superficial interval is between the gluteus maximus and the iliotibial band (IT band).",
+          "tag": "anatomy",
+          "difficulty": 2
+        },
+        {
+          "approach_id": "approach_lower_ext_hip_posterior_moore_southern",
+          "q": "During the posterior hip approach, which muscles form the deep interval used for exposure?",
+          "answer": "The deep interval is between the piriformis and short external rotators and the femur.",
+          "tag": "anatomy",
+          "difficulty": 3
+        },
+        {
+          "approach_id": "approach_lower_ext_hip_posterior_moore_southern",
+          "q": "What is a major nerve at risk during the posterior hip (Moore/Southern) surgical approach?",
+          "answer": "The sciatic nerve is at risk during this approach.",
+          "tag": "clinical_anatomy",
+          "difficulty": 2
+        },
+        {
+          "approach_id": "approach_lower_ext_hip_posterior_moore_southern",
+          "q": "Which artery is considered at risk in the posterior hip approach described by Moore/Southern?",
+          "answer": "The inferior gluteal artery is at risk.",
+          "tag": "vascular_anatomy",
+          "difficulty": 3
+        },
+        {
+          "approach_id": "approach_lower_ext_hip_posterior_moore_southern",
+          "q": "In the posterior hip approach, what is the significance of the MFCA?",
+          "answer": "The medial femoral circumflex artery (MFCA) is at risk and important for femoral head blood supply.",
+          "tag": "vascular_anatomy",
+          "difficulty": 3
+        },
+        {
+          "approach_id": "approach_lower_ext_hip_posterior_moore_southern",
+          "q": "Which bones are primarily exposed using the posterior hip (Moore/Southern) approach?",
+          "answer": "The femur and the pelvis can be exposed through this approach.",
+          "tag": "anatomy",
+          "difficulty": 2
+        },
+        {
+          "approach_id": "approach_lower_ext_hip_posterior_moore_southern",
+          "q": "The posterior hip (Moore/Southern) approach is primarily used to access which joint?",
+          "answer": "It provides access to the hip joint.",
+          "tag": "anatomy",
+          "difficulty": 1
+        },
+        {
+          "approach_id": "approach_lower_ext_hip_posterior_moore_southern",
+          "q": "Name one common surgical alias for the posterior hip approach described.",
+          "answer": "Moore approach (also known as Southern approach or posterior hip approach).",
+          "tag": "terminology",
+          "difficulty": 1
+        }
+      ]
+    },
+    "router": {
+      "case_family": "tha_posterior",
+      "selectionMode": "deterministic_router",
+      "allowedApproachIds": [
+        "approach_lower_ext_hip_posterior_moore_southern"
+      ],
+      "blockedApproachIds": [],
+      "routerRationale": ""
+    }
+  },
+  "caseprep_version": "v1",
+  "engine": "legacy_rag_gpt",
+  "procedure_slug": null,
+  "content_status": "legacy",
+  "match_method": "none",
+  "ai_used": [
+    "query_refiner",
+    "snippet_filter",
+    "snippet_reformat",
+    "anatomy_pipeline"
+  ],
+  "rag_used": true,
+  "warnings": [],
+  "payload": {
+    "pimpQuestions": [
+      "Q: What complication is more common utilizing a posterior THA approach? A: Dislocation",
+      "Q: What are the steps involved in the posterior (Southern-Moore) approach to the hip? A: 1) Split the gluteus maximus (inferior gluteal nerve) 2) Retract the gluteus medius anteriorly 3) Identify piriformis and short external rotators 4) Detach external rotators 5) Dislocate the hip",
+      "Q: What is the femoral component of a THA implant should be placed with how much anteversion? A: 15°",
+      "Q: What are the three most common bearing combinations for THA? A: Ceramic on polyethylene, Ceramic on ceramic, Metal (cobalt-chrome) on polyethylene",
+      "Q: What symptoms suggest a loose femoral component following THA? A: Thigh pain, Start-up pain with walking"
+    ],
+    "otherUsefulFacts": [
+      "Pseudotumors are a complication seen with metal on metal THA bearing surfaces.",
+      "Excessively increased femoral head offset can lead to trochanteric bursitis.",
+      "The hip should be fused in 25-30 degrees of flexion, 0 degrees of abduction and rotation."
+    ],
+    "anatomy": {
+      "approachSelection": {
+        "selected": [
+          {
+            "id": "approach_lower_ext_hip_posterior_moore_southern",
+            "confidence": 0.99,
+            "rationale": "Posterior total hip arthroplasty is best performed using the posterior (Moore/Southern) approach, which provides direct access to the hip joint from the posterior side and is commonly used for this procedure."
+          }
+        ],
+        "notes": "Only one approach from the allowed set fits the posterior total hip arthroplasty anatomy and surgical goals.",
+        "router": {
+          "case_family": "tha_posterior",
+          "selectionMode": "deterministic_router",
+          "allowedApproachIds": [
+            "approach_lower_ext_hip_posterior_moore_southern"
+          ],
+          "blockedApproachIds": [],
+          "routerRationale": ""
+        },
+        "validation": {
+          "valid_selected": [
+            "approach_lower_ext_hip_posterior_moore_southern"
+          ],
+          "removed": [],
+          "confidence_adjustment": "ok",
+          "notes": ""
+        }
+      },
+      "anatomyQuiz": {
+        "questions": [
+          {
+            "approach_id": "approach_lower_ext_hip_posterior_moore_southern",
+            "q": "In the posterior hip (Moore/Southern) approach, what two structures define the superficial interval?",
+            "answer": "The superficial interval is between the gluteus maximus and the iliotibial band (IT band).",
+            "tag": "anatomy",
+            "difficulty": 2
+          },
+          {
+            "approach_id": "approach_lower_ext_hip_posterior_moore_southern",
+            "q": "During the posterior hip approach, which muscles form the deep interval used for exposure?",
+            "answer": "The deep interval is between the piriformis and short external rotators and the femur.",
+            "tag": "anatomy",
+            "difficulty": 3
+          },
+          {
+            "approach_id": "approach_lower_ext_hip_posterior_moore_southern",
+            "q": "What is a major nerve at risk during the posterior hip (Moore/Southern) surgical approach?",
+            "answer": "The sciatic nerve is at risk during this approach.",
+            "tag": "clinical_anatomy",
+            "difficulty": 2
+          },
+          {
+            "approach_id": "approach_lower_ext_hip_posterior_moore_southern",
+            "q": "Which artery is considered at risk in the posterior hip approach described by Moore/Southern?",
+            "answer": "The inferior gluteal artery is at risk.",
+            "tag": "vascular_anatomy",
+            "difficulty": 3
+          },
+          {
+            "approach_id": "approach_lower_ext_hip_posterior_moore_southern",
+            "q": "In the posterior hip approach, what is the significance of the MFCA?",
+            "answer": "The medial femoral circumflex artery (MFCA) is at risk and important for femoral head blood supply.",
+            "tag": "vascular_anatomy",
+            "difficulty": 3
+          },
+          {
+            "approach_id": "approach_lower_ext_hip_posterior_moore_southern",
+            "q": "Which bones are primarily exposed using the posterior hip (Moore/Southern) approach?",
+            "answer": "The femur and the pelvis can be exposed through this approach.",
+            "tag": "anatomy",
+            "difficulty": 2
+          },
+          {
+            "approach_id": "approach_lower_ext_hip_posterior_moore_southern",
+            "q": "The posterior hip (Moore/Southern) approach is primarily used to access which joint?",
+            "answer": "It provides access to the hip joint.",
+            "tag": "anatomy",
+            "difficulty": 1
+          },
+          {
+            "approach_id": "approach_lower_ext_hip_posterior_moore_southern",
+            "q": "Name one common surgical alias for the posterior hip approach described.",
+            "answer": "Moore approach (also known as Southern approach or posterior hip approach).",
+            "tag": "terminology",
+            "difficulty": 1
+          }
+        ]
+      },
+      "router": {
+        "case_family": "tha_posterior",
+        "selectionMode": "deterministic_router",
+        "allowedApproachIds": [
+          "approach_lower_ext_hip_posterior_moore_southern"
+        ],
+        "blockedApproachIds": [],
+        "routerRationale": ""
+      }
+    }
+  }
+}

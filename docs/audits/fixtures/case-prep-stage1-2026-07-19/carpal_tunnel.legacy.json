@@ -1,0 +1,247 @@
+{
+  "pimpQuestions": [
+    "Q: What are the two ways in which a carpal tunnel release can be performed? A: Open or endoscopic",
+    "Q: What is the operative treatment of carpal tunnel syndrome? A: Release of the transcarpal ligament (open, mini open, arthroscopic)",
+    "Q: Is there any difference in outcomes following open vs endoscopic carpal tunnel release? A: Patients with endoscopic surgery return to work earlier; no difference in long-term patient outcomes.",
+    "Q: What is the most common reason for failed endoscopic carpal tunnel surgery? A: Incomplete release of the transverse carpal ligament distally.",
+    "Q: How do outcomes of endoscopic and open carpal tunnel release compare? A: Endoscopic may have less early scar tenderness, improved short term function, and better patient satisfaction scores; long term results are equivalent.",
+    "Q: What are the contents of the carpal tunnel? A: FDS tendons x4, FDP tendons x4, FPL, Median nerve.",
+    "Q: Which structure may be injured if the transverse carpal ligament is incised too radially? A: Recurrent motor branch of the median nerve.",
+    "Q: What is the most sensitive test for diagnosing carpal tunnel syndrome? A: Durkan's compression test.",
+    "Q: What is the most radial structure within the carpal tunnel? A: FPL.",
+    "Q: In the carpal tunnel, the median nerve runs in between what? A: FDS and FCR (FCR is outside of carpal tunnel)."
+  ],
+  "otherUsefulFacts": [
+    "No additional benefit gained from neurolysis or tenosynovectomy in carpal tunnel syndrome.",
+    "Steroids yield transient relief in 80% of patients after 6 weeks, but only 20% are symptom free at 1 year.",
+    "Acute carpal tunnel may occur with a distal radius fracture; this is a surgical emergency."
+  ],
+  "anatomy": {
+    "approachSelection": {
+      "selected": [
+        {
+          "id": "approach_wrist_carpal_tunnel",
+          "confidence": 1,
+          "rationale": "Specifically designed for carpal tunnel release, targeting the transverse carpal ligament and median nerve at the wrist."
+        }
+      ],
+      "notes": "No other approaches in the catalog are relevant to carpal tunnel surgery.",
+      "router": {
+        "case_family": "carpal_tunnel_release",
+        "selectionMode": "deterministic_router",
+        "allowedApproachIds": [
+          "approach_wrist_carpal_tunnel"
+        ],
+        "blockedApproachIds": [],
+        "routerRationale": ""
+      },
+      "validation": {
+        "valid_selected": [
+          "approach_wrist_carpal_tunnel"
+        ],
+        "removed": [],
+        "confidence_adjustment": "ok",
+        "notes": ""
+      }
+    },
+    "anatomyQuiz": {
+      "questions": [
+        {
+          "approach_id": "approach_wrist_carpal_tunnel",
+          "q": "What superficial nerves are encountered during the carpal tunnel approach?",
+          "answer": "Median and ulnar nerves",
+          "tag": "superficial_interval",
+          "difficulty": 2
+        },
+        {
+          "approach_id": "approach_wrist_carpal_tunnel",
+          "q": "Which ligament is released in the carpal tunnel approach?",
+          "answer": "Transverse carpal ligament",
+          "tag": "deep_interval",
+          "difficulty": 2
+        },
+        {
+          "approach_id": "approach_wrist_carpal_tunnel",
+          "q": "Name three structures at risk during the carpal tunnel approach.",
+          "answer": "Median nerve, recurrent motor branch, palmar cutaneous branch",
+          "tag": "structures_at_risk",
+          "difficulty": 3
+        },
+        {
+          "approach_id": "approach_wrist_carpal_tunnel",
+          "q": "Is the carpal tunnel approach performed through an internervous plane?",
+          "answer": "No, it is not an internervous plane",
+          "tag": "internervous_plane",
+          "difficulty": 1
+        },
+        {
+          "approach_id": "approach_wrist_carpal_tunnel",
+          "q": "What motor branch of the median nerve is at risk during the carpal tunnel release?",
+          "answer": "Recurrent motor branch of the median nerve",
+          "tag": "structures_at_risk",
+          "difficulty": 3
+        },
+        {
+          "approach_id": "approach_wrist_carpal_tunnel",
+          "q": "What cutaneous branch of the median nerve is at risk in a carpal tunnel approach?",
+          "answer": "Palmar cutaneous branch",
+          "tag": "structures_at_risk",
+          "difficulty": 3
+        },
+        {
+          "approach_id": "approach_wrist_carpal_tunnel",
+          "q": "The carpal tunnel approach is classified as which type of surgical approach based on location?",
+          "answer": "Volar approach",
+          "tag": "approach_type",
+          "difficulty": 2
+        },
+        {
+          "approach_id": "approach_wrist_carpal_tunnel",
+          "q": "For which clinical procedure is the carpal tunnel approach primarily used?",
+          "answer": "Carpal tunnel release",
+          "tag": "clinical_tags",
+          "difficulty": 1
+        }
+      ]
+    },
+    "router": {
+      "case_family": "carpal_tunnel_release",
+      "selectionMode": "deterministic_router",
+      "allowedApproachIds": [
+        "approach_wrist_carpal_tunnel"
+      ],
+      "blockedApproachIds": [],
+      "routerRationale": ""
+    }
+  },
+  "caseprep_version": "v1",
+  "engine": "legacy_rag_gpt",
+  "procedure_slug": null,
+  "content_status": "legacy",
+  "match_method": "none",
+  "ai_used": [
+    "query_refiner",
+    "snippet_filter",
+    "snippet_reformat",
+    "anatomy_pipeline"
+  ],
+  "rag_used": true,
+  "warnings": [],
+  "payload": {
+    "pimpQuestions": [
+      "Q: What are the two ways in which a carpal tunnel release can be performed? A: Open or endoscopic",
+      "Q: What is the operative treatment of carpal tunnel syndrome? A: Release of the transcarpal ligament (open, mini open, arthroscopic)",
+      "Q: Is there any difference in outcomes following open vs endoscopic carpal tunnel release? A: Patients with endoscopic surgery return to work earlier; no difference in long-term patient outcomes.",
+      "Q: What is the most common reason for failed endoscopic carpal tunnel surgery? A: Incomplete release of the transverse carpal ligament distally.",
+      "Q: How do outcomes of endoscopic and open carpal tunnel release compare? A: Endoscopic may have less early scar tenderness, improved short term function, and better patient satisfaction scores; long term results are equivalent.",
+      "Q: What are the contents of the carpal tunnel? A: FDS tendons x4, FDP tendons x4, FPL, Median nerve.",
+      "Q: Which structure may be injured if the transverse carpal ligament is incised too radially? A: Recurrent motor branch of the median nerve.",
+      "Q: What is the most sensitive test for diagnosing carpal tunnel syndrome? A: Durkan's compression test.",
+      "Q: What is the most radial structure within the carpal tunnel? A: FPL.",
+      "Q: In the carpal tunnel, the median nerve runs in between what? A: FDS and FCR (FCR is outside of carpal tunnel)."
+    ],
+    "otherUsefulFacts": [
+      "No additional benefit gained from neurolysis or tenosynovectomy in carpal tunnel syndrome.",
+      "Steroids yield transient relief in 80% of patients after 6 weeks, but only 20% are symptom free at 1 year.",
+      "Acute carpal tunnel may occur with a distal radius fracture; this is a surgical emergency."
+    ],
+    "anatomy": {
+      "approachSelection": {
+        "selected": [
+          {
+            "id": "approach_wrist_carpal_tunnel",
+            "confidence": 1,
+            "rationale": "Specifically designed for carpal tunnel release, targeting the transverse carpal ligament and median nerve at the wrist."
+          }
+        ],
+        "notes": "No other approaches in the catalog are relevant to carpal tunnel surgery.",
+        "router": {
+          "case_family": "carpal_tunnel_release",
+          "selectionMode": "deterministic_router",
+          "allowedApproachIds": [
+            "approach_wrist_carpal_tunnel"
+          ],
+          "blockedApproachIds": [],
+          "routerRationale": ""
+        },
+        "validation": {
+          "valid_selected": [
+            "approach_wrist_carpal_tunnel"
+          ],
+          "removed": [],
+          "confidence_adjustment": "ok",
+          "notes": ""
+        }
+      },
+      "anatomyQuiz": {
+        "questions": [
+          {
+            "approach_id": "approach_wrist_carpal_tunnel",
+            "q": "What superficial nerves are encountered during the carpal tunnel approach?",
+            "answer": "Median and ulnar nerves",
+            "tag": "superficial_interval",
+            "difficulty": 2
+          },
+          {
+            "approach_id": "approach_wrist_carpal_tunnel",
+            "q": "Which ligament is released in the carpal tunnel approach?",
+            "answer": "Transverse carpal ligament",
+            "tag": "deep_interval",
+            "difficulty": 2
+          },
+          {
+            "approach_id": "approach_wrist_carpal_tunnel",
+            "q": "Name three structures at risk during the carpal tunnel approach.",
+            "answer": "Median nerve, recurrent motor branch, palmar cutaneous branch",
+            "tag": "structures_at_risk",
+            "difficulty": 3
+          },
+          {
+            "approach_id": "approach_wrist_carpal_tunnel",
+            "q": "Is the carpal tunnel approach performed through an internervous plane?",
+            "answer": "No, it is not an internervous plane",
+            "tag": "internervous_plane",
+            "difficulty": 1
+          },
+          {
+            "approach_id": "approach_wrist_carpal_tunnel",
+            "q": "What motor branch of the median nerve is at risk during the carpal tunnel release?",
+            "answer": "Recurrent motor branch of the median nerve",
+            "tag": "structures_at_risk",
+            "difficulty": 3
+          },
+          {
+            "approach_id": "approach_wrist_carpal_tunnel",
+            "q": "What cutaneous branch of the median nerve is at risk in a carpal tunnel approach?",
+            "answer": "Palmar cutaneous branch",
+            "tag": "structures_at_risk",
+            "difficulty": 3
+          },
+          {
+            "approach_id": "approach_wrist_carpal_tunnel",
+            "q": "The carpal tunnel approach is classified as which type of surgical approach based on location?",
+            "answer": "Volar approach",
+            "tag": "approach_type",
+            "difficulty": 2
+          },
+          {
+            "approach_id": "approach_wrist_carpal_tunnel",
+            "q": "For which clinical procedure is the carpal tunnel approach primarily used?",
+            "answer": "Carpal tunnel release",
+            "tag": "clinical_tags",
+            "difficulty": 1
+          }
+        ]
+      },
+      "router": {
+        "case_family": "carpal_tunnel_release",
+        "selectionMode": "deterministic_router",
+        "allowedApproachIds": [
+          "approach_wrist_carpal_tunnel"
+        ],
+        "blockedApproachIds": [],
+        "routerRationale": ""
+      }
+    }
+  }
+}

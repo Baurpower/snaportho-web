@@ -43,6 +43,13 @@ export type QuestionProvider = 'orthobullets' | 'rock' | 'himalaya';
 export type ExtractedPageMode = 'question' | 'curriculum_content' | 'topic_page';
 export type ClassifiedPageKind = 'question' | 'educational_content' | 'mixed' | 'topic_page' | 'unreadable';
 export type ProviderDetectionStatus = QuestionProvider | 'unsupported' | 'readable_unrecognized';
+export type SupportedPageKind =
+  | 'rock_himalaya_question'
+  | 'rock_himalaya_review'
+  | 'rock_learning_page'
+  | 'orthobullets_question'
+  | 'orthobullets_topic'
+  | 'unsupported';
 
 export interface PageClassification {
   pageKind: ClassifiedPageKind;
@@ -63,7 +70,13 @@ export interface PageClassification {
 
 export type OrthobulletsExtractionFailureCode =
   | 'content_script_no_response'
-  | 'page_not_readable';
+  | 'page_not_readable'
+  | 'waiting_for_question_selection'
+  | 'page_not_ready'
+  | 'modal_not_found'
+  | 'question_content_not_found'
+  | 'cross_origin_frame_unreadable'
+  | 'unsupported_page_type';
 
 export interface OrthobulletsExtractionDiagnostics {
   activeTabId: number | null;
@@ -128,6 +141,7 @@ export interface OrthobulletsPageContext {
   pageUrl: string;
   sourceUrl: string;
   pageKind: OrthobulletsPageKind | string;
+  supportedPageKind?: SupportedPageKind;
   questionId?: string | null;
   topicId?: string | null;
   title?: string | null;

@@ -1,0 +1,247 @@
+{
+  "pimpQuestions": [
+    "Q: What is the most common surgical treatment for subtrochanteric femur fractures? A: Intramedullary nail",
+    "Q: What are the non-arthroplasty surgical treatment options for IT fractures? A: 1) Sliding hip screw (SHS) 2) Cephalomedullary nail (CMN)",
+    "Q: What makes an IT fracture unstable? A: 1) Reverse obliquity 2) Fracture extension into the subtrochanteric region 3) Disrupted medial calcar 4) Disruption of the lateral cortex",
+    "Q: What is the advantage of placing an intramedullary nail with the patient in the lateral decubitus position? A: Allows for easier reduction of fracture fragments",
+    "Q: What is the most common malunion following antegrade IMN for subtrochanteric femur fractures? A: Varus and procurvatum",
+    "Q: What are the deforming forces on a subtrochanteric femur fracture? A: Proximal fragment: Abduction - Gluteus medius/minimus; Flexion - Iliopsoas; External rotation - Short external rotators; Distal fragment: Adduction and shortening - Adductors",
+    "Q: What radiograph should be obtained to better delineate the fracture pattern in intertrochanteric femur fractures? A: Traction view",
+    "Q: What additional radiograph must be obtained preoperatively for intertrochanteric femur fractures? A: Full length femur x-ray",
+    "Q: What is the importance of the TAD? A: TAD >25mm is associated with screw cutout"
+  ],
+  "otherUsefulFacts": [
+    "Sliding hip screws should be avoided in unstable fracture patterns.",
+    "IT fractures have better healing potential because they are extracapsular, have periosteum, and soft tissue attachment."
+  ],
+  "anatomy": {
+    "approachSelection": {
+      "selected": [
+        {
+          "id": "approach_lower_ext_hip_lateral_hardinge",
+          "confidence": 0.95,
+          "rationale": "Hardinge (lateral hip) approach provides direct access to the proximal femur and greater trochanter region, ideal for intramedullary fixation of intertrochanteric fractures."
+        }
+      ],
+      "notes": "Hardinge approach is preferred over lateral thigh approach for intertrochanteric fractures due to better proximal femur exposure.",
+      "router": {
+        "case_family": "intertrochanteric_hip_fracture_orif",
+        "selectionMode": "deterministic_router",
+        "allowedApproachIds": [
+          "approach_lower_ext_hip_lateral_hardinge",
+          "approach_lower_ext_thigh_lateral"
+        ],
+        "blockedApproachIds": [],
+        "routerRationale": ""
+      },
+      "validation": {
+        "valid_selected": [
+          "approach_lower_ext_hip_lateral_hardinge"
+        ],
+        "removed": [],
+        "confidence_adjustment": "ok",
+        "notes": ""
+      }
+    },
+    "anatomyQuiz": {
+      "questions": [
+        {
+          "approach_id": "approach_lower_ext_hip_lateral_hardinge",
+          "q": "Which superficial interval is split in the Hardinge lateral approach to the hip?",
+          "answer": "Iliotibial (IT) band",
+          "tag": "landmark",
+          "difficulty": 2
+        },
+        {
+          "approach_id": "approach_lower_ext_hip_lateral_hardinge",
+          "q": "In the Hardinge approach, which two muscles are divided in the deep interval to expose the hip joint?",
+          "answer": "Gluteus medius and vastus lateralis",
+          "tag": "anatomy",
+          "difficulty": 3
+        },
+        {
+          "approach_id": "approach_lower_ext_hip_lateral_hardinge",
+          "q": "Which nerve is at risk during the Hardinge lateral approach to the hip?",
+          "answer": "Superior gluteal nerve",
+          "tag": "risk",
+          "difficulty": 3
+        },
+        {
+          "approach_id": "approach_lower_ext_hip_lateral_hardinge",
+          "q": "Which arterial branch is at risk during the Hardinge approach?",
+          "answer": "Transverse branch of the lateral femoral circumflex artery (LFCA)",
+          "tag": "risk",
+          "difficulty": 3
+        },
+        {
+          "approach_id": "approach_lower_ext_hip_lateral_hardinge",
+          "q": "The Hardinge approach provides surgical access primarily to which joint?",
+          "answer": "Hip joint",
+          "tag": "joint",
+          "difficulty": 1
+        },
+        {
+          "approach_id": "approach_lower_ext_hip_lateral_hardinge",
+          "q": "The Hardinge approach to the hip involves splitting which deep interval?",
+          "answer": "Between gluteus medius and vastus lateralis",
+          "tag": "anatomy",
+          "difficulty": 2
+        },
+        {
+          "approach_id": "approach_lower_ext_hip_lateral_hardinge",
+          "q": "What muscle group's tendon is involved in the superficial interval during the Hardinge approach?",
+          "answer": "Iliotibial band (tensor fasciae latae muscle's tendon)",
+          "tag": "anatomy",
+          "difficulty": 3
+        },
+        {
+          "approach_id": "approach_lower_ext_hip_lateral_hardinge",
+          "q": "Name two bones primarily exposed during the Hardinge approach.",
+          "answer": "Femur and pelvis",
+          "tag": "anatomy",
+          "difficulty": 2
+        }
+      ]
+    },
+    "router": {
+      "case_family": "intertrochanteric_hip_fracture_orif",
+      "selectionMode": "deterministic_router",
+      "allowedApproachIds": [
+        "approach_lower_ext_hip_lateral_hardinge",
+        "approach_lower_ext_thigh_lateral"
+      ],
+      "blockedApproachIds": [],
+      "routerRationale": ""
+    }
+  },
+  "caseprep_version": "v1",
+  "engine": "legacy_rag_gpt",
+  "procedure_slug": null,
+  "content_status": "legacy",
+  "match_method": "none",
+  "ai_used": [
+    "query_refiner",
+    "snippet_filter",
+    "snippet_reformat",
+    "anatomy_pipeline"
+  ],
+  "rag_used": true,
+  "warnings": [],
+  "payload": {
+    "pimpQuestions": [
+      "Q: What is the most common surgical treatment for subtrochanteric femur fractures? A: Intramedullary nail",
+      "Q: What are the non-arthroplasty surgical treatment options for IT fractures? A: 1) Sliding hip screw (SHS) 2) Cephalomedullary nail (CMN)",
+      "Q: What makes an IT fracture unstable? A: 1) Reverse obliquity 2) Fracture extension into the subtrochanteric region 3) Disrupted medial calcar 4) Disruption of the lateral cortex",
+      "Q: What is the advantage of placing an intramedullary nail with the patient in the lateral decubitus position? A: Allows for easier reduction of fracture fragments",
+      "Q: What is the most common malunion following antegrade IMN for subtrochanteric femur fractures? A: Varus and procurvatum",
+      "Q: What are the deforming forces on a subtrochanteric femur fracture? A: Proximal fragment: Abduction - Gluteus medius/minimus; Flexion - Iliopsoas; External rotation - Short external rotators; Distal fragment: Adduction and shortening - Adductors",
+      "Q: What radiograph should be obtained to better delineate the fracture pattern in intertrochanteric femur fractures? A: Traction view",
+      "Q: What additional radiograph must be obtained preoperatively for intertrochanteric femur fractures? A: Full length femur x-ray",
+      "Q: What is the importance of the TAD? A: TAD >25mm is associated with screw cutout"
+    ],
+    "otherUsefulFacts": [
+      "Sliding hip screws should be avoided in unstable fracture patterns.",
+      "IT fractures have better healing potential because they are extracapsular, have periosteum, and soft tissue attachment."
+    ],
+    "anatomy": {
+      "approachSelection": {
+        "selected": [
+          {
+            "id": "approach_lower_ext_hip_lateral_hardinge",
+            "confidence": 0.95,
+            "rationale": "Hardinge (lateral hip) approach provides direct access to the proximal femur and greater trochanter region, ideal for intramedullary fixation of intertrochanteric fractures."
+          }
+        ],
+        "notes": "Hardinge approach is preferred over lateral thigh approach for intertrochanteric fractures due to better proximal femur exposure.",
+        "router": {
+          "case_family": "intertrochanteric_hip_fracture_orif",
+          "selectionMode": "deterministic_router",
+          "allowedApproachIds": [
+            "approach_lower_ext_hip_lateral_hardinge",
+            "approach_lower_ext_thigh_lateral"
+          ],
+          "blockedApproachIds": [],
+          "routerRationale": ""
+        },
+        "validation": {
+          "valid_selected": [
+            "approach_lower_ext_hip_lateral_hardinge"
+          ],
+          "removed": [],
+          "confidence_adjustment": "ok",
+          "notes": ""
+        }
+      },
+      "anatomyQuiz": {
+        "questions": [
+          {
+            "approach_id": "approach_lower_ext_hip_lateral_hardinge",
+            "q": "Which superficial interval is split in the Hardinge lateral approach to the hip?",
+            "answer": "Iliotibial (IT) band",
+            "tag": "landmark",
+            "difficulty": 2
+          },
+          {
+            "approach_id": "approach_lower_ext_hip_lateral_hardinge",
+            "q": "In the Hardinge approach, which two muscles are divided in the deep interval to expose the hip joint?",
+            "answer": "Gluteus medius and vastus lateralis",
+            "tag": "anatomy",
+            "difficulty": 3
+          },
+          {
+            "approach_id": "approach_lower_ext_hip_lateral_hardinge",
+            "q": "Which nerve is at risk during the Hardinge lateral approach to the hip?",
+            "answer": "Superior gluteal nerve",
+            "tag": "risk",
+            "difficulty": 3
+          },
+          {
+            "approach_id": "approach_lower_ext_hip_lateral_hardinge",
+            "q": "Which arterial branch is at risk during the Hardinge approach?",
+            "answer": "Transverse branch of the lateral femoral circumflex artery (LFCA)",
+            "tag": "risk",
+            "difficulty": 3
+          },
+          {
+            "approach_id": "approach_lower_ext_hip_lateral_hardinge",
+            "q": "The Hardinge approach provides surgical access primarily to which joint?",
+            "answer": "Hip joint",
+            "tag": "joint",
+            "difficulty": 1
+          },
+          {
+            "approach_id": "approach_lower_ext_hip_lateral_hardinge",
+            "q": "The Hardinge approach to the hip involves splitting which deep interval?",
+            "answer": "Between gluteus medius and vastus lateralis",
+            "tag": "anatomy",
+            "difficulty": 2
+          },
+          {
+            "approach_id": "approach_lower_ext_hip_lateral_hardinge",
+            "q": "What muscle group's tendon is involved in the superficial interval during the Hardinge approach?",
+            "answer": "Iliotibial band (tensor fasciae latae muscle's tendon)",
+            "tag": "anatomy",
+            "difficulty": 3
+          },
+          {
+            "approach_id": "approach_lower_ext_hip_lateral_hardinge",
+            "q": "Name two bones primarily exposed during the Hardinge approach.",
+            "answer": "Femur and pelvis",
+            "tag": "anatomy",
+            "difficulty": 2
+          }
+        ]
+      },
+      "router": {
+        "case_family": "intertrochanteric_hip_fracture_orif",
+        "selectionMode": "deterministic_router",
+        "allowedApproachIds": [
+          "approach_lower_ext_hip_lateral_hardinge",
+          "approach_lower_ext_thigh_lateral"
+        ],
+        "blockedApproachIds": [],
+        "routerRationale": ""
+      }
+    }
+  }
+}

@@ -14,10 +14,12 @@ import type {
   TopicSection,
 } from '../shared/types.js';
 
-export const EXTRACTOR_VERSION = '2026-07-05-rock-explain-study-panel-v2';
+export const EXTRACTOR_VERSION = '2026-07-19-rock-structured-long-page-v3';
 export { SELECTOR_SET_VERSION };
 
-const MAX_CURRICULUM_CONTENT_CHARS = 14000;
+// This is an abuse/memory ceiling, not a model-request limit. The backend
+// performs token-aware chunking; extraction must preserve the whole article.
+const MAX_CURRICULUM_CONTENT_CHARS = 240000;
 const MIN_CURRICULUM_CONTENT_CHARS = 500;
 const MIN_REFERENCES_HEAVY_CONTENT_CHARS = 180;
 
@@ -1140,15 +1142,15 @@ function extractRockCurriculumContent(root: DocumentLike, matched: Record<string
   const authors = collectRockTexts(root, ROCK_SELECTORS.authors, 'authors', matched).slice(0, 8);
   const date = firstText(root, ROCK_SELECTORS.date, 'date', matched) ?? null;
   const extractionStrategy = blocks.length ? 'semantic_content_blocks' : references.length ? 'references_blocks' : 'not_found';
-  const normalizedSections = contentSections.slice(0, 20).map((section) => ({
+  const normalizedSections = contentSections.slice(0, 120).map((section) => ({
     heading: section.heading,
-    text: section.text.slice(0, 3000),
+    text: section.text.slice(0, 20000),
   }));
   const learningObjectives = extractLearningObjectives(scanRoot, normalizedSections, matched);
   const contentMarkdown = buildContentMarkdown({
     title: firstText(root, ROCK_SELECTORS.title, 'title', matched) ?? null,
     breadcrumbs: collectRockTexts(root, ROCK_SELECTORS.breadcrumbs, 'breadcrumbs', matched),
-    sectionHeadings: dedupeTexts(sectionHeadings).slice(0, 30),
+    sectionHeadings: dedupeTexts(sectionHeadings).slice(0, 120),
     contentSections: normalizedSections,
     references,
     tablesMarkdown,

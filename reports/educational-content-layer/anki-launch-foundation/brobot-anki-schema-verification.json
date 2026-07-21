@@ -1,0 +1,1964 @@
+{
+  "generatedAt": "2026-07-20T03:52:51.390Z",
+  "databaseHost": "aws-0-us-east-2.pooler.supabase.com",
+  "safety": {
+    "transactionReadOnly": "on",
+    "transactionDisposition": "rollback"
+  },
+  "mode": "verify",
+  "valid": false,
+  "errors": [
+    "brobot_anki_device_links: missing trigger set_brobot_anki_device_links_updated_at",
+    "brobot_anki_device_links: missing policy brobot_anki_service_role_all",
+    "brobot_anki_device_links: rls_forced=false, expected true",
+    "brobot_anki_device_links: service_role has unexpected REFERENCES",
+    "brobot_anki_device_links: service_role has unexpected TRIGGER",
+    "brobot_anki_device_links: service_role has unexpected TRUNCATE",
+    "brobot_anki_device_links: forbidden direct DELETE grant to anon",
+    "brobot_anki_device_links: forbidden direct INSERT grant to anon",
+    "brobot_anki_device_links: forbidden direct REFERENCES grant to anon",
+    "brobot_anki_device_links: forbidden direct SELECT grant to anon",
+    "brobot_anki_device_links: forbidden direct TRIGGER grant to anon",
+    "brobot_anki_device_links: forbidden direct TRUNCATE grant to anon",
+    "brobot_anki_device_links: forbidden direct UPDATE grant to anon",
+    "brobot_anki_device_links: forbidden direct DELETE grant to authenticated",
+    "brobot_anki_device_links: forbidden direct INSERT grant to authenticated",
+    "brobot_anki_device_links: forbidden direct REFERENCES grant to authenticated",
+    "brobot_anki_device_links: forbidden direct SELECT grant to authenticated",
+    "brobot_anki_device_links: forbidden direct TRIGGER grant to authenticated",
+    "brobot_anki_device_links: forbidden direct TRUNCATE grant to authenticated",
+    "brobot_anki_device_links: forbidden direct UPDATE grant to authenticated",
+    "brobot_anki_device_tokens: missing trigger set_brobot_anki_device_tokens_updated_at",
+    "brobot_anki_device_tokens: missing policy brobot_anki_service_role_all",
+    "brobot_anki_device_tokens: rls_forced=false, expected true",
+    "brobot_anki_device_tokens: service_role has unexpected REFERENCES",
+    "brobot_anki_device_tokens: service_role has unexpected TRIGGER",
+    "brobot_anki_device_tokens: service_role has unexpected TRUNCATE",
+    "brobot_anki_device_tokens: forbidden direct DELETE grant to anon",
+    "brobot_anki_device_tokens: forbidden direct INSERT grant to anon",
+    "brobot_anki_device_tokens: forbidden direct REFERENCES grant to anon",
+    "brobot_anki_device_tokens: forbidden direct SELECT grant to anon",
+    "brobot_anki_device_tokens: forbidden direct TRIGGER grant to anon",
+    "brobot_anki_device_tokens: forbidden direct TRUNCATE grant to anon",
+    "brobot_anki_device_tokens: forbidden direct UPDATE grant to anon",
+    "brobot_anki_device_tokens: forbidden direct DELETE grant to authenticated",
+    "brobot_anki_device_tokens: forbidden direct INSERT grant to authenticated",
+    "brobot_anki_device_tokens: forbidden direct REFERENCES grant to authenticated",
+    "brobot_anki_device_tokens: forbidden direct SELECT grant to authenticated",
+    "brobot_anki_device_tokens: forbidden direct TRIGGER grant to authenticated",
+    "brobot_anki_device_tokens: forbidden direct TRUNCATE grant to authenticated",
+    "brobot_anki_device_tokens: forbidden direct UPDATE grant to authenticated",
+    "brobot_anki_addon_devices: missing index brobot_anki_addon_devices_user_active_idx",
+    "brobot_anki_addon_devices: missing trigger set_brobot_anki_addon_devices_updated_at",
+    "brobot_anki_addon_devices: missing policy brobot_anki_service_role_all",
+    "brobot_anki_addon_devices: rls_forced=false, expected true",
+    "brobot_anki_addon_devices: service_role has unexpected REFERENCES",
+    "brobot_anki_addon_devices: service_role has unexpected TRIGGER",
+    "brobot_anki_addon_devices: service_role has unexpected TRUNCATE",
+    "brobot_anki_addon_devices: forbidden direct DELETE grant to anon",
+    "brobot_anki_addon_devices: forbidden direct INSERT grant to anon",
+    "brobot_anki_addon_devices: forbidden direct REFERENCES grant to anon",
+    "brobot_anki_addon_devices: forbidden direct SELECT grant to anon",
+    "brobot_anki_addon_devices: forbidden direct TRIGGER grant to anon",
+    "brobot_anki_addon_devices: forbidden direct TRUNCATE grant to anon",
+    "brobot_anki_addon_devices: forbidden direct UPDATE grant to anon",
+    "brobot_anki_addon_devices: forbidden direct DELETE grant to authenticated",
+    "brobot_anki_addon_devices: forbidden direct INSERT grant to authenticated",
+    "brobot_anki_addon_devices: forbidden direct REFERENCES grant to authenticated",
+    "brobot_anki_addon_devices: forbidden direct SELECT grant to authenticated",
+    "brobot_anki_addon_devices: forbidden direct TRIGGER grant to authenticated",
+    "brobot_anki_addon_devices: forbidden direct TRUNCATE grant to authenticated",
+    "brobot_anki_addon_devices: forbidden direct UPDATE grant to authenticated",
+    "brobot_anki_prep_requests: missing index brobot_anki_prep_requests_user_status_idx",
+    "brobot_anki_prep_requests: missing trigger set_brobot_anki_prep_requests_updated_at",
+    "brobot_anki_prep_requests: missing policy brobot_anki_service_role_all",
+    "brobot_anki_prep_requests: rls_forced=false, expected true",
+    "brobot_anki_prep_requests: service_role has unexpected REFERENCES",
+    "brobot_anki_prep_requests: service_role has unexpected TRIGGER",
+    "brobot_anki_prep_requests: service_role has unexpected TRUNCATE",
+    "brobot_anki_prep_requests: forbidden direct DELETE grant to anon",
+    "brobot_anki_prep_requests: forbidden direct INSERT grant to anon",
+    "brobot_anki_prep_requests: forbidden direct REFERENCES grant to anon",
+    "brobot_anki_prep_requests: forbidden direct SELECT grant to anon",
+    "brobot_anki_prep_requests: forbidden direct TRIGGER grant to anon",
+    "brobot_anki_prep_requests: forbidden direct TRUNCATE grant to anon",
+    "brobot_anki_prep_requests: forbidden direct UPDATE grant to anon",
+    "brobot_anki_prep_requests: forbidden direct DELETE grant to authenticated",
+    "brobot_anki_prep_requests: forbidden direct INSERT grant to authenticated",
+    "brobot_anki_prep_requests: forbidden direct REFERENCES grant to authenticated",
+    "brobot_anki_prep_requests: forbidden direct SELECT grant to authenticated",
+    "brobot_anki_prep_requests: forbidden direct TRIGGER grant to authenticated",
+    "brobot_anki_prep_requests: forbidden direct TRUNCATE grant to authenticated",
+    "brobot_anki_prep_requests: forbidden direct UPDATE grant to authenticated",
+    "brobot_anki_study_sessions.max_cards: missing column",
+    "brobot_anki_study_sessions.min_match_score: missing column",
+    "brobot_anki_study_sessions.include_cloze_siblings: missing column",
+    "brobot_anki_study_sessions.total_candidates_found: missing column",
+    "brobot_anki_study_sessions: missing constraint brobot_anki_study_sessions_counts_check",
+    "brobot_anki_study_sessions: missing index brobot_anki_study_sessions_prep_request_idx",
+    "brobot_anki_study_sessions: missing index brobot_anki_study_sessions_user_created_idx",
+    "brobot_anki_study_sessions: missing trigger set_brobot_anki_study_sessions_updated_at",
+    "brobot_anki_study_sessions: missing policy brobot_anki_service_role_all",
+    "brobot_anki_study_sessions: rls_forced=false, expected true",
+    "brobot_anki_study_sessions: service_role has unexpected REFERENCES",
+    "brobot_anki_study_sessions: service_role has unexpected TRIGGER",
+    "brobot_anki_study_sessions: service_role has unexpected TRUNCATE",
+    "brobot_anki_study_sessions: forbidden direct DELETE grant to anon",
+    "brobot_anki_study_sessions: forbidden direct INSERT grant to anon",
+    "brobot_anki_study_sessions: forbidden direct REFERENCES grant to anon",
+    "brobot_anki_study_sessions: forbidden direct SELECT grant to anon",
+    "brobot_anki_study_sessions: forbidden direct TRIGGER grant to anon",
+    "brobot_anki_study_sessions: forbidden direct TRUNCATE grant to anon",
+    "brobot_anki_study_sessions: forbidden direct UPDATE grant to anon",
+    "brobot_anki_study_sessions: forbidden direct DELETE grant to authenticated",
+    "brobot_anki_study_sessions: forbidden direct INSERT grant to authenticated",
+    "brobot_anki_study_sessions: forbidden direct REFERENCES grant to authenticated",
+    "brobot_anki_study_sessions: forbidden direct SELECT grant to authenticated",
+    "brobot_anki_study_sessions: forbidden direct TRIGGER grant to authenticated",
+    "brobot_anki_study_sessions: forbidden direct TRUNCATE grant to authenticated",
+    "brobot_anki_study_sessions: forbidden direct UPDATE grant to authenticated",
+    "brobot_anki_session_matches: missing constraint brobot_anki_session_matches_score_check",
+    "brobot_anki_session_matches: missing policy brobot_anki_service_role_all",
+    "brobot_anki_session_matches: rls_forced=false, expected true",
+    "brobot_anki_session_matches: service_role has unexpected REFERENCES",
+    "brobot_anki_session_matches: service_role has unexpected TRIGGER",
+    "brobot_anki_session_matches: service_role has unexpected TRUNCATE",
+    "brobot_anki_session_matches: forbidden direct DELETE grant to anon",
+    "brobot_anki_session_matches: forbidden direct INSERT grant to anon",
+    "brobot_anki_session_matches: forbidden direct REFERENCES grant to anon",
+    "brobot_anki_session_matches: forbidden direct SELECT grant to anon",
+    "brobot_anki_session_matches: forbidden direct TRIGGER grant to anon",
+    "brobot_anki_session_matches: forbidden direct TRUNCATE grant to anon",
+    "brobot_anki_session_matches: forbidden direct UPDATE grant to anon",
+    "brobot_anki_session_matches: forbidden direct DELETE grant to authenticated",
+    "brobot_anki_session_matches: forbidden direct INSERT grant to authenticated",
+    "brobot_anki_session_matches: forbidden direct REFERENCES grant to authenticated",
+    "brobot_anki_session_matches: forbidden direct SELECT grant to authenticated",
+    "brobot_anki_session_matches: forbidden direct TRIGGER grant to authenticated",
+    "brobot_anki_session_matches: forbidden direct TRUNCATE grant to authenticated",
+    "brobot_anki_session_matches: forbidden direct UPDATE grant to authenticated"
+  ],
+  "actual": {
+    "brobot_anki_device_links": {
+      "columns": [
+        {
+          "table_name": "brobot_anki_device_links",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "normalized_type": "uuid"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "column_name": "link_code",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "column_name": "device_name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "column_name": "user_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "uuid"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'pending'::text",
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "column_name": "approved_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "timestamp with time zone"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "column_name": "exchanged_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "timestamp with time zone"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "column_name": "revoked_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "timestamp with time zone"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "column_name": "expires_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": null,
+          "normalized_type": "timestamp with time zone"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "timezone('utc'::text, now())",
+          "normalized_type": "timestamp with time zone"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "timezone('utc'::text, now())",
+          "normalized_type": "timestamp with time zone"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "brobot_anki_device_links",
+          "constraint_name": "brobot_anki_device_links_link_code_key",
+          "constraint_type": "UNIQUE",
+          "definition": "UNIQUE (link_code)"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "constraint_name": "brobot_anki_device_links_pkey",
+          "constraint_type": "PRIMARY KEY",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "constraint_name": "brobot_anki_device_links_status_check",
+          "constraint_type": "CHECK",
+          "definition": "CHECK (status = ANY (ARRAY['pending'::text, 'approved'::text, 'expired'::text, 'revoked'::text]))"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "constraint_name": "brobot_anki_device_links_user_id_fkey",
+          "constraint_type": "FOREIGN KEY",
+          "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+        }
+      ],
+      "indexes": [
+        {
+          "table_name": "brobot_anki_device_links",
+          "index_name": "brobot_anki_device_links_link_code_key",
+          "definition": "CREATE UNIQUE INDEX brobot_anki_device_links_link_code_key ON public.brobot_anki_device_links USING btree (link_code)"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "index_name": "brobot_anki_device_links_pkey",
+          "definition": "CREATE UNIQUE INDEX brobot_anki_device_links_pkey ON public.brobot_anki_device_links USING btree (id)"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "index_name": "brobot_anki_device_links_status_idx",
+          "definition": "CREATE INDEX brobot_anki_device_links_status_idx ON public.brobot_anki_device_links USING btree (status)"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "index_name": "brobot_anki_device_links_user_id_idx",
+          "definition": "CREATE INDEX brobot_anki_device_links_user_id_idx ON public.brobot_anki_device_links USING btree (user_id)"
+        }
+      ],
+      "triggers": [],
+      "rls": {
+        "table_name": "brobot_anki_device_links",
+        "rls_enabled": true,
+        "rls_forced": false
+      },
+      "policies": [],
+      "grants": [
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "anon",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "anon",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "anon",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "anon",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "anon",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "anon",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "anon",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "authenticated",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "authenticated",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "authenticated",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "authenticated",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "authenticated",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "authenticated",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "authenticated",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "postgres",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "postgres",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "postgres",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "postgres",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "postgres",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "postgres",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "postgres",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "service_role",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "service_role",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "service_role",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "service_role",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "service_role",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "service_role",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_device_links",
+          "grantee": "service_role",
+          "privilege_type": "UPDATE"
+        }
+      ]
+    },
+    "brobot_anki_device_tokens": {
+      "columns": [
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "normalized_type": "uuid"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "column_name": "device_link_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "normalized_type": "uuid"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "column_name": "user_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "normalized_type": "uuid"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "column_name": "device_name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "column_name": "token_hash",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "column_name": "last_used_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "timestamp with time zone"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "column_name": "revoked_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "timestamp with time zone"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "timezone('utc'::text, now())",
+          "normalized_type": "timestamp with time zone"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "timezone('utc'::text, now())",
+          "normalized_type": "timestamp with time zone"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "constraint_name": "brobot_anki_device_tokens_device_link_id_fkey",
+          "constraint_type": "FOREIGN KEY",
+          "definition": "FOREIGN KEY (device_link_id) REFERENCES brobot_anki_device_links(id) ON DELETE CASCADE"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "constraint_name": "brobot_anki_device_tokens_device_link_id_key",
+          "constraint_type": "UNIQUE",
+          "definition": "UNIQUE (device_link_id)"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "constraint_name": "brobot_anki_device_tokens_pkey",
+          "constraint_type": "PRIMARY KEY",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "constraint_name": "brobot_anki_device_tokens_token_hash_key",
+          "constraint_type": "UNIQUE",
+          "definition": "UNIQUE (token_hash)"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "constraint_name": "brobot_anki_device_tokens_user_id_fkey",
+          "constraint_type": "FOREIGN KEY",
+          "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+        }
+      ],
+      "indexes": [
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "index_name": "brobot_anki_device_tokens_device_link_id_key",
+          "definition": "CREATE UNIQUE INDEX brobot_anki_device_tokens_device_link_id_key ON public.brobot_anki_device_tokens USING btree (device_link_id)"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "index_name": "brobot_anki_device_tokens_pkey",
+          "definition": "CREATE UNIQUE INDEX brobot_anki_device_tokens_pkey ON public.brobot_anki_device_tokens USING btree (id)"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "index_name": "brobot_anki_device_tokens_revoked_at_idx",
+          "definition": "CREATE INDEX brobot_anki_device_tokens_revoked_at_idx ON public.brobot_anki_device_tokens USING btree (revoked_at)"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "index_name": "brobot_anki_device_tokens_token_hash_key",
+          "definition": "CREATE UNIQUE INDEX brobot_anki_device_tokens_token_hash_key ON public.brobot_anki_device_tokens USING btree (token_hash)"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "index_name": "brobot_anki_device_tokens_user_id_idx",
+          "definition": "CREATE INDEX brobot_anki_device_tokens_user_id_idx ON public.brobot_anki_device_tokens USING btree (user_id)"
+        }
+      ],
+      "triggers": [],
+      "rls": {
+        "table_name": "brobot_anki_device_tokens",
+        "rls_enabled": true,
+        "rls_forced": false
+      },
+      "policies": [],
+      "grants": [
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "anon",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "anon",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "anon",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "anon",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "anon",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "anon",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "anon",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "authenticated",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "authenticated",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "authenticated",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "authenticated",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "authenticated",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "authenticated",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "authenticated",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "postgres",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "postgres",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "postgres",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "postgres",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "postgres",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "postgres",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "postgres",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "service_role",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "service_role",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "service_role",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "service_role",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "service_role",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "service_role",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_device_tokens",
+          "grantee": "service_role",
+          "privilege_type": "UPDATE"
+        }
+      ]
+    },
+    "brobot_anki_addon_devices": {
+      "columns": [
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "normalized_type": "uuid"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "column_name": "user_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "normalized_type": "uuid"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "column_name": "device_name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "column_name": "anki_profile_name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "column_name": "addon_version",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "column_name": "last_seen_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "timestamp with time zone"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "column_name": "is_active",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "NO",
+          "column_default": "true",
+          "normalized_type": "boolean"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "normalized_type": "timestamp with time zone"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "normalized_type": "timestamp with time zone"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "constraint_name": "brobot_anki_addon_devices_pkey",
+          "constraint_type": "PRIMARY KEY",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "constraint_name": "brobot_anki_addon_devices_user_id_fkey",
+          "constraint_type": "FOREIGN KEY",
+          "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+        }
+      ],
+      "indexes": [
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "index_name": "brobot_anki_addon_devices_pkey",
+          "definition": "CREATE UNIQUE INDEX brobot_anki_addon_devices_pkey ON public.brobot_anki_addon_devices USING btree (id)"
+        }
+      ],
+      "triggers": [],
+      "rls": {
+        "table_name": "brobot_anki_addon_devices",
+        "rls_enabled": true,
+        "rls_forced": false
+      },
+      "policies": [],
+      "grants": [
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "anon",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "anon",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "anon",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "anon",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "anon",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "anon",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "anon",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "authenticated",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "authenticated",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "authenticated",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "authenticated",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "authenticated",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "authenticated",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "authenticated",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "postgres",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "postgres",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "postgres",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "postgres",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "postgres",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "postgres",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "postgres",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "service_role",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "service_role",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "service_role",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "service_role",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "service_role",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "service_role",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_addon_devices",
+          "grantee": "service_role",
+          "privilege_type": "UPDATE"
+        }
+      ]
+    },
+    "brobot_anki_prep_requests": {
+      "columns": [
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "normalized_type": "uuid"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "user_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "normalized_type": "uuid"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "title",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "raw_case_input",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "diagnosis",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "procedure",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "body_region",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "subspecialty",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "generated_summary",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "generated_keywords",
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "is_nullable": "NO",
+          "column_default": "'[]'::jsonb",
+          "normalized_type": "jsonb"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "generated_topics",
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "is_nullable": "NO",
+          "column_default": "'[]'::jsonb",
+          "normalized_type": "jsonb"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "suggested_tags",
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "is_nullable": "NO",
+          "column_default": "'[]'::jsonb",
+          "normalized_type": "jsonb"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'pending'::text",
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "sent_to_anki_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": "now()",
+          "normalized_type": "timestamp with time zone"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "pulled_by_addon_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "timestamp with time zone"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "completed_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "timestamp with time zone"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "error_message",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "normalized_type": "timestamp with time zone"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "normalized_type": "timestamp with time zone"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "constraint_name": "brobot_anki_prep_requests_pkey",
+          "constraint_type": "PRIMARY KEY",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "constraint_name": "brobot_anki_prep_requests_status_check",
+          "constraint_type": "CHECK",
+          "definition": "CHECK (status = ANY (ARRAY['pending'::text, 'pulled_by_addon'::text, 'deck_created'::text, 'completed'::text, 'failed'::text, 'cancelled'::text]))"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "constraint_name": "brobot_anki_prep_requests_user_id_fkey",
+          "constraint_type": "FOREIGN KEY",
+          "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+        }
+      ],
+      "indexes": [
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "index_name": "brobot_anki_prep_requests_pkey",
+          "definition": "CREATE UNIQUE INDEX brobot_anki_prep_requests_pkey ON public.brobot_anki_prep_requests USING btree (id)"
+        }
+      ],
+      "triggers": [],
+      "rls": {
+        "table_name": "brobot_anki_prep_requests",
+        "rls_enabled": true,
+        "rls_forced": false
+      },
+      "policies": [],
+      "grants": [
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "anon",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "anon",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "anon",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "anon",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "anon",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "anon",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "anon",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "authenticated",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "authenticated",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "authenticated",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "authenticated",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "authenticated",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "authenticated",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "authenticated",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "postgres",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "postgres",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "postgres",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "postgres",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "postgres",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "postgres",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "postgres",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "service_role",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "service_role",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "service_role",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "service_role",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "service_role",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "service_role",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_prep_requests",
+          "grantee": "service_role",
+          "privilege_type": "UPDATE"
+        }
+      ]
+    },
+    "brobot_anki_study_sessions": {
+      "columns": [
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "normalized_type": "uuid"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "column_name": "user_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "normalized_type": "uuid"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "column_name": "prep_request_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "normalized_type": "uuid"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "column_name": "addon_device_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "uuid"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "column_name": "session_title",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "column_name": "applied_base_tag",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'SnapOrtho::Tonight'::text",
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "column_name": "applied_case_tag",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "column_name": "applied_request_tag",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "column_name": "matching_strategy",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'local_keyword'::text",
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "column_name": "total_cards_found",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": "0",
+          "normalized_type": "integer"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "column_name": "total_cards_tagged",
+          "data_type": "integer",
+          "udt_name": "int4",
+          "is_nullable": "NO",
+          "column_default": "0",
+          "normalized_type": "integer"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "NO",
+          "column_default": "'created'::text",
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "normalized_type": "timestamp with time zone"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "normalized_type": "timestamp with time zone"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "constraint_name": "brobot_anki_study_sessions_addon_device_id_fkey",
+          "constraint_type": "FOREIGN KEY",
+          "definition": "FOREIGN KEY (addon_device_id) REFERENCES brobot_anki_addon_devices(id) ON DELETE SET NULL"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "constraint_name": "brobot_anki_study_sessions_matching_strategy_check",
+          "constraint_type": "CHECK",
+          "definition": "CHECK (matching_strategy = ANY (ARRAY['local_keyword'::text, 'local_tag'::text, 'local_hybrid'::text]))"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "constraint_name": "brobot_anki_study_sessions_pkey",
+          "constraint_type": "PRIMARY KEY",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "constraint_name": "brobot_anki_study_sessions_prep_request_id_fkey",
+          "constraint_type": "FOREIGN KEY",
+          "definition": "FOREIGN KEY (prep_request_id) REFERENCES brobot_anki_prep_requests(id) ON DELETE CASCADE"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "constraint_name": "brobot_anki_study_sessions_status_check",
+          "constraint_type": "CHECK",
+          "definition": "CHECK (status = ANY (ARRAY['created'::text, 'tagged'::text, 'completed'::text, 'failed'::text]))"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "constraint_name": "brobot_anki_study_sessions_user_id_fkey",
+          "constraint_type": "FOREIGN KEY",
+          "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+        }
+      ],
+      "indexes": [
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "index_name": "brobot_anki_study_sessions_pkey",
+          "definition": "CREATE UNIQUE INDEX brobot_anki_study_sessions_pkey ON public.brobot_anki_study_sessions USING btree (id)"
+        }
+      ],
+      "triggers": [],
+      "rls": {
+        "table_name": "brobot_anki_study_sessions",
+        "rls_enabled": true,
+        "rls_forced": false
+      },
+      "policies": [],
+      "grants": [
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "anon",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "anon",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "anon",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "anon",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "anon",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "anon",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "anon",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "authenticated",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "authenticated",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "authenticated",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "authenticated",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "authenticated",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "authenticated",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "authenticated",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "postgres",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "postgres",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "postgres",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "postgres",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "postgres",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "postgres",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "postgres",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "service_role",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "service_role",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "service_role",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "service_role",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "service_role",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "service_role",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_study_sessions",
+          "grantee": "service_role",
+          "privilege_type": "UPDATE"
+        }
+      ]
+    },
+    "brobot_anki_session_matches": {
+      "columns": [
+        {
+          "table_name": "brobot_anki_session_matches",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": "gen_random_uuid()",
+          "normalized_type": "uuid"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "column_name": "user_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "normalized_type": "uuid"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "column_name": "session_id",
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "is_nullable": "NO",
+          "column_default": null,
+          "normalized_type": "uuid"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "column_name": "raw_anki_card_id",
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "bigint"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "column_name": "raw_anki_note_id",
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "bigint"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "column_name": "deck_name",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "column_name": "card_preview",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "column_name": "match_score",
+          "data_type": "numeric",
+          "udt_name": "numeric",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "numeric"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "column_name": "matched_keywords",
+          "data_type": "ARRAY",
+          "udt_name": "_text",
+          "is_nullable": "NO",
+          "column_default": "'{}'::text[]",
+          "normalized_type": "text[]"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "column_name": "match_reason",
+          "data_type": "text",
+          "udt_name": "text",
+          "is_nullable": "YES",
+          "column_default": null,
+          "normalized_type": "text"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "column_name": "included",
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "is_nullable": "NO",
+          "column_default": "true",
+          "normalized_type": "boolean"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "is_nullable": "NO",
+          "column_default": "now()",
+          "normalized_type": "timestamp with time zone"
+        }
+      ],
+      "constraints": [
+        {
+          "table_name": "brobot_anki_session_matches",
+          "constraint_name": "brobot_anki_session_matches_pkey",
+          "constraint_type": "PRIMARY KEY",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "constraint_name": "brobot_anki_session_matches_session_id_fkey",
+          "constraint_type": "FOREIGN KEY",
+          "definition": "FOREIGN KEY (session_id) REFERENCES brobot_anki_study_sessions(id) ON DELETE CASCADE"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "constraint_name": "brobot_anki_session_matches_user_id_fkey",
+          "constraint_type": "FOREIGN KEY",
+          "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+        }
+      ],
+      "indexes": [
+        {
+          "table_name": "brobot_anki_session_matches",
+          "index_name": "brobot_anki_session_matches_pkey",
+          "definition": "CREATE UNIQUE INDEX brobot_anki_session_matches_pkey ON public.brobot_anki_session_matches USING btree (id)"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "index_name": "idx_brobot_anki_session_matches_session",
+          "definition": "CREATE INDEX idx_brobot_anki_session_matches_session ON public.brobot_anki_session_matches USING btree (session_id)"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "index_name": "idx_brobot_anki_session_matches_user",
+          "definition": "CREATE INDEX idx_brobot_anki_session_matches_user ON public.brobot_anki_session_matches USING btree (user_id)"
+        }
+      ],
+      "triggers": [],
+      "rls": {
+        "table_name": "brobot_anki_session_matches",
+        "rls_enabled": true,
+        "rls_forced": false
+      },
+      "policies": [],
+      "grants": [
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "anon",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "anon",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "anon",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "anon",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "anon",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "anon",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "anon",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "authenticated",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "authenticated",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "authenticated",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "authenticated",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "authenticated",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "authenticated",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "authenticated",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "postgres",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "postgres",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "postgres",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "postgres",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "postgres",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "postgres",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "postgres",
+          "privilege_type": "UPDATE"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "service_role",
+          "privilege_type": "DELETE"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "service_role",
+          "privilege_type": "INSERT"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "service_role",
+          "privilege_type": "REFERENCES"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "service_role",
+          "privilege_type": "SELECT"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "service_role",
+          "privilege_type": "TRIGGER"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "service_role",
+          "privilege_type": "TRUNCATE"
+        },
+        {
+          "table_name": "brobot_anki_session_matches",
+          "grantee": "service_role",
+          "privilege_type": "UPDATE"
+        }
+      ]
+    }
+  }
+}

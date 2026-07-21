@@ -44,9 +44,9 @@ exports.OrthobulletsPageContextSchema = zod_1.z.object({
     breadcrumbs: zod_1.z.array(zod_1.z.string().trim().min(1).max(200)).max(12).default([]),
     authors: zod_1.z.array(zod_1.z.string().trim().min(1).max(200)).max(12).default([]).optional(),
     date: zod_1.z.string().trim().min(1).max(120).nullable().optional(),
-    sectionHeadings: zod_1.z.array(zod_1.z.string().trim().min(1).max(240)).max(40).default([]).optional(),
-    contentText: zod_1.z.string().trim().min(1).max(16000).nullable().optional(),
-    contentMarkdown: zod_1.z.string().trim().min(1).max(16000).nullable().optional(),
+    sectionHeadings: zod_1.z.array(zod_1.z.string().trim().min(1).max(240)).max(120).default([]).optional(),
+    contentText: zod_1.z.string().trim().min(1).max(240000).nullable().optional(),
+    contentMarkdown: zod_1.z.string().trim().min(1).max(240000).nullable().optional(),
     references: zod_1.z.array(zod_1.z.string().trim().min(1).max(1200)).max(40).default([]).optional(),
     referencesCount: zod_1.z.number().int().min(0).max(100).optional(),
     tablesCount: zod_1.z.number().int().min(0).max(50).optional(),
@@ -55,8 +55,8 @@ exports.OrthobulletsPageContextSchema = zod_1.z.object({
     videoCount: zod_1.z.number().int().min(0).max(9999).optional(),
     contentSections: zod_1.z.array(zod_1.z.object({
         heading: zod_1.z.string().trim().min(1).max(240),
-        text: zod_1.z.string().trim().min(1).max(4000),
-    })).max(24).default([]).optional(),
+        text: zod_1.z.string().trim().min(1).max(20000),
+    })).max(120).default([]).optional(),
     learningObjectives: zod_1.z.array(zod_1.z.string().trim().min(1).max(400)).max(20).default([]).optional(),
     tablesMarkdown: zod_1.z.array(zod_1.z.string().trim().min(1).max(2000)).max(8).default([]).optional(),
     stem: zod_1.z.string().trim().min(1).max(12000).optional(),
@@ -136,9 +136,10 @@ const CurriculumSectionSchema = zod_1.z.object({
     id: zod_1.z.string().trim().min(1).max(120).optional(),
     heading: zod_1.z.string().trim().min(1).max(240).optional(),
     level: zod_1.z.number().int().min(1).max(6).optional(),
-    text: zod_1.z.string().trim().min(1).max(5000),
+    text: zod_1.z.string().trim().min(1).max(20000),
 });
 exports.CurriculumExplainRequestSchema = zod_1.z.object({
+    contractVersion: zod_1.z.literal('curriculum-explain-v2').default('curriculum-explain-v2'),
     task: zod_1.z.literal('curriculum_explain'),
     provider: zod_1.z.enum(['orthobullets', 'rock']),
     sourceUrl: zod_1.z.string().trim().url(),
@@ -147,7 +148,7 @@ exports.CurriculumExplainRequestSchema = zod_1.z.object({
     curriculum: zod_1.z.object({
         title: zod_1.z.string().trim().min(1).max(300),
         breadcrumbs: zod_1.z.array(zod_1.z.string().trim().min(1).max(200)).max(12).default([]).optional(),
-        sections: zod_1.z.array(CurriculumSectionSchema).max(30).default([]),
+        sections: zod_1.z.array(CurriculumSectionSchema).max(120).default([]),
         tables: zod_1.z.array(zod_1.z.object({
             caption: zod_1.z.string().trim().min(1).max(240).optional(),
             headers: zod_1.z.array(zod_1.z.string().trim().min(1).max(160)).max(12).optional(),
@@ -160,7 +161,7 @@ exports.CurriculumExplainRequestSchema = zod_1.z.object({
         })).max(20).default([]).optional(),
         authors: zod_1.z.array(zod_1.z.string().trim().min(1).max(200)).max(12).default([]).optional(),
         date: zod_1.z.string().trim().min(1).max(120).nullable().optional(),
-        visibleText: zod_1.z.string().trim().min(1).max(18000).optional(),
+        visibleText: zod_1.z.string().trim().min(1).max(240000).optional(),
     }),
 }).superRefine((value, ctx) => {
     if (value.pageContext.provider !== value.provider) {
@@ -186,7 +187,7 @@ exports.CurriculumExplainRequestSchema = zod_1.z.object({
             path: ['curriculum', 'sections'],
         });
     }
-    if (JSON.stringify(value).length > 70000) {
+    if (JSON.stringify(value).length > 500000) {
         ctx.addIssue({
             code: 'custom',
             message: 'Curriculum request is too large.',

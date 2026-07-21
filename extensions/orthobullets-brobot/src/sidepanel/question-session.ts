@@ -264,6 +264,14 @@ export class QuestionSessionStore {
     return session;
   }
 
+  clearActiveQuestion(event = 'active_question_cleared') {
+    this.activeFingerprint = null;
+    this.activeQuestionKey = null;
+    this.visibleQuestionIdentity = null;
+    this.visiblePanelMode = 'idle';
+    this.lastEvent = event;
+  }
+
   activateFingerprint(
     fingerprint: string,
     init: {
@@ -461,11 +469,20 @@ export class QuestionSessionStore {
 
     const hintButton = deriveHintButtonState(session, this.visiblePanelMode);
 
+    const isMissedReview = Boolean(
+      session?.payload?.provider === 'himalaya' &&
+      session.payload.pageKind === 'review' &&
+      session.payload.selectedAnswerKey &&
+      session.payload.correctAnswerKey &&
+      session.payload.selectedAnswerKey !== session.payload.correctAnswerKey
+    );
     const explainButtonLabel = !session
       ? 'Explain with BroBot'
       : session.explanationStatus === 'prefetching'
         ? 'Preparing explanation...'
-        : 'Explain with BroBot';
+        : isMissedReview
+          ? 'Explain why I missed this'
+          : 'Explain with BroBot';
 
     return {
       fingerprintAligned,

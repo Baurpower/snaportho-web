@@ -7,6 +7,7 @@ import {
   parseJsonBody,
   requireAuthenticatedUser,
 } from "../_lib";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 const prepRequestSchema = z.object({
   title: z.string().trim().min(1, "Title is required."),
@@ -35,7 +36,8 @@ export async function POST(request: Request) {
       return parsed.response;
     }
 
-    const { supabase, user } = auth;
+    const { user } = auth;
+    const supabase = createAdminClient();
     const body = parsed.data;
 
     const insertPayload = {

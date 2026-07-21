@@ -10,6 +10,7 @@ export type BroBotQuestionPayload = {
 };
 
 export type BroBotCurriculumPayload = {
+  contractVersion: 'curriculum-explain-v2';
   task: 'curriculum_explain';
   provider: 'orthobullets' | 'rock';
   sourceUrl: string;
@@ -41,8 +42,32 @@ export type BroBotCurriculumPayload = {
 
 export type BroBotExtensionRequest = BroBotQuestionPayload | BroBotCurriculumPayload;
 
-const CURRICULUM_SECTION_TEXT_LIMIT = 14000;
-const CURRICULUM_SINGLE_SECTION_TEXT_LIMIT = 4800;
+const CURRICULUM_PAGE_TEXT_LIMIT = 240000;
+const CURRICULUM_SINGLE_SECTION_TEXT_LIMIT = 20000;
+export const CURRICULUM_EXPLAIN_CONTRACT_VERSION = 'curriculum-explain-v2' as const;
+
+export function validateCurriculumExplainRequest(payload: BroBotCurriculumPayload) {
+  const issues: Array<{ path: string; code: string; message: string }> = [];
+  const add = (path: string, code: string, message: string) => issues.push({ path, code, message });
+  if (payload.contractVersion !== CURRICULUM_EXPLAIN_CONTRACT_VERSION) add('contractVersion', 'unsupported_contract_version', 'Unsupported curriculum contract version.');
+  if (payload.task !== 'curriculum_explain') add('task', 'wrong_task', 'Expected curriculum_explain.');
+  if (!['rock', 'orthobullets'].includes(payload.provider)) add('provider', 'unsupported_provider', 'Unsupported curriculum provider.');
+  try { new URL(payload.sourceUrl); } catch { add('sourceUrl', 'invalid_source_url', 'Expected a valid source URL.'); }
+  if (payload.pageContext.mode !== 'curriculum_content') add('pageContext.mode', 'unsupported_page_kind', 'Expected curriculum_content mode.');
+  if (!payload.curriculum.title.trim()) add('curriculum.title', 'missing_title', 'A page title is required.');
+  if (!payload.curriculum.sections.length && !payload.curriculum.visibleText?.trim()) add('curriculum.sections', 'missing_sections', 'At least one readable section is required.');
+  if (payload.curriculum.sections.length > 120) add('curriculum.sections', 'too_many_sections', 'At most 120 sections are accepted.');
+  const ids = new Set<string>();
+  payload.curriculum.sections.forEach((section, index) => {
+    if (section.text.length > CURRICULUM_SINGLE_SECTION_TEXT_LIMIT) add(`curriculum.sections.${index}.text`, 'section_too_large', 'Section exceeds 20,000 characters.');
+    if (section.id && ids.has(section.id)) add(`curriculum.sections.${index}.id`, 'duplicate_section_id', 'Section IDs must be unique.');
+    if (section.id) ids.add(section.id);
+  });
+  const totalCharacters = payload.curriculum.sections.reduce((sum, section) => sum + section.text.length, 0);
+  if (totalCharacters > CURRICULUM_PAGE_TEXT_LIMIT) add('curriculum.sections', 'document_too_large', 'Document exceeds 240,000 characters.');
+  if (JSON.stringify(payload).length > 500000) add('', 'request_too_large', 'Serialized request exceeds 500,000 characters.');
+  return { success: issues.length === 0, issues };
+}
 
 function assertNever(value: never): never {
   throw new Error(`Unhandled BroBot task: ${String(value)}`);
@@ -77,46 +102,6 @@ function dedupeSections(
   });
 }
 
-function selectSectionsAcrossPage(
-  sections: Array<{ id: string; heading: string; level: number; text: string }>
-) {
-  const total = sections.reduce((sum, section) => sum + section.text.length, 0);
-  if (total <= CURRICULUM_SECTION_TEXT_LIMIT) {
-    return { sections, wasTruncated: false, omittedSectionCount: 0 };
-  }
-
-  const selected: typeof sections = [];
-  const selectedIndexes = new Set<number>();
-  const anchorIndexes = [0, sections.length - 1, Math.floor(sections.length / 2)].filter(
-    (index) => index >= 0 && index < sections.length
-  );
-  for (const index of anchorIndexes) {
-    selectedIndexes.add(index);
-  }
-  const stride = Math.max(1, Math.floor(sections.length / 8));
-  for (let index = 0; index < sections.length; index += stride) {
-    selectedIndexes.add(index);
-  }
-
-  let used = 0;
-  for (const index of [...selectedIndexes].sort((a, b) => a - b)) {
-    const section = sections[index];
-    if (!section) continue;
-    const remaining = CURRICULUM_SECTION_TEXT_LIMIT - used;
-    if (remaining <= 0) break;
-    const text = section.text.length > remaining ? section.text.slice(0, Math.max(0, remaining - 120)).trim() : section.text;
-    if (!text) continue;
-    selected.push({ ...section, text });
-    used += text.length;
-  }
-
-  return {
-    sections: selected,
-    wasTruncated: true,
-    omittedSectionCount: Math.max(0, sections.length - selected.length),
-  };
-}
-
 export function buildCurriculumExplainRequest(pageContext: OrthobulletsPageContext): BroBotCurriculumPayload {
   const rawSections = (pageContext.contentSections ?? [])
     .map((section, index) => ({
@@ -129,31 +114,30 @@ export function buildCurriculumExplainRequest(pageContext: OrthobulletsPageConte
 
   const fallbackText = normalizeText(pageContext.contentText ?? pageContext.contentMarkdown);
   const dedupedSections = dedupeSections(rawSections);
-  const selected = selectSectionsAcrossPage(dedupedSections);
-  const curriculumSections = selected.sections.length
-    ? selected.sections
+  const curriculumSections = dedupedSections.length
+    ? dedupedSections
     : fallbackText
       ? [{
           id: 'visible-text',
           heading: normalizeText(pageContext.title) || 'Visible content',
           level: 1,
-          text: fallbackText.slice(0, CURRICULUM_SECTION_TEXT_LIMIT),
+          text: fallbackText.slice(0, CURRICULUM_PAGE_TEXT_LIMIT),
         }]
       : [];
   const providerSpecific = {
     ...(pageContext.raw?.providerSpecific ?? {}),
-    wasTruncated: selected.wasTruncated || fallbackText.length > CURRICULUM_SECTION_TEXT_LIMIT,
-    omittedSectionCount: selected.omittedSectionCount,
+    wasTruncated: fallbackText.length > CURRICULUM_PAGE_TEXT_LIMIT,
+    omittedSectionCount: 0,
     originalSectionCount: rawSections.length,
     preparedSectionCount: curriculumSections.length,
   };
   const preparedPageContext: OrthobulletsPageContext = {
     ...pageContext,
-    contentSections: curriculumSections.map((section) => ({
-      heading: section.heading || 'Visible content',
-      text: section.text,
-    })),
-    contentText: curriculumSections.map((section) => `${section.heading}\n${section.text}`).join('\n\n') || fallbackText.slice(0, CURRICULUM_SECTION_TEXT_LIMIT),
+    // The structured curriculum below is the source of truth. Do not duplicate
+    // a long copyrighted page several times in the transport payload.
+    contentSections: [],
+    contentText: null,
+    contentMarkdown: null,
     raw: {
       ...(pageContext.raw ?? {}),
       providerSpecific,
@@ -161,6 +145,7 @@ export function buildCurriculumExplainRequest(pageContext: OrthobulletsPageConte
   };
 
   return {
+    contractVersion: CURRICULUM_EXPLAIN_CONTRACT_VERSION,
     task: 'curriculum_explain',
     provider: pageContext.provider === 'rock' ? 'rock' : 'orthobullets',
     sourceUrl: pageContext.sourceUrl ?? pageContext.pageUrl,
@@ -180,7 +165,7 @@ export function buildCurriculumExplainRequest(pageContext: OrthobulletsPageConte
       })),
       authors: pageContext.authors?.map(normalizeText).filter(Boolean),
       date: pageContext.date ?? null,
-      visibleText: preparedPageContext.contentText || undefined,
+      visibleText: curriculumSections.length ? undefined : fallbackText.slice(0, CURRICULUM_PAGE_TEXT_LIMIT) || undefined,
     },
   };
 }

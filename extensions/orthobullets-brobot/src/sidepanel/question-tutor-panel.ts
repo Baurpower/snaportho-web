@@ -82,7 +82,17 @@ export function appendQuestionTutorPanel(
   }
 
   if (view.showExplainCta) {
+    const reviewPosition = view.session?.payload?.provider === 'himalaya' && view.session.payload.pageKind === 'review'
+      ? view.session.questionPositionLabel?.match(/question\s+\d+\s+of\s+\d+/i)?.[0]
+        ?? (view.session.questionNumber && view.session.totalQuestions
+          ? `Question ${view.session.questionNumber} of ${view.session.totalQuestions}`
+          : 'Question')
+      : null;
+    const reviewHeading = reviewPosition
+      ? `Review ${reviewPosition.replace(/^Question\s+/i, 'Question ')}`
+      : null;
     const explainCard = createElement(`<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:10px;">
+      ${reviewHeading ? `<p style="margin:0;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#0f766e;font-weight:700;">${escapeHtml(reviewHeading)}</p>` : ''}
       <p style="margin:0;color:#5c6574;line-height:1.45;">Active page: ${escapeHtml(input.activePageTitle ?? input.activePageUrl ?? providerLabel(input.provider))}</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button id="qt-explain" ${isBusy ? 'disabled' : ''} style="border:none;border-radius:999px;background:${isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">${escapeHtml(view.explainButtonLabel)}</button>

@@ -4,6 +4,10 @@ export const HIMALAYA_OBSERVER_ATTRIBUTE_FILTER = [
   'aria-hidden',
   'aria-checked',
   'aria-selected',
+  'aria-expanded',
+  'data-correct',
+  'data-selected',
+  'data-state',
   'disabled',
 ] as const;
 

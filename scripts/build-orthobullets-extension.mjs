@@ -203,16 +203,16 @@ const generatedSidepanelSource = [
 ].join('\n');
 
 const requiredGeneratedNeedles = [
-  ['background service worker', generatedBackgroundSource, '2026-07-12-rock-curriculum-routing-v3'],
+  ['background service worker', generatedBackgroundSource, '2026-07-19-rock-curriculum-contract-v2'],
   ['background service worker', generatedBackgroundSource, 'brobot:request'],
   ['background service worker', generatedBackgroundSource, 'endpoint_resolution'],
   ['background service worker', generatedBackgroundSource, 'Routing invariant violated'],
   ['routing helper', generatedRoutingSource, 'curriculum_explain'],
   ['routing helper', generatedRoutingSource, '/api/brobot/curriculum/explain'],
-  ['build info', generatedBuildInfoSource, '2026-07-12-rock-curriculum-routing-v3'],
-  ['build info', generatedBuildInfoSource, 'curriculum-task-routing-v1'],
+  ['build info', generatedBuildInfoSource, '2026-07-19-rock-curriculum-contract-v2'],
+  ['build info', generatedBuildInfoSource, 'curriculum-explain-v2'],
   ['sidepanel entry', generatedSidepanelSource, 'brobot:request'],
-  ['sidepanel entry', generatedSidepanelSource, '2026-07-12-rock-curriculum-routing-v3'],
+  ['sidepanel entry', generatedSidepanelSource, '2026-07-19-rock-curriculum-contract-v2'],
 ];
 
 for (const [label, source, needle] of requiredGeneratedNeedles) {

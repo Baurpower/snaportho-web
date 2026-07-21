@@ -1,0 +1,255 @@
+{
+  "pimpQuestions": [
+    "Q: What commonly associated injury, if missed, may compromise ACL reconstruction? A: Posterolateral corner injury",
+    "Q: What landmarks may be used for placement of the tibial tunnel during ACL reconstruction? A: 1 cm anterior to the PCL, Slightly anterior to the medial tibial eminence, In line with the posterior border of the anterior horn of the lateral meniscus",
+    "Q: What is the most common cause of ACL reconstruction failure? A: Tunnel malpositioning",
+    "Q: What complication occurs if the femoral tunnel is positioned too anteriorly? A: Knee will be tight in flexion and loose in extension",
+    "Q: What complication occurs if the tibial tunnel is positioned too anteriorly? A: Graft impingement in extension",
+    "Q: How is the femoral tunnel most commonly malpositioned during ACL reconstruction? A: Too anterior",
+    "Q: What is a cyclops lesion? A: Localized fibrosis of the native ACL stump following reconstruction",
+    "Q: What is the drawback of using a BTB graft for ACL reconstruction? A: Increased anterior knee pain",
+    "Q: What is the typical pattern of bone bruising seen on MRI following an ACL tear? A: Anterior or middle 1/3 of the lateral femoral condyle, Posterior 1/3 of the lateral tibial plateau",
+    "Q: Where should the femoral tunnel be positioned during ACL reconstruction? A: 9-10 O'clock position, 6-8 mm from posterior cortex",
+    "Q: The knee should be held in what position when tensioning an ACL graft? A: Approximately 20° of flexion with a reverse Lachman motion"
+  ],
+  "otherUsefulFacts": [
+    "The bundles of the ACL are Anteromedial and Posterolateral.",
+    "The anterior drawer primarily tests the Anteromedial bundle of the ACL.",
+    "The pivot shift primarily tests the Posterolateral bundle of the ACL.",
+    "The most specific physical exam test for an ACL rupture is the Pivot shift.",
+    "The two most commonly used grafts for ACL reconstruction are Bone-Patellar Tendon-Bone (BTB) and Quadruple hamstring (Gracilis and Semitendinosus).",
+    "The benefit of using a BTB graft for ACL reconstruction is bone to bone healing."
+  ],
+  "anatomy": {
+    "approachSelection": {
+      "selected": [
+        {
+          "id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+          "confidence": 1,
+          "rationale": "Standard approach for ACL reconstruction providing direct access to the knee joint and ACL."
+        }
+      ],
+      "notes": "Only one anatomically appropriate approach is available in the catalog for ACL reconstruction.",
+      "router": {
+        "case_family": "acl_reconstruction",
+        "selectionMode": "deterministic_router",
+        "allowedApproachIds": [
+          "approach_lower_ext_knee_anterior_medial_parapatellar"
+        ],
+        "blockedApproachIds": [],
+        "routerRationale": ""
+      },
+      "validation": {
+        "valid_selected": [
+          "approach_lower_ext_knee_anterior_medial_parapatellar"
+        ],
+        "removed": [],
+        "confidence_adjustment": "ok",
+        "notes": ""
+      }
+    },
+    "anatomyQuiz": {
+      "questions": [
+        {
+          "approach_id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+          "q": "Which nerve branch is at risk during the medial parapatellar approach to the knee?",
+          "answer": "Infrapatellar branch of the saphenous nerve",
+          "tag": "nerve_at_risk",
+          "difficulty": 2
+        },
+        {
+          "approach_id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+          "q": "Through which muscular interval is the medial parapatellar approach performed?",
+          "answer": "Rectus femoris and vastus medialis interval",
+          "tag": "surgical_interval",
+          "difficulty": 2
+        },
+        {
+          "approach_id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+          "q": "Which retinaculum is incised during the medial parapatellar approach to the knee?",
+          "answer": "Medial patellar retinaculum",
+          "tag": "anatomic_landmark",
+          "difficulty": 2
+        },
+        {
+          "approach_id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+          "q": "Name the bones exposed during the anterior medial parapatellar approach to the knee.",
+          "answer": "Femur, tibia, and patella",
+          "tag": "anatomic_exposure",
+          "difficulty": 1
+        },
+        {
+          "approach_id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+          "q": "What joint is accessed via the medial parapatellar surgical approach?",
+          "answer": "Knee joint",
+          "tag": "joint_access",
+          "difficulty": 1
+        },
+        {
+          "approach_id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+          "q": "The medial parapatellar approach involves incision adjacent to which border of the patella?",
+          "answer": "Medial border of the patella",
+          "tag": "landmark_position",
+          "difficulty": 2
+        },
+        {
+          "approach_id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+          "q": "Which muscles are separated or retracted to gain access in the medial parapatellar approach?",
+          "answer": "Rectus femoris and vastus medialis",
+          "tag": "muscle_retraction",
+          "difficulty": 2
+        },
+        {
+          "approach_id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+          "q": "Is the infrapatellar branch of the saphenous nerve typically spared or at risk during the medial parapatellar approach?",
+          "answer": "At risk",
+          "tag": "clinical_risk",
+          "difficulty": 2
+        }
+      ]
+    },
+    "router": {
+      "case_family": "acl_reconstruction",
+      "selectionMode": "deterministic_router",
+      "allowedApproachIds": [
+        "approach_lower_ext_knee_anterior_medial_parapatellar"
+      ],
+      "blockedApproachIds": [],
+      "routerRationale": ""
+    }
+  },
+  "caseprep_version": "v1",
+  "engine": "legacy_rag_gpt",
+  "procedure_slug": null,
+  "content_status": "legacy",
+  "match_method": "none",
+  "ai_used": [
+    "query_refiner",
+    "snippet_filter",
+    "snippet_reformat",
+    "anatomy_pipeline"
+  ],
+  "rag_used": true,
+  "warnings": [],
+  "payload": {
+    "pimpQuestions": [
+      "Q: What commonly associated injury, if missed, may compromise ACL reconstruction? A: Posterolateral corner injury",
+      "Q: What landmarks may be used for placement of the tibial tunnel during ACL reconstruction? A: 1 cm anterior to the PCL, Slightly anterior to the medial tibial eminence, In line with the posterior border of the anterior horn of the lateral meniscus",
+      "Q: What is the most common cause of ACL reconstruction failure? A: Tunnel malpositioning",
+      "Q: What complication occurs if the femoral tunnel is positioned too anteriorly? A: Knee will be tight in flexion and loose in extension",
+      "Q: What complication occurs if the tibial tunnel is positioned too anteriorly? A: Graft impingement in extension",
+      "Q: How is the femoral tunnel most commonly malpositioned during ACL reconstruction? A: Too anterior",
+      "Q: What is a cyclops lesion? A: Localized fibrosis of the native ACL stump following reconstruction",
+      "Q: What is the drawback of using a BTB graft for ACL reconstruction? A: Increased anterior knee pain",
+      "Q: What is the typical pattern of bone bruising seen on MRI following an ACL tear? A: Anterior or middle 1/3 of the lateral femoral condyle, Posterior 1/3 of the lateral tibial plateau",
+      "Q: Where should the femoral tunnel be positioned during ACL reconstruction? A: 9-10 O'clock position, 6-8 mm from posterior cortex",
+      "Q: The knee should be held in what position when tensioning an ACL graft? A: Approximately 20° of flexion with a reverse Lachman motion"
+    ],
+    "otherUsefulFacts": [
+      "The bundles of the ACL are Anteromedial and Posterolateral.",
+      "The anterior drawer primarily tests the Anteromedial bundle of the ACL.",
+      "The pivot shift primarily tests the Posterolateral bundle of the ACL.",
+      "The most specific physical exam test for an ACL rupture is the Pivot shift.",
+      "The two most commonly used grafts for ACL reconstruction are Bone-Patellar Tendon-Bone (BTB) and Quadruple hamstring (Gracilis and Semitendinosus).",
+      "The benefit of using a BTB graft for ACL reconstruction is bone to bone healing."
+    ],
+    "anatomy": {
+      "approachSelection": {
+        "selected": [
+          {
+            "id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+            "confidence": 1,
+            "rationale": "Standard approach for ACL reconstruction providing direct access to the knee joint and ACL."
+          }
+        ],
+        "notes": "Only one anatomically appropriate approach is available in the catalog for ACL reconstruction.",
+        "router": {
+          "case_family": "acl_reconstruction",
+          "selectionMode": "deterministic_router",
+          "allowedApproachIds": [
+            "approach_lower_ext_knee_anterior_medial_parapatellar"
+          ],
+          "blockedApproachIds": [],
+          "routerRationale": ""
+        },
+        "validation": {
+          "valid_selected": [
+            "approach_lower_ext_knee_anterior_medial_parapatellar"
+          ],
+          "removed": [],
+          "confidence_adjustment": "ok",
+          "notes": ""
+        }
+      },
+      "anatomyQuiz": {
+        "questions": [
+          {
+            "approach_id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+            "q": "Which nerve branch is at risk during the medial parapatellar approach to the knee?",
+            "answer": "Infrapatellar branch of the saphenous nerve",
+            "tag": "nerve_at_risk",
+            "difficulty": 2
+          },
+          {
+            "approach_id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+            "q": "Through which muscular interval is the medial parapatellar approach performed?",
+            "answer": "Rectus femoris and vastus medialis interval",
+            "tag": "surgical_interval",
+            "difficulty": 2
+          },
+          {
+            "approach_id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+            "q": "Which retinaculum is incised during the medial parapatellar approach to the knee?",
+            "answer": "Medial patellar retinaculum",
+            "tag": "anatomic_landmark",
+            "difficulty": 2
+          },
+          {
+            "approach_id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+            "q": "Name the bones exposed during the anterior medial parapatellar approach to the knee.",
+            "answer": "Femur, tibia, and patella",
+            "tag": "anatomic_exposure",
+            "difficulty": 1
+          },
+          {
+            "approach_id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+            "q": "What joint is accessed via the medial parapatellar surgical approach?",
+            "answer": "Knee joint",
+            "tag": "joint_access",
+            "difficulty": 1
+          },
+          {
+            "approach_id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+            "q": "The medial parapatellar approach involves incision adjacent to which border of the patella?",
+            "answer": "Medial border of the patella",
+            "tag": "landmark_position",
+            "difficulty": 2
+          },
+          {
+            "approach_id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+            "q": "Which muscles are separated or retracted to gain access in the medial parapatellar approach?",
+            "answer": "Rectus femoris and vastus medialis",
+            "tag": "muscle_retraction",
+            "difficulty": 2
+          },
+          {
+            "approach_id": "approach_lower_ext_knee_anterior_medial_parapatellar",
+            "q": "Is the infrapatellar branch of the saphenous nerve typically spared or at risk during the medial parapatellar approach?",
+            "answer": "At risk",
+            "tag": "clinical_risk",
+            "difficulty": 2
+          }
+        ]
+      },
+      "router": {
+        "case_family": "acl_reconstruction",
+        "selectionMode": "deterministic_router",
+        "allowedApproachIds": [
+          "approach_lower_ext_knee_anterior_medial_parapatellar"
+        ],
+        "blockedApproachIds": [],
+        "routerRationale": ""
+      }
+    }
+  }
+}

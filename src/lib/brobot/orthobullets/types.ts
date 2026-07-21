@@ -51,9 +51,9 @@ export const OrthobulletsPageContextSchema = z.object({
   breadcrumbs: z.array(z.string().trim().min(1).max(200)).max(12).default([]),
   authors: z.array(z.string().trim().min(1).max(200)).max(12).default([]).optional(),
   date: z.string().trim().min(1).max(120).nullable().optional(),
-  sectionHeadings: z.array(z.string().trim().min(1).max(240)).max(40).default([]).optional(),
-  contentText: z.string().trim().min(1).max(16000).nullable().optional(),
-  contentMarkdown: z.string().trim().min(1).max(16000).nullable().optional(),
+  sectionHeadings: z.array(z.string().trim().min(1).max(240)).max(120).default([]).optional(),
+  contentText: z.string().trim().min(1).max(240000).nullable().optional(),
+  contentMarkdown: z.string().trim().min(1).max(240000).nullable().optional(),
   references: z.array(z.string().trim().min(1).max(1200)).max(40).default([]).optional(),
   referencesCount: z.number().int().min(0).max(100).optional(),
   tablesCount: z.number().int().min(0).max(50).optional(),
@@ -62,8 +62,8 @@ export const OrthobulletsPageContextSchema = z.object({
   videoCount: z.number().int().min(0).max(9999).optional(),
   contentSections: z.array(z.object({
     heading: z.string().trim().min(1).max(240),
-    text: z.string().trim().min(1).max(4000),
-  })).max(24).default([]).optional(),
+    text: z.string().trim().min(1).max(20000),
+  })).max(120).default([]).optional(),
   learningObjectives: z.array(z.string().trim().min(1).max(400)).max(20).default([]).optional(),
   tablesMarkdown: z.array(z.string().trim().min(1).max(2000)).max(8).default([]).optional(),
   stem: z.string().trim().min(1).max(12000).optional(),
@@ -147,10 +147,11 @@ const CurriculumSectionSchema = z.object({
   id: z.string().trim().min(1).max(120).optional(),
   heading: z.string().trim().min(1).max(240).optional(),
   level: z.number().int().min(1).max(6).optional(),
-  text: z.string().trim().min(1).max(5000),
+  text: z.string().trim().min(1).max(20000),
 });
 
 export const CurriculumExplainRequestSchema = z.object({
+  contractVersion: z.literal('curriculum-explain-v2').default('curriculum-explain-v2'),
   task: z.literal('curriculum_explain'),
   provider: z.enum(['orthobullets', 'rock']),
   sourceUrl: z.string().trim().url(),
@@ -159,7 +160,7 @@ export const CurriculumExplainRequestSchema = z.object({
   curriculum: z.object({
     title: z.string().trim().min(1).max(300),
     breadcrumbs: z.array(z.string().trim().min(1).max(200)).max(12).default([]).optional(),
-    sections: z.array(CurriculumSectionSchema).max(30).default([]),
+    sections: z.array(CurriculumSectionSchema).max(120).default([]),
     tables: z.array(z.object({
       caption: z.string().trim().min(1).max(240).optional(),
       headers: z.array(z.string().trim().min(1).max(160)).max(12).optional(),
@@ -172,7 +173,7 @@ export const CurriculumExplainRequestSchema = z.object({
     })).max(20).default([]).optional(),
     authors: z.array(z.string().trim().min(1).max(200)).max(12).default([]).optional(),
     date: z.string().trim().min(1).max(120).nullable().optional(),
-    visibleText: z.string().trim().min(1).max(18000).optional(),
+    visibleText: z.string().trim().min(1).max(240000).optional(),
   }),
 }).superRefine((value, ctx) => {
   if (value.pageContext.provider !== value.provider) {
@@ -198,7 +199,7 @@ export const CurriculumExplainRequestSchema = z.object({
       path: ['curriculum', 'sections'],
     });
   }
-  if (JSON.stringify(value).length > 70000) {
+  if (JSON.stringify(value).length > 500000) {
     ctx.addIssue({
       code: 'custom',
       message: 'Curriculum request is too large.',

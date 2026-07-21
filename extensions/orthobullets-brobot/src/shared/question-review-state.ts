@@ -420,7 +420,9 @@ export function buildReviewStateKey(context: OrthobulletsPageContext): string {
     String(signals?.reviewScore ?? 0),
     String(signals?.unansweredScore ?? 0),
     signals?.visiblePreferredResponseActive ? '1' : '0',
-    String(Math.min(3, Math.ceil((signals?.visibleExplanationTextLength ?? 0) / 100))),
+    // Exact normalized teaching-text length lets AJAX-loaded discussion and
+    // "Show More" expansion refresh without changing the question identity.
+    String(signals?.visibleExplanationTextLength ?? 0),
     String(signals?.visibleDistributionRows ?? 0),
     signals?.visibleSelectedAnswerReviewClass ? '1' : '0',
     signals?.visibleCorrectAnswerReviewClass ? '1' : '0',

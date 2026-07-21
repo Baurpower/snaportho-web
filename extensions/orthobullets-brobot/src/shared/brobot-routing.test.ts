@@ -5,6 +5,7 @@ import {
   buildQuestionExplainRequest,
   buildQuestionHintRequest,
   resolveBroBotEndpoint,
+  validateCurriculumExplainRequest,
 } from './brobot-routing.js';
 import type { OrthobulletsPageContext } from './types.js';
 
@@ -106,8 +107,25 @@ const hugeContext: OrthobulletsPageContext = {
   })),
 };
 const hugeRequest = buildCurriculumExplainRequest(hugeContext);
-assert.equal(hugeRequest.pageContext.raw?.providerSpecific?.wasTruncated, true);
-assert.ok(Number(hugeRequest.pageContext.raw?.providerSpecific?.omittedSectionCount ?? 0) > 0);
-assert.ok(hugeRequest.curriculum.sections.length > 2, 'large pages should retain sections across the page');
+assert.equal(hugeRequest.pageContext.raw?.providerSpecific?.wasTruncated, false);
+assert.equal(hugeRequest.pageContext.raw?.providerSpecific?.omittedSectionCount, 0);
+assert.equal(hugeRequest.curriculum.sections.length, 40, 'large pages should preserve every structured section');
+assert.equal(hugeRequest.pageContext.contentText, null, 'transport should not duplicate the structured curriculum');
+
+const hipResurfacingContext: OrthobulletsPageContext = {
+  ...rockCurriculumContext,
+  title: 'Alternative Implant Designs: Hip Resurfacing',
+  pageUrl: 'https://rock.aaos.org/courseContent.aspx?ID=6004018&currID=19&currTopID=24742&yearID=',
+  sourceUrl: 'https://rock.aaos.org/courseContent.aspx?ID=6004018&currID=19&currTopID=24742&yearID=',
+  contentSections: Array.from({ length: 28 }, (_, index) => ({
+    heading: `Synthetic hip resurfacing section ${index + 1}`,
+    text: `Synthetic educational sentence for contract testing section ${index + 1}. `.repeat(20),
+  })),
+};
+const hipResurfacingRequest = buildCurriculumExplainRequest(hipResurfacingContext);
+assert.equal(hipResurfacingRequest.contractVersion, 'curriculum-explain-v2');
+assert.equal(hipResurfacingRequest.curriculum.sections.length, 28);
+assert.ok(hipResurfacingRequest.curriculum.sections.reduce((sum, section) => sum + section.text.length, 0) >= 25_000);
+assert.equal(validateCurriculumExplainRequest(hipResurfacingRequest).success, true);
 
 console.log('BroBot endpoint resolver tests passed.');

@@ -176,7 +176,9 @@ async function authenticateWithSupabaseUser(
   return {
     success: true,
     context: {
-      supabase,
+      // Authentication uses the caller's session; operational table access is
+      // service-route-only and every route scopes reads/writes by userId.
+      supabase: createAdminClient(),
       userId: user.id,
       authMethod: bearerToken ? "bearer_token" : "browser_session",
       deviceLinkId: null,

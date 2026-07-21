@@ -18,6 +18,7 @@ type ElementLike = {
   textContent: string | null;
   getAttribute(name: string): string | null;
   closest?(selector: string): ElementLike | null;
+  querySelector?(selector: string): ElementLike | null;
   classList?: { contains(name: string): boolean };
 };
 
@@ -37,7 +38,16 @@ function hashText(value: string) {
 function isIgnorableMutationTarget(target: Node | ElementLike): boolean {
   const element = target as Element;
   if (typeof element.closest !== 'function') return false;
-  if (element.closest('[role="dialog"], [class*="lightbox" i], [class*="modal" i], [class*="zoom" i], [class*="magnify" i]')) {
+  const dialog = element.closest('[role="dialog"], [aria-modal="true"], [class*="modal" i]') as ElementLike | null;
+  if (dialog) {
+    const hasQuestionContent = Boolean(dialog.querySelector?.(
+      '.stem, [class*="stem" i], [class*="question-text" i], [class*="question-content" i], [role="radio"], .answer'
+    ));
+    if (!hasQuestionContent) return true;
+  }
+  // Review dialogs are the primary document on Himalaya results pages. Only
+  // ignore image-only overlays; modal mutations must trigger re-extraction.
+  if (element.closest('[class*="lightbox" i], [class*="zoom" i], [class*="magnify" i]')) {
     return true;
   }
   if (element.closest('[class*="sidebar" i], [class*="side-panel" i], [id*="brobot" i]')) {
@@ -51,6 +61,10 @@ function isIgnorableMutationTarget(target: Node | ElementLike): boolean {
 
 function findQuestionWatchRoot(document: DocumentLike): ElementLike | null {
   const selectors = [
+    '[role="dialog"]',
+    '[aria-modal="true"]',
+    '.modal.show',
+    '[class*="modal-dialog" i]',
     'section.question',
     '.question-page',
     '[data-testid="question-page"]',
@@ -59,6 +73,7 @@ function findQuestionWatchRoot(document: DocumentLike): ElementLike | null {
     '[class*="question-attempt" i]',
     '.question',
     'main',
+    'body',
   ];
   for (const selector of selectors) {
     const node = document.querySelector(selector);

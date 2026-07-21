@@ -162,4 +162,14 @@ store.visiblePanelMode = 'explanation_open';
 const allowed = canRenderExplanationForSession(answeredSession, 'fp-a', 'explanation_open');
 assert.equal(allowed.allowed, true);
 
+const modalStore = new QuestionSessionStore();
+modalStore.activateFingerprint('himalaya:question-1', {
+  url: 'https://learn.aaos.org/diweb/',
+  questionId: '1',
+});
+modalStore.clearActiveQuestion('waiting_for_question_selection');
+assert.equal(modalStore.activeFingerprint, null, 'closing a Himalaya modal must clear the active fingerprint');
+assert.equal(modalStore.getRenderableSession(), null, 'closing a Himalaya modal must not render the prior question');
+assert.equal(modalStore.lastEvent, 'waiting_for_question_selection');
+
 console.log('Question session store tests passed.');

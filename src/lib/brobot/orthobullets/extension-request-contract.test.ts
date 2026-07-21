@@ -55,6 +55,7 @@ const curriculumPageContext: OrthobulletsPageContext = {
 
 assert.equal(
   CurriculumExplainRequestSchema.safeParse({
+    contractVersion: 'curriculum-explain-v2',
     task: 'curriculum_explain',
     provider: 'rock',
     sourceUrl: curriculumPageContext.sourceUrl,
@@ -68,6 +69,35 @@ assert.equal(
   true,
   'valid ROCK curriculum payload should pass without question fields'
 );
+
+const longHipResurfacingPayload = {
+  contractVersion: 'curriculum-explain-v2' as const,
+  task: 'curriculum_explain' as const,
+  provider: 'rock' as const,
+  sourceUrl: 'https://rock.aaos.org/courseContent.aspx?ID=6004018&currID=19&currTopID=24742&yearID=',
+  pageContext: {
+    ...curriculumPageContext,
+    pageUrl: 'https://rock.aaos.org/courseContent.aspx?ID=6004018&currID=19&currTopID=24742&yearID=',
+    sourceUrl: 'https://rock.aaos.org/courseContent.aspx?ID=6004018&currID=19&currTopID=24742&yearID=',
+    title: 'Alternative Implant Designs: Hip Resurfacing',
+    contentText: null,
+    contentMarkdown: null,
+    contentSections: [],
+  },
+  curriculum: {
+    title: 'Alternative Implant Designs: Hip Resurfacing',
+    breadcrumbs: ['Chapters', 'Hip and Knee | Hip'],
+    sections: Array.from({ length: 28 }, (_, index) => ({
+      id: `section-${index + 1}`,
+      heading: `Synthetic hip resurfacing section ${index + 1}`,
+      level: 2,
+      text: `Synthetic educational sentence for contract testing section ${index + 1}. `.repeat(20),
+    })),
+  },
+};
+assert.ok(JSON.stringify(longHipResurfacingPayload).length >= 25_000);
+const parsedLongHipPayload = CurriculumExplainRequestSchema.safeParse(longHipResurfacingPayload);
+assert.equal(parsedLongHipPayload.success, true, parsedLongHipPayload.success ? undefined : JSON.stringify(parsedLongHipPayload.error.issues));
 
 assert.equal(
   CurriculumExplainRequestSchema.safeParse({
