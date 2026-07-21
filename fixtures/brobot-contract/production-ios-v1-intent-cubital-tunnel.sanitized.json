@@ -1,0 +1,30 @@
+{
+  "request": {
+    "message": "What is the incision for cubital tunnel release?",
+    "mode": "auto",
+    "responseDepth": "standard",
+    "trainingLevel": "pgy2"
+  },
+  "productionResponse": {
+    "mode": "or_prep",
+    "subintent": "surgical_approach",
+    "procedureCategory": "soft_tissue_release",
+    "procedureOrTopic": "What is the incision for cubital tunnel release?",
+    "source": "local",
+    "goal": "",
+    "ambiguity": "moderate",
+    "confidence": 0.72,
+    "missingContext": [],
+    "branchOptions": [
+      {
+        "id": "branch-1",
+        "label": "Approach options",
+        "description": "Named approach choices for cubital tunnel release.",
+        "category": "Surgical Approach"
+      }
+    ],
+    "answerImmediately": true,
+    "requiresBranchSelection": false,
+    "reasonForBranching": ""
+  }
+}

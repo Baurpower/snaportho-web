@@ -26,6 +26,7 @@ import {
 } from '@/lib/brobot/guest-session';
 import { BROBOT_INTENT_MODEL } from '@/lib/brobot/model-config';
 import { getOpenAI } from '@/lib/brobot/openai-client';
+import { serializeBroBotIntentForClient } from '@/lib/brobot/chat/ios-v1-contract';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient as createServerSupabaseClient } from '@/utils/supabase/server';
 
@@ -299,7 +300,7 @@ export async function POST(request: Request) {
     });
   }
 
-  return withGuestCookie(NextResponse.json({
+  const responsePayload = {
     mode: intent.mode,
     subintent: intent.subintent,
     procedureCategory: intent.procedureCategory,
@@ -313,5 +314,15 @@ export async function POST(request: Request) {
     answerImmediately: Boolean(intent.answerImmediately),
     requiresBranchSelection: Boolean(intent.requiresBranchSelection),
     reasonForBranching: intent.reasonForBranching ?? '',
-  }), guestCookieToSet);
+  };
+
+  return withGuestCookie(
+    NextResponse.json(
+      serializeBroBotIntentForClient(
+        responsePayload,
+        request.headers.get('x-brobot-chat-version')
+      )
+    ),
+    guestCookieToSet
+  );
 }
