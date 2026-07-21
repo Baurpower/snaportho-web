@@ -89,11 +89,11 @@ import {
   selectBroBotResponseContract,
   encodeBroBotStreamEvent,
   serializeBroBotResponse,
-  shouldStreamBroBotResponse,
   type BroBotChatInternalResult,
   type BroBotResponseContract,
   type BroBotStreamEventName,
 } from '@/lib/brobot/chat/response-contract';
+import { shouldStreamBroBotResponse } from '@/lib/brobot/chat/transport';
 
 const BROBOT_STREAMING_ENABLED = process.env.BROBOT_STREAMING_ENABLED === 'true';
 
@@ -2266,8 +2266,8 @@ async function handleGuestChat(params: {
 
   if (shouldStreamBroBotResponse({
     contract: params.responseContract,
-    requested: Boolean(body.stream),
-    serverEnabled: BROBOT_STREAMING_ENABLED,
+    requestedStream: body.stream,
+    serverStreamingEnabled: BROBOT_STREAMING_ENABLED,
   })) {
     return createGuestStreamingChatResponse({
       request,
@@ -2968,8 +2968,8 @@ export async function POST(request: Request) {
 
     if (shouldStreamBroBotResponse({
       contract: responseContract,
-      requested: Boolean(body.stream),
-      serverEnabled: BROBOT_STREAMING_ENABLED,
+      requestedStream: body.stream,
+      serverStreamingEnabled: BROBOT_STREAMING_ENABLED,
     })) {
       return createStreamingChatResponse({
         request,
