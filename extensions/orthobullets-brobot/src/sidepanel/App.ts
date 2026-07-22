@@ -47,6 +47,7 @@ import {
   EXTENSION_BUILD_ID,
   ROUTING_CONTRACT_VERSION,
   SIDEPANEL_BUNDLE_VERSION,
+  isCompatibleExtensionBuild,
 } from '../shared/build-info.js';
 
 const BROBOT_ICON_URL = chrome.runtime.getURL('icons/brobot-32.png');
@@ -59,8 +60,8 @@ const ERROR_COPY: Record<ExtensionErrorCode, { title: string; canRetry: boolean 
   disabled: { title: 'BroBot Orthobullets explanations are currently unavailable.', canRetry: false },
   invalid_request: { title: 'This page context could not be processed.', canRetry: true },
   invalid_curriculum_request: { title: 'This curriculum page context could not be processed.', canRetry: true },
-  invalid_request_shape: { title: 'The extension and server curriculum formats do not match.', canRetry: false },
-  client_contract_validation_failed: { title: 'BroBot could not prepare this page because the extension and server formats do not match.', canRetry: false },
+  invalid_request_shape: { title: 'The extension and server curriculum formats do not match.', canRetry: true },
+  client_contract_validation_failed: { title: 'BroBot could not prepare this page because the extension and server formats do not match.', canRetry: true },
   extension_update_required: { title: 'BroBot needs an extension update before it can explain this page.', canRetry: false },
   curriculum_content_missing: { title: 'Curriculum content was not readable.', canRetry: true },
   curriculum_content_too_large: { title: 'BroBot will prepare this page section by section.', canRetry: true },
@@ -943,6 +944,26 @@ export function mountSidePanelApp(root: HTMLElement) {
     const requestedTask = state.brobotMode === 'explain_page' || pageContext.mode === 'curriculum_content'
       ? 'curriculum_explain'
       : 'question_explain';
+    if (requestedTask === 'curriculum_explain') {
+      const buildResult = await sendMessage({ type: 'ob:get-build-info' });
+      const actualBuild = buildResult.ok && 'buildInfo' in buildResult ? buildResult.buildInfo : null;
+      if (!actualBuild || !isCompatibleExtensionBuild(actualBuild)) {
+        state.operation = 'idle';
+        state.error = {
+          message: 'BroBot was updated, but Chrome is still running an older background process. Reload the extension, then retry.',
+          code: 'extension_update_required',
+        };
+        state.routingDiagnostics = {
+          extensionBuildId: actualBuild?.extensionBuildId,
+          routingContractVersion: actualBuild?.routingContractVersion,
+          backgroundHandlerVersion: actualBuild?.backgroundHandlerVersion,
+          sidePanelBuildIdMarker: SIDEPANEL_BUILD_ID_MARKER,
+          sidePanelBundleVersion: SIDEPANEL_BUNDLE_VERSION,
+        };
+        render();
+        return;
+      }
+    }
     state.routingDiagnostics = {
       extensionBuildId: EXTENSION_BUILD_ID,
       sidePanelBuildIdMarker: SIDEPANEL_BUILD_ID_MARKER,

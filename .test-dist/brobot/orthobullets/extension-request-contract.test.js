@@ -89,6 +89,20 @@ const longHipResurfacingPayload = {
 strict_1.default.ok(JSON.stringify(longHipResurfacingPayload).length >= 25_000);
 const parsedLongHipPayload = types_1.CurriculumExplainRequestSchema.safeParse(longHipResurfacingPayload);
 strict_1.default.equal(parsedLongHipPayload.success, true, parsedLongHipPayload.success ? undefined : JSON.stringify(parsedLongHipPayload.error.issues));
+const normalizedFailureReproduction = {
+    ...longHipResurfacingPayload,
+    curriculum: {
+        ...longHipResurfacingPayload.curriculum,
+        tables: [
+            { caption: 'Table 1', rows: [['normal']] },
+            { caption: 'Table 2', rows: [['x'.repeat(1000)]] },
+            { caption: 'Table 3', rows: [['normal']] },
+            { caption: 'Table 4', rows: [['🦴'.repeat(500)]] },
+        ],
+    },
+};
+const parsedNormalizedFailureReproduction = types_1.CurriculumExplainRequestSchema.safeParse(normalizedFailureReproduction);
+strict_1.default.equal(parsedNormalizedFailureReproduction.success, true, parsedNormalizedFailureReproduction.success ? undefined : JSON.stringify(parsedNormalizedFailureReproduction.error.issues));
 strict_1.default.equal(types_1.CurriculumExplainRequestSchema.safeParse({
     task: 'curriculum_explain',
     provider: 'rock',

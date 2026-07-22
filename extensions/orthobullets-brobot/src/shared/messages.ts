@@ -17,6 +17,7 @@ import type {
   QuestionProvider,
 } from './types.js';
 import type { BroBotTask } from './brobot-routing.js';
+import type { ExtensionBuildInfo } from './build-info.js';
 
 export type ActivePageState = {
   tabId: number | null;
@@ -69,6 +70,7 @@ export type VisibleQuestionIdentity = {
 };
 
 export type ExtensionMessage =
+  | { type: 'ob:get-build-info' }
   | { type: 'ob:get-active-page-state' }
   | { type: 'ob:get-auth-state' }
   | { type: 'ob:start-link'; deviceName: string }
@@ -130,6 +132,7 @@ export type ExtensionErrorCode =
   | 'unknown';
 
 export type ExtensionMessageResponse =
+  | { ok: true; buildInfo: ExtensionBuildInfo }
   | { ok: true; activePage: ActivePageState }
   | { ok: true; auth: AuthState }
   | { ok: true; link: LinkStartResult }

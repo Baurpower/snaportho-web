@@ -99,6 +99,25 @@ assert.ok(JSON.stringify(longHipResurfacingPayload).length >= 25_000);
 const parsedLongHipPayload = CurriculumExplainRequestSchema.safeParse(longHipResurfacingPayload);
 assert.equal(parsedLongHipPayload.success, true, parsedLongHipPayload.success ? undefined : JSON.stringify(parsedLongHipPayload.error.issues));
 
+const normalizedFailureReproduction = {
+  ...longHipResurfacingPayload,
+  curriculum: {
+    ...longHipResurfacingPayload.curriculum,
+    tables: [
+      { caption: 'Table 1', rows: [['normal']] },
+      { caption: 'Table 2', rows: [['x'.repeat(1000)]] },
+      { caption: 'Table 3', rows: [['normal']] },
+      { caption: 'Table 4', rows: [['🦴'.repeat(500)]] },
+    ],
+  },
+};
+const parsedNormalizedFailureReproduction = CurriculumExplainRequestSchema.safeParse(normalizedFailureReproduction);
+assert.equal(
+  parsedNormalizedFailureReproduction.success,
+  true,
+  parsedNormalizedFailureReproduction.success ? undefined : JSON.stringify(parsedNormalizedFailureReproduction.error.issues)
+);
+
 assert.equal(
   CurriculumExplainRequestSchema.safeParse({
     task: 'curriculum_explain',

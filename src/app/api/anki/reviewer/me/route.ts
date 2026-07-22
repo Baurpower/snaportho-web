@@ -1,0 +1,1 @@
+import{NextResponse}from"next/server";import{reviewerAuth}from"../_lib";export async function GET(request:Request){const a=await reviewerAuth(request);if("response"in a)return a.response;return NextResponse.json({userId:a.ctx.userId,displayName:a.reviewer.display_name,roles:a.ctx.roles,status:a.ctx.reviewerStatus,qualification:a.ctx.qualificationSnapshot});}

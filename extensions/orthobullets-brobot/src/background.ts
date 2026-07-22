@@ -18,6 +18,7 @@ import {
   buildCurriculumExplainRequest,
   buildQuestionExplainRequest,
   buildQuestionHintRequest,
+  type BroBotCurriculumPayload,
   type BroBotTask,
   resolveBroBotEndpoint,
   type BroBotExtensionRequest,
@@ -359,6 +360,18 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage | { type: 'ob:qu
         return;
       }
 
+      if (message.type === 'ob:get-build-info') {
+        sendResponse({
+          ok: true,
+          buildInfo: {
+            extensionBuildId: EXTENSION_BUILD_ID,
+            routingContractVersion: ROUTING_CONTRACT_VERSION,
+            backgroundHandlerVersion: BACKGROUND_HANDLER_VERSION,
+          },
+        });
+        return;
+      }
+
       if (message.type === 'ob:get-auth-state') {
         const deviceToken = await getStoredDeviceToken();
         sendResponse({
@@ -508,7 +521,9 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage | { type: 'ob:qu
                 emphasis: 'emphasis' in message ? message.emphasis : undefined,
               };
         if (requestPayload.task === 'curriculum_explain') {
-          const contract = validateCurriculumExplainRequest(requestPayload);
+          const contract = validateCurriculumExplainRequest(
+            requestBodyObject as BroBotCurriculumPayload & { emphasis?: unknown }
+          );
           if (!contract.success) {
             console.warn('[snaportho-extension] client_contract_validation_failed', {
               contractVersion: requestPayload.contractVersion,

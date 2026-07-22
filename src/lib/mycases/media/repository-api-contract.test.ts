@@ -1,0 +1,35 @@
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+
+const root = new URL("../../../../", import.meta.url);
+const repository = readFileSync(new URL("src/lib/mycases/media/repository.ts", root), "utf8");
+const upload = readFileSync(new URL("src/app/api/mycases/cases/[caseId]/assets/route.ts", root), "utf8");
+const view = readFileSync(new URL("src/app/api/mycases/assets/[assetId]/view/route.ts", root), "utf8");
+const asset = readFileSync(new URL("src/app/api/mycases/assets/[assetId]/route.ts", root), "utf8");
+const types = readFileSync(new URL("src/lib/mycases/media/types.ts", root), "utf8");
+const api = readFileSync(new URL("src/lib/mycases/media/api.ts", root), "utf8");
+
+for (const route of [upload, view, asset]) assert(route.includes("requireMyCasesApiUser"));
+assert(upload.includes('new Set(["file","caption","attestation"])'));
+assert.equal(upload.includes("user_id"), false);
+assert(upload.indexOf("sanitizeEducationalImage") < upload.indexOf("createOwnedAsset(auth.user.id"));
+assert(repository.includes('.eq("id", caseId).eq("user_id", userId)'));
+assert(repository.includes('.eq("id", assetId).eq("user_id", userId)'));
+assert(repository.includes("assertSanitizedImage(image)"));
+assert(repository.includes("assertOwnedObjectKeys(row)"));
+assert(repository.includes("if (uploaded.length) await admin.storage"));
+assert(repository.includes("if (!row) return { deleted:true }"));
+assert(repository.includes("cleanupOwnedMediaBeforePrincipalDeletion"));
+assert(repository.includes("must not delete the case or auth user unless this function completes"));
+assert(repository.includes("MYCASES_MEDIA_SIGNED_URL_SECONDS"));
+assert(repository.includes("createOwnedAssetThumbnailView"));
+assert(view.includes('searchParams.get("thumbnailOnly")==="true"'));
+assert(types.includes("MYCASES_MEDIA_SIGNED_URL_SECONDS = 60"));
+assert(types.includes('Omit<MyCasesEducationalAssetRow, "user_id" | "storage_object_key" | "thumbnail_object_key"'));
+assert.equal(view.includes("storage_object_key"), false);
+assert.equal(asset.includes("storage_object_key"), false);
+assert(asset.includes('key=>key!=="caption"'));
+assert(api.includes("assetId:safeAssetId, code:safe.code, status:safe.status, durationMs"));
+assert.equal(api.includes("caption"), false);
+assert.equal(api.includes("storage_object_key"), false);
+console.log("MyCases educational media repository/API contract tests passed");

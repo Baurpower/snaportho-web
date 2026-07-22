@@ -1,0 +1,6 @@
+import { NextRequest, NextResponse } from "next/server";
+import { createLearningItem, listLearningItems } from "@/lib/mycases/repository";
+import { requireMyCasesApiUser } from "@/lib/mycases/request-user";
+import { parseLearningItemInput } from "@/lib/mycases/validation";
+export async function GET(request: NextRequest) { try { const auth = await requireMyCasesApiUser(); if ("error" in auth) return auth.error; const p = request.nextUrl.searchParams; return NextResponse.json({ items: await listLearningItems(auth.user.id, { kind: p.get("kind") ?? undefined, caseId: p.get("caseId") ?? undefined, query: p.get("q") ?? undefined, includeArchived: p.get("archived") === "true" }) }); } catch { return NextResponse.json({ error: "Unable to load knowledge." }, { status: 500 }); } }
+export async function POST(request: NextRequest) { try { const auth = await requireMyCasesApiUser(); if ("error" in auth) return auth.error; const item = await createLearningItem(auth.user.id, parseLearningItemInput(await request.json()) as Parameters<typeof createLearningItem>[1]); return NextResponse.json({ item }, { status: 201 }); } catch (error) { return NextResponse.json({ error: error instanceof Error ? error.message : "Unable to create learning item." }, { status: 400 }); } }

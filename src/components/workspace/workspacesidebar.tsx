@@ -13,6 +13,7 @@ import {
   PlaneTakeoffIcon,
   GraduationCap,
   BookOpen,
+  BriefcaseMedical,
 } from "lucide-react";
 import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 
@@ -45,6 +46,7 @@ export const PRIMARY_NAV: NavItem[] = [
     icon: GraduationCap,
   },
   { label: "Preferences", mobileLabel: "Prefs", href: "/work/preferences", icon: BookOpen },
+  { label: "MyCases", href: "/work/mycases", icon: BriefcaseMedical },
 ];
 
 export const BOTTOM_NAV: NavItem[] = [

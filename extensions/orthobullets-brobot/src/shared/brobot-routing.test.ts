@@ -4,9 +4,11 @@ import {
   buildCurriculumExplainRequest,
   buildQuestionExplainRequest,
   buildQuestionHintRequest,
+  CURRICULUM_CONTRACT_LIMITS,
   resolveBroBotEndpoint,
   validateCurriculumExplainRequest,
 } from './brobot-routing.js';
+import { EXTENSION_BUILD_ID, ROUTING_CONTRACT_VERSION, isCompatibleExtensionBuild } from './build-info.js';
 import type { OrthobulletsPageContext } from './types.js';
 
 const rockCurriculumContext: OrthobulletsPageContext = {
@@ -127,5 +129,31 @@ assert.equal(hipResurfacingRequest.contractVersion, 'curriculum-explain-v2');
 assert.equal(hipResurfacingRequest.curriculum.sections.length, 28);
 assert.ok(hipResurfacingRequest.curriculum.sections.reduce((sum, section) => sum + section.text.length, 0) >= 25_000);
 assert.equal(validateCurriculumExplainRequest(hipResurfacingRequest).success, true);
+
+const oversizedTablesContext: OrthobulletsPageContext = {
+  ...hipResurfacingContext,
+  tablesMarkdown: [
+    'normal table',
+    `Clinical table ${'long-cell '.repeat(180)}`,
+    'another normal table',
+    `Unicode table ${'🦴'.repeat(1200)}`,
+  ],
+};
+const boundedTablesRequest = buildCurriculumExplainRequest(oversizedTablesContext);
+assert.equal(boundedTablesRequest.curriculum.tables?.length, 4);
+assert.equal((boundedTablesRequest.curriculum.tables?.[1]?.rows[0]?.[0] ?? '').length, CURRICULUM_CONTRACT_LIMITS.tableCell);
+assert.ok((boundedTablesRequest.curriculum.tables?.[3]?.rows[0]?.[0] ?? '').length <= CURRICULUM_CONTRACT_LIMITS.tableCell);
+assert.equal((boundedTablesRequest.curriculum.tables?.[3]?.rows[0]?.[0] ?? '').endsWith('\ud83e'), false, 'Unicode truncation must not split a surrogate pair');
+assert.equal(boundedTablesRequest.pageContext.raw?.providerSpecific?.truncatedTableCellCount, 2);
+assert.equal(validateCurriculumExplainRequest({ ...boundedTablesRequest, emphasis: 'high_yield' }).success, true, 'the exact serialized request must satisfy client validation');
+
+const invalidTablesRequest = structuredClone(boundedTablesRequest);
+invalidTablesRequest.curriculum.tables![1]!.rows[0]![0] = 'x'.repeat(CURRICULUM_CONTRACT_LIMITS.tableCell + 1);
+const invalidResult = validateCurriculumExplainRequest(invalidTablesRequest);
+assert.equal(invalidResult.success, false);
+assert.equal(invalidResult.issues.some((issue) => issue.path === 'curriculum.tables.1.rows.0.0' && issue.code === 'too_big'), true);
+
+assert.equal(isCompatibleExtensionBuild({ extensionBuildId: EXTENSION_BUILD_ID, routingContractVersion: ROUTING_CONTRACT_VERSION }), true);
+assert.equal(isCompatibleExtensionBuild({ extensionBuildId: 'stale-build', routingContractVersion: ROUTING_CONTRACT_VERSION }), false);
 
 console.log('BroBot endpoint resolver tests passed.');

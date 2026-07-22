@@ -22,8 +22,8 @@ assertNavActive(
   true
 );
 assertNavActive(
-  "notes not active for prepare",
-  isStudentWorkspacePathActive("/student-workspace/notes", "/student-workspace/prepare"),
+  "mycases not active for prepare",
+  isStudentWorkspacePathActive("/student-workspace/mycases", "/student-workspace/prepare"),
   false
 );
 assertNavActive(

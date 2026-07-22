@@ -2,7 +2,7 @@ import type { ComponentType } from "react";
 import {
   BookOpenText,
   Home,
-  NotebookPen,
+  BriefcaseMedical,
   Stethoscope,
   UserCircle2,
 } from "lucide-react";
@@ -21,9 +21,9 @@ export const STUDENT_WORKSPACE_NAV_ITEMS: StudentWorkspaceNavItem[] = [
     icon: Stethoscope,
   },
   {
-    label: "Notes",
-    href: "/student-workspace/notes",
-    icon: NotebookPen,
+    label: "MyCases",
+    href: "/student-workspace/mycases",
+    icon: BriefcaseMedical,
   },
   {
     label: "Profile",
