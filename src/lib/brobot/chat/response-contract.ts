@@ -48,6 +48,27 @@ export type BroBotChatInternalResult = {
 export type BroBotLegacyResponse = BroBotChatInternalResult;
 export type BroBotWebV2Response = BroBotChatInternalResult & { responseVersion: 2 };
 
+/**
+ * Canonical shipped JSON surface. Keep this allowlist explicit so new internal
+ * or web_v2-only fields cannot leak into the unversioned/iOS response.
+ */
+export const BROBOT_LEGACY_RESPONSE_KEYS = [
+  'conversationId', 'messageId', 'goal', 'selectedFocus', 'answer',
+  'priorityPoints', 'knowledgeGaps', 'whatMostResidentsMiss',
+  'suggestedQuestions', 'nextLearningBranches', 'tags', 'detectedMode',
+  'remainingFreeUses', 'confidence', 'needsClarification',
+  'clarifyingQuestions', 'assumedContext', 'consultConfidence',
+  'missingInformation', 'researchSubmode', 'tier', 'status', 'directAnswer',
+  'keyPoints', 'pearl', 'pitfall', 'clarifyingQuestion', 'specialty',
+  'resolvedTopic', 'entityResolutionState',
+] as const satisfies readonly (keyof BroBotLegacyResponse)[];
+
+// This list intentionally preserves every branch field already shipped to legacy/iOS
+// clients, including rankScore. New v2-only fields must not be added here.
+export const BROBOT_LEGACY_BRANCH_KEYS = [
+  'id', 'label', 'description', 'category', 'topicId', 'branchQuestionId', 'rankScore',
+] as const satisfies readonly (keyof NonNullable<BroBotLegacyResponse['nextLearningBranches']>[number])[];
+
 export type ContractSelection =
   | { ok: true; contract: BroBotResponseContract; clientPlatform: 'ios' | 'web' | 'unknown' }
   | { ok: false; requestedVersion: string };
@@ -91,7 +112,27 @@ export function encodeBroBotStreamEvent(
 }
 
 export function serializeLegacyResponse(result: BroBotChatInternalResult): BroBotLegacyResponse {
-  return { ...result };
+  const serialized: Partial<BroBotLegacyResponse> = {};
+  for (const key of BROBOT_LEGACY_RESPONSE_KEYS) {
+    if (Object.prototype.hasOwnProperty.call(result, key)) {
+      if (key === 'nextLearningBranches' && Array.isArray(result.nextLearningBranches)) {
+        Object.assign(serialized, {
+          nextLearningBranches: result.nextLearningBranches.map((branch) => {
+            const legacyBranch: Record<string, unknown> = {};
+            for (const branchKey of BROBOT_LEGACY_BRANCH_KEYS) {
+              if (Object.prototype.hasOwnProperty.call(branch, branchKey)) {
+                legacyBranch[branchKey] = branch[branchKey];
+              }
+            }
+            return legacyBranch;
+          }),
+        });
+      } else {
+        Object.assign(serialized, { [key]: result[key] });
+      }
+    }
+  }
+  return serialized as BroBotLegacyResponse;
 }
 
 export function serializeWebResponseV2(result: BroBotChatInternalResult): BroBotWebV2Response {
@@ -112,5 +153,6 @@ export function shouldStreamBroBotResponse(params: {
   requested: boolean;
   serverEnabled: boolean;
 }): boolean {
-  return params.contract === 'web_v2' && (params.requested || params.serverEnabled);
+  if (params.contract !== 'web_v2') return false;
+  return params.requested || params.serverEnabled;
 }

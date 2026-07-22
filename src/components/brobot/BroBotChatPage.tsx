@@ -197,7 +197,7 @@ const COMPOSER_MIN_HEIGHT_ACTIVE = 64;
 const COMPOSER_MAX_HEIGHT_MOBILE = 132;
 const COMPOSER_MAX_HEIGHT_DESKTOP = 168;
 const BROBOT_STREAMING_ENABLED =
-  process.env.NEXT_PUBLIC_BROBOT_STREAMING_ENABLED === 'true';
+  process.env.NEXT_PUBLIC_BROBOT_STREAMING_ENABLED !== 'false';
 
 type StreamEvent =
   | { event: 'start'; data: { assistantMessageId?: string; conversationId?: string } }
@@ -462,27 +462,6 @@ function isStructuredFallbackAnswer(answer: string) {
   return /could not format a structured response|could not be structured cleanly/i.test(answer);
 }
 
-function isUsefulAssumedContext(value: string | undefined): boolean {
-  const normalized = String(value ?? '')
-    .toLowerCase()
-    .replace(/[^\w\s]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-
-  if (!normalized) return false;
-
-  const genericAssumptions = [
-    'the learner is preparing for a surgical procedure',
-    'the user is asking about orthopaedics',
-    'the learner wants information',
-    'the user is asking for an overview',
-    'i can sharpen this if you pick a learning branch',
-    'the learner is preparing for surgery',
-  ];
-
-  return !genericAssumptions.some((phrase) => normalized.includes(phrase));
-}
-
 function synthesizeDisplayAnswer(priorityPoints: string[]) {
   return priorityPoints.slice(0, 3).map((point) => `- ${point}`).join('\n');
 }
@@ -684,12 +663,13 @@ export default function BroBotChatPage() {
     activeRequestControllerRef.current?.abort();
     activeRequestControllerRef.current = requestController;
 
-    const shouldAppendUserMessage = source !== 'branch_selection' && source !== 'answer_now';
+    const shouldAppendUserMessage = source !== 'answer_now' || Boolean(selectedBranch);
+    const visibleUserMessage = selectedBranch?.label ?? submittedPrompt;
     const optimisticUserMessage: ChatMessage | null = shouldAppendUserMessage
       ? {
           id: crypto.randomUUID(),
           role: 'user',
-          content: submittedPrompt,
+          content: visibleUserMessage,
         }
       : null;
 
@@ -1405,11 +1385,10 @@ function BroBotIntentCard({
       </div>
 
       <div className="mt-4">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-slate-500">Likely Goal</h2>
-        <p className="mt-1 text-base font-semibold leading-6 text-midnight">
-          {intent.goal || 'Choose the learning branch you want BroBot to prioritize.'}
-        </p>
-        <p className="mt-2 text-sm leading-5 text-slate-600">
+        <h2 className="text-sm font-bold uppercase tracking-wide text-slate-500">
+          Choose your focus
+        </h2>
+        <p className="mt-1 text-sm leading-5 text-slate-600">
           Choose your focus for a sharper answer.
         </p>
       </div>
@@ -1441,10 +1420,7 @@ function BroBotIntentCard({
       )}
 
       <div className="mt-4">
-        <h3 className="text-sm font-bold uppercase tracking-wide text-slate-500">
-          Choose your focus
-        </h3>
-        <div className="mt-2 grid gap-2 sm:grid-cols-2">
+        <div className="grid gap-2 sm:grid-cols-2">
           {intent.branchOptions.map((branch) => (
             <button
               key={branch.id}
@@ -1629,11 +1605,6 @@ function BroBotAssistantResponse({
         <span className="rounded-full bg-teal-50 px-2.5 py-1 text-xs font-semibold text-teal-700">
           {formatMode(response.detectedMode)}
         </span>
-        {response.selectedFocus && (
-          <span className="rounded-full bg-sky-50 px-2.5 py-1 text-xs font-semibold text-sky-700">
-            Focus: {response.selectedFocus}
-          </span>
-        )}
         {typeof response.confidence === 'number' && (
           <span className="text-xs text-slate-400">
             {Math.round(response.confidence * 100)}% confidence
@@ -1642,12 +1613,6 @@ function BroBotAssistantResponse({
       </div>
 
       <div className="mt-4 space-y-6">
-        {response.goal && (
-          <StructuredSection title="Your Goal">
-            <p className="text-sm font-semibold leading-6 text-midnight">{response.goal}</p>
-          </StructuredSection>
-        )}
-
         <StructuredSection title="Direct Answer">
           {response.answer && status === 'streaming' ? (
             <StreamingAnswer text={response.answer} />
@@ -1675,8 +1640,8 @@ function BroBotAssistantResponse({
           )}
         </StructuredSection>
 
-        {status !== 'pending' && status !== 'streaming' && ((response.clarifyingQuestions?.length ?? 0) > 0 ||
-          isUsefulAssumedContext(response.assumedContext)) && (
+        {status !== 'pending' && status !== 'streaming' &&
+          (response.clarifyingQuestions?.length ?? 0) > 0 && (
           <ClarificationBlock
             response={response}
             onPickClarification={onPickClarification}
@@ -1827,35 +1792,25 @@ function ClarificationBlock({
   onPickClarification: (question: string, sourceMessageId: string) => void;
 }) {
   const questions = response.clarifyingQuestions ?? [];
-  const usefulAssumption = isUsefulAssumedContext(response.assumedContext)
-    ? response.assumedContext
-    : '';
-  if (!usefulAssumption && questions.length === 0) return null;
+  if (questions.length === 0) return null;
 
   return (
-    <section className="rounded-xl border border-amber-100 bg-amber-50/60 px-3 py-3">
-      <h3 className="text-xs font-bold uppercase tracking-wide text-amber-700">
-        Assumption
+    <section className="rounded-xl border border-slate-200 bg-slate-50/70 px-3 py-3">
+      <h3 className="text-xs font-bold uppercase tracking-wide text-slate-600">
+        Follow-up
       </h3>
-      {usefulAssumption && (
-        <p className="mt-1.5 text-sm leading-5 text-amber-950">
-          <span className="font-semibold">Assuming:</span> {usefulAssumption}
-        </p>
-      )}
-      {questions.length > 0 && (
-        <div className="mt-2 flex flex-wrap gap-2">
-          {questions.map((question) => (
-            <button
-              key={question}
-              type="button"
-              onClick={() => onPickClarification(question, response.messageId)}
-              className="rounded-full border border-amber-200 bg-white px-3 py-2 text-left text-xs font-semibold leading-4 text-amber-800 shadow-sm transition hover:bg-amber-50 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {question}
-            </button>
-          ))}
-        </div>
-      )}
+      <div className="mt-2 flex flex-wrap gap-2">
+        {questions.map((question) => (
+          <button
+            key={question}
+            type="button"
+            onClick={() => onPickClarification(question, response.messageId)}
+            className="rounded-full border border-slate-200 bg-white px-3 py-2 text-left text-xs font-semibold leading-4 text-slate-700 shadow-sm transition hover:border-teal-200 hover:bg-teal-50 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {question}
+          </button>
+        ))}
+      </div>
     </section>
   );
 }

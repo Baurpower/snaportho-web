@@ -119,6 +119,46 @@ export const BROBOT_TIER1_KG_ENABLED = readBooleanEnv(
   false
 );
 
+/** Default-off quality rollout flags. Each can be disabled independently. */
+export const BROBOT_INTERACTION_CONSTRAINTS_ENABLED = readBooleanEnv(
+  'BROBOT_INTERACTION_CONSTRAINTS_ENABLED', false
+);
+export const BROBOT_SEMANTIC_RELEVANCE_GATE_ENABLED = readBooleanEnv(
+  'BROBOT_SEMANTIC_RELEVANCE_GATE_ENABLED', false
+);
+export const BROBOT_CORRECTION_REPAIR_ENABLED = readBooleanEnv(
+  'BROBOT_CORRECTION_REPAIR_ENABLED', false
+);
+export const BROBOT_STRUCTURED_CONVERSATION_STATE_ENABLED = readBooleanEnv(
+  'BROBOT_STRUCTURED_CONVERSATION_STATE_ENABLED', false
+);
+export const BROBOT_LATEST_TURN_TASK_ENABLED = readBooleanEnv(
+  'BROBOT_LATEST_TURN_TASK_ENABLED', false
+);
+export const BROBOT_OR_PREP_TASK_CONTRACT_ENABLED = readBooleanEnv(
+  'BROBOT_OR_PREP_TASK_CONTRACT_ENABLED', false
+);
+
+export type BroBotFactoredIntentMode = 'off' | 'shadow' | 'enabled';
+
+export function resolveBroBotFactoredIntentMode(
+  value: string | undefined = process.env.BROBOT_FACTORED_INTENT_MODE
+): BroBotFactoredIntentMode {
+  const normalized = value?.trim().toLowerCase();
+  return normalized === 'shadow' || normalized === 'enabled' ? normalized : 'off';
+}
+
+/** Enabled is intentionally observational in Phase 3 and behaves like shadow. */
+export const BROBOT_FACTORED_INTENT_MODE = resolveBroBotFactoredIntentMode();
+
+export type BroBotAnswerPlannerMode = 'off' | 'shadow' | 'enabled';
+export function resolveBroBotAnswerPlannerMode(value: string | undefined = process.env.BROBOT_ANSWER_PLANNER_MODE): BroBotAnswerPlannerMode {
+  const normalized = value?.trim().toLowerCase();
+  return normalized === 'shadow' || normalized === 'enabled' ? normalized : 'off';
+}
+/** Enabled remains observationally identical to shadow during Phase 4. */
+export const BROBOT_ANSWER_PLANNER_MODE = resolveBroBotAnswerPlannerMode();
+
 const STRONG_MODES = new Set<BroBotChatMode>(['or_prep', 'consult', 'oite', 'research']);
 const STRONG_SUBINTENTS = new Set<BroBotChatSubintent>([
   'surgical_steps',

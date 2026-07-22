@@ -59,6 +59,16 @@ function restoreAnchor(viewport: HTMLDivElement, anchor: ScrollAnchor) {
   viewport.scrollTop += nextOffset - anchor.offset;
 }
 
+function scrollAnchorToTop(viewport: HTMLDivElement, id: string) {
+  const element = viewport.querySelector<HTMLElement>(
+    `[data-chat-scroll-id="${CSS.escape(id)}"]`
+  );
+  if (!element) return;
+
+  viewport.scrollTop +=
+    element.getBoundingClientRect().top - viewport.getBoundingClientRect().top;
+}
+
 export function useChatScrollController({
   viewportRef,
   contentVersion,
@@ -211,14 +221,14 @@ export function useChatScrollController({
       return;
     }
 
-    // A new assistant response starts pinned to the newest content. Explicit
-    // wheel/touch/keyboard scrolling above unpins it via the handlers above.
+    // Start each new assistant response at the top of the viewport. Keep that
+    // anchor stable while the response grows instead of following its bottom.
     if (activeAssistantId && lastAnchoredAssistantIdRef.current !== activeAssistantId) {
       lastAnchoredAssistantIdRef.current = activeAssistantId;
-      userPinnedRef.current = true;
-      isPinnedToBottomRef.current = true;
-      viewport.scrollTop = viewport.scrollHeight;
-      setIsNearBottom(true);
+      userPinnedRef.current = false;
+      isPinnedToBottomRef.current = false;
+      scrollAnchorToTop(viewport, activeAssistantId);
+      setIsNearBottom(getDistanceFromBottom(viewport) <= NEAR_BOTTOM_PX);
       setUserHasScrolledUp(false);
       setShowNewMessagesButton(false);
       previousAnchorRef.current = getFirstVisibleAnchor(viewport);
@@ -240,7 +250,7 @@ export function useChatScrollController({
     previousAnchorRef.current = getFirstVisibleAnchor(viewport);
     previousScrollTopRef.current = viewport.scrollTop;
 
-    if (contentChanged) {
+    if (contentChanged && !activeAssistantId) {
       setShowNewMessagesButton(true);
     }
   }, [contentVersion, activeAssistantId, viewportRef]);

@@ -14,6 +14,8 @@ const {
   shouldStreamBroBotResponse,
   shouldUseCasePrepV2Migration,
   encodeBroBotStreamEvent,
+  BROBOT_LEGACY_RESPONSE_KEYS,
+  BROBOT_LEGACY_BRANCH_KEYS,
 } = responseContract;
 
 const fixture = (name: string) =>
@@ -34,6 +36,17 @@ const internal: BroBotChatInternalResult = {
 assert.deepEqual(serializeLegacyResponse(internal), fixture('legacy-success.json'));
 assert.deepEqual(serializeWebResponseV2(internal), fixture('web-v2-success.json'));
 assert.equal(serializeLegacyResponse(internal).answer, serializeWebResponseV2(internal).answer);
+assert.equal('responseVersion' in serializeLegacyResponse(internal), false);
+assert.deepEqual(Object.keys(serializeLegacyResponse(internal)).sort(), Object.keys(fixture('legacy-success.json')).sort());
+for (const key of ['conversationId', 'messageId', 'answer', 'priorityPoints', 'knowledgeGaps', 'suggestedQuestions', 'tags', 'detectedMode']) {
+  assert.ok(BROBOT_LEGACY_RESPONSE_KEYS.includes(key as never), `legacy key allowlist must include ${key}`);
+}
+
+const internalWithFutureFields = { ...internal, responseVersion: 999, citations: [{ title: 'web only' }] };
+const futureSafeLegacy = serializeLegacyResponse(internalWithFutureFields as BroBotChatInternalResult);
+assert.equal('responseVersion' in futureSafeLegacy, false);
+assert.equal('citations' in futureSafeLegacy, false, 'new internal fields must not alter legacy decoding');
+assert.equal((serializeWebResponseV2(internalWithFutureFields as BroBotChatInternalResult) as Record<string, unknown>).responseVersion, 2);
 
 assert.deepEqual(selectBroBotResponseContract(new Headers()), {
   ok: true,
@@ -48,6 +61,11 @@ assert.deepEqual(selectBroBotResponseContract(new Headers({ 'X-BroBot-Response-V
   ok: false,
   requestedVersion: '99',
 });
+assert.deepEqual(selectBroBotResponseContract(new Headers({ 'X-BroBot-Response-Version': '1', 'X-SnapOrtho-Client': 'ios' })), {
+  ok: true,
+  contract: 'legacy',
+  clientPlatform: 'ios',
+});
 assert.deepEqual(selectBroBotResponseContract(new Headers({ 'X-BroBot-Response-Version': '  ' })), {
   ok: false,
   requestedVersion: '(empty)',
@@ -56,6 +74,42 @@ assert.deepEqual(selectBroBotResponseContract(new Headers({ 'X-BroBot-Response-V
 assert.equal(shouldStreamBroBotResponse({ contract: 'legacy', requested: true, serverEnabled: true }), false);
 assert.equal(shouldStreamBroBotResponse({ contract: 'web_v2', requested: true, serverEnabled: false }), true);
 assert.equal(shouldStreamBroBotResponse({ contract: 'web_v2', requested: false, serverEnabled: true }), true);
+
+const clarification = serializeLegacyResponse({
+  ...internal,
+  answer: 'Which procedure do you mean?',
+  needsClarification: true,
+  clarifyingQuestions: ['Open or endoscopic release?'],
+});
+assert.equal(clarification.needsClarification, true);
+assert.deepEqual(clarification.clarifyingQuestions, ['Open or endoscopic release?']);
+assert.equal('responseVersion' in clarification, false);
+
+const branchSelection = serializeLegacyResponse({
+  ...internal,
+  selectedFocus: 'Anatomy at risk',
+  nextLearningBranches: [{ id: 'anatomy', label: 'Anatomy at risk', rankScore: 42 }],
+});
+assert.equal(branchSelection.selectedFocus, 'Anatomy at risk');
+assert.equal(branchSelection.nextLearningBranches?.[0]?.id, 'anatomy');
+assert.equal(branchSelection.nextLearningBranches?.[0]?.rankScore, 42, 'already-shipped legacy branch fields remain unchanged');
+assert.ok(BROBOT_LEGACY_BRANCH_KEYS.includes('rankScore'));
+
+const branchWithFutureFields = serializeLegacyResponse({
+  ...internal,
+  nextLearningBranches: [{
+    id: 'anatomy', label: 'Anatomy at risk', rankScore: 42,
+    canonicalPrompt: 'Internal prompt', provenance: ['model'], safetyWarnings: [],
+  } as never],
+});
+const serializedLegacyBranch = branchWithFutureFields.nextLearningBranches?.[0] as Record<string, unknown>;
+assert.equal('canonicalPrompt' in serializedLegacyBranch, false);
+assert.equal('provenance' in serializedLegacyBranch, false);
+assert.equal('safetyWarnings' in serializedLegacyBranch, false);
+
+const quota = serializeLegacyResponse({ ...internal, remainingFreeUses: 0 });
+assert.equal(quota.remainingFreeUses, 0);
+assert.deepEqual(fixture('legacy-error.json'), fixture('web-v2-error.json'), 'error JSON remains version-agnostic');
 
 const withoutOptionalMetadata = { ...internal };
 assert.deepEqual(serializeLegacyResponse(withoutOptionalMetadata), fixture('legacy-success.json'));
@@ -105,5 +159,17 @@ for (const webClient of [
   assert.match(source, /X-BroBot-Response-Version['"]?:\s*['"]2['"]/);
   assert.match(source, /X-SnapOrtho-Client['"]?:\s*['"]web['"]/);
 }
+
+const webChatSource = readFileSync(
+  join(process.cwd(), 'src/components/brobot/BroBotChatPage.tsx'),
+  'utf8'
+);
+assert.match(
+  webChatSource,
+  /NEXT_PUBLIC_BROBOT_STREAMING_ENABLED\s*!==\s*['"]false['"]/,
+  'the website chat should stream by default while retaining an emergency false kill switch'
+);
+assert.match(webChatSource, /stream:\s*Boolean\(streamingAssistantId\)/);
+assert.match(webChatSource, /text\/event-stream/);
 
 console.log('BroBot response contract tests passed');

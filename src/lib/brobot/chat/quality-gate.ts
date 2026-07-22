@@ -8,6 +8,9 @@ import type {
   BroBotTrainingLevel,
 } from './types';
 import type { BroBotAnswerRoute } from './answer-router';
+import { detectBroBotInteractionConstraints } from './interaction-constraints';
+import { deriveBroBotLatestTurnTask } from './latest-turn-task';
+import { BROBOT_OR_PREP_TASK_CONTRACT_ENABLED } from '@/lib/brobot/model-config';
 
 export type BroBotQualityGateResult = {
   passed: boolean;
@@ -190,10 +193,20 @@ export function runBroBotQualityGate(input: {
   procedureOrTopic?: string;
   answerRoute?: BroBotAnswerRoute;
   clinicalContext?: BroBotClinicalContext;
+  question?: string;
 }): BroBotQualityGateResult {
   const warnings: string[] = [];
   const answer = input.answer.trim();
   const selectedBranchLabel = input.selectedBranchLabel?.trim();
+  const latestTask = input.question
+    ? deriveBroBotLatestTurnTask({
+        message: input.question,
+        topic: input.procedureOrTopic,
+        constraints: detectBroBotInteractionConstraints({ message: input.question }),
+      })
+    : null;
+  const narrowOrPrepTask = BROBOT_OR_PREP_TASK_CONTRACT_ENABLED && input.mode === 'or_prep' &&
+    (latestTask?.action === 'estimate_duration' || latestTask?.action === 'retrieve_articles' || latestTask?.action === 'quiz');
 
   // ask_clarification answers are supposed to be a brief framing line (or
   // empty) with the clarifying questions/focus options carrying the rest.
@@ -217,7 +230,7 @@ export function runBroBotQualityGate(input: {
     }
   }
 
-  if (input.responseDepth !== 'quick' && answer.length < 450) {
+  if (input.responseDepth !== 'quick' && answer.length < 450 && !narrowOrPrepTask) {
     warnings.push('answer_short_for_depth');
   }
 
@@ -225,14 +238,14 @@ export function runBroBotQualityGate(input: {
     warnings.push('empty_caveat_without_concrete_pivots');
   }
 
-  if (!hasDecisionSignal(answer) && input.responseDepth !== 'quick') {
+  if (!hasDecisionSignal(answer) && input.responseDepth !== 'quick' && !narrowOrPrepTask) {
     warnings.push('decision_making_missing');
   }
 
   if (
     input.responseDepth !== 'quick' &&
     !OITE_BOARD_CHECKS_EXEMPT.has(input.subintent ?? '') &&
-    (input.mode === 'or_prep' ||
+    ((input.mode === 'or_prep' && !narrowOrPrepTask) ||
       input.mode === 'oite' ||
       input.mode === 'consult' ||
       input.subintent === 'fracture' ||
@@ -246,7 +259,7 @@ export function runBroBotQualityGate(input: {
   }
 
   if (
-    input.mode === 'or_prep' &&
+    input.mode === 'or_prep' && !narrowOrPrepTask &&
     tokenHits(answer, [
       'approach',
       'exposure',
@@ -263,7 +276,7 @@ export function runBroBotQualityGate(input: {
     warnings.push('limited_concrete_ortho_detail');
   }
 
-  if (input.mode === 'or_prep') {
+  if (input.mode === 'or_prep' && !narrowOrPrepTask) {
     if (
       tokenHits(answer, [
         'exposure',
@@ -478,9 +491,6 @@ export function runBroBotQualityGate(input: {
         'nonoperative',
         'definitive',
         'clinic',
-        'management',
-        'plan',
-        'treatment',
         'recommend',
         'refer',
         'discharge',

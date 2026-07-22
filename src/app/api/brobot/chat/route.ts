@@ -36,6 +36,16 @@ import {
   getDeterministicTierOneFollowUps,
   shouldIncludeResidentsMissSection,
   runTierAwareAnswerIntegrityChecks,
+  detectBroBotInteractionConstraints,
+  evaluateBroBotResponseRelevance,
+  deriveBroBotConversationState,
+  deriveBroBotFactoredIntent,
+  buildFactoredIntentTelemetry,
+  recordFactoredIntentTelemetrySafely,
+  buildBroBotAnswerPlan,
+  validateBroBotAnswerPlan,
+  buildAnswerPlanTelemetry,
+  recordAnswerPlanTelemetrySafely,
   type BroBotAnswerRoute,
   type BroBotChatIntent,
   type BroBotChatMode,
@@ -79,6 +89,9 @@ import {
   BROBOT_TIER1_METADATA_LLM_ENABLED,
   BROBOT_TIER1_KG_ENABLED,
   BROBOT_TIER1_REVISION_ENABLED,
+  BROBOT_SEMANTIC_RELEVANCE_GATE_ENABLED,
+  BROBOT_FACTORED_INTENT_MODE,
+  BROBOT_ANSWER_PLANNER_MODE,
   getAnswerModelForRoute,
   getMetadataModel,
   getRevisionModel,
@@ -94,6 +107,8 @@ import {
   type BroBotStreamEventName,
 } from '@/lib/brobot/chat/response-contract';
 import { shouldStreamBroBotResponse } from '@/lib/brobot/chat/transport';
+import { buildReadNextContextPacket } from '@/lib/brobot/read-next/context-packet';
+import { evaluateReadNextShadow, isReadNextShadowEnabled } from '@/lib/brobot/read-next/shadow';
 
 const BROBOT_STREAMING_ENABLED = process.env.BROBOT_STREAMING_ENABLED === 'true';
 
@@ -114,6 +129,35 @@ function tierResponseFields(output: Record<string, unknown>) {
     resolvedTopic: output.resolvedTopic as string | undefined,
     entityResolutionState: output.entityResolutionState as string | undefined,
   };
+}
+
+function addSemanticRelevanceWarnings(input: {
+  warnings: string[];
+  question: string;
+  answer: string;
+  history: BroBotModelMessage[];
+  mode?: string;
+  subintent?: string;
+}) {
+  if (!BROBOT_SEMANTIC_RELEVANCE_GATE_ENABLED) return;
+  const priorHistory = [...input.history];
+  const lastUserIndex = priorHistory.findLastIndex((item) => item.role === 'user');
+  if (lastUserIndex >= 0 && priorHistory[lastUserIndex]?.content.trim() === input.question.trim()) {
+    priorHistory.splice(lastUserIndex, 1);
+  }
+  const constraints = detectBroBotInteractionConstraints({ message: input.question, history: priorHistory });
+  const priorAnswer = [...priorHistory].reverse().find((item) => item.role === 'assistant')?.content;
+  const relevance = evaluateBroBotResponseRelevance({
+    question: input.question,
+    answer: input.answer,
+    constraints,
+    priorAnswer,
+    mode: input.mode,
+    subintent: input.subintent,
+  });
+  for (const warning of relevance.warnings) {
+    if (!input.warnings.includes(warning)) input.warnings.push(warning);
+  }
 }
 
 type AuthContext = {
@@ -144,6 +188,8 @@ type ChatAnalyticsEvent =
   | 'answer_now_clicked'
   | 'clarification_selected'
   | 'brobot_research_submode_detected'
+  | 'brobot_factored_intent_shadow'
+  | 'brobot_answer_plan_shadow'
   | 'quality_gate_failed';
 type ServerErrorCategory =
   | 'database_error'
@@ -1718,6 +1764,7 @@ async function generateBroBotPipelineResult(params: {
       procedureOrTopic: params.intent.procedureOrTopic,
       answerRoute,
       clinicalContext: answerContext.clinicalContext,
+      question: params.body.message,
     });
     const deterministicFollowUps = mergeQuestions(
       getDeterministicTierOneFollowUps({
@@ -1861,7 +1908,17 @@ async function generateBroBotPipelineResult(params: {
     procedureOrTopic: params.intent.procedureOrTopic,
     answerRoute,
     clinicalContext: answerContext.clinicalContext,
+    question: params.body.message,
   });
+  addSemanticRelevanceWarnings({
+    warnings: qualityGate.warnings,
+    question: params.body.message,
+    answer: parsedOutput.answer,
+    history: params.history,
+    mode: params.intent.mode,
+    subintent: params.intent.subintent,
+  });
+  qualityGate.passed = qualityGate.warnings.length === 0;
   if (BROBOT_TIERED_PIPELINE_ENABLED && params.tier && params.entityResolution) {
     qualityGate.warnings.push(
       ...runTierAwareAnswerIntegrityChecks({
@@ -1939,7 +1996,17 @@ async function generateBroBotPipelineResult(params: {
       procedureOrTopic: params.intent.procedureOrTopic,
       answerRoute,
       clinicalContext: answerContext.clinicalContext,
+      question: params.body.message,
     });
+    addSemanticRelevanceWarnings({
+      warnings: qualityGate.warnings,
+      question: params.body.message,
+      answer: parsedOutput.answer,
+      history: params.history,
+      mode: params.intent.mode,
+      subintent: params.intent.subintent,
+    });
+    qualityGate.passed = qualityGate.warnings.length === 0;
     logBroBot('[BROBOT-CHAT-REVISION]', {
       mode: params.intent.mode,
       subintent: params.intent.subintent,
@@ -2061,6 +2128,31 @@ async function generateBroBotPipelineResult(params: {
     5,
     params.rankingContext
   );
+  const persistedNextLearningBranches = await attachPersistedBranchQuestionIds({
+    persistence: params.persistence,
+    topic: params.learningBranches.topic,
+    branches: nextLearningBranches,
+  });
+  if (isReadNextShadowEnabled()) {
+    try {
+      const shadowSummary = evaluateReadNextShadow({
+        branches: persistedNextLearningBranches,
+        context: buildReadNextContextPacket({
+          latestUserRequest: params.body.message,
+          latestVisibleAnswer: parsedOutput.answer,
+          history: params.history,
+          mode: params.intent.mode,
+          learnerLevel: params.body.trainingLevel,
+          activeTopic: params.intent.procedureOrTopic,
+        }),
+      });
+      // Aggregate-only diagnostic: the summary contains no messages, labels,
+      // prompts, topics, procedures, IDs, or provenance values.
+      logBroBot('[BROBOT-READ-NEXT-V2-SHADOW]', shadowSummary);
+    } catch (error) {
+      logBroBot('[BROBOT-READ-NEXT-V2-SHADOW-FAILED]', safeErrorPayload(error));
+    }
+  }
   const brobotOutput = {
     ...parsedOutput,
     answer: routeNeedsClarification
@@ -2081,11 +2173,7 @@ async function generateBroBotPipelineResult(params: {
         ? metadataOutput.suggestedQuestions
         : parsedOutput.suggestedQuestions
     ),
-    nextLearningBranches: await attachPersistedBranchQuestionIds({
-      persistence: params.persistence,
-      topic: params.learningBranches.topic,
-      branches: nextLearningBranches,
-    }),
+    nextLearningBranches: persistedNextLearningBranches,
     tags: metadataOutput.tags.length > 0 ? metadataOutput.tags : parsedOutput.tags,
   };
 
@@ -2792,6 +2880,114 @@ export async function POST(request: Request) {
           ...researchSubmodeMetadata(researchSubmodeRoute),
         },
       });
+    }
+
+    // Phase 3 is observational only. Neither this result nor its mapped legacy
+    // comparison is passed to routing, prompts, models, branches, or responses.
+    if (BROBOT_FACTORED_INTENT_MODE !== 'off') {
+      const factoredIntentStartedAt = performance.now();
+      try {
+        const priorHistory = [...history];
+        const currentUserIndex = priorHistory.findLastIndex(
+          (item) => item.role === 'user' && item.content.trim() === validatedBody.message.trim()
+        );
+        if (currentUserIndex >= 0) priorHistory.splice(currentUserIndex, 1);
+        const interactionConstraints = detectBroBotInteractionConstraints({
+          message: validatedBody.message,
+          history: priorHistory,
+        });
+        const conversationState = deriveBroBotConversationState({
+          message: validatedBody.message,
+          history: priorHistory,
+          topic: intent.procedureOrTopic,
+          procedure: intent.mode === 'or_prep' ? intent.procedureOrTopic : undefined,
+          learnerLevel: validatedBody.trainingLevel,
+        });
+        const factoredIntent = deriveBroBotFactoredIntent({
+          message: validatedBody.message,
+          selectedMode: validatedBody.mode,
+          responseDepth: validatedBody.responseDepth,
+          trainingLevel: validatedBody.trainingLevel,
+          legacyIntent: intent,
+          conversationState,
+          interactionConstraints,
+        });
+        const telemetryMetadata = buildFactoredIntentTelemetry({
+          featureMode: BROBOT_FACTORED_INTENT_MODE,
+          legacyMode: intent.mode,
+          legacySubintent: intent.subintent,
+          factoredIntent,
+          latencyMs: performance.now() - factoredIntentStartedAt,
+        });
+        void recordFactoredIntentTelemetrySafely({
+          mode: BROBOT_FACTORED_INTENT_MODE,
+          metadata: telemetryMetadata,
+          record: async ({ eventType, metadata }) => {
+            await recordChatAnalyticsEvent({
+              userId: authenticatedUserId,
+              conversationId: persistedConversationId,
+              messageId: userMessageId,
+              eventType,
+              outcome: 'success',
+              latencyMs: metadata.classification_latency_ms,
+              metadata,
+            });
+          },
+          log: (message, error) => console.error(message, safeErrorPayload(error)),
+        });
+      } catch (error) {
+        console.error('[brobot] factored-intent shadow classification failed (non-fatal)', safeErrorPayload(error));
+      }
+    }
+
+    // Phase 4 remains observational: the local plan is only summarized into
+    // aggregate telemetry and never reaches answer-generation inputs.
+    if (BROBOT_ANSWER_PLANNER_MODE !== 'off') {
+      try {
+        const priorHistory = [...history];
+        const currentUserIndex = priorHistory.findLastIndex(
+          (item) => item.role === 'user' && item.content.trim() === validatedBody.message.trim()
+        );
+        if (currentUserIndex >= 0) priorHistory.splice(currentUserIndex, 1);
+        const interactionConstraints = detectBroBotInteractionConstraints({ message: validatedBody.message, history: priorHistory });
+        const conversationState = deriveBroBotConversationState({
+          message: validatedBody.message, history: priorHistory, topic: intent.procedureOrTopic,
+          procedure: intent.mode === 'or_prep' ? intent.procedureOrTopic : undefined,
+          learnerLevel: validatedBody.trainingLevel,
+        });
+        const factoredIntent = deriveBroBotFactoredIntent({
+          message: validatedBody.message, selectedMode: validatedBody.mode,
+          responseDepth: validatedBody.responseDepth, trainingLevel: validatedBody.trainingLevel,
+          legacyIntent: intent, conversationState, interactionConstraints,
+        });
+        const planInput = {
+          message: validatedBody.message, factoredIntent, interactionConstraints, conversationState,
+          legacyIntent: intent, responseDepth: validatedBody.responseDepth, trainingLevel: validatedBody.trainingLevel,
+          selectedBranch: { id: validatedBody.selectedBranchId, label: validatedBody.selectedBranchLabel },
+        };
+        const derivationStartedAt = performance.now();
+        const plan = buildBroBotAnswerPlan(planInput);
+        const derivationLatencyMs = performance.now() - derivationStartedAt;
+        const validationStartedAt = performance.now();
+        const validation = validateBroBotAnswerPlan(plan, planInput);
+        const telemetryMetadata = buildAnswerPlanTelemetry({
+          featureMode: BROBOT_ANSWER_PLANNER_MODE, factoredIntent, plan, validation,
+          derivationLatencyMs, validationLatencyMs: performance.now() - validationStartedAt,
+          fallbackReason: plan.sources.facets === 'fallback' ? 'incomplete_factored_intent' : null,
+        });
+        void recordAnswerPlanTelemetrySafely({
+          mode: BROBOT_ANSWER_PLANNER_MODE, metadata: telemetryMetadata,
+          record: async ({ eventType, metadata }) => {
+            await recordChatAnalyticsEvent({
+              userId: authenticatedUserId, conversationId: persistedConversationId, messageId: userMessageId,
+              eventType, outcome: 'success', latencyMs: metadata.derivation_latency_ms + metadata.validation_latency_ms, metadata,
+            });
+          },
+          log: (message, error) => console.error(message, safeErrorPayload(error)),
+        });
+      } catch (error) {
+        console.error('[brobot] answer-plan shadow derivation failed (non-fatal)', safeErrorPayload(error));
+      }
     }
 
     const entityResolution = resolveBroBotEntities(validatedBody.message);
@@ -3746,7 +3942,14 @@ async function persistCompletedBroBotOutput(params: PersistCompletedParams) {
     procedureOrTopic: params.intent.procedureOrTopic,
     answerRoute: params.answerRoute,
     clinicalContext: params.answerContext.clinicalContext,
+    question: params.body.message,
   });
+  if (BROBOT_SEMANTIC_RELEVANCE_GATE_ENABLED && !params.revisionTriggered) {
+    for (const warning of params.qualityGateWarningsBeforeRevision ?? []) {
+      if (!qualityGate.warnings.includes(warning)) qualityGate.warnings.push(warning);
+    }
+    qualityGate.passed = qualityGate.warnings.length === 0;
+  }
 
   if (!qualityGate.passed) {
     void recordChatAnalyticsEvent({

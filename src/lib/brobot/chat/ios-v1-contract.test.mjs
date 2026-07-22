@@ -33,4 +33,14 @@ assert.equal(
   'future backend enum cases must remain decodable by the shipped v1 client'
 );
 
+assert.equal(
+  serializeBroBotIntentForClient({ subintent: 'classification', mode: 'fracture_call' }, 'v1').subintent,
+  'overview',
+  'legacy fracture_call requests must map new subintents without changing the legacy mode value'
+);
+
+for (const value of ['landmarks', 'quiz', 'other']) {
+  assert.equal(serializeBroBotIntentForClient({ subintent: value }, 'v1').subintent, value);
+}
+
 console.log('BroBot iOS v1 intent compatibility tests passed.');

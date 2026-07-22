@@ -18,6 +18,21 @@ import {
   type BroBotAnswerContext,
 } from './context-builder';
 import { formatResearchSubmodeInstructions } from '@/lib/brobot/research';
+import {
+  BROBOT_CORRECTION_REPAIR_ENABLED,
+  BROBOT_INTERACTION_CONSTRAINTS_ENABLED,
+  BROBOT_LATEST_TURN_TASK_ENABLED,
+  BROBOT_OR_PREP_TASK_CONTRACT_ENABLED,
+  BROBOT_STRUCTURED_CONVERSATION_STATE_ENABLED,
+} from '@/lib/brobot/model-config';
+import { detectBroBotInteractionConstraints, formatInteractionConstraintsForPrompt } from './interaction-constraints';
+import { deriveBroBotConversationState, formatConversationStateForPrompt } from './conversation-state';
+import {
+  deriveBroBotLatestTurnTask,
+  formatLatestTurnTaskForPrompt,
+  formatOrPrepTaskContractForPrompt,
+  getBroBotOrPrepTaskContract,
+} from './latest-turn-task';
 
 type PromptBuilderInput = {
   message?: string;
@@ -479,6 +494,10 @@ export function buildBroBotChatSystemPrompt(input: {
   answerRoute?: BroBotAnswerRoute;
   includeProductMetadata?: boolean;
   includeResidentsMiss?: boolean;
+  interactionGuidance?: string;
+  conversationStateGuidance?: string;
+  latestTurnTaskGuidance?: string;
+  orPrepTaskContractGuidance?: string;
 }) {
   const includeProductMetadata = input.includeProductMetadata ?? true;
   const detectedEntityTopic =
@@ -631,6 +650,14 @@ Persona:
 
 ${formatRecentConversationForPrompt(input.answerContext)}
 
+${input.interactionGuidance ?? ''}
+
+${input.conversationStateGuidance ?? ''}
+
+${input.latestTurnTaskGuidance ?? ''}
+
+${input.orPrepTaskContractGuidance ?? ''}
+
 ${entityAnchor}
 
 ${selectedMode}
@@ -692,6 +719,28 @@ export function buildBroBotChatMessages(input: PromptBuilderInput): BroBotModelM
   const conversation = input.messages?.length
     ? input.messages.filter((message) => message.role !== 'system')
     : [{ role: 'user' as const, content: input.message ?? '' }];
+  const message = input.message ?? [...conversation].reverse().find((item) => item.role === 'user')?.content ?? '';
+  const priorHistory = [...conversation];
+  const lastUserIndex = priorHistory.findLastIndex((item) => item.role === 'user');
+  if (lastUserIndex >= 0 && priorHistory[lastUserIndex]?.content.trim() === message.trim()) priorHistory.splice(lastUserIndex, 1);
+  const constraints = detectBroBotInteractionConstraints({ message, history: priorHistory });
+  const latestTurnTask = deriveBroBotLatestTurnTask({
+    message,
+    topic: input.intent?.procedureOrTopic,
+    constraints,
+  });
+  const interactionGuidance = BROBOT_INTERACTION_CONSTRAINTS_ENABLED
+    ? formatInteractionConstraintsForPrompt(constraints)
+    : '';
+  const conversationStateGuidance = (BROBOT_STRUCTURED_CONVERSATION_STATE_ENABLED || BROBOT_CORRECTION_REPAIR_ENABLED)
+    ? formatConversationStateForPrompt(deriveBroBotConversationState({
+        message,
+        history: priorHistory,
+        topic: input.intent?.procedureOrTopic,
+        procedure: input.intent?.mode === 'or_prep' ? input.intent.procedureOrTopic : undefined,
+        learnerLevel: trainingLevel,
+      }))
+    : '';
 
   return [
     {
@@ -707,6 +756,15 @@ export function buildBroBotChatMessages(input: PromptBuilderInput): BroBotModelM
         answerRoute: input.answerRoute,
         includeProductMetadata: input.includeProductMetadata,
         includeResidentsMiss: input.includeResidentsMiss,
+        interactionGuidance,
+        conversationStateGuidance,
+        latestTurnTaskGuidance: BROBOT_LATEST_TURN_TASK_ENABLED
+          ? formatLatestTurnTaskForPrompt(latestTurnTask)
+          : '',
+        orPrepTaskContractGuidance:
+          BROBOT_OR_PREP_TASK_CONTRACT_ENABLED && (input.intent?.mode ?? mode) === 'or_prep'
+            ? formatOrPrepTaskContractForPrompt(getBroBotOrPrepTaskContract(latestTurnTask, input.intent?.subintent))
+            : '',
       }),
     },
     ...conversation.map((message) => ({
@@ -770,6 +828,28 @@ ${BROBOT_METADATA_JSON_CONTRACT}
 }
 
 export function buildBroBotRevisionMessages(input: RevisionPromptInput): BroBotModelMessage[] {
+  const revisionConstraints = detectBroBotInteractionConstraints({ message: input.message });
+  const latestTask = deriveBroBotLatestTurnTask({
+    message: input.message,
+    topic: input.intent.procedureOrTopic,
+    constraints: revisionConstraints,
+  });
+  const targetedRepairs = [
+    input.warnings.includes('newest_question_not_answered')
+      ? 'The draft did not perform the newest requested action. Rewrite the opening around that action and remove unrelated template content.' : '',
+    input.warnings.includes('staged_quiz_answer_revealed')
+      ? 'Ask exactly one quiz question and remove every answer, explanation, and answer-revealing hint.' : '',
+    input.warnings.includes('evidence_request_without_sources')
+      ? 'Provide verifiable supplied sources or clearly state that retrieval is unavailable; do not substitute search advice or invent citations.' : '',
+    input.warnings.includes('correction_not_repaired')
+      ? 'Explicitly replace the superseded claim and ensure it does not reappear anywhere in the revised answer.' : '',
+    input.warnings.includes('repeated_answer_not_reframed')
+      ? 'Do not repeat the prior framing. Address what was likely missed or ask one targeted question about what remains unclear.' : '',
+    input.warnings.includes('comparison_not_completed')
+      ? 'Compare both alternatives on shared decision-relevant criteria and state what favors each option.' : '',
+    input.warnings.includes('or_prep_task_contract_missing')
+      ? 'Satisfy the narrow OR Prep task contract without padding the response with unrelated OR sections.' : '',
+  ].filter(Boolean);
   return [
     {
       role: 'system',
@@ -801,7 +881,12 @@ ${BROBOT_CHAT_JSON_CONTRACT}
         `Selected branch: ${input.selectedBranch?.label || input.selectedBranch?.id || 'none'}`,
         formatAnswerContextForPrompt(input.answerContext),
         `User message: ${input.message}`,
+        BROBOT_LATEST_TURN_TASK_ENABLED ? formatLatestTurnTaskForPrompt(latestTask) : '',
+        BROBOT_OR_PREP_TASK_CONTRACT_ENABLED && input.intent.mode === 'or_prep'
+          ? formatOrPrepTaskContractForPrompt(getBroBotOrPrepTaskContract(latestTask, input.intent.subintent))
+          : '',
         `Quality gate warnings: ${input.warnings.join(', ')}`,
+        targetedRepairs.length ? `Required repairs:\n${targetedRepairs.map((item) => `- ${item}`).join('\n')}` : '',
         `Current answer:\n${input.originalResponse}`,
         `Current priorityPoints:\n${input.priorityPoints.map((item) => `- ${item}`).join('\n')}`,
         `Current knowledgeGaps:\n${input.knowledgeGaps.map((item) => `- ${item}`).join('\n')}`,

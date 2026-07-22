@@ -24,12 +24,32 @@ assert.equal(
 
 assert.equal(
   shouldStreamBroBotResponse({
+    contract: 'web_v2',
+    requestedStream: false,
+    serverStreamingEnabled: true,
+  }),
+  false,
+  'stream false must be honored even for a web_v2 rollout cohort'
+);
+
+assert.equal(
+  shouldStreamBroBotResponse({
     contract: 'legacy',
     requestedStream: true,
     serverStreamingEnabled: false,
   }),
+  false,
+  'legacy/iOS requests must remain JSON even if a body requests streaming'
+);
+
+assert.equal(
+  shouldStreamBroBotResponse({
+    contract: 'web_v2',
+    requestedStream: true,
+    serverStreamingEnabled: false,
+  }),
   true,
-  'an explicit streaming request must continue to receive SSE'
+  'an explicit web_v2 streaming request must receive SSE'
 );
 
 assert.equal(

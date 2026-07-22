@@ -17,7 +17,11 @@ export function shouldStreamBroBotResponse({
   requestedStream,
   serverStreamingEnabled,
 }: BroBotStreamingPreference): boolean {
+  // The shipped iOS app uses the legacy JSON contract. Never allow a request
+  // body or a server rollout flag to replace that contract with SSE.
+  if (contract !== 'web_v2') return false;
+
   if (requestedStream !== undefined) return requestedStream;
 
-  return contract === 'web_v2' && serverStreamingEnabled;
+  return serverStreamingEnabled;
 }
