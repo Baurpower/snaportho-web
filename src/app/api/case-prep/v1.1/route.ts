@@ -2,11 +2,12 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { requestCasePrepWebV11 } from "@/lib/caseprep-v1-1/client";
+import { isCasePrepWebV11Enabled } from "@/lib/caseprep-v1-1/flags";
 
 const RequestSchema = z.object({ prompt: z.string().trim().min(1) });
 
 export async function POST(request: Request) {
-  if (process.env.CASEPREP_WEB_V1_1_ENABLED !== "true") {
+  if (!isCasePrepWebV11Enabled()) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
   const parsed = RequestSchema.safeParse(await request.json().catch(() => null));

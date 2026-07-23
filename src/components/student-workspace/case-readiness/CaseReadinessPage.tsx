@@ -10,6 +10,7 @@ import { ReadinessConfidenceWidget } from "@/components/student-workspace/case-r
 import { ReadinessObjectiveCard } from "@/components/student-workspace/case-readiness/ReadinessObjectiveCard";
 import { CuratedCasePrepDocument } from "@/components/student-workspace/case-readiness/CuratedCasePrepDocument";
 import { CasePrepV11Document } from "@/components/student-workspace/case-readiness/CasePrepV11Document";
+import { CasePrepStreamPanel } from "@/components/student-workspace/case-readiness/CasePrepStreamPanel";
 import { StudentWorkspaceChrome } from "@/components/student-workspace/shell/StudentWorkspaceChrome";
 import {
   normalizeStudyGuideCompletionIds,
@@ -48,9 +49,11 @@ async function persistProgress(payload: {
 export function CaseReadinessPage({
   session,
   initialCompletedObjectiveIds = [],
+  casePrepStreamEnabled = false,
 }: {
   session: CaseReadinessSession | null;
   initialCompletedObjectiveIds?: string[];
+  casePrepStreamEnabled?: boolean;
 }) {
   const validInitialCompletedIds = useMemo(
     () =>
@@ -154,7 +157,13 @@ export function CaseReadinessPage({
         <CasePrepStatusBanner context={session.casePrepContext} />
 
         {session.casePrepContext.status === "preview" && session.casePrepContext.v11 ? (
-          <CasePrepV11Document data={session.casePrepContext.v11} />
+          casePrepStreamEnabled ? (
+            <CasePrepStreamPanel
+              prompt={session.casePrepContext.title ?? session.topic.title}
+            />
+          ) : (
+            <CasePrepV11Document data={session.casePrepContext.v11} />
+          )
         ) : null}
 
         {session.casePrepContext.status === "certified" ? (

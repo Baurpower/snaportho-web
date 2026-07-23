@@ -1,5 +1,6 @@
 import { requestCasePrepV2 } from "@/lib/caseprep-v2/client";
 import { requestCasePrepWebV11 } from "@/lib/caseprep-v1-1/client";
+import { isCasePrepWebV11Enabled } from "@/lib/caseprep-v1-1/flags";
 import type { CasePrepWebV11 } from "@/lib/caseprep-v1-1/schema";
 import type { CasePrepV2Normalized } from "@/lib/caseprep-v2/schema";
 import { getTopicById } from "@/lib/student-curriculum/curriculum-recommendations";
@@ -89,7 +90,7 @@ export async function getStudentCasePrepContext(
   }
 
   try {
-    if (process.env.CASEPREP_WEB_V1_1_ENABLED === "true") {
+    if (isCasePrepWebV11Enabled()) {
       const preview = await requestCasePrepWebV11(topic.title);
       return {
         status: preview.content_status === "clarification" ? "clarification" : "preview",

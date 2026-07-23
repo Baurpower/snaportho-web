@@ -17,8 +17,16 @@ const caseReadinessSource = readFileSync(
   join(process.cwd(), "src/lib/student-curriculum/student-caseprep-context.ts"),
   "utf8"
 );
-assert.match(caseReadinessSource, /CASEPREP_WEB_V1_1_ENABLED\s*===\s*["']true["']/);
+assert.match(caseReadinessSource, /isCasePrepWebV11Enabled\(\)/);
 assert.match(caseReadinessSource, /requestCasePrepWebV11/);
+
+// The flag itself must remain centralized and opt-in.
+const flagsSource = readFileSync(
+  join(process.cwd(), "src/lib/caseprep-v1-1/flags.ts"),
+  "utf8"
+);
+assert.match(flagsSource, /CASEPREP_WEB_V1_1_ENABLED\s*===\s*["']true["']/);
+assert.match(flagsSource, /CASEPREP_WEB_V1_1_STREAM_ENABLED\s*===\s*["']true["']/);
 
 const rendererSource = readFileSync(
   join(process.cwd(), "src/components/student-workspace/case-readiness/CasePrepV11Document.tsx"),

@@ -11,6 +11,7 @@ import {
 } from "@/lib/student-workspace/curriculum-progress";
 import { getStudentWorkspaceDashboardState } from "@/lib/student-workspace/page-state";
 import { getStudentCasePrepContext } from "@/lib/student-curriculum/student-caseprep-context";
+import { isCasePrepStreamEnabled } from "@/lib/caseprep-v1-1/flags";
 
 function resolveStudyMode(mode: string | undefined): StudyMode {
   return mode === "deep" ? "deep" : "fast";
@@ -57,6 +58,7 @@ export default async function StudentWorkspaceCaseReadinessRoute({
       <CaseReadinessPage
         session={session}
         initialCompletedObjectiveIds={topicProgress?.completed_objective_ids ?? []}
+        casePrepStreamEnabled={isCasePrepStreamEnabled()}
       />
     </>
   );

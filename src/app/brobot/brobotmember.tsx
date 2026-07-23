@@ -25,9 +25,15 @@ import { appendSafeReturnTo } from '@/lib/auth/redirects';
 import { BROBOT_PRICING } from '@/lib/config/brobot-pricing';
 import { createWebsiteBroBotCheckout } from '@/lib/brobot/checkout-client';
 import { useBroBotEntitlement } from '@/hooks/useBroBotEntitlement';
+import { CasePrepPacket } from '@/components/caseprep-packet/CasePrepPacket';
+import { useCasePrepStream } from '@/lib/caseprep-v1-1/useCasePrepStream';
 
 // Phase 1: All BroBot AI calls now go through our secure server proxy.
 // Direct browser calls to the external CasePrep API have been eliminated.
+
+// CasePrep v1.1 packet mode (streamed). Off → legacy /api/brobot/ask flow,
+// byte-for-byte unchanged. The iOS-consumed proxy is never touched.
+const CASEPREP_PACKET_MODE = process.env.NEXT_PUBLIC_CASEPREP_PACKET_ENABLED === 'true';
 
 const BROBOT_VERSION = 2.0;
 const BROBOT_RETURN_TO = '/brobot';
@@ -158,6 +164,20 @@ export default function BroBotMember() {
 
   const resultRef = useRef<HTMLDivElement>(null);
 
+  // CasePrep v1.1 packet stream (only active when the packet flag is on)
+  const casePrepStream = useCasePrepStream();
+  const packetStatus = casePrepStream.state.status;
+  const [packetDebug, setPacketDebug] = useState(false);
+  useEffect(() => {
+    setPacketDebug(window.location.search.includes('debug=1'));
+  }, []);
+  // Quota is consumed server-side per streamed packet — refresh the badge once done.
+  useEffect(() => {
+    if (CASEPREP_PACKET_MODE && packetStatus === 'done') {
+      refreshEntitlements();
+    }
+  }, [packetStatus, refreshEntitlements]);
+
   useEffect(() => {
     if (entitlementUsageMeta) {
       setUsageMeta((current) =>
@@ -200,6 +220,15 @@ export default function BroBotMember() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!user || !prompt.trim()) return;
+
+    // Packet mode: stream the v1.1 packet progressively — no overlay, no
+    // exact-question Supabase cache (backend caches are slug-keyed instead).
+    if (CASEPREP_PACKET_MODE) {
+      setData(null);
+      setBrobotError(null);
+      void casePrepStream.start(prompt.trim());
+      return;
+    }
 
     setLoading(true);
     setData(null);
@@ -443,6 +472,8 @@ export default function BroBotMember() {
                   loading ||
                   entitlementLoading ||
                   !prompt.trim() ||
+                  (CASEPREP_PACKET_MODE &&
+                    (packetStatus === 'connecting' || packetStatus === 'streaming')) ||
                   (usageMeta?.remainingToday === 0 && !usageMeta?.unlimited)
                 }
                 className="inline-flex items-center rounded-md bg-teal-600 px-5 py-2 text-white shadow hover:bg-teal-700 disabled:opacity-40 transition-colors"
@@ -499,6 +530,33 @@ export default function BroBotMember() {
               upgradeLoading={upgradeLoading}
               onTryTomorrow={() => { /* no-op for proactive case; user can just wait */ }}
             />
+          </div>
+        )}
+
+        {/* CasePrep v1.1 streamed packet (flag-gated) */}
+        {CASEPREP_PACKET_MODE && packetStatus !== 'idle' && (
+          <div className="mt-8">
+            {packetStatus === 'denied' ? (
+              <QuotaHitCard
+                dailyCap={
+                  (casePrepStream.state.deniedMeta?.dailyCap as number | null | undefined) ??
+                  usageMeta?.dailyCap ??
+                  null
+                }
+                onUpgrade={handleUpgrade}
+                upgradeLoading={upgradeLoading}
+                onTryTomorrow={() => casePrepStream.reset()}
+              />
+            ) : (
+              <CasePrepPacket
+                state={casePrepStream.state}
+                debug={packetDebug}
+                onClarify={(clarifiedPrompt) => {
+                  setPrompt(clarifiedPrompt);
+                  void casePrepStream.start(clarifiedPrompt);
+                }}
+              />
+            )}
           </div>
         )}
 
