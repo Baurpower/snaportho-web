@@ -1,9 +1,12 @@
 import { requestCasePrepV2 } from "@/lib/caseprep-v2/client";
+import { requestCasePrepWebV11 } from "@/lib/caseprep-v1-1/client";
+import type { CasePrepWebV11 } from "@/lib/caseprep-v1-1/schema";
 import type { CasePrepV2Normalized } from "@/lib/caseprep-v2/schema";
 import { getTopicById } from "@/lib/student-curriculum/curriculum-recommendations";
 
 export type StudentCasePrepContextStatus =
   | "certified"
+  | "preview"
   | "fallback"
   | "clarification"
   | "unavailable";
@@ -22,6 +25,7 @@ export type StudentCasePrepContext = {
   alternatives: CasePrepV2Normalized["alternatives"];
   payload: unknown | null;
   sections: Array<{ label: string; content: string }>;
+  v11: CasePrepWebV11 | null;
 };
 
 function payloadSections(payload: unknown): Array<{ label: string; content: string }> {
@@ -80,10 +84,39 @@ export async function getStudentCasePrepContext(
       alternatives: [],
       payload: null,
       sections: [],
+      v11: null,
     };
   }
 
   try {
+    if (process.env.CASEPREP_WEB_V1_1_ENABLED === "true") {
+      const preview = await requestCasePrepWebV11(topic.title);
+      return {
+        status: preview.content_status === "clarification" ? "clarification" : "preview",
+        slug: preview.case.canonical_slug,
+        title: preview.case.canonical_name ?? topic.title,
+        message:
+          preview.content_status === "clarification"
+            ? preview.case.clarification_reason ?? "Choose an approach to continue."
+            : "Faster parallel CasePrep preview",
+        sourceType: "rag_fallback",
+        entityKind: "procedure",
+        requestedApproach: preview.case.approach,
+        revisionId: null,
+        payloadHash: null,
+        citations: preview.sources.map((source) => ({
+          source_id: source.source_id,
+          title: source.title,
+          url: source.url || null,
+          section: null,
+          chunk_id: null,
+        })),
+        alternatives: [],
+        payload: preview,
+        sections: [],
+        v11: preview.content_status === "preview" ? preview : null,
+      };
+    }
     const result = await requestCasePrepV2({
       prompt: topic.title,
       entrySurface: "case_readiness",
@@ -119,6 +152,7 @@ export async function getStudentCasePrepContext(
       alternatives: result.alternatives,
       payload: result.payload,
       sections,
+      v11: null,
     };
   } catch {
     return {
@@ -135,6 +169,7 @@ export async function getStudentCasePrepContext(
       alternatives: [],
       payload: null,
       sections: [],
+      v11: null,
     };
   }
 }

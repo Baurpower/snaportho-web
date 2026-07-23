@@ -9,6 +9,7 @@ import { CaseReadinessProgress } from "@/components/student-workspace/case-readi
 import { ReadinessConfidenceWidget } from "@/components/student-workspace/case-readiness/ReadinessConfidenceWidget";
 import { ReadinessObjectiveCard } from "@/components/student-workspace/case-readiness/ReadinessObjectiveCard";
 import { CuratedCasePrepDocument } from "@/components/student-workspace/case-readiness/CuratedCasePrepDocument";
+import { CasePrepV11Document } from "@/components/student-workspace/case-readiness/CasePrepV11Document";
 import { StudentWorkspaceChrome } from "@/components/student-workspace/shell/StudentWorkspaceChrome";
 import {
   normalizeStudyGuideCompletionIds,
@@ -152,13 +153,17 @@ export function CaseReadinessPage({
         <CaseReadinessHeader session={session} />
         <CasePrepStatusBanner context={session.casePrepContext} />
 
+        {session.casePrepContext.status === "preview" && session.casePrepContext.v11 ? (
+          <CasePrepV11Document data={session.casePrepContext.v11} />
+        ) : null}
+
         {session.casePrepContext.status === "certified" ? (
           <CuratedCasePrepDocument context={session.casePrepContext} />
         ) : null}
 
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div className="grid gap-4">
-            {session.casePrepContext.status !== "certified"
+            {session.casePrepContext.status !== "certified" && session.casePrepContext.status !== "preview"
               ? session.studyGuideSections.map((objective) => (
               <ReadinessObjectiveCard
                 key={objective.id}

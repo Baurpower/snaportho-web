@@ -1867,6 +1867,7 @@ export function buildCaseReadinessSession(
       alternatives: [],
       payload: null,
       sections: [],
+      v11: null,
     };
   const guideType = detectStudyGuideTopicType(topic);
   const context: GuideBuildContext = {

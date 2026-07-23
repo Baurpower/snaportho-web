@@ -10,6 +10,8 @@ export function CasePrepStatusBanner({
   const tone =
     context.status === "certified"
       ? "border-emerald-200 bg-emerald-50 text-emerald-900"
+      : context.status === "preview"
+        ? "border-violet-200 bg-violet-50 text-violet-900"
       : context.status === "fallback"
         ? "border-sky-200 bg-sky-50 text-sky-900"
         : context.status === "clarification"
@@ -21,6 +23,8 @@ export function CasePrepStatusBanner({
       <p className="text-sm font-semibold">
         {context.status === "certified"
           ? "Curated Case Prep"
+          : context.status === "preview"
+            ? "CasePrep v1.1 Preview"
           : context.status === "fallback"
             ? "AI-assisted fallback"
             : context.status === "clarification"
