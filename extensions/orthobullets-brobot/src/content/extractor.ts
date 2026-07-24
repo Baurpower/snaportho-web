@@ -1453,6 +1453,8 @@ export function extractOrthobulletsTopicPageContext(input: {
 export function extractQuestionContext(input: {
   document: DocumentLike;
   pageUrl?: string;
+  /** AAOS Himalaya only: target one specific question by te6 attempt id. */
+  questionAttemptId?: number;
 }): OrthobulletsPageContext | null {
   const provider = detectQuestionProvider(input);
   if (provider === 'himalaya') return extractHimalayaProviderContext(input);

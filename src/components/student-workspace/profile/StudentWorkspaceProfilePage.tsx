@@ -6,6 +6,11 @@ import {
   UserRound,
 } from "lucide-react";
 import { StudentWorkspaceProfileSettingsPanel } from "@/components/student-workspace/StudentWorkspaceProfileSettingsPanel";
+import { MobileProfilePage } from "@/components/student-workspace/mobile/profile/MobileProfilePage";
+import {
+  DesktopOnly,
+  MobileOnly,
+} from "@/components/student-workspace/mobile/viewport";
 import { RotationList } from "@/components/student-workspace/rotations/RotationList";
 import { StudentWorkspaceChrome } from "@/components/student-workspace/shell/StudentWorkspaceChrome";
 import {
@@ -17,15 +22,32 @@ import type {
   StudentWorkspaceRotation,
 } from "@/lib/student-workspace/types";
 
-export function StudentWorkspaceProfilePage({
-  profile,
-  rotations,
-  today,
-}: {
+type StudentWorkspaceProfilePageProps = {
   profile: StudentWorkspaceProfile;
   rotations: StudentWorkspaceRotation[];
   today: string;
-}) {
+};
+
+export function StudentWorkspaceProfilePage(
+  props: StudentWorkspaceProfilePageProps
+) {
+  return (
+    <>
+      <MobileOnly>
+        <MobileProfilePage {...props} />
+      </MobileOnly>
+      <DesktopOnly>
+        <DesktopProfilePage {...props} />
+      </DesktopOnly>
+    </>
+  );
+}
+
+function DesktopProfilePage({
+  profile,
+  rotations,
+  today,
+}: StudentWorkspaceProfilePageProps) {
   return (
     <StudentWorkspaceChrome
       badge="Profile"

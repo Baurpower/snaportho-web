@@ -11,6 +11,7 @@ const iconsSourceDir = path.join(extensionRoot, 'icons');
 const builtPaths = {
   backgroundServiceWorker: 'background.js',
   contentScript: 'content/content-script.js',
+  himalayaBridge: 'providers/himalaya/himalaya-bridge.js',
   sidepanelHtml: 'sidepanel.html',
   sidepanelEntry: 'sidepanel/main.js',
   iconsDir: 'icons',
@@ -30,6 +31,10 @@ function buildClassicContentScriptBundle() {
   const questionFingerprintPath = path.join(distDir, 'shared', 'question-fingerprint.js');
   const himalayaDebugPath = path.join(distDir, 'providers', 'himalaya', 'himalaya-debug.js');
   const himalayaExtractorPath = path.join(distDir, 'providers', 'himalaya', 'himalaya-extractor.js');
+  const himalayaTe6TypesPath = path.join(distDir, 'providers', 'himalaya', 'himalaya-te6-types.js');
+  const himalayaApiPath = path.join(distDir, 'providers', 'himalaya', 'himalaya-api.js');
+  const himalayaContextPath = path.join(distDir, 'providers', 'himalaya', 'himalaya-context.js');
+  const himalayaStorePath = path.join(distDir, 'providers', 'himalaya', 'himalaya-store.js');
   const himalayaProviderPath = path.join(distDir, 'providers', 'himalaya', 'himalaya-provider.js');
   const questionLifecyclePath = path.join(distDir, 'content', 'question-lifecycle.js');
   const contentScriptPath = path.join(distDir, 'content', 'content-script.js');
@@ -84,11 +89,18 @@ function buildClassicContentScriptBundle() {
     .replace(/^import\s+\{[^}]+\}\s+from\s+['"]\.\/himalaya-debug\.js['"];\r?\n?/gm, '')
     .replace(/^export function /gm, 'function ');
 
-  const himalayaProviderSource = readFileSync(himalayaProviderPath, 'utf8')
-    .replace(/^import\s+type\s+\{[^}]+\}\s+from\s+['"][^'"]+['"];\r?\n?/gm, '')
-    .replace(/^import\s+\{[^}]+\}\s+from\s+['"]\.\/himalaya-extractor\.js['"];\r?\n?/gm, '')
-    .replace(/^export const /gm, 'const ')
-    .replace(/^export function /gm, 'function ');
+  const stripEsm = (filePath) =>
+    readFileSync(filePath, 'utf8')
+      .replace(/^import\s+.*from\s+['"][^'"]+['"];\r?\n?/gm, '')
+      .replace(/^export const /gm, 'const ')
+      .replace(/^export async function /gm, 'async function ')
+      .replace(/^export function /gm, 'function ');
+
+  const himalayaTe6TypesSource = stripEsm(himalayaTe6TypesPath);
+  const himalayaApiSource = stripEsm(himalayaApiPath);
+  const himalayaContextSource = stripEsm(himalayaContextPath);
+  const himalayaStoreSource = stripEsm(himalayaStorePath);
+  const himalayaProviderSource = stripEsm(himalayaProviderPath);
 
   const questionLifecycleSource = readFileSync(questionLifecyclePath, 'utf8')
     .replace(/^import\s+.*from\s+['"][^'"]+['"];\r?\n?/gm, '')
@@ -111,6 +123,14 @@ function buildClassicContentScriptBundle() {
     '',
     himalayaExtractorSource.trim(),
     '',
+    himalayaTe6TypesSource.trim(),
+    '',
+    himalayaApiSource.trim(),
+    '',
+    himalayaContextSource.trim(),
+    '',
+    himalayaStoreSource.trim(),
+    '',
     himalayaProviderSource.trim(),
     '',
     extractorSource.trim(),
@@ -127,6 +147,41 @@ function buildClassicContentScriptBundle() {
   }
 
   writeFileSync(contentScriptPath, bundledSource);
+}
+
+/**
+ * The Himalaya bridge ships as a classic MAIN-world content script so it can read
+ * the te6 AngularJS scope. Chrome does not load ES modules as content scripts, so
+ * the module and its one value-import are flattened into a self-invoking bundle.
+ */
+function buildHimalayaBridgeBundle() {
+  const typesPath = path.join(distDir, 'providers', 'himalaya', 'himalaya-te6-types.js');
+  const bridgePath = path.join(distDir, 'providers', 'himalaya', 'himalaya-bridge.js');
+
+  const typesSource = readFileSync(typesPath, 'utf8')
+    .replace(/^export const /gm, 'const ')
+    .replace(/^export function /gm, 'function ');
+
+  const bridgeSource = readFileSync(bridgePath, 'utf8')
+    .replace(/^import\s+.*from\s+['"][^'"]+['"];\r?\n?/gm, '')
+    .replace(/^export function /gm, 'function ');
+
+  const bundledSource = [
+    '(() => {',
+    typesSource.trim(),
+    '',
+    bridgeSource.trim(),
+    '',
+    'startHimalayaBridge();',
+    '})();',
+    '',
+  ].join('\n');
+
+  if (/^\s*import\s/m.test(bundledSource) || /^\s*export\s/m.test(bundledSource)) {
+    throw new Error('Himalaya bridge bundle still contains ESM syntax.');
+  }
+
+  writeFileSync(bridgePath, bundledSource);
 }
 
 rmSync(distDir, { recursive: true, force: true });
@@ -147,13 +202,15 @@ if (tscResult.status !== 0) {
 mkdirSync(distDir, { recursive: true });
 cpSync(iconsSourceDir, path.join(distDir, builtPaths.iconsDir), { recursive: true });
 buildClassicContentScriptBundle();
+buildHimalayaBridgeBundle();
 
 const manifestTemplate = readFileSync(manifestTemplatePath, 'utf8');
 const manifest = manifestTemplate
   .replace('__APP_ORIGIN__', configuredAppOrigin.replace(/\/+$/, ''))
   .replace('__BACKGROUND_SERVICE_WORKER__', builtPaths.backgroundServiceWorker)
   .replace('__SIDEPANEL_HTML__', builtPaths.sidepanelHtml)
-  .replace('__CONTENT_SCRIPT__', builtPaths.contentScript);
+  .replace('__CONTENT_SCRIPT__', builtPaths.contentScript)
+  .replace('__HIMALAYA_BRIDGE__', builtPaths.himalayaBridge);
 
 writeFileSync(path.join(distDir, 'manifest.json'), manifest);
 
@@ -166,6 +223,7 @@ writeFileSync(path.join(distDir, 'sidepanel.html'), builtSidepanelHtml);
 const requiredBuildArtifacts = [
   builtPaths.backgroundServiceWorker,
   builtPaths.contentScript,
+  builtPaths.himalayaBridge,
   builtPaths.sidepanelEntry,
   builtPaths.sidepanelHtml,
   path.join(builtPaths.iconsDir, 'brobot-16.png'),

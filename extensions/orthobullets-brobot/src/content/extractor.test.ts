@@ -592,6 +592,57 @@ assert.equal(himalayaModalContext.raw?.providerSpecific?.questionNumber, '6');
 assert.equal(himalayaModalContext.raw?.providerSpecific?.totalQuestions, '8');
 assert.equal(himalayaModalContext.classification?.pageKind, 'question');
 
+// Faithful te6 (mycrowdwisdom) DOM: results page with modal-question-review.html open.
+// Choices are bare <li> under .answers > ul, remediation lives in hidden uib-tab panes.
+const himalayaTe6ModalHtml = readFileSync(path.join(FIXTURES_DIR, 'himalaya-te6-review-modal.html'), 'utf8');
+const { document: himalayaTe6ModalDocument } = parseHTML(himalayaTe6ModalHtml);
+const himalayaTe6ModalContext = extractQuestionContext({
+  document: himalayaTe6ModalDocument,
+  pageUrl: 'https://learn.aaos.org/diweb/?wicket:interface=:3::::',
+});
+assert.ok(himalayaTe6ModalContext, 'te6 review modal must be detected as a question');
+assert.equal(himalayaTe6ModalContext.provider, 'himalaya');
+assert.equal(himalayaTe6ModalContext.pageKind, 'review');
+assert.equal(himalayaTe6ModalContext.supportedPageKind, 'rock_himalaya_review');
+assert.match(himalayaTe6ModalContext.stem ?? '', /periacetabular osteotomy scenario/i);
+assert.equal(himalayaTe6ModalContext.answerChoices.length, 4);
+assert.equal(
+  himalayaTe6ModalContext.answerChoices[0]?.text,
+  'A short period of synthetic protected weightbearing',
+  'index-derived labels must not strip prose that starts with "A "',
+);
+assert.equal(himalayaTe6ModalContext.selectedAnswer, 'Immediate synthetic revision fixation');
+assert.equal(himalayaTe6ModalContext.correctAnswer, 'Supervised synthetic progressive rehabilitation');
+assert.equal(himalayaTe6ModalContext.answerChoices.find((choice) => choice.isSelected)?.isCorrect, false);
+assert.match(himalayaTe6ModalContext.explanationText ?? '', /supervised progressive rehabilitation is preferred/i, 'hidden Reasoning tab text must be recovered');
+assert.match(himalayaTe6ModalContext.sourceKeyPoints ?? '', /stable constructs tolerate supervised progression/i);
+assert.match(himalayaTe6ModalContext.sourceReferences ?? '', /Sanitized Journal of Synthetic Orthopaedics/i);
+assert.equal(himalayaTe6ModalContext.raw?.providerSpecific?.questionNumber, '3');
+assert.equal(himalayaTe6ModalContext.raw?.providerSpecific?.totalQuestions, '5');
+assert.equal(himalayaTe6ModalContext.questionReviewSignals?.hasSubmittedAnswerState, true);
+
+// Faithful te6 partial-question.html live-question DOM: .choices li.paper-shadow rows
+// with sibling input.choice + label, selection marked via the `active` class.
+const himalayaTe6ActiveHtml = readFileSync(path.join(FIXTURES_DIR, 'himalaya-te6-active-question.html'), 'utf8');
+const { document: himalayaTe6ActiveDocument } = parseHTML(himalayaTe6ActiveHtml);
+const himalayaTe6ActiveContext = extractQuestionContext({
+  document: himalayaTe6ActiveDocument,
+  pageUrl: 'https://learn.aaos.org/diweb/?wicket:interface=:2::::',
+});
+assert.ok(himalayaTe6ActiveContext, 'te6 live question must be detected');
+assert.equal(himalayaTe6ActiveContext.pageKind, 'current_test');
+assert.equal(himalayaTe6ActiveContext.supportedPageKind, 'rock_himalaya_question');
+assert.match(himalayaTe6ActiveContext.stem ?? '', /hip arthroscopy scenario/i);
+assert.equal(himalayaTe6ActiveContext.answerChoices.length, 4);
+assert.equal(
+  himalayaTe6ActiveContext.answerChoices[1]?.text,
+  'A percutaneous synthetic approach without imaging',
+);
+assert.equal(himalayaTe6ActiveContext.selectedAnswer, 'A percutaneous synthetic approach without imaging');
+assert.equal(himalayaTe6ActiveContext.correctAnswerKey, null, 'live question must not leak a correct answer');
+assert.equal(himalayaTe6ActiveContext.raw?.providerSpecific?.questionNumber, '2');
+assert.equal(himalayaTe6ActiveContext.raw?.providerSpecific?.totalQuestions, '10');
+
 const himalayaMultiHtml = readFileSync(path.join(FIXTURES_DIR, 'himalaya-multiple-containers.html'), 'utf8');
 assert.match(himalayaMultiHtml, /Synthetic Himalaya Multiple Containers/);
 const { document: himalayaMultiDocument } = parseHTML(himalayaMultiHtml);

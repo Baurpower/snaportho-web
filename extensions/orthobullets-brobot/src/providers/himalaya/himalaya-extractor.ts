@@ -26,8 +26,12 @@ const HIMALAYA_SELECTORS = {
     '[role="dialog"]',
     '[aria-modal="true"]',
     '.modal.show',
+    // Bootstrap 3 open-modal class used by the te6 uib-modal question review dialog.
+    '.modal.in',
     '[class*="modal-dialog" i]',
     '[class*="review-dialog" i]',
+    // te6 partial-question.html live-question widget.
+    '.widget.exam-question',
     '.question-attempt',
     '[data-testid*="question" i]',
     '[class*="question-attempt" i]',
@@ -35,6 +39,8 @@ const HIMALAYA_SELECTORS = {
     '[class*="question" i]',
   ],
   stem: [
+    // te6 templates render the stem into `.questionStem` (modal review + live question).
+    '.questionStem',
     '.stem',
     '[class*="stem" i]',
     '[data-testid*="stem" i]',
@@ -47,6 +53,13 @@ const HIMALAYA_SELECTORS = {
   answers: [
     '.answers .answer',
     '.answer',
+    // te6 modal-question-review.html renders choices as bare list items whose only
+    // classes are ng-class results (your-answer / correct / incorrect).
+    '.answers > ul > li',
+    '.answers li',
+    // te6 partial-question.html renders live choices as `.choices li.paper-shadow`
+    // holding a sibling input.choice + label pair.
+    '.choices li',
     '[class*="answer" i]',
     '[data-testid*="answer" i]',
     'label:has(input[type="radio"])',
@@ -55,11 +68,22 @@ const HIMALAYA_SELECTORS = {
     '[role="option"]',
   ],
   answerIndex: ['.answer-index', '[class*="answer-index" i]', '[class*="answerIndex" i]'],
-  answerText: ['.answer-text', '[class*="answer-text" i]', '[class*="answerText" i]', 'p', 'span'],
-  explanation: ['.feedback', '[class*="feedback" i]', '[data-testid*="feedback" i]'],
+  // `label` precedes generic p/span so live-question rows prefer the answer label
+  // over auxiliary spans such as `.peer-percent`.
+  answerText: ['.answer-text', '[class*="answer-text" i]', '[class*="answerText" i]', 'label', 'p', 'span'],
+  explanation: ['.feedback', '.feedbackTab', '[class*="feedback" i]', '[data-testid*="feedback" i]'],
   discussion: ['[role="tabpanel"][aria-label*="discussion" i]', '[class*="discussion" i]', '[data-testid*="discussion" i]'],
-  keyReferencePoints: ['.keyReferencePoints', '[class*="keyReferencePoints" i]', '[class*="key-reference" i]'],
-  references: ['.reference', '.references', '[class*="reference" i]', '[data-testid*="reference" i]'],
+  keyReferencePoints: ['.keyPointsTab', '.keyReferencePoints', '[class*="keyReferencePoints" i]', '[class*="key-reference" i]'],
+  references: ['.referenceTab', '.reference', '.references', '[class*="reference" i]', '[data-testid*="reference" i]'],
+} as const;
+
+// te6 renders remediation into uib-tabset panes that stay in the DOM but are
+// display:none until their tab is clicked. These classes are unambiguous, so we
+// can safely read their text even while hidden.
+const HIMALAYA_HIDDEN_SECTION_SELECTORS = {
+  explanation: ['.feedbackTab', '.distractorFeedback'],
+  keyReferencePoints: ['.keyPointsTab'],
+  references: ['.referenceTab'],
 } as const;
 
 function normalizeWhitespace(value: string | null | undefined) {
@@ -219,7 +243,7 @@ function cleanAnswerText(raw: string, label?: string) {
   return text;
 }
 
-function detectChoiceLabel(node: DomElementLike, index: number) {
+function detectChoiceLabel(node: DomElementLike, index: number): { label: string; explicit: boolean } {
   const indexText = HIMALAYA_SELECTORS.answerIndex
     .map((selector) => textOf(node.querySelector(selector)))
     .find(Boolean);
@@ -228,8 +252,14 @@ function detectChoiceLabel(node: DomElementLike, index: number) {
     normalizeWhitespace(node.getAttribute('data-choice-label')) ||
     normalizeWhitespace(node.getAttribute('aria-label')).match(/^([A-H])[\).\s:-]+/)?.[1] ||
     '';
-  const fromText = textOf(node).match(/^([A-H])[\).\s:-]+/)?.[1];
-  return (indexText || attr || fromText || 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[index] || String(index + 1)).replace(/[^A-Za-z0-9]/g, '').slice(0, 3);
+  // Require a punctuation delimiter after the letter ("A." / "A)") so prose answers
+  // such as "A short period of protected weightbearing" are not mistaken for labels.
+  const fromText = textOf(node).match(/^([A-H])[\).:\-]\s*/)?.[1];
+  const explicitLabel = indexText || attr || fromText || '';
+  if (explicitLabel) {
+    return { label: explicitLabel.replace(/[^A-Za-z0-9]/g, '').slice(0, 3), explicit: true };
+  }
+  return { label: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[index] || String(index + 1), explicit: false };
 }
 
 function visibleMarker(node: DomElementLike, selectors: string[]) {
@@ -245,6 +275,9 @@ function detectAnswerState(node: DomElementLike) {
   const markerText = [className, text, aria, title, dataStatus].join(' ');
   const selected =
     /\b(your-answer|your answer|selected|you chose|chosen)\b/i.test(markerText) ||
+    // te6 partial-question.html marks the chosen live-question row with `active`.
+    // Scope to the class attribute so prose like "active infection" cannot match.
+    /(?:^|\s)active(?:\s|$)/i.test(className) ||
     node.getAttribute('aria-checked') === 'true' ||
     node.querySelector('input:checked') != null;
   const incorrect =
@@ -264,7 +297,9 @@ function extractChoices(container: DomElementLike) {
   const choices: HimalayaAnswerChoice[] = [];
   const rawNodes = Array.from(container.querySelectorAll(HIMALAYA_SELECTORS.answers.join(',')))
     .filter(isElementVisible)
-    .filter((node) => !/\banswers\b/i.test(node.getAttribute('class') ?? ''));
+    // Exclude the .answers wrapper itself plus structural controls such as the
+    // te6 `.exam-submit-answer` block that only contain buttons, not choices.
+    .filter((node) => !/\banswers\b|submit/i.test(node.getAttribute('class') ?? ''));
   const nodes = rawNodes.filter((node) => {
     let parent = node.parentElement;
     while (parent && parent !== container) {
@@ -274,11 +309,13 @@ function extractChoices(container: DomElementLike) {
     return true;
   });
   nodes.forEach((node, index) => {
-    const label = detectChoiceLabel(node, index);
+    const { label, explicit } = detectChoiceLabel(node, index);
     const scopedText = HIMALAYA_SELECTORS.answerText
       .map((selector) => visibleText(node.querySelector(selector)))
       .find((value) => value && value.length > 1);
-    const text = cleanAnswerText(scopedText || visibleText(node), label);
+    // Only strip a leading label from the text when the label came from markup;
+    // index-derived letters would otherwise eat prose that starts with "A ...".
+    const text = cleanAnswerText(scopedText || visibleText(node), explicit ? label : undefined);
     if (!text || text.length < 2) return;
     const key = `${label}|${text}`.toLowerCase();
     if (seen.has(key)) return;
@@ -346,10 +383,38 @@ function buildFingerprint(input: {
   return `himalaya:${hashText(normalized)}`;
 }
 
-function extractSection(container: DomElementLike, selectors: readonly string[], headingFallback: RegExp) {
+function collectHiddenTexts(root: DomElementLike, selectors: readonly string[]) {
+  const seen = new Set<string>();
+  const values: string[] = [];
+  for (const selector of selectors) {
+    for (const node of Array.from(root.querySelectorAll(selector))) {
+      const text = textOf(node);
+      const key = text.toLowerCase();
+      if (!text || seen.has(key)) continue;
+      seen.add(key);
+      values.push(text);
+    }
+    if (values.length) break;
+  }
+  return values;
+}
+
+function extractSection(
+  container: DomElementLike,
+  selectors: readonly string[],
+  headingFallback: RegExp,
+  hiddenFallbackSelectors?: readonly string[],
+) {
   const selectorText = collectVisibleTexts(container, selectors).join('\n\n');
   if (selectorText) return selectorText;
-  return textAfterHeading(container, headingFallback);
+  const headingText = textAfterHeading(container, headingFallback);
+  if (headingText) return headingText;
+  // te6 keeps remediation tabs in the DOM but display:none until clicked; for
+  // unambiguous section classes we still want that text for tutoring context.
+  if (hiddenFallbackSelectors?.length) {
+    return collectHiddenTexts(container, hiddenFallbackSelectors).join('\n\n');
+  }
+  return '';
 }
 
 export function extractHimalayaQuestionSnapshot(input: {
@@ -364,10 +429,25 @@ export function extractHimalayaQuestionSnapshot(input: {
   if (active && (pageMode === 'reviewed-question' || pageMode === 'active-question')) {
     const stem = visibleText(queryFirstVisible(active, HIMALAYA_SELECTORS.stem));
     const choices = extractChoices(active);
-    const explanation = extractSection(active, HIMALAYA_SELECTORS.explanation, /^(feedback|explanation)$/i);
+    const explanation = extractSection(
+      active,
+      HIMALAYA_SELECTORS.explanation,
+      /^(feedback|explanation)$/i,
+      HIMALAYA_HIDDEN_SECTION_SELECTORS.explanation,
+    );
     const discussion = extractSection(active, HIMALAYA_SELECTORS.discussion, /^discussion$/i);
-    const keyReferencePoints = extractSection(active, HIMALAYA_SELECTORS.keyReferencePoints, /^key reference points?$/i);
-    const references = extractSection(active, HIMALAYA_SELECTORS.references, /^references?$/i);
+    const keyReferencePoints = extractSection(
+      active,
+      HIMALAYA_SELECTORS.keyReferencePoints,
+      /^key reference points?$/i,
+      HIMALAYA_HIDDEN_SECTION_SELECTORS.keyReferencePoints,
+    );
+    const references = extractSection(
+      active,
+      HIMALAYA_SELECTORS.references,
+      /^references?$/i,
+      HIMALAYA_HIDDEN_SECTION_SELECTORS.references,
+    );
     const answeredReview =
       Boolean(explanation) ||
       Boolean(keyReferencePoints) ||
@@ -460,7 +540,7 @@ export function extractHimalayaPageContext(input: {
       },
       debug: {
         matchedSelectors: { himalayaPageMode: [pageMode] },
-        extractorVersion: '2026-07-12-himalaya-v1',
+        extractorVersion: '2026-07-23-himalaya-v2-te6-dom',
       },
     };
   }
@@ -570,7 +650,7 @@ export function extractHimalayaPageContext(input: {
     },
     debug: {
       matchedSelectors: { himalayaPageMode: [pageMode] },
-      extractorVersion: '2026-07-12-himalaya-v1',
+      extractorVersion: '2026-07-23-himalaya-v2-te6-dom',
     },
   };
 }

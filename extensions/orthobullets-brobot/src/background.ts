@@ -267,12 +267,12 @@ function extractionFailureCodeFor(pageContext: OrthobulletsPageContext): Orthobu
   return 'page_not_readable';
 }
 
-async function sendExtractionMessage(tabId: number): Promise<{
+async function sendExtractionMessage(tabId: number, questionAttemptId?: number): Promise<{
   response: { ok?: boolean; pageContext?: OrthobulletsPageContext; error?: string; provider?: ProviderDetectionStatus; unsupported?: boolean } | null;
   sendMessageError: string | null;
 }> {
   return new Promise((resolve) => {
-    chrome.tabs.sendMessage(tabId, { type: 'ob:extract-page-context' }, (response: unknown) => {
+    chrome.tabs.sendMessage(tabId, { type: 'ob:extract-page-context', questionAttemptId }, (response: unknown) => {
       const sendMessageError = chrome.runtime.lastError?.message ?? null;
       resolve({
         response: (response as { ok?: boolean; pageContext?: OrthobulletsPageContext; error?: string; provider?: ProviderDetectionStatus; unsupported?: boolean } | null) ?? null,
@@ -435,7 +435,7 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage | { type: 'ob:qu
 
       if (message.type === 'ob:extract-page-context') {
         const tabSnapshot = await getTabSnapshot(message.tabId);
-        const initialAttempt = await sendExtractionMessage(message.tabId);
+        const initialAttempt = await sendExtractionMessage(message.tabId, message.questionAttemptId);
         let response = initialAttempt.response;
         let sendMessageError = initialAttempt.sendMessageError;
         let fallbackInjectionAttempted = false;
@@ -451,7 +451,7 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage | { type: 'ob:qu
           injectionError = injectionResult.injectionError;
 
           if (injectionResult.ok) {
-            const retryAttempt = await sendExtractionMessage(message.tabId);
+            const retryAttempt = await sendExtractionMessage(message.tabId, message.questionAttemptId);
             response = retryAttempt.response;
             sendMessageError = retryAttempt.sendMessageError;
           }

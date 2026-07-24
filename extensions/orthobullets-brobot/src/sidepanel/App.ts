@@ -42,6 +42,12 @@ import { renderCurriculumChatChips, renderCurriculumStudyPanel } from './explain
 import { QuestionTutorController } from './question-tutor-controller.js';
 import type { QuestionTutorViewState } from './question-session.js';
 import { appendQuestionTutorPanel, renderQuestionTutorLifecycleDebug } from './question-tutor-panel.js';
+import {
+  appendHimalayaReviewBoard,
+  getReviewBoardRows,
+  summarizeBoard,
+  type ReviewBoardRowState,
+} from './himalaya-review-board.js';
 import { renderTopicTutorPanel } from './topic-tutor-panel.js';
 import {
   EXTENSION_BUILD_ID,
@@ -432,7 +438,17 @@ function getStatusCopy(input: {
   }
   if (input.pageContext) {
     if (input.pageContext.provider === 'himalaya' && input.pageContext.pageKind === 'results-overview') {
-      return { label: 'Himalaya results detected', detail: 'Select a question to review it with BroBot.' };
+      const boardRows = getReviewBoardRows(input.pageContext);
+      if (boardRows.length) {
+        const { missedCount, total } = summarizeBoard(boardRows);
+        return {
+          label: 'Review board ready',
+          detail: missedCount
+            ? `All ${total} questions loaded. BroBot is writing up the ${missedCount} you missed — expand any other question for its teaching answer.`
+            : `All ${total} questions loaded, none missed. Expand any question for its teaching answer.`,
+        };
+      }
+      return { label: 'Himalaya results detected', detail: 'Loading your questions from AAOS…' };
     }
     const classification = getPageClassification(input.pageContext);
     if (classification?.pageKind === 'topic_page') {
@@ -558,6 +574,9 @@ export function mountSidePanelApp(root: HTMLElement) {
     questionTutorEngaged: boolean;
     questionRefreshing: boolean;
     questionRefreshSource: QuestionRefreshSource;
+    reviewBoardRowStates: Map<number, ReviewBoardRowState>;
+    reviewBoardExplainAllInFlight: boolean;
+    reviewBoardAutoExplainedFor: string | null;
   } = {
     activePage: null,
     auth: null,
@@ -597,6 +616,9 @@ export function mountSidePanelApp(root: HTMLElement) {
     questionTutorEngaged: false,
     questionRefreshing: false,
     questionRefreshSource: 'automatic',
+    reviewBoardRowStates: new Map(),
+    reviewBoardExplainAllInFlight: false,
+    reviewBoardAutoExplainedFor: null,
   };
 
   const questionTutorController = new QuestionTutorController({
@@ -696,6 +718,123 @@ export function mountSidePanelApp(root: HTMLElement) {
     state.chatDraft = '';
     state.chatPrompts = [];
     state.questionRefreshing = questionTutorController.store.deriveViewState().showLoadingCurrentQuestion;
+  }
+
+  function getReviewBoardRowState(questionAttemptId: number): ReviewBoardRowState {
+    return (
+      state.reviewBoardRowStates.get(questionAttemptId) ?? {
+        expanded: false,
+        loading: false,
+        explanation: null,
+        error: null,
+      }
+    );
+  }
+
+  function setReviewBoardRowState(questionAttemptId: number, patch: Partial<ReviewBoardRowState>) {
+    state.reviewBoardRowStates.set(questionAttemptId, { ...getReviewBoardRowState(questionAttemptId), ...patch });
+  }
+
+  /**
+   * Explain one board row. The row carries only a preview, so the full question
+   * is pulled from the content script by te6 attempt id before asking BroBot.
+   */
+  async function explainReviewBoardRow(questionAttemptId: number) {
+    const existing = getReviewBoardRowState(questionAttemptId);
+    if (existing.loading || existing.explanation) return;
+    if (!state.activePage?.tabId) return;
+
+    setReviewBoardRowState(questionAttemptId, { expanded: true, loading: true, error: null });
+    render();
+
+    const extractResult = await sendMessage({
+      type: 'ob:extract-page-context',
+      tabId: state.activePage.tabId,
+      questionAttemptId,
+    });
+
+    if (!extractResult.ok || !('pageContext' in extractResult)) {
+      setReviewBoardRowState(questionAttemptId, {
+        loading: false,
+        error: extractResult.ok ? 'Could not load this question.' : extractResult.error,
+      });
+      render();
+      return;
+    }
+
+    const explainResult = await sendMessage({
+      type: 'ob:explain',
+      pageContext: extractResult.pageContext,
+    });
+
+    if (!explainResult.ok || !('explanation' in explainResult)) {
+      setReviewBoardRowState(questionAttemptId, {
+        loading: false,
+        error: explainResult.ok ? 'BroBot could not explain this question.' : explainResult.error,
+      });
+      render();
+      return;
+    }
+
+    // A Himalaya question always routes to question_explain, so a curriculum
+    // study here would mean the request was misrouted — surface it rather than
+    // rendering an explanation shape the board cannot display.
+    if (isCurriculumStudyResponse(explainResult.explanation)) {
+      setReviewBoardRowState(questionAttemptId, {
+        loading: false,
+        error: 'BroBot returned a page summary instead of a question explanation.',
+      });
+      render();
+      return;
+    }
+
+    state.usage = explainResult.explanation.usage ?? state.usage;
+    setReviewBoardRowState(questionAttemptId, {
+      loading: false,
+      explanation: explainResult.explanation,
+      error: null,
+    });
+    render();
+  }
+
+  /**
+   * Sequential, not parallel: the daily quota is per-request, and a burst of
+   * simultaneous calls would blow through it before the first result renders.
+   */
+  async function explainAllReviewBoardMisses() {
+    if (state.reviewBoardExplainAllInFlight) return;
+    const summary = summarizeBoard(getReviewBoardRows(state.pageContext));
+    if (!summary.missedIds.length) return;
+
+    state.reviewBoardExplainAllInFlight = true;
+    for (const questionAttemptId of summary.missedIds) {
+      setReviewBoardRowState(questionAttemptId, { expanded: true });
+    }
+    render();
+
+    for (const questionAttemptId of summary.missedIds) {
+      await explainReviewBoardRow(questionAttemptId);
+      // Stop early rather than burning quota once the account is capped out.
+      if (state.error?.code === 'quota_exceeded') break;
+    }
+
+    state.reviewBoardExplainAllInFlight = false;
+    render();
+  }
+
+  /**
+   * On landing in a finished attempt, expand the misses and start explaining
+   * them. Keyed by attempt so switching tests re-runs, but a re-render does not.
+   */
+  function maybeAutoExplainMisses() {
+    if (state.auth?.status !== 'linked') return;
+    const rows = getReviewBoardRows(state.pageContext);
+    if (!rows.length) return;
+    const attemptKey = String(state.pageContext?.raw?.providerSpecific?.testAttemptId ?? state.pageContext?.pageUrl ?? '');
+    if (!attemptKey || state.reviewBoardAutoExplainedFor === attemptKey) return;
+    state.reviewBoardAutoExplainedFor = attemptKey;
+    if (!summarizeBoard(rows).missedIds.length) return;
+    void explainAllReviewBoardMisses();
   }
 
   async function refreshBaseState() {
@@ -1311,14 +1450,27 @@ export function mountSidePanelApp(root: HTMLElement) {
         void startLinkFlow();
       });
     } else if (state.pageContext?.provider === 'himalaya' && state.pageContext.pageKind === 'results-overview') {
-      content.appendChild(
-        createElement('div', {
-          html: `<div style="padding:14px;border-radius:16px;background:#f0fdfa;border:1px solid #99f6e4;display:grid;gap:8px;">
-            <p style="margin:0;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#0f766e;font-weight:700;">AAOS Himalaya</p>
-            <p style="margin:0;color:#384152;line-height:1.5;">Select a question to review it with BroBot.</p>
-          </div>`,
-        })
-      );
+      const providerSpecific = state.pageContext.raw?.providerSpecific ?? {};
+      appendHimalayaReviewBoard(content, {
+        rows: getReviewBoardRows(state.pageContext),
+        rowStates: state.reviewBoardRowStates,
+        assessmentTitle: typeof providerSpecific.assessmentTitle === 'string' ? providerSpecific.assessmentTitle : null,
+        score: typeof providerSpecific.attemptScore === 'number' ? providerSpecific.attemptScore : null,
+        maxScore: typeof providerSpecific.attemptMaxScore === 'number' ? providerSpecific.attemptMaxScore : null,
+        explainAllInFlight: state.reviewBoardExplainAllInFlight,
+        hooks: {
+          onToggleRow: (questionAttemptId) => {
+            const rowState = getReviewBoardRowState(questionAttemptId);
+            setReviewBoardRowState(questionAttemptId, { expanded: !rowState.expanded });
+            render();
+          },
+          onExplainRow: (questionAttemptId) => void explainReviewBoardRow(questionAttemptId),
+          onExplainAllMisses: () => void explainAllReviewBoardMisses(),
+          onUnlink: () => void unlink(),
+        },
+        renderers: { escapeHtml, renderExplanation },
+      });
+      maybeAutoExplainMisses();
     } else if (isTopicPage) {
       renderTopicTutorPanel(content, state, {
         runTopicTutorTurn: (input) => void runTopicTutorTurn(input),

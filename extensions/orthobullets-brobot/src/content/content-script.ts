@@ -1,6 +1,7 @@
 import { detectQuestionProvider, extractQuestionContext } from './extractor.js';
 import { startQuestionLifecycleWatch } from './question-lifecycle.js';
 import { installHimalayaDebugInspector } from '../providers/himalaya/himalaya-debug.js';
+import { startHimalayaStore } from '../providers/himalaya/himalaya-store.js';
 
 declare global {
   interface Window {
@@ -60,9 +61,14 @@ if (!window.__snapOrthoBroBotContentScriptLoaded) {
   console.info('[SnapOrtho BroBot] content script loaded');
   ensureInPageLauncher();
   installHimalayaDebugInspector(document);
+  // Must start before the lifecycle watch so the first fingerprint can already
+  // see te6 API data rather than falling back to DOM scraping.
+  if (detectQuestionProvider({ document: document as never, pageUrl: window.location.href }) === 'himalaya') {
+    startHimalayaStore(window);
+  }
   startQuestionLifecycleWatch(document, window.location.href);
 
-  chrome.runtime.onMessage.addListener((message: { type?: string }, _sender: unknown, sendResponse: (response: unknown) => void) => {
+  chrome.runtime.onMessage.addListener((message: { type?: string; questionAttemptId?: number }, _sender: unknown, sendResponse: (response: unknown) => void) => {
     if (message?.type !== 'ob:extract-page-context') {
       return false;
     }
@@ -75,6 +81,7 @@ if (!window.__snapOrthoBroBotContentScriptLoaded) {
       const pageContext = extractQuestionContext({
         document: document as never,
         pageUrl: window.location.href,
+        questionAttemptId: message.questionAttemptId,
       });
 
       const debugEnabled = (() => { try { return localStorage.getItem('snaportho_brobot_debug') === '1'; } catch { return false; } })();

@@ -1,5 +1,10 @@
 import type { ReactNode } from "react";
 import { ArrowRight, CalendarCheck2, NotebookPen } from "lucide-react";
+import { MobileHomePage } from "@/components/student-workspace/mobile/home/MobileHomePage";
+import {
+  DesktopOnly,
+  MobileOnly,
+} from "@/components/student-workspace/mobile/viewport";
 import { StudentWorkspaceChrome } from "@/components/student-workspace/shell/StudentWorkspaceChrome";
 import { StudentWorkspaceDailySuccessChecklist } from "@/components/student-workspace/home/StudentWorkspaceDailySuccessChecklist";
 import { StudentWorkspaceProgressOverview } from "@/components/student-workspace/home/StudentWorkspaceProgressOverview";
@@ -14,16 +19,7 @@ import type {
   StudentWorkspaceScheduleEntry,
 } from "@/lib/student-workspace/types";
 
-export function StudentWorkspaceHomePage({
-  profile,
-  rotations,
-  progress,
-  scheduleEntries,
-  successChecklistItems,
-  successChecklistState,
-  today,
-  weekStart,
-}: {
+type StudentWorkspaceHomePageProps = {
   profile: StudentWorkspaceProfile;
   rotations: StudentWorkspaceRotation[];
   progress: FourthYearProgressState;
@@ -32,7 +28,31 @@ export function StudentWorkspaceHomePage({
   successChecklistState: StudentWorkspaceChecklistState[];
   today: string;
   weekStart: string;
-}) {
+};
+
+export function StudentWorkspaceHomePage(props: StudentWorkspaceHomePageProps) {
+  return (
+    <>
+      <MobileOnly>
+        <MobileHomePage {...props} />
+      </MobileOnly>
+      <DesktopOnly>
+        <DesktopHomePage {...props} />
+      </DesktopOnly>
+    </>
+  );
+}
+
+function DesktopHomePage({
+  profile,
+  rotations,
+  progress,
+  scheduleEntries,
+  successChecklistItems,
+  successChecklistState,
+  today,
+  weekStart,
+}: StudentWorkspaceHomePageProps) {
   return (
     <StudentWorkspaceChrome
       badge="Daily dashboard"

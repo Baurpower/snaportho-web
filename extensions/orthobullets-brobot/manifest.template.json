@@ -33,6 +33,12 @@
       "matches": ["https://www.orthobullets.com/*", "https://orthobullets.com/*", "https://rock.aaos.org/*", "https://www.rock.aaos.org/*", "https://*.rock.aaos.org/*", "https://learn.aaos.org/diweb/*"],
       "js": ["__CONTENT_SCRIPT__"],
       "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://learn.aaos.org/diweb/*"],
+      "js": ["__HIMALAYA_BRIDGE__"],
+      "run_at": "document_idle",
+      "world": "MAIN"
     }
   ],
   "web_accessible_resources": [

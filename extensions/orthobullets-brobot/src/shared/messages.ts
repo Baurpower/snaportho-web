@@ -76,7 +76,9 @@ export type ExtensionMessage =
   | { type: 'ob:start-link'; deviceName: string }
   | { type: 'ob:poll-link'; linkCode: string }
   | { type: 'ob:clear-link' }
-  | { type: 'ob:extract-page-context'; tabId: number }
+  // `questionAttemptId` targets one specific AAOS Himalaya question instead of
+  // whatever is on screen, so the review board can load any row on demand.
+  | { type: 'ob:extract-page-context'; tabId: number; questionAttemptId?: number }
   | {
       type: 'brobot:request';
       task: BroBotTask;

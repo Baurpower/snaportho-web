@@ -12,6 +12,18 @@ import { CuratedCasePrepDocument } from "@/components/student-workspace/case-rea
 import { CasePrepV11Document } from "@/components/student-workspace/case-readiness/CasePrepV11Document";
 import { CasePrepStreamPanel } from "@/components/student-workspace/case-readiness/CasePrepStreamPanel";
 import { StudentWorkspaceChrome } from "@/components/student-workspace/shell/StudentWorkspaceChrome";
+import { StudentWorkspaceMobileChrome } from "@/components/student-workspace/mobile/StudentWorkspaceMobileChrome";
+import {
+  MobileCaseReadinessHeader,
+  MobileReadinessConfidence,
+  MobileReadinessProgressBar,
+  MobileSessionAside,
+} from "@/components/student-workspace/mobile/case-readiness/MobileCaseReadinessLayout";
+import { MobileObjectiveCard } from "@/components/student-workspace/mobile/case-readiness/MobileObjectiveCard";
+import {
+  DesktopOnly,
+  MobileOnly,
+} from "@/components/student-workspace/mobile/viewport";
 import {
   normalizeStudyGuideCompletionIds,
   type CaseReadinessSession,
@@ -118,6 +130,31 @@ export function CaseReadinessPage({
 
   if (!session) {
     return (
+      <>
+        <MobileOnly>
+          <StudentWorkspaceMobileChrome
+            badge="Case readiness"
+            title="Topic not found"
+          >
+            <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+              <h2 className="text-xl font-black leading-tight tracking-tight text-slate-950">
+                That session is not available
+              </h2>
+              <p className="mt-2 text-[13px] leading-6 text-slate-600">
+                Return to Prepare and search by diagnosis, procedure, or common
+                case.
+              </p>
+              <Link
+                href="/student-workspace/prepare"
+                className="mt-3.5 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-slate-950 px-4 text-[15px] font-semibold text-white transition active:bg-slate-800"
+              >
+                Back to Prepare
+              </Link>
+            </section>
+          </StudentWorkspaceMobileChrome>
+        </MobileOnly>
+
+        <DesktopOnly>
       <StudentWorkspaceChrome
         badge="Case Readiness"
         title="Topic not found"
@@ -140,13 +177,98 @@ export function CaseReadinessPage({
           </div>
         </section>
       </StudentWorkspaceChrome>
+        </DesktopOnly>
+      </>
     );
   }
 
   const nextTopic = session.nextRecommendedTopic?.topic;
   const nextTopicReason = session.nextRecommendedTopic?.reasons[0]?.label;
+  const showObjectiveChecklist =
+    session.casePrepContext.status !== "certified" &&
+    session.casePrepContext.status !== "preview";
 
   return (
+    <>
+      <MobileOnly>
+        <StudentWorkspaceMobileChrome
+          badge="Case readiness"
+          title={session.topic.title}
+        >
+          <div className="grid gap-4">
+            <MobileCaseReadinessHeader session={session} />
+            <CasePrepStatusBanner context={session.casePrepContext} />
+
+            {session.casePrepContext.status === "preview" &&
+            session.casePrepContext.v11 ? (
+              casePrepStreamEnabled ? (
+                <CasePrepStreamPanel
+                  prompt={session.casePrepContext.title ?? session.topic.title}
+                />
+              ) : (
+                <CasePrepV11Document data={session.casePrepContext.v11} />
+              )
+            ) : null}
+
+            {session.casePrepContext.status === "certified" ? (
+              <CuratedCasePrepDocument context={session.casePrepContext} />
+            ) : null}
+
+            {showObjectiveChecklist && session.studyGuideSections.length > 0 ? (
+              <>
+                <MobileReadinessProgressBar
+                  completedCount={completedIds.length}
+                  totalCount={session.studyGuideSections.length}
+                  isSaving={isSaving}
+                />
+
+                {session.studyGuideSections.map((objective) => (
+                  <MobileObjectiveCard
+                    key={objective.id}
+                    objective={objective}
+                    expanded={expandedSet.has(objective.id)}
+                    completed={completedSet.has(objective.id)}
+                    onToggleExpanded={() =>
+                      setExpandedIds((current) =>
+                        current.includes(objective.id)
+                          ? current.filter((id) => id !== objective.id)
+                          : [...current, objective.id]
+                      )
+                    }
+                    onToggleCompleted={() => {
+                      const nextCompletedIds = completedSet.has(objective.id)
+                        ? completedIds.filter((id) => id !== objective.id)
+                        : [...completedIds, objective.id];
+                      setCompletedIds(nextCompletedIds);
+                      void syncProgress(nextCompletedIds);
+                    }}
+                    onBrobotLaunch={() =>
+                      void syncProgress(completedIds, {
+                        incrementBrobotSessions: true,
+                      })
+                    }
+                  />
+                ))}
+              </>
+            ) : null}
+
+            {saveError ? (
+              <p className="rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-3 text-[13px] text-rose-800">
+                {saveError}
+              </p>
+            ) : null}
+
+            <MobileSessionAside session={session}>
+              <MobileReadinessConfidence
+                confidence={readinessConfidence}
+                onChange={setReadinessConfidence}
+              />
+            </MobileSessionAside>
+          </div>
+        </StudentWorkspaceMobileChrome>
+      </MobileOnly>
+
+      <DesktopOnly>
     <StudentWorkspaceChrome
       badge="Case Readiness"
       title="What do I need to know before tomorrow?"
@@ -308,5 +430,7 @@ export function CaseReadinessPage({
         </div>
       </div>
     </StudentWorkspaceChrome>
+      </DesktopOnly>
+    </>
   );
 }

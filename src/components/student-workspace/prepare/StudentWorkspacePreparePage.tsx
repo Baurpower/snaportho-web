@@ -13,6 +13,15 @@ import {
   inferTopicLabel,
 } from "@/components/student-workspace/prepare/prepare-content";
 import { StudentWorkspaceChrome } from "@/components/student-workspace/shell/StudentWorkspaceChrome";
+import { StudentWorkspaceMobileChrome } from "@/components/student-workspace/mobile/StudentWorkspaceMobileChrome";
+import { MobileCasePrepLauncher } from "@/components/student-workspace/mobile/prepare/MobileCasePrepLauncher";
+import { MobileKnowledgeMap } from "@/components/student-workspace/mobile/prepare/MobileKnowledgeMap";
+import { MobileNextStep } from "@/components/student-workspace/mobile/prepare/MobileNextStep";
+import { MobileRotationPrep } from "@/components/student-workspace/mobile/prepare/MobileRotationPrep";
+import {
+  DesktopOnly,
+  MobileOnly,
+} from "@/components/student-workspace/mobile/viewport";
 import {
   inferTrackIdFromRotation,
   type CurriculumTrackFilterId,
@@ -202,11 +211,64 @@ export function StudentWorkspacePreparePage({
   }
 
   return (
-    <StudentWorkspaceChrome
-      badge="Prepare"
-      title="Your orthopaedic roadmap"
-      description="See where you are, what you know, and what to study next."
-    >
+    <>
+      <MobileOnly>
+        <StudentWorkspaceMobileChrome badge="Prepare" title="Your roadmap">
+          <div className="grid gap-4">
+            <MobileNextStep
+              lastStudiedTopic={lastStudiedTopic}
+              suggestedTopic={suggestedTopic}
+              rotationTitle={rotationTitle}
+              mode={activeMode}
+              selectedMinutes={selectedMinutes}
+            />
+
+            <MobileCasePrepLauncher
+              topicValue={topicValue}
+              onTopicChange={handleTopicInputChange}
+              onTopicSelect={handleTopicSelect}
+              onTopicPick={handleTopicPick}
+              searchResults={searchResults}
+              hasSearched={deferredTopicValue.trim().length > 0}
+              selectedTopic={selectedCurriculumTopic}
+              relatedTopics={relatedTopics}
+              rotationQuickPicks={rotationQuickPicks}
+              context={context}
+              rotationOptions={rotations.map((rotation) => ({
+                value: rotation.id,
+                label: rotation.title,
+              }))}
+              onChange={setContext}
+              selectedMinutes={selectedMinutes}
+            />
+
+            {rotationPrepProfile ? (
+              <MobileRotationPrep
+                profile={rotationPrepProfile}
+                rotationTitle={rotationTitle ?? "Current rotation"}
+                serviceLabel={inferredService}
+                studyMode={activeMode}
+                selectedMinutes={selectedMinutes}
+              />
+            ) : null}
+
+            <MobileKnowledgeMap
+              topicProgress={progressSnapshot.topicProgress}
+              completedTopicIds={progressSnapshot.completedTopicIds}
+              activeTrackId={activeRotationTrackId}
+              mode={activeMode}
+              selectedMinutes={selectedMinutes}
+            />
+          </div>
+        </StudentWorkspaceMobileChrome>
+      </MobileOnly>
+
+      <DesktopOnly>
+        <StudentWorkspaceChrome
+          badge="Prepare"
+          title="Your orthopaedic roadmap"
+          description="See where you are, what you know, and what to study next."
+        >
       <div className="grid gap-6">
         <NextStepHero
           lastStudiedTopic={lastStudiedTopic}
@@ -253,6 +315,8 @@ export function StudentWorkspacePreparePage({
           />
         ) : null}
       </div>
-    </StudentWorkspaceChrome>
+        </StudentWorkspaceChrome>
+      </DesktopOnly>
+    </>
   );
 }
