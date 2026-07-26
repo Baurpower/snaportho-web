@@ -1,0 +1,115 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Private, low-cost S3 and CloudFront delivery for SnapOrtho Anki media.
+
+Parameters:
+  BucketName:
+    Type: String
+    Default: snaportho-master-decks
+  CloudFrontSigningPublicKey:
+    Type: String
+    NoEcho: true
+    Description: PEM-encoded RSA public key paired with the app's signing private key.
+
+Resources:
+  MediaBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      LifecycleConfiguration:
+        Rules:
+          - Id: AbortIncompleteMultipartUploads
+            Status: Enabled
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 1
+          - Id: RemoveSupersededArtifacts
+            Status: Enabled
+            Prefix: superseded/
+            ExpirationInDays: 30
+
+  OriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: !Sub "${AWS::StackName}-s3-oac"
+        Description: CloudFront-only access to SnapOrtho Anki media
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  SigningPublicKey:
+    Type: AWS::CloudFront::PublicKey
+    Properties:
+      PublicKeyConfig:
+        CallerReference: !Sub "${AWS::StackName}-${AWS::AccountId}"
+        Comment: SnapOrtho Anki signed-download key
+        EncodedKey: !Ref CloudFrontSigningPublicKey
+        Name: !Sub "${AWS::StackName}-signing-key"
+
+  SigningKeyGroup:
+    Type: AWS::CloudFront::KeyGroup
+    Properties:
+      KeyGroupConfig:
+        Comment: Trusted signers for private Master Deck downloads
+        Items:
+          - !Ref SigningPublicKey
+        Name: !Sub "${AWS::StackName}-signing-key-group"
+
+  Distribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Comment: SnapOrtho Master Deck and card media
+        Enabled: true
+        HttpVersion: http2and3
+        IPV6Enabled: true
+        PriceClass: PriceClass_100
+        Origins:
+          - Id: MediaS3Origin
+            DomainName: !GetAtt MediaBucket.RegionalDomainName
+            OriginAccessControlId: !Ref OriginAccessControl
+            S3OriginConfig:
+              OriginAccessIdentity: ""
+        DefaultCacheBehavior:
+          TargetOriginId: MediaS3Origin
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods: [GET, HEAD, OPTIONS]
+          CachedMethods: [GET, HEAD]
+          Compress: false
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          TrustedKeyGroups:
+            - !Ref SigningKeyGroup
+
+  MediaBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref MediaBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: AllowCloudFrontReadOnly
+            Effect: Allow
+            Principal:
+              Service: cloudfront.amazonaws.com
+            Action: s3:GetObject
+            Resource: !Sub "${MediaBucket.Arn}/*"
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub "arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${Distribution}"
+
+Outputs:
+  Bucket:
+    Value: !Ref MediaBucket
+  CloudFrontDomain:
+    Value: !GetAtt Distribution.DomainName
+  CloudFrontKeyPairId:
+    Description: Use as SNAPORTHO_ANKI_CLOUDFRONT_KEY_PAIR_ID.
+    Value: !Ref SigningPublicKey

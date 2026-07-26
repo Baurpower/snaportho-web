@@ -294,15 +294,19 @@ class ProfileRuntime:
         except Exception:
             card_ids=[];tier="none"
             payload={"status":"failed","availableCount":0,"missingCount":0,"ambiguousCount":0,"versionMismatchCount":0,"backendCandidateCount":0,"localSupplementCount":0,"resultTier":"none","errorCode":"resolution_failed"}
+        if card_ids:
+            try:
+                open_browse_with_card_ids(self.mw,card_ids,{
+                    "nativeId":request.get("normalized_native_id")or request.get("submitted_native_id")or"",
+                    "concept":request.get("tested_concept")or request.get("concept_summary")or"",
+                    "tier":tier,
+                })
+            except Exception:
+                card_ids=[]
+                payload={"status":"failed","availableCount":0,"missingCount":0,"ambiguousCount":0,"versionMismatchCount":0,"backendCandidateCount":payload["backendCandidateCount"],"localSupplementCount":payload["localSupplementCount"],"resultTier":"none","errorCode":"browse_open_failed"}
         def complete_done(complete_future):
             try:
                 complete_future.result()
-                if card_ids:
-                    open_browse_with_card_ids(self.mw,card_ids,{
-                        "nativeId":request.get("normalized_native_id")or request.get("submitted_native_id")or"",
-                        "concept":request.get("tested_concept")or request.get("concept_summary")or"",
-                        "tier":tier,
-                    })
             except Exception:
                 pass
             self._search_relay_busy=False

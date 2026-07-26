@@ -15,6 +15,10 @@ const bootstrap = read(
 const gate = read("src/lib/education/deck-addon-version.ts");
 const assemble = read("src/lib/education/anki-deck-manifest-assemble.ts");
 const notetype = read("src/lib/education/anki-bootstrap-notetype.ts");
+const awsStorage = read("src/lib/education/anki-aws-storage.ts");
+const awsMigration = read(
+  "supabase/migrations/20260726_180000_anki_aws_media_storage.sql",
+);
 
 // Version gate: sync/plan blocks stale add-ons with 426 upgrade_required.
 for (const x of [/addonVersionAtLeast/, /426/, /upgrade_required/]) assert.match(plan, x);
@@ -48,6 +52,14 @@ for (const x of [
 ])
   assert.match(bootstrap, x);
 assert.doesNotMatch(bootstrap, /canonical_cards|canonical_card_versions/);
+for (const source of [media, bootstrap]) {
+  assert.match(source, /AWS_STORAGE_PROVIDER/);
+  assert.match(source, /signAnkiAwsDownload/);
+}
+for (const x of [/cloudfront-signer/, /HeadObjectCommand/, /@aws-sdk\/lib-storage/])
+  assert.match(awsStorage, x);
+for (const x of [/storage_provider/, /aws_s3/, /delivery_metadata/])
+  assert.match(awsMigration, x);
 
 // Shared manifest assembly + note-type contract exist for the builder path.
 assert.match(assemble, /export function assembleDeckSyncManifest/);

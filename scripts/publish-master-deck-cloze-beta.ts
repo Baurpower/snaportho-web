@@ -15,7 +15,10 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join, resolve } from "node:path";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { ARTIFACT_SCHEMA_VERSION, SNAPORTHO_STYLE_VERSION } from "../src/lib/education/anki-bootstrap-notetype.ts";
+import {
+  ARTIFACT_SCHEMA_VERSION,
+  SNAPORTHO_STYLE_VERSION,
+} from "../src/lib/education/anki-bootstrap-notetype.ts";
 import { toProductDeckPath } from "../src/lib/education/anki-deck-path.ts";
 import {
   normalizeFieldSnapshotToMaster,
@@ -33,18 +36,29 @@ import {
   resolveMediaFile,
   type ResolvedMediaFile,
 } from "./lib/education/anki-bootstrap/media-resolve.ts";
+import {
+  AWS_STORAGE_PROVIDER,
+  loadAnkiAwsStorageConfig,
+  signAnkiAwsDownload,
+  uploadAnkiAwsObject,
+} from "../src/lib/education/anki-aws-storage.ts";
 
-const BUCKET = "anki-deck-media";
 const DEFAULT_MEDIA_DIR = join(
   homedir(),
   "Library/Application Support/Anki2/User 1/collection.media",
 );
 
 function arg(name: string): string | undefined {
-  return process.argv.find((v) => v.startsWith(`--${name}=`))?.slice(name.length + 3);
+  return process.argv
+    .find((v) => v.startsWith(`--${name}=`))
+    ?.slice(name.length + 3);
 }
 function flag(name: string): boolean {
-  return process.argv.includes(`--${name}`) || arg(name) === "true" || arg(name) === "1";
+  return (
+    process.argv.includes(`--${name}`) ||
+    arg(name) === "true" ||
+    arg(name) === "1"
+  );
 }
 function num(name: string, fallback: number): number {
   const v = arg(name);
@@ -58,13 +72,20 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
+async function withTimeout<T>(
+  promise: Promise<T>,
+  ms: number,
+  label: string,
+): Promise<T> {
   let timer: ReturnType<typeof setTimeout> | undefined;
   try {
     return await Promise.race([
       promise,
       new Promise<T>((_, reject) => {
-        timer = setTimeout(() => reject(new Error(`timeout:${label}:${ms}ms`)), ms);
+        timer = setTimeout(
+          () => reject(new Error(`timeout:${label}:${ms}ms`)),
+          ms,
+        );
       }),
     ]);
   } finally {
@@ -85,7 +106,9 @@ async function withRetries<T>(
     } catch (error) {
       last = error;
       const msg = error instanceof Error ? error.message : String(error);
-      console.error(JSON.stringify({ retry: label, attempt: i, attempts, error: msg }));
+      console.error(
+        JSON.stringify({ retry: label, attempt: i, attempts, error: msg }),
+      );
       if (i === attempts) break;
       await sleep(Math.min(30_000, 1000 * 2 ** (i - 1)));
     }
@@ -112,14 +135,28 @@ function loadEnvFile(path: string): Record<string, string> {
 function serviceClient(): SupabaseClient {
   const fileEnv = loadEnvFile(resolve(process.cwd(), ".env.local"));
   const url =
-    process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() || fileEnv.NEXT_PUBLIC_SUPABASE_URL?.trim() || "";
+    process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() ||
+    fileEnv.NEXT_PUBLIC_SUPABASE_URL?.trim() ||
+    "";
   const key =
-    process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() || fileEnv.SUPABASE_SERVICE_ROLE_KEY?.trim() || "";
-  if (!url || !key) throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY");
-  return createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
+    process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() ||
+    fileEnv.SUPABASE_SERVICE_ROLE_KEY?.trim() ||
+    "";
+  if (!url || !key)
+    throw new Error(
+      "Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY",
+    );
+  return createClient(url, key, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
 }
 
-type MediaRef = { note_id: string; media_src: string; media_kind: string; metadata: any };
+type MediaRef = {
+  note_id: string;
+  media_src: string;
+  media_kind: string;
+  metadata: any;
+};
 
 type SelectedCard = {
   canonical_card_id: string;
@@ -142,7 +179,9 @@ type SelectedCard = {
   resolvedMedia: ResolvedMediaFile[];
 };
 
-async function fetchAllMediaRefs(supabase: SupabaseClient): Promise<Map<string, string[]>> {
+async function fetchAllMediaRefs(
+  supabase: SupabaseClient,
+): Promise<Map<string, string[]>> {
   const pageSize = 1000;
   let from = 0;
   const filesByNote = new Map<string, string[]>();
@@ -156,7 +195,9 @@ async function fetchAllMediaRefs(supabase: SupabaseClient): Promise<Map<string, 
     if (error) throw new Error(`media_refs:${error.message}`);
     if (!data?.length) break;
     for (const ref of data as MediaRef[]) {
-      const name = normalizeMediaFilename(ref.metadata?.fileName || ref.media_src || "");
+      const name = normalizeMediaFilename(
+        ref.metadata?.fileName || ref.media_src || "",
+      );
       if (!name) continue;
       const list = filesByNote.get(ref.note_id) ?? [];
       if (!list.includes(name)) list.push(name);
@@ -181,7 +222,9 @@ async function loadClozeBetaCohort(
   stats: Record<string, number>;
   mediaMap: Map<string, ResolvedMediaFile>;
 }> {
-  const filesByNote = opts.skipMedia ? new Map<string, string[]>() : await fetchAllMediaRefs(supabase);
+  const filesByNote = opts.skipMedia
+    ? new Map<string, string[]>()
+    : await fetchAllMediaRefs(supabase);
   const stats = {
     scanned: 0,
     clozeEligible: 0,
@@ -249,7 +292,9 @@ async function loadClozeBetaCohort(
     const noteById = new Map(notes.map((n) => [n.id, n]));
     const acById = new Map(ankiCards.map((c) => [c.id, c]));
 
-    const deckIds = [...new Set(ankiCards.map((c) => c.deck_id).filter(Boolean))] as string[];
+    const deckIds = [
+      ...new Set(ankiCards.map((c) => c.deck_id).filter(Boolean)),
+    ] as string[];
     const deckById = new Map<string, string>();
     if (deckIds.length) {
       for (let i = 0; i < deckIds.length; i += 100) {
@@ -286,8 +331,12 @@ async function loadClozeBetaCohort(
         continue;
       }
 
-      const rawFields = (Array.isArray(ver.field_snapshot) ? ver.field_snapshot : []) as SnapshotField[];
-      const tags = Array.isArray(ver.tag_snapshot) ? (ver.tag_snapshot as string[]) : [];
+      const rawFields = (
+        Array.isArray(ver.field_snapshot) ? ver.field_snapshot : []
+      ) as SnapshotField[];
+      const tags = Array.isArray(ver.tag_snapshot)
+        ? (ver.tag_snapshot as string[])
+        : [];
       const norm = normalizeFieldSnapshotToMaster(rawFields, tags, ac.card_ord);
 
       if (norm.isImageOcclusion) {
@@ -304,7 +353,10 @@ async function loadClozeBetaCohort(
         stats.skippedNoVersion += 1;
         continue;
       }
-      if (!ver.content_hash || !/^[a-f0-9]{64}$/.test(String(ver.content_hash))) {
+      if (
+        !ver.content_hash ||
+        !/^[a-f0-9]{64}$/.test(String(ver.content_hash))
+      ) {
         stats.skippedNoVersion += 1;
         continue;
       }
@@ -320,7 +372,8 @@ async function loadClozeBetaCohort(
           }
           const result = resolveMediaFile(opts.mediaDir, name);
           if (!result.ok) {
-            if (result.reason === "missing_on_disk") stats.skippedMissingMediaFile += 1;
+            if (result.reason === "missing_on_disk")
+              stats.skippedMissingMediaFile += 1;
             continue; // text-only OK for missing files
           }
           resolved.push(result.file);
@@ -340,7 +393,8 @@ async function loadClozeBetaCohort(
         note_id: card.anki_note_id,
         note_guid: note.anki_note_guid,
         card_ordinal: ac.card_ord,
-        native_card_id_hint: ac.anki_card_id != null ? String(ac.anki_card_id) : null,
+        native_card_id_hint:
+          ac.anki_card_id != null ? String(ac.anki_card_id) : null,
         source_deck_path: sourceDeckPath,
         product_deck_path: toProductDeckPath(sourceDeckPath),
         version_content_hash: String(ver.content_hash),
@@ -369,30 +423,21 @@ async function loadClozeBetaCohort(
   return { selected, stats, mediaMap };
 }
 
-async function ensureBucket(supabase: SupabaseClient) {
-  const { data: buckets } = await supabase.storage.listBuckets();
-  if (buckets?.some((b) => b.name === BUCKET)) return;
-  const { error } = await supabase.storage.createBucket(BUCKET, {
-    public: false,
-    fileSizeLimit: 50 * 1024 * 1024,
-  });
-  if (error && !/already exists/i.test(error.message)) {
-    throw new Error(`create_bucket:${error.message}`);
-  }
-}
-
 async function main() {
   const dryRun = flag("dry-run");
   const skipMedia = flag("skip-media");
   const limit = num("limit", 100_000);
   const maxMediaFiles = num("max-media-files", 50_000);
   const mediaDir = arg("media-dir") || DEFAULT_MEDIA_DIR;
-  const releaseKey = arg("release-key") || "snaportho-master-beta";
-  const releaseVersion = arg("release-version") || "0.3.0-cloze-style";
+  const releaseKey = arg("release-key") || "snaportho-master-cloze-media";
+  const releaseVersion = arg("release-version") || "0.3.1-cloze-media";
   const outPath = arg("out") || `/tmp/SnapOrtho-Master-${releaseVersion}.apkg`;
   const reportPath =
     arg("report") ||
-    resolve(process.cwd(), `reports/education/cloze-beta-inventory-${releaseVersion}.json`);
+    resolve(
+      process.cwd(),
+      `reports/education/cloze-beta-inventory-${releaseVersion}.json`,
+    );
 
   const supabase = serviceClient();
   console.log(
@@ -414,7 +459,7 @@ async function main() {
   );
 
   if (!skipMedia && !existsSync(mediaDir)) {
-    console.warn(`media-dir missing (${mediaDir}); continuing with --skip-media behavior for files`);
+    throw new Error(`media_dir_missing:${mediaDir}`);
   }
 
   const { selected, stats, mediaMap } = await loadClozeBetaCohort(supabase, {
@@ -455,14 +500,19 @@ async function main() {
   }
 
   const localOnly = flag("local-only");
-  // When media is already inside the .apkg, skip slow per-file storage uploads (still register bootstrap artifact).
-  const skipRemoteMediaUpload = flag("skip-remote-media-upload") || flag("apkg-only-upload");
+  if (skipMedia && !localOnly) {
+    throw new Error("text_only_remote_publish_forbidden:use --local-only with --skip-media");
+  }
+  const skipRemoteMediaUpload = flag("apkg-only-upload");
   // Provisional release id for local builds; replaced/confirmed when registering remotely.
   let releaseId = randomUUID();
 
   // Membership rows (ordering keys) — release_id filled after insert.
   const memberSpecs = selected.map((c, index) => {
-    const guidKey = createHash("sha256").update(c.note_guid).digest("hex").slice(0, 16);
+    const guidKey = createHash("sha256")
+      .update(c.note_guid)
+      .digest("hex")
+      .slice(0, 16);
     return {
       canonical_card_id: c.canonical_card_id,
       canonical_card_version_id: c.canonical_card_version_id,
@@ -486,11 +536,13 @@ async function main() {
     };
   });
 
-  const mediaInputs: BootstrapMediaInput[] = [...mediaMap.values()].map((file) => ({
-    contentSha256: file.contentSha256,
-    logicalFilename: file.logicalFilename,
-    bytes: file.bytes,
-  }));
+  const mediaInputs: BootstrapMediaInput[] = [...mediaMap.values()].map(
+    (file) => ({
+      contentSha256: file.contentSha256,
+      logicalFilename: file.logicalFilename,
+      bytes: file.bytes,
+    }),
+  );
 
   const provisionalChecksum = createHash("sha256")
     .update(memberSpecs.map((m) => m.ordering_key).join("\n"))
@@ -552,7 +604,8 @@ async function main() {
           mediaFiles: mediaMap.size,
           apkgPath: outPath,
           apkgBytes: result.apkgBytes.length,
-          apkgMB: Math.round((result.apkgBytes.length / (1024 * 1024)) * 10) / 10,
+          apkgMB:
+            Math.round((result.apkgBytes.length / (1024 * 1024)) * 10) / 10,
           artifactChecksum: result.artifactChecksum,
           next: "Import the local .apkg in Anki (File → Import). Re-run without --local-only to publish for add-on download.",
         },
@@ -579,7 +632,8 @@ async function main() {
     .select("id")
     .limit(1)
     .maybeSingle();
-  if (batchError || !batch) throw new Error(`import_batch_unavailable:${batchError?.message}`);
+  if (batchError || !batch)
+    throw new Error(`import_batch_unavailable:${batchError?.message}`);
 
   releaseId = existing?.id || releaseId;
   const placeholderChecksum = "0".repeat(64);
@@ -608,8 +662,14 @@ async function main() {
     });
     if (error) throw new Error(`insert_release:${error.message}`);
   } else if (existing.status === "draft") {
-    await supabase.from("anki_deck_release_cards").delete().eq("deck_release_id", releaseId);
-    await supabase.from("anki_deck_media_assets").delete().eq("deck_release_id", releaseId);
+    await supabase
+      .from("anki_deck_release_cards")
+      .delete()
+      .eq("deck_release_id", releaseId);
+    await supabase
+      .from("anki_deck_media_assets")
+      .delete()
+      .eq("deck_release_id", releaseId);
     await supabase
       .from("anki_deck_releases")
       .update({
@@ -647,10 +707,17 @@ async function main() {
 
   for (let i = 0; i < members.length; i += 25) {
     const chunk = members.slice(i, i + 25);
-    const { error } = await supabase.from("anki_deck_release_cards").insert(chunk);
+    const { error } = await supabase
+      .from("anki_deck_release_cards")
+      .insert(chunk);
     if (error) throw new Error(`insert_members:${error.message}`);
     if ((i + 25) % 500 === 0 || i + 25 >= members.length) {
-      console.error(JSON.stringify({ progress: "members", done: Math.min(i + 25, members.length) }));
+      console.error(
+        JSON.stringify({
+          progress: "members",
+          done: Math.min(i + 25, members.length),
+        }),
+      );
     }
   }
 
@@ -659,9 +726,8 @@ async function main() {
     .from("anki_deck_releases")
     .update({ manifest_checksum: checksum })
     .eq("id", releaseId);
-  if (checksumError) throw new Error(`update_checksum:${checksumError.message}`);
-
-  await ensureBucket(supabase);
+  if (checksumError)
+    throw new Error(`update_checksum:${checksumError.message}`);
 
   const versionForFile = new Map<string, string>();
   for (const c of selected) {
@@ -673,6 +739,9 @@ async function main() {
   }
 
   let mediaUploaded = 0;
+  const fileEnv = loadEnvFile(resolve(process.cwd(), ".env.local"));
+  const awsEnv = { ...fileEnv, ...process.env };
+  const awsConfig = loadAnkiAwsStorageConfig(awsEnv);
   if (skipRemoteMediaUpload) {
     console.error(
       JSON.stringify({
@@ -687,79 +756,89 @@ async function main() {
       await withRetries(
         `media_upload:${file.logicalFilename}`,
         async () => {
-          const { error: upError } = await supabase.storage
-            .from(BUCKET)
-            .upload(objectKey, file.bytes, {
-              contentType: file.mimeType,
-              upsert: true,
-            });
-          if (upError) throw new Error(upError.message);
+          await uploadAnkiAwsObject({
+            objectKey,
+            body: file.bytes,
+            contentType: file.mimeType,
+            checksumSha256: file.contentSha256,
+            env: awsEnv,
+          });
         },
         5,
         180_000,
       );
 
       await withRetries(`media_asset:${file.logicalFilename}`, async () => {
-        const { error: assetError } = await supabase.from("anki_deck_media_assets").upsert(
-          {
-            deck_release_id: releaseId,
-            canonical_card_version_id: versionForFile.get(file.logicalFilename) ?? null,
-            logical_filename: file.logicalFilename,
-            content_sha256: file.contentSha256,
-            mime_type: file.mimeType,
-            byte_size: file.byteSize,
-            object_key: objectKey,
-            license_status: "owned",
-            provenance: {
-              source: "local_anki_collection.media",
-              beta: true,
-              cloze_only: true,
+        const { error: assetError } = await supabase
+          .from("anki_deck_media_assets")
+          .upsert(
+            {
+              deck_release_id: releaseId,
+              canonical_card_version_id:
+                versionForFile.get(file.logicalFilename) ?? null,
+              logical_filename: file.logicalFilename,
+              content_sha256: file.contentSha256,
+              mime_type: file.mimeType,
+              byte_size: file.byteSize,
+              object_key: objectKey,
+              storage_provider: AWS_STORAGE_PROVIDER,
+              storage_bucket: awsConfig.bucket,
+              license_status: "owned",
+              provenance: {
+                source: "local_anki_collection.media",
+                binaryStorage: AWS_STORAGE_PROVIDER,
+                beta: true,
+                cloze_only: true,
+              },
             },
-          },
-          { onConflict: "deck_release_id,logical_filename" },
-        );
+            { onConflict: "deck_release_id,logical_filename" },
+          );
         if (assetError) throw new Error(assetError.message);
       });
 
       mediaUploaded += 1;
       if (mediaUploaded % 50 === 0 || mediaUploaded === mediaMap.size) {
         console.error(
-          JSON.stringify({ progress: "media", done: mediaUploaded, total: mediaMap.size }),
+          JSON.stringify({
+            progress: "media",
+            done: mediaUploaded,
+            total: mediaMap.size,
+          }),
         );
       }
     }
   }
 
-  const now = new Date().toISOString();
-  const { error: reviewError } = await supabase
-    .from("anki_deck_releases")
-    .update({ status: "review", reviewed_at: now })
-    .eq("id", releaseId);
-  if (reviewError) throw new Error(`to_review:${reviewError.message}`);
-
-  const { error: pubError } = await supabase
-    .from("anki_deck_releases")
-    .update({ status: "published", published_at: now })
-    .eq("id", releaseId);
-  if (pubError) throw new Error(`to_published:${pubError.message}`);
-
   const objectKey = `deck-releases/${releaseId}/bootstrap/${result.artifactChecksum}.apkg`;
   await withRetries(
     "bootstrap_upload",
     async () => {
-      const { error: bootUpError } = await supabase.storage
-        .from(BUCKET)
-        .upload(objectKey, result.apkgBytes, {
-          contentType: "application/apkg",
-          upsert: true,
-        });
-      if (bootUpError) throw new Error(bootUpError.message);
+      await uploadAnkiAwsObject({
+        objectKey,
+        body: result.apkgBytes,
+        contentType: "application/apkg",
+        checksumSha256: result.artifactChecksum,
+        metadata: {
+          releaseId,
+          releaseVersion,
+          packageKind: mediaMap.size ? "media_complete" : "text_only",
+          cardCount: String(selected.length),
+          mediaCount: String(mediaMap.size),
+        },
+        onProgress(uploaded, total) {
+          console.error(
+            JSON.stringify({ progress: "bootstrap_upload", uploaded, total }),
+          );
+        },
+        env: awsEnv,
+      });
     },
     5,
     600_000,
   );
 
-  const { error: artError } = await supabase.from("anki_deck_release_artifacts").insert({
+  const now = new Date().toISOString();
+  const artifactRow = {
     deck_release_id: releaseId,
     artifact_type: "bootstrap_apkg",
     artifact_schema_version: ARTIFACT_SCHEMA_VERSION,
@@ -767,14 +846,49 @@ async function main() {
     object_key: objectKey,
     byte_size: result.apkgBytes.length,
     media_type: "application/apkg",
-    status: "published",
-    published_at: now,
-  });
+    storage_provider: AWS_STORAGE_PROVIDER,
+    storage_bucket: awsConfig.bucket,
+    delivery_metadata: {
+      packageKind: mediaMap.size ? "media_complete" : "text_only",
+      cardCount: selected.length,
+      mediaCount: mediaMap.size,
+    },
+    status: "validated",
+  };
+  const { error: artError } = await supabase
+    .from("anki_deck_release_artifacts")
+    .upsert(artifactRow, {
+      onConflict: "deck_release_id,artifact_type,artifact_checksum",
+    });
   if (artError) throw new Error(`register_artifact:${artError.message}`);
 
-  const { data: signed } = await supabase.storage
-    .from(BUCKET)
-    .createSignedUrl(objectKey, 3600, { download: `SnapOrtho-Master-${releaseVersion}.apkg` });
+  const signedUrl = signAnkiAwsDownload(objectKey, 6 * 60 * 60, awsEnv);
+  const smoke = await fetch(signedUrl, { headers: { Range: "bytes=0-0" } });
+  await smoke.body?.cancel();
+  if (smoke.status !== 206 && smoke.status !== 200) {
+    throw new Error(`cloudfront_smoke_failed:${smoke.status}`);
+  }
+
+  const { error: reviewError } = await supabase
+    .from("anki_deck_releases")
+    .update({ status: "review", reviewed_at: now })
+    .eq("id", releaseId);
+  if (reviewError) throw new Error(`to_review:${reviewError.message}`);
+
+  const { error: artifactPublishError } = await supabase
+    .from("anki_deck_release_artifacts")
+    .update({ status: "published", published_at: now })
+    .eq("deck_release_id", releaseId)
+    .eq("artifact_type", "bootstrap_apkg")
+    .eq("artifact_checksum", result.artifactChecksum);
+  if (artifactPublishError)
+    throw new Error(`publish_artifact:${artifactPublishError.message}`);
+
+  const { error: pubError } = await supabase
+    .from("anki_deck_releases")
+    .update({ status: "published", published_at: now })
+    .eq("id", releaseId);
+  if (pubError) throw new Error(`to_published:${pubError.message}`);
 
   console.log(
     JSON.stringify(
@@ -794,7 +908,9 @@ async function main() {
         artifactChecksum: result.artifactChecksum,
         objectKey,
         reportPath,
-        signedUrlReady: Boolean(signed?.signedUrl),
+        storageProvider: AWS_STORAGE_PROVIDER,
+        storageBucket: awsConfig.bucket,
+        signedUrlReady: Boolean(signedUrl),
         next: "In Anki (add-on with streaming download): Get Started / Master Deck → Download SnapOrtho Master Deck — or import the local .apkg",
       },
       null,

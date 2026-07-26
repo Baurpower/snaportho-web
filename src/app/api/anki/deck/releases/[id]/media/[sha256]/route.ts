@@ -5,6 +5,8 @@ import {
   deviceAuth,
   ANKI_DECK_MEDIA_BUCKET,
   ANKI_MEDIA_SIGNED_URL_SECONDS,
+  AWS_STORAGE_PROVIDER,
+  signAnkiAwsDownload,
 } from "../../../../_lib";
 // Content-addressed media delivery for the delta-apply step. Returns a short-lived signed
 // URL for a sha256 that belongs to a published release; the add-on re-verifies the hash after
@@ -35,7 +37,9 @@ export async function GET(
     );
   const { data: asset, error } = await a.supabase
     .from("anki_deck_media_assets")
-    .select("content_sha256,mime_type,byte_size,object_key,logical_filename,license_status")
+    .select(
+      "content_sha256,mime_type,byte_size,object_key,logical_filename,license_status,storage_provider,storage_bucket",
+    )
     .eq("deck_release_id", id)
     .eq("content_sha256", sha256)
     .neq("license_status", "excluded")
@@ -47,12 +51,25 @@ export async function GET(
     );
   if (!asset)
     return NextResponse.json({ error: "media not found" }, { status: 404 });
-  const { data: signed, error: signError } = await a.supabase.storage
-    .from(ANKI_DECK_MEDIA_BUCKET)
-    .createSignedUrl(asset.object_key, ANKI_MEDIA_SIGNED_URL_SECONDS, {
-      download: asset.logical_filename,
-    });
-  if (signError || !signed)
+  let url: string | null = null;
+  if (asset.storage_provider === AWS_STORAGE_PROVIDER) {
+    try {
+      url = signAnkiAwsDownload(
+        asset.object_key,
+        ANKI_MEDIA_SIGNED_URL_SECONDS,
+      );
+    } catch (error) {
+      console.error("Unable to sign AWS Master Deck media", error);
+    }
+  } else {
+    const { data: signed } = await a.supabase.storage
+      .from(ANKI_DECK_MEDIA_BUCKET)
+      .createSignedUrl(asset.object_key, ANKI_MEDIA_SIGNED_URL_SECONDS, {
+        download: asset.logical_filename,
+      });
+    url = signed?.signedUrl ?? null;
+  }
+  if (!url)
     return NextResponse.json(
       { error: "media temporarily unavailable" },
       { status: 502 },
@@ -62,7 +79,8 @@ export async function GET(
     mimeType: asset.mime_type,
     byteSize: asset.byte_size,
     logicalFilename: asset.logical_filename,
-    url: signed.signedUrl,
+    url,
     expiresInSeconds: ANKI_MEDIA_SIGNED_URL_SECONDS,
+    storageProvider: asset.storage_provider,
   });
 }

@@ -9,7 +9,7 @@ def files():
     return sorted(rows,key=lambda p:p.relative_to(SOURCE).as_posix())
 def main():
     manifest=json.loads((SOURCE/"manifest.json").read_text());config=json.loads((SOURCE/"config.json").read_text())
-    assert manifest["version"]==VERSION and manifest["package"]=="snaportho_reviewer"
+    assert manifest["version"]==VERSION and manifest["name"]=="SnapOrtho" and manifest["package"]=="snaportho"
     assert not set(config)&{"token","credential","service_role_key","password"}
     rows=files();assert rows and all("learner" not in p.parts and "tests" not in p.parts for p in rows)
     for path in rows:

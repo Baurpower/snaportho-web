@@ -33,7 +33,7 @@ BroBot icon assets, and writes a `manifest.json` into
 be overridden:
 
 ```bash
-BROBOT_EXTENSION_APP_ORIGIN=https://app.snaportho.com npm run extension:orthobullets:build
+BROBOT_EXTENSION_APP_ORIGIN=https://snap-ortho.com npm run extension:orthobullets:build
 ```
 
 Other scripts:

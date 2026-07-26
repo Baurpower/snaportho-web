@@ -20,11 +20,19 @@ import {
   type BootstrapBuildInput,
   type BootstrapMediaInput,
 } from "./lib/education/anki-bootstrap/build-apkg.ts";
+import {
+  AWS_STORAGE_PROVIDER,
+  downloadAnkiAwsObject,
+  loadAnkiAwsStorageConfig,
+  uploadAnkiAwsObject,
+} from "../src/lib/education/anki-aws-storage.ts";
 
 const ANKI_DECK_MEDIA_BUCKET = "anki-deck-media";
 
 function arg(name: string): string | undefined {
-  return process.argv.find((v) => v.startsWith(`--${name}=`))?.slice(name.length + 3);
+  return process.argv
+    .find((v) => v.startsWith(`--${name}=`))
+    ?.slice(name.length + 3);
 }
 
 function flagTrue(name: string): boolean {
@@ -41,7 +49,10 @@ function loadEnvFile(path: string): Record<string, string> {
     const i = trimmed.indexOf("=");
     if (i <= 0) continue;
     const key = trimmed.slice(0, i).trim();
-    const raw = trimmed.slice(i + 1).trim().replace(/^['"]|['"]$/g, "");
+    const raw = trimmed
+      .slice(i + 1)
+      .trim()
+      .replace(/^['"]|['"]$/g, "");
     env[key] = raw;
   }
   return env;
@@ -50,18 +61,34 @@ function loadEnvFile(path: string): Record<string, string> {
 function serviceClient() {
   const fileEnv = loadEnvFile(resolve(process.cwd(), ".env.local"));
   const url =
-    process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() || fileEnv.NEXT_PUBLIC_SUPABASE_URL?.trim() || "";
+    process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() ||
+    fileEnv.NEXT_PUBLIC_SUPABASE_URL?.trim() ||
+    "";
   const key =
-    process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() || fileEnv.SUPABASE_SERVICE_ROLE_KEY?.trim() || "";
+    process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() ||
+    fileEnv.SUPABASE_SERVICE_ROLE_KEY?.trim() ||
+    "";
   if (!url || !key) {
-    throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY");
+    throw new Error(
+      "Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY",
+    );
   }
   return createClient(url, key, {
     auth: { autoRefreshToken: false, persistSession: false },
   });
 }
 
-async function loadFromRelease(releaseId: string, allowDraft: boolean): Promise<BootstrapBuildInput> {
+function runtimeEnv(): NodeJS.ProcessEnv {
+  return {
+    ...loadEnvFile(resolve(process.cwd(), ".env.local")),
+    ...process.env,
+  };
+}
+
+async function loadFromRelease(
+  releaseId: string,
+  allowDraft: boolean,
+): Promise<BootstrapBuildInput> {
   const supabase = serviceClient();
   const { data: release, error } = await supabase
     .from("anki_deck_releases")
@@ -73,7 +100,9 @@ async function loadFromRelease(releaseId: string, allowDraft: boolean): Promise<
   if (error) throw new Error(`release_lookup_failed:${error.message}`);
   if (!release) throw new Error("release_not_found");
   if (release.status !== "published" && !allowDraft) {
-    throw new Error(`release_not_published:${release.status} (pass --allow-draft=true for staging)`);
+    throw new Error(
+      `release_not_published:${release.status} (pass --allow-draft=true for staging)`,
+    );
   }
 
   const { data: members, error: memberError } = await supabase
@@ -83,7 +112,8 @@ async function loadFromRelease(releaseId: string, allowDraft: boolean): Promise<
     )
     .eq("deck_release_id", releaseId)
     .order("ordering_key");
-  if (memberError) throw new Error(`members_lookup_failed:${memberError.message}`);
+  if (memberError)
+    throw new Error(`members_lookup_failed:${memberError.message}`);
 
   const versionIds = (members ?? []).map((m) => m.canonical_card_version_id);
   const { data: versions } = versionIds.length
@@ -98,7 +128,9 @@ async function loadFromRelease(releaseId: string, allowDraft: boolean): Promise<
   const { data: mappings } = versionIds.length
     ? await supabase
         .from("anki_card_entity_version_mappings")
-        .select("canonical_card_version_id,canonical_entity_id,reviewer_mapping_role")
+        .select(
+          "canonical_card_version_id,canonical_entity_id,reviewer_mapping_role",
+        )
         .in("canonical_card_version_id", versionIds)
         .eq("production_eligible", true)
         .eq("lifecycle_status", "approved")
@@ -107,7 +139,7 @@ async function loadFromRelease(releaseId: string, allowDraft: boolean): Promise<
   const { data: mediaRows } = await supabase
     .from("anki_deck_media_assets")
     .select(
-      "canonical_card_version_id,logical_filename,content_sha256,mime_type,byte_size,object_key,license_status",
+      "canonical_card_version_id,logical_filename,content_sha256,mime_type,byte_size,object_key,license_status,storage_provider,storage_bucket",
     )
     .eq("deck_release_id", releaseId)
     .neq("license_status", "excluded");
@@ -129,13 +161,20 @@ async function loadFromRelease(releaseId: string, allowDraft: boolean): Promise<
   const media: BootstrapMediaInput[] = [];
   for (const asset of manifest.media) {
     if (!needed.has(asset.content_sha256)) continue;
-    const { data, error: dlError } = await supabase.storage
-      .from(ANKI_DECK_MEDIA_BUCKET)
-      .download(asset.object_key);
-    if (dlError || !data) {
-      throw new Error(`media_download_failed:${asset.object_key}:${dlError?.message ?? "empty"}`);
+    let bytes: Buffer;
+    if (asset.storage_provider === AWS_STORAGE_PROVIDER) {
+      bytes = await downloadAnkiAwsObject(asset.object_key, runtimeEnv());
+    } else {
+      const { data, error: dlError } = await supabase.storage
+        .from(ANKI_DECK_MEDIA_BUCKET)
+        .download(asset.object_key);
+      if (dlError || !data) {
+        throw new Error(
+          `media_download_failed:${asset.object_key}:${dlError?.message ?? "empty"}`,
+        );
+      }
+      bytes = Buffer.from(await data.arrayBuffer());
     }
-    const bytes = Buffer.from(await data.arrayBuffer());
     const digest = createHash("sha256").update(bytes).digest("hex");
     if (digest !== asset.content_sha256) {
       throw new Error(`media_hash_mismatch:${asset.logical_filename}`);
@@ -190,7 +229,10 @@ function loadFromFixture(inputPath: string): BootstrapBuildInput {
         bytes: Buffer.from(m.bytesBase64, "base64"),
       };
     }
-    if (!m.filePath) throw new Error(`media missing filePath/bytesBase64:${m.logicalFilename}`);
+    if (!m.filePath)
+      throw new Error(
+        `media missing filePath/bytesBase64:${m.logicalFilename}`,
+      );
     return {
       contentSha256: m.contentSha256,
       logicalFilename: m.logicalFilename,
@@ -202,31 +244,58 @@ function loadFromFixture(inputPath: string): BootstrapBuildInput {
 
 async function registerArtifact(
   releaseId: string,
-  result: { apkgBytes: Buffer; artifactChecksum: string },
+  result: {
+    apkgBytes: Buffer;
+    artifactChecksum: string;
+    cardCount: number;
+    mediaCount: number;
+  },
   releaseVersion: string,
 ): Promise<void> {
   const supabase = serviceClient();
+  const env = runtimeEnv();
+  const aws = loadAnkiAwsStorageConfig(env);
   const objectKey = `deck-releases/${releaseId}/bootstrap/${result.artifactChecksum}.apkg`;
-  const { error: uploadError } = await supabase.storage
-    .from(ANKI_DECK_MEDIA_BUCKET)
-    .upload(objectKey, result.apkgBytes, {
-      contentType: "application/apkg",
-      upsert: true,
-    });
-  if (uploadError) throw new Error(`artifact_upload_failed:${uploadError.message}`);
-
-  const { error: insertError } = await supabase.from("anki_deck_release_artifacts").insert({
-    deck_release_id: releaseId,
-    artifact_type: "bootstrap_apkg",
-    artifact_schema_version: ARTIFACT_SCHEMA_VERSION,
-    artifact_checksum: result.artifactChecksum,
-    object_key: objectKey,
-    byte_size: result.apkgBytes.length,
-    media_type: "application/apkg",
-    status: "published",
-    published_at: new Date().toISOString(),
+  await uploadAnkiAwsObject({
+    objectKey,
+    body: result.apkgBytes,
+    contentType: "application/apkg",
+    checksumSha256: result.artifactChecksum,
+    metadata: {
+      releaseId,
+      releaseVersion,
+      packageKind: result.mediaCount ? "media_complete" : "text_only",
+    },
+    env,
   });
-  if (insertError) throw new Error(`artifact_register_failed:${insertError.message}`);
+
+  const { error: insertError } = await supabase
+    .from("anki_deck_release_artifacts")
+    .upsert(
+      {
+        deck_release_id: releaseId,
+        artifact_type: "bootstrap_apkg",
+        artifact_schema_version: ARTIFACT_SCHEMA_VERSION,
+        artifact_checksum: result.artifactChecksum,
+        object_key: objectKey,
+        byte_size: result.apkgBytes.length,
+        media_type: "application/apkg",
+        storage_provider: AWS_STORAGE_PROVIDER,
+        storage_bucket: aws.bucket,
+        delivery_metadata: {
+          packageKind: result.mediaCount ? "media_complete" : "text_only",
+          cardCount: result.cardCount,
+          mediaCount: result.mediaCount,
+        },
+        status: "published",
+        published_at: new Date().toISOString(),
+      },
+      {
+        onConflict: "deck_release_id,artifact_type,artifact_checksum",
+      },
+    );
+  if (insertError)
+    throw new Error(`artifact_register_failed:${insertError.message}`);
   console.log(
     JSON.stringify(
       {
@@ -274,7 +343,11 @@ async function main() {
 
   if (flagTrue("register")) {
     if (!releaseId) throw new Error("--register requires --release-id");
-    await registerArtifact(releaseId, result, buildInput.release.releaseVersion);
+    await registerArtifact(
+      releaseId,
+      result,
+      buildInput.release.releaseVersion,
+    );
   }
 }
 

@@ -43,6 +43,9 @@ class ReviewerTests(unittest.TestCase):
   conversation={"conversationId":str(uuid.uuid4()),"messages":[{"role":"user","content":str(i)}for i in range(25)]}
   payload=chat_payload(" Why? ",context,conversation)
   self.assertEqual(payload["message"],"Why?");self.assertEqual(len(payload["history"]),20);self.assertEqual(payload["history"][0]["content"],"5")
+  self.assertEqual(payload["conversationId"],conversation["conversationId"])
+  self.assertNotIn("conversationId",chat_payload("First question",context,{"conversationId":None,"messages":[]}))
+  self.assertNotIn("conversationId",chat_payload("Retry",context,{"conversationId":"not-a-uuid","messages":[]}))
   self.assertNotIn("<b>",plain_text("<b>Hello</b>&nbsp;there"))
   self.assertEqual(plain_text("{{c1::Partial Articular Supraspinatus Tendon Avulsion}}"),"Partial Articular Supraspinatus Tendon Avulsion")
  def test_deck_footer_distinguishes_installed_and_latest_versions(self):
@@ -148,11 +151,12 @@ class ReviewerTests(unittest.TestCase):
   for gone in("assignments","assignment","start_assignment","submit_mapping","submit_proposal","submit_assignment"):
    self.assertFalse(hasattr(api,gone),gone)
   self.assertTrue(hasattr(api,"review_queue"))
- def test_search_relay_acknowledges_before_opening_browse(self):
+ def test_search_relay_only_reports_completion_after_opening_browse(self):
   with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:
    text=source.read()
   relay=text[text.index("def _resolve_relay_search"):text.index("def propose_from_editor")]
-  self.assertLess(relay.index("complete_future.result()"),relay.index("open_browse_with_card_ids("))
+  self.assertLess(relay.index("open_browse_with_card_ids("),relay.index("complete_search_request("))
+  self.assertIn('"errorCode":"browse_open_failed"',relay)
  def test_start_link_pins_browser_approval_to_addon_origin(self):
   class Response:
    status=200
@@ -270,12 +274,38 @@ class ReviewerTests(unittest.TestCase):
   with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:boot=source.read()
   self.assertIn("Get Started / Master Deck",boot)
   self.assertIn("MasterDeckDialog",boot)
+  from snaportho_reviewer import master_deck
   from snaportho_reviewer.master_deck import plan_counts,has_master_markers
+  self.assertIs(master_deck.tempfile,tempfile)
   self.assertEqual(plan_counts({"actions":[{"action":"add"},{"action":"add"},{"action":"unchanged"}]}),{"add":2,"unchanged":1})
   # has_master_markers needs a collection; pure inventory empty via fake
   class Col:
    def find_cards(self,q):return[]
   self.assertFalse(has_master_markers(Col()))
+ def test_master_deck_download_resumes_partial_file(self):
+  from snaportho_reviewer.master_deck import stream_download_to_part
+  class Response:
+   status=206
+   def __init__(self,data):self.data=data
+   def __enter__(self):return self
+   def __exit__(self,*args):return False
+   def getcode(self):return self.status
+   def read(self,size):
+    data,self.data=self.data[:size],self.data[size:]
+    return data
+  with tempfile.TemporaryDirectory()as d:
+   path=os.path.join(d,"deck.part")
+   with open(path,"wb")as handle:handle.write(b"abc")
+   requests=[]
+   def open_request(request,timeout):
+    requests.append(request)
+    return Response(b"def")
+   with patch("snaportho_reviewer.master_deck.urllib.request.urlopen",open_request):
+    digest,written=stream_download_to_part("https://cdn.example/deck",path,30,6)
+   self.assertEqual(requests[0].get_header("Range"),"bytes=3-")
+   self.assertEqual(written,6)
+   self.assertEqual(digest,"bef57ec7f53a6d40beb640a780a639c83bc29ac8a9816f1fc6c5c6dcd93c4721")
+   with open(path,"rb")as handle:self.assertEqual(handle.read(),b"abcdef")
  def test_structured_tags_round_trip_and_stay_consistent(self):
   structured,free=split_structured(["SnapOrtho::Level::Resident","SnapOrtho::Yield::High","SnapOrtho::Foot"])
   self.assertEqual(sorted(structured),["SnapOrtho::Level::Resident","SnapOrtho::Yield::High"]);self.assertEqual(free,["SnapOrtho::Foot"])

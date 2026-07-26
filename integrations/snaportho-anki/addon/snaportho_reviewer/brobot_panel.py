@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import html
 import re
+import uuid
 
 ATTENDING_PROMPT = "What would an attending ask related to this?"
 OITE_PROMPT = "What is a common OITE board trap or question?"
@@ -53,9 +54,8 @@ def card_context(card):
 def chat_payload(message, context, conversation=None):
     conversation = conversation or {}
     history = list(conversation.get("messages") or [])[-MAX_HISTORY_MESSAGES:]
-    return {
+    payload = {
         "message": message.strip(),
-        "conversationId": conversation.get("conversationId"),
         "card": context,
         "history": [
             {"role": row["role"], "content": row["content"]}
@@ -63,6 +63,14 @@ def chat_payload(message, context, conversation=None):
             if row.get("role") in ("user", "assistant") and row.get("content")
         ],
     }
+    conversation_id = conversation.get("conversationId")
+    try:
+        payload["conversationId"] = str(uuid.UUID(str(conversation_id)))
+    except (ValueError, TypeError, AttributeError):
+        # The API contract makes this field optional, but does not accept null
+        # or stale non-UUID values. Omitting it starts a fresh conversation.
+        pass
+    return payload
 
 
 def deck_footer_text(installed_release, latest_release, card_count):

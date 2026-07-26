@@ -25,8 +25,13 @@ import {
   resolveMediaFile,
   type ResolvedMediaFile,
 } from "./lib/education/anki-bootstrap/media-resolve.ts";
+import {
+  AWS_STORAGE_PROVIDER,
+  loadAnkiAwsStorageConfig,
+  signAnkiAwsDownload,
+  uploadAnkiAwsObject,
+} from "../src/lib/education/anki-aws-storage.ts";
 
-const BUCKET = "anki-deck-media";
 const DEFAULT_MEDIA_DIR = join(
   homedir(),
   "Library/Application Support/Anki2/User 1/collection.media",
@@ -336,18 +341,6 @@ async function fallbackLoad(
   }
 }
 
-async function ensureBucket(supabase: SupabaseClient) {
-  const { data: buckets } = await supabase.storage.listBuckets();
-  if (buckets?.some((b) => b.name === BUCKET)) return;
-  const { error } = await supabase.storage.createBucket(BUCKET, {
-    public: false,
-    fileSizeLimit: 50 * 1024 * 1024,
-  });
-  if (error && !/already exists/i.test(error.message)) {
-    throw new Error(`create_bucket:${error.message}`);
-  }
-}
-
 async function main() {
   const dryRun = flag("dry-run");
   const limit = num("limit", 50);
@@ -491,7 +484,9 @@ async function main() {
     .eq("id", releaseId);
   if (checksumError) throw new Error(`update_checksum:${checksumError.message}`);
 
-  await ensureBucket(supabase);
+  const fileEnv = loadEnvFile(resolve(process.cwd(), ".env.local"));
+  const awsEnv = { ...fileEnv, ...process.env };
+  const awsConfig = loadAnkiAwsStorageConfig(awsEnv);
 
   // Upload media + insert assets
   const mediaInputs: BootstrapMediaInput[] = [];
@@ -506,13 +501,13 @@ async function main() {
 
   for (const file of mediaMap.values()) {
     const objectKey = `deck-releases/${releaseId}/media/${file.contentSha256}`;
-    const { error: upError } = await supabase.storage
-      .from(BUCKET)
-      .upload(objectKey, file.bytes, {
-        contentType: file.mimeType,
-        upsert: true,
-      });
-    if (upError) throw new Error(`media_upload:${file.logicalFilename}:${upError.message}`);
+    await uploadAnkiAwsObject({
+      objectKey,
+      body: file.bytes,
+      contentType: file.mimeType,
+      checksumSha256: file.contentSha256,
+      env: awsEnv,
+    });
 
     const { error: assetError } = await supabase.from("anki_deck_media_assets").insert({
       deck_release_id: releaseId,
@@ -522,9 +517,12 @@ async function main() {
       mime_type: file.mimeType,
       byte_size: file.byteSize,
       object_key: objectKey,
+      storage_provider: AWS_STORAGE_PROVIDER,
+      storage_bucket: awsConfig.bucket,
       license_status: "owned",
       provenance: {
         source: "local_anki_collection.media",
+        binaryStorage: AWS_STORAGE_PROVIDER,
         profile: "User 1",
         pilot: true,
       },
@@ -537,20 +535,6 @@ async function main() {
       bytes: file.bytes,
     });
   }
-
-  // Lifecycle → review → published
-  const now = new Date().toISOString();
-  const { error: reviewError } = await supabase
-    .from("anki_deck_releases")
-    .update({ status: "review", reviewed_at: now })
-    .eq("id", releaseId);
-  if (reviewError) throw new Error(`to_review:${reviewError.message}`);
-
-  const { error: pubError } = await supabase
-    .from("anki_deck_releases")
-    .update({ status: "published", published_at: now })
-    .eq("id", releaseId);
-  if (pubError) throw new Error(`to_published:${pubError.message}`);
 
   // Build bootstrap input with per-card media hashes from resolved files
   const buildInput: BootstrapBuildInput = {
@@ -585,15 +569,21 @@ async function main() {
   writeFileSync(outPath, result.apkgBytes);
 
   const objectKey = `deck-releases/${releaseId}/bootstrap/${result.artifactChecksum}.apkg`;
-  const { error: bootUpError } = await supabase.storage
-    .from(BUCKET)
-    .upload(objectKey, result.apkgBytes, {
-      contentType: "application/apkg",
-      upsert: true,
-    });
-  if (bootUpError) throw new Error(`bootstrap_upload:${bootUpError.message}`);
+  await uploadAnkiAwsObject({
+    objectKey,
+    body: result.apkgBytes,
+    contentType: "application/apkg",
+    checksumSha256: result.artifactChecksum,
+    metadata: {
+      releaseId,
+      releaseVersion,
+      packageKind: "media_complete",
+    },
+    env: awsEnv,
+  });
 
-  const { error: artError } = await supabase.from("anki_deck_release_artifacts").insert({
+  const now = new Date().toISOString();
+  const { error: artError } = await supabase.from("anki_deck_release_artifacts").upsert({
     deck_release_id: releaseId,
     artifact_type: "bootstrap_apkg",
     artifact_schema_version: ARTIFACT_SCHEMA_VERSION,
@@ -601,15 +591,43 @@ async function main() {
     object_key: objectKey,
     byte_size: result.apkgBytes.length,
     media_type: "application/apkg",
-    status: "published",
-    published_at: now,
+    storage_provider: AWS_STORAGE_PROVIDER,
+    storage_bucket: awsConfig.bucket,
+    delivery_metadata: {
+      packageKind: "media_complete",
+      cardCount: selected.length,
+      mediaCount: mediaMap.size,
+    },
+    status: "validated",
+  }, {
+    onConflict: "deck_release_id,artifact_type,artifact_checksum",
   });
   if (artError) throw new Error(`register_artifact:${artError.message}`);
 
-  // Signed URL smoke
-  const { data: signed } = await supabase.storage
-    .from(BUCKET)
-    .createSignedUrl(objectKey, 300, { download: `SnapOrtho-Master-${releaseVersion}.apkg` });
+  const signedUrl = signAnkiAwsDownload(objectKey, 6 * 60 * 60, awsEnv);
+  const smoke = await fetch(signedUrl, { headers: { Range: "bytes=0-0" } });
+  await smoke.body?.cancel();
+  if (smoke.status !== 206 && smoke.status !== 200) {
+    throw new Error(`cloudfront_smoke_failed:${smoke.status}`);
+  }
+
+  const { error: reviewError } = await supabase
+    .from("anki_deck_releases")
+    .update({ status: "review", reviewed_at: now })
+    .eq("id", releaseId);
+  if (reviewError) throw new Error(`to_review:${reviewError.message}`);
+  const { error: artifactPublishError } = await supabase
+    .from("anki_deck_release_artifacts")
+    .update({ status: "published", published_at: now })
+    .eq("deck_release_id", releaseId)
+    .eq("artifact_type", "bootstrap_apkg")
+    .eq("artifact_checksum", result.artifactChecksum);
+  if (artifactPublishError) throw new Error(`publish_artifact:${artifactPublishError.message}`);
+  const { error: pubError } = await supabase
+    .from("anki_deck_releases")
+    .update({ status: "published", published_at: now })
+    .eq("id", releaseId);
+  if (pubError) throw new Error(`to_published:${pubError.message}`);
 
   console.log(
     JSON.stringify(
@@ -626,7 +644,9 @@ async function main() {
         apkgMB: Math.round((result.apkgBytes.length / (1024 * 1024)) * 10) / 10,
         artifactChecksum: result.artifactChecksum,
         objectKey,
-        signedUrlReady: Boolean(signed?.signedUrl),
+        storageProvider: AWS_STORAGE_PROVIDER,
+        storageBucket: awsConfig.bucket,
+        signedUrlReady: Boolean(signedUrl),
         next: "In Anki 0.7.0: Get Started / Master Deck → Download SnapOrtho Master Deck",
       },
       null,

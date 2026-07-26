@@ -5,6 +5,8 @@ import {
   deviceAuth,
   ANKI_DECK_MEDIA_BUCKET,
   ANKI_MEDIA_SIGNED_URL_SECONDS,
+  AWS_STORAGE_PROVIDER,
+  signAnkiAwsDownload,
 } from "../../../../_lib";
 
 // Serves the published bootstrap_apkg artifact for first install. Device auth only.
@@ -41,7 +43,7 @@ export async function GET(
   const { data: artifact, error } = await a.supabase
     .from("anki_deck_release_artifacts")
     .select(
-      "object_key,artifact_checksum,byte_size,media_type,status,artifact_schema_version",
+      "object_key,artifact_checksum,byte_size,media_type,status,artifact_schema_version,storage_provider,storage_bucket,delivery_metadata",
     )
     .eq("deck_release_id", id)
     .eq("artifact_type", "bootstrap_apkg")
@@ -63,12 +65,25 @@ export async function GET(
   }
 
   const filename = `SnapOrtho-Master-${release.release_version}.apkg`;
-  const { data: signed, error: signError } = await a.supabase.storage
-    .from(ANKI_DECK_MEDIA_BUCKET)
-    .createSignedUrl(artifact.object_key, ANKI_MEDIA_SIGNED_URL_SECONDS, {
-      download: filename,
-    });
-  if (signError || !signed) {
+  let url: string | null = null;
+  if (artifact.storage_provider === AWS_STORAGE_PROVIDER) {
+    try {
+      url = signAnkiAwsDownload(
+        artifact.object_key,
+        ANKI_MEDIA_SIGNED_URL_SECONDS,
+      );
+    } catch (error) {
+      console.error("Unable to sign AWS Master Deck artifact", error);
+    }
+  } else {
+    const { data: signed } = await a.supabase.storage
+      .from(ANKI_DECK_MEDIA_BUCKET)
+      .createSignedUrl(artifact.object_key, ANKI_MEDIA_SIGNED_URL_SECONDS, {
+        download: filename,
+      });
+    url = signed?.signedUrl ?? null;
+  }
+  if (!url) {
     return NextResponse.json(
       { error: "bootstrap artifact temporarily unavailable" },
       { status: 502 },
@@ -82,8 +97,12 @@ export async function GET(
     checksum: artifact.artifact_checksum,
     byteSize: artifact.byte_size,
     mediaType: artifact.media_type ?? "application/apkg",
-    url: signed.signedUrl,
+    url,
     expiresInSeconds: ANKI_MEDIA_SIGNED_URL_SECONDS,
     filename,
+    storageProvider: artifact.storage_provider,
+    packageKind: artifact.delivery_metadata?.packageKind ?? "unknown",
+    cardCount: artifact.delivery_metadata?.cardCount ?? null,
+    mediaCount: artifact.delivery_metadata?.mediaCount ?? null,
   });
 }

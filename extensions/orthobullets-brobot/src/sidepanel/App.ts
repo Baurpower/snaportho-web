@@ -1317,24 +1317,39 @@ export function mountSidePanelApp(root: HTMLElement) {
   async function sendQuestionToAnki(button: HTMLButtonElement, explanation?: OrthobulletsExplainResponse) {
     if (!state.pageContext || (explanation && isCurriculumStudyResponse(explanation))) return;
     button.disabled = true;
-    button.textContent = 'Sending to Anki…';
+    button.textContent = 'Preparing Anki search…';
     const result = await sendMessage({
       type: 'ob:send-to-anki',
       pageContext: state.pageContext,
       explanation,
     });
     if (result.ok && 'ankiSearch' in result) {
-      button.textContent = 'Sent — waiting for Anki';
+      button.textContent = 'Waiting for Anki to connect…';
       const requestId = result.ankiSearch.searchRequestId;
+      let statusFailures = 0;
       for (let attempt = 0; attempt < 30; attempt += 1) {
         await new Promise((resolve) => setTimeout(resolve, 2000));
         const status = await sendMessage({ type: 'ob:get-anki-search-status', searchRequestId: requestId });
-        if (!status.ok || !('ankiSearch' in status)) continue;
+        if (!status.ok || !('ankiSearch' in status)) {
+          statusFailures += 1;
+          if (statusFailures >= 3) {
+            button.disabled = false;
+            button.textContent = 'Could not confirm Anki — try again';
+            return;
+          }
+          continue;
+        }
+        statusFailures = 0;
         const current = status.ankiSearch.status;
+        if (current === 'queued') {
+          button.textContent = 'Waiting for Anki to connect…';
+        } else if (current === 'claimed' || current === 'resolving_local') {
+          button.textContent = 'Searching Anki…';
+        }
         if (current === 'completed') {
           const count = Number(status.ankiSearch.resultSummary?.availableCount ?? 0);
           const missing = Number(status.ankiSearch.resultSummary?.missingCount ?? 0);
-          button.textContent = `${count} opened${missing ? ` · ${missing} available after deck update` : ''}`;
+          button.textContent = `Sent ${count} card${count === 1 ? '' : 's'} to Anki${missing ? ` · ${missing} need a deck update` : ''}`;
           return;
         }
         if (['no_local_results', 'review_required', 'failed', 'expired', 'cancelled'].includes(current)) {
@@ -1345,7 +1360,8 @@ export function mountSidePanelApp(root: HTMLElement) {
           return;
         }
       }
-      button.textContent = 'Sent — open Anki to continue';
+      button.disabled = false;
+      button.textContent = 'Still waiting — open Anki and try again';
       return;
     }
     button.disabled = false;
@@ -1355,7 +1371,7 @@ export function mountSidePanelApp(root: HTMLElement) {
   async function findPageAnkiCards(button: HTMLButtonElement) {
     if (!state.pageContext) return;
     button.disabled = true;
-    button.textContent = 'Searching the whole page…';
+    button.textContent = 'Preparing page search…';
     const result = await sendMessage({
       type: 'ob:send-page-to-anki',
       pageContext: state.pageContext,
@@ -1365,18 +1381,33 @@ export function mountSidePanelApp(root: HTMLElement) {
       button.textContent = result.ok ? 'Find relevant Anki cards from this page' : `Try again — ${result.error}`;
       return;
     }
-    button.textContent = 'Sent — waiting for Anki';
+    button.textContent = 'Waiting for Anki to connect…';
+    let statusFailures = 0;
     for (let attempt = 0; attempt < 30; attempt += 1) {
       await new Promise((resolve) => setTimeout(resolve, 2000));
       const status = await sendMessage({
         type: 'ob:get-anki-search-status',
         searchRequestId: result.ankiSearch.searchRequestId,
       });
-      if (!status.ok || !('ankiSearch' in status)) continue;
+      if (!status.ok || !('ankiSearch' in status)) {
+        statusFailures += 1;
+        if (statusFailures >= 3) {
+          button.disabled = false;
+          button.textContent = 'Could not confirm Anki — try again';
+          return;
+        }
+        continue;
+      }
+      statusFailures = 0;
+      if (status.ankiSearch.status === 'queued') {
+        button.textContent = 'Waiting for Anki to connect…';
+      } else if (status.ankiSearch.status === 'claimed' || status.ankiSearch.status === 'resolving_local') {
+        button.textContent = 'Searching Anki…';
+      }
       if (status.ankiSearch.status === 'completed') {
         const count = Number(status.ankiSearch.resultSummary?.availableCount ?? 0);
         const missing = Number(status.ankiSearch.resultSummary?.missingCount ?? 0);
-        button.textContent = `${count} relevant card${count === 1 ? '' : 's'} opened${missing ? ` · ${missing} after deck update` : ''}`;
+        button.textContent = `Sent ${count} card${count === 1 ? '' : 's'} to Anki${missing ? ` · ${missing} need a deck update` : ''}`;
         return;
       }
       if (['no_local_results', 'review_required', 'failed', 'expired', 'cancelled'].includes(status.ankiSearch.status)) {
@@ -1387,7 +1418,8 @@ export function mountSidePanelApp(root: HTMLElement) {
         return;
       }
     }
-    button.textContent = 'Search sent — open Anki to continue';
+    button.disabled = false;
+    button.textContent = 'Still waiting — open Anki and try again';
   }
 
   function render() {

@@ -212,7 +212,9 @@ const manifest = manifestTemplate
   .replace('__CONTENT_SCRIPT__', builtPaths.contentScript)
   .replace('__HIMALAYA_BRIDGE__', builtPaths.himalayaBridge);
 
-writeFileSync(path.join(distDir, 'manifest.json'), manifest);
+const manifestJson = JSON.parse(manifest);
+manifestJson.host_permissions = [...new Set(manifestJson.host_permissions)];
+writeFileSync(path.join(distDir, 'manifest.json'), `${JSON.stringify(manifestJson, null, 2)}\n`);
 
 const builtSidepanelHtml = readFileSync(sidepanelHtmlPath, 'utf8').replace(
   '__SIDEPANEL_ENTRY__',

@@ -51,6 +51,8 @@ export type MediaAssetRow = {
   mime_type: string;
   byte_size: number;
   object_key: string;
+  storage_provider?: "supabase_storage" | "aws_s3";
+  storage_bucket?: string | null;
   license_status: string;
 };
 
@@ -73,7 +75,12 @@ export type AssembledDeckSyncManifest = {
     deckPath: string;
     orderingKey: string;
     inclusionStatus: string;
-    fieldSnapshot: Array<{ name: string; rawValue?: string; value?: string; plainText?: string }>;
+    fieldSnapshot: Array<{
+      name: string;
+      rawValue?: string;
+      value?: string;
+      plainText?: string;
+    }>;
     centralTags: string[];
     mappings: Array<{ canonicalEntityId: string; mappingRole: string }>;
     mediaHashes: string[];
@@ -83,7 +90,12 @@ export type AssembledDeckSyncManifest = {
 
 function asFieldSnapshot(
   raw: unknown,
-): Array<{ name: string; rawValue?: string; value?: string; plainText?: string }> {
+): Array<{
+  name: string;
+  rawValue?: string;
+  value?: string;
+  plainText?: string;
+}> {
   if (!Array.isArray(raw)) return [];
   return raw.map((field: unknown) => {
     const f =
@@ -111,7 +123,9 @@ export function filenamesInFieldSnapshot(
   const found = new Set<string>();
   for (const field of fields) {
     const html = field.rawValue ?? field.value ?? "";
-    for (const match of html.matchAll(/<img[^>]+src=["']([^"']+)["'][^>]*>/gi)) {
+    for (const match of html.matchAll(
+      /<img[^>]+src=["']([^"']+)["'][^>]*>/gi,
+    )) {
       const base = String(match[1] ?? "")
         .split(/[?#]/)[0]
         .split(/[/\\]/)
@@ -137,7 +151,10 @@ export function assembleDeckSyncManifest(input: {
   media: MediaAssetRow[];
 }): AssembledDeckSyncManifest {
   const versionById = new Map((input.versions ?? []).map((v) => [v.id, v]));
-  const entities = new Map<string, Array<{ canonicalEntityId: string; mappingRole: string }>>();
+  const entities = new Map<
+    string,
+    Array<{ canonicalEntityId: string; mappingRole: string }>
+  >();
   const mediaByVersion = new Map<string, string[]>();
   const mediaByFilename = new Map<string, string>(); // logical_filename -> sha256
 
@@ -159,7 +176,11 @@ export function assembleDeckSyncManifest(input: {
   }
 
   const members = [...(input.members ?? [])].sort((a, b) =>
-    a.ordering_key < b.ordering_key ? -1 : a.ordering_key > b.ordering_key ? 1 : 0,
+    a.ordering_key < b.ordering_key
+      ? -1
+      : a.ordering_key > b.ordering_key
+        ? 1
+        : 0,
   );
 
   return {
@@ -175,7 +196,11 @@ export function assembleDeckSyncManifest(input: {
       const rawFields = asFieldSnapshot(v?.field_snapshot);
       const tags = asTagSnapshot(v?.tag_snapshot);
       // Normalize to SnapOrtho Master fields so contentHash matches bootstrap notes.
-      const normalized = normalizeFieldSnapshotToMaster(rawFields, tags, m.card_ordinal);
+      const normalized = normalizeFieldSnapshotToMaster(
+        rawFields,
+        tags,
+        m.card_ordinal,
+      );
       const fields = normalized.fieldSnapshot;
       const byVersion = mediaByVersion.get(m.canonical_card_version_id) ?? [];
       const byFilename = filenamesInFieldSnapshot([...rawFields, ...fields])

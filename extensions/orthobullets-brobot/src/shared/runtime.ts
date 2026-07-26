@@ -1,7 +1,15 @@
 const ORTHOBULLETS_HOSTS = new Set(['orthobullets.com', 'www.orthobullets.com']);
 const ROCK_HOSTS = new Set(['rock.aaos.org', 'www.rock.aaos.org']);
 const HIMALAYA_HOSTS = new Set(['learn.aaos.org']);
-const SNAPORTHO_HOSTS = new Set(['localhost', '127.0.0.1', 'snaportho.com', 'www.snaportho.com', 'app.snaportho.com']);
+const SNAPORTHO_HOSTS = new Set([
+  'localhost',
+  '127.0.0.1',
+  'snap-ortho.com',
+  'www.snap-ortho.com',
+  'snaportho.com',
+  'www.snaportho.com',
+  'app.snaportho.com',
+]);
 
 function isQuestionBankPermissionHost(hostname: string, pathname: string) {
   const host = hostname.toLowerCase();
@@ -37,7 +45,11 @@ export function getConfiguredAppOrigin() {
   const localOrigin = appOrigins.find((origin) => ['localhost', '127.0.0.1'].includes(origin.hostname.toLowerCase()));
   if (localOrigin) return localOrigin.toString().replace(/\/$/, '');
 
-  const productionOrigin = appOrigins.find((origin) => ['snaportho.com', 'www.snaportho.com', 'app.snaportho.com'].includes(origin.hostname.toLowerCase()));
+  const productionOrigin = appOrigins.find((origin) =>
+    ['snap-ortho.com', 'www.snap-ortho.com', 'snaportho.com', 'www.snaportho.com', 'app.snaportho.com'].includes(
+      origin.hostname.toLowerCase()
+    )
+  );
   if (productionOrigin) return productionOrigin.toString().replace(/\/$/, '');
 
   return 'http://localhost:3000';

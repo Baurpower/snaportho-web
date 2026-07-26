@@ -67,6 +67,14 @@ type GenerateParams = {
   historicalStats: ExistingResidentStats[];
   slotMode?: QuickAssignSlotMode;
   slotDefinitions?: ProgramCallSlotDefinition[];
+  /**
+   * Phase 3: when true, run the local-search optimizer on the best complete +
+   * valid greedy result to further balance fairness. Opt-in / default off so
+   * existing behavior is unchanged until enabled behind a flag.
+   */
+  enableLocalSearch?: boolean;
+  /** Iteration budget for the local-search optimizer (Phase 3). */
+  localSearchMaxIterations?: number;
 };
 
 type ResidentAutoStats = {
@@ -546,6 +554,60 @@ function updateStats(
     } else if (slot === "Backup") {
       entry.monthWeekendBackup += 1;
       entry.yearWeekendBackup += 1;
+    }
+  }
+}
+
+function removeDateOnce(dates: string[], dateKey: string) {
+  const index = dates.indexOf(dateKey);
+  if (index >= 0) dates.splice(index, 1);
+}
+
+/**
+ * Exact inverse of updateStats — reverts a single (resident, slot, day)
+ * assignment. Used by the local-search optimizer to apply/undo neighborhood
+ * moves in O(1) so it never has to rebuild stats from scratch (Phase 3).
+ */
+function undoStats(
+  stats: Map<string, ResidentAutoStats>,
+  residentId: string,
+  slot: Slot,
+  day: CalendarDay,
+  countsTowardWorkload = true
+) {
+  const entry = stats.get(residentId);
+  if (!entry) return;
+
+  if (slot === "Primary") {
+    entry.monthPrimary -= 1;
+    entry.yearPrimary -= 1;
+    removeDateOnce(entry.primaryDates, day.key);
+  } else if (slot === "Backup") {
+    entry.monthBackup -= 1;
+    entry.yearBackup -= 1;
+    removeDateOnce(entry.backupDates, day.key);
+  } else {
+    entry.monthBuddy -= 1;
+    entry.yearBuddy -= 1;
+    removeDateOnce(entry.buddyDates, day.key);
+  }
+
+  if (countsTowardWorkload) {
+    entry.monthTotal -= 1;
+    entry.yearTotal -= 1;
+    removeDateOnce(entry.assignedDates, day.key);
+  }
+
+  if (countsTowardWorkload && day.isWeekend) {
+    entry.monthWeekend -= 1;
+    entry.yearWeekend -= 1;
+
+    if (slot === "Primary") {
+      entry.monthWeekendPrimary -= 1;
+      entry.yearWeekendPrimary -= 1;
+    } else if (slot === "Backup") {
+      entry.monthWeekendBackup -= 1;
+      entry.yearWeekendBackup -= 1;
     }
   }
 }
@@ -1403,37 +1465,13 @@ function countOpenRequiredSlots({
   return open;
 }
 
-function scoreGeneratedSchedule({
-  stats,
-  assignments,
-  monthDays,
-  residents,
-  rules,
-  slotMode,
-  diagnostics,
-  slotDefinitions,
-  residentsById,
-}: {
-  stats: ResidentAutoStats[];
-  assignments: Record<string, DraftDayAssignment>;
-  monthDays: CalendarDay[];
-  residents: ResidentOption[];
-  rules: ProgramRule[];
-  slotMode: QuickAssignSlotMode;
-  diagnostics: CombinationDiagnostics;
-  slotDefinitions?: ProgramCallSlotDefinition[];
-  residentsById?: Map<string, ResidentOption>;
-}) {
-  const openRequiredSlots = countOpenRequiredSlots({
-    monthDays,
-    residents,
-    assignments,
-    rules,
-    slotMode,
-    slotDefinitions,
-    residentsById,
-  });
-
+/**
+ * Soft (fairness) portion of the schedule objective — the terms that depend only
+ * on per-resident stats, not on hard-rule diagnostics. Extracted so the
+ * local-search optimizer minimizes the exact same fairness objective that
+ * scoreGeneratedSchedule uses to rank greedy attempts.
+ */
+function softStatsScore(stats: ResidentAutoStats[]) {
   const adjustedMonthBurdens = stats.map(getAdjustedMonthBurden);
   const adjustedWeekendBurdens = stats.map(getAdjustedWeekendBurden);
   const primaryTotals = stats.map((item) => item.monthPrimary);
@@ -1466,16 +1504,52 @@ function scoreGeneratedSchedule({
   );
 
   return (
-    diagnostics.hardErrors * 1000000 +
-    diagnostics.invalidAssignments * 250000 +
-    openRequiredSlots * 100000 +
-    diagnostics.warnings * 300 +
     adjustedBurdenSpread * 800 +
     adjustedWeekendSpread * 1000 +
     primarySpread * 650 +
     backupSpread * 120 +
     totalWeightedBurden * 5 +
     totalWeightedWeekendBurden * 12
+  );
+}
+
+function scoreGeneratedSchedule({
+  stats,
+  assignments,
+  monthDays,
+  residents,
+  rules,
+  slotMode,
+  diagnostics,
+  slotDefinitions,
+  residentsById,
+}: {
+  stats: ResidentAutoStats[];
+  assignments: Record<string, DraftDayAssignment>;
+  monthDays: CalendarDay[];
+  residents: ResidentOption[];
+  rules: ProgramRule[];
+  slotMode: QuickAssignSlotMode;
+  diagnostics: CombinationDiagnostics;
+  slotDefinitions?: ProgramCallSlotDefinition[];
+  residentsById?: Map<string, ResidentOption>;
+}) {
+  const openRequiredSlots = countOpenRequiredSlots({
+    monthDays,
+    residents,
+    assignments,
+    rules,
+    slotMode,
+    slotDefinitions,
+    residentsById,
+  });
+
+  return (
+    diagnostics.hardErrors * 1000000 +
+    diagnostics.invalidAssignments * 250000 +
+    openRequiredSlots * 100000 +
+    diagnostics.warnings * 300 +
+    softStatsScore(stats)
   );
 }
 
@@ -2368,6 +2442,323 @@ function generateSingleCallSchedule({
   };
 }
 
+// ---------------------------------------------------------------------------
+// Phase 3: local-search optimizer
+//
+// Takes an already hard-feasible, complete schedule and improves its fairness
+// (softStatsScore) via simulated annealing over Primary/Backup reassign and
+// swap moves. Hard constraints are invariants — a move is only ever accepted
+// if the affected cells remain hard-eligible (evaluateResidentForSlot). Buddy
+// days are frozen (their Primary is the partner-PGY resident and Backup is
+// disabled), so they are excluded from moves. Deterministic for a given seed.
+// ---------------------------------------------------------------------------
+
+type OptimizerSlot = "Primary" | "Backup";
+
+/** Deterministic PRNG (mulberry32) — no Math.random/Date in the optimize loop. */
+function createSeededRng(seed: number) {
+  let state = seed >>> 0;
+  return function next() {
+    state = (state + 0x6d2b79f5) | 0;
+    let t = Math.imul(state ^ (state >>> 15), 1 | state);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function cloneAssignments(
+  assignments: Record<string, DraftDayAssignment>
+): Record<string, DraftDayAssignment> {
+  const next: Record<string, DraftDayAssignment> = {};
+  for (const [dateKey, assignment] of Object.entries(assignments)) {
+    next[dateKey] = {
+      primaryRosterId: assignment.primaryRosterId ?? null,
+      backupRosterId: assignment.backupRosterId ?? null,
+      buddyRosterId: assignment.buddyRosterId ?? null,
+    };
+  }
+  return next;
+}
+
+export type OptimizeCallScheduleParams = {
+  assignments: Record<string, DraftDayAssignment>;
+  monthDays: CalendarDay[];
+  residents: ResidentOption[];
+  rules: ProgramRule[];
+  availabilityByResident: ProgramAvailabilityMonthResponse["availability"];
+  historicalStats: ExistingResidentStats[];
+  slotDefinitions?: ProgramCallSlotDefinition[];
+  seed?: number;
+  maxIterations?: number;
+  /** Annealing start temperature and geometric cooling factor per iteration. */
+  startTemperature?: number;
+  coolingRate?: number;
+};
+
+export type OptimizeCallScheduleResult = {
+  assignments: Record<string, DraftDayAssignment>;
+  stats: ResidentAutoStats[];
+  iterations: number;
+  acceptedMoves: number;
+  improvedMoves: number;
+  softScoreBefore: number;
+  softScoreAfter: number;
+};
+
+export function optimizeCallSchedule({
+  assignments,
+  monthDays,
+  residents,
+  rules,
+  availabilityByResident,
+  historicalStats,
+  slotDefinitions = DEFAULT_SLOT_DEFINITIONS,
+  seed = 1,
+  maxIterations = 4000,
+  startTemperature = 500,
+  coolingRate = 0.9995,
+}: OptimizeCallScheduleParams): OptimizeCallScheduleResult {
+  const enabledRules = getEffectiveRules(rules, { includeDisabled: false });
+  const effectiveSlotDefinitions =
+    slotDefinitions.length > 0 ? slotDefinitions : DEFAULT_SLOT_DEFINITIONS;
+
+  const current = cloneAssignments(assignments);
+  const monthDayByKey = new Map(monthDays.map((day) => [day.key, day]));
+
+  // Build the live stats map for the starting schedule (matches how the greedy
+  // generator accounts for existing assignments).
+  const stats = buildInitialStats(
+    residents,
+    historicalStats,
+    monthDays[0]?.key ?? null
+  );
+  applyExistingAssignmentsToStats(
+    stats,
+    monthDays,
+    current,
+    effectiveSlotDefinitions
+  );
+
+  const startScore = softStatsScore(Array.from(stats.values()));
+
+  // Movable cells: filled Primary/Backup cells on non-buddy days. Buddy days are
+  // frozen (buddyRosterId set → Primary is the locked partner, Backup disabled).
+  const movableCells: Array<{ dateKey: string; slot: OptimizerSlot }> = [];
+  for (const day of monthDays) {
+    const assignment = current[day.key];
+    if (!assignment || assignment.buddyRosterId) continue;
+    if (assignment.primaryRosterId) {
+      movableCells.push({ dateKey: day.key, slot: "Primary" });
+    }
+    if (assignment.backupRosterId) {
+      movableCells.push({ dateKey: day.key, slot: "Backup" });
+    }
+  }
+
+  const emptyResult: OptimizeCallScheduleResult = {
+    assignments: current,
+    stats: Array.from(stats.values()),
+    iterations: 0,
+    acceptedMoves: 0,
+    improvedMoves: 0,
+    softScoreBefore: startScore,
+    softScoreAfter: startScore,
+  };
+
+  if (movableCells.length === 0 || residents.length < 2) {
+    return emptyResult;
+  }
+
+  const rng = createSeededRng(seed);
+  const pick = <T>(items: T[]) => items[Math.floor(rng() * items.length)];
+
+  function getSlotRoster(dateKey: string, slot: OptimizerSlot) {
+    const assignment = current[dateKey];
+    return slot === "Primary"
+      ? assignment?.primaryRosterId ?? null
+      : assignment?.backupRosterId ?? null;
+  }
+
+  function setSlotRoster(
+    dateKey: string,
+    slot: OptimizerSlot,
+    rosterId: string | null
+  ) {
+    const assignment = current[dateKey];
+    if (!assignment) return;
+    if (slot === "Primary") assignment.primaryRosterId = rosterId;
+    else assignment.backupRosterId = rosterId;
+  }
+
+  function residentsAssignedOn(dateKey: string) {
+    const assignment = current[dateKey];
+    const ids = new Set<string>();
+    if (assignment?.primaryRosterId) ids.add(assignment.primaryRosterId);
+    if (assignment?.backupRosterId) ids.add(assignment.backupRosterId);
+    if (assignment?.buddyRosterId) ids.add(assignment.buddyRosterId);
+    return ids;
+  }
+
+  // Primary/Backup always count toward workload in the stats model (matches
+  // applyExistingAssignmentsToStats), so cell moves use countsTowardWorkload=true.
+  function isHardEligible(
+    residentId: string,
+    slot: OptimizerSlot,
+    dateKey: string
+  ) {
+    const resident = residents.find((r) => r.residentId === residentId);
+    if (!resident) return false;
+    return !evaluateResidentForSlot({
+      resident,
+      slot,
+      dateKey,
+      assignments: current,
+      rules: enabledRules,
+      availabilityByResident,
+    }).blocked;
+  }
+
+  let currentScore = startScore;
+  let bestScore = startScore;
+  let bestAssignments = cloneAssignments(current);
+  let temperature = startTemperature;
+  let acceptedMoves = 0;
+  let improvedMoves = 0;
+
+  function acceptDelta(delta: number) {
+    if (delta <= 0) return true;
+    return rng() < Math.exp(-delta / Math.max(temperature, 1e-6));
+  }
+
+  for (let iteration = 0; iteration < maxIterations; iteration += 1) {
+    temperature *= coolingRate;
+
+    const doSwap = rng() < 0.5;
+
+    if (!doSwap) {
+      // Reassign: replace the resident in a random movable cell.
+      const cell = pick(movableCells);
+      const day = monthDayByKey.get(cell.dateKey);
+      if (!day) continue;
+
+      const currentRoster = getSlotRoster(cell.dateKey, cell.slot);
+      if (!currentRoster) continue;
+
+      const occupied = residentsAssignedOn(cell.dateKey);
+      const candidatePool = residents.filter(
+        (r) => r.residentId !== currentRoster && !occupied.has(r.residentId)
+      );
+      if (candidatePool.length === 0) continue;
+      const candidate = pick(candidatePool);
+
+      // Apply tentatively.
+      setSlotRoster(cell.dateKey, cell.slot, candidate.residentId);
+      undoStats(stats, currentRoster, cell.slot, day);
+      updateStats(stats, candidate.residentId, cell.slot, day);
+
+      const eligible = isHardEligible(
+        candidate.residentId,
+        cell.slot,
+        cell.dateKey
+      );
+      const nextScore = eligible
+        ? softStatsScore(Array.from(stats.values()))
+        : Number.POSITIVE_INFINITY;
+      const delta = nextScore - currentScore;
+
+      if (eligible && acceptDelta(delta)) {
+        currentScore = nextScore;
+        acceptedMoves += 1;
+        if (delta < 0) improvedMoves += 1;
+        if (currentScore < bestScore) {
+          bestScore = currentScore;
+          bestAssignments = cloneAssignments(current);
+        }
+      } else {
+        // Revert.
+        setSlotRoster(cell.dateKey, cell.slot, currentRoster);
+        undoStats(stats, candidate.residentId, cell.slot, day);
+        updateStats(stats, currentRoster, cell.slot, day);
+      }
+      continue;
+    }
+
+    // Swap: exchange residents between two movable cells on different dates.
+    const cellA = pick(movableCells);
+    const cellB = pick(movableCells);
+    if (cellA.dateKey === cellB.dateKey) continue;
+
+    const dayA = monthDayByKey.get(cellA.dateKey);
+    const dayB = monthDayByKey.get(cellB.dateKey);
+    if (!dayA || !dayB) continue;
+
+    const rosterA = getSlotRoster(cellA.dateKey, cellA.slot);
+    const rosterB = getSlotRoster(cellB.dateKey, cellB.slot);
+    if (!rosterA || !rosterB || rosterA === rosterB) continue;
+
+    // Neither resident may already hold another slot on the other's date.
+    if (residentsAssignedOn(cellA.dateKey).has(rosterB)) continue;
+    if (residentsAssignedOn(cellB.dateKey).has(rosterA)) continue;
+
+    // Apply tentatively.
+    setSlotRoster(cellA.dateKey, cellA.slot, rosterB);
+    setSlotRoster(cellB.dateKey, cellB.slot, rosterA);
+    undoStats(stats, rosterA, cellA.slot, dayA);
+    undoStats(stats, rosterB, cellB.slot, dayB);
+    updateStats(stats, rosterB, cellA.slot, dayA);
+    updateStats(stats, rosterA, cellB.slot, dayB);
+
+    const eligible =
+      isHardEligible(rosterB, cellA.slot, cellA.dateKey) &&
+      isHardEligible(rosterA, cellB.slot, cellB.dateKey);
+    const nextScore = eligible
+      ? softStatsScore(Array.from(stats.values()))
+      : Number.POSITIVE_INFINITY;
+    const delta = nextScore - currentScore;
+
+    if (eligible && acceptDelta(delta)) {
+      currentScore = nextScore;
+      acceptedMoves += 1;
+      if (delta < 0) improvedMoves += 1;
+      if (currentScore < bestScore) {
+        bestScore = currentScore;
+        bestAssignments = cloneAssignments(current);
+      }
+    } else {
+      // Revert.
+      setSlotRoster(cellA.dateKey, cellA.slot, rosterA);
+      setSlotRoster(cellB.dateKey, cellB.slot, rosterB);
+      undoStats(stats, rosterB, cellA.slot, dayA);
+      undoStats(stats, rosterA, cellB.slot, dayB);
+      updateStats(stats, rosterA, cellA.slot, dayA);
+      updateStats(stats, rosterB, cellB.slot, dayB);
+    }
+  }
+
+  // Recompute stats cleanly for the best schedule found.
+  const bestStats = buildInitialStats(
+    residents,
+    historicalStats,
+    monthDays[0]?.key ?? null
+  );
+  applyExistingAssignmentsToStats(
+    bestStats,
+    monthDays,
+    bestAssignments,
+    effectiveSlotDefinitions
+  );
+
+  return {
+    assignments: bestAssignments,
+    stats: Array.from(bestStats.values()),
+    iterations: maxIterations,
+    acceptedMoves,
+    improvedMoves,
+    softScoreBefore: startScore,
+    softScoreAfter: bestScore,
+  };
+}
+
 function summarizeCombinationForAI(
   combo: GeneratedScheduleCombination,
   monthDays: CalendarDay[],
@@ -2519,6 +2910,8 @@ export function generateCallSchedule({
   historicalStats,
   slotMode = "Both",
   slotDefinitions = DEFAULT_SLOT_DEFINITIONS,
+  enableLocalSearch = false,
+  localSearchMaxIterations = 4000,
 }: GenerateParams) {
   // Phase 9 alignment: use canonical effective filter (disabled rules are excluded
   // from generation by default, matching validation behavior).
@@ -2631,13 +3024,77 @@ export function generateCallSchedule({
 
   const best = topCombinations[0];
 
+  // Phase 3: optionally run local search on the best complete + valid result to
+  // squeeze out fairness gains the greedy passes left on the table. Only runs on
+  // a hard-feasible, complete schedule (the optimizer's precondition); the result
+  // is adopted only if it remains feasible (defensive — the optimizer guarantees
+  // this, but we re-verify before returning).
+  let selectedAssignments = best?.assignments ?? {};
+  let selectedStats = best?.stats ?? [];
+  let optimizationReport: {
+    applied: boolean;
+    softScoreBefore: number;
+    softScoreAfter: number;
+    acceptedMoves: number;
+    improvedMoves: number;
+    iterations: number;
+  } | null = null;
+
+  if (enableLocalSearch && best && best.isComplete && best.isValid) {
+    const optimized = optimizeCallSchedule({
+      assignments: best.assignments,
+      monthDays,
+      residents,
+      rules: effectiveRules,
+      availabilityByResident,
+      historicalStats,
+      slotDefinitions,
+      seed: generationVersion,
+      maxIterations: localSearchMaxIterations,
+    });
+
+    const optimizedOpenSlots = countOpenRequiredSlots({
+      monthDays,
+      residents,
+      assignments: optimized.assignments,
+      rules: effectiveRules,
+      slotMode,
+      slotDefinitions,
+      residentsById,
+    });
+    const optimizedDiagnostics = analyzeCombinationDiagnostics({
+      combo: {
+        assignments: optimized.assignments,
+        openRequiredSlots: optimizedOpenSlots,
+      },
+      monthDays,
+      residents,
+      rules: effectiveRules,
+      availabilityByResident,
+    });
+
+    if (optimizedDiagnostics.hardErrors === 0 && optimizedOpenSlots === 0) {
+      selectedAssignments = optimized.assignments;
+      selectedStats = optimized.stats;
+      optimizationReport = {
+        applied: true,
+        softScoreBefore: optimized.softScoreBefore,
+        softScoreAfter: optimized.softScoreAfter,
+        acceptedMoves: optimized.acceptedMoves,
+        improvedMoves: optimized.improvedMoves,
+        iterations: optimized.iterations,
+      };
+    }
+  }
+
     return {
-    assignments: best?.assignments ?? {},
-    stats: best?.stats ?? [],
+    assignments: selectedAssignments,
+    stats: selectedStats,
     generationReport: {
       attemptsRun: ATTEMPTS,
       uniqueCombinations: rankedCombinations.length,
       completeCombinationCount: completeCombinations.length,
+      optimization: optimizationReport,
       topCombinations,
       topCombinationSummaries: topCombinations.map((combo) =>
         summarizeCombinationForAI(

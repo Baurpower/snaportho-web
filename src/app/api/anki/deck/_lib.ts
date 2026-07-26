@@ -7,10 +7,15 @@ import {
   addonVersionFromClientHeader,
   addonVersionAtLeast,
 } from "@/lib/education/deck-addon-version";
+import {
+  AWS_STORAGE_PROVIDER,
+  signAnkiAwsDownload,
+} from "@/lib/education/anki-aws-storage";
 export { addonVersionAtLeast };
 export const ANKI_DECK_MEDIA_BUCKET = "anki-deck-media";
-// Bootstrap packages with full media can be ~1GB; keep signed URLs long enough to download.
-export const ANKI_MEDIA_SIGNED_URL_SECONDS = 3600;
+// Full media packages can be ~1GB. A fresh URL can also resume a partial Range download.
+export const ANKI_MEDIA_SIGNED_URL_SECONDS = 6 * 60 * 60;
+export { AWS_STORAGE_PROVIDER, signAnkiAwsDownload };
 export async function deviceAuth(request: Request) {
   const auth = await authenticateBroBotAnkiRequest(request);
   if ("response" in auth) return { response: auth.response };
@@ -25,7 +30,9 @@ export async function deviceAuth(request: Request) {
 }
 // Add-on version gate. The client sends `X-SnapOrtho-Client: reviewer-addon/<version>`.
 export function clientAddonVersion(request: Request): string | null {
-  return addonVersionFromClientHeader(request.headers.get("x-snaportho-client"));
+  return addonVersionFromClientHeader(
+    request.headers.get("x-snaportho-client"),
+  );
 }
 export async function loadReleaseManifest(supabase: any, releaseId: string) {
   const { data: release, error } = await supabase
@@ -68,7 +75,7 @@ export async function loadReleaseManifest(supabase: any, releaseId: string) {
   const { data: media } = await supabase
     .from("anki_deck_media_assets")
     .select(
-      "canonical_card_version_id,logical_filename,content_sha256,mime_type,byte_size,object_key,license_status",
+      "canonical_card_version_id,logical_filename,content_sha256,mime_type,byte_size,object_key,license_status,storage_provider,storage_bucket",
     )
     .eq("deck_release_id", releaseId)
     .neq("license_status", "excluded");

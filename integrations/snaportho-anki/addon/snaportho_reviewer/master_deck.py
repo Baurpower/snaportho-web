@@ -11,12 +11,54 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import tempfile
 import urllib.request
 
 from .errors import describe, headline
 from .sync import chunk_list, installed_card_inventory, merge_sync_plan_actions
 
 STEP_LINK, STEP_INSTALL, STEP_UPDATE = 1, 2, 3
+
+
+def stream_download_to_part(url, part_path, timeout, expected_size=None):
+    """Download with HTTP Range resume and return (sha256, bytes_written)."""
+    existing = os.path.getsize(part_path) if os.path.isfile(part_path) else 0
+    if expected_size and existing > expected_size:
+        os.remove(part_path)
+        existing = 0
+
+    digest = hashlib.sha256()
+    if existing:
+        with open(part_path, "rb") as current:
+            while True:
+                chunk = current.read(1024 * 1024)
+                if not chunk:
+                    break
+                digest.update(chunk)
+        if expected_size and existing == expected_size:
+            return digest.hexdigest(), existing
+
+    headers = {"User-Agent": "SnapOrtho-Anki-Addon"}
+    if existing:
+        headers["Range"] = f"bytes={existing}-"
+    req = urllib.request.Request(url, headers=headers)
+    with urllib.request.urlopen(req, timeout=timeout) as response:
+        status = getattr(response, "status", None) or response.getcode()
+        resumed = existing > 0 and status == 206
+        if existing and not resumed:
+            existing = 0
+            digest = hashlib.sha256()
+        mode = "ab" if resumed else "wb"
+        written = existing
+        with open(part_path, mode) as handle:
+            while True:
+                chunk = response.read(1024 * 1024)
+                if not chunk:
+                    break
+                handle.write(chunk)
+                digest.update(chunk)
+                written += len(chunk)
+    return digest.hexdigest(), written
 
 HUB_STYLE = """
 QDialog { background: #f6f7f9; }
@@ -599,38 +641,35 @@ class MasterDeckDialog:
         def work():
             _, desc = self.runtime.api.deck_bootstrap_apkg(release_id)
             url = desc["url"]
+            if desc.get("packageKind") == "text_only":
+                raise RuntimeError(
+                    "The published package is text-only. A media-complete Master Deck must be published first."
+                )
             checksum = (desc.get("checksum") or desc.get("artifactChecksum") or "").lower()
-            filename = desc.get("filename") or f"SnapOrtho-Master-{version}.apkg"
+            filename = os.path.basename(desc.get("filename") or f"SnapOrtho-Master-{version}.apkg")
             expected = desc.get("byteSize") or desc.get("byte_size")
-            # Stream to a temp file (no 200MB cap) so full media packages download safely.
-            tmp_dir = tempfile.mkdtemp(prefix="snaportho-bootstrap-")
-            tmp_path = os.path.join(tmp_dir, filename if filename.endswith(".apkg") else f"{filename}.apkg")
-            digest = hashlib.sha256()
-            written = 0
-            req = urllib.request.Request(url, headers={"User-Agent": "SnapOrtho-Anki-Addon"})
-            with urllib.request.urlopen(req, timeout=download_timeout) as response:
-                with open(tmp_path, "wb") as handle:
-                    while True:
-                        chunk = response.read(1024 * 1024)  # 1 MiB
-                        if not chunk:
-                            break
-                        handle.write(chunk)
-                        digest.update(chunk)
-                        written += len(chunk)
-            hex_digest = digest.hexdigest()
+            try:
+                expected_n = int(expected) if expected is not None else None
+            except (TypeError, ValueError):
+                expected_n = None
+            # Stable .part path survives transient errors and signed-URL refreshes.
+            tmp_dir = os.path.join(tempfile.gettempdir(), "snaportho-master-deck")
+            os.makedirs(tmp_dir, exist_ok=True)
+            safe_name = filename if filename.endswith(".apkg") else f"{filename}.apkg"
+            tmp_path = os.path.join(tmp_dir, f"{release_id}-{checksum or version}-{safe_name}.part")
+            hex_digest, written = stream_download_to_part(
+                url, tmp_path, download_timeout, expected_n
+            )
             if checksum and hex_digest != checksum:
-                try:
-                    os.remove(tmp_path)
-                except OSError:
-                    pass
+                # Keep an incomplete partial transfer; discard a complete but corrupt object.
+                if expected_n is None or written >= expected_n:
+                    try:
+                        os.remove(tmp_path)
+                    except OSError:
+                        pass
                 raise RuntimeError(f"checksum_mismatch:expected={checksum}:got={hex_digest}")
-            if expected is not None:
-                try:
-                    expected_n = int(expected)
-                except (TypeError, ValueError):
-                    expected_n = None
-                if expected_n is not None and expected_n > 0 and written != expected_n:
-                    raise RuntimeError(f"size_mismatch:expected={expected_n}:got={written}")
+            if expected_n is not None and expected_n > 0 and written != expected_n:
+                raise RuntimeError(f"size_mismatch:expected={expected_n}:got={written}")
             return tmp_path, tmp_dir, filename, hex_digest, written, desc
 
         def done(future):
