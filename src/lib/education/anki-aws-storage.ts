@@ -189,6 +189,28 @@ export async function uploadAnkiAwsObject(params: {
   };
 }
 
+export async function verifyAnkiAwsObject(params: {
+  objectKey: string;
+  expectedByteSize: number;
+  expectedSha256: string;
+  env?: NodeJS.ProcessEnv;
+}): Promise<{ bucket: string; objectKey: string }> {
+  const env = params.env ?? process.env;
+  const config = loadAnkiAwsStorageConfig(env);
+  const head = await new S3Client({ region: config.region }).send(
+    new HeadObjectCommand({ Bucket: config.bucket, Key: params.objectKey }),
+  );
+  if (head.ContentLength !== params.expectedByteSize) {
+    throw new Error(
+      `aws_object_size_mismatch:expected=${params.expectedByteSize}:got=${head.ContentLength ?? "missing"}`,
+    );
+  }
+  if (head.Metadata?.sha256 !== params.expectedSha256) {
+    throw new Error("aws_object_checksum_metadata_mismatch");
+  }
+  return { bucket: config.bucket, objectKey: params.objectKey };
+}
+
 export async function downloadAnkiAwsObject(
   objectKey: string,
   env: NodeJS.ProcessEnv = process.env,

@@ -77,18 +77,27 @@ export async function loadReleaseManifest(supabase: any, releaseId: string) {
         .eq("production_eligible", true)
         .eq("lifecycle_status", "approved")
     : { data: [] };
-  const { data: media } = await supabase
-    .from("anki_deck_media_assets")
-    .select(
-      "canonical_card_version_id,logical_filename,content_sha256,mime_type,byte_size,object_key,license_status,storage_provider,storage_bucket",
-    )
-    .eq("deck_release_id", releaseId)
-    .neq("license_status", "excluded");
+  const media: any[] = [];
+  const pageSize = 1000;
+  for (let from = 0; ; from += pageSize) {
+    const { data: page, error: mediaError } = await supabase
+      .from("anki_deck_media_assets")
+      .select(
+        "canonical_card_version_id,logical_filename,content_sha256,mime_type,byte_size,object_key,license_status,storage_provider,storage_bucket",
+      )
+      .eq("deck_release_id", releaseId)
+      .neq("license_status", "excluded")
+      .order("logical_filename")
+      .range(from, from + pageSize - 1);
+    if (mediaError) return null;
+    media.push(...(page ?? []));
+    if (!page || page.length < pageSize) break;
+  }
   return assembleDeckSyncManifest({
     release,
     members: members ?? [],
     versions: versions ?? [],
     mappings: mappings ?? [],
-    media: media ?? [],
+    media,
   });
 }

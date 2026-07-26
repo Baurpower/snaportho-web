@@ -16,6 +16,9 @@ const gate = read("src/lib/education/deck-addon-version.ts");
 const assemble = read("src/lib/education/anki-deck-manifest-assemble.ts");
 const notetype = read("src/lib/education/anki-bootstrap-notetype.ts");
 const awsStorage = read("src/lib/education/anki-aws-storage.ts");
+const migrateAws = read(
+  "src/app/api/anki/deck/releases/[id]/media/migrate-aws/route.ts",
+);
 const awsMigration = read(
   "supabase/migrations/20260726_180000_anki_aws_media_storage.sql",
 );
@@ -67,6 +70,16 @@ for (const x of [
   /cloudfront_signing_failed/,
 ])
   assert.match(awsStorage, x);
+for (const x of [
+  /deviceAuth/,
+  /verifyAnkiAwsObject/,
+  /storage_provider/,
+  /AWS_STORAGE_PROVIDER/,
+  /max\(50\)/,
+])
+  assert.match(migrateAws, x);
+for (const x of [/pageSize = 1000/, /\.range\(/, /\.order\("logical_filename"\)/])
+  assert.match(read("src/app/api/anki/deck/_lib.ts"), x);
 for (const x of [/storage_provider/, /aws_s3/, /delivery_metadata/])
   assert.match(awsMigration, x);
 
