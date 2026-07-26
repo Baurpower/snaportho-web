@@ -1,5 +1,4 @@
 import { z } from "zod";
-// @ts-expect-error Direct Node test tooling imports TypeScript source files.
 import {
   canonicalContentHash,
   stripNonClinicalMarkup,
