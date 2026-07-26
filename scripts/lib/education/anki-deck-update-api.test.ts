@@ -55,8 +55,17 @@ assert.doesNotMatch(bootstrap, /canonical_cards|canonical_card_versions/);
 for (const source of [media, bootstrap]) {
   assert.match(source, /AWS_STORAGE_PROVIDER/);
   assert.match(source, /signAnkiAwsDownload/);
+  assert.match(source, /describeAnkiAwsDeliveryError/);
+  assert.match(source, /status: 503/);
 }
-for (const x of [/cloudfront-signer/, /HeadObjectCommand/, /@aws-sdk\/lib-storage/])
+for (const x of [
+  /cloudfront-signer/,
+  /HeadObjectCommand/,
+  /@aws-sdk\/lib-storage/,
+  /cloudfront_config_missing/,
+  /cloudfront_private_key_invalid/,
+  /cloudfront_signing_failed/,
+])
   assert.match(awsStorage, x);
 for (const x of [/storage_provider/, /aws_s3/, /delivery_metadata/])
   assert.match(awsMigration, x);

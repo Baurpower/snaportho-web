@@ -6,6 +6,7 @@ import {
   ANKI_DECK_MEDIA_BUCKET,
   ANKI_MEDIA_SIGNED_URL_SECONDS,
   AWS_STORAGE_PROVIDER,
+  describeAnkiAwsDeliveryError,
   signAnkiAwsDownload,
 } from "../../../../_lib";
 // Content-addressed media delivery for the delta-apply step. Returns a short-lived signed
@@ -52,6 +53,7 @@ export async function GET(
   if (!asset)
     return NextResponse.json({ error: "media not found" }, { status: 404 });
   let url: string | null = null;
+  let deliveryErrorCode: string | null = null;
   if (asset.storage_provider === AWS_STORAGE_PROVIDER) {
     try {
       url = signAnkiAwsDownload(
@@ -59,7 +61,15 @@ export async function GET(
         ANKI_MEDIA_SIGNED_URL_SECONDS,
       );
     } catch (error) {
-      console.error("Unable to sign AWS Master Deck media", error);
+      const deliveryError = describeAnkiAwsDeliveryError(error);
+      deliveryErrorCode = deliveryError.code;
+      console.error("Unable to sign AWS Master Deck media", {
+        code: deliveryError.code,
+        environmentVariable: deliveryError.environmentVariable,
+        releaseId: id,
+        sha256,
+        objectKey: asset.object_key,
+      });
     }
   } else {
     const { data: signed } = await a.supabase.storage
@@ -71,8 +81,11 @@ export async function GET(
   }
   if (!url)
     return NextResponse.json(
-      { error: "media temporarily unavailable" },
-      { status: 502 },
+      {
+        error: "media temporarily unavailable",
+        code: deliveryErrorCode ?? "media_delivery_unavailable",
+      },
+      { status: 503 },
     );
   return NextResponse.json({
     sha256: asset.content_sha256,

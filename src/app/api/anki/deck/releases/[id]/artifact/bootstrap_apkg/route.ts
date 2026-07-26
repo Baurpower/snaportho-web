@@ -6,6 +6,7 @@ import {
   ANKI_DECK_MEDIA_BUCKET,
   ANKI_MEDIA_SIGNED_URL_SECONDS,
   AWS_STORAGE_PROVIDER,
+  describeAnkiAwsDeliveryError,
   signAnkiAwsDownload,
 } from "../../../../_lib";
 
@@ -66,6 +67,7 @@ export async function GET(
 
   const filename = `SnapOrtho-Master-${release.release_version}.apkg`;
   let url: string | null = null;
+  let deliveryErrorCode: string | null = null;
   if (artifact.storage_provider === AWS_STORAGE_PROVIDER) {
     try {
       url = signAnkiAwsDownload(
@@ -73,7 +75,14 @@ export async function GET(
         ANKI_MEDIA_SIGNED_URL_SECONDS,
       );
     } catch (error) {
-      console.error("Unable to sign AWS Master Deck artifact", error);
+      const deliveryError = describeAnkiAwsDeliveryError(error);
+      deliveryErrorCode = deliveryError.code;
+      console.error("Unable to sign AWS Master Deck artifact", {
+        code: deliveryError.code,
+        environmentVariable: deliveryError.environmentVariable,
+        releaseId: id,
+        objectKey: artifact.object_key,
+      });
     }
   } else {
     const { data: signed } = await a.supabase.storage
@@ -85,8 +94,11 @@ export async function GET(
   }
   if (!url) {
     return NextResponse.json(
-      { error: "bootstrap artifact temporarily unavailable" },
-      { status: 502 },
+      {
+        error: "bootstrap artifact temporarily unavailable",
+        code: deliveryErrorCode ?? "artifact_delivery_unavailable",
+      },
+      { status: 503 },
     );
   }
 

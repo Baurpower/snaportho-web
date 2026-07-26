@@ -9,13 +9,18 @@ import {
 } from "@/lib/education/deck-addon-version";
 import {
   AWS_STORAGE_PROVIDER,
+  describeAnkiAwsDeliveryError,
   signAnkiAwsDownload,
 } from "@/lib/education/anki-aws-storage";
 export { addonVersionAtLeast };
 export const ANKI_DECK_MEDIA_BUCKET = "anki-deck-media";
 // Full media packages can be ~1GB. A fresh URL can also resume a partial Range download.
 export const ANKI_MEDIA_SIGNED_URL_SECONDS = 6 * 60 * 60;
-export { AWS_STORAGE_PROVIDER, signAnkiAwsDownload };
+export {
+  AWS_STORAGE_PROVIDER,
+  describeAnkiAwsDeliveryError,
+  signAnkiAwsDownload,
+};
 export async function deviceAuth(request: Request) {
   const auth = await authenticateBroBotAnkiRequest(request);
   if ("response" in auth) return { response: auth.response };

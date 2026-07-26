@@ -1,4 +1,5 @@
 import { getSignedUrl } from "@aws-sdk/cloudfront-signer";
+import { createPrivateKey } from "node:crypto";
 import {
   GetObjectCommand,
   HeadObjectCommand,
@@ -7,6 +8,26 @@ import {
 import { Upload } from "@aws-sdk/lib-storage";
 
 export const AWS_STORAGE_PROVIDER = "aws_s3";
+
+export type AnkiAwsDeliveryErrorCode =
+  | "cloudfront_config_missing"
+  | "cloudfront_private_key_invalid"
+  | "cloudfront_signing_failed";
+
+export class AnkiAwsDeliveryError extends Error {
+  readonly code: AnkiAwsDeliveryErrorCode;
+  readonly environmentVariable?: string;
+
+  constructor(
+    code: AnkiAwsDeliveryErrorCode,
+    options?: { cause?: unknown; environmentVariable?: string },
+  ) {
+    super(code, { cause: options?.cause });
+    this.name = "AnkiAwsDeliveryError";
+    this.code = code;
+    this.environmentVariable = options?.environmentVariable;
+  }
+}
 
 export type AnkiAwsStorageConfig = {
   region: string;
@@ -18,7 +39,11 @@ export type AnkiAwsStorageConfig = {
 
 function required(name: string, env: NodeJS.ProcessEnv): string {
   const value = env[name]?.trim();
-  if (!value) throw new Error(`missing_environment:${name}`);
+  if (!value) {
+    throw new AnkiAwsDeliveryError("cloudfront_config_missing", {
+      environmentVariable: name,
+    });
+  }
   return value;
 }
 
@@ -55,13 +80,48 @@ export function signAnkiAwsDownload(
   expiresInSeconds: number,
   env: NodeJS.ProcessEnv = process.env,
 ): string {
-  const config = loadAnkiAwsStorageConfig(env);
-  return getSignedUrl({
-    url: awsObjectUrl(config, objectKey),
-    keyPairId: config.cloudFrontKeyPairId,
-    privateKey: config.cloudFrontPrivateKey,
-    dateLessThan: new Date(Date.now() + expiresInSeconds * 1000).toISOString(),
-  });
+  let config: AnkiAwsStorageConfig;
+  try {
+    config = loadAnkiAwsStorageConfig(env);
+  } catch (error) {
+    if (error instanceof AnkiAwsDeliveryError) throw error;
+    throw new AnkiAwsDeliveryError("cloudfront_config_missing", {
+      cause: error,
+    });
+  }
+  try {
+    createPrivateKey(config.cloudFrontPrivateKey);
+    return getSignedUrl({
+      url: awsObjectUrl(config, objectKey),
+      keyPairId: config.cloudFrontKeyPairId,
+      privateKey: config.cloudFrontPrivateKey,
+      dateLessThan: new Date(Date.now() + expiresInSeconds * 1000).toISOString(),
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message.toLowerCase() : "";
+    throw new AnkiAwsDeliveryError(
+      message.includes("decoder") ||
+        message.includes("private") ||
+        message.includes("pem") ||
+        message.includes("key")
+        ? "cloudfront_private_key_invalid"
+        : "cloudfront_signing_failed",
+      { cause: error },
+    );
+  }
+}
+
+export function describeAnkiAwsDeliveryError(error: unknown): {
+  code: AnkiAwsDeliveryErrorCode;
+  environmentVariable?: string;
+} {
+  if (error instanceof AnkiAwsDeliveryError) {
+    return {
+      code: error.code,
+      environmentVariable: error.environmentVariable,
+    };
+  }
+  return { code: "cloudfront_signing_failed" };
 }
 
 export async function uploadAnkiAwsObject(params: {
