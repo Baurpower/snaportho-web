@@ -3,7 +3,7 @@ import {
   canonicalContentHash,
   stripNonClinicalMarkup,
   type EphemeralField,
-} from "./deck-semantic-mapping.ts";
+} from "./deck-semantic-mapping";
 
 export const ANKI_INCORPORATION_CONTRACT =
   "snaportho-anki-incorporation-agent.v1" as const;
