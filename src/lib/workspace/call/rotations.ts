@@ -1,3 +1,4 @@
+import type { SupabaseClient } from '@supabase/supabase-js'
 import { createClient } from '@/utils/supabase/server'
 
 type RotationRelation = {
@@ -410,9 +411,14 @@ function toProgramRotationAssignment(
 export async function getProgramRotationAssignmentsInRange(
   programId: string,
   rangeStart: string,
-  rangeEnd: string
+  rangeEnd: string,
+  // Optional client override so callers that must run with elevated access
+  // (validation context loader) or that already hold a client (availability
+  // builder) can share this one canonical loader instead of re-querying
+  // rotation_assignments with divergent identity/window logic.
+  supabaseOverride?: SupabaseClient
 ): Promise<ProgramRotationAssignment[]> {
-  const supabase = await createClient();
+  const supabase = supabaseOverride ?? (await createClient());
 
   const { data, error } = await supabase
     .from("rotation_assignments")

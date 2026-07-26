@@ -1,5 +1,6 @@
 import {
   evaluateMonthlyLimitForResident,
+  evaluateMonthlyLoadTargetForResident,
   evaluatePgyEligibility,
   evaluateRotationEligibility,
   evaluateSpacingForResident,
@@ -9,15 +10,18 @@ import {
   getRequiredCallTypesFromRules,
   getRuleSeverity,
   isWeekendDateKey,
+  parseRotationCallLimitConfig,
+  rotationCallLimitCallTypeApplies,
+  rotationCallLimitDayScopeApplies,
   normalizeCallType as normalizeEvaluatedCallType,
   normalizeCallTypeList,
   normalizeRuleCode as normalizeEvaluatorRuleCode,
   resolveMatchingRules,
 } from "@/lib/workspace/call/rule-evaluator";
 import {
-  BUDDY_PRIMARY_PARTNER_PGY,
   getBuddyDateStatesForMonth,
   isBuddyEligibleRotationName,
+  resolveBuddyPolicy,
 } from "@/lib/workspace/call/buddy-requirements";
 import {
   buildResidentIdentityMaps,
@@ -40,7 +44,8 @@ export type ValidationIssueCode =
   | "invalid_resident_identity"
   | "resident_not_found"
   | "invalid_call_date"
-  | "invalid_call_type";
+  | "invalid_call_type"
+  | "monthly_load_target";
 
 export type CallValidationRule = {
   id?: string | null;
@@ -1028,6 +1033,124 @@ export function validatePgyRestrictionRule(input: CallValidationInput) {
   return issues;
 }
 
+/**
+ * Enforces `monthly_load_target_by_pgy` rules on a saved/edited schedule.
+ *
+ * The generator already treats a per-PGY hard maximum as a HARD block
+ * (evaluateMonthlyLoadTargetForResident forces severity "error" when the
+ * projected count exceeds targetHardMaxCalls). Without this validator a manual
+ * edit or swap could create exactly the violation the generator refuses to,
+ * because validateCallMonthDraft never checked it. This mirrors the generator's
+ * per-slot-type counting semantics for parity.
+ */
+export function validateMonthlyLoadTargetRule(input: CallValidationInput) {
+  const issues: CallValidationIssue[] = [];
+  const rules = resolveValidationRules(input.rules, [
+    "monthly_load_target_by_pgy",
+  ]);
+  const assignments = (input.assignments ?? []).filter(isActiveAssignment);
+
+  if (rules.length === 0 || assignments.length === 0) {
+    return issues;
+  }
+
+  const { residentByIdentity } = getResidentMaps(input);
+
+  // First pass: count assignments per resident, per month, per evaluated call
+  // type. Matches the generator, which counts each slot type independently
+  // (Primary / Backup / Buddy) rather than a combined total.
+  const contexts = assignments.map((assignment) => ({
+    assignment,
+    context: getIntegrityAssignmentContext(assignment),
+  }));
+
+  const countsByResidentMonthCallType = new Map<string, number>();
+
+  function aggregateKey(
+    residentKey: string,
+    monthKey: string,
+    callType: string
+  ) {
+    return `${residentKey}__${monthKey}__${callType}`;
+  }
+
+  for (const { context } of contexts) {
+    const residentKey = context.residentId ?? context.rosterId;
+    const dateKey = context.normalizedDateKey;
+    const evaluatedCallType = context.normalizedCallType
+      ? normalizeEvaluatedCallType(context.normalizedCallType)
+      : null;
+
+    if (!residentKey || !dateKey || !evaluatedCallType) continue;
+
+    const monthKey = dateKey.slice(0, 7);
+    const key = aggregateKey(residentKey, monthKey, evaluatedCallType);
+    countsByResidentMonthCallType.set(
+      key,
+      (countsByResidentMonthCallType.get(key) ?? 0) + 1
+    );
+  }
+
+  for (const { assignment, context } of contexts) {
+    const residentKey = context.residentId ?? context.rosterId;
+    const dateKey = context.normalizedDateKey;
+    const evaluatedCallType = context.normalizedCallType
+      ? normalizeEvaluatedCallType(context.normalizedCallType)
+      : null;
+
+    if (!residentKey || !dateKey || !evaluatedCallType) continue;
+
+    const resident =
+      (context.rosterId && residentByIdentity.get(context.rosterId)) ||
+      (context.residentId && residentByIdentity.get(context.residentId)) ||
+      null;
+    if (!resident) continue;
+
+    const residentStatus = getResidentStatusDetails(
+      resident.gradYear ?? null,
+      dateKey
+    );
+    if (typeof residentStatus.pgyYear !== "number") continue;
+
+    const monthKey = dateKey.slice(0, 7);
+    const projectedCount =
+      countsByResidentMonthCallType.get(
+        aggregateKey(residentKey, monthKey, evaluatedCallType)
+      ) ?? 0;
+
+    for (const violation of evaluateMonthlyLoadTargetForResident({
+      residentPgyYear: residentStatus.pgyYear,
+      callType: evaluatedCallType,
+      projectedCount,
+      rules,
+    })) {
+      issues.push(
+        createValidationIssue({
+          code: "monthly_load_target",
+          ruleCode: violation.ruleCode,
+          severity: violation.severity,
+          source: "rule",
+          message: violation.message,
+          slotId: context.slotId,
+          residentId: context.residentId,
+          rosterId: context.rosterId,
+          dateKey,
+          callType: context.normalizedCallType ?? context.rawCallType,
+          assignmentId: assignment.callId ?? context.assignmentId,
+          metadata: {
+            blockingRuleId: normalizeString(violation.rule.id) ?? null,
+            blockingRuleName: normalizeString(violation.rule.name) ?? null,
+            monthKey,
+            ...violation.metadata,
+          },
+        })
+      );
+    }
+  }
+
+  return issues;
+}
+
 export function validateRequiredSlotRule(input: CallValidationInput) {
   const issues: CallValidationIssue[] = [];
   const rules = resolveValidationRules(input.rules, ["required_daily_call_slots"]);
@@ -1516,6 +1639,8 @@ export function validateBuddyAssignments(input: CallValidationInput) {
   const buddyDef = slotDefs.find((def) => def.callType === "Buddy");
   if (!buddyDef) return issues;
 
+  const buddyPolicy = resolveBuddyPolicy(rulesRaw);
+
   const activeAssignments = (input.assignments ?? []).filter(isActiveAssignment);
   const buddyStateByDate = buildBuddyDateStateLookup(input, slotDefs, activeAssignments);
   const residents = input.residents ?? input.context?.residents ?? [];
@@ -1616,7 +1741,7 @@ export function validateBuddyAssignments(input: CallValidationInput) {
       normalizeString(buddyRotation?.shortName) ??
       normalizeString(buddyRotation?.rotationName) ??
       null;
-    if (!isBuddyEligibleRotationName(rotationLabel)) {
+    if (!isBuddyEligibleRotationName(rotationLabel, buddyPolicy.eligibleRotationNameTokens)) {
       issues.push(
         createValidationIssue({
           code: "invalid_buddy_rotation",
@@ -1635,14 +1760,14 @@ export function validateBuddyAssignments(input: CallValidationInput) {
       );
     }
 
-    if (primaryPgy !== BUDDY_PRIMARY_PARTNER_PGY) {
+    if (primaryPgy !== buddyPolicy.partnerPgyYear) {
       issues.push(
         createValidationIssue({
           code: "invalid_buddy_primary_partner",
           ruleCode: "buddy_requires_pgy4_primary",
           severity: "error",
           source: "rule",
-          message: `Buddy slot on ${dateKey} requires a PGY-${BUDDY_PRIMARY_PARTNER_PGY} Primary resident.`,
+          message: `Buddy slot on ${dateKey} requires a PGY-${buddyPolicy.partnerPgyYear} Primary resident.`,
           slotId: serializeSlotId({ dateKey, callType: "Buddy" }),
           residentId: buddyAssignment.rosterId,
           rosterId: buddyAssignment.rosterId,
@@ -1763,32 +1888,11 @@ export function validateRotationCallLimitRule(input: CallValidationInput): CallV
   }
 
   for (const limitRule of limitRules) {
-    const limitRotationIds = new Set(
-      (Array.isArray(limitRule.config.rotationCallLimitIds)
-        ? limitRule.config.rotationCallLimitIds
-        : []
-      ).filter((id): id is string => typeof id === "string" && id.trim().length > 0)
-    );
+    // Shared parser/predicates keep matching, scope, call-type, and max
+    // semantics identical to the generator's evaluateRotationCallLimitForResident.
+    const { limitRotationIds, dayScope, limitCallTypes, maxCallDays } =
+      parseRotationCallLimitConfig(limitRule.config);
     if (limitRotationIds.size === 0) continue;
-
-    const dayScope =
-      typeof limitRule.config.rotationCallLimitDayScope === "string"
-        ? limitRule.config.rotationCallLimitDayScope
-        : "all";
-
-    const limitCallTypes = (
-      Array.isArray(limitRule.config.rotationCallLimitCallTypes)
-        ? (limitRule.config.rotationCallLimitCallTypes as unknown[]).filter(
-            (t): t is string => typeof t === "string"
-          )
-        : ["Primary"]
-    );
-
-    const maxCallDays =
-      typeof limitRule.config.rotationCallLimitMax === "number" &&
-      Number.isFinite(limitRule.config.rotationCallLimitMax)
-        ? limitRule.config.rotationCallLimitMax
-        : 1;
 
     for (const [residentId, residentRotations] of rotationsByResident.entries()) {
       // Which of this resident's rotations match the rule?
@@ -1802,14 +1906,14 @@ export function validateRotationCallLimitRule(input: CallValidationInput): CallV
       // Filter assignments to those that fall under the rule's scope.
       const relevant = residentEntries.filter((entry) => {
         // Call type scope
-        const callTypeMatches =
-          limitCallTypes.includes("any") ||
-          limitCallTypes.map((t) => t.toLowerCase()).includes(entry.callType.toLowerCase());
-        if (!callTypeMatches) return false;
+        if (!rotationCallLimitCallTypeApplies(limitCallTypes, entry.callType)) {
+          return false;
+        }
 
         // Day scope
-        if (dayScope === "weekend_only" && !entry.isWeekend) return false;
-        if (dayScope === "weekday_only" && entry.isWeekend) return false;
+        if (!rotationCallLimitDayScopeApplies(dayScope, entry.isWeekend)) {
+          return false;
+        }
 
         // Overlaps with at least one matching rotation period
         return matchingRotations.some((rotation) => {
@@ -1898,6 +2002,7 @@ export function validateCallMonthDraft(input: CallValidationInput) {
     ...validateBuddyAssignments(normalizedInput),
     ...validateSpacingRule(normalizedInput),
     ...validateMonthlyLimitRule(normalizedInput),
+    ...validateMonthlyLoadTargetRule(normalizedInput),
     ...validateWeekendRule(normalizedInput),
     ...validatePgyRestrictionRule(normalizedInput),
     ...validateTimeOffRule(normalizedInput),

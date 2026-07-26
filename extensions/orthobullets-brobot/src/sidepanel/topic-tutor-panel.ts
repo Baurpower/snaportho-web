@@ -18,6 +18,7 @@ export interface TopicTutorPanelState {
 
 export interface TopicTutorPanelActions {
   runTopicTutorTurn: (input: { action?: OrthobulletsTopicAction; userMessage?: string }) => void;
+  findPageAnkiCards: (button: HTMLButtonElement) => void;
   saveTopicPearl: (quote: string) => void;
   setDraft: (value: string) => void;
   unlink: () => void;
@@ -71,7 +72,7 @@ function renderPrimaryActions(isBusy: boolean) {
 
 function renderConversation(history: OrthobulletsTopicTutorTurn[], isLoading: boolean) {
   if (!history.length && !isLoading) {
-    return `<p style="margin:0;color:#5c6574;font-size:12px;">Pick an action above, or answer BroBot's question below once it asks one.</p>`;
+    return `<p style="margin:0;color:#5c6574;font-size:12px;">Ask BroBot anything about this topic, or use a study action above.</p>`;
   }
 
   const items = history
@@ -101,34 +102,6 @@ function renderConversation(history: OrthobulletsTopicTutorTurn[], isLoading: bo
   return `<div style="display:grid;gap:10px;max-height:320px;overflow:auto;padding-right:4px;">${items}${loadingBubble}</div>`;
 }
 
-function renderProgressPanel(progress: OrthobulletsTopicProgress) {
-  function renderList(items: string[], emptyLabel: string) {
-    if (!items.length) return `<p style="margin:0;color:#94a3b8;font-size:11px;">${escapeHtml(emptyLabel)}</p>`;
-    return `<ul style="margin:0;padding-left:16px;display:grid;gap:2px;font-size:12px;line-height:1.35;">${items
-      .map((item) => `<li>${escapeHtml(item)}</li>`)
-      .join('')}</ul>`;
-  }
-
-  return `<details style="padding:10px;border-radius:12px;background:white;border:1px solid #ded7c8;" open>
-    <summary style="cursor:pointer;font-weight:700;font-size:13px;">Your progress on this page</summary>
-    <div style="margin-top:8px;display:grid;gap:8px;">
-      <p style="margin:0;font-size:12px;color:#5c6574;">${progress.sectionsCompleted.length} section${progress.sectionsCompleted.length === 1 ? '' : 's'} completed</p>
-      <div>
-        <p style="margin:0 0 2px;font-size:11px;font-weight:700;color:#b45309;">Concepts missed</p>
-        ${renderList(progress.conceptsMissed, 'None yet — keep going.')}
-      </div>
-      <div>
-        <p style="margin:0 0 2px;font-size:11px;font-weight:700;color:#0f766e;">Concepts mastered</p>
-        ${renderList(progress.conceptsMastered, 'None yet.')}
-      </div>
-      <div>
-        <p style="margin:0 0 2px;font-size:11px;font-weight:700;color:#5c6574;">Saved pearls</p>
-        ${renderList(progress.savedPearls, 'Tap "Save as pearl" on any BroBot message to keep it here.')}
-      </div>
-    </div>
-  </details>`;
-}
-
 export function renderTopicTutorPanel(
   content: HTMLElement,
   state: TopicTutorPanelState,
@@ -141,8 +114,9 @@ export function renderTopicTutorPanel(
   const actionsCard = createElement(
     'div',
     `<div style="padding:12px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:8px;">
-      <p style="margin:0;font-size:12px;color:#5c6574;line-height:1.4;">BroBot reads this page's title, headings, and bullets, then quizzes you on it instead of summarizing it.</p>
+      <p style="margin:0;font-size:12px;color:#5c6574;line-height:1.4;">Chat normally about this topic, or launch a focused board-review activity grounded in the whole page.</p>
       ${renderPrimaryActions(actions.isBusy)}
+      <button type="button" id="topic-find-anki" ${actions.isBusy ? 'disabled' : ''} style="width:100%;border:0;border-radius:10px;background:${actions.isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:10px 12px;font-size:12px;font-weight:700;cursor:${actions.isBusy ? 'default' : 'pointer'};">Find relevant Anki cards from this page</button>
     </div>`
   );
   content.appendChild(actionsCard);
@@ -153,6 +127,8 @@ export function renderTopicTutorPanel(
       actions.runTopicTutorTurn({ action });
     });
   });
+  const ankiButton = actionsCard.querySelector<HTMLButtonElement>('#topic-find-anki');
+  ankiButton?.addEventListener('click', () => actions.findPageAnkiCards(ankiButton));
 
   if (state.topicInsufficientContent) {
     content.appendChild(
@@ -181,7 +157,7 @@ export function renderTopicTutorPanel(
           : ''
       }
       <form id="topic-chat-form" style="display:grid;gap:6px;">
-        <textarea id="topic-chat-input" rows="2" placeholder="Type your answer or reply here..." style="width:100%;box-sizing:border-box;border:1px solid #d2cab8;border-radius:12px;padding:10px;font:inherit;resize:vertical;font-size:13px;">${escapeHtml(state.topicChatDraft)}</textarea>
+        <textarea id="topic-chat-input" rows="2" placeholder="Ask BroBot anything about this topic..." style="width:100%;box-sizing:border-box;border:1px solid #d2cab8;border-radius:12px;padding:10px;font:inherit;resize:vertical;font-size:13px;">${escapeHtml(state.topicChatDraft)}</textarea>
         <div style="display:flex;justify-content:flex-end;">
           <button type="submit" ${actions.isBusy ? 'disabled' : ''} style="border:none;border-radius:999px;background:${actions.isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:8px 12px;font-weight:700;font-size:12px;cursor:${actions.isBusy ? 'default' : 'pointer'};">${actions.isBusy ? 'Sending...' : 'Send'}</button>
         </div>
@@ -218,8 +194,6 @@ export function renderTopicTutorPanel(
     const value = chatInput?.value.trim();
     if (value) actions.runTopicTutorTurn({ userMessage: value });
   });
-
-  content.appendChild(createElement('div', renderProgressPanel(state.topicProgress)));
 
   const unlinkCard = createElement(
     'div',

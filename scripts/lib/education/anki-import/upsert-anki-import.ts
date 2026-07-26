@@ -177,9 +177,13 @@ async function updateCanonicalVersionPointers(
 }
 
 function buildCanonicalContentHash(note: ParsedAnkiNote, card: ParsedAnkiCard) {
+  // Preimage MUST stay byte-identical to the add-on's proposed_content_hash (editor.py):
+  // fields in note-type order, tags sorted by code point, raw Unicode (JSON.stringify /
+  // Python json.dumps(ensure_ascii=False) agree). Anki stores tags sorted already, so the
+  // sort is a no-op on real imports but guarantees determinism regardless of parse order.
   return createStableHash({
     noteFields: note.fields.map((field) => ({ name: field.name, rawValue: field.rawValue })),
-    tags: note.tagNames,
+    tags: [...note.tagNames].sort(),
     cardOrd: card.cardOrd,
   });
 }

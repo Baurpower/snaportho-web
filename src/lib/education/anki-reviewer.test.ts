@@ -12,7 +12,7 @@ import {
   assignmentComplete,
   safeReviewerMetadata,
   REVIEWER_CONTRACT_VERSION,
-} from "./anki-reviewer.ts";
+} from "./anki-reviewer";
 const id = (d: string) =>
   `${d.repeat(8)}-${d.repeat(4)}-4${d.repeat(3)}-8${d.repeat(3)}-${d.repeat(12)}`;
 const base = {

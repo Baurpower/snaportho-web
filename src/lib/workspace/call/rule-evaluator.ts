@@ -442,6 +442,76 @@ export function evaluateWeekendPairingForResident<TRule extends RuleLike>(params
   return violations;
 }
 
+export type RotationCallLimitDayScope = "all" | "weekend_only" | "weekday_only";
+
+export type ParsedRotationCallLimit = {
+  limitRotationIds: Set<string>;
+  dayScope: RotationCallLimitDayScope;
+  limitCallTypes: string[];
+  maxCallDays: number;
+};
+
+/**
+ * Parses a `max_calls_for_rotation` rule config into its canonical shape.
+ *
+ * This is the single source of truth for how rotation-call-limit config is
+ * interpreted. Both the generator's incremental evaluator
+ * (`evaluateRotationCallLimitForResident`) and the batch validator
+ * (`validateRotationCallLimitRule`) parse config through here so their
+ * matching, scope, call-type, and max semantics cannot drift apart.
+ */
+export function parseRotationCallLimitConfig(
+  config: Record<string, unknown>
+): ParsedRotationCallLimit {
+  const limitRotationIds = new Set(
+    (Array.isArray(config.rotationCallLimitIds) ? config.rotationCallLimitIds : [])
+      .map((value) => normalizeString(typeof value === "string" ? value : null))
+      .filter((value): value is string => Boolean(value))
+  );
+
+  const rawScope =
+    typeof config.rotationCallLimitDayScope === "string"
+      ? config.rotationCallLimitDayScope
+      : "all";
+  const dayScope: RotationCallLimitDayScope =
+    rawScope === "weekend_only" || rawScope === "weekday_only" ? rawScope : "all";
+
+  const limitCallTypes = Array.isArray(config.rotationCallLimitCallTypes)
+    ? (config.rotationCallLimitCallTypes as unknown[]).filter(
+        (value): value is string => typeof value === "string"
+      )
+    : ["Primary"];
+
+  const maxCallDays =
+    typeof config.rotationCallLimitMax === "number" &&
+    Number.isFinite(config.rotationCallLimitMax)
+      ? config.rotationCallLimitMax
+      : 1;
+
+  return { limitRotationIds, dayScope, limitCallTypes, maxCallDays };
+}
+
+/** Whether a rotation-call-limit rule's call-type scope covers `callType`. */
+export function rotationCallLimitCallTypeApplies(
+  limitCallTypes: string[],
+  callType: string
+): boolean {
+  return (
+    limitCallTypes.includes("any") ||
+    limitCallTypes.map((t) => t.toLowerCase()).includes(callType.toLowerCase())
+  );
+}
+
+/** Whether a rotation-call-limit rule's day scope covers a given date. */
+export function rotationCallLimitDayScopeApplies(
+  dayScope: RotationCallLimitDayScope,
+  isWeekendDate: boolean
+): boolean {
+  if (dayScope === "weekend_only") return isWeekendDate;
+  if (dayScope === "weekday_only") return !isWeekendDate;
+  return true;
+}
+
 /**
  * Evaluates whether a resident who is on a specific rotation has exceeded their
  * call-day limit for the period under a `max_calls_for_rotation` rule.
@@ -487,14 +557,8 @@ export function evaluateRotationCallLimitForResident<TRule extends RuleLike>(par
   const violations: RuleViolation<TRule>[] = [];
 
   for (const match of resolveMatchingRules(rules, ["max_calls_for_rotation"])) {
-    const limitRotationIds = new Set(
-      (Array.isArray(match.config.rotationCallLimitIds)
-        ? match.config.rotationCallLimitIds
-        : []
-      )
-        .map((value) => normalizeString(typeof value === "string" ? value : null))
-        .filter((value): value is string => Boolean(value))
-    );
+    const { limitRotationIds, dayScope, limitCallTypes, maxCallDays } =
+      parseRotationCallLimitConfig(match.config);
 
     const matchedRotationIds = [...normalizedRotationIds].filter((id) =>
       limitRotationIds.has(id)
@@ -502,30 +566,10 @@ export function evaluateRotationCallLimitForResident<TRule extends RuleLike>(par
     if (matchedRotationIds.length === 0) continue;
 
     // Day-scope filter: the rule only fires on days it covers.
-    const dayScope =
-      typeof match.config.rotationCallLimitDayScope === "string"
-        ? match.config.rotationCallLimitDayScope
-        : "all";
-
-    if (dayScope === "weekend_only" && !isWeekendDate) continue;
-    if (dayScope === "weekday_only" && isWeekendDate) continue;
+    if (!rotationCallLimitDayScopeApplies(dayScope, isWeekendDate)) continue;
 
     // Call-type filter.
-    const limitCallTypes = Array.isArray(match.config.rotationCallLimitCallTypes)
-      ? (match.config.rotationCallLimitCallTypes as string[])
-      : ["Primary"];
-
-    const appliesToThisCallType =
-      limitCallTypes.includes("any") ||
-      limitCallTypes.map((t) => t.toLowerCase()).includes(callType.toLowerCase());
-
-    if (!appliesToThisCallType) continue;
-
-    const maxCallDays =
-      typeof match.config.rotationCallLimitMax === "number" &&
-      Number.isFinite(match.config.rotationCallLimitMax)
-        ? match.config.rotationCallLimitMax
-        : 1;
+    if (!rotationCallLimitCallTypeApplies(limitCallTypes, callType)) continue;
 
     const relevantCount =
       dayScope === "weekend_only"

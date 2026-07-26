@@ -1,8 +1,6 @@
 import assert from "node:assert/strict";
-// @ts-expect-error Direct Node test imports TypeScript source files.
-import * as f from "./deck-mapping-factory.ts";
-// @ts-expect-error Direct Node test imports TypeScript source files.
-import { computeDeckManifestChecksum } from "./deck-foundation.ts";
+import * as f from "./deck-mapping-factory";
+import { computeDeckManifestChecksum } from "./deck-foundation";
 const id=(d:string)=>`${d.repeat(8)}-${d.repeat(4)}-4${d.repeat(3)}-8${d.repeat(3)}-${d.repeat(12)}`;
 const cards=["1","2"].map((d,i)=>({canonicalCardId:id(d),canonicalCardVersionId:id(String(i+3)),noteGuid:`guid-${d}`,cardOrdinal:0,nativeCardIdHint:null,contentHash:d.repeat(64),deckPath:"Deck::Branch",orderingKey:`000${i}/${d}`,inclusionStatus:"included",canonicalEntityIds:[],metadata:{}}));
 const manifest={contractVersion:"snaportho-deck-manifest.v1",releaseId:id("5"),releaseKey:"draft-test",releaseVersion:"0.1.0",releaseStatus:"draft",manifestChecksum:computeDeckManifestChecksum(cards as never),minimumAddonVersion:null,cards,metadata:{}} as never;

@@ -1,6 +1,5 @@
 import { createHash } from "node:crypto";
-// @ts-expect-error Direct Node tooling imports TypeScript source files.
-import { containsUnsafeMetadata, deterministicUuid, type PublishedDeckManifestV1, type VersionMappingCandidate } from "./deck-foundation.ts";
+import { containsUnsafeMetadata, deterministicUuid, type PublishedDeckManifestV1, type VersionMappingCandidate } from "./deck-foundation";
 
 export const FACTORY_CONTRACT_VERSION = "snaportho-anki-kg-factory.v1" as const;
 export const STAGE_RESULT_CONTRACT_VERSION = "snaportho-anki-kg-stage-result.v1" as const;

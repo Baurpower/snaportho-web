@@ -4,6 +4,10 @@ import type { QuestionTutorViewState } from './question-session.js';
 export type QuestionTutorPanelHooks = {
   onHintClick: () => void;
   onExplainClick: () => void;
+  onSendToAnki: (
+    button: HTMLButtonElement,
+    explanation?: import('../shared/types.js').OrthobulletsExplainResponse
+  ) => void;
   onRefreshClick: () => void;
   onUnlink: () => void;
   onChatDraftChange: (value: string) => void;
@@ -82,6 +86,14 @@ export function appendQuestionTutorPanel(
   }
 
   if (view.showExplainCta) {
+    const prefetchedQuestionExplanation =
+      input.provider === 'orthobullets' &&
+      view.session?.explanation &&
+      'testedConcept' in view.session.explanation
+        ? view.session.explanation
+        : null;
+    const showPreExplainAnkiAction = input.provider === 'orthobullets';
+    const ankiButtonLabel = 'Find cards in Anki';
     const reviewPosition = view.session?.payload?.provider === 'himalaya' && view.session.payload.pageKind === 'review'
       ? view.session.questionPositionLabel?.match(/question\s+\d+\s+of\s+\d+/i)?.[0]
         ?? (view.session.questionNumber && view.session.totalQuestions
@@ -96,12 +108,19 @@ export function appendQuestionTutorPanel(
       <p style="margin:0;color:#5c6574;line-height:1.45;">Active page: ${escapeHtml(input.activePageTitle ?? input.activePageUrl ?? providerLabel(input.provider))}</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button id="qt-explain" ${isBusy ? 'disabled' : ''} style="border:none;border-radius:999px;background:${isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">${escapeHtml(view.explainButtonLabel)}</button>
+        ${showPreExplainAnkiAction ? `<button id="qt-send-to-anki-before-explain" style="border:1px solid #0f766e;border-radius:999px;background:white;color:#0f766e;padding:10px 14px;font-weight:700;cursor:pointer;">${escapeHtml(ankiButtonLabel)}</button>` : ''}
         <button id="qt-unlink-explain" style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:10px 14px;font-weight:700;cursor:pointer;">Unlink</button>
       </div>
       <p style="margin:0;font-size:12px;color:#5c6574;">Review data detected. BroBot prefetches the explanation in the background; click to open when ready.</p>
     </div>`);
     content.appendChild(explainCard);
     explainCard.querySelector('#qt-explain')?.addEventListener('click', () => hooks.onExplainClick());
+    const preExplainAnkiButton = explainCard.querySelector<HTMLButtonElement>('#qt-send-to-anki-before-explain');
+    if (preExplainAnkiButton) {
+      preExplainAnkiButton.addEventListener('click', () =>
+        hooks.onSendToAnki(preExplainAnkiButton, prefetchedQuestionExplanation ?? undefined)
+      );
+    }
     explainCard.querySelector('#qt-unlink-explain')?.addEventListener('click', () => hooks.onUnlink());
   }
 
@@ -121,6 +140,17 @@ export function appendQuestionTutorPanel(
     content.appendChild(
       createElement(renderExplanation(view.explanationToRender as import('../shared/types.js').OrthobulletsExplainResponse, 'question_tutor'))
     );
+
+    if (input.provider === 'orthobullets' && 'testedConcept' in view.explanationToRender) {
+      const questionExplanation = view.explanationToRender;
+      const ankiCard = createElement(`<div style="padding:14px;border-radius:14px;background:#ecfdf5;border:1px solid #99d8c7;display:grid;gap:8px;">
+        <button id="qt-send-to-anki" type="button" style="width:100%;border:0;border-radius:12px;background:#0f766e;color:white;padding:10px 12px;font-size:13px;font-weight:700;cursor:pointer;">Find cards in Anki</button>
+        <p style="margin:0;color:#46615b;line-height:1.4;font-size:12px;">Sends this question ID and tested concept to Anki, then opens matching cards in Browse.</p>
+      </div>`);
+      content.appendChild(ankiCard);
+      const button = ankiCard.querySelector<HTMLButtonElement>('#qt-send-to-anki');
+      button?.addEventListener('click', () => hooks.onSendToAnki(button, questionExplanation));
+    }
 
     const chatCard = createElement(`<div style="padding:14px;border-radius:14px;background:white;border:1px solid #ded7c8;display:grid;gap:12px;">
       <div style="display:grid;gap:4px;">

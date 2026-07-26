@@ -1,6 +1,5 @@
 import { createHash } from "node:crypto";
-// @ts-expect-error Direct Node tooling imports TypeScript source files.
-import { deterministicUuid } from "./deck-foundation.ts";
+import { deterministicUuid } from "./deck-foundation";
 
 export const SEMANTIC_CONTRACT_VERSION="snaportho-anki-kg-semantic.v1" as const;
 export const SEMANTIC_SCHEMA_VERSION="snaportho-anki-kg-semantic-schema.v1" as const;
@@ -18,7 +17,7 @@ export type SemanticCardResult={concepts:ExtractedConcept[];resolutions:Semantic
 function stable(value:unknown):string{if(value===null||typeof value!=="object")return JSON.stringify(value);if(Array.isArray(value))return`[${value.map(stable).join(",")}]`;return`{${Object.entries(value as Record<string,unknown>).sort(([a],[b])=>a.localeCompare(b)).map(([k,v])=>`${JSON.stringify(k)}:${stable(v)}`).join(",")}}`;}
 export function hash(value:unknown):string{return createHash("sha256").update(typeof value==="string"?value:stable(value)).digest("hex");}
 export function canonicalContentHash(card:Pick<EphemeralCard,"fields"|"tags"|"cardOrdinal">):string{return hash({noteFields:card.fields.map(f=>({name:f.name,rawValue:f.rawValue})),tags:card.tags,cardOrd:card.cardOrdinal});}
-export function stripNonClinicalMarkup(value:string):string{return value.replace(/<style[\s\S]*?<\/style>/gi," ").replace(/<script[\s\S]*?<\/script>/gi," ").replace(/\[sound:[^\]]+\]/gi," ").replace(/<img\b[^>]*>/gi," ").replace(/\{\{[^}]+\}\}/g," ").replace(/\$\$?[\s\S]*?\$\$?/g," ").replace(/<[^>]+>/g," ").replace(/&nbsp;/gi," ").replace(/&amp;/gi,"&").replace(/&#39;/gi,"'").replace(/&quot;/gi,'"').replace(/\s+/g," ").trim();}
+export function stripNonClinicalMarkup(value:string):string{return value.replace(/<style[\s\S]*?<\/style>/gi," ").replace(/<script[\s\S]*?<\/script>/gi," ").replace(/\[sound:[^\]]+\]/gi," ").replace(/<img\b[^>]*>/gi," ").replace(/\{\{c\d+::([^{}]*?)(?:::[^{}]*?)?\}\}/gi," $1 ").replace(/\{\{[^}]+\}\}/g," ").replace(/\$\$?[\s\S]*?\$\$?/g," ").replace(/<[^>]+>/g," ").replace(/&nbsp;/gi," ").replace(/&amp;/gi,"&").replace(/&#39;/gi,"'").replace(/&quot;/gi,'"').replace(/\s+/g," ").trim();}
 export function normalizeClinicalText(value:string):string{return stripNonClinicalMarkup(value).toLowerCase().replace(/[^a-z0-9+\-/ ]+/g," ").replace(/\s+/g," ").trim();}
 export function validateEphemeralCard(card:EphemeralCard,expected:{cardId:string;versionId:string;contentHash:string}):void{if(card.canonicalCardId!==expected.cardId)throw new Error("card_ownership_mismatch");if(card.canonicalCardVersionId!==expected.versionId)throw new Error("card_version_mismatch");if(card.contentHash!==expected.contentHash||canonicalContentHash(card)!==expected.contentHash)throw new Error("card_content_hash_mismatch");}
 

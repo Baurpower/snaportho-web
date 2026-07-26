@@ -8,8 +8,10 @@ import type {
 } from "@/components/workspace/call/programcalltypes";
 import {
   BUDDY_PRIMARY_PARTNER_PGY,
+  DEFAULT_BUDDY_POLICY,
   getBuddyDateStatesForMonth,
   getBuddyRequirementsForMonth,
+  resolveBuddyPolicy,
 } from "@/lib/workspace/call/buddy-requirements";
 import { getSlotStatusForDay } from "@/lib/workspace/call/rule-definitions";
 
@@ -257,3 +259,137 @@ assert.equal(
   0,
   "PGY-4 Friday/Saturday Primary alone does not create Buddy requirements"
 );
+
+// --- Configurable buddy policy (buddy_requirement rule) ---
+
+// resolveBuddyPolicy falls back to defaults when no rule is present.
+assert.deepEqual(
+  resolveBuddyPolicy([]),
+  DEFAULT_BUDDY_POLICY,
+  "resolveBuddyPolicy returns the default policy when no buddy_requirement rule exists"
+);
+
+const buddySlotRule = rules[0];
+
+function rulesWithBuddyPolicy(config: Record<string, unknown>): ProgramRule[] {
+  return [
+    buddySlotRule,
+    {
+      id: "buddy-requirement-rule",
+      name: "Buddy policy",
+      rule_type: "buddy_requirement",
+      is_enabled: true,
+      is_hard_rule: false,
+      config,
+    } as ProgramRule,
+  ];
+}
+
+const genOrthoPgy1 = () =>
+  makeResident({
+    residentId: "pgy1-gen-ortho",
+    displayName: "PGY1 Gen Ortho",
+    trainingLevel: "PGY-1",
+    rotationAssignments: [
+      {
+        rotationName: "Gen Ortho",
+        startDate: "2026-07-01",
+        endDate: "2026-07-31",
+      } as any,
+    ],
+  });
+
+// requiredDaysPerMonth override.
+const oneDayReq = getBuddyRequirementsForMonth({
+  year: 2026,
+  month: 7,
+  residents: [genOrthoPgy1()],
+  rotations: [],
+  rules: rulesWithBuddyPolicy({ requiredDaysPerMonth: 1 }),
+  slotDefinitions: [buddySlotDefinition],
+  assignments: {},
+});
+assert.equal(
+  oneDayReq[0]?.requiredBuddyDays,
+  1,
+  "requiredDaysPerMonth override changes the required buddy days"
+);
+
+// partnerPgyYear override flows into BuddyDateState.
+const partnerOverrideStates = getBuddyDateStatesForMonth({
+  year: 2026,
+  month: 7,
+  residents: [genOrthoPgy1()],
+  rotations: [],
+  rules: rulesWithBuddyPolicy({ partnerPgyYear: 5 }),
+  slotDefinitions: [buddySlotDefinition],
+  assignments: {},
+});
+assert.ok(
+  partnerOverrideStates.some((state) => state.requiredPrimaryPartnerPgy === 5),
+  "partnerPgyYear override changes the required Primary partner PGY"
+);
+
+// allowedDaysOfWeek override: Sundays only → no Friday/Saturday eligible dates.
+const sundayOnly = getBuddyRequirementsForMonth({
+  year: 2026,
+  month: 7,
+  residents: [genOrthoPgy1()],
+  rotations: [],
+  rules: rulesWithBuddyPolicy({ allowedDaysOfWeek: [0] }),
+  slotDefinitions: [buddySlotDefinition],
+  assignments: {},
+});
+assert.ok(
+  (sundayOnly[0]?.eligibleDates ?? []).every(
+    (dateKey) => new Date(`${dateKey}T00:00:00`).getDay() === 0
+  ),
+  "allowedDaysOfWeek override restricts buddy dates to the configured weekdays"
+);
+
+// buddyPgyYears override: a PGY-2 on Gen Ortho becomes buddy-eligible.
+const pgy2Buddy = getBuddyRequirementsForMonth({
+  year: 2026,
+  month: 7,
+  residents: [
+    makeResident({
+      residentId: "pgy2-gen-ortho",
+      displayName: "PGY2 Gen Ortho",
+      trainingLevel: "PGY-2",
+      rotationAssignments: [
+        {
+          rotationName: "Gen Ortho",
+          startDate: "2026-07-01",
+          endDate: "2026-07-31",
+        } as any,
+      ],
+    }),
+  ],
+  rotations: [],
+  rules: rulesWithBuddyPolicy({ buddyPgyYears: [2] }),
+  slotDefinitions: [buddySlotDefinition],
+  assignments: {},
+});
+assert.equal(
+  pgy2Buddy.length,
+  1,
+  "buddyPgyYears override lets a PGY-2 take the buddy slot"
+);
+
+// eligibleRotationNameTokens override: Gen Ortho no longer eligible.
+const nightFloatOnly = getBuddyRequirementsForMonth({
+  year: 2026,
+  month: 7,
+  residents: [genOrthoPgy1()],
+  rotations: [],
+  rules: rulesWithBuddyPolicy({ eligibleRotationNameTokens: ["nightfloat"] }),
+  slotDefinitions: [buddySlotDefinition],
+  assignments: {},
+});
+assert.equal(
+  nightFloatOnly.length,
+  0,
+  "eligibleRotationNameTokens override excludes rotations that no longer match"
+);
+
+console.log("buddy-requirements.test.ts passed");

@@ -26,6 +26,8 @@ export type ApprovalStatus = "requested" | "approved" | "denied";
 export type TimeOffItem = {
   id: string;
   membershipId: string | null;
+  rosterId?: string | null;
+  programMembershipId?: string | null;
   type: TimeOffType;
   usingPto: boolean;
   startDate: string | null;

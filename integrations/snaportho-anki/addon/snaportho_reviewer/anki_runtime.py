@@ -23,3 +23,33 @@ class CollectionGateway:
         for field in fields:
             if field["name"] in note:note[field["name"]]=field["value"]
         note.add_tag(marker);self.col.update_note(note)
+    def _deck_id(self,deck_path):return self.col.decks.id(deck_path)  # creates the deck if absent
+    def _write_fields(self,note,central_fields,markers):
+        for field in central_fields:
+            if field["name"] in note:note[field["name"]]=field["value"]
+        for name,value in markers.items():
+            if name in note:note[name]=value
+    def write_central_update(self,note_guid,card_ordinal,central_fields,central_tags,deck_path,markers):
+        """Patch central fields/tags/deck on an existing note in place. Never touches personal
+        fields (not in central_fields) or scheduling (set_deck preserves due/interval/ease)."""
+        matches=self.cards_by_guid_ordinal(note_guid,card_ordinal)
+        if len(matches)!=1:return False
+        card=matches[0];note=card.note();self._write_fields(note,central_fields,markers)
+        # Replace SnapOrtho:: tags with the manifest's; keep personal + any other user tags.
+        note.tags=sorted(set(t for t in note.tags if not t.startswith("SnapOrtho::"))|set(central_tags))
+        self.col.update_note(note)
+        if deck_path:self.col.set_deck([card.id],self._deck_id(deck_path))
+        return True
+    def create_central_card(self,note_guid,central_fields,central_tags,deck_path,markers):
+        """Create a new note on the SnapOrtho Master note type, pinned to the release GUID so a
+        later sync matches it. New cards enter Anki as new — no scheduling manipulation."""
+        from .deck_update import NOTE_TYPE_NAME
+        notetype=self.col.models.by_name(NOTE_TYPE_NAME)
+        if not notetype:return False
+        note=self.col.new_note(notetype);note.guid=note_guid;self._write_fields(note,central_fields,markers)
+        note.tags=sorted(set(central_tags));self.col.add_note(note,self._deck_id(deck_path))
+        return True
+    def has_media(self,filename):
+        import os
+        return bool(filename)and os.path.exists(os.path.join(self.col.media.dir(),filename))
+    def write_media(self,filename,data):self.col.media.write_data(filename,data)

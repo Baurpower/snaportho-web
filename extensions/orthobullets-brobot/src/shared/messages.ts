@@ -110,7 +110,17 @@ export type ExtensionMessage =
       progress: OrthobulletsTopicProgress;
       history: OrthobulletsTopicTutorTurn[];
       userMessage?: string;
-    };
+    }
+  | {
+      type: 'ob:send-to-anki';
+      pageContext: OrthobulletsPageContext;
+      explanation?: OrthobulletsExplainResponse;
+    }
+  | {
+      type: 'ob:send-page-to-anki';
+      pageContext: OrthobulletsPageContext;
+    }
+  | { type: 'ob:get-anki-search-status'; searchRequestId: string };
 
 // Stable error codes surfaced to the side panel so it can render a specific
 // UI state (and, where relevant, a retry path) instead of a raw message.
@@ -144,5 +154,6 @@ export type ExtensionMessageResponse =
   | { ok: true; explanation: BrobotExplainResult; fetchDiagnostics?: ExtensionFetchDiagnostics }
   | { ok: true; chat: OrthobulletsChatResponse }
   | { ok: true; topicTurn: OrthobulletsTopicTutorResponse }
+  | { ok: true; ankiSearch: { searchRequestId: string; status: string; expiresAt: string; resultSummary?: Record<string, unknown> } }
   | { ok: true; cleared: true }
   | { ok: false; error: string; code?: ExtensionErrorCode; diagnostics?: OrthobulletsExtractionDiagnostics; fetchDiagnostics?: ExtensionFetchDiagnostics };

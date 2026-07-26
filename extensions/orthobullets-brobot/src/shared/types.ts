@@ -335,15 +335,9 @@ export interface OrthobulletsChatResponse {
  */
 export type OrthobulletsTopicAction =
   | 'quiz_me'
-  | 'find_answer'
-  | 'explain_section'
   | 'what_tested'
   | 'attending_question'
-  | 'explain_images'
-  | 'board_traps'
-  | 'rapid_review'
-  | 'grade_answer'
-  | 'save_missed';
+  | 'board_traps';
 
 export interface OrthobulletsTopicAskedQuestion {
   id: string;

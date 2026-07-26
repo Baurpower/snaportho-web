@@ -1,5 +1,4 @@
-// @ts-expect-error TS5097 direct Node tooling imports the source module.
-import { computeDeckManifestChecksum, type DeckManifestCardV1, type PublishedDeckManifestV1, validateReviewRow } from "./deck-foundation.ts";
+import { computeDeckManifestChecksum, type DeckManifestCardV1, type PublishedDeckManifestV1, validateReviewRow } from "./deck-foundation";
 
 export const NO_CANDIDATE_CLASSIFICATIONS = [
   "correctly_unmapped", "missing_alias", "missing_canonical_entity", "extraction_failure",

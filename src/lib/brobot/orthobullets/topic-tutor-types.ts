@@ -8,13 +8,9 @@ import { OrthobulletsPageContextSchema } from './types';
 // reusing the same generic "teach this page" prompt.
 export const OrthobulletsTopicActionSchema = z.enum([
   'quiz_me',
-  'find_answer',
-  'explain_section',
   'what_tested',
   'attending_question',
-  'explain_images',
   'board_traps',
-  'save_missed',
 ]);
 export type OrthobulletsTopicAction = z.infer<typeof OrthobulletsTopicActionSchema>;
 

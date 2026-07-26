@@ -11,6 +11,7 @@ import {
   normalizeCallTypeList,
   normalizeNumericList,
   resolveMatchingRules,
+  type RuleLike,
 } from "@/lib/workspace/call/rule-evaluator";
 
 type RotationLike = {
@@ -66,9 +67,85 @@ export type BuddyDateState = {
   requiredPrimaryPartnerPgy: number;
 };
 
-export const BUDDY_REQUIRED_DAYS_PER_MONTH = 2;
-export const BUDDY_ALLOWED_DAYS_OF_WEEK = [5, 6] as const;
-export const BUDDY_PRIMARY_PARTNER_PGY = 4;
+/**
+ * Configurable buddy-call policy. These were previously hardcoded constants; a
+ * `buddy_requirement` program rule can now override any field so a program (or a
+ * policy change) can adjust buddy call without code edits. The defaults exactly
+ * reproduce the original PGY-1 ↔ PGY-4, Fri/Sat, 2-days/month, Gen Ortho/Pager
+ * behavior.
+ */
+export type BuddyPolicy = {
+  /** Required buddy days per eligible resident per month. */
+  requiredDaysPerMonth: number;
+  /** Days of week (0=Sun … 6=Sat) that can host a buddy slot. */
+  allowedDaysOfWeek: number[];
+  /** PGY year(s) that take the buddy slot. */
+  buddyPgyYears: number[];
+  /** PGY year required in the Primary slot to pair with a buddy. */
+  partnerPgyYear: number;
+  /** Normalized rotation-name tokens that make a resident buddy-eligible. */
+  eligibleRotationNameTokens: string[];
+};
+
+export const DEFAULT_BUDDY_POLICY: BuddyPolicy = {
+  requiredDaysPerMonth: 2,
+  allowedDaysOfWeek: [5, 6],
+  buddyPgyYears: [1],
+  partnerPgyYear: 4,
+  eligibleRotationNameTokens: ["genortho", "pager"],
+};
+
+// Backward-compatible constant exports (now derived from the default policy).
+export const BUDDY_REQUIRED_DAYS_PER_MONTH =
+  DEFAULT_BUDDY_POLICY.requiredDaysPerMonth;
+export const BUDDY_ALLOWED_DAYS_OF_WEEK = DEFAULT_BUDDY_POLICY.allowedDaysOfWeek;
+export const BUDDY_PRIMARY_PARTNER_PGY = DEFAULT_BUDDY_POLICY.partnerPgyYear;
+
+function numberOr(value: unknown, fallback: number) {
+  return typeof value === "number" && Number.isFinite(value) ? value : fallback;
+}
+
+/** Resolve the effective buddy policy from a program's rules (defaults if none). */
+export function resolveBuddyPolicy(
+  rules: RuleLike[] | null | undefined
+): BuddyPolicy {
+  const match = resolveMatchingRules(rules ?? [], ["buddy_requirement"])[0];
+  if (!match) return DEFAULT_BUDDY_POLICY;
+
+  const config = match.config;
+
+  const allowedDaysOfWeek = normalizeNumericList(config.allowedDaysOfWeek);
+  const buddyPgyYears = normalizeNumericList(config.buddyPgyYears);
+  const tokens = Array.isArray(config.eligibleRotationNameTokens)
+    ? config.eligibleRotationNameTokens
+        .filter((token): token is string => typeof token === "string")
+        .map((token) => normalizeBuddyRotationName(token))
+        .filter(Boolean)
+    : [];
+
+  return {
+    requiredDaysPerMonth: numberOr(
+      config.requiredDaysPerMonth,
+      DEFAULT_BUDDY_POLICY.requiredDaysPerMonth
+    ),
+    allowedDaysOfWeek:
+      allowedDaysOfWeek.length > 0
+        ? allowedDaysOfWeek
+        : DEFAULT_BUDDY_POLICY.allowedDaysOfWeek,
+    buddyPgyYears:
+      buddyPgyYears.length > 0
+        ? buddyPgyYears
+        : DEFAULT_BUDDY_POLICY.buddyPgyYears,
+    partnerPgyYear: numberOr(
+      config.partnerPgyYear,
+      DEFAULT_BUDDY_POLICY.partnerPgyYear
+    ),
+    eligibleRotationNameTokens:
+      tokens.length > 0
+        ? tokens
+        : DEFAULT_BUDDY_POLICY.eligibleRotationNameTokens,
+  };
+}
 
 function toDateKey(year: number, month: number, day: number) {
   return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
@@ -81,9 +158,9 @@ function getMonthDateKeys(year: number, month: number) {
   );
 }
 
-function isFridayOrSaturday(dateKey: string) {
+function isBuddyAllowedDay(dateKey: string, allowedDaysOfWeek: number[]) {
   const dayOfWeek = new Date(`${dateKey}T00:00:00`).getDay();
-  return BUDDY_ALLOWED_DAYS_OF_WEEK.includes(dayOfWeek as 5 | 6);
+  return allowedDaysOfWeek.includes(dayOfWeek);
 }
 
 export function normalizeBuddyRotationName(value: string | null | undefined) {
@@ -91,9 +168,13 @@ export function normalizeBuddyRotationName(value: string | null | undefined) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, "");
 }
 
-export function isBuddyEligibleRotationName(value: string | null | undefined) {
+export function isBuddyEligibleRotationName(
+  value: string | null | undefined,
+  eligibleRotationNameTokens: string[] = DEFAULT_BUDDY_POLICY.eligibleRotationNameTokens
+) {
   const normalized = normalizeBuddyRotationName(value);
-  return normalized.includes("genortho") || normalized.includes("pager");
+  if (!normalized) return false;
+  return eligibleRotationNameTokens.some((token) => normalized.includes(token));
 }
 
 function getBuddySlotDefinition(
@@ -155,7 +236,8 @@ function getBuddyMaxForResident(
   resident: ResidentOption,
   rules: ProgramRule[],
   eligibleDateCount: number,
-  effectiveDate: string
+  effectiveDate: string,
+  policy: BuddyPolicy
 ) {
   const residentPgy = getResidentPgyYear(resident, effectiveDate);
   const hardCaps: number[] = [];
@@ -213,7 +295,7 @@ function getBuddyMaxForResident(
       ? Math.min(...hardCaps)
       : softCaps.length > 0
       ? Math.min(...softCaps)
-      : BUDDY_REQUIRED_DAYS_PER_MONTH;
+      : policy.requiredDaysPerMonth;
 
   return Math.max(0, Math.min(eligibleDateCount, configuredCap));
 }
@@ -240,36 +322,45 @@ export function getBuddyRequirementsForMonth(params: {
   const buddySlotDefinition = getBuddySlotDefinition(rules, slotDefinitions);
   if (!buddySlotDefinition) return [];
 
+  const policy = resolveBuddyPolicy(rules);
   const monthDateKeys = getMonthDateKeys(year, month);
-  const buddyDateKeys = monthDateKeys.filter(isFridayOrSaturday);
+  const buddyDateKeys = monthDateKeys.filter((dateKey) =>
+    isBuddyAllowedDay(dateKey, policy.allowedDaysOfWeek)
+  );
+
+  const isBuddyResidentOnDate = (resident: ResidentOption, dateKey: string) => {
+    const pgy = getResidentPgyYear(resident, dateKey);
+    return (
+      pgy !== null &&
+      policy.buddyPgyYears.includes(pgy) &&
+      isBuddyEligibleRotationName(
+        getRotationLabelForResidentOnDate(resident, dateKey, rotations),
+        policy.eligibleRotationNameTokens
+      )
+    );
+  };
 
   return residents
     .filter((resident) => {
-      return buddyDateKeys.some((dateKey) => {
-        return (
-          getResidentPgyYear(resident, dateKey) === 1 &&
-          isBuddyEligibleRotationName(
-            getRotationLabelForResidentOnDate(resident, dateKey, rotations)
-          )
-        );
-      });
+      return buddyDateKeys.some((dateKey) =>
+        isBuddyResidentOnDate(resident, dateKey)
+      );
     })
     .map((resident) => {
-      const eligibleDates = buddyDateKeys.filter((dateKey) => {
-        return (
-          getResidentPgyYear(resident, dateKey) === 1 &&
-          isBuddyEligibleRotationName(
-            getRotationLabelForResidentOnDate(resident, dateKey, rotations)
-          )
-        )
-      });
+      const eligibleDates = buddyDateKeys.filter((dateKey) =>
+        isBuddyResidentOnDate(resident, dateKey)
+      );
       const maxBuddyDays = getBuddyMaxForResident(
         resident,
         rules,
         eligibleDates.length,
-        buddyDateKeys[0] ?? toDateKey(year, month, 1)
+        buddyDateKeys[0] ?? toDateKey(year, month, 1),
+        policy
       );
-      const requiredBuddyDays = Math.min(BUDDY_REQUIRED_DAYS_PER_MONTH, maxBuddyDays);
+      const requiredBuddyDays = Math.min(
+        policy.requiredDaysPerMonth,
+        maxBuddyDays
+      );
       const assignedDates = getAssignedBuddyDates(resident.residentId, assignments).filter(
         (dateKey) => eligibleDates.includes(dateKey)
       );
@@ -332,6 +423,7 @@ export function getBuddyDateStatesForMonth(params: {
     assignments = {},
   } = params;
   const buddySlotDefinition = getBuddySlotDefinition(rules, slotDefinitions);
+  const policy = resolveBuddyPolicy(rules);
   const requirements = getBuddyRequirementsForMonth({
     year,
     month,
@@ -358,7 +450,10 @@ export function getBuddyDateStatesForMonth(params: {
   );
 
   return getMonthDateKeys(year, month).map((dateKey) => {
-    const isEligibleWeekendDate = isFridayOrSaturday(dateKey);
+    const isEligibleWeekendDate = isBuddyAllowedDay(
+      dateKey,
+      policy.allowedDaysOfWeek
+    );
     const remainingNeededByResidentBefore = Object.fromEntries(
       [...remainingByRosterId.entries()]
     );
@@ -450,7 +545,7 @@ export function getBuddyDateStatesForMonth(params: {
       remainingNeededByResidentBefore,
       remainingNeededByResidentAfter,
       backupRequiredOnBuddyDay: false,
-      requiredPrimaryPartnerPgy: BUDDY_PRIMARY_PARTNER_PGY,
+      requiredPrimaryPartnerPgy: policy.partnerPgyYear,
     };
   });
 }

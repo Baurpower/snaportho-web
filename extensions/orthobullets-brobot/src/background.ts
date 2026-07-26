@@ -5,6 +5,7 @@ import type {
 } from './shared/messages.js';
 import type {
   ExtensionFetchDiagnostics,
+  OrthobulletsExplainResponse,
   OrthobulletsExtractionDiagnostics,
   OrthobulletsPageContext,
   ProviderDetectionStatus,
@@ -89,6 +90,138 @@ async function setStoredDeviceToken(deviceToken: string) {
 
 async function clearStoredDeviceToken() {
   await chrome.storage.local.remove([STORAGE_KEY]);
+}
+
+async function sha256(value: string) {
+  const bytes = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest('SHA-256', bytes);
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
+function uuidFromHash(hash: string) {
+  const chars = hash.slice(0, 32).split('');
+  chars[12] = '4';
+  chars[16] = ['8', '9', 'a', 'b'][Number.parseInt(chars[16] ?? '0', 16) % 4] ?? '8';
+  const value = chars.join('');
+  return `${value.slice(0, 8)}-${value.slice(8, 12)}-${value.slice(12, 16)}-${value.slice(16, 20)}-${value.slice(20)}`;
+}
+
+function ankiSearchKeywords(explanation: OrthobulletsExplainResponse) {
+  const stop = new Set([
+    'appropriate', 'because', 'correct', 'following', 'management', 'patient',
+    'patients', 'physician', 'prescribed', 'treatment', 'without', 'would',
+    'appointment', 'comprehensive', 'evaluation', 'approach', 'involves',
+  ]);
+  const source = [
+    explanation.testedConcept,
+    explanation.bottomLine,
+    explanation.whyCorrect,
+    ...explanation.whyWrong.map((item) => item.reason),
+    explanation.boardTrap ?? '',
+    explanation.boardPearl,
+    ...explanation.studyNext,
+  ].join(' ');
+  return [...new Set(
+    (source.match(/[A-Za-z][A-Za-z-]{6,}/g) ?? [])
+      .map((token) => token.toLowerCase().replace(/^-|-$/g, ''))
+      .filter((token) => token.length >= 7 && !stop.has(token)),
+  )]
+    .sort((left, right) => right.length - left.length || left.localeCompare(right))
+    .slice(0, 24);
+}
+
+function ankiQuestionMetadata(
+  pageContext: OrthobulletsPageContext,
+  explanation?: OrthobulletsExplainResponse
+) {
+  if (explanation) {
+    return {
+      testedConcept: explanation.testedConcept,
+      summary: explanation.bottomLine,
+      searchKeywords: ankiSearchKeywords(explanation),
+      source: 'brobot_explanation' as const,
+    };
+  }
+  const topic = pageContext.linkedConcepts[0]?.label
+    || pageContext.breadcrumbs[pageContext.breadcrumbs.length - 1]
+    || pageContext.title
+    || 'Orthobullets question';
+  const scopedContext: OrthobulletsPageContext = {
+    ...pageContext,
+    title: topic,
+    sectionHeadings: [topic],
+    contentSections: [{
+      heading: topic,
+      text: [
+        pageContext.stem ?? '',
+        ...pageContext.answerChoices.map((choice) => choice.text),
+      ].join(' '),
+    }],
+  };
+  return {
+    testedConcept: topic.slice(0, 300),
+    summary: `Question topic: ${topic}`.slice(0, 600),
+    searchKeywords: ankiPageSearchKeywords(scopedContext),
+    source: 'page_metadata' as const,
+  };
+}
+
+function ankiPageSearchKeywords(pageContext: OrthobulletsPageContext) {
+  const stop = new Set([
+    'about', 'after', 'also', 'because', 'between', 'cards', 'clinical', 'from',
+    'have', 'images', 'management', 'most', 'orthobullets', 'page', 'patient',
+    'patients', 'questions', 'section', 'should', 'that', 'their', 'these',
+    'this', 'treatment', 'video', 'what', 'when', 'which', 'with',
+  ]);
+  const source = [
+    pageContext.title ?? '',
+    ...(pageContext.sectionHeadings ?? []),
+    ...(pageContext.contentSections ?? []).flatMap((section) => [section.heading, section.text]),
+    pageContext.contentText ?? '',
+  ].join(' ');
+  const counts = new Map<string, number>();
+  for (const raw of source.match(/[A-Za-z][A-Za-z-]{3,}/g) ?? []) {
+    const token = raw.toLowerCase().replace(/^-|-$/g, '');
+    if (token.length < 4 || stop.has(token)) continue;
+    counts.set(token, (counts.get(token) ?? 0) + 1);
+  }
+  return [...counts]
+    .sort((left, right) => right[1] - left[1] || right[0].length - left[0].length)
+    .slice(0, 24)
+    .map(([token]) => token);
+}
+
+function ankiPageSearchSections(pageContext: OrthobulletsPageContext) {
+  const sections = pageContext.contentSections ?? [];
+  const structured = sections
+    .map((section, index) => {
+      const scopedContext: OrthobulletsPageContext = {
+        ...pageContext,
+        title: section.heading,
+        sectionHeadings: [section.heading],
+        contentSections: [section],
+        contentText: section.text,
+      };
+      const concepts = ankiPageSearchKeywords(scopedContext).slice(0, 12);
+      if (!concepts.length) return null;
+      return {
+        id: `section-${index + 1}`,
+        heading: section.heading.slice(0, 240),
+        concepts,
+        priority: index < 4 ? 5 : index < 10 ? 4 : 3,
+      };
+    })
+    .filter((section): section is NonNullable<typeof section> => Boolean(section))
+    .slice(0, 30);
+  if (structured.length) return structured;
+  const concepts = ankiPageSearchKeywords(pageContext).slice(0, 12);
+  if (!concepts.length) return [];
+  return [{
+    id: 'page-overview',
+    heading: (pageContext.title || pageContext.sectionHeadings?.[0] || 'Topic overview').slice(0, 240),
+    concepts,
+    priority: 5,
+  }];
 }
 
 async function getActiveTabState() {
@@ -430,6 +563,98 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage | { type: 'ob:qu
         }
         await clearStoredDeviceToken();
         sendResponse({ ok: true, cleared: true });
+        return;
+      }
+
+      if (message.type === 'ob:send-to-anki') {
+        const deviceToken = await getStoredDeviceToken();
+        if (!deviceToken) throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');
+        const nativeQuestionId = message.pageContext.questionId?.trim();
+        if (!nativeQuestionId) throw new CodedError('This question has no stable Orthobullets ID.', 'invalid_request');
+        const metadata = ankiQuestionMetadata(message.pageContext, message.explanation);
+        const fingerprint = await sha256([
+          nativeQuestionId,
+          message.pageContext.stem ?? '',
+          metadata.testedConcept,
+        ].join('|'));
+        const idempotencyHash = await sha256(`${fingerprint}|${Math.floor(Date.now() / 300_000)}`);
+        const result = await fetchJson('/api/brobot/extension/anki-search', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json',[EXTENSION_TOKEN_HEADER]:deviceToken},
+          body: JSON.stringify({
+            contractVersion:'snaportho-extension-anki-search.v1',
+            clientRequestId:crypto.randomUUID(),
+            idempotencyKey:uuidFromHash(idempotencyHash),
+            source:{provider:'orthobullets',queryKind:'question',nativeQuestionId,questionFingerprintHash:fingerprint},
+            concept:{
+              testedConcept:metadata.testedConcept,
+              summary:metadata.summary,
+              searchKeywords:metadata.searchKeywords,
+              pageSections:[],
+              source:metadata.source,
+            },
+            requestedAction:'open_browse_and_return_results',
+            extensionVersion:chrome.runtime.getManifest?.().version??'unknown',
+            createdAt:new Date().toISOString(),
+          }),
+        });
+        sendResponse({ok:true,ankiSearch:result});
+        return;
+      }
+
+      if (message.type === 'ob:send-page-to-anki') {
+        const deviceToken = await getStoredDeviceToken();
+        if (!deviceToken) throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');
+        const title = message.pageContext.title?.trim() || 'Orthobullets topic';
+        const pageIdentity = message.pageContext.topicId?.trim()
+          || new URL(message.pageContext.sourceUrl || message.pageContext.pageUrl).pathname.slice(0, 200);
+        if (!pageIdentity) throw new CodedError('This topic page has no stable identity.', 'invalid_request');
+        const pageSections = ankiPageSearchSections(message.pageContext);
+        if (!pageSections.length) throw new CodedError('No searchable page sections were extracted.', 'extraction_failure');
+        const summary = `${title}. Sections: ${pageSections.map((section) => section.heading).join('; ')}`.slice(0, 600);
+        const fingerprint = await sha256([
+          pageIdentity,
+          title,
+          message.pageContext.contentMarkdown ?? message.pageContext.contentText ?? '',
+        ].join('|'));
+        const idempotencyHash = await sha256(`${fingerprint}|${Math.floor(Date.now() / 300_000)}`);
+        const result = await fetchJson('/api/brobot/extension/anki-search', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', [EXTENSION_TOKEN_HEADER]: deviceToken },
+          body: JSON.stringify({
+            contractVersion: 'snaportho-extension-anki-search.v1',
+            clientRequestId: crypto.randomUUID(),
+            idempotencyKey: uuidFromHash(idempotencyHash),
+            source: {
+              provider: 'orthobullets',
+              queryKind: 'topic_page',
+              nativeQuestionId: pageIdentity,
+              questionFingerprintHash: fingerprint,
+            },
+            concept: {
+              testedConcept: title,
+              summary,
+              searchKeywords: ankiPageSearchKeywords(message.pageContext),
+              pageSections,
+              source: 'page_metadata',
+            },
+            requestedAction: 'open_browse_and_return_results',
+            extensionVersion: chrome.runtime.getManifest?.().version ?? 'unknown',
+            createdAt: new Date().toISOString(),
+          }),
+        });
+        sendResponse({ ok: true, ankiSearch: result });
+        return;
+      }
+
+      if (message.type === 'ob:get-anki-search-status') {
+        const deviceToken = await getStoredDeviceToken();
+        if (!deviceToken) throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');
+        const result = await fetchJson(`/api/brobot/extension/anki-search/${encodeURIComponent(message.searchRequestId)}`, {
+          method:'GET',
+          headers:{[EXTENSION_TOKEN_HEADER]:deviceToken},
+        });
+        sendResponse({ok:true,ankiSearch:result});
         return;
       }
 

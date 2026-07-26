@@ -21,9 +21,9 @@ import {
   type ProgramCallSlotDefinition,
 } from "@/lib/workspace/call/rule-definitions"; // Phase 9 alignment
 import {
-  BUDDY_PRIMARY_PARTNER_PGY,
   getBuddyDateStatesForMonth,
   getBuddyRequirementsForMonth,
+  resolveBuddyPolicy,
   type BuddyDateState,
 } from "@/lib/workspace/call/buddy-requirements";
 import {
@@ -32,7 +32,6 @@ import {
   evaluateMonthlyLimitForResident,
   evaluateMonthlyLoadTargetForResident,
   evaluatePgyEligibility,
-  evaluateRotationEligibility,
   evaluateSpacingForResident,
   evaluateWeekendLimitForResident,
   evaluateWeekendPairingForResident,
@@ -42,7 +41,18 @@ import {
   getResidentPgyYear,
   getRuleSeverity,
   isRuleEnabled,
+  resolveMatchingRules,
 } from "@/lib/workspace/call/rule-evaluator";
+
+// Rule codes that configure minimum spacing between a resident's calls. When any
+// of these is active, spacing is scored by the config-respecting penalty in
+// getRulePenalty; the generic gap heuristic in scoreResident is suppressed to
+// avoid double-counting (see #3).
+const SPACING_RULE_CODES = [
+  "min_days_between_assignments",
+  "minimum_spacing",
+  "avoid_consecutive_call",
+];
 
 type Slot = "Primary" | "Backup" | "Buddy";
 
@@ -80,6 +90,9 @@ type ResidentAutoStats = {
   backupDates: string[];
   buddyDates: string[];
   assignedDates: string[];
+
+  // PGY burden multiplier resolved once for the scheduled month (see #1).
+  expectedBurdenMultiplier: number;
 };
 
 type GeneratedScheduleCombination = {
@@ -298,29 +311,6 @@ function getResidentRotationId(resident: ResidentOption, dateKey: string) {
   );
 }
 
-function isResidentBlockedByRotationRule({
-  resident,
-  slot,
-  dateKey,
-  rules,
-}: {
-  resident: ResidentOption;
-  slot: Slot;
-  dateKey: string;
-  rules: ProgramRule[];
-}) {
-  const residentRotationId = getResidentRotationId(resident, dateKey);
-
-  if (!residentRotationId) return false;
-
-  return (
-    evaluateRotationEligibility({
-      rotationIds: [residentRotationId],
-      callType: slot,
-      rules,
-    }).length > 0
-  );
-}
 
 const PRIMARY_WEIGHT = 1;
 const BACKUP_WEIGHT = 0.25;
@@ -335,8 +325,13 @@ function getResidentYearValue(
   return getResidentPgyYear(resident, effectiveDate) ?? 99;
 }
 
-function getExpectedPgyBurdenMultiplier(resident: ResidentOption) {
-  const pgy = getResidentYearValue(resident);
+function getExpectedPgyBurdenMultiplier(
+  resident: ResidentOption,
+  effectiveDate?: string | null
+) {
+  // Resolve PGY as of the scheduled month, not "now". Without the effective date
+  // this mis-weights fairness across the academic-year boundary (e.g. July).
+  const pgy = getResidentYearValue(resident, effectiveDate);
 
   // Lower PGYs are expected to carry more call burden.
   // This does not force bad schedules, but it lowers their fairness penalty.
@@ -378,11 +373,11 @@ function getWeightedYearWeekendBurden(entry: ResidentAutoStats) {
 }
 
 function getAdjustedMonthBurden(entry: ResidentAutoStats) {
-  return getWeightedMonthBurden(entry) / getExpectedPgyBurdenMultiplier(entry.resident);
+  return getWeightedMonthBurden(entry) / entry.expectedBurdenMultiplier;
 }
 
 function getAdjustedWeekendBurden(entry: ResidentAutoStats) {
-  return getWeightedWeekendBurden(entry) / getExpectedPgyBurdenMultiplier(entry.resident);
+  return getWeightedWeekendBurden(entry) / entry.expectedBurdenMultiplier;
 }
 
 function daysBetween(a: string, b: string) {
@@ -474,7 +469,8 @@ function summarizeRuleWarningsForCombination({
 
 function buildInitialStats(
   residents: ResidentOption[],
-  historicalStats: ExistingResidentStats[]
+  historicalStats: ExistingResidentStats[],
+  effectiveDate?: string | null
 ) {
   const stats = new Map<string, ResidentAutoStats>();
 
@@ -485,6 +481,7 @@ function buildInitialStats(
 
     stats.set(resident.residentId, {
   resident,
+  expectedBurdenMultiplier: getExpectedPgyBurdenMultiplier(resident, effectiveDate),
   monthPrimary: 0,
   monthBackup: 0,
   monthBuddy: 0,
@@ -769,14 +766,9 @@ function getRulePenalty({
   const residentPgy = getResidentYearValue(resident, day.key);
   const residentPgyForFilter = residentPgy < 99 ? residentPgy : null;
 
-  for (const violation of evaluateRotationEligibility({
-    rotationIds: [getResidentRotationId(resident, day.key)],
-    callType: slot,
-    rules,
-    residentPgyYear: residentPgyForFilter,
-  })) {
-    penalty += 999999 * (violation.severity === "error" ? 10 : 1);
-  }
+  // Rotation eligibility is enforced during candidate filtering
+  // (isResidentAllowedForSlot → canonical availability source), so it is no
+  // longer double-counted as a scoring penalty here.
 
   for (const violation of evaluateSpacingForResident({
     assignedDates: entry.assignedDates,
@@ -990,11 +982,24 @@ function scoreResident({
   // Spacing still matters, but backup is less punishing than primary.
   const spacingMultiplier = slot === "Primary" ? 1 : 0.65;
 
+  // When an explicit spacing rule is configured, spacing is scored by the
+  // config-respecting penalty inside getRulePenalty. Suppress this generic
+  // gap heuristic in that case so spacing isn't weighted twice (#3); the
+  // same-day (gap 0) guard always applies.
+  const spacingRuleActive =
+    resolveMatchingRules(rules, SPACING_RULE_CODES).length > 0;
+
   for (const assignedDate of entry.assignedDates) {
     const gap = daysBetween(day.key, assignedDate);
 
-    if (gap === 0) score += 99999;
-    else if (gap === 1) score += 90 * spacingMultiplier;
+    if (gap === 0) {
+      score += 99999;
+      continue;
+    }
+
+    if (spacingRuleActive) continue;
+
+    if (gap === 1) score += 90 * spacingMultiplier;
     else if (gap === 2) score += 40 * spacingMultiplier;
     else if (gap === 3) score += 15 * spacingMultiplier;
   }
@@ -1066,6 +1071,7 @@ function selectBuddyPrimaryPartner({
   availabilityByResident,
   stats,
   generationVersion,
+  partnerPgyYear,
 }: {
   residents: ResidentOption[];
   day: CalendarDay;
@@ -1075,17 +1081,18 @@ function selectBuddyPrimaryPartner({
   availabilityByResident: ProgramAvailabilityMonthResponse["availability"];
   stats: Map<string, ResidentAutoStats>;
   generationVersion: number;
+  partnerPgyYear: number;
 }) {
-  const pgy4Residents = residents.filter(
+  const partnerResidents = residents.filter(
     (resident) =>
-      getResidentPgyYear(resident, day.key) === BUDDY_PRIMARY_PARTNER_PGY &&
+      getResidentPgyYear(resident, day.key) === partnerPgyYear &&
       resident.residentId !== current.buddyRosterId
   );
 
-  if (pgy4Residents.length === 0) return null;
+  if (partnerResidents.length === 0) return null;
 
   return pickBestResident({
-    residents: pgy4Residents,
+    residents: partnerResidents,
     slot: "Primary",
     day,
     assignments,
@@ -1208,17 +1215,8 @@ function inspectCandidatePool({
       reasons.push("Already assigned to another slot on this day.");
     }
 
-    if (
-      isResidentBlockedByRotationRule({
-        resident,
-        slot,
-        dateKey: day.key,
-        rules,
-      })
-    ) {
-      reasons.push("Blocked by rotation rule.");
-    }
-
+    // Rotation blocking is reported by evaluateResidentForSlot below (canonical
+    // availability source); no separate rotation-rule check is needed here.
     const evaluation = evaluateResidentForSlot({
       resident,
       slot,
@@ -1267,14 +1265,11 @@ function pickBestResident({
   stats: Map<string, ResidentAutoStats>;
   generationVersion: number;
 }) {
-  const eligible = residents.filter(
-  (resident) =>
-    !isResidentBlockedByRotationRule({
-      resident,
-      slot,
-      dateKey: day.key,
-      rules,
-    }) &&
+  const eligible = residents.filter((resident) =>
+    // Rotation eligibility is enforced inside isResidentAllowedForSlot →
+    // evaluateResidentForSlot, which reads the canonical availability rotation
+    // data. The former separate isResidentBlockedByRotationRule check used a
+    // second rotation source and is now redundant (see rotation source unification).
     isResidentAllowedForSlot({
       resident,
       slot,
@@ -1283,7 +1278,7 @@ function pickBestResident({
       rules,
       availabilityByResident,
     })
-);
+  );
 
   if (eligible.length === 0) return null;
 
@@ -1497,6 +1492,7 @@ function generateSingleCallSchedule({
   slotDefinitions = DEFAULT_SLOT_DEFINITIONS,
 }: GenerateParams) {
   const enabledRules = rules.filter(isRuleEnabled);
+  const buddyPolicy = resolveBuddyPolicy(enabledRules);
   const effectiveSlotDefinitions =
     slotDefinitions.length > 0 ? slotDefinitions : DEFAULT_SLOT_DEFINITIONS;
   const residentsById = new Map(
@@ -1525,7 +1521,11 @@ function generateSingleCallSchedule({
         };
   }
 
-  const stats = buildInitialStats(residents, historicalStats);
+  const stats = buildInitialStats(
+    residents,
+    historicalStats,
+    monthDays[0]?.key ?? null
+  );
   const generationDebug = createGenerationDebug();
 
   if (!forceRegenerate) {
@@ -1700,20 +1700,23 @@ function generateSingleCallSchedule({
           ? getResidentPgyYear(existingPrimary, dateKey)
           : null;
 
+        // #2: apply the same partner-PGY guard in both incremental and
+        // force-regenerate modes. Previously force-regenerate bypassed this,
+        // which could pair a buddy with a non-partner Primary. A manually-set
+        // Primary that is not the partner PGY always blocks buddy placement here.
         if (
           existingPrimary &&
-          existingPrimaryPgy !== BUDDY_PRIMARY_PARTNER_PGY &&
-          !forceRegenerate
+          existingPrimaryPgy !== buddyPolicy.partnerPgyYear
         ) {
           skippedReasons.push({
             dateKey,
-            reason: `Existing Primary is PGY-${existingPrimaryPgy ?? "unknown"}, not PGY-${BUDDY_PRIMARY_PARTNER_PGY}.`,
+            reason: `Existing Primary is PGY-${existingPrimaryPgy ?? "unknown"}, not PGY-${buddyPolicy.partnerPgyYear}.`,
           });
           return null;
         }
 
         const partner =
-          existingPrimaryPgy === BUDDY_PRIMARY_PARTNER_PGY
+          existingPrimaryPgy === buddyPolicy.partnerPgyYear
             ? existingPrimary
             : selectBuddyPrimaryPartner({
                 residents,
@@ -1733,12 +1736,13 @@ function generateSingleCallSchedule({
                 availabilityByResident,
                 stats,
                 generationVersion,
+                partnerPgyYear: buddyPolicy.partnerPgyYear,
               });
 
         if (!partner) {
           skippedReasons.push({
             dateKey,
-            reason: `No eligible PGY-${BUDDY_PRIMARY_PARTNER_PGY} Primary partner available.`,
+            reason: `No eligible PGY-${buddyPolicy.partnerPgyYear} Primary partner available.`,
           });
           return null;
         }
@@ -1864,7 +1868,7 @@ function generateSingleCallSchedule({
     const primaryPgy = primaryResident
       ? getResidentPgyYear(primaryResident, day.key)
       : null;
-    if (primaryPgy !== BUDDY_PRIMARY_PARTNER_PGY) {
+    if (primaryPgy !== buddyPolicy.partnerPgyYear) {
       return false;
     }
 
@@ -2555,7 +2559,9 @@ export function generateCallSchedule({
       monthDays,
       residents,
       assignments: generated.assignments,
-      rules,
+      // #4: score/diagnose against the same effective rule set generation used,
+      // so scoring can never silently disagree with what was generated.
+      rules: effectiveRules,
       slotMode,
       slotDefinitions,
       residentsById,
@@ -2568,7 +2574,7 @@ export function generateCallSchedule({
       },
       monthDays,
       residents,
-      rules,
+      rules: effectiveRules,
       availabilityByResident,
     });
 
@@ -2577,7 +2583,7 @@ export function generateCallSchedule({
       assignments: generated.assignments,
       monthDays,
       residents,
-      rules,
+      rules: effectiveRules,
       slotMode,
       diagnostics,
       slotDefinitions,
@@ -2638,7 +2644,7 @@ export function generateCallSchedule({
           combo,
           monthDays,
           residents,
-          rules,
+          effectiveRules,
           availabilityByResident
         )
       ),
@@ -2648,7 +2654,7 @@ export function generateCallSchedule({
             best,
             monthDays,
             residents,
-            rules,
+            effectiveRules,
             availabilityByResident
           )
         : null,

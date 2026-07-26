@@ -3,7 +3,7 @@
 const {
   inferTrackIdFromRotation,
   inferTrackIdFromService,
-} = require("./rotation-track-mapping.ts") as typeof import("./rotation-track-mapping");
+} = require("./rotation-track-mapping") as typeof import("./rotation-track-mapping");
 
 function assertTrackMappingEqual<T>(label: string, actual: T, expected: T) {
   if (actual !== expected) {

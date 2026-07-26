@@ -5,6 +5,8 @@ import { getResidentStatusDetails } from "@/lib/workspace/pgy";
 import {
   canManageProgramTimeOff,
   createTimeOffEvent,
+  PROGRAM_TIME_OFF_SOURCE_KIND,
+  SELF_TIME_OFF_SOURCE_KIND,
   getTimeOffTypeLabel,
   TimeOffType,
   ApprovalStatus,
@@ -361,7 +363,11 @@ export async function POST(request: NextRequest) {
     const approvalStatus =
       body.approvalStatus ??
       (isProgramCreated ? "approved" : "requested");
-    const sourceKind = body.sourceKind ?? (isProgramCreated ? "program_quick_add" : "self_reported");
+    // Canonical DB values: official | self_reported | preference
+    // (see availability_events_source_kind_check). Do not use app-only labels.
+    const sourceKind =
+      body.sourceKind ??
+      (isProgramCreated ? PROGRAM_TIME_OFF_SOURCE_KIND : SELF_TIME_OFF_SOURCE_KIND);
     const constraintLevel = body.constraintLevel ?? (approvalStatus === "approved" ? "hard" : "soft");
 
     const result = await createTimeOffEvent({

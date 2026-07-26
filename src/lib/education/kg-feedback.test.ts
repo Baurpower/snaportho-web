@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 
-// @ts-expect-error TS5097: explicit .ts suffix is required by the direct Node test runner.
-import { sanitizeKgFeedbackText, sanitizeKgProductContext, submitKgGraphFeedback } from "./kg-feedback.ts";
+import { sanitizeKgFeedbackText, sanitizeKgProductContext, submitKgGraphFeedback } from "./kg-feedback";
 
 assert.equal(
   sanitizeKgFeedbackText("email a@example.com phone 415-555-1212 id 123456789", 200),

@@ -302,4 +302,85 @@ assert.equal(
   "required_daily_call_slots with Primary only does not require Backup"
 );
 
+// --- monthly_load_target_by_pgy: enforced on save, mirroring the generator ---
+
+const pgy2PrimaryHardMax2Rule = {
+  id: "pgy2-primary-hard-max-2",
+  name: "PGY-2: max 2 Primary/month",
+  rule_type: "monthly_load_target_by_pgy",
+  is_enabled: true,
+  is_hard_rule: true,
+  config: {
+    targetPgyYears: [2],
+    targetCallType: "Primary",
+    targetHardMaxCalls: 2,
+    targetMaxCalls: 2,
+  },
+} as ProgramRule;
+
+const loadTargetRules = [
+  primarySlotRule,
+  backupSlotRule,
+  requiredPrimaryOnlyRule,
+  pgy2PrimaryHardMax2Rule,
+];
+
+function primaryAssignmentsForPgy2(dateKeys: string[]) {
+  return dateKeys.map((d, i) => ({
+    callId: `lt-primary-${i}`,
+    rosterId: "pgy2-primary",
+    residentId: "pgy2-primary",
+    callDate: d,
+    callType: "Primary" as const,
+  }));
+}
+
+// Two Primary calls is at the cap — no error.
+const loadTargetAtCap = validateAssignments(
+  primaryAssignmentsForPgy2(["2026-07-02", "2026-07-06"]),
+  loadTargetRules
+);
+assert.equal(
+  loadTargetAtCap.errors.some((issue) => issue.code === "monthly_load_target"),
+  false,
+  "PGY-2 at the Primary hard max (2/2) does not error"
+);
+
+// Three Primary calls exceeds the hard max — hard error, matching the generator.
+const loadTargetOverCap = validateAssignments(
+  primaryAssignmentsForPgy2(["2026-07-02", "2026-07-06", "2026-07-10"]),
+  loadTargetRules
+);
+assert.ok(
+  loadTargetOverCap.errors.some((issue) => issue.code === "monthly_load_target"),
+  "PGY-2 over the Primary hard max (3/2) produces a hard validation error"
+);
+assert.equal(
+  loadTargetOverCap.hasErrors,
+  true,
+  "monthly_load_target hard-max violation blocks save (hasErrors=true)"
+);
+
+// The cap is per call type: Backup calls do not count against a Primary cap.
+const loadTargetBackupUnaffected = validateAssignments(
+  [
+    ...primaryAssignmentsForPgy2(["2026-07-02", "2026-07-06"]),
+    {
+      callId: "lt-backup-1",
+      rosterId: "pgy2-primary",
+      residentId: "pgy2-primary",
+      callDate: "2026-07-10",
+      callType: "Backup" as const,
+    },
+  ],
+  loadTargetRules
+);
+assert.equal(
+  loadTargetBackupUnaffected.errors.some(
+    (issue) => issue.code === "monthly_load_target"
+  ),
+  false,
+  "Backup calls do not count against a Primary-only monthly load target"
+);
+
 console.log("validation.test.ts passed");

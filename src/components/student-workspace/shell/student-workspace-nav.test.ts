@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 
-const { isStudentWorkspacePathActive } = require("./student-workspace-nav.ts") as typeof import("./student-workspace-nav");
+const { isStudentWorkspacePathActive } = require("./student-workspace-nav") as typeof import("./student-workspace-nav");
 
 function assertNavActive(label: string, actual: boolean, expected: boolean) {
   if (actual !== expected) {

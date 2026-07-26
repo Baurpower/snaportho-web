@@ -2,7 +2,15 @@
 // @ts-nocheck Additive Phase 3 tables are absent from generated database types until deployment.
 import { NextResponse } from "next/server";
 import { authenticateBroBotAnkiRequest } from "@/app/api/brobot-anki/_lib";
-import { computeCentralSyncHash } from "@/lib/education/anki-deck-incorporation";
+import { assembleDeckSyncManifest } from "@/lib/education/anki-deck-manifest-assemble";
+import {
+  addonVersionFromClientHeader,
+  addonVersionAtLeast,
+} from "@/lib/education/deck-addon-version";
+export { addonVersionAtLeast };
+export const ANKI_DECK_MEDIA_BUCKET = "anki-deck-media";
+// Bootstrap packages with full media can be ~1GB; keep signed URLs long enough to download.
+export const ANKI_MEDIA_SIGNED_URL_SECONDS = 3600;
 export async function deviceAuth(request: Request) {
   const auth = await authenticateBroBotAnkiRequest(request);
   if ("response" in auth) return { response: auth.response };
@@ -14,6 +22,10 @@ export async function deviceAuth(request: Request) {
       ),
     };
   return auth;
+}
+// Add-on version gate. The client sends `X-SnapOrtho-Client: reviewer-addon/<version>`.
+export function clientAddonVersion(request: Request): string | null {
+  return addonVersionFromClientHeader(request.headers.get("x-snaportho-client"));
 }
 export async function loadReleaseManifest(supabase: any, releaseId: string) {
   const { data: release, error } = await supabase
@@ -60,52 +72,11 @@ export async function loadReleaseManifest(supabase: any, releaseId: string) {
     )
     .eq("deck_release_id", releaseId)
     .neq("license_status", "excluded");
-  const versionById = new Map((versions ?? []).map((v: any) => [v.id, v])),
-    entities = new Map<string, any[]>(),
-    mediaByVersion = new Map<string, string[]>();
-  for (const m of mappings ?? []) {
-    const rows = entities.get(m.canonical_card_version_id) ?? [];
-    rows.push({
-      canonicalEntityId: m.canonical_entity_id,
-      mappingRole: m.reviewer_mapping_role,
-    });
-    entities.set(m.canonical_card_version_id, rows);
-  }
-  for (const asset of media ?? []) {
-    if (!asset.canonical_card_version_id) continue;
-    const rows = mediaByVersion.get(asset.canonical_card_version_id) ?? [];
-    rows.push(asset.content_sha256);
-    mediaByVersion.set(asset.canonical_card_version_id, rows);
-  }
-  return {
-    contractVersion: "snaportho-deck-sync-manifest.v1",
-    releaseId: release.id,
-    releaseKey: release.release_key,
-    releaseVersion: release.release_version,
-    releaseStatus: release.status,
-    manifestChecksum: release.manifest_checksum,
-    minimumAddonVersion: release.minimum_addon_version,
-    cards: (members ?? []).map((m: any) => {
-      const v = versionById.get(m.canonical_card_version_id),
-        fields = v?.field_snapshot ?? [],
-        tags = v?.tag_snapshot ?? [];
-      return {
-        canonicalCardId: m.canonical_card_id,
-        canonicalCardVersionId: m.canonical_card_version_id,
-        noteGuid: m.note_guid,
-        cardOrdinal: m.card_ordinal,
-        nativeCardIdHint: m.native_card_id_hint,
-        canonicalContentHash: m.content_hash,
-        contentHash: computeCentralSyncHash(fields, tags, m.card_ordinal),
-        deckPath: m.deck_path,
-        orderingKey: m.ordering_key,
-        inclusionStatus: m.inclusion_status,
-        fieldSnapshot: fields,
-        centralTags: tags.filter((t: string) => t.startsWith("SnapOrtho::")),
-        mappings: entities.get(m.canonical_card_version_id) ?? [],
-        mediaHashes: mediaByVersion.get(m.canonical_card_version_id) ?? [],
-      };
-    }),
+  return assembleDeckSyncManifest({
+    release,
+    members: members ?? [],
+    versions: versions ?? [],
+    mappings: mappings ?? [],
     media: media ?? [],
-  };
+  });
 }

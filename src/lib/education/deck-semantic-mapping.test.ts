@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
-// @ts-expect-error Direct Node test imports TypeScript source files.
-import * as s from "./deck-semantic-mapping.ts";
+import * as s from "./deck-semantic-mapping";
 const id=(d:string)=>`${d.repeat(8)}-${d.repeat(4)}-4${d.repeat(3)}-8${d.repeat(3)}-${d.repeat(12)}`;
 const fields=[{name:"Front",rawValue:"<style>.x{color:red}</style><b>Achilles tendon</b> is tested {{FrontSide}}",plainText:"Achilles tendon is tested"},{name:"Back",rawValue:"[sound:x.mp3] No talus fracture",plainText:"No talus fracture"}];const seed={fields,tags:["foot"],cardOrdinal:0};const card={canonicalCardId:id("1"),canonicalCardVersionId:id("2"),contentHash:s.canonicalContentHash(seed),...seed};
 const entities=[{id:id("3"),preferredLabel:"Achilles tendon",normalizedLabel:"achilles tendon",entityType:"anatomy_structure",aliases:["calcaneal tendon"],sourceAliases:[],active:true,lifecycleStatus:"canonical"},{id:id("4"),preferredLabel:"Talus fracture",normalizedLabel:"talus fracture",entityType:"condition",aliases:[],sourceAliases:[],active:true,lifecycleStatus:"canonical"}];

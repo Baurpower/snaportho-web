@@ -14,7 +14,8 @@ export type RuleType =
   | "call_slot_definition"
   | "max_calls_for_rotation"
   | "monthly_load_target_by_pgy"
-  | "day_of_week_preference";
+  | "day_of_week_preference"
+  | "buddy_requirement";
 
 export type SlotCondition = {
   type: "when_pgy_scheduled";
@@ -115,6 +116,19 @@ export type RuleConfig = {
   preferenceRotationIds?: string[];
   /** Optional: only apply to residents in these PGY years. */
   preferencePgyYears?: number[];
+
+  // buddy_requirement fields (all optional; omitted fields fall back to
+  // DEFAULT_BUDDY_POLICY in buddy-requirements.ts).
+  /** Required buddy days per eligible resident per month. */
+  requiredDaysPerMonth?: number;
+  /** Days of week (0=Sun … 6=Sat) that can host a buddy slot. */
+  allowedDaysOfWeek?: number[];
+  /** PGY year(s) that take the buddy slot. */
+  buddyPgyYears?: number[];
+  /** PGY year required in the Primary slot to pair with a buddy. */
+  partnerPgyYear?: number;
+  /** Rotation-name tokens (case/punctuation-insensitive) that make a resident buddy-eligible. */
+  eligibleRotationNameTokens?: string[];
 };
 
 export type RuleFieldDefinition =

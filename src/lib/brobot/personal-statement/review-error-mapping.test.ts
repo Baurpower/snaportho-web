@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mapReviewError, shouldOfferUpgrade } from './review-error-mapping.ts';
+import { mapReviewError, shouldOfferUpgrade } from './review-error-mapping';
 
 assert.equal(shouldOfferUpgrade('quota_exceeded'), true);
 assert.equal(shouldOfferUpgrade('plan_required'), true);

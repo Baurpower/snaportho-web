@@ -9,13 +9,9 @@ const types_1 = require("./types");
 // reusing the same generic "teach this page" prompt.
 exports.OrthobulletsTopicActionSchema = zod_1.z.enum([
     'quiz_me',
-    'find_answer',
-    'explain_section',
     'what_tested',
     'attending_question',
-    'explain_images',
     'board_traps',
-    'save_missed',
 ]);
 exports.OrthobulletsTopicProgressSchema = zod_1.z.object({
     sectionsCompleted: zod_1.z.array(zod_1.z.string().trim().min(1).max(240)).max(40).default([]),

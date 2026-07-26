@@ -7,6 +7,7 @@ import {
 import { getResidentStatusDetails } from "@/lib/workspace/pgy";
 import {
   createTimeOffEvent,
+  PROGRAM_TIME_OFF_SOURCE_KIND,
   type TimeOffType,
 } from "@/lib/workspace/call/time-off";
 
@@ -389,7 +390,9 @@ export async function POST(request: NextRequest) {
         createdByUserId: user.id,
         eventType: row.eventType as TimeOffType,
         usingPto: row.eventType === "vacation" || row.eventType === "personal",
-        sourceKind: "admin_entry",
+        // Must match availability_events_source_kind_check
+        // (official | self_reported | preference). admin_entry is rejected by DB.
+        sourceKind: PROGRAM_TIME_OFF_SOURCE_KIND,
         constraintLevel: "hard",
         title: null,
         notes: normalizeNotes(row.notes),

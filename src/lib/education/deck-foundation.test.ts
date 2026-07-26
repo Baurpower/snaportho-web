@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
-// @ts-expect-error TS5097: direct Node runner requires the source suffix.
-import * as foundation from "./deck-foundation.ts";
+import * as foundation from "./deck-foundation";
 
 const id = (digit: string) => `${digit.repeat(8)}-${digit.repeat(4)}-4${digit.repeat(3)}-8${digit.repeat(3)}-${digit.repeat(12)}`;
 const card = { canonicalCardId:id("1"),canonicalCardVersionId:id("2"),noteGuid:"guid-1",cardOrdinal:0,nativeCardIdHint:"1",contentHash:"a".repeat(64),deckPath:"Deck::Branch",orderingKey:"0001/guid-1/0",inclusionStatus:"included",canonicalEntityIds:[id("3")],metadata:{} };

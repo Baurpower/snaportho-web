@@ -1,7 +1,103 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getResidentStatusDetails } from "@/lib/workspace/pgy";
+import {
+  validateProgramCallMutationDraft,
+  type ProgramCallDraftMutationRow,
+} from "@/lib/workspace/call/calls";
+import { computeIntroducedHardViolations } from "./swap-call-rule-diff";
 import { getSwapRequestWithDetailsById } from "./queries";
 import type { ShiftSwapRequest, SwapRequestListItem } from "./types";
+
+/**
+ * A single roster reassignment produced by approving a swap: the identified
+ * call row moves to a new resident (roster + program membership).
+ */
+type SwapCallMove = {
+  callId: string;
+  callDate: string | null;
+  callType: string | null;
+  rosterId: string;
+  programMembershipId: string | null;
+  startDatetime: string | null;
+  endDatetime: string | null;
+};
+
+/**
+ * Blocks a swap approval that would introduce a NEW hard call-rule violation
+ * (approved time-off, spacing, monthly/weekend limits, PGY restriction,
+ * rotation restriction, or a per-PGY monthly load cap).
+ *
+ * Swap approval historically only checked same-date double-booking, so it could
+ * silently place a resident on a day they had approved time off or push them
+ * past a hard limit. This routes the projected post-swap schedule through the
+ * same engine the save/publish path uses (validateProgramCallMutationDraft).
+ *
+ * A before/after diff is used so approval is only blocked by violations the
+ * swap actually introduces — never by unrelated pre-existing issues elsewhere
+ * in the month. Soft warnings never block (hasErrors counts hard rules only).
+ */
+async function assertSwapIntroducesNoHardViolations(
+  programId: string | null,
+  moves: SwapCallMove[],
+  traceId?: string
+) {
+  if (!programId) return;
+
+  const touchedDates = [
+    ...new Set(
+      moves
+        .map((move) => move.callDate)
+        .filter((dateKey): dateKey is string => Boolean(dateKey))
+    ),
+  ];
+  if (touchedDates.length === 0) return;
+
+  const upserts: ProgramCallDraftMutationRow[] = moves.map((move) => ({
+    id: move.callId,
+    rosterId: move.rosterId,
+    programMembershipId: move.programMembershipId,
+    callType: move.callType,
+    callDate: move.callDate,
+    startDatetime: move.startDatetime,
+    endDatetime: move.endDatetime,
+  }));
+
+  const emptyReplace: string[] = [];
+  const [before, after] = await Promise.all([
+    // Baseline: current saved schedule for the touched month(s), no changes.
+    validateProgramCallMutationDraft({
+      programId,
+      touchedDates,
+      upserts: [],
+      // Never use replace semantics: a swap changes only these specific call
+      // rows and must leave every other assignment on the touched dates intact.
+      replaceExistingForDates: emptyReplace,
+    }),
+    // Projected: the same month with the swap's roster reassignments applied.
+    validateProgramCallMutationDraft({
+      programId,
+      touchedDates,
+      upserts,
+      replaceExistingForDates: emptyReplace,
+    }),
+  ]);
+
+  const introduced = computeIntroducedHardViolations(before.errors, after.errors);
+
+  if (introduced.length === 0) return;
+
+  logTrace(traceId, "mutation.validation.blocked", {
+    introducedCount: introduced.length,
+    codes: introduced.slice(0, 5).map((issue) => issue.code),
+  });
+
+  const detail = introduced
+    .slice(0, 3)
+    .map((issue) => issue.message)
+    .join(" ");
+
+  throw new Error(`Approving this swap would violate call rules: ${detail}`);
+}
 
 type CallAssignmentRow = {
   id: string;
@@ -381,6 +477,24 @@ export async function applyApprovedCoverageSwap(
       recipientProgramMembershipId: recipient.program_membership_id,
     });
 
+    await timedStep(traceId, "mutation.coverage.validate_call_rules", async () =>
+      assertSwapIntroducesNoHardViolations(
+        request.program_id,
+        [
+          {
+            callId: requesterCall.id,
+            callDate: requesterCall.call_date,
+            callType: requesterCall.call_type,
+            rosterId: request.recipient_roster_id,
+            programMembershipId: recipient.program_membership_id,
+            startDatetime: requesterCall.start_datetime,
+            endDatetime: requesterCall.end_datetime,
+          },
+        ],
+        traceId
+      )
+    );
+
     await timedStep(traceId, "mutation.coverage.rpc", async () =>
       approveCoverageSwapViaRpc(supabase, {
         requestId: request.id,
@@ -594,6 +708,35 @@ export async function applyApprovedTradeSwap(
     if (recipientConflict) {
       throw new Error("Recipient already has a conflicting call on the requester's call date.");
     }
+
+    await timedStep(traceId, "mutation.trade.validate_call_rules", async () =>
+      assertSwapIntroducesNoHardViolations(
+        request.program_id,
+        [
+          {
+            // Requester's call transfers to the recipient.
+            callId: requesterCall.id,
+            callDate: requesterCall.call_date,
+            callType: requesterCall.call_type,
+            rosterId: request.recipient_roster_id,
+            programMembershipId: recipient.program_membership_id,
+            startDatetime: requesterCall.start_datetime,
+            endDatetime: requesterCall.end_datetime,
+          },
+          {
+            // Recipient's return shift transfers to the requester.
+            callId: recipientCall.id,
+            callDate: recipientCall.call_date,
+            callType: recipientCall.call_type,
+            rosterId: request.requester_roster_id,
+            programMembershipId: requester.program_membership_id,
+            startDatetime: recipientCall.start_datetime,
+            endDatetime: recipientCall.end_datetime,
+          },
+        ],
+        traceId
+      )
+    );
 
     await timedStep(traceId, "mutation.trade.rpc", async () =>
       approveTradeSwapViaRpc(supabase, {

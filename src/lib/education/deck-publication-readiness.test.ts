@@ -1,8 +1,6 @@
 import assert from "node:assert/strict";
-// @ts-expect-error TS5097 direct Node runner.
-import {calculateDeckPublicationReadiness} from "./deck-publication-readiness.ts";
-// @ts-expect-error TS5097 direct Node runner.
-import {computeDeckManifestChecksum,DECK_MANIFEST_CONTRACT_VERSION,type DeckManifestCardV1} from "./deck-foundation.ts";
+import {calculateDeckPublicationReadiness} from "./deck-publication-readiness";
+import {computeDeckManifestChecksum,DECK_MANIFEST_CONTRACT_VERSION,type DeckManifestCardV1} from "./deck-foundation";
 const id=(d:string)=>`${d.repeat(8)}-${d.repeat(4)}-4${d.repeat(3)}-8${d.repeat(3)}-${d.repeat(12)}`;
 const card:DeckManifestCardV1={canonicalCardId:id("1"),canonicalCardVersionId:id("2"),noteGuid:"guid",cardOrdinal:0,nativeCardIdHint:"1",contentHash:"a".repeat(64),deckPath:"Deck",orderingKey:"0001/a",inclusionStatus:"included",canonicalEntityIds:[],metadata:{}};
 const manifest={contractVersion:DECK_MANIFEST_CONTRACT_VERSION,releaseId:id("4"),releaseKey:"draft",releaseVersion:"0.1",releaseStatus:"draft" as const,manifestChecksum:computeDeckManifestChecksum([card]),minimumAddonVersion:null,cards:[card],metadata:{}};

@@ -4,7 +4,7 @@ import { join } from 'node:path';
 
 // Node's type-stripping runner requires the source extension; the app tsconfig does not enable it.
 // @ts-expect-error -- Node's runner needs the extension; the app tsconfig intentionally disallows it.
-import * as responseContract from './response-contract.ts';
+import * as responseContract from './response-contract';
 import type { BroBotChatInternalResult } from './response-contract';
 
 const {

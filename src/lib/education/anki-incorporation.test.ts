@@ -3,7 +3,7 @@ import {
   ANKI_INCORPORATION_CONTRACT,
   buildIncorporationCandidate,
   validateAgentPlan,
-} from "./anki-incorporation.ts";
+} from "./anki-incorporation";
 
 const id = "11111111-1111-4111-8111-111111111111";
 const hash = "a".repeat(64);

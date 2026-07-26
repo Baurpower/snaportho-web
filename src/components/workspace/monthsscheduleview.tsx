@@ -18,7 +18,7 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import DayDetailsModal from "@/components/workspace/shared/daydetailsmodal";
-import type { TimeOffItem } from "@/lib/workspace/call/time-off";
+import type { TimeOffItem } from "@/lib/workspace/call/time-off-shared";
 
 export type { TimeOffItem };
 

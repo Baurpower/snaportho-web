@@ -2,12 +2,12 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 const root = new URL("../../../../", import.meta.url);
-const repository = readFileSync(new URL("src/lib/mycases/media/repository.ts", root), "utf8");
-const upload = readFileSync(new URL("src/app/api/mycases/cases/[caseId]/assets/route.ts", root), "utf8");
-const view = readFileSync(new URL("src/app/api/mycases/assets/[assetId]/view/route.ts", root), "utf8");
-const asset = readFileSync(new URL("src/app/api/mycases/assets/[assetId]/route.ts", root), "utf8");
-const types = readFileSync(new URL("src/lib/mycases/media/types.ts", root), "utf8");
-const api = readFileSync(new URL("src/lib/mycases/media/api.ts", root), "utf8");
+const repository = readFileSync(new URL("src/lib/mycases/media/repository", root), "utf8");
+const upload = readFileSync(new URL("src/app/api/mycases/cases/[caseId]/assets/route", root), "utf8");
+const view = readFileSync(new URL("src/app/api/mycases/assets/[assetId]/view/route", root), "utf8");
+const asset = readFileSync(new URL("src/app/api/mycases/assets/[assetId]/route", root), "utf8");
+const types = readFileSync(new URL("src/lib/mycases/media/types", root), "utf8");
+const api = readFileSync(new URL("src/lib/mycases/media/api", root), "utf8");
 
 for (const route of [upload, view, asset]) assert(route.includes("requireMyCasesApiUser"));
 assert(upload.includes('new Set(["file","caption","attestation"])'));

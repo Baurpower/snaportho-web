@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 
-import { centsToRoundedDollars, donorDisplayName, mapDonationRowToListItem } from './display.ts';
+import { centsToRoundedDollars, donorDisplayName, mapDonationRowToListItem } from './display';
 
 assert.equal(donorDisplayName({ display_name: 'Alex', anonymous: false }), 'Alex');
 assert.equal(donorDisplayName({ display_name: '', anonymous: false }), 'Anonymous');

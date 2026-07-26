@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 
-// @ts-expect-error TS5097: explicit .ts suffix is required by the direct Node test runner.
-import { findProductionKgTopics, getProductionKgNeighborhood } from "./kg-production.ts";
+import { findProductionKgTopics, getProductionKgNeighborhood } from "./kg-production";
 
 const payload = {
   releaseId: "kg-beta-test",

@@ -38,14 +38,3 @@ class DraftStore:
     def cleanup(self,max_age_days=90):
         cutoff=int(time.time())-max_age_days*86400;self.db.execute("delete from drafts where scope=? and state='submitted' and updated_at<?",(self.scope,cutoff));self.db.execute("delete from workspace_drafts where scope=? and state='submitted' and updated_at<?",(self.scope,cutoff));self.db.commit()
     def close(self):self.db.close()
-class RetryQueue:
-    def __init__(self,store):self.store=store
-    def drain(self,client,device_active=True,cancelled=lambda:False):
-        if not device_active:return[]
-        results=[]
-        for item,version,key in self.store.pending():
-            if cancelled():break
-            result=client.retry(item,version,key);results.append(result)
-            if result=="accepted":self.store.mark(item,version,"submitted")
-            elif result in{"conflict","unauthorized","revoked"}:self.store.mark(item,version,"conflict")
-        return results

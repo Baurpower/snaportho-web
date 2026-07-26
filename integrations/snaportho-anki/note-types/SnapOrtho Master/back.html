@@ -1,0 +1,222 @@
+{{#Text}}
+<div class="snaportho-card snaportho-back">
+  <div class="brand-bar" aria-hidden="true">
+    <span class="brand-mark">SnapOrtho</span>
+  </div>
+
+  <div class="cloze-body">
+    {{cloze:Text}}
+  </div>
+
+  {{#Extra}}
+  <div class="extra-block">
+    <div class="extra-label">Extra</div>
+    <div class="extra-body">{{Extra}}</div>
+  </div>
+  {{/Extra}}
+
+  <div class="resource-stack" id="snaportho-resources">
+
+    {{#Orthobullets}}
+    <details class="resource" data-resource="Orthobullets">
+      <summary>Orthobullets</summary>
+      <div class="resource-body">
+        {{Orthobullets}}
+        {{#Orthobullets_Link}}
+        <p class="resource-open"><a class="external" href="{{Orthobullets_Link}}">Open Orthobullets ↗</a></p>
+        {{/Orthobullets_Link}}
+      </div>
+    </details>
+    {{/Orthobullets}}
+    {{^Orthobullets}}
+      {{#Orthobullets_Link}}
+      <details class="resource" data-resource="Orthobullets">
+        <summary>Orthobullets</summary>
+        <div class="resource-body">
+          <p class="resource-open"><a class="external" href="{{Orthobullets_Link}}">Open Orthobullets ↗</a></p>
+        </div>
+      </details>
+      {{/Orthobullets_Link}}
+    {{/Orthobullets}}
+
+    {{#ROCK}}
+    <details class="resource" data-resource="ROCK">
+      <summary>ROCK</summary>
+      <div class="resource-body">
+        {{ROCK}}
+        {{#ROCK_Link}}
+        <p class="resource-open"><a class="external" href="{{ROCK_Link}}">Open ROCK ↗</a></p>
+        {{/ROCK_Link}}
+      </div>
+    </details>
+    {{/ROCK}}
+    {{^ROCK}}
+      {{#ROCK_Link}}
+      <details class="resource" data-resource="ROCK">
+        <summary>ROCK</summary>
+        <div class="resource-body">
+          <p class="resource-open"><a class="external" href="{{ROCK_Link}}">Open ROCK ↗</a></p>
+        </div>
+      </details>
+      {{/ROCK_Link}}
+    {{/ROCK}}
+
+    {{#Nailed_It}}
+    <details class="resource" data-resource="Nailed_It">
+      <summary>Nailed It</summary>
+      <div class="resource-body">
+        {{Nailed_It}}
+        {{#Nailed_It_Link}}
+        <p class="resource-open"><a class="external" href="{{Nailed_It_Link}}">Open episode ↗</a></p>
+        {{/Nailed_It_Link}}
+      </div>
+    </details>
+    {{/Nailed_It}}
+    {{^Nailed_It}}
+      {{#Nailed_It_Link}}
+      <details class="resource" data-resource="Nailed_It">
+        <summary>Nailed It</summary>
+        <div class="resource-body">
+          <p class="resource-open"><a class="external" href="{{Nailed_It_Link}}">Open episode ↗</a></p>
+        </div>
+      </details>
+      {{/Nailed_It_Link}}
+    {{/Nailed_It}}
+
+    {{#Video}}
+    <details class="resource" data-resource="Video">
+      <summary>Video</summary>
+      <div class="resource-body">
+        {{Video}}
+        {{#Video_Link}}
+        <p class="resource-open"><a class="external" href="{{Video_Link}}">Open video ↗</a></p>
+        {{/Video_Link}}
+      </div>
+    </details>
+    {{/Video}}
+    {{^Video}}
+      {{#Video_Link}}
+      <details class="resource" data-resource="Video">
+        <summary>Video</summary>
+        <div class="resource-body">
+          <p class="resource-open"><a class="external" href="{{Video_Link}}">Open video ↗</a></p>
+        </div>
+      </details>
+      {{/Video_Link}}
+    {{/Video}}
+
+    {{#Millers}}
+    <details class="resource" data-resource="Millers">
+      <summary>Miller's</summary>
+      <div class="resource-body">{{Millers}}</div>
+    </details>
+    {{/Millers}}
+
+    {{#OKU}}
+    <details class="resource" data-resource="OKU">
+      <summary>OKU</summary>
+      <div class="resource-body">{{OKU}}</div>
+    </details>
+    {{/OKU}}
+
+    {{#Campbells}}
+    <details class="resource" data-resource="Campbells">
+      <summary>Campbell's</summary>
+      <div class="resource-body">{{Campbells}}</div>
+    </details>
+    {{/Campbells}}
+
+    {{#Classifications}}
+    <details class="resource" data-resource="Classifications">
+      <summary>Classifications</summary>
+      <div class="resource-body">{{Classifications}}</div>
+    </details>
+    {{/Classifications}}
+
+    {{#Anatomy}}
+    <details class="resource" data-resource="Anatomy">
+      <summary>Anatomy</summary>
+      <div class="resource-body">{{Anatomy}}</div>
+    </details>
+    {{/Anatomy}}
+
+    {{#Podcasts}}
+    <details class="resource" data-resource="Podcasts">
+      <summary>Podcasts</summary>
+      <div class="resource-body">
+        {{Podcasts}}
+        {{#Podcasts_Link}}
+        <p class="resource-open"><a class="external" href="{{Podcasts_Link}}">Open podcast ↗</a></p>
+        {{/Podcasts_Link}}
+      </div>
+    </details>
+    {{/Podcasts}}
+    {{^Podcasts}}
+      {{#Podcasts_Link}}
+      <details class="resource" data-resource="Podcasts">
+        <summary>Podcasts</summary>
+        <div class="resource-body">
+          <p class="resource-open"><a class="external" href="{{Podcasts_Link}}">Open podcast ↗</a></p>
+        </div>
+      </details>
+      {{/Podcasts_Link}}
+    {{/Podcasts}}
+
+    {{#OITE}}
+    <details class="resource" data-resource="OITE">
+      <summary>OITE</summary>
+      <div class="resource-body">{{OITE}}</div>
+    </details>
+    {{/OITE}}
+
+    {{#CasePrep}}
+    <details class="resource" data-resource="CasePrep">
+      <summary>Case Prep</summary>
+      <div class="resource-body">{{CasePrep}}</div>
+    </details>
+    {{/CasePrep}}
+
+    {{#BroBot}}
+    <details class="resource" data-resource="BroBot">
+      <summary>BroBot</summary>
+      <div class="resource-body">{{BroBot}}</div>
+    </details>
+    {{/BroBot}}
+
+    {{#Additional_Resources}}
+    <details class="resource" data-resource="Additional_Resources">
+      <summary>Additional</summary>
+      <div class="resource-body">{{Additional_Resources}}</div>
+    </details>
+    {{/Additional_Resources}}
+
+    {{#Missed_Questions}}
+    <details class="resource" data-resource="Missed_Questions">
+      <summary>Missed Qs</summary>
+      <div class="resource-body">{{Missed_Questions}}</div>
+    </details>
+    {{/Missed_Questions}}
+
+    {{#Personal_Notes}}
+    <details class="resource resource-personal" data-resource="Personal_Notes">
+      <summary>Personal Notes</summary>
+      <div class="resource-body">{{Personal_Notes}}</div>
+    </details>
+    {{/Personal_Notes}}
+
+  </div>
+</div>
+{{/Text}}
+{{^Text}}
+<div class="snaportho-card snaportho-back snaportho-empty">
+  <p class="muted">This card has no Text field yet.</p>
+  {{#Extra}}
+  <div class="extra-block">
+    <div class="extra-label">Extra</div>
+    <div class="extra-body">{{Extra}}</div>
+  </div>
+  {{/Extra}}
+</div>
+{{/Text}}
+
+<!-- SnapOrtho Master styleVersion: 1.0.0 — update via SnapOrtho → Update Card Style -->

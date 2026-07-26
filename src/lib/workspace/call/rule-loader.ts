@@ -10,6 +10,10 @@ import {
   type CallValidationTimeOff,
 } from "@/lib/workspace/call/validation";
 import { getEffectiveRules } from "@/lib/workspace/call/rule-definitions";
+import {
+  getProgramRotationAssignmentsInRange,
+  type ProgramRotationAssignment,
+} from "@/lib/workspace/call/rotations";
 import { migratePersistedCallRules } from "@/lib/workspace/call/persisted-rule-migration";
 import {
   buildResidentIdentityMaps,
@@ -52,32 +56,6 @@ type AvailabilityEventRow = {
   title: string | null;
   notes: string | null;
   approval_status: string | null;
-};
-
-type RotationAssignmentRow = {
-  id: string;
-  program_membership_id: string | null;
-  roster_id: string | null;
-  rotation_id: string | null;
-  start_date: string | null;
-  end_date: string | null;
-  site_label: string | null;
-  team_label: string | null;
-  notes: string | null;
-  rotations:
-    | {
-        id: string | null;
-        name: string | null;
-        short_name: string | null;
-        category: string | null;
-      }
-    | {
-        id: string | null;
-        name: string | null;
-        short_name: string | null;
-        category: string | null;
-      }[]
-    | null;
 };
 
 export type LoadedProgramCallValidationContext = {
@@ -165,46 +143,6 @@ function toValidationTimeOff(
     type: row.event_type ?? null,
     status: row.approval_status ?? null,
     reason: row.title ?? row.notes ?? null,
-  };
-}
-
-function normalizeRotationRelation(row: RotationAssignmentRow["rotations"]) {
-  if (!row) return null;
-  return Array.isArray(row) ? row[0] ?? null : row;
-}
-
-function toValidationRotation(
-  row: RotationAssignmentRow,
-  residentIdByProgramMembershipId: Map<string, string>
-): CallValidationRotation {
-  const rotation = normalizeRotationRelation(row.rotations);
-  const rotationName =
-    rotation?.short_name ??
-    rotation?.name ??
-    row.team_label ??
-    row.site_label ??
-    "Unknown Rotation";
-
-  const residentId =
-    row.roster_id ??
-    (row.program_membership_id
-      ? residentIdByProgramMembershipId.get(row.program_membership_id) ?? null
-      : null);
-
-  return {
-    id: row.id,
-    residentId,
-    membershipId: residentId,
-    rosterId: residentId,
-    programMembershipId: row.program_membership_id ?? null,
-    rotationId: row.rotation_id ?? rotation?.id ?? null,
-    rotationName,
-    shortName: rotation?.short_name ?? null,
-    category: rotation?.category ?? null,
-    service: row.team_label ?? row.site_label ?? rotation?.category ?? null,
-    notes: row.notes ?? null,
-    startDate: row.start_date ?? null,
-    endDate: row.end_date ?? null,
   };
 }
 
@@ -323,44 +261,61 @@ async function loadValidationRotations(params: {
     dateEnd,
     residentIdByProgramMembershipId,
   } = params;
-  let query = supabase
-    .from("rotation_assignments")
-    .select(
-      `
-      id,
-      program_membership_id,
-      roster_id,
-      rotation_id,
-      start_date,
-      end_date,
-      site_label,
-      team_label,
-      notes,
-      rotations (
-        id,
-        name,
-        short_name,
-        category
-      )
-    `
+
+  // Unify on the canonical rotation loader so validation sees exactly the same
+  // rotation data (identity + window) as the availability builder and the
+  // rotation-assignments route. A wide fallback window preserves the previous
+  // "load everything" behavior when no date bounds are supplied.
+  const rangeStart = dateStart ?? "0001-01-01";
+  const rangeEnd = dateEnd ?? "9999-12-31";
+
+  const rotations = await getProgramRotationAssignmentsInRange(
+    programId,
+    rangeStart,
+    rangeEnd,
+    supabase
+  );
+
+  return rotations
+    .filter((row) => row.startDate && row.endDate)
+    .map((row) =>
+      toValidationRotationFromCanonical(row, residentIdByProgramMembershipId)
     )
-    .eq("program_id", programId)
-    .order("start_date", { ascending: true });
-
-  if (dateStart && dateEnd) {
-    query = query.lte("start_date", dateEnd).gte("end_date", dateStart);
-  }
-
-  const { data, error } = await query;
-
-  if (error) {
-    throw new Error(`Failed to load program call validation rotations: ${error.message}`);
-  }
-
-  return ((data ?? []) as RotationAssignmentRow[])
-    .filter((row) => row.start_date && row.end_date)
-    .map((row) => toValidationRotation(row, residentIdByProgramMembershipId))
     .filter((row) => Boolean(row.residentId));
+}
+
+function toValidationRotationFromCanonical(
+  row: ProgramRotationAssignment,
+  residentIdByProgramMembershipId: Map<string, string>
+): CallValidationRotation {
+  const rotationName =
+    row.rotation?.short_name ??
+    row.rotation?.name ??
+    row.teamLabel ??
+    row.siteLabel ??
+    "Unknown Rotation";
+
+  const residentId =
+    row.rosterId ??
+    (row.programMembershipId
+      ? residentIdByProgramMembershipId.get(row.programMembershipId) ?? null
+      : null);
+
+  return {
+    id: row.id,
+    residentId,
+    membershipId: residentId,
+    rosterId: residentId,
+    programMembershipId: row.programMembershipId ?? null,
+    rotationId: row.rotation?.id ?? null,
+    rotationName,
+    shortName: row.rotation?.short_name ?? null,
+    category: row.rotation?.category ?? null,
+    service: row.teamLabel ?? row.siteLabel ?? row.rotation?.category ?? null,
+    notes: row.notes ?? null,
+    startDate: row.startDate ?? null,
+    endDate: row.endDate ?? null,
+  };
 }
 
 export async function loadProgramCallValidationRules(

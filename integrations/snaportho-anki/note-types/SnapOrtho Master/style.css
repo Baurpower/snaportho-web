@@ -1,0 +1,221 @@
+/* SnapOrtho Master card style v1.0.0
+   Presentation only — resource payloads live in note fields.
+   User overrides: append after SNAPORTHO_STYLE_END if needed. */
+
+.card {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 20px;
+  line-height: 1.45;
+  text-align: left;
+  color: var(--so-fg, #0f172a);
+  background-color: var(--so-bg, #f8fafc);
+  padding: 12px 14px 20px;
+}
+
+.nightMode .card,
+.card.night_mode {
+  --so-fg: #e2e8f0;
+  --so-bg: #0b1220;
+  --so-muted: #94a3b8;
+  --so-border: #1e293b;
+  --so-panel: #111827;
+  --so-accent: #38bdf8;
+  --so-accent-soft: rgba(56, 189, 248, 0.12);
+  --so-cloze: #fbbf24;
+  --so-extra: #1e293b;
+  --so-personal: #334155;
+}
+
+:root,
+.card {
+  --so-muted: #64748b;
+  --so-border: #e2e8f0;
+  --so-panel: #ffffff;
+  --so-accent: #0369a1;
+  --so-accent-soft: rgba(3, 105, 161, 0.08);
+  --so-cloze: #b45309;
+  --so-extra: #eff6ff;
+  --so-personal: #f1f5f9;
+}
+
+.snaportho-card {
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+.brand-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.brand-mark {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--so-accent);
+  opacity: 0.85;
+}
+
+.cloze-body {
+  font-size: 1.08em;
+  background: var(--so-panel);
+  border: 1px solid var(--so-border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.cloze {
+  font-weight: 700;
+  color: var(--so-cloze);
+}
+
+.clozeb {
+  font-weight: 700;
+  color: var(--so-accent);
+}
+
+.extra-block {
+  margin-top: 14px;
+  background: var(--so-extra);
+  border: 1px solid var(--so-border);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.extra-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--so-accent);
+  margin-bottom: 6px;
+}
+
+.extra-body {
+  font-size: 0.95em;
+}
+
+.resource-stack {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resource {
+  background: var(--so-panel);
+  border: 1px solid var(--so-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.resource > summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  padding: 10px 14px;
+  font-size: 0.92em;
+  font-weight: 650;
+  color: var(--so-accent);
+  background: var(--so-accent-soft);
+  outline: none;
+}
+
+.resource > summary::-webkit-details-marker {
+  display: none;
+}
+
+.resource > summary::after {
+  content: "▸";
+  float: right;
+  color: var(--so-muted);
+  font-weight: 400;
+  transition: transform 0.12s ease;
+}
+
+.resource[open] > summary::after {
+  content: "▾";
+}
+
+.resource-body {
+  padding: 12px 14px 14px;
+  border-top: 1px solid var(--so-border);
+  font-size: 0.92em;
+}
+
+.resource-body ul {
+  margin: 0.35em 0 0.35em 1.1em;
+  padding: 0;
+}
+
+.resource-body p {
+  margin: 0.4em 0;
+}
+
+.resource-open {
+  margin-top: 10px !important;
+}
+
+a.external {
+  color: var(--so-accent);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--so-accent) 35%, transparent);
+}
+
+a.external:hover {
+  border-bottom-color: var(--so-accent);
+}
+
+.resource-personal > summary {
+  color: var(--so-muted);
+  background: var(--so-personal);
+}
+
+.muted {
+  color: var(--so-muted);
+  font-size: 0.95em;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.5em 0;
+  font-size: 0.9em;
+}
+
+th,
+td {
+  border: 1px solid var(--so-border);
+  padding: 6px 8px;
+  text-align: left;
+}
+
+th {
+  background: var(--so-accent-soft);
+}
+
+/* Mobile */
+.mobile .card {
+  font-size: 18px;
+  padding: 10px 10px 16px;
+}
+
+.mobile .cloze-body {
+  padding: 14px;
+}
+
+.mobile .resource > summary {
+  padding: 12px 12px;
+}
+
+/* SNAPORTHO_STYLE_END — user CSS overrides below this line survive style updates if preserved by the add-on */

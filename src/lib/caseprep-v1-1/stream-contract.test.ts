@@ -3,10 +3,8 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 // Node's type-stripping runner requires the extension; the app tsconfig intentionally disallows it.
-// @ts-expect-error -- required by the direct Node test runner.
-import { createSseParseState, parseSseChunk, encodeSseEvent } from "./sse.ts";
-// @ts-expect-error -- required by the direct Node test runner.
-import { createInitialPacketState, reducePacketEvent } from "./stream-schema.ts";
+import { createSseParseState, parseSseChunk, encodeSseEvent } from "./sse";
+import { createInitialPacketState, reducePacketEvent } from "./stream-schema";
 
 type PacketState = ReturnType<typeof createInitialPacketState>;
 
@@ -206,7 +204,7 @@ const HEADER = {
 
 // ── Route source guards: gate before upstream; frozen routes untouched ──────
 const streamRouteSource = readFileSync(
-  join(process.cwd(), "src/app/api/case-prep/v1.1/stream/route.ts"),
+  join(process.cwd(), "src/app/api/case-prep/v1.1/stream/route"),
   "utf8"
 );
 assert.ok(
@@ -218,7 +216,7 @@ assert.match(streamRouteSource, /isCasePrepStreamEnabled\(\)/);
 assert.match(streamRouteSource, /X-Accel-Buffering/);
 
 const legacyAskRouteSource = readFileSync(
-  join(process.cwd(), "src/app/api/brobot/ask/route.ts"),
+  join(process.cwd(), "src/app/api/brobot/ask/route"),
   "utf8"
 );
 assert.doesNotMatch(legacyAskRouteSource, /v1\.1\/stream/);

@@ -1,0 +1,176 @@
+{
+  "noteTypeName": "SnapOrtho Master",
+  "styleVersion": "1.0.0",
+  "modelType": "cloze",
+  "description": "Ultimate SnapOrtho card style: cloze Text + Extra + ortho resource fields. Empty resource fields collapse on the card face.",
+  "payloadPolicy": "curated_bullets_plus_link",
+  "fields": [
+    {
+      "name": "Text",
+      "description": "Primary cloze body. Use {{c1::...}} markup.",
+      "role": "core"
+    },
+    {
+      "name": "Extra",
+      "description": "Extra teaching text after reveal (tables, pearls, differentials).",
+      "role": "core"
+    },
+    {
+      "name": "Orthobullets",
+      "description": "Curated Orthobullets-aligned teaching bullets (original/edited text you own).",
+      "role": "resource",
+      "buttonLabel": "Orthobullets",
+      "dayOne": true
+    },
+    {
+      "name": "Orthobullets_Link",
+      "description": "Bare HTTPS URL to the Orthobullets topic (or deep link).",
+      "role": "link",
+      "linkFor": "Orthobullets",
+      "dayOne": true
+    },
+    {
+      "name": "ROCK",
+      "description": "ROCK chapter/section citation + curated teaching points.",
+      "role": "resource",
+      "buttonLabel": "ROCK",
+      "dayOne": true
+    },
+    {
+      "name": "ROCK_Link",
+      "description": "Bare HTTPS URL / locator for the ROCK chapter.",
+      "role": "link",
+      "linkFor": "ROCK",
+      "dayOne": true
+    },
+    {
+      "name": "Classifications",
+      "description": "Classification systems (Neer, Garden, Schatzker, etc.) — text and/or licensed images.",
+      "role": "resource",
+      "buttonLabel": "Classifications"
+    },
+    {
+      "name": "Anatomy",
+      "description": "Anatomy / approach anatomy notes and licensed figures.",
+      "role": "resource",
+      "buttonLabel": "Anatomy"
+    },
+    {
+      "name": "Nailed_It",
+      "description": "Nailed It Ortho episode title, timestamp, and 1–3 takeaways.",
+      "role": "resource",
+      "buttonLabel": "Nailed It",
+      "dayOne": true
+    },
+    {
+      "name": "Nailed_It_Link",
+      "description": "Bare HTTPS URL to the Nailed It episode.",
+      "role": "link",
+      "linkFor": "Nailed_It",
+      "dayOne": true
+    },
+    {
+      "name": "Podcasts",
+      "description": "Other podcasts (OrthoJOE, JBJS, specialty shows) — titles + takeaways.",
+      "role": "resource",
+      "buttonLabel": "Podcasts"
+    },
+    {
+      "name": "Podcasts_Link",
+      "description": "Bare HTTPS URL(s) for generic podcasts. Prefer HTML list if multiple.",
+      "role": "link",
+      "linkFor": "Podcasts"
+    },
+    {
+      "name": "Video",
+      "description": "VuMedi / Orthobullets video / approach video title + notes.",
+      "role": "resource",
+      "buttonLabel": "Video",
+      "dayOne": true
+    },
+    {
+      "name": "Video_Link",
+      "description": "Bare HTTPS URL to the video.",
+      "role": "link",
+      "linkFor": "Video",
+      "dayOne": true
+    },
+    {
+      "name": "Millers",
+      "description": "Miller's Review / Concise Orthopaedics citations and points.",
+      "role": "resource",
+      "buttonLabel": "Miller's",
+      "dayOne": true
+    },
+    {
+      "name": "OKU",
+      "description": "OKU chapter reference and curated points.",
+      "role": "resource",
+      "buttonLabel": "OKU",
+      "dayOne": true
+    },
+    {
+      "name": "Campbells",
+      "description": "Campbell's Operative Orthopaedics chapter/page citation and points.",
+      "role": "resource",
+      "buttonLabel": "Campbell's",
+      "dayOne": true
+    },
+    {
+      "name": "OITE",
+      "description": "OITE-related teaching points (not copyrighted full stems).",
+      "role": "resource",
+      "buttonLabel": "OITE"
+    },
+    {
+      "name": "CasePrep",
+      "description": "SnapOrtho Case Prep packet summary and/or deep link HTML.",
+      "role": "resource",
+      "buttonLabel": "Case Prep"
+    },
+    {
+      "name": "BroBot",
+      "description": "Optional BroBot deep link or prefilled prompt context (IDs preferred).",
+      "role": "resource",
+      "buttonLabel": "BroBot"
+    },
+    {
+      "name": "Additional_Resources",
+      "description": "Catch-all for other curated resources.",
+      "role": "resource",
+      "buttonLabel": "Additional"
+    },
+    {
+      "name": "Missed_Questions",
+      "description": "Wrong-question notes / OITE misses (user or curated).",
+      "role": "resource",
+      "buttonLabel": "Missed Qs"
+    },
+    {
+      "name": "One_by_one",
+      "description": "Reserved for sequential cloze control (type yes or c1,c3). Not used by template v1.",
+      "role": "control"
+    },
+    {
+      "name": "Personal_Notes",
+      "description": "User private notes — never synced centrally.",
+      "role": "personal",
+      "buttonLabel": "Personal Notes"
+    },
+    {
+      "name": "SnapOrtho_ID",
+      "description": "canonicalCardId — do not edit",
+      "role": "marker"
+    },
+    {
+      "name": "SnapOrtho_Version",
+      "description": "canonicalCardVersionId — do not edit",
+      "role": "marker"
+    },
+    {
+      "name": "SnapOrtho_Installed_Hash",
+      "description": "central-sync hash of installed content — do not edit",
+      "role": "marker"
+    }
+  ]
+}

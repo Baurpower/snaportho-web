@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SnapOrtho Master — card style preview</title>
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    header {
+      max-width: 52rem;
+      margin: 0 auto;
+      padding: 20px 16px 8px;
+    }
+    header h1 {
+      font-size: 1.15rem;
+      margin: 0 0 4px;
+    }
+    header p {
+      margin: 0;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+    .stage {
+      max-width: 52rem;
+      margin: 12px auto 28px;
+      background: #f8fafc;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
+    .stage-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0369a1;
+      padding: 10px 16px;
+      background: #e0f2fe;
+      border-bottom: 1px solid #bae6fd;
+    }
+    .stage .card {
+      /* mimic Anki .card wrapper */
+    }
+    .cloze { font-weight: 700; color: #b45309; }
+    .clozeb { font-weight: 700; color: #0369a1; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SnapOrtho Master style v1.0.0</h1>
+    <p>Browser mock of front vs back. Empty resources stay hidden; filled ones use &lt;details&gt; expanders.</p>
+  </header>
+
+  <div class="stage">
+    <div class="stage-label">Front</div>
+    <div class="card">
+      <div class="snaportho-card snaportho-front">
+        <div class="brand-bar" aria-hidden="true">
+          <span class="brand-mark">SnapOrtho</span>
+        </div>
+        <div class="cloze-body">
+          The most sensitive physical exam test for ACL integrity is the <span class="cloze">[…]</span>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-label">Back (with sample resources)</div>
+    <div class="card">
+      <div class="snaportho-card snaportho-back">
+        <div class="brand-bar" aria-hidden="true">
+          <span class="brand-mark">SnapOrtho</span>
+        </div>
+        <div class="cloze-body">
+          The most sensitive physical exam test for ACL integrity is the <span class="clozeb">Lachman test</span>.
+        </div>
+
+        <div class="extra-block">
+          <div class="extra-label">Extra</div>
+          <div class="extra-body">
+            Pivot shift is more specific. Anterior drawer is less sensitive in acute injuries with hemarthrosis and guarding.
+          </div>
+        </div>
+
+        <div class="resource-stack">
+          <details class="resource" open>
+            <summary>Orthobullets</summary>
+            <div class="resource-body">
+              <ul>
+                <li>Primary restraint to anterior tibial translation</li>
+                <li>Lachman: most sensitive exam maneuver</li>
+                <li>MRI: discontinuity or abnormal signal of ACL fibers</li>
+              </ul>
+              <p class="resource-open"><a class="external" href="https://www.orthobullets.com/sports/3009/acl-tear">Open Orthobullets ↗</a></p>
+            </div>
+          </details>
+
+          <details class="resource">
+            <summary>ROCK</summary>
+            <div class="resource-body">
+              <p>Sports Medicine → Knee → ACL Injury (chapter citation).</p>
+              <p class="resource-open"><a class="external" href="#">Open ROCK ↗</a></p>
+            </div>
+          </details>
+
+          <details class="resource">
+            <summary>Nailed It</summary>
+            <div class="resource-body">
+              <p><strong>Episode:</strong> ACL Reconstruction Basics — ~12:40</p>
+              <ul>
+                <li>Graft choice tradeoffs (BPTB vs hamstring vs QT)</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="resource">
+            <summary>Video</summary>
+            <div class="resource-body">
+              <p>Approach / technique video notes go here.</p>
+              <p class="resource-open"><a class="external" href="#">Open video ↗</a></p>
+            </div>
+          </details>
+
+          <details class="resource">
+            <summary>Miller's</summary>
+            <div class="resource-body">
+              <p>Miller’s Review — Knee chapter: ACL anatomy and exam.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

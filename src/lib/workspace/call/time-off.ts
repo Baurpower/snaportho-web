@@ -1,152 +1,25 @@
-// lib/db/time-off.ts
+// lib/workspace/call/time-off.ts
+// Server-only time-off data access. Pure types/helpers live in time-off-shared.ts
+// so client components never import next/headers via this module's side effects.
 import { createClient } from "@/utils/supabase/server";
+import {
+  approvalStatusToBoolean,
+  buildAvailabilityEventDayRows,
+  enumerateTimeOffDates,
+  mapEventTypeToFrontendType,
+  normalizeApprovalStatus,
+  type ConstraintLevel,
+  type CreateTimeOffInput,
+  type TimeOffItem,
+  type TimeOffMonthResponse,
+  type TimeOffType,
+} from "./time-off-shared";
 
-export type TimeOffType =
-  | "personal"
-  | "conference"
-  | "vacation"
-  | "sick"
-  | "other";
-
-export type ApprovalStatus = "requested" | "approved" | "denied";
-
-export type ConstraintLevel = "hard" | "soft" | "informational";
-
-export const PROGRAM_TIME_OFF_EDITOR_ROLES = new Set([
-  "admin",
-  "program_admin",
-  "coordinator",
-  "chief",
-  "chief_resident",
-  "faculty",
-  "faculty_lead",
-]);
-
-export function normalizeProgramScopedRole(role: string | null | undefined) {
-  if (typeof role !== "string") return null;
-
-  const normalized = role.trim().toLowerCase().replace(/[\s-]+/g, "_");
-  return normalized.length > 0 ? normalized : null;
-}
-
-export function canManageProgramTimeOff(params: {
-  rosterRole?: string | null;
-  membershipRole?: string | null;
-  isRosterAdmin?: boolean | null;
-}) {
-  const rosterRole = normalizeProgramScopedRole(params.rosterRole);
-  const membershipRole = normalizeProgramScopedRole(params.membershipRole);
-
-  return {
-    rosterRole,
-    membershipRole,
-    canManage: Boolean(params.isRosterAdmin),
-  };
-}
-
-export type TimeOffItem = {
-  id: string;
-  membershipId: string | null; // compatibility
-  rosterId: string | null;
-  programMembershipId: string | null;
-  residentName: string;
-  trainingLevel: string | null;
-  classYear: number | null;
-  userId: string | null;
-  type: TimeOffType;
-  usingPto: boolean;
-  startDate: string | null;
-  endDate: string | null;
-  title: string | null;
-  location: string | null;
-  notes: string | null;
-  approvalStatus: ApprovalStatus | null;
-  approved?: boolean | null;
-  isMine: boolean;
-};
-
-export type TimeOffMonthResponse = {
-  monthStart: string;
-  monthEnd: string;
-  myMembershipId: string | null;
-  myRosterId: string | null;
-  items: TimeOffItem[];
-};
-
-export type CreateTimeOffInput = {
-  programId: string;
-  rosterId: string;
-  membershipId?: string | null;
-  createdByUserId: string;
-  eventType: TimeOffType;
-  usingPto?: boolean;
-  sourceKind: string;
-  constraintLevel: ConstraintLevel | string;
-  title?: string | null;
-  notes?: string | null;
-  location?: string | null;
-  startDate: string;
-  endDate: string;
-  approvalStatus?: ApprovalStatus;
-};
-
-function mapEventTypeToFrontendType(eventType: string): TimeOffType {
-  if (eventType === "conference") return "conference";
-  if (eventType === "vacation") return "vacation";
-  if (eventType === "sick") return "sick";
-  if (eventType === "other") return "other";
-  return "personal";
-}
-
-export function getTimeOffTypeLabel(eventType: TimeOffType | string | null | undefined) {
-  if (eventType === "conference") return "Conference";
-  if (eventType === "vacation") return "Vacation";
-  if (eventType === "sick") return "Sick";
-  if (eventType === "other") return "Other";
-  return "Personal";
-}
-
-function normalizeApprovalStatus(
-  value: string | null | undefined
-): ApprovalStatus | null {
-  if (!value) return null;
-  if (value === "requested") return "requested";
-  if (value === "approved") return "approved";
-  if (value === "denied") return "denied";
-  return null;
-}
-
-function approvalStatusToBoolean(
-  value: ApprovalStatus | null
-): boolean | null {
-  if (value === "approved") return true;
-  if (value === "denied") return false;
-  return null;
-}
+// Re-export shared client-safe API for server/API callers that already import here.
+export * from "./time-off-shared";
 
 function enumerateDates(startDate: string, endDate: string) {
-  const start = new Date(`${startDate}T00:00:00`);
-  const end = new Date(`${endDate}T00:00:00`);
-  const rows: { off_date: string; is_weekend: boolean }[] = [];
-
-  const cursor = new Date(start);
-
-  while (cursor <= end) {
-    const yyyy = cursor.getFullYear();
-    const mm = String(cursor.getMonth() + 1).padStart(2, "0");
-    const dd = String(cursor.getDate()).padStart(2, "0");
-    const off_date = `${yyyy}-${mm}-${dd}`;
-    const day = cursor.getDay();
-
-    rows.push({
-      off_date,
-      is_weekend: day === 0 || day === 6,
-    });
-
-    cursor.setDate(cursor.getDate() + 1);
-  }
-
-  return rows;
+  return enumerateTimeOffDates(startDate, endDate);
 }
 
 type RawDayRow = {
@@ -361,7 +234,6 @@ export async function getProgramTimeOffMonth(params: {
               (row.membership_id ?? null) === myMembershipId)),
       };
 
-      console.log("Mapped time-off item", item);
       byEventId.set(row.event_id, item);
     }
   }
@@ -528,42 +400,6 @@ export async function createTimeOffEvent(input: CreateTimeOffInput) {
     dayCount: dayRows.length,
     dayRows,
   };
-}
-
-export function buildAvailabilityEventDayRows(input: {
-  eventId: string;
-  programId: string;
-  membershipId?: string | null;
-  rosterId: string;
-  eventType: TimeOffType;
-  sourceKind: string;
-  constraintLevel: ConstraintLevel | string;
-  startDate: string;
-  endDate: string;
-}) {
-  const {
-    eventId,
-    programId,
-    membershipId = null,
-    rosterId,
-    eventType,
-    sourceKind,
-    constraintLevel,
-    startDate,
-    endDate,
-  } = input;
-
-  return enumerateDates(startDate, endDate).map((day) => ({
-    event_id: eventId,
-    program_id: programId,
-    membership_id: membershipId,
-    roster_id: rosterId,
-    off_date: day.off_date,
-    event_type: eventType,
-    source_kind: sourceKind,
-    constraint_level: constraintLevel,
-    is_weekend: day.is_weekend,
-  }));
 }
 
 export async function syncAvailabilityEventDays(input: {

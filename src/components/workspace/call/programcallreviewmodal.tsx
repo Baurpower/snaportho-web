@@ -693,6 +693,35 @@ React.useEffect(() => {
     () => parseGeneratedOptions(generationReport),
     [generationReport]
   );
+
+  // #6: surface a hard stop when the option about to be saved is incomplete
+  // (required slots still open) or invalid (hard rule violations). We derive
+  // health from the currently-selected option, and separately note whether ANY
+  // generated option was fully complete and valid.
+  const selectedOptionHealth = useMemo(() => {
+    if (topOptions.length === 0) return null;
+    const selected =
+      topOptions.find((option) => option.rank === selectedOptionRank) ??
+      topOptions[0];
+    const openRequiredSlots = selected.openRequiredSlots ?? 0;
+    const hardErrors = Number(selected.ruleWarnings?.errors ?? 0);
+    const isIncomplete = selected.isComplete === false || openRequiredSlots > 0;
+    const isInvalid = selected.isValid === false || hardErrors > 0;
+    const hasCleanOption = topOptions.some(
+      (option) =>
+        option.isComplete !== false &&
+        option.isValid !== false &&
+        (option.openRequiredSlots ?? 0) === 0
+    );
+    return {
+      openRequiredSlots,
+      hardErrors,
+      isIncomplete,
+      isInvalid,
+      hasCleanOption,
+      needsAttention: isIncomplete || isInvalid,
+    };
+  }, [topOptions, selectedOptionRank]);
   const requiredCallTypes = useMemo(
     () => getRequiredCallTypesFromRules(rules),
     [rules]
@@ -955,6 +984,58 @@ React.useEffect(() => {
 
             <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">
               <div className="space-y-5">
+                {selectedOptionHealth?.needsAttention ? (
+                  <div
+                    className={`rounded-[1.35rem] border p-4 shadow-sm ${
+                      selectedOptionHealth.isInvalid
+                        ? "border-rose-300 bg-rose-50"
+                        : "border-amber-300 bg-amber-50"
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <AlertTriangle
+                        className={`mt-0.5 h-5 w-5 shrink-0 ${
+                          selectedOptionHealth.isInvalid
+                            ? "text-rose-600"
+                            : "text-amber-600"
+                        }`}
+                      />
+                      <div>
+                        <p
+                          className={`text-sm font-bold ${
+                            selectedOptionHealth.isInvalid
+                              ? "text-rose-800"
+                              : "text-amber-800"
+                          }`}
+                        >
+                          {selectedOptionHealth.isInvalid
+                            ? "This schedule has hard rule violations"
+                            : "This schedule is incomplete"}
+                        </p>
+                        <p
+                          className={`mt-1 text-xs ${
+                            selectedOptionHealth.isInvalid
+                              ? "text-rose-700"
+                              : "text-amber-700"
+                          }`}
+                        >
+                          {selectedOptionHealth.isInvalid
+                            ? `${selectedOptionHealth.hardErrors} hard rule violation${
+                                selectedOptionHealth.hardErrors === 1 ? "" : "s"
+                              } must be resolved before publishing.`
+                            : `${selectedOptionHealth.openRequiredSlots} required slot${
+                                selectedOptionHealth.openRequiredSlots === 1
+                                  ? ""
+                                  : "s"
+                              } still need to be filled.`}
+                          {selectedOptionHealth.hasCleanOption
+                            ? " Another generated option is complete and valid — select it above, or fix the issues manually."
+                            : " No generated option was fully complete and valid. Regenerate or resolve the flagged dates manually before saving."}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
                 {topOptions.length > 0 ? (
                   <div className="rounded-[1.35rem] border border-slate-200 bg-white p-4 shadow-sm">
                     <div className="flex items-center justify-between gap-3">

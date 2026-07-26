@@ -801,6 +801,23 @@ assert.equal(topicContext.classification?.pageKind, 'topic_page');
 const dispatchedTopicContext = extractQuestionContext({ document: topicDocument, pageUrl: topicPageUrl });
 assert.equal(dispatchedTopicContext?.mode, 'topic_page');
 
+// Image-heavy topic pages must remain within the server page-context
+// contract or every tutor action is rejected as an invalid request.
+const imageHeavyTopicHtml = topicHtml.replace(
+  '</main>',
+  `${Array.from(
+    { length: 25 },
+    (_, index) => `<img src="https://example.test/topic-${index}.jpg" alt="${'x'.repeat(600)}">`
+  ).join('')}</main>`
+);
+const { document: imageHeavyTopicDocument } = parseHTML(imageHeavyTopicHtml);
+const imageHeavyTopicContext = extractOrthobulletsTopicPageContext({
+  document: imageHeavyTopicDocument,
+  pageUrl: topicPageUrl,
+});
+assert.equal(imageHeavyTopicContext.images.length, 20);
+assert.ok(imageHeavyTopicContext.images.every((image) => (image.alt?.length ?? 0) <= 500));
+
 const ranRealFixtures = REAL_FIXTURES.length - skippedRealFixtures;
 console.log(
   `Question extractor tests passed (${ranRealFixtures}/${REAL_FIXTURES.length} real Orthobullets fixtures run, ${skippedRealFixtures} skipped (not present locally) + Orthobullets/ROCK synthetic sanity checks).`

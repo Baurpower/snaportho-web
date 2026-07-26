@@ -19,7 +19,11 @@ import {
   getWeekendBucket,
   isWeekendDateKey,
 } from "@/lib/workspace/call/rule-evaluator";
-import { getTimeOffTypeLabel, type TimeOffType } from "@/lib/workspace/call/time-off";
+import {
+  getTimeOffTypeLabel,
+  type TimeOffType,
+} from "@/lib/workspace/call/time-off-shared";
+import { getProgramRotationAssignmentsInRange } from "@/lib/workspace/call/rotations";
 
 type AvailabilityFlag = {
   key: string;
@@ -110,30 +114,6 @@ type CallRow = {
   call_date: string | null;
 };
 
-type RotationRow = {
-  id: string;
-  roster_id: string | null;
-  program_membership_id: string | null;
-  rotation_id: string | null;
-  start_date: string | null;
-  end_date: string | null;
-  site_label: string | null;
-  team_label: string | null;
-  notes: string | null;
-  rotations:
-    | {
-        id: string | null;
-        name: string | null;
-        short_name: string | null;
-      }
-    | {
-        id: string | null;
-        name: string | null;
-        short_name: string | null;
-      }[]
-    | null;
-};
-
 type RawResident = {
   residentId: string;
   rosterId: string;
@@ -188,20 +168,6 @@ function pushRuleBlockIfMissing(day: ResidentAvailabilityDay, block: RuleBlock) 
   );
 
   if (!exists) day.ruleBlocks.push(block);
-}
-
-function getRotationMeta(row: RotationRow) {
-  const rel = Array.isArray(row.rotations) ? row.rotations[0] : row.rotations;
-
-  return {
-    rotationId: row.rotation_id ?? rel?.id ?? null,
-    rotationName:
-      rel?.short_name ||
-      rel?.name ||
-      row.team_label ||
-      row.site_label ||
-      "Unknown Rotation",
-  };
 }
 
 export async function getProgramAvailabilityMonth(params: {
@@ -267,31 +233,14 @@ export async function getProgramAvailabilityMonth(params: {
     );
   }
 
-  const { data: rotationRows, error: rotationError } = await supabase
-    .from("rotation_assignments")
-    .select(`
-      id,
-      roster_id,
-      program_membership_id,
-      rotation_id,
-      start_date,
-      end_date,
-      site_label,
-      team_label,
-      notes,
-      rotations (
-        id,
-        name,
-        short_name
-      )
-    `)
-    .eq("program_id", programId)
-    .lte("start_date", monthEnd)
-    .gte("end_date", monthStart);
-
-  if (rotationError) {
-    throw new Error(`Failed to load rotation assignments: ${rotationError.message}`);
-  }
+  // Unify on the canonical rotation loader so availability sees exactly the same
+  // rotation data (identity + window) as validation and the generator's source.
+  const rotationAssignments = await getProgramRotationAssignmentsInRange(
+    programId,
+    monthStart,
+    monthEnd,
+    supabase
+  );
 
   const { data: callRows, error: callsError } = await supabase
     .from("call_assignments")
@@ -425,21 +374,27 @@ export async function getProgramAvailabilityMonth(params: {
     }
   }
 
-  for (const row of (rotationRows ?? []) as RotationRow[]) {
-    if (!row.start_date || !row.end_date) continue;
+  for (const row of rotationAssignments) {
+    if (!row.startDate || !row.endDate) continue;
     const residentKey =
-      row.roster_id ??
-      (row.program_membership_id
-        ? membershipToRoster.get(row.program_membership_id) ?? null
+      row.rosterId ??
+      (row.programMembershipId
+        ? membershipToRoster.get(row.programMembershipId) ?? null
         : null);
     if (!residentKey) continue;
 
     const residentAvailability = availability[residentKey];
     if (!residentAvailability) continue;
 
-    const { rotationId, rotationName } = getRotationMeta(row);
+    const rotationId = row.rotation?.id ?? null;
+    const rotationName =
+      row.rotation?.short_name ||
+      row.rotation?.name ||
+      row.teamLabel ||
+      row.siteLabel ||
+      "Unknown Rotation";
 
-    const coveredDates = enumerateDates(row.start_date, row.end_date).filter(
+    const coveredDates = enumerateDates(row.startDate, row.endDate).filter(
       (dateKey) => dateKey >= monthStart && dateKey <= monthEnd
     );
 
@@ -450,9 +405,9 @@ export async function getProgramAvailabilityMonth(params: {
       day.rotationConflicts.push({
         rotationId,
         rotationName,
-        startDate: row.start_date,
-        endDate: row.end_date,
-        reason: row.notes ?? row.team_label ?? row.site_label ?? null,
+        startDate: row.startDate,
+        endDate: row.endDate,
+        reason: row.notes ?? row.teamLabel ?? row.siteLabel ?? null,
       });
     }
   }

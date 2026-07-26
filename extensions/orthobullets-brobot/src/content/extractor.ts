@@ -904,12 +904,15 @@ function extractRockImages(root: DocumentLike, matched: Record<string, string[]>
       if (!src || src.startsWith('data:') || seen.has(src)) return;
       seen.add(src);
       images.push({
-        src,
-        alt: normalizeWhitespace(node.getAttribute('alt')) || undefined,
+        src: src.slice(0, 2000),
+        alt: normalizeWhitespace(node.getAttribute('alt')).slice(0, 500) || undefined,
       });
     });
   }
-  return images;
+  // Keep the extractor aligned with the API's page-context contract. Topic
+  // pages commonly contain many thumbnail/utility images; sending all of
+  // them made the entire tutor request fail validation before an action ran.
+  return images.slice(0, 20);
 }
 
 function cleanCurriculumText(value: string) {

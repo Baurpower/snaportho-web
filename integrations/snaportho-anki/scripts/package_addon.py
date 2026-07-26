@@ -1,5 +1,5 @@
 import hashlib,json,pathlib,sys,zipfile
-ROOT=pathlib.Path(__file__).resolve().parents[1];SOURCE=ROOT/"addon";DIST=ROOT.parents[1]/"dist";VERSION="0.5.0";OUT=DIST/f"snaportho-reviewer-{VERSION}.ankiaddon"
+ROOT=pathlib.Path(__file__).resolve().parents[1];SOURCE=ROOT/"addon";DIST=ROOT.parents[1]/"dist";VERSION=json.loads((SOURCE/"manifest.json").read_text())["version"];OUT=DIST/f"snaportho-{VERSION}.ankiaddon"
 FORBIDDEN_SUFFIXES={".pyc",".pyo",".db",".sqlite",".sqlite3",".log",".map"};FORBIDDEN_NAMES={".DS_Store","__pycache__"};SECRET_PATTERNS=(b"SUPABASE_SERVICE_ROLE_KEY=",b"BEGIN PRIVATE KEY",b'"access_token":"')
 def files():
     rows=[]

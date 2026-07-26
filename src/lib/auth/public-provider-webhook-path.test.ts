@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 
-import { isPublicProviderWebhookPath } from './public-provider-webhook-path.ts';
+import { isPublicProviderWebhookPath } from './public-provider-webhook-path';
 
 assert.equal(isPublicProviderWebhookPath('/api/stripe/webhook', 'POST'), true);
 assert.equal(isPublicProviderWebhookPath('/api/stripe/donation-webhook', 'POST'), true);

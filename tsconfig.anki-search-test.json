@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "outDir": ".test-dist/anki-search",
+    "rootDir": "src/lib/education",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "lib": ["ES2022"]
+  },
+  "include": [
+    "src/lib/education/anki-search-ranking.ts",
+    "src/lib/education/anki-search-ranking.test.ts",
+    "src/lib/education/contracts/extension-anki-search-v1.ts",
+    "src/lib/education/contracts/extension-anki-search-v1.test.ts",
+    "src/lib/education/contracts/resource-search-v1.ts",
+    "src/lib/education/contracts/resource-search-v1.test.ts"
+  ]
+}

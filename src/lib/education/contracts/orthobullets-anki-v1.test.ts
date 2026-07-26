@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 
-// @ts-expect-error TS5097: explicit .ts suffix is required by the direct Node test runner.
-import * as contract from "./orthobullets-anki-v1.ts";
+import * as contract from "./orthobullets-anki-v1";
 
 const {
   ORTHOBULLETS_ANKI_CONTRACT_VERSION, PATELLAR_INSTABILITY_ENTITY_ID,

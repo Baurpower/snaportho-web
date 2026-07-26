@@ -8,7 +8,7 @@ import { getCheckoutSuccessUrl } from './app-url';
 
 const mobileRoutePath = join(
   process.cwd(),
-  'src/app/api/mobile/stripe/create-checkout-session/route.ts'
+  'src/app/api/mobile/stripe/create-checkout-session/route'
 );
 const mobileRouteSource = readFileSync(mobileRoutePath, 'utf8');
 

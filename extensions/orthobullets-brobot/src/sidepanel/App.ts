@@ -1221,10 +1221,11 @@ export function mountSidePanelApp(root: HTMLElement) {
     if (!state.pageContext) return;
 
     const userMessage = input.userMessage?.trim() || undefined;
+    const priorHistory = state.topicHistory.slice(-18);
     state.error = null;
     state.operation = 'chatting';
     if (userMessage) {
-      state.topicHistory = [...state.topicHistory, { role: 'user', content: userMessage }];
+      state.topicHistory = [...priorHistory, { role: 'user', content: userMessage }];
     }
     render();
 
@@ -1233,7 +1234,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       pageContext: state.pageContext,
       action: input.action,
       progress: state.topicProgress,
-      history: state.topicHistory,
+      history: priorHistory,
       userMessage,
     });
 
@@ -1250,7 +1251,11 @@ export function mountSidePanelApp(root: HTMLElement) {
     }
 
     const turn = result.topicTurn;
-    state.topicHistory = [...state.topicHistory, { role: 'assistant', content: turn.message }];
+    state.topicHistory = [
+      ...priorHistory,
+      ...(userMessage ? [{ role: 'user' as const, content: userMessage }] : []),
+      { role: 'assistant' as const, content: turn.message },
+    ].slice(-20);
     state.topicChips = resolveTopicTutorChips(turn.suggestedChips);
     state.topicInsufficientContent = turn.insufficientContent;
     state.topicChatDraft = '';
@@ -1307,6 +1312,82 @@ export function mountSidePanelApp(root: HTMLElement) {
     state.pageContext = diagnostics.pageContext;
     state.currentQuestionFingerprint = diagnostics.currentQuestionFingerprint;
     state.questionRefreshing = questionTutorController.store.deriveViewState().showLoadingCurrentQuestion;
+  }
+
+  async function sendQuestionToAnki(button: HTMLButtonElement, explanation?: OrthobulletsExplainResponse) {
+    if (!state.pageContext || (explanation && isCurriculumStudyResponse(explanation))) return;
+    button.disabled = true;
+    button.textContent = 'Sending to Anki…';
+    const result = await sendMessage({
+      type: 'ob:send-to-anki',
+      pageContext: state.pageContext,
+      explanation,
+    });
+    if (result.ok && 'ankiSearch' in result) {
+      button.textContent = 'Sent — waiting for Anki';
+      const requestId = result.ankiSearch.searchRequestId;
+      for (let attempt = 0; attempt < 30; attempt += 1) {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        const status = await sendMessage({ type: 'ob:get-anki-search-status', searchRequestId: requestId });
+        if (!status.ok || !('ankiSearch' in status)) continue;
+        const current = status.ankiSearch.status;
+        if (current === 'completed') {
+          const count = Number(status.ankiSearch.resultSummary?.availableCount ?? 0);
+          const missing = Number(status.ankiSearch.resultSummary?.missingCount ?? 0);
+          button.textContent = `${count} opened${missing ? ` · ${missing} available after deck update` : ''}`;
+          return;
+        }
+        if (['no_local_results', 'review_required', 'failed', 'expired', 'cancelled'].includes(current)) {
+          button.textContent =
+            current === 'review_required'
+              ? 'No confident cards — review needed'
+              : `Anki search: ${current.replaceAll('_', ' ')}`;
+          return;
+        }
+      }
+      button.textContent = 'Sent — open Anki to continue';
+      return;
+    }
+    button.disabled = false;
+    button.textContent = result.ok ? 'Find cards in Anki' : `Try again — ${result.error}`;
+  }
+
+  async function findPageAnkiCards(button: HTMLButtonElement) {
+    if (!state.pageContext) return;
+    button.disabled = true;
+    button.textContent = 'Searching the whole page…';
+    const result = await sendMessage({
+      type: 'ob:send-page-to-anki',
+      pageContext: state.pageContext,
+    });
+    if (!result.ok || !('ankiSearch' in result)) {
+      button.disabled = false;
+      button.textContent = result.ok ? 'Find relevant Anki cards from this page' : `Try again — ${result.error}`;
+      return;
+    }
+    button.textContent = 'Sent — waiting for Anki';
+    for (let attempt = 0; attempt < 30; attempt += 1) {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const status = await sendMessage({
+        type: 'ob:get-anki-search-status',
+        searchRequestId: result.ankiSearch.searchRequestId,
+      });
+      if (!status.ok || !('ankiSearch' in status)) continue;
+      if (status.ankiSearch.status === 'completed') {
+        const count = Number(status.ankiSearch.resultSummary?.availableCount ?? 0);
+        const missing = Number(status.ankiSearch.resultSummary?.missingCount ?? 0);
+        button.textContent = `${count} relevant card${count === 1 ? '' : 's'} opened${missing ? ` · ${missing} after deck update` : ''}`;
+        return;
+      }
+      if (['no_local_results', 'review_required', 'failed', 'expired', 'cancelled'].includes(status.ankiSearch.status)) {
+        button.disabled = false;
+        button.textContent = status.ankiSearch.status === 'review_required'
+          ? 'No confident matches — try again'
+          : `Anki search: ${status.ankiSearch.status.replaceAll('_', ' ')}`;
+        return;
+      }
+    }
+    button.textContent = 'Search sent — open Anki to continue';
   }
 
   function render() {
@@ -1474,6 +1555,7 @@ export function mountSidePanelApp(root: HTMLElement) {
     } else if (isTopicPage) {
       renderTopicTutorPanel(content, state, {
         runTopicTutorTurn: (input) => void runTopicTutorTurn(input),
+        findPageAnkiCards: (button) => void findPageAnkiCards(button),
         saveTopicPearl,
         setDraft: (value) => {
           state.topicChatDraft = value;
@@ -1493,6 +1575,7 @@ export function mountSidePanelApp(root: HTMLElement) {
         hooks: {
           onHintClick: () => questionTutorController.openHint(),
           onExplainClick: () => questionTutorController.openExplain(),
+          onSendToAnki: (button, explanation) => void sendQuestionToAnki(button, explanation),
           onRefreshClick: () => void questionTutorController.onManualRefresh().then(() => syncQuestionTutorShellState()),
           onUnlink: () => void unlink(),
           onChatDraftChange: (value) => questionTutorController.setChatDraft(value),
@@ -1763,6 +1846,19 @@ export function mountSidePanelApp(root: HTMLElement) {
             ),
           })
         );
+        if (state.pageContext?.provider === 'orthobullets' && !isCurriculumStudyResponse(state.explanation)) {
+          const sendToAnki = createElement('button', {
+            text: 'Find cards in Anki',
+          });
+          sendToAnki.setAttribute('type', 'button');
+          sendToAnki.style.cssText =
+            'width:100%;border:0;border-radius:12px;background:#0f766e;color:white;padding:10px 12px;font-size:13px;font-weight:700;cursor:pointer;';
+          sendToAnki.addEventListener('click', () => {
+            if (!state.explanation || isCurriculumStudyResponse(state.explanation)) return;
+            void sendQuestionToAnki(sendToAnki, state.explanation);
+          });
+          content.appendChild(sendToAnki);
+        }
       }
 
       const questionWarnings = state.explanation.warnings.filter(isClinicallyImportantWarning);

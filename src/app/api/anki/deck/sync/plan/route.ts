@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- Release manifest rows await generated Supabase types. */
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { deviceAuth, loadReleaseManifest } from "../../_lib";
+import {
+  deviceAuth,
+  loadReleaseManifest,
+  clientAddonVersion,
+  addonVersionAtLeast,
+} from "../../_lib";
 import { buildSyncPlan } from "@/lib/education/anki-deck-incorporation";
 const h = z.string().regex(/^[a-f0-9]{64}$/),
   installed = z
@@ -20,6 +25,8 @@ const h = z.string().regex(/^[a-f0-9]{64}$/),
       contractVersion: z.literal("snaportho-anki-sync-request.v1"),
       targetReleaseId: z.string().uuid(),
       installedCards: z.array(installed).max(100000),
+      // Optional full set of local master IDs for chunked inventory POSTs.
+      allInstalledIds: z.array(z.string().uuid()).max(100000).optional(),
     })
     .strict();
 export async function POST(request: Request) {
@@ -46,6 +53,16 @@ export async function POST(request: Request) {
       { error: "published target release unavailable" },
       { status: 404 },
     );
+  if (!addonVersionAtLeast(clientAddonVersion(request), manifest.minimumAddonVersion))
+    return NextResponse.json(
+      {
+        error: "upgrade_required",
+        minimumAddonVersion: manifest.minimumAddonVersion,
+        message:
+          "This release needs a newer SnapOrtho Reviewer add-on. Update the add-on, then check for deck updates again.",
+      },
+      { status: 426 },
+    );
   const target = manifest.cards
       .filter((c: any) => c.inclusionStatus === "included")
       .map((c: any) => ({
@@ -58,7 +75,11 @@ export async function POST(request: Request) {
         centralTags: c.centralTags,
         mediaHashes: c.mediaHashes,
       })),
-    plan = buildSyncPlan(parsed.data.installedCards, target);
+    plan = buildSyncPlan(
+      parsed.data.installedCards,
+      target,
+      parsed.data.allInstalledIds,
+    );
   return NextResponse.json({
     ...plan,
     targetReleaseId: manifest.releaseId,

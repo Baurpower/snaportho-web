@@ -15,7 +15,7 @@ const thumbnail=read("src/components/mycases/media/SecureThumbnail.tsx");
 const knowledge=read("src/components/mycases/knowledge/KnowledgeLibrary.tsx");
 const collections=read("src/components/mycases/collections/CollectionsView.tsx");
 const search=read("src/components/mycases/search/SearchView.tsx");
-const fixtures=read("src/lib/mycases/fixtures.ts");
+const fixtures=read("src/lib/mycases/fixtures");
 
 assert(student.includes("<MyCasesWorkspace")); assert(resident.includes("<MyCasesWorkspace"));
 assert(student.includes('audience="student"')); assert(resident.includes('audience="resident"'));

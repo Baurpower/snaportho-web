@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 
-const { buildCaseReadinessHref } = require("./prepare-routes.ts") as typeof import("./prepare-routes");
+const { buildCaseReadinessHref } = require("./prepare-routes") as typeof import("./prepare-routes");
 
 if (
   buildCaseReadinessHref({ topicId: "acl-tear", mode: "fast", time: 15 }) !==

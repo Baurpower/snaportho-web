@@ -1,18 +1,21 @@
 import json,os,sys,tempfile,unittest,uuid
 from unittest.mock import patch
 ROOT=os.path.join(os.path.dirname(__file__),"..","addon");sys.path.insert(0,ROOT)
-from snaportho_reviewer.contracts import CardIdentity,MappingDraft
+from snaportho_reviewer.contracts import CardIdentity
 from snaportho_reviewer.resolver import resolve_card
 from snaportho_reviewer.editor import field_diff,save_local_working_edit
-from snaportho_reviewer.state import DraftStore,RetryQueue
-from snaportho_reviewer.inbox import assignment_complete,summarize
+from snaportho_reviewer.state import DraftStore
 from snaportho_reviewer.config import validate
 from snaportho_reviewer.credential_store import FakeCredentialStore,CredentialUnavailable
 from snaportho_reviewer.api import ReviewerApi,ApiError
 from snaportho_reviewer.diagnostics import build
-from snaportho_reviewer.dialogs import linked_copy
-from snaportho_reviewer.workspace import central_fields,central_tags
+from snaportho_reviewer.dialogs import access_level_label,format_roles,linked_copy,summarize_local_deck
+from snaportho_reviewer.errors import describe,headline
+from snaportho_reviewer.version import ADDON_VERSION
+from snaportho_reviewer.workspace import central_fields,central_tags,split_structured,combo_for_tag,tag_for_label,LEVEL_TAGS,YIELD_TAGS,CENTRAL_TAG_RE
 from snaportho_reviewer.sync import central_sync_hash
+from snaportho_reviewer.brobot_panel import ATTENDING_PROMPT,OITE_PROMPT,card_context,chat_payload,deck_footer_text,plain_text
+from snaportho_reviewer.resource_search import anki_card_query,local_concept_card_ids,local_page_card_ids,parse_orthobullets_id,request_payload,resolve_local_results,result_summary
 class Card:
  def __init__(self,id,h):self.id=id;self.h=h
 class Gateway:
@@ -20,36 +23,55 @@ class Gateway:
  def cards_by_guid_ordinal(self,g,o):return self.cards
  def content_hash(self,c):return c.h
  def save_working_edit(self,*args,**kwargs):self.saved.append((args,kwargs))
-class Client:
- def __init__(self,result):self.result=result
- def retry(self,*args):return self.result
 class ReviewerTests(unittest.TestCase):
  def setUp(self):self.i=CardIdentity("c","v","guid",0,"a"*64)
+ def test_learner_panel_has_only_two_teaching_prompts(self):
+  self.assertEqual(ATTENDING_PROMPT,"What would an attending ask related to this?")
+  self.assertEqual(OITE_PROMPT,"What is a common OITE board trap or question?")
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","brobot_panel.py"))as source:text=source.read()
+  self.assertIn("LearnerSidePanel",text);self.assertNotIn("Suggest KG improvements",text);self.assertNotIn("Card classification",text)
+ def test_learner_chat_payload_is_card_scoped_and_bounded(self):
+  class Note(dict):
+   id=9;guid="guid-9";tags=["SnapOrtho::Trauma"]
+  class LocalCard:
+   ord=0;did=1
+   def note(self):return Note(Front="<b>Tibial plateau fracture</b>",Back="Assess alignment")
+   def question(self):return "rendered question"
+   def answer(self):return "rendered answer"
+  context=card_context(LocalCard())
+  self.assertEqual(context["key"],"guid-9:0");self.assertEqual(context["question"],"Tibial plateau fracture");self.assertEqual(context["topic"],"Trauma")
+  conversation={"conversationId":str(uuid.uuid4()),"messages":[{"role":"user","content":str(i)}for i in range(25)]}
+  payload=chat_payload(" Why? ",context,conversation)
+  self.assertEqual(payload["message"],"Why?");self.assertEqual(len(payload["history"]),20);self.assertEqual(payload["history"][0]["content"],"5")
+  self.assertNotIn("<b>",plain_text("<b>Hello</b>&nbsp;there"))
+  self.assertEqual(plain_text("{{c1::Partial Articular Supraspinatus Tendon Avulsion}}"),"Partial Articular Supraspinatus Tendon Avulsion")
+ def test_deck_footer_distinguishes_installed_and_latest_versions(self):
+  self.assertEqual(deck_footer_text(None,None,0),"Master Deck not installed")
+  self.assertIn("Latest 2026.08",deck_footer_text(None,"2026.08",0))
+  self.assertIn("Up to date",deck_footer_text("2026.08","2026.08",100))
+  update=deck_footer_text("2026.07","2026.08",100);self.assertIn("2026.07 → 2026.08",update);self.assertIn("Update available",update)
  def test_resolution(self):
   self.assertEqual(resolve_card(Gateway([]),self.i).status,"not_found");self.assertEqual(resolve_card(Gateway([Card(1,"a"*64),Card(2,"a"*64)]),self.i).status,"ambiguous");self.assertEqual(resolve_card(Gateway([Card(1,"b"*64)]),self.i).status,"hash_mismatch");self.assertEqual(resolve_card(Gateway([Card(1,"a"*64)]),self.i).status,"resolved")
- def test_decision_and_no_mapping(self):
-  MappingDraft("approved",.97,"entity","teaches",None,"resolved").validate()
-  with self.assertRaises(ValueError):MappingDraft("approved",.97,None,None,None,"resolved").validate()
  def test_diff_and_no_silent_overwrite(self):
   self.assertEqual(field_diff([{"name":"Front","value":"a"}],[{"name":"Front","value":"b"}])[0]["after"],"b");g=Gateway([])
   with self.assertRaises(PermissionError):save_local_working_edit(g,1,[])
   save_local_working_edit(g,1,[],True);self.assertEqual(len(g.saved),1)
- def test_restart_retry_conflict_and_revocation(self):
+ def test_draft_store_survives_restart_and_marks_conflict(self):
   with tempfile.TemporaryDirectory()as d:
-   p=os.path.join(d,"s.db");s=DraftStore(p,"user:profile:assignment");key=str(uuid.uuid4());s.save("i","v",{"decision":"defer"},key,"pending");s.db.close();s=DraftStore(p,"user:profile:assignment");self.assertEqual(s.load("i","v")["idempotencyKey"],key);q=RetryQueue(s);self.assertEqual(q.drain(Client("accepted")),["accepted"]);s.save("j","v",{},key,"pending");q.drain(Client("conflict"));self.assertEqual(s.load("j","v")["state"],"conflict");s.save("k","v",{},key,"pending");self.assertEqual(q.drain(Client("accepted"),False),[])
- def test_assignment_ui_and_completion(self):
-  items=[{"status":"pending","riskTier":"A"}];self.assertEqual(summarize({"id":"a","status":"assigned","items":items},[])["pending"],1);self.assertFalse(assignment_complete(items));self.assertTrue(assignment_complete([{"status":"skipped_with_reason"}]))
+   p=os.path.join(d,"s.db");s=DraftStore(p,"user:profile:assignment");key=str(uuid.uuid4());s.save("i","v",{"decision":"defer"},key,"pending");s.db.close();s=DraftStore(p,"user:profile:assignment");self.assertEqual(s.load("i","v")["idempotencyKey"],key);s.mark("i","v","conflict");self.assertEqual(s.load("i","v")["state"],"conflict");s.close()
  def test_learner_excludes_reviewer(self):
   with open(os.path.join(os.path.dirname(__file__),"..","learner","__init__.py")) as source: learner=source.read()
   self.assertNotIn("snaportho_reviewer",learner)
   with open(os.path.join(os.path.dirname(__file__),"..","addon","__init__.py")) as source: bootstrap=source.read()
   self.assertIn("from .snaportho_reviewer.bootstrap import register",bootstrap)
   with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:surfaces=source.read()
-  self.assertIn("browser_menus_did_init",surfaces);self.assertIn("reviewer_did_show_question",surfaces);self.assertIn("Review Current Card",surfaces)
+  self.assertIn("browser_menus_did_init",surfaces);self.assertIn("reviewer_did_show_question",surfaces);self.assertIn("Review Current Card",surfaces);self.assertIn("Get Started / Master Deck",surfaces);self.assertIn("Propose SnapOrtho changes",surfaces);self.assertIn("editor_did_init_buttons",surfaces)
  def test_configuration_and_https(self):
   settings=validate({"environment":"local","base_url":"http://127.0.0.1:3000","request_timeout_seconds":15,"diagnostics_enabled":False});self.assertEqual(settings.environment,"local")
   with self.assertRaises(ValueError):validate({"environment":"production","base_url":"http://example.com","request_timeout_seconds":15,"diagnostics_enabled":False})
   with self.assertRaises(ValueError):validate({"environment":"local","base_url":"http://127.0.0.1:3000","request_timeout_seconds":15,"diagnostics_enabled":False,"token":"x"})
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","config.json"))as source:packaged=json.load(source)
+  self.assertEqual(packaged["environment"],"production");self.assertEqual(packaged["base_url"],"https://snap-ortho.com")
  def test_credentials_namespace_and_failure(self):
   store=FakeCredentialStore();store.set("secret");self.assertEqual(store.get(),"secret");store.delete();self.assertIsNone(store.get())
   with self.assertRaises(CredentialUnavailable):FakeCredentialStore(False).get()
@@ -57,6 +79,80 @@ class ReviewerTests(unittest.TestCase):
   store=FakeCredentialStore();api=ReviewerApi("http://127.0.0.1:3000",store)
   with self.assertRaises(ApiError):api.me()
   self.assertNotIn("secret",str(api.safe_error(ApiError("authorization_failed",401))))
+ def test_resource_search_input_parsing_and_contract(self):
+  for raw in ("123456","ob:123456","qid: 123456","orthobullets:123456"):
+   self.assertEqual(parse_orthobullets_id(raw),"123456")
+  for raw in ("OBQ14.85","ob:OBQ14.85","OBQ14-85","obq14.85"):
+   self.assertEqual(parse_orthobullets_id(raw),"OBQ14-85")
+  self.assertEqual(parse_orthobullets_id("https://www.orthobullets.com/testview?qid=OBQ14.85"),"OBQ14-85")
+  self.assertEqual(parse_orthobullets_id("https://www.orthobullets.com/testview?qid=ABC-12"),"ABC-12")
+  self.assertEqual(parse_orthobullets_id("https://www.orthobullets.com/questions/ABC-12"),"ABC-12")
+  self.assertIsNone(parse_orthobullets_id("https://example.com/testview?qid=123"))
+  self.assertIsNone(parse_orthobullets_id("bad id"))
+  payload=request_payload("123456",100)
+  self.assertEqual(payload["contractVersion"],"snaportho-resource-search.v1")
+  self.assertEqual(payload["scopes"],["direct"]);self.assertEqual(payload["limit"],50)
+  semantic=request_payload("123456",12,"Superior trunk brachial plexus","Finger abduction remains intact")
+  self.assertEqual(semantic["scopes"],["direct","latest_deck_concept"])
+  self.assertEqual(semantic["query"]["testedConcept"],"Superior trunk brachial plexus")
+  topic=request_payload("4092",50,"Duchenne muscular dystrophy","Sections",["dystrophin"],"topic_page",[
+   {"id":"diagnosis","heading":"Diagnosis","concepts":["genetic testing"],"priority":5},
+  ])
+  self.assertEqual(topic["query"]["kind"],"topic_page")
+  self.assertEqual(topic["query"]["sections"][0]["id"],"diagnosis")
+ def test_resource_search_local_resolution_and_query(self):
+  class LocalGateway:
+   def cards_by_guid_ordinal(self,guid,ordinal):
+    return {"found":[Card(9,"")],"duplicate":[Card(3,""),Card(4,"")]}.get(guid,[])
+   def content_hash(self,card):return card.h
+  results=[
+   {"canonicalCardId":"a","noteGuid":"found","cardOrdinal":0},
+   {"canonicalCardId":"b","noteGuid":"missing","cardOrdinal":0},
+   {"canonicalCardId":"c","noteGuid":"duplicate","cardOrdinal":1},
+   {"canonicalCardId":"d","noteGuid":"found","cardOrdinal":0,"contentHash":"a"*64},
+  ]
+  local=resolve_local_results(LocalGateway(),results)
+  self.assertEqual(local["cardIds"],[9,9])
+  self.assertEqual([row["status"]for row in local["dispositions"]],["available","missing","ambiguous","version_mismatch"])
+  self.assertEqual(anki_card_query([9,3,9]),"cid:3 OR cid:9")
+  body={"resolution":{"status":"resolved","nativeId":"123","canonicalEntities":[{"label":"Patellar instability"}]},"results":results}
+  summary=result_summary(body,local)
+  self.assertIn("Patellar instability",summary);self.assertIn("2 available locally",summary);self.assertIn("differ from the current canonical version",summary)
+ def test_whole_page_search_falls_back_to_broad_local_query(self):
+  class Collection:
+   def __init__(self):self.queries=[]
+   def find_cards(self,query):self.queries.append(query);return [7,3,7,11]
+  collection=Collection()
+  found=local_page_card_ids(
+   collection,
+   "Duchenne Muscular Dystrophy",
+   ["dystrophin","cardiomyopathy","management","gowers"],
+  )
+  self.assertEqual(found,[7,3,11])
+  self.assertIn('"Duchenne Muscular Dystrophy"',collection.queries)
+  self.assertIn('"cardiomyopathy"',collection.queries)
+  self.assertNotIn('"management"',collection.queries)
+ def test_local_concept_search_ranks_phrase_and_cross_concept_matches(self):
+  class Collection:
+   def find_cards(self,query):
+    return {
+     '"Duchenne muscular dystrophy"':[1,2],
+     '"cardiomyopathy"':[2,3],
+     '"dystrophin"':[2,4],
+    }.get(query,[])
+  found=local_concept_card_ids(Collection(),"Duchenne muscular dystrophy",["cardiomyopathy","dystrophin"],[],10)
+  self.assertEqual(found[0],2)
+  self.assertEqual(set(found),{1,2,3,4})
+ def test_assignment_surface_is_removed(self):
+  api=ReviewerApi("http://127.0.0.1:3000")
+  for gone in("assignments","assignment","start_assignment","submit_mapping","submit_proposal","submit_assignment"):
+   self.assertFalse(hasattr(api,gone),gone)
+  self.assertTrue(hasattr(api,"review_queue"))
+ def test_search_relay_acknowledges_before_opening_browse(self):
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:
+   text=source.read()
+  relay=text[text.index("def _resolve_relay_search"):text.index("def propose_from_editor")]
+  self.assertLess(relay.index("complete_future.result()"),relay.index("open_browse_with_card_ids("))
  def test_start_link_pins_browser_approval_to_addon_origin(self):
   class Response:
    status=200
@@ -68,19 +164,175 @@ class ReviewerTests(unittest.TestCase):
   api=ReviewerApi("http://127.0.0.1:3000")
   with patch("snaportho_reviewer.api.urllib.request.urlopen",open_request):api.start_link("Reviewer")
   headers={key.lower():value for key,value in captured[0].header_items()}
-  self.assertEqual(headers["x-snaportho-addon-base-url"],"http://127.0.0.1:3000")
+  self.assertEqual(headers["x-snaportho-addon-base-url"],"http://127.0.0.1:3000");self.assertEqual(headers["x-snaportho-client"],f"reviewer-addon/{ADDON_VERSION}")
  def test_safe_diagnostics(self):
   settings=validate({"environment":"local","base_url":"http://127.0.0.1:3000","request_timeout_seconds":15,"diagnostics_enabled":False});data=build({"ankiVersion":"26.05","qtVersion":6,"profileHash":"abc"},settings,False)
-  self.assertNotIn("token",str(data).lower());self.assertEqual(data["profileHash"],"abc")
+  self.assertNotIn("token",str(data).lower());self.assertEqual(data["profileHash"],"abc");self.assertEqual(data["addonVersion"],ADDON_VERSION)
  def test_link_success_copy_separates_device_and_reviewer_state(self):
-  title,detail=linked_copy();self.assertEqual(title,"Device linked successfully");self.assertIn("credential is saved securely",detail);self.assertIn("needs to be provisioned",detail)
-  title,detail=linked_copy({"displayName":"Dr Reviewer"});self.assertEqual(title,"Device linked successfully");self.assertIn("Dr Reviewer",detail);self.assertIn("access is ready",detail)
+  title,detail=linked_copy();self.assertEqual(title,"Signed in successfully");self.assertIn("credential was saved securely",detail)
+  title,detail=linked_copy({"displayName":"Dr Reviewer"});self.assertEqual(title,"Signed in successfully");self.assertIn("Dr Reviewer",detail);self.assertIn("BroBot",detail)
+ def test_request_too_large_error_copy_is_honest(self):
+  err=ApiError("request_too_large",413,server_message="body_bytes=200000 limit=128000")
+  self.assertEqual(headline(err),"Request too large")
+  self.assertIn("inventory",describe(err).lower())
+  self.assertNotIn("This card is too large",describe(err))
+ def test_merge_sync_plan_actions_priority(self):
+  from snaportho_reviewer.sync import chunk_list,merge_sync_plan_actions
+  self.assertEqual(chunk_list([1,2,3,4,5],2),[[1,2],[3,4],[5]])
+  merged=merge_sync_plan_actions([
+   [{"canonicalCardId":"a","action":"add"},{"canonicalCardId":"b","action":"unchanged"}],
+   [{"canonicalCardId":"a","action":"add"},{"canonicalCardId":"b","action":"update"}],
+   [{"canonicalCardId":"c","action":"conflict","reason":"x"}],
+  ])
+  by={x["canonicalCardId"]:x["action"] for x in merged}
+  self.assertEqual(by,{"a":"add","b":"update","c":"conflict"})
+ def test_side_panel_status_soft_mismatch(self):
+  from snaportho_reviewer.surfaces import (
+   build_enrichment_edited_fields,
+   build_enrichment_proposal_payload,
+   build_enrichment_tag_changes,
+   build_ob_qid_tag,
+   label_for_tag,
+   parse_ob_question_id,
+   side_panel_status,
+   LEVEL_OPTIONS,
+   IMPORTANCE_OPTIONS,
+  )
+  matched=side_panel_status({"found":True,"contentMatches":True,"versionNumber":3,"mappings":[{},{}]})
+  self.assertIn("Master",matched);self.assertIn("v3",matched);self.assertIn("2 KG",matched)
+  # Soft style mismatch must NOT alarm as "Differs from master"
+  mismatch=side_panel_status({"found":True,"identityResolved":True,"contentMatches":False,"styleMismatchLikely":True,"versionNumber":1,"mappings":[]})
+  self.assertIn("Master",mismatch);self.assertIn("No KG links yet",mismatch)
+  self.assertNotIn("Differs from master",mismatch)
+  missing=side_panel_status({"found":False,"identityResolved":False})
+  self.assertIn("Not in the master deck",missing)
+  fields=build_enrichment_edited_fields({},orthobullets="bullets",orthobullets_link="https://ob.example",rock="",rock_link="")
+  self.assertEqual({f["name"] for f in fields},{"Orthobullets","Orthobullets_Link"})
+  tags=build_enrichment_tag_changes(
+   ["SnapOrtho::Level::PGY1","SnapOrtho::Yield::Low","SnapOrtho::Foot"],
+   level_label="PGY3",importance_label="High",ob_question_id="3009",
+  )
+  self.assertIn("SnapOrtho::Level::PGY3",tags["add"])
+  self.assertIn("SnapOrtho::Yield::High",tags["add"])
+  self.assertIn("SnapOrtho::OB::QuestionId::3009",tags["add"])
+  self.assertIn("SnapOrtho::Level::PGY1",tags["remove"])
+  self.assertIn("SnapOrtho::Yield::Low",tags["remove"])
+  self.assertNotIn("SnapOrtho::Foot",tags["remove"])
+  self.assertEqual(parse_ob_question_id(["SnapOrtho::OB::QuestionId::abc-1"]),"abc-1")
+  self.assertEqual(build_ob_qid_tag("  12 34  "),"SnapOrtho::OB::QuestionId::12-34")
+  self.assertEqual(label_for_tag(LEVEL_OPTIONS,["SnapOrtho::Level::MS4"]),"MS4")
+  self.assertEqual(label_for_tag(IMPORTANCE_OPTIONS,["SnapOrtho::Yield::High"]),"High")
+  payload=build_enrichment_proposal_payload(
+   {"found":True,"canonicalCardId":"c","canonicalCardVersionId":"v","contentHash":"a"*64},
+   {"noteGuid":"g","cardOrdinal":0,"contentHash":"b"*64},
+   edited_fields=fields,mapping_changes=[],notes="hi",central_tag_changes=tags,
+  )
+  self.assertEqual(payload["sourceSurface"],"reviewer_panel")
+  self.assertEqual(payload["proposalKind"],"edit_existing_card")
+  self.assertEqual(payload["editedFields"],fields)
+  self.assertEqual(payload["notes"],"hi")
+  self.assertEqual(payload["centralTagChanges"],tags)
+ def test_settings_access_level_and_deck_summary(self):
+  self.assertEqual(access_level_label(["administrator","clinical_editor"]),"Administrator")
+  self.assertEqual(access_level_label(["clinical_editor"]),"Clinical editor")
+  self.assertEqual(access_level_label([],status="pending"),"Inactive (pending)")
+  self.assertIn("Clinical editor",format_roles(["clinical_editor","mapping_reviewer"]))
+  empty=summarize_local_deck([])
+  self.assertFalse(empty["installed"]);self.assertEqual(empty["cardCount"],0)
+  installed=summarize_local_deck([{"canonicalCardVersionId":"v1"},{"canonicalCardVersionId":"v1"},{"canonicalCardVersionId":"v2"}])
+  self.assertTrue(installed["installed"]);self.assertEqual(installed["cardCount"],3);self.assertEqual(installed["versionCount"],2)
  def test_personal_fields_and_tags_never_enter_central_upload(self):
   fields=central_fields([{"name":"Front","value":"central"},{"name":"Personal_Notes","value":"mine"}]);self.assertEqual(fields,[{"name":"Front","value":"central"}])
   self.assertEqual(central_tags(["SnapOrtho::Foot","personal::favorite"]),["SnapOrtho::Foot"])
+ def test_error_copy_never_conflates_auth_with_conflict(self):
+  auth=ApiError("authorization_failed",403);self.assertEqual(headline(auth),"Sign-in needed");self.assertIn("Sign In",describe(auth))
+  conflict=ApiError("conflict",409,False,"local_content_changed");self.assertEqual(headline(conflict),"Needs comparison");self.assertIn("master card changed",describe(conflict))
+  self.assertEqual(headline(ApiError("network_error",0,True)),"Offline")
+  self.assertNotIn("Manual comparison",describe(auth))
+ def test_typed_release_errors_are_human(self):
+  no_release=ApiError("no_release",404,server_message="no published SnapOrtho deck release")
+  self.assertEqual(headline(no_release),"No deck published")
+  self.assertIn("No published SnapOrtho Master Deck",describe(no_release))
+  self.assertNotIn("api_error",describe(no_release))
+  no_boot=ApiError("no_bootstrap_artifact",404)
+  self.assertEqual(headline(no_boot),"Starter pack missing")
+  self.assertIn("starter",describe(no_boot).lower())
+  upgrade=ApiError("upgrade_required",426,body={"downloadUrl":"https://example.com/addon"})
+  self.assertIn("newer",describe(upgrade).lower());self.assertIn("example.com",describe(upgrade))
+ def test_http_error_classification_for_releases(self):
+  from snaportho_reviewer.api import _classify_http_error
+  self.assertEqual(_classify_http_error(404,{"error":"no published SnapOrtho deck release"},"/api/anki/deck/releases/current")[0],"no_release")
+  self.assertEqual(_classify_http_error(404,{"error":"bootstrap artifact not found"},"/api/anki/deck/releases/x/artifact/bootstrap_apkg")[0],"no_bootstrap_artifact")
+  self.assertEqual(_classify_http_error(426,{"error":"upgrade_required"},"/api/anki/deck/sync/plan")[0],"upgrade_required")
+  self.assertEqual(_classify_http_error(500,{"error":"boom"},"/api/anki/deck/releases/current")[0],"server_error")
+  self.assertEqual(_classify_http_error(503,{"error":"database_upgrade_required"},"/api/anki/reviewer/kg/improvements/suggest")[0],"database_upgrade_required")
+ def test_master_deck_menu_entry_and_helpers(self):
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:boot=source.read()
+  self.assertIn("Get Started / Master Deck",boot)
+  self.assertIn("MasterDeckDialog",boot)
+  from snaportho_reviewer.master_deck import plan_counts,has_master_markers
+  self.assertEqual(plan_counts({"actions":[{"action":"add"},{"action":"add"},{"action":"unchanged"}]}),{"add":2,"unchanged":1})
+  # has_master_markers needs a collection; pure inventory empty via fake
+  class Col:
+   def find_cards(self,q):return[]
+  self.assertFalse(has_master_markers(Col()))
+ def test_structured_tags_round_trip_and_stay_consistent(self):
+  structured,free=split_structured(["SnapOrtho::Level::Resident","SnapOrtho::Yield::High","SnapOrtho::Foot"])
+  self.assertEqual(sorted(structured),["SnapOrtho::Level::Resident","SnapOrtho::Yield::High"]);self.assertEqual(free,["SnapOrtho::Foot"])
+  self.assertEqual(combo_for_tag(LEVEL_TAGS,structured),"Resident");self.assertEqual(combo_for_tag(YIELD_TAGS,structured),"High yield")
+  self.assertEqual(combo_for_tag(LEVEL_TAGS,[]),"—")
+  self.assertEqual(tag_for_label(LEVEL_TAGS,"Resident"),"SnapOrtho::Level::Resident");self.assertIsNone(tag_for_label(LEVEL_TAGS,"—"))
+ def test_structured_and_free_tags_pass_server_central_tag_pattern(self):
+  for _,tag in LEVEL_TAGS+YIELD_TAGS:
+   if tag:self.assertRegex(tag,CENTRAL_TAG_RE)
+  self.assertIsNone(CENTRAL_TAG_RE.match("highyield"));self.assertIsNone(CENTRAL_TAG_RE.match("personal::mine"));self.assertRegex("SnapOrtho::HighYield",CENTRAL_TAG_RE)
  def test_workspace_draft_survives_restart_and_reuses_idempotency(self):
   with tempfile.TemporaryDirectory()as d:
    path=os.path.join(d,"state.db");s=DraftStore(path,"profile:local");payload={"editedFields":[{"name":"Front","value":"new"}],"localIdentity":{"contentHash":"a"*64}};key=str(uuid.uuid4());s.save_workspace("guid",0,"version",payload,key);s.close();s=DraftStore(path,"profile:local");draft=s.load_workspace("guid",0,"version");self.assertEqual(draft["idempotencyKey"],key);self.assertEqual(draft["payload"],payload);s.mark_workspace("guid",0,"version","conflict");self.assertEqual(s.load_workspace("guid",0,"version")["state"],"conflict");s.close()
+ def test_cross_language_hash_parity_frozen_vectors(self):
+  # These MUST equal the TS constants in anki-deck-incorporation.test.ts. Input has non-ASCII
+  # (≥, µ), personal + marker fields, and unsorted tags to catch ensure_ascii / sort drift.
+  from snaportho_reviewer.sync import PERSONAL_FIELD_RE,MARKER_FIELDS_LOWER
+  from snaportho_reviewer.editor import proposed_content_hash
+  import hashlib
+  fields=[("Front","What is the ≥ threshold?"),("Back","µ value"),("Personal_Notes","mine"),("SnapOrtho_ID","abc")];tags=["SnapOrtho::Foot","SnapOrtho::Ankle","personal::fav","marked"];ordinal=2
+  note=dict(fields);parts=[f"{n}\0{note[n]}" for n in sorted(note) if not(PERSONAL_FIELD_RE.match(n)or n.lower()in MARKER_FIELDS_LOWER)]
+  parts+= [f"tag\0{t}" for t in sorted(t for t in tags if t.startswith("SnapOrtho::"))]+[f"ord\0{ordinal}"]
+  central=hashlib.sha256("\n".join(parts).encode()).hexdigest()
+  self.assertEqual(central,"9495123b73dc2f69148fa64ac0a20515a0086c2e34d4a34326f5eac978e074f5")
+  identity=proposed_content_hash([{"name":n,"value":v}for n,v in fields],sorted(tags),ordinal)
+  self.assertEqual(identity,"e636e4722e5b0d9b863b5c0c6f890d169d4dc55757744d1b9e4f8f7e39ef53d3")
+ def test_delta_apply_splits_plan_strips_personal_and_never_writes_conflicts(self):
+  from snaportho_reviewer.deck_update import build_operations,apply_operations,central_snapshot_fields,marker_values,ack_status
+  def card(cid,vid,guid,ordinal=0,media=None):
+   return{"canonicalCardId":cid,"canonicalCardVersionId":vid,"noteGuid":guid,"cardOrdinal":ordinal,"contentHash":"c"*64,"deckPath":"SnapOrtho::Foot","centralTags":["SnapOrtho::Foot"],"fieldSnapshot":[{"name":"Front","value":"Q"},{"name":"Personal_Notes","value":"mine"},{"name":"SnapOrtho_ID","value":"x"}],"mediaHashes":media or[]}
+  manifest=[card("u","v1","g-u",media=["a"*64]),card("a","v2","g-a"),card("c","v3","g-c")]
+  actions=[{"canonicalCardId":"u","action":"update"},{"canonicalCardId":"a","action":"add"},{"canonicalCardId":"c","action":"conflict","reason":"local_central_fields_changed"},{"canonicalCardId":"x","action":"update"},{"canonicalCardId":"z","action":"unchanged"}]
+  ops=build_operations(actions,manifest)
+  self.assertEqual([c["canonicalCardId"]for c in ops["update"]],["u"]);self.assertEqual([c["canonicalCardId"]for c in ops["add"]],["a"])
+  self.assertEqual(len(ops["conflict"]),1);self.assertEqual(ops["conflict"][0]["reason"],"local_central_fields_changed")
+  self.assertEqual(ops["missing_manifest"],["x"]);self.assertEqual(ops["media"],{"a"*64})
+  # personal + marker fields are stripped before any write
+  self.assertEqual(central_snapshot_fields(manifest[0]["fieldSnapshot"]),[{"name":"Front","value":"Q"}])
+  self.assertEqual(marker_values(manifest[0]),{"SnapOrtho_ID":"u","SnapOrtho_Version":"v1","SnapOrtho_Installed_Hash":"c"*64})
+  class FakeGateway:
+   def __init__(self):self.updates=[];self.creates=[]
+   def write_central_update(self,guid,ordinal,fields,tags,deck,markers):self.updates.append((guid,fields,tags,deck,markers));return True
+   def create_central_card(self,guid,fields,tags,deck,markers):self.creates.append((guid,fields,markers));return True
+  g=FakeGateway();summary=apply_operations(g,ops)
+  self.assertEqual((summary["updated"],summary["added"],summary["conflicts"]),(1,1,1));self.assertEqual(summary["errors"],[])
+  self.assertEqual(len(g.updates),1);self.assertEqual(len(g.creates),1)  # conflict card was never written
+  self.assertEqual(g.updates[0][1],[{"name":"Front","value":"Q"}])  # no personal/marker leaked into the write
+  self.assertEqual(ack_status(summary),"applied")
+  self.assertEqual(ack_status({"errors":["x"],"updated":1,"added":0}),"partial");self.assertEqual(ack_status({"errors":["x"],"updated":0,"added":0}),"failed")
+ def test_delta_apply_reports_not_found_without_aborting(self):
+  from snaportho_reviewer.deck_update import build_operations,apply_operations
+  manifest=[{"canonicalCardId":"u","canonicalCardVersionId":"v","noteGuid":"g","cardOrdinal":0,"contentHash":"c"*64,"deckPath":"SnapOrtho::Foot","centralTags":[],"fieldSnapshot":[{"name":"Front","value":"Q"}],"mediaHashes":[]}]
+  ops=build_operations([{"canonicalCardId":"u","action":"update"}],manifest)
+  class MissingGateway:
+   def write_central_update(self,*a):return False
+  summary=apply_operations(MissingGateway(),ops)
+  self.assertEqual(summary["updated"],0);self.assertIn("not_found:u",summary["errors"])
  def test_central_sync_hash_ignores_personal_fields(self):
   class Note(dict):
    guid="g";tags=["SnapOrtho::Foot","personal::favorite"]

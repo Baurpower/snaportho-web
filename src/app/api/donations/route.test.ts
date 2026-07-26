@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 
-import { mapDonationRowToListItem } from '../../../lib/donations/display.ts';
+import { mapDonationRowToListItem } from '../../../lib/donations/display';
 
 function buildDonationsResponse(rows: Array<ReturnType<typeof sampleRow>>) {
   const donations = rows.map((row) => mapDonationRowToListItem(row));

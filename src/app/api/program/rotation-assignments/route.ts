@@ -3,6 +3,7 @@ import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import { requireRotationSettingsAccess } from "@/lib/workspace/rotations/permissions";
 import { getResidentStatusDetails } from "@/lib/workspace/pgy";
+import { getProgramRotationAssignmentsInRange } from "@/lib/workspace/call/rotations";
 
 type PostBody = {
   membershipId?: string | null;
@@ -355,64 +356,38 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const { data, error } = await supabase
-      .from("rotation_assignments")
-      .select(`
-        id,
-        program_id,
-        roster_id,
-        program_membership_id,
-        rotation_id,
-        start_date,
-        end_date,
-        site_label,
-        team_label,
-        notes,
-        rotations (
-          id,
-          name,
-          short_name,
-          category,
-          color
-        )
-      `)
-      .eq("program_id", activeMembership.program_id)
-      .lte("start_date", monthEnd)
-      .gte("end_date", monthStart)
-      .order("start_date", { ascending: true });
+    // Unify on the canonical rotation loader so the generator/buddy engine (which
+    // consume this route via resident.rotationAssignments) see exactly the same
+    // rotation data (identity + window) as validation and availability.
+    const rotationAssignments = await getProgramRotationAssignmentsInRange(
+      activeMembership.program_id,
+      monthStart,
+      monthEnd,
+      supabase
+    );
 
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    const assignments = (data ?? []).map((row) => {
-      const rotation = Array.isArray(row.rotations)
-        ? row.rotations[0]
-        : row.rotations;
-
-      return {
-        id: row.id,
-        rosterId: row.roster_id,
-        // Compatibility field: `membershipId` mirrors roster identity for older clients.
-        membershipId: row.roster_id,
-        programMembershipId: row.program_membership_id,
-        rotationId: row.rotation_id,
-        startDate: row.start_date,
-        endDate: row.end_date,
-        siteLabel: row.site_label,
-        teamLabel: row.team_label,
-        notes: row.notes,
-        rotation: rotation
-          ? {
-              id: rotation.id,
-              name: rotation.name,
-              shortName: rotation.short_name,
-              category: rotation.category,
-              color: rotation.color,
-            }
-          : null,
-      };
-    });
+    const assignments = rotationAssignments.map((row) => ({
+      id: row.id,
+      rosterId: row.rosterId,
+      // Compatibility field: `membershipId` mirrors roster identity for older clients.
+      membershipId: row.rosterId,
+      programMembershipId: row.programMembershipId,
+      rotationId: row.rotation?.id ?? null,
+      startDate: row.startDate,
+      endDate: row.endDate,
+      siteLabel: row.siteLabel,
+      teamLabel: row.teamLabel,
+      notes: row.notes,
+      rotation: row.rotation
+        ? {
+            id: row.rotation.id,
+            name: row.rotation.name,
+            shortName: row.rotation.short_name,
+            category: row.rotation.category,
+            color: row.rotation.color,
+          }
+        : null,
+    }));
 
     return NextResponse.json({ assignments }, { status: 200 });
   } catch (error) {

@@ -7,7 +7,7 @@ type BroBotProductTab = {
   description: string;
 };
 
-const configModulePath = './BroBotProductTabs.config.ts';
+const configModulePath = './BroBotProductTabs.config';
 const { broBotProductTabs, isBroBotProductTabActive } = (await import(configModulePath)) as {
   broBotProductTabs: BroBotProductTab[];
   isBroBotProductTabActive: (pathname: string | null, tab: BroBotProductTab) => boolean;

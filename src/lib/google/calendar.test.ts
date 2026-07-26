@@ -6,7 +6,7 @@ const {
   decodeGoogleOAuthState,
   encodeGoogleOAuthState,
   sanitizeGoogleOAuthNextPath,
-} = require("./oauth-state.ts") as typeof import("./oauth-state");
+} = require("./oauth-state") as typeof import("./oauth-state");
 
 function assertGoogleEqual<T>(label: string, actual: T, expected: T) {
   if (actual !== expected) {

@@ -8,7 +8,7 @@ const {
   isGraduatedFromGradYear,
   resolvePgyFromSources,
   resolveTrainingLevelFromSources,
-} = require("./pgy.ts") as typeof import("./pgy");
+} = require("./pgy") as typeof import("./pgy");
 
 function assertEqual<T>(label: string, actual: T, expected: T) {
   if (actual !== expected) {

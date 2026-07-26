@@ -3,18 +3,17 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 // Node's type-stripping runner requires the extension; the app tsconfig intentionally disallows it.
-// @ts-expect-error -- required by the direct Node test runner.
-import { CasePrepWebV11Schema } from "./schema.ts";
+import { CasePrepWebV11Schema } from "./schema";
 
 const legacyAskRoute = readFileSync(
-  join(process.cwd(), "src/app/api/brobot/ask/route.ts"),
+  join(process.cwd(), "src/app/api/brobot/ask/route"),
   "utf8"
 );
 assert.match(legacyAskRoute, /const upstreamUrl = `\$\{baseUrl\}\/case-prep`/);
 assert.doesNotMatch(legacyAskRoute, /case-prep\/web\/v1\.1/);
 
 const caseReadinessSource = readFileSync(
-  join(process.cwd(), "src/lib/student-curriculum/student-caseprep-context.ts"),
+  join(process.cwd(), "src/lib/student-curriculum/student-caseprep-context"),
   "utf8"
 );
 assert.match(caseReadinessSource, /isCasePrepWebV11Enabled\(\)/);
@@ -22,7 +21,7 @@ assert.match(caseReadinessSource, /requestCasePrepWebV11/);
 
 // The flag itself must remain centralized and opt-in.
 const flagsSource = readFileSync(
-  join(process.cwd(), "src/lib/caseprep-v1-1/flags.ts"),
+  join(process.cwd(), "src/lib/caseprep-v1-1/flags"),
   "utf8"
 );
 assert.match(flagsSource, /CASEPREP_WEB_V1_1_ENABLED\s*===\s*["']true["']/);

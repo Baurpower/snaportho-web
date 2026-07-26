@@ -23,6 +23,18 @@ import {
 import { useRouter } from "next/navigation";
 import DayDetailsModal from "@/components/workspace/shared/daydetailsmodal";
 import TimeOffDayDetailsContent from "@/components/workspace/time-off/timeoffdaydetailscontent";
+import ProgramTimeOffDashboard from "@/components/workspace/time-off/program-time-off-dashboard";
+import TimeOffReviewDrawer from "@/components/workspace/time-off/time-off-review-drawer";
+import {
+  mergeTimeOffItems,
+  normalizeTimeOffMonthResponse,
+  type ApprovalStatus,
+  type TimeOffItem,
+  type TimeOffMonthResponse,
+  type TimeOffType,
+} from "@/components/workspace/time-off/time-off-display";
+import { getTimeOffTypeLabel } from "@/lib/workspace/call/time-off-shared";
+import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -30,30 +42,7 @@ const fadeUp = {
 };
 
 type PlannerViewMode = "month" | "year";
-type TimeOffType = "personal" | "conference";
-type ApprovalStatus = "requested" | "approved" | "denied";
-
-type TimeOffItem = {
-  id: string;
-  membershipId: string | null;
-  type: TimeOffType;
-  usingPto: boolean;
-  startDate: string | null;
-  endDate: string | null;
-  title: string | null;
-  location: string | null;
-  notes: string | null;
-  approvalStatus?: ApprovalStatus | null;
-  approved?: boolean | null;
-  isMine: boolean;
-};
-
-type TimeOffMonthResponse = {
-  monthStart: string;
-  monthEnd: string;
-  myMembershipId: string | null;
-  items: TimeOffItem[];
-};
+type PlannerScope = "mine" | "program";
 
 type GoldenWeekendSummary = {
   friday: string;
@@ -189,58 +178,6 @@ function getDayCount(startDate: string | null, endDate: string | null) {
   return enumerateDateKeys(startDate, endDate).length;
 }
 
-function isApprovalStatus(value: unknown): value is ApprovalStatus {
-  return value === "requested" || value === "approved" || value === "denied";
-}
-
-function isTimeOffType(value: unknown): value is TimeOffType {
-  return value === "personal" || value === "conference";
-}
-
-function normalizeTimeOffMonthResponse(payload: unknown): TimeOffMonthResponse {
-  const safePayload =
-    payload && typeof payload === "object"
-      ? (payload as Record<string, unknown>)
-      : {};
-
-  const rawItems = Array.isArray(safePayload.items) ? safePayload.items : [];
-
-  const items: TimeOffItem[] = rawItems.map((raw, index) => {
-    const item =
-      raw && typeof raw === "object" ? (raw as Record<string, unknown>) : {};
-
-    return {
-  id: typeof item.id === "string" ? item.id : `fallback-${index}`,
-  membershipId:
-    typeof item.membershipId === "string" ? item.membershipId : null,
-  type: isTimeOffType(item.type) ? item.type : "personal",
-      usingPto: Boolean(item.usingPto),
-      startDate: typeof item.startDate === "string" ? item.startDate : null,
-      endDate: typeof item.endDate === "string" ? item.endDate : null,
-      title: typeof item.title === "string" ? item.title : null,
-      location: typeof item.location === "string" ? item.location : null,
-      notes: typeof item.notes === "string" ? item.notes : null,
-      approvalStatus: isApprovalStatus(item.approvalStatus)
-        ? item.approvalStatus
-        : null,
-      approved: typeof item.approved === "boolean" ? item.approved : null,
-      isMine: Boolean(item.isMine),
-    };
-  });
-
-  return {
-    monthStart:
-      typeof safePayload.monthStart === "string" ? safePayload.monthStart : "",
-    monthEnd:
-      typeof safePayload.monthEnd === "string" ? safePayload.monthEnd : "",
-    myMembershipId:
-      typeof safePayload.myMembershipId === "string"
-        ? safePayload.myMembershipId
-        : null,
-    items,
-  };
-}
-
 function normalizeGoldenWeekendsResponse(
   payload: unknown
 ): GoldenWeekendsMonthResponse {
@@ -337,7 +274,43 @@ function getTimeOffTone(item: TimeOffItem) {
       badge: "bg-violet-600 text-white",
       icon: <BriefcaseMedical className="h-4 w-4 shrink-0" />,
       text: "text-violet-950",
-      label: "Conference",
+      label: getTimeOffTypeLabel("conference"),
+    };
+  }
+
+  if (item.type === "vacation") {
+    return {
+      card: item.isMine
+        ? "border-sky-300 bg-sky-50"
+        : "border-sky-200 bg-sky-50/70",
+      badge: "bg-sky-600 text-white",
+      icon: <PlaneTakeoff className="h-4 w-4 shrink-0" />,
+      text: "text-sky-950",
+      label: getTimeOffTypeLabel("vacation"),
+    };
+  }
+
+  if (item.type === "sick") {
+    return {
+      card: item.isMine
+        ? "border-rose-300 bg-rose-50"
+        : "border-rose-200 bg-rose-50/70",
+      badge: "bg-rose-600 text-white",
+      icon: <XCircle className="h-4 w-4 shrink-0" />,
+      text: "text-rose-950",
+      label: getTimeOffTypeLabel("sick"),
+    };
+  }
+
+  if (item.type === "other") {
+    return {
+      card: item.isMine
+        ? "border-amber-300 bg-amber-50"
+        : "border-amber-200 bg-amber-50/70",
+      badge: "bg-amber-600 text-white",
+      icon: <FileText className="h-4 w-4 shrink-0" />,
+      text: "text-amber-950",
+      label: getTimeOffTypeLabel("other"),
     };
   }
 
@@ -348,7 +321,7 @@ function getTimeOffTone(item: TimeOffItem) {
     badge: "bg-slate-900 text-white",
     icon: <UserRound className="h-4 w-4 shrink-0" />,
     text: "text-slate-950",
-    label: "Personal",
+    label: getTimeOffTypeLabel(item.type),
   };
 }
 
@@ -494,8 +467,13 @@ function TimeOffRequestCard({
           </div>
 
           <h4 className={`mt-4 text-xl font-bold tracking-tight ${tone.text}`}>
-            {item.title ?? (item.type === "conference" ? "Conference" : "Time off")}
+            {item.title ?? getTimeOffTypeLabel(item.type)}
           </h4>
+          {item.residentName && !item.isMine ? (
+            <p className="mt-1 text-sm font-medium text-slate-600">
+              {item.residentName}
+            </p>
+          ) : null}
 
           <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-600">
             <span className="font-medium">
@@ -661,8 +639,13 @@ function StatusBoard({
 export default function TimeOffHubPage() {
   const now = new Date();
   const router = useRouter();
+  const { permissions, loading: permissionsLoading } = useWorkspacePermissions();
+  const canUploadTimeOff = permissions?.canUploadTimeOff ?? false;
+  const isAdminMode = permissions?.mode === "admin";
 
   const [viewMode, setViewMode] = useState<PlannerViewMode>("month");
+  const [plannerScope, setPlannerScope] = useState<PlannerScope>("mine");
+  const [scopeInitialized, setScopeInitialized] = useState(false);
   const [visibleDate, setVisibleDate] = useState({
     year: now.getFullYear(),
     monthIndex: now.getMonth(),
@@ -677,6 +660,20 @@ export default function TimeOffHubPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (permissionsLoading || scopeInitialized) return;
+    if (canUploadTimeOff || isAdminMode) {
+      setPlannerScope("program");
+    }
+    setScopeInitialized(true);
+  }, [canUploadTimeOff, isAdminMode, permissionsLoading, scopeInitialized]);
+
+  useEffect(() => {
+    if (!canUploadTimeOff && plannerScope === "program") {
+      setPlannerScope("mine");
+    }
+  }, [canUploadTimeOff, plannerScope]);
 
   const { monthStart, monthEnd } = useMemo(
     () => getMonthRange(visibleDate.year, visibleDate.monthIndex),
@@ -827,7 +824,9 @@ export default function TimeOffHubPage() {
           ),
         ]);
 
-        const combinedItems = timeOffResults.flatMap((result) => result.items);
+        const combinedItems = mergeTimeOffItems(
+          timeOffResults.map((result) => result.items)
+        );
         const firstMonth = timeOffResults[0];
         const lastMonth = timeOffResults[timeOffResults.length - 1];
 
@@ -842,6 +841,7 @@ export default function TimeOffHubPage() {
             monthStart: firstMonth?.monthStart ?? "",
             monthEnd: lastMonth?.monthEnd ?? "",
             myMembershipId: firstMonth?.myMembershipId ?? null,
+            myRosterId: firstMonth?.myRosterId ?? null,
             items: combinedItems,
           });
 
@@ -1103,39 +1103,100 @@ export default function TimeOffHubPage() {
                     SnapOrtho
                   </div>
                   <h1 className="mt-5 text-4xl font-black tracking-tight text-white md:text-6xl">
-                    Time-Off Planner
+                    {plannerScope === "program"
+                      ? "Program Time-Off"
+                      : "Time-Off Planner"}
                   </h1>
                   <p className="mt-3 max-w-2xl text-base leading-7 text-slate-300 md:text-lg">
-                    A cleaner planning view for your requests, approvals, trips,
-                    and conferences.
+                    {plannerScope === "program"
+                      ? "See who is out across the program, filter by resident and type, and open any event for details."
+                      : "A cleaner planning view for your requests, approvals, trips, and conferences."}
                   </p>
                 </div>
 
-                <div className="grid gap-4 md:grid-cols-3">
-                  <StatCard
-                    title="Next Day Off"
-                    value={nextDayOff ? formatShortDate(nextDayOff) : "—"}
-                    subtitle={
-                      nextDayOff
-                        ? "Your next approved or requested day away"
-                        : "No upcoming time-off in view"
-                    }
-                  />
-                  <StatCard
-                    title={viewMode === "month" ? "Golden Weekends" : "Golden Weekends This Year"}
-                    value={String(goldenWeekendsThisPeriod)}
-                    subtitle={
-                      viewMode === "month"
-                        ? "Full Fri–Sun weekends without call"
-                        : "Full Fri–Sun weekends without call across the year"
-                    }
-                  />
-                  <StatCard
-                    title="Visible Days Away"
-                    value={String(myPersonalDays + myConferenceDays)}
-                    subtitle={`${myPersonalDays} personal • ${myConferenceDays} conference`}
-                  />
-                </div>
+                {canUploadTimeOff ? (
+                  <div className="flex flex-wrap items-center gap-2">
+                    <div className="flex items-center gap-1 rounded-full bg-white/10 p-1">
+                      <SegmentToggle
+                        active={plannerScope === "mine"}
+                        label="My planner"
+                        icon={<UserRound className="h-4 w-4" />}
+                        onClick={() => setPlannerScope("mine")}
+                      />
+                      <SegmentToggle
+                        active={plannerScope === "program"}
+                        label="Program"
+                        icon={<BadgeCheck className="h-4 w-4" />}
+                        onClick={() => setPlannerScope("program")}
+                      />
+                    </div>
+                    {plannerScope === "program" ? (
+                      <button
+                        type="button"
+                        onClick={() => router.push("/work/time-off/add?mode=admin")}
+                        className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/15"
+                      >
+                        <Plus className="h-4 w-4" />
+                        Batch entry
+                      </button>
+                    ) : null}
+                  </div>
+                ) : null}
+
+                {plannerScope === "mine" ? (
+                  <div className="grid gap-4 md:grid-cols-3">
+                    <StatCard
+                      title="Next Day Off"
+                      value={nextDayOff ? formatShortDate(nextDayOff) : "—"}
+                      subtitle={
+                        nextDayOff
+                          ? "Your next approved or requested day away"
+                          : "No upcoming time-off in view"
+                      }
+                    />
+                    <StatCard
+                      title={viewMode === "month" ? "Golden Weekends" : "Golden Weekends This Year"}
+                      value={String(goldenWeekendsThisPeriod)}
+                      subtitle={
+                        viewMode === "month"
+                          ? "Full Fri–Sun weekends without call"
+                          : "Full Fri–Sun weekends without call across the year"
+                      }
+                    />
+                    <StatCard
+                      title="Visible Days Away"
+                      value={String(myPersonalDays + myConferenceDays)}
+                      subtitle={`${myPersonalDays} personal • ${myConferenceDays} conference`}
+                    />
+                  </div>
+                ) : (
+                  <div className="grid gap-4 md:grid-cols-3">
+                    <StatCard
+                      title="Program events"
+                      value={String(items.length)}
+                      subtitle="Loaded for the visible range"
+                    />
+                    <StatCard
+                      title="Residents away"
+                      value={String(
+                        new Set(
+                          items
+                            .filter((i) => i.approvalStatus !== "denied")
+                            .map((i) => i.rosterId ?? i.id)
+                        ).size
+                      )}
+                      subtitle="With at least one event in range"
+                    />
+                    <StatCard
+                      title="Pending approvals"
+                      value={String(
+                        items.filter((i) => i.approvalStatus === "requested")
+                          .length
+                      )}
+                      subtitle="Requested status across program"
+                    />
+                  </div>
+                )}
               </div>
             </motion.div>
           </div>
@@ -1167,7 +1228,7 @@ export default function TimeOffHubPage() {
 
                   <div>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
-                      My Requests
+                      {plannerScope === "program" ? "Program calendar" : "My Requests"}
                     </p>
                     <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-950 md:text-3xl">
                       {visibleHeading}
@@ -1200,98 +1261,181 @@ export default function TimeOffHubPage() {
                     />
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => router.push("/work/time-off/add")}
-                    className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 py-2.5 text-sm font-semibold text-sky-950 transition hover:border-sky-300 hover:bg-sky-100"
-                  >
-                    <Plus className="h-4 w-4" />
-                    Add Time-Off
-                  </button>
+                  <div className="flex flex-wrap items-center gap-2">
+                    {plannerScope === "program" && canUploadTimeOff ? (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          router.push("/work/time-off/add?mode=admin")
+                        }
+                        className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 transition hover:bg-slate-50"
+                      >
+                        Batch entry
+                      </button>
+                    ) : null}
+                    <button
+                      type="button"
+                      onClick={() => router.push("/work/time-off/add")}
+                      className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 py-2.5 text-sm font-semibold text-sky-950 transition hover:border-sky-300 hover:bg-sky-100"
+                    >
+                      <Plus className="h-4 w-4" />
+                      Add Time-Off
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              <div className="mb-6 grid gap-3 md:grid-cols-4">
-                <div className="rounded-[1.25rem] border border-slate-200 bg-slate-50 px-4 py-4">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
-                    Visible Range
-                  </p>
-                  <p className="mt-2 text-xl font-black text-slate-900">
-                    {viewMode === "month" ? "Month" : "Year"}
-                  </p>
-                  <p className="mt-1 text-sm text-slate-600">{topSummaryLabel}</p>
-                </div>
-
-                <div className="rounded-[1.25rem] border border-amber-200 bg-amber-50 px-4 py-4">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-amber-700">
-                    Requested
-                  </p>
-                  <p className="mt-2 text-2xl font-black text-amber-900">
-                    {requestedCount}
-                  </p>
-                </div>
-
-                <div className="rounded-[1.25rem] border border-emerald-200 bg-emerald-50 px-4 py-4">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
-                    Approved
-                  </p>
-                  <p className="mt-2 text-2xl font-black text-emerald-900">
-                    {approvedCount}
-                  </p>
-                </div>
-
-                <div className="rounded-[1.25rem] border border-violet-200 bg-violet-50 px-4 py-4">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-700">
-                    Conference Days
-                  </p>
-                  <p className="mt-2 text-2xl font-black text-violet-900">
-                    {myConferenceDays}
-                  </p>
-                </div>
-              </div>
-
-              {loading ? (
-                <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-6 text-sm text-slate-500">
-                  Loading time-off planner...
-                </div>
+              {plannerScope === "program" ? (
+                <ProgramTimeOffDashboard
+                  items={items}
+                  year={visibleDate.year}
+                  monthIndex={visibleDate.monthIndex}
+                  viewMode={viewMode}
+                  loading={loading}
+                  onOpenItem={(item) => {
+                    setSelectedItem(item);
+                    setSelectedDateKey(item.startDate);
+                  }}
+                />
               ) : (
-                <div className="space-y-8">
-                  <TimeOffListSection
-                    title="Upcoming"
-                    subtitle={
-                      viewMode === "month"
-                        ? "What you have coming up next in this visible month."
-                        : "Your next upcoming requests across the visible year."
-                    }
-                    count={upcomingItems.length}
-                    icon={<ArrowRight className="h-5 w-5" />}
-                    items={upcomingItems}
-                    emptyTitle="No upcoming requests"
-                    emptySubtitle="You do not have any visible upcoming time away in this range."
-                    onOpen={(item) => {
-                      setSelectedItem(item);
-                      setSelectedDateKey(item.startDate);
-                    }}
-                  />
+                <>
+                  <div className="mb-6 grid gap-3 md:grid-cols-4">
+                    <div className="rounded-[1.25rem] border border-slate-200 bg-slate-50 px-4 py-4">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+                        Visible Range
+                      </p>
+                      <p className="mt-2 text-xl font-black text-slate-900">
+                        {viewMode === "month" ? "Month" : "Year"}
+                      </p>
+                      <p className="mt-1 text-sm text-slate-600">
+                        {topSummaryLabel}
+                      </p>
+                    </div>
 
-                  <StatusBoard
-                    requestedItems={requestedItems}
-                    approvedItems={approvedItems}
-                    deniedItems={deniedItems}
-                    onOpen={(item) => {
-                      setSelectedItem(item);
-                      setSelectedDateKey(item.startDate);
-                    }}
-                  />
-                </div>
+                    <div className="rounded-[1.25rem] border border-amber-200 bg-amber-50 px-4 py-4">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-amber-700">
+                        Requested
+                      </p>
+                      <p className="mt-2 text-2xl font-black text-amber-900">
+                        {requestedCount}
+                      </p>
+                    </div>
+
+                    <div className="rounded-[1.25rem] border border-emerald-200 bg-emerald-50 px-4 py-4">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
+                        Approved
+                      </p>
+                      <p className="mt-2 text-2xl font-black text-emerald-900">
+                        {approvedCount}
+                      </p>
+                    </div>
+
+                    <div className="rounded-[1.25rem] border border-violet-200 bg-violet-50 px-4 py-4">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-700">
+                        Conference Days
+                      </p>
+                      <p className="mt-2 text-2xl font-black text-violet-900">
+                        {myConferenceDays}
+                      </p>
+                    </div>
+                  </div>
+
+                  {loading ? (
+                    <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-6 text-sm text-slate-500">
+                      Loading time-off planner...
+                    </div>
+                  ) : (
+                    <div className="space-y-8">
+                      <TimeOffListSection
+                        title="Upcoming"
+                        subtitle={
+                          viewMode === "month"
+                            ? "What you have coming up next in this visible month."
+                            : "Your next upcoming requests across the visible year."
+                        }
+                        count={upcomingItems.length}
+                        icon={<ArrowRight className="h-5 w-5" />}
+                        items={upcomingItems}
+                        emptyTitle="No upcoming requests"
+                        emptySubtitle="You do not have any visible upcoming time away in this range."
+                        onOpen={(item) => {
+                          setSelectedItem(item);
+                          setSelectedDateKey(item.startDate);
+                        }}
+                      />
+
+                      <StatusBoard
+                        requestedItems={requestedItems}
+                        approvedItems={approvedItems}
+                        deniedItems={deniedItems}
+                        onOpen={(item) => {
+                          setSelectedItem(item);
+                          setSelectedDateKey(item.startDate);
+                        }}
+                      />
+                    </div>
+                  )}
+                </>
               )}
             </motion.div>
           </div>
         </section>
       </main>
 
+      {plannerScope === "program" ? (
+        <TimeOffReviewDrawer
+          open={!!selectedItem}
+          item={selectedItem}
+          canManageProgram={canUploadTimeOff}
+          onClose={() => {
+            setSelectedItem(null);
+            setSelectedDateKey(null);
+            setDraftItem(null);
+          }}
+          onUpdated={(updated) => {
+            setData((prev) =>
+              prev
+                ? {
+                    ...prev,
+                    items: prev.items.map((row) =>
+                      row.id === updated.id
+                        ? {
+                            ...row,
+                            ...updated,
+                            residentName:
+                              updated.residentName || row.residentName,
+                          }
+                        : row
+                    ),
+                  }
+                : prev
+            );
+            setSelectedItem((prev) =>
+              prev && prev.id === updated.id
+                ? { ...prev, ...updated, residentName: updated.residentName || prev.residentName }
+                : prev
+            );
+          }}
+          onDeleted={(id) => {
+            setData((prev) =>
+              prev
+                ? {
+                    ...prev,
+                    items: prev.items.filter((row) => row.id !== id),
+                  }
+                : prev
+            );
+            setSelectedItem(null);
+            setSelectedDateKey(null);
+            setDraftItem(null);
+          }}
+        />
+      ) : null}
+
       <DayDetailsModal
-        open={!!selectedDateKey || !!selectedItem}
+        open={
+          plannerScope === "mine" && (!!selectedDateKey || !!selectedItem)
+        }
         onClose={() => {
           setSelectedDateKey(null);
           setSelectedItem(null);
@@ -1300,7 +1444,7 @@ export default function TimeOffHubPage() {
         title="Time-Off Details"
         subtitle={
           draftItem
-            ? draftItem.title ?? "Time-off request"
+            ? draftItem.title ?? getTimeOffTypeLabel(draftItem.type)
             : "See request details."
         }
         dateLabel={draftItem ? formatDateRange(draftItem.startDate, draftItem.endDate) : modalDateLabel}
@@ -1309,6 +1453,21 @@ export default function TimeOffHubPage() {
         {(isEditing) =>
           draftItem ? (
             <div className="space-y-4">
+              {plannerScope === "program" ? (
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                    Resident
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-slate-900">
+                    {draftItem.residentName}
+                  </p>
+                  {!draftItem.isMine ? (
+                    <p className="mt-1 text-xs text-slate-500">
+                      View only — editing other residents is not enabled yet.
+                    </p>
+                  ) : null}
+                </div>
+              ) : null}
               <div className="flex flex-wrap items-center gap-2">
                 <div
                   className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] ${

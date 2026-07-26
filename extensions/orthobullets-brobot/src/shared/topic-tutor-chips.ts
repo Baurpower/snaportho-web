@@ -1,19 +1,11 @@
 import type { OrthobulletsTopicAction, OrthobulletsPageContext } from './types.js';
 
-/**
- * The 8 primary Orthobullets Page Mode actions. Deliberately separate from
- * ROCK's curriculum-chips.ts: ROCK chips ask the model to teach/expand a
- * concept, these ask BroBot to quiz/retrieve/validate against THIS page.
- */
+/** The focused study actions that earn permanent space in Page Mode. */
 export const TOPIC_TUTOR_PRIMARY_ACTIONS: Array<{ action: OrthobulletsTopicAction; label: string }> = [
-  { action: 'quiz_me', label: 'Quiz me from this page' },
-  { action: 'find_answer', label: 'Ask me to find answers on the page' },
-  { action: 'explain_section', label: 'Explain this section' },
+  { action: 'quiz_me', label: 'Quiz me' },
   { action: 'what_tested', label: 'What would be tested?' },
-  { action: 'attending_question', label: 'What would an attending ask?' },
-  { action: 'explain_images', label: 'Explain the images' },
-  { action: 'board_traps', label: 'Show board traps' },
-  { action: 'save_missed', label: 'Save missed concepts' },
+  { action: 'board_traps', label: 'Board traps' },
+  { action: 'attending_question', label: 'Attending questions' },
 ];
 
 const MAX_CHIPS = 4;
