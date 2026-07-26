@@ -70,7 +70,6 @@
     "education:anki:bootstrap:publish-pilot": "node --experimental-strip-types scripts/publish-master-deck-pilot.ts",
     "education:anki:bootstrap:publish-cloze-beta": "node --experimental-strip-types scripts/publish-master-deck-cloze-beta.ts",
     "education:anki:aws:audit": "node --experimental-strip-types scripts/audit-anki-aws-release.ts",
-    "education:anki:aws:migrate-apkg": "node --experimental-strip-types scripts/migrate-anki-apkg-media-to-aws.ts",
     "education:anki-reviewer:test": "node --experimental-strip-types src/lib/education/anki-reviewer.test.ts && node --experimental-strip-types scripts/lib/education/anki-reviewer-schema.test.ts && node --experimental-strip-types scripts/lib/education/anki-editor-workspace-schema.test.ts && node --experimental-strip-types scripts/lib/education/anki-reviewer-api.test.ts",
     "education:anki-reviewer-addon:test": "python3 -m unittest discover -s integrations/snaportho-anki/tests -p 'test_*.py'",
     "anki:user:package": "python3 integrations/snaportho-anki/scripts/package_addon.py",

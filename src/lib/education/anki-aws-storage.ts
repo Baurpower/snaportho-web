@@ -37,6 +37,17 @@ export type AnkiAwsStorageConfig = {
   cloudFrontPrivateKey: string;
 };
 
+function s3Client(env: NodeJS.ProcessEnv, region: string): S3Client {
+  const accessKeyId = env.AWS_ACCESS_KEY_ID?.trim();
+  const secretAccessKey = env.AWS_SECRET_ACCESS_KEY?.trim();
+  return new S3Client({
+    region,
+    ...(accessKeyId && secretAccessKey
+      ? { credentials: { accessKeyId, secretAccessKey } }
+      : {}),
+  });
+}
+
 export function normalizeCloudFrontPrivateKey(value: string): string {
   const expanded = value.trim().replace(/\\n/g, "\n");
   if (expanded.includes("\n")) return expanded;
@@ -147,7 +158,7 @@ export async function uploadAnkiAwsObject(params: {
 }): Promise<{ bucket: string; objectKey: string; byteSize: number }> {
   const env = params.env ?? process.env;
   const config = loadAnkiAwsStorageConfig(env);
-  const client = new S3Client({ region: config.region });
+  const client = s3Client(env, config.region);
   const upload = new Upload({
     client,
     params: {
@@ -189,34 +200,12 @@ export async function uploadAnkiAwsObject(params: {
   };
 }
 
-export async function verifyAnkiAwsObject(params: {
-  objectKey: string;
-  expectedByteSize: number;
-  expectedSha256: string;
-  env?: NodeJS.ProcessEnv;
-}): Promise<{ bucket: string; objectKey: string }> {
-  const env = params.env ?? process.env;
-  const config = loadAnkiAwsStorageConfig(env);
-  const head = await new S3Client({ region: config.region }).send(
-    new HeadObjectCommand({ Bucket: config.bucket, Key: params.objectKey }),
-  );
-  if (head.ContentLength !== params.expectedByteSize) {
-    throw new Error(
-      `aws_object_size_mismatch:expected=${params.expectedByteSize}:got=${head.ContentLength ?? "missing"}`,
-    );
-  }
-  if (head.Metadata?.sha256 !== params.expectedSha256) {
-    throw new Error("aws_object_checksum_metadata_mismatch");
-  }
-  return { bucket: config.bucket, objectKey: params.objectKey };
-}
-
 export async function downloadAnkiAwsObject(
   objectKey: string,
   env: NodeJS.ProcessEnv = process.env,
 ): Promise<Buffer> {
   const config = loadAnkiAwsStorageConfig(env);
-  const response = await new S3Client({ region: config.region }).send(
+  const response = await s3Client(env, config.region).send(
     new GetObjectCommand({ Bucket: config.bucket, Key: objectKey }),
   );
   if (!response.Body) throw new Error(`aws_object_empty:${objectKey}`);
