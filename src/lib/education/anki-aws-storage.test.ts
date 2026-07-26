@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 // @ts-expect-error Node's strip-types test runner requires the source extension.
-import { AnkiAwsDeliveryError, awsObjectUrl, describeAnkiAwsDeliveryError, loadAnkiAwsStorageConfig, signAnkiAwsDownload } from "./anki-aws-storage.ts";
+import { AnkiAwsDeliveryError, awsObjectUrl, describeAnkiAwsDeliveryError, loadAnkiAwsStorageConfig, normalizeCloudFrontPrivateKey, signAnkiAwsDownload } from "./anki-aws-storage.ts";
 
 const privateKey = `-----BEGIN PRIVATE KEY-----
 MC4CAQAwBQYDK2VwBCIEIIGEKL16ByMmJgrY1YWsk8mT0p43HnYKkU8e8LaSZ7nj
@@ -18,6 +18,10 @@ const env: NodeJS.ProcessEnv = {
 const config = loadAnkiAwsStorageConfig(env);
 assert.equal(config.cloudFrontDomain, "example.cloudfront.net");
 assert.equal(config.cloudFrontPrivateKey, privateKey);
+assert.equal(
+  normalizeCloudFrontPrivateKey(privateKey.replace(/\n/g, " ")),
+  privateKey,
+);
 assert.equal(
   awsObjectUrl(config, "deck releases/a+b/file.apkg"),
   "https://example.cloudfront.net/deck%20releases/a%2Bb/file.apkg",

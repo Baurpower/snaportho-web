@@ -37,6 +37,19 @@ export type AnkiAwsStorageConfig = {
   cloudFrontPrivateKey: string;
 };
 
+export function normalizeCloudFrontPrivateKey(value: string): string {
+  const expanded = value.trim().replace(/\\n/g, "\n");
+  if (expanded.includes("\n")) return expanded;
+  const match = expanded.match(
+    /^-----BEGIN ([A-Z0-9 ]*PRIVATE KEY)-----\s*(.*?)\s*-----END \1-----$/,
+  );
+  if (!match) return expanded;
+  const label = match[1];
+  const body = match[2].replace(/\s+/g, "");
+  const wrapped = body.match(/.{1,64}/g)?.join("\n") ?? body;
+  return `-----BEGIN ${label}-----\n${wrapped}\n-----END ${label}-----`;
+}
+
 function required(name: string, env: NodeJS.ProcessEnv): string {
   const value = env[name]?.trim();
   if (!value) {
@@ -57,10 +70,9 @@ export function loadAnkiAwsStorageConfig(
       .replace(/^https?:\/\//, "")
       .replace(/\/+$/, ""),
     cloudFrontKeyPairId: required("SNAPORTHO_ANKI_CLOUDFRONT_KEY_PAIR_ID", env),
-    cloudFrontPrivateKey: required(
-      "SNAPORTHO_ANKI_CLOUDFRONT_PRIVATE_KEY",
-      env,
-    ).replace(/\\n/g, "\n"),
+    cloudFrontPrivateKey: normalizeCloudFrontPrivateKey(
+      required("SNAPORTHO_ANKI_CLOUDFRONT_PRIVATE_KEY", env),
+    ),
   };
 }
 
