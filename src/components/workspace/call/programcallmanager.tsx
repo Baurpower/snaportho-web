@@ -3,6 +3,14 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ProgramCallReviewModal from "@/components/workspace/call/programcallreviewmodal";
 import { generateCallSchedule } from "@/components/workspace/call/programcallautogenerator";
+import { isCallGenV2Enabled } from "@/components/workspace/call/call-gen-flags";
+import {
+  toCalendarDaySnapshot,
+  type GenerateRequestPayload,
+  type GenerateResponsePayload,
+  type GenerateWorkerRequest,
+  type GenerateWorkerResponse,
+} from "@/components/workspace/call/call-generator-protocol";
 import {
   ChevronLeft,
   ChevronRight,
@@ -527,6 +535,56 @@ function getSavableSlotRowsForDay(
   }
 
   return rows;
+}
+
+/**
+ * CALL_GEN_V2: run schedule generation in a Web Worker so the UI stays
+ * responsive. Resolves with the serializable response, or rejects on worker
+ * error / timeout so the caller can fall back to the synchronous path.
+ */
+function runGenerationInWorker(
+  payload: GenerateRequestPayload,
+  timeoutMs = 60000
+): Promise<GenerateResponsePayload> {
+  return new Promise((resolve, reject) => {
+    let worker: Worker;
+    try {
+      worker = new Worker(
+        new URL(
+          "@/components/workspace/call/call-generator.worker.ts",
+          import.meta.url
+        )
+      );
+    } catch (error) {
+      reject(error);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      worker.terminate();
+      reject(new Error("Schedule generation timed out."));
+    }, timeoutMs);
+
+    worker.onmessage = (event: MessageEvent<GenerateWorkerResponse>) => {
+      const message = event.data;
+      clearTimeout(timer);
+      worker.terminate();
+      if (message?.kind === "result") {
+        resolve(message);
+      } else {
+        reject(new Error(message?.message ?? "Schedule generation failed."));
+      }
+    };
+
+    worker.onerror = (event) => {
+      clearTimeout(timer);
+      worker.terminate();
+      reject(new Error(event.message || "Schedule generation worker error."));
+    };
+
+    const request: GenerateWorkerRequest = { kind: "generate", ...payload };
+    worker.postMessage(request);
+  });
 }
 
 export default function ProgramCallManager() {
@@ -1658,8 +1716,7 @@ const rotationAssignmentsByRosterId =
       const { rules: latestRules, slotDefinitions: latestSlotDefinitions } =
         await loadLatestRules();
 
-      const generated = generateCallSchedule({
-        monthDays,
+      const commonParams = {
         residents: sortedResidents,
         existingAssignments: forceRegenerate ? {} : draftAssignments,
         rules: latestRules,
@@ -1669,7 +1726,46 @@ const rotationAssignmentsByRosterId =
         availabilityByResident: programAvailability?.availability ?? {},
         historicalStats,
         slotMode: scheduleSlotMode,
-      });
+      };
+
+      let generated: {
+        assignments: Record<string, DraftDayAssignment>;
+        stats: ReturnType<typeof generateCallSchedule>["stats"];
+        generationReport: ReturnType<typeof generateCallSchedule>["generationReport"];
+      };
+
+      if (isCallGenV2Enabled()) {
+        // CALL_GEN_V2: repair-then-optimize pipeline in a Web Worker (off main
+        // thread). Falls back to synchronous generation if the worker fails.
+        const payload: GenerateRequestPayload = {
+          requestId: `gen-${Date.now()}`,
+          monthDays: monthDays.map(toCalendarDaySnapshot),
+          enableLocalSearch: true,
+          localSearchMaxIterations: 4000,
+          ...commonParams,
+        };
+        try {
+          const response = await runGenerationInWorker(payload);
+          generated = {
+            assignments: response.assignments,
+            stats: response.stats,
+            generationReport: response.generationReport,
+          };
+        } catch (workerError) {
+          console.warn(
+            "[CALL_GEN_V2] worker failed; falling back to synchronous generation",
+            workerError
+          );
+          generated = generateCallSchedule({
+            monthDays,
+            ...commonParams,
+            enableLocalSearch: true,
+            localSearchMaxIterations: 4000,
+          });
+        }
+      } else {
+        generated = generateCallSchedule({ monthDays, ...commonParams });
+      }
 
       if (process.env.NODE_ENV !== "production") {
         const [yearValue, monthValue] = builderMonth.split("-").map(Number);

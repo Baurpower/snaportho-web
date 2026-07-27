@@ -136,11 +136,26 @@ export const OrthobulletsExplainRequestSchema = z.object({
   emphasis: CurriculumExplainEmphasisSchema.optional(),
 });
 
+const PriorHintSchema = z.object({
+  hintLevel: z.union([z.literal(1), z.literal(2)]),
+  title: z.string().trim().min(1).max(120),
+  hint: z.string().trim().min(1).max(800),
+});
+
 export const OrthobulletsHintRequestSchema = z.object({
   task: z.literal('question_hint').default('question_hint'),
   pageContext: StrictQuestionPageContextSchema,
   hintLevel: z.union([z.literal(1), z.literal(2), z.literal(3)]),
   selectedAnswerKey: z.string().trim().min(1).max(32).optional(),
+  priorHints: z.array(PriorHintSchema).max(2).default([]),
+}).superRefine((value, ctx) => {
+  if (value.priorHints.some((hint) => hint.hintLevel >= value.hintLevel)) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ['priorHints'],
+      message: 'Prior hints must precede the requested hint level.',
+    });
+  }
 });
 
 const CurriculumSectionSchema = z.object({

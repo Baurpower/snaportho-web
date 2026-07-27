@@ -275,6 +275,12 @@ assert.ok(
   optReport.softScoreAfter <= optReport.softScoreBefore,
   "integrated local search never worsens the selected schedule"
 );
+// Greedy result is already complete here, so feasibility repair is not applied.
+assert.equal(
+  (genOptimized.generationReport as any).repair,
+  null,
+  "repair is skipped when the greedy result is already complete + valid"
+);
 for (const key of monthDayKeys) {
   assert.ok(
     genOptimized.assignments[key]?.primaryRosterId,

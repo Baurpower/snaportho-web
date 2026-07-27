@@ -1365,7 +1365,14 @@ function pickBestResident({
   return ranked[0]?.resident ?? null;
 }
 
-function countOpenRequiredSlots({
+type OpenRequiredSlot = { dateKey: string; slot: Slot };
+
+/**
+ * Lists every required-and-open (date, slot) cell for a schedule. This is the
+ * single source of truth for "what still needs filling"; countOpenRequiredSlots
+ * is just its length, and Phase-A repair consumes the list directly.
+ */
+function listOpenRequiredSlots({
   monthDays,
   residents,
   assignments,
@@ -1381,8 +1388,8 @@ function countOpenRequiredSlots({
   slotMode: QuickAssignSlotMode;
   slotDefinitions?: ProgramCallSlotDefinition[];
   residentsById?: Map<string, ResidentOption>;
-}) {
-  let open = 0;
+}): OpenRequiredSlot[] {
+  const open: OpenRequiredSlot[] = [];
 
   const requiredCallTypes = getRequiredCallTypesFromRules(rules);
   const shouldCheckPrimary =
@@ -1410,7 +1417,7 @@ function countOpenRequiredSlots({
     const buddyDateState = buddyDateStateByDate.get(day.key) ?? null;
 
     if (shouldCheckPrimary && !assignment?.primaryRosterId) {
-      open += 1;
+      open.push({ dateKey: day.key, slot: "Primary" });
     }
 
     if (!assignment?.backupRosterId) {
@@ -1435,9 +1442,9 @@ function countOpenRequiredSlots({
           });
           return isRequired;
         });
-        if (hasRequiredOpenBackup) open += 1;
+        if (hasRequiredOpenBackup) open.push({ dateKey: day.key, slot: "Backup" });
       } else if (globalBackupRequired && !buddyDateState?.isVisible && !assignment?.buddyRosterId) {
-        open += 1;
+        open.push({ dateKey: day.key, slot: "Backup" });
       }
     }
 
@@ -1458,11 +1465,23 @@ function countOpenRequiredSlots({
         });
         return isRequired;
       });
-      if (hasRequiredOpenBuddy) open += 1;
+      if (hasRequiredOpenBuddy) open.push({ dateKey: day.key, slot: "Buddy" });
     }
   }
 
   return open;
+}
+
+function countOpenRequiredSlots(params: {
+  monthDays: CalendarDay[];
+  residents: ResidentOption[];
+  assignments: Record<string, DraftDayAssignment>;
+  rules: ProgramRule[];
+  slotMode: QuickAssignSlotMode;
+  slotDefinitions?: ProgramCallSlotDefinition[];
+  residentsById?: Map<string, ResidentOption>;
+}) {
+  return listOpenRequiredSlots(params).length;
 }
 
 /**
@@ -2759,6 +2778,284 @@ export function optimizeCallSchedule({
   };
 }
 
+// ---------------------------------------------------------------------------
+// Phase 3: Phase-A feasibility repair
+//
+// Takes a possibly incomplete/invalid schedule and drives it to a complete,
+// hard-feasible one (for Primary/Backup) — or reports exactly which required
+// slots could not be filled. Three stages: purge hard-violating occupants,
+// directly fill open required slots with the best eligible resident, then
+// swap-to-unstick slots that stayed open because their only eligible resident
+// was already used elsewhere. Buddy slots are left to the buddy pre-pass.
+// ---------------------------------------------------------------------------
+
+export type RepairInfeasibleSlot = {
+  dateKey: string;
+  slot: OptimizerSlot;
+  reason: string;
+};
+
+export type RepairCallScheduleResult = {
+  assignments: Record<string, DraftDayAssignment>;
+  stats: ResidentAutoStats[];
+  feasible: boolean;
+  filledSlots: number;
+  swapUnsticks: number;
+  purgedViolations: number;
+  infeasibleSlots: RepairInfeasibleSlot[];
+};
+
+export function repairCallSchedule({
+  assignments,
+  monthDays,
+  residents,
+  rules,
+  availabilityByResident,
+  historicalStats,
+  slotDefinitions = DEFAULT_SLOT_DEFINITIONS,
+  slotMode = "Both",
+  seed = 1,
+  maxRounds = 200,
+}: {
+  assignments: Record<string, DraftDayAssignment>;
+  monthDays: CalendarDay[];
+  residents: ResidentOption[];
+  rules: ProgramRule[];
+  availabilityByResident: ProgramAvailabilityMonthResponse["availability"];
+  historicalStats: ExistingResidentStats[];
+  slotDefinitions?: ProgramCallSlotDefinition[];
+  slotMode?: QuickAssignSlotMode;
+  seed?: number;
+  maxRounds?: number;
+}): RepairCallScheduleResult {
+  const enabledRules = getEffectiveRules(rules, { includeDisabled: false });
+  const effectiveSlotDefinitions =
+    slotDefinitions.length > 0 ? slotDefinitions : DEFAULT_SLOT_DEFINITIONS;
+  const residentsById = new Map(
+    residents.map((resident) => [resident.residentId, resident])
+  );
+  const monthDayByKey = new Map(monthDays.map((day) => [day.key, day]));
+
+  const current = cloneAssignments(assignments);
+  const stats = buildInitialStats(
+    residents,
+    historicalStats,
+    monthDays[0]?.key ?? null
+  );
+  applyExistingAssignmentsToStats(
+    stats,
+    monthDays,
+    current,
+    effectiveSlotDefinitions
+  );
+
+  function getSlotRoster(dateKey: string, slot: OptimizerSlot) {
+    const assignment = current[dateKey];
+    return slot === "Primary"
+      ? assignment?.primaryRosterId ?? null
+      : assignment?.backupRosterId ?? null;
+  }
+
+  function setSlotRoster(
+    dateKey: string,
+    slot: OptimizerSlot,
+    rosterId: string | null
+  ) {
+    const assignment = current[dateKey] ?? {
+      primaryRosterId: null,
+      backupRosterId: null,
+      buddyRosterId: null,
+    };
+    if (slot === "Primary") assignment.primaryRosterId = rosterId;
+    else assignment.backupRosterId = rosterId;
+    current[dateKey] = assignment;
+  }
+
+  function residentsAssignedOn(dateKey: string) {
+    const assignment = current[dateKey];
+    const ids = new Set<string>();
+    if (assignment?.primaryRosterId) ids.add(assignment.primaryRosterId);
+    if (assignment?.backupRosterId) ids.add(assignment.backupRosterId);
+    if (assignment?.buddyRosterId) ids.add(assignment.buddyRosterId);
+    return ids;
+  }
+
+  function isBlocked(residentId: string, slot: OptimizerSlot, dateKey: string) {
+    const resident = residentsById.get(residentId);
+    if (!resident) return true;
+    return evaluateResidentForSlot({
+      resident,
+      slot,
+      dateKey,
+      assignments: current,
+      rules: enabledRules,
+      availabilityByResident,
+    }).blocked;
+  }
+
+  // --- Stage 1: purge hard-violating Primary/Backup occupants ---
+  let purgedViolations = 0;
+  for (const day of monthDays) {
+    if (current[day.key]?.buddyRosterId) continue; // buddy days handled elsewhere
+    for (const slot of ["Primary", "Backup"] as OptimizerSlot[]) {
+      const roster = getSlotRoster(day.key, slot);
+      if (roster && isBlocked(roster, slot, day.key)) {
+        setSlotRoster(day.key, slot, null);
+        undoStats(stats, roster, slot, day);
+        purgedViolations += 1;
+      }
+    }
+  }
+
+  function bestEligibleFor(dateKey: string, slot: OptimizerSlot) {
+    const day = monthDayByKey.get(dateKey);
+    if (!day) return null;
+    const occupied = residentsAssignedOn(dateKey);
+    const pool = residents.filter((r) => !occupied.has(r.residentId));
+    if (pool.length === 0) return null;
+    return pickBestResident({
+      residents: pool,
+      slot,
+      day,
+      assignments: current,
+      rules: enabledRules,
+      availabilityByResident,
+      stats,
+      generationVersion: seed,
+    });
+  }
+
+  function openPrimaryBackup(): OpenRequiredSlot[] {
+    return listOpenRequiredSlots({
+      monthDays,
+      residents,
+      assignments: current,
+      rules: enabledRules,
+      slotMode,
+      slotDefinitions: effectiveSlotDefinitions,
+      residentsById,
+    }).filter((entry) => entry.slot === "Primary" || entry.slot === "Backup");
+  }
+
+  let filledSlots = 0;
+  let swapUnsticks = 0;
+
+  // --- Stage 2 + 3: fill, then swap-to-unstick ---
+  for (let round = 0; round < maxRounds; round += 1) {
+    const openSlots = openPrimaryBackup();
+    if (openSlots.length === 0) break;
+
+    let progress = false;
+
+    // Stage 2: direct fill.
+    for (const openSlot of openSlots) {
+      const dateKey = openSlot.dateKey;
+      const slot = openSlot.slot as OptimizerSlot;
+      if (getSlotRoster(dateKey, slot)) continue; // filled earlier this round
+      const day = monthDayByKey.get(dateKey);
+      if (!day) continue;
+      const picked = bestEligibleFor(dateKey, slot);
+      if (picked) {
+        setSlotRoster(dateKey, slot, picked.residentId);
+        updateStats(stats, picked.residentId, slot, day);
+        filledSlots += 1;
+        progress = true;
+      }
+    }
+
+    if (progress) continue;
+
+    // Stage 3: swap-to-unstick the first still-open slot.
+    const target = openPrimaryBackup()[0];
+    if (!target) break;
+    if (attemptSwapUnstick(target.dateKey, target.slot as OptimizerSlot)) {
+      swapUnsticks += 1;
+      continue;
+    }
+
+    break; // no direct fill and no swap possible → stuck
+  }
+
+  function attemptSwapUnstick(dateKey: string, slot: OptimizerSlot): boolean {
+    const targetDay = monthDayByKey.get(dateKey);
+    if (!targetDay) return false;
+    const occupiedOnTarget = residentsAssignedOn(dateKey);
+
+    // Candidate movers: residents currently in a movable (non-buddy) Primary/Backup
+    // cell elsewhere who could legally take the target slot.
+    for (const sourceDay of monthDays) {
+      if (sourceDay.key === dateKey) continue;
+      if (current[sourceDay.key]?.buddyRosterId) continue;
+
+      for (const sourceSlot of ["Primary", "Backup"] as OptimizerSlot[]) {
+        const mover = getSlotRoster(sourceDay.key, sourceSlot);
+        if (!mover || occupiedOnTarget.has(mover)) continue;
+
+        // Tentatively move the mover from source → target.
+        setSlotRoster(sourceDay.key, sourceSlot, null);
+        undoStats(stats, mover, sourceSlot, sourceDay);
+
+        const moverEligible = !isBlocked(mover, slot, dateKey);
+        if (!moverEligible) {
+          // revert
+          setSlotRoster(sourceDay.key, sourceSlot, mover);
+          updateStats(stats, mover, sourceSlot, sourceDay);
+          continue;
+        }
+
+        setSlotRoster(dateKey, slot, mover);
+        updateStats(stats, mover, slot, targetDay);
+
+        // Refill the vacated source cell with a different eligible resident.
+        const refill = bestEligibleFor(sourceDay.key, sourceSlot);
+        if (refill) {
+          setSlotRoster(sourceDay.key, sourceSlot, refill.residentId);
+          updateStats(stats, refill.residentId, sourceSlot, sourceDay);
+          return true;
+        }
+
+        // Could not refill → revert the whole swap and try the next candidate.
+        setSlotRoster(dateKey, slot, null);
+        undoStats(stats, mover, slot, targetDay);
+        setSlotRoster(sourceDay.key, sourceSlot, mover);
+        updateStats(stats, mover, sourceSlot, sourceDay);
+      }
+    }
+
+    return false;
+  }
+
+  const remainingOpen = openPrimaryBackup();
+  const infeasibleSlots: RepairInfeasibleSlot[] = remainingOpen.map((entry) => {
+    const day = monthDayByKey.get(entry.dateKey);
+    const occupied = residentsAssignedOn(entry.dateKey);
+    const anyEligible =
+      day != null &&
+      residents.some(
+        (r) =>
+          !occupied.has(r.residentId) &&
+          !isBlocked(r.residentId, entry.slot as OptimizerSlot, entry.dateKey)
+      );
+    return {
+      dateKey: entry.dateKey,
+      slot: entry.slot as OptimizerSlot,
+      reason: anyEligible
+        ? "No feasible arrangement filled this required slot (over-constrained)."
+        : "No eligible resident is available for this required slot on this date.",
+    };
+  });
+
+  return {
+    assignments: current,
+    stats: Array.from(stats.values()),
+    feasible: infeasibleSlots.length === 0,
+    filledSlots,
+    swapUnsticks,
+    purgedViolations,
+    infeasibleSlots,
+  };
+}
+
 function summarizeCombinationForAI(
   combo: GeneratedScheduleCombination,
   monthDays: CalendarDay[],
@@ -3024,11 +3321,13 @@ export function generateCallSchedule({
 
   const best = topCombinations[0];
 
-  // Phase 3: optionally run local search on the best complete + valid result to
-  // squeeze out fairness gains the greedy passes left on the table. Only runs on
-  // a hard-feasible, complete schedule (the optimizer's precondition); the result
-  // is adopted only if it remains feasible (defensive — the optimizer guarantees
-  // this, but we re-verify before returning).
+  // Phase 3 (opt-in) pipeline: repair-then-optimize.
+  //   A) If the best greedy result is incomplete/invalid, run feasibility repair
+  //      (fills open required slots + swap-to-unstick), adopting it only if it
+  //      reaches a fully complete, hard-feasible schedule.
+  //   B) On a complete + valid schedule, run local search to improve fairness.
+  // Both stages re-verify feasibility before adopting; the default path
+  // (enableLocalSearch off) is byte-unchanged.
   let selectedAssignments = best?.assignments ?? {};
   let selectedStats = best?.stats ?? [];
   let optimizationReport: {
@@ -3039,51 +3338,121 @@ export function generateCallSchedule({
     improvedMoves: number;
     iterations: number;
   } | null = null;
+  let repairReport: {
+    applied: boolean;
+    feasible: boolean;
+    filledSlots: number;
+    swapUnsticks: number;
+    purgedViolations: number;
+    infeasibleSlots: RepairInfeasibleSlot[];
+  } | null = null;
 
-  if (enableLocalSearch && best && best.isComplete && best.isValid) {
-    const optimized = optimizeCallSchedule({
-      assignments: best.assignments,
-      monthDays,
-      residents,
-      rules: effectiveRules,
-      availabilityByResident,
-      historicalStats,
-      slotDefinitions,
-      seed: generationVersion,
-      maxIterations: localSearchMaxIterations,
-    });
+  if (enableLocalSearch && best) {
+    let workingAssignments = best.assignments;
+    let workingComplete = best.isComplete;
+    let workingValid = best.isValid;
 
-    const optimizedOpenSlots = countOpenRequiredSlots({
-      monthDays,
-      residents,
-      assignments: optimized.assignments,
-      rules: effectiveRules,
-      slotMode,
-      slotDefinitions,
-      residentsById,
-    });
-    const optimizedDiagnostics = analyzeCombinationDiagnostics({
-      combo: {
-        assignments: optimized.assignments,
-        openRequiredSlots: optimizedOpenSlots,
-      },
-      monthDays,
-      residents,
-      rules: effectiveRules,
-      availabilityByResident,
-    });
+    // Stage A: feasibility repair for incomplete/invalid results.
+    if (!(best.isComplete && best.isValid)) {
+      const repaired = repairCallSchedule({
+        assignments: best.assignments,
+        monthDays,
+        residents,
+        rules: effectiveRules,
+        availabilityByResident,
+        historicalStats,
+        slotDefinitions,
+        slotMode,
+        seed: generationVersion,
+      });
 
-    if (optimizedDiagnostics.hardErrors === 0 && optimizedOpenSlots === 0) {
-      selectedAssignments = optimized.assignments;
-      selectedStats = optimized.stats;
-      optimizationReport = {
+      const repairedOpenSlots = countOpenRequiredSlots({
+        monthDays,
+        residents,
+        assignments: repaired.assignments,
+        rules: effectiveRules,
+        slotMode,
+        slotDefinitions,
+        residentsById,
+      });
+      const repairedDiagnostics = analyzeCombinationDiagnostics({
+        combo: {
+          assignments: repaired.assignments,
+          openRequiredSlots: repairedOpenSlots,
+        },
+        monthDays,
+        residents,
+        rules: effectiveRules,
+        availabilityByResident,
+      });
+
+      const fullyFeasible =
+        repairedDiagnostics.hardErrors === 0 && repairedOpenSlots === 0;
+
+      repairReport = {
         applied: true,
-        softScoreBefore: optimized.softScoreBefore,
-        softScoreAfter: optimized.softScoreAfter,
-        acceptedMoves: optimized.acceptedMoves,
-        improvedMoves: optimized.improvedMoves,
-        iterations: optimized.iterations,
+        feasible: fullyFeasible,
+        filledSlots: repaired.filledSlots,
+        swapUnsticks: repaired.swapUnsticks,
+        purgedViolations: repaired.purgedViolations,
+        infeasibleSlots: repaired.infeasibleSlots,
       };
+
+      if (fullyFeasible) {
+        workingAssignments = repaired.assignments;
+        workingComplete = true;
+        workingValid = true;
+        selectedAssignments = repaired.assignments;
+        selectedStats = repaired.stats;
+      }
+    }
+
+    // Stage B: local-search fairness optimization on a complete + valid schedule.
+    if (workingComplete && workingValid) {
+      const optimized = optimizeCallSchedule({
+        assignments: workingAssignments,
+        monthDays,
+        residents,
+        rules: effectiveRules,
+        availabilityByResident,
+        historicalStats,
+        slotDefinitions,
+        seed: generationVersion,
+        maxIterations: localSearchMaxIterations,
+      });
+
+      const optimizedOpenSlots = countOpenRequiredSlots({
+        monthDays,
+        residents,
+        assignments: optimized.assignments,
+        rules: effectiveRules,
+        slotMode,
+        slotDefinitions,
+        residentsById,
+      });
+      const optimizedDiagnostics = analyzeCombinationDiagnostics({
+        combo: {
+          assignments: optimized.assignments,
+          openRequiredSlots: optimizedOpenSlots,
+        },
+        monthDays,
+        residents,
+        rules: effectiveRules,
+        availabilityByResident,
+      });
+
+      if (optimizedDiagnostics.hardErrors === 0 && optimizedOpenSlots === 0) {
+        selectedAssignments = optimized.assignments;
+        selectedStats = optimized.stats;
+        optimizationReport = {
+          applied: true,
+          softScoreBefore: optimized.softScoreBefore,
+          softScoreAfter: optimized.softScoreAfter,
+          acceptedMoves: optimized.acceptedMoves,
+          improvedMoves: optimized.improvedMoves,
+          iterations: optimized.iterations,
+        };
+      }
     }
   }
 
@@ -3095,6 +3464,7 @@ export function generateCallSchedule({
       uniqueCombinations: rankedCombinations.length,
       completeCombinationCount: completeCombinations.length,
       optimization: optimizationReport,
+      repair: repairReport,
       topCombinations,
       topCombinationSummaries: topCombinations.map((combo) =>
         summarizeCombinationForAI(

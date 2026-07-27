@@ -1028,6 +1028,9 @@ export function mountSidePanelApp(root: HTMLElement) {
       pageContext,
       hintLevel,
       selectedAnswerKey: pageContext.selectedAnswerKey,
+      priorHints: state.hints
+        .filter((hint) => hint.hintLevel < hintLevel)
+        .map(({ hintLevel: priorLevel, title, hint }) => ({ hintLevel: priorLevel, title, hint })),
     });
 
     if (!isCurrentQuestionLifecycle(generation)) return;

@@ -267,6 +267,9 @@ export class QuestionTutorController {
       pageContext: session.payload,
       hintLevel,
       selectedAnswerKey: session.payload.selectedAnswerKey,
+      priorHints: session.hints
+        .filter((hint) => hint.hintLevel < hintLevel)
+        .map(({ hintLevel: priorLevel, title, hint }) => ({ hintLevel: priorLevel, title, hint })),
     });
     this.store.endInFlight();
 

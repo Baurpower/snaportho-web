@@ -86,12 +86,14 @@ export type ExtensionMessage =
       emphasis?: CurriculumExplainEmphasis;
       hintLevel?: 1 | 2 | 3;
       selectedAnswerKey?: string | null;
+      priorHints?: Array<Pick<OrthobulletsHintResponse, 'hintLevel' | 'title' | 'hint'>>;
     }
   | {
       type: 'ob:hint';
       pageContext: OrthobulletsPageContext;
       hintLevel: 1 | 2 | 3;
       selectedAnswerKey?: string | null;
+      priorHints?: Array<Pick<OrthobulletsHintResponse, 'hintLevel' | 'title' | 'hint'>>;
     }
   | { type: 'ob:explain'; pageContext: OrthobulletsPageContext; emphasis?: CurriculumExplainEmphasis }
   | {

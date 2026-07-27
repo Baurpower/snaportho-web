@@ -126,11 +126,25 @@ exports.OrthobulletsExplainRequestSchema = zod_1.z.object({
     pageContext: StrictQuestionPageContextSchema,
     emphasis: curriculum_types_1.CurriculumExplainEmphasisSchema.optional(),
 });
+const PriorHintSchema = zod_1.z.object({
+    hintLevel: zod_1.z.union([zod_1.z.literal(1), zod_1.z.literal(2)]),
+    title: zod_1.z.string().trim().min(1).max(120),
+    hint: zod_1.z.string().trim().min(1).max(800),
+});
 exports.OrthobulletsHintRequestSchema = zod_1.z.object({
     task: zod_1.z.literal('question_hint').default('question_hint'),
     pageContext: StrictQuestionPageContextSchema,
     hintLevel: zod_1.z.union([zod_1.z.literal(1), zod_1.z.literal(2), zod_1.z.literal(3)]),
     selectedAnswerKey: zod_1.z.string().trim().min(1).max(32).optional(),
+    priorHints: zod_1.z.array(PriorHintSchema).max(2).default([]),
+}).superRefine((value, ctx) => {
+    if (value.priorHints.some((hint) => hint.hintLevel >= value.hintLevel)) {
+        ctx.addIssue({
+            code: zod_1.z.ZodIssueCode.custom,
+            path: ['priorHints'],
+            message: 'Prior hints must precede the requested hint level.',
+        });
+    }
 });
 const CurriculumSectionSchema = zod_1.z.object({
     id: zod_1.z.string().trim().min(1).max(120).optional(),

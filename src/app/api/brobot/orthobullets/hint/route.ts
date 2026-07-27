@@ -6,6 +6,7 @@ import { getBroBotAccessGate } from '@/lib/brobot/brobot-entitlement-access';
 import { type Subject } from '@/lib/brobot/entitlements';
 import { getAnswerModelForRoute } from '@/lib/brobot/model-config';
 import { getOpenAI } from '@/lib/brobot/openai-client';
+import { validateOrthobulletsHintDraft } from '@/lib/brobot/orthobullets/hint-quality';
 import { buildOrthobulletsHintMessages } from '@/lib/brobot/orthobullets/prompt-builder';
 import { lookupOrthobulletsKgContext } from '@/lib/brobot/orthobullets/kg-lookup';
 import { resolveOrthobulletsContext } from '@/lib/brobot/orthobullets/context-resolver';
@@ -125,21 +126,61 @@ export async function POST(request: Request) {
   });
 
   try {
-    const completion = await getOpenAI().chat.completions.create({
-      model: getAnswerModelForRoute({
-        mode: 'oite',
-        ambiguity: 'low',
-        responseDepth: 'quick',
-        subintent: 'oite_traps',
-      }),
-      temperature: 0.2,
-      response_format: { type: 'json_object' },
-      messages: buildOrthobulletsHintMessages({
-        context: resolvedContext,
-        hintLevel: parsed.data.hintLevel,
-        selectedAnswerKey: parsed.data.selectedAnswerKey,
-      }),
+    const model = getAnswerModelForRoute({
+      mode: 'oite',
+      ambiguity: 'low',
+      responseDepth: 'quick',
+      subintent: 'oite_traps',
     });
+    const generateHint = async (correctionIssues?: string[]) => {
+      const completion = await getOpenAI().chat.completions.create({
+        model,
+        temperature: 0.2,
+        response_format: { type: 'json_object' },
+        messages: buildOrthobulletsHintMessages({
+          context: resolvedContext,
+          hintLevel: parsed.data.hintLevel,
+          priorHints: parsed.data.priorHints,
+          correctionIssues,
+        }),
+      });
+      return parseOrthobulletsHintResponse({
+        raw: completion.choices[0]?.message?.content ?? '',
+        hintId: crypto.randomUUID(),
+        hintLevel: parsed.data.hintLevel,
+        remainingToday: null,
+        dailyCap: entitlement.aiAccess.dailyCap,
+        unlimited: entitlement.aiAccess.unlimited,
+      });
+    };
+
+    let response = await generateHint();
+    let qualityIssues = validateOrthobulletsHintDraft({
+      draft: response,
+      hintLevel: parsed.data.hintLevel,
+      pageContext: resolvedContext.pageContext,
+      priorHints: parsed.data.priorHints,
+    });
+    let qualityRetried = false;
+    if (qualityIssues.length) {
+      qualityRetried = true;
+      console.warn('[brobot-orthobullets] hint_quality_retry', {
+        requestId,
+        questionId: resolvedContext.pageContext.questionId ?? null,
+        hintLevel: parsed.data.hintLevel,
+        issues: qualityIssues,
+      });
+      response = await generateHint(qualityIssues);
+      qualityIssues = validateOrthobulletsHintDraft({
+        draft: response,
+        hintLevel: parsed.data.hintLevel,
+        pageContext: resolvedContext.pageContext,
+        priorHints: parsed.data.priorHints,
+      });
+    }
+    if (qualityIssues.length) {
+      throw new OrthobulletsParseError(`Hint failed quality checks: ${qualityIssues.join('; ')}`);
+    }
 
     const latencyMs = Date.now() - startedAt;
     const usedAfter = await recordSuccessfulAIUse(subject, latencyMs);
@@ -147,15 +188,14 @@ export async function POST(request: Request) {
       entitlement.aiAccess.dailyCap != null
         ? Math.max(0, entitlement.aiAccess.dailyCap - usedAfter)
         : null;
-
-    const response = parseOrthobulletsHintResponse({
-      raw: completion.choices[0]?.message?.content ?? '',
-      hintId: crypto.randomUUID(),
-      hintLevel: parsed.data.hintLevel,
-      remainingToday,
-      dailyCap: entitlement.aiAccess.dailyCap,
-      unlimited: entitlement.aiAccess.unlimited,
-    });
+    response = {
+      ...response,
+      usage: {
+        remainingToday,
+        dailyCap: entitlement.aiAccess.dailyCap,
+        unlimited: entitlement.aiAccess.unlimited,
+      },
+    };
 
     console.log('[brobot-orthobullets] hint_success', {
       requestId,
@@ -164,6 +204,7 @@ export async function POST(request: Request) {
       hintLevel: parsed.data.hintLevel,
       latencyMs,
       remainingToday,
+      qualityRetried,
     });
 
     return NextResponse.json(response);

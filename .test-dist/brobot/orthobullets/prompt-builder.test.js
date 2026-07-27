@@ -31,11 +31,25 @@ const context = {
     kgLookup: null,
 };
 const [system, user] = (0, prompt_builder_1.buildOrthobulletsHintMessages)({ context, hintLevel: 1 });
-strict_1.default.match(system?.content ?? '', /title must be generic/i);
-strict_1.default.match(system?.content ?? '', /Do NOT repeat any answer choice verbatim/i);
-strict_1.default.match(system?.content ?? '', /unmistakable synonym/i);
+strict_1.default.match(system?.content ?? '', /Do NOT reveal the correct answer choice/i);
+strict_1.default.match(system?.content ?? '', /Medical terms appearing inside choices may be discussed/i);
 strict_1.default.match(system?.content ?? '', /Which choices describe a one-time threshold/i);
 strict_1.default.match(system?.content ?? '', /learner must still perform a real reasoning step/i);
 strict_1.default.match(user?.content ?? '', /Hint 1 - Recognize the pattern/);
 strict_1.default.match(user?.content ?? '', /Yield strength/);
+strict_1.default.doesNotMatch(user?.content ?? '', /User selected answer/);
+const [levelTwoSystem, levelTwoUser] = (0, prompt_builder_1.buildOrthobulletsHintMessages)({
+    context,
+    hintLevel: 2,
+    priorHints: [{
+            hintLevel: 1,
+            title: 'Separate the material-property categories',
+            hint: 'Sort the choices by the kind of behavior each property measures.',
+        }],
+    correctionIssues: ['Hint 2 does not explicitly contrast stronger and weaker paths'],
+});
+strict_1.default.match(levelTwoSystem?.content ?? '', /reduce five choices to roughly two/i);
+strict_1.default.match(levelTwoSystem?.content ?? '', /CORRECTION REQUIRED/);
+strict_1.default.match(levelTwoUser?.content ?? '', /Prior learner-visible hints/);
+strict_1.default.match(levelTwoUser?.content ?? '', /Sort the choices by the kind of behavior/);
 console.log('Orthobullets hint prompt anti-spoiler tests passed.');

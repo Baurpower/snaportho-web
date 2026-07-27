@@ -47,10 +47,47 @@ trivial inputs.
   (the real worker-boundary requirement), plus end-to-end generation,
   `enableLocalSearch` pass-through, and determinism.
 
-**Worker + manager wiring (task 1) — NOT DONE, needs a browser/`next build` to
-verify** (Next worker bundling can't be checked with `tsc`; a mis-bundled worker
-can break the build). Drop-in stub below; wire it behind `CALL_GEN_V2` with a
-sync fallback, then verify with a real build before enabling.
+**Phase-A feasibility repair done (task 4)** — in `programcallautogenerator.ts`,
+tested in `call-schedule-repair.test.ts` (6 scenarios):
+- Refactored `countOpenRequiredSlots` to derive from a new `listOpenRequiredSlots`
+  (single source of truth for "what's open"; count = list length).
+- **`repairCallSchedule({...})`** (exported) — three stages: (1) purge
+  hard-violating Primary/Backup occupants, (2) directly fill open required slots
+  with the best eligible resident, (3) **swap-to-unstick** slots whose only
+  eligible resident is used elsewhere (move them in, refill their vacated cell).
+  Buddy slots left to the buddy pre-pass. Never introduces a hard violation;
+  reports `infeasibleSlots` with reasons when it can't reach feasibility.
+- Verified: direct fill, swap-to-unstick (the real value), genuine-infeasibility
+  reporting (no fabricated assignment), hard-violation purge+refill, complete
+  no-op, determinism.
+
+**Repair-then-optimize pipeline wired into `generateCallSchedule`** (still behind
+`enableLocalSearch`, default off): Stage A repairs an incomplete/invalid best
+(adopted only if it reaches full feasibility), Stage B optimizes. `generationReport`
+now carries both an `optimization` and a `repair` block. Default path unchanged.
+
+**Worker + manager wiring (task 1) — DONE & BROWSER-VERIFIED (2026-07-26).**
+- `call-generator.worker.ts` — postMessage wrapper over `runGenerateRequest`.
+- `call-gen-flags.ts` — `isCallGenV2Enabled()` (env `NEXT_PUBLIC_CALL_GEN_V2`,
+  `localStorage.callGenV2`, or `?callGenV2=1`). Default OFF.
+- `programcallmanager.tsx` — module-level `runGenerationInWorker(payload)` (new
+  Worker via `new URL("@/…/call-generator.worker.ts", import.meta.url)`, 60s
+  timeout, `worker.terminate()` cleanup); `handleAutoGenerate` branches on the
+  flag → worker path (enableLocalSearch on) with a synchronous fallback on worker
+  error. Default (flag off) path byte-unchanged.
+- `app/dev/call-gen-worker/page.tsx` — dev-only harness (guarded out of prod).
+- **Verified in `next dev` (Next 15.3.8) browser:** the worker chunk bundled and
+  ran off the main thread — returned in ~308ms, 14/14 days filled, optimization
+  applied (soft score 3166 → 2095, ~34% fairness gain), response JSON-serializable,
+  zero console/server errors. The manager uses the identical worker-construction
+  pattern (typecheck-clean); its admin Auto-Generate click-through wasn't exercised
+  because that route is auth-gated in the test browser, but the worker mechanism it
+  relies on is confirmed.
+- **Remaining before flipping default ON:** confirm with a production `next build`
+  (verify the worker chunk stays pure, no `next/*`), then enable via
+  `NEXT_PUBLIC_CALL_GEN_V2` and validate on a real program (A/B vs v1).
+
+Reference stub (implemented above; kept for context):
 
 ```ts
 // src/components/workspace/call/call-generator.worker.ts

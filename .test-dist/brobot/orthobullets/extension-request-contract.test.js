@@ -132,6 +132,26 @@ strict_1.default.equal(types_1.OrthobulletsHintRequestSchema.safeParse({
     },
     hintLevel: 1,
 }).success, false, 'question hint without choices should fail');
+strict_1.default.equal(types_1.OrthobulletsHintRequestSchema.safeParse({
+    task: 'question_hint',
+    pageContext: questionPageContext,
+    hintLevel: 2,
+    priorHints: [{
+            hintLevel: 1,
+            title: 'Orient to the clue',
+            hint: 'Identify the category that separates the options.',
+        }],
+}).success, true, 'later hints should accept preceding learner-visible hints');
+strict_1.default.equal(types_1.OrthobulletsHintRequestSchema.safeParse({
+    task: 'question_hint',
+    pageContext: questionPageContext,
+    hintLevel: 1,
+    priorHints: [{
+            hintLevel: 1,
+            title: 'Invalid current hint',
+            hint: 'A current-level hint cannot be prior context.',
+        }],
+}).success, false, 'prior hints must precede the requested level');
 strict_1.default.equal(types_1.OrthobulletsExplainRequestSchema.safeParse({
     task: 'question_explain',
     pageContext: questionPageContext,

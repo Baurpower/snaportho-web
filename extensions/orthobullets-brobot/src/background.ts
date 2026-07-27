@@ -740,6 +740,7 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage | { type: 'ob:qu
                 ...requestPayload,
                 hintLevel: 'hintLevel' in message ? message.hintLevel : undefined,
                 selectedAnswerKey: 'selectedAnswerKey' in message ? message.selectedAnswerKey : undefined,
+                priorHints: 'priorHints' in message ? message.priorHints : undefined,
               }
             : {
                 ...requestPayload,

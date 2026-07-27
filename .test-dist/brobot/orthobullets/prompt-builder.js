@@ -104,18 +104,18 @@ GOAL
 - Keep the hint concise and useful. The "hint" field must stay under 120 words.
 
 NON-NEGOTIABLE SAFETY RULES
-- Treat BOTH "title" and "hint" as learner-visible hint content. The title must be generic (for example, "Classify what is being measured"), never a topic summary or a named concept from an answer choice.
-- Do NOT reveal the correct answer choice, answer number, or answer text.
-- Do NOT repeat any answer choice verbatim or use its distinctive term anywhere in the title or hint. This applies even when the term is also the textbook name of the concept being tested.
-- Do NOT use an unmistakable synonym, expansion, eponym, acronym, definition, or wordplay that maps one-to-one to a single answer choice. A hint that lets the learner match one phrase directly to one option is an answer, not a hint.
+- Treat BOTH "title" and "hint" as learner-visible hint content.
+- Do NOT reveal the correct answer choice, answer number, or reproduce the complete answer text.
+- Never instruct the learner to select a numbered or lettered choice.
+- Medical terms appearing inside choices may be discussed when necessary to teach a discriminator at Hint 2 or Hint 3. Do not copy a complete choice or merely restate it.
 - Do NOT say "the correct answer is", "choose", "pick", "the answer is", or any equivalent.
 - Do NOT quote the source explanation.
-- Do NOT give away the final management/test/diagnosis in Hint 1 or Hint 2.
 
 HINT LADDER
-- Hint 1 ("Recognize the pattern"): ask one Socratic question that tells the learner which feature of the stem to inspect or which DIMENSION distinguishes the options. Do not state the conclusion, name the tested concept, define the winning option, or narrow to one option. For a definition-style stem, contrast broad dimensions (for example threshold vs maximum vs energy vs repeated loading) without pairing any dimension with an answer choice.
-- Hint 2 ("Narrow the differential"): give a mechanism, anatomy, imaging, or management discriminator that lets the learner eliminate wrong paths. Prefer describing why categories differ; do not define or paraphrase the winning answer and do not narrow to one option explicitly.
-- Hint 3 ("Decision point"): point directly to the deciding test, treatment principle, anatomy, classification, or complication that should drive the choice. Still do not reveal the answer choice text or answer number.
+- Hint 1 ("Orient"): identify the reasoning axis and clue category that deserves attention. Preserve a meaningful reasoning step and do not eliminate a specific choice. For a definition-style stem, contrast broad dimensions without pairing one with a choice.
+- Hint 2 ("Narrow"): add ONE concrete clinical discriminator absent from Hint 1. Explicitly contrast stronger and weaker profiles, mechanisms, findings, or management paths. It should ordinarily reduce five choices to roughly two plausible choices. It may name medical features found within choices, but must not give a choice key, copy a complete choice, or announce which option wins.
+- Hint 3 ("Decide"): state the decisive clinical rule, risk-factor combination, imaging feature, anatomy, test, or treatment principle. It is acceptable and intended that one choice becomes evident after the learner applies this rule. Do not state its key or copy its complete text.
+- Each new hint must materially advance the reasoning. Never paraphrase a prior hint.
 
 BAD HINT 1 EXAMPLE
 - Stem asks for the stress where plastic deformation begins; one option is "Yield strength."
@@ -124,9 +124,9 @@ BAD HINT 1 EXAMPLE
 - Acceptable direction: title "Separate the material-property categories"; hint "Which choices describe a one-time threshold, which describe the greatest load reached, which describe energy absorbed, and which describe behavior under repeated cycles? Sort the options by what each one measures before matching the stem."
 
 FINAL SILENT CHECK BEFORE RETURNING JSON
-1. Compare every distinctive word and phrase in "title" and "hint" against every answer choice.
-2. If either field contains an answer-choice term, a near-synonym unique to one choice, or a definition that points to only one choice, rewrite it at least one rung more abstractly.
-3. For Hint 1, verify that the learner must still perform a real reasoning step after reading it. If only one option remains obvious by direct phrase matching, rewrite it.
+1. Verify that no answer key or complete answer choice is disclosed.
+2. For Hint 1, verify that the learner must still perform a real reasoning step.
+3. For Hint 2 or 3, compare against prior hints and verify that a new, more specific discriminator was added.
 
 STYLE
 - Sound like a smart senior resident on rounds: direct, practical, and clinically grounded.
@@ -335,10 +335,18 @@ function buildOrthobulletsHintMessages(input) {
         : input.hintLevel === 2
             ? 'Hint 2 - Narrow the differential'
             : 'Hint 3 - Decision point';
+    const priorHints = input.priorHints?.length
+        ? input.priorHints
+            .map((hint) => `Hint ${hint.hintLevel} — ${hint.title}: ${hint.hint}`)
+            .join('\n')
+        : '(none)';
+    const correction = input.correctionIssues?.length
+        ? `\n\nCORRECTION REQUIRED\nThe previous draft failed these checks: ${input.correctionIssues.join('; ')}. Return a substantially revised hint that fixes every issue.`
+        : '';
     return [
         {
             role: 'system',
-            content: HINT_SYSTEM_PROMPT,
+            content: `${HINT_SYSTEM_PROMPT}${correction}`,
         },
         {
             role: 'user',
@@ -351,12 +359,7 @@ function buildOrthobulletsHintMessages(input) {
                 `Breadcrumbs: ${input.context.pageContext.breadcrumbs.join(' > ') || '(missing)'}`,
                 `Stem:\n${input.context.pageContext.stem ?? '(missing)'}`,
                 `Answer choices (visible to learner; do not reveal any choice in the hint):\n${renderChoices(input.context)}`,
-                `User selected answer so far: ${input.selectedAnswerKey ?? input.context.pageContext.selectedAnswerKey ?? input.context.pageContext.selectedAnswer ?? '(none visible)'}`,
-                `Correct answer visibility on page: ${input.context.pageContext.correctAnswerKey || input.context.pageContext.correctAnswer ? 'visible' : 'not visible'}`,
-                `Percent distribution:\n${renderDistribution(input.context)}`,
-                `Visible explanation text (may be missing; do not quote it):\n${input.context.pageContext.explanationText ?? input.context.pageContext.explanation ?? '(missing)'}`,
-                `Source key reference points shown on page:\n${input.context.pageContext.sourceKeyPoints ?? '(missing)'}`,
-                `Source references shown on page:\n${renderSourceReferences(input.context)}`,
+                `Prior learner-visible hints (advance beyond these; do not paraphrase them):\n${priorHints}`,
                 `Linked concepts: ${input.context.pageContext.linkedConcepts.map((item) => item.label).join(', ') || '(none)'}`,
                 `Image count: ${input.context.pageContext.images.length}`,
                 renderKgNotes(input.context),
