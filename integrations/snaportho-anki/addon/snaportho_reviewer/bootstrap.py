@@ -33,15 +33,6 @@ class ProfileRuntime:
         if current<MIN_ANKI:raise RuntimeError("Anki 26.05 or newer is required")
         self.mw=mw;self.closed=False;self.window=None;self.reviewer_enabled=False
         raw=mw.addonManager.getConfig(__name__.split('.')[0]) or {}
-        # 0.9.0 was briefly packaged with the developer loopback backend. Repair
-        # that unsafe default for users; local developers can opt back in.
-        if (
-            raw.get("environment")=="local"
-            and raw.get("base_url") in {"http://127.0.0.1:3000","http://localhost:3000"}
-            and os.environ.get("SNAPORTHO_ANKI_ALLOW_LOCAL")!="1"
-        ):
-            raw={**raw,"environment":"production","base_url":"https://snap-ortho.com"}
-            mw.addonManager.writeConfig(__name__.split('.')[0],raw)
         self.settings=validate(raw);self.profile_hash=__import__('hashlib').sha256(str(mw.pm.name).encode()).hexdigest()[:16]
         from .credential_store import MacOSKeychainStore
         self.credentials=MacOSKeychainStore(self.settings.environment,self.profile_hash,"reviewer-device")
@@ -227,7 +218,9 @@ class ProfileRuntime:
         self.background(lambda: self.api.resource_search(request_payload(native_id)), done)
 
     def poll_search_relay(self):
-        if self.closed or not self.reviewer_enabled or getattr(self,"_search_relay_busy",False):return
+        # Finding cards is a learner feature. Reviewer roles only gate curation
+        # surfaces and must not prevent a linked learner from claiming searches.
+        if self.closed or getattr(self,"_search_relay_busy",False):return
         try:
             if not self.credentials.get():return
         except Exception:return

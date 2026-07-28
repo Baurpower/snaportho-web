@@ -55,6 +55,7 @@ import {
   SIDEPANEL_BUNDLE_VERSION,
   isCompatibleExtensionBuild,
 } from '../shared/build-info.js';
+import { getConfiguredAppOrigin } from '../shared/runtime.js';
 
 const BROBOT_ICON_URL = chrome.runtime.getURL('icons/brobot-32.png');
 const SIDEPANEL_BUILD_ID_MARKER = '2026-07-19-rock-curriculum-contract-v2';
@@ -85,6 +86,28 @@ type UsageState =
   | OrthobulletsChatResponse['usage']
   | OrthobulletsHintResponse['usage']
   | null;
+
+const ANKI_STATUS_POLL_INTERVAL_MS = 2_000;
+const ANKI_STATUS_POLL_ATTEMPTS = 15;
+
+function waitingForAnkiCopy(attempt: number) {
+  if (attempt < 5) return 'Waiting for Anki to connect…';
+  const appOrigin = getConfiguredAppOrigin();
+  const environment = /^https?:\/\/(?:localhost|127\.0\.0\.1)(?::|\/|$)/i.test(appOrigin)
+    ? 'local'
+    : 'production';
+  return attempt < 10
+    ? `Anki has not connected — open Anki (${environment})…`
+    : `Still waiting — verify the SnapOrtho add-on is linked to ${environment}…`;
+}
+
+function ankiConnectionTimeoutCopy() {
+  const appOrigin = getConfiguredAppOrigin();
+  const environment = /^https?:\/\/(?:localhost|127\.0\.0\.1)(?::|\/|$)/i.test(appOrigin)
+    ? 'local'
+    : 'production';
+  return `Anki did not connect — check the ${environment} add-on and retry`;
+}
 
 async function sendMessage(message: ExtensionMessage): Promise<ExtensionMessageResponse> {
   return chrome.runtime.sendMessage(message);
@@ -1330,8 +1353,9 @@ export function mountSidePanelApp(root: HTMLElement) {
       button.textContent = 'Waiting for Anki to connect…';
       const requestId = result.ankiSearch.searchRequestId;
       let statusFailures = 0;
-      for (let attempt = 0; attempt < 30; attempt += 1) {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+      for (let attempt = 0; attempt < ANKI_STATUS_POLL_ATTEMPTS; attempt += 1) {
+        button.textContent = waitingForAnkiCopy(attempt);
+        await new Promise((resolve) => setTimeout(resolve, ANKI_STATUS_POLL_INTERVAL_MS));
         const status = await sendMessage({ type: 'ob:get-anki-search-status', searchRequestId: requestId });
         if (!status.ok || !('ankiSearch' in status)) {
           statusFailures += 1;
@@ -1345,7 +1369,7 @@ export function mountSidePanelApp(root: HTMLElement) {
         statusFailures = 0;
         const current = status.ankiSearch.status;
         if (current === 'queued') {
-          button.textContent = 'Waiting for Anki to connect…';
+          button.textContent = waitingForAnkiCopy(attempt + 1);
         } else if (current === 'claimed' || current === 'resolving_local') {
           button.textContent = 'Searching Anki…';
         }
@@ -1364,7 +1388,7 @@ export function mountSidePanelApp(root: HTMLElement) {
         }
       }
       button.disabled = false;
-      button.textContent = 'Still waiting — open Anki and try again';
+      button.textContent = ankiConnectionTimeoutCopy();
       return;
     }
     button.disabled = false;
@@ -1386,8 +1410,9 @@ export function mountSidePanelApp(root: HTMLElement) {
     }
     button.textContent = 'Waiting for Anki to connect…';
     let statusFailures = 0;
-    for (let attempt = 0; attempt < 30; attempt += 1) {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+    for (let attempt = 0; attempt < ANKI_STATUS_POLL_ATTEMPTS; attempt += 1) {
+      button.textContent = waitingForAnkiCopy(attempt);
+      await new Promise((resolve) => setTimeout(resolve, ANKI_STATUS_POLL_INTERVAL_MS));
       const status = await sendMessage({
         type: 'ob:get-anki-search-status',
         searchRequestId: result.ankiSearch.searchRequestId,
@@ -1403,7 +1428,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       }
       statusFailures = 0;
       if (status.ankiSearch.status === 'queued') {
-        button.textContent = 'Waiting for Anki to connect…';
+        button.textContent = waitingForAnkiCopy(attempt + 1);
       } else if (status.ankiSearch.status === 'claimed' || status.ankiSearch.status === 'resolving_local') {
         button.textContent = 'Searching Anki…';
       }
@@ -1422,7 +1447,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       }
     }
     button.disabled = false;
-    button.textContent = 'Still waiting — open Anki and try again';
+    button.textContent = ankiConnectionTimeoutCopy();
   }
 
   function render() {

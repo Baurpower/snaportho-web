@@ -161,6 +161,8 @@ class ReviewerTests(unittest.TestCase):
  def test_search_relay_only_reports_completion_after_opening_browse(self):
   with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:
    text=source.read()
+  poll=text[text.index("def poll_search_relay"):text.index("def _claimed_search")]
+  self.assertNotIn("reviewer_enabled",poll)
   relay=text[text.index("def _resolve_relay_search"):text.index("def propose_from_editor")]
   self.assertLess(relay.index("open_browse_with_card_ids("),relay.index("complete_search_request("))
   self.assertIn('"errorCode":"browse_open_failed"',relay)

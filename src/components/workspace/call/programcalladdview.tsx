@@ -413,6 +413,7 @@ function DayChip({
   isChanged,
   visibleSlots,
   slotValidations,
+  canAssignSelectedSlot,
   onClick,
 }: {
   day: CalendarDay;
@@ -426,6 +427,8 @@ function DayChip({
   visibleSlots: ProgramCallSlotDefinition[];
   /** Per-call-type validation guidance, keyed by call type. */
   slotValidations: Record<string, SlotValidationDisplay | undefined>;
+  /** Whether the selected resident can take the selected slot mode on this day. */
+  canAssignSelectedSlot: boolean;
   onClick: () => void;
 }) {
   const rosterIdForCallType = (callType: string) => {
@@ -446,16 +449,11 @@ function DayChip({
       !selectedResidentAvailability?.isBlocked
   );
 
-  // Whether the selected slot mode is actually offered on this day. Buddy is only
-  // offered on eligible weekend days (via buddyDateState), so this prevents
-  // tapping a Buddy assignment onto a day that has no Buddy slot — without which
-  // a Buddy-eligible resident would otherwise appear tappable on every weekday.
-  const selectedSlotOffered = visibleSlots.some((def) =>
-    slotMatchesMode(def.callType, quickAssignSlotMode)
-  );
-
   const firstFlag = selectedResidentAvailability?.flags?.[0] ?? null;
-  const isDisabled = (isBlocked || !selectedSlotOffered) && !active;
+  // Tappable only when the selected resident can actually take the selected slot
+  // mode on this day (computed by the parent: slot offered AND resident
+  // eligible). Assigned cells stay tappable so they can be cleared.
+  const isDisabled = !canAssignSelectedSlot && !active;
 
   return (
     <button
@@ -560,6 +558,7 @@ export default function ProgramCallAddView({
   residentLookup,
   draftAssignments,
   originalAssignments,
+  rules,
   slotDefinitions,
   buddyDateStateByDate,
   availabilityByResident,
@@ -678,6 +677,54 @@ export default function ProgramCallAddView({
   const selectedResident = quickAssignResidentId
     ? residentLookup.get(quickAssignResidentId)
     : null;
+
+  // Whether the selected resident can actually take the selected slot mode on a
+  // given day: the slot must be OFFERED that day AND the resident must be
+  // ELIGIBLE for it (per the shared evaluator + buddy candidacy). This is what
+  // gates tap-ability, so a resident never appears tappable in a mode/day they
+  // cannot be assigned (e.g. a Buddy-only PGY-1 on a weekday, or in Primary mode).
+  function canAssignSelectedSlotOnDay(
+    day: CalendarDay,
+    visibleSlots: ProgramCallSlotDefinition[]
+  ): boolean {
+    if (!selectedResident) return false;
+
+    const offered = visibleSlots.some((def) =>
+      slotMatchesMode(def.callType, quickAssignSlotMode)
+    );
+    if (!offered) return false;
+
+    const allowedFor = (slot: "Primary" | "Backup" | "Buddy") =>
+      isResidentAllowedForSlot({
+        resident: selectedResident,
+        slot,
+        dateKey: day.key,
+        assignments: draftAssignments,
+        rules,
+        availabilityByResident,
+      });
+
+    if (quickAssignSlotMode === "Primary") return allowedFor("Primary");
+    if (quickAssignSlotMode === "Backup") return allowedFor("Backup");
+    if (quickAssignSlotMode === "Both") {
+      return allowedFor("Primary") || allowedFor("Backup");
+    }
+    if (quickAssignSlotMode === "Buddy") {
+      const buddyState = buddyDateStateByDate?.get(day.key) ?? null;
+      if (!buddyState) return false;
+      const eligibleBuddyIds = new Set<string>([
+        ...buddyState.visibleEligibleRosterIds,
+        ...buddyState.eligibleRequirementRosterIds,
+        ...(buddyState.selectedBuddyRosterId
+          ? [buddyState.selectedBuddyRosterId]
+          : []),
+      ]);
+      return (
+        eligibleBuddyIds.has(selectedResident.residentId) && allowedFor("Buddy")
+      );
+    }
+    return false;
+  }
 
   const selectedResidentMonthSummary = useMemo(() => {
     if (!selectedResident) return null;
@@ -1067,6 +1114,9 @@ export default function ProgramCallAddView({
                           }
                         }
 
+                        const canAssignSelectedSlot =
+                          canAssignSelectedSlotOnDay(day, visibleSlots);
+
                         return (
                           <DayChip
                             key={day.key}
@@ -1079,6 +1129,7 @@ export default function ProgramCallAddView({
                             isChanged={isChanged}
                             visibleSlots={visibleSlots}
                             slotValidations={slotValidations}
+                            canAssignSelectedSlot={canAssignSelectedSlot}
                             onClick={() => onToggleQuickAssignDay(day.key)}
                           />
                         );
