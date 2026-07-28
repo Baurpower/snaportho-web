@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   AlertTriangle,
   Check,
@@ -23,11 +23,19 @@ import {
   getResidentColorClasses,
   getResidentColorKey,
 } from "@/lib/workspace/call/resident-colors";
+import {
+  DEFAULT_SLOT_DEFINITIONS,
+  getVisibleCallSlotsForDay,
+} from "@/components/workspace/call/programcalltypes";
+import type { BuddyDateState } from "@/lib/workspace/call/buddy-requirements";
+import { isResidentAllowedForSlot } from "@/components/workspace/call/programcallevaluator";
 import type {
   AssignmentFlagCategory,
   AssignmentFlagTone,
   CalendarDay,
   DraftDayAssignment,
+  PgySummaryRow,
+  ProgramCallSlotDefinition,
   ProgramRule,
   QuickAssignSlotMode,
   ResidentAvailabilityForDate,
@@ -102,20 +110,108 @@ function getToneBadgeClass(tone: AvailabilityFlag["tone"]) {
   return "bg-slate-100 text-slate-700 border border-slate-200";
 }
 
+/** Maps a slot call type to the DraftDayAssignment field that stores its roster id. */
+const CALL_TYPE_ROSTER_FIELD: Record<string, keyof DraftDayAssignment> = {
+  Primary: "primaryRosterId",
+  Backup: "backupRosterId",
+  Buddy: "buddyRosterId",
+};
+
+/** Compact header label for a call type in the balance rail. */
+const CALL_TYPE_SHORT_LABEL: Record<string, string> = {
+  Primary: "1°",
+  Backup: "2°",
+  Buddy: "B°",
+};
+
+function callTypeShortLabel(callType: string) {
+  return CALL_TYPE_SHORT_LABEL[callType] ?? callType.slice(0, 2);
+}
+
+/**
+ * Whether tapping in the given quick-assign mode acts on the given slot call type.
+ * "Both" acts on Primary + Backup; every other mode acts on its own call type.
+ */
+function slotMatchesMode(callType: string, mode: QuickAssignSlotMode) {
+  if (mode === "Both") return callType === "Primary" || callType === "Backup";
+  return callType === mode;
+}
+
+function BalanceCard({
+  row,
+  callTypes,
+}: {
+  row: PgySummaryRow;
+  callTypes: string[];
+}) {
+  // Columns: one per call type present in the program, then the Total.
+  const gridTemplate = `minmax(1.6rem,auto) repeat(${callTypes.length + 1}, minmax(0,1fr))`;
+
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white px-3 py-2.5">
+      <div className="mb-2 flex items-center justify-between gap-2">
+        <p className="text-sm font-semibold text-slate-900">{row.label}</p>
+        <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-slate-500">
+          calls
+        </span>
+      </div>
+
+      <div className="grid gap-x-2 gap-y-1" style={{ gridTemplateColumns: gridTemplate }}>
+        {/* Header row */}
+        <span />
+        {callTypes.map((ct) => (
+          <span
+            key={`h-${ct}`}
+            title={ct}
+            className="text-center text-[9px] font-semibold uppercase tracking-[0.1em] text-slate-400"
+          >
+            {callTypeShortLabel(ct)}
+          </span>
+        ))}
+        <span className="text-center text-[9px] font-semibold uppercase tracking-[0.1em] text-slate-500">
+          Σ
+        </span>
+
+        {/* Month row */}
+        <span className="text-[9px] font-semibold uppercase tracking-[0.1em] text-slate-400">
+          Mo
+        </span>
+        {callTypes.map((ct) => (
+          <span key={`m-${ct}`} className="text-center text-sm font-bold text-slate-950">
+            {row.monthByCallType[ct] ?? 0}
+          </span>
+        ))}
+        <span className="text-center text-sm font-bold text-slate-950">{row.monthTotal}</span>
+
+        {/* Year row */}
+        <span className="text-[9px] font-semibold uppercase tracking-[0.1em] text-slate-400">
+          Yr
+        </span>
+        {callTypes.map((ct) => (
+          <span key={`y-${ct}`} className="text-center text-sm font-bold text-slate-700">
+            {row.yearByCallType[ct] ?? 0}
+          </span>
+        ))}
+        <span className="text-center text-sm font-bold text-slate-700">{row.yearTotal}</span>
+      </div>
+
+      <p className="mt-2 text-[9px] font-semibold uppercase tracking-[0.1em] text-slate-400">
+        Wknd · Mo {row.monthWeekend} · Yr {row.yearWeekend}
+      </p>
+    </div>
+  );
+}
+
 function CalendarStatsRail({
   pgyRows,
+  callTypes,
   statsLoading,
   residentLoading,
   collapsed,
   onToggle,
 }: {
-  pgyRows: Array<{
-    label: string;
-    monthTotal: number;
-    monthWeekend: number;
-    yearTotal: number;
-    yearWeekend: number;
-  }>;
+  pgyRows: PgySummaryRow[];
+  callTypes: string[];
   statsLoading: boolean;
   residentLoading: boolean;
   collapsed: boolean;
@@ -184,93 +280,15 @@ function CalendarStatsRail({
           <>
             <div className="flex gap-3 overflow-x-auto pb-1 xl:hidden">
               {pgyRows.map((row) => (
-                <div
-                  key={row.label}
-                  className="min-w-[220px] shrink-0 rounded-xl border border-slate-200 bg-white px-3 py-2.5"
-                >
-                  <div className="mb-2 flex items-center justify-between gap-2">
-                    <p className="text-sm font-semibold text-slate-900">{row.label}</p>
-                    <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-slate-500">
-                      totals
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-4 gap-2">
-                    <div className="rounded-lg bg-slate-50 px-2 py-1.5">
-                      <p className="text-[9px] uppercase tracking-[0.12em] text-slate-400">
-                        Month
-                      </p>
-                      <p className="text-sm font-bold text-slate-950">{row.monthTotal}</p>
-                    </div>
-
-                    <div className="rounded-lg bg-slate-50 px-2 py-1.5">
-                      <p className="text-[9px] uppercase tracking-[0.12em] text-slate-400">
-                        M Wknd
-                      </p>
-                      <p className="text-sm font-bold text-slate-950">{row.monthWeekend}</p>
-                    </div>
-
-                    <div className="rounded-lg bg-slate-50 px-2 py-1.5">
-                      <p className="text-[9px] uppercase tracking-[0.12em] text-slate-400">
-                        Year
-                      </p>
-                      <p className="text-sm font-bold text-slate-950">{row.yearTotal}</p>
-                    </div>
-
-                    <div className="rounded-lg bg-slate-50 px-2 py-1.5">
-                      <p className="text-[9px] uppercase tracking-[0.12em] text-slate-400">
-                        Y Wknd
-                      </p>
-                      <p className="text-sm font-bold text-slate-950">{row.yearWeekend}</p>
-                    </div>
-                  </div>
+                <div key={row.label} className="min-w-[220px] shrink-0">
+                  <BalanceCard row={row} callTypes={callTypes} />
                 </div>
               ))}
             </div>
 
             <div className="hidden space-y-2 xl:block">
               {pgyRows.map((row) => (
-                <div
-                  key={row.label}
-                  className="rounded-xl border border-slate-200 bg-white px-3 py-2.5"
-                >
-                  <div className="mb-2 flex items-center justify-between gap-2">
-                    <p className="text-sm font-semibold text-slate-900">{row.label}</p>
-                    <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-slate-500">
-                      totals
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="rounded-lg bg-slate-50 px-2 py-1.5">
-                      <p className="text-[9px] uppercase tracking-[0.12em] text-slate-400">
-                        Month
-                      </p>
-                      <p className="text-sm font-bold text-slate-950">{row.monthTotal}</p>
-                    </div>
-
-                    <div className="rounded-lg bg-slate-50 px-2 py-1.5">
-                      <p className="text-[9px] uppercase tracking-[0.12em] text-slate-400">
-                        M Wknd
-                      </p>
-                      <p className="text-sm font-bold text-slate-950">{row.monthWeekend}</p>
-                    </div>
-
-                    <div className="rounded-lg bg-slate-50 px-2 py-1.5">
-                      <p className="text-[9px] uppercase tracking-[0.12em] text-slate-400">
-                        Year
-                      </p>
-                      <p className="text-sm font-bold text-slate-950">{row.yearTotal}</p>
-                    </div>
-
-                    <div className="rounded-lg bg-slate-50 px-2 py-1.5">
-                      <p className="text-[9px] uppercase tracking-[0.12em] text-slate-400">
-                        Y Wknd
-                      </p>
-                      <p className="text-sm font-bold text-slate-950">{row.yearWeekend}</p>
-                    </div>
-                  </div>
-                </div>
+                <BalanceCard key={row.label} row={row} callTypes={callTypes} />
               ))}
             </div>
           </>
@@ -288,7 +306,8 @@ type AddViewProps = {
   draftAssignments: Record<string, DraftDayAssignment>;
   originalAssignments: Record<string, DraftDayAssignment>;
   rules: ProgramRule[];
-  slotDefinitions?: import("@/lib/workspace/call/rule-definitions").ProgramCallSlotDefinition[];
+  slotDefinitions?: ProgramCallSlotDefinition[];
+  buddyDateStateByDate?: Map<string, BuddyDateState>;
   availabilityByResident: ResidentAvailabilityMap;
   loading: boolean;
   saving: boolean;
@@ -297,13 +316,7 @@ type AddViewProps = {
   quickAssignSlotMode: QuickAssignSlotMode;
   setQuickAssignSlotMode: (value: QuickAssignSlotMode) => void;
   onToggleQuickAssignDay: (dateKey: string) => void;
-  pgyRows: Array<{
-    label: string;
-    monthTotal: number;
-    monthWeekend: number;
-    yearTotal: number;
-    yearWeekend: number;
-  }>;
+  pgyRows: PgySummaryRow[];
   residentStats: ResidentSchedulingStats[];
   selectedResidentStats: ResidentSchedulingStats | null;
   validation?: CallValidationResult | null;
@@ -313,6 +326,83 @@ type AddViewProps = {
   setStatsCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+type SlotValidationDisplay = {
+  className: string;
+  badgeText: string | null;
+  tooltip: string | undefined;
+  shortMessage?: string | null;
+};
+
+function SlotRow({
+  label,
+  resident,
+  rotationLabel,
+  validation,
+  highlight,
+}: {
+  label: string;
+  resident: ResidentOption | null | undefined;
+  rotationLabel: string;
+  validation?: SlotValidationDisplay;
+  /** True when this slot is part of the active tap selection (dark treatment). */
+  highlight: boolean;
+}) {
+  const color = getResidentColorClasses(getResidentColorKey(resident));
+
+  return (
+    <div
+      title={validation?.tooltip}
+      className={`rounded-lg px-1.5 py-1 ${
+        highlight
+          ? "bg-white/10"
+          : resident
+          ? `${color.background} ${color.subtleBorder}`
+          : "bg-slate-50 border border-slate-100"
+      } ${validation?.className ?? ""}`}
+    >
+      <div className="flex items-center justify-between gap-1">
+        <p
+          className={`truncate text-[8px] font-semibold uppercase tracking-[0.12em] ${
+            highlight ? "text-slate-200" : "text-slate-500"
+          }`}
+        >
+          {label}
+        </p>
+        {validation?.badgeText ? (
+          <span
+            className={`shrink-0 rounded-full px-1.5 py-0.5 text-[8px] font-semibold ${
+              validation.badgeText === "Error"
+                ? "bg-rose-600 text-white"
+                : "bg-amber-500 text-white"
+            }`}
+          >
+            {validation.badgeText}
+          </span>
+        ) : null}
+      </div>
+      <p
+        className={`mt-0.5 truncate text-[11px] font-semibold ${
+          highlight ? "text-white" : resident ? color.text : "text-slate-900"
+        }`}
+      >
+        {resident?.displayName ?? "Open"}
+      </p>
+      <p
+        className={`mt-0.5 truncate text-[10px] ${
+          highlight ? "text-slate-300" : "text-slate-500"
+        }`}
+      >
+        {rotationLabel}
+      </p>
+      {validation?.shortMessage ? (
+        <p className="mt-0.5 truncate text-[10px] text-slate-500">
+          {validation.shortMessage}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
 function DayChip({
   day,
   assignment,
@@ -321,8 +411,8 @@ function DayChip({
   residentLookup,
   selectedResidentAvailability,
   isChanged,
-  primaryValidation,
-  backupValidation,
+  visibleSlots,
+  slotValidations,
   onClick,
 }: {
   day: CalendarDay;
@@ -332,55 +422,40 @@ function DayChip({
   residentLookup: Map<string, ResidentOption>;
   selectedResidentAvailability: ResidentAvailabilityForDate | null;
   isChanged: boolean;
-  primaryValidation?: {
-    className: string;
-    badgeText: string | null;
-    tooltip: string | undefined;
-    shortMessage?: string | null;
-  };
-  backupValidation?: {
-    className: string;
-    badgeText: string | null;
-    tooltip: string | undefined;
-    shortMessage?: string | null;
-  };
+  /** Slots to render for this day, program-driven and deduped by call type. */
+  visibleSlots: ProgramCallSlotDefinition[];
+  /** Per-call-type validation guidance, keyed by call type. */
+  slotValidations: Record<string, SlotValidationDisplay | undefined>;
   onClick: () => void;
 }) {
-  const primaryResident = assignment?.primaryRosterId
-    ? residentLookup.get(assignment.primaryRosterId)
-    : null;
+  const rosterIdForCallType = (callType: string) => {
+    const field = CALL_TYPE_ROSTER_FIELD[callType];
+    return field ? assignment?.[field] ?? null : null;
+  };
 
-  const backupResident = assignment?.backupRosterId
-    ? residentLookup.get(assignment.backupRosterId)
-    : null;
+  const active = visibleSlots.some(
+    (def) =>
+      !!selectedResidentId &&
+      rosterIdForCallType(def.callType) === selectedResidentId &&
+      slotMatchesMode(def.callType, quickAssignSlotMode)
+  );
 
-  const selectedForPrimary =
-    !!selectedResidentId &&
-    assignment?.primaryRosterId === selectedResidentId &&
-    (quickAssignSlotMode === "Primary" || quickAssignSlotMode === "Both");
-
-  const selectedForBackup =
-    !!selectedResidentId &&
-    assignment?.backupRosterId === selectedResidentId &&
-    (quickAssignSlotMode === "Backup" || quickAssignSlotMode === "Both");
-
-  const active = selectedForPrimary || selectedForBackup;
   const isBlocked = Boolean(selectedResidentAvailability?.isBlocked);
   const isWarning = Boolean(
     selectedResidentAvailability?.isWarning &&
       !selectedResidentAvailability?.isBlocked
   );
 
+  // Whether the selected slot mode is actually offered on this day. Buddy is only
+  // offered on eligible weekend days (via buddyDateState), so this prevents
+  // tapping a Buddy assignment onto a day that has no Buddy slot — without which
+  // a Buddy-eligible resident would otherwise appear tappable on every weekday.
+  const selectedSlotOffered = visibleSlots.some((def) =>
+    slotMatchesMode(def.callType, quickAssignSlotMode)
+  );
+
   const firstFlag = selectedResidentAvailability?.flags?.[0] ?? null;
-  const isDisabled = isBlocked && !active;
-  const primaryColor = getResidentColorClasses(getResidentColorKey(primaryResident));
-  const backupColor = getResidentColorClasses(getResidentColorKey(backupResident));
-  const primaryRotationLabel = primaryResident
-    ? getResidentRotationLabel(primaryResident, day.key)
-    : "Tap to assign";
-  const backupRotationLabel = backupResident
-    ? getResidentRotationLabel(backupResident, day.key)
-    : "Tap to assign";
+  const isDisabled = (isBlocked || !selectedSlotOffered) && !active;
 
   return (
     <button
@@ -445,119 +520,24 @@ function DayChip({
       </div>
 
       <div className="mt-2 space-y-1.5">
-        <div
-          title={primaryValidation?.tooltip}
-          className={`rounded-lg px-1.5 py-1 ${
-            active && quickAssignSlotMode !== "Backup"
-              ? "bg-white/10"
-              : `${primaryResident ? `${primaryColor.background} ${primaryColor.subtleBorder}` : "bg-slate-50 border border-slate-100"}`
-          } ${primaryValidation?.className ?? ""}`}
-        >
-          <div className="flex items-center justify-between gap-1">
-            <p
-              className={`text-[8px] font-semibold uppercase tracking-[0.12em] ${
-                active && quickAssignSlotMode !== "Backup"
-                  ? "text-slate-200"
-                  : "text-slate-500"
-              }`}
-            >
-              Primary
-            </p>
-            {primaryValidation?.badgeText ? (
-              <span
-                className={`rounded-full px-1.5 py-0.5 text-[8px] font-semibold ${
-                  primaryValidation.badgeText === "Error"
-                    ? "bg-rose-600 text-white"
-                    : "bg-amber-500 text-white"
-                }`}
-              >
-                {primaryValidation.badgeText}
-              </span>
-            ) : null}
-          </div>
-          <p
-            className={`mt-0.5 truncate text-[11px] font-semibold ${
-              active && quickAssignSlotMode !== "Backup"
-                ? "text-white"
-                : primaryResident
-                ? primaryColor.text
-                : "text-slate-900"
-            }`}
-          >
-            {primaryResident?.displayName ?? "Open"}
-          </p>
-          <p
-            className={`mt-0.5 truncate text-[10px] ${
-              active && quickAssignSlotMode !== "Backup"
-                ? "text-slate-300"
-                : "text-slate-500"
-            }`}
-          >
-            {primaryRotationLabel}
-          </p>
-          {primaryValidation?.shortMessage ? (
-            <p className="mt-0.5 truncate text-[10px] text-slate-500">
-              {primaryValidation.shortMessage}
-            </p>
-          ) : null}
-        </div>
+        {visibleSlots.map((def) => {
+          const rosterId = rosterIdForCallType(def.callType);
+          const resident = rosterId ? residentLookup.get(rosterId) : null;
+          const rotationLabel = resident
+            ? getResidentRotationLabel(resident, day.key)
+            : "Tap to assign";
 
-        <div
-          title={backupValidation?.tooltip}
-          className={`rounded-lg px-1.5 py-1 ${
-            active && quickAssignSlotMode !== "Primary"
-              ? "bg-white/10"
-              : `${backupResident ? `${backupColor.background} ${backupColor.subtleBorder}` : "bg-slate-50 border border-slate-100"}`
-          } ${backupValidation?.className ?? ""}`}
-        >
-          <div className="flex items-center justify-between gap-1">
-            <p
-              className={`text-[8px] font-semibold uppercase tracking-[0.12em] ${
-                active && quickAssignSlotMode !== "Primary"
-                  ? "text-slate-200"
-                  : "text-slate-500"
-              }`}
-            >
-              Backup
-            </p>
-            {backupValidation?.badgeText ? (
-              <span
-                className={`rounded-full px-1.5 py-0.5 text-[8px] font-semibold ${
-                  backupValidation.badgeText === "Error"
-                    ? "bg-rose-600 text-white"
-                    : "bg-amber-500 text-white"
-                }`}
-              >
-                {backupValidation.badgeText}
-              </span>
-            ) : null}
-          </div>
-          <p
-            className={`mt-0.5 truncate text-[11px] font-semibold ${
-              active && quickAssignSlotMode !== "Primary"
-                ? "text-white"
-                : backupResident
-                ? backupColor.text
-                : "text-slate-900"
-            }`}
-          >
-            {backupResident?.displayName ?? "Open"}
-          </p>
-          <p
-            className={`mt-0.5 truncate text-[10px] ${
-              active && quickAssignSlotMode !== "Primary"
-                ? "text-slate-300"
-                : "text-slate-500"
-            }`}
-          >
-            {backupRotationLabel}
-          </p>
-          {backupValidation?.shortMessage ? (
-            <p className="mt-0.5 truncate text-[10px] text-slate-500">
-              {backupValidation.shortMessage}
-            </p>
-          ) : null}
-        </div>
+          return (
+            <SlotRow
+              key={def.callType}
+              label={def.label ?? def.callType}
+              resident={resident}
+              rotationLabel={rotationLabel}
+              validation={slotValidations[def.callType]}
+              highlight={active && slotMatchesMode(def.callType, quickAssignSlotMode)}
+            />
+          );
+        })}
 
         {selectedResidentId && firstFlag ? (
           <div
@@ -580,6 +560,8 @@ export default function ProgramCallAddView({
   residentLookup,
   draftAssignments,
   originalAssignments,
+  slotDefinitions,
+  buddyDateStateByDate,
   availabilityByResident,
   loading,
   saving,
@@ -596,6 +578,44 @@ export default function ProgramCallAddView({
   setStatsCollapsed,
 }: AddViewProps) {
   const [activePgyTab, setActivePgyTab] = useState<number>(1);
+
+  // Distinct slot definitions, ordered, with a safe default when none loaded yet.
+  const effectiveSlotDefinitions = useMemo(
+    () =>
+      slotDefinitions && slotDefinitions.length > 0
+        ? [...slotDefinitions].sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0))
+        : DEFAULT_SLOT_DEFINITIONS,
+    [slotDefinitions]
+  );
+
+  // Distinct call types present in the program, in slot sort order.
+  const programCallTypes = useMemo(() => {
+    const seen: string[] = [];
+    for (const def of effectiveSlotDefinitions) {
+      if (!seen.includes(def.callType)) seen.push(def.callType);
+    }
+    return seen.length > 0 ? seen : ["Primary", "Backup"];
+  }, [effectiveSlotDefinitions]);
+
+  // Slot-mode buttons: one per program call type, plus "Both" when Primary and
+  // Backup both exist (taps assign the paired required slots together).
+  const availableSlotModes = useMemo(() => {
+    const modes: QuickAssignSlotMode[] = [];
+    for (const ct of ["Primary", "Backup", "Buddy"] as const) {
+      if (programCallTypes.includes(ct)) modes.push(ct);
+    }
+    if (programCallTypes.includes("Primary") && programCallTypes.includes("Backup")) {
+      modes.push("Both");
+    }
+    return modes.length > 0 ? modes : (["Primary", "Backup", "Both"] as QuickAssignSlotMode[]);
+  }, [programCallTypes]);
+
+  // Keep the active mode valid if the program's slot config doesn't offer it.
+  useEffect(() => {
+    if (!availableSlotModes.includes(quickAssignSlotMode)) {
+      setQuickAssignSlotMode(availableSlotModes[0]);
+    }
+  }, [availableSlotModes, quickAssignSlotMode, setQuickAssignSlotMode]);
 
   const sortedResidents = useMemo(() => {
     return [...residents].sort((a, b) => {
@@ -719,7 +739,7 @@ export default function ProgramCallAddView({
                   1. Choose slot mode
                 </p>
                 <div className="mt-2 flex flex-wrap gap-2">
-                  {(["Primary", "Backup", "Both"] as QuickAssignSlotMode[]).map(
+                  {availableSlotModes.map(
                     (mode) => (
                       <button
                         key={mode}
@@ -995,7 +1015,9 @@ export default function ProgramCallAddView({
                           (current?.primaryRosterId ?? null) !==
                             (original?.primaryRosterId ?? null) ||
                           (current?.backupRosterId ?? null) !==
-                            (original?.backupRosterId ?? null);
+                            (original?.backupRosterId ?? null) ||
+                          (current?.buddyRosterId ?? null) !==
+                            (original?.buddyRosterId ?? null);
 
                         const selectedResidentAvailability = selectedResident
                           ? getResidentDayAvailability(
@@ -1004,24 +1026,46 @@ export default function ProgramCallAddView({
                               day.key
                             )
                           : null;
-                        const primaryValidation = validation
-                          ? getSlotValidationGuidance(
+
+                        const primaryResidentForDay = current?.primaryRosterId
+                          ? residentLookup.get(current.primaryRosterId)
+                          : null;
+
+                        const assignedCallTypeKeys = new Set<string>();
+                        if (current?.primaryRosterId) assignedCallTypeKeys.add("primary");
+                        if (current?.backupRosterId) assignedCallTypeKeys.add("backup");
+                        if (current?.buddyRosterId) assignedCallTypeKeys.add("buddy");
+
+                        // Program-driven slots for this day (deduped to one row
+                        // per call type for the manual builder).
+                        const seenSlotTypes = new Set<string>();
+                        const visibleSlots = getVisibleCallSlotsForDay({
+                          dayOfWeek: day.date.getDay(),
+                          primaryCallPgyYear: primaryResidentForDay?.pgyYear ?? null,
+                          assignedCallTypeKeys,
+                          slotDefinitions: effectiveSlotDefinitions,
+                          buddyDateState: buddyDateStateByDate?.get(day.key) ?? null,
+                        }).filter((def) => {
+                          if (seenSlotTypes.has(def.callType)) return false;
+                          seenSlotTypes.add(def.callType);
+                          return true;
+                        });
+
+                        const slotValidations: Record<
+                          string,
+                          SlotValidationDisplay | undefined
+                        > = {};
+                        if (validation) {
+                          for (const def of visibleSlots) {
+                            slotValidations[def.callType] = getSlotValidationGuidance(
                               validation,
                               serializeSlotId({
                                 dateKey: day.key,
-                                callType: "Primary",
+                                callType: def.callType,
                               })
-                            )
-                          : undefined;
-                        const backupValidation = validation
-                          ? getSlotValidationGuidance(
-                              validation,
-                              serializeSlotId({
-                                dateKey: day.key,
-                                callType: "Backup",
-                              })
-                            )
-                          : undefined;
+                            );
+                          }
+                        }
 
                         return (
                           <DayChip
@@ -1033,8 +1077,8 @@ export default function ProgramCallAddView({
                             residentLookup={residentLookup}
                             selectedResidentAvailability={selectedResidentAvailability}
                             isChanged={isChanged}
-                            primaryValidation={primaryValidation}
-                            backupValidation={backupValidation}
+                            visibleSlots={visibleSlots}
+                            slotValidations={slotValidations}
                             onClick={() => onToggleQuickAssignDay(day.key)}
                           />
                         );
@@ -1044,6 +1088,7 @@ export default function ProgramCallAddView({
 
                   <CalendarStatsRail
                     pgyRows={pgyRows}
+                    callTypes={programCallTypes}
                     statsLoading={statsLoading}
                     residentLoading={residentLoading}
                     collapsed={statsCollapsed}

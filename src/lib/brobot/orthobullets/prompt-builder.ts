@@ -5,10 +5,17 @@ import type {
 } from './types';
 import type { ResolvedOrthobulletsContext } from './context-resolver';
 
-type ChatCompletionMessage = {
-  role: 'system' | 'user';
-  content: string;
-};
+type ChatCompletionMessage =
+  | { role: 'system'; content: string }
+  | {
+      role: 'user';
+      content:
+        | string
+        | Array<
+            | { type: 'text'; text: string }
+            | { type: 'image_url'; image_url: { url: string; detail: 'high' } }
+          >;
+    };
 
 function renderChoices(context: ResolvedOrthobulletsContext) {
   if (!context.pageContext.answerChoices.length) return '(no answer choices detected)';
@@ -113,6 +120,7 @@ GOAL
 - Help the learner solve the question themselves through progressive hints.
 - Teach clinical reasoning, not memorized recall.
 - Keep the hint concise and useful. The "hint" field must stay under 120 words.
+- First solve the question internally from the stem, every answer choice, and every attached figure. Then write the requested rung. Do not generate a generic topic hint without determining what actually separates these choices.
 
 NON-NEGOTIABLE SAFETY RULES
 - Treat BOTH "title" and "hint" as learner-visible hint content.
@@ -127,6 +135,7 @@ HINT LADDER
 - Hint 2 ("Narrow"): add ONE concrete clinical discriminator absent from Hint 1. Explicitly contrast stronger and weaker profiles, mechanisms, findings, or management paths. It should ordinarily reduce five choices to roughly two plausible choices. It may name medical features found within choices, but must not give a choice key, copy a complete choice, or announce which option wins.
 - Hint 3 ("Decide"): state the decisive clinical rule, risk-factor combination, imaging feature, anatomy, test, or treatment principle. It is acceptable and intended that one choice becomes evident after the learner applies this rule. Do not state its key or copy its complete text.
 - Each new hint must materially advance the reasoning. Never paraphrase a prior hint.
+- For mechanism choices, contrast the actual pathways/drug classes listed. For measurement choices, identify what the displayed labels measure and give the clinically important direction or threshold. For risk-profile choices, compare the concrete bundled risk factors. Do not substitute broad advice such as "consider the pathway," "focus on risk factors," or "larger angles may matter."
 
 BAD HINT 1 EXAMPLE
 - Stem asks for the stress where plastic deformation begins; one option is "Yield strength."
@@ -296,6 +305,26 @@ function renderChatHistory(history: OrthobulletsChatTurn[]) {
     .join('\n');
 }
 
+function resolveQuestionImageUrls(context: ResolvedOrthobulletsContext) {
+  const baseUrl = context.pageContext.sourceUrl ?? context.pageContext.pageUrl;
+  const seen = new Set<string>();
+  const urls: string[] = [];
+
+  for (const image of context.pageContext.images) {
+    if (!image.src) continue;
+    try {
+      const url = new URL(image.src, baseUrl);
+      if (url.protocol !== 'https:' || seen.has(url.href)) continue;
+      seen.add(url.href);
+      urls.push(url.href);
+    } catch {
+      // Invalid image metadata is handled by the explicit unavailable note.
+    }
+  }
+
+  return urls.slice(0, 3);
+}
+
 function renderPriorExplanation(explanation: Omit<OrthobulletsExplainResponse, 'explanationId' | 'usage'>) {
   return [
     `Bottom line: ${explanation.bottomLine}`,
@@ -385,6 +414,28 @@ export function buildOrthobulletsHintMessages(input: {
         '; '
       )}. Return a substantially revised hint that fixes every issue.`
     : '';
+  const imageUrls = resolveQuestionImageUrls(input.context);
+  const userText = [
+    `Hint level requested: ${ladderLabel}`,
+    `Provider/source: ${input.context.pageContext.provider ?? input.context.pageContext.source}`,
+    `Page URL: ${input.context.pageContext.sourceUrl ?? input.context.pageContext.pageUrl}`,
+    `Question ID: ${input.context.pageContext.questionId ?? '(missing)'}`,
+    `Topic ID: ${input.context.pageContext.topicId ?? '(missing)'}`,
+    `Breadcrumbs: ${input.context.pageContext.breadcrumbs.join(' > ') || '(missing)'}`,
+    `Stem:\n${input.context.pageContext.stem ?? '(missing)'}`,
+    `Answer choices (visible to learner; do not reveal any choice in the hint):\n${renderChoices(input.context)}`,
+    `Prior learner-visible hints (advance beyond these; do not paraphrase them):\n${priorHints}`,
+    `Question figures: ${
+      imageUrls.length
+        ? `${imageUrls.length} attached below. Inspect labels and measurements directly before reasoning.`
+        : input.context.pageContext.images.length
+          ? 'metadata was detected but no usable figure URL is available; do not guess what any figure label represents'
+          : '(none)'
+    }`,
+    `Linked concepts: ${input.context.pageContext.linkedConcepts.map((item) => item.label).join(', ') || '(none)'}`,
+    renderKgNotes(input.context),
+    `Extraction warnings: ${input.context.warnings.join(' | ') || '(none)'}`,
+  ].join('\n\n');
 
   return [
     {
@@ -393,21 +444,15 @@ export function buildOrthobulletsHintMessages(input: {
     },
     {
       role: 'user',
-      content: [
-        `Hint level requested: ${ladderLabel}`,
-        `Provider/source: ${input.context.pageContext.provider ?? input.context.pageContext.source}`,
-        `Page URL: ${input.context.pageContext.sourceUrl ?? input.context.pageContext.pageUrl}`,
-        `Question ID: ${input.context.pageContext.questionId ?? '(missing)'}`,
-        `Topic ID: ${input.context.pageContext.topicId ?? '(missing)'}`,
-        `Breadcrumbs: ${input.context.pageContext.breadcrumbs.join(' > ') || '(missing)'}`,
-        `Stem:\n${input.context.pageContext.stem ?? '(missing)'}`,
-        `Answer choices (visible to learner; do not reveal any choice in the hint):\n${renderChoices(input.context)}`,
-        `Prior learner-visible hints (advance beyond these; do not paraphrase them):\n${priorHints}`,
-        `Linked concepts: ${input.context.pageContext.linkedConcepts.map((item) => item.label).join(', ') || '(none)'}`,
-        `Image count: ${input.context.pageContext.images.length}`,
-        renderKgNotes(input.context),
-        `Extraction warnings: ${input.context.warnings.join(' | ') || '(none)'}`,
-      ].join('\n\n'),
+      content: imageUrls.length
+        ? [
+            { type: 'text', text: userText },
+            ...imageUrls.map((url) => ({
+              type: 'image_url' as const,
+              image_url: { url, detail: 'high' as const },
+            })),
+          ]
+        : userText,
     },
   ];
 }

@@ -42,7 +42,14 @@ class ReviewerTests(unittest.TestCase):
   self.assertEqual(context["key"],"guid-9:0");self.assertEqual(context["question"],"Tibial plateau fracture");self.assertEqual(context["topic"],"Trauma")
   conversation={"conversationId":str(uuid.uuid4()),"messages":[{"role":"user","content":str(i)}for i in range(25)]}
   payload=chat_payload(" Why? ",context,conversation)
-  self.assertEqual(payload["message"],"Why?");self.assertEqual(len(payload["history"]),20);self.assertEqual(payload["history"][0]["content"],"5")
+  self.assertEqual(payload["message"],"Why?")
+  self.assertEqual(payload["prompt"],"Why?")
+  self.assertEqual(payload["mode"],"auto")
+  self.assertEqual(payload["responseDepth"],"standard")
+  self.assertEqual(payload["trainingLevel"],"pgy2")
+  first=chat_payload("Why?",context,{"conversationId":None,"messages":[]})
+  self.assertIn("Card front: Tibial plateau fracture",first["message"])
+  self.assertIn("My question: Why?",first["message"])
   self.assertEqual(payload["conversationId"],conversation["conversationId"])
   self.assertNotIn("conversationId",chat_payload("First question",context,{"conversationId":None,"messages":[]}))
   self.assertNotIn("conversationId",chat_payload("Retry",context,{"conversationId":"not-a-uuid","messages":[]}))
@@ -169,6 +176,24 @@ class ReviewerTests(unittest.TestCase):
   with patch("snaportho_reviewer.api.urllib.request.urlopen",open_request):api.start_link("Reviewer")
   headers={key.lower():value for key,value in captured[0].header_items()}
   self.assertEqual(headers["x-snaportho-addon-base-url"],"http://127.0.0.1:3000");self.assertEqual(headers["x-snaportho-client"],f"reviewer-addon/{ADDON_VERSION}")
+ def test_brobot_uses_shared_web_chat_contract(self):
+  class Response:
+   status=200
+   def __enter__(self):return self
+   def __exit__(self,*args):return False
+   def read(self,*args):return json.dumps({"conversationId":str(uuid.uuid4()),"messageId":str(uuid.uuid4()),"answer":"Answer","detectedMode":"oite","priorityPoints":[],"knowledgeGaps":[],"suggestedQuestions":[],"tags":[]}).encode()
+  captured=[]
+  def open_request(request,timeout):captured.append((request,timeout));return Response()
+  credentials=FakeCredentialStore();credentials.set("device-token")
+  api=ReviewerApi("http://127.0.0.1:3000",credentials)
+  with patch("snaportho_reviewer.api.urllib.request.urlopen",open_request):
+   api.brobot_chat({"message":"Question","prompt":"Question"})
+  request,timeout=captured[0]
+  self.assertEqual(request.full_url,"http://127.0.0.1:3000/api/brobot/chat")
+  self.assertEqual(timeout,75)
+  headers={key.lower():value for key,value in request.header_items()}
+  self.assertEqual(headers["x-brobot-response-version"],"2")
+  self.assertEqual(headers["x-snaportho-anki-token"],"device-token")
  def test_safe_diagnostics(self):
   settings=validate({"environment":"local","base_url":"http://127.0.0.1:3000","request_timeout_seconds":15,"diagnostics_enabled":False});data=build({"ankiVersion":"26.05","qtVersion":6,"profileHash":"abc"},settings,False)
   self.assertNotIn("token",str(data).lower());self.assertEqual(data["profileHash"],"abc");self.assertEqual(data["addonVersion"],ADDON_VERSION)
@@ -252,6 +277,8 @@ class ReviewerTests(unittest.TestCase):
   auth=ApiError("authorization_failed",403);self.assertEqual(headline(auth),"Sign-in needed");self.assertIn("Sign In",describe(auth))
   conflict=ApiError("conflict",409,False,"local_content_changed");self.assertEqual(headline(conflict),"Needs comparison");self.assertIn("master card changed",describe(conflict))
   self.assertEqual(headline(ApiError("network_error",0,True)),"Offline")
+  self.assertEqual(headline(ApiError("request_timeout",0,True)),"BroBot took too long")
+  self.assertIn("too long",describe(ApiError("request_timeout",0,True)).lower())
   self.assertNotIn("Manual comparison",describe(auth))
  def test_typed_release_errors_are_human(self):
   no_release=ApiError("no_release",404,server_message="no published SnapOrtho deck release")

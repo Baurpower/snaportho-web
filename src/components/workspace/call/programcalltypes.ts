@@ -226,6 +226,9 @@ export type PgySummaryRow = {
   monthWeekend: number;
   yearTotal: number;
   yearWeekend: number;
+  /** Per-call-type breakdown (keyed by CallType, e.g. "Primary"). */
+  monthByCallType: Record<string, number>;
+  yearByCallType: Record<string, number>;
 };
 
 export type ResidentSchedulingStats = {

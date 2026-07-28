@@ -9,8 +9,6 @@ ATTENDING_PROMPT = "What would an attending ask related to this?"
 OITE_PROMPT = "What is a common OITE board trap or question?"
 MAX_HISTORY_MESSAGES = 20
 MAX_CONTEXT_CHARS = 30000
-
-
 def plain_text(value):
     """Convert rendered/card HTML into compact model-safe plain text."""
     text = re.sub(r"(?is)<(script|style).*?>.*?</\1>", " ", str(value or ""))
@@ -51,18 +49,38 @@ def card_context(card):
     }
 
 
-def chat_payload(message, context, conversation=None):
+def chat_payload(
+    message,
+    context,
+    conversation=None,
+    mode="auto",
+    response_depth="standard",
+    training_level="pgy2",
+    source="manual",
+    source_message_id=None,
+):
     conversation = conversation or {}
-    history = list(conversation.get("messages") or [])[-MAX_HISTORY_MESSAGES:]
+    if conversation.get("conversationId"):
+        card_prompt = message.strip()
+    else:
+        card_prompt = (
+            "Use this Anki card as the primary context for my question.\n\n"
+            f"Card topic: {context.get('topic') or 'Current card'}\n"
+            f"Card front: {context.get('question') or ''}\n"
+            f"Card back: {context.get('answer') or ''}\n\n"
+            f"My question: {message.strip()}"
+        )
     payload = {
-        "message": message.strip(),
-        "card": context,
-        "history": [
-            {"role": row["role"], "content": row["content"]}
-            for row in history
-            if row.get("role") in ("user", "assistant") and row.get("content")
-        ],
+        "message": card_prompt,
+        "prompt": card_prompt,
+        "mode": mode,
+        "responseDepth": response_depth,
+        "trainingLevel": training_level,
+        "source": source,
+        "stream": False,
     }
+    if source_message_id:
+        payload["sourceMessageId"] = source_message_id
     conversation_id = conversation.get("conversationId")
     try:
         payload["conversationId"] = str(uuid.UUID(str(conversation_id)))
@@ -93,30 +111,34 @@ def deck_footer_text(installed_release, latest_release, card_count):
 
 PANEL_STYLE = """
 QWidget#snapOrthoPanel { background: #f7f8fb; }
-QFrame#headerCard {
-  background: #17233b; border: none; border-radius: 14px;
-}
-QLabel#brand { color: #ffffff; font-size: 19px; font-weight: 700; }
-QLabel#eyebrow {
-  color: #93c5fd; font-size: 10px; font-weight: 700;
-  letter-spacing: 0.8px;
-}
-QLabel#topic { color: #dbeafe; font-size: 12px; }
+QFrame#headerCard { background: transparent; border: none; }
+QLabel#brand { color: #17233b; font-size: 20px; font-weight: 800; }
+QLabel#eyebrow { color: #0f8f83; font-size: 10px; font-weight: 700; }
+QLabel#topic { color: #64748b; font-size: 11px; }
 QTextBrowser#conversation {
   background: transparent; border: none; padding: 0; color: #172033;
 }
 QPushButton#prompt {
-  text-align: left; background: #ffffff; color: #17233b;
-  border: 1px solid #dbe3ef; border-radius: 12px; padding: 11px 12px;
-  font-size: 12px; font-weight: 650;
+  text-align: left; background: #ffffff; color: #334155;
+  border: 1px solid #dbe3ef; border-radius: 9px; padding: 9px 10px;
+  font-size: 11px; font-weight: 650;
 }
-QPushButton#prompt:hover { background: #eef5ff; border-color: #7db5ff; }
-QPushButton#prompt:pressed { background: #dbeafe; }
+QPushButton#prompt:hover { background: #f0fdfa; border-color: #5eead4; }
+QPushButton#prompt:pressed { background: #ccfbf1; }
 QPlainTextEdit#composer {
-  background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px;
-  padding: 9px 10px; color: #0f172a; font-size: 12px;
+  background: #ffffff; border: 1px solid #cbd5e1; border-radius: 9px;
+  padding: 8px 9px; color: #0f172a; font-size: 12px;
 }
-QPlainTextEdit#composer:focus { border: 1px solid #4f8fe8; }
+QPlainTextEdit#composer:focus { border: 1px solid #14b8a6; }
+QPushButton#send {
+  background: #0d9488; color: white; border: none; border-radius: 9px;
+  min-width: 38px; padding: 9px; font-weight: 700;
+}
+QPushButton#send:hover { background: #0f766e; }
+QPushButton#newChat {
+  background: #ffffff; color: #475569; border: 1px solid #e2e8f0;
+  border-radius: 7px; padding: 5px 8px; font-size: 10px; font-weight: 650;
+}
 QLabel#footer {
   background: transparent; color: #64748b; border-top: 1px solid #e2e8f0;
   padding: 9px 2px 2px 2px; font-size: 10px; font-weight: 600;
@@ -130,6 +152,7 @@ class LearnerSidePanel:
         from aqt.qt import (
             QDockWidget,
             QFrame,
+            QHBoxLayout,
             QLabel,
             QPlainTextEdit,
             QPushButton,
@@ -164,23 +187,32 @@ class LearnerSidePanel:
         header = QFrame()
         header.setObjectName("headerCard")
         header_layout = QVBoxLayout(header)
-        header_layout.setContentsMargins(13, 12, 13, 12)
-        header_layout.setSpacing(3)
-        eyebrow = QLabel("SNAPORTHO  ·  CARD COMPANION")
+        header_layout.setContentsMargins(2, 4, 2, 5)
+        header_layout.setSpacing(2)
+        eyebrow = QLabel("SNAPORTHO")
         eyebrow.setObjectName("eyebrow")
-        brand = QLabel("BroBot")
+        title_row = QHBoxLayout()
+        brand = QLabel("BroBot Chat")
         brand.setObjectName("brand")
+        self.new_chat = QPushButton("New chat")
+        self.new_chat.setObjectName("newChat")
+        self.new_chat.clicked.connect(self.start_new_chat)
+        title_row.addWidget(brand)
+        title_row.addStretch(1)
+        title_row.addWidget(self.new_chat)
         self.topic = QLabel("Open a card to start")
         self.topic.setObjectName("topic")
         self.topic.setWordWrap(True)
         header_layout.addWidget(eyebrow)
-        header_layout.addWidget(brand)
+        header_layout.addLayout(title_row)
         header_layout.addWidget(self.topic)
         root.addWidget(header)
 
         self.conversation = QTextBrowser()
         self.conversation.setObjectName("conversation")
         self.conversation.setOpenExternalLinks(True)
+        self.conversation.setOpenLinks(False)
+        self.conversation.anchorClicked.connect(self._open_conversation_link)
         self.conversation.setHtml(self._empty_html())
         self.conversation.setMaximumHeight(84)
         root.addWidget(self.conversation, 1)
@@ -213,12 +245,20 @@ class LearnerSidePanel:
                     return
                 super().keyPressEvent(event)
 
+        composer_row = QHBoxLayout()
+        composer_row.setSpacing(6)
         self.composer = FollowupComposer()
         self.composer.setObjectName("composer")
         self.composer.setPlaceholderText("Ask a follow-up…")
         self.composer.setMaximumHeight(62)
         self.composer.setToolTip("Press Enter to send · Shift+Enter for a new line")
-        root.addWidget(self.composer)
+        self.send = QPushButton("➤")
+        self.send.setObjectName("send")
+        self.send.setToolTip("Send message")
+        self.send.clicked.connect(self.send_composer)
+        composer_row.addWidget(self.composer, 1)
+        composer_row.addWidget(self.send)
+        root.addLayout(composer_row)
 
         self.footer = QLabel("Master Deck · Checking version…")
         self.footer.setObjectName("footer")
@@ -244,7 +284,7 @@ class LearnerSidePanel:
         except Exception:
             pass
         active = bool(enabled and linked and not self.busy)
-        for widget in (self.attending, self.oite, self.composer):
+        for widget in (self.attending, self.oite, self.composer, self.send):
             widget.setEnabled(active)
         if enabled and not linked:
             self.notice.setText("Sign in to SnapOrtho from Tools → SnapOrtho → Get Started.")
@@ -273,14 +313,23 @@ class LearnerSidePanel:
     def send_composer(self):
         self.send_prompt(self.composer.toPlainText())
 
-    def send_prompt(self, message):
+    def send_prompt(self, message, source="manual", source_message_id=None):
         message = (message or "").strip()
         if not message or not self.context or self.busy:
             return
         conversation = self.conversations.setdefault(
             self.card_key, {"conversationId": None, "messages": []}
         )
-        payload = chat_payload(message, self.context, conversation)
+        payload = chat_payload(
+            message,
+            self.context,
+            conversation,
+            "auto",
+            "standard",
+            "pgy2",
+            source,
+            source_message_id,
+        )
         conversation["messages"].append({"role": "user", "content": message})
         self.composer.clear()
         self.busy = True
@@ -300,7 +349,11 @@ class LearnerSidePanel:
                 _, body = future.result()
                 current["conversationId"] = body.get("conversationId")
                 current["messages"].append(
-                    {"role": "assistant", "content": body.get("answer") or "No answer returned."}
+                    {
+                        "role": "assistant",
+                        "content": body.get("answer") or "No answer returned.",
+                        "response": body,
+                    }
                 )
                 self.notice.hide()
             except Exception as error:
@@ -337,22 +390,95 @@ class LearnerSidePanel:
                     f"{content}</div>"
                 )
             elif role == "assistant":
+                response = row.get("response") or {}
+                mode = html.escape(str(response.get("detectedMode") or "general").replace("_", " ").title())
+                confidence = response.get("confidence")
+                meta = mode
+                if isinstance(confidence, (int, float)):
+                    meta += f" · {round(confidence * 100)}% confidence"
+                sections = []
+                for title, key in (
+                    ("Important Concepts", "priorityPoints"),
+                    ("What Most Residents Miss", "whatMostResidentsMiss"),
+                    ("What to Learn Next", "knowledgeGaps"),
+                ):
+                    items = response.get(key) or []
+                    if items:
+                        rendered = "".join(
+                            f"<li style='margin:4px 0'>{html.escape(str(item))}</li>"
+                            for item in items
+                        )
+                        sections.append(
+                            f"<div style='margin-top:12px;color:#64748b;font-size:10px;"
+                            f"font-weight:700;text-transform:uppercase'>{title}</div>"
+                            f"<ul style='margin:5px 0 0 16px;padding:0'>{rendered}</ul>"
+                        )
                 blocks.append(
-                    "<div style='margin:10px 24px 10px 0;padding:9px 10px;"
-                    "background:#f1f5f9;border-radius:10px;color:#172033'>"
-                    f"{content}</div>"
+                    "<div style='margin:10px 8px 10px 0;padding:12px;"
+                    "background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;color:#172033'>"
+                    f"<div style='color:#0f766e;font-size:10px;font-weight:700'>{meta}</div>"
+                    f"<div style='margin-top:9px;line-height:1.45'>{content}</div>"
+                    f"{''.join(sections)}</div>"
                 )
             else:
                 blocks.append(
                     "<div style='margin:8px 0;color:#b45309;font-size:11px'>"
                     f"{content}</div>"
                 )
-        self.conversation.setHtml("".join(blocks))
+        latest = next(
+            (row.get("response") or {} for row in reversed(messages) if row.get("role") == "assistant"),
+            {},
+        )
+        questions = latest.get("nextLearningBranches") or latest.get("suggestedQuestions") or []
+        chips = []
+        for index, item in enumerate(questions[:5]):
+            label = item.get("label") if isinstance(item, dict) else item
+            if label:
+                chips.append(
+                    "<a style='display:block;margin:5px 0;padding:7px 9px;"
+                    "color:#0f766e;text-decoration:none;background:#f0fdfa;"
+                    "border:1px solid #99f6e4;border-radius:9px' "
+                    f"href='brobot-followup:{index}'>{html.escape(str(label))}</a>"
+                )
+        followups = (
+            "<div style='margin:12px 2px 5px;color:#64748b;font-size:10px;"
+            "font-weight:700'>KEEP LEARNING</div>" + "".join(chips)
+            if chips else ""
+        )
+        self.conversation.setHtml("".join(blocks) + followups)
         self.conversation.setMaximumHeight(16777215)
         bar = self.conversation.verticalScrollBar()
         bar.setValue(bar.maximum())
         self.attending.hide()
         self.oite.hide()
+
+    def _open_conversation_link(self, url):
+        raw = url.toString()
+        if not raw.startswith("brobot-followup:") or self.busy:
+            return
+        try:
+            index = int(raw.split(":", 1)[1])
+            messages = (self.conversations.get(self.card_key) or {}).get("messages") or []
+            latest = next(
+                (row.get("response") or {} for row in reversed(messages) if row.get("role") == "assistant"),
+                {},
+            )
+            questions = latest.get("nextLearningBranches") or latest.get("suggestedQuestions") or []
+            item = questions[index]
+            label = item.get("label") if isinstance(item, dict) else item
+            self.send_prompt(
+                str(label),
+                "branch_selection" if isinstance(item, dict) else "suggested_question",
+                latest.get("messageId"),
+            )
+        except (IndexError, TypeError, ValueError):
+            return
+
+    def start_new_chat(self):
+        if not self.card_key or self.busy:
+            return
+        self.conversations[self.card_key] = {"conversationId": None, "messages": []}
+        self._render()
 
     def refresh_deck_footer(self):
         from .sync import installed_card_inventory

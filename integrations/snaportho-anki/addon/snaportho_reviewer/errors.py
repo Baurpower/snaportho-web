@@ -21,6 +21,8 @@ def headline(error):
         return "Sign-in needed"
     if code == "network_error":
         return "Offline"
+    if code == "request_timeout":
+        return "BroBot took too long"
     if code == "daily_limit_reached":
         return "Daily BroBot limit reached"
     if code == "cancelled":
@@ -87,6 +89,8 @@ def describe(error):
         return "The requested resource was not found on the server."
     if code == "network_error":
         return "Can't reach SnapOrtho right now. Check your connection — any local draft is safe."
+    if code == "request_timeout":
+        return "BroBot took too long to finish this answer. Try once more; your card and question are still here."
     if code == "daily_limit_reached":
         return "You've used today's free BroBot questions. Your card and conversation remain available."
     if code == "cancelled":

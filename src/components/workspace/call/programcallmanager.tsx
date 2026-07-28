@@ -38,6 +38,7 @@ import type {
   MonthCall,
   MonthResponse,
   ProgramAvailabilityMonthResponse,
+  PgySummaryRow,
   ProgramCallSlotDefinition,
   ProgramRule,
   QuickAssignSlotMode,
@@ -1210,7 +1211,10 @@ const rotationAssignmentsByRosterId =
         yearPrimary: baseline?.primaryCallsYear ?? 0,
         yearBackup: baseline?.backupCallsYear ?? 0,
         yearBuddy: baseline?.buddyCallsYear ?? 0,
-        yearTotal: baseline?.totalCallsYear ?? 0,
+        // Backend totalCallsYear excludes Buddy (see calls.ts); fold it in so the
+        // year total reflects every call type. weekendCallsYear already counts
+        // Buddy weekend days, so it is used as-is.
+        yearTotal: (baseline?.totalCallsYear ?? 0) + (baseline?.buddyCallsYear ?? 0),
         yearWeekend: baseline?.weekendCallsYear ?? 0,
         spacingFlags: 0,
       });
@@ -1247,8 +1251,9 @@ const rotationAssignmentsByRosterId =
         if (entry) {
           entry.monthBuddy += 1;
           entry.yearBuddy += 1;
-          // Buddy does not count toward monthTotal/yearTotal by default.
-          // Slot definition's countsTowardWorkload controls this in Phase 3.
+          entry.monthTotal += 1;
+          entry.yearTotal += 1;
+          if (day.isWeekend) { entry.monthWeekend += 1; entry.yearWeekend += 1; }
         }
       }
     }
@@ -1276,31 +1281,31 @@ const rotationAssignmentsByRosterId =
       return a.resident.displayName.localeCompare(b.resident.displayName);
     });
 
-    const byPgy = new Map<
-      string,
-      {
-        label: string;
-        monthTotal: number;
-        monthWeekend: number;
-        yearTotal: number;
-        yearWeekend: number;
-      }
-    >();
+    const byPgy = new Map<string, PgySummaryRow>();
 
     for (const row of residentRows) {
       const label = pgyLabel(row.resident);
-      const current = byPgy.get(label) ?? {
+      const current: PgySummaryRow = byPgy.get(label) ?? {
         label,
         monthTotal: 0,
         monthWeekend: 0,
         yearTotal: 0,
         yearWeekend: 0,
+        monthByCallType: {},
+        yearByCallType: {},
       };
 
       current.monthTotal += row.monthTotal;
       current.monthWeekend += row.monthWeekend;
       current.yearTotal += row.yearTotal;
       current.yearWeekend += row.yearWeekend;
+
+      current.monthByCallType.Primary = (current.monthByCallType.Primary ?? 0) + row.monthPrimary;
+      current.monthByCallType.Backup = (current.monthByCallType.Backup ?? 0) + row.monthBackup;
+      current.monthByCallType.Buddy = (current.monthByCallType.Buddy ?? 0) + row.monthBuddy;
+      current.yearByCallType.Primary = (current.yearByCallType.Primary ?? 0) + row.yearPrimary;
+      current.yearByCallType.Backup = (current.yearByCallType.Backup ?? 0) + row.yearBackup;
+      current.yearByCallType.Buddy = (current.yearByCallType.Buddy ?? 0) + row.yearBuddy;
 
       byPgy.set(label, current);
     }
@@ -1319,12 +1324,11 @@ const rotationAssignmentsByRosterId =
     };
   }, [draftAssignments, historicalStats, monthDays, residents]);
 
-  const aiReviewContext: AIReviewContext = useMemo(() => {
-    // Per-day backup visibility: respect conditional slot definitions.
-    const backupSlotDefs = slotDefinitions.filter((def) => def.callType === "Backup");
-    const hasConditionalBackupDefs = backupSlotDefs.some((def) => def.requiredMode === "conditional");
+  // Canonical per-day Buddy visibility/requirement state for the builder month.
+  // Shared by the AI review context and the manual "Fast month builder" add view.
+  const buddyDateStateByDate = useMemo(() => {
     const firstDay = monthDays[0];
-    const buddyDateStateByDate = new Map(
+    return new Map(
       (firstDay
         ? getBuddyDateStatesForMonth({
             year: firstDay.date.getFullYear(),
@@ -1342,8 +1346,14 @@ const rotationAssignmentsByRosterId =
             assignments: draftAssignments,
           })
         : []
-      ).map((state) => [state.dateKey, state])
+      ).map((state) => [state.dateKey, state] as const)
     );
+  }, [monthDays, residents, rules, slotDefinitions, draftAssignments]);
+
+  const aiReviewContext: AIReviewContext = useMemo(() => {
+    // Per-day backup visibility: respect conditional slot definitions.
+    const backupSlotDefs = slotDefinitions.filter((def) => def.callType === "Backup");
+    const hasConditionalBackupDefs = backupSlotDefs.some((def) => def.requiredMode === "conditional");
 
     let assignedSlots = 0;
     let expectedSlots = 0;
@@ -1485,6 +1495,7 @@ const rotationAssignmentsByRosterId =
     residentLookup,
     getAssignedResidentFlags,
     rules,
+    buddyDateStateByDate,
     computedStats.residentRows,
     computedStats.pgyRows,
   ]);
@@ -2362,6 +2373,7 @@ const rotationAssignmentsByRosterId =
                       validation={serverValidationResult}
                       rules={rules}
                       slotDefinitions={slotDefinitions}
+                      buddyDateStateByDate={buddyDateStateByDate}
                       availabilityByResident={programAvailability?.availability ?? {}}
                       loading={callsLoading}
                       saving={saving}

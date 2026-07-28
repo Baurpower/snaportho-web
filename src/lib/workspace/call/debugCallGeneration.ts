@@ -10,7 +10,6 @@ import {
   getEffectiveRules,
 } from "@/lib/workspace/call/rule-definitions";
 import {
-  BUDDY_PRIMARY_PARTNER_PGY,
   getBuddyDateStatesForMonth,
   getBuddyRequirementsForMonth,
   type BuddyDateState,
@@ -696,11 +695,11 @@ function getBuddyReason(params: {
       ? getResidentPgyYear(primaryResident, buddyState.dateKey)
       : null;
 
-    if (primaryPgy !== BUDDY_PRIMARY_PARTNER_PGY) {
-      return `Buddy assigned but Primary PGY is ${primaryPgy ?? "unknown"} instead of PGY-${BUDDY_PRIMARY_PARTNER_PGY}.`;
+    if (primaryPgy !== buddyState.requiredPrimaryPartnerPgy) {
+      return `Buddy assigned but Primary PGY is ${primaryPgy ?? "unknown"} instead of PGY-${buddyState.requiredPrimaryPartnerPgy}.`;
     }
 
-    return `Buddy assigned to ${selectedRequirement?.residentName ?? buddyState.selectedBuddyResidentName ?? buddyState.selectedBuddyRosterId} with PGY-${BUDDY_PRIMARY_PARTNER_PGY} Primary partner.`;
+    return `Buddy assigned to ${selectedRequirement?.residentName ?? buddyState.selectedBuddyResidentName ?? buddyState.selectedBuddyRosterId} with PGY-${buddyState.requiredPrimaryPartnerPgy} Primary partner.`;
   }
 
   if (generationSlotDebug && generationSlotDebug.attempted === false) {
@@ -712,12 +711,12 @@ function getBuddyReason(params: {
   }
 
   if (!primaryResident) {
-    return "Buddy required but no eligible PGY-4 Primary partner was assigned";
+    return `Buddy required but no eligible PGY-${buddyState.requiredPrimaryPartnerPgy} Primary partner was assigned`;
   }
 
   const primaryPgy = getResidentPgyYear(primaryResident, buddyState.dateKey);
-  if (primaryPgy !== BUDDY_PRIMARY_PARTNER_PGY) {
-    return `Buddy required but Primary PGY is ${primaryPgy ?? "unknown"} instead of PGY-${BUDDY_PRIMARY_PARTNER_PGY}.`;
+  if (primaryPgy !== buddyState.requiredPrimaryPartnerPgy) {
+    return `Buddy required but Primary PGY is ${primaryPgy ?? "unknown"} instead of PGY-${buddyState.requiredPrimaryPartnerPgy}.`;
   }
 
   return "Buddy required because an eligible PGY-1 still needs Buddy days.";

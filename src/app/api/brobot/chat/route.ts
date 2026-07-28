@@ -98,6 +98,7 @@ import {
 } from '@/lib/brobot/model-config';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient as createServerSupabaseClient } from '@/utils/supabase/server';
+import { authenticateBroBotAnkiRequest } from '@/app/api/brobot-anki/_lib';
 import {
   selectBroBotResponseContract,
   encodeBroBotStreamEvent,
@@ -162,7 +163,9 @@ function addSemanticRelevanceWarnings(input: {
 
 type AuthContext = {
   user: { id: string } | null;
-  supabase: Awaited<ReturnType<typeof createServerSupabaseClient>>;
+  supabase:
+    | Awaited<ReturnType<typeof createServerSupabaseClient>>
+    | ReturnType<typeof createAdminClient>;
   hasBearerToken: boolean;
 };
 type BroBotDbClient = AuthContext['supabase'] | ReturnType<typeof createAdminClient>;
@@ -427,6 +430,24 @@ function getBearerToken(request: Request): string | null {
 }
 
 async function getAuthContext(request: Request): Promise<AuthContext> {
+  if (request.headers.get('x-snaportho-anki-token')?.trim()) {
+    const auth = await authenticateBroBotAnkiRequest(request);
+    if ('response' in auth) {
+      return {
+        user: null,
+        supabase: createAdminClient(),
+        // Treat a rejected device credential like a rejected bearer credential,
+        // so the shared route returns 401 instead of silently becoming a guest.
+        hasBearerToken: true,
+      };
+    }
+    return {
+      user: { id: auth.userId },
+      supabase: auth.supabase,
+      hasBearerToken: true,
+    };
+  }
+
   const bearerToken = getBearerToken(request);
   const supabase = bearerToken
     ? createSupabaseClient(

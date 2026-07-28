@@ -1739,6 +1739,11 @@ export function mountSidePanelApp(root: HTMLElement) {
             <p style="margin:0;color:#5c6574;line-height:1.45;">Active page: ${escapeHtml(state.activePage.title ?? state.activePage.url ?? providerLabel(state.activePage.provider))}</p>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
               <button id="explain" ${isBusy ? 'disabled' : ''} style="border:none;border-radius:999px;background:${isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">${escapeHtml(explainButtonLabel)}</button>
+              ${
+                state.pageContext?.provider === 'rock' && isCurriculumPage
+                  ? `<button id="rock-find-anki" ${isBusy ? 'disabled' : ''} style="border:1px solid #0f766e;border-radius:999px;background:white;color:#0f766e;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Find Anki cards</button>`
+                  : ''
+              }
               ${pageLooksHintEligible ? '' : `<button id="unlink" ${isBusy ? 'disabled' : ''} style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Unlink</button>`}
             </div>
             <p style="margin:0;font-size:12px;color:#5c6574;">${
@@ -1752,6 +1757,8 @@ export function mountSidePanelApp(root: HTMLElement) {
         });
         content.appendChild(controls);
         controls.querySelector('#explain')?.addEventListener('click', () => void runExplain());
+        const rockAnkiButton = controls.querySelector<HTMLButtonElement>('#rock-find-anki');
+        rockAnkiButton?.addEventListener('click', () => void findPageAnkiCards(rockAnkiButton));
         controls.querySelector('#unlink')?.addEventListener('click', () => void unlink());
       }
     }

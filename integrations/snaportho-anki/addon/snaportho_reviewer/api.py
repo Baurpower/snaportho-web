@@ -1,4 +1,4 @@
-import json, time, urllib.error, urllib.parse, urllib.request
+import json, socket, time, urllib.error, urllib.parse, urllib.request
 from .version import ADDON_VERSION
 
 CONTRACT = "snaportho-anki-reviewer.v1"
@@ -64,7 +64,17 @@ class ReviewerApi:
         self.timeout = timeout
         self.cancelled = cancelled
 
-    def request(self, method, path, payload=None, idempotency_key=None, authenticated=True, retries=2):
+    def request(
+        self,
+        method,
+        path,
+        payload=None,
+        idempotency_key=None,
+        authenticated=True,
+        retries=2,
+        extra_headers=None,
+        timeout=None,
+    ):
         if self.cancelled():
             raise ApiError("cancelled")
         headers = {
@@ -80,6 +90,7 @@ class ReviewerApi:
             headers["X-SnapOrtho-Anki-Token"] = token
         if idempotency_key:
             headers["Idempotency-Key"] = idempotency_key
+        headers.update(extra_headers or {})
         data = None if payload is None else json.dumps(payload, separators=(",", ":")).encode()
         if data and len(data) > MAX_REQUEST:
             raise ApiError(
@@ -92,7 +103,7 @@ class ReviewerApi:
             try:
                 with urllib.request.urlopen(
                     urllib.request.Request(self.base_url + path, data=data, headers=headers, method=method),
-                    timeout=self.timeout,
+                    timeout=self.timeout if timeout is None else timeout,
                 ) as response:
                     raw = response.read(MAX_RESPONSE + 1)
                     if len(raw) > MAX_RESPONSE:
@@ -130,7 +141,10 @@ class ReviewerApi:
                         body,
                         path,
                     )
-            except (OSError, TimeoutError) as error:
+            except (socket.timeout, TimeoutError) as error:
+                if attempt == retries:
+                    raise ApiError("request_timeout", 0, True) from error
+            except OSError as error:
                 if attempt == retries:
                     raise ApiError("network_error", 0, True) from error
             if self.cancelled():
@@ -263,7 +277,17 @@ class ReviewerApi:
         return self.request("POST", "/api/anki/deck/sync/ack", payload)
 
     def brobot_chat(self, payload):
-        return self.request("POST", "/api/brobot-anki/chat", payload, retries=0)
+        # Use the same persisted, structured BroBot engine as the website.
+        return self.request(
+            "POST",
+            "/api/brobot/chat",
+            payload,
+            retries=0,
+            extra_headers={"X-BroBot-Response-Version": "2"},
+            # The web UI streams this longer pipeline. Anki consumes the final
+            # JSON response, so it needs a dedicated completion timeout.
+            timeout=max(self.timeout, 75),
+        )
 
     @staticmethod
     def safe_error(error):

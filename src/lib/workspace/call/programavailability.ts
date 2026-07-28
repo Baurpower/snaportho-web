@@ -24,6 +24,7 @@ import {
   type TimeOffType,
 } from "@/lib/workspace/call/time-off-shared";
 import { getProgramRotationAssignmentsInRange } from "@/lib/workspace/call/rotations";
+import { extractSlotDefinitions } from "@/lib/workspace/call/rule-definitions";
 
 type AvailabilityFlag = {
   key: string;
@@ -206,6 +207,14 @@ export async function getProgramAvailabilityMonth(params: {
   const rules = defaultRuleSet
     ? await getProgramRules(programId, defaultRuleSet.id)
     : [];
+
+  // Whether the program offers a Buddy slot. Used so a resident who is
+  // PGY/rotation-restricted from Primary+Backup but still eligible for Buddy
+  // (e.g. a PGY-1 intern on Gen Ortho) is NOT marked fully hard-blocked for the
+  // day — buddy-only residents must stay assignable to Buddy call.
+  const buddyIsProgramCallType = extractSlotDefinitions(rules).some(
+    (definition) => definition.callType === "Buddy"
+  );
 
   const { data: timeOffRows, error: timeOffError } = await supabase
     .from("availability_events")
@@ -508,17 +517,34 @@ export async function getProgramAvailabilityMonth(params: {
         });
       }
 
+      const rotationIdsForConflicts = day.rotationConflicts.map(
+        (conflict) => conflict.rotationId
+      );
       const primaryRotationViolations = evaluateRotationEligibility({
-        rotationIds: day.rotationConflicts.map((conflict) => conflict.rotationId),
+        rotationIds: rotationIdsForConflicts,
         callType: "Primary",
         rules,
       });
       const backupRotationViolations = evaluateRotationEligibility({
-        rotationIds: day.rotationConflicts.map((conflict) => conflict.rotationId),
+        rotationIds: rotationIdsForConflicts,
         callType: "Backup",
         rules,
       });
-      if (primaryRotationViolations.length > 0 && backupRotationViolations.length > 0) {
+      // A day is only fully hard-blocked by rotation if EVERY program call type
+      // is blocked. If Buddy is offered and still allowed on this rotation, the
+      // resident is not fully blocked (buddy-only residents stay assignable).
+      const buddyRotationBlocked =
+        !buddyIsProgramCallType ||
+        evaluateRotationEligibility({
+          rotationIds: rotationIdsForConflicts,
+          callType: "Buddy",
+          rules,
+        }).length > 0;
+      if (
+        primaryRotationViolations.length > 0 &&
+        backupRotationViolations.length > 0 &&
+        buddyRotationBlocked
+      ) {
         const matchingRotation = day.rotationConflicts[0];
         const representativeViolation = primaryRotationViolations[0];
 
@@ -616,7 +642,22 @@ export async function getProgramAvailabilityMonth(params: {
         rules,
         effectiveDate: dateKey,
       });
-      if (primaryPgyViolations.length > 0 && backupPgyViolations.length > 0) {
+      // Only mark the day fully hard-blocked when the resident is PGY-restricted
+      // from EVERY program call type. A PGY-1 who may only take Buddy call (the
+      // whole point of buddy call) must NOT show as blocked in Buddy mode.
+      const buddyPgyBlocked =
+        !buddyIsProgramCallType ||
+        evaluatePgyEligibility({
+          resident,
+          callType: "Buddy",
+          rules,
+          effectiveDate: dateKey,
+        }).length > 0;
+      if (
+        primaryPgyViolations.length > 0 &&
+        backupPgyViolations.length > 0 &&
+        buddyPgyBlocked
+      ) {
         const representativeViolation = primaryPgyViolations[0];
 
         day.isBlocked = day.isBlocked || representativeViolation.severity === "error";
