@@ -109,6 +109,24 @@ export async function buildImprovementContext(
       for (const entity of aliasEntities ?? []) entityMap.set(entity.id, entity);
     }
   }
+  const { data: links } = await supabase
+    .from("card_canonical_entity_links")
+    .select("canonical_entity_id")
+    .eq("canonical_card_id", canonical.id)
+    .eq("is_active", true);
+  const existingEntityIds = [
+    ...new Set((links ?? []).map((link: any) => String(link.canonical_entity_id))),
+  ].filter(Boolean) as string[];
+  const missingLinkedIds = existingEntityIds.filter((id) => !entityMap.has(id));
+  if (missingLinkedIds.length) {
+    const { data: linkedEntities } = await supabase
+      .from("canonical_entities")
+      .select("id,preferred_label,normalized_label,entity_type,description,status,is_active")
+      .in("id", missingLinkedIds)
+      .eq("is_active", true)
+      .eq("status", "canonical");
+    for (const entity of linkedEntities ?? []) entityMap.set(entity.id, entity);
+  }
   const entities: ImprovementEntity[] = [...entityMap.values()].map((entity) => ({
     id: entity.id,
     preferredLabel: entity.preferred_label,
@@ -119,6 +137,69 @@ export async function buildImprovementContext(
     description: entity.description ?? undefined,
   }));
   const entityIds = entities.map((entity) => entity.id);
+  const hierarchyParentByChild = new Map<string, string>();
+  const hierarchyEntityMap = new Map(entityMap);
+  let frontier = [...new Set(entityIds)];
+  for (let depth = 0; depth < 6 && frontier.length; depth += 1) {
+    const { data: relations } = await supabase
+      .from("canonical_relationships")
+      .select("subject_entity_id,object_entity_id")
+      .eq("subject_entity_type", "canonical_entity")
+      .in("subject_entity_id", frontier)
+      .eq("predicate", "part_of")
+      .eq("object_entity_type", "canonical_entity")
+      .eq("review_status", "approved")
+      .eq("lifecycle_status", "active")
+      .eq("is_active", true);
+    const grouped = new Map<string, string[]>();
+    for (const relation of relations ?? []) {
+      const child = String(relation.subject_entity_id);
+      const parent = String(relation.object_entity_id);
+      grouped.set(child, [...(grouped.get(child) ?? []), parent]);
+    }
+    const parents = [...grouped.entries()]
+      .filter(([, ids]) => new Set(ids).size === 1)
+      .map(([child, ids]) => {
+        const parent = ids[0]!;
+        hierarchyParentByChild.set(child, parent);
+        return parent;
+      });
+    const missingParents = [...new Set(parents)].filter(
+      (id) => !hierarchyEntityMap.has(id),
+    );
+    if (missingParents.length) {
+      const { data: parentEntities } = await supabase
+        .from("canonical_entities")
+        .select("id,preferred_label,normalized_label,entity_type,description,status,is_active")
+        .in("id", missingParents)
+        .eq("is_active", true)
+        .eq("status", "canonical");
+      for (const entity of parentEntities ?? [])
+        hierarchyEntityMap.set(entity.id, entity);
+    }
+    frontier = [...new Set(parents)];
+  }
+  const hierarchyPaths: Record<
+    string,
+    Array<{ id: string; label: string; entityType: string }>
+  > = {};
+  for (const entityId of entityIds) {
+    const leafToRoot: Array<{ id: string; label: string; entityType: string }> = [];
+    const seen = new Set<string>();
+    let current: string | undefined = entityId;
+    while (current && !seen.has(current) && leafToRoot.length < 7) {
+      seen.add(current);
+      const entity = hierarchyEntityMap.get(current);
+      if (!entity) break;
+      leafToRoot.push({
+        id: current,
+        label: String(entity.preferred_label),
+        entityType: String(entity.entity_type),
+      });
+      current = hierarchyParentByChild.get(current);
+    }
+    hierarchyPaths[entityId] = leafToRoot.reverse();
+  }
   let existingClaims: ExistingClaim[] = [];
   if (entityIds.length) {
     const { data: claims } = await supabase
@@ -135,18 +216,14 @@ export async function buildImprovementContext(
       reviewStatus: claim.review_status,
     }));
   }
-  const { data: links } = await supabase
-    .from("card_canonical_entity_links")
-    .select("canonical_entity_id")
-    .eq("canonical_card_id", canonical.id)
-    .eq("is_active", true);
   const improvement = buildKgImprovement({
     canonicalCardId: canonical.id,
     canonicalCardVersionId: version.id,
     fields,
     entities,
     existingClaims,
-    existingEntityIds: (links ?? []).map((link: any) => link.canonical_entity_id),
+    existingEntityIds,
+    hierarchyPaths,
   });
   return {
     canonicalCardId: canonical.id,
@@ -156,4 +233,3 @@ export async function buildImprovementContext(
     improvement,
   };
 }
-

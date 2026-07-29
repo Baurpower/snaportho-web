@@ -53,3 +53,65 @@ class CollectionGateway:
         import os
         return bool(filename)and os.path.exists(os.path.join(self.col.media.dir(),filename))
     def write_media(self,filename,data):self.col.media.write_data(filename,data)
+
+class NoteCollectionGatewayV2:
+    """Note-level collection adapter. Existing cards retain scheduling because notes are updated in place."""
+    def __init__(self,col,store,deck_key="snaportho-master",media_payloads=None):
+        self.col=col;self.store=store;self.deck_key=deck_key;self.media_payloads=media_payloads or{}
+    def _note(self,canonical_note_id,payload=None):
+        baseline=self.store.note_baseline(canonical_note_id,self.deck_key)
+        if baseline:
+            try:return self.col.get_note(baseline["ankiNoteId"])
+            except Exception:pass
+        guid=(payload or{}).get("noteGuid")
+        if guid:
+            ids=self.col.db.list("select id from notes where guid=?",guid)
+            if len(ids)==1:return self.col.get_note(ids[0])
+        return None
+    def snapshot(self,canonical_note_id):
+        note=self._note(canonical_note_id)
+        if not note:return{"fields":{},"tags":[],"ankiNoteId":None,"noteGuid":None}
+        return{"fields":{name:note[name]for name in note.keys()},"tags":sorted(note.tags),"ankiNoteId":note.id,"noteGuid":note.guid}
+    def upsert_note(self,canonical_note_id,payload,fields,tags):
+        note=self._note(canonical_note_id,payload);created=note is None
+        if created:
+            notetype=self.col.models.by_name(payload["noteTypeName"])
+            if not notetype:raise RuntimeError("note_type_missing")
+            note=self.col.new_note(notetype);note.guid=payload["noteGuid"]
+        for name,value in fields.items():
+            if name in note:note[name]=value
+        note.tags=sorted(set(tags))
+        deck_id=self.col.decks.id(payload["deckPath"])
+        if created:self.col.add_note(note,deck_id)
+        else:
+            self.col.update_note(note)
+            card_ids=[card.id for card in note.cards()]
+            if card_ids:self.col.set_deck(card_ids,deck_id)
+        return{"ankiNoteId":note.id,"noteGuid":note.guid}
+    def update_tags(self,canonical_note_id,tags):
+        note=self._note(canonical_note_id)
+        if not note:raise RuntimeError("note_not_found")
+        note.tags=sorted(set(tags));self.col.update_note(note)
+    def move_note(self,canonical_note_id,deck_path):
+        note=self._note(canonical_note_id)
+        if not note:raise RuntimeError("note_not_found")
+        card_ids=[card.id for card in note.cards()]
+        if card_ids:self.col.set_deck(card_ids,self.col.decks.id(deck_path))
+    def retire_note(self,canonical_note_id,payload):
+        note=self._note(canonical_note_id)
+        if not note:return
+        note.add_tag("SnapOrtho::Workflow::Retired");self.col.update_note(note)
+        for card in note.cards():card.queue=-1;self.col.update_card(card)
+    def media_add(self,payload):
+        import os
+        filename=payload["filename"]
+        if os.path.isfile(os.path.join(self.col.media.dir(),filename)):return
+        data=self.media_payloads.get(payload["sha256"])
+        if data is None:raise RuntimeError("verified_media_payload_missing")
+        self.col.media.write_data(filename,data)
+    def media_remove(self,payload):
+        # Do not delete shared Anki media automatically. The baseline records retirement.
+        return None
+    def update_note_type(self,payload):
+        # Note-type migrations are release-gated and require a dedicated full-sync preflight.
+        if payload.get("requiresFullSync"):raise RuntimeError("note_type_full_sync_required")

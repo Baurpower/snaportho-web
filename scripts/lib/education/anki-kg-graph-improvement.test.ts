@@ -21,6 +21,13 @@ const suggest = readFileSync(
   ),
   "utf8",
 );
+const context = readFileSync(
+  path.join(
+    root,
+    "src/app/api/anki/reviewer/kg/improvements/_lib.ts",
+  ),
+  "utf8",
+);
 const decision = readFileSync(
   path.join(
     root,
@@ -68,6 +75,9 @@ for (const forbidden of [
 
 assert.match(suggest, /buildImprovementContext/);
 assert.match(suggest, /canonicalDataChanged:\s*false/);
+assert.match(context, /from\("canonical_relationships"\)/);
+assert.match(context, /\.eq\("predicate",\s*"part_of"\)/);
+assert.match(context, /hierarchyPaths/);
 assert.match(decision, /queuedForReview/);
 assert.match(decision, /server_version_changed/);
 assert.match(adjudicate, /independent adjudicator required/);
@@ -87,6 +97,8 @@ for (const label of [
   assert.match(addonPanel, new RegExp(label));
 assert.match(addonPanel, /kg_suggest_improvement/);
 assert.match(addonPanel, /kg_improvement_decision/);
+assert.match(addonPanel, /GOVERNED HIERARCHY/);
+assert.match(addonPanel, /No leaf fact will be proposed yet/);
 assert.match(verification, /transaction read only/);
 assert.match(verification, /accepted_without_adjudication/);
 assert.match(verification, /rollback/);

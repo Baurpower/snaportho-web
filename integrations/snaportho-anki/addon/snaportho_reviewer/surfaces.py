@@ -862,10 +862,17 @@ class ReviewerSidePanel:
         self.accept_improvement_btn.setEnabled(can_submit)
         self.review_improvement_btn.setEnabled(bool(operations))
         self.improvement_card.setVisible(True)
-        self.mapping_summary.setText(
-            "Check the plain-language recommendation. Open details only if you want "
-            "to inspect individual graph changes and safety checks."
-        )
+        next_layer = improvement.get("nextRequiredLayer") or {}
+        if next_layer:
+            self.mapping_summary.setText(
+                f"Hierarchy first · {next_layer.get('reason') or 'Resolve the parent chain before adding leaf facts.'} "
+                "Open Full workspace to search for the subject and its governed parent."
+            )
+        else:
+            self.mapping_summary.setText(
+                "Check the plain-language recommendation. Open details only if you want "
+                "to inspect individual graph changes and safety checks."
+            )
 
     def _show_improvement_details(self):
         if not self.kg_improvement:
@@ -919,10 +926,52 @@ class ReviewerSidePanel:
         body_layout.setContentsMargins(2, 2, 8, 2)
         body_layout.setSpacing(8)
 
+        hierarchy_heading = QLabel("GOVERNED HIERARCHY")
+        hierarchy_heading.setObjectName("sectionHeading")
+        body_layout.addWidget(hierarchy_heading)
+        subject = self.kg_improvement.get("subject") or {}
+        hierarchy_path = subject.get("hierarchyPath") or []
+        next_layer = self.kg_improvement.get("nextRequiredLayer") or {}
+        hierarchy_card = QFrame()
+        hierarchy_card.setObjectName("gateCard")
+        hierarchy_layout = QVBoxLayout(hierarchy_card)
+        hierarchy_layout.setContentsMargins(11, 9, 11, 10)
+        if hierarchy_path:
+            path_label = QLabel(
+                " → ".join(str(node.get("label") or "Unnamed") for node in hierarchy_path)
+            )
+            path_label.setStyleSheet("font-size:13px;font-weight:700;color:#0f766e;")
+            hierarchy_layout.addWidget(path_label)
+        else:
+            next_label = QLabel(
+                f"Start here: {next_layer.get('label') or 'Resolve card subject'}"
+            )
+            next_label.setStyleSheet("font-size:13px;font-weight:700;color:#9a3412;")
+            hierarchy_layout.addWidget(next_label)
+        hierarchy_reason = QLabel(
+            next_layer.get("reason")
+            or "This subject is attached to a governed hierarchy before detailed claims are added."
+        )
+        hierarchy_reason.setWordWrap(True)
+        hierarchy_reason.setStyleSheet("font-size:11px;color:#475569;")
+        hierarchy_layout.addWidget(hierarchy_reason)
+        body_layout.addWidget(hierarchy_card)
+
         change_heading = QLabel("PROPOSED GRAPH CHANGES")
         change_heading.setObjectName("sectionHeading")
         body_layout.addWidget(change_heading)
-        for operation in self.kg_improvement.get("operations") or []:
+        operations = self.kg_improvement.get("operations") or []
+        if not operations:
+            deferred = QLabel(
+                "No leaf fact will be proposed yet. Complete the hierarchy step above first."
+            )
+            deferred.setWordWrap(True)
+            deferred.setStyleSheet(
+                "background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;"
+                "padding:10px;color:#9a3412;font-weight:600;"
+            )
+            body_layout.addWidget(deferred)
+        for operation in operations:
             risk = str(operation.get("risk") or "review").replace("_", " ")
             kind_labels = {
                 "add_asset_mapping": "CARD CONNECTION",

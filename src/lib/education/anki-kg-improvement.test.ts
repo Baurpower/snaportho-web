@@ -39,6 +39,7 @@ const fields = [
     existingEntityIds: [],
   });
   assert.equal(improvement.subject.resolution, "existing");
+  assert.equal(improvement.subject.hierarchyStatus, "anchored");
   assert.equal(
     improvement.operations.filter((operation) => operation.kind === "propose_entity").length,
     0,
@@ -100,13 +101,89 @@ const fields = [
   assert.equal(improvement.subject.resolution, "proposed");
   assert.equal(
     improvement.operations.filter((operation) => operation.kind === "propose_entity").length,
-    1,
+    0,
   );
   assert.equal(improvement.reviewTier, "ontology_review");
+  assert.equal(improvement.canSubmit, false);
+  assert.equal(improvement.nextRequiredLayer?.kind, "select_parent");
   assert.ok(
     improvement.operations
       .filter((operation) => operation.kind === "propose_claim")
       .every((operation) => operation.kind !== "propose_claim" || operation.primaryEntityId === null),
+  );
+}
+
+{
+  const improvement = buildKgImprovement({
+    canonicalCardId: id("a"),
+    canonicalCardVersionId: id("b"),
+    fields: [
+      {
+        name: "Text",
+        rawValue:
+          "To attain longitudinal growth, chondrocytes divide and stack into columns within the {{c1::proliferative}} zone.",
+      },
+    ],
+    entities: [],
+    existingClaims: [],
+    existingEntityIds: [],
+  });
+  assert.equal(improvement.subject.resolution, "unresolved");
+  assert.equal(improvement.subject.hierarchyStatus, "unresolved");
+  assert.equal(improvement.nextRequiredLayer?.kind, "resolve_subject");
+  assert.equal(
+    improvement.operations.filter((operation) => operation.kind === "propose_claim")
+      .length,
+    0,
+  );
+  assert.equal(improvement.canSubmit, false);
+  assert.match(improvement.summary, /start at the top/i);
+  assert.match(
+    improvement.qualityGates.find(
+      (gate) => gate.gate === "hierarchy_attachment",
+    )!.reason,
+    /top-level subject/i,
+  );
+}
+
+{
+  const boneId = id("c");
+  const rootId = id("9");
+  const improvement = buildKgImprovement({
+    canonicalCardId: id("a"),
+    canonicalCardVersionId: id("b"),
+    fields,
+    entities: [
+      {
+        id: boneId,
+        preferredLabel: "Bone",
+        normalizedLabel: "bone",
+        entityType: "anatomy_structure",
+        aliases: [],
+      },
+    ],
+    existingClaims: [],
+    existingEntityIds: [],
+    hierarchyPaths: {
+      [boneId]: [
+        {
+          id: rootId,
+          label: "Musculoskeletal anatomy",
+          entityType: "anatomy_structure",
+        },
+        { id: boneId, label: "Bone", entityType: "anatomy_structure" },
+      ],
+    },
+  });
+  assert.deepEqual(
+    improvement.subject.hierarchyPath.map((node) => node.label),
+    ["Musculoskeletal anatomy", "Bone"],
+  );
+  assert.match(
+    improvement.qualityGates.find(
+      (gate) => gate.gate === "hierarchy_attachment",
+    )!.reason,
+    /Musculoskeletal anatomy → Bone/,
   );
 }
 

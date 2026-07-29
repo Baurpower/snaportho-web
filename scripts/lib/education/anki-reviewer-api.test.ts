@@ -31,6 +31,7 @@ const workspace = readFileSync(
   );
 for (const x of [
   /workspaceProposalSchema/,
+  /from\("anki_editor_workspace_proposals"\)[\s\S]*?\.insert\(/,
   /idempotency_key/,
   /server_version_changed/,
   /entity_inactive/,

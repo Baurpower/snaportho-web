@@ -138,8 +138,8 @@ def summarize_local_deck(inventory):
         "versions": versions[:5],
         "headline": f"{len(inventory)} Master cards installed",
         "detail": (
-            f"Local notes carry SnapOrtho markers across {len(versions)} version id(s). "
-            "Open Master Deck to check for updates."
+            f"{len(inventory)} linked SnapOrtho Master Deck cards are installed in this profile. "
+            "Check below to see whether an update is available."
         ),
     }
 
@@ -183,6 +183,13 @@ class SettingsDialog:
 
         # Deck card
         self.deck_card, self.deck_body, self.deck_badge = self._make_card("Master Deck")
+        deck_actions = QHBoxLayout()
+        self.deck_update_btn = QPushButton("Check for deck updates")
+        self.deck_update_btn.setObjectName("primary")
+        self.deck_update_btn.clicked.connect(self._open_master_deck)
+        deck_actions.addWidget(self.deck_update_btn)
+        deck_actions.addStretch(1)
+        self.deck_card.layout().addLayout(deck_actions)
         root.addWidget(self.deck_card)
 
         # Connection settings
@@ -215,12 +222,8 @@ class SettingsDialog:
         self.link_btn = QPushButton("Link / manage device")
         self.link_btn.setObjectName("secondary")
         self.link_btn.clicked.connect(self._open_link)
-        self.deck_btn = QPushButton("Open Master Deck…")
-        self.deck_btn.setObjectName("secondary")
-        self.deck_btn.clicked.connect(self._open_master_deck)
         row1.addWidget(self.refresh_btn)
         row1.addWidget(self.link_btn)
-        row1.addWidget(self.deck_btn)
         root.addLayout(row1)
 
         row2 = QHBoxLayout()
@@ -289,8 +292,10 @@ class SettingsDialog:
         self.deck_body.setText(local["detail"])
         if local["installed"]:
             self._set_badge(self.deck_badge, f"{local['cardCount']} cards", "ok")
+            self.deck_update_btn.setText("Check for deck updates")
         else:
             self._set_badge(self.deck_badge, "Not installed", "warn")
+            self.deck_update_btn.setText("Install Master Deck")
 
         if not self._is_linked():
             self.account_body.setText(
@@ -361,7 +366,8 @@ class SettingsDialog:
                 _, body = future.result()
                 release = body.get("release") or body
                 version = (
-                    release.get("release_version")
+                    release.get("version")
+                    or release.get("release_version")
                     or release.get("releaseVersion")
                     or "?"
                 )
@@ -381,13 +387,13 @@ class SettingsDialog:
                 if local["installed"]:
                     self.deck_body.setText(local["detail"] + extra)
                     self._set_badge(
-                        self.deck_badge, f"{local['cardCount']} cards · v{version}", "ok"
+                        self.deck_badge, f"{local['cardCount']} installed · latest v{version}", "ok"
                     )
                 else:
                     self.deck_body.setText(
                         "Starter package is available on the server but not installed in this profile."
                         + extra
-                        + "<br><br>Use <b>Open Master Deck…</b> to download and import."
+                        + "<br><br>Use <b>Install Master Deck</b> to download and import."
                     )
                     self._set_badge(self.deck_badge, f"Available · v{version}", "warn")
             except Exception as error:
@@ -408,7 +414,12 @@ class SettingsDialog:
                         local["detail"] + f"<br><br>Release check: {describe(error)}"
                     )
 
-        self.runtime.background(self.runtime.api.current_deck_release, release_done)
+        operation=(
+            self.runtime.api.deck_v2_status
+            if local["installed"]
+            else self.runtime.api.current_deck_release
+        )
+        self.runtime.background(operation, release_done)
 
     def _open_link(self):
         DeviceLinkDialog(self.dialog, self.runtime, on_linked=self.refresh_status).exec()
@@ -602,6 +613,7 @@ class DiagnosticsDialog:
         from aqt.qt import QApplication, QDialog, QPushButton, QTextEdit, QVBoxLayout
 
         from .diagnostics import build
+        from .sync import recovery_diagnostic
 
         self.dialog = QDialog(parent)
         self.dialog.setWindowTitle("SnapOrtho Safe Diagnostics")
@@ -613,6 +625,9 @@ class DiagnosticsDialog:
                 "profileHash": runtime.profile_hash,
                 "pendingDrafts": len(runtime.store.pending()),
                 "pendingRetries": len(runtime.store.pending()),
+                "deckSubscription": runtime.store.deck_subscription(),
+                "deckRecoveryInventory": recovery_diagnostic(runtime.mw.col),
+                "pendingDeckJournal": len(runtime.store.pending_deck_journal()),
             },
             runtime.settings,
             bool(runtime.credentials.get()),

@@ -40,20 +40,26 @@ def build_operations(plan_actions,manifest_cards):
         elif kind=="media_download" and card:
             for h in card.get("mediaHashes",[]):ops["media"].add(h)
     return ops
-def apply_operations(gateway,ops):
+def apply_operations(gateway,ops,progress=None):
     """Execute update/add writes through the gateway. conflicts are never written here.
     Returns a summary the dialog surfaces and the sync-ack ledger records."""
     summary={"updated":0,"added":0,"conflicts":len(ops["conflict"]),"skipped_missing":len(ops["missing_manifest"]),"errors":[]}
+    total=len(ops["update"])+len(ops["add"])
+    completed=0
     for card in ops["update"]:
         try:
             if gateway.write_central_update(card["noteGuid"],card["cardOrdinal"],central_snapshot_fields(card["fieldSnapshot"]),card.get("centralTags",[]),card.get("deckPath"),marker_values(card)):summary["updated"]+=1
             else:summary["errors"].append(f"not_found:{card['canonicalCardId']}")
         except Exception as error:summary["errors"].append(f"update_failed:{card['canonicalCardId']}:{type(error).__name__}")
+        completed+=1
+        if progress:progress(completed,total,"Updating cards")
     for card in ops["add"]:
         try:
             if gateway.create_central_card(card["noteGuid"],central_snapshot_fields(card["fieldSnapshot"]),card.get("centralTags",[]),card.get("deckPath"),marker_values(card)):summary["added"]+=1
             else:summary["errors"].append(f"notetype_missing:{card['canonicalCardId']}")
         except Exception as error:summary["errors"].append(f"add_failed:{card['canonicalCardId']}:{type(error).__name__}")
+        completed+=1
+        if progress:progress(completed,total,"Adding cards")
     return summary
 def ack_status(summary):
     """planned→applied/partial/failed for the sync acknowledgement ledger."""

@@ -12,6 +12,7 @@ import hashlib
 import json
 import os
 import tempfile
+import time
 import urllib.request
 
 from .errors import describe, headline
@@ -20,7 +21,7 @@ from .sync import chunk_list, installed_card_inventory, merge_sync_plan_actions
 STEP_LINK, STEP_INSTALL, STEP_UPDATE = 1, 2, 3
 
 
-def stream_download_to_part(url, part_path, timeout, expected_size=None):
+def stream_download_to_part(url, part_path, timeout, expected_size=None, progress=None):
     """Download with HTTP Range resume and return (sha256, bytes_written)."""
     existing = os.path.getsize(part_path) if os.path.isfile(part_path) else 0
     if expected_size and existing > expected_size:
@@ -28,6 +29,8 @@ def stream_download_to_part(url, part_path, timeout, expected_size=None):
         existing = 0
 
     digest = hashlib.sha256()
+    if progress:
+        progress(existing, expected_size)
     if existing:
         with open(part_path, "rb") as current:
             while True:
@@ -58,7 +61,20 @@ def stream_download_to_part(url, part_path, timeout, expected_size=None):
                 handle.write(chunk)
                 digest.update(chunk)
                 written += len(chunk)
+                if progress:
+                    progress(written, expected_size)
     return digest.hexdigest(), written
+
+
+def format_download_size(value):
+    value = max(0, int(value or 0))
+    if value >= 1024 * 1024 * 1024:
+        return f"{value / (1024 * 1024 * 1024):.2f} GB"
+    if value >= 1024 * 1024:
+        return f"{value / (1024 * 1024):.1f} MB"
+    if value >= 1024:
+        return f"{value / 1024:.1f} KB"
+    return f"{value} B"
 
 HUB_STYLE = """
 QDialog { background: #f6f7f9; }
@@ -156,6 +172,21 @@ QPushButton#ghost {
   border: none;
   padding: 8px 10px;
 }
+QProgressBar#deckDownloadProgress {
+  min-height: 14px;
+  border: 1px solid #bfdbfe;
+  border-radius: 7px;
+  background: #eff6ff;
+  text-align: center;
+  color: #1e3a8a;
+  font-size: 10px;
+  font-weight: 600;
+}
+QProgressBar#deckDownloadProgress::chunk {
+  background: #2563eb;
+  border-radius: 6px;
+}
+QLabel#downloadProgressLabel { color: #334155; font-size: 11px; }
 """
 
 
@@ -179,6 +210,7 @@ class MasterDeckDialog:
             QHBoxLayout,
             QLabel,
             QPlainTextEdit,
+            QProgressBar,
             QPushButton,
             QSizePolicy,
             QVBoxLayout,
@@ -190,6 +222,8 @@ class MasterDeckDialog:
         self.release = None
         self.display_name = None
         self.last_download_path = None
+        self.v2_pages = []
+        self.v2_release = None
         self._busy = False
 
         self.dialog = QDialog(parent)
@@ -202,14 +236,14 @@ class MasterDeckDialog:
         root.setSpacing(12)
 
         # Header
-        title = QLabel("SnapOrtho Master Deck")
-        title.setObjectName("title")
+        self.title = QLabel("SnapOrtho Master Deck")
+        self.title.setObjectName("title")
         self.subtitle = QLabel("")
         self.subtitle.setObjectName("subtitle")
         self.subtitle.setWordWrap(True)
         header_row = QHBoxLayout()
         header_left = QVBoxLayout()
-        header_left.addWidget(title)
+        header_left.addWidget(self.title)
         header_left.addWidget(self.subtitle)
         header_row.addLayout(header_left, 1)
         self.link_badge = QLabel("Checking…")
@@ -255,6 +289,17 @@ class MasterDeckDialog:
         self.hero.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
         root.addWidget(self.hero)
 
+        self.download_progress = QProgressBar()
+        self.download_progress.setObjectName("deckDownloadProgress")
+        self.download_progress.setRange(0, 100)
+        self.download_progress.setValue(0)
+        self.download_progress.hide()
+        root.addWidget(self.download_progress)
+        self.download_progress_label = QLabel("")
+        self.download_progress_label.setObjectName("downloadProgressLabel")
+        self.download_progress_label.hide()
+        root.addWidget(self.download_progress_label)
+
         # Actions
         actions = QHBoxLayout()
         self.primary = QPushButton("Continue")
@@ -280,13 +325,13 @@ class MasterDeckDialog:
         root.addWidget(self.details)
 
         footer = QHBoxLayout()
-        refresh = QPushButton("Refresh status")
-        refresh.setObjectName("secondary")
-        refresh.clicked.connect(self.refresh)
+        self.footer_refresh = QPushButton("Refresh status")
+        self.footer_refresh.setObjectName("secondary")
+        self.footer_refresh.clicked.connect(self.refresh)
         close = QPushButton("Close")
         close.setObjectName("secondary")
         close.clicked.connect(self.dialog.accept)
-        footer.addWidget(refresh)
+        footer.addWidget(self.footer_refresh)
         footer.addStretch(1)
         footer.addWidget(close)
         root.addLayout(footer)
@@ -300,7 +345,11 @@ class MasterDeckDialog:
         base_titles = {
             STEP_LINK: "1 · Sign in",
             STEP_INSTALL: "2 · Install Master Deck",
-            STEP_UPDATE: "3 · Stay up to date",
+            STEP_UPDATE: (
+                "Check and apply updates"
+                if not self.step_frames[STEP_INSTALL].isVisible()
+                else "3 · Stay up to date"
+            ),
         }
         for key, frame in self.step_frames.items():
             is_done = key in done
@@ -341,6 +390,61 @@ class MasterDeckDialog:
             self._secondary_action = None
             self.secondary.hide()
 
+    def _set_download_progress(self, written=0, total=None, speed=None, phase="downloading"):
+        self.download_progress.show()
+        self.download_progress_label.show()
+        if phase == "preparing":
+            self.download_progress.setRange(0, 0)
+            self.download_progress_label.setText("Preparing secure download…")
+            return
+        if phase == "verifying":
+            self.download_progress.setRange(0, 0)
+            self.download_progress_label.setText(
+                f"Download complete · {format_download_size(written)} · Verifying package integrity…"
+            )
+            return
+        if total and total > 0:
+            percent = min(100, int(written * 100 / total))
+            self.download_progress.setRange(0, 100)
+            self.download_progress.setValue(percent)
+            amount = f"{format_download_size(written)} of {format_download_size(total)}"
+        else:
+            self.download_progress.setRange(0, 0)
+            amount = format_download_size(written)
+        speed_text = f" · {format_download_size(speed)}/s" if speed and speed > 0 else ""
+        self.download_progress_label.setText(f"Downloading Master Deck · {amount}{speed_text}")
+
+    def _hide_download_progress(self):
+        self.download_progress.hide()
+        self.download_progress_label.hide()
+
+    def _set_update_progress(self, value, label, indeterminate=False):
+        self.download_progress.show()
+        self.download_progress_label.show()
+        if indeterminate:
+            self.download_progress.setRange(0, 0)
+        else:
+            self.download_progress.setRange(0, 100)
+            self.download_progress.setValue(max(0, min(100, int(value))))
+        self.download_progress_label.setText(label)
+
+    def _set_installed_layout(self, installed):
+        self.title.setText("Master Deck Updates" if installed else "SnapOrtho Master Deck")
+        self.step_frames[STEP_LINK].setVisible(not installed)
+        self.step_frames[STEP_INSTALL].setVisible(not installed)
+        self.step_frames[STEP_UPDATE].setVisible(not installed)
+        self.footer_refresh.setVisible(not installed)
+        if installed:
+            self.dialog.resize(680, 360)
+            self.subtitle.setText(
+                "Safe, resumable note updates. Scheduling and protected fields stay local."
+            )
+        else:
+            self.dialog.resize(760, 620)
+        self.step_titles[STEP_UPDATE].setText(
+            "Check and apply updates" if installed else "3 · Stay up to date"
+        )
+
     def _toggle_details(self):
         self.details.setVisible(not self.details.isVisible())
 
@@ -368,6 +472,7 @@ class MasterDeckDialog:
         )
         self.plan = None
         self.release = None
+        self._hide_download_progress()
         linked = self._is_linked()
         if not linked:
             self.link_badge.setText("Not linked")
@@ -412,6 +517,10 @@ class MasterDeckDialog:
     def _load_release_and_plan(self):
         inventory = installed_card_inventory(self.runtime.mw.col)
         has_markers = bool(inventory)
+        self._set_installed_layout(has_markers)
+        if has_markers:
+            self._load_v2_status(inventory)
+            return
 
         def release_done(future):
             try:
@@ -426,6 +535,126 @@ class MasterDeckDialog:
             self._load_plan(self.release, inventory)
 
         self.runtime.background(self.runtime.api.current_deck_release, release_done)
+
+    def _load_v2_status(self, inventory):
+        """Only v2 may write an installed deck. v1 remains available solely for first install."""
+        self._set_step(active=STEP_UPDATE, done=(STEP_LINK, STEP_INSTALL))
+        self._set_hero("<b>Checking the versioned SnapOrtho update service…</b>", "info")
+        self._set_update_progress(0, "Checking immutable release and local cursor…", indeterminate=True)
+        subscription=self.runtime.store.deck_subscription()
+        after=int((subscription or{}).get("cursor")or 0)
+        def work():
+            _,status=self.runtime.api.deck_v2_status()
+            release=status["release"];pages=[];cursor=after
+            while True:
+                _,page=self.runtime.api.deck_v2_updates(cursor,250);pages.append(page)
+                cursor=int(page["nextCursor"])
+                if int(page.get("remaining")or 0)==0:break
+            return release,pages
+        def done(future):
+            self._hide_download_progress()
+            try:release,pages=future.result()
+            except Exception as error:
+                code=getattr(error,"code","")
+                if code in("not_found","no_release"):
+                    self._set_hero(
+                        "<b>Your deck was not changed.</b><br><br>"
+                        "The safe note-level update service has not been published yet. "
+                        "The retired v1 writer is disabled because it could misidentify cloze cards. "
+                        "Continue studying normally; scheduling is unaffected.",
+                        "info",
+                    )
+                    self._set_actions("Check again",self.refresh)
+                else:
+                    self._set_hero(f"<b>Update check failed</b><br><br>{describe(error)}","default")
+                    self._set_actions("Try again",self.refresh)
+                return
+            self.v2_release=release;self.v2_pages=pages
+            operations=[op for page in pages for op in(page.get("operations")or[])]
+            counts={}
+            for op in operations:counts[op["operation"]]=counts.get(op["operation"],0)+1
+            if not operations:
+                self.runtime.store.save_deck_subscription(release,cursor=after,status="current")
+                self._set_hero(
+                    f"<b>✓ Master Deck {release['version']} is up to date.</b><br><br>"
+                    f"{release['expectedNoteCount']} notes · {release['expectedCardCount']} cards",
+                    "ok",
+                )
+                self._set_step(active=None,done=(STEP_LINK,STEP_INSTALL,STEP_UPDATE))
+                self._set_actions("Check again",self.refresh)
+                return
+            self._set_hero(
+                f"<b>Master Deck {release['version']} is ready</b><br><br>"
+                f"{len(operations)} verified operations across {len(pages)} resumable page(s).<br>"
+                f"Notes: {counts.get('upsert_note',0)} · Tags: {counts.get('update_tags',0)} · "
+                f"Moves: {counts.get('move_note',0)} · Media: {counts.get('media_add',0)}<br><br>"
+                "Personal and protected fields are preserved. Existing scheduling is not changed.",
+                "info",
+            )
+            self.details.setPlainText(json.dumps({"release":release,"operationCounts":counts,"pages":len(pages)},indent=2))
+            self._set_actions("Update now",self._apply_v2,"Check again",self.refresh)
+        self.runtime.background(work,done)
+
+    def _apply_v2(self):
+        if self._busy or not self.v2_pages:return
+        self._busy=True;self._set_actions("Updating…",None)
+        self._set_update_progress(0,"Checking media files…")
+        import os
+        media_dir=self.runtime.mw.col.media.dir()
+        media_ops=[op for page in self.v2_pages for op in page["operations"]if op["operation"]=="media_add"and not os.path.isfile(os.path.join(media_dir,op["payload"]["filename"]))]
+        def fetch_media():
+            downloads={}
+            for op in media_ops:
+                payload=op["payload"];_,desc=self.runtime.api.deck_v2_media(payload["releaseId"],payload["sha256"])
+                with urllib.request.urlopen(desc["url"],timeout=max(self.runtime.settings.request_timeout_seconds,120))as response:data=response.read(int(payload.get("byteSize")or 20_000_000)+1)
+                if len(data)!=int(payload["byteSize"])or hashlib.sha256(data).hexdigest()!=payload["sha256"]:raise RuntimeError("media_integrity_check_failed")
+                downloads[payload["sha256"]]=data
+            return downloads
+        def media_done(future):
+            try:downloads=future.result()
+            except Exception as error:
+                self._busy=False;self._hide_download_progress();self._set_hero(f"<b>Media download failed safely</b><br><br>{error}","default");self._set_actions("Resume",self.refresh);return
+            self._apply_v2_pages(downloads)
+        self.runtime.background(fetch_media,media_done)
+
+    def _apply_v2_pages(self,media_payloads):
+        try:self.runtime.mw.checkpoint("SnapOrtho versioned deck update")
+        except Exception:pass
+        from .anki_runtime import NoteCollectionGatewayV2
+        from .deck_sync_v2 import NoteSyncV2Importer
+        gateway=NoteCollectionGatewayV2(self.runtime.mw.col,self.runtime.store,media_payloads=media_payloads)
+        importer=NoteSyncV2Importer(self.runtime.store,gateway)
+        totals={"notes":0,"retired":0,"tags":0,"moved":0,"media":0,"overwrittenLocal":[]}
+        try:
+            for index,page in enumerate(self.v2_pages):
+                self._set_update_progress(
+                    int(100*index/max(1,len(self.v2_pages))),
+                    f"Applying verified page {index+1} of {len(self.v2_pages)}…",
+                )
+                from aqt.qt import QApplication
+                QApplication.processEvents()
+                result=importer.apply_page(page)
+                for key in("notes","retired","tags","moved","media"):totals[key]+=result[key]
+                totals["overwrittenLocal"]+=result["overwrittenLocal"]
+            self.runtime.mw.reset();self._busy=False
+            self._set_update_progress(100,"Update complete")
+            self._set_hero(
+                f"<b>✓ Master Deck {self.v2_release['version']} updated</b><br><br>"
+                f"{totals['notes']} notes · {totals['tags']} tag updates · "
+                f"{totals['moved']} moves · {totals['media']} media operations<br><br>"
+                "Existing scheduling and protected fields were preserved.",
+                "ok",
+            )
+            self._set_step(active=None,done=(STEP_LINK,STEP_INSTALL,STEP_UPDATE))
+            self._set_actions("Check again",self.refresh)
+        except Exception as error:
+            self._busy=False
+            self._set_hero(
+                f"<b>Update paused safely</b><br><br>{type(error).__name__}: {error}<br><br>"
+                "The cursor was saved after the last completed operation. Check again to resume.",
+                "default",
+            )
+            self._set_actions("Resume",self.refresh)
 
     def _show_release_error(self, error, has_markers, inventory):
         code = getattr(error, "code", "")
@@ -524,6 +753,7 @@ class MasterDeckDialog:
             return plan
 
         def plan_done(future):
+            self._hide_download_progress()
             try:
                 plan = future.result()
             except Exception as error:
@@ -576,13 +806,14 @@ class MasterDeckDialog:
                 )
                 self._set_hero(
                     summary
-                    + "<br><br>Apply updates only writes central content. "
+                    + "<br><br>Update to the latest version applies published card content, "
+                    "media, and governed SnapOrtho tags. "
                     "Your review scheduling and Personal_* fields stay untouched."
                     + conflict_note,
                     "info",
                 )
                 self._set_actions(
-                    "Apply updates" if changes > 0 else "Re-check",
+                    "Update to latest version" if changes > 0 else "Re-check",
                     self._apply if changes > 0 else self.refresh,
                     "Re-check" if changes > 0 else "Download starter pack…",
                     self.refresh if changes > 0 else self._download_bootstrap,
@@ -606,6 +837,11 @@ class MasterDeckDialog:
             f"Building an update plan from {len(inventory)} local Master markers"
             + (f" ({total_chunks} requests)…" if total_chunks > 1 else "…"),
             "info",
+        )
+        self._set_update_progress(
+            0,
+            f"Checking {len(inventory)} cards against the latest release…",
+            indeterminate=True,
         )
         self.runtime.background(work, plan_done)
 
@@ -633,10 +869,26 @@ class MasterDeckDialog:
         self._busy = True
         self.primary.setEnabled(False)
         self._set_hero("Preparing the starter package download…", "info")
+        self._set_download_progress(phase="preparing")
 
         timeout = self.runtime.settings.request_timeout_seconds
         # Media-rich master packages can be ~1GB; allow long transfers.
         download_timeout = max(int(timeout or 60), 3600)
+        progress_state = {"started": time.monotonic(), "initial": None, "last_update": 0.0}
+
+        def report_progress(written, total):
+            now = time.monotonic()
+            if progress_state["initial"] is None:
+                progress_state["initial"] = written
+            if total and written < total and now - progress_state["last_update"] < 0.15:
+                return
+            progress_state["last_update"] = now
+            elapsed = max(now - progress_state["started"], 0.001)
+            transferred = max(0, written - progress_state["initial"])
+            speed = transferred / elapsed
+            self.runtime.mw.taskman.run_on_main(
+                lambda w=written, t=total, s=speed: self._set_download_progress(w, t, s)
+            )
 
         def work():
             _, desc = self.runtime.api.deck_bootstrap_apkg(release_id)
@@ -658,7 +910,10 @@ class MasterDeckDialog:
             safe_name = filename if filename.endswith(".apkg") else f"{filename}.apkg"
             tmp_path = os.path.join(tmp_dir, f"{release_id}-{checksum or version}-{safe_name}.part")
             hex_digest, written = stream_download_to_part(
-                url, tmp_path, download_timeout, expected_n
+                url, tmp_path, download_timeout, expected_n, report_progress
+            )
+            self.runtime.mw.taskman.run_on_main(
+                lambda w=written: self._set_download_progress(written=w, phase="verifying")
             )
             if checksum and hex_digest != checksum:
                 # Keep an incomplete partial transfer; discard a complete but corrupt object.
@@ -678,6 +933,7 @@ class MasterDeckDialog:
             try:
                 tmp_path, tmp_dir, filename, digest, written, desc = future.result()
             except Exception as error:
+                self._hide_download_progress()
                 code = getattr(error, "code", None)
                 if code:
                     self._set_hero(f"<b>{headline(error)}</b><br><br>{describe(error)}", "default")
@@ -699,6 +955,7 @@ class MasterDeckDialog:
                 "Anki package (*.apkg)",
             )
             if not path:
+                self._hide_download_progress()
                 try:
                     if tmp_path and os.path.isfile(tmp_path):
                         os.remove(tmp_path)
@@ -738,20 +995,20 @@ class MasterDeckDialog:
                     pass
 
             self.last_download_path = path
+            self._hide_download_progress()
             size_mb = round(written / (1024 * 1024), 1)
             self._set_hero(
                 f"<b>SnapOrtho Master deck saved.</b><br><br>"
                 f"<code>{path}</code><br>"
                 f"Size: <b>{size_mb} MB</b><br>"
                 f"SHA-256 verified: <code>{digest[:16]}…</code><br><br>"
-                "<b>Next:</b> In Anki choose <b>File → Import</b> and select this file "
-                "(or drag it onto the Anki window). When import finishes, click "
-                "<b>I've already imported it — refresh</b>.",
+                "<b>Next:</b> Click <b>Import into Anki now</b>. "
+                "SnapOrtho will open Anki's importer with this deck already selected.",
                 "ok",
             )
             self._set_actions(
-                "I've already imported it — refresh",
-                self.refresh,
+                "Import into Anki now",
+                self._import_downloaded_deck,
                 "Open containing folder",
                 self._open_download_folder,
             )
@@ -769,6 +1026,43 @@ class MasterDeckDialog:
 
         self.runtime.background(work, done)
 
+    def _import_downloaded_deck(self):
+        path = self.last_download_path
+        if not path or not os.path.isfile(path):
+            self._set_hero(
+                "<b>Downloaded deck not found.</b><br><br>"
+                "Download the Master Deck again, then import it.",
+                "default",
+            )
+            self._set_actions(
+                "Download again",
+                self._download_bootstrap,
+                "Refresh status",
+                self.refresh,
+            )
+            return
+
+        # Close this modal first so Anki's native import dialog can take focus.
+        # Defer one event-loop turn to avoid stacking modal dialogs on macOS.
+        self.dialog.accept()
+        from aqt.qt import QTimer
+
+        def launch_import():
+            try:
+                from aqt.import_export.importing import import_file
+
+                import_file(self.runtime.mw, path)
+            except Exception as error:
+                from aqt.utils import showWarning
+
+                showWarning(
+                    "Anki could not open the downloaded Master Deck automatically.\n\n"
+                    f"The file is still available here:\n{path}\n\n"
+                    f"Error: {error}"
+                )
+
+        QTimer.singleShot(0, launch_import)
+
     def _open_download_folder(self):
         if not self.last_download_path:
             return
@@ -782,7 +1076,12 @@ class MasterDeckDialog:
             return
         self._busy = True
         self.primary.setEnabled(False)
-        self._set_hero("Downloading the latest content and applying updates…", "info")
+        self._set_hero(
+            "<b>Update in progress</b><br><br>"
+            "Keep this window open. SnapOrtho will show a completion summary when every change has been applied.",
+            "info",
+        )
+        self._set_update_progress(5, "Step 1 of 4 · Downloading the release manifest…")
         release_id = self.plan.get("targetReleaseId") or self.release.get("id")
         actions = self.plan.get("actions", [])
         timeout = self.runtime.settings.request_timeout_seconds
@@ -793,7 +1092,14 @@ class MasterDeckDialog:
             _, manifest = self.runtime.api.deck_manifest(release_id)
             ops = build_operations(actions, manifest.get("cards", []))
             media = {}
-            for sha in ops["media"]:
+            media_hashes = list(ops["media"])
+            self.runtime.mw.taskman.run_on_main(
+                lambda: self._set_update_progress(
+                    25,
+                    f"Step 2 of 4 · Preparing {len(ops['update']) + len(ops['add'])} card changes…",
+                )
+            )
+            for index, sha in enumerate(media_hashes):
                 try:
                     _, desc = self.runtime.api.deck_media(release_id, sha)
                     with urllib.request.urlopen(desc["url"], timeout=timeout) as response:
@@ -802,6 +1108,12 @@ class MasterDeckDialog:
                         media[sha] = (desc["logicalFilename"], data)
                 except Exception:
                     pass
+                percent = 25 + int(25 * (index + 1) / max(1, len(media_hashes)))
+                self.runtime.mw.taskman.run_on_main(
+                    lambda p=percent, n=index + 1, total=len(media_hashes): self._set_update_progress(
+                        p, f"Step 2 of 4 · Downloading media {n} of {total}…"
+                    )
+                )
             return manifest, ops, media
 
         def done(future):
@@ -809,6 +1121,7 @@ class MasterDeckDialog:
             try:
                 manifest, ops, media = future.result()
             except Exception as error:
+                self._hide_download_progress()
                 self._set_hero(f"<b>Update failed</b><br><br>{describe(error)}", "default")
                 self._set_actions("Try again", self._apply, "Refresh", self.refresh)
                 return
@@ -821,6 +1134,7 @@ class MasterDeckDialog:
             except Exception:
                 pass
             written = 0
+            self._set_update_progress(52, "Step 3 of 4 · Writing media and card updates…")
             for filename, data in media.values():
                 try:
                     if not gateway.has_media(filename):
@@ -828,13 +1142,24 @@ class MasterDeckDialog:
                     written += 1
                 except Exception:
                     pass
-            summary = apply_operations(gateway, ops)
+            def apply_progress(completed, total, activity):
+                from aqt.qt import QApplication
+
+                percent = 55 + int(35 * completed / max(1, total))
+                self._set_update_progress(
+                    percent,
+                    f"Step 3 of 4 · {activity} · {completed} of {total}",
+                )
+                QApplication.processEvents()
+
+            summary = apply_operations(gateway, ops, progress=apply_progress)
             summary["media"] = written
             if not summary["errors"]:
                 version = self.release.get("release_version") or self.release.get("releaseVersion")
                 if version:
                     self.runtime.store.cache("installed_master_release", version)
             self.runtime.mw.reset()
+            self._set_update_progress(95, "Step 4 of 4 · Verifying and recording completion…")
             payload = {
                 "targetReleaseId": release_id,
                 "syncPlanChecksum": self.plan.get("checksum"),
@@ -863,8 +1188,21 @@ class MasterDeckDialog:
                     f"{len(summary['errors'])} item(s) could not be applied: "
                     + ", ".join(summary["errors"][:10])
                 )
-            self._set_hero("<br>".join(lines).replace("\n", "<br>"), "ok" if not summary["errors"] else "info")
-            self._set_actions("Refresh status", self.refresh)
+            self._set_update_progress(
+                100,
+                "Update complete" if not summary["errors"] else "Update completed with warnings",
+            )
+            result_title = (
+                "<b>✓ Update complete</b><br><br>"
+                if not summary["errors"]
+                else "<b>Update completed with warnings</b><br><br>"
+            )
+            self._set_hero(
+                result_title + "<br>".join(lines).replace("\n", "<br>"),
+                "ok" if not summary["errors"] else "info",
+            )
+            self._set_step(active=None, done=(STEP_LINK, STEP_INSTALL, STEP_UPDATE))
+            self._set_actions("Check again", self.refresh)
             self.details.setPlainText("\n".join(lines))
 
         self.runtime.background(fetch, done)

@@ -264,6 +264,15 @@ class ReviewerApi:
     def deck_sync_plan(self, payload):
         return self.request("POST", "/api/anki/deck/sync/plan", payload)
 
+    def deck_v2_status(self):
+        return self.request("GET", "/api/anki/deck/v2/status")
+
+    def deck_v2_updates(self, after=0, limit=250):
+        return self.request("GET", f"/api/anki/deck/v2/updates?after={int(after)}&limit={int(limit)}")
+
+    def deck_v2_media(self, release_id, sha256):
+        return self.request("GET", f"/api/anki/deck/v2/releases/{release_id}/media/{sha256}")
+
     def deck_media(self, release_id, sha256):
         return self.request("GET", f"/api/anki/deck/releases/{release_id}/media/{sha256}")
 

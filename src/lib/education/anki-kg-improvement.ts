@@ -25,6 +25,12 @@ export type ExistingClaim = {
   reviewStatus: string;
 };
 
+export type HierarchyNode = {
+  id: string;
+  label: string;
+  entityType: string;
+};
+
 export type GraphOperation =
   | {
       id: string;
@@ -60,6 +66,7 @@ export type GraphOperation =
 export type QualityGate = {
   gate:
     | "subject_resolution"
+    | "hierarchy_attachment"
     | "answer_entity_separation"
     | "claim_atomicity"
     | "duplicate_check"
@@ -78,14 +85,21 @@ export type KgImprovement = {
     entityId: string | null;
     entityType: string | null;
     resolution: "existing" | "proposed" | "unresolved";
+    hierarchyPath: HierarchyNode[];
+    hierarchyStatus: "anchored" | "needs_parent" | "unresolved";
   };
   operations: GraphOperation[];
   qualityGates: QualityGate[];
   reviewTier: "streamlined" | "clinical_review" | "ontology_review";
   canSubmit: boolean;
   noChangeReason: string | null;
+  nextRequiredLayer: {
+    kind: "resolve_subject" | "select_parent";
+    label: string;
+    reason: string;
+  } | null;
   evidence: KgCardEvidence;
-  algorithmVersion: "graph_diff_v1";
+  algorithmVersion: "graph_diff_v2_hierarchy";
 };
 
 function stableId(seed: string): string {
@@ -232,10 +246,20 @@ export function buildKgImprovement(input: {
   entities: ImprovementEntity[];
   existingClaims: ExistingClaim[];
   existingEntityIds: string[];
+  hierarchyPaths?: Record<string, HierarchyNode[]>;
 }): KgImprovement {
   const evidence = analyzeKgCardEvidence(input.fields);
-  const subjectLabel = extractSubjectLabel(evidence.stem);
-  const resolution = resolveSubject(subjectLabel, input.entities);
+  const extractedSubjectLabel = extractSubjectLabel(evidence.stem);
+  const exactResolution = resolveSubject(extractedSubjectLabel, input.entities);
+  const linkedEntities = input.entities.filter((entity) =>
+    input.existingEntityIds.includes(entity.id),
+  );
+  const resolution =
+    exactResolution.entity || exactResolution.ambiguous || linkedEntities.length !== 1
+      ? exactResolution
+      : { entity: linkedEntities[0]!, ambiguous: false };
+  const subjectLabel =
+    resolution.entity?.preferredLabel ?? extractedSubjectLabel;
   const safeEntityType = inferSafeEntityType(subjectLabel);
   const subjectResolution = resolution.entity
     ? "existing"
@@ -244,6 +268,20 @@ export function buildKgImprovement(input: {
       : "unresolved";
   const operations: GraphOperation[] = [];
   const gates: QualityGate[] = [];
+  const hierarchyPath = resolution.entity
+    ? input.hierarchyPaths?.[resolution.entity.id] ?? [
+        {
+          id: resolution.entity.id,
+          label: resolution.entity.preferredLabel,
+          entityType: resolution.entity.entityType,
+        },
+      ]
+    : [];
+  const hierarchyStatus = resolution.entity
+    ? "anchored"
+    : subjectResolution === "proposed"
+      ? "needs_parent"
+      : "unresolved";
 
   if (resolution.entity) {
     gates.push({
@@ -269,15 +307,6 @@ export function buildKgImprovement(input: {
       decision: "review",
       reason: `${subjectLabel} has no exact governed entity match and requires ontology review.`,
     });
-    operations.push({
-      id: stableId(`entity|${subjectLabel}|${input.canonicalCardVersionId}`),
-      kind: "propose_entity",
-      risk: "high",
-      proposedLabel: subjectLabel,
-      entityType: safeEntityType!,
-      statement: `Review ${subjectLabel} as a possible canonical ${safeEntityType!.replaceAll("_", " ")}.`,
-      evidence: evidence.stem,
-    });
   } else {
     gates.push({
       gate: "subject_resolution",
@@ -285,6 +314,26 @@ export function buildKgImprovement(input: {
       reason: resolution.ambiguous
         ? "The card subject matches multiple canonical entities."
         : "The card subject could not be resolved safely.",
+    });
+  }
+
+  if (hierarchyStatus === "anchored") {
+    gates.push({
+      gate: "hierarchy_attachment",
+      decision: "pass",
+      reason: `Governed path: ${hierarchyPath.map((node) => node.label).join(" → ")}.`,
+    });
+  } else if (hierarchyStatus === "needs_parent") {
+    gates.push({
+      gate: "hierarchy_attachment",
+      decision: "block",
+      reason: `Choose a governed parent for ${subjectLabel} before proposing the entity or any leaf facts.`,
+    });
+  } else {
+    gates.push({
+      gate: "hierarchy_attachment",
+      decision: "block",
+      reason: "Resolve the card's top-level subject, then choose its governed parent before adding detailed facts.",
     });
   }
 
@@ -304,6 +353,9 @@ export function buildKgImprovement(input: {
     const claim = normalizeClaim(subjectLabel, item.answer, item.context);
     if (!claim || !isAtomicClaim(claim)) continue;
     atomicClaims += 1;
+    // A fact without a governed primary entity becomes an orphaned leaf. Keep
+    // the evidence, but defer the graph operation until the hierarchy exists.
+    if (!resolution.entity || hierarchyStatus !== "anchored") continue;
     if (isDuplicateClaim(claim, input.existingClaims)) {
       duplicates += 1;
       continue;
@@ -323,8 +375,16 @@ export function buildKgImprovement(input: {
 
   gates.push({
     gate: "claim_atomicity",
-    decision: atomicClaims === claimEvidence.length ? "pass" : "review",
-    reason: `${atomicClaims} of ${claimEvidence.length} cloze facts were reconstructed as atomic claims.`,
+    decision:
+      !resolution.entity || hierarchyStatus !== "anchored"
+        ? "review"
+        : atomicClaims === claimEvidence.length
+          ? "pass"
+          : "review",
+    reason:
+      !resolution.entity || hierarchyStatus !== "anchored"
+        ? `${atomicClaims} atomic fact(s) were retained as evidence but deferred until the subject hierarchy is anchored.`
+        : `${atomicClaims} of ${claimEvidence.length} cloze facts were reconstructed as atomic claims.`,
   });
   gates.push({
     gate: "duplicate_check",
@@ -344,7 +404,7 @@ export function buildKgImprovement(input: {
   const blocked = gates.some((gate) => gate.decision === "block");
   const hasHighRisk = operations.some((operation) => operation.risk === "high");
   const hasMediumRisk = operations.some((operation) => operation.risk === "medium");
-  const reviewTier = hasHighRisk
+  const reviewTier = hierarchyStatus !== "anchored" || hasHighRisk
     ? "ontology_review"
     : hasMediumRisk
       ? "clinical_review"
@@ -363,7 +423,25 @@ export function buildKgImprovement(input: {
     ? `${pieces.join(" and ")}.`
     : duplicates
       ? "The graph already represents the supported knowledge from this card."
-      : "No safe graph improvement could be produced.";
+      : hierarchyStatus === "needs_parent"
+        ? `Start with ${subjectLabel}: select a governed parent before adding detailed teaching facts.`
+        : hierarchyStatus === "unresolved"
+          ? "Start at the top: resolve the card subject and its governed parent before adding detailed teaching facts."
+          : "No safe graph improvement could be produced.";
+  const nextRequiredLayer =
+    hierarchyStatus === "needs_parent"
+      ? {
+          kind: "select_parent" as const,
+          label: subjectLabel,
+          reason: `A new ${safeEntityType?.replaceAll("_", " ") ?? "concept"} must attach to an existing governed parent.`,
+        }
+      : hierarchyStatus === "unresolved"
+        ? {
+            kind: "resolve_subject" as const,
+            label: "Card subject",
+            reason: "Identify the broad subject first; then build downward through parent concepts to claims.",
+          }
+        : null;
 
   return {
     contractVersion: KG_IMPROVEMENT_CONTRACT,
@@ -377,6 +455,8 @@ export function buildKgImprovement(input: {
       entityId: primaryEntityId,
       entityType: resolution.entity?.entityType ?? safeEntityType,
       resolution: subjectResolution,
+      hierarchyPath,
+      hierarchyStatus,
     },
     operations,
     qualityGates: gates,
@@ -388,7 +468,8 @@ export function buildKgImprovement(input: {
           ? "already_represented"
           : "no_safe_graph_delta"
         : null,
+    nextRequiredLayer,
     evidence,
-    algorithmVersion: "graph_diff_v1",
+    algorithmVersion: "graph_diff_v2_hierarchy",
   };
 }

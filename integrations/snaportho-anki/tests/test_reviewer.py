@@ -16,6 +16,7 @@ from snaportho_reviewer.workspace import central_fields,central_tags,split_struc
 from snaportho_reviewer.sync import central_sync_hash
 from snaportho_reviewer.brobot_panel import ATTENDING_PROMPT,OITE_PROMPT,card_context,chat_payload,deck_footer_text,plain_text
 from snaportho_reviewer.resource_search import anki_card_query,local_concept_card_ids,local_page_card_ids,parse_orthobullets_id,request_payload,resolve_local_results,result_summary
+from snaportho_reviewer.bootstrap import ANKI_DOWNLOAD_URL,MIN_ANKI,UnsupportedAnkiError
 class Card:
  def __init__(self,id,h):self.id=id;self.h=h
 class Gateway:
@@ -25,6 +26,17 @@ class Gateway:
  def save_working_edit(self,*args,**kwargs):self.saved.append((args,kwargs))
 class ReviewerTests(unittest.TestCase):
  def setUp(self):self.i=CardIdentity("c","v","guid",0,"a"*64)
+ def test_anki_2509_is_supported(self):
+  self.assertEqual(MIN_ANKI,(25,9))
+  error=UnsupportedAnkiError("25.02.7")
+  self.assertIn("Anki 25.09 or newer is required",str(error))
+  self.assertIn("installed: 25.02.7",str(error))
+  self.assertEqual(ANKI_DOWNLOAD_URL,"https://apps.ankiweb.net/")
+ def test_old_anki_dialog_is_actionable(self):
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:text=source.read()
+  self.assertIn('setWindowTitle("Anki update required")',text)
+  self.assertIn('addButton("Open Anki Download Page"',text)
+  self.assertIn("profiles, decks, review history, and SnapOrtho drafts will remain in place",text)
  def test_learner_panel_has_only_two_teaching_prompts(self):
   self.assertEqual(ATTENDING_PROMPT,"What would an attending ask related to this?")
   self.assertEqual(OITE_PROMPT,"What is a common OITE board trap or question?")
@@ -76,6 +88,14 @@ class ReviewerTests(unittest.TestCase):
   self.assertIn("from .snaportho_reviewer.bootstrap import register",bootstrap)
   with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:surfaces=source.read()
   self.assertIn("browser_menus_did_init",surfaces);self.assertIn("reviewer_did_show_question",surfaces);self.assertIn("Review Current Card",surfaces);self.assertIn("Get Started / Master Deck",surfaces);self.assertIn("Propose SnapOrtho changes",surfaces);self.assertIn("editor_did_init_buttons",surfaces)
+ def test_user_and_reviewer_editions_have_distinct_runtime_surfaces(self):
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:text=source.read()
+  self.assertIn("from . import REVIEWER_EDITION",text)
+  reviewer=text[text.index("if self.reviewer_edition:"):text.index("self._maybe_first_run_prompt()")]
+  self.assertIn("ReviewerSidePanel",reviewer)
+  self.assertIn("_register_editor_propose_button",reviewer)
+  self.assertIn("LearnerSidePanel",reviewer)
+  self.assertLess(reviewer.index("ReviewerSidePanel"),reviewer.index("LearnerSidePanel"))
  def test_configuration_and_https(self):
   settings=validate({"environment":"local","base_url":"http://127.0.0.1:3000","request_timeout_seconds":15,"diagnostics_enabled":False});self.assertEqual(settings.environment,"local")
   with self.assertRaises(ValueError):validate({"environment":"production","base_url":"http://example.com","request_timeout_seconds":15,"diagnostics_enabled":False})
@@ -89,6 +109,28 @@ class ReviewerTests(unittest.TestCase):
   store=FakeCredentialStore();api=ReviewerApi("http://127.0.0.1:3000",store)
   with self.assertRaises(ApiError):api.me()
   self.assertNotIn("secret",str(api.safe_error(ApiError("authorization_failed",401))))
+ def test_workspace_proposal_posts_edits_to_backend_with_auth_and_idempotency(self):
+  class Response:
+   status=200
+   def __enter__(self):return self
+   def __exit__(self,*args):return False
+   def read(self,*args):return json.dumps({"proposalId":str(uuid.uuid4()),"status":"submitted","canonicalDataChanged":False}).encode()
+  captured=[]
+  def open_request(request,timeout):captured.append(request);return Response()
+  credentials=FakeCredentialStore();credentials.set("reviewer-device-token")
+  api=ReviewerApi("https://snap-ortho.com",credentials)
+  key=str(uuid.uuid4())
+  payload={"contractVersion":"snaportho-anki-reviewer.v1","editedFields":[{"name":"Text","value":"Corrected calcitonin card"}]}
+  with patch("snaportho_reviewer.api.urllib.request.urlopen",open_request):
+   _,body=api.submit_workspace_proposal(payload,key)
+  request=captured[0]
+  self.assertEqual(request.full_url,"https://snap-ortho.com/api/anki/reviewer/workspace/proposals")
+  self.assertEqual(request.method,"POST")
+  headers={name.lower():value for name,value in request.header_items()}
+  self.assertEqual(headers["x-snaportho-anki-token"],"reviewer-device-token")
+  self.assertEqual(headers["idempotency-key"],key)
+  self.assertEqual(json.loads(request.data)["editedFields"][0]["value"],"Corrected calcitonin card")
+  self.assertFalse(body["canonicalDataChanged"])
  def test_resource_search_input_parsing_and_contract(self):
   for raw in ("123456","ob:123456","qid: 123456","orthobullets:123456"):
    self.assertEqual(parse_orthobullets_id(raw),"123456")
@@ -237,6 +279,10 @@ class ReviewerTests(unittest.TestCase):
   self.assertNotIn("Differs from master",mismatch)
   missing=side_panel_status({"found":False,"identityResolved":False})
   self.assertIn("Not in the master deck",missing)
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","surfaces.py"))as source:panel=source.read()
+  self.assertIn("GOVERNED HIERARCHY",panel)
+  self.assertIn("No leaf fact will be proposed yet",panel)
+  self.assertIn("Hierarchy first",panel)
   fields=build_enrichment_edited_fields({},orthobullets="bullets",orthobullets_link="https://ob.example",rock="",rock_link="")
   self.assertEqual({f["name"] for f in fields},{"Orthobullets","Orthobullets_Link"})
   tags=build_enrichment_tag_changes(
@@ -311,8 +357,14 @@ class ReviewerTests(unittest.TestCase):
   class Col:
    def find_cards(self,q):return[]
   self.assertFalse(has_master_markers(Col()))
+ def test_master_deck_can_launch_native_anki_importer(self):
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","master_deck.py"))as source:text=source.read()
+  self.assertIn('"Import into Anki now"',text)
+  self.assertIn("from aqt.import_export.importing import import_file",text)
+  self.assertIn("import_file(self.runtime.mw, path)",text)
+  self.assertIn("self.dialog.accept()",text)
  def test_master_deck_download_resumes_partial_file(self):
-  from snaportho_reviewer.master_deck import stream_download_to_part
+  from snaportho_reviewer.master_deck import format_download_size,stream_download_to_part
   class Response:
    status=206
    def __init__(self,data):self.data=data
@@ -326,15 +378,19 @@ class ReviewerTests(unittest.TestCase):
    path=os.path.join(d,"deck.part")
    with open(path,"wb")as handle:handle.write(b"abc")
    requests=[]
+   progress=[]
    def open_request(request,timeout):
     requests.append(request)
     return Response(b"def")
    with patch("snaportho_reviewer.master_deck.urllib.request.urlopen",open_request):
-    digest,written=stream_download_to_part("https://cdn.example/deck",path,30,6)
+    digest,written=stream_download_to_part("https://cdn.example/deck",path,30,6,lambda written,total:progress.append((written,total)))
    self.assertEqual(requests[0].get_header("Range"),"bytes=3-")
    self.assertEqual(written,6)
+   self.assertEqual(progress,[(3,6),(6,6)])
    self.assertEqual(digest,"bef57ec7f53a6d40beb640a780a639c83bc29ac8a9816f1fc6c5c6dcd93c4721")
    with open(path,"rb")as handle:self.assertEqual(handle.read(),b"abcdef")
+  self.assertEqual(format_download_size(1536),"1.5 KB")
+  self.assertEqual(format_download_size(5*1024*1024),"5.0 MB")
  def test_structured_tags_round_trip_and_stay_consistent(self):
   structured,free=split_structured(["SnapOrtho::Level::Resident","SnapOrtho::Yield::High","SnapOrtho::Foot"])
   self.assertEqual(sorted(structured),["SnapOrtho::Level::Resident","SnapOrtho::Yield::High"]);self.assertEqual(free,["SnapOrtho::Foot"])
@@ -378,10 +434,12 @@ class ReviewerTests(unittest.TestCase):
    def __init__(self):self.updates=[];self.creates=[]
    def write_central_update(self,guid,ordinal,fields,tags,deck,markers):self.updates.append((guid,fields,tags,deck,markers));return True
    def create_central_card(self,guid,fields,tags,deck,markers):self.creates.append((guid,fields,markers));return True
-  g=FakeGateway();summary=apply_operations(g,ops)
+  progress=[]
+  g=FakeGateway();summary=apply_operations(g,ops,progress=lambda completed,total,activity:progress.append((completed,total,activity)))
   self.assertEqual((summary["updated"],summary["added"],summary["conflicts"]),(1,1,1));self.assertEqual(summary["errors"],[])
   self.assertEqual(len(g.updates),1);self.assertEqual(len(g.creates),1)  # conflict card was never written
   self.assertEqual(g.updates[0][1],[{"name":"Front","value":"Q"}])  # no personal/marker leaked into the write
+  self.assertEqual(progress,[(1,2,"Updating cards"),(2,2,"Adding cards")])
   self.assertEqual(ack_status(summary),"applied")
   self.assertEqual(ack_status({"errors":["x"],"updated":1,"added":0}),"partial");self.assertEqual(ack_status({"errors":["x"],"updated":0,"added":0}),"failed")
  def test_delta_apply_reports_not_found_without_aborting(self):
@@ -400,4 +458,38 @@ class ReviewerTests(unittest.TestCase):
    def __init__(self,personal):self.n=Note(Front="central",Personal_Notes=personal)
    def note(self):return self.n
   self.assertEqual(central_sync_hash(SyncCard("one")),central_sync_hash(SyncCard("two")))
+ def test_note_sync_v2_merge_protects_personal_and_replaces_governed_tags(self):
+  from snaportho_reviewer.deck_sync_v2 import checksum,merge_fields,merge_governed_tags
+  self.assertEqual(checksum({"unicode":"≥ µ","a":[1,True,None],"z":{"b":"x"}}),"e6ecd9c1ebaf418390c451e61a9c1caf0547c39c0038a219b89d0546ad7f0dc4")
+  result=merge_fields({"Text":"base","Extra":"old"},{"Text":"mine","Extra":"old","Personal_Notes":"private"},{"Text":"remote","Extra":"new","Personal_Notes":"server"},["Text"])
+  self.assertEqual(result["fields"]["Text"],"mine");self.assertEqual(result["fields"]["Extra"],"new");self.assertEqual(result["fields"]["Personal_Notes"],"private")
+  tags=merge_governed_tags(["mine","SnapOrtho::Diagnosis::Old","SnapOrtho_Protect::Text"],["SnapOrtho::Diagnosis::New"],["SnapOrtho::Diagnosis"])
+  self.assertEqual(tags,["SnapOrtho::Diagnosis::New","SnapOrtho_Protect::Text","mine"])
+ def test_note_sync_v2_cursor_journal_and_idempotent_empty_followup(self):
+  from snaportho_reviewer.deck_sync_v2 import CONTRACT,NoteSyncV2Importer,checksum
+  class FakeGateway:
+   def __init__(self):self.notes={};self.writes=0
+   def snapshot(self,nid):return self.notes.get(nid,{"fields":{},"tags":[]})
+   def upsert_note(self,nid,payload,fields,tags):self.notes[nid]={"fields":fields,"tags":tags};self.writes+=1;return{"ankiNoteId":7,"noteGuid":payload["noteGuid"]}
+  release={"id":"release","sequence":1,"version":"1","aggregateChecksum":"a"*64}
+  payload={"noteGuid":"guid","noteTypeName":"SnapOrtho Master","deckPath":"SnapOrtho","fields":{"Text":"Q"},"governedTags":["SnapOrtho::Diagnosis::ACL"],"governedPrefixes":["SnapOrtho::Diagnosis"],"contentChecksum":"b"*64,"tagsChecksum":"c"*64}
+  op={"cursor":1,"releaseId":"release","operationIndex":0,"operation":"upsert_note","noteId":"note","noteVersionId":"version","payloadChecksum":checksum(payload),"payload":payload}
+  page={"contractVersion":CONTRACT,"release":release,"nextCursor":1,"remaining":0,"operations":[op],"pageChecksum":checksum([op])}
+  with tempfile.TemporaryDirectory()as d:
+   store=DraftStore(os.path.join(d,"state.db"),"scope");gateway=FakeGateway();sync=NoteSyncV2Importer(store,gateway)
+   self.assertEqual(sync.apply_page(page)["notes"],1);self.assertEqual(gateway.writes,1);self.assertEqual(store.deck_subscription()["cursor"],1);self.assertEqual(store.pending_deck_journal(),[])
+   empty={"contractVersion":CONTRACT,"release":release,"nextCursor":1,"remaining":0,"operations":[],"pageChecksum":checksum([])}
+   self.assertEqual(sync.apply_page(empty)["notes"],0);self.assertEqual(gateway.writes,1);store.close()
+ def test_note_sync_v2_validates_more_than_four_thousand_ordered_operations(self):
+  from snaportho_reviewer.deck_sync_v2 import CONTRACT,checksum,validate_page
+  ops=[]
+  for i in range(1,4002):
+   payload={"deckPath":f"SnapOrtho::{i}"}
+   ops.append({"cursor":i,"operation":"move_note","payload":payload,"payloadChecksum":checksum(payload)})
+  page={"contractVersion":CONTRACT,"nextCursor":4001,"operations":ops,"pageChecksum":checksum(ops)}
+  self.assertEqual(validate_page(page,0),[])
+ def test_safe_diagnostics_advertise_note_sync_v2(self):
+  class Settings:environment="production";base_url="https://snap-ortho.com"
+  data=build({"ankiVersion":"25.09","qtVersion":6,"profileHash":"safe","deckSubscription":{"cursor":9},"deckRecoveryInventory":{"inventoryCards":10},"pendingDeckJournal":0},Settings(),True)
+  self.assertEqual(data["apiContract"],"snaportho-anki-note-sync.v2");self.assertEqual(data["localSchemaVersion"],4);self.assertEqual(data["deckSubscription"]["cursor"],9)
 if __name__=="__main__":unittest.main()

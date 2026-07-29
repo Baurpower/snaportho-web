@@ -77,6 +77,25 @@ export async function loadReleaseManifest(supabase: any, releaseId: string) {
         .eq("production_eligible", true)
         .eq("lifecycle_status", "approved")
     : { data: [] };
+  const { data: publishedTagManifest } = await supabase
+    .from("rendered_anki_tag_manifests")
+    .select("id,manifest_key,output_checksum,published_at")
+    .eq("status", "published")
+    .order("published_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const renderedTags: any[] = [];
+  if (publishedTagManifest && versionIds.length) {
+    for (let offset = 0; offset < versionIds.length; offset += 100) {
+      const { data: rows, error: renderedTagError } = await supabase
+        .from("rendered_anki_tag_manifest_cards")
+        .select("canonical_card_version_id,rendered_tags")
+        .eq("manifest_id", publishedTagManifest.id)
+        .in("canonical_card_version_id", versionIds.slice(offset, offset + 100));
+      if (renderedTagError) return null;
+      renderedTags.push(...(rows ?? []));
+    }
+  }
   const media: any[] = [];
   const pageSize = 1000;
   for (let from = 0; ; from += pageSize) {
@@ -99,5 +118,6 @@ export async function loadReleaseManifest(supabase: any, releaseId: string) {
     versions: versions ?? [],
     mappings: mappings ?? [],
     media,
+    renderedTags,
   });
 }

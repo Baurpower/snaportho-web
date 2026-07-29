@@ -2,8 +2,10 @@ import hashlib,platform,sys
 from .version import ADDON_VERSION
 def profile_hash(profile_id):return hashlib.sha256(profile_id.encode()).hexdigest()[:16]
 def build(runtime,settings,linked,reviewer=None,last_error=None):
-    return{"addonVersion":ADDON_VERSION,"apiContract":"snaportho-anki-reviewer.v1","schemaCompatibility":"20260721_130000",
+    return{"addonVersion":ADDON_VERSION,"apiContract":"snaportho-anki-note-sync.v2","schemaCompatibility":"20260728_130000",
       "ankiVersion":runtime.get("ankiVersion"),"pythonVersion":sys.version.split()[0],"qtVersion":runtime.get("qtVersion"),"operatingSystem":platform.platform(),
       "backendEnvironment":settings.environment,"backendOrigin":settings.base_url,"linked":bool(linked),"reviewerStatus":(reviewer or{}).get("status"),
-      "reviewerRoles":(reviewer or{}).get("roles",[]),"profileHash":runtime.get("profileHash"),"localSchemaVersion":2,
-      "pendingDrafts":runtime.get("pendingDrafts",0),"pendingRetries":runtime.get("pendingRetries",0),"lastSafeErrorCode":last_error}
+      "reviewerRoles":(reviewer or{}).get("roles",[]),"profileHash":runtime.get("profileHash"),"localSchemaVersion":4,
+      "pendingDrafts":runtime.get("pendingDrafts",0),"pendingRetries":runtime.get("pendingRetries",0),
+      "deckSubscription":runtime.get("deckSubscription"),"deckRecoveryInventory":runtime.get("deckRecoveryInventory"),
+      "pendingDeckJournal":runtime.get("pendingDeckJournal",0),"lastSafeErrorCode":last_error}

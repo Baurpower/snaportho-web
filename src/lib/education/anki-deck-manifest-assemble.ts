@@ -56,6 +56,11 @@ export type MediaAssetRow = {
   license_status: string;
 };
 
+export type RenderedTagRow = {
+  canonical_card_version_id: string;
+  rendered_tags: string[];
+};
+
 export type AssembledDeckSyncManifest = {
   contractVersion: "snaportho-deck-sync-manifest.v1";
   releaseId: string;
@@ -149,6 +154,7 @@ export function assembleDeckSyncManifest(input: {
   versions: VersionRow[];
   mappings: MappingRow[];
   media: MediaAssetRow[];
+  renderedTags?: RenderedTagRow[];
 }): AssembledDeckSyncManifest {
   const versionById = new Map((input.versions ?? []).map((v) => [v.id, v]));
   const entities = new Map<
@@ -157,6 +163,12 @@ export function assembleDeckSyncManifest(input: {
   >();
   const mediaByVersion = new Map<string, string[]>();
   const mediaByFilename = new Map<string, string>(); // logical_filename -> sha256
+  const renderedTagsByVersion = new Map(
+    (input.renderedTags ?? []).map((row) => [
+      row.canonical_card_version_id,
+      [...new Set((row.rendered_tags ?? []).map(String))].sort(),
+    ]),
+  );
 
   for (const m of input.mappings ?? []) {
     const rows = entities.get(m.canonical_card_version_id) ?? [];
@@ -194,7 +206,11 @@ export function assembleDeckSyncManifest(input: {
     cards: members.map((m) => {
       const v = versionById.get(m.canonical_card_version_id);
       const rawFields = asFieldSnapshot(v?.field_snapshot);
-      const tags = asTagSnapshot(v?.tag_snapshot);
+      const sourceTags = asTagSnapshot(v?.tag_snapshot);
+      const governedTags = renderedTagsByVersion.get(m.canonical_card_version_id);
+      const tags = governedTags
+        ? [...sourceTags.filter((tag) => !tag.startsWith("SnapOrtho::")), ...governedTags]
+        : sourceTags;
       // Normalize to SnapOrtho Master fields so contentHash matches bootstrap notes.
       const normalized = normalizeFieldSnapshotToMaster(
         rawFields,

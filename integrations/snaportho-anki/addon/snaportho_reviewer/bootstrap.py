@@ -1,5 +1,46 @@
 _registered=False;_runtime=None
-MIN_ANKI=(26,5)
+try:
+    from . import REVIEWER_EDITION
+except ImportError:
+    REVIEWER_EDITION=False
+
+# Anki 25.09 provides the Qt 6 and lifecycle APIs used by this add-on.
+# Keep this floor aligned with the oldest release covered by compatibility
+# smoke testing instead of the version on the development machine.
+MIN_ANKI=(25,9)
+ANKI_DOWNLOAD_URL="https://apps.ankiweb.net/"
+
+class UnsupportedAnkiError(RuntimeError):
+    def __init__(self,installed):
+        self.installed=installed
+        required=f"{MIN_ANKI[0]}.{MIN_ANKI[1]:02d}"
+        super().__init__(f"Anki {required} or newer is required (installed: {installed})")
+
+def show_startup_error(parent,error):
+    product_name="SnapOrtho Reviewer" if REVIEWER_EDITION else "SnapOrtho"
+    if not isinstance(error,UnsupportedAnkiError):
+        from aqt.utils import showWarning
+        detail=str(error).strip() or type(error).__name__
+        showWarning(f"{product_name} could not start: {detail}")
+        return
+    from aqt.qt import QDesktopServices,QMessageBox,QUrl
+    required=f"{MIN_ANKI[0]}.{MIN_ANKI[1]:02d}"
+    box=QMessageBox(parent)
+    box.setIcon(QMessageBox.Icon.Warning)
+    box.setWindowTitle("Anki update required")
+    box.setText(f"<b>Update Anki to continue using {product_name}.</b>")
+    box.setInformativeText(
+        f"You have Anki {error.installed}. {product_name} supports Anki "
+        f"{required} and newer.\n\n"
+        "Close Anki, install the current Anki release, then reopen Anki. "
+        "Your profiles, decks, review history, and SnapOrtho drafts will remain in place."
+    )
+    update_button=box.addButton("Open Anki Download Page",QMessageBox.ButtonRole.AcceptRole)
+    box.addButton("Not Now",QMessageBox.ButtonRole.RejectRole)
+    box.exec()
+    if box.clickedButton() is update_button:
+        QDesktopServices.openUrl(QUrl(ANKI_DOWNLOAD_URL))
+
 def register():
     global _registered
     if _registered:return
@@ -12,8 +53,7 @@ def register():
         global _runtime
         try:_runtime=ProfileRuntime(mw);_runtime.start()
         except Exception as error:
-            from aqt.utils import showWarning
-            showWarning(f"SnapOrtho could not start: {type(error).__name__}")
+            show_startup_error(mw,error)
     def on_close():
         global _runtime
         if _runtime:_runtime.stop();_runtime=None
@@ -30,8 +70,10 @@ class ProfileRuntime:
         from anki import version
         from .config import validate
         current=tuple(int(x)for x in version.split(".")[:2])
-        if current<MIN_ANKI:raise RuntimeError("Anki 26.05 or newer is required")
-        self.mw=mw;self.closed=False;self.window=None;self.reviewer_enabled=False
+        if current<MIN_ANKI:raise UnsupportedAnkiError(version)
+        self.mw=mw;self.closed=False;self.window=None
+        self.reviewer_edition=REVIEWER_EDITION
+        self.reviewer_enabled=REVIEWER_EDITION
         raw=mw.addonManager.getConfig(__name__.split('.')[0]) or {}
         self.settings=validate(raw);self.profile_hash=__import__('hashlib').sha256(str(mw.pm.name).encode()).hexdigest()[:16]
         from .credential_store import MacOSKeychainStore
@@ -43,7 +85,10 @@ class ProfileRuntime:
         self.store=DraftStore(state_path,f"{self.profile_hash}:{self.settings.environment}")
     def start(self):
         from aqt.qt import QAction,QMenu,QTimer,qconnect
-        menu=QMenu("SnapOrtho",self.mw.form.menuTools);menu.setObjectName("snaportho_menu");self.mw.form.menuTools.addMenu(menu);self.menu=menu
+        menu_title="SnapOrtho Reviewer" if self.reviewer_edition else "SnapOrtho"
+        menu=QMenu(menu_title,self.mw.form.menuTools)
+        menu.setObjectName("snaportho_reviewer_menu" if self.reviewer_edition else "snaportho_menu")
+        self.mw.form.menuTools.addMenu(menu);self.menu=menu
         for label,callback in[
             ("Get Started / Master Deck…",self.open_deck_sync),
             ("Sign In or Manage Account…",self.link_device),
@@ -51,17 +96,26 @@ class ProfileRuntime:
             ("Sign Out",self.sign_out),
         ]:
             action=QAction(label,menu);qconnect(action.triggered,callback);menu.addAction(action)
-        self.reviewer_menu=menu.addMenu("Reviewer tools")
-        self.reviewer_menu.menuAction().setVisible(False)
-        for label,callback in[
+        reviewer_actions=[
             ("Review Current Card",self.open_current_workspace),
             ("Open Review Dashboard",self.open_dashboard),
             ("Diagnostics",self.open_diagnostics),
-        ]:
-            action=QAction(label,self.reviewer_menu);qconnect(action.triggered,callback);self.reviewer_menu.addAction(action)
-        from .brobot_panel import LearnerSidePanel
-        self.side_panel=LearnerSidePanel(self.mw,self)
-        self._load_account_capabilities()
+        ]
+        if self.reviewer_edition:
+            menu.addSeparator()
+            for label,callback in reviewer_actions:
+                action=QAction(label,menu);qconnect(action.triggered,callback);menu.addAction(action)
+            from .surfaces import ReviewerSidePanel
+            self.side_panel=ReviewerSidePanel(self.mw,self)
+            self._register_editor_propose_button()
+        else:
+            self.reviewer_menu=menu.addMenu("Reviewer tools")
+            self.reviewer_menu.menuAction().setVisible(False)
+            for label,callback in reviewer_actions:
+                action=QAction(label,self.reviewer_menu);qconnect(action.triggered,callback);self.reviewer_menu.addAction(action)
+            from .brobot_panel import LearnerSidePanel
+            self.side_panel=LearnerSidePanel(self.mw,self)
+            self._load_account_capabilities()
         self._maybe_first_run_prompt()
         self.search_relay_timer=QTimer(self.mw)
         self.search_relay_timer.setInterval(10000)
@@ -90,7 +144,8 @@ class ProfileRuntime:
     def open_deck_sync(self):
         from .master_deck import MasterDeckDialog
         MasterDeckDialog(self.mw,self).exec()
-        if hasattr(self,"side_panel"):self.side_panel.refresh_deck_footer()
+        if hasattr(self,"side_panel") and hasattr(self.side_panel,"refresh_deck_footer"):
+            self.side_panel.refresh_deck_footer()
     def _maybe_first_run_prompt(self):
         """Open resumable setup directly until account and Master Deck are ready."""
         try:
@@ -145,7 +200,10 @@ class ProfileRuntime:
                         icon=None,
                         cmd="snaportho_propose",
                         func=on_propose,
-                        tip="Propose SnapOrtho changes for this note",
+                        tip=(
+                            "Save this local note and open a SnapOrtho proposal. "
+                            "Nothing is uploaded until you click Submit proposal."
+                        ),
                         label="Propose to SnapOrtho",
                         keys=None,
                     )

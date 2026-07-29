@@ -8,5 +8,10 @@ with zipfile.ZipFile(package)as archive:
     assert manifest["name"]=="SnapOrtho" and manifest["package"]=="snaportho" and manifest["version"]==VERSION
     assert config["environment"]in{"local","staging","production"}
     bootstrap=archive.read("__init__.py").decode();assert "from .snaportho_reviewer.bootstrap import register" in bootstrap
+    edition=archive.read("snaportho_reviewer/__init__.py").decode()
+    assert "USER_EDITION = True" in edition and "REVIEWER_EDITION = True" not in edition
+    runtime=archive.read("snaportho_reviewer/bootstrap.py").decode()
+    assert "if self.reviewer_edition:" in runtime
+    assert "from .brobot_panel import LearnerSidePanel" in runtime
     payload=b"".join(archive.read(n)for n in names);assert b"SUPABASE_SERVICE_ROLE"not in payload and b"BEGIN PRIVATE KEY"not in payload
 digest=hashlib.sha256(package.read_bytes()).hexdigest();expected=package.with_suffix(package.suffix+".sha256").read_text().split()[0];assert digest==expected;print(json.dumps({"verified":True,"package":str(package),"sha256":digest,"files":len(names)}))

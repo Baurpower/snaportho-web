@@ -14,6 +14,7 @@ const bootstrap = read(
 );
 const gate = read("src/lib/education/deck-addon-version.ts");
 const assemble = read("src/lib/education/anki-deck-manifest-assemble.ts");
+const deckLib = read("src/app/api/anki/deck/_lib.ts");
 const notetype = read("src/lib/education/anki-bootstrap-notetype.ts");
 const awsStorage = read("src/lib/education/anki-aws-storage.ts");
 const awsMigration = read(
@@ -74,6 +75,12 @@ for (const x of [/storage_provider/, /aws_s3/, /delivery_metadata/])
 
 // Shared manifest assembly + note-type contract exist for the builder path.
 assert.match(assemble, /export function assembleDeckSyncManifest/);
+for (const source of [
+  /rendered_anki_tag_manifests/,
+  /rendered_anki_tag_manifest_cards/,
+  /renderedTags/,
+]) assert.match(deckLib, source);
+assert.match(assemble, /renderedTagsByVersion/);
 assert.match(notetype, /SnapOrtho Master/);
 assert.match(notetype, /SnapOrtho_Installed_Hash/);
 

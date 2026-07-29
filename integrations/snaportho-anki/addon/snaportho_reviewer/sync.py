@@ -59,6 +59,20 @@ def installed_card_inventory(col):
         )
     return rows
 
+def recovery_diagnostic(col):
+    """Content-free inventory for v1 recovery triage. Safe to copy into support reports."""
+    rows=installed_card_inventory(col);by_id={};by_note={}
+    for row in rows:
+        by_id.setdefault(row["canonicalCardId"],[]).append(row)
+        by_note.setdefault(row["noteGuid"],[]).append(row)
+    duplicate_ids=sum(1 for values in by_id.values()if len(values)>1)
+    sibling_marker_collisions=sum(1 for values in by_note.values()if len({v["cardOrdinal"]for v in values})>1 and len({v["canonicalCardId"]for v in values})==1)
+    return{
+        "inventoryCards":len(rows),"uniqueCanonicalCardIds":len(by_id),"uniqueNoteGuids":len(by_note),
+        "duplicateCanonicalCardIds":duplicate_ids,"clozeSiblingMarkerCollisions":sibling_marker_collisions,
+        "aggregateHashMismatches":sum(1 for row in rows if row["installedContentHash"]!=row["localCentralContentHash"]),
+    }
+
 
 INVENTORY_CHUNK_SIZE = 250
 ACTION_PRIORITY = {
