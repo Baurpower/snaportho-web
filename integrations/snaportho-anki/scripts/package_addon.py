@@ -16,7 +16,7 @@ def main():
     assert not set(config)&{"token","credential","service_role_key","password"}
     reviewer=args.edition=="reviewer"
     out=DIST/f"{'snaportho-reviewer' if reviewer else 'snaportho'}-{VERSION}.ankiaddon"
-    packaged_manifest={**manifest}
+    packaged_manifest={**manifest,"conflicts":[]}
     if reviewer:packaged_manifest.update(name="SnapOrtho Reviewer",package="snaportho_reviewer")
     rows=files();assert rows and all("learner" not in p.parts and "tests" not in p.parts for p in rows)
     for path in rows:

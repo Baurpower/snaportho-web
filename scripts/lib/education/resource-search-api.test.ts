@@ -11,6 +11,10 @@ const ranking = readFileSync(
   path.join(root, "src/lib/education/anki-search-ranking.ts"),
   "utf8",
 );
+const precisionMigration = readFileSync(
+  path.join(root, "supabase/migrations/20260728_132000_precision_first_anki_concept_search.sql"),
+  "utf8",
+);
 
 for (const required of [
   /authenticateBroBotAnkiRequest\(request\)/,
@@ -39,6 +43,16 @@ assert.doesNotMatch(route, /reviewerAuth\(/);
 assert.doesNotMatch(route, /latestDeckConceptResults\(db,\s*input\)\.catch\(\(\) => \[\]\)/);
 assert.match(ranking, /perSectionLimit/);
 assert.match(ranking, /matchedSectionIds/);
+assert.match(route, /if \(directResults\.length\)/);
+assert.match(route, /selectConfidentQuestionCandidates/);
+assert.doesNotMatch(route, /QUESTION_SEARCH_MAX_RESULTS/);
+assert.doesNotMatch(route, /anchors\.map/);
+assert.match(ranking, /QUESTION_SEARCH_MIN_COVERAGE/);
+assert.match(precisionMigration, /cardinality\(d\.terms\) >= 2/);
+assert.match(precisionMigration, /primary_hits >= 1/);
+assert.match(precisionMigration, /ceil\(cardinality\(terms\) \* 0\.5\)/);
+assert.match(precisionMigration, /setweight\(to_tsvector\('english', d\.primary_document\), 'A'\)/);
+assert.doesNotMatch(precisionMigration, /least\(result_limit,/);
 assert.doesNotMatch(route, /\.(insert|update|upsert|delete)\(/);
 assert.doesNotMatch(route, /openai|embedding|completion/i);
 assert.doesNotMatch(route, /console\.(log|error)/);

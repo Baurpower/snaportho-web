@@ -2,7 +2,10 @@
 import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { authenticateBroBotAnkiRequest } from "@/app/api/brobot-anki/_lib";
-import { rankSearchCandidates } from "@/lib/education/anki-search-ranking";
+import {
+  rankSearchCandidates,
+  selectConfidentQuestionCandidates,
+} from "@/lib/education/anki-search-ranking";
 import {
   RESOURCE_SEARCH_CONTRACT_VERSION,
   isResourceSearchRequestV1,
@@ -21,7 +24,7 @@ function response(input: Omit<ResourceSearchResponseV1, "contractVersion" | "tra
     ...input,
     trace: {
       searchId: randomUUID(),
-      algorithmVersion: "direct_reviewed_then_latest_deck_concept.v2",
+      algorithmVersion: "precision_first_direct_or_thresholded_concept.v3",
     },
   } satisfies ResourceSearchResponseV1);
 }
@@ -33,9 +36,9 @@ const SEARCH_STOP_WORDS = new Set([
   "examination", "would", "result",
 ]);
 
-function conceptTerms(testedConcept?: string, summary?: string) {
+function conceptTerms(testedConcept?: string) {
   const terms: string[] = [];
-  for (const token of `${testedConcept ?? ""} ${summary ?? ""}`.match(/[A-Za-z0-9]+/g) ?? []) {
+  for (const token of `${testedConcept ?? ""}`.match(/[A-Za-z0-9]+/g) ?? []) {
     const normalized = token.toLowerCase();
     if (normalized.length >= 4 && !SEARCH_STOP_WORDS.has(normalized) && !terms.includes(normalized))
       terms.push(normalized);
@@ -61,11 +64,7 @@ function normalizedTerms(values: string[], limit = 10) {
 
 async function latestDeckConceptResults(db: any, input: any): Promise<ResourceSearchCardV1[]> {
   if (!input.scopes.includes("latest_deck_concept")) return [];
-  const terms = conceptTerms(input.query.testedConcept, input.query.conceptSummary);
-  const anchors = (input.query.searchKeywords ?? [])
-    .map((value: string) => value.toLowerCase())
-    .filter((value: string) => value.length >= 3 && !SEARCH_STOP_WORDS.has(value))
-    .slice(0, 16);
+  const terms = conceptTerms(input.query.testedConcept);
   const searches: SearchSpec[] = input.query.kind === "topic_page"
     ? (input.query.sections ?? []).map((section: any) => ({
         terms: normalizedTerms([section.heading, ...(section.concepts ?? [])], 8),
@@ -74,8 +73,11 @@ async function latestDeckConceptResults(db: any, input: any): Promise<ResourceSe
         priority: section.priority,
       })).filter((search: SearchSpec) => search.terms.length > 0)
     : [
-        ...(terms.length >= 2 ? [{ terms, limit: Math.min(input.limit, 20), priority: 5 }] : []),
-        ...anchors.map((anchor: string) => ({ terms: [anchor], limit: 6, priority: 3 })),
+        ...(terms.length >= 2 ? [{
+          terms,
+          limit: input.limit,
+          priority: 5,
+        }] : []),
       ];
   if (!searches.length) return [];
   const batches = input.query.kind === "topic_page"
@@ -133,9 +135,12 @@ async function latestDeckConceptResults(db: any, input: any): Promise<ResourceSe
     input.query.kind === "topic_page"
       ? (input.query.sections ?? []).map((section: any) => section.id)
       : [],
-    input.limit,
+    input.query.kind === "topic_page" ? input.limit : Number.MAX_SAFE_INTEGER,
   );
-  return ranked.map((candidate) => ({
+  const accepted = input.query.kind === "topic_page"
+    ? ranked
+    : selectConfidentQuestionCandidates(ranked);
+  return accepted.map((candidate) => ({
     ...candidate.value,
     reviewConfidence: candidate.reviewConfidence,
     relevanceScore: candidate.relevanceScore,
@@ -393,19 +398,21 @@ export async function POST(request: Request) {
       || right.sharedCanonicalEntityIds.length - left.sharedCanonicalEntityIds.length
       || right.reviewConfidence - left.reviewConfidence
       || left.canonicalCardId.localeCompare(right.canonicalCardId),
-    )
-    .slice(0, input.limit);
+    );
+  if (directResults.length) {
+    return response({
+      resolution: { ...baseResolution, status: "resolved", canonicalEntities },
+      results: directResults,
+      discovery: { status: "not_needed", reason: null },
+    });
+  }
   let semanticResults: ResourceSearchCardV1[];
   try {
     semanticResults = await latestDeckConceptResults(db, input);
   } catch {
     semanticResults = [];
   }
-  const resultById = new Map<string, ResourceSearchCardV1>();
-  for (const card of [...directResults, ...semanticResults]) {
-    if (!resultById.has(card.canonicalCardId)) resultById.set(card.canonicalCardId, card);
-  }
-  const results = [...resultById.values()].slice(0, input.limit);
+  const results = semanticResults;
 
   return response({
     resolution: { ...baseResolution, status: "resolved", canonicalEntities },

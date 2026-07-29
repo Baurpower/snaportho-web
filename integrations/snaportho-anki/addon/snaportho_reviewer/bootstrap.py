@@ -117,11 +117,12 @@ class ProfileRuntime:
             self.side_panel=LearnerSidePanel(self.mw,self)
             self._load_account_capabilities()
         self._maybe_first_run_prompt()
-        self.search_relay_timer=QTimer(self.mw)
-        self.search_relay_timer.setInterval(10000)
-        self.search_relay_timer.timeout.connect(self.poll_search_relay)
-        self.search_relay_timer.start()
-        QTimer.singleShot(1500,self.poll_search_relay)
+        if self._handles_search_relay():
+            self.search_relay_timer=QTimer(self.mw)
+            self.search_relay_timer.setInterval(10000)
+            self.search_relay_timer.timeout.connect(self.poll_search_relay)
+            self.search_relay_timer.start()
+            QTimer.singleShot(1500,self.poll_search_relay)
     def stop(self):
         self.closed=True
         if self.window:self.window.close();self.window=None
@@ -132,6 +133,11 @@ class ProfileRuntime:
     def background(self,operation,success):
         if self.closed:return
         self.mw.taskman.run_in_background(operation,lambda future:None if self.closed else success(future))
+    def _handles_search_relay(self):
+        """Prefer the User add-on when both editions share this Anki profile."""
+        if not self.reviewer_edition:return True
+        try:return "snaportho" not in set(self.mw.addonManager.allAddons())
+        except Exception:return True
     def open_dashboard(self):
         from .reviewer_window import ReviewerWindow
         if not self.window:self.window=ReviewerWindow(self.mw,self)
@@ -218,14 +224,19 @@ class ProfileRuntime:
             pass
 
     def add_browser_action(self, browser):
-        if not self.reviewer_enabled:return
         from aqt.qt import QAction, qconnect
         from .resource_search import install_browser_search_surface
 
+        # Browse/search belongs to every linked SnapOrtho user. The Chrome
+        # extension relay opens this surface for learner accounts too, so do
+        # not hide its toolbar or manual-search fallback behind reviewer roles.
         install_browser_search_surface(browser, self.open_resource_search)
         search_action = QAction("Search SnapOrtho by Orthobullets ID…", browser)
         qconnect(search_action.triggered, lambda: self.open_resource_search(browser))
         browser.form.menuEdit.addAction(search_action)
+
+        # Editing the canonical deck remains a reviewer-only capability.
+        if not self.reviewer_enabled:return
         action = QAction("Propose SnapOrtho changes…", browser)
         qconnect(action.triggered, lambda: self.open_browser_workspace(browser))
         browser.form.menuEdit.addAction(action)
@@ -298,7 +309,8 @@ class ProfileRuntime:
             from .resource_search import request_payload
             self.background(
                 lambda:self.api.resource_search(request_payload(
-                    request["normalized_native_id"],50,
+                    request["normalized_native_id"],
+                    30 if request.get("query_kind")=="topic_page" else 50,
                     request.get("tested_concept")or"",
                     request.get("concept_summary")or"",
                     request.get("search_keywords")or[],
@@ -311,7 +323,7 @@ class ProfileRuntime:
 
     def _resolve_relay_search(self,future,request):
         from .anki_runtime import CollectionGateway
-        from .resource_search import local_concept_card_ids,open_browse_with_card_ids,resolve_local_results
+        from .resource_search import open_browse_with_card_ids,resolve_local_results
         gateway=CollectionGateway(self.mw.col);tier="direct_reviewed";error_code=None
         try:
             _,body=future.result()
@@ -320,18 +332,6 @@ class ProfileRuntime:
             card_ids=local["cardIds"]
             dispositions=local["dispositions"]
             tier=(backend_results[0].get("tier")if backend_results else"none")or"none"
-            local_candidates=local_concept_card_ids(
-                    self.mw.col,
-                    request.get("tested_concept")or"",
-                    request.get("search_keywords")or[],
-                    request.get("page_sections")or[],
-                    80 if request.get("query_kind")=="topic_page" else 30,
-                )
-            canonical_ids=set(card_ids)
-            supplemental=[cid for cid in local_candidates if cid not in canonical_ids]
-            card_ids=list(dict.fromkeys(card_ids+supplemental))
-            if canonical_ids and supplemental:tier="hybrid"
-            if card_ids and not backend_results:tier="local_concept_candidate"
             status="completed" if card_ids else("review_required" if not backend_results else"no_local_results")
             payload={
                 "status":status,"availableCount":len(set(card_ids)),
@@ -339,7 +339,7 @@ class ProfileRuntime:
                 "ambiguousCount":sum(1 for x in dispositions if x["status"]=="ambiguous"),
                 "versionMismatchCount":sum(1 for x in dispositions if x["status"]=="version_mismatch"),
                 "backendCandidateCount":len(backend_results),
-                "localSupplementCount":len(supplemental),
+                "localSupplementCount":0,
                 "resultTier":tier,"errorCode":error_code,
             }
         except Exception:

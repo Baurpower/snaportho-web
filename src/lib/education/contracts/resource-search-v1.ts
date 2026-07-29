@@ -70,7 +70,7 @@ export type ResourceSearchResponseV1 = {
   };
   trace: {
     searchId: string;
-    algorithmVersion: "direct_reviewed_then_latest_deck_concept.v2";
+    algorithmVersion: "precision_first_direct_or_thresholded_concept.v3";
   };
 };
 

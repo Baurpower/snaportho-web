@@ -15,7 +15,7 @@ from snaportho_reviewer.version import ADDON_VERSION
 from snaportho_reviewer.workspace import central_fields,central_tags,split_structured,combo_for_tag,tag_for_label,LEVEL_TAGS,YIELD_TAGS,CENTRAL_TAG_RE
 from snaportho_reviewer.sync import central_sync_hash
 from snaportho_reviewer.brobot_panel import ATTENDING_PROMPT,OITE_PROMPT,card_context,chat_payload,deck_footer_text,plain_text
-from snaportho_reviewer.resource_search import anki_card_query,local_concept_card_ids,local_page_card_ids,parse_orthobullets_id,request_payload,resolve_local_results,result_summary
+from snaportho_reviewer.resource_search import anki_card_query,parse_orthobullets_id,request_payload,resolve_local_results,result_summary
 from snaportho_reviewer.bootstrap import ANKI_DOWNLOAD_URL,MIN_ANKI,UnsupportedAnkiError
 class Card:
  def __init__(self,id,h):self.id=id;self.h=h
@@ -96,6 +96,21 @@ class ReviewerTests(unittest.TestCase):
   self.assertIn("_register_editor_propose_button",reviewer)
   self.assertIn("LearnerSidePanel",reviewer)
   self.assertLess(reviewer.index("ReviewerSidePanel"),reviewer.index("LearnerSidePanel"))
+ def test_packaged_editions_can_coexist(self):
+  with open(os.path.join(os.path.dirname(__file__),"..","scripts","package_addon.py"))as source:text=source.read()
+  self.assertIn('"conflicts":[]',text)
+ def test_user_addon_is_preferred_relay_handler_when_both_are_installed(self):
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:text=source.read()
+  self.assertIn("if self._handles_search_relay():",text)
+  handler=text[text.index("def _handles_search_relay"):text.index("def open_dashboard")]
+  self.assertIn('if not self.reviewer_edition:return True',handler)
+  self.assertIn('"snaportho" not in set(self.mw.addonManager.allAddons())',handler)
+ def test_user_edition_installs_browse_search_before_reviewer_gate(self):
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:text=source.read()
+  browse=text[text.index("    def add_browser_action"):text.index("    def open_resource_search")]
+  self.assertLess(browse.index("install_browser_search_surface"),browse.index("if not self.reviewer_enabled:return"))
+  self.assertLess(browse.index("Search SnapOrtho by Orthobullets ID"),browse.index("if not self.reviewer_enabled:return"))
+  self.assertGreater(browse.index("Propose SnapOrtho changes"),browse.index("if not self.reviewer_enabled:return"))
  def test_configuration_and_https(self):
   settings=validate({"environment":"local","base_url":"http://127.0.0.1:3000","request_timeout_seconds":15,"diagnostics_enabled":False});self.assertEqual(settings.environment,"local")
   with self.assertRaises(ValueError):validate({"environment":"production","base_url":"http://example.com","request_timeout_seconds":15,"diagnostics_enabled":False})
@@ -170,31 +185,6 @@ class ReviewerTests(unittest.TestCase):
   body={"resolution":{"status":"resolved","nativeId":"123","canonicalEntities":[{"label":"Patellar instability"}]},"results":results}
   summary=result_summary(body,local)
   self.assertIn("Patellar instability",summary);self.assertIn("2 available locally",summary);self.assertIn("differ from the current canonical version",summary)
- def test_whole_page_search_falls_back_to_broad_local_query(self):
-  class Collection:
-   def __init__(self):self.queries=[]
-   def find_cards(self,query):self.queries.append(query);return [7,3,7,11]
-  collection=Collection()
-  found=local_page_card_ids(
-   collection,
-   "Duchenne Muscular Dystrophy",
-   ["dystrophin","cardiomyopathy","management","gowers"],
-  )
-  self.assertEqual(found,[7,3,11])
-  self.assertIn('"Duchenne Muscular Dystrophy"',collection.queries)
-  self.assertIn('"cardiomyopathy"',collection.queries)
-  self.assertNotIn('"management"',collection.queries)
- def test_local_concept_search_ranks_phrase_and_cross_concept_matches(self):
-  class Collection:
-   def find_cards(self,query):
-    return {
-     '"Duchenne muscular dystrophy"':[1,2],
-     '"cardiomyopathy"':[2,3],
-     '"dystrophin"':[2,4],
-    }.get(query,[])
-  found=local_concept_card_ids(Collection(),"Duchenne muscular dystrophy",["cardiomyopathy","dystrophin"],[],10)
-  self.assertEqual(found[0],2)
-  self.assertEqual(set(found),{1,2,3,4})
  def test_assignment_surface_is_removed(self):
   api=ReviewerApi("http://127.0.0.1:3000")
   for gone in("assignments","assignment","start_assignment","submit_mapping","submit_proposal","submit_assignment"):
@@ -208,6 +198,13 @@ class ReviewerTests(unittest.TestCase):
   relay=text[text.index("def _resolve_relay_search"):text.index("def propose_from_editor")]
   self.assertLess(relay.index("open_browse_with_card_ids("),relay.index("complete_search_request("))
   self.assertIn('"errorCode":"browse_open_failed"',relay)
+  self.assertNotIn("local_concept_card_ids",relay)
+  self.assertIn('"localSupplementCount":0',relay)
+ def test_question_relay_does_not_apply_the_topic_page_cap(self):
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:
+   text=source.read()
+  claim=text[text.index("def _claimed_search"):text.index("def _resolve_relay_search")]
+  self.assertIn('30 if request.get("query_kind")=="topic_page" else 50',claim)
  def test_start_link_pins_browser_approval_to_addon_origin(self):
   class Response:
    status=200

@@ -29,6 +29,7 @@ import {
 } from "@/components/workspace/call/programcalltypes";
 import type { BuddyDateState } from "@/lib/workspace/call/buddy-requirements";
 import { isResidentAllowedForSlot } from "@/components/workspace/call/programcallevaluator";
+import type { EngineHelpers } from "@/lib/workspace/call/policy/policy-runtime";
 import type {
   AssignmentFlagCategory,
   AssignmentFlagTone,
@@ -308,6 +309,8 @@ type AddViewProps = {
   rules: ProgramRule[];
   slotDefinitions?: ProgramCallSlotDefinition[];
   buddyDateStateByDate?: Map<string, BuddyDateState>;
+  /** Unified policy engine (CALL_POLICY_V2). When present, drives slot presence + tap eligibility. */
+  policyEngine?: EngineHelpers | null;
   availabilityByResident: ResidentAvailabilityMap;
   loading: boolean;
   saving: boolean;
@@ -561,6 +564,7 @@ export default function ProgramCallAddView({
   rules,
   slotDefinitions,
   buddyDateStateByDate,
+  policyEngine,
   availabilityByResident,
   loading,
   saving,
@@ -693,6 +697,18 @@ export default function ProgramCallAddView({
       slotMatchesMode(def.callType, quickAssignSlotMode)
     );
     if (!offered) return false;
+
+    // CALL_POLICY_V2: eligibility (incl. Buddy roster gate) flows through the engine.
+    if (policyEngine) {
+      const selectable = (slot: "Primary" | "Backup" | "Buddy") =>
+        policyEngine.isSelectable(selectedResident, slot, day.key);
+      if (quickAssignSlotMode === "Primary") return selectable("Primary");
+      if (quickAssignSlotMode === "Backup") return selectable("Backup");
+      if (quickAssignSlotMode === "Both")
+        return selectable("Primary") || selectable("Backup");
+      if (quickAssignSlotMode === "Buddy") return selectable("Buddy");
+      return false;
+    }
 
     const allowedFor = (slot: "Primary" | "Backup" | "Buddy") =>
       isResidentAllowedForSlot({
@@ -1084,15 +1100,24 @@ export default function ProgramCallAddView({
                         if (current?.buddyRosterId) assignedCallTypeKeys.add("buddy");
 
                         // Program-driven slots for this day (deduped to one row
-                        // per call type for the manual builder).
+                        // per call type for the manual builder). CALL_POLICY_V2:
+                        // presence comes from the engine (effective-date PGY, not the
+                        // static field), with already-assigned slots always shown.
                         const seenSlotTypes = new Set<string>();
-                        const visibleSlots = getVisibleCallSlotsForDay({
-                          dayOfWeek: day.date.getDay(),
-                          primaryCallPgyYear: primaryResidentForDay?.pgyYear ?? null,
-                          assignedCallTypeKeys,
-                          slotDefinitions: effectiveSlotDefinitions,
-                          buddyDateState: buddyDateStateByDate?.get(day.key) ?? null,
-                        }).filter((def) => {
+                        const presentDefs = policyEngine
+                          ? effectiveSlotDefinitions.filter(
+                              (def) =>
+                                assignedCallTypeKeys.has(def.callType.toLowerCase()) ||
+                                policyEngine.presence(def.callType, day.key).present
+                            )
+                          : getVisibleCallSlotsForDay({
+                              dayOfWeek: day.date.getDay(),
+                              primaryCallPgyYear: primaryResidentForDay?.pgyYear ?? null,
+                              assignedCallTypeKeys,
+                              slotDefinitions: effectiveSlotDefinitions,
+                              buddyDateState: buddyDateStateByDate?.get(day.key) ?? null,
+                            });
+                        const visibleSlots = presentDefs.filter((def) => {
                           if (seenSlotTypes.has(def.callType)) return false;
                           seenSlotTypes.add(def.callType);
                           return true;

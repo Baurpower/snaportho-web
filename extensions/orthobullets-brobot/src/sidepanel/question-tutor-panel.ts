@@ -93,7 +93,9 @@ export function appendQuestionTutorPanel(
         ? view.session.explanation
         : null;
     const showPreExplainAnkiAction = input.provider === 'orthobullets';
-    const ankiButtonLabel = 'Find cards in Anki';
+    const ankiButtonLabel = prefetchedQuestionExplanation
+      ? 'Find cards in Anki'
+      : 'Preparing card search…';
     const reviewPosition = view.session?.payload?.provider === 'himalaya' && view.session.payload.pageKind === 'review'
       ? view.session.questionPositionLabel?.match(/question\s+\d+\s+of\s+\d+/i)?.[0]
         ?? (view.session.questionNumber && view.session.totalQuestions
@@ -108,7 +110,7 @@ export function appendQuestionTutorPanel(
       <p style="margin:0;color:#5c6574;line-height:1.45;">Active page: ${escapeHtml(input.activePageTitle ?? input.activePageUrl ?? providerLabel(input.provider))}</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button id="qt-explain" ${isBusy ? 'disabled' : ''} style="border:none;border-radius:999px;background:${isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">${escapeHtml(view.explainButtonLabel)}</button>
-        ${showPreExplainAnkiAction ? `<button id="qt-send-to-anki-before-explain" style="border:1px solid #0f766e;border-radius:999px;background:white;color:#0f766e;padding:10px 14px;font-weight:700;cursor:pointer;">${escapeHtml(ankiButtonLabel)}</button>` : ''}
+        ${showPreExplainAnkiAction ? `<button id="qt-send-to-anki-before-explain" ${prefetchedQuestionExplanation ? '' : 'disabled'} style="border:1px solid #0f766e;border-radius:999px;background:white;color:#0f766e;padding:10px 14px;font-weight:700;cursor:${prefetchedQuestionExplanation ? 'pointer' : 'default'};opacity:${prefetchedQuestionExplanation ? '1' : '0.65'};">${escapeHtml(ankiButtonLabel)}</button>` : ''}
         <button id="qt-unlink-explain" style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:10px 14px;font-weight:700;cursor:pointer;">Unlink</button>
       </div>
       <p style="margin:0;font-size:12px;color:#5c6574;">Review data detected. BroBot prefetches the explanation in the background; click to open when ready.</p>
@@ -116,9 +118,9 @@ export function appendQuestionTutorPanel(
     content.appendChild(explainCard);
     explainCard.querySelector('#qt-explain')?.addEventListener('click', () => hooks.onExplainClick());
     const preExplainAnkiButton = explainCard.querySelector<HTMLButtonElement>('#qt-send-to-anki-before-explain');
-    if (preExplainAnkiButton) {
+    if (preExplainAnkiButton && prefetchedQuestionExplanation) {
       preExplainAnkiButton.addEventListener('click', () =>
-        hooks.onSendToAnki(preExplainAnkiButton, prefetchedQuestionExplanation ?? undefined)
+        hooks.onSendToAnki(preExplainAnkiButton, prefetchedQuestionExplanation)
       );
     }
     explainCard.querySelector('#qt-unlink-explain')?.addEventListener('click', () => hooks.onUnlink());

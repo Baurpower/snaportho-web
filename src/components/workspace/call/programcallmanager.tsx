@@ -4,6 +4,11 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ProgramCallReviewModal from "@/components/workspace/call/programcallreviewmodal";
 import { generateCallSchedule } from "@/components/workspace/call/programcallautogenerator";
 import { isCallGenV2Enabled } from "@/components/workspace/call/call-gen-flags";
+import { isCallPolicyV2Enabled } from "@/lib/workspace/call/policy/call-policy-flags";
+import {
+  makeEngineHelpers,
+  type EngineHelpers,
+} from "@/lib/workspace/call/policy/policy-runtime";
 import {
   toCalendarDaySnapshot,
   type GenerateRequestPayload,
@@ -1164,34 +1169,45 @@ const rotationAssignmentsByRosterId =
     [residentLookup, programAvailability]
   );
 
+  // Unified policy engine (CALL_POLICY_V2). When enabled, slot eligibility/presence
+  // flow through the single evaluator; when off, legacy per-consumer logic is unchanged.
+  const policyEngine = useMemo<EngineHelpers | null>(() => {
+    if (!isCallPolicyV2Enabled()) return null;
+    return makeEngineHelpers({
+      rules,
+      slotDefinitions,
+      residents: sortedResidents,
+      availability: programAvailability?.availability ?? {},
+      assignments: draftAssignments,
+    });
+  }, [rules, slotDefinitions, sortedResidents, programAvailability, draftAssignments]);
+
   const selectableResidentsBySlot = useMemo(() => {
+    if (policyEngine && pickerSlot) {
+      const forSlot = (slot: string) =>
+        policyEngine.selectableResidentsForSlot(slot, pickerSlot.dateKey, sortedResidents);
+      return { Primary: forSlot("Primary"), Backup: forSlot("Backup"), Buddy: forSlot("Buddy") };
+    }
+
+    const legacyFilter = (slot: "Primary" | "Backup") =>
+      sortedResidents.filter((resident) =>
+        !pickerSlot
+          ? true
+          : isResidentAllowedForSlot({
+              resident,
+              slot,
+              dateKey: pickerSlot.dateKey,
+              assignments: draftAssignments,
+              rules,
+              availabilityByResident: programAvailability?.availability ?? {},
+            })
+      );
     return {
-      Primary: sortedResidents.filter((resident) =>
-        !pickerSlot
-          ? true
-          : isResidentAllowedForSlot({
-              resident,
-              slot: "Primary",
-              dateKey: pickerSlot.dateKey,
-              assignments: draftAssignments,
-              rules,
-              availabilityByResident: programAvailability?.availability ?? {},
-            })
-      ),
-      Backup: sortedResidents.filter((resident) =>
-        !pickerSlot
-          ? true
-          : isResidentAllowedForSlot({
-              resident,
-              slot: "Backup",
-              dateKey: pickerSlot.dateKey,
-              assignments: draftAssignments,
-              rules,
-              availabilityByResident: programAvailability?.availability ?? {},
-            })
-      ),
+      Primary: legacyFilter("Primary"),
+      Backup: legacyFilter("Backup"),
+      Buddy: [] as ResidentOption[],
     };
-  }, [sortedResidents, pickerSlot, draftAssignments, rules, programAvailability]);
+  }, [sortedResidents, pickerSlot, draftAssignments, rules, programAvailability, policyEngine]);
 
   const computedStats = useMemo(() => {
     const perResident = new Map<string, ResidentSchedulingStats>();
@@ -1557,10 +1573,17 @@ const rotationAssignmentsByRosterId =
     if (!pickerSlot) return [];
 
     const slotLower = pickerSlot.slot.toLowerCase();
-    const source =
-      slotLower === "primary"
+    // With the engine on, Buddy has its own eligible pool. Legacy path keeps the
+    // prior behavior (Buddy fell through to the Backup pool) unchanged when off.
+    const source = policyEngine
+      ? slotLower === "primary"
         ? selectableResidentsBySlot.Primary
-        : selectableResidentsBySlot.Backup;
+        : slotLower === "buddy"
+        ? selectableResidentsBySlot.Buddy
+        : selectableResidentsBySlot.Backup
+      : slotLower === "primary"
+      ? selectableResidentsBySlot.Primary
+      : selectableResidentsBySlot.Backup;
 
     const query = pickerSearch.trim().toLowerCase();
     if (!query) return source;
@@ -1571,7 +1594,7 @@ const rotationAssignmentsByRosterId =
       }`.toLowerCase();
       return label.includes(query);
     });
-  }, [pickerSlot, pickerSearch, selectableResidentsBySlot]);
+  }, [pickerSlot, pickerSearch, selectableResidentsBySlot, policyEngine]);
 
   const pickerGroupedResidents = useMemo(() => {
     const grouped = new Map<string, ResidentOption[]>();
@@ -1737,6 +1760,7 @@ const rotationAssignmentsByRosterId =
         availabilityByResident: programAvailability?.availability ?? {},
         historicalStats,
         slotMode: scheduleSlotMode,
+        useCallPolicyV2: isCallPolicyV2Enabled(),
       };
 
       let generated: {
@@ -2351,6 +2375,7 @@ const rotationAssignmentsByRosterId =
                       getAssignmentFlags={getAssignedResidentFlags}
                       rules={rules}
                       slotDefinitions={slotDefinitions}
+                      policyEngine={policyEngine}
                       onOpenPicker={openPicker}
                       pgyRows={computedStats.pgyRows}
                       statsLoading={statsLoading}
@@ -2374,6 +2399,7 @@ const rotationAssignmentsByRosterId =
                       rules={rules}
                       slotDefinitions={slotDefinitions}
                       buddyDateStateByDate={buddyDateStateByDate}
+                      policyEngine={policyEngine}
                       availabilityByResident={programAvailability?.availability ?? {}}
                       loading={callsLoading}
                       saving={saving}

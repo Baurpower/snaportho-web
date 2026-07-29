@@ -131,58 +131,6 @@ def resolve_local_results(gateway, results: list[dict]) -> dict:
 def anki_card_query(card_ids: list[int]) -> str:
     return " OR ".join(f"cid:{int(card_id)}" for card_id in sorted(set(card_ids)))
 
-LOCAL_PAGE_STOP_WORDS = {
-    "about", "after", "before", "cards", "clinical", "from", "management",
-    "orthobullets", "page", "patient", "patients", "section", "should",
-    "study", "these", "this", "treatment", "which", "with",
-}
-
-
-def local_concept_card_ids(col, concept: str, keywords, sections=None, limit: int = 80) -> list[int]:
-    """Rank local cards by phrase and repeated concept matches."""
-    title = re.sub(r"\s+", " ", concept or "").strip()
-    terms = []
-    for raw in keywords or []:
-        term = re.sub(r"[^A-Za-z0-9 -]", "", str(raw)).strip().lower()
-        if len(term) < 5 or term in LOCAL_PAGE_STOP_WORDS or term in terms:
-            continue
-        terms.append(term)
-    # Longer terms are usually disease names, anatomy, tests, or procedures and
-    # produce much cleaner local matches than frequent generic page words.
-    terms = sorted(terms, key=lambda value: (-len(value), value))[:16]
-    weighted_queries = []
-    if title:
-        safe_title = title.replace('"', "")
-        weighted_queries.append((f'"{safe_title}"', 8))
-    weighted_queries.extend((f'"{term}"', 2) for term in terms)
-    for section in sections or []:
-        heading = re.sub(r"[^A-Za-z0-9 -]", "", str(section.get("heading") or "")).strip()
-        if heading and heading.lower() != title.lower():
-            weighted_queries.append((f'"{heading}"', max(2, int(section.get("priority") or 3))))
-        for value in (section.get("concepts") or [])[:5]:
-            term = re.sub(r"[^A-Za-z0-9 -]", "", str(value)).strip().lower()
-            if len(term) >= 4 and term not in LOCAL_PAGE_STOP_WORDS:
-                weighted_queries.append((f'"{term}"', max(1, int(section.get("priority") or 3) - 1)))
-    if not weighted_queries:
-        return []
-    scores = {}
-    first_seen = {}
-    sequence = 0
-    for query, weight in weighted_queries[:80]:
-        for card_id in col.find_cards(query):
-            normalized_id = int(card_id)
-            if normalized_id not in first_seen:
-                first_seen[normalized_id] = sequence
-                sequence += 1
-            scores[normalized_id] = scores.get(normalized_id, 0) + weight
-    ranked = sorted(scores, key=lambda card_id: (-scores[card_id], first_seen[card_id], card_id))
-    return ranked[:max(1, min(limit, 100))]
-
-
-def local_page_card_ids(col, concept: str, keywords, limit: int = 80) -> list[int]:
-    return local_concept_card_ids(col, concept, keywords, [], limit)
-
-
 def apply_browser_query(browser, query: str) -> None:
     """Use public Browser methods when available, with a conservative UI fallback."""
     if hasattr(browser, "search_for"):

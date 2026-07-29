@@ -37,6 +37,7 @@ import {
 } from "@/components/workspace/call/programcalltypes";
 import { getBuddyDateStatesForMonth } from "@/lib/workspace/call/buddy-requirements";
 import { getResidentPgyYear } from "@/lib/workspace/call/rule-evaluator";
+import type { EngineHelpers } from "@/lib/workspace/call/policy/policy-runtime";
 
 type DisplayFlag = {
   key: string;
@@ -553,6 +554,7 @@ function DayCell({
   getAssignmentFlags,
   rules,
   slotDefinitions,
+  policyEngine,
   onOpenPicker,
   onOpenFlag,
   draftAssignments,
@@ -571,6 +573,7 @@ function DayCell({
   }) => AssignmentFlag[];
   rules: ProgramRule[];
   slotDefinitions?: ProgramCallSlotDefinition[];
+  policyEngine?: EngineHelpers | null;
   onOpenPicker: (dateKey: string, slot: string) => void;
   onOpenFlag: (payload: {
     dayLabel: string;
@@ -616,13 +619,21 @@ function DayCell({
       assignments: draftAssignments,
     }).find((state) => state.dateKey === day.key) ?? null;
 
-  const visibleSlots = getVisibleCallSlotsForDay({
-    dayOfWeek: day.date.getDay(),
-    primaryCallPgyYear,
-    assignedCallTypeKeys,
-    slotDefinitions: effectiveDefs,
-    buddyDateState,
-  });
+  // CALL_POLICY_V2: slot presence from the unified engine (already-assigned slots
+  // always shown). Falls back to the legacy visibility helper when the flag is off.
+  const visibleSlots = policyEngine
+    ? effectiveDefs.filter(
+        (def) =>
+          assignedCallTypeKeys.has(def.callType.toLowerCase()) ||
+          policyEngine.presence(def.callType, day.key).present
+      )
+    : getVisibleCallSlotsForDay({
+        dayOfWeek: day.date.getDay(),
+        primaryCallPgyYear,
+        assignedCallTypeKeys,
+        slotDefinitions: effectiveDefs,
+        buddyDateState,
+      });
 
   return (
     <div
@@ -718,6 +729,7 @@ type EditViewProps = {
   }) => AssignmentFlag[];
   rules: ProgramRule[];
   slotDefinitions?: ProgramCallSlotDefinition[];
+  policyEngine?: EngineHelpers | null;
   availabilityByResident: ResidentAvailabilityMap;
   onOpenPicker: (dateKey: string, slot: string) => void;
   pgyRows: Array<{
@@ -745,6 +757,7 @@ export default function ProgramCallEditView({
   getAssignmentFlags,
   rules,
   slotDefinitions,
+  policyEngine,
   availabilityByResident,
   onOpenPicker,
   pgyRows,
@@ -885,6 +898,7 @@ export default function ProgramCallEditView({
                     getAssignmentFlags={getAssignmentFlags}
                     rules={rules}
                     slotDefinitions={slotDefinitions}
+                    policyEngine={policyEngine}
                     onOpenPicker={onOpenPicker}
                     onOpenFlag={setActiveFlag}
                     draftAssignments={draftAssignments}

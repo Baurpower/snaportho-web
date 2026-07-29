@@ -75,6 +75,13 @@ type GenerateParams = {
   enableLocalSearch?: boolean;
   /** Iteration budget for the local-search optimizer (Phase 3). */
   localSearchMaxIterations?: number;
+  /**
+   * CALL_POLICY_V2: when true, enforce the policy engine's buddy hard cap
+   * (globals.buddy.maxWeekendsPerInternMonth) — no intern may exceed that many
+   * buddy weekends per month. Fixes #3 (buddy on every weekend). Off by default so
+   * the legacy path is byte-unchanged.
+   */
+  useCallPolicyV2?: boolean;
 };
 
 type ResidentAutoStats = {
@@ -1572,6 +1579,34 @@ function scoreGeneratedSchedule({
   );
 }
 
+/**
+ * CALL_POLICY_V2 (#3): given the final assignments, return the excess buddy
+ * (dateKey, rosterId) pairs that exceed `cap` buddy days for any one intern —
+ * keeping each intern's earliest `cap` buddy weekends. Pure + exported for testing.
+ */
+export function computeBuddyCapTrim(
+  assignments: Record<string, DraftDayAssignment>,
+  cap: number
+): Array<{ dateKey: string; rosterId: string }> {
+  const datesByResident = new Map<string, string[]>();
+  for (const [dateKey, assignment] of Object.entries(assignments)) {
+    const rosterId = assignment?.buddyRosterId;
+    if (!rosterId) continue;
+    const dates = datesByResident.get(rosterId) ?? [];
+    dates.push(dateKey);
+    datesByResident.set(rosterId, dates);
+  }
+
+  const trim: Array<{ dateKey: string; rosterId: string }> = [];
+  for (const [rosterId, dates] of datesByResident) {
+    if (dates.length <= cap) continue;
+    for (const dateKey of [...dates].sort().slice(Math.max(0, cap))) {
+      trim.push({ dateKey, rosterId });
+    }
+  }
+  return trim;
+}
+
 function generateSingleCallSchedule({
   monthDays,
   residents,
@@ -1583,6 +1618,7 @@ function generateSingleCallSchedule({
   historicalStats,
   slotMode = "Both",
   slotDefinitions = DEFAULT_SLOT_DEFINITIONS,
+  useCallPolicyV2 = false,
 }: GenerateParams) {
   const enabledRules = rules.filter(isRuleEnabled);
   const buddyPolicy = resolveBuddyPolicy(enabledRules);
@@ -2454,6 +2490,35 @@ function generateSingleCallSchedule({
     `${monthDays.length} day(s)`
   );
 
+  // CALL_POLICY_V2 (#3): enforce the buddy hard cap. Both buddy assignment paths
+  // (the required/optional prepass and assignBuddyToExistingPrimaryDay) can place a
+  // buddy, and the legacy optional target derived from the generic monthly cap could
+  // exceed the intended maximum. Trim any intern beyond the policy cap here, keeping
+  // their earliest buddy weekends. Buddy is optional (never required), so clearing an
+  // excess buddy day introduces no missing-required-slot violation.
+  if (useCallPolicyV2) {
+    const trim = computeBuddyCapTrim(
+      nextAssignments,
+      buddyPolicy.requiredDaysPerMonth
+    );
+    for (const { dateKey, rosterId } of trim) {
+      const current = nextAssignments[dateKey];
+      const day = monthDayByKey.get(dateKey);
+      if (!current || !day) continue;
+      nextAssignments[dateKey] = { ...current, buddyRosterId: null };
+      undoStats(stats, rosterId, "Buddy", day, buddyCountsTowardWorkload);
+    }
+    if (trim.length > 0) {
+      recordDaySlotDebug(generationDebug, trim[0].dateKey, "Buddy", {
+        considered: true,
+        attempted: false,
+        successful: false,
+        reason: `Buddy cap enforced: trimmed ${trim.length} buddy day(s) over the ${buddyPolicy.requiredDaysPerMonth}-weekend/intern max.`,
+      });
+      invalidateBuddyDateStateMap();
+    }
+  }
+
   return {
     assignments: nextAssignments,
     stats: Array.from(stats.values()),
@@ -3209,6 +3274,7 @@ export function generateCallSchedule({
   slotDefinitions = DEFAULT_SLOT_DEFINITIONS,
   enableLocalSearch = false,
   localSearchMaxIterations = 4000,
+  useCallPolicyV2 = false,
 }: GenerateParams) {
   // Phase 9 alignment: use canonical effective filter (disabled rules are excluded
   // from generation by default, matching validation behavior).
@@ -3238,6 +3304,7 @@ export function generateCallSchedule({
       historicalStats,
       slotMode,
       slotDefinitions,
+      useCallPolicyV2,
     });
 
     const signature = JSON.stringify(generated.assignments);

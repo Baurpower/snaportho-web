@@ -116,10 +116,6 @@ function ankiSearchKeywords(explanation: OrthobulletsExplainResponse) {
     explanation.testedConcept,
     explanation.bottomLine,
     explanation.whyCorrect,
-    ...explanation.whyWrong.map((item) => item.reason),
-    explanation.boardTrap ?? '',
-    explanation.boardPearl,
-    ...explanation.studyNext,
   ].join(' ');
   return [...new Set(
     (source.match(/[A-Za-z][A-Za-z-]{6,}/g) ?? [])

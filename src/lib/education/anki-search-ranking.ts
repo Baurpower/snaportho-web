@@ -15,6 +15,15 @@ export type RankedSearchCandidate<T> = {
   matchedSectionIds: string[];
 };
 
+export const QUESTION_SEARCH_MIN_COVERAGE = 0.5;
+
+export function selectConfidentQuestionCandidates<T>(
+  candidates: RankedSearchCandidate<T>[],
+): RankedSearchCandidate<T>[] {
+  return candidates
+    .filter((candidate) => candidate.reviewConfidence >= QUESTION_SEARCH_MIN_COVERAGE);
+}
+
 export function rankSearchCandidates<T>(
   candidates: SearchCandidate<T>[],
   sectionIds: string[],

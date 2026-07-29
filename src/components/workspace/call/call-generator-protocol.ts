@@ -67,6 +67,7 @@ export type GenerateRequestPayload = {
   forceRegenerate?: boolean;
   enableLocalSearch?: boolean;
   localSearchMaxIterations?: number;
+  useCallPolicyV2?: boolean;
 };
 
 /** Serializable response payload (worker-boundary safe). */
@@ -108,6 +109,7 @@ export function runGenerateRequest(
     forceRegenerate: payload.forceRegenerate,
     enableLocalSearch: payload.enableLocalSearch,
     localSearchMaxIterations: payload.localSearchMaxIterations,
+    useCallPolicyV2: payload.useCallPolicyV2,
   });
 
   return {

@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 
-import { rankSearchCandidates } from "./anki-search-ranking";
+import {
+  rankSearchCandidates,
+  selectConfidentQuestionCandidates,
+} from "./anki-search-ranking";
 
 const ranked = rankSearchCandidates([
   { id: "diagnosis-1", value: "diagnosis-1", sectionId: "diagnosis", priority: 5, coverage: 1, textRank: 0.8 },
@@ -19,5 +22,20 @@ assert.ok(ranked.some((item) => item.matchedSectionIds.includes("cardiac")));
 assert.ok(ranked.some((item) => item.matchedSectionIds.includes("scoliosis")));
 assert.deepEqual(ranked.find((item) => item.id === "cross")?.matchedSectionIds.sort(), ["cardiac", "scoliosis"]);
 assert.equal(ranked.filter((item) => item.id.startsWith("diagnosis")).length, 3, "one section cannot consume the page result set");
+
+const preciseQuestionResults = selectConfidentQuestionCandidates([
+  { id: "strong", value: "strong", relevanceScore: 3.2, reviewConfidence: 0.6, matchedSectionIds: [] },
+  { id: "single-word", value: "single-word", relevanceScore: 3.1, reviewConfidence: 0.25, matchedSectionIds: [] },
+  ...Array.from({ length: 20 }, (_, index) => ({
+    id: `extra-${index}`,
+    value: `extra-${index}`,
+    relevanceScore: 3,
+    reviewConfidence: 0.5,
+    matchedSectionIds: [] as string[],
+  })),
+]);
+assert.equal(preciseQuestionResults[0]?.id, "strong");
+assert.ok(!preciseQuestionResults.some((item) => item.id === "single-word"));
+assert.equal(preciseQuestionResults.length, 21, "every candidate above the relevance threshold is returned");
 
 console.log("anki-search-ranking.test.ts: all assertions passed");
