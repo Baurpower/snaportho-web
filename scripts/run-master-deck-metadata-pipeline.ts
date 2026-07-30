@@ -35,6 +35,10 @@ const DEFAULT_CONCURRENCY = 3;
 const DEFAULT_TAXONOMY_LIMIT = 40;
 const CODEX_PACKET_VERSION = "snaportho-codex-metadata-packet.1";
 const CODEX_MODEL_ID = "codex-interactive";
+const SIMPLE_RUN_VERSION = "snaportho-codex-cohorts.1";
+const SIMPLE_DEFAULT_COHORT_SIZE = 100;
+const SIMPLE_DEFAULT_AGENTS = 5;
+const SIMPLE_DEFAULT_TAXONOMY_LIMIT = 12;
 
 function parseArgs(values: string[]): Args {
   const result = new Map<string, string>();
@@ -804,6 +808,271 @@ async function exportCodexBatch(db: SupabaseClient, args: Args) {
   }, null, 2));
 }
 
+async function ensureSimpleRun(
+  db: SupabaseClient,
+  args: Args,
+  release: JsonRow,
+  taxonomy: JsonRow,
+  cards: Array<{ releaseCard: JsonRow; packet: CardPacket }>,
+) {
+  const runKey = args.get("--run-key") ?? "snaportho-codex-cohorts-v1";
+  const existing = await db.from("metadata_pipeline_runs").select("*")
+    .eq("run_key", runKey).maybeSingle();
+  if (existing.error) throw new Error(`simple_run_lookup_failed:${existing.error.message}`);
+  if (existing.data) {
+    if (existing.data.deck_release_id !== release.id
+      || existing.data.taxonomy_version_id !== taxonomy.id) {
+      throw new Error("simple_run_release_or_taxonomy_mismatch");
+    }
+    return existing.data as JsonRow;
+  }
+  const inputChecksum = sha(cards.map(({ packet }) => [
+    packet.canonicalCardVersionId,
+    packet.contentHash,
+  ]));
+  const configuration = {
+    pipeline: SIMPLE_RUN_VERSION,
+    taxonomyLimit: SIMPLE_DEFAULT_TAXONOMY_LIMIT,
+    model: CODEX_MODEL_ID,
+  };
+  const now = new Date().toISOString();
+  const inserted = await db.from("metadata_pipeline_runs").insert({
+    run_key: runKey,
+    deck_release_id: release.id,
+    taxonomy_version_id: taxonomy.id,
+    cohort_kind: release.status === "published" ? "published_release" : "full_import",
+    cohort_definition: {
+      release_key: release.release_key,
+      total_card_count: cards.length,
+      scheduling: "just_in_time_cohorts",
+    },
+    input_manifest_checksum: inputChecksum,
+    configuration_checksum: sha(configuration),
+    deterministic_rules_version: SIMPLE_RUN_VERSION,
+    deterministic_rules_checksum: sha(SIMPLE_RUN_VERSION),
+    prompt_bundle_version: CODEX_PACKET_VERSION,
+    prompt_bundle_checksum: sha(CODEX_PACKET_VERSION),
+    model_manifest: {
+      provider: "codex",
+      operating_mode: "parallel_compact_packets",
+      model: CODEX_MODEL_ID,
+    },
+    export_policy_version: EXPORT_POLICY_VERSION,
+    export_policy_checksum: sha(EXPORT_POLICY_VERSION),
+    status: "running",
+    safe_metadata: {
+      scheduling: "just_in_time",
+      no_human_review_required: true,
+      only_high_confidence_assertions_are_publishable: true,
+    },
+    started_at: now,
+  }).select("*").single();
+  if (inserted.error) throw new Error(`simple_run_insert_failed:${inserted.error.message}`);
+  return inserted.data as JsonRow;
+}
+
+async function exportSimpleCodexCohort(db: SupabaseClient, args: Args) {
+  const release = await resolveRelease(db, args);
+  const taxonomyVersion = args.get("--taxonomy-version") ?? DEFAULT_TAXONOMY_VERSION;
+  const taxonomy = await loadTaxonomy(db, taxonomyVersion);
+  const cards = await loadReleaseCards(db, release.id);
+  const run = await ensureSimpleRun(db, args, release, taxonomy.version, cards);
+  const cohortSize = integer(
+    args,
+    "--cohort-size",
+    SIMPLE_DEFAULT_COHORT_SIZE,
+    1,
+    500,
+  );
+  const agentCount = integer(
+    args,
+    "--agents",
+    SIMPLE_DEFAULT_AGENTS,
+    1,
+    20,
+  );
+  const taxonomyLimit = integer(
+    args,
+    "--taxonomy-limit",
+    SIMPLE_DEFAULT_TAXONOMY_LIMIT,
+    1,
+    30,
+  );
+  const [completedStages, acceptedAssertions, existingBatches] = await Promise.all([
+    allRows(
+      db,
+      "metadata_pipeline_stage_results",
+      "canonical_card_version_id",
+      (query) => query.eq("stage", "consensus").eq("status", "completed"),
+    ),
+    allRows(
+      db,
+      "card_metadata_assertions",
+      "canonical_card_version_id",
+      (query) => query.eq("decision", "accepted"),
+    ),
+    allRows(
+      db,
+      "metadata_pipeline_batches",
+      "batch_key,status,ordered_card_version_ids",
+      (query) => query.eq("pipeline_run_id", run.id).order("batch_key"),
+    ),
+  ]);
+  const unavailable = new Set<string>();
+  for (const row of [...completedStages, ...acceptedAssertions]) {
+    if (row.canonical_card_version_id) unavailable.add(row.canonical_card_version_id);
+  }
+  for (const batch of existingBatches) {
+    if (batch.status === "cancelled" || batch.status === "failed") continue;
+    for (const id of batch.ordered_card_version_ids ?? []) unavailable.add(id);
+  }
+  const selected = cards
+    .filter(({ packet }) => !unavailable.has(packet.canonicalCardVersionId))
+    .slice(0, cohortSize);
+  if (!selected.length) {
+    console.log(JSON.stringify({
+      runKey: run.run_key,
+      exported: false,
+      reason: "no_unprocessed_cards",
+      processedOrReservedCards: unavailable.size,
+      releaseCards: cards.length,
+    }, null, 2));
+    return;
+  }
+  const priorCohortNumbers = existingBatches.flatMap((batch) => {
+    const match = String(batch.batch_key).match(/^cohort-(\d+)-agent-\d+$/);
+    return match ? [Number(match[1])] : [];
+  });
+  const cohortNumber = Math.max(0, ...priorCohortNumbers) + 1;
+  const actualAgents = Math.min(agentCount, selected.length);
+  const cardsPerAgent = Math.ceil(selected.length / actualAgents);
+  const batchRows: JsonRow[] = [];
+  for (let agentIndex = 0; agentIndex < actualAgents; agentIndex += 1) {
+    const slice = selected.slice(
+      agentIndex * cardsPerAgent,
+      (agentIndex + 1) * cardsPerAgent,
+    );
+    if (!slice.length) continue;
+    batchRows.push({
+      pipeline_run_id: run.id,
+      batch_key: `cohort-${String(cohortNumber).padStart(6, "0")}-agent-${String(agentIndex + 1).padStart(2, "0")}`,
+      cohort_key: `cohort-${String(cohortNumber).padStart(6, "0")}`,
+      ordered_card_version_ids: slice.map(({ packet }) => packet.canonicalCardVersionId),
+      batch_checksum: sha(slice.map(({ packet }) => [
+        packet.canonicalCardVersionId,
+        packet.contentHash,
+      ])),
+      status: "pending",
+      current_stage: "identity_validation",
+    });
+  }
+  const created = await db.from("metadata_pipeline_batches").insert(batchRows)
+    .select("*").order("batch_key");
+  if (created.error) throw new Error(`simple_batches_insert_failed:${created.error.message}`);
+  const cardByVersion = new Map(
+    selected.map((card) => [card.packet.canonicalCardVersionId, card.packet]),
+  );
+  const retriever = new LexicalTaxonomyRetriever(taxonomy.terms);
+  const outputDirectory = path.resolve(
+    args.get("--out-dir")
+      ?? `tmp/codex-metadata/${run.run_key}/cohort-${String(cohortNumber).padStart(6, "0")}`,
+  );
+  mkdirSync(outputDirectory, { recursive: true });
+  const packets: Array<{
+    batchKey: string;
+    cards: number;
+    packet: string;
+    leaseOwner: string;
+  }> = [];
+  for (const batch of created.data ?? []) {
+    const leaseOwner = `codex-${randomUUID()}`;
+    const leased = await db.from("metadata_pipeline_batches").update({
+      status: "running",
+      current_stage: "consensus",
+      lease_owner: leaseOwner,
+      leased_until: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+      last_heartbeat_at: new Date().toISOString(),
+      started_at: new Date().toISOString(),
+      attempt_count: 1,
+    }).eq("id", batch.id).eq("status", "pending");
+    if (leased.error) throw new Error(`simple_batch_lease_failed:${leased.error.message}`);
+    const packetCards: CodexPacket["cards"] = [];
+    for (const versionId of batch.ordered_card_version_ids as string[]) {
+      const card = cardByVersion.get(versionId);
+      if (!card) throw new Error(`simple_batch_card_missing:${versionId}`);
+      const candidates = {} as CodexPacket["cards"][number]["candidates"];
+      for (const facet of METADATA_FACETS) {
+        candidates[facet] = (await retriever.retrieve({
+          card,
+          facet,
+          limit: taxonomyLimit,
+        })).map((term) => ({
+          termId: term.id,
+          preferredLabel: term.preferredLabel,
+          aliases: [],
+          parentIds: [],
+          retrievalScore: term.retrievalScore,
+        }));
+      }
+      packetCards.push({
+        canonicalCardId: card.canonicalCardId,
+        canonicalCardVersionId: card.canonicalCardVersionId,
+        contentHash: card.contentHash,
+        front: card.front,
+        back: card.back,
+        existingTags: card.existingTags,
+        candidates,
+        assertions: [],
+      });
+    }
+    const packetWithoutChecksum = {
+      schemaVersion: CODEX_PACKET_VERSION,
+      runId: run.id,
+      runKey: run.run_key,
+      batchId: batch.id,
+      batchKey: batch.batch_key,
+      leaseOwner,
+      taxonomyVersion,
+      taxonomyVersionId: taxonomy.version.id,
+      taxonomyLimit,
+      instructions: [
+        "Fill only assertions using listed candidate term IDs.",
+        "Require an exact front/back quote; use no assertion when unsupported.",
+        "Use confidence >= 0.98 only for explicit, publishable facts.",
+      ],
+      cards: packetCards,
+    } satisfies Omit<CodexPacket, "inputChecksum">;
+    const packet: CodexPacket = {
+      ...packetWithoutChecksum,
+      inputChecksum: sha(codexPacketInput(packetWithoutChecksum)),
+    };
+    const output = path.join(outputDirectory, `${batch.batch_key}.json`);
+    writeFileSync(output, `${JSON.stringify(packet, null, 2)}\n`, {
+      encoding: "utf8",
+      mode: 0o600,
+    });
+    packets.push({
+      batchKey: batch.batch_key,
+      cards: packet.cards.length,
+      packet: output,
+      leaseOwner,
+    });
+  }
+  console.log(JSON.stringify({
+    exported: true,
+    apiCalls: 0,
+    runId: run.id,
+    runKey: run.run_key,
+    cohort: cohortNumber,
+    cards: selected.length,
+    agents: packets.length,
+    taxonomyCandidatesPerFacet: taxonomyLimit,
+    previouslyProcessedOrReserved: unavailable.size,
+    remainingAfterThisCohort: Math.max(0, cards.length - unavailable.size - selected.length),
+    packets,
+  }, null, 2));
+}
+
 function validateCodexAssertions(packet: CodexPacket, terms: ReadonlyMap<string, TaxonomyTerm>) {
   return packet.cards.map((card) => {
     const seen = new Set<string>();
@@ -913,6 +1182,27 @@ async function importCodexBatch(db: SupabaseClient, args: Args) {
       assertions: item.assertions,
     });
   }
+  let autoAccepted = 0;
+  if (run.data.safe_metadata?.scheduling === "just_in_time") {
+    const eligible = await db.from("card_metadata_assertions")
+      .select("id")
+      .eq("pipeline_run_id", packet.runId)
+      .eq("batch_id", packet.batchId)
+      .eq("decision", "proposed")
+      .gte("confidence", 0.98);
+    if (eligible.error) throw new Error(`simple_auto_accept_lookup_failed:${eligible.error.message}`);
+    const eligibleIds = (eligible.data ?? []).map((row) => row.id);
+    if (eligibleIds.length) {
+      const accepted = await db.from("card_metadata_assertions").update({
+        decision: "accepted",
+        decision_method: "automated_policy",
+        decision_policy_version: SIMPLE_RUN_VERSION,
+        reviewed_at: new Date().toISOString(),
+      }).in("id", eligibleIds).eq("decision", "proposed");
+      if (accepted.error) throw new Error(`simple_auto_accept_failed:${accepted.error.message}`);
+      autoAccepted = eligibleIds.length;
+    }
+  }
   const completedAt = new Date().toISOString();
   const finish = await db.from("metadata_pipeline_batches").update({
     status: "completed", current_stage: "completed", lease_owner: null, leased_until: null,
@@ -922,7 +1212,7 @@ async function importCodexBatch(db: SupabaseClient, args: Args) {
   const remaining = await db.from("metadata_pipeline_batches").select("id", { count: "exact", head: true })
     .eq("pipeline_run_id", packet.runId).neq("status", "completed");
   if (remaining.error) throw new Error(`codex_remaining_batches_failed:${remaining.error.message}`);
-  if (remaining.count === 0) {
+  if (remaining.count === 0 && run.data.safe_metadata?.scheduling !== "just_in_time") {
     const complete = await db.from("metadata_pipeline_runs").update({
       status: "completed", completed_at: completedAt, failed_at: null,
     }).eq("id", packet.runId);
@@ -935,7 +1225,7 @@ async function importCodexBatch(db: SupabaseClient, args: Args) {
     imported: true, apiCalls: 0, runId: packet.runId, runKey: packet.runKey,
     batchId: packet.batchId, batchKey: packet.batchKey, cards: packet.cards.length,
     attemptedAssertions: validated.reduce((count, item) => count + item.assertions.length, 0),
-    persistedAssertions: persisted.count,
+    persistedAssertions: persisted.count, autoAccepted,
     remainingBatches: remaining.count,
   }, null, 2));
 }
@@ -1000,7 +1290,7 @@ async function classifyLegacyTags(db: SupabaseClient, args: Args) {
   const already = new Set(existing.map((row) => row.anki_tag_id));
   const classify = (raw: string) => {
     const normalized = raw.trim().replace(/^#+/, "").trim().replace(/\s+/g, " ").toLowerCase();
-    if (/snaportho::caseprep/i.test(raw)) return { disposition: "contaminated", rationale: "CasePrep/session path is not reliable card-level clinical truth." };
+    if (/snaportho::caseprep/i.test(raw)) return { disposition: "workflow_only", rationale: "CasePrep/session path is workflow context rather than a clinical facet." };
     if (/pocketpimped|netter/i.test(raw)) return { disposition: "source_only", rationale: "Source or collection provenance must remain separate from clinical facets." };
     if (/^#|::/.test(raw)) return { disposition: "navigation_only", rationale: "Nested source/deck navigation requires card-level clinical resolution." };
     if (/^(trauma|spine|hand|foot|ankle|shoulder|elbow|knee|hip|pelvis)$/i.test(raw)) {
@@ -1386,6 +1676,7 @@ async function main() {
     auth: { autoRefreshToken: false, persistSession: false },
   });
   if (command === "bootstrap-full-release") return bootstrapFullRelease(db, args);
+  if (command === "codex-cohort-export") return exportSimpleCodexCohort(db, args);
   if (command === "codex-export") return exportCodexBatch(db, args);
   if (command === "codex-import") return importCodexBatch(db, args);
   if (command === "classify-legacy-tags") return classifyLegacyTags(db, args);

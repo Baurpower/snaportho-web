@@ -1,0 +1,501 @@
+{
+  "generatedAt": "2026-07-29T20:15:40.992Z",
+  "verdict": {
+    "publishedSyncRelease": "0.0.1 (#1)",
+    "releasedNotes": 3670,
+    "pipelineCardCoverage": {
+      "acceptedAssertionCards": 3287,
+      "releasedNotes": 3670,
+      "pct": 89.6
+    },
+    "renderedManifestCoverage": {
+      "cards": 84,
+      "releasedNotes": 3670,
+      "pct": 2.3
+    },
+    "allFourRequiredFacetCoverage": {
+      "notes": 2,
+      "total": 3670,
+      "pct": 0.1
+    }
+  },
+  "pipeline": {
+    "taxonomyVersions": [
+      {
+        "version": "0.1.0",
+        "status": "frozen"
+      }
+    ],
+    "runs": {
+      "total": 5,
+      "byStatus": {
+        "cancelled": 2,
+        "running": 2,
+        "completed": 1
+      },
+      "byCohort": {
+        "full_import": 5
+      },
+      "items": [
+        {
+          "runKey": "metadata-live-smoke-20260728-001",
+          "status": "completed",
+          "cohortKind": "full_import",
+          "createdAt": "2026-07-28T20:13:37.157411+00:00"
+        },
+        {
+          "runKey": "snaportho-codex-metadata-v1",
+          "status": "cancelled",
+          "cohortKind": "full_import",
+          "createdAt": "2026-07-28T20:24:26.570495+00:00"
+        },
+        {
+          "runKey": "snaportho-codex-metadata-50-v1",
+          "status": "running",
+          "cohortKind": "full_import",
+          "createdAt": "2026-07-28T20:36:16.939687+00:00"
+        },
+        {
+          "runKey": "snaportho-codex-metadata-10-v1",
+          "status": "cancelled",
+          "cohortKind": "full_import",
+          "createdAt": "2026-07-28T20:30:24.919854+00:00"
+        },
+        {
+          "runKey": "snaportho-codex-cohorts-v1",
+          "status": "running",
+          "cohortKind": "full_import",
+          "createdAt": "2026-07-29T19:20:24.130865+00:00"
+        }
+      ]
+    },
+    "batches": {
+      "total": 2349,
+      "cardsDeclared": 20254,
+      "byStatus": {
+        "cancelled": 2207,
+        "pending": 100,
+        "completed": 42
+      },
+      "byCurrentStage": {
+        "failed": 2207,
+        "identity_validation": 100,
+        "completed": 42
+      },
+      "retrying": 0
+    },
+    "stages": {
+      "total": 5099,
+      "failed": 0,
+      "withWarnings": 0,
+      "byStageAndStatus": {
+        "consensus:completed": 5099
+      },
+      "failureCodes": {}
+    },
+    "assertions": {
+      "total": 7039,
+      "byFacetAndDecision": {
+        "specialty:accepted": 3572,
+        "anatomy:accepted": 2312,
+        "diagnosis:accepted": 858,
+        "treatment:accepted": 264,
+        "specialty:proposed": 16,
+        "anatomy:proposed": 13,
+        "diagnosis:proposed": 2,
+        "treatment:proposed": 2
+      },
+      "acceptedByFacet": {
+        "specialty": 3572,
+        "anatomy": 2312,
+        "diagnosis": 858,
+        "treatment": 264
+      },
+      "publishedByFacet": {
+        "anatomy": 93,
+        "specialty": 70,
+        "diagnosis": 25,
+        "treatment": 6
+      },
+      "uniqueCardsWithAcceptedAssertions": 3287,
+      "confidenceByFacet": {
+        "anatomy": {
+          "count": 2325,
+          "average": 0.9896,
+          "below080": 1,
+          "below098": 9
+        },
+        "diagnosis": {
+          "count": 860,
+          "average": 0.9896,
+          "below080": 0,
+          "below098": 8
+        },
+        "specialty": {
+          "count": 3588,
+          "average": 0.9891,
+          "below080": 1,
+          "below098": 48
+        },
+        "treatment": {
+          "count": 266,
+          "average": 0.9891,
+          "below080": 0,
+          "below098": 4
+        }
+      },
+      "byProvenance": {
+        "model": 7039
+      },
+      "byDecisionMethod": {
+        "automated_policy": 7006,
+        "pending": 33
+      }
+    },
+    "metadataReleases": [
+      {
+        "key": "snaportho-metadata-provisional-review-v1",
+        "version": "1.0.0-provisional",
+        "status": "published",
+        "publishedAt": "2026-07-28T21:34:42.222+00:00"
+      },
+      {
+        "key": "snaportho-metadata-cohort-000001",
+        "version": "0.2.0-cohort.1",
+        "status": "draft",
+        "publishedAt": null
+      },
+      {
+        "key": "snaportho-metadata-full-codex-v1",
+        "version": "1.0.0-codex",
+        "status": "draft",
+        "publishedAt": null
+      }
+    ],
+    "publishedAssertionCount": 194
+  },
+  "renderedManifest": {
+    "manifest": {
+      "key": "snaportho-master-deck-provisional-review-v2",
+      "status": "published",
+      "transitionMode": "shadow",
+      "publishedAt": "2026-07-28T21:34:42.222+00:00"
+    },
+    "cards": 84,
+    "sources": 8228,
+    "sourceKinds": {
+      "assertion": 8144,
+      "release_marker": 84
+    },
+    "staleSourceRows": 7950,
+    "cardsWithAddedTags": 84,
+    "cardsWithRemovedTags": 0
+  },
+  "actualPublishedTags": {
+    "notes": 3670,
+    "totalAssignments": 218,
+    "uniqueTags": 75,
+    "noGovernedTagNotes": 3602,
+    "completeRequiredFacetNotes": 2,
+    "facets": {
+      "Anatomy": {
+        "covered": 40,
+        "total": 3670,
+        "pct": 1.1
+      },
+      "Diagnosis": {
+        "covered": 22,
+        "total": 3670,
+        "pct": 0.6
+      },
+      "Treatment": {
+        "covered": 5,
+        "total": 3670,
+        "pct": 0.1
+      },
+      "Specialty": {
+        "covered": 53,
+        "total": 3670,
+        "pct": 1.4
+      }
+    },
+    "tagsPerNote": {
+      "min": 0,
+      "median": 0,
+      "p90": 0,
+      "max": 8,
+      "average": 0.06
+    },
+    "malformedTags": [],
+    "caseCollisions": [],
+    "roots": {
+      "SnapOrtho::Workflow": 68,
+      "SnapOrtho::Anatomy": 60,
+      "SnapOrtho::Specialty": 60,
+      "SnapOrtho::Diagnosis": 24,
+      "SnapOrtho::Treatment": 6
+    },
+    "topTags": {
+      "SnapOrtho::Workflow::Needs_Metadata_Review": 68,
+      "SnapOrtho::Specialty::Shoulder_Elbow": 16,
+      "SnapOrtho::Specialty::Foot_Ankle": 12,
+      "SnapOrtho::Specialty::Trauma": 9,
+      "SnapOrtho::Anatomy::Fibula": 6,
+      "SnapOrtho::Anatomy::Tibia": 6,
+      "SnapOrtho::Anatomy::Elbow_Joint": 5,
+      "SnapOrtho::Specialty::Hand_Upper_Extremity": 5,
+      "SnapOrtho::Anatomy::Subscapularis": 4,
+      "SnapOrtho::Specialty::Basic_Science": 4,
+      "SnapOrtho::Specialty::Pediatric_Orthopedics": 4,
+      "SnapOrtho::Specialty::Sports_Medicine": 4,
+      "SnapOrtho::Anatomy::Patella": 3,
+      "SnapOrtho::Specialty::Spine": 3,
+      "SnapOrtho::Anatomy::Distal_Radius": 2,
+      "SnapOrtho::Anatomy::Fds": 2,
+      "SnapOrtho::Anatomy::Femoral_Neck": 2,
+      "SnapOrtho::Anatomy::Rotator_Cuff": 2,
+      "SnapOrtho::Anatomy::Talus": 2,
+      "SnapOrtho::Diagnosis::Crps": 2,
+      "SnapOrtho::Diagnosis::Lisfranc_Injury": 2,
+      "SnapOrtho::Specialty::Adult_Reconstruction": 2,
+      "SnapOrtho::Anatomy::Achilles_Tendon": 1,
+      "SnapOrtho::Anatomy::Capitellum": 1,
+      "SnapOrtho::Anatomy::Carpal_Tunnel": 1,
+      "SnapOrtho::Anatomy::Deep_Palmar_Arch": 1,
+      "SnapOrtho::Anatomy::Distal_Femur": 1,
+      "SnapOrtho::Anatomy::Distal_Humerus": 1,
+      "SnapOrtho::Anatomy::Femoral_Nerve": 1,
+      "SnapOrtho::Anatomy::Knee_Extensor_Mechanism": 1,
+      "SnapOrtho::Anatomy::Lateral_Malleolus": 1,
+      "SnapOrtho::Anatomy::Lesser_Trochanter": 1,
+      "SnapOrtho::Anatomy::Lisfranc_Joint": 1,
+      "SnapOrtho::Anatomy::Lunate": 1,
+      "SnapOrtho::Anatomy::Medial_Meniscus": 1,
+      "SnapOrtho::Anatomy::Median_Nerve": 1,
+      "SnapOrtho::Anatomy::Pelvis": 1,
+      "SnapOrtho::Anatomy::Physis": 1,
+      "SnapOrtho::Anatomy::Pip_Joint": 1,
+      "SnapOrtho::Anatomy::Proximal_Femur": 1,
+      "SnapOrtho::Anatomy::Proximal_Humerus": 1,
+      "SnapOrtho::Anatomy::Radius": 1,
+      "SnapOrtho::Anatomy::Scaphoid": 1,
+      "SnapOrtho::Anatomy::Sciatic_Nerve": 1,
+      "SnapOrtho::Anatomy::Subtalar_Joint": 1,
+      "SnapOrtho::Anatomy::Supraspinatus": 1,
+      "SnapOrtho::Anatomy::Syndesmosis": 1,
+      "SnapOrtho::Anatomy::Trochlea": 1,
+      "SnapOrtho::Diagnosis::Achilles_Tendon_Rupture": 1,
+      "SnapOrtho::Diagnosis::ACL_Tear": 1
+    }
+  },
+  "legacySourceTags": {
+    "activeUniqueTags": 637,
+    "notesWithActiveTags": 4675,
+    "activeAssignments": 16239,
+    "assignmentsPerTaggedNote": {
+      "average": 3.47,
+      "median": 4,
+      "p90": 5,
+      "max": 7
+    },
+    "dispositionRows": 0,
+    "dispositionCoveragePct": 0,
+    "assignmentWeightedDispositionCoveragePct": 0,
+    "byDispositionAndReview": {},
+    "undispositionedCount": 637,
+    "semanticCollisionGroups": [
+      [
+        "Trauma",
+        "trauma"
+      ],
+      [
+        "Trauma::TraumaAcetabulum",
+        "trauma::TraumaAcetabulum"
+      ],
+      [
+        "Trauma::TraumaAnkle",
+        "trauma::TraumaAnkle"
+      ],
+      [
+        "Trauma::TraumaCalcaneus",
+        "trauma::TraumaCalcaneus"
+      ],
+      [
+        "Trauma::TraumaCapitellumTrochlea",
+        "trauma::TraumaCapitellumTrochlea"
+      ],
+      [
+        "Trauma::TraumaClavicle",
+        "trauma::TraumaClavicle"
+      ],
+      [
+        "Trauma::TraumaFemoralHeadandNeck",
+        "trauma::TraumaFemoralHeadandNeck"
+      ],
+      [
+        "Trauma::TraumaFemoralShaft",
+        "trauma::TraumaFemoralShaft"
+      ],
+      [
+        "Trauma::TraumaHumerus",
+        "trauma::TraumaHumerus"
+      ],
+      [
+        "Trauma::TraumaKneeDislocations",
+        "trauma::TraumaKneeDislocations"
+      ],
+      [
+        "Trauma::TraumaLisfranc",
+        "trauma::TraumaLisfranc"
+      ],
+      [
+        "Trauma::TraumaPatella",
+        "trauma::TraumaPatella"
+      ],
+      [
+        "Trauma::TraumaPelvicRing",
+        "trauma::TraumaPelvicRing"
+      ],
+      [
+        "Trauma::TraumaPilon",
+        "trauma::TraumaPilon"
+      ],
+      [
+        "Trauma::TraumaProximalHumerus",
+        "trauma::TraumaProximalHumerus"
+      ],
+      [
+        "Trauma::TraumaProximalRadius",
+        "trauma::TraumaProximalRadius"
+      ],
+      [
+        "Trauma::TraumaProximalUlna",
+        "trauma::TraumaProximalUlna"
+      ],
+      [
+        "Trauma::TraumaScapula",
+        "trauma::TraumaScapula"
+      ],
+      [
+        "Trauma::TraumaSpinalCordInjuries",
+        "trauma::TraumaSpinalCordInjuries"
+      ],
+      [
+        "Trauma::TraumaSubtrochantericFractures",
+        "trauma::TraumaSubtrochantericFractures"
+      ],
+      [
+        "Trauma::TraumaTalus",
+        "trauma::TraumaTalus"
+      ],
+      [
+        "Trauma::TraumaTibialPlateau",
+        "trauma::TraumaTibialPlateau"
+      ]
+    ],
+    "topTagsByAssignment": {
+      "SnapOrtho::CasePrep": 1958,
+      "SnapOrtho::CasePrep::brobot_decks_distal_radius_orif": 1958,
+      "PocketPimped": 1455,
+      "NettersConciseOrthopaedicAnatomy": 834,
+      "GeneralAnatomy": 366,
+      "Pediatric::Pediatrics": 359,
+      "Trauma": 310,
+      "Hand": 265,
+      "trauma": 258,
+      "LowerExtremity::Knee": 256,
+      "FootAnkle": 254,
+      "ShoulderAndElbow::Shoulder": 236,
+      "Spine": 186,
+      "TheBasics": 167,
+      "UpperExtremity": 164,
+      "Muscles": 162,
+      "LowerExtremity": 153,
+      "Leg::LegKnee": 150,
+      "ShoulderGirdle": 145,
+      "BasicScience": 137,
+      "GeneralTrauma": 135,
+      "Elbow": 119,
+      "Pelvis": 119,
+      "Forearm": 109,
+      "LowerExtremity::Hip": 107,
+      "Orthobullets": 102,
+      "ShoulderAndElbow": 87,
+      "Joints": 85,
+      "ThighHip": 83,
+      "Disorders": 76,
+      "Arm": 71,
+      "Pediatric::PediatricTrauma": 67,
+      "PhysicalExam": 65,
+      "#Ortho::Netters::Foot_Ankle::Osteology": 56,
+      "GeneralKnowledge": 56,
+      "Nerves": 54,
+      "Osteology": 53,
+      "Forearm::ForearmWrist": 52,
+      "Radiology": 52,
+      "#Ortho::Netters::Forearm::Muscles": 50,
+      "MSKScience": 49,
+      "AdultReconstruction::AdultReconstructionTotalKneeArthroplasty": 46,
+      "CompartmentSyndrome": 45,
+      "Xrays": 44,
+      "SpecificPresentations": 43,
+      "LowerExtremity::Knee::KneeAndSports": 42,
+      "Spine::SpineDegenerative": 41,
+      "Bones::BoneBasicScience": 40,
+      "AnatomyAndEvaluation": 39,
+      "Femur": 39
+    },
+    "undispositionedExamples": [
+      "#AK_Step1_v7::#FirstAid::OrthoBasicScience",
+      "#Ortho::Netters::Arm",
+      "#Ortho::Netters::Arm::Arteries",
+      "#Ortho::Netters::Arm::Muscles",
+      "#Ortho::Netters::Arm::Nerves",
+      "#Ortho::Netters::Arm::Osteology",
+      "#Ortho::Netters::Foot_Ankle",
+      "#Ortho::Netters::Foot_Ankle::Arteries",
+      "#Ortho::Netters::Foot_Ankle::Misc",
+      "#Ortho::Netters::Foot_Ankle::Muscles",
+      "#Ortho::Netters::Foot_Ankle::Nerves",
+      "#Ortho::Netters::Foot_Ankle::Osteology",
+      "#Ortho::Netters::Forearm",
+      "#Ortho::Netters::Forearm::Misc",
+      "#Ortho::Netters::Forearm::Muscles",
+      "#Ortho::Netters::Forearm::Nerves",
+      "#Ortho::Netters::Forearm::Osteology",
+      "#Ortho::Netters::Pelvis",
+      "#Ortho::Netters::Pelvis::Arteries",
+      "#Ortho::Netters::Pelvis::Misc",
+      "#Ortho::Netters::Pelvis::Muscles",
+      "#Ortho::Netters::Pelvis::Nerves",
+      "#Ortho::Netters::Pelvis::Osteology",
+      "#Ortho::Netters::Spine",
+      "#Ortho::Netters::Spine::Arteries",
+      "#Ortho::Netters::Spine::Imaging",
+      "#Ortho::Netters::Spine::Muscles",
+      "#Ortho::Netters::Spine::Nerves",
+      "#Ortho::Netters::Spine::Osteology",
+      "#Ortho::Netters::Thigh_Hip",
+      "#Ortho::Netters::Thigh_Hip::Arteries",
+      "#Ortho::Netters::Thigh_Hip::Misc",
+      "#Ortho::Netters::Thigh_Hip::Muscles",
+      "#Ortho::Netters::Thigh_Hip::Nerves",
+      "#Ortho::Netters::Thigh_Hip::Osteology",
+      "AbuseAndTraumaEvaluation",
+      "AcetabularFractures",
+      "Acetabulum",
+      "AchillesTendonRupture",
+      "ACLTear",
+      "AcromioclavicularJoint",
+      "AdhesiveCapsulitisFrozenShoulder",
+      "AdolescentBlountsDisease",
+      "AdolescentIdiopathicScoliosis",
+      "AdultReconstruction",
+      "AdultReconstruction::AdultReconstructionReverseShoulderArthroplasty",
+      "AdultReconstruction::AdultReconstructionShoulderHemiarthroplasty",
+      "AdultReconstruction::AdultReconstructionTotalHipArthroplasty",
+      "AdultReconstruction::AdultReconstructionTotalKneeArthroplasty",
+      "AdultReconstruction::AdultReconstructionTotalShoulderArthroplasty"
+    ]
+  }
+}

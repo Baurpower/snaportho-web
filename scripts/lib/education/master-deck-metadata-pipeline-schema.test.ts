@@ -15,6 +15,10 @@ const seed = readFileSync(
   path.join(root, "supabase/migrations/20260728_121000_master_deck_metadata_taxonomy_v0_1_seed.sql"),
   "utf8",
 );
+const runner = readFileSync(
+  path.join(root, "scripts/run-master-deck-metadata-pipeline.ts"),
+  "utf8",
+);
 
 const tables = [
   "metadata_taxonomy_versions",
@@ -79,5 +83,17 @@ for (const specialty of [
 }
 assert.match(verification, /transaction read only/i);
 assert.match(verification, /rollback/);
+for (const expected of [
+  /codex-cohort-export/,
+  /just_in_time_cohorts/,
+  /parallel_compact_packets/,
+  /SIMPLE_DEFAULT_TAXONOMY_LIMIT = 12/,
+  /remainingAfterThisCohort/,
+  /decision_policy_version: SIMPLE_RUN_VERSION/,
+  /disposition: "workflow_only"/,
+]) {
+  assert.match(runner, expected);
+}
+assert.doesNotMatch(runner, /snaportho::caseprep[\s\S]{0,200}disposition: "contaminated"/i);
 
 console.log("master-deck-metadata-pipeline-schema.test.ts: all assertions passed");

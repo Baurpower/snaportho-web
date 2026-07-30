@@ -13,7 +13,7 @@ import { buildSchedulingContext } from "@/lib/workspace/call/policy/context";
 import { evalPredicate, firstMatchingTier } from "@/lib/workspace/call/policy/predicates";
 import { compilePolicy } from "@/lib/workspace/call/policy/compile";
 import { evaluateSlotPresence, evaluateSlot } from "@/lib/workspace/call/policy/evaluator";
-import type { EligibilityTier, Predicate } from "@/lib/workspace/call/policy/types";
+import type { EligibilityTier } from "@/lib/workspace/call/policy/types";
 
 let passed = 0;
 function ok(label: string, cond: boolean) {

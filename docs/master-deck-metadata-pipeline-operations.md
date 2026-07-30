@@ -37,66 +37,67 @@ npm run education:anki:metadata:pipeline -- \
 
 The command is idempotent by release key.
 
-## 4. Default: process batches with Codex (no API)
+## 4. Default: process just-in-time cohorts with parallel Codex agents (no API)
 
 This is the recommended operating mode. It does not require `OPENAI_API_KEY`,
 and the runner makes zero model API calls.
 
-Export the next resumable batch:
+Export only the next requested cohort and split it into compact packets for
+parallel agents:
 
 ```bash
 npm run education:anki:metadata:pipeline -- \
-  --command=codex-export \
+  --command=codex-cohort-export \
   --release-key=snaportho-metadata-full-active \
   --taxonomy-version=0.1.0 \
-  --batch-size=10 \
-  --run-key=snaportho-codex-metadata-v1
+  --run-key=snaportho-codex-cohorts-v1 \
+  --cohort-size=100 \
+  --agents=5
 ```
 
-When graduating from a calibration run, exclude its completed cards from the
-new larger-batch run:
+This creates five 20-card packets and exactly five database batch rows. It does
+not pre-create batches for the rest of the deck. Every later invocation reuses
+the same run and automatically skips card versions that are already completed,
+accepted, or reserved by an active packet.
 
-```bash
-npm run education:anki:metadata:pipeline -- \
-  --command=codex-export \
-  --release-key=snaportho-metadata-full-active \
-  --taxonomy-version=0.1.0 \
-  --batch-size=10 \
-  --run-key=snaportho-codex-metadata-10-v1 \
-  --exclude-run-key=snaportho-codex-metadata-v1
-```
-
-Multiple predecessor runs can be excluded with a comma-separated
-`--exclude-run-keys` value. Use `--retire-run-key` to cancel the superseded
-run's unfinished batches after the replacement packet is safely exported.
-
-The command writes a mode-0600 packet under
-`tmp/codex-metadata/<run-key>/`. Give that file to Codex and ask it to fill only
+The command writes mode-0600 packets under
+`tmp/codex-metadata/<run-key>/<cohort>/`. Give one file to each agent and ask it to fill only
 each card's `assertions` array. The packet contains exact card text and a bounded
-governed candidate vocabulary for each facet.
+governed candidate vocabulary for each facet. The default candidate limit is 12
+per facet rather than 40 to reduce packet size and token use.
 
-After Codex completes the packet, validate and checkpoint it:
+After each agent completes its packet, validate and checkpoint it:
 
 ```bash
 npm run education:anki:metadata:pipeline -- \
   --command=codex-import \
-  --input=tmp/codex-metadata/snaportho-codex-metadata-v1/batch-0001.json
+  --input=<packet-path>
 ```
 
-Repeat export, Codex completion, and import over time. Supabase tracks completed
-batches, so a later Codex task continues with the next unprocessed batch.
+Imports are idempotent. Assertions with explicit evidence and confidence of at
+least 0.98 are accepted automatically under `snaportho-codex-cohorts.1`.
+Lower-confidence assertions remain outside published manifests; they do not
+create a mandatory human-review queue.
 
 This path provides:
 
 - no OpenAI API key or automated model call
 - immutable card identity and packet checksum
 - governed candidate IDs and exact-substring evidence validation
-- proposed, review-routed output only
+- one persistent run instead of a new run for every cohort size
+- only requested batch rows instead of thousands of future pending rows
+- automatic reuse of previously processed cards across older calibration runs
+- high-confidence automated acceptance for every clinical facet
 - one primary specialty; additional specialties are secondary
-- resumable leases and idempotent completed-packet imports
+- 24-hour packet leases and idempotent completed-packet imports
+- no per-card heartbeat writes
 
-Keep batches small (5–15 cards) for careful review. Packets contain card content
-and must remain in the ignored `tmp/` directory.
+Packets contain card content and must remain in the ignored `tmp/` directory.
+Adjust `--agents`, not the persistent run key, when changing parallelism.
+
+The older `codex-export` command remains available only for resuming an already
+created legacy run. Do not use it for new cohorts because it materializes every
+remaining batch up front.
 
 ## 5. Optional: API pilot
 
@@ -170,7 +171,9 @@ npm run education:anki:metadata:pipeline -- \
   --confirm-classification=CREATE_PROPOSED_DISPOSITIONS
 ```
 
-CasePrep contamination is quarantined, source collections are separated, nested navigation is identified, and broad labels remain ambiguous until card-level review.
+CasePrep paths are classified as workflow-only, source collections are separated,
+nested navigation is identified, and broad labels remain ambiguous until
+card-level resolution. No quarantine step is required.
 
 ## 8. Apply the narrow automated policy
 

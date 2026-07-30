@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- v2 tables precede generated Supabase types. */
-// @ts-nocheck
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { deviceAuth } from "../../_lib";
@@ -11,18 +10,19 @@ const query=z.object({
 }).strict();
 export async function GET(request:Request){
   const auth=await deviceAuth(request);if("response"in auth)return auth.response;
+  const db=auth.supabase as any;
   const url=new URL(request.url),parsed=query.safeParse(Object.fromEntries(url.searchParams));
   if(!parsed.success)return NextResponse.json({error:"invalid v2 cursor request"},{status:400});
-  const{data:release,error:releaseError}=await auth.supabase.from("anki_sync_v2_releases")
+  const{data:release,error:releaseError}=await db.from("anki_sync_v2_releases")
     .select("id,release_sequence,release_version,aggregate_checksum,expected_note_count,expected_card_count,expected_media_count")
     .eq("status","published").order("release_sequence",{ascending:false}).limit(1).maybeSingle();
   if(releaseError)return NextResponse.json({error:"v2 release lookup unavailable"},{status:500});
   if(!release)return NextResponse.json({error:"no published SnapOrtho sync v2 release"},{status:404});
-  const{data:lineage,error:lineageError}=await auth.supabase.from("anki_sync_v2_releases")
+  const{data:lineage,error:lineageError}=await db.from("anki_sync_v2_releases")
     .select("id").in("status",["published","superseded"]).lte("release_sequence",release.release_sequence);
   if(lineageError)return NextResponse.json({error:"v2 release lineage unavailable"},{status:500});
   const releaseIds=(lineage??[]).map((row:any)=>row.id);
-  const{data,error,count}=await auth.supabase.from("anki_sync_v2_delta_operations")
+  const{data,error,count}=await db.from("anki_sync_v2_delta_operations")
     .select("cursor,release_id,operation_index,operation,note_id,note_version_id,payload_checksum,payload",{count:"exact"})
     .in("release_id",releaseIds).gt("cursor",parsed.data.after).order("cursor")
     .limit(parsed.data.limit);
