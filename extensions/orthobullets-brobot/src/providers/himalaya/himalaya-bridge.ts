@@ -124,7 +124,17 @@ function readOpenModal(angular: AngularLike): HimalayaBridgeState['openModal'] {
 function readLiveQuestion(te: Record<string, unknown>): HimalayaBridgeState['liveQuestion'] {
   const questions = te.questions;
   if (!Array.isArray(questions) || !questions.length) return null;
-  const current = questions[0] as Record<string, unknown> | undefined;
+  const index = asNumber(te.index);
+  const displayOrder = index != null ? index + 1 : null;
+  const current = (
+    displayOrder != null
+      ? questions.find((candidate) =>
+          asNumber((candidate as Record<string, unknown> | null)?.displayOrder) === displayOrder
+        )
+      : null
+  ) as Record<string, unknown> | undefined
+    ?? (index != null ? questions[index] as Record<string, unknown> | undefined : undefined)
+    ?? questions[0] as Record<string, unknown> | undefined;
   if (!current) return null;
   const question = plainCopy<Te6Question>(current);
   if (!question || !question.stem) return null;
@@ -187,7 +197,7 @@ function stateKey(state: HimalayaBridgeState) {
     state.questionResults.map((result) => `${result.questionAttemptId ?? ''}:${result.result ?? ''}`).join(','),
     state.openModal ? `${state.openModal.questionAttemptId ?? ''}@${state.openModal.currentIndex ?? ''}` : '',
     state.liveQuestion
-      ? `${state.liveQuestion.question.questionAttemptId ?? ''}:${state.liveQuestion.question.selectedAnswer ?? ''}:${state.liveQuestion.showCorrectAnswer ? '1' : '0'}`
+      ? `${state.liveQuestion.question.questionAttemptId ?? ''}:${state.liveQuestion.question.selectedAnswer ?? ''}:${(state.liveQuestion.question.selectedAnswers ?? []).join(',')}:${state.liveQuestion.showCorrectAnswer ? '1' : '0'}`
       : '',
   ].join('|');
 }

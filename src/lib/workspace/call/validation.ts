@@ -23,12 +23,16 @@ import {
   isBuddyEligibleRotationName,
   resolveBuddyPolicy,
 } from "@/lib/workspace/call/buddy-requirements";
+import { isCallPolicyV2Enabled } from "@/lib/workspace/call/policy/call-policy-flags";
+import { compilePolicy } from "@/lib/workspace/call/policy/compile";
+import { buildSchedulingContext } from "@/lib/workspace/call/policy/context";
+import { firstMatchingTier } from "@/lib/workspace/call/policy/predicates";
 import {
   buildResidentIdentityMaps,
   normalizeScheduleResidentId,
 } from "@/lib/workspace/call/resident-identity";
 import { getResidentStatusDetails } from "@/lib/workspace/pgy";
-import type { ProgramRule } from "@/components/workspace/call/programcalltypes";
+import type { ProgramRule, ResidentOption } from "@/components/workspace/call/programcalltypes";
 import {
   extractSlotDefinitions,
   getSlotStatusForDay,
@@ -929,6 +933,66 @@ export function validateWeekendRule(input: CallValidationInput) {
   return issues;
 }
 
+/**
+ * CALL_POLICY_V2: compile the program's policy and expose pool/tier eligibility so the
+ * save-gate honors grey-zone tiers (e.g. a PGY-1 intern joining the Primary pool in
+ * their 2nd Gen-Ortho month). Returns null when the kill-switch is off (legacy path).
+ * Built from the validation input's rules + residents + rotations (no availability
+ * needed — pool tiers depend only on PGY + rotation service-month index).
+ */
+function buildGreyZonePoolEligibility(
+  input: CallValidationInput
+): ((rosterId: string, callType: string, dateKey: string) => boolean) | null {
+  if (!isCallPolicyV2Enabled()) return null;
+
+  const rawRules = input.rules ?? input.context?.rules ?? [];
+  const programRules: ProgramRule[] = rawRules.map((r) => ({
+    id: normalizeString(r.id) ?? "",
+    name: normalizeString(r.name) ?? "",
+    rule_type: (normalizeString(r.ruleType ?? r.ruleCode) ?? "") as ProgramRule["rule_type"],
+    is_enabled: r.isEnabled !== false,
+    is_hard_rule: r.isHardRule !== false,
+    config: (r.config as ProgramRule["config"]) ?? {},
+  }));
+
+  const rotationsByRoster = new Map<string, ResidentOption["rotationAssignments"]>();
+  for (const rot of input.rotations ?? input.context?.rotations ?? []) {
+    const key = normalizeRosterId(rot.rosterId) ?? normalizeRosterId(rot.residentId) ?? normalizeRosterId(rot.membershipId);
+    if (!key) continue;
+    const list = rotationsByRoster.get(key) ?? [];
+    list!.push({
+      rotationId: rot.rotationId ?? rot.id ?? null,
+      rotationName: rot.rotationName ?? rot.shortName ?? null,
+      startDate: rot.startDate ?? null,
+      endDate: rot.endDate ?? null,
+    });
+    rotationsByRoster.set(key, list);
+  }
+
+  const residents: ResidentOption[] = (input.residents ?? []).map((r) => {
+    const id = normalizeRosterId(r.rosterId) ?? normalizeRosterId(r.residentId) ?? normalizeRosterId(r.membershipId) ?? "";
+    return {
+      residentId: id,
+      membershipId: id,
+      displayName: r.displayName ?? r.residentName ?? id,
+      trainingLevel: r.trainingLevel ?? null,
+      pgyYear: r.pgyYear ?? null,
+      gradYear: r.gradYear ?? null,
+      rotationAssignments: rotationsByRoster.get(id) ?? [],
+    };
+  });
+
+  const policy = compilePolicy(programRules);
+  const ctx = buildSchedulingContext({ residents });
+  const slotByType = new Map(policy.slots.map((s) => [s.callType, s]));
+
+  return (rosterId, callType, dateKey) => {
+    const slot = slotByType.get(callType);
+    if (!slot) return false;
+    return firstMatchingTier(slot.eligibility, { residentId: rosterId, dateKey }, ctx) !== null;
+  };
+}
+
 export function validatePgyRestrictionRule(input: CallValidationInput) {
   const issues: CallValidationIssue[] = [];
   const rules = resolveValidationRules(input.rules, [
@@ -942,6 +1006,10 @@ export function validatePgyRestrictionRule(input: CallValidationInput) {
   }
 
   const { residentByIdentity } = getResidentMaps(input);
+  // When the engine is on, a resident who matches a grey-zone eligibility tier for the
+  // slot (e.g. intern's 2nd-ortho-month Primary progression) is NOT a PGY violation,
+  // even though the legacy pool rule would flag them.
+  const greyZoneEligible = buildGreyZonePoolEligibility(input);
 
   for (const assignment of assignments) {
     const context = getIntegrityAssignmentContext(assignment);
@@ -992,6 +1060,21 @@ export function validatePgyRestrictionRule(input: CallValidationInput) {
     // misclassifying them as Primary, which would produce false violations.
     const evaluatedCallType = normalizeEvaluatedCallType(context.normalizedCallType);
     if (!evaluatedCallType) continue;
+
+    // Grey-zone override: if the engine's tiers make this resident eligible for the
+    // slot on this date, the legacy pool restriction does not apply.
+    if (
+      greyZoneEligible &&
+      (context.rosterId || context.residentId) &&
+      context.normalizedDateKey &&
+      greyZoneEligible(
+        (context.rosterId ?? context.residentId) as string,
+        context.normalizedCallType,
+        context.normalizedDateKey
+      )
+    ) {
+      continue;
+    }
 
     const pgyViolations = evaluatePgyEligibility({
       resident,
@@ -1985,6 +2068,53 @@ export function validateRotationCallLimitRule(input: CallValidationInput): CallV
   return issues;
 }
 
+/**
+ * CALL_POLICY_V2 (#3): flag any intern assigned more Buddy weekends than the policy
+ * hard cap (globals.buddy.maxWeekendsPerInternMonth = buddy policy requiredDaysPerMonth).
+ * Additive and flag-gated: it never runs when CALL_POLICY_V2 is off, so the legacy
+ * save-gate is byte-unchanged. Mirrors the generator's computeBuddyCapTrim so the
+ * generator and the save-gate agree on the cap.
+ */
+export function validateBuddyCapRule(input: CallValidationInput): CallValidationIssue[] {
+  if (!isCallPolicyV2Enabled()) return [];
+
+  const rulesRaw = input.rules ?? input.context?.rules ?? [];
+  const cap = resolveBuddyPolicy(rulesRaw).requiredDaysPerMonth;
+
+  const buddyDatesByRoster = new Map<string, string[]>();
+  for (const assignment of (input.assignments ?? []).filter(isActiveAssignment)) {
+    const ctx = getIntegrityAssignmentContext(assignment);
+    if (ctx.normalizedCallType !== "Buddy" || !ctx.normalizedDateKey || !ctx.residentId) {
+      continue;
+    }
+    const dates = buddyDatesByRoster.get(ctx.residentId) ?? [];
+    dates.push(ctx.normalizedDateKey);
+    buddyDatesByRoster.set(ctx.residentId, dates);
+  }
+
+  const issues: CallValidationIssue[] = [];
+  for (const [rosterId, dates] of buddyDatesByRoster) {
+    if (dates.length <= cap) continue;
+    // Keep the earliest `cap` weekends; flag the rest (matches computeBuddyCapTrim).
+    for (const dateKey of [...dates].sort().slice(Math.max(0, cap))) {
+      issues.push(
+        createValidationIssue({
+          code: "buddy_cap_exceeded",
+          severity: "error",
+          message: `Resident exceeds the ${cap}-weekend Buddy cap for this month.`,
+          slotId: serializeSlotId({ dateKey, callType: "Buddy" }),
+          rosterId,
+          residentId: rosterId,
+          dateKey,
+          callType: "Buddy",
+          ruleCode: "buddy_requirement",
+        })
+      );
+    }
+  }
+  return issues;
+}
+
 export function validateCallMonthDraft(input: CallValidationInput) {
   const normalizedInput: CallValidationInput = {
     assignments: input.assignments ?? [],
@@ -2000,6 +2130,7 @@ export function validateCallMonthDraft(input: CallValidationInput) {
     ...validateRequiredSlotRule(normalizedInput),
     ...validateConditionalRequiredSlots(normalizedInput),
     ...validateBuddyAssignments(normalizedInput),
+    ...validateBuddyCapRule(normalizedInput),
     ...validateSpacingRule(normalizedInput),
     ...validateMonthlyLimitRule(normalizedInput),
     ...validateMonthlyLoadTargetRule(normalizedInput),

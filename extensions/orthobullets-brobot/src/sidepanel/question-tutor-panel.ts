@@ -126,6 +126,56 @@ export function appendQuestionTutorPanel(
     explainCard.querySelector('#qt-unlink-explain')?.addEventListener('click', () => hooks.onUnlink());
   }
 
+  if (view.session && view.fingerprintAligned && !view.showLoadingCurrentQuestion) {
+    const unanswered = view.reviewState === 'unanswered';
+    const starterPrompts = unanswered
+      ? ['Give me a hint', 'What clue should I focus on?', 'Help me narrow the choices']
+      : ['Why not the trap answer?', 'Make this simpler', 'Give me an Anki-style card'];
+    const visiblePrompts = view.chatPrompts.length ? view.chatPrompts : starterPrompts;
+    const chatCard = createElement(`<div style="padding:14px;border-radius:14px;background:white;border:1px solid #ded7c8;display:grid;gap:12px;">
+      <div style="display:grid;gap:4px;">
+        <h3 style="margin:0;font-size:16px;">Ask BroBot</h3>
+        <p style="margin:0;color:#5c6574;line-height:1.4;font-size:12px;">${unanswered
+          ? 'Ask about this question or get a reasoning nudge. BroBot will not reveal the answer before you submit.'
+          : 'Ask about this exact question without opening the full explanation.'}</p>
+      </div>
+      ${view.chatHistory.length || isBusy
+        ? renderChatTranscript(view.chatHistory, isBusy)
+        : `<p style="margin:0;color:#5c6574;font-size:12px;">Try: “${escapeHtml(visiblePrompts[0] ?? 'Give me a hint')}”</p>`}
+      ${visiblePrompts.length ? renderCurriculumChatChips(visiblePrompts) : ''}
+      <form id="qt-chat-form" style="display:grid;gap:6px;">
+        <textarea id="qt-chat-input" rows="2" ${isBusy ? 'disabled' : ''} placeholder="${unanswered ? 'Ask a question or request a hint...' : 'Ask about this question...'}" style="width:100%;box-sizing:border-box;border:1px solid #d2cab8;border-radius:12px;padding:10px;font:inherit;resize:vertical;font-size:13px;">${escapeHtml(view.chatDraft)}</textarea>
+        <div style="display:flex;justify-content:flex-end;">
+          <button type="submit" ${isBusy ? 'disabled' : ''} style="border:none;border-radius:999px;background:${isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:8px 12px;font-weight:700;font-size:12px;cursor:${isBusy ? 'default' : 'pointer'};">${isBusy ? 'Thinking…' : 'Ask BroBot'}</button>
+        </div>
+      </form>
+    </div>`);
+    content.appendChild(chatCard);
+
+    const chatInput = chatCard.querySelector('#qt-chat-input') as HTMLTextAreaElement | null;
+    chatInput?.addEventListener('input', (event) => {
+      hooks.onChatDraftChange((event.currentTarget as HTMLTextAreaElement).value);
+    });
+    chatCard.querySelector('#qt-chat-form')?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      hooks.onChatSubmit();
+    });
+    chatCard.querySelectorAll<HTMLButtonElement>('[data-prompt-index]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const index = Number(button.dataset.promptIndex ?? -1);
+        const prompt = visiblePrompts[index];
+        if (prompt) hooks.onChatPromptClick(prompt);
+      });
+    });
+  }
+
+  if (view.operationError) {
+    content.appendChild(createElement(`<div style="padding:12px;border-radius:12px;background:#fff0ef;border:1px solid #f0c0bc;color:#a02d1f;display:grid;gap:5px;">
+      <p style="margin:0;font-weight:700;font-size:13px;">BroBot needs another try</p>
+      <p style="margin:0;line-height:1.45;font-size:12px;">${escapeHtml(view.operationError)}</p>
+    </div>`));
+  }
+
   if (view.showHintLoading && view.visiblePanelMode === 'hint_open') {
     content.appendChild(createElement(renderLoadingSkeleton('Preparing hint', 'BroBot is generating a reasoning nudge for this question...')));
   }
@@ -154,37 +204,6 @@ export function appendQuestionTutorPanel(
       button?.addEventListener('click', () => hooks.onSendToAnki(button, questionExplanation));
     }
 
-    const chatCard = createElement(`<div style="padding:14px;border-radius:14px;background:white;border:1px solid #ded7c8;display:grid;gap:12px;">
-      <div style="display:grid;gap:4px;">
-        <h3 style="margin:0;font-size:16px;">Ask BroBot</h3>
-        <p style="margin:0;color:#5c6574;line-height:1.4;font-size:12px;">Ask about this exact question without leaving the side panel.</p>
-      </div>
-      ${view.chatHistory.length ? renderChatTranscript(view.chatHistory, false) : '<p style="margin:0;color:#5c6574;font-size:12px;">Try: “Why not the trap answer?” or “Give me an Anki-style card.”</p>'}
-      ${view.chatPrompts.length ? renderCurriculumChatChips(view.chatPrompts) : ''}
-      <form id="qt-chat-form" style="display:grid;gap:6px;">
-        <textarea id="qt-chat-input" rows="2" placeholder="Ask a follow-up..." style="width:100%;box-sizing:border-box;border:1px solid #d2cab8;border-radius:12px;padding:10px;font:inherit;resize:vertical;font-size:13px;">${escapeHtml(view.chatDraft)}</textarea>
-        <div style="display:flex;justify-content:flex-end;">
-          <button type="submit" style="border:none;border-radius:999px;background:#0f766e;color:white;padding:8px 12px;font-weight:700;font-size:12px;cursor:pointer;">Ask BroBot</button>
-        </div>
-      </form>
-    </div>`);
-    content.appendChild(chatCard);
-
-    const chatInput = chatCard.querySelector('#qt-chat-input') as HTMLTextAreaElement | null;
-    chatInput?.addEventListener('input', (event) => {
-      hooks.onChatDraftChange((event.currentTarget as HTMLTextAreaElement).value);
-    });
-    chatCard.querySelector('#qt-chat-form')?.addEventListener('submit', (event) => {
-      event.preventDefault();
-      hooks.onChatSubmit();
-    });
-    chatCard.querySelectorAll<HTMLButtonElement>('[data-prompt-index]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const index = Number(button.dataset.promptIndex ?? -1);
-        const prompt = view.chatPrompts[index];
-        if (prompt) hooks.onChatPromptClick(prompt);
-      });
-    });
   }
 
   if (input.error) {

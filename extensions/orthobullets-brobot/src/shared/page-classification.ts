@@ -77,6 +77,31 @@ export function classifyPage(context: OrthobulletsPageContext): PageClassificati
   let confidence: number;
   let reason: string;
 
+  if (
+    context.provider === 'orthobullets' &&
+    context.mode === 'test_review' &&
+    context.testReview
+  ) {
+    return {
+      pageKind: 'test_results',
+      confidence: context.testReview.rows.length > 0 ? 0.98 : 0.72,
+      reason: context.testReview.rows.length > 0
+        ? 'Detected an Orthobullets completed-test results table.'
+        : 'Detected an Orthobullets test-results page; question rows may still be loading.',
+      detected: {
+        hasStem,
+        answerChoiceCount,
+        readableTextLength,
+        headings: headings.slice(0, 12),
+        referencesCount,
+        tablesCount,
+        imagesCount,
+        activeUrl,
+        title,
+      },
+    };
+  }
+
   if (context.provider === 'orthobullets' && context.mode === 'topic_page') {
     // Classify as topic_page whenever we have solid content OR a title/heading —
     // even if the text threshold isn't met yet (e.g. content still loading,
@@ -183,7 +208,14 @@ export function isPageUsable(context: OrthobulletsPageContext, options: { forceQ
 
 export function preferredBrobotMode(
   context: OrthobulletsPageContext
-): 'question_tutor' | 'explain_page' | 'topic_tutor' {
+): 'question_tutor' | 'explain_page' | 'topic_tutor' | 'test_debrief' {
+  if (
+    context.provider === 'orthobullets' &&
+    context.mode === 'test_review' &&
+    context.pageKind === 'test_results'
+  ) {
+    return 'test_debrief';
+  }
   const classification = context.classification ?? classifyPage(context);
   if (classification.pageKind === 'topic_page') return 'topic_tutor';
   if (classification.pageKind === 'educational_content') return 'explain_page';

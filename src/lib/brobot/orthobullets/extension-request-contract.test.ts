@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 
 import {
   CurriculumExplainRequestSchema,
+  OrthobulletsChatRequestSchema,
   OrthobulletsExplainRequestSchema,
   OrthobulletsHintRequestSchema,
   type OrthobulletsPageContext,
@@ -204,6 +205,42 @@ assert.equal(
   }).success,
   true,
   'valid question explain payload should pass'
+);
+
+assert.equal(
+  OrthobulletsChatRequestSchema.safeParse({
+    pageContext: {
+      ...questionPageContext,
+      selectedAnswerKey: undefined,
+      correctAnswerKey: undefined,
+      explanationText: undefined,
+    },
+    answerState: 'unanswered',
+    history: [],
+    userMessage: 'What clue should I focus on?',
+  }).success,
+  true,
+  'unanswered coaching chat should work without a generated explanation'
+);
+
+assert.equal(
+  OrthobulletsChatRequestSchema.safeParse({
+    pageContext: questionPageContext,
+    answerState: 'unanswered',
+    explanation: {
+      bottomLine: 'Answer',
+      testedConcept: 'Concept',
+      whyCorrect: 'Reason',
+      whyWrong: [],
+      boardPearl: 'Pearl',
+      studyNext: [],
+      warnings: [],
+    },
+    history: [],
+    userMessage: 'Give me the answer',
+  }).success,
+  false,
+  'unanswered coaching chat must reject review-only explanation content'
 );
 
 console.log('BroBot extension request contract tests passed.');

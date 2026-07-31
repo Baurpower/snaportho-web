@@ -8,6 +8,11 @@ import {
   QuestionSessionStore,
 } from './question-session.js';
 import type { OrthobulletsPageContext } from '../shared/types.js';
+import { selectedAnswerForHint } from './question-tutor-controller.js';
+
+assert.equal(selectedAnswerForHint(null), undefined, 'unanswered questions must omit selectedAnswerKey from hint requests');
+assert.equal(selectedAnswerForHint(''), undefined, 'blank answer keys must be omitted from hint requests');
+assert.equal(selectedAnswerForHint(' B '), 'B', 'submitted answer keys remain available to hint requests');
 
 const sampleHint = {
   hintLevel: 1,
@@ -151,6 +156,11 @@ const blockedView = store.deriveViewState();
 assert.equal(blockedView.showExplainCta, false);
 assert.equal(blockedView.explanationToRender, null);
 assert.equal(blockedView.debug.explanationRenderBlockedReason, 'review_state_not_answered_review');
+staleExplainSession.chatDraft = 'Can you help me reason through this?';
+staleExplainSession.chatHistory = [{ role: 'assistant', content: 'Start with the injury pattern.' }];
+const unansweredChatView = store.deriveViewState();
+assert.equal(unansweredChatView.chatDraft, 'Can you help me reason through this?');
+assert.equal(unansweredChatView.chatHistory.length, 1, 'chat remains available without an explanation');
 
 const answeredSession = store.getSession('fp-a')!;
 answeredSession.reviewState = 'answered_review';

@@ -39,8 +39,11 @@ const normalChat = (0, topic_tutor_prompt_builder_1.buildTopicTutorMessages)({
     history: [],
     userMessage: 'Why does this cause cardiomyopathy?',
 });
-strict_1.default.match(normalChat[0]?.content ?? '', /normal chat question or request/i);
+strict_1.default.match(normalChat[0]?.content ?? '', /treat the learner's message as normal chat/i);
 strict_1.default.match(normalChat[0]?.content ?? '', /Answer it directly and conversationally/i);
+const usefulVersion = (0, topic_tutor_prompt_builder_1.buildTopicTutorMessages)({ context, progress, history: [], action: 'explain_page' });
+strict_1.default.match(usefulVersion[1]?.content ?? '', /3-5 ideas that organize the topic/i);
+strict_1.default.match(usefulVersion[1]?.content ?? '', /helpful synthesis, not a quiz/i);
 const tested = (0, topic_tutor_prompt_builder_1.buildTopicTutorMessages)({ context, progress, history: [], action: 'what_tested' });
 strict_1.default.match(tested[1]?.content ?? '', /Give 3-5 concrete, prioritized OITE\/board testable takeaways/i);
 const traps = (0, topic_tutor_prompt_builder_1.buildTopicTutorMessages)({ context, progress, history: [], action: 'board_traps' });

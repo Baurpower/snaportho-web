@@ -28,8 +28,52 @@ export type ReviewBoardHooks = {
   onToggleRow: (questionAttemptId: number) => void;
   onExplainRow: (questionAttemptId: number) => void;
   onExplainAllMisses: () => void;
+  onCopyDebrief: () => void;
+  onClearDebrief: () => void;
   onUnlink: () => void;
 };
+
+export function himalayaDebriefStorageKey(pageContext: OrthobulletsPageContext | null) {
+  const providerSpecific = pageContext?.raw?.providerSpecific;
+  const identity = providerSpecific?.testAttemptId ?? pageContext?.pageUrl ?? 'unknown';
+  return `snaportho:himalaya-debrief:v1:${identity}`;
+}
+
+export function himalayaDebriefText(
+  rows: ReviewBoardRow[],
+  rowStates: Map<number, ReviewBoardRowState>,
+  assessmentTitle: string | null
+) {
+  const ready = rows.flatMap((row) => {
+    const explanation = rowStates.get(row.questionAttemptId)?.explanation;
+    return explanation ? [{ row, explanation }] : [];
+  });
+  const concepts = [...new Set(ready.map(({ explanation }) => explanation.testedConcept))];
+  return [
+    `# ${assessmentTitle || 'AAOS Himalaya test debrief'}`,
+    '',
+    `${summarizeBoard(rows).correctCount}/${rows.length} correct; ${summarizeBoard(rows).missedCount} missed.`,
+    '',
+    '## Pattern diagnosis',
+    ...(concepts.length ? concepts.map((concept) => `- ${concept}`) : ['- No completed explanations yet.']),
+    '',
+    '## Miss analysis',
+    ...ready.flatMap(({ row, explanation }) => [
+      `### Q${row.questionNumber ?? '?'} · ${explanation.testedConcept}`,
+      `- You answered: ${row.selectedAnswer ?? 'unknown'}`,
+      `- Correct answer: ${row.correctAnswer ?? 'unknown'}`,
+      `- Bottom line: ${explanation.bottomLine}`,
+      `- Main trap: ${explanation.boardTrap ?? explanation.whyWrong[0]?.reason ?? 'Not identified'}`,
+      `- Remember: ${explanation.boardPearl}`,
+      '',
+    ]),
+    '## Active recall',
+    ...ready.map(({ explanation }) => `- Explain ${explanation.testedConcept}, including the decisive clue and main trap.`),
+    '',
+    '## Remediation',
+    ...[...new Set(ready.flatMap(({ explanation }) => explanation.studyNext))].map((item) => `- ${item}`),
+  ].join('\n');
+}
 
 export type ReviewBoardRenderers = {
   escapeHtml: (value: string) => string;
@@ -141,6 +185,11 @@ export function appendHimalayaReviewBoard(
   const { rows, rowStates, hooks, renderers } = input;
   const { escapeHtml } = renderers;
   const summary = summarizeBoard(rows);
+  const completedExplanations = rows.filter((row) => rowStates.get(row.questionAttemptId)?.explanation).length;
+  const concepts = [...new Set(rows.flatMap((row) => {
+    const explanation = rowStates.get(row.questionAttemptId)?.explanation;
+    return explanation ? [explanation.testedConcept] : [];
+  }))];
 
   const createElement = (html: string) => {
     const host = document.createElement('div');
@@ -172,7 +221,7 @@ export function appendHimalayaReviewBoard(
         ? `<div style="display:flex;gap:8px;flex-wrap:wrap;">
             <button id="rb-explain-misses" ${input.explainAllInFlight ? 'disabled' : ''}
               style="border:none;border-radius:999px;background:${input.explainAllInFlight ? '#94a3b8' : '#0f766e'};color:white;padding:9px 14px;font-weight:700;font-size:13px;cursor:${input.explainAllInFlight ? 'default' : 'pointer'};">
-              ${input.explainAllInFlight ? 'Working through your misses…' : `Walk my ${summary.missedCount} miss${summary.missedCount === 1 ? '' : 'es'}`}
+              ${input.explainAllInFlight ? 'Building full debrief…' : completedExplanations ? 'Rebuild full debrief' : 'Build full debrief'}
             </button>
           </div>`
         : `<p style="margin:0;font-size:13px;color:#15803d;font-weight:600;">Clean sweep — nothing missed on this attempt.</p>`
@@ -180,6 +229,23 @@ export function appendHimalayaReviewBoard(
   </div>`);
   content.appendChild(header);
   header.querySelector('#rb-explain-misses')?.addEventListener('click', () => hooks.onExplainAllMisses());
+
+  if (completedExplanations || input.explainAllInFlight) {
+    const debriefSummary = createElement(`<section style="padding:14px;border-radius:14px;background:#fff7ed;border:1px solid #fed7aa;display:grid;gap:10px;">
+      <div>
+        <p style="margin:0;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9a3412;font-weight:800;">Full debrief</p>
+        <p style="margin:4px 0 0;font-size:12px;color:#5c6574;">${completedExplanations} of ${summary.missedCount} misses analyzed · saved locally</p>
+      </div>
+      ${concepts.length ? `<div><p style="margin:0 0 4px;font-weight:800;font-size:13px;">Pattern diagnosis</p>${concepts.map((concept) => `<p style="margin:2px 0;font-size:12px;color:#384152;">• ${escapeHtml(concept)}</p>`).join('')}</div>` : ''}
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button id="rb-copy-debrief" style="border:1px solid #c2410c;border-radius:999px;background:white;color:#9a3412;padding:7px 11px;font-weight:700;font-size:12px;cursor:pointer;">Copy debrief</button>
+        <button id="rb-clear-debrief" style="border:none;background:transparent;color:#64748b;padding:7px;font-weight:700;font-size:12px;cursor:pointer;">Clear saved debrief</button>
+      </div>
+    </section>`);
+    content.appendChild(debriefSummary);
+    debriefSummary.querySelector('#rb-copy-debrief')?.addEventListener('click', () => hooks.onCopyDebrief());
+    debriefSummary.querySelector('#rb-clear-debrief')?.addEventListener('click', () => hooks.onClearDebrief());
+  }
 
   const defaultRowState: ReviewBoardRowState = { expanded: false, loading: false, explanation: null, error: null };
   const list = createElement(`<ul style="margin:0;padding:0;display:grid;gap:8px;">

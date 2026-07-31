@@ -2,6 +2,7 @@ import type { OrthobulletsTopicAction, OrthobulletsPageContext } from './types.j
 
 /** The focused study actions that earn permanent space in Page Mode. */
 export const TOPIC_TUTOR_PRIMARY_ACTIONS: Array<{ action: OrthobulletsTopicAction; label: string }> = [
+  { action: 'explain_page', label: 'Give me the useful version' },
   { action: 'quiz_me', label: 'Quiz me' },
   { action: 'what_tested', label: 'What would be tested?' },
   { action: 'board_traps', label: 'Board traps' },

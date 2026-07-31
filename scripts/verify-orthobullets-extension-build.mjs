@@ -22,14 +22,14 @@ const sidepanelSource = [
 ].join('\n');
 
 const assertions = [
-  ['background service worker', backgroundSource, '2026-07-19-rock-curriculum-contract-v2'],
+  ['background service worker', backgroundSource, '2026-07-30-himalaya-live-v4'],
   ['background service worker', backgroundSource, 'brobot:request'],
   ['background service worker', backgroundSource, 'endpoint_resolution'],
   ['background service worker', backgroundSource, 'Routing invariant violated'],
   ['routing helper', routingSource, 'curriculum_explain'],
   ['routing helper', routingSource, '/api/brobot/curriculum/explain'],
   ['routing helper', routingSource, '/api/brobot/orthobullets/explain'],
-  ['build info', buildInfoSource, '2026-07-19-rock-curriculum-contract-v2'],
+  ['build info', buildInfoSource, '2026-07-30-himalaya-live-v4'],
   ['build info', buildInfoSource, 'curriculum-explain-v2'],
   ['sidepanel entry', sidepanelSource, 'brobot:request'],
   ['sidepanel entry', sidepanelSource, 'BroBot curriculum click'],
@@ -48,7 +48,7 @@ console.log(
       manifestPath,
       backgroundPath,
       expectedChromeLoadUnpackedDirectory: distDir,
-      extensionBuildId: '2026-07-19-rock-curriculum-contract-v2',
+      extensionBuildId: '2026-07-30-himalaya-live-v4',
       routingContractVersion: 'curriculum-explain-v2',
       forbiddenCurriculumEndpoint: '/api/brobot/orthobullets/explain',
       requiredCurriculumEndpoint: '/api/brobot/curriculum/explain',

@@ -3,9 +3,9 @@ import OrthoMatchStatsPageClient from './orthomatchstatspageclient';
 export const metadata = {
   title: 'Orthopaedic Surgery Match Statistics',
   description:
-    'Explore orthopaedic surgery match trends over time, including overall match rates, MD vs DO outcomes, and applicant breakdowns.',
+    'Explore orthopaedic surgery match trends, 2026 board score outcomes, dual applying patterns, and MD vs DO results.',
   alternates: {
-    canonical: '/pathtoortho/match-statistics',
+    canonical: '/pathtoortho/orthomatch-stats',
   },
   keywords: [
     'orthopaedics',
@@ -22,8 +22,8 @@ export const metadata = {
   openGraph: {
     title: 'Orthopaedic Surgery Match Statistics',
     description:
-      'A clear, easy-to-understand breakdown of orthopaedic surgery match trends, including overall, MD, and DO match rates.',
-    url: 'https://snap-ortho.com/pathtoortho/match-statistics',
+      'Orthopaedic surgery match trends with 2026 board score outcomes, dual applying patterns, and MD vs DO match rates.',
+    url: 'https://snap-ortho.com/pathtoortho/orthomatch-stats',
     siteName: 'SnapOrtho',
     images: [
       {

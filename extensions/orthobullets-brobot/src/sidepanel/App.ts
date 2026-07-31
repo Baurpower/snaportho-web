@@ -4,6 +4,7 @@ import type {
   ExtensionErrorCode,
   ExtensionMessage,
   ExtensionMessageResponse,
+  PageChangeMessage,
   QuestionChangeMessage,
 } from '../shared/messages.js';
 import type {
@@ -39,15 +40,24 @@ import { fingerprintFromPageContext } from '../shared/question-fingerprint.js';
 import type { QuestionRefreshDiagnostics, QuestionRefreshSource } from '../shared/question-fingerprint.js';
 import { hasVisibleReviewData, inferQuestionStateBlockedReason } from '../shared/question-review-state.js';
 import { renderCurriculumChatChips, renderCurriculumStudyPanel } from './explain-study-panel.js';
-import { QuestionTutorController } from './question-tutor-controller.js';
+import { QuestionTutorController, selectedAnswerForHint } from './question-tutor-controller.js';
 import type { QuestionTutorViewState } from './question-session.js';
 import { appendQuestionTutorPanel, renderQuestionTutorLifecycleDebug } from './question-tutor-panel.js';
 import {
   appendHimalayaReviewBoard,
   getReviewBoardRows,
+  himalayaDebriefStorageKey,
+  himalayaDebriefText,
   summarizeBoard,
   type ReviewBoardRowState,
 } from './himalaya-review-board.js';
+import {
+  appendOrthobulletsTestDebrief,
+  fullDebriefText,
+  getOrthobulletsTestReview,
+  testDebriefStorageKey,
+  type FullTestDebrief,
+} from './orthobullets-test-debrief.js';
 import { renderTopicTutorPanel } from './topic-tutor-panel.js';
 import {
   EXTENSION_BUILD_ID,
@@ -58,7 +68,7 @@ import {
 import { getConfiguredAppOrigin } from '../shared/runtime.js';
 
 const BROBOT_ICON_URL = chrome.runtime.getURL('icons/brobot-32.png');
-const SIDEPANEL_BUILD_ID_MARKER = '2026-07-19-rock-curriculum-contract-v2';
+const SIDEPANEL_BUILD_ID_MARKER = '2026-07-30-himalaya-live-v4';
 const DEFAULT_FOLLOW_UP_PROMPTS = ['Why not the trap answer?', 'Make this simpler', 'Give me an Anki-style card'];
 const ERROR_COPY: Record<ExtensionErrorCode, { title: string; canRetry: boolean }> = {
   unsupported_page: { title: 'This page is not supported.', canRetry: false },
@@ -230,7 +240,13 @@ function renderExplanation(explanation: OrthobulletsExplainResponse, mode: 'ques
 
   cards.push(renderCard(summaryTitle, renderTextBlock(explanation.bottomLine, true), 'accent'));
 
-  if (explanation.testedConcept) {
+  if (explanation.boardPearl) {
+    cards.push(renderCard(pearlTitle, renderTextBlock(explanation.boardPearl, true), 'warning'));
+  }
+
+  // The concept remains in the response contract for search and follow-up context,
+  // but it is redundant in Question Tutor's skim-first teaching stack.
+  if (mode === 'explain_page' && explanation.testedConcept) {
     cards.push(renderCard(conceptTitle, renderTextBlock(explanation.testedConcept)));
   }
 
@@ -258,10 +274,6 @@ function renderExplanation(explanation: OrthobulletsExplainResponse, mode: 'ques
   const boardTrap = getBoardTrap(explanation);
   if (boardTrap) {
     cards.push(renderCard(trapTitle, renderTextBlock(boardTrap), 'warning'));
-  }
-
-  if (explanation.boardPearl) {
-    cards.push(renderCard(pearlTitle, renderTextBlock(explanation.boardPearl, true), 'warning'));
   }
 
   if (explanation.studyNext.length) {
@@ -460,6 +472,15 @@ function getStatusCopy(input: {
     return { label: 'Hint Mode ready', detail: 'This page looks unanswered, so you can ask for progressive hints before revealing the reasoning.' };
   }
   if (input.pageContext) {
+    const testReview = getOrthobulletsTestReview(input.pageContext);
+    if (testReview) {
+      return {
+        label: 'Test debrief ready',
+        detail: testReview.missedCount
+          ? `${testReview.missedCount} missed questions grouped into a concept map. Open any question for full review data or send all matched cards to Anki.`
+          : `All ${testReview.totalCount} detected questions were correct.`,
+      };
+    }
     if (input.pageContext.provider === 'himalaya' && input.pageContext.pageKind === 'results-overview') {
       const boardRows = getReviewBoardRows(input.pageContext);
       if (boardRows.length) {
@@ -477,7 +498,7 @@ function getStatusCopy(input: {
     if (classification?.pageKind === 'topic_page') {
       return {
         label: 'Orthobullets topic page detected',
-        detail: 'Pick an action below — BroBot will quiz you on this page instead of summarizing it.',
+        detail: 'BroBot has the visible sections and is ready to clarify, synthesize, or connect them to clinical decisions.',
       };
     }
     if (classification?.pageKind === 'educational_content') {
@@ -506,7 +527,12 @@ function getQuestionTutorStatusCopy(input: {
   if (input.loading) {
     return { label: 'Loading', detail: 'Checking your extension state and active page.' };
   }
-  if (!input.activePage?.supported) {
+  const hasAlignedExtractedQuestion = Boolean(
+    input.view?.fingerprintAligned &&
+    input.view.session?.payload &&
+    input.view.session.extractionStatus === 'ready'
+  );
+  if (!input.activePage?.supported && !hasAlignedExtractedQuestion) {
     return { label: 'Open a supported question page', detail: 'Switch to an Orthobullets, ROCK, or AAOS Himalaya question tab, then reopen this panel.' };
   }
   if (input.auth?.status !== 'linked') {
@@ -583,7 +609,7 @@ export function mountSidePanelApp(root: HTMLElement) {
     chatDraft: string;
     chatPrompts: string[];
     usage: UsageState;
-    brobotMode: 'question_tutor' | 'explain_page' | 'topic_tutor';
+    brobotMode: 'question_tutor' | 'explain_page' | 'topic_tutor' | 'test_debrief';
     forceQuestionMode: boolean;
     topicProgress: OrthobulletsTopicProgress;
     topicHistory: OrthobulletsTopicTutorTurn[];
@@ -599,7 +625,8 @@ export function mountSidePanelApp(root: HTMLElement) {
     questionRefreshSource: QuestionRefreshSource;
     reviewBoardRowStates: Map<number, ReviewBoardRowState>;
     reviewBoardExplainAllInFlight: boolean;
-    reviewBoardAutoExplainedFor: string | null;
+    reviewBoardLoadedFor: string | null;
+    fullTestDebrief: FullTestDebrief | null;
   } = {
     activePage: null,
     auth: null,
@@ -641,7 +668,8 @@ export function mountSidePanelApp(root: HTMLElement) {
     questionRefreshSource: 'automatic',
     reviewBoardRowStates: new Map(),
     reviewBoardExplainAllInFlight: false,
-    reviewBoardAutoExplainedFor: null,
+    reviewBoardLoadedFor: null,
+    fullTestDebrief: null,
   };
 
   const questionTutorController = new QuestionTutorController({
@@ -650,6 +678,8 @@ export function mountSidePanelApp(root: HTMLElement) {
     onRender: () => render(),
     getExplainEmphasis: () => state.explainEmphasis,
   });
+  let pageRefreshTimer: number | null = null;
+  let pageRefreshSequence = 0;
 
   function bumpQuestionLifecycleGeneration() {
     state.questionLifecycleGeneration += 1;
@@ -708,12 +738,12 @@ export function mountSidePanelApp(root: HTMLElement) {
 
   async function handleQuestionChange(message: QuestionChangeMessage) {
     if (message.tabId != null && message.tabId !== state.activePage?.tabId) return;
-    if (state.brobotMode !== 'question_tutor') return;
     if (state.loading || state.auth?.status !== 'linked') return;
+    if (pageRefreshTimer) {
+      window.clearTimeout(pageRefreshTimer);
+      pageRefreshTimer = null;
+    }
 
-    enableQuestionTutorWatching();
-    state.questionPositionLabel = message.questionPositionLabel;
-    state.currentQuestionFingerprint = message.fingerprint;
     if (message.activeQuestionKey === 'himalaya:results-overview') {
       bumpQuestionLifecycleGeneration();
       clearQuestionSpecificContent();
@@ -727,6 +757,10 @@ export function mountSidePanelApp(root: HTMLElement) {
       render();
       return;
     }
+    if (state.brobotMode !== 'question_tutor') return;
+    enableQuestionTutorWatching();
+    state.questionPositionLabel = message.questionPositionLabel;
+    state.currentQuestionFingerprint = message.fingerprint;
     await questionTutorController.onQuestionChanged(message);
     syncQuestionTutorShellState();
   }
@@ -756,6 +790,39 @@ export function mountSidePanelApp(root: HTMLElement) {
 
   function setReviewBoardRowState(questionAttemptId: number, patch: Partial<ReviewBoardRowState>) {
     state.reviewBoardRowStates.set(questionAttemptId, { ...getReviewBoardRowState(questionAttemptId), ...patch });
+    const overview = state.pageContext?.provider === 'himalaya' && state.pageContext.pageKind === 'results-overview'
+      ? state.pageContext
+      : null;
+    if (overview) {
+      const serialized = Object.fromEntries(state.reviewBoardRowStates);
+      void chrome.storage.local.set({ [himalayaDebriefStorageKey(overview)]: serialized });
+    }
+  }
+
+  async function loadHimalayaDebrief(pageContext: OrthobulletsPageContext) {
+    const key = himalayaDebriefStorageKey(pageContext);
+    if (state.reviewBoardLoadedFor === key) return;
+    state.reviewBoardLoadedFor = key;
+    const stored = await chrome.storage.local.get(key);
+    const rows = stored[key] as Record<string, ReviewBoardRowState> | undefined;
+    state.reviewBoardRowStates = new Map(
+      Object.entries(rows ?? {}).map(([questionAttemptId, rowState]) => [Number(questionAttemptId), rowState])
+    );
+  }
+
+  async function copyHimalayaDebrief() {
+    const rows = getReviewBoardRows(state.pageContext);
+    const title = typeof state.pageContext?.raw?.providerSpecific?.assessmentTitle === 'string'
+      ? state.pageContext.raw.providerSpecific.assessmentTitle
+      : state.pageContext?.title ?? null;
+    await navigator.clipboard.writeText(himalayaDebriefText(rows, state.reviewBoardRowStates, title));
+  }
+
+  async function clearHimalayaDebrief() {
+    if (!state.pageContext) return;
+    await chrome.storage.local.remove(himalayaDebriefStorageKey(state.pageContext));
+    state.reviewBoardRowStates.clear();
+    render();
   }
 
   /**
@@ -764,8 +831,8 @@ export function mountSidePanelApp(root: HTMLElement) {
    */
   async function explainReviewBoardRow(questionAttemptId: number) {
     const existing = getReviewBoardRowState(questionAttemptId);
-    if (existing.loading || existing.explanation) return;
-    if (!state.activePage?.tabId) return;
+    if (existing.loading || existing.explanation) return null;
+    if (!state.activePage?.tabId) return 'unsupported_page' as ExtensionErrorCode;
 
     setReviewBoardRowState(questionAttemptId, { expanded: true, loading: true, error: null });
     render();
@@ -782,7 +849,7 @@ export function mountSidePanelApp(root: HTMLElement) {
         error: extractResult.ok ? 'Could not load this question.' : extractResult.error,
       });
       render();
-      return;
+      return extractResult.ok ? 'extraction_failure' as ExtensionErrorCode : extractResult.code ?? 'extraction_failure';
     }
 
     const explainResult = await sendMessage({
@@ -796,7 +863,7 @@ export function mountSidePanelApp(root: HTMLElement) {
         error: explainResult.ok ? 'BroBot could not explain this question.' : explainResult.error,
       });
       render();
-      return;
+      return explainResult.ok ? 'api_failure' as ExtensionErrorCode : explainResult.code ?? 'api_failure';
     }
 
     // A Himalaya question always routes to question_explain, so a curriculum
@@ -808,7 +875,7 @@ export function mountSidePanelApp(root: HTMLElement) {
         error: 'BroBot returned a page summary instead of a question explanation.',
       });
       render();
-      return;
+      return 'api_failure' as ExtensionErrorCode;
     }
 
     state.usage = explainResult.explanation.usage ?? state.usage;
@@ -818,6 +885,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       error: null,
     });
     render();
+    return null;
   }
 
   /**
@@ -836,31 +904,32 @@ export function mountSidePanelApp(root: HTMLElement) {
     render();
 
     for (const questionAttemptId of summary.missedIds) {
-      await explainReviewBoardRow(questionAttemptId);
+      const errorCode = await explainReviewBoardRow(questionAttemptId);
       // Stop early rather than burning quota once the account is capped out.
-      if (state.error?.code === 'quota_exceeded') break;
+      if (errorCode === 'quota_exceeded') break;
     }
 
     state.reviewBoardExplainAllInFlight = false;
     render();
   }
 
-  /**
-   * On landing in a finished attempt, expand the misses and start explaining
-   * them. Keyed by attempt so switching tests re-runs, but a re-render does not.
-   */
-  function maybeAutoExplainMisses() {
-    if (state.auth?.status !== 'linked') return;
-    const rows = getReviewBoardRows(state.pageContext);
-    if (!rows.length) return;
-    const attemptKey = String(state.pageContext?.raw?.providerSpecific?.testAttemptId ?? state.pageContext?.pageUrl ?? '');
-    if (!attemptKey || state.reviewBoardAutoExplainedFor === attemptKey) return;
-    state.reviewBoardAutoExplainedFor = attemptKey;
-    if (!summarizeBoard(rows).missedIds.length) return;
-    void explainAllReviewBoardMisses();
+  function clearPageSpecificState() {
+    bumpQuestionLifecycleGeneration();
+    clearQuestionSpecificContent();
+    state.pageContext = null;
+    state.extractionDiagnostics = null;
+    state.fetchDiagnostics = null;
+    state.currentQuestionFingerprint = null;
+    state.questionPositionLabel = null;
+    state.questionTutorEngaged = false;
+    state.questionRefreshing = false;
+    state.fullTestDebrief = null;
+    state.reviewBoardRowStates.clear();
+    state.reviewBoardLoadedFor = null;
   }
 
   async function refreshBaseState() {
+    const refreshSequence = ++pageRefreshSequence;
     state.loading = true;
     render();
 
@@ -868,6 +937,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       sendMessage({ type: 'ob:get-active-page-state' }),
       sendMessage({ type: 'ob:get-auth-state' }),
     ]);
+    if (refreshSequence !== pageRefreshSequence) return;
 
     state.activePage = pageResult.ok && 'activePage' in pageResult ? pageResult.activePage : null;
     state.auth = authResult.ok && 'auth' in authResult ? authResult.auth : null;
@@ -875,16 +945,30 @@ export function mountSidePanelApp(root: HTMLElement) {
     render();
 
     if (state.activePage?.supported && state.auth?.status === 'linked') {
-      void prefetchPageContext();
+      void prefetchPageContext(refreshSequence);
     }
   }
 
-  async function prefetchPageContext() {
+  function schedulePageRefresh(delayMs = 120) {
+    if (pageRefreshTimer) window.clearTimeout(pageRefreshTimer);
+    pageRefreshTimer = window.setTimeout(() => {
+      pageRefreshTimer = null;
+      clearPageSpecificState();
+      void refreshBaseState();
+    }, delayMs);
+  }
+
+  async function prefetchPageContext(expectedRefreshSequence: number) {
     state.operation = 'extracting';
     state.error = null;
     render();
 
-    const pageContext = await extractPageContext({ allowPartial: true, preserveError: false });
+    const pageContext = await extractPageContext({
+      allowPartial: true,
+      preserveError: false,
+      expectedRefreshSequence,
+    });
+    if (expectedRefreshSequence !== pageRefreshSequence) return;
     state.operation = 'idle';
     if (pageContext) {
       state.brobotMode = state.forceQuestionMode ? 'question_tutor' : preferredBrobotMode(pageContext);
@@ -947,7 +1031,12 @@ export function mountSidePanelApp(root: HTMLElement) {
     }, 3000);
   }
 
-  async function extractPageContext(options: { allowPartial?: boolean; preserveError?: boolean; forceQuestionMode?: boolean } = {}) {
+  async function extractPageContext(options: {
+    allowPartial?: boolean;
+    preserveError?: boolean;
+    forceQuestionMode?: boolean;
+    expectedRefreshSequence?: number;
+  } = {}) {
     if (!state.activePage?.tabId) {
       if (!options.preserveError) {
         state.error = { message: 'No active supported page tab is available.', code: 'unsupported_page' };
@@ -964,6 +1053,12 @@ export function mountSidePanelApp(root: HTMLElement) {
       type: 'ob:extract-page-context',
       tabId: state.activePage.tabId,
     });
+    if (
+      options.expectedRefreshSequence != null &&
+      options.expectedRefreshSequence !== pageRefreshSequence
+    ) {
+      return null;
+    }
 
     if (!extractResult.ok || !('pageContext' in extractResult)) {
       state.extractionDiagnostics = !extractResult.ok && 'diagnostics' in extractResult ? extractResult.diagnostics ?? null : null;
@@ -978,9 +1073,28 @@ export function mountSidePanelApp(root: HTMLElement) {
     }
 
     state.pageContext = extractResult.pageContext;
+    if (
+      extractResult.pageContext.provider === 'himalaya' &&
+      extractResult.pageContext.pageKind === 'results-overview'
+    ) {
+      await loadHimalayaDebrief(extractResult.pageContext);
+    }
     state.extractionDiagnostics = extractResult.diagnostics;
     state.fetchDiagnostics = null;
     state.brobotMode = state.forceQuestionMode ? 'question_tutor' : preferredBrobotMode(extractResult.pageContext);
+    const extractedReview = getOrthobulletsTestReview(extractResult.pageContext);
+    if (extractedReview) {
+      const storageKey = testDebriefStorageKey(extractedReview);
+      const stored = await chrome.storage.local.get(storageKey);
+      state.fullTestDebrief = (stored[storageKey] as FullTestDebrief | undefined) ?? null;
+      if (state.fullTestDebrief?.status === 'building') {
+        const readyCount = state.fullTestDebrief.questions.filter((question) => question.status === 'ready').length;
+        state.fullTestDebrief.status = readyCount > 0 ? 'partial' : 'error';
+        await chrome.storage.local.set({ [storageKey]: state.fullTestDebrief });
+      }
+    } else {
+      state.fullTestDebrief = null;
+    }
     if (extractResult.pageContext.mode === 'question') {
       state.currentQuestionFingerprint = fingerprintFromPageContext(extractResult.pageContext);
     }
@@ -1050,7 +1164,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       task: 'question_hint',
       pageContext,
       hintLevel,
-      selectedAnswerKey: pageContext.selectedAnswerKey,
+      selectedAnswerKey: selectedAnswerForHint(pageContext.selectedAnswerKey),
       priorHints: state.hints
         .filter((hint) => hint.hintLevel < hintLevel)
         .map(({ hintLevel: priorLevel, title, hint }) => ({ hintLevel: priorLevel, title, hint })),
@@ -1204,6 +1318,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       pageContext: state.pageContext,
       explanation: isCurriculumStudyResponse(state.explanation) ? undefined : state.explanation,
       curriculumStudy: state.curriculumStudy ?? undefined,
+      answerState: 'answered_review',
       emphasis: state.explainEmphasis,
       history: priorHistory,
       userMessage,
@@ -1450,15 +1565,255 @@ export function mountSidePanelApp(root: HTMLElement) {
     button.textContent = ankiConnectionTimeoutCopy();
   }
 
+  function waitForTabToLoad(tabId: number, timeoutMs = 20_000) {
+    return new Promise<void>((resolve, reject) => {
+      const timeout = window.setTimeout(() => {
+        chrome.tabs.onUpdated.removeListener(listener);
+        reject(new Error('The question review page took too long to load.'));
+      }, timeoutMs);
+      const listener = (updatedTabId: number, changeInfo: { status?: string }) => {
+        if (updatedTabId !== tabId || changeInfo.status !== 'complete') return;
+        window.clearTimeout(timeout);
+        chrome.tabs.onUpdated.removeListener(listener);
+        resolve();
+      };
+      chrome.tabs.onUpdated.addListener(listener);
+      void chrome.tabs.get(tabId).then((tab: { status?: string }) => {
+        if (tab.status !== 'complete') return;
+        window.clearTimeout(timeout);
+        chrome.tabs.onUpdated.removeListener(listener);
+        resolve();
+      }).catch(() => undefined);
+    });
+  }
+
+  function debriefSearchKeywords(explanation: OrthobulletsExplainResponse) {
+    return [...new Set(
+      [explanation.testedConcept, explanation.bottomLine, explanation.boardPearl, ...explanation.studyNext]
+        .join(' ')
+        .match(/[A-Za-z][A-Za-z-]{4,}/g)
+        ?.map((token) => token.toLowerCase()) ?? []
+    )].slice(0, 24);
+  }
+
+  function compactDebriefPageContext(pageContext: OrthobulletsPageContext): OrthobulletsPageContext {
+    return {
+      ...pageContext,
+      images: [],
+      raw: undefined,
+      contentText: undefined,
+      contentMarkdown: undefined,
+      contentSections: undefined,
+      topicSections: undefined,
+      tablesMarkdown: undefined,
+      sectionHeadings: undefined,
+    };
+  }
+
+  async function persistFullTestDebrief(
+    review: NonNullable<ReturnType<typeof getOrthobulletsTestReview>>,
+    debrief = state.fullTestDebrief
+  ) {
+    if (!debrief) return;
+    debrief.updatedAt = new Date().toISOString();
+    await chrome.storage.local.set({
+      [testDebriefStorageKey(review)]: debrief,
+    });
+  }
+
+  async function buildFullTestDebrief() {
+    const review = getOrthobulletsTestReview(state.pageContext);
+    if (!review || state.fullTestDebrief?.status === 'building') return;
+    const now = new Date().toISOString();
+    const debrief: FullTestDebrief = {
+      version: 1,
+      testKey: testDebriefStorageKey(review),
+      createdAt: now,
+      updatedAt: now,
+      status: 'building',
+      questions: review.rows
+        .filter((row) => row.isCorrect === false)
+        .map((row) => ({
+          row,
+          pageContext: null,
+          explanation: null,
+          status: 'pending' as const,
+          error: null,
+        })),
+    };
+    state.fullTestDebrief = debrief;
+    await persistFullTestDebrief(review, debrief);
+    render();
+
+    for (const question of debrief.questions) {
+      question.status = 'collecting';
+      await persistFullTestDebrief(review, debrief);
+      if (state.fullTestDebrief === debrief) render();
+      let temporaryTabId: number | null = null;
+      try {
+        const tab = await chrome.tabs.create({ url: question.row.reviewUrl, active: false });
+        if (tab.id == null) throw new Error('Chrome could not open the question review page.');
+        temporaryTabId = tab.id;
+        await waitForTabToLoad(tab.id);
+        const extracted = await sendMessage({ type: 'ob:extract-page-context', tabId: tab.id });
+        if (!extracted.ok || !('pageContext' in extracted)) {
+          throw new Error(extracted.ok ? 'Could not read this review page.' : extracted.error);
+        }
+        const explained = await sendMessage({ type: 'ob:explain', pageContext: extracted.pageContext });
+        if (!explained.ok || !('explanation' in explained) || isCurriculumStudyResponse(explained.explanation)) {
+          throw new Error(explained.ok ? 'BroBot returned the wrong response type.' : explained.error);
+        }
+        question.pageContext = compactDebriefPageContext(extracted.pageContext);
+        question.explanation = explained.explanation;
+        question.status = 'ready';
+        state.usage = explained.explanation.usage ?? state.usage;
+      } catch (error) {
+        question.status = 'error';
+        question.error = error instanceof Error ? error.message : 'Could not analyze this question.';
+      } finally {
+        if (temporaryTabId != null) {
+          await chrome.tabs.remove(temporaryTabId).catch(() => undefined);
+        }
+      }
+      await persistFullTestDebrief(review, debrief);
+      if (state.fullTestDebrief === debrief) render();
+    }
+    const readyCount = debrief.questions.filter((question) => question.status === 'ready').length;
+    debrief.status = readyCount === debrief.questions.length
+      ? 'ready'
+      : readyCount > 0
+        ? 'partial'
+        : 'error';
+    await persistFullTestDebrief(review, debrief);
+    if (state.fullTestDebrief === debrief) render();
+  }
+
+  async function exportFullTestDebrief() {
+    const review = getOrthobulletsTestReview(state.pageContext);
+    if (!review || !state.fullTestDebrief) return;
+    await navigator.clipboard.writeText(fullDebriefText(review, state.fullTestDebrief));
+  }
+
+  async function clearFullTestDebrief() {
+    const review = getOrthobulletsTestReview(state.pageContext);
+    if (!review) return;
+    await chrome.storage.local.remove(testDebriefStorageKey(review));
+    state.fullTestDebrief = null;
+    render();
+  }
+
+  async function findQuestionAnkiCards(questionId: string, button: HTMLButtonElement) {
+    const question = state.fullTestDebrief?.questions.find((candidate) => candidate.row.questionId === questionId);
+    if (!question?.pageContext || !question.explanation) {
+      button.textContent = 'Rebuild the debrief to search this question';
+      return;
+    }
+    button.disabled = true;
+    button.textContent = 'Searching for this misconception…';
+    const result = await sendMessage({
+      type: 'ob:send-to-anki',
+      pageContext: question.pageContext,
+      explanation: question.explanation,
+    });
+    if (!result.ok || !('ankiSearch' in result)) {
+      button.disabled = false;
+      button.textContent = result.ok ? 'Try again' : `Try again — ${result.error}`;
+      return;
+    }
+    for (let attempt = 0; attempt < ANKI_STATUS_POLL_ATTEMPTS; attempt += 1) {
+      await new Promise((resolve) => setTimeout(resolve, ANKI_STATUS_POLL_INTERVAL_MS));
+      const status = await sendMessage({
+        type: 'ob:get-anki-search-status',
+        searchRequestId: result.ankiSearch.searchRequestId,
+      });
+      if (!status.ok || !('ankiSearch' in status)) continue;
+      if (status.ankiSearch.status === 'completed') {
+        const count = Number(status.ankiSearch.resultSummary?.availableCount ?? 0);
+        button.textContent = `Opened ${count} matching card${count === 1 ? '' : 's'} in Anki`;
+        return;
+      }
+      if (['no_local_results', 'review_required', 'failed', 'expired', 'cancelled'].includes(status.ankiSearch.status)) {
+        button.disabled = false;
+        button.textContent = `Anki search: ${status.ankiSearch.status.replaceAll('_', ' ')}`;
+        return;
+      }
+    }
+    button.disabled = false;
+    button.textContent = ankiConnectionTimeoutCopy();
+  }
+
+  async function findTestAnkiCards(button: HTMLButtonElement, debrief: FullTestDebrief | null) {
+    if (!state.pageContext || !getOrthobulletsTestReview(state.pageContext)) return;
+    button.disabled = true;
+    button.textContent = 'Preparing missed-concept search…';
+    const result = await sendMessage({
+      type: 'ob:send-test-to-anki',
+      pageContext: state.pageContext,
+      enrichedQuestions: debrief?.questions.flatMap((question) => question.explanation ? [{
+        questionId: question.row.questionId,
+        testedConcept: question.explanation.testedConcept,
+        summary: question.explanation.bottomLine,
+        searchKeywords: debriefSearchKeywords(question.explanation),
+      }] : []),
+    });
+    if (!result.ok || !('ankiSearch' in result)) {
+      button.disabled = false;
+      button.textContent = result.ok ? 'Find all relevant cards in Anki' : `Try again — ${result.error}`;
+      return;
+    }
+    let statusFailures = 0;
+    for (let attempt = 0; attempt < ANKI_STATUS_POLL_ATTEMPTS; attempt += 1) {
+      button.textContent = waitingForAnkiCopy(attempt);
+      await new Promise((resolve) => setTimeout(resolve, ANKI_STATUS_POLL_INTERVAL_MS));
+      const status = await sendMessage({
+        type: 'ob:get-anki-search-status',
+        searchRequestId: result.ankiSearch.searchRequestId,
+      });
+      if (!status.ok || !('ankiSearch' in status)) {
+        statusFailures += 1;
+        if (statusFailures >= 3) {
+          button.disabled = false;
+          button.textContent = 'Could not confirm Anki — try again';
+          return;
+        }
+        continue;
+      }
+      statusFailures = 0;
+      const current = status.ankiSearch.status;
+      if (current === 'claimed' || current === 'resolving_local') {
+        button.textContent = 'Resolving cards in Anki…';
+      }
+      if (current === 'completed') {
+        const count = Number(status.ankiSearch.resultSummary?.availableCount ?? 0);
+        const missing = Number(status.ankiSearch.resultSummary?.missingCount ?? 0);
+        const mismatch = Number(status.ankiSearch.resultSummary?.versionMismatchCount ?? 0);
+        button.textContent = `Opened ${count} card${count === 1 ? '' : 's'} in Anki${missing + mismatch ? ` · ${missing + mismatch} unavailable` : ''}`;
+        return;
+      }
+      if (['no_local_results', 'review_required', 'failed', 'expired', 'cancelled'].includes(current)) {
+        button.disabled = false;
+        button.textContent = current === 'review_required'
+          ? 'No confident backend matches'
+          : `Anki search: ${current.replaceAll('_', ' ')}`;
+        return;
+      }
+    }
+    button.disabled = false;
+    button.textContent = ankiConnectionTimeoutCopy();
+  }
+
   function render() {
     root.innerHTML = '';
     syncQuestionTutorViewContext();
+    const testReview = getOrthobulletsTestReview(state.pageContext);
 
     const questionTutorView =
-      state.brobotMode === 'question_tutor' ? questionTutorController.store.deriveViewState() : null;
+      state.brobotMode === 'question_tutor' && !testReview
+        ? questionTutorController.store.deriveViewState()
+        : null;
 
     const status =
-      state.brobotMode === 'question_tutor'
+      state.brobotMode === 'question_tutor' && !testReview
         ? getQuestionTutorStatusCopy({
             loading: state.loading,
             activePage: state.activePage,
@@ -1501,8 +1856,10 @@ export function mountSidePanelApp(root: HTMLElement) {
       (state.brobotMode === 'question_tutor' && primaryAction === 'explain');
     const hintNextLevel = state.hints.length === 0 ? 1 : state.hints.length === 1 ? 2 : 3;
     const panelTitle =
-      state.brobotMode === 'topic_tutor'
-        ? 'Orthobullets Page Mode'
+      testReview
+        ? 'Test Debrief'
+        : state.brobotMode === 'topic_tutor'
+        ? 'Page Companion'
         : state.brobotMode === 'explain_page'
           ? 'Explain with BroBot'
           : 'Question Tutor';
@@ -1557,7 +1914,9 @@ export function mountSidePanelApp(root: HTMLElement) {
           }
         </div>`,
     });
-    content.appendChild(statusCard);
+    if (!isTopicPage) {
+      content.appendChild(statusCard);
+    }
     statusCard.querySelector('#refresh-question')?.addEventListener('click', () => {
       void questionTutorController.onManualRefresh().then(() => syncQuestionTutorShellState());
     });
@@ -1590,6 +1949,25 @@ export function mountSidePanelApp(root: HTMLElement) {
       card.querySelector('#start-link')?.addEventListener('click', () => {
         void startLinkFlow();
       });
+    } else if (testReview) {
+      appendOrthobulletsTestDebrief(content, {
+        review: testReview,
+        debrief: state.fullTestDebrief,
+        hooks: {
+          onFindAnkiCards: (button, debrief) => void findTestAnkiCards(button, debrief),
+          onFindQuestionAnkiCards: (questionId, button) => void findQuestionAnkiCards(questionId, button),
+          onOpenQuestion: (reviewUrl) => {
+            if (state.activePage?.tabId != null) {
+              void chrome.tabs.update(state.activePage.tabId, { url: reviewUrl });
+            }
+          },
+          onBuildDebrief: () => void buildFullTestDebrief(),
+          onExportDebrief: () => void exportFullTestDebrief(),
+          onClearDebrief: () => void clearFullTestDebrief(),
+          onUnlink: () => void unlink(),
+        },
+        escapeHtml,
+      });
     } else if (state.pageContext?.provider === 'himalaya' && state.pageContext.pageKind === 'results-overview') {
       const providerSpecific = state.pageContext.raw?.providerSpecific ?? {};
       appendHimalayaReviewBoard(content, {
@@ -1607,11 +1985,12 @@ export function mountSidePanelApp(root: HTMLElement) {
           },
           onExplainRow: (questionAttemptId) => void explainReviewBoardRow(questionAttemptId),
           onExplainAllMisses: () => void explainAllReviewBoardMisses(),
+          onCopyDebrief: () => void copyHimalayaDebrief(),
+          onClearDebrief: () => void clearHimalayaDebrief(),
           onUnlink: () => void unlink(),
         },
         renderers: { escapeHtml, renderExplanation },
       });
-      maybeAutoExplainMisses();
     } else if (isTopicPage) {
       renderTopicTutorPanel(content, state, {
         runTopicTutorTurn: (input) => void runTopicTutorTurn(input),
@@ -2007,9 +2386,35 @@ export function mountSidePanelApp(root: HTMLElement) {
     root.appendChild(content);
   }
 
-  chrome.runtime.onMessage.addListener((message: QuestionChangeMessage) => {
+  chrome.runtime.onMessage.addListener((message: QuestionChangeMessage | PageChangeMessage) => {
     if (message?.type === 'ob:question-changed') {
       void handleQuestionChange(message);
+    } else if (
+      message?.type === 'ob:page-changed' &&
+      (message.tabId == null || message.tabId === state.activePage?.tabId)
+    ) {
+      schedulePageRefresh();
+    }
+  });
+
+  chrome.tabs.onActivated.addListener(() => {
+    schedulePageRefresh(0);
+  });
+
+  chrome.tabs.onUpdated.addListener((
+    tabId: number,
+    changeInfo: { status?: string; url?: string },
+    tab: { active?: boolean }
+  ) => {
+    if (!tab.active) return;
+    if (changeInfo.url) {
+      // Clear stale content promptly, then let the completed navigation perform
+      // extraction after the destination DOM and content script are ready.
+      schedulePageRefresh(0);
+      return;
+    }
+    if (changeInfo.status === 'complete' && tabId === state.activePage?.tabId) {
+      schedulePageRefresh();
     }
   });
 

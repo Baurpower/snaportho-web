@@ -7,6 +7,12 @@ import {
   getSlotStatusForDay,
 } from "@/lib/workspace/call/rule-definitions";
 import { getBuddyDateStatesForMonth } from "@/lib/workspace/call/buddy-requirements";
+import { isCallPolicyV2Enabled } from "@/lib/workspace/call/policy/call-policy-flags";
+import {
+  makeEngineHelpers,
+  type EngineHelpers,
+} from "@/lib/workspace/call/policy/policy-runtime";
+import type { ProgramRule } from "@/components/workspace/call/programcalltypes";
 
 type ScheduleSlotMode = "Primary" | "Both";
 type Slot = "Primary" | "Backup" | "Buddy";
@@ -317,6 +323,7 @@ function evaluateCandidateForSlot({
   draftAssignments,
   availabilityByResident,
   rules,
+  engine,
 }: {
   resident: ResidentTotal;
   day: CalendarDayLike;
@@ -324,6 +331,7 @@ function evaluateCandidateForSlot({
   draftAssignments: DraftAssignments;
   availabilityByResident: AvailabilityByResident;
   rules: RuleLike[];
+  engine?: EngineHelpers | null;
 }) {
   const assignment = draftAssignments[day.key] ?? {};
 
@@ -332,6 +340,27 @@ function evaluateCandidateForSlot({
   const helpfulReasons: string[] = [];
 
   const residentKey = resident.resolvedRosterId;
+
+  // CALL_POLICY_V2: derive eligibility from the unified engine (removes this file's
+  // incomplete rule reimplementation). Advisory packet only — read-only.
+  if (engine && residentKey) {
+    const resOption = engine.ctx.residentsById.get(residentKey);
+    if (resOption) {
+      const ev = engine.evaluate(resOption, slot, day.key);
+      const selectable = engine.isSelectable(resOption, slot, day.key);
+      if (resident.monthTotal <= 2) helpfulReasons.push("Low total monthly call burden.");
+      if (day.isWeekend && resident.monthWeekend <= 1) {
+        helpfulReasons.push("Low weekend burden.");
+      }
+      return {
+        ...resident,
+        eligible: selectable,
+        hardBlockers: ev.blocks.map((b) => b.message),
+        bendableWarnings: ev.warnings.map((w) => w.message),
+        helpfulReasons,
+      };
+    }
+  }
 
   if (!residentKey) hardBlockers.push("Missing roster ID.");
 
@@ -476,6 +505,7 @@ function getCandidatesForSlot(params: {
   draftAssignments: DraftAssignments;
   availabilityByResident: AvailabilityByResident;
   rules: RuleLike[];
+  engine?: EngineHelpers | null;
 }) {
   return params.residentTotals
     .map((resident) =>
@@ -630,6 +660,26 @@ export function buildSchedulePacket(body: BuildSchedulePacketBody) {
     residentTotals.map((resident) => [resident.resolvedRosterId, resident] as const)
   );
 
+  // CALL_POLICY_V2: build the unified engine once so candidate eligibility flows
+  // through evaluateSlot rather than this file's partial rule reimplementation.
+  const engine: EngineHelpers | null = isCallPolicyV2Enabled()
+    ? makeEngineHelpers({
+        residents: residentTotals.map((rt) => ({
+          residentId: rt.resolvedRosterId,
+          membershipId: rt.membershipId ?? rt.resolvedRosterId,
+          displayName: String(rt.displayName ?? rt.resolvedRosterId),
+          trainingLevel: rt.trainingLevel ?? null,
+          pgyYear: rt.pgyYear ?? null,
+          gradYear: rt.gradYear ?? null,
+          rotationAssignments: rt.rotationAssignments ?? [],
+        })),
+        rules: safeRules as unknown as ProgramRule[],
+        slotDefinitions: extractSlotDefinitions(safeRules as never[]),
+        availability: safeAvailabilityByResident as never,
+        assignments: safeDraftAssignments as never,
+      })
+    : null;
+
   const requiredSlots = getRequiredSlots({
     monthDays,
     residents,
@@ -649,6 +699,7 @@ export function buildSchedulePacket(body: BuildSchedulePacketBody) {
           draftAssignments: safeDraftAssignments,
           availabilityByResident: safeAvailabilityByResident,
           rules: safeRules,
+          engine,
         })
       : [];
 

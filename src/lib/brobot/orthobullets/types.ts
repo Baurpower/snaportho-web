@@ -225,7 +225,7 @@ export const CurriculumExplainRequestSchema = z.object({
 
 export const OrthobulletsExplainResponseSchema = z.object({
   explanationId: z.string().uuid(),
-  // 1-2 sentence direct answer: the diagnosis/principle + which choice wins.
+  // Compact TL;DR: the answer, decisive clue, and causal reasoning.
   bottomLine: z.string().trim().min(1).max(400),
   // The single concept being tested, named concretely (not a vague topic).
   testedConcept: z.string().trim().min(1).max(200),
@@ -270,17 +270,32 @@ export const OrthobulletsChatRequestSchema = z.object({
   pageContext: OrthobulletsPageContextSchema,
   explanation: OrthobulletsChatExplanationSchema.optional(),
   curriculumStudy: CurriculumChatStudySchema.optional(),
+  answerState: z.enum(['unanswered', 'answered_review']),
   emphasis: CurriculumExplainEmphasisSchema.optional(),
   history: z.array(OrthobulletsChatTurnSchema).max(12).default([]),
   userMessage: z.string().trim().min(1).max(1000),
 }).superRefine((value, ctx) => {
   const hasQuestion = Boolean(value.explanation);
   const hasCurriculum = Boolean(value.curriculumStudy);
-  if (hasQuestion === hasCurriculum) {
+  if (hasQuestion && hasCurriculum) {
     ctx.addIssue({
       code: 'custom',
-      message: 'Provide exactly one of explanation or curriculumStudy.',
+      message: 'Provide no more than one of explanation or curriculumStudy.',
       path: ['explanation'],
+    });
+  }
+  if (value.answerState === 'unanswered' && (hasQuestion || hasCurriculum)) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Unanswered-question chat must not include review-only teaching content.',
+      path: ['answerState'],
+    });
+  }
+  if (value.pageContext.mode === 'curriculum_content' && !hasCurriculum) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Curriculum chat requires curriculumStudy.',
+      path: ['curriculumStudy'],
     });
   }
 });

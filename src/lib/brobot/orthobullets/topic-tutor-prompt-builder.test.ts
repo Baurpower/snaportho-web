@@ -39,8 +39,12 @@ const normalChat = buildTopicTutorMessages({
   history: [],
   userMessage: 'Why does this cause cardiomyopathy?',
 });
-assert.match(normalChat[0]?.content ?? '', /normal chat question or request/i);
+assert.match(normalChat[0]?.content ?? '', /treat the learner's message as normal chat/i);
 assert.match(normalChat[0]?.content ?? '', /Answer it directly and conversationally/i);
+
+const usefulVersion = buildTopicTutorMessages({ context, progress, history: [], action: 'explain_page' });
+assert.match(usefulVersion[1]?.content ?? '', /3-5 ideas that organize the topic/i);
+assert.match(usefulVersion[1]?.content ?? '', /helpful synthesis, not a quiz/i);
 
 const tested = buildTopicTutorMessages({ context, progress, history: [], action: 'what_tested' });
 assert.match(tested[1]?.content ?? '', /Give 3-5 concrete, prioritized OITE\/board testable takeaways/i);

@@ -136,7 +136,8 @@ export async function POST(request: Request) {
           })
         : buildOrthobulletsChatMessages({
             context: resolvedContext,
-            explanation: parsed.data.explanation!,
+            explanation: parsed.data.explanation,
+            answerState: parsed.data.answerState,
             history: parsed.data.history,
             userMessage: parsed.data.userMessage,
           }),

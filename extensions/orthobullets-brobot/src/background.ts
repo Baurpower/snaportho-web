@@ -2,6 +2,8 @@ import type {
   ExtensionErrorCode,
   ExtensionMessage,
   ExtensionMessageResponse,
+  PageChangeMessage,
+  QuestionChangeMessage,
 } from './shared/messages.js';
 import type {
   ExtensionFetchDiagnostics,
@@ -39,7 +41,7 @@ import {
 const STORAGE_KEY = 'snaportho_extension_device_token';
 const EXTENSION_TOKEN_HEADER = 'x-snaportho-extension-token';
 const ADDON_BASE_URL_HEADER = 'x-snaportho-addon-base-url';
-const BACKGROUND_BUILD_ID_MARKER = '2026-07-19-rock-curriculum-contract-v2';
+const BACKGROUND_BUILD_ID_MARKER = '2026-07-30-himalaya-live-v4';
 
 // Server error codes (from explain/route.ts and friends) map 1:1 onto the
 // extension's own ExtensionErrorCode for known cases; anything else falls
@@ -472,8 +474,13 @@ function buildExtractionDiagnostics(input: {
   };
 }
 
-chrome.runtime.onMessage.addListener((message: ExtensionMessage | { type: 'ob:question-changed' }, sender: { tab?: { id?: number } }, sendResponse: (response: ExtensionMessageResponse) => void) => {
-  if (message && typeof message === 'object' && 'type' in message && message.type === 'ob:question-changed') {
+chrome.runtime.onMessage.addListener((message: ExtensionMessage | QuestionChangeMessage | PageChangeMessage, sender: { tab?: { id?: number } }, sendResponse: (response: ExtensionMessageResponse) => void) => {
+  if (
+    message &&
+    typeof message === 'object' &&
+    'type' in message &&
+    (message.type === 'ob:question-changed' || message.type === 'ob:page-changed')
+  ) {
     void chrome.runtime
       .sendMessage({
         ...message,
@@ -643,6 +650,80 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage | { type: 'ob:qu
         return;
       }
 
+      if (message.type === 'ob:send-test-to-anki') {
+        const deviceToken = await getStoredDeviceToken();
+        if (!deviceToken) throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');
+        const review = message.pageContext.testReview;
+        if (
+          message.pageContext.provider !== 'orthobullets' ||
+          message.pageContext.mode !== 'test_review' ||
+          !review
+        ) {
+          throw new CodedError('This is not an Orthobullets test-results page.', 'invalid_request');
+        }
+        const missedRows = review.rows.filter((row) => row.isCorrect === false);
+        if (!missedRows.length) throw new CodedError('This test has no missed questions to search.', 'invalid_request');
+        const grouped = new Map<string, typeof missedRows>();
+        for (const row of missedRows) {
+          const key = row.topic?.trim() || row.specialty?.trim() || row.questionId;
+          grouped.set(key, [...(grouped.get(key) ?? []), row]);
+        }
+        const enrichedById = new Map(
+          (message.enrichedQuestions ?? []).map((question) => [question.questionId, question])
+        );
+        const pageSections = [...grouped.entries()].map(([heading, rows], index) => ({
+          id: `missed-concept-${index + 1}`,
+          heading: heading.slice(0, 240),
+          concepts: [...new Set([
+            heading,
+            ...rows.map((row) => row.specialty).filter((value): value is string => Boolean(value)),
+            ...rows.map((row) => row.questionId),
+            ...rows.flatMap((row) => {
+              const enriched = enrichedById.get(row.questionId);
+              return enriched ? [enriched.testedConcept, ...enriched.searchKeywords] : [];
+            }),
+          ])].slice(0, 12),
+          priority: Math.max(1, Math.min(5, rows.length + 2)),
+        })).slice(0, 30);
+        const nativeTestId = review.testId || new URL(message.pageContext.pageUrl).searchParams.get('test') || 'orthobullets-test';
+        const fingerprint = await sha256(JSON.stringify({
+          nativeTestId,
+          misses: missedRows.map((row) => [row.questionId, row.topic, row.selectedAnswerKey, row.correctAnswerKey]),
+        }));
+        const idempotencyHash = await sha256(`${fingerprint}|${Math.floor(Date.now() / 300_000)}`);
+        const result = await fetchJson('/api/brobot/extension/anki-search', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', [EXTENSION_TOKEN_HEADER]: deviceToken },
+          body: JSON.stringify({
+            contractVersion: 'snaportho-extension-anki-search.v1',
+            clientRequestId: crypto.randomUUID(),
+            idempotencyKey: uuidFromHash(idempotencyHash),
+            source: {
+              provider: 'orthobullets',
+              queryKind: 'topic_page',
+              nativeQuestionId: `test:${nativeTestId}`,
+              questionFingerprintHash: fingerprint,
+            },
+            concept: {
+              testedConcept: (message.enrichedQuestions?.length
+                ? message.enrichedQuestions.map((question) => question.testedConcept).join('; ')
+                : `Missed concepts from Orthobullets test ${nativeTestId}`).slice(0, 300),
+              summary: (message.enrichedQuestions?.length
+                ? message.enrichedQuestions.map((question) => question.summary).join(' ')
+                : `${missedRows.length} missed questions across ${pageSections.length} concept groups: ${pageSections.map((section) => section.heading).join('; ')}`).slice(0, 600),
+              searchKeywords: [...new Set(pageSections.flatMap((section) => section.concepts))].slice(0, 24),
+              pageSections,
+              source: 'page_metadata',
+            },
+            requestedAction: 'open_browse_and_return_results',
+            extensionVersion: chrome.runtime.getManifest?.().version ?? 'unknown',
+            createdAt: new Date().toISOString(),
+          }),
+        });
+        sendResponse({ ok: true, ankiSearch: result });
+        return;
+      }
+
       if (message.type === 'ob:get-anki-search-status') {
         const deviceToken = await getStoredDeviceToken();
         if (!deviceToken) throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');
@@ -679,12 +760,18 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage | { type: 'ob:qu
         }
 
         if (!response?.ok || !response.pageContext) {
+          const contentScriptResponded = Boolean(response);
+          const failureCode: OrthobulletsExtractionDiagnostics['failureCode'] = !contentScriptResponded
+            ? 'content_script_no_response'
+            : response?.provider === 'himalaya'
+              ? 'question_content_not_found'
+              : 'unsupported_page_type';
           const diagnostics = buildExtractionDiagnostics({
             activeTabId: tabSnapshot.tabId,
             activeTabUrl: tabSnapshot.url,
             activeTabStatus: tabSnapshot.status,
-            contentScriptResponded: false,
-            failureCode: 'content_script_no_response',
+            contentScriptResponded,
+            failureCode,
             sendMessageError,
             fallbackInjectionAttempted,
             injectionError,
@@ -735,7 +822,10 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage | { type: 'ob:qu
             ? {
                 ...requestPayload,
                 hintLevel: 'hintLevel' in message ? message.hintLevel : undefined,
-                selectedAnswerKey: 'selectedAnswerKey' in message ? message.selectedAnswerKey : undefined,
+                selectedAnswerKey:
+                  'selectedAnswerKey' in message && message.selectedAnswerKey
+                    ? message.selectedAnswerKey
+                    : undefined,
                 priorHints: 'priorHints' in message ? message.priorHints : undefined,
               }
             : {
@@ -851,6 +941,7 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage | { type: 'ob:qu
             pageContext: message.pageContext,
             explanation: message.explanation,
             curriculumStudy: message.curriculumStudy,
+            answerState: message.answerState,
             emphasis: message.emphasis,
             history: message.history,
             userMessage: message.userMessage,

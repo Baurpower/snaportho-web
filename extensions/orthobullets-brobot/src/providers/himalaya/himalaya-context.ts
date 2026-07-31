@@ -62,7 +62,9 @@ export function buildHimalayaApiPageContext(input: {
   const selected = question.choices.find((choice) => choice.selected);
   const correct = question.choices.find((choice) => choice.correct === true);
   const explanation = question.explanation;
-  const fingerprint = buildHimalayaFingerprint(question);
+  const fingerprint = bridgeState?.testAttemptId != null
+    ? `himalaya:${bridgeState.testAttemptId}:${question.questionAttemptId}`
+    : buildHimalayaFingerprint(question);
   const totalQuestions = bridgeState?.openModal?.total
     ?? bridgeState?.liveQuestion?.totalQuestions
     ?? (input.allQuestions.length || null);
@@ -140,16 +142,18 @@ export function buildHimalayaApiPageContext(input: {
       hasVisibleExplanation: Boolean(explanation),
       hasVisibleReviewMarker: isReview,
       hasSubmittedAnswerState: isReview,
-      visibleUnansweredPrompt: !isReview && !selected,
+      visibleUnansweredPrompt: !isReview,
       unansweredOverrideApplied: false,
       reviewScore: isReview ? 3 : 0,
-      unansweredScore: !isReview && !selected ? 3 : 0,
+      unansweredScore: !isReview ? 3 : 0,
       reviewEvidence: [
         explanation ? 'te6_api_feedback' : '',
         question.references ? 'te6_api_reference' : '',
         isReview ? 'te6_api_show_correct_answer' : '',
       ].filter(Boolean),
-      unansweredEvidence: !isReview && !selected ? ['te6_api_no_remediation', 'te6_api_no_selection'] : [],
+      unansweredEvidence: !isReview
+        ? ['te6_api_no_remediation', selected ? 'selected_not_submitted' : 'no_selection']
+        : [],
       visiblePreferredResponseActive: Boolean(explanation),
       visiblePreferredResponseEnabled: Boolean(explanation),
       visibleExplanationTextLength: explanation?.length ?? 0,

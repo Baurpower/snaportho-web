@@ -156,4 +156,30 @@ strict_1.default.equal(types_1.OrthobulletsExplainRequestSchema.safeParse({
     task: 'question_explain',
     pageContext: questionPageContext,
 }).success, true, 'valid question explain payload should pass');
+strict_1.default.equal(types_1.OrthobulletsChatRequestSchema.safeParse({
+    pageContext: {
+        ...questionPageContext,
+        selectedAnswerKey: undefined,
+        correctAnswerKey: undefined,
+        explanationText: undefined,
+    },
+    answerState: 'unanswered',
+    history: [],
+    userMessage: 'What clue should I focus on?',
+}).success, true, 'unanswered coaching chat should work without a generated explanation');
+strict_1.default.equal(types_1.OrthobulletsChatRequestSchema.safeParse({
+    pageContext: questionPageContext,
+    answerState: 'unanswered',
+    explanation: {
+        bottomLine: 'Answer',
+        testedConcept: 'Concept',
+        whyCorrect: 'Reason',
+        whyWrong: [],
+        boardPearl: 'Pearl',
+        studyNext: [],
+        warnings: [],
+    },
+    history: [],
+    userMessage: 'Give me the answer',
+}).success, false, 'unanswered coaching chat must reject review-only explanation content');
 console.log('BroBot extension request contract tests passed.');

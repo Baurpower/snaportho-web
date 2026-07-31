@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { BarChart3, GraduationCap, Users, Stethoscope } from 'lucide-react';
+import { BarChart3, BookOpenCheck, GraduationCap, GitBranch, Stethoscope, Users } from 'lucide-react';
 import type React from 'react';
 
 const COLORS = {
@@ -128,6 +128,28 @@ const matchData = [
   },
 ];
 
+const chartingOutcomesData = {
+  md: {
+    matched: 628,
+    notMatched: 245,
+    step2: { matched: 259, notMatched: 251 },
+    specialties: {
+      matched: { one: 570, two: 49, three: 7, fourOrMore: 2 },
+      notMatched: { one: 197, two: 40, three: 7, fourOrMore: 1 },
+    },
+  },
+  do: {
+    matched: 94,
+    notMatched: 115,
+    step2: { matched: 256, notMatched: 245 },
+    comlex2: { matched: 623, notMatched: 568 },
+    specialties: {
+      matched: { one: 73, two: 18, three: 3, fourOrMore: 0 },
+      notMatched: { one: 67, two: 45, three: 2, fourOrMore: 1 },
+    },
+  },
+} as const;
+
 function Container({ children }: { children: React.ReactNode }) {
   return <div className="mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-10">{children}</div>;
 }
@@ -220,6 +242,33 @@ function formatInt(value: number) {
   return value.toLocaleString();
 }
 
+function formatWholePercent(numerator: number, denominator: number) {
+  return `${((numerator / denominator) * 100).toFixed(1)}%`;
+}
+
+function OutcomeBar({ matched, notMatched, max }: { matched: number; notMatched: number; max: number }) {
+  return (
+    <div className="space-y-3">
+      {[
+        { label: 'Matched', value: matched, color: COLORS.accent },
+        { label: 'Did not match', value: notMatched, color: '#9ca3af' },
+      ].map((item) => (
+        <div key={item.label}>
+          <div className="mb-1.5 flex items-center justify-between gap-4 text-xs">
+            <span className="font-medium text-gray-600">{item.label}</span>
+            <span className="font-semibold" style={{ color: COLORS.headingSub }}>
+              {item.value}
+            </span>
+          </div>
+          <div className="h-2 overflow-hidden rounded-full bg-gray-100">
+            <div className="h-full rounded-full" style={{ width: `${(item.value / max) * 100}%`, background: item.color }} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function PathToOrthoMatchStatsPage() {
   const latestYear = matchData[0];
   const earliestYear = matchData[matchData.length - 1];
@@ -261,6 +310,175 @@ export default function PathToOrthoMatchStatsPage() {
               </p>
             </div>
           </div>
+        </Container>
+      </Section>
+
+      <Divider />
+
+      <Section>
+        <Container>
+          <SectionHeading
+            eyebrow="2026 Charting Outcomes"
+            title="Boards: what the matched cohorts scored"
+            subtitle="Median board scores differed between matched and unmatched orthopaedic applicants. These are cohort descriptions—not screening cutoffs or a prediction for any one applicant."
+          />
+
+          <div className="grid gap-6 lg:grid-cols-3">
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2">
+                  <BookOpenCheck className="h-5 w-5" style={{ color: COLORS.accent }} />
+                  MD seniors · Step 2 CK
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <OutcomeBar
+                  matched={chartingOutcomesData.md.step2.matched}
+                  notMatched={chartingOutcomesData.md.step2.notMatched}
+                  max={280}
+                />
+                <p className="mt-5">
+                  Median scores: 259 among matched applicants and 251 among applicants who did not match.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2">
+                  <BookOpenCheck className="h-5 w-5" style={{ color: COLORS.accent }} />
+                  DO seniors · Step 2 CK
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <OutcomeBar
+                  matched={chartingOutcomesData.do.step2.matched}
+                  notMatched={chartingOutcomesData.do.step2.notMatched}
+                  max={280}
+                />
+                <p className="mt-5">
+                  Median scores: 256 among matched applicants and 245 among applicants who did not match.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2">
+                  <BookOpenCheck className="h-5 w-5" style={{ color: COLORS.accent }} />
+                  DO seniors · COMLEX Level 2-CE
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <OutcomeBar
+                  matched={chartingOutcomesData.do.comlex2.matched}
+                  notMatched={chartingOutcomesData.do.comlex2.notMatched}
+                  max={700}
+                />
+                <p className="mt-5">
+                  Median scores: 623 among matched applicants and 568 among applicants who did not match.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div
+            className="mt-6 rounded-2xl border px-5 py-4 text-sm leading-relaxed text-gray-600"
+            style={{ borderColor: COLORS.border, background: 'rgba(255,255,255,0.65)' }}
+          >
+            <span className="font-semibold" style={{ color: COLORS.headingSub }}>
+              How to read this:
+            </span>{' '}
+            stronger board performance was associated with matching in these cohorts, but the distributions overlap
+            and the Match remains multifactorial. Use these medians as context—not as a target that guarantees an
+            interview or match.
+          </div>
+        </Container>
+      </Section>
+
+      <Divider />
+
+      <Section>
+        <Container>
+          <SectionHeading
+            eyebrow="Application Strategy"
+            title="Dual applying: what applicants actually did"
+            subtitle="NRMP reports the number of distinct specialties applicants ranked. Ranking two or more specialties is used here as the practical marker of dual applying."
+          />
+
+          <div className="grid gap-6 lg:grid-cols-2">
+            {[
+              {
+                label: 'U.S. MD seniors',
+                icon: GraduationCap,
+                matchedCount: 58,
+                matchedTotal: chartingOutcomesData.md.matched,
+                notMatchedCount: 48,
+                notMatchedTotal: chartingOutcomesData.md.notMatched,
+                detail: '570 of 628 matched and 197 of 245 unmatched applicants ranked orthopaedics only.',
+              },
+              {
+                label: 'U.S. DO seniors',
+                icon: GitBranch,
+                matchedCount: 21,
+                matchedTotal: chartingOutcomesData.do.matched,
+                notMatchedCount: 48,
+                notMatchedTotal: chartingOutcomesData.do.notMatched,
+                detail: '73 of 94 matched and 67 of 115 unmatched applicants ranked orthopaedics only.',
+              },
+            ].map((group) => {
+              const Icon = group.icon;
+              return (
+                <Card key={group.label}>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="flex items-center gap-2">
+                      <Icon className="h-5 w-5" style={{ color: COLORS.accent }} />
+                      {group.label}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="rounded-xl p-4" style={{ background: 'rgba(89,116,152,0.08)' }}>
+                        <div className="text-xs font-medium uppercase tracking-wide text-gray-500">Matched</div>
+                        <div className="mt-1 text-3xl font-semibold" style={{ color: COLORS.heading }}>
+                          {formatWholePercent(group.matchedCount, group.matchedTotal)}
+                        </div>
+                        <div className="mt-1 text-xs text-gray-500">{group.matchedCount} ranked 2+ specialties</div>
+                      </div>
+                      <div className="rounded-xl p-4" style={{ background: 'rgba(156,163,175,0.12)' }}>
+                        <div className="text-xs font-medium uppercase tracking-wide text-gray-500">Did not match</div>
+                        <div className="mt-1 text-3xl font-semibold" style={{ color: COLORS.heading }}>
+                          {formatWholePercent(group.notMatchedCount, group.notMatchedTotal)}
+                        </div>
+                        <div className="mt-1 text-xs text-gray-500">{group.notMatchedCount} ranked 2+ specialties</div>
+                      </div>
+                    </div>
+                    <p className="mt-4">{group.detail}</p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
+          <Card className="mt-6">
+            <CardHeader className="pb-3">
+              <CardTitle>What this means for your strategy</CardTitle>
+            </CardHeader>
+            <CardContent className="pt-0">
+              Dual applying was more common among applicants who did not match their preferred specialty, but this does
+              not mean dual applying caused the outcome. Applicants may choose a second specialty because they already
+              recognize higher application risk. If you are considering it, decide early with mentors, build a credible
+              second-specialty application, and understand that the NRMP chart reflects ranked specialties—not every
+              specialty to which an applicant submitted an application.
+            </CardContent>
+          </Card>
+
+          <p className="mt-5 text-xs leading-relaxed text-gray-500">
+            Source: NRMP 2026 Charting Outcomes in the Match, U.S. MD Seniors and U.S. DO Seniors, Orthopaedic Surgery
+            tables and charts. The orthopaedic samples shown here include applicants who consented to research use: MD
+            n=873 and DO n=209. Board scores are primary-source NRMP data; research and other experience measures in the
+            reports are self-reported.
+          </p>
         </Container>
       </Section>
 

@@ -8,6 +8,7 @@ const types_1 = require("./types");
 // or the question-tutor path) so the two modes can't accidentally end up
 // reusing the same generic "teach this page" prompt.
 exports.OrthobulletsTopicActionSchema = zod_1.z.enum([
+    'explain_page',
     'quiz_me',
     'what_tested',
     'attending_question',

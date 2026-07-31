@@ -173,20 +173,21 @@ QPushButton#ghost {
   padding: 8px 10px;
 }
 QProgressBar#deckDownloadProgress {
-  min-height: 14px;
-  border: 1px solid #bfdbfe;
-  border-radius: 7px;
-  background: #eff6ff;
-  text-align: center;
-  color: #1e3a8a;
-  font-size: 10px;
-  font-weight: 600;
+  min-height: 8px;
+  max-height: 8px;
+  border: none;
+  border-radius: 4px;
+  background: #dbeafe;
 }
 QProgressBar#deckDownloadProgress::chunk {
   background: #2563eb;
-  border-radius: 6px;
+  border-radius: 4px;
 }
-QLabel#downloadProgressLabel { color: #334155; font-size: 11px; }
+QLabel#downloadProgressLabel {
+  color: #475569;
+  font-size: 11px;
+  padding-top: 2px;
+}
 """
 
 
@@ -200,6 +201,30 @@ def plan_counts(plan) -> dict:
         kind = action.get("action")
         counts[kind] = counts.get(kind, 0) + 1
     return counts
+
+
+def v2_content_summary(operations) -> dict:
+    """Describe user-visible final content, not internal delta operation kinds."""
+    latest_tags = {}
+    updated_notes = set()
+    media_assets = set()
+    for operation in operations or []:
+        kind = operation.get("operation")
+        note_id = operation.get("noteId")
+        payload = operation.get("payload") or {}
+        if note_id and kind in ("upsert_note", "update_tags"):
+            updated_notes.add(note_id)
+        if note_id and "governedTags" in payload:
+            latest_tags[note_id] = set(payload.get("governedTags") or [])
+        if kind == "media_add":
+            media_assets.add(payload.get("sha256") or payload.get("filename"))
+    latest_tags.pop(None, None)
+    return {
+        "updatedNotes": len(updated_notes),
+        "taggedNotes": sum(bool(tags) for tags in latest_tags.values()),
+        "managedTagAssignments": sum(len(tags) for tags in latest_tags.values()),
+        "mediaAssets": len(media_assets),
+    }
 
 
 class MasterDeckDialog:
@@ -224,6 +249,7 @@ class MasterDeckDialog:
         self.last_download_path = None
         self.v2_pages = []
         self.v2_release = None
+        self.v2_summary = {}
         self._busy = False
 
         self.dialog = QDialog(parent)
@@ -293,6 +319,7 @@ class MasterDeckDialog:
         self.download_progress.setObjectName("deckDownloadProgress")
         self.download_progress.setRange(0, 100)
         self.download_progress.setValue(0)
+        self.download_progress.setTextVisible(False)
         self.download_progress.hide()
         root.addWidget(self.download_progress)
         self.download_progress_label = QLabel("")
@@ -421,11 +448,11 @@ class MasterDeckDialog:
     def _set_update_progress(self, value, label, indeterminate=False):
         self.download_progress.show()
         self.download_progress_label.show()
-        if indeterminate:
-            self.download_progress.setRange(0, 0)
-        else:
-            self.download_progress.setRange(0, 100)
-            self.download_progress.setValue(max(0, min(100, int(value))))
+        # Qt's native indeterminate bar renders as two oversized blocks on
+        # macOS. Use a calm initial position until real page progress is known.
+        self.download_progress.setRange(0, 100)
+        shown_value = 10 if indeterminate else value
+        self.download_progress.setValue(max(0, min(100, int(shown_value))))
         self.download_progress_label.setText(label)
 
     def _set_installed_layout(self, installed):
@@ -571,6 +598,7 @@ class MasterDeckDialog:
                 return
             self.v2_release=release;self.v2_pages=pages
             operations=[op for page in pages for op in(page.get("operations")or[])]
+            self.v2_summary=v2_content_summary(operations)
             counts={}
             for op in operations:counts[op["operation"]]=counts.get(op["operation"],0)+1
             if not operations:
@@ -585,9 +613,11 @@ class MasterDeckDialog:
                 return
             self._set_hero(
                 f"<b>Master Deck {release['version']} is ready</b><br><br>"
-                f"{len(operations)} verified operations across {len(pages)} resumable page(s).<br>"
-                f"Notes: {counts.get('upsert_note',0)} · Tags: {counts.get('update_tags',0)} · "
-                f"Moves: {counts.get('move_note',0)} · Media: {counts.get('media_add',0)}<br><br>"
+                f"{self.v2_summary['updatedNotes']} notes will be refreshed across "
+                f"{len(pages)} resumable batch(es).<br>"
+                f"{self.v2_summary['managedTagAssignments']} managed tag assignments on "
+                f"{self.v2_summary['taggedNotes']} notes · "
+                f"{self.v2_summary['mediaAssets']} media assets<br><br>"
                 "Personal and protected fields are preserved. Existing scheduling is not changed.",
                 "info",
             )
@@ -637,11 +667,14 @@ class MasterDeckDialog:
                 for key in("notes","retired","tags","moved","media"):totals[key]+=result[key]
                 totals["overwrittenLocal"]+=result["overwrittenLocal"]
             self.runtime.mw.reset();self._busy=False
-            self._set_update_progress(100,"Update complete")
+            self._hide_download_progress()
+            summary=self.v2_summary
             self._set_hero(
                 f"<b>✓ Master Deck {self.v2_release['version']} updated</b><br><br>"
-                f"{totals['notes']} notes · {totals['tags']} tag updates · "
-                f"{totals['moved']} moves · {totals['media']} media operations<br><br>"
+                f"{summary.get('updatedNotes',totals['notes'])} notes refreshed · "
+                f"{summary.get('managedTagAssignments',totals['tags'])} managed tag assignments "
+                f"across {summary.get('taggedNotes',0)} notes · "
+                f"{summary.get('mediaAssets',totals['media'])} media assets<br><br>"
                 "Existing scheduling and protected fields were preserved.",
                 "ok",
             )

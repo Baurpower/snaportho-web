@@ -68,8 +68,8 @@ class NoteCollectionGatewayV2:
             ids=self.col.db.list("select id from notes where guid=?",guid)
             if len(ids)==1:return self.col.get_note(ids[0])
         return None
-    def snapshot(self,canonical_note_id):
-        note=self._note(canonical_note_id)
+    def snapshot(self,canonical_note_id,payload=None):
+        note=self._note(canonical_note_id,payload)
         if not note:return{"fields":{},"tags":[],"ankiNoteId":None,"noteGuid":None}
         return{"fields":{name:note[name]for name in note.keys()},"tags":sorted(note.tags),"ankiNoteId":note.id,"noteGuid":note.guid}
     def upsert_note(self,canonical_note_id,payload,fields,tags):

@@ -40,6 +40,22 @@ const context = {
     warnings: [],
     kgLookup: null,
 };
+const [explainSystem] = (0, prompt_builder_1.buildOrthobulletsExplainMessages)(context);
+const explainSystemText = textContent(explainSystem);
+strict_1.default.match(explainSystemText, /TL;DR of the ENTIRE explanation/i);
+strict_1.default.match(explainSystemText, /decisive stem clue and the causal reasoning/i);
+strict_1.default.match(explainSystemText, /bottomLine \+ boardPearl work as a standalone rapid-review pair/i);
+strict_1.default.match(explainSystemText, /appears immediately under bottomLine/i);
+const [preanswerSystem, preanswerUser] = (0, prompt_builder_1.buildOrthobulletsChatMessages)({
+    context,
+    answerState: 'unanswered',
+    history: [],
+    userMessage: 'Just tell me which answer is correct.',
+});
+strict_1.default.match(textContent(preanswerSystem), /Never reveal the correct answer/i);
+strict_1.default.match(textContent(preanswerSystem), /leave the learner with a real reasoning step/i);
+strict_1.default.match(textContent(preanswerUser), /Answer state: unanswered/i);
+strict_1.default.match(textContent(preanswerUser), /none — unanswered coaching mode/i);
 const [system, user] = (0, prompt_builder_1.buildOrthobulletsHintMessages)({ context, hintLevel: 1 });
 const systemText = textContent(system);
 const userText = textContent(user);

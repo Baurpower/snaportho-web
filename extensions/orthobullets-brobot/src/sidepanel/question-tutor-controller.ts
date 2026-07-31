@@ -18,6 +18,11 @@ import {
 } from './question-session.js';
 
 const DEFAULT_FOLLOW_UP_PROMPTS = ['Why not the trap answer?', 'Make this simpler', 'Give me an Anki-style card'];
+const PREANSWER_CHAT_PROMPTS = ['Give me a hint', 'What clue should I focus on?', 'Help me narrow the choices'];
+
+export function selectedAnswerForHint(value: string | null | undefined) {
+  return value?.trim() || undefined;
+}
 
 export type QuestionTutorControllerDeps = {
   sendMessage: (message: ExtensionMessage) => Promise<ExtensionMessageResponse>;
@@ -127,7 +132,9 @@ export class QuestionTutorController {
   }
 
   async onInitialPageContext(pageContext: OrthobulletsPageContext) {
-    const fingerprint = fingerprintFromPageContext(pageContext);
+    const fingerprint = pageContext.provider === 'himalaya'
+      ? String(pageContext.raw?.providerSpecific?.fingerprint ?? fingerprintFromPageContext(pageContext))
+      : fingerprintFromPageContext(pageContext);
     this.store.activateFingerprint(fingerprint, {
       url: pageContext.pageUrl ?? pageContext.sourceUrl ?? '',
       questionId: pageContext.questionId ?? null,
@@ -266,7 +273,7 @@ export class QuestionTutorController {
       task: 'question_hint',
       pageContext: session.payload,
       hintLevel,
-      selectedAnswerKey: session.payload.selectedAnswerKey,
+      selectedAnswerKey: selectedAnswerForHint(session.payload.selectedAnswerKey),
       priorHints: session.hints
         .filter((hint) => hint.hintLevel < hintLevel)
         .map(({ hintLevel: priorLevel, title, hint }) => ({ hintLevel: priorLevel, title, hint })),
@@ -395,7 +402,7 @@ export class QuestionTutorController {
 
   async submitFollowUp(promptOverride?: string) {
     const session = this.getActiveSession();
-    if (!session?.payload || !session.explanation) return;
+    if (!session?.payload) return;
 
     const userMessage = (promptOverride ?? session.chatDraft).trim();
     if (!userMessage) return;
@@ -403,13 +410,20 @@ export class QuestionTutorController {
     this.store.visiblePanelMode = 'chat_open';
     const generation = session.generation;
     const priorHistory = [...session.chatHistory];
+    const answerState =
+      session.reviewState === 'answered_review' ? 'answered_review' : 'unanswered';
+    session.chatError = undefined;
 
     this.store.beginInFlight();
     const result = await this.deps.sendMessage({
       type: 'ob:chat',
       pageContext: session.payload,
-      explanation: isCurriculumStudyResponse(session.explanation) ? undefined : session.explanation,
+      explanation:
+        answerState === 'answered_review' && session.explanation && !isCurriculumStudyResponse(session.explanation)
+          ? session.explanation
+          : undefined,
       curriculumStudy: session.curriculumStudy ?? undefined,
+      answerState,
       emphasis: this.deps.getExplainEmphasis(),
       history: priorHistory,
       userMessage,
@@ -420,17 +434,24 @@ export class QuestionTutorController {
 
     if (!result.ok || !('chat' in result)) {
       if (!promptOverride) session.chatDraft = userMessage;
+      session.chatError = result.ok ? 'BroBot could not answer this follow-up.' : result.error;
       this.store.lastEvent = 'chat_error';
       this.render();
       return;
     }
 
     session.chatDraft = '';
+    session.chatError = undefined;
     session.chatHistory = [
       ...priorHistory,
       { role: 'user', content: userMessage },
       { role: 'assistant', content: result.chat.answer },
     ];
+    session.chatPrompts = result.chat.suggestedPrompts.length
+      ? result.chat.suggestedPrompts
+      : answerState === 'unanswered'
+        ? PREANSWER_CHAT_PROMPTS
+        : DEFAULT_FOLLOW_UP_PROMPTS;
     this.store.lastEvent = 'chat_ready';
     this.render();
   }

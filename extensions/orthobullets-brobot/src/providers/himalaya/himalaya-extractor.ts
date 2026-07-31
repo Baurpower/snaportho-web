@@ -32,6 +32,9 @@ const HIMALAYA_SELECTORS = {
     '[class*="review-dialog" i]',
     // te6 partial-question.html live-question widget.
     '.widget.exam-question',
+    '#teApp',
+    '[ng-controller*="question" i]',
+    '[ng-include*="question" i]',
     '.question-attempt',
     '[data-testid*="question" i]',
     '[class*="question-attempt" i]',
@@ -66,6 +69,8 @@ const HIMALAYA_SELECTORS = {
     'label:has(input[type="checkbox"])',
     '[role="radio"]',
     '[role="option"]',
+    'li:has(input[type="radio"])',
+    'li:has(input[type="checkbox"])',
   ],
   answerIndex: ['.answer-index', '[class*="answer-index" i]', '[class*="answerIndex" i]'],
   // `label` precedes generic p/span so live-question rows prefer the answer label
@@ -143,6 +148,42 @@ function queryFirstVisible(root: DomElementLike, selectors: readonly string[]) {
   return null;
 }
 
+function findVisibleStem(root: DomElementLike) {
+  const known = queryFirstVisible(root, HIMALAYA_SELECTORS.stem);
+  if (known) return known;
+  const candidates = Array.from(root.querySelectorAll(
+    '[ng-bind-html*="stem" i], [ng-bind-html*="question" i], p, h1, h2, h3, h4, div'
+  ))
+    .filter(isElementVisible)
+    .filter((node) => {
+      const text = visibleText(node);
+      if (text.length < 35 || text.length > 5000 || !text.includes('?')) return false;
+      // Prefer the smallest node containing the actual prompt rather than a
+      // page-sized ancestor that also contains every answer and control.
+      return !Array.from(node.querySelectorAll('p,div')).some((child) => {
+        if (child === node || !isElementVisible(child)) return false;
+        const childText = visibleText(child);
+        return childText.length >= 35 && childText.includes('?');
+      });
+    })
+    .sort((left, right) => visibleText(left).length - visibleText(right).length);
+  return candidates[0] ?? null;
+}
+
+function findAnswerNodes(container: DomElementLike) {
+  const known = Array.from(container.querySelectorAll(HIMALAYA_SELECTORS.answers.join(',')))
+    .filter(isElementVisible);
+  const fromInputs = Array.from(container.querySelectorAll('input[type="radio"], input[type="checkbox"]'))
+    .filter(isElementVisible)
+    .map((input) =>
+      input.closest?.('li, label, [role="radio"], [class*="choice" i], [class*="answer" i]')
+      ?? input.parentElement
+      ?? input
+    )
+    .filter(isElementVisible);
+  return [...new Set([...known, ...fromInputs])];
+}
+
 function collectVisibleTexts(root: DomElementLike, selectors: readonly string[]) {
   const seen = new Set<string>();
   const values: string[] = [];
@@ -174,10 +215,10 @@ function textAfterHeading(root: DomElementLike, headingPattern: RegExp) {
 function detectHimalayaPageMode(documentRef: DocumentLike): HimalayaPageMode {
   const bodyText = normalizeWhitespace(documentRef.body?.innerText ?? documentRef.textContent);
   const hasQuestion = Array.from(documentRef.querySelectorAll(HIMALAYA_SELECTORS.questionContainer.join(','))).some((node) => {
-    const stem = queryFirstVisible(node, HIMALAYA_SELECTORS.stem);
-    const answers = Array.from(node.querySelectorAll(HIMALAYA_SELECTORS.answers.join(','))).filter(isElementVisible);
+    const stem = findVisibleStem(node);
+    const answers = findAnswerNodes(node);
     return Boolean(stem && answers.length >= 2);
-  });
+  }) || Boolean(documentRef.body && findVisibleStem(documentRef.body) && findAnswerNodes(documentRef.body).length >= 2);
   if (hasQuestion) {
     if (bodyText.match(/\b(feedback|discussion|key reference points|references|correct|incorrect|your answer|show more)\b/i)) {
       return 'reviewed-question';
@@ -225,8 +266,18 @@ function containerScore(node: DomElementLike) {
 function findActiveQuestionContainer(documentRef: DocumentLike) {
   const candidates = Array.from(documentRef.querySelectorAll(HIMALAYA_SELECTORS.questionContainer.join(',')))
     .filter(isElementVisible)
-    .filter((node) => queryFirstVisible(node, HIMALAYA_SELECTORS.stem))
-    .filter((node) => Array.from(node.querySelectorAll(HIMALAYA_SELECTORS.answers.join(','))).filter(isElementVisible).length >= 2);
+    .filter((node) => findVisibleStem(node))
+    .filter((node) => findAnswerNodes(node).length >= 2);
+
+  if (
+    !candidates.length &&
+    documentRef.body &&
+    isElementVisible(documentRef.body) &&
+    findVisibleStem(documentRef.body) &&
+    findAnswerNodes(documentRef.body).length >= 2
+  ) {
+    candidates.push(documentRef.body);
+  }
 
   candidates.sort((a, b) => containerScore(b) - containerScore(a));
   return { active: candidates[0] ?? null, candidates };
@@ -295,8 +346,7 @@ function detectAnswerState(node: DomElementLike) {
 function extractChoices(container: DomElementLike) {
   const seen = new Set<string>();
   const choices: HimalayaAnswerChoice[] = [];
-  const rawNodes = Array.from(container.querySelectorAll(HIMALAYA_SELECTORS.answers.join(',')))
-    .filter(isElementVisible)
+  const rawNodes = findAnswerNodes(container)
     // Exclude the .answers wrapper itself plus structural controls such as the
     // te6 `.exam-submit-answer` block that only contain buttons, not choices.
     .filter((node) => !/\banswers\b|submit/i.test(node.getAttribute('class') ?? ''));
@@ -427,7 +477,7 @@ export function extractHimalayaQuestionSnapshot(input: {
   let snapshot: HimalayaQuestionSnapshot | null = null;
 
   if (active && (pageMode === 'reviewed-question' || pageMode === 'active-question')) {
-    const stem = visibleText(queryFirstVisible(active, HIMALAYA_SELECTORS.stem));
+    const stem = visibleText(findVisibleStem(active));
     const choices = extractChoices(active);
     const explanation = extractSection(
       active,

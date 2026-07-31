@@ -15,6 +15,41 @@ import {
   getFlagsForAssignedResident,
 } from "@/components/workspace/call/programcallevaluator";
 import {
+  makeEngineHelpers,
+  type EngineHelpers,
+} from "@/lib/workspace/call/policy/policy-runtime";
+
+/**
+ * CALL_POLICY_V2: the active policy engine for the in-flight generation attempt.
+ * generateSingleCallSchedule runs fully synchronously (no await), and the public
+ * generateCallSchedule invokes it in a synchronous loop, so a module-scoped handle
+ * set at the start of each attempt (and cleared before returning) is safe and avoids
+ * threading `engine` through every candidate-selection helper. Null = legacy path.
+ */
+let activeGeneratorEngine: EngineHelpers | null = null;
+
+/** Engine-backed hard eligibility for a candidate, or the legacy evaluator when off. */
+function generatorEligible(
+  resident: ResidentOption,
+  slot: Slot,
+  dateKey: string,
+  assignments: Record<string, DraftDayAssignment>,
+  rules: ProgramRule[],
+  availabilityByResident: ProgramAvailabilityMonthResponse["availability"]
+): boolean {
+  if (activeGeneratorEngine) {
+    return activeGeneratorEngine.isSelectable(resident, slot, dateKey);
+  }
+  return isResidentAllowedForSlot({
+    resident,
+    slot,
+    dateKey,
+    assignments,
+    rules,
+    availabilityByResident,
+  });
+}
+import {
   DEFAULT_SLOT_DEFINITIONS,
   getEffectiveRules,
   getSlotStatusForDay,
@@ -1285,18 +1320,26 @@ function inspectCandidatePool({
     }
 
     // Rotation blocking is reported by evaluateResidentForSlot below (canonical
-    // availability source); no separate rotation-rule check is needed here.
-    const evaluation = evaluateResidentForSlot({
-      resident,
-      slot,
-      dateKey: day.key,
-      assignments,
-      rules,
-      availabilityByResident,
-    });
-
-    for (const block of evaluation.blocks) {
-      reasons.push(block.message);
+    // availability source). Under CALL_POLICY_V2, eligibility (incl. temporal /
+    // grey-zone tiers + Buddy roster gate) comes from the policy engine instead.
+    if (activeGeneratorEngine) {
+      const ev = activeGeneratorEngine.evaluate(resident, slot, day.key);
+      for (const block of ev.blocks) reasons.push(block.message);
+      if (!activeGeneratorEngine.isSelectable(resident, slot, day.key) && ev.blocks.length === 0) {
+        reasons.push(`Not eligible for ${slot} on this date.`);
+      }
+    } else {
+      const evaluation = evaluateResidentForSlot({
+        resident,
+        slot,
+        dateKey: day.key,
+        assignments,
+        rules,
+        availabilityByResident,
+      });
+      for (const block of evaluation.blocks) {
+        reasons.push(block.message);
+      }
     }
 
     if (reasons.length > 0) {
@@ -1337,16 +1380,9 @@ function pickBestResident({
   const eligible = residents.filter((resident) =>
     // Rotation eligibility is enforced inside isResidentAllowedForSlot →
     // evaluateResidentForSlot, which reads the canonical availability rotation
-    // data. The former separate isResidentBlockedByRotationRule check used a
-    // second rotation source and is now redundant (see rotation source unification).
-    isResidentAllowedForSlot({
-      resident,
-      slot,
-      dateKey: day.key,
-      assignments,
-      rules,
-      availabilityByResident,
-    })
+    // data. Under CALL_POLICY_V2 this routes through the policy engine instead
+    // (tiers + temporal/grey-zone eligibility).
+    generatorEligible(resident, slot, day.key, assignments, rules, availabilityByResident)
   );
 
   if (eligible.length === 0) return null;
@@ -1650,6 +1686,19 @@ function generateSingleCallSchedule({
         };
   }
 
+  // CALL_POLICY_V2: activate the policy engine for this attempt. Built with
+  // nextAssignments as a LIVE ref so presence/pairing/slot-occupant reads reflect
+  // assignments as the generator mutates them. Cleared before every return below.
+  activeGeneratorEngine = useCallPolicyV2
+    ? makeEngineHelpers({
+        rules: enabledRules,
+        slotDefinitions: effectiveSlotDefinitions,
+        residents,
+        availability: availabilityByResident,
+        assignments: nextAssignments,
+      })
+    : null;
+
   const stats = buildInitialStats(
     residents,
     historicalStats,
@@ -1805,14 +1854,22 @@ function generateSingleCallSchedule({
           return null;
         }
 
-        const buddyEvaluation = evaluateResidentForSlot({
-          resident: buddyResident,
-          slot: "Buddy",
-          dateKey,
-          assignments: nextAssignments,
-          rules: enabledRules,
-          availabilityByResident,
-        });
+        // CALL_POLICY_V2: buddy eligibility (incl. the "first Gen-Ortho month only"
+        // temporal tier) comes from the engine, so a 2nd-month intern is skipped here
+        // even though the legacy buddy roster still lists them.
+        const buddyEvaluation = activeGeneratorEngine
+          ? {
+              allowed: activeGeneratorEngine.isSelectable(buddyResident, "Buddy", dateKey),
+              blocks: activeGeneratorEngine.evaluate(buddyResident, "Buddy", dateKey).blocks,
+            }
+          : evaluateResidentForSlot({
+              resident: buddyResident,
+              slot: "Buddy",
+              dateKey,
+              assignments: nextAssignments,
+              rules: enabledRules,
+              availabilityByResident,
+            });
         if (!buddyEvaluation.allowed) {
           skippedReasons.push({
             dateKey,
@@ -2518,6 +2575,10 @@ function generateSingleCallSchedule({
       invalidateBuddyDateStateMap();
     }
   }
+
+  // Clear the per-attempt engine handle before returning (repair/optimize, which run
+  // after in the wrapper, use the legacy path).
+  activeGeneratorEngine = null;
 
   return {
     assignments: nextAssignments,

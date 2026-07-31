@@ -51,6 +51,7 @@ export type QuestionSession = {
   chatHistory: OrthobulletsChatTurn[];
   chatDraft: string;
   chatPrompts: string[];
+  chatError?: string;
 
   generation: number;
   questionPositionLabel?: string | null;
@@ -97,7 +98,7 @@ export type QuestionLifecycleDebug = {
   previousVisibleQuestionIdentity: VisibleQuestionIdentity | null;
   activeQuestionKey: string | null;
   previousActiveQuestionKey: string | null;
-  questionChangeDetectedBy: 'polling' | 'mutation' | 'url' | 'manual' | null;
+  questionChangeDetectedBy: 'polling' | 'mutation' | 'url' | 'store' | 'manual' | null;
   lastQuestionChangeAt: string | null;
   refreshSkippedReason: string | null;
   hintCount: number;
@@ -126,6 +127,7 @@ export type QuestionTutorViewState = {
   showExplainCta: boolean;
   showHintLoading: boolean;
   showExplanationLoading: boolean;
+  operationError: string | null;
   debug: QuestionLifecycleDebug;
 };
 
@@ -245,7 +247,7 @@ export class QuestionSessionStore {
   previousVisibleQuestionIdentity: VisibleQuestionIdentity | null = null;
   activeQuestionKey: string | null = null;
   previousActiveQuestionKey: string | null = null;
-  questionChangeDetectedBy: 'polling' | 'mutation' | 'url' | 'manual' | null = null;
+  questionChangeDetectedBy: 'polling' | 'mutation' | 'url' | 'store' | 'manual' | null = null;
   lastQuestionChangeAt: string | null = null;
   refreshSkippedReason: string | null = null;
 
@@ -316,6 +318,7 @@ export class QuestionSessionStore {
     session.explanation = undefined;
     session.curriculumStudy = null;
     session.explanationError = undefined;
+    session.chatError = undefined;
     session.extractionStatus = 'idle';
     session.extractionError = undefined;
     this.visiblePanelMode = 'idle';
@@ -438,6 +441,10 @@ export class QuestionSessionStore {
     let explanationRenderBlockedReason: string | null = null;
 
     if (fingerprintAligned && session && !showLoadingCurrentQuestion) {
+      chatHistory = [...session.chatHistory];
+      chatDraft = session.chatDraft;
+      chatPrompts = [...session.chatPrompts];
+
       if (this.visiblePanelMode === 'hint_open') {
         if (session.hintStatus === 'prefetching') showHintLoading = true;
         if (session.currentHintIndex != null) {
@@ -453,9 +460,6 @@ export class QuestionSessionStore {
       explanationRenderBlockedReason = explanationRender.blockedReason;
       if (explanationRender.allowed && session.explanation) {
         explanationToRender = session.explanation;
-        chatHistory = [...session.chatHistory];
-        chatDraft = session.chatDraft;
-        chatPrompts = [...session.chatPrompts];
       }
       if (
         (this.visiblePanelMode === 'explanation_open' || this.visiblePanelMode === 'chat_open') &&
@@ -504,6 +508,7 @@ export class QuestionSessionStore {
       showExplainCta,
       showHintLoading,
       showExplanationLoading,
+      operationError: session?.chatError ?? session?.hintError ?? session?.explanationError ?? session?.extractionError ?? null,
       debug: this.buildDebug(explanationRenderBlockedReason),
     };
   }

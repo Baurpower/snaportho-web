@@ -5,7 +5,11 @@
 // here; when nothing has arrived (bridge blocked, AAOS changed their app), the
 // caller falls back to the DOM extractor.
 
-import { fetchHimalayaAttempts, type HimalayaApiQuestion } from './himalaya-api.js';
+import {
+  fetchHimalayaAttempts,
+  reconcileHimalayaLiveQuestion,
+  type HimalayaApiQuestion,
+} from './himalaya-api.js';
 import {
   HIMALAYA_BRIDGE_MESSAGE_SOURCE,
   isHimalayaBridgeMessage,
@@ -18,6 +22,8 @@ export type HimalayaStoreSnapshot = {
   /** Why the API path is unavailable, when it is. */
   apiFailureReason: string | null;
   fetchedTestAttemptId: number | null;
+  readiness: 'waiting_for_bridge' | 'waiting_for_attempt_id' | 'loading_attempt' | 'ready' | 'error';
+  revision: number;
 };
 
 type Listener = (snapshot: HimalayaStoreSnapshot) => void;
@@ -27,12 +33,16 @@ const state: HimalayaStoreSnapshot = {
   questions: [],
   apiFailureReason: null,
   fetchedTestAttemptId: null,
+  readiness: 'waiting_for_bridge',
+  revision: 0,
 };
 
 const listeners = new Set<Listener>();
 let inFlightTestAttemptId: number | null = null;
+let fetchedForResults = false;
 
 function emit() {
+  state.revision += 1;
   const snapshot = getHimalayaStoreSnapshot();
   for (const listener of listeners) {
     try {
@@ -44,17 +54,49 @@ function emit() {
 }
 
 export function getHimalayaStoreSnapshot(): HimalayaStoreSnapshot {
+  const readiness: HimalayaStoreSnapshot['readiness'] = state.apiFailureReason
+    ? 'error'
+    : !state.bridgeState
+      ? 'waiting_for_bridge'
+      : state.bridgeState.testAttemptId == null
+        ? 'waiting_for_attempt_id'
+        : inFlightTestAttemptId != null || state.fetchedTestAttemptId !== state.bridgeState.testAttemptId
+          ? 'loading_attempt'
+          : state.questions.length
+            ? 'ready'
+            : 'error';
   return {
     bridgeState: state.bridgeState,
     questions: state.questions,
     apiFailureReason: state.apiFailureReason,
     fetchedTestAttemptId: state.fetchedTestAttemptId,
+    readiness,
+    revision: state.revision,
   };
 }
 
 export function subscribeToHimalayaStore(listener: Listener) {
   listeners.add(listener);
   return () => listeners.delete(listener);
+}
+
+export function waitForHimalayaStoreReady(timeoutMs = 2500): Promise<HimalayaStoreSnapshot> {
+  const initial = getHimalayaStoreSnapshot();
+  if (initial.readiness === 'ready' || initial.readiness === 'error') return Promise.resolve(initial);
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = (snapshot: HimalayaStoreSnapshot) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timeout);
+      unsubscribe();
+      resolve(snapshot);
+    };
+    const unsubscribe = subscribeToHimalayaStore((snapshot) => {
+      if (snapshot.readiness === 'ready' || snapshot.readiness === 'error') finish(snapshot);
+    });
+    const timeout = setTimeout(() => finish(getHimalayaStoreSnapshot()), timeoutMs);
+  });
 }
 
 /** Look up one normalized question by its te6 attempt id. */
@@ -73,17 +115,23 @@ export function getActiveHimalayaQuestion(): HimalayaApiQuestion | null {
   if (bridgeState.openModal?.questionAttemptId != null) {
     return findHimalayaQuestion(bridgeState.openModal.questionAttemptId);
   }
+  if (bridgeState.view === 'results') return null;
   if (bridgeState.liveQuestion?.question.questionAttemptId != null) {
-    return findHimalayaQuestion(bridgeState.liveQuestion.question.questionAttemptId);
+    return reconcileHimalayaLiveQuestion(
+      findHimalayaQuestion(bridgeState.liveQuestion.question.questionAttemptId),
+      bridgeState.liveQuestion
+    );
   }
   return null;
 }
 
-async function loadAttempts(testAttemptId: number, archived: boolean, origin: string) {
+async function loadAttempts(testAttemptId: number, archived: boolean, origin: string, resultsView: boolean) {
   // Results are immutable once an attempt is archived, so one fetch per attempt
   // is enough; re-fetching on every scope tick would hammer AAOS.
-  if (inFlightTestAttemptId === testAttemptId || state.fetchedTestAttemptId === testAttemptId) return;
+  if (inFlightTestAttemptId === testAttemptId) return;
+  if (state.fetchedTestAttemptId === testAttemptId && (!resultsView || fetchedForResults)) return;
   inFlightTestAttemptId = testAttemptId;
+  emit();
   const result = await fetchHimalayaAttempts({ testAttemptId, archived, origin });
   inFlightTestAttemptId = null;
 
@@ -91,11 +139,19 @@ async function loadAttempts(testAttemptId: number, archived: boolean, origin: st
     state.questions = result.questions;
     state.apiFailureReason = null;
     state.fetchedTestAttemptId = testAttemptId;
+    fetchedForResults = resultsView;
   } else {
     state.questions = [];
     state.apiFailureReason = result.status ? `${result.reason}_${result.status}` : result.reason;
   }
   emit();
+  if (
+    !resultsView &&
+    state.bridgeState?.testAttemptId === testAttemptId &&
+    state.bridgeState.view === 'results'
+  ) {
+    void loadAttempts(testAttemptId, state.bridgeState.archived, origin, true);
+  }
 }
 
 export function handleHimalayaBridgeState(bridgeState: HimalayaBridgeState, origin: string) {
@@ -107,11 +163,17 @@ export function handleHimalayaBridgeState(bridgeState: HimalayaBridgeState, orig
     state.questions = [];
     state.apiFailureReason = null;
     state.fetchedTestAttemptId = null;
+    fetchedForResults = false;
   }
   emit();
 
   if (bridgeState.testAttemptId != null) {
-    void loadAttempts(bridgeState.testAttemptId, bridgeState.archived, origin);
+    void loadAttempts(
+      bridgeState.testAttemptId,
+      bridgeState.archived,
+      origin,
+      bridgeState.view === 'results'
+    );
   }
 }
 
@@ -139,6 +201,9 @@ export function resetHimalayaStoreForTests() {
   state.questions = [];
   state.apiFailureReason = null;
   state.fetchedTestAttemptId = null;
+  state.readiness = 'waiting_for_bridge';
+  state.revision = 0;
   inFlightTestAttemptId = null;
+  fetchedForResults = false;
   listeners.clear();
 }

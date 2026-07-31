@@ -1,7 +1,7 @@
 import { detectQuestionProvider, extractQuestionContext } from './extractor.js';
 import { buildReviewStateKey } from '../shared/question-review-state.js';
 import { fingerprintFromPageContext } from '../shared/question-fingerprint.js';
-import type { QuestionChangeMessage, VisibleQuestionIdentity } from '../shared/messages.js';
+import type { PageChangeMessage, QuestionChangeMessage, VisibleQuestionIdentity } from '../shared/messages.js';
 
 const DEBOUNCE_MS = 120;
 const QUESTION_CLOCK_MS = 350;
@@ -210,13 +210,27 @@ export function startQuestionLifecycleWatch(document: Document, pageUrl = window
   let lastUrl = pageUrl;
   let observer: MutationObserver | null = null;
 
-  function publishChange(detectedBy: 'polling' | 'mutation' | 'url') {
+  function publishPageChange(previousPageUrl: string | null, detectedBy: 'polling' | 'url') {
+    const payload: PageChangeMessage = {
+      type: 'ob:page-changed',
+      pageUrl: window.location.href,
+      previousPageUrl,
+      refreshTimestamp: new Date().toISOString(),
+      detectedBy,
+    };
+    void chrome.runtime.sendMessage(payload).catch(() => {
+      // Side panel may be closed; ignore.
+    });
+  }
+
+  function publishChange(detectedBy: 'polling' | 'mutation' | 'url' | 'store') {
     const snapshot = evaluateQuestionFingerprint(document, window.location.href);
     if (!snapshot) return;
 
     const fingerprintChanged = snapshot.fingerprint !== lastFingerprint;
     const reviewStateChanged = snapshot.reviewStateKey !== lastReviewStateKey;
-    if (!fingerprintChanged && !reviewStateChanged) return;
+    const forcedProviderRefresh = detectedBy === 'store';
+    if (!fingerprintChanged && !reviewStateChanged && !forcedProviderRefresh) return;
     const previousActiveQuestionKey = lastFingerprint;
     const previousVisibleQuestionIdentity = lastVisibleQuestionIdentity;
 
@@ -226,7 +240,11 @@ export function startQuestionLifecycleWatch(document: Document, pageUrl = window
       questionId: snapshot.questionId,
       previousFingerprint: lastFingerprint,
       previousQuestionId: lastQuestionId,
-      reasonForRefresh: fingerprintChanged ? `${detectedBy}_question_identity_change` : 'review_state_change',
+      reasonForRefresh: fingerprintChanged
+        ? `${detectedBy}_question_identity_change`
+        : forcedProviderRefresh
+          ? 'provider_context_ready'
+          : 'review_state_change',
       refreshTimestamp: new Date().toISOString(),
       questionPositionLabel: snapshot.questionPositionLabel,
       pageUrl: snapshot.pageUrl,
@@ -251,7 +269,7 @@ export function startQuestionLifecycleWatch(document: Document, pageUrl = window
     });
   }
 
-  function scheduleCheck(detectedBy: 'mutation' | 'url') {
+  function scheduleCheck(detectedBy: 'mutation' | 'url' | 'store') {
     if (debounceTimer) clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
       debounceTimer = null;
@@ -303,15 +321,27 @@ export function startQuestionLifecycleWatch(document: Document, pageUrl = window
   window.setInterval(() => {
     const currentUrl = window.location.href;
     if (currentUrl !== lastUrl) {
+      const previousUrl = lastUrl;
       lastUrl = currentUrl;
+      publishPageChange(previousUrl, 'polling');
       publishChange('url');
       return;
     }
     publishChange('polling');
   }, QUESTION_CLOCK_MS);
 
-  window.addEventListener('popstate', () => scheduleCheck('url'));
-  window.addEventListener('hashchange', () => scheduleCheck('url'));
+  function handleHistoryNavigation() {
+    const currentUrl = window.location.href;
+    if (currentUrl !== lastUrl) {
+      const previousUrl = lastUrl;
+      lastUrl = currentUrl;
+      publishPageChange(previousUrl, 'url');
+    }
+    scheduleCheck('url');
+  }
+
+  window.addEventListener('popstate', handleHistoryNavigation);
+  window.addEventListener('hashchange', handleHistoryNavigation);
 
   const historyRef = window.history as History & {
     __snapOrthoBroBotPatched?: boolean;
@@ -322,11 +352,11 @@ export function startQuestionLifecycleWatch(document: Document, pageUrl = window
     const originalReplaceState = historyRef.replaceState.bind(historyRef);
     historyRef.pushState = (...args) => {
       originalPushState(...args);
-      scheduleCheck('url');
+      handleHistoryNavigation();
     };
     historyRef.replaceState = (...args) => {
       originalReplaceState(...args);
-      scheduleCheck('url');
+      handleHistoryNavigation();
     };
   }
 
@@ -341,4 +371,10 @@ export function startQuestionLifecycleWatch(document: Document, pageUrl = window
     });
     return false;
   });
+
+  return {
+    requestCheck(detectedBy: 'store' = 'store') {
+      scheduleCheck(detectedBy);
+    },
+  };
 }

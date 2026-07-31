@@ -1,7 +1,12 @@
 import { detectQuestionProvider, extractQuestionContext } from './extractor.js';
 import { startQuestionLifecycleWatch } from './question-lifecycle.js';
 import { installHimalayaDebugInspector } from '../providers/himalaya/himalaya-debug.js';
-import { startHimalayaStore } from '../providers/himalaya/himalaya-store.js';
+import {
+  getHimalayaStoreSnapshot,
+  startHimalayaStore,
+  subscribeToHimalayaStore,
+  waitForHimalayaStoreReady,
+} from '../providers/himalaya/himalaya-store.js';
 
 declare global {
   interface Window {
@@ -66,18 +71,33 @@ if (!window.__snapOrthoBroBotContentScriptLoaded) {
   if (detectQuestionProvider({ document: document as never, pageUrl: window.location.href }) === 'himalaya') {
     startHimalayaStore(window);
   }
-  startQuestionLifecycleWatch(document, window.location.href);
+  const questionLifecycle = startQuestionLifecycleWatch(document, window.location.href);
+  if (detectQuestionProvider({ document: document as never, pageUrl: window.location.href }) === 'himalaya') {
+    subscribeToHimalayaStore((snapshot) => {
+      if (snapshot.readiness === 'ready' || snapshot.readiness === 'error') {
+        questionLifecycle.requestCheck('store');
+      }
+    });
+  }
 
   chrome.runtime.onMessage.addListener((message: { type?: string; questionAttemptId?: number }, _sender: unknown, sendResponse: (response: unknown) => void) => {
     if (message?.type !== 'ob:extract-page-context') {
       return false;
     }
 
-    try {
+    void (async () => {
+      try {
       const provider = detectQuestionProvider({
         document: document as never,
         pageUrl: window.location.href,
       });
+      if (
+        provider === 'himalaya' &&
+        message.questionAttemptId != null &&
+        getHimalayaStoreSnapshot().readiness !== 'ready'
+      ) {
+        await waitForHimalayaStoreReady();
+      }
       const pageContext = extractQuestionContext({
         document: document as never,
         pageUrl: window.location.href,
@@ -111,20 +131,21 @@ if (!window.__snapOrthoBroBotContentScriptLoaded) {
           provider: provider ?? 'unsupported',
           error: 'This readable page is not a supported BroBot question page.',
         });
-        return false;
+        return;
       }
 
       sendResponse({
         ok: true,
         pageContext,
       });
-    } catch (error) {
+      } catch (error) {
       sendResponse({
         ok: false,
         error: error instanceof Error ? error.message : 'Failed to extract Orthobullets page context.',
       });
-    }
+      }
+    })();
 
-    return false;
+    return true;
   });
 }

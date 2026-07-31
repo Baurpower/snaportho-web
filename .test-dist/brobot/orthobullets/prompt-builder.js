@@ -53,16 +53,17 @@ YOUR JOB IS TO TEACH THE CONCEPT, NOT SUMMARIZE THE PAGE
 
 CONTENT REQUIREMENTS (map directly to the JSON fields)
 - testedConcept: name the ONE concept being tested, concretely (e.g. "reverse obliquity intertrochanteric fracture fixation," not "hip fractures"). One short phrase, not a sentence.
-- bottomLine: 1-2 sentences. The direct answer: what's going on clinically and which choice wins. A resident skimming only this should get the core takeaway.
+- bottomLine: a compact 2-3 sentence TL;DR of the ENTIRE explanation, not just the answer label. State what is happening and which choice wins, then compress the decisive stem clue and the causal reasoning that makes it correct. Include the key contrast with the most tempting distractor only when that contrast is essential to solving the question. A resident who reads only this field plus boardPearl should understand the answer and retain the lesson. Do not merely repeat the source's preferred-response sentence.
 - whyCorrect: the mechanism/reasoning that makes the correct choice right, going at least one level deeper than the provided explanation (see above) — not just restating what it is.
 - whyWrong: one bullet per distractor (skip the correct choice). Each reason is ONE sentence — the specific flaw, not a restatement of the choice. Flag exactly one distractor as "isClassicTrap": true — the choice residents most often pick incorrectly. When percent-distribution data is provided, that's empirical evidence: the trap is whichever WRONG choice has the highest selection percentage, even if it's not the one you'd intuitively guess — defer to the data over your own intuition. Without distribution data, use medical-education judgment instead. If no distractor is a real trap, omit the flag entirely (do not force one).
 - boardTrap: optional. Name the single trap in 1-2 sentences: why a smart resident gets baited and the key clue that rescues them. Omit this field if there is no meaningful trap beyond the whyWrong bullets.
-- boardPearl: ONE memorable, high-yield sentence — a generalizable rule or distinguishing feature the resident could apply to a DIFFERENT question testing this same concept. It must not just restate this question's specific answer (that's what bottomLine is for); it should still be true even if the choices or clinical scenario were different.
+- boardPearl: ONE memorable, high-yield sentence — a generalizable rule, discriminator, or decision pivot the resident could apply to a DIFFERENT question testing this same concept. It appears immediately under bottomLine, so it must complement the TL;DR rather than repeat it and should still be true if the choices or clinical scenario changed.
 - studyNext: 2-4 short, concrete next-study ideas. These should be tightly adjacent topics a resident should review next, not generic advice like "read more." Examples: "reverse obliquity fracture fixation", "dynamic hip screw failure patterns", "OTA intertrochanteric fracture stability".
 
 STYLE CONSTRAINTS
 - Prefer accuracy over completeness: a shorter, fully accurate answer beats a longer one that pads with hedged or generic filler.
 - Zero repetition: never make the same point in two fields. Each field earns its place.
+- Silently verify that bottomLine + boardPearl work as a standalone rapid-review pair before returning the JSON.
 - No generic AI phrasing: never write "In conclusion," "It's important to note," "Let's break this down," "Overall," "Additionally," or similar filler. Start sentences with the substance.
 - Write for orthopaedic residents: use precise clinical and anatomic terminology without defining basic terms; do not over-explain things a PGY-2+ already knows.
 - Whole response should read in well under 500 words unless the question genuinely has unusual complexity (e.g. many distractors or multi-step reasoning) — most should be much shorter than that ceiling.
@@ -89,6 +90,31 @@ RULES
 - If the user asks for an Anki card, return the answer as a compact Q/A style card inside the answer string.
 - No markdown bullets or headers inside "answer".
 - "suggestedPrompts" should contain 0-3 short, useful next follow-ups only when there is an obvious next step.`;
+const PREANSWER_CHAT_SYSTEM_PROMPT = `You are BroBot, a senior orthopaedic resident coaching a learner through an unanswered orthopaedic question-bank question.
+
+Return valid JSON only, matching exactly this shape:
+{
+  "answer": string,
+  "suggestedPrompts": string[],
+  "warnings": string[]
+}
+
+GOAL
+- Answer questions about the visible stem and choices while preserving a meaningful reasoning step.
+- Help the learner orient, compare choices, identify relevant anatomy or principles, or get a progressive hint.
+- Most answers should be 2-5 concise sentences.
+
+NON-NEGOTIABLE ANTI-SPOILER RULES
+- The question has not been submitted. Never reveal the correct answer, answer key, complete answer text, or which choice to select.
+- Never say or imply that a named choice is correct. Do not eliminate every choice except one.
+- If asked directly for the answer, explain that you can help them reason to it, then give one useful discriminator or next step.
+- You may discuss medical terms that appear in choices when needed, but must leave the learner with a real reasoning step.
+- Do not use review-only fields, hidden explanations, or outside page content.
+
+STYLE
+- Sound like a smart senior resident at the workstation: direct, specific, and encouraging without filler.
+- No markdown bullets or headers inside "answer".
+- Suggest 0-3 short next prompts that continue the reasoning without revealing the answer.`;
 const HINT_SYSTEM_PROMPT = `You are BroBot, a senior orthopaedic resident coaching an intern through an unanswered orthopaedic question-bank question.
 
 Return valid JSON only, matching exactly this shape:
@@ -310,10 +336,15 @@ function renderPriorExplanation(explanation) {
 }
 function buildOrthobulletsChatMessages(input) {
     const isCurriculum = input.context.pageContext.mode === 'curriculum_content';
+    const isPreanswer = input.answerState === 'unanswered';
     return [
         {
             role: 'system',
-            content: isCurriculum ? CURRICULUM_CHAT_SYSTEM_PROMPT : CHAT_SYSTEM_PROMPT,
+            content: isCurriculum
+                ? CURRICULUM_CHAT_SYSTEM_PROMPT
+                : isPreanswer
+                    ? PREANSWER_CHAT_SYSTEM_PROMPT
+                    : CHAT_SYSTEM_PROMPT,
         },
         {
             role: 'user',
@@ -326,13 +357,14 @@ function buildOrthobulletsChatMessages(input) {
                     `Breadcrumbs: ${input.context.pageContext.breadcrumbs.join(' > ') || '(missing)'}`,
                     `Section headings: ${(input.context.pageContext.sectionHeadings ?? []).join(' | ') || '(missing)'}`,
                     `Extracted markdown:\n${input.context.pageContext.contentMarkdown ?? input.context.pageContext.contentText ?? '(missing)'}`,
-                    `Prior BroBot explanation:\n${renderPriorExplanation(input.explanation)}`,
+                    `Prior BroBot explanation:\n${input.explanation ? renderPriorExplanation(input.explanation) : '(not opened or unavailable)'}`,
                     `Recent follow-up chat:\n${renderChatHistory(input.history)}`,
                     `Resident follow-up: ${input.userMessage}`,
                     `Extraction warnings: ${input.context.warnings.join(' | ') || '(none)'}`,
                 ].join('\n\n')
                 : [
                     `Provider/source: ${input.context.pageContext.provider ?? input.context.pageContext.source}`,
+                    `Answer state: ${input.answerState}`,
                     `Page URL: ${input.context.pageContext.sourceUrl ?? input.context.pageContext.pageUrl}`,
                     `Question ID: ${input.context.pageContext.questionId ?? '(missing)'}`,
                     `Breadcrumbs: ${input.context.pageContext.breadcrumbs.join(' > ') || '(missing)'}`,
@@ -343,7 +375,7 @@ function buildOrthobulletsChatMessages(input) {
                     `Source feedback/explanation shown on page:\n${input.context.pageContext.sourceExplanation ?? input.context.pageContext.explanationText ?? input.context.pageContext.explanation ?? '(missing)'}`,
                     `Source key reference points shown on page:\n${input.context.pageContext.sourceKeyPoints ?? '(missing)'}`,
                     `Source references shown on page:\n${renderSourceReferences(input.context)}`,
-                    `Prior BroBot explanation:\n${renderPriorExplanation(input.explanation)}`,
+                    `Prior BroBot explanation:\n${input.explanation ? renderPriorExplanation(input.explanation) : '(none — unanswered coaching mode)'}`,
                     `Recent follow-up chat:\n${renderChatHistory(input.history)}`,
                     `Resident follow-up: ${input.userMessage}`,
                     `Extraction warnings: ${input.context.warnings.join(' | ') || '(none)'}`,

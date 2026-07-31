@@ -10,8 +10,12 @@ import {
   type ReviewBoardRow,
   type ReviewBoardRowState,
 } from './himalaya-review-board.js';
-import { buildHimalayaOverviewContext } from '../providers/himalaya/himalaya-context.js';
+import {
+  buildHimalayaApiPageContext,
+  buildHimalayaOverviewContext,
+} from '../providers/himalaya/himalaya-context.js';
 import type { HimalayaApiQuestion } from '../providers/himalaya/himalaya-api.js';
+import { inferQuestionState } from '../shared/question-review-state.js';
 
 function makeQuestion(overrides: Partial<HimalayaApiQuestion> & { questionAttemptId: number }): HimalayaApiQuestion {
   return {
@@ -139,6 +143,25 @@ assert.deepEqual(summarizeBoard([]).missedIds, []);
 assert.equal(emptyOverview.classification?.pageKind, 'unreadable');
 assert.ok(emptyOverview.extractionWarnings.includes('himalaya_results_overview_no_active_question'));
 
+const selectedButUnsubmitted = buildHimalayaApiPageContext({
+  question: makeQuestion({
+    questionAttemptId: 300,
+    reviewAvailable: false,
+    choices: [
+      { id: 'A', label: 'A', text: 'Selected live choice', selected: true },
+      { id: 'B', label: 'B', text: 'Another live choice', selected: false },
+    ],
+  }),
+  bridgeState: null,
+  allQuestions: [],
+  pageUrl: 'https://learn.aaos.org/diweb/',
+});
+assert.equal(
+  inferQuestionState(selectedButUnsubmitted),
+  'unanswered',
+  'selecting an answer before submission must keep Hint Mode available'
+);
+
 // Malformed provider payloads must not crash the panel.
 assert.deepEqual(getReviewBoardRows(null), []);
 assert.deepEqual(
@@ -163,7 +186,16 @@ const escapeHtml = (value: string) =>
 const expandedMiss: ReviewBoardRowState = {
   expanded: true,
   loading: false,
-  explanation: { bottomLine: 'Synthetic bottom line' } as never,
+  explanation: {
+    explanationId: '00000000-0000-4000-8000-000000000001',
+    bottomLine: 'Synthetic bottom line',
+    testedConcept: 'Synthetic tested concept',
+    whyCorrect: 'Synthetic reason',
+    whyWrong: [],
+    boardPearl: 'Synthetic pearl',
+    studyNext: [],
+    warnings: [],
+  },
   error: null,
 };
 
@@ -179,6 +211,8 @@ appendHimalayaReviewBoard(root, {
     onToggleRow: () => {},
     onExplainRow: () => {},
     onExplainAllMisses: () => {},
+    onCopyDebrief: () => {},
+    onClearDebrief: () => {},
     onUnlink: () => {},
   },
   renderers: {
@@ -189,7 +223,7 @@ appendHimalayaReviewBoard(root, {
 
 const renderedHtml = root.innerHTML;
 assert.equal(root.querySelectorAll('[data-toggle-id]').length, 3, 'one toggle per question');
-assert.equal(root.querySelector('#rb-explain-misses')?.textContent?.trim(), 'Walk my 1 miss');
+assert.equal(root.querySelector('#rb-explain-misses')?.textContent?.trim(), 'Rebuild full debrief');
 assert.ok(renderedHtml.includes('1/3'), 'attempt score is shown');
 assert.ok(renderedHtml.includes('1 missed of 3'), 'miss count is shown');
 assert.equal(root.querySelectorAll('.expl').length, 1, 'only the expanded miss renders an explanation');
@@ -213,7 +247,14 @@ appendHimalayaReviewBoard(cleanRoot, {
   score: 1,
   maxScore: 1,
   explainAllInFlight: false,
-  hooks: { onToggleRow: () => {}, onExplainRow: () => {}, onExplainAllMisses: () => {}, onUnlink: () => {} },
+  hooks: {
+    onToggleRow: () => {},
+    onExplainRow: () => {},
+    onExplainAllMisses: () => {},
+    onCopyDebrief: () => {},
+    onClearDebrief: () => {},
+    onUnlink: () => {},
+  },
   renderers: { escapeHtml, renderExplanation: () => '' },
 });
 assert.equal(cleanRoot.querySelector('#rb-explain-misses'), null, 'no bulk action when nothing was missed');

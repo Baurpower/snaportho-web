@@ -38,10 +38,10 @@ export interface TopicSection {
   bullets: TopicBullet[];
 }
 
-export type OrthobulletsPageKind = 'review' | 'current_test' | 'topic' | 'unknown';
+export type OrthobulletsPageKind = 'review' | 'current_test' | 'test_results' | 'topic' | 'unknown';
 export type QuestionProvider = 'orthobullets' | 'rock' | 'himalaya';
-export type ExtractedPageMode = 'question' | 'curriculum_content' | 'topic_page';
-export type ClassifiedPageKind = 'question' | 'educational_content' | 'mixed' | 'topic_page' | 'unreadable';
+export type ExtractedPageMode = 'question' | 'curriculum_content' | 'topic_page' | 'test_review';
+export type ClassifiedPageKind = 'question' | 'educational_content' | 'mixed' | 'topic_page' | 'test_results' | 'unreadable';
 export type ProviderDetectionStatus = QuestionProvider | 'unsupported' | 'readable_unrecognized';
 export type SupportedPageKind =
   | 'rock_himalaya_question'
@@ -66,6 +66,30 @@ export interface PageClassification {
     activeUrl: string;
     title: string | null;
   };
+}
+
+export interface OrthobulletsTestResultRow {
+  order: number;
+  questionId: string;
+  reviewUrl: string;
+  isCorrect: boolean | null;
+  correctAnswerKey: string | null;
+  selectedAnswerKey: string | null;
+  specialty: string | null;
+  topic: string | null;
+  testedConcept?: string | null;
+  summary?: string | null;
+  searchKeywords?: string[];
+}
+
+export interface OrthobulletsTestReview {
+  testId: string | null;
+  day: string | null;
+  scorePercent: number | null;
+  totalCount: number;
+  correctCount: number;
+  missedCount: number;
+  rows: OrthobulletsTestResultRow[];
 }
 
 export type OrthobulletsExtractionFailureCode =
@@ -165,6 +189,7 @@ export interface OrthobulletsPageContext {
   questionCount?: number;
   cardCount?: number;
   videoCount?: number;
+  testReview?: OrthobulletsTestReview;
   classification?: PageClassification;
   stem?: string;
   answerChoices: OrthobulletsChoice[];
@@ -334,6 +359,7 @@ export interface OrthobulletsChatResponse {
  * questions and judges answers rather than teaching/expanding the page.
  */
 export type OrthobulletsTopicAction =
+  | 'explain_page'
   | 'quiz_me'
   | 'what_tested'
   | 'attending_question'

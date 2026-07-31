@@ -4,6 +4,7 @@ import {
   fetchHimalayaAttempts,
   htmlToText,
   normalizeHimalayaAttempts,
+  reconcileHimalayaLiveQuestion,
 } from './himalaya-api.js';
 
 // Mirrors the real POST /all-question-attempts/ payload shape captured live from
@@ -118,6 +119,28 @@ const live = liveQuestions[0];
 assert.equal(live.reviewAvailable, false);
 assert.equal(live.isCorrect, null, 'correctness is unknown mid-attempt');
 assert.deepEqual(live.correctChoiceIds, [], 'no correct answer may be exposed mid-attempt');
+const reconciledLive = reconcileHimalayaLiveQuestion(first, {
+  question: {
+    questionAttemptId: first.questionAttemptId,
+    stem: '<p>Figure 1 shows a synthetic radiograph of a sanitized patient.</p><p>What is the most likely finding?</p>',
+    answers: [
+      { id: 2471033971, text: '<p>Synthetic choice one</p>', displayNumber: 'A' },
+      { id: 2471033972, text: '<p>Synthetic choice two</p>', displayNumber: 'B' },
+      { id: 2471033975, text: '<p>Synthetic choice three</p>', displayNumber: 'C' },
+    ],
+    selectedAnswer: 2471033972,
+    selectedAnswers: [2471033972],
+    displayOrder: 1,
+  },
+  remediation: null,
+  showCorrectAnswer: false,
+  displayIndex: 1,
+  totalQuestions: 10,
+});
+assert.ok(reconciledLive);
+assert.deepEqual(reconciledLive.selectedChoiceIds, ['B'], 'Angular live selection overrides stale REST state');
+assert.deepEqual(reconciledLive.correctChoiceIds, [], 'reconciliation must not leak the REST answer key');
+assert.equal(reconciledLive.reviewAvailable, false);
 assert.equal(
   live.choices.every((choice) => choice.correct === undefined),
   true,

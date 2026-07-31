@@ -349,6 +349,14 @@ class ReviewerTests(unittest.TestCase):
   from snaportho_reviewer import master_deck
   from snaportho_reviewer.master_deck import plan_counts,has_master_markers
   self.assertIs(master_deck.tempfile,tempfile)
+  summary=master_deck.v2_content_summary([
+   {"operation":"upsert_note","noteId":"n1","payload":{"governedTags":["SnapOrtho::Diagnosis::ACL","SnapOrtho::Specialty::Sports"]}},
+   {"operation":"upsert_note","noteId":"n1","payload":{"governedTags":["SnapOrtho::Diagnosis::ACL"]}},
+   {"operation":"upsert_note","noteId":"n2","payload":{"governedTags":[]}},
+   {"operation":"media_add","payload":{"sha256":"a"}},
+   {"operation":"media_add","payload":{"sha256":"a"}},
+  ])
+  self.assertEqual(summary,{"updatedNotes":2,"taggedNotes":1,"managedTagAssignments":1,"mediaAssets":1})
   self.assertEqual(plan_counts({"actions":[{"action":"add"},{"action":"add"},{"action":"unchanged"}]}),{"add":2,"unchanged":1})
   # has_master_markers needs a collection; pure inventory empty via fake
   class Col:
@@ -466,7 +474,7 @@ class ReviewerTests(unittest.TestCase):
   from snaportho_reviewer.deck_sync_v2 import CONTRACT,NoteSyncV2Importer,checksum
   class FakeGateway:
    def __init__(self):self.notes={};self.writes=0
-   def snapshot(self,nid):return self.notes.get(nid,{"fields":{},"tags":[]})
+   def snapshot(self,nid,payload=None):return self.notes.get(nid,{"fields":{},"tags":[]})
    def upsert_note(self,nid,payload,fields,tags):self.notes[nid]={"fields":fields,"tags":tags};self.writes+=1;return{"ankiNoteId":7,"noteGuid":payload["noteGuid"]}
   release={"id":"release","sequence":1,"version":"1","aggregateChecksum":"a"*64}
   payload={"noteGuid":"guid","noteTypeName":"SnapOrtho Master","deckPath":"SnapOrtho","fields":{"Text":"Q"},"governedTags":["SnapOrtho::Diagnosis::ACL"],"governedPrefixes":["SnapOrtho::Diagnosis"],"contentChecksum":"b"*64,"tagsChecksum":"c"*64}
@@ -477,6 +485,27 @@ class ReviewerTests(unittest.TestCase):
    self.assertEqual(sync.apply_page(page)["notes"],1);self.assertEqual(gateway.writes,1);self.assertEqual(store.deck_subscription()["cursor"],1);self.assertEqual(store.pending_deck_journal(),[])
    empty={"contractVersion":CONTRACT,"release":release,"nextCursor":1,"remaining":0,"operations":[],"pageChecksum":checksum([])}
    self.assertEqual(sync.apply_page(empty)["notes"],0);self.assertEqual(gateway.writes,1);store.close()
+ def test_note_sync_v2_initial_reconciliation_preserves_local_fields_and_tags(self):
+  from snaportho_reviewer.deck_sync_v2 import CONTRACT,NoteSyncV2Importer,checksum
+  class ExistingNoteGateway:
+   def __init__(self):self.written=None
+   def snapshot(self,nid,payload=None):
+    self.snapshot_payload=payload
+    return{"fields":{"Text":"old","Personal_Notes":"keep me"},"tags":["favorite","SnapOrtho::Diagnosis::Old"]}
+   def upsert_note(self,nid,payload,fields,tags):
+    self.written=(fields,tags)
+    return{"ankiNoteId":7,"noteGuid":payload["noteGuid"]}
+  release={"id":"release","sequence":1,"version":"1","aggregateChecksum":"a"*64}
+  payload={"noteGuid":"existing-guid","noteTypeName":"SnapOrtho Master","deckPath":"SnapOrtho","fields":{"Text":"new","Personal_Notes":"server must not win"},"protectedFields":["Personal_Notes"],"governedTags":["SnapOrtho::Diagnosis::New"],"governedPrefixes":["SnapOrtho::Diagnosis"],"contentChecksum":"b"*64,"tagsChecksum":"c"*64}
+  op={"cursor":1,"releaseId":"release","operationIndex":0,"operation":"upsert_note","noteId":"note","noteVersionId":"version","payloadChecksum":checksum(payload),"payload":payload}
+  page={"contractVersion":CONTRACT,"release":release,"nextCursor":1,"remaining":0,"operations":[op],"pageChecksum":checksum([op])}
+  with tempfile.TemporaryDirectory()as d:
+   store=DraftStore(os.path.join(d,"state.db"),"scope");gateway=ExistingNoteGateway()
+   sync=NoteSyncV2Importer(store,gateway);sync.apply_page(page)
+   self.assertEqual(gateway.snapshot_payload["noteGuid"],"existing-guid")
+   self.assertEqual(gateway.written[0],{"Text":"new","Personal_Notes":"keep me"})
+   self.assertEqual(gateway.written[1],["SnapOrtho::Diagnosis::New","favorite"])
+   store.close()
  def test_note_sync_v2_validates_more_than_four_thousand_ordered_operations(self):
   from snaportho_reviewer.deck_sync_v2 import CONTRACT,checksum,validate_page
   ops=[]

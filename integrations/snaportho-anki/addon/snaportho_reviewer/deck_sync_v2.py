@@ -44,7 +44,12 @@ class NoteSyncV2Importer:
         summary={"notes":0,"retired":0,"tags":0,"moved":0,"media":0,"overwrittenLocal":[]}
         for op in page["operations"]:
             payload=op["payload"];kind=op["operation"];note_id=op.get("noteId")
-            before=self.gateway.snapshot(note_id)if note_id else{}
+            # A baseline does not exist on the first v2 sync of an already
+            # installed deck. Pass the operation payload so the collection
+            # gateway can resolve that note by its stable Anki GUID before the
+            # three-way merge. Otherwise local fields and tags appear empty and
+            # can be lost during the initial reconciliation.
+            before=self.gateway.snapshot(note_id,payload)if note_id else{}
             self.store.journal_start(self.deck_key,op["cursor"],note_id,kind,before)
             if kind=="upsert_note":
                 baseline=self.store.note_baseline(note_id,self.deck_key)or{}

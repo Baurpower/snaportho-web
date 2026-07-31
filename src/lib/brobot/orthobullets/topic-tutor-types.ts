@@ -7,6 +7,7 @@ import { OrthobulletsPageContextSchema } from './types';
 // or the question-tutor path) so the two modes can't accidentally end up
 // reusing the same generic "teach this page" prompt.
 export const OrthobulletsTopicActionSchema = z.enum([
+  'explain_page',
   'quiz_me',
   'what_tested',
   'attending_question',

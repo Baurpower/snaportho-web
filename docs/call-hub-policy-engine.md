@@ -259,11 +259,58 @@ Single cutover, but de-risked with a **parity harness**:
     `selectableResidentsBySlot` gained a Buddy branch and, when V2 on, routes all three
     slots through the engine; `filteredPickerResidents` routes `buddy` → the Buddy pool.
     Legacy path byte-unchanged when flag off. Typecheck clean.
-  - ⏳ Remaining: add/edit views (#1), generator + delete buddy engine (#3), validation,
-    swaps, AI packet.
-- **Phase 3 — Grey-zone policy + authoring.** Encode HM temporal/tiered/pairing policy;
-  verify #1–#4. Rules-sheet UI (or JSON) to author tiers/predicates.
-- **Phase 4 — Cutover & cleanup.** Remove legacy eligibility paths and the flag; update docs.
+  - ✅ **Add/edit views wired (2026-07-28) — #1 groundwork.** `policyEngine` threaded
+    into `programcalladdview.tsx` + `programcalleditview.tsx`; slot presence via
+    `presence()` (effective-date PGY, not the static field) and add-view tap eligibility
+    via `isSelectable()`. Legacy path unchanged when off.
+  - ✅ **Generator wired (2026-07-28) — fixes #3.** `useCallPolicyV2` threaded through
+    `GenerateParams` → worker payload → `handleAutoGenerate`. `generateSingleCallSchedule`
+    enforces the buddy hard cap post-fill via exported `computeBuddyCapTrim` (keeps each
+    intern's earliest N buddy weekends, trims the rest + reverses stats). Buddy engine
+    NOT deleted yet (legacy path needs it) — deletion deferred to Phase 4 cutover.
+    `call-buddy-cap.test.ts` (8 assertions).
+  - ✅ **Validation / swaps / AI packet wired (2026-07-28) — #11.** `buildSchedulePacket.ts`
+    builds the engine from its residents and derives candidate eligibility via
+    `evaluate()`/`isSelectable()` (removes the third partial reimplementation);
+    `validation.ts` adds additive flag-gated `validateBuddyCapRule` to
+    `validateCallMonthDraft` (the save-gate) — swaps inherit it via
+    `validateProgramCallMutationDraft`. `validate-buddy-cap.test.ts` (6 assertions).
+    NOTE: the parity-critical validators (PGY/spacing/etc.) are left on their existing
+    code — they are already parity-proven against the engine, so rerouting them is a
+    zero-behavior-change Phase 4 cleanup, not rushed into the save-gate here.
+
+  **Phase 2 complete.** All consumers route through the engine behind `CALL_POLICY_V2`
+  (default OFF); legacy paths byte-unchanged when off. #1 groundwork, #2, #3 delivered.
+  Tests: 30 + 504 + 11 + 8 + 6 assertions green; full typecheck clean (only pre-existing
+  errors remain).
+- **Phase 3 — Grey-zone policy + authoring. ✅ ENGINE DONE (2026-07-28).** Compiler reads
+  OPT-IN grey-zone config off existing, UI-safe rule types (no new rule type → no rules-sheet
+  crash risk); programs without it stay byte-identical to Phase 1/2 (parity still green).
+  `buddy_requirement` config: `eligibleServiceMonthIndices` (Buddy only in those Gen-Ortho
+  month indices), `partnerPgyYears` (partner set → pairing + presence), and
+  `internPrimaryFromServiceMonthIndex` (interns join Primary from that month → **#4**).
+  `call_slot_definition` config: `slotFallbackPgyYears` (+ label) → a preference-1 fallback
+  tier (Backup = PGY-5 preferred, PGY-4 if needed). `policy-phase3.test.ts` (14 assertions)
+  proves #1–#4 on this policy. `scripts/apply-hm-greyzone-config.ts` writes HM's config
+  (dry-run default; `--apply` to write) — dormant until the flag flips. DEFERRED (open Q4):
+  rules-sheet UI editor for these fields; JSON/script is the interim authoring path.
+- **Phase 4a — Cutover. ✅ DONE (2026-07-28).** `isCallPolicyV2Enabled()` now defaults ON
+  (engine is the production path) with the flag retained as an opt-out KILL-SWITCH
+  (`NEXT_PUBLIC_CALL_POLICY_V2=false` / `?callPolicyV2=0` / localStorage). Closed the one
+  cutover correctness gap: the save-gate now honors grey-zone tiers — `validation.ts`
+  `validatePgyRestrictionRule` suppresses the legacy PGY violation for tier-eligible
+  residents (e.g. a 2nd-ortho-month intern on Primary), via `buildGreyZonePoolEligibility`
+  (compiles the policy from the validation input, no availability needed). Non-grey-zone
+  programs: byte-identical behavior (a resident is only ever "suppressed" if they match a
+  tier, which for legacy pools = residents who had no violation anyway). Tests:
+  `validate-greyzone-consistency.test.ts` (4), `validate-buddy-cap.test.ts` updated.
+  Full suite green; parity still 504/0.
+- **Phase 4b — Legacy deletion (DEFERRED until prod soak).** Rewrite the generator buddy
+  pass as engine-native (buddy-as-slot), move `resolveBuddyPolicy`/defaults into the policy
+  module, delete `buddy-requirements.ts` + strip all legacy dual-path branches, remove the
+  flag. Held deliberately: removing the kill-switch before any live-app soak is the one
+  irreversible/reckless step, it needs the untested generator buddy rewrite, and it delivers
+  ZERO user-facing value (every fix is already live via the default-on cutover).
 
 ---
 

@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict';
 
-import { buildOrthobulletsHintMessages } from './prompt-builder';
+import {
+  buildOrthobulletsChatMessages,
+  buildOrthobulletsExplainMessages,
+  buildOrthobulletsHintMessages,
+} from './prompt-builder';
 import type { ResolvedOrthobulletsContext } from './context-resolver';
 
 function textContent(message: ReturnType<typeof buildOrthobulletsHintMessages>[number] | undefined) {
@@ -38,6 +42,25 @@ const context: ResolvedOrthobulletsContext = {
   warnings: [],
   kgLookup: null,
 };
+
+const [explainSystem] = buildOrthobulletsExplainMessages(context);
+const explainSystemText = textContent(explainSystem);
+
+assert.match(explainSystemText, /TL;DR of the ENTIRE explanation/i);
+assert.match(explainSystemText, /decisive stem clue and the causal reasoning/i);
+assert.match(explainSystemText, /bottomLine \+ boardPearl work as a standalone rapid-review pair/i);
+assert.match(explainSystemText, /appears immediately under bottomLine/i);
+
+const [preanswerSystem, preanswerUser] = buildOrthobulletsChatMessages({
+  context,
+  answerState: 'unanswered',
+  history: [],
+  userMessage: 'Just tell me which answer is correct.',
+});
+assert.match(textContent(preanswerSystem), /Never reveal the correct answer/i);
+assert.match(textContent(preanswerSystem), /leave the learner with a real reasoning step/i);
+assert.match(textContent(preanswerUser), /Answer state: unanswered/i);
+assert.match(textContent(preanswerUser), /none — unanswered coaching mode/i);
 
 const [system, user] = buildOrthobulletsHintMessages({ context, hintLevel: 1 });
 const systemText = textContent(system);

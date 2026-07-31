@@ -66,6 +66,7 @@ function buildClassicContentScriptBundle() {
     .replace(/^export\s+\{[^}]+\}\s+from\s+['"]\.\.\/providers\/himalaya\/himalaya-extractor\.js['"];\r?\n?/m, '')
     .replace(/^export const EXTRACTOR_VERSION =/m, 'const EXTRACTOR_VERSION =')
     .replace(/^export \{ SELECTOR_SET_VERSION \};\r?\n?/m, '')
+    .replace(/^export function extractOrthobulletsTestResultsContext\(/m, 'function extractOrthobulletsTestResultsContext(')
     .replace(/^export function detectQuestionProvider\(/m, 'function detectQuestionProvider(')
     .replace(/^export function extractOrthobulletsPageContext\(/m, 'function extractOrthobulletsPageContext(')
     .replace(/^export function extractOrthobulletsTopicPageContext\(/m, 'function extractOrthobulletsTopicPageContext(')
@@ -263,16 +264,16 @@ const generatedSidepanelSource = [
 ].join('\n');
 
 const requiredGeneratedNeedles = [
-  ['background service worker', generatedBackgroundSource, '2026-07-19-rock-curriculum-contract-v2'],
+  ['background service worker', generatedBackgroundSource, '2026-07-30-himalaya-live-v4'],
   ['background service worker', generatedBackgroundSource, 'brobot:request'],
   ['background service worker', generatedBackgroundSource, 'endpoint_resolution'],
   ['background service worker', generatedBackgroundSource, 'Routing invariant violated'],
   ['routing helper', generatedRoutingSource, 'curriculum_explain'],
   ['routing helper', generatedRoutingSource, '/api/brobot/curriculum/explain'],
-  ['build info', generatedBuildInfoSource, '2026-07-19-rock-curriculum-contract-v2'],
+  ['build info', generatedBuildInfoSource, '2026-07-30-himalaya-live-v4'],
   ['build info', generatedBuildInfoSource, 'curriculum-explain-v2'],
   ['sidepanel entry', generatedSidepanelSource, 'brobot:request'],
-  ['sidepanel entry', generatedSidepanelSource, '2026-07-19-rock-curriculum-contract-v2'],
+  ['sidepanel entry', generatedSidepanelSource, '2026-07-30-himalaya-live-v4'],
 ];
 
 for (const [label, source, needle] of requiredGeneratedNeedles) {

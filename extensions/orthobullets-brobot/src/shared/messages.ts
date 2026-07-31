@@ -54,8 +54,17 @@ export type QuestionChangeMessage = {
   previousVisibleQuestionIdentity?: VisibleQuestionIdentity | null;
   activeQuestionKey?: string | null;
   previousActiveQuestionKey?: string | null;
-  questionChangeDetectedBy?: 'polling' | 'mutation' | 'url' | 'manual';
+  questionChangeDetectedBy?: 'polling' | 'mutation' | 'url' | 'store' | 'manual';
   settleDelayMs?: number;
+};
+
+export type PageChangeMessage = {
+  type: 'ob:page-changed';
+  pageUrl: string;
+  previousPageUrl: string | null;
+  refreshTimestamp: string;
+  detectedBy: 'polling' | 'url';
+  tabId?: number | null;
 };
 
 export type VisibleQuestionIdentity = {
@@ -101,6 +110,7 @@ export type ExtensionMessage =
       pageContext: OrthobulletsPageContext;
       explanation?: OrthobulletsExplainResponse;
       curriculumStudy?: CurriculumStudyResponse;
+      answerState: 'unanswered' | 'answered_review';
       emphasis?: CurriculumExplainEmphasis;
       history: OrthobulletsChatTurn[];
       userMessage: string;
@@ -121,6 +131,16 @@ export type ExtensionMessage =
   | {
       type: 'ob:send-page-to-anki';
       pageContext: OrthobulletsPageContext;
+    }
+  | {
+      type: 'ob:send-test-to-anki';
+      pageContext: OrthobulletsPageContext;
+      enrichedQuestions?: Array<{
+        questionId: string;
+        testedConcept: string;
+        summary: string;
+        searchKeywords: string[];
+      }>;
     }
   | { type: 'ob:get-anki-search-status'; searchRequestId: string };
 

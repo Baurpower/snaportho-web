@@ -9,6 +9,7 @@ import type {
   OrthobulletsLinkedConcept,
   OrthobulletsPageContext,
   OrthobulletsPercentDistribution,
+  OrthobulletsTestResultRow,
   QuestionProvider,
   TopicBullet,
   TopicSection,
@@ -85,6 +86,172 @@ function parseQuestionIdFromUrl(url: string) {
 function parseTopicIdFromUrl(url: string) {
   const match = url.match(/orthobullets\.com\/[^/]+\/(\d{3,6})\//i);
   return match?.[1];
+}
+
+function isOrthobulletsTestResultsUrl(url: string) {
+  try {
+    const parsed = new URL(url);
+    return /(^|\.)orthobullets\.com$/i.test(parsed.hostname) &&
+      /\/qbank\/testscore\b/i.test(parsed.pathname);
+  } catch {
+    return /orthobullets\.com\/qbank\/testscore\b/i.test(url);
+  }
+}
+
+function answerKey(value: string | undefined) {
+  const match = normalizeWhitespace(value).match(/\b([A-E]|[1-5])\b/i);
+  return match?.[1]?.toUpperCase() ?? null;
+}
+
+function absoluteUrl(value: string, baseUrl: string) {
+  try {
+    return new URL(value, baseUrl).toString();
+  } catch {
+    return value;
+  }
+}
+
+export function extractOrthobulletsTestResultsContext(input: {
+  document: DocumentLike;
+  pageUrl?: string;
+}): OrthobulletsPageContext {
+  const pageUrl = input.pageUrl ?? input.document.locationHref ?? '';
+  const tableCandidates = Array.from(input.document.querySelectorAll('table'));
+  let resultTable: DomElementLike | null = null;
+  let headers: string[] = [];
+
+  for (const table of tableCandidates) {
+    const candidateHeaders = Array.from(table.querySelectorAll('thead th, thead td, tr th'))
+      .map((cell) => textOf(cell).toLowerCase());
+    const headerText = candidateHeaders.join(' ');
+    if (/question/.test(headerText) && /correct/.test(headerText) && /selected/.test(headerText)) {
+      resultTable = table;
+      headers = candidateHeaders;
+      break;
+    }
+  }
+
+  const columnIndex = (label: RegExp) => headers.findIndex((header) => label.test(header));
+  const questionIndex = columnIndex(/^question$/);
+  const correctIndex = columnIndex(/^correct$/);
+  const selectedIndex = columnIndex(/^selected$/);
+  const specialtyIndex = columnIndex(/^specialty$/);
+  const topicIndex = columnIndex(/^topic$/);
+  const orderIndex = columnIndex(/^#$/);
+  const rows: OrthobulletsTestResultRow[] = [];
+
+  if (resultTable) {
+    for (const [rowOffset, row] of Array.from(resultTable.querySelectorAll('tbody tr')).entries()) {
+      const cells = Array.from(row.querySelectorAll('td'));
+      const questionCell = cells[questionIndex] ?? null;
+      const link = questionCell?.querySelector('a[href]') ?? row.querySelector('a[href]');
+      const questionId = normalizeWhitespace(link?.textContent)
+        .replace(/[^A-Za-z0-9.-]/g, '')
+        .toUpperCase();
+      const href = normalizeWhitespace(link?.getAttribute('href'));
+      // Orthobullets uses several question-bank prefixes (OBQ, SBQ, SAF, and
+      // others). The results table and linked question column are the reliable
+      // signals; restricting prefixes silently drops valid rows.
+      if (!questionId || !href || !/^[A-Z0-9][A-Z0-9.-]{2,63}$/i.test(questionId)) continue;
+
+      const correctAnswerKey = answerKey(cells[correctIndex]?.textContent ?? undefined);
+      const selectedAnswerKey = answerKey(cells[selectedIndex]?.textContent ?? undefined);
+      const rowSignals = [
+        normalizeWhitespace(row.getAttribute('class')),
+        normalizeWhitespace(row.textContent),
+        ...Array.from(row.querySelectorAll('[class],[aria-label],[title]')).flatMap((node) => [
+          normalizeWhitespace(node.getAttribute('class')),
+          normalizeWhitespace(node.getAttribute('aria-label')),
+          normalizeWhitespace(node.getAttribute('title')),
+        ]),
+      ].join(' ').toLowerCase();
+      const explicitIncorrect = /\b(incorrect|wrong|times|fa-xmark|fa-close)\b/.test(rowSignals);
+      const explicitCorrect = !explicitIncorrect && /\b(correct|right|check|fa-check)\b/.test(rowSignals);
+      const isCorrect = correctAnswerKey && selectedAnswerKey
+        ? correctAnswerKey === selectedAnswerKey
+        : explicitIncorrect
+          ? false
+          : explicitCorrect
+            ? true
+            : null;
+      const parsedOrder = Number.parseInt(textOf(cells[orderIndex]), 10);
+
+      rows.push({
+        order: Number.isFinite(parsedOrder) ? parsedOrder : rowOffset + 1,
+        questionId,
+        reviewUrl: absoluteUrl(href, pageUrl),
+        isCorrect,
+        correctAnswerKey,
+        selectedAnswerKey,
+        specialty: textOf(cells[specialtyIndex]) || null,
+        topic: textOf(cells[topicIndex]) || null,
+      });
+    }
+  }
+
+  let testId: string | null = null;
+  let day: string | null = null;
+  try {
+    const parsed = new URL(pageUrl);
+    testId = parsed.searchParams.get('test');
+    day = parsed.searchParams.get('day');
+  } catch {
+    // Preserve a useful results context even when a fixture supplies a partial URL.
+  }
+  const bodyText = textOf(input.document.querySelector('body')) || normalizeWhitespace(input.document.textContent);
+  const scoreMatch = bodyText.match(/\b(\d{1,3})\s*%\s*correct\b/i);
+  const scorePercent = scoreMatch ? Number.parseInt(scoreMatch[1], 10) : null;
+  const correctCount = rows.filter((row) => row.isCorrect === true).length;
+  const missedCount = rows.filter((row) => row.isCorrect === false).length;
+  const extractionWarnings: string[] = [];
+  if (!resultTable) extractionWarnings.push('test_results_table_not_visible');
+  if (!rows.length) extractionWarnings.push('test_result_rows_not_visible');
+  if (rows.some((row) => row.isCorrect == null)) extractionWarnings.push('some_result_statuses_unknown');
+  if (
+    scorePercent != null &&
+    rows.length > 0 &&
+    Math.abs(Math.round((correctCount / rows.length) * 100) - scorePercent) > 1
+  ) {
+    extractionWarnings.push('test_score_does_not_match_detected_rows');
+  }
+
+  const draftContext: OrthobulletsPageContext = {
+    source: 'orthobullets',
+    provider: 'orthobullets',
+    mode: 'test_review',
+    pageUrl,
+    sourceUrl: pageUrl,
+    pageKind: 'test_results',
+    title: normalizeWhitespace(input.document.title) || null,
+    breadcrumbs: [],
+    answerChoices: [],
+    percentDistribution: [],
+    linkedConcepts: [],
+    images: [],
+    testReview: {
+      testId,
+      day,
+      scorePercent,
+      totalCount: rows.length,
+      correctCount,
+      missedCount,
+      rows,
+    },
+    extractionWarnings,
+    raw: {
+      providerSpecific: {
+        adapter: 'orthobullets-test-results',
+      },
+    },
+    debug: {
+      matchedSelectors: resultTable ? { testResultsTable: ['table'] } : {},
+      extractorVersion: EXTRACTOR_VERSION,
+    },
+  };
+  return {
+    ...draftContext,
+    classification: classifyPage(draftContext),
+  };
 }
 
 // Orthobullets question/review pages live under /question/ or /currenttest/;
@@ -1340,6 +1507,84 @@ function extractTopicCount(bodyText: string, label: string) {
   return Number.isFinite(value) ? value : undefined;
 }
 
+function extractOrthobulletsTopicCount(root: DocumentLike, kind: 'question' | 'flashcard' | 'video') {
+  const container = root.querySelector(`.page-navigation__element--${kind}`);
+  const quantity = container?.querySelector('.page-navigation__content-quantity');
+  const match = textOf(quantity).match(/\b(\d{1,4})\b/);
+  if (!match) return undefined;
+  const value = Number(match[1]);
+  return Number.isFinite(value) ? value : undefined;
+}
+
+function extractOrthobulletsTopicSections(
+  root: DocumentLike,
+  matched: Record<string, string[]>
+) {
+  const sectionRoots = Array.from(
+    root.querySelectorAll('#topic-notes-section-text > ul.topic-bullets-section__ul')
+  );
+  if (!sectionRoots.length) {
+    return {
+      contentSections: [] as Array<{ heading: string; text: string }>,
+      topicSections: [] as TopicSection[],
+      sectionHeadings: [] as string[],
+      contentText: null as string | null,
+    };
+  }
+  matched.topicSections = ['#topic-notes-section-text > ul.topic-bullets-section__ul'];
+  const contentSections: Array<{ heading: string; text: string }> = [];
+  const topicSections: TopicSection[] = [];
+
+  sectionRoots.slice(0, 120).forEach((sectionRoot, sectionIndex) => {
+    const sectionItem = sectionRoot.querySelector(':scope > li');
+    const heading = cleanCurriculumText(
+      textOf(sectionItem?.querySelector(':scope > .topic-bullets-section__context'))
+    );
+    if (!heading) return;
+    const contentRoot =
+      sectionItem?.querySelector(':scope > .topic-bullets-section__child-bullets-wrapper') ??
+      sectionItem ??
+      sectionRoot;
+    const bulletNodes = Array.from(
+      contentRoot.querySelectorAll('li[class*="bullet_level_"]')
+    );
+    const bullets: TopicBullet[] = [];
+    const pathByDepth: string[] = [];
+
+    bulletNodes.forEach((node) => {
+      const contextNode = node.querySelector(':scope > .topic-bullets-section__context');
+      const text = cleanCurriculumText(textOf(contextNode));
+      if (!text || /^login to view\b/i.test(text)) return;
+      const className = normalizeWhitespace(node.getAttribute('class'));
+      const depthMatch = className.match(/\bbullet_level_(\d+)\b/);
+      const depth = Math.max(0, Number.parseInt(depthMatch?.[1] ?? '1', 10) - 1);
+      pathByDepth.length = depth;
+      bullets.push({ text, depth, path: [...pathByDepth] });
+      pathByDepth[depth] = text;
+    });
+
+    const text = bullets
+      .map((bullet) => `${'  '.repeat(Math.min(bullet.depth, 6))}- ${bullet.text}`)
+      .join('\n')
+      .slice(0, 20000);
+    if (text.length < MIN_TOPIC_CONTENT_CHARS) return;
+    const id = `ob-${sectionIndex}-${heading.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 48)}`;
+    contentSections.push({ heading, text });
+    topicSections.push({ id, title: heading, bullets });
+  });
+
+  const contentText = contentSections
+    .map((section) => `## ${section.heading}\n${section.text}`)
+    .join('\n\n')
+    .slice(0, MAX_CURRICULUM_CONTENT_CHARS);
+  return {
+    contentSections,
+    topicSections,
+    sectionHeadings: contentSections.map((section) => section.heading),
+    contentText: contentText || null,
+  };
+}
+
 // Orthobullets topic pages ("Trauma > 1042 > Femoral Shaft Fractures") are
 // concise bullet-based references rather than question pages. This reuses
 // the same generic semantic-tag scanner as ROCK's curriculum extraction
@@ -1358,34 +1603,57 @@ export function extractOrthobulletsTopicPageContext(input: {
     null;
   const topicId = extractTopicId(input.document, pageUrl, matchedSelectors);
   const curriculum = extractRockCurriculumContent(input.document, matchedSelectors);
+  const orthobulletsSections = extractOrthobulletsTopicSections(input.document, matchedSelectors);
   const images = extractRockImages(input.document, matchedSelectors);
   // Document.textContent is null per DOM spec (only Element/Text nodes have
   // it) — read from <body> (or the document itself as a last resort, e.g.
   // in tests that pass a body-less stub).
   const bodyText = normalizeWhitespace((input.document.querySelector('body') ?? input.document).textContent);
-  const questionCount = extractTopicCount(bodyText, 'questions?');
-  const cardCount = extractTopicCount(bodyText, 'cards?');
-  const videoCount = extractTopicCount(bodyText, 'videos?');
+  const questionCount =
+    extractOrthobulletsTopicCount(input.document, 'question') ??
+    extractTopicCount(bodyText, 'questions?');
+  const cardCount =
+    extractOrthobulletsTopicCount(input.document, 'flashcard') ??
+    extractTopicCount(bodyText, 'cards?');
+  const videoCount =
+    extractOrthobulletsTopicCount(input.document, 'video') ??
+    extractTopicCount(bodyText, 'videos?');
 
-  const hasContent = Boolean(curriculum.contentText && curriculum.contentText.length >= MIN_TOPIC_CONTENT_CHARS);
+  const structuredContentText = orthobulletsSections.contentText ?? curriculum.contentText;
+  const structuredContentSections = orthobulletsSections.contentSections.length
+    ? orthobulletsSections.contentSections
+    : curriculum.contentSections;
+  const hasContent = Boolean(structuredContentText && structuredContentText.length >= MIN_TOPIC_CONTENT_CHARS);
 
   // When the semantic block scanner found no headings (Orthobullets uses
   // .trending-title divs and .panel-title divs rather than <h1>–<h4>), seed
   // sectionHeadings from the page title so classification doesn't treat a
   // readable topic page as "unreadable" due to an empty headings array.
   const effectiveSectionHeadings =
-    curriculum.sectionHeadings.length > 0
-      ? curriculum.sectionHeadings
-      : title
-        ? [title]
-        : [];
+    orthobulletsSections.sectionHeadings.length > 0
+      ? orthobulletsSections.sectionHeadings
+      : curriculum.sectionHeadings.length > 0
+        ? curriculum.sectionHeadings
+        : title
+          ? [title]
+          : [];
 
   // If the semantic scanner returned insufficient content (e.g. Orthobullets
   // uses non-standard class names that don't match contentRoot selectors, or
   // accordion content loads after document_idle), fall back to body text so
   // the Topic Tutor can still receive some material to work with.
-  let effectiveContentText = curriculum.contentText;
-  let effectiveContentMarkdown = curriculum.contentMarkdown;
+  let effectiveContentText = structuredContentText;
+  let effectiveContentMarkdown = structuredContentText
+    ? buildContentMarkdown({
+        title,
+        breadcrumbs,
+        sectionHeadings: effectiveSectionHeadings,
+        contentSections: structuredContentSections,
+        references: curriculum.references,
+        tablesMarkdown: curriculum.tablesMarkdown,
+        contentText: structuredContentText,
+      })
+    : curriculum.contentMarkdown;
   if (!hasContent) {
     const cleanBody = bodyText
       .replace(
@@ -1420,7 +1688,14 @@ export function extractOrthobulletsTopicPageContext(input: {
     sectionHeadings: effectiveSectionHeadings,
     contentText: effectiveContentText,
     contentMarkdown: effectiveContentMarkdown,
-    contentSections: curriculum.contentSections,
+    contentSections: structuredContentSections,
+    topicSections: orthobulletsSections.topicSections.length
+      ? orthobulletsSections.topicSections
+      : buildTopicStructuredSections(structuredContentSections),
+    topicBulletCount: orthobulletsSections.topicSections.reduce(
+      (total, section) => total + section.bullets.length,
+      0
+    ),
     tablesMarkdown: curriculum.tablesMarkdown,
     references: curriculum.references,
     referencesCount: curriculum.referencesCount,
@@ -1436,8 +1711,11 @@ export function extractOrthobulletsTopicPageContext(input: {
     raw: {
       providerSpecific: {
         adapter: 'orthobullets-topic',
-        extractionStrategy: curriculum.extractionStrategy,
-        contentCharCount: curriculum.contentCharCount,
+        extractionStrategy: orthobulletsSections.contentSections.length
+          ? 'orthobullets_topic_sections'
+          : curriculum.extractionStrategy,
+        contentCharCount: effectiveContentMarkdown?.length ?? effectiveContentText?.length ?? 0,
+        sectionCount: structuredContentSections.length,
         usedBodyTextFallback: !hasContent && Boolean(effectiveContentText),
       },
     },
@@ -1463,6 +1741,9 @@ export function extractQuestionContext(input: {
   if (provider === 'himalaya') return extractHimalayaProviderContext(input);
   if (provider === 'orthobullets') {
     const pageUrl = input.pageUrl ?? input.document.locationHref ?? '';
+    if (isOrthobulletsTestResultsUrl(pageUrl)) {
+      return extractOrthobulletsTestResultsContext(input);
+    }
     if (isLikelyOrthobulletsTopicUrl(pageUrl)) {
       return extractOrthobulletsTopicPageContext(input);
     }

@@ -9,6 +9,7 @@ import {
   HIMALAYA_REST_BASE_PATH,
   type Te6Answer,
   type Te6QuestionAttempt,
+  type HimalayaBridgeState,
 } from './himalaya-te6-types.js';
 import type { HimalayaAnswerChoice } from './himalaya-types.js';
 
@@ -163,6 +164,54 @@ export function normalizeHimalayaAttempts(payload: unknown): HimalayaApiQuestion
     .map((entry, index) => normalizeQuestion((entry ?? {}) as Te6QuestionAttempt, index))
     .filter((question): question is HimalayaApiQuestion => question != null)
     .sort((a, b) => (a.questionNumber ?? 0) - (b.questionNumber ?? 0));
+}
+
+/**
+ * Overlay the authoritative live Angular question state onto the stable REST
+ * question record. REST supplies the question bank; Angular supplies current
+ * selection/navigation/submission state. Correct answers remain unavailable
+ * until te6 explicitly enables review.
+ */
+export function reconcileHimalayaLiveQuestion(
+  base: HimalayaApiQuestion | null,
+  live: NonNullable<HimalayaBridgeState['liveQuestion']>
+): HimalayaApiQuestion | null {
+  const normalized = normalizeHimalayaAttempts([{
+    question: live.question,
+    remediation: live.remediation ?? undefined,
+    showCorrectAnswer: live.showCorrectAnswer,
+  }])[0] ?? null;
+  if (!normalized) return base;
+  if (!base) return normalized;
+
+  const selectedByLabel = new Map(normalized.choices.map((choice) => [choice.label, choice.selected]));
+  const selectedByText = new Map(normalized.choices.map((choice) => [choice.text, choice.selected]));
+  const reviewAvailable = normalized.reviewAvailable;
+  const choices = base.choices.map((choice) => ({
+    ...choice,
+    selected: selectedByLabel.get(choice.label) ?? selectedByText.get(choice.text) ?? false,
+    correct: reviewAvailable
+      ? normalized.choices.find((candidate) => candidate.label === choice.label || candidate.text === choice.text)?.correct
+        ?? choice.correct
+      : undefined,
+  }));
+
+  return {
+    ...base,
+    questionNumber: live.displayIndex ?? base.questionNumber,
+    choices,
+    selectedChoiceIds: choices.filter((choice) => choice.selected).map((choice) => choice.id),
+    correctChoiceIds: reviewAvailable
+      ? choices.filter((choice) => choice.correct === true).map((choice) => choice.id)
+      : [],
+    isCorrect: reviewAvailable ? normalized.isCorrect : null,
+    explanation: reviewAvailable ? normalized.explanation ?? base.explanation : null,
+    references: reviewAvailable ? normalized.references ?? base.references : null,
+    keyReferencePoints: reviewAvailable ? normalized.keyReferencePoints ?? base.keyReferencePoints : null,
+    additionalFeedback: reviewAvailable ? normalized.additionalFeedback : [],
+    averagePeerPercent: reviewAvailable ? normalized.averagePeerPercent : null,
+    reviewAvailable,
+  };
 }
 
 type FetchLike = (input: string, init: {

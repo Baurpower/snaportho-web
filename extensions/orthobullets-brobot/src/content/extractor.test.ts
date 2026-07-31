@@ -643,6 +643,33 @@ assert.equal(himalayaTe6ActiveContext.correctAnswerKey, null, 'live question mus
 assert.equal(himalayaTe6ActiveContext.raw?.providerSpecific?.questionNumber, '2');
 assert.equal(himalayaTe6ActiveContext.raw?.providerSpecific?.totalQuestions, '10');
 
+// Some live AAOS courses omit every known question-wrapper class. The visible
+// structure is still unambiguous: Question N of M, one prompt, and radio rows.
+const { document: himalayaStructuralFallbackDocument } = parseHTML(`
+  <html><head><title>Himalaya Assessment Engine</title></head><body>
+    <main class="assessment-shell">
+      <div>Question 1 of 7</div>
+      <p>A patient has a painful arthroplasty and elevated inflammatory markers. What is the next step?</p>
+      <ul>
+        <li><input type="radio" name="answer" id="live-a"><label for="live-a">A) Bone scan</label></li>
+        <li><input type="radio" name="answer" id="live-b" checked><label for="live-b">B) Hip aspiration</label></li>
+        <li><input type="radio" name="answer" id="live-c"><label for="live-c">C) PET scan</label></li>
+      </ul>
+      <a>NEXT QUESTION</a>
+    </main>
+  </body></html>
+`);
+const himalayaStructuralFallbackContext = extractQuestionContext({
+  document: himalayaStructuralFallbackDocument,
+  pageUrl: 'https://learn.aaos.org/diweb/?wicket:interface=:9::::',
+});
+assert.ok(himalayaStructuralFallbackContext, 'live question must extract without a provider-specific wrapper class');
+assert.equal(himalayaStructuralFallbackContext.pageKind, 'current_test');
+assert.equal(himalayaStructuralFallbackContext.answerChoices.length, 3);
+assert.equal(himalayaStructuralFallbackContext.selectedAnswer, 'Hip aspiration');
+assert.equal(himalayaStructuralFallbackContext.raw?.providerSpecific?.questionNumber, '1');
+assert.equal(himalayaStructuralFallbackContext.raw?.providerSpecific?.totalQuestions, '7');
+
 const himalayaMultiHtml = readFileSync(path.join(FIXTURES_DIR, 'himalaya-multiple-containers.html'), 'utf8');
 assert.match(himalayaMultiHtml, /Synthetic Himalaya Multiple Containers/);
 const { document: himalayaMultiDocument } = parseHTML(himalayaMultiHtml);
@@ -766,6 +793,40 @@ assert.equal(detectQuestionProvider({ document: unsupportedDocument as any }), n
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 assert.equal(extractQuestionContext({ document: unsupportedDocument as any }), null);
 
+// --- Orthobullets completed-test overview (Test Debrief mode) ------------
+
+const testResultsDocument = loadFixtureDocument('synthetic-test-results.html');
+const testResultsContext = extractQuestionContext({
+  document: testResultsDocument,
+  pageUrl: 'https://www.orthobullets.com/qbank/testscore?test=TEST123&scope=learning&day=20',
+});
+assert.ok(testResultsContext, 'test-results URL should dispatch to the dedicated extractor');
+assert.equal(testResultsContext.provider, 'orthobullets');
+assert.equal(testResultsContext.mode, 'test_review');
+assert.equal(testResultsContext.pageKind, 'test_results');
+assert.equal(testResultsContext.classification?.pageKind, 'test_results');
+assert.equal(testResultsContext.testReview?.testId, 'TEST123');
+assert.equal(testResultsContext.testReview?.day, '20');
+assert.equal(testResultsContext.testReview?.scorePercent, 50);
+assert.equal(testResultsContext.testReview?.totalCount, 4);
+assert.equal(testResultsContext.testReview?.correctCount, 2);
+assert.equal(testResultsContext.testReview?.missedCount, 2);
+assert.deepEqual(
+  testResultsContext.testReview?.rows.map((row) => ({
+    id: row.questionId,
+    correct: row.isCorrect,
+    selected: row.selectedAnswerKey,
+    answer: row.correctAnswerKey,
+    topic: row.topic,
+  })),
+  [
+    { id: 'OBQ13-14', correct: true, selected: '2', answer: '2', topic: 'Humeral Shaft Fractures' },
+    { id: 'OBQ12-66', correct: false, selected: '2', answer: '4', topic: 'Humeral Shaft Fractures' },
+    { id: 'SBQ12TR-18', correct: false, selected: '4', answer: '1', topic: 'Humeral Shaft Nonunion' },
+    { id: 'SAF110S-71', correct: true, selected: '3', answer: '3', topic: 'Humeral Shaft Nonunion' },
+  ]
+);
+
 // --- Orthobullets topic page (Orthobullets Page Mode) --------------------
 
 assert.equal(isLikelyOrthobulletsTopicUrl('https://www.orthobullets.com/trauma/1042/femoral-neck-fractures'), true);
@@ -800,6 +861,26 @@ assert.equal(topicContext.classification?.pageKind, 'topic_page');
 // extractor rather than the question-only Orthobullets extractor.
 const dispatchedTopicContext = extractQuestionContext({ document: topicDocument, pageUrl: topicPageUrl });
 assert.equal(dispatchedTopicContext?.mode, 'topic_page');
+
+// Orthobullets' live topic DOM uses custom div headers and nested UL/LI
+// levels rather than semantic h2/h3 elements. This fixture locks that
+// provider-specific adapter without changing the generic ROCK scanner.
+const liveStructureTopicDocument = loadFixtureDocument('synthetic-orthobullets-live-structure.html');
+const liveStructureTopicContext = extractOrthobulletsTopicPageContext({
+  document: liveStructureTopicDocument,
+  pageUrl: 'https://www.orthobullets.com/trauma/1005/evaluation-resuscitation-and-dco',
+});
+assert.deepEqual(liveStructureTopicContext.sectionHeadings, ['Introduction', 'Evaluation']);
+assert.equal(liveStructureTopicContext.contentSections?.length, 2);
+assert.equal(liveStructureTopicContext.topicSections?.length, 2);
+assert.equal(liveStructureTopicContext.topicBulletCount, 5);
+assert.match(liveStructureTopicContext.contentMarkdown ?? '', /Three peak times of death after trauma/);
+assert.match(liveStructureTopicContext.contentMarkdown ?? '', /Treat the greatest threats to life first/);
+assert.equal(liveStructureTopicContext.questionCount, 62);
+assert.equal(liveStructureTopicContext.cardCount, 43);
+assert.equal(liveStructureTopicContext.videoCount, 20);
+assert.equal(liveStructureTopicContext.raw?.providerSpecific?.extractionStrategy, 'orthobullets_topic_sections');
+assert.equal(liveStructureTopicContext.extractionWarnings.includes('topic_content_not_visible'), false);
 
 // Image-heavy topic pages must remain within the server page-context
 // contract or every tutor action is rejected as an invalid request.
