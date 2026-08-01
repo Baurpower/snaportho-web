@@ -1,0 +1,560 @@
+{
+  "schemaVersion": "anatomy-hierarchy.v1",
+  "shard": "shard-05",
+  "manifestId": "17d15dc9-ecad-4fe0-95cf-c4f1059b3be6",
+  "regions": [
+    "Basic_Science",
+    "Spine",
+    "Shoulder_Girdle",
+    "Arm",
+    "Elbow",
+    "Forearm",
+    "Hand",
+    "Pelvis",
+    "Thigh_Hip",
+    "Leg_Knee",
+    "Foot_Ankle",
+    "General"
+  ],
+  "tissues": [
+    "Osteology",
+    "Joints",
+    "Ligaments",
+    "Muscles",
+    "Tendons",
+    "Nerves",
+    "Vasculature",
+    "Compartment",
+    "Other"
+  ],
+  "instructions": "For each structure set region + tissue (from the lists above) + canonical_structure (clean PascalCase_with_underscores; keep the given anki_slug unless it is a typo/abbreviation you are normalizing). Set merge_into to another structure's anki_slug only if this is a true duplicate. confidence: high|medium|low. evidence: one short phrase citing the sample_fronts or anatomy knowledge. Do NOT invent region/tissue tokens.",
+  "structures": [
+    {
+      "entity_id": "f763d2fd-67ed-44ac-b614-de37ecb316ae",
+      "preferred_label": "Fibula",
+      "anki_slug": "Fibula",
+      "current_tag": "SnapOrtho::Anatomy::Fibula",
+      "deck_card_count": 66,
+      "sample_fronts": [
+        "Where are the incisions located for a two-incision lower leg fasciotomy ? {{c1:: Anterolateral - half way between the tibial crest and the fibula Medial - just posterior to the posteromedial border of the tibia }}",
+        "{{c1::LCL::Ligament}} and {{c1::biceps femoris::muscle}} insert on the head of the fibula."
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Osteology",
+      "canonical_structure": "Fibula",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "lower leg bone; LCL/biceps insert on fibular head"
+    },
+    {
+      "entity_id": "fa535948-ab09-48d7-b540-f669d994ae43",
+      "preferred_label": "Femoral Neck",
+      "anki_slug": "Femoral_Neck",
+      "current_tag": "SnapOrtho::Anatomy::Femoral_Neck",
+      "deck_card_count": 45,
+      "sample_fronts": [
+        "What is Shenton's line ? {{c1::Congruent line from the medial femoral neck extending to the suprior portion of the obturator foramen }}",
+        "Osteoporosis is common in {{c1::cancellous::cancellous/cortical}} bone."
+      ],
+      "region": "Thigh_Hip",
+      "tissue": "Osteology",
+      "canonical_structure": "Femoral_Neck",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "Shenton's line along medial femoral neck"
+    },
+    {
+      "entity_id": "28208dd2-5e55-4ef3-9e13-3e8cdc041a15",
+      "preferred_label": "Distal Phalanx",
+      "anki_slug": "Distal_Phalanx",
+      "current_tag": "SnapOrtho::Anatomy::Distal_Phalanx",
+      "deck_card_count": 39,
+      "sample_fronts": [
+        "Flexor Digitorum Profundus (FDP) Origin: {{c1::Anterior ulna}} Insertion: {{c2::Distal phalanx}} Nerve: {{c3::Median}}, {{c3::ulnar}} Action: {{c4::Flex DIPJ}}",
+        "Flexor Digitorum Profundus (FDP) Origin: {{c1::Anterior ulna}} Insertion: {{c2::Distal phalanx}} Nerve: {{c3::Median}}, {{c3::ulnar}} Action: {{c4::Flex DIPJ}}"
+      ],
+      "region": "Hand",
+      "tissue": "Osteology",
+      "canonical_structure": "Distal_Phalanx",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "FDP inserts on distal phalanx; DIPJ hand anatomy"
+    },
+    {
+      "entity_id": "ff8baba6-3fc7-477b-a6a7-d9ec99589349",
+      "preferred_label": "Radial Nerve",
+      "anki_slug": "Radial_Nerve",
+      "current_tag": "SnapOrtho::Anatomy::Radial_Nerve",
+      "deck_card_count": 28,
+      "sample_fronts": [
+        "Is a radial nerve palsy a contraindication to functional bracing ? {{c1::No}}",
+        "The radial nerve can be found between what two muscles on the anterolateral arm ? {{c1:: Brachialis Brachioradialis }}"
+      ],
+      "region": "Arm",
+      "tissue": "Nerves",
+      "canonical_structure": "Radial_Nerve",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "between brachialis and brachioradialis on anterolateral arm"
+    },
+    {
+      "entity_id": "198149f8-eaed-4cf4-9566-0d6f836ad553",
+      "preferred_label": "Tibial Shaft",
+      "anki_slug": "Tibial_Shaft",
+      "current_tag": "SnapOrtho::Anatomy::Tibial_Shaft",
+      "deck_card_count": 22,
+      "sample_fronts": [
+        "Which fracture in adult patients is the most common cause of acute compartment syndrome ? {{c1::Closed Tibial Shaft Fracture}}",
+        "What is the anatomic axis of the lower extremity ? {{c1::Line drawn down the long axis of the femoral or tibial shaft}}"
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Osteology",
+      "canonical_structure": "Tibial_Shaft",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "closed tibial shaft fracture and compartment syndrome"
+    },
+    {
+      "entity_id": "6509a880-426e-43b4-9ff5-66220647aedb",
+      "preferred_label": "Achilles Tendon",
+      "anki_slug": "Achilles_Tendon",
+      "current_tag": "SnapOrtho::Anatomy::Achilles_Tendon",
+      "deck_card_count": 18,
+      "sample_fronts": [
+        "{{c2::Thompson}} test Normal: Squeezing calf results in gastrocnemius and soleus contraction causing plantarflexion of ankle if {{c1::Achilles}} tendon is intact. Positive test: Disruption of {{c1::Achilles}} tendon resu",
+        "{{c2::Thompson}} test Normal: Squeezing calf results in gastrocnemius and soleus contraction causing plantarflexion of ankle if {{c1::Achilles}} tendon is intact. Positive test: Disruption of {{c1::Achilles}} tendon resu"
+      ],
+      "region": "Foot_Ankle",
+      "tissue": "Tendons",
+      "canonical_structure": "Achilles_Tendon",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "Thompson test for Achilles integrity at ankle"
+    },
+    {
+      "entity_id": "9648cf12-8362-49ff-b281-d3e0eabd77af",
+      "preferred_label": "DRUJ",
+      "anki_slug": "Druj",
+      "current_tag": "SnapOrtho::Anatomy::Druj",
+      "deck_card_count": 17,
+      "sample_fronts": [
+        "Which ligaments of the TFCC are the primary stabilizers ? {{c1::Radioulnar ligaments - volar and dorsal}}",
+        "What are the (3) eponyms for a fracture of the distal radius with an associated DRUJ (distal radial ulnar joint) injury ? {{c1:: Galeazzi fracture Fracture of necessity Piedmont fracture }}"
+      ],
+      "region": "Forearm",
+      "tissue": "Joints",
+      "canonical_structure": "Distal_Radioulnar_Joint",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample expands DRUJ as distal radioulnar joint; Galeazzi"
+    },
+    {
+      "entity_id": "56229d10-d49a-400b-bd28-1f9ad30ff338",
+      "preferred_label": "Lunate",
+      "anki_slug": "Lunate",
+      "current_tag": "SnapOrtho::Anatomy::Lunate",
+      "deck_card_count": 15,
+      "sample_fronts": [
+        "What are Gilula's arcs on hand x-ray ? First arc: {{c1::Proximal convexity of the scaphoid, lunate, and triquetrum}} Second arc: {{c1::Distal concavity of the scaphoid, lunate, and triquetrum}} Third arc: {{c1::Proximal ",
+        "The {{c1::Space of Poirier}} is a weak spot volarly where perilunate dislocations occur."
+      ],
+      "region": "Hand",
+      "tissue": "Osteology",
+      "canonical_structure": "Lunate",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "carpal bone in Gilula arcs; perilunate dislocation"
+    },
+    {
+      "entity_id": "f53b6b67-3f42-4190-b06a-4235296fdf24",
+      "preferred_label": "Capitellum",
+      "anki_slug": "Capitellum",
+      "current_tag": "SnapOrtho::Anatomy::Capitellum",
+      "deck_card_count": 11,
+      "sample_fronts": [
+        "What radiographic finding indicates a capitellum fracture that extends to the trochlea? {{c1::Double-Arc Sign}}",
+        "What is the classification for capitellum fractures ? {{c1::Bryan and Morrey Classification}}"
+      ],
+      "region": "Elbow",
+      "tissue": "Osteology",
+      "canonical_structure": "Capitellum",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "capitellum fracture classifications; distal humerus articular"
+    },
+    {
+      "entity_id": "01649fb1-4e23-4354-9bc6-290fec4011ff",
+      "preferred_label": "Femoral Condyles",
+      "anki_slug": "Femoral_Condyles",
+      "current_tag": "SnapOrtho::Anatomy::Femoral_Condyles",
+      "deck_card_count": 9,
+      "sample_fronts": [
+        "What makes a perfect lateral radiograph of the knee ? {{c1::Medial and lateral femoral condyles are superimposed}}",
+        "Upon arthroscopy, the anterior cruciate ligament can be visualized between {{c1::femoral condyles}}."
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Osteology",
+      "canonical_structure": "Femoral_Condyles",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "knee lateral XR and ACL between condyles"
+    },
+    {
+      "entity_id": "850e2c40-054b-487f-9089-6ac253f787a2",
+      "preferred_label": "Anterior Cruciate Ligament",
+      "anki_slug": "Anterior_Cruciate_Ligament",
+      "current_tag": "SnapOrtho::Anatomy::Anterior_Cruciate_Ligament",
+      "deck_card_count": 7,
+      "sample_fronts": [
+        "Upon arthroscopy, the anterior cruciate ligament can be visualized between {{c1::femoral condyles}}.",
+        "What is the most specific physical exam test for an ACL rupture ? {{c1::Pivot shift}}"
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Ligaments",
+      "canonical_structure": "Anterior_Cruciate_Ligament",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "ACL between femoral condyles; pivot shift"
+    },
+    {
+      "entity_id": "4961e82a-8719-4623-877a-99c4f1130938",
+      "preferred_label": "Pisiform",
+      "anki_slug": "Pisiform",
+      "current_tag": "SnapOrtho::Anatomy::Pisiform",
+      "deck_card_count": 7,
+      "sample_fronts": [
+        "Abductor Digiti Minimi Origin: {{c1::Pisiform}} Insertion: {{c2::Ulnar base of proximal phalanx}} Nerve: {{c3::Ulnar}} Action: {{c4::Abduction}}",
+        "Abductor Digiti Minimi Origin: {{c1::Pisiform}} Insertion: {{c2::Ulnar base of proximal phalanx}} Nerve: {{c3::Ulnar}} Action: {{c4::Abduction}}"
+      ],
+      "region": "Hand",
+      "tissue": "Osteology",
+      "canonical_structure": "Pisiform",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "carpal origin of abductor digiti minimi"
+    },
+    {
+      "entity_id": "aa380864-2be6-4609-afc4-d34a819dc7f7",
+      "preferred_label": "Anterior Interosseous Nerve",
+      "anki_slug": "Anterior_Interosseous_Nerve",
+      "current_tag": "SnapOrtho::Anatomy::Anterior_Interosseous_Nerve",
+      "deck_card_count": 6,
+      "sample_fronts": [
+        "Median nerve path The median nerve runs in the anterior forearm, under the {{c1::lacertus fibrosis}} and between the {{c1::2 heads of the pronator teres}}. The {{c2::AIN (anterior interosseous nerve)}} then branches, and",
+        "Median nerve path The median nerve runs in the anterior forearm, under the {{c1::lacertus fibrosis}} and between the {{c1::2 heads of the pronator teres}}. The {{c2::AIN (anterior interosseous nerve)}} then branches, and"
+      ],
+      "region": "Forearm",
+      "tissue": "Nerves",
+      "canonical_structure": "Anterior_Interosseous_Nerve",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "AIN branches from median in anterior forearm"
+    },
+    {
+      "entity_id": "870bf11c-1e8d-47c3-afaa-6399a10cf2ff",
+      "preferred_label": "Distal Biceps Tendon",
+      "anki_slug": "Distal_Biceps_Tendon",
+      "current_tag": "SnapOrtho::Anatomy::Distal_Biceps_Tendon",
+      "deck_card_count": 5,
+      "sample_fronts": [
+        "Partial distal biceps tendon tears occur on what side of the radial tuberosity ? {{c1::Radial side}}",
+        "What type of muscular contraction commonly leads to distal biceps rupture ? {{c1::Eccentric contraction}}"
+      ],
+      "region": "Elbow",
+      "tissue": "Tendons",
+      "canonical_structure": "Distal_Biceps_Tendon",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "distal biceps tears at radial tuberosity"
+    },
+    {
+      "entity_id": "862e0154-07b9-4d0e-b290-f14e3c202b70",
+      "preferred_label": "TFCC",
+      "anki_slug": "Tfcc",
+      "current_tag": "SnapOrtho::Anatomy::Tfcc",
+      "deck_card_count": 5,
+      "sample_fronts": [
+        "What are the components (6) of the triangular fibrocartilage complex (TFCC) ? M{{c1::eniscal homologue}} A{{c1::rticular disc}} U{{c1::lnolunate}} and U{{c1::lnotriquetral ligaments}} E{{c1::CU subsheath}} R{{c1::adiouln",
+        "Which ligaments of the TFCC are the primary stabilizers ? {{c1::Radioulnar ligaments - volar and dorsal}}"
+      ],
+      "region": "Hand",
+      "tissue": "Ligaments",
+      "canonical_structure": "Triangular_Fibrocartilage_Complex",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "wrist TFCC components; radioulnar ligament stabilizers"
+    },
+    {
+      "entity_id": "49c374d3-b0c7-442b-ad27-e30592e90e76",
+      "preferred_label": "Pubic Symphysis",
+      "anki_slug": "Pubic_Symphysis",
+      "current_tag": "SnapOrtho::Anatomy::Pubic_Symphysis",
+      "deck_card_count": 4,
+      "sample_fronts": [
+        "On average, the corona mortis is how far posterolateral to the pubic symphysis ? {{c1::6.8 cm}}",
+        "What is the Space of Retzius ? {{c1::Space posterior to the pubic symphysis and anterior to the bladder}}"
+      ],
+      "region": "Pelvis",
+      "tissue": "Joints",
+      "canonical_structure": "Pubic_Symphysis",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "corona mortis distance from pubic symphysis"
+    },
+    {
+      "entity_id": "6ae60b9d-4932-4fe1-bba8-d8fa87b9528a",
+      "preferred_label": "Medial Collateral Ligament",
+      "anki_slug": "Medial_Collateral_Ligament",
+      "current_tag": "SnapOrtho::Anatomy::Medial_Collateral_Ligament",
+      "deck_card_count": 3,
+      "sample_fronts": [
+        "Where does the medial collateral ligament of the elbow insert ? {{c1::Sublime tubercle}}",
+        "Following operative fixation of a terrible triad injury of the elbow , how should the elbow and forearm be splinted in a patient with an intact MCL ? {{c1::Flexion and supination}}"
+      ],
+      "region": "Elbow",
+      "tissue": "Ligaments",
+      "canonical_structure": "Medial_Collateral_Ligament",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "elbow MCL inserts on sublime tubercle; terrible triad \u2014 samples are elbow-only (not knee MCL)"
+    },
+    {
+      "entity_id": "9cb246ce-3e30-48e5-8511-656c675b29fa",
+      "preferred_label": "Anterior Compartment of the Leg",
+      "anki_slug": "Anterior_Compartment_Of_The_Leg",
+      "current_tag": "SnapOrtho::Anatomy::Anterior_Compartment_Of_The_Leg",
+      "deck_card_count": 2,
+      "sample_fronts": [
+        "The {{c1::deep peroneal}} nerve runs in the anterior compartment of the leg with the anterior tibial artery, posterior to the tibialis anterior muscle.",
+        "What structures (6) are within the anterior compartment of the leg ? {{c1:: Tibialis anterior Extensor digitorum longus (EDL) Extensor hallicus longus (EHL) Peroneus tertius Anterior tibial artery/vein Deep peroneal nerv"
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Compartment",
+      "canonical_structure": "Anterior_Compartment_Of_The_Leg",
+      "merge_into": "Anterior_Compartment",
+      "confidence": "high",
+      "evidence": "deep peroneal and TA contents of leg anterior compartment"
+    },
+    {
+      "entity_id": "a184740e-c683-491b-836e-d92041e48f7a",
+      "preferred_label": "PIP Joint",
+      "anki_slug": "Pip_Joint",
+      "current_tag": "SnapOrtho::Anatomy::Pip_Joint",
+      "deck_card_count": 2,
+      "sample_fronts": [
+        "Trigger fingers most often becomes locked in a flexed position at the {{c1::PIP}} joint.",
+        "The {{c1::FDS}} predominantly controls flexion of the PIP joint, while the {{c1::FDP}} predominantly controls flexion of the DIP joint."
+      ],
+      "region": "Hand",
+      "tissue": "Joints",
+      "canonical_structure": "PIP_Joint",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "trigger finger locks at PIP; FDS flexes PIP"
+    },
+    {
+      "entity_id": "a3b7c9c5-8258-453b-9e34-80c61de5ca1c",
+      "preferred_label": "Brachial Artery",
+      "anki_slug": "Brachial_Artery",
+      "current_tag": "SnapOrtho::Anatomy::Brachial_Artery",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "The {{c1:: superior }} ulnar collateral branch of the brachial artery forms an anastomosis with the posterior ulnar recurrent artery."
+      ],
+      "region": "Arm",
+      "tissue": "Vasculature",
+      "canonical_structure": "Brachial_Artery",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "superior ulnar collateral branch of brachial artery"
+    },
+    {
+      "entity_id": "bee1bcf3-b105-4ce8-94d4-bd3464205055",
+      "preferred_label": "Digital Nerves",
+      "anki_slug": "Digital_Nerves",
+      "current_tag": "SnapOrtho::Anatomy::Digital_Nerves",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "{{c1::Cleland's::Cleland's/Grayson's}} ligaments lie dorsal to digital nerves and are not involved in Dupuytren's disease ."
+      ],
+      "region": "Hand",
+      "tissue": "Nerves",
+      "canonical_structure": "Digital_Nerves",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "Cleland's ligaments dorsal to digital nerves; Dupuytren's"
+    },
+    {
+      "entity_id": "9a2e39f5-2a4b-4b8d-8218-0d0549df91a2",
+      "preferred_label": "Femoral Head Blood Supply",
+      "anki_slug": "Femoral_Head_Blood_Supply",
+      "current_tag": "SnapOrtho::Anatomy::Femoral_Head_Blood_Supply",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "The {{c1::medial femoral circumflex}} artery is the main blood supply of the adult femoral head ."
+      ],
+      "region": "Thigh_Hip",
+      "tissue": "Vasculature",
+      "canonical_structure": "Femoral_Head_Blood_Supply",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "MFCA main supply of adult femoral head"
+    },
+    {
+      "entity_id": "73cb23c6-f5e0-41cb-9ddd-6db1eabc22c4",
+      "preferred_label": "Surgical Neck",
+      "anki_slug": "Surgical_Neck",
+      "current_tag": "SnapOrtho::Anatomy::Surgical_Neck",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "A fracture of the {{c1::anatomic}} neck of the shoulder is at risk for osteonecrosis. A fracture of the {{c1::surgical}} neck of the shoulder is a common fracture site in the elderly."
+      ],
+      "region": "Shoulder_Girdle",
+      "tissue": "Osteology",
+      "canonical_structure": "Surgical_Neck",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "surgical neck of the shoulder (proximal humerus)"
+    },
+    {
+      "entity_id": "d6a12864-69ea-4f77-9a26-bce5fd4cc76b",
+      "preferred_label": "Ankle Ring",
+      "anki_slug": "Ankle_Ring",
+      "current_tag": "SnapOrtho::Anatomy::Ankle_Ring",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Foot_Ankle",
+      "tissue": "Other",
+      "canonical_structure": "Ankle_Ring",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "conceptual ankle stability ring (malleoli/syndesmosis/ligaments), not single tissue \u2192 Other"
+    },
+    {
+      "entity_id": "ba51473e-6fad-44f4-8dd8-73fe2822df9b",
+      "preferred_label": "Deep Palmar Arch",
+      "anki_slug": "Deep_Palmar_Arch",
+      "current_tag": "SnapOrtho::Anatomy::Deep_Palmar_Arch",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Hand",
+      "tissue": "Vasculature",
+      "canonical_structure": "Deep_Palmar_Arch",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "named arterial arch of the palm (radial-dominant)"
+    },
+    {
+      "entity_id": "f7b1d430-204f-40a3-b926-c9412a1bf23b",
+      "preferred_label": "FDP",
+      "anki_slug": "Fdp",
+      "current_tag": "SnapOrtho::Anatomy::Fdp",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Hand",
+      "tissue": "Muscles",
+      "canonical_structure": "Flexor_Digitorum_Profundus",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "FDP digital profundus flexor; Hand home for flexor-tendon system"
+    },
+    {
+      "entity_id": "6fcd6e56-5263-46c2-b109-7cb6de174f31",
+      "preferred_label": "Glenoid Labrum",
+      "anki_slug": "Glenoid_Labrum",
+      "current_tag": "SnapOrtho::Anatomy::Glenoid_Labrum",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Shoulder_Girdle",
+      "tissue": "Ligaments",
+      "canonical_structure": "Glenoid_Labrum",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "labrum-like stabilizer of glenohumeral joint"
+    },
+    {
+      "entity_id": "d22f71b0-9268-4174-9946-5d80791e1e1f",
+      "preferred_label": "Knee Extensor Mechanism",
+      "anki_slug": "Knee_Extensor_Mechanism",
+      "current_tag": "SnapOrtho::Anatomy::Knee_Extensor_Mechanism",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Leg_Knee",
+      "tissue": "Other",
+      "canonical_structure": "Knee_Extensor_Mechanism",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "multi-tissue complex (quad/patella/patellar tendon) \u2192 Other by design"
+    },
+    {
+      "entity_id": "8b491e8b-e24d-4ded-8f24-57844362cc78",
+      "preferred_label": "Medial Parapatellar Interval",
+      "anki_slug": "Medial_Parapatellar_Interval",
+      "current_tag": "SnapOrtho::Anatomy::Medial_Parapatellar_Interval",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Leg_Knee",
+      "tissue": "Other",
+      "canonical_structure": "Medial_Parapatellar_Interval",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "surgical approach interval at the knee"
+    },
+    {
+      "entity_id": "da0c0274-88a1-4707-ae89-421e96a9562a",
+      "preferred_label": "PRUJ",
+      "anki_slug": "Pruj",
+      "current_tag": "SnapOrtho::Anatomy::Pruj",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Elbow",
+      "tissue": "Joints",
+      "canonical_structure": "Proximal_Radioulnar_Joint",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "PRUJ = proximal radioulnar joint at the elbow"
+    },
+    {
+      "entity_id": "69e1e2e5-2e05-41b0-b9ab-537494f3cd0b",
+      "preferred_label": "Sports Elbow Anatomy Hub",
+      "anki_slug": "Sports_Elbow_Anatomy_Hub",
+      "current_tag": "SnapOrtho::Anatomy::Sports_Elbow_Anatomy_Hub",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Elbow",
+      "tissue": "Other",
+      "canonical_structure": "Sports_Elbow_Anatomy_Hub",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "named anatomy hub for sports elbow topics"
+    },
+    {
+      "entity_id": "d2ca3969-8b4f-46fd-a189-61f078fc1b12",
+      "preferred_label": "Third Metacarpal",
+      "anki_slug": "Third_Metacarpal",
+      "current_tag": "SnapOrtho::Anatomy::Third_Metacarpal",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Hand",
+      "tissue": "Osteology",
+      "canonical_structure": "Third_Metacarpal",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "metacarpal bone of the hand"
+    },
+    {
+      "entity_id": "5418aec8-1ea7-4986-9cfd-f317d14a0810",
+      "preferred_label": "Wrist Anatomy Hub",
+      "anki_slug": "Wrist_Anatomy_Hub",
+      "current_tag": "SnapOrtho::Anatomy::Wrist_Anatomy_Hub",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Hand",
+      "tissue": "Other",
+      "canonical_structure": "Wrist_Anatomy_Hub",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "named anatomy hub for wrist; Hand region covers wrist"
+    }
+  ]
+}

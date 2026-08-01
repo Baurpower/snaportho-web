@@ -914,14 +914,19 @@ function getRulePenalty({
     penalty += 50000 * hardMultiplier;
   }
 
-  for (const violation of evaluatePgyEligibility({
-    resident,
-    callType: slot,
-    rules,
-    effectiveDate: day.key,
-  })) {
-    const hardMultiplier = violation.severity === "error" ? 10 : 1;
-    penalty += 99999 * hardMultiplier;
+  // V2 eligibility can intentionally override a legacy PGY pool restriction
+  // (for example, a PGY-1 joins Primary in their second orthopedic month).
+  // Do not re-penalize an engine-approved candidate with the legacy rule here.
+  if (!activeGeneratorEngine) {
+    for (const violation of evaluatePgyEligibility({
+      resident,
+      callType: slot,
+      rules,
+      effectiveDate: day.key,
+    })) {
+      const hardMultiplier = violation.severity === "error" ? 10 : 1;
+      penalty += 99999 * hardMultiplier;
+    }
   }
 
   // Monthly load target by PGY — per-PGY hard/soft max.

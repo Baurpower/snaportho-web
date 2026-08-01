@@ -2580,6 +2580,10 @@ async function submitProposedRuleType() {
   rules
     .filter((rule) => {
       if (rule.type === "call_slot_definition") return false;
+      // Persisted scheduler-only rules can predate the current editor schema.
+      // Keep them available to the scheduler without trying to render an
+      // editor card that has no matching definition.
+      if (!getRuleDefinition(rule.type)) return false;
       if (rule.type !== "restrict_call_type_by_pgy") return true;
       return !rule.name.toLowerCase().includes("call pool");
     })

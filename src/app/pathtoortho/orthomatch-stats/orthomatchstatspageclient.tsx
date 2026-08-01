@@ -1,8 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { BarChart3, BookOpenCheck, GraduationCap, GitBranch, Stethoscope, Users } from 'lucide-react';
+import { BarChart3, Calculator, GitBranch, GraduationCap, ShieldAlert, Stethoscope, Users } from 'lucide-react';
 import type React from 'react';
+import { useState } from 'react';
 
 const COLORS = {
   bg: '#f9f7f4',
@@ -150,12 +151,57 @@ const chartingOutcomesData = {
   },
 } as const;
 
+type ApplicantType = 'md' | 'do' | 'us-img' | 'non-us-img';
+
+const scoreRanges = [
+  { id: '220-or-less', label: '220 or less' },
+  { id: '221-230', label: '221–230' },
+  { id: '231-240', label: '231–240' },
+  { id: '241-250', label: '241–250' },
+  { id: '251-260', label: '251–260' },
+  { id: '261-270', label: '261–270' },
+  { id: '271-280', label: '271–280' },
+] as const;
+
+const scoreOutcomes = {
+  md: [
+    { matched: 1, notMatched: 3 },
+    { matched: 10, notMatched: 21 },
+    { matched: 34, notMatched: 34 },
+    { matched: 115, notMatched: 58 },
+    { matched: 200, notMatched: 68 },
+    { matched: 183, notMatched: 53 },
+    { matched: 84, notMatched: 7 },
+  ],
+  do: [
+    { matched: 1, notMatched: 2 },
+    { matched: 1, notMatched: 7 },
+    { matched: 6, notMatched: 27 },
+    { matched: 15, notMatched: 25 },
+    { matched: 39, notMatched: 22 },
+    { matched: 19, notMatched: 7 },
+    { matched: 0, notMatched: 2 },
+  ],
+} as const;
+
+const applicantLabels: Record<ApplicantType, string> = {
+  md: 'U.S. MD senior',
+  do: 'U.S. DO senior',
+  'us-img': 'U.S. IMG',
+  'non-us-img': 'Non-U.S. IMG',
+};
+
+const imgProbabilities = {
+  'us-img': [0.121, 0.131, 0.15, 0.18, 0.211, 0.239, 0.255],
+  'non-us-img': [0.015, 0.021, 0.057, 0.126, 0.278, 0.502, 0.613],
+} as const;
+
 function Container({ children }: { children: React.ReactNode }) {
   return <div className="mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-10">{children}</div>;
 }
 
-function Section({ children }: { children: React.ReactNode }) {
-  return <section className="py-12 sm:py-16 lg:py-20">{children}</section>;
+function Section({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  return <section className={`py-12 sm:py-16 lg:py-20 ${className}`}>{children}</section>;
 }
 
 function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
@@ -246,32 +292,17 @@ function formatWholePercent(numerator: number, denominator: number) {
   return `${((numerator / denominator) * 100).toFixed(1)}%`;
 }
 
-function OutcomeBar({ matched, notMatched, max }: { matched: number; notMatched: number; max: number }) {
-  return (
-    <div className="space-y-3">
-      {[
-        { label: 'Matched', value: matched, color: COLORS.accent },
-        { label: 'Did not match', value: notMatched, color: '#9ca3af' },
-      ].map((item) => (
-        <div key={item.label}>
-          <div className="mb-1.5 flex items-center justify-between gap-4 text-xs">
-            <span className="font-medium text-gray-600">{item.label}</span>
-            <span className="font-semibold" style={{ color: COLORS.headingSub }}>
-              {item.value}
-            </span>
-          </div>
-          <div className="h-2 overflow-hidden rounded-full bg-gray-100">
-            <div className="h-full rounded-full" style={{ width: `${(item.value / max) * 100}%`, background: item.color }} />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 export default function PathToOrthoMatchStatsPage() {
   const latestYear = matchData[0];
   const earliestYear = matchData[matchData.length - 1];
+  const [applicantType, setApplicantType] = useState<ApplicantType>('md');
+  const [scoreRangeIndex, setScoreRangeIndex] = useState(4);
+  const scoreRange = scoreRanges[scoreRangeIndex];
+  const domesticOutcome = applicantType === 'md' || applicantType === 'do' ? scoreOutcomes[applicantType][scoreRangeIndex] : null;
+  const probability = domesticOutcome
+    ? domesticOutcome.matched / (domesticOutcome.matched + domesticOutcome.notMatched)
+    : imgProbabilities[applicantType as 'us-img' | 'non-us-img'][scoreRangeIndex];
+  const domesticSample = domesticOutcome ? domesticOutcome.matched + domesticOutcome.notMatched : null;
 
   return (
     <main className="min-h-screen" style={{ background: COLORS.bg, color: COLORS.text }}>
@@ -318,27 +349,26 @@ export default function PathToOrthoMatchStatsPage() {
       <Section>
         <Container>
           <SectionHeading
-            eyebrow="2026 Charting Outcomes"
-            title="Boards: what the matched cohorts scored"
-            subtitle="Median board scores differed between matched and unmatched orthopaedic applicants. These are cohort descriptions—not screening cutoffs or a prediction for any one applicant."
+            eyebrow="At a Glance"
+            title="Quick Takeaways"
+            subtitle="Start with the latest match picture, then explore how board-score outcomes differed by applicant type."
           />
 
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-3">
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2">
-                  <BookOpenCheck className="h-5 w-5" style={{ color: COLORS.accent }} />
-                  MD seniors · Step 2 CK
+                  <BarChart3 className="h-5 w-5" style={{ color: COLORS.accent }} />
+                  Overall Match Rate
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
-                <OutcomeBar
-                  matched={chartingOutcomesData.md.step2.matched}
-                  notMatched={chartingOutcomesData.md.step2.notMatched}
-                  max={280}
-                />
-                <p className="mt-5">
-                  Median scores: 259 among matched applicants and 251 among applicants who did not match.
+                <div className="text-3xl font-semibold" style={{ color: COLORS.heading }}>
+                  {formatPercent(latestYear.matchTotal)}
+                </div>
+                <p className="mt-2">
+                  In {latestYear.year}, {formatInt(latestYear.totalMatched)} of{' '}
+                  {formatInt(latestYear.totalApplicants)} total applicants matched.
                 </p>
               </CardContent>
             </Card>
@@ -346,52 +376,46 @@ export default function PathToOrthoMatchStatsPage() {
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2">
-                  <BookOpenCheck className="h-5 w-5" style={{ color: COLORS.accent }} />
-                  DO seniors · Step 2 CK
+                  <GraduationCap className="h-5 w-5" style={{ color: COLORS.accent }} />
+                  MD vs DO Match Rate
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
-                <OutcomeBar
-                  matched={chartingOutcomesData.do.step2.matched}
-                  notMatched={chartingOutcomesData.do.step2.notMatched}
-                  max={280}
-                />
-                <p className="mt-5">
-                  Median scores: 256 among matched applicants and 245 among applicants who did not match.
-                </p>
+                <div className="flex items-end gap-6">
+                  <div>
+                    <div className="text-xs uppercase tracking-wide text-gray-500">MD</div>
+                    <div className="text-3xl font-semibold" style={{ color: COLORS.heading }}>
+                      {formatPercent(latestYear.matchMD)}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-xs uppercase tracking-wide text-gray-500">DO</div>
+                    <div className="text-3xl font-semibold" style={{ color: COLORS.heading }}>
+                      {formatPercent(latestYear.matchDO)}
+                    </div>
+                  </div>
+                </div>
+                <p className="mt-2">The degree-type gap remained substantial in the most recent cycle.</p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2">
-                  <BookOpenCheck className="h-5 w-5" style={{ color: COLORS.accent }} />
-                  DO seniors · COMLEX Level 2-CE
+                  <Users className="h-5 w-5" style={{ color: COLORS.accent }} />
+                  Applicant Volume Trend
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
-                <OutcomeBar
-                  matched={chartingOutcomesData.do.comlex2.matched}
-                  notMatched={chartingOutcomesData.do.comlex2.notMatched}
-                  max={700}
-                />
-                <p className="mt-5">
-                  Median scores: 623 among matched applicants and 568 among applicants who did not match.
+                <div className="text-3xl font-semibold" style={{ color: COLORS.heading }}>
+                  +{formatInt(latestYear.totalApplicants - earliestYear.totalApplicants)}
+                </div>
+                <p className="mt-2">
+                  Total applicants increased from {formatInt(earliestYear.totalApplicants)} in {earliestYear.year} to{' '}
+                  {formatInt(latestYear.totalApplicants)} in {latestYear.year}.
                 </p>
               </CardContent>
             </Card>
-          </div>
-
-          <div
-            className="mt-6 rounded-2xl border px-5 py-4 text-sm leading-relaxed text-gray-600"
-            style={{ borderColor: COLORS.border, background: 'rgba(255,255,255,0.65)' }}
-          >
-            <span className="font-semibold" style={{ color: COLORS.headingSub }}>
-              How to read this:
-            </span>{' '}
-            stronger board performance was associated with matching in these cohorts, but the distributions overlap
-            and the Match remains multifactorial. Use these medians as context—not as a target that guarantees an
-            interview or match.
           </div>
         </Container>
       </Section>
@@ -399,6 +423,110 @@ export default function PathToOrthoMatchStatsPage() {
       <Divider />
 
       <Section>
+        <Container>
+          <SectionHeading
+            eyebrow="2026 Charting Outcomes"
+            title="Explore Step 2 outcomes"
+            subtitle="Choose an applicant group and score range to see the reported or modeled chance of matching orthopaedic surgery as the preferred specialty."
+          />
+
+          <Card className="overflow-hidden">
+            <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
+              <div className="border-b p-6 md:p-8 lg:border-b-0 lg:border-r" style={{ borderColor: COLORS.border }}>
+                <div className="text-sm font-semibold" style={{ color: COLORS.headingSub }}>
+                  1. Applicant type
+                </div>
+                <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-2">
+                  {(Object.keys(applicantLabels) as ApplicantType[]).map((type) => {
+                    const selected = applicantType === type;
+                    return (
+                      <button
+                        key={type}
+                        type="button"
+                        onClick={() => setApplicantType(type)}
+                        className="rounded-xl border px-3 py-3 text-sm font-semibold transition"
+                        style={{
+                          borderColor: selected ? COLORS.accent : 'rgba(148,163,184,0.35)',
+                          background: selected ? 'rgba(89,116,152,0.10)' : '#fff',
+                          color: selected ? COLORS.accent : COLORS.headingSub,
+                        }}
+                      >
+                        {applicantLabels[type]}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <label className="mt-7 block text-sm font-semibold" htmlFor="step-2-range" style={{ color: COLORS.headingSub }}>
+                  2. Step 2 CK range
+                </label>
+                <select
+                  id="step-2-range"
+                  value={scoreRangeIndex}
+                  onChange={(event) => setScoreRangeIndex(Number(event.target.value))}
+                  className="mt-3 w-full rounded-xl border bg-white px-4 py-3 text-sm font-medium outline-none"
+                  style={{ borderColor: COLORS.border, color: COLORS.headingSub }}
+                >
+                  {scoreRanges.map((range, index) => (
+                    <option key={range.id} value={index}>
+                      {range.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex flex-col justify-center p-6 md:p-8" style={{ background: 'rgba(89,116,152,0.06)' }}>
+                <div className="flex items-center gap-2 text-sm font-semibold" style={{ color: COLORS.accent }}>
+                  <Calculator className="h-5 w-5" />
+                  Estimated match outcome
+                </div>
+                <div className="mt-5 text-5xl font-bold tracking-tight" style={{ color: COLORS.heading }}>
+                  {formatPercent(probability)}
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                  {applicantLabels[applicantType]} with a Step 2 CK score of {scoreRange.label}.
+                </p>
+
+                {domesticOutcome ? (
+                  <div className="mt-6 grid grid-cols-2 gap-3">
+                    <div className="rounded-xl bg-white p-4">
+                      <div className="text-xs uppercase tracking-wide text-gray-500">Matched</div>
+                      <div className="mt-1 text-2xl font-semibold" style={{ color: COLORS.heading }}>
+                        {domesticOutcome.matched}
+                      </div>
+                    </div>
+                    <div className="rounded-xl bg-white p-4">
+                      <div className="text-xs uppercase tracking-wide text-gray-500">Did not match</div>
+                      <div className="mt-1 text-2xl font-semibold" style={{ color: COLORS.heading }}>
+                        {domesticOutcome.notMatched}
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
+
+                <p className="mt-5 text-xs leading-relaxed text-gray-500">
+                  {domesticOutcome
+                    ? `Observed rate within this score band (n=${domesticSample}) in the 2026 U.S. senior report.`
+                    : `Approximate probability read from the NRMP 2026 model, which pooled 2024–2026 applicants. The 2026 matched cohort was below the five-person reporting threshold (${applicantType === 'us-img' ? 'U.S. IMG n=4' : 'non-U.S. IMG n=2'}).${scoreRangeIndex === 6 ? ' This range uses the model endpoint near 270.' : ''}`}
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <div className="mt-6 flex gap-3 rounded-2xl border px-5 py-4 text-sm leading-relaxed text-gray-600" style={{ borderColor: COLORS.border }}>
+            <ShieldAlert className="mt-0.5 h-5 w-5 shrink-0" style={{ color: COLORS.accent }} />
+            <p>
+              This is a historical score-only estimate—not a personalized prediction. Away rotations, letters,
+              research, interviews, program list, number of ranks, and the rest of the application materially affect
+              outcomes. Very small score bands can be unstable.
+            </p>
+          </div>
+        </Container>
+      </Section>
+
+      <Divider />
+
+      <Section className="hidden">
         <Container>
           <SectionHeading
             eyebrow="Application Strategy"
@@ -484,7 +612,7 @@ export default function PathToOrthoMatchStatsPage() {
 
       <Divider />
 
-      <Section>
+      <Section className="hidden">
         <Container>
           <SectionHeading
             eyebrow="At a Glance"
@@ -749,6 +877,82 @@ export default function PathToOrthoMatchStatsPage() {
               </Card>
             ))}
           </div>
+        </Container>
+      </Section>
+
+      <Divider />
+
+      <Section>
+        <Container>
+          <SectionHeading
+            eyebrow="Backup Planning"
+            title="Should you dual apply?"
+            subtitle="The clearest 2026 signal is how many unmatched applicants ranked orthopaedics—and no other specialty."
+          />
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle>U.S. MD seniors</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <div className="text-4xl font-semibold" style={{ color: COLORS.heading }}>
+                  197
+                </div>
+                <p className="mt-2">
+                  of 245 unmatched applicants (80.4%) ranked orthopaedics only. Forty-eight ranked at least one other
+                  specialty.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle>U.S. DO seniors</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <div className="text-4xl font-semibold" style={{ color: COLORS.heading }}>
+                  67
+                </div>
+                <p className="mt-2">
+                  of 115 unmatched applicants (58.3%) ranked orthopaedics only. Forty-eight ranked at least one other
+                  specialty.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="mt-6 grid gap-6 lg:grid-cols-2">
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle>Why the comparison is skewed</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                Applicants do not choose dual applying at random. Many pursue a second specialty because they already
+                recognize weaker scores, fewer interviews, or other application risk. That selection effect makes the
+                dual-applicant group higher-risk from the start, so its match rate cannot tell us that dual applying
+                itself hurts an application.
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle>Why it can still be worth considering</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                A thoughtful backup can preserve a path into another specialty you would genuinely enjoy. A strong
+                overall applicant may also be competitive in another selective specialty—but that plan works only when
+                the second application is credible, specialty-specific, and supported by appropriate mentors and
+                letters. Start early rather than treating it as a last-minute safety net.
+              </CardContent>
+            </Card>
+          </div>
+
+          <p className="mt-5 text-xs leading-relaxed text-gray-500">
+            NRMP reports specialties ranked, not every specialty to which an applicant submitted an application.
+            “Orthopaedics only” therefore means one distinct specialty on the rank list; it does not prove the applicant
+            applied only to orthopaedic programs.
+          </p>
         </Container>
       </Section>
     </main>

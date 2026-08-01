@@ -1,0 +1,561 @@
+{
+  "schemaVersion": "anatomy-hierarchy.v1",
+  "shard": "shard-01",
+  "manifestId": "17d15dc9-ecad-4fe0-95cf-c4f1059b3be6",
+  "regions": [
+    "Basic_Science",
+    "Spine",
+    "Shoulder_Girdle",
+    "Arm",
+    "Elbow",
+    "Forearm",
+    "Hand",
+    "Pelvis",
+    "Thigh_Hip",
+    "Leg_Knee",
+    "Foot_Ankle",
+    "General"
+  ],
+  "tissues": [
+    "Osteology",
+    "Joints",
+    "Ligaments",
+    "Muscles",
+    "Tendons",
+    "Nerves",
+    "Vasculature",
+    "Compartment",
+    "Other"
+  ],
+  "instructions": "For each structure set region + tissue (from the lists above) + canonical_structure (clean PascalCase_with_underscores; keep the given anki_slug unless it is a typo/abbreviation you are normalizing). Set merge_into to another structure's anki_slug only if this is a true duplicate. confidence: high|medium|low. evidence: one short phrase citing the sample_fronts or anatomy knowledge. Do NOT invent region/tissue tokens.",
+  "structures": [
+    {
+      "entity_id": "0d9178bb-30a0-469d-a930-3e48aa2685a1",
+      "preferred_label": "Tibia",
+      "anki_slug": "Tibia",
+      "current_tag": "SnapOrtho::Anatomy::Tibia",
+      "deck_card_count": 124,
+      "sample_fronts": [
+        "Where are the incisions located for a two-incision lower leg fasciotomy ? {{c1:: Anterolateral - half way between the tibial crest and the fibula Medial - just posterior to the posteromedial border of the tibia }}",
+        "A {{c1::Pilon}} fracture occurs when vertical loading of the ankle joint causes a fracture of the tibia, fibula, and separation of the malleoli."
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Tibia",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "2dc7f59e-6ca8-4c9f-ba86-24490fbc35d6",
+      "preferred_label": "Clavicle",
+      "anki_slug": "Clavicle",
+      "current_tag": "SnapOrtho::Anatomy::Clavicle",
+      "deck_card_count": 56,
+      "sample_fronts": [
+        "What is the one long bone that does NOT undergo endochrondral ossification? {{c1::Clavicle}}",
+        "What structures (6) make up the superior shoulder suspensory complex ? {{c1:: 1) Acromial process 2) Acromioclavicular joint 3) Coraclavicular ligaments 4) Coracoid process 5) Distal clavicle 6) Glenoid }}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Clavicle",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "93a6f92b-b229-4f7a-9df4-453f7f02de4f",
+      "preferred_label": "Rotator Cuff",
+      "anki_slug": "Rotator_Cuff",
+      "current_tag": "SnapOrtho::Anatomy::Rotator_Cuff",
+      "deck_card_count": 43,
+      "sample_fronts": [
+        "What are the rotator cuff muscles and their innervations ? {{c1:: Supraspinatus - suprascapular nerve Infraspinatus - suprascapular nerve Teres minor - Axillary nerve Subscapularis - Upper and lower subscapular nerve }}",
+        "Which rotator cuff tendon(s) attach to the greater tuberosity ? {{c1:: Supraspinatus Infraspinatus Teres minor }}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Rotator_Cuff",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "cf042c74-f70a-40d2-94cf-96527923340b",
+      "preferred_label": "Talus",
+      "anki_slug": "Talus",
+      "current_tag": "SnapOrtho::Anatomy::Talus",
+      "deck_card_count": 35,
+      "sample_fronts": [
+        "A {{c1::Maisonneuve}} fracture occurs when the tibiofibular synesmosis is disrupted by external rotation of the talus, which results in high fracture of the fibula and tearing of the interosseous membrane longitudinally.",
+        "Which epiphyseal centers are present at birth ? {{c1:: Distal Femur Proximal Tibia Calcaneus Proximal Humerus Talus Cuboid }}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Talus",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "d66bb527-b441-451d-b9bd-cc577c98388a",
+      "preferred_label": "Spinal Cord",
+      "anki_slug": "Spinal_Cord",
+      "current_tag": "SnapOrtho::Anatomy::Spinal_Cord",
+      "deck_card_count": 27,
+      "sample_fronts": [
+        "What is the main vascular supply to the descending motor tract ? {{c1::Anterior spinal artery}}",
+        "What is the name of the anterior segmental artery that supplies the lower half of the spinal cord ? {{c1::Artery of Adamkiewicz}}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Spinal_Cord",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "b8c22ec6-1383-4b7e-ae89-a4e598722eb6",
+      "preferred_label": "Median Nerve",
+      "anki_slug": "Median_Nerve",
+      "current_tag": "SnapOrtho::Anatomy::Median_Nerve",
+      "deck_card_count": 20,
+      "sample_fronts": [
+        "For a carpal tunnel injection, it is important to have the patient pinch their thumb and small finger to identify the {{c1::palmaris longus}}. Insert the needle {{c2::ulnar::radial/ulnar}} to this, since the median nerve",
+        "For a carpal tunnel injection, it is important to have the patient pinch their thumb and small finger to identify the {{c1::palmaris longus}}. Insert the needle {{c2::ulnar::radial/ulnar}} to this, since the median nerve"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Median_Nerve",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "32b74829-878a-438d-9659-4a4f34465194",
+      "preferred_label": "Humeral Shaft",
+      "anki_slug": "Humeral_Shaft",
+      "current_tag": "SnapOrtho::Anatomy::Humeral_Shaft",
+      "deck_card_count": 18,
+      "sample_fronts": [
+        "With respect to Neer's classification of proximal humerus fractures , what structures (4) are considered parts ? {{c1:: Head Greater tuberosity Lesser tuberosity Humeral shaft }}",
+        "What are the nonoperative indications for humeral shaft fractures ? Anterior angulation: &lt;{{c1::30}}° Varus/valgus angulation: &lt;{{c1::20}}° Shortening: &lt;{{c1::3}} cm"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Humeral_Shaft",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "33c820ef-8fcc-4962-90a6-36a95624ec05",
+      "preferred_label": "Interosseous Membrane",
+      "anki_slug": "Interosseous_Membrane",
+      "current_tag": "SnapOrtho::Anatomy::Interosseous_Membrane",
+      "deck_card_count": 17,
+      "sample_fronts": [
+        "What are the five ligaments of the interosseous membrane of the forearm ? {{c1:: Proximal oblique cord Dorsal oblique accessory cord Central band Accessory band Distal oblique bundle }}",
+        "Which ligament of the interosseous membrane is most important for stability ? {{c1::Central band}}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Interosseous_Membrane",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "ed1c9277-4eb6-48a5-beae-fc218d0abe41",
+      "preferred_label": "Hamate",
+      "anki_slug": "Hamate",
+      "current_tag": "SnapOrtho::Anatomy::Hamate",
+      "deck_card_count": 13,
+      "sample_fronts": [
+        "What are Gilula's arcs on hand x-ray ? First arc: {{c1::Proximal convexity of the scaphoid, lunate, and triquetrum}} Second arc: {{c1::Distal concavity of the scaphoid, lunate, and triquetrum}} Third arc: {{c1::Proximal ",
+        "Flexor digiti minimi brevis Origin: {{c1::Hamate}} Insertion: {{c2::Base of proximal phalanx of small finger}} Nerve: {{c3::Ulnar}} Action: {{c4::Small finger flexion}}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Hamate",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "b30f2c65-05e1-4854-82ac-799514fc6f95",
+      "preferred_label": "Syndesmosis",
+      "anki_slug": "Syndesmosis",
+      "current_tag": "SnapOrtho::Anatomy::Syndesmosis",
+      "deck_card_count": 11,
+      "sample_fronts": [
+        "What ligaments (5) make up the syndesmosis ? {{c1:: Anterior inferior tibiofibular ligament (AITFL) Posterior inferior tibiofibular ligament (PITFL) Interosseous ligament (IOL) Transverse tibiofibular ligament (TTFL) Inf",
+        "In which direction is the ankle syndesmosis most unstable ? {{c1::Anterior to posterior}}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Syndesmosis",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "8b635965-b793-4718-a334-b7527c5fca30",
+      "preferred_label": "Capitate",
+      "anki_slug": "Capitate",
+      "current_tag": "SnapOrtho::Anatomy::Capitate",
+      "deck_card_count": 8,
+      "sample_fronts": [
+        "What are Gilula's arcs on hand x-ray ? First arc: {{c1::Proximal convexity of the scaphoid, lunate, and triquetrum}} Second arc: {{c1::Distal concavity of the scaphoid, lunate, and triquetrum}} Third arc: {{c1::Proximal ",
+        "Adductor Pollicis Origin: {{c1::Capitate (2nd and 3rd MC)}} Insertion: {{c2::Ulnar base of proximal phalanx}} Nerve: {{c3::Ulnar}} Action: {{c4::Thumb adduction}}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Capitate",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "41ba04e2-e819-475e-ab97-91d31ed0ca3e",
+      "preferred_label": "Distal Ulna",
+      "anki_slug": "Distal_Ulna",
+      "current_tag": "SnapOrtho::Anatomy::Distal_Ulna",
+      "deck_card_count": 7,
+      "sample_fronts": [
+        "How much of the weight-bearing force is transmitted through the distal radius and ulna ? Distal radius: {{c1::80}}% Distal ulna: {{c1::20}}%",
+        "Pronator Quadratus Origin: {{c1::Medial distal ulna}} Insertion: {{c2::Anterior distal radius}} Nerve: {{c3::Median}} Action: {{c4::Pronate forearm}}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Distal_Ulna",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "08fd77c1-a818-4afd-9ab2-71e6d80080c4",
+      "preferred_label": "Trochlea",
+      "anki_slug": "Trochlea",
+      "current_tag": "SnapOrtho::Anatomy::Trochlea",
+      "deck_card_count": 7,
+      "sample_fronts": [
+        "What radiographic finding indicates a capitellum fracture that extends to the trochlea? {{c1::Double-Arc Sign}}",
+        "What is the classification for capitellum fractures ? {{c1::Bryan and Morrey Classification}}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Trochlea",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "3104da27-ab60-46ed-9c53-c2c179464fa1",
+      "preferred_label": "Lateral Collateral Ligament",
+      "anki_slug": "Lateral_Collateral_Ligament",
+      "current_tag": "SnapOrtho::Anatomy::Lateral_Collateral_Ligament",
+      "deck_card_count": 6,
+      "sample_fronts": [
+        "What 4 structures make up the lateral collateral ligament complex ? {{c1:: Accessory LCL Annular ligament Lateral radial collateral ligament (LRCL) Lateral ulnar collateral ligament (LUCL) }}",
+        "What physical exam finding is indicative of a pathologic process rather than physiologic genu varum ? {{c1::Varus thrust with ambulation indicating lateral collateral ligament insufficiency}}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Lateral_Collateral_Ligament",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "c1719d7a-f6ec-4a8d-aa17-0405f30ffeeb",
+      "preferred_label": "Posterolateral Corner",
+      "anki_slug": "Posterolateral_Corner",
+      "current_tag": "SnapOrtho::Anatomy::Posterolateral_Corner",
+      "deck_card_count": 5,
+      "sample_fronts": [
+        "What are the three main stabilizers of the posterolateral corner ? {{c1:: LCL Popliteus tendon Popliteofibular ligament }}",
+        "What is the classification for knee dislocations ? {{c1::Schenck Classification}}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Posterolateral_Corner",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "a39bf748-9bf2-4477-98bc-620c66eb38e3",
+      "preferred_label": "Collateral Ligaments",
+      "anki_slug": "Collateral_Ligaments",
+      "current_tag": "SnapOrtho::Anatomy::Collateral_Ligaments",
+      "deck_card_count": 4,
+      "sample_fronts": [
+        "Why is the intrinsic plus position recommended for metacarpal fractures ? {{c1::Keeps tension on the collateral ligaments to help prevent stiffness}}",
+        "Which two ligaments create the ulnar collateral ligament (UCL) of the thumb ? {{c1::Proper and Accessory collateral ligaments}}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Collateral_Ligaments",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "f3be2d30-1e96-46b1-a056-935a05ac9924",
+      "preferred_label": "Acromioclavicular Joint",
+      "anki_slug": "Acromioclavicular_Joint",
+      "current_tag": "SnapOrtho::Anatomy::Acromioclavicular_Joint",
+      "deck_card_count": 3,
+      "sample_fronts": [
+        "What structures (6) make up the superior shoulder suspensory complex ? {{c1:: 1) Acromial process 2) Acromioclavicular joint 3) Coraclavicular ligaments 4) Coracoid process 5) Distal clavicle 6) Glenoid }}",
+        "Shoulder is made up of which 4 articulations? 1. {{c1::Sternoclavicular joint}} 2. {{c1::Glenohumeral joint}} 3. {{c1::Acromioclavicular joint}} 4. {{c1::Scapulothoracic articulation}}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Acromioclavicular_Joint",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "474c54ba-7e7b-4dcb-8475-801816675cc3",
+      "preferred_label": "Radial Collateral Ligament",
+      "anki_slug": "Radial_Collateral_Ligament",
+      "current_tag": "SnapOrtho::Anatomy::Radial_Collateral_Ligament",
+      "deck_card_count": 3,
+      "sample_fronts": [
+        "What 4 structures make up the lateral collateral ligament complex ? {{c1:: Accessory LCL Annular ligament Lateral radial collateral ligament (LRCL) Lateral ulnar collateral ligament (LUCL) }}",
+        "Four (4) components of the lateral collateral ligament complex : {{c1:: Lateral ulnar collateral ligament Radial collateral ligament Annular ligament Accessory collateral ligament }}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Radial_Collateral_Ligament",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "1203c213-061d-4499-9aec-a7268655b004",
+      "preferred_label": "Fifth Metacarpal",
+      "anki_slug": "Fifth_Metacarpal",
+      "current_tag": "SnapOrtho::Anatomy::Fifth_Metacarpal",
+      "deck_card_count": 2,
+      "sample_fronts": [
+        "What is the eponym for a fifth metacarpal neck fracture ? {{c1::Boxer's fracture}}",
+        "What is the eponym for a fifth metacarpal base fracture ? {{c1::Baby Bennett}}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Fifth_Metacarpal",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "bcfa3dac-d90c-46d4-ae70-708e09bbbd2d",
+      "preferred_label": "Superficial Palmar Arch",
+      "anki_slug": "Superficial_Palmar_Arch",
+      "current_tag": "SnapOrtho::Anatomy::Superficial_Palmar_Arch",
+      "deck_card_count": 2,
+      "sample_fronts": [
+        "The {{c1::dorsal carpal}} branch of the radial artery provides the major blood supply to the scaphoid .",
+        "Blood supply to the hand is divided into the superficial and palmar arches, which are predominantly supplied by the {{c1::ulnar}} and {{c1::radial}} artery, respectively."
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Superficial_Palmar_Arch",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "34b0bbc5-3fba-4a0c-9f3c-3a3ffef22b7f",
+      "preferred_label": "CMC Joint",
+      "anki_slug": "Cmc_Joint",
+      "current_tag": "SnapOrtho::Anatomy::Cmc_Joint",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "What ligament is torn with a thumb CMC joint dislocation ? {{c1::Dorsoradial ligament}}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Cmc_Joint",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "70fd32c3-494b-4252-bd82-d8914b0d2c23",
+      "preferred_label": "Exiting Nerve Root",
+      "anki_slug": "Exiting_Nerve_Root",
+      "current_tag": "SnapOrtho::Anatomy::Exiting_Nerve_Root",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "An L5/S1 {{c1::far lateral::far lateral/paracentral}} disc hernation would result in a Trendelenburg gait ."
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Exiting_Nerve_Root",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "1982fda4-6158-4e78-90d1-9ddb0c42960b",
+      "preferred_label": "Henry Interval",
+      "anki_slug": "Henry_Interval",
+      "current_tag": "SnapOrtho::Anatomy::Henry_Interval",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "What approach is most commonly used for fixation of Galeazzi fractures ? {{c1::Volar (Henry) approach}}"
+      ],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Henry_Interval",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "37b0a933-a5ca-4209-976a-a3d03b679dd1",
+      "preferred_label": "A4 Pulley",
+      "anki_slug": "A4_Pulley",
+      "current_tag": "SnapOrtho::Anatomy::A4_Pulley",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "A4_Pulley",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "b027c2ba-ef80-4ccd-88c6-52eaf461519c",
+      "preferred_label": "C1 Pulley",
+      "anki_slug": "C1_Pulley",
+      "current_tag": "SnapOrtho::Anatomy::C1_Pulley",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "C1_Pulley",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "40a424b0-9add-40f7-b141-8ca3b548ed15",
+      "preferred_label": "ECU",
+      "anki_slug": "Ecu",
+      "current_tag": "SnapOrtho::Anatomy::Ecu",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Ecu",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "b7df5744-42ed-4c21-89aa-837f48e50d74",
+      "preferred_label": "Femoral Triangle",
+      "anki_slug": "Femoral_Triangle",
+      "current_tag": "SnapOrtho::Anatomy::Femoral_Triangle",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Femoral_Triangle",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "0881f88a-0c58-47e8-8277-c1fef78bf31b",
+      "preferred_label": "Hand & Wrist Anatomy Hub",
+      "anki_slug": "Hand_Wrist_Anatomy_Hub",
+      "current_tag": "SnapOrtho::Anatomy::Hand_Wrist_Anatomy_Hub",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Hand_Wrist_Anatomy_Hub",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "38bc37b4-46ca-49e8-b3f8-e8e13985d742",
+      "preferred_label": "Lateral Column Distal Humerus",
+      "anki_slug": "Lateral_Column_Distal_Humerus",
+      "current_tag": "SnapOrtho::Anatomy::Lateral_Column_Distal_Humerus",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Lateral_Column_Distal_Humerus",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "5b18cda4-caa0-45fb-a032-ad7d5b391a3b",
+      "preferred_label": "Orthopaedic Anatomy",
+      "anki_slug": "Orthopaedic_Anatomy",
+      "current_tag": "SnapOrtho::Anatomy::Orthopaedic_Anatomy",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Orthopaedic_Anatomy",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "40337e1a-8d8e-46a8-a0c0-bb8fe1557bec",
+      "preferred_label": "Sacroiliac Joint",
+      "anki_slug": "Sacroiliac_Joint",
+      "current_tag": "SnapOrtho::Anatomy::Sacroiliac_Joint",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Sacroiliac_Joint",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "38ec5225-b723-4bef-acc3-cb2fd82b6226",
+      "preferred_label": "Sports Knee Anatomy Hub",
+      "anki_slug": "Sports_Knee_Anatomy_Hub",
+      "current_tag": "SnapOrtho::Anatomy::Sports_Knee_Anatomy_Hub",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Sports_Knee_Anatomy_Hub",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    },
+    {
+      "entity_id": "1220b90b-62db-4d28-9ebe-1992f712e4b9",
+      "preferred_label": "Traversing Nerve Root",
+      "anki_slug": "Traversing_Nerve_Root",
+      "current_tag": "SnapOrtho::Anatomy::Traversing_Nerve_Root",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": null,
+      "tissue": null,
+      "canonical_structure": "Traversing_Nerve_Root",
+      "merge_into": null,
+      "confidence": null,
+      "evidence": null
+    }
+  ]
+}

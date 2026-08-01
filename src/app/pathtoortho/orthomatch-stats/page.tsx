@@ -3,7 +3,7 @@ import OrthoMatchStatsPageClient from './orthomatchstatspageclient';
 export const metadata = {
   title: 'Orthopaedic Surgery Match Statistics',
   description:
-    'Explore orthopaedic surgery match trends, 2026 board score outcomes, dual applying patterns, and MD vs DO results.',
+    'Explore orthopaedic surgery match trends, compare Step 2 outcomes by applicant type, and understand dual applying.',
   alternates: {
     canonical: '/pathtoortho/orthomatch-stats',
   },
@@ -22,7 +22,7 @@ export const metadata = {
   openGraph: {
     title: 'Orthopaedic Surgery Match Statistics',
     description:
-      'Orthopaedic surgery match trends with 2026 board score outcomes, dual applying patterns, and MD vs DO match rates.',
+      'Orthopaedic surgery match trends with an interactive Step 2 outcome explorer and dual-applying guidance.',
     url: 'https://snap-ortho.com/pathtoortho/orthomatch-stats',
     siteName: 'SnapOrtho',
     images: [

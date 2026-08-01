@@ -1,0 +1,560 @@
+{
+  "schemaVersion": "anatomy-hierarchy.v1",
+  "shard": "shard-04",
+  "manifestId": "17d15dc9-ecad-4fe0-95cf-c4f1059b3be6",
+  "regions": [
+    "Basic_Science",
+    "Spine",
+    "Shoulder_Girdle",
+    "Arm",
+    "Elbow",
+    "Forearm",
+    "Hand",
+    "Pelvis",
+    "Thigh_Hip",
+    "Leg_Knee",
+    "Foot_Ankle",
+    "General"
+  ],
+  "tissues": [
+    "Osteology",
+    "Joints",
+    "Ligaments",
+    "Muscles",
+    "Tendons",
+    "Nerves",
+    "Vasculature",
+    "Compartment",
+    "Other"
+  ],
+  "instructions": "For each structure set region + tissue (from the lists above) + canonical_structure (clean PascalCase_with_underscores; keep the given anki_slug unless it is a typo/abbreviation you are normalizing). Set merge_into to another structure's anki_slug only if this is a true duplicate. confidence: high|medium|low. evidence: one short phrase citing the sample_fronts or anatomy knowledge. Do NOT invent region/tissue tokens.",
+  "structures": [
+    {
+      "entity_id": "7174f760-664c-4873-8778-fc7c36db796d",
+      "preferred_label": "Proximal Phalanx",
+      "anki_slug": "Proximal_Phalanx",
+      "current_tag": "SnapOrtho::Anatomy::Proximal_Phalanx",
+      "deck_card_count": 68,
+      "sample_fronts": [
+        "Flexor pollicis brevis Superficial head Origin: {{c1::Transverse carpal ligament}} Insertion: {{c2::Base of thumb}} Nerve: {{c3::Median}} Action: {{c4::Thumb flexion}} Deep head Origin: {{c5::Trapezium}} Insertion: {{c6:",
+        "Flexor pollicis brevis Superficial head Origin: {{c1::Transverse carpal ligament}} Insertion: {{c2::Base of thumb}} Nerve: {{c3::Median}} Action: {{c4::Thumb flexion}} Deep head Origin: {{c5::Trapezium}} Insertion: {{c6:"
+      ],
+      "region": "Hand",
+      "tissue": "Osteology",
+      "canonical_structure": "Proximal_Phalanx",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "digit bone; sample fronts on thumb base insertions"
+    },
+    {
+      "entity_id": "e85357d3-87fb-4ece-a7ac-a4f976875b84",
+      "preferred_label": "Femoral Head",
+      "anki_slug": "Femoral_Head",
+      "current_tag": "SnapOrtho::Anatomy::Femoral_Head",
+      "deck_card_count": 49,
+      "sample_fronts": [
+        "Three types of \"snapping hip syndrome\": {{c1:: External Internal Intra-articular }}",
+        "Which artery is the main blood supply to the adult femoral head? {{c1::Medial femoral circumflex}}"
+      ],
+      "region": "Thigh_Hip",
+      "tissue": "Osteology",
+      "canonical_structure": "Femoral_Head",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: adult femoral head blood supply via MFCA"
+    },
+    {
+      "entity_id": "2aa3df65-9ff3-4517-876f-f5d3122a25b0",
+      "preferred_label": "Scaphoid",
+      "anki_slug": "Scaphoid",
+      "current_tag": "SnapOrtho::Anatomy::Scaphoid",
+      "deck_card_count": 41,
+      "sample_fronts": [
+        "How do you obtain a scaphoid view ? {{c1::PA x-ray with maximal ulnar deviation}}",
+        "What are Gilula's arcs on hand x-ray ? First arc: {{c1::Proximal convexity of the scaphoid, lunate, and triquetrum}} Second arc: {{c1::Distal concavity of the scaphoid, lunate, and triquetrum}} Third arc: {{c1::Proximal "
+      ],
+      "region": "Hand",
+      "tissue": "Osteology",
+      "canonical_structure": "Scaphoid",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: scaphoid view and Gilula arcs on hand XR"
+    },
+    {
+      "entity_id": "c515851f-0b9a-44eb-9541-32e80b3765ab",
+      "preferred_label": "Pelvis",
+      "anki_slug": "Pelvis",
+      "current_tag": "SnapOrtho::Anatomy::Pelvis",
+      "deck_card_count": 28,
+      "sample_fronts": [
+        "What are the 6 radiographic lines of the pelvis ? 1) {{c1::Iliopubic line}} 2) {{c1::Ilioischial line}} 3) {{c1::Acetabular roof}} 4) {{c1::Anterior border}} 5) {{c1::Posterior border}} 6) {{c1::Tear drop - Medial acetab",
+        "What 3 radiographic views should be obtained to evaluate the pelvic ring ? {{c1::AP pelvis, Inlet, Outlet}}"
+      ],
+      "region": "Pelvis",
+      "tissue": "Osteology",
+      "canonical_structure": "Pelvis",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: radiographic lines of pelvis and pelvic ring views"
+    },
+    {
+      "entity_id": "0b2ca1de-9598-4f6b-abd6-e1aacbc13312",
+      "preferred_label": "Physis",
+      "anki_slug": "Physis",
+      "current_tag": "SnapOrtho::Anatomy::Physis",
+      "deck_card_count": 23,
+      "sample_fronts": [
+        "What are the zones (4) of the physis ? {{c1:: Resting/Reserve Proliferative Hypertrophic Metaphysis }}",
+        "Through which zone of the physis do Salter Harris fractures occur ? {{c1::Hypertrophic zone (Zone of provisional calcification) }}"
+      ],
+      "region": "Basic_Science",
+      "tissue": "Osteology",
+      "canonical_structure": "Physis",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: physis zones and Salter-Harris; general growth plate"
+    },
+    {
+      "entity_id": "5fc12c89-407a-426a-85aa-ad62693de408",
+      "preferred_label": "Infraspinatus",
+      "anki_slug": "Infraspinatus",
+      "current_tag": "SnapOrtho::Anatomy::Infraspinatus",
+      "deck_card_count": 19,
+      "sample_fronts": [
+        "What are the rotator cuff muscles and their innervations ? {{c1:: Supraspinatus - suprascapular nerve Infraspinatus - suprascapular nerve Teres minor - Axillary nerve Subscapularis - Upper and lower subscapular nerve }}",
+        "Which rotator cuff tendon(s) attach to the greater tuberosity ? {{c1:: Supraspinatus Infraspinatus Teres minor }}"
+      ],
+      "region": "Shoulder_Girdle",
+      "tissue": "Muscles",
+      "canonical_structure": "Infraspinatus",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: rotator cuff muscle, suprascapular n., greater tuberosity"
+    },
+    {
+      "entity_id": "e99faeef-e8f6-44a5-b7e3-430c64453947",
+      "preferred_label": "Distal Humerus",
+      "anki_slug": "Distal_Humerus",
+      "current_tag": "SnapOrtho::Anatomy::Distal_Humerus",
+      "deck_card_count": 17,
+      "sample_fronts": [
+        "What x-ray should be obtained to better evaluate intraarticular distal humerus fractures ? {{c1::Traction view}}",
+        "What are the treatment options (3) for a comminuted distal humerus fracture in an elderly , low demand patient? {{c1:: Nonoperative ORIF Total Elbow Arthroplasty }}"
+      ],
+      "region": "Elbow",
+      "tissue": "Osteology",
+      "canonical_structure": "Distal_Humerus",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: intraarticular distal humerus fx; TEA option"
+    },
+    {
+      "entity_id": "e5311266-9868-4ed3-86c5-6f6c3ddc9e82",
+      "preferred_label": "Axillary Nerve",
+      "anki_slug": "Axillary_Nerve",
+      "current_tag": "SnapOrtho::Anatomy::Axillary_Nerve",
+      "deck_card_count": 15,
+      "sample_fronts": [
+        "What are the rotator cuff muscles and their innervations ? {{c1:: Supraspinatus - suprascapular nerve Infraspinatus - suprascapular nerve Teres minor - Axillary nerve Subscapularis - Upper and lower subscapular nerve }}",
+        "The axillary nerve is approximately how far distal to the lateral edge of the acromion ? {{c1::5 cm}}"
+      ],
+      "region": "Shoulder_Girdle",
+      "tissue": "Nerves",
+      "canonical_structure": "Axillary_Nerve",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: distance from acromion; teres minor innervation"
+    },
+    {
+      "entity_id": "d980ac8f-d2b3-4fa4-9489-67678a19b439",
+      "preferred_label": "Sacrum",
+      "anki_slug": "Sacrum",
+      "current_tag": "SnapOrtho::Anatomy::Sacrum",
+      "deck_card_count": 12,
+      "sample_fronts": [
+        "What is the classification for sacrum fractures ? {{c1::Denis Classification}}",
+        "Gluteus maximus Origin: {{c1::Ilium}}, {{c1::dorsal sacrum}} Insertion: {{c2::IT band}}, {{c2::gluteal tuberosity}} Nerve: {{c3::Inferior gluteal}} Action: {{c4::Thigh extension}}, {{c4::external rotation}}"
+      ],
+      "region": "Pelvis",
+      "tissue": "Osteology",
+      "canonical_structure": "Sacrum",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "Denis sacral fracture classification (pelvic trauma); vocab allows sacrum-as-pelvis"
+    },
+    {
+      "entity_id": "284b0061-2409-4f70-ad1f-d1dca1cc93a0",
+      "preferred_label": "Elbow Joint",
+      "anki_slug": "Elbow_Joint",
+      "current_tag": "SnapOrtho::Anatomy::Elbow_Joint",
+      "deck_card_count": 9,
+      "sample_fronts": [
+        "What is the most common site for medial nerve entrapment about the elbow ? {{c1::Between two heads of the pronator teres}}",
+        "Distal biceps tendon rupture most commonly occurs with {{c1::eccentric::concentric/eccentric}} overload of a partially flexed elbow."
+      ],
+      "region": "Elbow",
+      "tissue": "Joints",
+      "canonical_structure": "Elbow_Joint",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "named elbow articulation; cards about elbow region"
+    },
+    {
+      "entity_id": "402b1c8d-e7f0-42ae-8521-0633bc1b61d0",
+      "preferred_label": "Volar Plate",
+      "anki_slug": "Volar_Plate",
+      "current_tag": "SnapOrtho::Anatomy::Volar_Plate",
+      "deck_card_count": 8,
+      "sample_fronts": [
+        "How does volar plate placement influence FPL rupture risk ? {{c1::Increased risk of FPL rupture if the plate is placed distal to watershed line}}",
+        "Hyperextension of the MCPJ may lead to avulsion of what structure ? {{c1::Volar plate}}"
+      ],
+      "region": "Hand",
+      "tissue": "Ligaments",
+      "canonical_structure": "Volar_Plate",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "MCPJ volar plate avulsion is anatomic meaning; volar locking plate cards are hardware homonym noise"
+    },
+    {
+      "entity_id": "842f3453-fa9f-42a9-961c-609696e473bd",
+      "preferred_label": "Medial Femoral Circumflex Artery",
+      "anki_slug": "Medial_Femoral_Circumflex_Artery",
+      "current_tag": "SnapOrtho::Anatomy::Medial_Femoral_Circumflex_Artery",
+      "deck_card_count": 7,
+      "sample_fronts": [
+        "What is the primary blood supply to the femoral head in adults? {{c1::Lateral epiphyseal artery of the medial femoral circumflex artery}}",
+        "Which vessel is at risk while dividing the quadratus femoris ? {{c1::Medial femoral circumflex artery}}"
+      ],
+      "region": "Thigh_Hip",
+      "tissue": "Vasculature",
+      "canonical_structure": "Medial_Femoral_Circumflex_Artery",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: primary femoral head supply; at risk with QF division"
+    },
+    {
+      "entity_id": "123480ce-cacd-4514-b12d-e56e9d988ace",
+      "preferred_label": "Anterior Compartment",
+      "anki_slug": "Anterior_Compartment",
+      "current_tag": "SnapOrtho::Anatomy::Anterior_Compartment",
+      "deck_card_count": 6,
+      "sample_fronts": [
+        "What are the compartments (3) of the forearm ? {{c1::Anterior, posterior, and mobile wad}}",
+        "Four muscles of the anterior compartment of the lower leg: {{c1:: Tibialis anterior Extensor hallicus longus Extensor digitorum longus Peroneus tertius }}"
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Compartment",
+      "canonical_structure": "Anterior_Compartment",
+      "merge_into": null,
+      "confidence": "medium",
+      "evidence": "entity overloaded: forearm compartment list + leg anterior muscles; home Leg_Knee (classic ACS); Of_The_Leg is explicit twin"
+    },
+    {
+      "entity_id": "02470a37-a249-42e6-a0c5-9ea3b43db887",
+      "preferred_label": "Common Peroneal Nerve",
+      "anki_slug": "Common_Peroneal_Nerve",
+      "current_tag": "SnapOrtho::Anatomy::Common_Peroneal_Nerve",
+      "deck_card_count": 5,
+      "sample_fronts": [
+        "Knee dislocation is an ortho emergency because of the high risk for {{c1::neurovascular}} injury.",
+        "What structure runs between layers 1 and 2 on the lateral knee ? {{c1::Common peroneal nerve}}"
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Nerves",
+      "canonical_structure": "Common_Peroneal_Nerve",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: between layers 1\u20132 lateral knee"
+    },
+    {
+      "entity_id": "5a16b93a-d689-4dc3-bd29-7e0b5d9a4298",
+      "preferred_label": "Superficial Peroneal Nerve",
+      "anki_slug": "Superficial_Peroneal_Nerve",
+      "current_tag": "SnapOrtho::Anatomy::Superficial_Peroneal_Nerve",
+      "deck_card_count": 5,
+      "sample_fronts": [
+        "The {{c1::superficial}} peroneal nerve runs in the lateral compartment of the leg and crosses anteriorly 12 cm above the lateral malleolus.",
+        "What structures (3) are within the lateral compartment of the leg ? {{c1:: Peroneus longus Peroneus brevis Superficial peroneal nerve }}"
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Nerves",
+      "canonical_structure": "Superficial_Peroneal_Nerve",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: lateral compartment of leg; exits ~12 cm above malleolus"
+    },
+    {
+      "entity_id": "d6c1a299-65b7-449c-9d87-ff7a9a7c85cc",
+      "preferred_label": "Lunotriquetral Ligament",
+      "anki_slug": "Lunotriquetral_Ligament",
+      "current_tag": "SnapOrtho::Anatomy::Lunotriquetral_Ligament",
+      "deck_card_count": 4,
+      "sample_fronts": [
+        "What deformity results from chronic scapholunate ligament injury ? {{c1::Coupled motion between the scaphoid and lunate is lost}}",
+        "What deformity results from chronic lunotriquetral ligament injury ? {{c1::VISI - Volar Intercalated Segment Instability}}"
+      ],
+      "region": "Hand",
+      "tissue": "Ligaments",
+      "canonical_structure": "Lunotriquetral_Ligament",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: LT injury \u2192 VISI"
+    },
+    {
+      "entity_id": "3e644b34-d2d8-4ea6-9670-d6e15aa94e84",
+      "preferred_label": "MCP Joint",
+      "anki_slug": "Mcp_Joint",
+      "current_tag": "SnapOrtho::Anatomy::Mcp_Joint",
+      "deck_card_count": 3,
+      "sample_fronts": [
+        "In what position should the hand be splinted following a metacarpal fracture ? {{c1::Intrinsic plus position}}",
+        "What is the function of the sagittal band ? {{c1::Keeps the extensor mechanism centered over the digit}}"
+      ],
+      "region": "Hand",
+      "tissue": "Joints",
+      "canonical_structure": "MCP_Joint",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "metacarpophalangeal joint; hand/digit cards"
+    },
+    {
+      "entity_id": "9f8ea87d-2bc9-4ec2-85ad-2f5c4e2b5386",
+      "preferred_label": "Trapezoid",
+      "anki_slug": "Trapezoid",
+      "current_tag": "SnapOrtho::Anatomy::Trapezoid",
+      "deck_card_count": 3,
+      "sample_fronts": [
+        "Which ligaments (4) attach to the coracoid ? {{c1:: Conoid Trapezoid Coracohumeral Coracoacromial }}",
+        "Which ligaments (2) provide superior and inferior stability to the clavicle ? {{c1:: Conoid Trapezoid }}"
+      ],
+      "region": "Shoulder_Girdle",
+      "tissue": "Ligaments",
+      "canonical_structure": "Trapezoid_Ligament",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "samples are coracoclavicular trapezoid ligament, not carpal bone"
+    },
+    {
+      "entity_id": "cc63571f-fb66-4f4a-bde2-3482d1ecd2b8",
+      "preferred_label": "Palmar Cutaneous Branch of the Median Nerve",
+      "anki_slug": "Palmar_Cutaneous_Branch_Of_The_Median_Nerve",
+      "current_tag": "SnapOrtho::Anatomy::Palmar_Cutaneous_Branch_Of_The_Median_Nerve",
+      "deck_card_count": 2,
+      "sample_fronts": [
+        "The palmar cutaneous branch of the median nerve gives sensation to which part of the hand ? {{c1::Thenar eminence}}",
+        "Which nerve is located under the ulnar border of the FCR sheath ? {{c1::Palmar cutaneous branch of the median nerve}}"
+      ],
+      "region": "Hand",
+      "tissue": "Nerves",
+      "canonical_structure": "Palmar_Cutaneous_Branch_Of_The_Median_Nerve",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: thenar eminence sensation; under FCR sheath"
+    },
+    {
+      "entity_id": "84ae62dc-cf45-492b-8872-e54696aa7ef3",
+      "preferred_label": "Anterior Talofibular Ligament",
+      "anki_slug": "Anterior_Talofibular_Ligament",
+      "current_tag": "SnapOrtho::Anatomy::Anterior_Talofibular_Ligament",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "The {{c1::anterior talofibular ligament}} resists anterior translation and is the #1 injured ligament in ankle sprains. The {{c1::calcaneofibular ligament}} resists inversion and is the #2 injured ligament in ankle sprai"
+      ],
+      "region": "Foot_Ankle",
+      "tissue": "Ligaments",
+      "canonical_structure": "Anterior_Talofibular_Ligament",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: #1 injured ankle sprain ligament"
+    },
+    {
+      "entity_id": "bdb7dbd2-fd13-4bb6-b785-a1b190c0a97c",
+      "preferred_label": "Deltopectoral Interval",
+      "anki_slug": "Deltopectoral_Interval",
+      "current_tag": "SnapOrtho::Anatomy::Deltopectoral_Interval",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "What structure lies within the deltopectoral interval ? {{c1::Cephalic vein}}"
+      ],
+      "region": "Shoulder_Girdle",
+      "tissue": "Other",
+      "canonical_structure": "Deltopectoral_Interval",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: surgical interval containing cephalic vein"
+    },
+    {
+      "entity_id": "a902a7d7-1739-49da-9915-c08114950b2b",
+      "preferred_label": "Femoral Diaphysis",
+      "anki_slug": "Femoral_Diaphysis",
+      "current_tag": "SnapOrtho::Anatomy::Femoral_Diaphysis",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "What is the epiphyseal diaphyseal angle ? {{c1::Angle between a line drawn perpendicular to the proximal femoral epiphysis and a line drawn along the femoral diaphysis}}"
+      ],
+      "region": "Thigh_Hip",
+      "tissue": "Osteology",
+      "canonical_structure": "Femoral_Diaphysis",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: femoral diaphysis line in epiphyseal-diaphyseal angle"
+    },
+    {
+      "entity_id": "cc6cb2b8-b76f-4330-a4b4-6e9bd22ad138",
+      "preferred_label": "Proximal Biceps Anchor",
+      "anki_slug": "Proximal_Biceps_Anchor",
+      "current_tag": "SnapOrtho::Anatomy::Proximal_Biceps_Anchor",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "What are the two (2) differences in outcomes between biceps tenodesis and biceps tenotomy ? {{c1::Tenotomy - cosmetic deformity Tenodesis - \"groove pain\"}}"
+      ],
+      "region": "Shoulder_Girdle",
+      "tissue": "Tendons",
+      "canonical_structure": "Proximal_Biceps_Anchor",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "LHBT origin/anchor; sample on tenodesis vs tenotomy"
+    },
+    {
+      "entity_id": "af6c70a5-1667-4548-92a7-7bd81c387c57",
+      "preferred_label": "AIN",
+      "anki_slug": "Ain",
+      "current_tag": "SnapOrtho::Anatomy::Ain",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Forearm",
+      "tissue": "Nerves",
+      "canonical_structure": "Ain",
+      "merge_into": "Anterior_Interosseous_Nerve",
+      "confidence": "high",
+      "evidence": "AIN = anterior interosseous nerve of forearm; expand abbreviation maps to Anterior_Interosseous_Nerve (merge proposal; leaf kept as Ain to avoid tag collision)"
+    },
+    {
+      "entity_id": "cf4d0fe0-4c5e-43bd-862b-8d2d7b12f679",
+      "preferred_label": "Common Fibular Nerve Safe Zone",
+      "anki_slug": "Common_Fibular_Nerve_Safe_Zone",
+      "current_tag": "SnapOrtho::Anatomy::Common_Fibular_Nerve_Safe_Zone",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Leg_Knee",
+      "tissue": "Other",
+      "canonical_structure": "Common_Fibular_Nerve_Safe_Zone",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "surgical safe zone near common fibular at fibular neck \u2192 Leg_Knee/Other"
+    },
+    {
+      "entity_id": "52df6b06-b4c2-484c-9bbd-fb7765763097",
+      "preferred_label": "FCU",
+      "anki_slug": "Fcu",
+      "current_tag": "SnapOrtho::Anatomy::Fcu",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Forearm",
+      "tissue": "Muscles",
+      "canonical_structure": "Flexor_Carpi_Ulnaris",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "FCU = flexor carpi ulnaris forearm flexor"
+    },
+    {
+      "entity_id": "3bf359b0-93d2-4772-86f7-1c0a73a29e7e",
+      "preferred_label": "FPL",
+      "anki_slug": "Fpl",
+      "current_tag": "SnapOrtho::Anatomy::Fpl",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Hand",
+      "tissue": "Muscles",
+      "canonical_structure": "Flexor_Pollicis_Longus",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "FPL thumb flexor; Hand home (belly is forearm)"
+    },
+    {
+      "entity_id": "5f897bd4-5bc2-4ceb-9d81-5988d9ed6af5",
+      "preferred_label": "Kaplan Interval",
+      "anki_slug": "Kaplan_Interval",
+      "current_tag": "SnapOrtho::Anatomy::Kaplan_Interval",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Thigh_Hip",
+      "tissue": "Other",
+      "canonical_structure": "Kaplan_Interval",
+      "merge_into": null,
+      "confidence": "medium",
+      "evidence": "Kaplan anterolateral hip interval (TFL/GMed); not Kaplan cardinal line (hand) \u2014 no samples, assumed hip approach interval"
+    },
+    {
+      "entity_id": "c2a5f15f-3fa6-48ec-b0c5-5f67a6ecfe8b",
+      "preferred_label": "Medial Column Distal Humerus",
+      "anki_slug": "Medial_Column_Distal_Humerus",
+      "current_tag": "SnapOrtho::Anatomy::Medial_Column_Distal_Humerus",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Elbow",
+      "tissue": "Osteology",
+      "canonical_structure": "Medial_Column_Distal_Humerus",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "medial column of distal humerus osteology"
+    },
+    {
+      "entity_id": "49c6baba-7173-4b72-9ebb-b7071e39f10f",
+      "preferred_label": "Proximal Femur Anatomy Hub",
+      "anki_slug": "Proximal_Femur_Anatomy_Hub",
+      "current_tag": "SnapOrtho::Anatomy::Proximal_Femur_Anatomy_Hub",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Thigh_Hip",
+      "tissue": "Other",
+      "canonical_structure": "Proximal_Femur_Anatomy_Hub",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "named anatomy hub for proximal femur"
+    },
+    {
+      "entity_id": "ddc83622-39e4-42bb-9904-36ce10cd5761",
+      "preferred_label": "Soft-Tissue Envelope",
+      "anki_slug": "Soft_Tissue_Envelope",
+      "current_tag": "SnapOrtho::Anatomy::Soft_Tissue_Envelope",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "General",
+      "tissue": "Other",
+      "canonical_structure": "Soft_Tissue_Envelope",
+      "merge_into": null,
+      "confidence": "low",
+      "evidence": "pan-regional soft-tissue concept; no regional home"
+    },
+    {
+      "entity_id": "f3ef0b57-ed5a-4ffa-9dde-e27d2e09e47a",
+      "preferred_label": "Superficial Posterior Compartment",
+      "anki_slug": "Superficial_Posterior_Compartment",
+      "current_tag": "SnapOrtho::Anatomy::Superficial_Posterior_Compartment",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Leg_Knee",
+      "tissue": "Compartment",
+      "canonical_structure": "Superficial_Posterior_Compartment",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "standard superficial posterior compartment of the leg"
+    },
+    {
+      "entity_id": "c1272872-f3fe-4070-abeb-48fbe5f49ae9",
+      "preferred_label": "Watson-Jones Interval",
+      "anki_slug": "Watson_Jones_Interval",
+      "current_tag": "SnapOrtho::Anatomy::Watson_Jones_Interval",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Thigh_Hip",
+      "tissue": "Other",
+      "canonical_structure": "Watson_Jones_Interval",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "Watson-Jones anterolateral hip surgical interval"
+    }
+  ]
+}

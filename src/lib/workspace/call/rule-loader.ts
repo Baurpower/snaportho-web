@@ -7,17 +7,15 @@ import {
   type CallValidationResident,
   type CallValidationRotation,
   type CallValidationRule,
-  type CallValidationTimeOff,
+  type CallValidationTimeOff
 } from "@/lib/workspace/call/validation";
 import { getEffectiveRules } from "@/lib/workspace/call/rule-definitions";
 import {
   getProgramRotationAssignmentsInRange,
-  type ProgramRotationAssignment,
+  type ProgramRotationAssignment
 } from "@/lib/workspace/call/rotations";
 import { migratePersistedCallRules } from "@/lib/workspace/call/persisted-rule-migration";
-import {
-  buildResidentIdentityMaps,
-} from "@/lib/workspace/call/resident-identity";
+import { buildResidentIdentityMaps } from "@/lib/workspace/call/resident-identity";
 
 type ProgramCallRuleSetRow = {
   id: string;
@@ -87,12 +85,15 @@ function toValidationRule(row: ProgramCallRuleRow): CallValidationRule {
     severity: row.is_hard_rule ? "error" : "warning",
     priority: row.priority,
     scope: row.scope ?? {},
-    config: row.config ?? {},
+    config: row.config ?? {}
   };
 }
 
 function getResidentDisplayName(row: ProgramRosterResidentRow) {
-  const joinedName = [row.first_name, row.last_name].filter(Boolean).join(" ").trim();
+  const joinedName = [row.first_name, row.last_name]
+    .filter(Boolean)
+    .join(" ")
+    .trim();
   return row.full_name?.trim() || joinedName || "Unknown Resident";
 }
 
@@ -118,7 +119,7 @@ function toValidationResident(
     gradYear,
     classYear: gradYear,
     isGraduated: status.isGraduated,
-    isActiveResident: status.isActiveResident,
+    isActiveResident: status.isActiveResident
   };
 }
 
@@ -129,7 +130,7 @@ function toValidationTimeOff(
   const residentId =
     row.roster_id ??
     (row.membership_id
-      ? residentIdByProgramMembershipId.get(row.membership_id) ?? null
+      ? (residentIdByProgramMembershipId.get(row.membership_id) ?? null)
       : null);
 
   return {
@@ -142,7 +143,7 @@ function toValidationTimeOff(
     endDate: row.end_date ?? null,
     type: row.event_type ?? null,
     status: row.approval_status ?? null,
-    reason: row.title ?? row.notes ?? null,
+    reason: row.title ?? row.notes ?? null
   };
 }
 
@@ -163,7 +164,9 @@ async function resolveRuleSetId(
     .maybeSingle<ProgramCallRuleSetRow>();
 
   if (error) {
-    throw new Error(`Failed to load default program call rule set: ${error.message}`);
+    throw new Error(
+      `Failed to load default program call rule set: ${error.message}`
+    );
   }
 
   return data?.id ?? null;
@@ -187,13 +190,17 @@ async function loadValidationRulesForResolvedRuleSet(params: {
     .order("created_at", { ascending: true });
 
   if (error) {
-    throw new Error(`Failed to load program call validation rules: ${error.message}`);
+    throw new Error(
+      `Failed to load program call validation rules: ${error.message}`
+    );
   }
 
-  const migrated = migratePersistedCallRules((data ?? []) as ProgramCallRuleRow[]);
+  const migrated = migratePersistedCallRules(
+    (data ?? []) as ProgramCallRuleRow[]
+  );
   // Belt-and-suspenders: run through the canonical effective filter (Phase 9 alignment)
   const effective = getEffectiveRules(migrated.rules as ProgramCallRuleRow[], {
-    includeDisabled: false,
+    includeDisabled: false
   });
   return (effective as ProgramCallRuleRow[]).map(toValidationRule);
 }
@@ -215,7 +222,9 @@ async function loadValidationResidents(params: {
     .order("first_name", { ascending: true, nullsFirst: false });
 
   if (error) {
-    throw new Error(`Failed to load program call validation residents: ${error.message}`);
+    throw new Error(
+      `Failed to load program call validation residents: ${error.message}`
+    );
   }
 
   return ((data ?? []) as ProgramRosterResidentRow[]).map((row) =>
@@ -238,7 +247,9 @@ async function loadValidationTimeOff(params: {
     .eq("approval_status", "approved");
 
   if (error) {
-    throw new Error(`Failed to load program call validation time off: ${error.message}`);
+    throw new Error(
+      `Failed to load program call validation time off: ${error.message}`
+    );
   }
 
   return ((data ?? []) as AvailabilityEventRow[])
@@ -259,7 +270,7 @@ async function loadValidationRotations(params: {
     programId,
     dateStart,
     dateEnd,
-    residentIdByProgramMembershipId,
+    residentIdByProgramMembershipId
   } = params;
 
   // Unify on the canonical rotation loader so validation sees exactly the same
@@ -298,7 +309,7 @@ function toValidationRotationFromCanonical(
   const residentId =
     row.rosterId ??
     (row.programMembershipId
-      ? residentIdByProgramMembershipId.get(row.programMembershipId) ?? null
+      ? (residentIdByProgramMembershipId.get(row.programMembershipId) ?? null)
       : null);
 
   return {
@@ -314,7 +325,7 @@ function toValidationRotationFromCanonical(
     service: row.teamLabel ?? row.siteLabel ?? row.rotation?.category ?? null,
     notes: row.notes ?? null,
     startDate: row.startDate ?? null,
-    endDate: row.endDate ?? null,
+    endDate: row.endDate ?? null
   };
 }
 
@@ -337,7 +348,7 @@ export async function loadProgramCallValidationRules(
   return loadValidationRulesForResolvedRuleSet({
     supabase,
     programId,
-    ruleSetId: resolvedRuleSetId,
+    ruleSetId: resolvedRuleSetId
   });
 }
 
@@ -347,6 +358,8 @@ export async function loadProgramCallValidationContext(
   options?: {
     dateStart?: string | null;
     dateEnd?: string | null;
+    rotationHistoryStart?: string | null;
+    rotationHistoryEnd?: string | null;
   }
 ): Promise<LoadedProgramCallValidationContext> {
   // Validation must see the full program rule/roster context, not a user-scoped subset.
@@ -361,26 +374,27 @@ export async function loadProgramCallValidationContext(
     ? await loadValidationRulesForResolvedRuleSet({
         supabase,
         programId,
-        ruleSetId: resolvedRuleSetId,
+        ruleSetId: resolvedRuleSetId
       })
     : [];
   const residents = await loadValidationResidents({
     supabase,
     programId,
-    effectiveDate: options?.dateStart ?? options?.dateEnd ?? null,
+    effectiveDate: options?.dateStart ?? options?.dateEnd ?? null
   });
-  const { residentIdByProgramMembershipId } = buildResidentIdentityMaps(residents);
+  const { residentIdByProgramMembershipId } =
+    buildResidentIdentityMaps(residents);
   const timeOff = await loadValidationTimeOff({
     supabase,
     programId,
-    residentIdByProgramMembershipId,
+    residentIdByProgramMembershipId
   });
   const rotations = await loadValidationRotations({
     supabase,
     programId,
-    dateStart: options?.dateStart ?? null,
-    dateEnd: options?.dateEnd ?? null,
-    residentIdByProgramMembershipId,
+    dateStart: options?.rotationHistoryStart ?? options?.dateStart ?? null,
+    dateEnd: options?.rotationHistoryEnd ?? options?.dateEnd ?? null,
+    residentIdByProgramMembershipId
   });
 
   return {
@@ -393,9 +407,9 @@ export async function loadProgramCallValidationContext(
       ruleSetId: resolvedRuleSetId,
       dateWindow: {
         startDate: options?.dateStart ?? null,
-        endDate: options?.dateEnd ?? null,
-      },
-    },
+        endDate: options?.dateEnd ?? null
+      }
+    }
     // TODO: Use resident PGY/role metadata in shared PGY and scope-aware validators.
     // TODO: Join resident availability identity context for rule-aware validation.
     // TODO: Refine time-off loading for partial-day and non-blocking availability cases.

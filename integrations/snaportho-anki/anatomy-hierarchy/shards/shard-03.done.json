@@ -1,0 +1,560 @@
+{
+  "schemaVersion": "anatomy-hierarchy.v1",
+  "shard": "shard-03",
+  "manifestId": "17d15dc9-ecad-4fe0-95cf-c4f1059b3be6",
+  "regions": [
+    "Basic_Science",
+    "Spine",
+    "Shoulder_Girdle",
+    "Arm",
+    "Elbow",
+    "Forearm",
+    "Hand",
+    "Pelvis",
+    "Thigh_Hip",
+    "Leg_Knee",
+    "Foot_Ankle",
+    "General"
+  ],
+  "tissues": [
+    "Osteology",
+    "Joints",
+    "Ligaments",
+    "Muscles",
+    "Tendons",
+    "Nerves",
+    "Vasculature",
+    "Compartment",
+    "Other"
+  ],
+  "instructions": "For each structure set region + tissue (from the lists above) + canonical_structure (clean PascalCase_with_underscores; keep the given anki_slug unless it is a typo/abbreviation you are normalizing). Set merge_into to another structure's anki_slug only if this is a true duplicate. confidence: high|medium|low. evidence: one short phrase citing the sample_fronts or anatomy knowledge. Do NOT invent region/tissue tokens.",
+  "structures": [
+    {
+      "entity_id": "d0cf6589-20f9-42dc-a127-0e9aef1e5371",
+      "preferred_label": "Radius",
+      "anki_slug": "Radius",
+      "current_tag": "SnapOrtho::Anatomy::Radius",
+      "deck_card_count": 81,
+      "sample_fronts": [
+        "What radiographic finding indicates a capitellum fracture that extends to the trochlea? {{c1::Double-Arc Sign}}",
+        "What view of the wrist evaluates dorsal screw lengths following ORIF of the distal radius ? {{c1::Skyline}}"
+      ],
+      "region": "Forearm",
+      "tissue": "Osteology",
+      "canonical_structure": "Radius",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: distal radius ORIF / wrist skyline view; radius is forearm bone"
+    },
+    {
+      "entity_id": "7b3d603f-9fb2-47b3-bd5e-553187064918",
+      "preferred_label": "Patella",
+      "anki_slug": "Patella",
+      "current_tag": "SnapOrtho::Anatomy::Patella",
+      "deck_card_count": 51,
+      "sample_fronts": [
+        "{{c1::Bipartite patella}} occurs when there is a failure of the superolateral portion of the patella to fuse.",
+        "Fracture of the patella can commonly be confused with {{c1::bipartite patella}}."
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Osteology",
+      "canonical_structure": "Patella",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: bipartite patella / patella fracture"
+    },
+    {
+      "entity_id": "1fd6dbe0-6b22-4e8c-8345-2e4e42df63a0",
+      "preferred_label": "Greater Trochanter",
+      "anki_slug": "Greater_Trochanter",
+      "current_tag": "SnapOrtho::Anatomy::Greater_Trochanter",
+      "deck_card_count": 41,
+      "sample_fronts": [
+        "Tenderness at the {{c1::greater trochanter}} can indicate trochanteric bursitis.",
+        "Three types of \"snapping hip syndrome\": {{c1:: External Internal Intra-articular }}"
+      ],
+      "region": "Thigh_Hip",
+      "tissue": "Osteology",
+      "canonical_structure": "Greater_Trochanter",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: greater trochanter tenderness / snapping hip"
+    },
+    {
+      "entity_id": "515df3e3-951a-462a-8710-4f4777f08d46",
+      "preferred_label": "Tibial Plateau",
+      "anki_slug": "Tibial_Plateau",
+      "current_tag": "SnapOrtho::Anatomy::Tibial_Plateau",
+      "deck_card_count": 34,
+      "sample_fronts": [
+        "Osteoporosis is common in {{c1::cancellous::cancellous/cortical}} bone.",
+        "{{c1::Schatzker}} classification is used for tibial plateau fractures."
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Osteology",
+      "canonical_structure": "Tibial_Plateau",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: Schatzker classification for tibial plateau fractures"
+    },
+    {
+      "entity_id": "585db38b-2be1-4827-8d38-c523aa78b4cb",
+      "preferred_label": "Subscapularis",
+      "anki_slug": "Subscapularis",
+      "current_tag": "SnapOrtho::Anatomy::Subscapularis",
+      "deck_card_count": 24,
+      "sample_fronts": [
+        "What are the rotator cuff muscles and their innervations ? {{c1:: Supraspinatus - suprascapular nerve Infraspinatus - suprascapular nerve Teres minor - Axillary nerve Subscapularis - Upper and lower subscapular nerve }}",
+        "Which rotator cuff tendon(s) attach to the lesser tuberosity ? {{c1::Subscapularis}}"
+      ],
+      "region": "Shoulder_Girdle",
+      "tissue": "Muscles",
+      "canonical_structure": "Subscapularis",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: rotator cuff muscle inserting on lesser tuberosity"
+    },
+    {
+      "entity_id": "37d6d5e6-8edb-4348-b7d0-e19de10ea074",
+      "preferred_label": "Humeral Head",
+      "anki_slug": "Humeral_Head",
+      "current_tag": "SnapOrtho::Anatomy::Humeral_Head",
+      "deck_card_count": 19,
+      "sample_fronts": [
+        "What radiographic finding on AP view is suggestive of a posterior shoulder dislocation ? {{c1::Light bulb sign}}",
+        "A Bankart Lesion is best visualized on what view? {{c1::West Point}}"
+      ],
+      "region": "Shoulder_Girdle",
+      "tissue": "Osteology",
+      "canonical_structure": "Humeral_Head",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: light bulb sign / posterior shoulder dislocation"
+    },
+    {
+      "entity_id": "fd843f85-bec5-495f-85d0-564cafda0f3f",
+      "preferred_label": "Teres Minor",
+      "anki_slug": "Teres_Minor",
+      "current_tag": "SnapOrtho::Anatomy::Teres_Minor",
+      "deck_card_count": 18,
+      "sample_fronts": [
+        "What are the rotator cuff muscles and their innervations ? {{c1:: Supraspinatus - suprascapular nerve Infraspinatus - suprascapular nerve Teres minor - Axillary nerve Subscapularis - Upper and lower subscapular nerve }}",
+        "Which rotator cuff tendon(s) attach to the greater tuberosity ? {{c1:: Supraspinatus Infraspinatus Teres minor }}"
+      ],
+      "region": "Shoulder_Girdle",
+      "tissue": "Muscles",
+      "canonical_structure": "Teres_Minor",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: rotator cuff muscle, axillary nerve, greater tuberosity"
+    },
+    {
+      "entity_id": "4bc58249-885f-4309-93ae-86a56e3d7832",
+      "preferred_label": "Lesser Trochanter",
+      "anki_slug": "Lesser_Trochanter",
+      "current_tag": "SnapOrtho::Anatomy::Lesser_Trochanter",
+      "deck_card_count": 16,
+      "sample_fronts": [
+        "What defines the subtrochanteric area of the femur ? {{c1::Area b/w lesser trochanter and 5 cm distal}}",
+        "What muscle inserts on the lesser trochanter ? {{c1::Iliopsoas}}"
+      ],
+      "region": "Thigh_Hip",
+      "tissue": "Osteology",
+      "canonical_structure": "Lesser_Trochanter",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: subtrochanteric definition / iliopsoas insertion"
+    },
+    {
+      "entity_id": "bfe79007-c7a3-4a02-9350-49aed1710c42",
+      "preferred_label": "Deltoid Ligament",
+      "anki_slug": "Deltoid_Ligament",
+      "current_tag": "SnapOrtho::Anatomy::Deltoid_Ligament",
+      "deck_card_count": 12,
+      "sample_fronts": [
+        "Posterior Tibial Tendon Insufficiency Classification: Stage I: {{c5::Tenosynovitis w/o deformity; Can perform single-heel raise}} Stage IIA: {{c4::Flatfoot deformity with flexible hindfoot and normal forefoot; Cannot per",
+        "Posterior Tibial Tendon Insufficiency Classification: Stage I: {{c5::Tenosynovitis w/o deformity; Can perform single-heel raise}} Stage IIA: {{c4::Flatfoot deformity with flexible hindfoot and normal forefoot; Cannot per"
+      ],
+      "region": "Foot_Ankle",
+      "tissue": "Ligaments",
+      "canonical_structure": "Deltoid_Ligament",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "medial ankle deltoid ligament; sample fronts in PTTI/hindfoot context"
+    },
+    {
+      "entity_id": "c9bc0ccf-5b8f-4e74-92c7-e709412f197f",
+      "preferred_label": "Ulnar Collateral Ligament",
+      "anki_slug": "Ulnar_Collateral_Ligament",
+      "current_tag": "SnapOrtho::Anatomy::Ulnar_Collateral_Ligament",
+      "deck_card_count": 10,
+      "sample_fronts": [
+        "In the setting of elbow dislocations , where is the lateral ulnar collateral ligament (LUCL) typically injured? {{c1::Proximal origin}}",
+        "What 4 structures make up the lateral collateral ligament complex ? {{c1:: Accessory LCL Annular ligament Lateral radial collateral ligament (LRCL) Lateral ulnar collateral ligament (LUCL) }}"
+      ],
+      "region": "Elbow",
+      "tissue": "Ligaments",
+      "canonical_structure": "Ulnar_Collateral_Ligament",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: elbow LUCL / lateral collateral ligament complex"
+    },
+    {
+      "entity_id": "931aa889-cfbd-433a-b134-0e787fe152f9",
+      "preferred_label": "Medial Meniscus",
+      "anki_slug": "Medial_Meniscus",
+      "current_tag": "SnapOrtho::Anatomy::Medial_Meniscus",
+      "deck_card_count": 8,
+      "sample_fronts": [
+        "The {{c1::medial::lateral/medial}} meniscus is C-shaped. The {{c1::lateral::lateral/medial}} meniscus is circular.",
+        "Which condition is this? {{c1::Terrible triad (torn MCL, ACL, and medial meniscus)}}"
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Ligaments",
+      "canonical_structure": "Medial_Meniscus",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: C-shaped medial meniscus; O'Donoghue terrible triad"
+    },
+    {
+      "entity_id": "e3372694-7192-4c14-aaa3-749012b38d88",
+      "preferred_label": "Iliac Wing",
+      "anki_slug": "Iliac_Wing",
+      "current_tag": "SnapOrtho::Anatomy::Iliac_Wing",
+      "deck_card_count": 7,
+      "sample_fronts": [
+        "What are the three (3) subtypes of pelvic ring fractures according to the Young-Burgess Classification ? {{c1:: APC (Anterior Posterior Compression) LC (Lateral Compression) VS (Vertical Shear) }}",
+        "What is the eponym for an isolated iliac wing fracture that does not extend into the SI joint ? {{c1::Duverney fracture}}"
+      ],
+      "region": "Pelvis",
+      "tissue": "Osteology",
+      "canonical_structure": "Iliac_Wing",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: Duverney fracture = isolated iliac wing"
+    },
+    {
+      "entity_id": "34287f2c-339e-4115-a559-bf2f830fd38f",
+      "preferred_label": "Abductor Pollicis Brevis",
+      "anki_slug": "Abductor_Pollicis_Brevis",
+      "current_tag": "SnapOrtho::Anatomy::Abductor_Pollicis_Brevis",
+      "deck_card_count": 6,
+      "sample_fronts": [
+        "Abductor pollicis brevis Origin: {{c1::Scaphoid}}, {{c1::trapezium}} Insertion: {{c2::Lateral thumb}} Nerve: {{c3::Median}} Action: {{c4::Palmar pronation}}",
+        "Abductor pollicis brevis Origin: {{c1::Scaphoid}}, {{c1::trapezium}} Insertion: {{c2::Lateral thumb}} Nerve: {{c3::Median}} Action: {{c4::Palmar pronation}}"
+      ],
+      "region": "Hand",
+      "tissue": "Muscles",
+      "canonical_structure": "Abductor_Pollicis_Brevis",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: thenar muscle from scaphoid/trapezium, median n."
+    },
+    {
+      "entity_id": "6a3ba370-220b-4745-bea3-e1a74b823339",
+      "preferred_label": "Short External Rotators",
+      "anki_slug": "Short_External_Rotators",
+      "current_tag": "SnapOrtho::Anatomy::Short_External_Rotators",
+      "deck_card_count": 6,
+      "sample_fronts": [
+        "What are the (5) short external rotators of the hip? {{c1:: Inferior gamellus Obturator internus Piriformis Quadratus femoris Superior gamellus }}",
+        "What are the deforming forces on a subtrochanteric femur fracture ? Proximal fragment: Abduction - {{c1::Gluteus medius/minimus}} Flexion - {{c1::Iliopsoas}} External rotation - {{c3::Short external rotators}} Distal fra"
+      ],
+      "region": "Thigh_Hip",
+      "tissue": "Muscles",
+      "canonical_structure": "Short_External_Rotators",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: five hip short external rotators / subtrochanteric deforming force"
+    },
+    {
+      "entity_id": "44224283-dd38-4db0-a732-b5bc3cd0715a",
+      "preferred_label": "Subtalar Joint",
+      "anki_slug": "Subtalar_Joint",
+      "current_tag": "SnapOrtho::Anatomy::Subtalar_Joint",
+      "deck_card_count": 5,
+      "sample_fronts": [
+        "What is the primary motion of the subtalar joint ? {{c1::Inversion and eversion}}",
+        "What are the three facets of the subtalar joint ? {{c1::Anterior, middle, and posterior}}"
+      ],
+      "region": "Foot_Ankle",
+      "tissue": "Joints",
+      "canonical_structure": "Subtalar_Joint",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: inversion/eversion; anterior/middle/posterior facets"
+    },
+    {
+      "entity_id": "63ee9ed0-2db0-4066-adc6-614271b906a0",
+      "preferred_label": "Lateral Malleolus",
+      "anki_slug": "Lateral_Malleolus",
+      "current_tag": "SnapOrtho::Anatomy::Lateral_Malleolus",
+      "deck_card_count": 4,
+      "sample_fronts": [
+        "The {{c1::superficial}} peroneal nerve runs in the lateral compartment of the leg and crosses anteriorly 12 cm above the lateral malleolus.",
+        "On physical exam, see the following images when the patient dorsiflexes. Where is the injury located? {{c1::Superior peroneal retinaculum}}"
+      ],
+      "region": "Foot_Ankle",
+      "tissue": "Osteology",
+      "canonical_structure": "Lateral_Malleolus",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: SPN crosses 12 cm above lateral malleolus; distal fibula landmark"
+    },
+    {
+      "entity_id": "44a846ca-62be-49e8-a6cb-8c573496df16",
+      "preferred_label": "Lateral Compartment of the Leg",
+      "anki_slug": "Lateral_Compartment_Of_The_Leg",
+      "current_tag": "SnapOrtho::Anatomy::Lateral_Compartment_Of_The_Leg",
+      "deck_card_count": 3,
+      "sample_fronts": [
+        "The {{c1::superficial}} peroneal nerve runs in the lateral compartment of the leg and crosses anteriorly 12 cm above the lateral malleolus.",
+        "The {{c1::peroneal}} artery supplies muscles of the lateral compartment of the leg."
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Compartment",
+      "canonical_structure": "Lateral_Compartment_Of_The_Leg",
+      "merge_into": "Lateral_Compartment",
+      "confidence": "high",
+      "evidence": "same lateral leg compartment (SPN/peroneals); merge into short form"
+    },
+    {
+      "entity_id": "a4f1b405-1d3b-482b-a053-6554e474f090",
+      "preferred_label": "Sternoclavicular Joint",
+      "anki_slug": "Sternoclavicular_Joint",
+      "current_tag": "SnapOrtho::Anatomy::Sternoclavicular_Joint",
+      "deck_card_count": 3,
+      "sample_fronts": [
+        "Shoulder is made up of which 4 articulations? 1. {{c1::Sternoclavicular joint}} 2. {{c1::Glenohumeral joint}} 3. {{c1::Acromioclavicular joint}} 4. {{c1::Scapulothoracic articulation}}",
+        "The sternoclavicular joint is best assessed radiographically by {{c1::Serendipity view}}."
+      ],
+      "region": "Shoulder_Girdle",
+      "tissue": "Joints",
+      "canonical_structure": "Sternoclavicular_Joint",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: one of four shoulder articulations; serendipity view"
+    },
+    {
+      "entity_id": "21f83b8e-bf70-4576-a0a9-265f3c761bfe",
+      "preferred_label": "Knee Articular Cartilage",
+      "anki_slug": "Knee_Articular_Cartilage",
+      "current_tag": "SnapOrtho::Anatomy::Knee_Articular_Cartilage",
+      "deck_card_count": 2,
+      "sample_fronts": [
+        "What type of cartilage covers articular surfaces ? {{c1::Hyaline (Type II collagen)}}",
+        "At the surface of articular cartilage , chondrocytes are oriented {{c1::parallel::parallel/perpendicular/randomly}} with respect to the surface ."
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Other",
+      "canonical_structure": "Knee_Articular_Cartilage",
+      "merge_into": null,
+      "confidence": "medium",
+      "evidence": "knee-named cartilage entity; samples are hyaline BS; Other (no Cartilage tissue token)"
+    },
+    {
+      "entity_id": "6372a209-9c7e-42fb-b1c1-2d091bbcb9c7",
+      "preferred_label": "A3 Pulley",
+      "anki_slug": "A3_Pulley",
+      "current_tag": "SnapOrtho::Anatomy::A3_Pulley",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "Operative intervention is indicated for pediatric trigger finger in patients who are ages {{c1::2-4}} years old . In these patients, it may be necessary to release one slip of the {{c1::FDS}} and {{c1::A3}} pulley as wel"
+      ],
+      "region": "Hand",
+      "tissue": "Tendons",
+      "canonical_structure": "A3_Pulley",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: A3 pulley release with FDS in pediatric trigger finger"
+    },
+    {
+      "entity_id": "3d4ad272-ac02-451a-9a2a-0635a81ba87e",
+      "preferred_label": "Deep Posterior Compartment of the Leg",
+      "anki_slug": "Deep_Posterior_Compartment_Of_The_Leg",
+      "current_tag": "SnapOrtho::Anatomy::Deep_Posterior_Compartment_Of_The_Leg",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "What structures (6) are within the deep posterior compartment of the leg ? {{c1:: Flexor digitorum longus (FDL) Tibialis posterior Flexor hallicus longus (FHL) Posterior tibial artery and vein Tibial nerve Peroneal arter"
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Compartment",
+      "canonical_structure": "Deep_Posterior_Compartment_Of_The_Leg",
+      "merge_into": "Deep_Posterior_Compartment",
+      "confidence": "high",
+      "evidence": "same deep posterior leg compartment contents (FDL/TP/FHL/PTA/tibial n.); merge into short form"
+    },
+    {
+      "entity_id": "5f3c0369-f4e6-4438-903c-57bf479ba633",
+      "preferred_label": "FCR",
+      "anki_slug": "Fcr",
+      "current_tag": "SnapOrtho::Anatomy::Fcr",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "Name the nerve root based on the following primary motion, muscle innervation, and sensory area. {{c1::C7}} Motion: Elbow extension, wrist flexion Muscle: Triceps, FCR Sensory: Fingers 2, 3, and 4"
+      ],
+      "region": "Forearm",
+      "tissue": "Muscles",
+      "canonical_structure": "Flexor_Carpi_Radialis",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: FCR as wrist flexor muscle (C7); expanded opaque abbreviation"
+    },
+    {
+      "entity_id": "72031bf2-a184-4835-88c9-117c16a3f69b",
+      "preferred_label": "PIN",
+      "anki_slug": "Pin",
+      "current_tag": "SnapOrtho::Anatomy::Pin",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "Which nerve is most at risk with a Monteggia fracture ? {{c1::PIN}}"
+      ],
+      "region": "Forearm",
+      "tissue": "Nerves",
+      "canonical_structure": "Posterior_Interosseous_Nerve",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample_fronts: PIN at risk in Monteggia; posterior interosseous nerve"
+    },
+    {
+      "entity_id": "14f44479-f605-46b6-ad3c-c6f451598bbe",
+      "preferred_label": "Adult Reconstruction Anatomy Hub",
+      "anki_slug": "Adult_Reconstruction_Anatomy_Hub",
+      "current_tag": "SnapOrtho::Anatomy::Adult_Reconstruction_Anatomy_Hub",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "General",
+      "tissue": "Other",
+      "canonical_structure": "Adult_Reconstruction_Anatomy_Hub",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "adult recon hub spans hip/knee \u2192 General/Other"
+    },
+    {
+      "entity_id": "d4be0263-3e47-468d-8826-7b58cd9fd12b",
+      "preferred_label": "C3 Pulley",
+      "anki_slug": "C3_Pulley",
+      "current_tag": "SnapOrtho::Anatomy::C3_Pulley",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Hand",
+      "tissue": "Tendons",
+      "canonical_structure": "C3_Pulley",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "digital cruciate flexor pulley (hand pulley system)"
+    },
+    {
+      "entity_id": "314387d0-0c00-4515-b01e-f333e9b0a38f",
+      "preferred_label": "EPL",
+      "anki_slug": "Epl",
+      "current_tag": "SnapOrtho::Anatomy::Epl",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Hand",
+      "tissue": "Tendons",
+      "canonical_structure": "Extensor_Pollicis_Longus",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "EPL tendon; 3rd dorsal compartment / Lister's tubercle"
+    },
+    {
+      "entity_id": "1e4844af-a7b7-47c0-af17-7516a6d9451b",
+      "preferred_label": "Fourth Metacarpal",
+      "anki_slug": "Fourth_Metacarpal",
+      "current_tag": "SnapOrtho::Anatomy::Fourth_Metacarpal",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Hand",
+      "tissue": "Osteology",
+      "canonical_structure": "Fourth_Metacarpal",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "4th metacarpal bone of the hand"
+    },
+    {
+      "entity_id": "d6bb177c-295e-48f8-a786-7d08b2b93ebe",
+      "preferred_label": "Intertrochanteric Region",
+      "anki_slug": "Intertrochanteric_Region",
+      "current_tag": "SnapOrtho::Anatomy::Intertrochanteric_Region",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Thigh_Hip",
+      "tissue": "Osteology",
+      "canonical_structure": "Intertrochanteric_Region",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "proximal femur intertrochanteric bony region"
+    },
+    {
+      "entity_id": "b1479705-294b-4d3a-8f76-dbcd3f625327",
+      "preferred_label": "Lower Extremity Trauma Anatomy Hub",
+      "anki_slug": "Lower_Extremity_Trauma_Anatomy_Hub",
+      "current_tag": "SnapOrtho::Anatomy::Lower_Extremity_Trauma_Anatomy_Hub",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "General",
+      "tissue": "Other",
+      "canonical_structure": "Lower_Extremity_Trauma_Anatomy_Hub",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "LE trauma hub spans multiple LE regions \u2192 General/Other"
+    },
+    {
+      "entity_id": "f13f0358-e9be-4bd9-9db8-3564740b926b",
+      "preferred_label": "Popliteal Fossa",
+      "anki_slug": "Popliteal_Fossa",
+      "current_tag": "SnapOrtho::Anatomy::Popliteal_Fossa",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Leg_Knee",
+      "tissue": "Other",
+      "canonical_structure": "Popliteal_Fossa",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "popliteal fossa anatomic space behind the knee"
+    },
+    {
+      "entity_id": "21a45aa8-d42e-4298-b5ff-8df58ad25590",
+      "preferred_label": "Smith-Petersen Interval",
+      "anki_slug": "Smith_Petersen_Interval",
+      "current_tag": "SnapOrtho::Anatomy::Smith_Petersen_Interval",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Thigh_Hip",
+      "tissue": "Other",
+      "canonical_structure": "Smith_Petersen_Interval",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "Smith-Petersen anterior hip surgical interval (sartorius/TFL plane)"
+    },
+    {
+      "entity_id": "01d07455-5fca-4c09-9c9c-7fcf5726e36b",
+      "preferred_label": "Sports Shoulder Anatomy Hub",
+      "anki_slug": "Sports_Shoulder_Anatomy_Hub",
+      "current_tag": "SnapOrtho::Anatomy::Sports_Shoulder_Anatomy_Hub",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Shoulder_Girdle",
+      "tissue": "Other",
+      "canonical_structure": "Sports_Shoulder_Anatomy_Hub",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "region-clear sports shoulder anatomy hub \u2192 Shoulder_Girdle/Other"
+    },
+    {
+      "entity_id": "a403c3db-e871-4ef0-be13-acfc38a4412c",
+      "preferred_label": "Vertebral Artery",
+      "anki_slug": "Vertebral_Artery",
+      "current_tag": "SnapOrtho::Anatomy::Vertebral_Artery",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Spine",
+      "tissue": "Vasculature",
+      "canonical_structure": "Vertebral_Artery",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "vertebral artery course through transverse foramina of cervical spine"
+    }
+  ]
+}

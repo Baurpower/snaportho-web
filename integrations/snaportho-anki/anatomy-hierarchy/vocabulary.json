@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "anatomy-hierarchy.v1",
+  "governedFacet": "SnapOrtho::Anatomy",
+  "note": "Canonical Region + Tissue values. Agents MUST choose region/tissue from these exact tokens. Structure leaf is free PascalCase_with_underscores. Final governed tag = SnapOrtho::Anatomy::<Region>::<Tissue>::<Structure>.",
+  "regions": [
+    { "token": "Basic_Science", "desc": "Bone/cartilage/tissue science, physis, growth, general osteology concepts not tied to one body region." },
+    { "token": "Spine", "desc": "Vertebral column, spinal cord, nerve roots, disc, sacrum-as-spine." },
+    { "token": "Shoulder_Girdle", "desc": "Clavicle, scapula, glenoid, proximal humerus articular, rotator cuff, AC/SC joints." },
+    { "token": "Arm", "desc": "Humeral shaft and diaphysis, brachium soft tissue (non-articular)." },
+    { "token": "Elbow", "desc": "Elbow joint, distal humerus, capitellum, trochlea, olecranon, coronoid, elbow ligaments, distal biceps." },
+    { "token": "Forearm", "desc": "Radius, ulna shafts, interosseous membrane, DRUJ, PIN/AIN, Henry approach structures." },
+    { "token": "Hand", "desc": "Wrist, carpals, metacarpals, phalanges, pulleys, TFCC, carpal tunnel, digital nerves/arteries." },
+    { "token": "Pelvis", "desc": "Pelvic ring, acetabulum, sacrum-as-pelvis, pubic symphysis, iliac wing." },
+    { "token": "Thigh_Hip", "desc": "Femur proximal/head/neck/trochanters/shaft, hip joint/capsule, gluteals, sciatic/femoral nerve, femoral vessels." },
+    { "token": "Leg_Knee", "desc": "Tibia, fibula, patella, menisci, cruciates, knee collaterals, leg compartments, popliteal/peroneal structures." },
+    { "token": "Foot_Ankle", "desc": "Talus, calcaneus, malleoli, syndesmosis, ankle ligaments, Lisfranc, subtalar, midfoot, Achilles." },
+    { "token": "General", "desc": "Truly pan-regional/systemic with no single home. Use sparingly." }
+  ],
+  "tissues": [
+    { "token": "Osteology", "desc": "Whole bones and named bony regions/landmarks (e.g. Femoral_Head, Greater_Trochanter, Tibial_Plateau, Physis, Calcar, Surgical_Neck)." },
+    { "token": "Joints", "desc": "Articulations, joint capsules, syndesmoses (e.g. Hip_Joint, Elbow_Joint, DRUJ, Subtalar_Joint, MCP/PIP/DIP/CMC, Pubic_Symphysis, AC/SC)." },
+    { "token": "Ligaments", "desc": "Ligaments and labrum-like stabilizers (e.g. ACL/PCL, collaterals, scapholunate, deltoid ligament, volar plate, Lisfranc ligament)." },
+    { "token": "Muscles", "desc": "Muscles and muscle groups (e.g. Supraspinatus, Subscapularis, Rotator_Cuff, Gluteus_Medius, APB, short external rotators)." },
+    { "token": "Tendons", "desc": "Named tendons and tendon systems (e.g. Achilles_Tendon, Patellar_Tendon, Quadriceps_Tendon, Distal_Biceps_Tendon, pulleys, flexor pulley system)." },
+    { "token": "Nerves", "desc": "Peripheral nerves and branches, spinal cord (e.g. Radial/Median/Ulnar/Sciatic/Femoral, AIN, PIN, digital nerves)." },
+    { "token": "Vasculature", "desc": "Arteries, veins, vascular arches, named blood supply (e.g. Popliteal/Radial/Brachial artery, MFCA, superficial palmar arch)." },
+    { "token": "Compartment", "desc": "Fascial compartments (e.g. Anterior/Lateral/Deep_Posterior compartment of the leg)." },
+    { "token": "Other", "desc": "Surgical intervals, tunnels/spaces, membranes, hubs, zones not fitting a tissue (e.g. Carpal_Tunnel, Henry_Interval, Interosseous_Membrane, Extensor_Tendon_Zones)." }
+  ]
+}

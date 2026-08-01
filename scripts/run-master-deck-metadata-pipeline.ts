@@ -1494,12 +1494,55 @@ async function renderTags(db: SupabaseClient, args: Args) {
   const facetName: Record<MetadataFacet, "Anatomy" | "Diagnosis" | "Treatment" | "Specialty"> = {
     anatomy: "Anatomy", diagnosis: "Diagnosis", treatment: "Treatment", specialty: "Specialty",
   };
-  const nodes: TaxonomyTagNode[] = taxonomy.terms.map((term) => ({
-    canonicalEntityId: term.id,
-    facet: facetName[term.facet],
-    path: [term.ankiSlug],
-    exportable: true,
-  }));
+  // Anatomy hierarchy overlay: multi-token Region/Tissue/Structure paths + exportable ancestors.
+  // Other facets stay flat single-token paths. Map is optional so non-anatomy renders still work.
+  const anatomyMapPath = path.resolve(
+    "integrations/snaportho-anki/anatomy-hierarchy/anatomy-hierarchy.map.json",
+  );
+  type AnatomyHierarchyEntry = {
+    entity_id: string;
+    region: string;
+    tissue: string;
+    structure: string;
+  };
+  const anatomyMap = new Map<string, AnatomyHierarchyEntry>();
+  if (existsSync(anatomyMapPath)) {
+    const raw = JSON.parse(readFileSync(anatomyMapPath, "utf8")) as {
+      entities?: Record<string, AnatomyHierarchyEntry>;
+    };
+    for (const entry of Object.values(raw.entities ?? {})) {
+      anatomyMap.set(entry.entity_id, entry);
+    }
+  }
+  const nodes: TaxonomyTagNode[] = [];
+  const ancestorSeen = new Set<string>();
+  for (const term of taxonomy.terms) {
+    const facet = facetName[term.facet];
+    const hierarchy = facet === "Anatomy" ? anatomyMap.get(term.id) : undefined;
+    const pathTokens = hierarchy
+      ? [hierarchy.region, hierarchy.tissue, hierarchy.structure]
+      : [term.ankiSlug];
+    nodes.push({
+      canonicalEntityId: term.id,
+      facet,
+      path: pathTokens,
+      exportable: true,
+    });
+    if (!hierarchy) continue;
+    // Declare exportable Region and Region::Tissue ancestors so exportableParentClosure emits them.
+    for (const depth of [1, 2] as const) {
+      const ancestorPath = pathTokens.slice(0, depth);
+      const key = `${facet}::${ancestorPath.join("::")}`;
+      if (ancestorSeen.has(key)) continue;
+      ancestorSeen.add(key);
+      nodes.push({
+        canonicalEntityId: `anatomy-ancestor:${ancestorPath.join("::")}`,
+        facet,
+        path: ancestorPath,
+        exportable: true,
+      });
+    }
+  }
   const policy: TagExportPolicy = {
     version: args.get("--export-policy-version") ?? EXPORT_POLICY_VERSION,
     taxonomyVersion: taxonomyVersion.data.version,

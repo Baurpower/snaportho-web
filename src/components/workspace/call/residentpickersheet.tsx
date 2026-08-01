@@ -7,13 +7,20 @@ import type { CallValidationResult } from "@/lib/workspace/call/validation";
 import type { ResidentOption } from "@/components/workspace/call/programcalltypes";
 import {
   getPickerResidentGuidance,
-  getSlotValidationGuidance,
+  getSlotValidationGuidance
 } from "@/lib/workspace/call/validation-display";
 import {
   getResidentColorToken,
   getRotationAssignmentForDate,
-  getRotationDisplayLabel,
+  getRotationDisplayLabel
 } from "@/lib/workspace/call/resident-display";
+
+export type ResidentPickerCandidate = {
+  resident: ResidentOption;
+  selectable: boolean;
+  statusLabel: string;
+  detail: string | null;
+};
 
 type ResidentPickerSheetProps = {
   open: boolean;
@@ -21,7 +28,7 @@ type ResidentPickerSheetProps = {
   title?: string;
   searchValue: string;
   onSearchChange: (value: string) => void;
-  groupedResidents: Array<[string, ResidentOption[]]>;
+  groupedResidents: Array<[string, ResidentPickerCandidate[]]>;
   currentMembershipId: string | null;
   onSelectResident: (membershipId: string) => void;
   onClearResident?: () => void;
@@ -53,15 +60,17 @@ export default function ResidentPickerSheet({
   validation,
   activeSlotId,
   activeDateKey,
-  activeCallType,
+  activeCallType
 }: ResidentPickerSheetProps) {
   const totalResidents = groupedResidents.reduce(
-    (sum, [, residents]) => sum + residents.length,
+    (sum, [, candidates]) =>
+      sum + candidates.filter((candidate) => candidate.selectable).length,
     0
   );
-  const slotValidation = validation && activeSlotId
-    ? getSlotValidationGuidance(validation, activeSlotId)
-    : null;
+  const slotValidation =
+    validation && activeSlotId
+      ? getSlotValidationGuidance(validation, activeSlotId)
+      : null;
 
   return (
     <AnimatePresence>
@@ -177,7 +186,7 @@ export default function ResidentPickerSheet({
                 </div>
               ) : (
                 <div className="space-y-5">
-                  {groupedResidents.map(([groupLabel, residents]) => (
+                  {groupedResidents.map(([groupLabel, candidates]) => (
                     <div key={groupLabel}>
                       <div className="mb-2 px-1">
                         <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
@@ -186,7 +195,8 @@ export default function ResidentPickerSheet({
                       </div>
 
                       <div className="space-y-2">
-                        {residents.map((resident) => {
+                        {candidates.map((candidate) => {
+                          const { resident } = candidate;
                           const isSelected =
                             currentMembershipId === resident.membershipId;
                           const residentColor = getResidentColorToken(
@@ -206,32 +216,42 @@ export default function ResidentPickerSheet({
                                   activeDateKey
                                 )
                               )
-                            : (resident.currentRotationLabel ?? "No rotation listed");
+                            : (resident.currentRotationLabel ??
+                              "No rotation listed");
 
                           return (
                             <button
                               key={resident.membershipId}
                               type="button"
-                              onClick={() =>
-                                onSelectResident(resident.membershipId)
-                              }
+                              onClick={() => {
+                                if (candidate.selectable) {
+                                  onSelectResident(resident.membershipId);
+                                }
+                              }}
+                              disabled={!candidate.selectable}
                               title={residentValidation?.tooltip}
                               className={`flex w-full items-center justify-between gap-3 rounded-[1rem] border px-4 py-3 text-left transition ${
                                 isSelected
                                   ? `${residentColor.border} ${residentColor.background}`
-                                  : residentValidation?.className
-                                  ? residentValidation.className
-                                  : `${residentColor.subtleBorder} ${residentColor.mutedBackground} hover:bg-white`
+                                  : !candidate.selectable
+                                    ? "cursor-not-allowed border-slate-200 bg-slate-50 opacity-75"
+                                    : residentValidation?.className
+                                      ? residentValidation.className
+                                      : `${residentColor.subtleBorder} ${residentColor.mutedBackground} hover:bg-white`
                               }`}
                             >
                               <div className="min-w-0">
-                                <p className={`truncate text-sm font-semibold ${residentColor.text}`}>
+                                <p
+                                  className={`truncate text-sm font-semibold ${residentColor.text}`}
+                                >
                                   {resident.displayName}
                                 </p>
                                 <p className="mt-0.5 text-xs text-slate-500">
                                   {rotationLabel}
                                 </p>
-                                <p className={`mt-1 inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold ${residentColor.badge} ${residentColor.badgeText}`}>
+                                <p
+                                  className={`mt-1 inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold ${residentColor.badge} ${residentColor.badgeText}`}
+                                >
                                   {pgyLabel(resident)}
                                 </p>
                                 {residentValidation?.shortMessage ? (
@@ -239,9 +259,27 @@ export default function ResidentPickerSheet({
                                     {residentValidation.shortMessage}
                                   </p>
                                 ) : null}
+                                {candidate.detail ? (
+                                  <p className="mt-1 text-xs text-slate-600">
+                                    {candidate.detail}
+                                  </p>
+                                ) : null}
                               </div>
 
                               <div className="shrink-0 flex items-center gap-2">
+                                <span
+                                  className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${
+                                    candidate.selectable
+                                      ? candidate.statusLabel.includes(
+                                          "fallback"
+                                        )
+                                        ? "bg-amber-100 text-amber-800"
+                                        : "bg-emerald-100 text-emerald-800"
+                                      : "bg-slate-200 text-slate-600"
+                                  }`}
+                                >
+                                  {candidate.statusLabel}
+                                </span>
                                 {residentValidation?.badgeText ? (
                                   <span
                                     className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${
@@ -254,7 +292,9 @@ export default function ResidentPickerSheet({
                                   </span>
                                 ) : null}
                                 {isSelected ? (
-                                  <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${residentColor.badge} ${residentColor.badgeText}`}>
+                                  <span
+                                    className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${residentColor.badge} ${residentColor.badgeText}`}
+                                  >
                                     <Check className="h-3.5 w-3.5" />
                                     Selected
                                   </span>

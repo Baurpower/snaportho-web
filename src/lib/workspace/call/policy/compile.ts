@@ -41,6 +41,8 @@ const POLICY_VERSION = 1;
 type GreyZone = {
   buddyPgyYears: number[];
   serviceTokens: string[];
+  /** Broader service tokens used to count an intern's orthopedic months for Primary progression. */
+  primaryServiceTokens: string[];
   /** Gen-Ortho month indices a buddy is eligible in (e.g. [1] = first month). null = not configured. */
   buddyMonthIndices: number[] | null;
   /** PGY years accepted as a Buddy's Primary partner. */
@@ -57,7 +59,7 @@ function resolveGreyZone(rules: ProgramRule[]): GreyZone {
 
   const buddyMonthIndices = Array.isArray(config.eligibleServiceMonthIndices)
     ? normalizeNumericList(config.eligibleServiceMonthIndices)
-    : null;
+    : [1];
 
   const partnerConfigured =
     Array.isArray(config.partnerPgyYears) && config.partnerPgyYears.length > 0;
@@ -69,11 +71,20 @@ function resolveGreyZone(rules: ProgramRule[]): GreyZone {
     typeof config.internPrimaryFromServiceMonthIndex === "number" &&
     Number.isFinite(config.internPrimaryFromServiceMonthIndex)
       ? config.internPrimaryFromServiceMonthIndex
-      : null;
+      : 2;
+
+  const configuredPrimaryTokens = Array.isArray(config.internPrimaryServiceTokens)
+    ? config.internPrimaryServiceTokens
+        .filter((token): token is string => typeof token === "string")
+        .map((token) => token.trim())
+        .filter(Boolean)
+    : [];
 
   return {
     buddyPgyYears: buddyPolicy.buddyPgyYears,
     serviceTokens: buddyPolicy.eligibleRotationNameTokens,
+    primaryServiceTokens:
+      configuredPrimaryTokens.length > 0 ? configuredPrimaryTokens : ["ortho"],
     buddyMonthIndices,
     partnerPgyYears,
     partnerExplicit: partnerConfigured,
@@ -240,7 +251,7 @@ function buildEligibilityTiers(
           { kind: "pgyIn", years: gz.buddyPgyYears },
           {
             kind: "serviceMonthIndex",
-            tokens: gz.serviceTokens,
+            tokens: gz.primaryServiceTokens,
             op: "gte",
             n: gz.internPrimaryFromMonthIndex,
           },

@@ -3,14 +3,14 @@ import assert from "node:assert/strict";
 import {
   BACKUP_REQUIRED_EXPLICIT_KEY,
   findBackupRequirementSources,
-  migratePersistedCallRules,
+  migratePersistedCallRules
 } from "@/lib/workspace/call/persisted-rule-migration";
 import { buildCallHubValidationInput } from "@/lib/workspace/call/call-hub-scheduling";
 import type { CallHubValidationContext } from "@/lib/workspace/call/call-hub-scheduling";
 import {
   validateCallMonthDraft,
   validateConditionalRequiredSlots,
-  validateRequiredSlotRule,
+  validateRequiredSlotRule
 } from "@/lib/workspace/call/validation";
 
 const persistedDbRules = [
@@ -21,8 +21,8 @@ const persistedDbRules = [
     is_enabled: true,
     is_hard_rule: true,
     config: {
-      requiredCallTypes: ["Primary", "Backup"],
-    },
+      requiredCallTypes: ["Primary", "Backup"]
+    }
   },
   {
     id: "slot-backup",
@@ -37,9 +37,9 @@ const persistedDbRules = [
       slotCondition: {
         type: "when_pgy_scheduled",
         pgyYears: [1, 2],
-        sourceSlotCallTypes: ["Primary"],
-      },
-    },
+        sourceSlotCallTypes: ["Primary"]
+      }
+    }
   },
   {
     id: "pgy5-backup-only",
@@ -49,24 +49,35 @@ const persistedDbRules = [
     is_hard_rule: true,
     config: {
       restrictedPgyYears: [5],
-      allowedCallTypes: ["Backup"],
-    },
-  },
+      allowedCallTypes: ["Backup"]
+    }
+  }
 ] as const;
 
 const sources = findBackupRequirementSources([...persistedDbRules]);
-assert.ok(sources.requiredDailyCallSlotsRule, "detects persisted required_daily_call_slots with Backup");
-assert.ok(sources.backupSlotDefinitionRule, "detects persisted Backup slot with requiredWhenVisible true");
+assert.ok(
+  sources.requiredDailyCallSlotsRule,
+  "detects persisted required_daily_call_slots with Backup"
+);
+assert.ok(
+  sources.backupSlotDefinitionRule,
+  "detects persisted Backup slot with requiredWhenVisible true"
+);
 
 const migrated = migratePersistedCallRules([...persistedDbRules]);
-assert.equal(migrated.changedCount, 2, "migrates legacy required-daily and backup slot rules");
+assert.equal(
+  migrated.changedCount,
+  2,
+  "migrates legacy required-daily and backup slot rules"
+);
 assert.deepEqual(
-  migrated.rules[0].config?.requiredCallTypes,
+  (migrated.rules[0].config as Record<string, unknown>)?.requiredCallTypes,
   ["Primary"],
   "removes Backup from legacy required_daily_call_slots"
 );
 assert.equal(
-  migrated.rules[1].config?.slotRequiredWhenVisible,
+  (migrated.rules[1].config as Record<string, unknown>)
+    ?.slotRequiredWhenVisible,
   false,
   "clears legacy Backup slotRequiredWhenVisible"
 );
@@ -76,16 +87,16 @@ const explicitRules = migratePersistedCallRules([
     ...persistedDbRules[0],
     config: {
       requiredCallTypes: ["Primary", "Backup"],
-      [BACKUP_REQUIRED_EXPLICIT_KEY]: true,
-    },
+      [BACKUP_REQUIRED_EXPLICIT_KEY]: true
+    }
   },
   {
     ...persistedDbRules[1],
     config: {
       ...persistedDbRules[1].config,
-      [BACKUP_REQUIRED_EXPLICIT_KEY]: true,
-    },
-  },
+      [BACKUP_REQUIRED_EXPLICIT_KEY]: true
+    }
+  }
 ]);
 assert.equal(
   explicitRules.changedCount,
@@ -104,7 +115,7 @@ const validationContext: CallHubValidationContext = {
       residentName: "PGY2 Primary",
       trainingLevel: "PGY-2",
       pgyYear: 2,
-      gradYear: 2030,
+      gradYear: 2030
     },
     {
       rosterId: "pgy5-backup",
@@ -112,11 +123,11 @@ const validationContext: CallHubValidationContext = {
       residentName: "PGY5 Backup",
       trainingLevel: "PGY-5",
       pgyYear: 5,
-      gradYear: 2027,
-    },
+      gradYear: 2027
+    }
   ],
   rotations: [],
-  timeOff: [],
+  timeOff: []
 };
 
 const primaryOnlyAssignment = [
@@ -125,14 +136,14 @@ const primaryOnlyAssignment = [
     rosterId: "pgy2-primary",
     residentId: "pgy2-primary",
     callDate: dateKey,
-    callType: "Primary" as const,
-  },
+    callType: "Primary" as const
+  }
 ];
 
 const validationInput = buildCallHubValidationInput({
   assignments: primaryOnlyAssignment,
   context: validationContext,
-  touchedDates: [dateKey],
+  touchedDates: [dateKey]
 });
 
 const requiredSlotIssues = validateRequiredSlotRule(validationInput);
@@ -150,7 +161,8 @@ assert.equal(
 const conditionalIssues = validateConditionalRequiredSlots(validationInput);
 assert.equal(
   conditionalIssues.some(
-    (issue) => issue.code === "missing_required_slot" && issue.callType === "Backup"
+    (issue) =>
+      issue.code === "missing_required_slot" && issue.callType === "Backup"
   ),
   false,
   "migrated persisted rules no longer trigger validateConditionalRequiredSlots Backup errors"
@@ -159,7 +171,8 @@ assert.equal(
 const fullValidation = validateCallMonthDraft(validationInput);
 assert.equal(
   fullValidation.errors.some(
-    (issue) => issue.callType === "Backup" && issue.code === "missing_required_slot"
+    (issue) =>
+      issue.callType === "Backup" && issue.code === "missing_required_slot"
   ),
   false,
   "empty Backup is not an error after migrating persisted DB-shaped rules"
@@ -174,14 +187,18 @@ const assignedBackupValidation = validateCallMonthDraft(
         rosterId: "pgy5-backup",
         residentId: "pgy5-backup",
         callDate: dateKey,
-        callType: "Backup",
-      },
+        callType: "Backup"
+      }
     ],
     context: validationContext,
-    touchedDates: [dateKey],
+    touchedDates: [dateKey]
   })
 );
-assert.equal(assignedBackupValidation.hasErrors, false, "PGY-5 Backup assignment remains allowed");
+assert.equal(
+  assignedBackupValidation.hasErrors,
+  false,
+  "PGY-5 Backup assignment remains allowed"
+);
 
 const pgy5PrimaryBlocked = validateCallMonthDraft(
   buildCallHubValidationInput({
@@ -191,11 +208,11 @@ const pgy5PrimaryBlocked = validateCallMonthDraft(
         rosterId: "pgy5-backup",
         residentId: "pgy5-backup",
         callDate: dateKey,
-        callType: "Primary",
-      },
+        callType: "Primary"
+      }
     ],
     context: validationContext,
-    touchedDates: [dateKey],
+    touchedDates: [dateKey]
   })
 );
 assert.ok(

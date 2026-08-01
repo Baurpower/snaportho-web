@@ -1,0 +1,561 @@
+{
+  "schemaVersion": "anatomy-hierarchy.v1",
+  "shard": "shard-02",
+  "manifestId": "17d15dc9-ecad-4fe0-95cf-c4f1059b3be6",
+  "regions": [
+    "Basic_Science",
+    "Spine",
+    "Shoulder_Girdle",
+    "Arm",
+    "Elbow",
+    "Forearm",
+    "Hand",
+    "Pelvis",
+    "Thigh_Hip",
+    "Leg_Knee",
+    "Foot_Ankle",
+    "General"
+  ],
+  "tissues": [
+    "Osteology",
+    "Joints",
+    "Ligaments",
+    "Muscles",
+    "Tendons",
+    "Nerves",
+    "Vasculature",
+    "Compartment",
+    "Other"
+  ],
+  "instructions": "For each structure set region + tissue (from the lists above) + canonical_structure (clean PascalCase_with_underscores; keep the given anki_slug unless it is a typo/abbreviation you are normalizing). Set merge_into to another structure's anki_slug only if this is a true duplicate. confidence: high|medium|low. evidence: one short phrase citing the sample_fronts or anatomy knowledge. Do NOT invent region/tissue tokens.",
+  "structures": [
+    {
+      "entity_id": "4e4b8e3d-0cb6-4497-bbdc-f4b55103925a",
+      "preferred_label": "Femur",
+      "anki_slug": "Femur",
+      "current_tag": "SnapOrtho::Anatomy::Femur",
+      "deck_card_count": 102,
+      "sample_fronts": [
+        "What is Shenton's line ? {{c1::Congruent line from the medial femoral neck extending to the suprior portion of the obturator foramen }}",
+        "What radiograph should be obtained to better delineate the fracture pattern in intertrochanteric femur fractures ? {{c1::Traction view}}"
+      ],
+      "region": "Thigh_Hip",
+      "tissue": "Osteology",
+      "canonical_structure": "Femur",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: intertrochanteric femur fx / Shenton's line at femoral neck"
+    },
+    {
+      "entity_id": "df9f225f-494e-46c2-b0b4-66682b738eec",
+      "preferred_label": "Calcaneus",
+      "anki_slug": "Calcaneus",
+      "current_tag": "SnapOrtho::Anatomy::Calcaneus",
+      "deck_card_count": 54,
+      "sample_fronts": [
+        "What two specific radiographs should be obtained to evaluate the calcaneus ? {{c1:: Broden Harris }}",
+        "Which epiphyseal centers are present at birth ? {{c1:: Distal Femur Proximal Tibia Calcaneus Proximal Humerus Talus Cuboid }}"
+      ],
+      "region": "Foot_Ankle",
+      "tissue": "Osteology",
+      "canonical_structure": "Calcaneus",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: Broden/Harris views for calcaneus evaluation"
+    },
+    {
+      "entity_id": "af0826ab-ffb3-474c-9fda-f267dd5e6cab",
+      "preferred_label": "Glenoid",
+      "anki_slug": "Glenoid",
+      "current_tag": "SnapOrtho::Anatomy::Glenoid",
+      "deck_card_count": 42,
+      "sample_fronts": [
+        "What radiographic finding on AP view is suggestive of a posterior shoulder dislocation ? {{c1::Light bulb sign}}",
+        "A Hill-Sachs lesion is best visualized on what view? {{c1::Stryker Notch}}"
+      ],
+      "region": "Shoulder_Girdle",
+      "tissue": "Osteology",
+      "canonical_structure": "Glenoid",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: shoulder dislocation / Hill-Sachs; bony glenoid fossa"
+    },
+    {
+      "entity_id": "e53bd296-d076-4e6f-afec-5a2589d69e75",
+      "preferred_label": "Distal Femur",
+      "anki_slug": "Distal_Femur",
+      "current_tag": "SnapOrtho::Anatomy::Distal_Femur",
+      "deck_card_count": 34,
+      "sample_fronts": [
+        "Three complications of distal femur fracture: 1) {{c1::Posttraumatic arthritis}} 2) {{c1::Nonunion/malunion}} 3) {{c1::Stiffness/loss of ROM}}",
+        "Which epiphyseal centers are present at birth ? {{c1:: Distal Femur Proximal Tibia Calcaneus Proximal Humerus Talus Cuboid }}"
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Osteology",
+      "canonical_structure": "Distal_Femur",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: distal femur fracture complications (arthritis/stiffness at knee)"
+    },
+    {
+      "entity_id": "cd78780a-9a5d-4838-aa0b-fe8d0a642a06",
+      "preferred_label": "Ulnar Nerve",
+      "anki_slug": "Ulnar_Nerve",
+      "current_tag": "SnapOrtho::Anatomy::Ulnar_Nerve",
+      "deck_card_count": 26,
+      "sample_fronts": [
+        "At what level does the ulnar nerve travel from the anterior to posterior compartment ? {{c1::Arcade of Struthers}}",
+        "What are the five entrapment sites of the ulnar nerve about the elbow ? {{c1:: Arcade of Struthers Medial head of triceps Medial intermuscular septum Osbourne's ligament Two heads of the FCU }}"
+      ],
+      "region": "Elbow",
+      "tissue": "Nerves",
+      "canonical_structure": "Ulnar_Nerve",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: five elbow entrapment sites / Arcade of Struthers"
+    },
+    {
+      "entity_id": "babc6fd0-ca9c-44f7-95d9-ab237365c25a",
+      "preferred_label": "Trapezium",
+      "anki_slug": "Trapezium",
+      "current_tag": "SnapOrtho::Anatomy::Trapezium",
+      "deck_card_count": 20,
+      "sample_fronts": [
+        "Abductor pollicis brevis Origin: {{c1::Scaphoid}}, {{c1::trapezium}} Insertion: {{c2::Lateral thumb}} Nerve: {{c3::Median}} Action: {{c4::Palmar pronation}}",
+        "Abductor pollicis brevis Origin: {{c1::Scaphoid}}, {{c1::trapezium}} Insertion: {{c2::Lateral thumb}} Nerve: {{c3::Median}} Action: {{c4::Palmar pronation}}"
+      ],
+      "region": "Hand",
+      "tissue": "Osteology",
+      "canonical_structure": "Trapezium",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: carpal origin of APB with scaphoid"
+    },
+    {
+      "entity_id": "5020d5ca-bb45-4403-a4a0-7dea742ad757",
+      "preferred_label": "Patellar Tendon",
+      "anki_slug": "Patellar_Tendon",
+      "current_tag": "SnapOrtho::Anatomy::Patellar_Tendon",
+      "deck_card_count": 18,
+      "sample_fronts": [
+        "Which condition is seen in jumpers and involves microtears at the distal pole of patellar tendon insertion? {{c1::Patellar Tendinitis}}",
+        "Quadriceps tendon rupture is more likely to occur in patients over the age of {{c1::40}}."
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Tendons",
+      "canonical_structure": "Patellar_Tendon",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: jumper's knee / patellar tendinitis at distal pole"
+    },
+    {
+      "entity_id": "5232f5bd-616b-4a8d-a138-8a384f82158c",
+      "preferred_label": "Sciatic Nerve",
+      "anki_slug": "Sciatic_Nerve",
+      "current_tag": "SnapOrtho::Anatomy::Sciatic_Nerve",
+      "deck_card_count": 17,
+      "sample_fronts": [
+        "What is the most common relationship of the sciatic nerve to the piriformis tendon ? {{c1::Sciatic nerve is anterior to the piriformis tendon}}",
+        "What position should the leg be placed in to decrease tension of the sciatic nerve ? {{c1::Hip extension and knee flexion}}"
+      ],
+      "region": "Thigh_Hip",
+      "tissue": "Nerves",
+      "canonical_structure": "Sciatic_Nerve",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: sciatic\u2013piriformis relation; hip positioning to detension"
+    },
+    {
+      "entity_id": "ef8128c6-8e88-4934-b002-efe7ba22b3a1",
+      "preferred_label": "Proximal Femur",
+      "anki_slug": "Proximal_Femur",
+      "current_tag": "SnapOrtho::Anatomy::Proximal_Femur",
+      "deck_card_count": 13,
+      "sample_fronts": [
+        "What is the normal neck-shaft angle of the proximal femur ? {{c1::130\u00b0}}",
+        "What is the difference between a complex and a simple hip dislocation ? {{c1::Simple - no associated fracture of acetabulum/proximal femur}}"
+      ],
+      "region": "Thigh_Hip",
+      "tissue": "Osteology",
+      "canonical_structure": "Proximal_Femur",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: neck-shaft angle; hip dislocation with proximal femur fx"
+    },
+    {
+      "entity_id": "bbe4b727-cc71-474b-b3dc-6b3374fdc7b4",
+      "preferred_label": "Quadriceps Tendon",
+      "anki_slug": "Quadriceps_Tendon",
+      "current_tag": "SnapOrtho::Anatomy::Quadriceps_Tendon",
+      "deck_card_count": 10,
+      "sample_fronts": [
+        "Quadriceps tendon rupture is more likely to occur in patients over the age of {{c1::40}}.",
+        "Which four muscles make up the quadriceps tendon ? {{c1:: Rectus femoris Vastus lateralis Vastus medialis Vastus intermedius }}"
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Tendons",
+      "canonical_structure": "Quadriceps_Tendon",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: quad tendon rupture; four vastus/rectus contributors"
+    },
+    {
+      "entity_id": "0bb7c697-1b07-40bd-80e1-484e46ef6d98",
+      "preferred_label": "Femoral Nerve",
+      "anki_slug": "Femoral_Nerve",
+      "current_tag": "SnapOrtho::Anatomy::Femoral_Nerve",
+      "deck_card_count": 8,
+      "sample_fronts": [
+        "For the anterior (Smith-Peterson) THA approach, the {{c1::femoral}} nerve is in danger. For medial (Ludloff) THA approach, the {{c1::obturator}} nerve is in danger.",
+        "The saphenous nerve is a branch of the {{c1::femoral}} nerve."
+      ],
+      "region": "Thigh_Hip",
+      "tissue": "Nerves",
+      "canonical_structure": "Femoral_Nerve",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: femoral n. at risk in Smith-Peterson THA"
+    },
+    {
+      "entity_id": "9ce2562b-2f4e-4d80-b9f2-4c75c33bf9ad",
+      "preferred_label": "Hip Joint",
+      "anki_slug": "Hip_Joint",
+      "current_tag": "SnapOrtho::Anatomy::Hip_Joint",
+      "deck_card_count": 7,
+      "sample_fronts": [
+        "Fractures involving what percentage of the posterior wall are highly associated with hip joint instability ? {{c1::\u226540%}}",
+        "What test can be performed to assess the stability of the hip joint following posterior wall fracture ? {{c1::Exam under anesthesia (EUA)}}"
+      ],
+      "region": "Thigh_Hip",
+      "tissue": "Joints",
+      "canonical_structure": "Hip_Joint",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: posterior wall and hip joint instability"
+    },
+    {
+      "entity_id": "edfbad8c-78d7-4e0b-be60-1ffef2f5042c",
+      "preferred_label": "A1 Pulley",
+      "anki_slug": "A1_Pulley",
+      "current_tag": "SnapOrtho::Anatomy::A1_Pulley",
+      "deck_card_count": 6,
+      "sample_fronts": [
+        "Which structure may be injured with A1 pulley release of the thumb ? {{c1::Radial digital nerve - crosses surgical field}}",
+        "Trigger Finger is the inhibition of smooth tendon gliding due to mechanical impingement at the level of the {{c1::A1}} pulley that causes progressive pain , clicking , catching , and locking of the digit ."
+      ],
+      "region": "Hand",
+      "tissue": "Tendons",
+      "canonical_structure": "A1_Pulley",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: trigger finger at A1 pulley; thumb A1 release"
+    },
+    {
+      "entity_id": "3e867388-3a11-4770-9517-8f14aa78a61f",
+      "preferred_label": "Medial Malleolus",
+      "anki_slug": "Medial_Malleolus",
+      "current_tag": "SnapOrtho::Anatomy::Medial_Malleolus",
+      "deck_card_count": 6,
+      "sample_fronts": [
+        "Pulse from the {{c1::posterior tibial}} artery is palpable between the flexor digitorum longus and flexor hallicus longus tendons posterior to the medial malleolus.",
+        "What is difference between an apparent and an actual leg length discrepancy ? {{c1:: Apparent = measured from umbilicus to medial malleolus Actual = measured from ASIS to medial malleolus }}"
+      ],
+      "region": "Foot_Ankle",
+      "tissue": "Osteology",
+      "canonical_structure": "Medial_Malleolus",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: PT pulse posterior to medial malleolus"
+    },
+    {
+      "entity_id": "40a022f2-55cf-4783-b0f2-2068c22c7bb0",
+      "preferred_label": "Scapholunate Ligament",
+      "anki_slug": "Scapholunate_Ligament",
+      "current_tag": "SnapOrtho::Anatomy::Scapholunate_Ligament",
+      "deck_card_count": 5,
+      "sample_fronts": [
+        "Following scapholunate ligament disruption , which part of the ligamentous complex must be repaired ? {{c1::Dorsal interosseous ligaments}}",
+        "What is a SLAC wrist ? {{c1::ScaphoLunate Advanced Collapse}}"
+      ],
+      "region": "Hand",
+      "tissue": "Ligaments",
+      "canonical_structure": "Scapholunate_Ligament",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: SL ligament disruption / SLAC wrist"
+    },
+    {
+      "entity_id": "4290ac19-e655-4734-a65a-3689dc603ae7",
+      "preferred_label": "Lateral Compartment",
+      "anki_slug": "Lateral_Compartment",
+      "current_tag": "SnapOrtho::Anatomy::Lateral_Compartment",
+      "deck_card_count": 4,
+      "sample_fronts": [
+        "The {{c1::superficial}} peroneal nerve runs in the lateral compartment of the leg and crosses anteriorly 12 cm above the lateral malleolus.",
+        "The {{c1::peroneal}} artery supplies muscles of the lateral compartment of the leg."
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Compartment",
+      "canonical_structure": "Lateral_Compartment",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: SPN and peroneal a. in lateral compartment of leg"
+    },
+    {
+      "entity_id": "003ee1e7-bc76-4243-9692-900d71f5f638",
+      "preferred_label": "First Metacarpal",
+      "anki_slug": "First_Metacarpal",
+      "current_tag": "SnapOrtho::Anatomy::First_Metacarpal",
+      "deck_card_count": 3,
+      "sample_fronts": [
+        "What is the eponym for a simple intra-articular first metacarpal base fracture ? {{c1::Bennett fracture}}",
+        "What is the eponym for an intra-articular first metacarpal base fracture with multiple fracture lines ? {{c1::Rolando fracture}}"
+      ],
+      "region": "Hand",
+      "tissue": "Osteology",
+      "canonical_structure": "First_Metacarpal",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: Bennett/Rolando base of first metacarpal fractures"
+    },
+    {
+      "entity_id": "c5e07daf-00d5-49a9-b22b-41e533843d0e",
+      "preferred_label": "Recurrent Motor Branch of the Median Nerve",
+      "anki_slug": "Recurrent_Motor_Branch_Of_The_Median_Nerve",
+      "current_tag": "SnapOrtho::Anatomy::Recurrent_Motor_Branch_Of_The_Median_Nerve",
+      "deck_card_count": 3,
+      "sample_fronts": [
+        "Which structure may be injured if the transverse carpal ligament is incised too radially ? {{c1::Recurrent motor branch of the median nerve}}",
+        "Which nerve is occasionally present within the transverse carpal ligament ? {{c1::Recurrent motor branch of the median nerve}}"
+      ],
+      "region": "Hand",
+      "tissue": "Nerves",
+      "canonical_structure": "Recurrent_Motor_Branch_Of_The_Median_Nerve",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: at risk with radial TCL release in carpal tunnel"
+    },
+    {
+      "entity_id": "8571ca1f-d9a4-44a4-913a-8e6911ea3bc8",
+      "preferred_label": "Hip Capsule",
+      "anki_slug": "Hip_Capsule",
+      "current_tag": "SnapOrtho::Anatomy::Hip_Capsule",
+      "deck_card_count": 2,
+      "sample_fronts": [
+        "Where does the hip capsule insert distally? {{c1:: Anteriorly along the intertrochanteric crest Posteriorly along the distal femoral neck }}",
+        "What position is the hip generally held in if septic ? {{c1::Flexion, Abduction, External Rotation (FABER)}}"
+      ],
+      "region": "Thigh_Hip",
+      "tissue": "Joints",
+      "canonical_structure": "Hip_Capsule",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: distal hip capsule insertion on femur/neck"
+    },
+    {
+      "entity_id": "6d10114a-2182-47ad-8f3c-a89f22ebea69",
+      "preferred_label": "Thumb UCL",
+      "anki_slug": "Thumb_UCL",
+      "current_tag": "SnapOrtho::Anatomy::Thumb_UCL",
+      "deck_card_count": 2,
+      "sample_fronts": [
+        "When evaluating thumb UCL injuries , what ligaments (2) are being assessed with the thumb in full extension ? {{c1::Accessory and proper UCL ligaments}}",
+        "When evaluating thumb UCL injuries , what ligament is being assessed with the thumb in 30\u00b0 of flexion ? {{c1::Proper UCL ligament only}}"
+      ],
+      "region": "Hand",
+      "tissue": "Ligaments",
+      "canonical_structure": "Thumb_Ulnar_Collateral_Ligament",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: proper vs accessory UCL stress testing at thumb MCP"
+    },
+    {
+      "entity_id": "c5e6a49e-8169-41b6-ab0b-2c6a0dd5b626",
+      "preferred_label": "Cruciate Ligaments",
+      "anki_slug": "Cruciate_Ligaments",
+      "current_tag": "SnapOrtho::Anatomy::Cruciate_Ligaments",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "Two entry points for retrograde IM nail : {{c1::Intercondylar Medial condylar}}"
+      ],
+      "region": "Leg_Knee",
+      "tissue": "Ligaments",
+      "canonical_structure": "Cruciate_Ligaments",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "knee ACL/PCL complex (named); sample front weak but structure unambiguous"
+    },
+    {
+      "entity_id": "e9310217-b7cf-4e65-87b6-e1929adc51c3",
+      "preferred_label": "Extensor Tendon Zones",
+      "anki_slug": "Extensor_Tendon_Zones",
+      "current_tag": "SnapOrtho::Anatomy::Extensor_Tendon_Zones",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "Which index finger extensor tendon is more ulnar ? {{c1::EIP}}"
+      ],
+      "region": "Hand",
+      "tissue": "Other",
+      "canonical_structure": "Extensor_Tendon_Zones",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "vocab example Other; hand extensor zone system (EIP sample)"
+    },
+    {
+      "entity_id": "c3c8eb81-36f6-4082-9094-6556581c1a79",
+      "preferred_label": "Lisfranc Joint",
+      "anki_slug": "Lisfranc_Joint",
+      "current_tag": "SnapOrtho::Anatomy::Lisfranc_Joint",
+      "deck_card_count": 1,
+      "sample_fronts": [
+        "How are Lisfranc injuries treated surgically ? {{c1::ORIF or arthrodesis}}"
+      ],
+      "region": "Foot_Ankle",
+      "tissue": "Joints",
+      "canonical_structure": "Lisfranc_Joint",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "sample: Lisfranc injury ORIF/arthrodesis; tarsometatarsal complex"
+    },
+    {
+      "entity_id": "7d2431eb-cbfc-4b0b-ac17-2757fc08139a",
+      "preferred_label": "A5 Pulley",
+      "anki_slug": "A5_Pulley",
+      "current_tag": "SnapOrtho::Anatomy::A5_Pulley",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Hand",
+      "tissue": "Tendons",
+      "canonical_structure": "A5_Pulley",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "A5 annular pulley at DIP; Hand/Tendons flexor system"
+    },
+    {
+      "entity_id": "db37ce0e-d396-4c52-88ea-7450de58ee63",
+      "preferred_label": "C2 Pulley",
+      "anki_slug": "C2_Pulley",
+      "current_tag": "SnapOrtho::Anatomy::C2_Pulley",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Hand",
+      "tissue": "Tendons",
+      "canonical_structure": "C2_Pulley",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "C2 cruciate pulley; Hand/Tendons flexor system"
+    },
+    {
+      "entity_id": "12584ec2-1bc8-4746-a5f5-a0a08b66cc4e",
+      "preferred_label": "EPB",
+      "anki_slug": "Epb",
+      "current_tag": "SnapOrtho::Anatomy::Epb",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Hand",
+      "tissue": "Tendons",
+      "canonical_structure": "Extensor_Pollicis_Brevis",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "EPB tendon in 1st dorsal compartment with APL"
+    },
+    {
+      "entity_id": "a473da3a-00c6-405c-aad0-52365e80ffdf",
+      "preferred_label": "Flexor Tendon Zones",
+      "anki_slug": "Flexor_Tendon_Zones",
+      "current_tag": "SnapOrtho::Anatomy::Flexor_Tendon_Zones",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Hand",
+      "tissue": "Other",
+      "canonical_structure": "Flexor_Tendon_Zones",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "Verdan flexor tendon zones (hand)"
+    },
+    {
+      "entity_id": "60a354cc-dea2-4fb5-a3bc-dc8ed529e28c",
+      "preferred_label": "Imaging Anatomy Landmarks",
+      "anki_slug": "Imaging_Anatomy_Landmarks",
+      "current_tag": "SnapOrtho::Anatomy::Imaging_Anatomy_Landmarks",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "General",
+      "tissue": "Other",
+      "canonical_structure": "Imaging_Anatomy_Landmarks",
+      "merge_into": null,
+      "confidence": "low",
+      "evidence": "pan-regional conceptual hub; no samples or single anatomic home"
+    },
+    {
+      "entity_id": "069ba34b-b5da-4114-838c-88a58cae8858",
+      "preferred_label": "Leg Compartment Complex",
+      "anki_slug": "Leg_Compartment_Complex",
+      "current_tag": "SnapOrtho::Anatomy::Leg_Compartment_Complex",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Leg_Knee",
+      "tissue": "Compartment",
+      "canonical_structure": "Leg_Compartment_Complex",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "aggregate of four leg fascial compartments"
+    },
+    {
+      "entity_id": "dcdcdcd9-d582-4108-8a0a-8a193ee5852b",
+      "preferred_label": "Plantar Soft Tissues",
+      "anki_slug": "Plantar_Soft_Tissues",
+      "current_tag": "SnapOrtho::Anatomy::Plantar_Soft_Tissues",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Foot_Ankle",
+      "tissue": "Other",
+      "canonical_structure": "Plantar_Soft_Tissues",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "plantar foot soft-tissue aggregate \u2192 Other"
+    },
+    {
+      "entity_id": "95c8fe7e-311f-4883-b99f-c043e0452c01",
+      "preferred_label": "Second Metacarpal",
+      "anki_slug": "Second_Metacarpal",
+      "current_tag": "SnapOrtho::Anatomy::Second_Metacarpal",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "Hand",
+      "tissue": "Osteology",
+      "canonical_structure": "Second_Metacarpal",
+      "merge_into": null,
+      "confidence": "high",
+      "evidence": "index metacarpal osteology"
+    },
+    {
+      "entity_id": "b52d90ff-efb0-439d-88f7-f1d9bcd9d74e",
+      "preferred_label": "Sports Medicine Anatomy Hub",
+      "anki_slug": "Sports_Medicine_Anatomy_Hub",
+      "current_tag": "SnapOrtho::Anatomy::Sports_Medicine_Anatomy_Hub",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "General",
+      "tissue": "Other",
+      "canonical_structure": "Sports_Medicine_Anatomy_Hub",
+      "merge_into": null,
+      "confidence": "low",
+      "evidence": "cross-regional topic hub, not a single structure"
+    },
+    {
+      "entity_id": "e7a4bfd4-5ada-4b9c-b634-043f159a4f9a",
+      "preferred_label": "Upper Extremity Trauma Anatomy Hub",
+      "anki_slug": "Upper_Extremity_Trauma_Anatomy_Hub",
+      "current_tag": "SnapOrtho::Anatomy::Upper_Extremity_Trauma_Anatomy_Hub",
+      "deck_card_count": 0,
+      "sample_fronts": [],
+      "region": "General",
+      "tissue": "Other",
+      "canonical_structure": "Upper_Extremity_Trauma_Anatomy_Hub",
+      "merge_into": null,
+      "confidence": "low",
+      "evidence": "cross-regional upper-extremity topic hub, not a single structure"
+    }
+  ]
+}

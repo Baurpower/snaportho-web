@@ -18,15 +18,18 @@ import type {
   ResidentAvailabilityForDate,
   ResidentAvailabilityMap,
   ResidentOption,
-  RuleEvaluationBlock,
+  RuleEvaluationBlock
 } from "@/components/workspace/call/programcalltypes";
 import type { SchedulingContext } from "@/lib/workspace/call/policy/context";
-import { evalPredicate, firstMatchingTier } from "@/lib/workspace/call/policy/predicates";
+import {
+  evalPredicate,
+  firstMatchingTier
+} from "@/lib/workspace/call/policy/predicates";
 import type {
   CallPolicy,
   PairingResult,
   SlotEvaluation,
-  SlotPolicy,
+  SlotPolicy
 } from "@/lib/workspace/call/policy/types";
 import {
   countUniqueWeekendBuckets,
@@ -42,13 +45,13 @@ import {
   getWeekendBucket,
   isWeekendDateKey,
   type RuleLike,
-  type RuleViolation,
+  type RuleViolation
 } from "@/lib/workspace/call/rule-evaluator";
 
 const SLOT_ROSTER_FIELD: Record<string, keyof DraftDayAssignment> = {
   Primary: "primaryRosterId",
   Backup: "backupRosterId",
-  Buddy: "buddyRosterId",
+  Buddy: "buddyRosterId"
 };
 
 // ── Availability blocks/warnings (mirrors programcallevaluator private helpers) ──
@@ -64,7 +67,7 @@ function availabilityBlocks(
     ruleType: "time_off",
     ruleName: "Approved time off",
     message: c.title ? `Approved time off: ${c.title}` : "Approved time off",
-    isHardRule: true,
+    isHardRule: true
   }));
 }
 
@@ -79,7 +82,7 @@ function availabilityWarnings(
     ruleType: "time_off",
     ruleName: "Requested time off",
     message: c.title ? `Requested time off: ${c.title}` : "Requested time off",
-    isHardRule: false,
+    isHardRule: false
   }));
 }
 
@@ -107,16 +110,19 @@ function countSlotAssignments(
 ): number {
   const field = SLOT_ROSTER_FIELD[slot];
   if (!field) return 0;
-  return Object.values(assignments).filter((a) => a?.[field] === residentId).length;
+  return Object.values(assignments).filter((a) => a?.[field] === residentId)
+    .length;
 }
 
-function blockFromViolation(violation: RuleViolation<RuleLike>): RuleEvaluationBlock {
+function blockFromViolation(
+  violation: RuleViolation<RuleLike>
+): RuleEvaluationBlock {
   return {
     ruleId: violation.rule.id ?? null,
     ruleType: violation.rule.rule_type ?? "rule",
     ruleName: violation.rule.name ?? violation.rule.rule_type ?? "rule",
     message: violation.message,
-    isHardRule: violation.severity === "error",
+    isHardRule: violation.severity === "error"
   };
 }
 
@@ -166,7 +172,7 @@ function evaluatePairing(
       message:
         constraint.message ??
         `${slotPolicy.callType} partner in ${constraint.otherSlot} does not satisfy the pairing rule.`,
-      isHardRule: constraint.severity === "hard",
+      isHardRule: constraint.severity === "hard"
     };
     if (constraint.severity === "hard") violations.push(block);
     else warnings.push(block);
@@ -186,8 +192,15 @@ export function evaluateSlot(params: {
   assignments: Record<string, DraftDayAssignment>;
   availabilityByResident: ResidentAvailabilityMap;
 }): SlotEvaluation {
-  const { resident, slot, dateKey, ctx, policy, assignments, availabilityByResident } =
-    params;
+  const {
+    resident,
+    slot,
+    dateKey,
+    ctx,
+    policy,
+    assignments,
+    availabilityByResident
+  } = params;
 
   const residentId = resident.residentId;
   const rules = policy.rules as RuleLike[];
@@ -212,7 +225,7 @@ export function evaluateSlot(params: {
       ruleType: "restrict_call_type_by_pgy",
       ruleName: `${slot} call pool`,
       message: `Resident is not in the ${slot} call pool.`,
-      isHardRule: true,
+      isHardRule: true
     });
   } else if (tier.preference > 0 && tier.softLabel) {
     // Fallback tier used — surface as a soft note (never blocks).
@@ -220,8 +233,33 @@ export function evaluateSlot(params: {
       ruleType: "eligibility_tier",
       ruleName: `${slot} fallback`,
       message: tier.softLabel,
-      isHardRule: false,
+      isHardRule: false
     });
+  }
+
+  // Buddy is a hard monthly ceiling in every interactive path, not only a final
+  // generator trim/save validation. Keep an existing assignment editable, but block
+  // adding a new Buddy day once the resident has reached the configured cap.
+  if (slot === "Buddy" && tier !== null) {
+    const monthPrefix = dateKey.slice(0, 7);
+    const alreadyBuddyOnDate =
+      assignments[dateKey]?.buddyRosterId === residentId;
+    const buddyDatesThisMonth = Object.entries(assignments)
+      .filter(
+        ([assignedDate, assignment]) =>
+          assignedDate.startsWith(monthPrefix) &&
+          assignment?.buddyRosterId === residentId
+      )
+      .map(([assignedDate]) => assignedDate);
+    const cap = policy.globals.buddy.maxWeekendsPerInternMonth;
+    if (!alreadyBuddyOnDate && buddyDatesThisMonth.length >= cap) {
+      blocks.push({
+        ruleType: "buddy_requirement",
+        ruleName: "Buddy weekend cap",
+        message: `Resident has reached the ${cap}-weekend Buddy cap for this month.`,
+        isHardRule: true
+      });
+    }
   }
 
   // (2) Availability (approved time off = hard; requested = warning).
@@ -238,11 +276,13 @@ export function evaluateSlot(params: {
     assignedDates.some((d) => getWeekendBucket(d) === currentWeekendBucket);
   const assignedWeekendCount = countUniqueWeekendBuckets(assignedDates);
   const adjacentDateKey = getAdjacentWeekendDateKey(dateKey);
-  const adjacentAssignment = adjacentDateKey ? assignments[adjacentDateKey] : null;
+  const adjacentAssignment = adjacentDateKey
+    ? assignments[adjacentDateKey]
+    : null;
   const adjacentResidentId =
     slot === "Primary"
-      ? adjacentAssignment?.primaryRosterId ?? null
-      : adjacentAssignment?.backupRosterId ?? null;
+      ? (adjacentAssignment?.primaryRosterId ?? null)
+      : (adjacentAssignment?.backupRosterId ?? null);
   const residentPgyYear = ctx.pgyOf(residentId, dateKey);
   const rotationConflictIds =
     availability?.rotationConflicts.map((c) => c.rotationId) ?? [];
@@ -259,7 +299,7 @@ export function evaluateSlot(params: {
     evaluateSpacingForResident({
       assignedDates: assignedDates.filter((d) => d !== dateKey),
       dateKey,
-      rules,
+      rules
     })
   );
 
@@ -267,7 +307,12 @@ export function evaluateSlot(params: {
   const projectedMonthCount = alreadyAssignedOnDate
     ? assignedDates.length
     : assignedDates.length + 1;
-  route(evaluateMonthlyLimitForResident({ assignmentCount: projectedMonthCount, rules }));
+  route(
+    evaluateMonthlyLimitForResident({
+      assignmentCount: projectedMonthCount,
+      rules
+    })
+  );
 
   // (5) Weekend limit.
   const projectedWeekendCount = alreadyAssignedInWeekendBucket
@@ -277,7 +322,7 @@ export function evaluateSlot(params: {
     evaluateWeekendLimitForResident({
       dateKey,
       weekendCount: projectedWeekendCount,
-      rules,
+      rules
     })
   );
 
@@ -287,7 +332,7 @@ export function evaluateSlot(params: {
       rotationIds: rotationConflictIds,
       callType: slot as "Primary" | "Backup" | "Buddy",
       rules,
-      residentPgyYear,
+      residentPgyYear
     })
   );
 
@@ -297,9 +342,13 @@ export function evaluateSlot(params: {
     const weekendDates = assignedDates.filter((d) => isWeekendDateKey(d));
     const weekdayDates = assignedDates.filter((d) => !isWeekendDateKey(d));
     const projectedWeekendDays =
-      isWeekend && !alreadyAssignedOnDate ? weekendDates.length + 1 : weekendDates.length;
+      isWeekend && !alreadyAssignedOnDate
+        ? weekendDates.length + 1
+        : weekendDates.length;
     const projectedWeekdayDays =
-      !isWeekend && !alreadyAssignedOnDate ? weekdayDates.length + 1 : weekdayDates.length;
+      !isWeekend && !alreadyAssignedOnDate
+        ? weekdayDates.length + 1
+        : weekdayDates.length;
     const projectedTotalDays = alreadyAssignedOnDate
       ? assignedDates.length
       : assignedDates.length + 1;
@@ -311,7 +360,7 @@ export function evaluateSlot(params: {
         weekdayCallDays: projectedWeekdayDays,
         totalCallDays: projectedTotalDays,
         callType: slot as "Primary" | "Backup" | "Buddy",
-        rules,
+        rules
       })
     );
   }
@@ -323,13 +372,17 @@ export function evaluateSlot(params: {
       adjacentResidentId,
       dateKey,
       callType: slot as "Primary" | "Backup" | "Buddy",
-      rules,
+      rules
     })
   );
 
   // (9) Monthly load target by PGY.
   if (slot === "Primary" || slot === "Backup" || slot === "Buddy") {
-    const currentSlotCount = countSlotAssignments(residentId, slot, assignments);
+    const currentSlotCount = countSlotAssignments(
+      residentId,
+      slot,
+      assignments
+    );
     const projectedSlotCount = alreadyAssignedOnDate
       ? currentSlotCount
       : currentSlotCount + 1;
@@ -338,7 +391,7 @@ export function evaluateSlot(params: {
         residentPgyYear,
         callType: slot,
         projectedCount: projectedSlotCount,
-        rules,
+        rules
       })
     );
   }
@@ -350,7 +403,7 @@ export function evaluateSlot(params: {
       callType: slot as "Primary" | "Backup" | "Buddy",
       rotationIds: rotationConflictIds,
       residentPgyYear,
-      rules,
+      rules
     })
   );
 
@@ -371,7 +424,7 @@ export function evaluateSlot(params: {
     eligible: !hasHardBlock,
     blocks,
     warnings,
-    pairing,
+    pairing
   };
 }
 
