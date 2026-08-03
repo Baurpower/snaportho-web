@@ -48,6 +48,9 @@ interface RemoteConfigResponse {
     brobotStreaming: boolean;
     brobotFollowUpChips: boolean;
     brobotReadingRecs: boolean;
+    brobotChatEnrichment: boolean;
+    brobotCasePrepPacket: boolean;
+    brobotLegacyCasePrepFallback: boolean;
   };
 
   brobotSubscription: MobileSubscriptionDisplayConfig;
@@ -149,8 +152,10 @@ export async function GET(request: Request) {
     maintenanceTitle: process.env.MOBILE_MAINTENANCE_TITLE || null,
     maintenanceMessage: process.env.MOBILE_MAINTENANCE_MESSAGE || null,
 
-    brobotChatApiVersion: process.env.BROBOT_CHAT_API_VERSION || 'v1',
-    brobotCasePrepApiVersion: process.env.BROBOT_CASEPREP_API_VERSION || 'v1',
+    brobotChatApiVersion:
+      process.env.BROBOT_CHAT_API_VERSION ||
+      (readBool(process.env.BROBOT_FEATURE_STREAMING, false) ? 'v2' : 'v1'),
+    brobotCasePrepApiVersion: process.env.BROBOT_CASEPREP_API_VERSION || 'v1.1',
     brobotChatEnabled: readBool(process.env.BROBOT_CHAT_ENABLED, true),
     brobotCasePrepEnabled: readBool(process.env.BROBOT_CASEPREP_ENABLED, true),
 
@@ -158,6 +163,15 @@ export async function GET(request: Request) {
       brobotStreaming: readBool(process.env.BROBOT_FEATURE_STREAMING, false),
       brobotFollowUpChips: readBool(process.env.BROBOT_FEATURE_FOLLOWUP_CHIPS, true),
       brobotReadingRecs: readBool(process.env.BROBOT_FEATURE_READING_RECS, false),
+      brobotChatEnrichment: readBool(process.env.BROBOT_FEATURE_CHAT_ENRICHMENT, true),
+      brobotCasePrepPacket: readBool(
+        process.env.BROBOT_FEATURE_CASEPREP_PACKET,
+        readBool(process.env.CASEPREP_WEB_V1_1_STREAM_ENABLED, false)
+      ),
+      brobotLegacyCasePrepFallback: readBool(
+        process.env.BROBOT_FEATURE_LEGACY_CASEPREP_FALLBACK,
+        true
+      ),
     },
 
     brobotSubscription: getMobileSubscriptionDisplayConfig(),

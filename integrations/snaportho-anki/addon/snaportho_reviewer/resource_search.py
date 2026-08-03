@@ -102,22 +102,39 @@ def resolve_local_results(gateway, results: list[dict]) -> dict:
     resolved_ids = []
     dispositions = []
     for result in results:
-        matches = gateway.cards_by_guid_ordinal(
-            result.get("noteGuid"), result.get("cardOrdinal")
+        canonical_lookup = getattr(gateway, "cards_by_canonical_id", None)
+        matches = (
+            canonical_lookup(result.get("canonicalCardId"))
+            if callable(canonical_lookup) and result.get("canonicalCardId")
+            else []
         )
+        if not matches:
+            matches = gateway.cards_by_guid_ordinal(
+                result.get("noteGuid"), result.get("cardOrdinal")
+            )
         if not matches:
             status = "missing"
         elif len(matches) > 1:
             status = "ambiguous"
         else:
+            card = matches[0]
+            identity_reader = getattr(gateway, "installed_identity", None)
+            installed = identity_reader(card) if callable(identity_reader) else None
+            expected_id = result.get("canonicalCardId")
+            expected_version = result.get("canonicalCardVersionId")
             expected_hash = result.get("contentHash")
-            local_hash = gateway.content_hash(matches[0]) if expected_hash else None
-            status = (
-                "version_mismatch"
-                if expected_hash and local_hash != expected_hash
-                else "available"
-            )
-            resolved_ids.append(matches[0].id)
+            # Versioned cards carry their exact release identity in marker fields.
+            # A full-note hash includes those markers and is self-referential, so
+            # it can never equal the canonical hash stored inside the note.
+            if installed and installed.get("contentHash"):
+                id_matches = not expected_id or installed.get("canonicalCardId") == expected_id
+                version_matches = not expected_version or installed.get("canonicalCardVersionId") == expected_version
+                hash_matches = not expected_hash or installed.get("contentHash") == expected_hash
+                status = "available" if id_matches and version_matches and hash_matches else "version_mismatch"
+            else:
+                local_hash = gateway.content_hash(card) if expected_hash else None
+                status = "version_mismatch" if expected_hash and local_hash != expected_hash else "available"
+            resolved_ids.append(card.id)
         dispositions.append(
             {
                 "canonicalCardId": result.get("canonicalCardId"),
@@ -197,6 +214,12 @@ def open_browse_with_card_ids(mw, card_ids: list[int], search_context: dict | No
     if not query:
         return None
     from aqt import dialogs
+    # Opening Browser directly from the relay callback is unreliable in current
+    # Anki builds when no Browser window exists yet. Go through the main-window
+    # action first (the same path as the user's Browse button), then retrieve the
+    # registered dialog. If Browse is already open, onBrowse simply focuses it.
+    if hasattr(mw, "onBrowse"):
+        mw.onBrowse()
     browser = dialogs.open("Browser", mw)
     install_browser_search_surface(browser)
     apply_browser_query(browser, query)

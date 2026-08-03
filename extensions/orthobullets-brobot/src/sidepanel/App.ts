@@ -39,10 +39,14 @@ import type { PageClassification } from '../shared/types.js';
 import { fingerprintFromPageContext } from '../shared/question-fingerprint.js';
 import type { QuestionRefreshDiagnostics, QuestionRefreshSource } from '../shared/question-fingerprint.js';
 import { hasVisibleReviewData, inferQuestionStateBlockedReason } from '../shared/question-review-state.js';
-import { renderCurriculumChatChips, renderCurriculumStudyPanel } from './explain-study-panel.js';
+import {
+  renderCurriculumChatChips,
+  renderCurriculumGenerationError,
+  renderCurriculumStudyPanel,
+} from './explain-study-panel.js';
 import { QuestionTutorController, selectedAnswerForHint } from './question-tutor-controller.js';
 import type { QuestionTutorViewState } from './question-session.js';
-import { appendQuestionTutorPanel, renderQuestionTutorLifecycleDebug } from './question-tutor-panel.js';
+import { appendQuestionTutorPanel } from './question-tutor-panel.js';
 import {
   appendHimalayaReviewBoard,
   getReviewBoardRows,
@@ -72,19 +76,67 @@ const SIDEPANEL_BUILD_ID_MARKER = '2026-07-30-himalaya-live-v4';
 const DEFAULT_FOLLOW_UP_PROMPTS = ['Why not the trap answer?', 'Make this simpler', 'Give me an Anki-style card'];
 const ERROR_COPY: Record<ExtensionErrorCode, { title: string; canRetry: boolean }> = {
   unsupported_page: { title: 'This page is not supported.', canRetry: false },
-  not_linked: { title: 'Extension is not linked to a SnapOrtho account.', canRetry: false },
+  not_linked: {
+    title: 'Extension is not linked to a SnapOrtho account.',
+    canRetry: false,
+  },
   quota_exceeded: { title: 'Daily BroBot limit reached.', canRetry: false },
-  disabled: { title: 'BroBot Orthobullets explanations are currently unavailable.', canRetry: false },
-  invalid_request: { title: 'This page context could not be processed.', canRetry: true },
-  invalid_curriculum_request: { title: 'This curriculum page context could not be processed.', canRetry: true },
-  invalid_request_shape: { title: 'The extension and server curriculum formats do not match.', canRetry: true },
-  client_contract_validation_failed: { title: 'BroBot could not prepare this page because the extension and server formats do not match.', canRetry: true },
-  extension_update_required: { title: 'BroBot needs an extension update before it can explain this page.', canRetry: false },
-  curriculum_content_missing: { title: 'Curriculum content was not readable.', canRetry: true },
-  curriculum_content_too_large: { title: 'BroBot will prepare this page section by section.', canRetry: true },
-  unsupported_provider: { title: 'This curriculum provider is not supported.', canRetry: false },
-  api_failure: { title: 'BroBot could not generate an explanation.', canRetry: true },
-  parse_failure: { title: "BroBot's response could not be parsed.", canRetry: true },
+  disabled: {
+    title: 'BroBot Orthobullets explanations are currently unavailable.',
+    canRetry: false,
+  },
+  invalid_request: {
+    title: 'This page context could not be processed.',
+    canRetry: true,
+  },
+  invalid_curriculum_request: {
+    title: 'This curriculum page context could not be processed.',
+    canRetry: true,
+  },
+  invalid_request_shape: {
+    title: 'The extension and server curriculum formats do not match.',
+    canRetry: true,
+  },
+  client_contract_validation_failed: {
+    title: 'BroBot could not prepare this page because the extension and server formats do not match.',
+    canRetry: true,
+  },
+  extension_update_required: {
+    title: 'BroBot needs an extension update before it can explain this page.',
+    canRetry: false,
+  },
+  curriculum_content_missing: {
+    title: 'Curriculum content was not readable.',
+    canRetry: true,
+  },
+  curriculum_content_too_large: {
+    title: 'BroBot will prepare this page section by section.',
+    canRetry: true,
+  },
+  unsupported_provider: {
+    title: 'This curriculum provider is not supported.',
+    canRetry: false,
+  },
+  model_unavailable: {
+    title: 'BroBot API credits are exhausted.',
+    canRetry: false,
+  },
+  all_chunks_failed: {
+    title: 'BroBot could not process this page.',
+    canRetry: true,
+  },
+  synthesis_failed: {
+    title: 'BroBot could not combine the page sections.',
+    canRetry: true,
+  },
+  api_failure: {
+    title: 'BroBot could not generate an explanation.',
+    canRetry: true,
+  },
+  parse_failure: {
+    title: "BroBot's response could not be parsed.",
+    canRetry: true,
+  },
   extraction_failure: { title: 'Could not read this page.', canRetry: true },
   network_failure: { title: 'Could not reach SnapOrtho.', canRetry: true },
   unknown: { title: 'Something went wrong.', canRetry: true },
@@ -92,10 +144,7 @@ const ERROR_COPY: Record<ExtensionErrorCode, { title: string; canRetry: boolean 
 
 type OperationState = 'idle' | 'extracting' | 'hinting' | 'explaining' | 'chatting';
 type UsageState =
-  | OrthobulletsExplainResponse['usage']
-  | OrthobulletsChatResponse['usage']
-  | OrthobulletsHintResponse['usage']
-  | null;
+  OrthobulletsExplainResponse['usage'] | OrthobulletsChatResponse['usage'] | OrthobulletsHintResponse['usage'] | null;
 
 const ANKI_STATUS_POLL_INTERVAL_MS = 2_000;
 const ANKI_STATUS_POLL_ATTEMPTS = 15;
@@ -103,9 +152,7 @@ const ANKI_STATUS_POLL_ATTEMPTS = 15;
 function waitingForAnkiCopy(attempt: number) {
   if (attempt < 5) return 'Waiting for Anki to connect…';
   const appOrigin = getConfiguredAppOrigin();
-  const environment = /^https?:\/\/(?:localhost|127\.0\.0\.1)(?::|\/|$)/i.test(appOrigin)
-    ? 'local'
-    : 'production';
+  const environment = /^https?:\/\/(?:localhost|127\.0\.0\.1)(?::|\/|$)/i.test(appOrigin) ? 'local' : 'production';
   return attempt < 10
     ? `Anki has not connected — open Anki (${environment})…`
     : `Still waiting — verify the SnapOrtho add-on is linked to ${environment}…`;
@@ -113,10 +160,14 @@ function waitingForAnkiCopy(attempt: number) {
 
 function ankiConnectionTimeoutCopy() {
   const appOrigin = getConfiguredAppOrigin();
-  const environment = /^https?:\/\/(?:localhost|127\.0\.0\.1)(?::|\/|$)/i.test(appOrigin)
-    ? 'local'
-    : 'production';
+  const environment = /^https?:\/\/(?:localhost|127\.0\.0\.1)(?::|\/|$)/i.test(appOrigin) ? 'local' : 'production';
   return `Anki did not connect — check the ${environment} add-on and retry`;
+}
+
+function ankiSearchFailureCopy(errorCode: string | null | undefined) {
+  if (errorCode === 'browse_open_failed') return 'Open Anki Browse, then try again';
+  if (errorCode === 'resolution_failed') return 'Anki could not match the installed deck — update it and retry';
+  return 'Anki search failed — try again';
 }
 
 async function sendMessage(message: ExtensionMessage): Promise<ExtensionMessageResponse> {
@@ -129,7 +180,7 @@ function createElement<K extends keyof HTMLElementTagNameMap>(
     className?: string;
     text?: string;
     html?: string;
-  } = {}
+  } = {},
 ) {
   const element = document.createElement(tag);
   if (options.className) element.className = options.className;
@@ -158,7 +209,7 @@ function renderTextBlock(value: string, emphasis = false) {
   return paragraphs
     .map(
       (paragraph) =>
-        `<p style="margin:0;line-height:1.55;${emphasis ? 'font-weight:600;' : ''}">${escapeHtml(paragraph).replace(/\n/g, '<br />')}</p>`
+        `<p style="margin:0;line-height:1.55;${emphasis ? 'font-weight:600;' : ''}">${escapeHtml(paragraph).replace(/\n/g, '<br />')}</p>`,
     )
     .join('');
 }
@@ -179,7 +230,11 @@ function extractionFailureMessage(classification: PageClassification | null) {
   if (!classification) {
     return 'Could not extract enough visible page content yet.';
   }
-  if (classification.pageKind === 'unreadable' && classification.detected.hasStem && classification.detected.answerChoiceCount < 2) {
+  if (
+    classification.pageKind === 'unreadable' &&
+    classification.detected.hasStem &&
+    classification.detected.answerChoiceCount < 2
+  ) {
     return 'Could not detect a question. BroBot needs a visible stem and at least two answer choices for Question Tutor mode.';
   }
   if (classification.pageKind === 'unreadable' && classification.detected.readableTextLength > 0) {
@@ -229,7 +284,10 @@ function renderCard(title: string, contentHtml: string, tone: 'neutral' | 'accen
   </article>`;
 }
 
-function renderExplanation(explanation: OrthobulletsExplainResponse, mode: 'question_tutor' | 'explain_page' = 'question_tutor') {
+function renderExplanation(
+  explanation: OrthobulletsExplainResponse,
+  mode: 'question_tutor' | 'explain_page' = 'question_tutor',
+) {
   const cards: string[] = [];
   const summaryTitle = mode === 'explain_page' ? 'Quick summary' : 'Bottom Line';
   const conceptTitle = mode === 'explain_page' ? 'High-yield concepts' : 'Tested Concept';
@@ -266,8 +324,8 @@ function renderExplanation(explanation: OrthobulletsExplainResponse, mode: 'ques
               : '';
             return `<li><strong>${label}</strong> ${escapeHtml(item.reason)}${trapTag}</li>`;
           })
-          .join('')}</ul>`
-      )
+          .join('')}</ul>`,
+      ),
     );
   }
 
@@ -318,8 +376,8 @@ function renderHintCards(hints: OrthobulletsHintResponse[]) {
             ? `<p style="margin:0;font-size:12px;color:#7c2d12;">Notes: ${escapeHtml(hint.warnings.join(' | '))}</p>`
             : ''
         }`,
-        hint.hintLevel === 3 ? 'warning' : 'neutral'
-      )
+        hint.hintLevel === 3 ? 'warning' : 'neutral',
+      ),
     )
     .join('')}</section>`;
 }
@@ -374,9 +432,15 @@ function renderDebugSummary(input: {
     breadcrumbCount: input.diagnostics?.breadcrumbCount ?? input.pageContext?.breadcrumbs.length ?? 0,
     breadcrumbs: input.pageContext?.breadcrumbs ?? [],
     hasStem: input.diagnostics?.hasStem ?? Boolean(input.pageContext?.stem),
-    hasSelectedAnswer: input.diagnostics?.hasSelectedAnswer ?? Boolean(input.pageContext?.selectedAnswerKey ?? input.pageContext?.selectedAnswer),
-    hasCorrectAnswer: input.diagnostics?.hasCorrectAnswer ?? Boolean(input.pageContext?.correctAnswerKey ?? input.pageContext?.correctAnswer),
-    hasExplanation: input.diagnostics?.hasExplanation ?? Boolean(input.pageContext?.explanationText ?? input.pageContext?.explanation),
+    hasSelectedAnswer:
+      input.diagnostics?.hasSelectedAnswer ??
+      Boolean(input.pageContext?.selectedAnswerKey ?? input.pageContext?.selectedAnswer),
+    hasCorrectAnswer:
+      input.diagnostics?.hasCorrectAnswer ??
+      Boolean(input.pageContext?.correctAnswerKey ?? input.pageContext?.correctAnswer),
+    hasExplanation:
+      input.diagnostics?.hasExplanation ??
+      Boolean(input.pageContext?.explanationText ?? input.pageContext?.explanation),
     hasCurriculumContent: input.diagnostics?.hasCurriculumContent ?? Boolean(input.pageContext?.contentText),
     contentCharCount: input.diagnostics?.contentCharCount ?? input.pageContext?.contentText?.length ?? 0,
     sectionCount: input.diagnostics?.sectionCount ?? input.pageContext?.contentSections?.length ?? 0,
@@ -386,7 +450,8 @@ function renderDebugSummary(input: {
     answerChoiceCount: input.diagnostics?.answerChoiceCount ?? input.pageContext?.answerChoices.length ?? 0,
     selectedAnswerKey: input.pageContext?.selectedAnswerKey ?? null,
     correctAnswerKey: input.pageContext?.correctAnswerKey ?? null,
-    percentDistributionRows: input.diagnostics?.percentDistributionCount ?? input.pageContext?.percentDistribution.length ?? 0,
+    percentDistributionRows:
+      input.diagnostics?.percentDistributionCount ?? input.pageContext?.percentDistribution.length ?? 0,
     imageCount: input.diagnostics?.imageCount ?? input.pageContext?.images.length ?? 0,
     linkedConceptCount: input.diagnostics?.linkedConceptCount ?? input.pageContext?.linkedConcepts.length ?? 0,
     warnings: input.diagnostics?.warnings ?? input.pageContext?.extractionWarnings ?? [],
@@ -421,17 +486,27 @@ function getStatusCopy(input: {
   questionRefreshing?: boolean;
 }) {
   if (input.loading) {
-    return { label: 'Loading', detail: 'Checking your extension state and active page.' };
+    return {
+      label: 'Loading',
+      detail: 'Checking your extension state and active page.',
+    };
   }
   if (!input.activePage?.supported) {
-    return { label: 'Open a supported question page', detail: 'Switch to an Orthobullets or ROCK question tab, then reopen this panel.' };
+    return {
+      label: 'Open a supported question page',
+      detail: 'Switch to an Orthobullets or ROCK question tab, then reopen this panel.',
+    };
   }
   if (input.auth?.status !== 'linked') {
-    return { label: 'Not linked', detail: 'Link the extension to your SnapOrtho account to use BroBot.' };
+    return {
+      label: 'Not linked',
+      detail: 'Link the extension to your SnapOrtho account to use BroBot.',
+    };
   }
   if (input.operation === 'extracting' || input.operation === 'explaining') {
     if (input.questionRefreshing && input.questionPositionLabel) {
-      const normalized = input.questionPositionLabel.match(/question\s+\d+\s+of\s+\d+/i)?.[0] ?? input.questionPositionLabel;
+      const normalized =
+        input.questionPositionLabel.match(/question\s+\d+\s+of\s+\d+/i)?.[0] ?? input.questionPositionLabel;
       return {
         label: 'Refreshing question',
         detail: `Loading question for ${normalized}...`,
@@ -445,31 +520,55 @@ function getStatusCopy(input: {
     }
   }
   if (input.operation === 'extracting') {
-    return { label: 'Extracting', detail: 'Reading the visible question stem, choices, and review context from this page.' };
+    return {
+      label: 'Extracting',
+      detail: 'Reading the visible question stem, choices, and review context from this page.',
+    };
   }
   if (input.operation === 'hinting') {
-    return { label: 'Generating hint', detail: 'BroBot is giving the next reasoning nudge without revealing the answer.' };
+    return {
+      label: 'Generating hint',
+      detail: 'BroBot is giving the next reasoning nudge without revealing the answer.',
+    };
   }
   if (input.operation === 'explaining') {
-    return { label: 'Generating explanation', detail: 'BroBot is turning this question into a focused teaching answer.' };
+    return {
+      label: 'Generating explanation',
+      detail: 'BroBot is turning this question into a focused teaching answer.',
+    };
   }
   if (input.operation === 'chatting') {
-    return { label: 'Follow-up chat loading', detail: 'BroBot is answering your follow-up based on this same question context.' };
+    return {
+      label: 'Follow-up chat loading',
+      detail: 'BroBot is answering your follow-up based on this same question context.',
+    };
   }
   if (input.error?.code === 'quota_exceeded') {
-    return { label: 'Quota exceeded', detail: 'Your daily BroBot limit has been reached for now.' };
+    return {
+      label: 'Quota exceeded',
+      detail: 'Your daily BroBot limit has been reached for now.',
+    };
   }
   if (input.error) {
     return { label: 'Error with retry', detail: input.error.message };
   }
   if (input.explanation) {
-    return { label: 'Explanation ready', detail: 'BroBot has a structured teaching answer ready below.' };
+    return {
+      label: 'Explanation ready',
+      detail: 'BroBot has a structured teaching answer ready below.',
+    };
   }
   if (input.hints.length) {
-    return { label: 'Hint Mode active', detail: 'BroBot is nudging your reasoning step by step without naming the answer choice.' };
+    return {
+      label: 'Hint Mode active',
+      detail: 'BroBot is nudging your reasoning step by step without naming the answer choice.',
+    };
   }
   if (input.pageContext && isUnansweredQuestion(input.pageContext)) {
-    return { label: 'Hint Mode ready', detail: 'This page looks unanswered, so you can ask for progressive hints before revealing the reasoning.' };
+    return {
+      label: 'Hint Mode ready',
+      detail: 'This page looks unanswered, so you can ask for progressive hints before revealing the reasoning.',
+    };
   }
   if (input.pageContext) {
     const testReview = getOrthobulletsTestReview(input.pageContext);
@@ -492,29 +591,48 @@ function getStatusCopy(input: {
             : `All ${total} questions loaded, none missed. Expand any question for its teaching answer.`,
         };
       }
-      return { label: 'Himalaya results detected', detail: 'Loading your questions from AAOS…' };
+      return {
+        label: 'Himalaya results detected',
+        detail: 'Loading your questions from AAOS…',
+      };
     }
     const classification = getPageClassification(input.pageContext);
     if (classification?.pageKind === 'topic_page') {
       return {
         label: 'Orthobullets topic page detected',
-        detail: 'BroBot has the visible sections and is ready to clarify, synthesize, or connect them to clinical decisions.',
+        detail:
+          'BroBot has the visible sections and is ready to clarify, synthesize, or connect them to clinical decisions.',
       };
     }
     if (classification?.pageKind === 'educational_content') {
-      return { label: 'Learning page detected', detail: 'BroBot can explain this curriculum or article content without forcing Question Tutor mode.' };
+      return {
+        label: 'Learning page detected',
+        detail: 'BroBot can explain this curriculum or article content without forcing Question Tutor mode.',
+      };
     }
     if (classification?.pageKind === 'mixed') {
-      return { label: 'Mixed page detected', detail: 'Question Tutor is available, and you can switch to Explain mode for the surrounding educational text.' };
+      return {
+        label: 'Mixed page detected',
+        detail: 'Question Tutor is available, and you can switch to Explain mode for the surrounding educational text.',
+      };
     }
   }
   if (input.pageContext && hasVisibleReviewData(input.pageContext)) {
     if (input.pageContext.mode === 'curriculum_content') {
-      return { label: 'ROCK curriculum page detected', detail: 'Use Explain with BroBot for a resident-friendly teaching summary of this page.' };
+      return {
+        label: 'ROCK curriculum page detected',
+        detail: 'Use Explain with BroBot for a resident-friendly teaching summary of this page.',
+      };
     }
-    return { label: `${providerLabel(input.pageContext.provider)} review data detected`, detail: 'Use Explain with BroBot for full reasoning.' };
+    return {
+      label: `${providerLabel(input.pageContext.provider)} review data detected`,
+      detail: 'Use Explain with BroBot for full reasoning.',
+    };
   }
-  return { label: 'Ready to explain', detail: 'Nothing is sent to SnapOrtho until you click a hint or explanation action.' };
+  return {
+    label: 'Ready to explain',
+    detail: 'Nothing is sent to SnapOrtho until you click a hint or explanation action.',
+  };
 }
 
 function getQuestionTutorStatusCopy(input: {
@@ -525,21 +643,31 @@ function getQuestionTutorStatusCopy(input: {
   view: QuestionTutorViewState | null;
 }) {
   if (input.loading) {
-    return { label: 'Loading', detail: 'Checking your extension state and active page.' };
+    return {
+      label: 'Loading',
+      detail: 'Checking your extension state and active page.',
+    };
   }
   const hasAlignedExtractedQuestion = Boolean(
-    input.view?.fingerprintAligned &&
-    input.view.session?.payload &&
-    input.view.session.extractionStatus === 'ready'
+    input.view?.fingerprintAligned && input.view.session?.payload && input.view.session.extractionStatus === 'ready',
   );
   if (!input.activePage?.supported && !hasAlignedExtractedQuestion) {
-    return { label: 'Open a supported question page', detail: 'Switch to an Orthobullets, ROCK, or AAOS Himalaya question tab, then reopen this panel.' };
+    return {
+      label: 'Open a supported question page',
+      detail: 'Switch to an Orthobullets, ROCK, or AAOS Himalaya question tab, then reopen this panel.',
+    };
   }
   if (input.auth?.status !== 'linked') {
-    return { label: 'Not linked', detail: 'Link the extension to your SnapOrtho account to use BroBot.' };
+    return {
+      label: 'Not linked',
+      detail: 'Link the extension to your SnapOrtho account to use BroBot.',
+    };
   }
   if (input.error?.code === 'quota_exceeded') {
-    return { label: 'Quota exceeded', detail: 'Your daily BroBot limit has been reached for now.' };
+    return {
+      label: 'Quota exceeded',
+      detail: 'Your daily BroBot limit has been reached for now.',
+    };
   }
   if (input.error) {
     return { label: 'Error with retry', detail: input.error.message };
@@ -571,7 +699,8 @@ function getQuestionTutorStatusCopy(input: {
   if (view.reviewState === 'unanswered') {
     return {
       label: 'Question ready',
-      detail: 'Ask for a hint when you want a reasoning nudge. BroBot will not reveal the answer until you submit one on the page.',
+      detail:
+        'Ask for a hint when you want a reasoning nudge. BroBot will not reveal the answer until you submit one on the page.',
     };
   }
 
@@ -702,15 +831,17 @@ export function mountSidePanelApp(root: HTMLElement) {
   function buildQuestionLifecycleDiagnostics(
     message: QuestionChangeMessage | null,
     pageContext: OrthobulletsPageContext | null,
-    refreshSource: QuestionRefreshSource = state.questionRefreshSource
+    refreshSource: QuestionRefreshSource = state.questionRefreshSource,
   ): QuestionRefreshDiagnostics {
     const currentFingerprint = state.currentQuestionFingerprint;
     const signals = pageContext?.questionReviewSignals;
     const inferredQuestionState = inferQuestionState(pageContext);
     return {
       currentFingerprint,
-      previousFingerprint: message?.previousFingerprint ?? state.questionRefreshDiagnostics?.previousFingerprint ?? null,
-      questionRefreshReason: message?.reasonForRefresh ?? state.questionRefreshDiagnostics?.questionRefreshReason ?? null,
+      previousFingerprint:
+        message?.previousFingerprint ?? state.questionRefreshDiagnostics?.previousFingerprint ?? null,
+      questionRefreshReason:
+        message?.reasonForRefresh ?? state.questionRefreshDiagnostics?.questionRefreshReason ?? null,
       questionTutorEngaged: state.questionTutorEngaged,
       hasSelectedAnswer: Boolean(pageContext?.selectedAnswerKey ?? pageContext?.selectedAnswer),
       hasCorrectAnswer: Boolean(pageContext?.correctAnswerKey ?? pageContext?.correctAnswer),
@@ -744,18 +875,35 @@ export function mountSidePanelApp(root: HTMLElement) {
       pageRefreshTimer = null;
     }
 
-    if (message.activeQuestionKey === 'himalaya:results-overview') {
+    // AAOS keeps the last reviewed question mounted behind the results screen.
+    // Its mutation observer can therefore emit a stale question fingerprint
+    // after the overview has already loaded. Re-confirm the visible page before
+    // allowing any Himalaya lifecycle event to switch the panel back to the
+    // single-question tutor.
+    const isHimalayaHost = (() => {
+      try {
+        return new URL(state.activePage?.url ?? '').hostname === 'learn.aaos.org';
+      } catch {
+        return false;
+      }
+    })();
+    if (message.activeQuestionKey === 'himalaya:results-overview' || isHimalayaHost) {
       bumpQuestionLifecycleGeneration();
       clearQuestionSpecificContent();
       questionTutorController.onQuestionClosed(message);
-      const overview = await extractPageContext({ allowPartial: true, preserveError: false });
+      const overview = await extractPageContext({
+        allowPartial: true,
+        preserveError: false,
+      });
       if (overview?.provider === 'himalaya' && overview.pageKind === 'results-overview') {
         state.pageContext = overview;
         state.currentQuestionFingerprint = null;
         state.questionRefreshing = false;
+        render();
+        return;
       }
-      render();
-      return;
+      // A genuinely open AAOS review dialog continues through the normal
+      // question-tutor path below.
     }
     if (state.brobotMode !== 'question_tutor') return;
     enableQuestionTutorWatching();
@@ -789,13 +937,19 @@ export function mountSidePanelApp(root: HTMLElement) {
   }
 
   function setReviewBoardRowState(questionAttemptId: number, patch: Partial<ReviewBoardRowState>) {
-    state.reviewBoardRowStates.set(questionAttemptId, { ...getReviewBoardRowState(questionAttemptId), ...patch });
-    const overview = state.pageContext?.provider === 'himalaya' && state.pageContext.pageKind === 'results-overview'
-      ? state.pageContext
-      : null;
+    state.reviewBoardRowStates.set(questionAttemptId, {
+      ...getReviewBoardRowState(questionAttemptId),
+      ...patch,
+    });
+    const overview =
+      state.pageContext?.provider === 'himalaya' && state.pageContext.pageKind === 'results-overview'
+        ? state.pageContext
+        : null;
     if (overview) {
       const serialized = Object.fromEntries(state.reviewBoardRowStates);
-      void chrome.storage.local.set({ [himalayaDebriefStorageKey(overview)]: serialized });
+      void chrome.storage.local.set({
+        [himalayaDebriefStorageKey(overview)]: serialized,
+      });
     }
   }
 
@@ -806,15 +960,16 @@ export function mountSidePanelApp(root: HTMLElement) {
     const stored = await chrome.storage.local.get(key);
     const rows = stored[key] as Record<string, ReviewBoardRowState> | undefined;
     state.reviewBoardRowStates = new Map(
-      Object.entries(rows ?? {}).map(([questionAttemptId, rowState]) => [Number(questionAttemptId), rowState])
+      Object.entries(rows ?? {}).map(([questionAttemptId, rowState]) => [Number(questionAttemptId), rowState]),
     );
   }
 
   async function copyHimalayaDebrief() {
     const rows = getReviewBoardRows(state.pageContext);
-    const title = typeof state.pageContext?.raw?.providerSpecific?.assessmentTitle === 'string'
-      ? state.pageContext.raw.providerSpecific.assessmentTitle
-      : state.pageContext?.title ?? null;
+    const title =
+      typeof state.pageContext?.raw?.providerSpecific?.assessmentTitle === 'string'
+        ? state.pageContext.raw.providerSpecific.assessmentTitle
+        : (state.pageContext?.title ?? null);
     await navigator.clipboard.writeText(himalayaDebriefText(rows, state.reviewBoardRowStates, title));
   }
 
@@ -834,7 +989,11 @@ export function mountSidePanelApp(root: HTMLElement) {
     if (existing.loading || existing.explanation) return null;
     if (!state.activePage?.tabId) return 'unsupported_page' as ExtensionErrorCode;
 
-    setReviewBoardRowState(questionAttemptId, { expanded: true, loading: true, error: null });
+    setReviewBoardRowState(questionAttemptId, {
+      expanded: true,
+      loading: true,
+      error: null,
+    });
     render();
 
     const extractResult = await sendMessage({
@@ -849,7 +1008,9 @@ export function mountSidePanelApp(root: HTMLElement) {
         error: extractResult.ok ? 'Could not load this question.' : extractResult.error,
       });
       render();
-      return extractResult.ok ? 'extraction_failure' as ExtensionErrorCode : extractResult.code ?? 'extraction_failure';
+      return extractResult.ok
+        ? ('extraction_failure' as ExtensionErrorCode)
+        : (extractResult.code ?? 'extraction_failure');
     }
 
     const explainResult = await sendMessage({
@@ -863,7 +1024,7 @@ export function mountSidePanelApp(root: HTMLElement) {
         error: explainResult.ok ? 'BroBot could not explain this question.' : explainResult.error,
       });
       render();
-      return explainResult.ok ? 'api_failure' as ExtensionErrorCode : explainResult.code ?? 'api_failure';
+      return explainResult.ok ? ('api_failure' as ExtensionErrorCode) : (explainResult.code ?? 'api_failure');
     }
 
     // A Himalaya question always routes to question_explain, so a curriculum
@@ -933,8 +1094,13 @@ export function mountSidePanelApp(root: HTMLElement) {
     state.loading = true;
     render();
 
+    const frameParams = new URLSearchParams(window.location.search);
     const [pageResult, authResult] = await Promise.all([
-      sendMessage({ type: 'ob:get-active-page-state' }),
+      sendMessage({
+        type: 'ob:get-active-page-state',
+        preferRegisteredHost: frameParams.get('embedded') === '1',
+        preferredHostUrl: frameParams.get('hostUrl') ?? undefined,
+      }),
       sendMessage({ type: 'ob:get-auth-state' }),
     ]);
     if (refreshSequence !== pageRefreshSequence) return;
@@ -994,7 +1160,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       state.error = result.ok
         ? { message: 'Failed to start link flow.', code: 'unknown' }
         : { message: result.error, code: result.code ?? 'unknown' };
-      state.fetchDiagnostics = !result.ok && 'fetchDiagnostics' in result ? result.fetchDiagnostics ?? null : null;
+      state.fetchDiagnostics = !result.ok && 'fetchDiagnostics' in result ? (result.fetchDiagnostics ?? null) : null;
       state.linking = false;
       render();
       return;
@@ -1022,7 +1188,7 @@ export function mountSidePanelApp(root: HTMLElement) {
         await refreshBaseState();
         window.clearInterval(interval);
       } else if (!pollResult.ok && pollResult.code === 'network_failure') {
-        state.fetchDiagnostics = 'fetchDiagnostics' in pollResult ? pollResult.fetchDiagnostics ?? null : null;
+        state.fetchDiagnostics = 'fetchDiagnostics' in pollResult ? (pollResult.fetchDiagnostics ?? null) : null;
         state.error = { message: pollResult.error, code: pollResult.code };
         state.linking = false;
         window.clearInterval(interval);
@@ -1031,15 +1197,20 @@ export function mountSidePanelApp(root: HTMLElement) {
     }, 3000);
   }
 
-  async function extractPageContext(options: {
-    allowPartial?: boolean;
-    preserveError?: boolean;
-    forceQuestionMode?: boolean;
-    expectedRefreshSequence?: number;
-  } = {}) {
+  async function extractPageContext(
+    options: {
+      allowPartial?: boolean;
+      preserveError?: boolean;
+      forceQuestionMode?: boolean;
+      expectedRefreshSequence?: number;
+    } = {},
+  ) {
     if (!state.activePage?.tabId) {
       if (!options.preserveError) {
-        state.error = { message: 'No active supported page tab is available.', code: 'unsupported_page' };
+        state.error = {
+          message: 'No active supported page tab is available.',
+          code: 'unsupported_page',
+        };
         render();
       }
       return null;
@@ -1053,20 +1224,25 @@ export function mountSidePanelApp(root: HTMLElement) {
       type: 'ob:extract-page-context',
       tabId: state.activePage.tabId,
     });
-    if (
-      options.expectedRefreshSequence != null &&
-      options.expectedRefreshSequence !== pageRefreshSequence
-    ) {
+    if (options.expectedRefreshSequence != null && options.expectedRefreshSequence !== pageRefreshSequence) {
       return null;
     }
 
     if (!extractResult.ok || !('pageContext' in extractResult)) {
-      state.extractionDiagnostics = !extractResult.ok && 'diagnostics' in extractResult ? extractResult.diagnostics ?? null : null;
-      state.fetchDiagnostics = !extractResult.ok && 'fetchDiagnostics' in extractResult ? extractResult.fetchDiagnostics ?? null : null;
+      state.extractionDiagnostics =
+        !extractResult.ok && 'diagnostics' in extractResult ? (extractResult.diagnostics ?? null) : null;
+      state.fetchDiagnostics =
+        !extractResult.ok && 'fetchDiagnostics' in extractResult ? (extractResult.fetchDiagnostics ?? null) : null;
       if (!options.preserveError) {
         state.error = extractResult.ok
-          ? { message: 'Failed to extract page context.', code: 'extraction_failure' }
-          : { message: extractResult.error, code: extractResult.code ?? 'extraction_failure' };
+          ? {
+              message: 'Failed to extract page context.',
+              code: 'extraction_failure',
+            }
+          : {
+              message: extractResult.error,
+              code: extractResult.code ?? 'extraction_failure',
+            };
       }
       render();
       return null;
@@ -1099,7 +1275,9 @@ export function mountSidePanelApp(root: HTMLElement) {
       state.currentQuestionFingerprint = fingerprintFromPageContext(extractResult.pageContext);
     }
 
-    const usable = isPageUsable(extractResult.pageContext, { forceQuestionMode: state.forceQuestionMode });
+    const usable = isPageUsable(extractResult.pageContext, {
+      forceQuestionMode: state.forceQuestionMode,
+    });
     if (!usable && !options.allowPartial) {
       const classification = getPageClassification(extractResult.pageContext);
       state.error = {
@@ -1167,7 +1345,11 @@ export function mountSidePanelApp(root: HTMLElement) {
       selectedAnswerKey: selectedAnswerForHint(pageContext.selectedAnswerKey),
       priorHints: state.hints
         .filter((hint) => hint.hintLevel < hintLevel)
-        .map(({ hintLevel: priorLevel, title, hint }) => ({ hintLevel: priorLevel, title, hint })),
+        .map(({ hintLevel: priorLevel, title, hint }) => ({
+          hintLevel: priorLevel,
+          title,
+          hint,
+        })),
     });
 
     if (!isCurrentQuestionLifecycle(generation)) return;
@@ -1177,7 +1359,8 @@ export function mountSidePanelApp(root: HTMLElement) {
       state.error = hintResult.ok
         ? { message: 'Failed to generate hint.', code: 'unknown' }
         : { message: hintResult.error, code: hintResult.code ?? 'unknown' };
-      state.fetchDiagnostics = !hintResult.ok && 'fetchDiagnostics' in hintResult ? hintResult.fetchDiagnostics ?? null : null;
+      state.fetchDiagnostics =
+        !hintResult.ok && 'fetchDiagnostics' in hintResult ? (hintResult.fetchDiagnostics ?? null) : null;
       state.routingDiagnostics = state.fetchDiagnostics ?? state.routingDiagnostics;
       render();
       return;
@@ -1191,7 +1374,12 @@ export function mountSidePanelApp(root: HTMLElement) {
     render();
   }
 
-  async function runExplain(options: { revealRequested?: boolean; emphasis?: CurriculumExplainEmphasis } = {}) {
+  async function runExplain(
+    options: {
+      revealRequested?: boolean;
+      emphasis?: CurriculumExplainEmphasis;
+    } = {},
+  ) {
     bumpQuestionLifecycleGeneration();
     const generation = state.questionLifecycleGeneration;
     state.questionRefreshing = false;
@@ -1209,7 +1397,9 @@ export function mountSidePanelApp(root: HTMLElement) {
     state.operation = 'extracting';
     render();
 
-    const pageContext = await extractPageContext({ forceQuestionMode: state.forceQuestionMode });
+    const pageContext = await extractPageContext({
+      forceQuestionMode: state.forceQuestionMode,
+    });
     if (!isCurrentQuestionLifecycle(generation)) return;
     if (!pageContext) {
       state.operation = 'idle';
@@ -1220,16 +1410,18 @@ export function mountSidePanelApp(root: HTMLElement) {
 
     state.brobotMode = state.forceQuestionMode ? 'question_tutor' : preferredBrobotMode(pageContext);
     state.operation = 'explaining';
-    const requestedTask = state.brobotMode === 'explain_page' || pageContext.mode === 'curriculum_content'
-      ? 'curriculum_explain'
-      : 'question_explain';
+    const requestedTask =
+      state.brobotMode === 'explain_page' || pageContext.mode === 'curriculum_content'
+        ? 'curriculum_explain'
+        : 'question_explain';
     if (requestedTask === 'curriculum_explain') {
       const buildResult = await sendMessage({ type: 'ob:get-build-info' });
       const actualBuild = buildResult.ok && 'buildInfo' in buildResult ? buildResult.buildInfo : null;
       if (!actualBuild || !isCompatibleExtensionBuild(actualBuild)) {
         state.operation = 'idle';
         state.error = {
-          message: 'BroBot was updated, but Chrome is still running an older background process. Reload the extension, then retry.',
+          message:
+            'BroBot was updated, but Chrome is still running an older background process. Reload the extension, then retry.',
           code: 'extension_update_required',
         };
         state.routingDiagnostics = {
@@ -1254,9 +1446,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       requestPageKind: pageContext.pageKind,
       requestPayloadKind: requestedTask === 'curriculum_explain' ? 'curriculum' : 'question',
       resolvedEndpoint:
-        requestedTask === 'curriculum_explain'
-          ? '/api/brobot/curriculum/explain'
-          : '/api/brobot/orthobullets/explain',
+        requestedTask === 'curriculum_explain' ? '/api/brobot/curriculum/explain' : '/api/brobot/orthobullets/explain',
     };
     console.info('[BroBot curriculum click]', {
       provider: pageContext.provider,
@@ -1281,8 +1471,12 @@ export function mountSidePanelApp(root: HTMLElement) {
       state.operation = 'idle';
       state.error = explainResult.ok
         ? { message: 'Failed to explain page.', code: 'unknown' }
-        : { message: explainResult.error, code: explainResult.code ?? 'unknown' };
-      state.fetchDiagnostics = !explainResult.ok && 'fetchDiagnostics' in explainResult ? explainResult.fetchDiagnostics ?? null : null;
+        : {
+            message: explainResult.error,
+            code: explainResult.code ?? 'unknown',
+          };
+      state.fetchDiagnostics =
+        !explainResult.ok && 'fetchDiagnostics' in explainResult ? (explainResult.fetchDiagnostics ?? null) : null;
       state.routingDiagnostics = state.fetchDiagnostics ?? state.routingDiagnostics;
       render();
       return;
@@ -1329,7 +1523,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       state.error = result.ok
         ? { message: 'Failed to answer follow-up.', code: 'unknown' }
         : { message: result.error, code: result.code ?? 'unknown' };
-      state.fetchDiagnostics = !result.ok && 'fetchDiagnostics' in result ? result.fetchDiagnostics ?? null : null;
+      state.fetchDiagnostics = !result.ok && 'fetchDiagnostics' in result ? (result.fetchDiagnostics ?? null) : null;
       if (!promptOverride) {
         state.chatDraft = userMessage;
       }
@@ -1349,7 +1543,7 @@ export function mountSidePanelApp(root: HTMLElement) {
         ? resolveCurriculumChatChips(state.pageContext, {
             suggestedFollowUps: result.chat.suggestedPrompts.length
               ? result.chat.suggestedPrompts
-              : state.curriculumStudy?.suggestedFollowUps ?? [],
+              : (state.curriculumStudy?.suggestedFollowUps ?? []),
           })
         : result.chat.suggestedPrompts.length
           ? result.chat.suggestedPrompts
@@ -1385,7 +1579,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       state.error = result.ok
         ? { message: 'Failed to get a tutoring response.', code: 'unknown' }
         : { message: result.error, code: result.code ?? 'unknown' };
-      state.fetchDiagnostics = !result.ok && 'fetchDiagnostics' in result ? result.fetchDiagnostics ?? null : null;
+      state.fetchDiagnostics = !result.ok && 'fetchDiagnostics' in result ? (result.fetchDiagnostics ?? null) : null;
       if (userMessage) state.topicChatDraft = userMessage;
       render();
       return;
@@ -1402,7 +1596,10 @@ export function mountSidePanelApp(root: HTMLElement) {
     state.topicChatDraft = '';
     state.usage = turn.usage ?? state.usage;
 
-    const progress: OrthobulletsTopicProgress = { ...state.topicProgress, tier: turn.tier };
+    const progress: OrthobulletsTopicProgress = {
+      ...state.topicProgress,
+      tier: turn.tier,
+    };
     if (turn.sectionCompleted && !progress.sectionsCompleted.includes(turn.sectionCompleted)) {
       progress.sectionsCompleted = [...progress.sectionsCompleted, turn.sectionCompleted];
     }
@@ -1471,7 +1668,10 @@ export function mountSidePanelApp(root: HTMLElement) {
       for (let attempt = 0; attempt < ANKI_STATUS_POLL_ATTEMPTS; attempt += 1) {
         button.textContent = waitingForAnkiCopy(attempt);
         await new Promise((resolve) => setTimeout(resolve, ANKI_STATUS_POLL_INTERVAL_MS));
-        const status = await sendMessage({ type: 'ob:get-anki-search-status', searchRequestId: requestId });
+        const status = await sendMessage({
+          type: 'ob:get-anki-search-status',
+          searchRequestId: requestId,
+        });
         if (!status.ok || !('ankiSearch' in status)) {
           statusFailures += 1;
           if (statusFailures >= 3) {
@@ -1550,14 +1750,20 @@ export function mountSidePanelApp(root: HTMLElement) {
       if (status.ankiSearch.status === 'completed') {
         const count = Number(status.ankiSearch.resultSummary?.availableCount ?? 0);
         const missing = Number(status.ankiSearch.resultSummary?.missingCount ?? 0);
-        button.textContent = `Sent ${count} card${count === 1 ? '' : 's'} to Anki${missing ? ` · ${missing} need a deck update` : ''}`;
+        const mismatched = Number(status.ankiSearch.resultSummary?.versionMismatchCount ?? 0);
+        button.textContent = `Opened ${count} relevant card${count === 1 ? '' : 's'} in Anki${missing ? ` · ${missing} missing locally` : ''}${mismatched ? ` · ${mismatched} from an older deck version` : ''}`;
         return;
       }
-      if (['no_local_results', 'review_required', 'failed', 'expired', 'cancelled'].includes(status.ankiSearch.status)) {
+      if (
+        ['no_local_results', 'review_required', 'failed', 'expired', 'cancelled'].includes(status.ankiSearch.status)
+      ) {
         button.disabled = false;
-        button.textContent = status.ankiSearch.status === 'review_required'
-          ? 'No confident matches — try again'
-          : `Anki search: ${status.ankiSearch.status.replaceAll('_', ' ')}`;
+        button.textContent =
+          status.ankiSearch.status === 'review_required'
+            ? 'No confident matches — try again'
+            : status.ankiSearch.status === 'failed'
+              ? ankiSearchFailureCopy(status.ankiSearch.errorCode)
+              : `Anki search: ${status.ankiSearch.status.replaceAll('_', ' ')}`;
         return;
       }
     }
@@ -1578,22 +1784,27 @@ export function mountSidePanelApp(root: HTMLElement) {
         resolve();
       };
       chrome.tabs.onUpdated.addListener(listener);
-      void chrome.tabs.get(tabId).then((tab: { status?: string }) => {
-        if (tab.status !== 'complete') return;
-        window.clearTimeout(timeout);
-        chrome.tabs.onUpdated.removeListener(listener);
-        resolve();
-      }).catch(() => undefined);
+      void chrome.tabs
+        .get(tabId)
+        .then((tab: { status?: string }) => {
+          if (tab.status !== 'complete') return;
+          window.clearTimeout(timeout);
+          chrome.tabs.onUpdated.removeListener(listener);
+          resolve();
+        })
+        .catch(() => undefined);
     });
   }
 
   function debriefSearchKeywords(explanation: OrthobulletsExplainResponse) {
-    return [...new Set(
-      [explanation.testedConcept, explanation.bottomLine, explanation.boardPearl, ...explanation.studyNext]
-        .join(' ')
-        .match(/[A-Za-z][A-Za-z-]{4,}/g)
-        ?.map((token) => token.toLowerCase()) ?? []
-    )].slice(0, 24);
+    return [
+      ...new Set(
+        [explanation.testedConcept, explanation.bottomLine, explanation.boardPearl, ...explanation.studyNext]
+          .join(' ')
+          .match(/[A-Za-z][A-Za-z-]{4,}/g)
+          ?.map((token) => token.toLowerCase()) ?? [],
+      ),
+    ].slice(0, 24);
   }
 
   function compactDebriefPageContext(pageContext: OrthobulletsPageContext): OrthobulletsPageContext {
@@ -1612,7 +1823,7 @@ export function mountSidePanelApp(root: HTMLElement) {
 
   async function persistFullTestDebrief(
     review: NonNullable<ReturnType<typeof getOrthobulletsTestReview>>,
-    debrief = state.fullTestDebrief
+    debrief = state.fullTestDebrief,
   ) {
     if (!debrief) return;
     debrief.updatedAt = new Date().toISOString();
@@ -1651,15 +1862,24 @@ export function mountSidePanelApp(root: HTMLElement) {
       if (state.fullTestDebrief === debrief) render();
       let temporaryTabId: number | null = null;
       try {
-        const tab = await chrome.tabs.create({ url: question.row.reviewUrl, active: false });
+        const tab = await chrome.tabs.create({
+          url: question.row.reviewUrl,
+          active: false,
+        });
         if (tab.id == null) throw new Error('Chrome could not open the question review page.');
         temporaryTabId = tab.id;
         await waitForTabToLoad(tab.id);
-        const extracted = await sendMessage({ type: 'ob:extract-page-context', tabId: tab.id });
+        const extracted = await sendMessage({
+          type: 'ob:extract-page-context',
+          tabId: tab.id,
+        });
         if (!extracted.ok || !('pageContext' in extracted)) {
           throw new Error(extracted.ok ? 'Could not read this review page.' : extracted.error);
         }
-        const explained = await sendMessage({ type: 'ob:explain', pageContext: extracted.pageContext });
+        const explained = await sendMessage({
+          type: 'ob:explain',
+          pageContext: extracted.pageContext,
+        });
         if (!explained.ok || !('explanation' in explained) || isCurriculumStudyResponse(explained.explanation)) {
           throw new Error(explained.ok ? 'BroBot returned the wrong response type.' : explained.error);
         }
@@ -1679,11 +1899,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       if (state.fullTestDebrief === debrief) render();
     }
     const readyCount = debrief.questions.filter((question) => question.status === 'ready').length;
-    debrief.status = readyCount === debrief.questions.length
-      ? 'ready'
-      : readyCount > 0
-        ? 'partial'
-        : 'error';
+    debrief.status = readyCount === debrief.questions.length ? 'ready' : readyCount > 0 ? 'partial' : 'error';
     await persistFullTestDebrief(review, debrief);
     if (state.fullTestDebrief === debrief) render();
   }
@@ -1732,7 +1948,9 @@ export function mountSidePanelApp(root: HTMLElement) {
         button.textContent = `Opened ${count} matching card${count === 1 ? '' : 's'} in Anki`;
         return;
       }
-      if (['no_local_results', 'review_required', 'failed', 'expired', 'cancelled'].includes(status.ankiSearch.status)) {
+      if (
+        ['no_local_results', 'review_required', 'failed', 'expired', 'cancelled'].includes(status.ankiSearch.status)
+      ) {
         button.disabled = false;
         button.textContent = `Anki search: ${status.ankiSearch.status.replaceAll('_', ' ')}`;
         return;
@@ -1749,12 +1967,18 @@ export function mountSidePanelApp(root: HTMLElement) {
     const result = await sendMessage({
       type: 'ob:send-test-to-anki',
       pageContext: state.pageContext,
-      enrichedQuestions: debrief?.questions.flatMap((question) => question.explanation ? [{
-        questionId: question.row.questionId,
-        testedConcept: question.explanation.testedConcept,
-        summary: question.explanation.bottomLine,
-        searchKeywords: debriefSearchKeywords(question.explanation),
-      }] : []),
+      enrichedQuestions: debrief?.questions.flatMap((question) =>
+        question.explanation
+          ? [
+              {
+                questionId: question.row.questionId,
+                testedConcept: question.explanation.testedConcept,
+                summary: question.explanation.bottomLine,
+                searchKeywords: debriefSearchKeywords(question.explanation),
+              },
+            ]
+          : [],
+      ),
     });
     if (!result.ok || !('ankiSearch' in result)) {
       button.disabled = false;
@@ -1792,9 +2016,10 @@ export function mountSidePanelApp(root: HTMLElement) {
       }
       if (['no_local_results', 'review_required', 'failed', 'expired', 'cancelled'].includes(current)) {
         button.disabled = false;
-        button.textContent = current === 'review_required'
-          ? 'No confident backend matches'
-          : `Anki search: ${current.replaceAll('_', ' ')}`;
+        button.textContent =
+          current === 'review_required'
+            ? 'No confident backend matches'
+            : `Anki search: ${current.replaceAll('_', ' ')}`;
         return;
       }
     }
@@ -1808,9 +2033,7 @@ export function mountSidePanelApp(root: HTMLElement) {
     const testReview = getOrthobulletsTestReview(state.pageContext);
 
     const questionTutorView =
-      state.brobotMode === 'question_tutor' && !testReview
-        ? questionTutorController.store.deriveViewState()
-        : null;
+      state.brobotMode === 'question_tutor' && !testReview ? questionTutorController.store.deriveViewState() : null;
 
     const status =
       state.brobotMode === 'question_tutor' && !testReview
@@ -1855,10 +2078,11 @@ export function mountSidePanelApp(root: HTMLElement) {
       isMixedPage ||
       (state.brobotMode === 'question_tutor' && primaryAction === 'explain');
     const hintNextLevel = state.hints.length === 0 ? 1 : state.hints.length === 1 ? 2 : 3;
-    const panelTitle =
-      testReview
-        ? 'Test Debrief'
-        : state.brobotMode === 'topic_tutor'
+    const panelTitle = state.pageContext?.provider === 'himalaya' && state.pageContext.pageKind === 'results-overview'
+      ? 'Test Review'
+      : testReview
+      ? 'Test Debrief'
+      : state.brobotMode === 'topic_tutor'
         ? 'Page Companion'
         : state.brobotMode === 'explain_page'
           ? 'Explain with BroBot'
@@ -1914,7 +2138,9 @@ export function mountSidePanelApp(root: HTMLElement) {
           }
         </div>`,
     });
-    if (!isTopicPage) {
+    const isHimalayaResultsOverview =
+      state.pageContext?.provider === 'himalaya' && state.pageContext.pageKind === 'results-overview';
+    if (!isTopicPage && !isHimalayaResultsOverview && !(isCurriculumPage && state.error)) {
       content.appendChild(statusCard);
     }
     statusCard.querySelector('#refresh-question')?.addEventListener('click', () => {
@@ -1925,7 +2151,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       content.appendChild(
         createElement('div', {
           html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;color:#5c6574;">Loading extension state...</div>`,
-        })
+        }),
       );
     } else if (!state.activePage?.supported) {
       content.appendChild(
@@ -1933,7 +2159,7 @@ export function mountSidePanelApp(root: HTMLElement) {
           html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;">
             Open an Orthobullets, ROCK, or AAOS Himalaya question page, then reopen this panel.
           </div>`,
-        })
+        }),
       );
     } else if (state.auth?.status !== 'linked') {
       const card = createElement('div', {
@@ -1958,7 +2184,9 @@ export function mountSidePanelApp(root: HTMLElement) {
           onFindQuestionAnkiCards: (questionId, button) => void findQuestionAnkiCards(questionId, button),
           onOpenQuestion: (reviewUrl) => {
             if (state.activePage?.tabId != null) {
-              void chrome.tabs.update(state.activePage.tabId, { url: reviewUrl });
+              void chrome.tabs.update(state.activePage.tabId, {
+                url: reviewUrl,
+              });
             }
           },
           onBuildDebrief: () => void buildFullTestDebrief(),
@@ -1980,7 +2208,9 @@ export function mountSidePanelApp(root: HTMLElement) {
         hooks: {
           onToggleRow: (questionAttemptId) => {
             const rowState = getReviewBoardRowState(questionAttemptId);
-            setReviewBoardRowState(questionAttemptId, { expanded: !rowState.expanded });
+            setReviewBoardRowState(questionAttemptId, {
+              expanded: !rowState.expanded,
+            });
             render();
           },
           onExplainRow: (questionAttemptId) => void explainReviewBoardRow(questionAttemptId),
@@ -2015,7 +2245,8 @@ export function mountSidePanelApp(root: HTMLElement) {
           onHintClick: () => questionTutorController.openHint(),
           onExplainClick: () => questionTutorController.openExplain(),
           onSendToAnki: (button, explanation) => void sendQuestionToAnki(button, explanation),
-          onRefreshClick: () => void questionTutorController.onManualRefresh().then(() => syncQuestionTutorShellState()),
+          onRefreshClick: () =>
+            void questionTutorController.onManualRefresh().then(() => syncQuestionTutorShellState()),
           onUnlink: () => void unlink(),
           onChatDraftChange: (value) => questionTutorController.setChatDraft(value),
           onChatSubmit: () => void questionTutorController.submitFollowUp(),
@@ -2054,7 +2285,7 @@ export function mountSidePanelApp(root: HTMLElement) {
                 <button id="unlink-edu" ${isBusy ? 'disabled' : ''} style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Unlink</button>
               </div>
             </div>`,
-          })
+          }),
         );
         content.querySelector('#explain-page')?.addEventListener('click', () => {
           state.forceQuestionMode = false;
@@ -2064,7 +2295,9 @@ export function mountSidePanelApp(root: HTMLElement) {
         content.querySelector('#force-question')?.addEventListener('click', async () => {
           state.forceQuestionMode = true;
           state.brobotMode = 'question_tutor';
-          const pageContext = await extractPageContext({ forceQuestionMode: true });
+          const pageContext = await extractPageContext({
+            forceQuestionMode: true,
+          });
           if (pageContext?.mode === 'question') {
             await questionTutorController.onInitialPageContext(pageContext);
             syncQuestionTutorShellState();
@@ -2089,7 +2322,7 @@ export function mountSidePanelApp(root: HTMLElement) {
               <p style="margin:0;color:#384152;line-height:1.5;">BroBot will default to Question Tutor, but you can switch to Explain mode for the surrounding educational text.</p>
               <button id="switch-explain" ${isBusy ? 'disabled' : ''} style="justify-self:start;border:1px solid #d2cab8;border-radius:999px;background:white;color:#18202b;padding:8px 12px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Switch to Explain mode</button>
             </div>`,
-          })
+          }),
         );
         content.querySelector('#switch-explain')?.addEventListener('click', () => {
           state.forceQuestionMode = false;
@@ -2124,7 +2357,9 @@ export function mountSidePanelApp(root: HTMLElement) {
         });
         content.appendChild(hintCard);
         hintCard.querySelector('#hint-next')?.addEventListener('click', () => void runHint(hintNextLevel as 1 | 2 | 3));
-        hintCard.querySelector('#reveal-reasoning')?.addEventListener('click', () => void runExplain({ revealRequested: true }));
+        hintCard
+          .querySelector('#reveal-reasoning')
+          ?.addEventListener('click', () => void runExplain({ revealRequested: true }));
         hintCard.querySelector('#unlink')?.addEventListener('click', () => void unlink());
       } else if (isCurriculumPage) {
         content.appendChild(
@@ -2133,11 +2368,14 @@ export function mountSidePanelApp(root: HTMLElement) {
               <p style="margin:0;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#0f766e;font-weight:700;">ROCK curriculum page detected</p>
               <p style="margin:0;color:#384152;line-height:1.5;">BroBot can explain and organize the visible curriculum content. Hints and reveal reasoning are only available on question pages.</p>
             </div>`,
-          })
+          }),
         );
       }
 
       if (showPrimaryExplainControl) {
+        const curriculumErrorCopy =
+          state.error && isCurriculumPage ? (ERROR_COPY[state.error.code] ?? ERROR_COPY.unknown) : null;
+        const curriculumRequestId = state.fetchDiagnostics?.requestId;
         const controls = createElement('div', {
           html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:10px;">
             <p style="margin:0;color:#5c6574;line-height:1.45;">Active page: ${escapeHtml(state.activePage.title ?? state.activePage.url ?? providerLabel(state.activePage.provider))}</p>
@@ -2157,17 +2395,28 @@ export function mountSidePanelApp(root: HTMLElement) {
                   ? 'Review data detected. Use Explain with BroBot for full reasoning.'
                   : 'Use Explain with BroBot for full review-mode reasoning.'
             }</p>
+            ${
+              curriculumErrorCopy && state.error
+                ? renderCurriculumGenerationError({
+                    title: curriculumErrorCopy.title,
+                    message: state.error.message,
+                    requestId: curriculumRequestId,
+                    canRetry: curriculumErrorCopy.canRetry,
+                  })
+                : ''
+            }
           </div>`,
         });
         content.appendChild(controls);
         controls.querySelector('#explain')?.addEventListener('click', () => void runExplain());
+        controls.querySelector('#retry-curriculum-explain')?.addEventListener('click', () => void runExplain());
         const rockAnkiButton = controls.querySelector<HTMLButtonElement>('#rock-find-anki');
         rockAnkiButton?.addEventListener('click', () => void findPageAnkiCards(rockAnkiButton));
         controls.querySelector('#unlink')?.addEventListener('click', () => void unlink());
       }
     }
 
-    if (state.error && !(isEducationalPage && !state.forceQuestionMode)) {
+    if (state.error && !isCurriculumPage) {
       const copy = ERROR_COPY[state.error.code] ?? ERROR_COPY.unknown;
       const errorTitle =
         isUnreadablePage && classification?.detected.referencesCount
@@ -2206,7 +2455,7 @@ export function mountSidePanelApp(root: HTMLElement) {
             html: `<div style="padding:12px;border-radius:14px;background:#fffaf0;border:1px solid #f5d7a1;color:#7c2d12;">
               <p style="margin:0;font-size:12px;line-height:1.5;">Hint Mode is designed to guide your reasoning without naming the answer choice. Use Reveal Reasoning only when you want the full answer path.</p>
             </div>`,
-          })
+          }),
         );
       }
     }
@@ -2226,7 +2475,7 @@ export function mountSidePanelApp(root: HTMLElement) {
             <p style="margin:0;font-weight:700;">Review data detected.</p>
             <p style="margin:0;color:#384152;line-height:1.5;">Use Explain with BroBot for full reasoning. This page already shows ${state.pageContext.correctAnswerKey || state.pageContext.correctAnswer ? 'a visible correct answer' : 'review-style context'}${state.pageContext.explanationText || state.pageContext.explanation ? ', explanation text' : ''}${state.pageContext.percentDistribution.length ? `, and ${state.pageContext.percentDistribution.length} distribution rows` : ''}.</p>
           </div>`,
-        })
+        }),
       );
     }
 
@@ -2246,7 +2495,7 @@ export function mountSidePanelApp(root: HTMLElement) {
             <p style="margin:0;font-weight:700;">Partial question data detected.</p>
             <p style="margin:0;color:#384152;line-height:1.5;">BroBot can still help with hints from the visible stem and choices. Missing fields are treated as warnings, not a hard failure.</p>
           </div>`,
-        })
+        }),
       );
     }
 
@@ -2266,7 +2515,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       content.appendChild(
         createElement('div', {
           html: renderLoadingSkeleton(refreshStatus.label, refreshStatus.detail),
-        })
+        }),
       );
     }
 
@@ -2288,9 +2537,9 @@ export function mountSidePanelApp(root: HTMLElement) {
           createElement('div', {
             html: renderExplanation(
               state.explanation as OrthobulletsExplainResponse,
-              state.brobotMode === 'explain_page' ? 'explain_page' : 'question_tutor'
+              state.brobotMode === 'explain_page' ? 'explain_page' : 'question_tutor',
             ),
-          })
+          }),
         );
         if (state.pageContext?.provider === 'orthobullets' && !isCurriculumStudyResponse(state.explanation)) {
           const sendToAnki = createElement('button', {
@@ -2314,7 +2563,7 @@ export function mountSidePanelApp(root: HTMLElement) {
             html: `<div style="padding:10px;border-radius:12px;background:#fffaf0;border:1px solid #f5d7a1;color:#7c2d12;">
               <p style="margin:0;font-size:12px;line-height:1.4;">BroBot notes: ${escapeHtml(questionWarnings.join(' · '))}</p>
             </div>`,
-          })
+          }),
         );
       }
 
@@ -2361,12 +2610,18 @@ export function mountSidePanelApp(root: HTMLElement) {
       });
     }
 
-    if (state.pageContext || state.extractionDiagnostics || state.fetchDiagnostics || questionTutorView) {
+    const developerDebugEnabled = (() => {
+      try {
+        return localStorage.getItem('snaportho_brobot_debug') === '1';
+      } catch {
+        return false;
+      }
+    })();
+    if (developerDebugEnabled && (state.pageContext || state.extractionDiagnostics || state.fetchDiagnostics || questionTutorView)) {
       const lifecycleDebug = questionTutorView?.debug ?? null;
       content.appendChild(
         createElement('div', {
-          html:
-            renderDebugSummary({
+          html: renderDebugSummary({
               activePage: state.activePage,
               diagnostics: state.extractionDiagnostics,
               fetchDiagnostics: state.fetchDiagnostics,
@@ -2376,9 +2631,8 @@ export function mountSidePanelApp(root: HTMLElement) {
               currentQuestionFingerprint: state.currentQuestionFingerprint,
               questionLifecycleDebug: lifecycleDebug,
               routingDiagnostics: state.routingDiagnostics,
-            }) +
-            (lifecycleDebug ? renderQuestionTutorLifecycleDebug(lifecycleDebug, escapeHtml) : ''),
-        })
+            }),
+        }),
       );
     }
 
@@ -2401,22 +2655,20 @@ export function mountSidePanelApp(root: HTMLElement) {
     schedulePageRefresh(0);
   });
 
-  chrome.tabs.onUpdated.addListener((
-    tabId: number,
-    changeInfo: { status?: string; url?: string },
-    tab: { active?: boolean }
-  ) => {
-    if (!tab.active) return;
-    if (changeInfo.url) {
-      // Clear stale content promptly, then let the completed navigation perform
-      // extraction after the destination DOM and content script are ready.
-      schedulePageRefresh(0);
-      return;
-    }
-    if (changeInfo.status === 'complete' && tabId === state.activePage?.tabId) {
-      schedulePageRefresh();
-    }
-  });
+  chrome.tabs.onUpdated.addListener(
+    (tabId: number, changeInfo: { status?: string; url?: string }, tab: { active?: boolean }) => {
+      if (!tab.active) return;
+      if (changeInfo.url) {
+        // Clear stale content promptly, then let the completed navigation perform
+        // extraction after the destination DOM and content script are ready.
+        schedulePageRefresh(0);
+        return;
+      }
+      if (changeInfo.status === 'complete' && tabId === state.activePage?.tabId) {
+        schedulePageRefresh();
+      }
+    },
+  );
 
   void refreshBaseState();
 }

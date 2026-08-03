@@ -7,6 +7,7 @@ type DomElementLike = {
   nodeName?: string;
   tagName?: string;
   textContent: string | null;
+  innerText?: string | null;
   getAttribute(name: string): string | null;
   querySelector(selector: string): DomElementLike | null;
   querySelectorAll(selector: string): ArrayLike<DomElementLike>;
@@ -214,6 +215,32 @@ function textAfterHeading(root: DomElementLike, headingPattern: RegExp) {
 
 function detectHimalayaPageMode(documentRef: DocumentLike): HimalayaPageMode {
   const bodyText = normalizeWhitespace(documentRef.body?.innerText ?? documentRef.textContent);
+  const hasResultsOverviewMarkers =
+    /^Results:/i.test(bodyText) ||
+    /\bResults:\s*Posttest/i.test(bodyText) ||
+    /Each box below represents a question/i.test(bodyText) ||
+    /\b(CORRECT|INCORRECT|UNANSWERED)\b/.test(bodyText);
+  const hasOpenReviewModal = Array.from(
+    documentRef.querySelectorAll('.modal.in,.modal.show,[aria-modal="true"]'),
+  ).some((node) => {
+    // AAOS leaves a full-size `.modal.in` shell mounted after close. textContent
+    // still contains the old question, but innerText is empty because none of
+    // that content is actually rendered. Only rendered dialog text qualifies.
+    const renderedDialogText = normalizeWhitespace(node.innerText);
+    return (
+      /\bmodal-open\b/i.test(documentRef.body?.getAttribute('class') ?? '') &&
+      isElementVisible(node) &&
+      renderedDialogText.length >= 40 &&
+      Boolean(findVisibleStem(node)) &&
+      findAnswerNodes(node).length >= 2
+    );
+  });
+
+  // te6 leaves question templates and stale answer markup mounted behind the
+  // finished-attempt screen. The explicit Results UI wins unless the learner
+  // has actually opened a visible review dialog.
+  if (hasResultsOverviewMarkers && !hasOpenReviewModal) return 'results-overview';
+
   const hasQuestion = Array.from(documentRef.querySelectorAll(HIMALAYA_SELECTORS.questionContainer.join(','))).some((node) => {
     const stem = findVisibleStem(node);
     const answers = findAnswerNodes(node);
@@ -225,13 +252,7 @@ function detectHimalayaPageMode(documentRef: DocumentLike): HimalayaPageMode {
     }
     return 'active-question';
   }
-  if (
-    /^Results:/i.test(bodyText) ||
-    /\bResults:\s*Posttest/i.test(bodyText) ||
-    /\bQuestions:\b/i.test(bodyText) ||
-    /Each box below represents a question/i.test(bodyText) ||
-    /\b(CORRECT|INCORRECT|UNANSWERED)\b/.test(bodyText)
-  ) {
+  if (hasResultsOverviewMarkers || /\bQuestions:/i.test(bodyText)) {
     return 'results-overview';
   }
   return 'unknown';
@@ -343,7 +364,10 @@ function detectAnswerState(node: DomElementLike) {
   return { selected, correct: correct ? true : incorrect ? false : undefined };
 }
 
-function extractChoices(container: DomElementLike) {
+// Keep this name provider-specific. The production build flattens this module and
+// the generic Orthobullets extractor into one classic-script scope; a shared
+// `extractChoices` declaration is hoisted and silently replaces this function.
+function extractHimalayaChoices(container: DomElementLike) {
   const seen = new Set<string>();
   const choices: HimalayaAnswerChoice[] = [];
   const rawNodes = findAnswerNodes(container)
@@ -478,7 +502,13 @@ export function extractHimalayaQuestionSnapshot(input: {
 
   if (active && (pageMode === 'reviewed-question' || pageMode === 'active-question')) {
     const stem = visibleText(findVisibleStem(active));
-    const choices = extractChoices(active);
+    const extractedChoices = extractHimalayaChoices(active);
+    // Normalize at the boundary as a production safeguard. A third-party page
+    // must never be able to crash review detection by returning an unexpected
+    // array-like collection from selector plumbing.
+    const choices: HimalayaAnswerChoice[] = Array.isArray(extractedChoices)
+      ? extractedChoices
+      : Array.from(extractedChoices ?? []);
     const explanation = extractSection(
       active,
       HIMALAYA_SELECTORS.explanation,

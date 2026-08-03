@@ -52,6 +52,36 @@ export function extractHimalayaProviderContext(input: {
     }));
   }
 
+  // The visible results screen is authoritative. te6 can leave `openModal` in
+  // its Angular scope after the dialog has closed; if we trust that stale store
+  // value first, the lifecycle watcher continuously replaces the overview with
+  // a phantom question fingerprint and the panel stays in "Refreshing".
+  const renderedBodyText = typeof input.document.body?.innerText === 'string'
+    ? input.document.body.innerText.replace(/\s+/g, ' ').trim()
+    : '';
+  const visibleResultsOverview =
+    /\bResults:\s*Posttest\b/i.test(renderedBodyText) &&
+    /Each box below represents a question/i.test(renderedBodyText);
+  const domContext = visibleResultsOverview
+    ? buildHimalayaOverviewContext({
+        bridgeState: store.bridgeState,
+        allQuestions: store.questions,
+        pageUrl,
+        documentTitle: typeof input.document.title === 'string' ? input.document.title : null,
+      })
+    : extractHimalayaPageContext(input);
+  if (domContext?.pageKind === 'results-overview') {
+    if (store.questions.length) {
+      return withDiagnostics(buildHimalayaOverviewContext({
+        bridgeState: store.bridgeState,
+        allQuestions: store.questions,
+        pageUrl,
+        documentTitle: typeof input.document.title === 'string' ? input.document.title : null,
+      }));
+    }
+    return withDiagnostics(domContext);
+  }
+
   // Preferred path: structured data straight from the te6 API. It is complete
   // and immune to AAOS restyling, so it wins whenever the bridge delivered.
   if (store.questions.length) {
@@ -78,5 +108,5 @@ export function extractHimalayaProviderContext(input: {
 
   // Fallback: scrape the rendered DOM. Keeps BroBot working if the bridge is
   // blocked or AAOS changes the API payload.
-  return withDiagnostics(extractHimalayaPageContext(input));
+  return withDiagnostics(domContext);
 }

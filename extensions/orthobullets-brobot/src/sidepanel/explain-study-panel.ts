@@ -4,11 +4,7 @@ import {
   estimateStudyMinutes,
   isClinicallyImportantWarning,
 } from '../shared/curriculum-chips.js';
-import type {
-  CurriculumExplainEmphasis,
-  CurriculumStudyResponse,
-  OrthobulletsPageContext,
-} from '../shared/types.js';
+import type { CurriculumExplainEmphasis, CurriculumStudyResponse, OrthobulletsPageContext } from '../shared/types.js';
 
 function escapeHtml(value: string) {
   return value
@@ -17,6 +13,20 @@ function escapeHtml(value: string) {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
+}
+
+export function renderCurriculumGenerationError(input: {
+  title: string;
+  message: string;
+  requestId?: string | null;
+  canRetry: boolean;
+}) {
+  return `<div data-curriculum-generation-error style="padding:12px;border-radius:12px;background:#fff0ef;border:1px solid #f0c0bc;color:#a02d1f;display:grid;gap:7px;">
+    <p style="margin:0;font-weight:700;">Page detected, but generation failed</p>
+    <p style="margin:0;line-height:1.45;">${escapeHtml(input.title)} ${escapeHtml(input.message)}</p>
+    ${input.requestId ? `<p style="margin:0;font-size:11px;color:#7f1d1d;">Request ID: ${escapeHtml(input.requestId)}</p>` : ''}
+    ${input.canRetry ? '<button id="retry-curriculum-explain" style="justify-self:start;border:1px solid #a02d1f;border-radius:999px;background:white;color:#a02d1f;padding:6px 12px;font-weight:700;cursor:pointer;">Retry explanation</button>' : ''}
+  </div>`;
 }
 
 function renderBulletList(items: string[]) {
@@ -53,7 +63,7 @@ function renderMustKnow(groups: CurriculumStudyResponse['mustKnow']) {
         `<div style="display:grid;gap:4px;">
           <p style="margin:0;font-size:12px;font-weight:700;color:#0f766e;">${escapeHtml(group.title)}</p>
           ${renderBulletList(group.bullets)}
-        </div>`
+        </div>`,
     )
     .join('');
 }
@@ -66,7 +76,7 @@ function renderAttendingQuestions(items: CurriculumStudyResponse['attendingQuest
         `<details style="padding:0;">
           <summary style="cursor:pointer;font-size:13px;line-height:1.35;"><span style="font-size:11px;color:#5c6574;margin-right:6px;">${escapeHtml(item.difficulty)}</span>${escapeHtml(item.question)}</summary>
           <p style="margin:6px 0 0;font-size:12px;color:#384152;">${escapeHtml(item.answer)}</p>
-        </details>`
+        </details>`,
     )
     .join('');
 }
@@ -85,7 +95,10 @@ function sectionsForEmphasis(emphasis: CurriculumExplainEmphasis) {
   }
 }
 
-export function renderStudyPanelHeader(pageContext: OrthobulletsPageContext, selectedEmphasis: CurriculumExplainEmphasis) {
+export function renderStudyPanelHeader(
+  pageContext: OrthobulletsPageContext,
+  selectedEmphasis: CurriculumExplainEmphasis,
+) {
   const topic = detectTopicLabel(pageContext);
   const studyMinutes = estimateStudyMinutes(pageContext);
   const refsHeavy = (pageContext.referencesCount ?? pageContext.references?.length ?? 0) >= 3;
@@ -108,16 +121,13 @@ export function renderStudyPanelHeader(pageContext: OrthobulletsPageContext, sel
     <div role="tablist" aria-label="Study emphasis" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;">
       ${CURRICULUM_EMPHASIS_TABS.map(
         (tab) =>
-          `<button type="button" data-emphasis-tab="${tab.id}" style="border:1px solid ${tab.id === selectedEmphasis ? '#0f766e' : '#cbd5e1'};border-radius:8px;background:${tab.id === selectedEmphasis ? '#0f766e' : 'white'};color:${tab.id === selectedEmphasis ? 'white' : '#18202b'};padding:5px 3px;font-size:11px;font-weight:700;cursor:pointer;">${escapeHtml(tab.label)}</button>`
+          `<button type="button" data-emphasis-tab="${tab.id}" style="border:1px solid ${tab.id === selectedEmphasis ? '#0f766e' : '#cbd5e1'};border-radius:8px;background:${tab.id === selectedEmphasis ? '#0f766e' : 'white'};color:${tab.id === selectedEmphasis ? 'white' : '#18202b'};padding:5px 3px;font-size:11px;font-weight:700;cursor:pointer;">${escapeHtml(tab.label)}</button>`,
       ).join('')}
     </div>
   </header>`;
 }
 
-export function renderCurriculumStudyPanel(
-  study: CurriculumStudyResponse,
-  pageContext: OrthobulletsPageContext
-) {
+export function renderCurriculumStudyPanel(study: CurriculumStudyResponse, pageContext: OrthobulletsPageContext) {
   const cards: string[] = [];
   const active = new Set(sectionsForEmphasis(study.emphasis));
 
@@ -128,7 +138,7 @@ export function renderCurriculumStudyPanel(
       contentHtml: `<p style="margin:0;font-size:13px;font-weight:600;line-height:1.35;">${escapeHtml(study.oneSentenceTakeaway)}</p>`,
       expanded: true,
       tone: 'accent',
-    })
+    }),
   );
 
   if (active.has('thirty') && study.inThirtySeconds.length) {
@@ -138,7 +148,7 @@ export function renderCurriculumStudyPanel(
         title: 'In 30 Seconds',
         contentHtml: renderBulletList(study.inThirtySeconds),
         expanded: true,
-      })
+      }),
     );
   }
 
@@ -149,7 +159,7 @@ export function renderCurriculumStudyPanel(
         title: 'Must Know',
         contentHtml: renderMustKnow(study.mustKnow),
         expanded: true,
-      })
+      }),
     );
   }
 
@@ -160,7 +170,7 @@ export function renderCurriculumStudyPanel(
         title: 'Common Mistakes',
         contentHtml: renderBulletList(study.commonMistakes),
         expanded: study.emphasis === 'high_yield',
-      })
+      }),
     );
   }
 
@@ -171,7 +181,7 @@ export function renderCurriculumStudyPanel(
         title: 'Practical pearls',
         contentHtml: renderBulletList(study.clinicalPearls),
         expanded: study.emphasis === 'clinical' || study.emphasis === 'or',
-      })
+      }),
     );
   }
 
@@ -182,7 +192,7 @@ export function renderCurriculumStudyPanel(
         title: 'Most testable facts',
         contentHtml: renderBulletList(study.testableFacts),
         expanded: study.emphasis === 'boards',
-      })
+      }),
     );
   }
 
@@ -193,7 +203,7 @@ export function renderCurriculumStudyPanel(
         title: study.emphasis === 'or' ? 'What attendings ask' : 'Attending questions',
         contentHtml: renderAttendingQuestions(study.attendingQuestions),
         expanded: study.emphasis === 'or' || study.emphasis === 'boards',
-      })
+      }),
     );
   }
 
@@ -225,7 +235,7 @@ export function renderCurriculumChatChips(chips: string[]) {
   return `<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start;">${chips
     .map(
       (prompt, index) =>
-        `<button data-prompt-index="${index}" type="button" style="border:1px solid #cbd5e1;border-radius:999px;background:#f8fafc;color:#0f172a;padding:6px 10px;font-size:11px;font-weight:600;line-height:1.3;cursor:pointer;max-width:100%;text-align:left;">${escapeHtml(prompt)}</button>`
+        `<button data-prompt-index="${index}" type="button" style="border:1px solid #cbd5e1;border-radius:999px;background:#f8fafc;color:#0f172a;padding:6px 10px;font-size:11px;font-weight:600;line-height:1.3;cursor:pointer;max-width:100%;text-align:left;">${escapeHtml(prompt)}</button>`,
     )
     .join('')}</div>`;
 }

@@ -80,14 +80,19 @@ export type VisibleQuestionIdentity = {
 
 export type ExtensionMessage =
   | { type: 'ob:get-build-info' }
-  | { type: 'ob:get-active-page-state' }
+  | { type: 'ob:get-active-page-state'; preferRegisteredHost?: boolean; preferredHostUrl?: string }
+  | { type: 'ob:register-host-page' }
   | { type: 'ob:get-auth-state' }
   | { type: 'ob:start-link'; deviceName: string }
   | { type: 'ob:poll-link'; linkCode: string }
   | { type: 'ob:clear-link' }
   // `questionAttemptId` targets one specific AAOS Himalaya question instead of
   // whatever is on screen, so the review board can load any row on demand.
-  | { type: 'ob:extract-page-context'; tabId: number; questionAttemptId?: number }
+  | {
+      type: 'ob:extract-page-context';
+      tabId: number;
+      questionAttemptId?: number;
+    }
   | {
       type: 'brobot:request';
       task: BroBotTask;
@@ -104,7 +109,11 @@ export type ExtensionMessage =
       selectedAnswerKey?: string | null;
       priorHints?: Array<Pick<OrthobulletsHintResponse, 'hintLevel' | 'title' | 'hint'>>;
     }
-  | { type: 'ob:explain'; pageContext: OrthobulletsPageContext; emphasis?: CurriculumExplainEmphasis }
+  | {
+      type: 'ob:explain';
+      pageContext: OrthobulletsPageContext;
+      emphasis?: CurriculumExplainEmphasis;
+    }
   | {
       type: 'ob:chat';
       pageContext: OrthobulletsPageContext;
@@ -159,6 +168,9 @@ export type ExtensionErrorCode =
   | 'curriculum_content_missing'
   | 'curriculum_content_too_large'
   | 'unsupported_provider'
+  | 'model_unavailable'
+  | 'all_chunks_failed'
+  | 'synthesis_failed'
   | 'api_failure'
   | 'parse_failure'
   | 'extraction_failure'
@@ -167,15 +179,43 @@ export type ExtensionErrorCode =
 
 export type ExtensionMessageResponse =
   | { ok: true; buildInfo: ExtensionBuildInfo }
+  | { ok: true; registeredHostTabId: number | null }
   | { ok: true; activePage: ActivePageState }
   | { ok: true; auth: AuthState }
   | { ok: true; link: LinkStartResult }
   | { ok: true; deviceToken: string }
-  | { ok: true; pageContext: OrthobulletsPageContext; diagnostics: OrthobulletsExtractionDiagnostics }
-  | { ok: true; hint: OrthobulletsHintResponse; fetchDiagnostics?: ExtensionFetchDiagnostics }
-  | { ok: true; explanation: BrobotExplainResult; fetchDiagnostics?: ExtensionFetchDiagnostics }
+  | {
+      ok: true;
+      pageContext: OrthobulletsPageContext;
+      diagnostics: OrthobulletsExtractionDiagnostics;
+    }
+  | {
+      ok: true;
+      hint: OrthobulletsHintResponse;
+      fetchDiagnostics?: ExtensionFetchDiagnostics;
+    }
+  | {
+      ok: true;
+      explanation: BrobotExplainResult;
+      fetchDiagnostics?: ExtensionFetchDiagnostics;
+    }
   | { ok: true; chat: OrthobulletsChatResponse }
   | { ok: true; topicTurn: OrthobulletsTopicTutorResponse }
-  | { ok: true; ankiSearch: { searchRequestId: string; status: string; expiresAt: string; resultSummary?: Record<string, unknown> } }
+  | {
+      ok: true;
+      ankiSearch: {
+        searchRequestId: string;
+        status: string;
+        expiresAt: string;
+        resultSummary?: Record<string, unknown>;
+        errorCode?: string | null;
+      };
+    }
   | { ok: true; cleared: true }
-  | { ok: false; error: string; code?: ExtensionErrorCode; diagnostics?: OrthobulletsExtractionDiagnostics; fetchDiagnostics?: ExtensionFetchDiagnostics };
+  | {
+      ok: false;
+      error: string;
+      code?: ExtensionErrorCode;
+      diagnostics?: OrthobulletsExtractionDiagnostics;
+      fetchDiagnostics?: ExtensionFetchDiagnostics;
+    };

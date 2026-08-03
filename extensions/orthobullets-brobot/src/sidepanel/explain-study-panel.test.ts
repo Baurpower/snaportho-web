@@ -3,6 +3,7 @@ import * as assert from 'node:assert/strict';
 import {
   hasGiantParagraphCards,
   renderCurriculumChatChips,
+  renderCurriculumGenerationError,
   renderCurriculumStudyPanel,
 } from './explain-study-panel.js';
 import type { CurriculumStudyResponse, OrthobulletsPageContext } from '../shared/types.js';
@@ -17,7 +18,12 @@ const sampleStudy: CurriculumStudyResponse = {
     'Esters vs amides differ in metabolism.',
     'LAST presents with neuro then cardio toxicity.',
   ],
-  mustKnow: [{ title: 'Core mechanism', bullets: ['Voltage-gated Na+ blockade', 'Onset/duration varies by agent'] }],
+  mustKnow: [
+    {
+      title: 'Core mechanism',
+      bullets: ['Voltage-gated Na+ blockade', 'Onset/duration varies by agent'],
+    },
+  ],
   clinicalPearls: ['Aspirate before injection'],
   commonMistakes: ['Confusing local with regional/neuraxial anesthesia'],
   attendingQuestions: [],
@@ -74,5 +80,16 @@ assert.match(chipHtml, /esters and amides/i);
 
 const legacyDense = `<section>${'<p style="margin:0;line-height:1.55;">Long paragraph</p>'.repeat(4)}</section>`;
 assert.equal(hasGiantParagraphCards(legacyDense), true);
+
+const generationErrorHtml = renderCurriculumGenerationError({
+  title: 'BroBot could not process this page.',
+  message: 'Please retry.',
+  requestId: 'request-123',
+  canRetry: true,
+});
+assert.match(generationErrorHtml, /Page detected, but generation failed/);
+assert.match(generationErrorHtml, /Request ID: request-123/);
+assert.match(generationErrorHtml, /retry-curriculum-explain/);
+assert.equal((generationErrorHtml.match(/data-curriculum-generation-error/g) ?? []).length, 1);
 
 console.log('Explain study panel renderer tests passed.');

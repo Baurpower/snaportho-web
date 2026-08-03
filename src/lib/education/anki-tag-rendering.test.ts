@@ -61,6 +61,16 @@ test("parent closure emits only declared exportable ancestors", () => {
   ]);
 });
 
+test("leaf-only hierarchy mode emits one Anki path per accepted assertion", () => {
+  const manifest = renderCardTagManifest({
+    canonicalCardVersionId: "v",
+    assertions: [{ assertionId: "a", canonicalCardVersionId: "v", canonicalEntityId: "acl", status: "accepted" }],
+  }, taxonomy, { ...transition, hierarchyMode: "leaf_only" });
+  assert.deepEqual(manifest.generatedTags, [
+    "SnapOrtho::Anatomy::Lower_Extremity::Knee::Ligament::ACL",
+  ]);
+});
+
 test("public rendering filters workflow tags and is deterministic", () => {
   const input = {
     canonicalCardVersionId: "card-v1",

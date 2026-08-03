@@ -223,9 +223,9 @@ appendHimalayaReviewBoard(root, {
 
 const renderedHtml = root.innerHTML;
 assert.equal(root.querySelectorAll('[data-toggle-id]').length, 3, 'one toggle per question');
-assert.equal(root.querySelector('#rb-explain-misses')?.textContent?.trim(), 'Rebuild full debrief');
+assert.equal(root.querySelector('#rb-explain-misses')?.textContent?.trim(), 'Rebuild teaching review');
 assert.ok(renderedHtml.includes('1/3'), 'attempt score is shown');
-assert.ok(renderedHtml.includes('1 missed of 3'), 'miss count is shown');
+assert.ok(renderedHtml.includes('To review'), 'miss count is labeled for review');
 assert.equal(root.querySelectorAll('.expl').length, 1, 'only the expanded miss renders an explanation');
 assert.equal(root.querySelector('[data-toggle-id="102"]')?.getAttribute('aria-expanded'), 'true');
 assert.equal(root.querySelector('[data-toggle-id="101"]')?.getAttribute('aria-expanded'), 'false');

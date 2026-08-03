@@ -56,7 +56,7 @@ assert.equal(overview?.activeQuestionKey, 'himalaya:results-overview');
 const modalDocument = load('himalaya-results-review-modal.html');
 const reviewQuestion = getVisibleQuestionIdentity(modalDocument, himalayaUrl);
 assert.ok(reviewQuestion);
-assert.notEqual(reviewQuestion.activeQuestionKey, overview?.activeQuestionKey, 'opening a same-URL review modal must create a question identity');
+assert.equal(reviewQuestion.activeQuestionKey, overview?.activeQuestionKey, 'the full-test review board remains authoritative on results pages');
 
 modalDocument.querySelector('[role="dialog"]')?.remove();
 const closedModal = getVisibleQuestionIdentity(modalDocument, himalayaUrl);

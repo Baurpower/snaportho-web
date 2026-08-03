@@ -63,6 +63,12 @@ export interface TagExportPolicy {
   publicWorkflowPaths?: readonly string[];
   legacyMode: "none" | "transition";
   navigationLegacyMode?: "omit" | "quarantine";
+  /**
+   * `leaf_only` emits one governed path for an assertion. Anki already exposes
+   * each `::` segment as hierarchy, so separate ancestor tags usually add noise.
+   * `closure` remains the compatibility default when this is omitted.
+   */
+  hierarchyMode?: "leaf_only" | "closure";
 }
 
 export interface CardTagRenderInput {
@@ -245,7 +251,11 @@ export function renderCardTagManifest(
   for (const assertion of assertions) {
     const node = index.get(assertion.canonicalEntityId);
     if (!node) throw new Error(`unknown_assertion_entity:${assertion.canonicalEntityId}`);
-    generated.push(...exportableParentClosure(node, taxonomy));
+    generated.push(...(
+      policy.hierarchyMode === "leaf_only"
+        ? node.exportable ? [buildGovernedTag(node.facet, node.path)] : []
+        : exportableParentClosure(node, taxonomy)
+    ));
   }
   generated.push(
     ...applyLegacyDispositions(input.rawTags ?? [], legacyRules, taxonomy, policy),

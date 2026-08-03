@@ -41,7 +41,8 @@ export interface TopicSection {
 export type OrthobulletsPageKind = 'review' | 'current_test' | 'test_results' | 'topic' | 'unknown';
 export type QuestionProvider = 'orthobullets' | 'rock' | 'himalaya';
 export type ExtractedPageMode = 'question' | 'curriculum_content' | 'topic_page' | 'test_review';
-export type ClassifiedPageKind = 'question' | 'educational_content' | 'mixed' | 'topic_page' | 'test_results' | 'unreadable';
+export type ClassifiedPageKind =
+  'question' | 'educational_content' | 'mixed' | 'topic_page' | 'test_results' | 'unreadable';
 export type ProviderDetectionStatus = QuestionProvider | 'unsupported' | 'readable_unrecognized';
 export type SupportedPageKind =
   | 'rock_himalaya_question'
@@ -156,6 +157,8 @@ export interface ExtensionFetchDiagnostics {
   wasTruncated?: boolean;
   omittedSectionCount?: number;
   serverErrorCode?: string | null;
+  requestId?: string | null;
+  failureStage?: string | null;
 }
 
 export interface OrthobulletsPageContext {
@@ -295,7 +298,7 @@ export interface CurriculumStudyResponse {
 export type BrobotExplainResult = OrthobulletsExplainResponse | CurriculumStudyResponse;
 
 export function isCurriculumStudyResponse(
-  value: BrobotExplainResult | null | undefined
+  value: BrobotExplainResult | null | undefined,
 ): value is CurriculumStudyResponse {
   return Boolean(value && 'responseKind' in value && value.responseKind === 'curriculum');
 }
@@ -358,12 +361,7 @@ export interface OrthobulletsChatResponse {
  * from ROCK's curriculum_content mode: the tutor asks page-grounded
  * questions and judges answers rather than teaching/expanding the page.
  */
-export type OrthobulletsTopicAction =
-  | 'explain_page'
-  | 'quiz_me'
-  | 'what_tested'
-  | 'attending_question'
-  | 'board_traps';
+export type OrthobulletsTopicAction = 'explain_page' | 'quiz_me' | 'what_tested' | 'attending_question' | 'board_traps';
 
 export interface OrthobulletsTopicAskedQuestion {
   id: string;

@@ -44,7 +44,7 @@ function ensureInPageLauncher() {
   shell.innerHTML = `
     <div id="brobot-panel" aria-label="BroBot panel">
       <button id="brobot-close" type="button" aria-label="Close BroBot">×</button>
-      <iframe title="BroBot" src="${chrome.runtime.getURL('sidepanel.html')}"></iframe>
+      <iframe title="BroBot" src="${chrome.runtime.getURL('sidepanel.html')}?embedded=1&amp;hostUrl=${encodeURIComponent(window.location.href)}"></iframe>
     </div>
     <button id="brobot-launcher" type="button" aria-label="Open BroBot">
       <img alt="" src="${chrome.runtime.getURL('icons/brobot-32.png')}" />
@@ -64,7 +64,13 @@ function ensureInPageLauncher() {
 if (!window.__snapOrthoBroBotContentScriptLoaded) {
   window.__snapOrthoBroBotContentScriptLoaded = true;
   console.info('[SnapOrtho BroBot] content script loaded');
-  ensureInPageLauncher();
+  // Embedded panels live inside AAOS popup windows. Register the sender tab so
+  // the extension frame can bind to this host instead of Chrome's unrelated
+  // active tab in the parent window.
+  void chrome.runtime
+    .sendMessage({ type: 'ob:register-host-page' })
+    .catch(() => null)
+    .finally(() => ensureInPageLauncher());
   installHimalayaDebugInspector(document);
   // Must start before the lifecycle watch so the first fingerprint can already
   // see te6 API data rather than falling back to DOM scraping.
@@ -96,6 +102,9 @@ if (!window.__snapOrthoBroBotContentScriptLoaded) {
         message.questionAttemptId != null &&
         getHimalayaStoreSnapshot().readiness !== 'ready'
       ) {
+        // Targeted rows need the structured attempt payload. Overview pages do
+        // not wait: Wicket can replace that transient results DOM while the API
+        // request is in flight, so the panel must commit the overview first.
         await waitForHimalayaStoreReady();
       }
       const pageContext = extractQuestionContext({

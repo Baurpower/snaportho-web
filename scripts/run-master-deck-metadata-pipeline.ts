@@ -33,9 +33,9 @@ const DEFAULT_TAXONOMY_VERSION = "0.1.0";
 const DEFAULT_BATCH_SIZE = 100;
 const DEFAULT_CONCURRENCY = 3;
 const DEFAULT_TAXONOMY_LIMIT = 40;
-const CODEX_PACKET_VERSION = "snaportho-codex-metadata-packet.1";
+const CODEX_PACKET_VERSION = "snaportho-portable-tag-review-packet.2";
 const CODEX_MODEL_ID = "codex-interactive";
-const SIMPLE_RUN_VERSION = "snaportho-codex-cohorts.1";
+const SIMPLE_RUN_VERSION = "snaportho-portable-review-cohorts.2";
 const SIMPLE_DEFAULT_COHORT_SIZE = 100;
 const SIMPLE_DEFAULT_AGENTS = 5;
 const SIMPLE_DEFAULT_TAXONOMY_LIMIT = 12;
@@ -632,12 +632,14 @@ type CodexPacket = {
   taxonomyLimit: number;
   inputChecksum: string;
   instructions: string[];
+  reviewer?: { provider: string; model: string; reviewedAt: string };
   cards: Array<{
     canonicalCardId: string;
     canonicalCardVersionId: string;
     contentHash: string;
     front: string;
     back: string;
+    deckPath: string;
     existingTags: string[];
     candidates: Record<MetadataFacet, Array<{
       termId: string;
@@ -646,6 +648,9 @@ type CodexPacket = {
       parentIds: string[];
       retrievalScore: number;
     }>>;
+    reviewStatus?: "completed";
+    reviewNotes?: string[];
+    missingConcepts?: Array<{ facet: MetadataFacet; preferredLabel: string; rationale: string }>;
     assertions: CodexPacketAssertion[];
   }>;
 };
@@ -666,6 +671,7 @@ function codexPacketInput(packet: Omit<CodexPacket, "inputChecksum"> | CodexPack
       contentHash: card.contentHash,
       front: card.front,
       back: card.back,
+      deckPath: card.deckPath,
       existingTags: card.existingTags,
       candidates: card.candidates,
     })),
@@ -752,6 +758,7 @@ async function exportCodexBatch(db: SupabaseClient, args: Args) {
       contentHash: card.contentHash,
       front: card.front,
       back: card.back,
+      deckPath: card.deckPath ?? "",
       existingTags: card.existingTags,
       candidates,
       assertions: [],
@@ -768,12 +775,18 @@ async function exportCodexBatch(db: SupabaseClient, args: Args) {
     taxonomyVersionId: taxonomy.version.id,
     taxonomyLimit,
     instructions: [
-      "Fill only each card.assertions; do not modify identity, content, candidates, or inputChecksum.",
+      "Review every card independently. Fill only reviewer, reviewStatus, reviewNotes, missingConcepts, and assertions; do not modify identity, content, candidates, deckPath, or inputChecksum.",
       "Use only termId values present in that card's matching facet candidates.",
-      "Every assertion needs an exact front/back quote. Do not infer unstated diagnoses or treatments.",
-      "Use zero assertions when the card does not explicitly support a governed term.",
+      "Classify the card's primary teaching subject, not every entity mentioned in the question or explanation.",
+      "Use deckPath and existingTags as contextual evidence, but treat both as fallible and never copy them blindly.",
+      "Do not tag an incidental structure used only as an insertion, origin, comparison, examination maneuver, complication, differential diagnosis, or structure-at-risk unless it is itself a teaching target.",
+      "Specialty may be multi-label when genuinely useful, but give the most central specialty the highest confidence.",
+      "Every assertion needs an exact front/back quote. Deck path alone cannot support diagnosis or treatment assertions.",
+      "Use zero assertions for a facet when no candidate is supported; do not force a weak match.",
+      "Set reviewStatus to completed even when assertions is empty. Record a truly missing governed concept in missingConcepts instead of forcing the wrong candidate.",
       "Confidence is 0..1. Rationale codes must be concise snake_case tokens.",
       "Do not place card text in rationale codes or any other metadata.",
+      "Set reviewer.provider, reviewer.model, and reviewer.reviewedAt before returning the completed packet.",
     ],
     cards: packetCards,
   } satisfies Omit<CodexPacket, "inputChecksum">;
@@ -833,7 +846,7 @@ async function ensureSimpleRun(
   const configuration = {
     pipeline: SIMPLE_RUN_VERSION,
     taxonomyLimit: SIMPLE_DEFAULT_TAXONOMY_LIMIT,
-    model: CODEX_MODEL_ID,
+    model: "provider-neutral",
   };
   const now = new Date().toISOString();
   const inserted = await db.from("metadata_pipeline_runs").insert({
@@ -853,16 +866,16 @@ async function ensureSimpleRun(
     prompt_bundle_version: CODEX_PACKET_VERSION,
     prompt_bundle_checksum: sha(CODEX_PACKET_VERSION),
     model_manifest: {
-      provider: "codex",
-      operating_mode: "parallel_compact_packets",
-      model: CODEX_MODEL_ID,
+      provider: "portable",
+      operating_mode: "resumable_provider_neutral_packets",
+      model: "provider-supplied-at-import",
     },
     export_policy_version: EXPORT_POLICY_VERSION,
     export_policy_checksum: sha(EXPORT_POLICY_VERSION),
     status: "running",
     safe_metadata: {
       scheduling: "just_in_time",
-      no_human_review_required: true,
+      no_human_review_required: false,
       only_high_confidence_assertions_are_publishable: true,
     },
     started_at: now,
@@ -903,13 +916,13 @@ async function exportSimpleCodexCohort(db: SupabaseClient, args: Args) {
       db,
       "metadata_pipeline_stage_results",
       "canonical_card_version_id",
-      (query) => query.eq("stage", "consensus").eq("status", "completed"),
+      (query) => query.eq("pipeline_run_id", run.id).eq("stage", "consensus").eq("status", "completed"),
     ),
     allRows(
       db,
       "card_metadata_assertions",
       "canonical_card_version_id",
-      (query) => query.eq("decision", "accepted"),
+      (query) => query.eq("pipeline_run_id", run.id).eq("decision", "accepted"),
     ),
     allRows(
       db,
@@ -1020,6 +1033,7 @@ async function exportSimpleCodexCohort(db: SupabaseClient, args: Args) {
         contentHash: card.contentHash,
         front: card.front,
         back: card.back,
+        deckPath: card.deckPath ?? "",
         existingTags: card.existingTags,
         candidates,
         assertions: [],
@@ -1036,9 +1050,11 @@ async function exportSimpleCodexCohort(db: SupabaseClient, args: Args) {
       taxonomyVersionId: taxonomy.version.id,
       taxonomyLimit,
       instructions: [
-        "Fill only assertions using listed candidate term IDs.",
-        "Require an exact front/back quote; use no assertion when unsupported.",
-        "Use confidence >= 0.98 only for explicit, publishable facts.",
+        "Review every card independently; fill only reviewer, reviewStatus, reviewNotes, missingConcepts, and card.assertions.",
+        "Tag the primary teaching subject, not every mentioned entity. Deck path and original tags are fallible context.",
+        "Use only listed candidate term IDs and require an exact front/back quote for every assertion.",
+        "Do not classify incidental anatomy, differentials, complications, structures-at-risk, or explanation mentions as primary subjects.",
+        "Use no assertion for a facet when unsupported. Set reviewStatus=completed; use missingConcepts when the correct concept is absent. Set reviewer metadata.",
       ],
       cards: packetCards,
     } satisfies Omit<CodexPacket, "inputChecksum">;
@@ -1075,6 +1091,9 @@ async function exportSimpleCodexCohort(db: SupabaseClient, args: Args) {
 
 function validateCodexAssertions(packet: CodexPacket, terms: ReadonlyMap<string, TaxonomyTerm>) {
   return packet.cards.map((card) => {
+    if (card.reviewStatus !== "completed") {
+      throw new Error(`portable_review_card_incomplete:${card.canonicalCardVersionId}`);
+    }
     const seen = new Set<string>();
     const proposals = card.assertions.map((item) => {
       if (!METADATA_FACETS.includes(item.facet) || !Number.isFinite(item.confidence)
@@ -1104,8 +1123,8 @@ function validateCodexAssertions(packet: CodexPacket, terms: ReadonlyMap<string,
         confidence: item.confidence,
         evidence: spans.map((span) => span.evidenceHash),
         evidenceSpans: spans,
-        rationaleCodes: [...new Set([...item.rationaleCodes, "codex_interactive_review"])].sort(),
-        agentId: CODEX_MODEL_ID,
+        rationaleCodes: [...new Set([...item.rationaleCodes, "portable_independent_review"])].sort(),
+        agentId: `${packet.reviewer?.provider ?? "unknown"}:${packet.reviewer?.model ?? "unknown"}`,
         promptVersion: CODEX_PACKET_VERSION,
       };
     });
@@ -1138,6 +1157,10 @@ async function importCodexBatch(db: SupabaseClient, args: Args) {
   const packet = JSON.parse(readFileSync(path.resolve(input), "utf8")) as CodexPacket;
   if (packet.schemaVersion !== CODEX_PACKET_VERSION) throw new Error("unsupported_codex_packet_version");
   if (sha(codexPacketInput(packet)) !== packet.inputChecksum) throw new Error("codex_packet_input_was_modified");
+  if (!packet.reviewer || !packet.reviewer.provider.trim() || !packet.reviewer.model.trim()
+    || !Number.isFinite(Date.parse(packet.reviewer.reviewedAt))) {
+    throw new Error("portable_review_packet_reviewer_metadata_required");
+  }
   const run = await db.from("metadata_pipeline_runs").select("*").eq("id", packet.runId).eq("run_key", packet.runKey).single();
   if (run.error) throw new Error(`codex_run_lookup_failed:${run.error.message}`);
   const batch = await db.from("metadata_pipeline_batches").select("*").eq("id", packet.batchId)
@@ -1156,7 +1179,8 @@ async function importCodexBatch(db: SupabaseClient, args: Args) {
   if (taxonomy.version.id !== packet.taxonomyVersionId) throw new Error("codex_taxonomy_version_mismatch");
   const terms = new Map(taxonomy.terms.map((term) => [term.id, term]));
   const validated = validateCodexAssertions(packet, terms);
-  const store = new SupabaseCheckpointStore(db, packet.runId, packet.batchId, packet.taxonomyVersionId, terms, CODEX_MODEL_ID);
+  const reviewerModel = `${packet.reviewer.provider}:${packet.reviewer.model}`.slice(0, 200);
+  const store = new SupabaseCheckpointStore(db, packet.runId, packet.batchId, packet.taxonomyVersionId, terms, reviewerModel);
   for (const item of validated) {
     const cardPacket: CardPacket = {
       canonicalCardId: item.card.canonicalCardId,
@@ -1165,6 +1189,7 @@ async function importCodexBatch(db: SupabaseClient, args: Args) {
       front: item.card.front,
       back: item.card.back,
       existingTags: item.card.existingTags,
+      deckPath: item.card.deckPath,
     };
     await store.put({
       contractVersion: METADATA_PIPELINE_VERSION,
@@ -1183,7 +1208,8 @@ async function importCodexBatch(db: SupabaseClient, args: Args) {
     });
   }
   let autoAccepted = 0;
-  if (run.data.safe_metadata?.scheduling === "just_in_time") {
+  if (args.get("--confirm-auto-accept") === "ACCEPT_PORTABLE_REVIEW_0_98"
+    && run.data.safe_metadata?.scheduling === "just_in_time") {
     const eligible = await db.from("card_metadata_assertions")
       .select("id")
       .eq("pipeline_run_id", packet.runId)
@@ -1548,6 +1574,7 @@ async function renderTags(db: SupabaseClient, args: Args) {
     taxonomyVersion: taxonomyVersion.data.version,
     publicExport: false,
     legacyMode: "none",
+    hierarchyMode: args.get("--render-ancestor-tags") === "true" ? "closure" : "leaf_only",
   };
   const byVersion = new Map<string, JsonRow[]>();
   for (const row of assertionRows) {
@@ -1632,13 +1659,15 @@ async function renderTags(db: SupabaseClient, args: Args) {
     assertionsByVersion.set(row.canonical_card_version_id, values);
   }
   const termById = new Map(taxonomy.terms.map((term) => [term.id, term]));
+  const nodeById = new Map(nodes.map((node) => [node.canonicalEntityId, node]));
   const sources: JsonRow[] = [];
   for (const card of insertedCards.data ?? []) {
     const rows = assertionsByVersion.get(card.canonical_card_version_id) ?? [];
     const sourceByTag = new Map(rows.map((row) => {
       const targetId = row.canonical_entity_id ?? row.metadata_concept_id;
       const term = termById.get(targetId);
-      return term ? [`SnapOrtho::${facetName[term.facet]}::${term.ankiSlug}`, row] : ["", row];
+      const node = nodeById.get(targetId);
+      return term && node ? [`SnapOrtho::${facetName[term.facet]}::${node.path.join("::")}`, row] : ["", row];
     }));
     for (const tag of card.rendered_tags as string[]) {
       const assertion = sourceByTag.get(tag);
@@ -1719,9 +1748,9 @@ async function main() {
     auth: { autoRefreshToken: false, persistSession: false },
   });
   if (command === "bootstrap-full-release") return bootstrapFullRelease(db, args);
-  if (command === "codex-cohort-export") return exportSimpleCodexCohort(db, args);
-  if (command === "codex-export") return exportCodexBatch(db, args);
-  if (command === "codex-import") return importCodexBatch(db, args);
+  if (command === "codex-cohort-export" || command === "review-cohort-export") return exportSimpleCodexCohort(db, args);
+  if (command === "codex-export" || command === "review-export") return exportCodexBatch(db, args);
+  if (command === "codex-import" || command === "review-import") return importCodexBatch(db, args);
   if (command === "classify-legacy-tags") return classifyLegacyTags(db, args);
   if (command === "run") {
     if (!env.OPENAI_API_KEY) throw new Error("OPENAI_API_KEY is required");

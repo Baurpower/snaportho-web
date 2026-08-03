@@ -208,25 +208,27 @@ export function appendHimalayaReviewBoard(
   }
 
   const scoreLabel = input.score != null && input.maxScore != null ? `${input.score}/${input.maxScore}` : null;
-  const header = createElement(`<div style="padding:14px;border-radius:16px;background:#f0fdfa;border:1px solid #99f6e4;display:grid;gap:10px;">
+  const header = createElement(`<section style="padding:16px;border-radius:18px;background:linear-gradient(145deg,#0f766e,#115e59);color:white;display:grid;gap:14px;box-shadow:0 10px 28px rgba(15,118,110,.18);">
     <div style="display:grid;gap:4px;">
-      <p style="margin:0;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#0f766e;font-weight:700;">Review board</p>
-      ${input.assessmentTitle ? `<p style="margin:0;font-size:13px;line-height:1.4;color:#18202b;font-weight:600;">${escapeHtml(input.assessmentTitle)}</p>` : ''}
-      <p style="margin:0;color:#384152;line-height:1.5;font-size:13px;">
-        ${scoreLabel ? `<strong>${escapeHtml(scoreLabel)}</strong> · ` : ''}${summary.missedCount} missed of ${summary.total}
-      </p>
+      <p style="margin:0;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#ccfbf1;font-weight:800;">Attempt review</p>
+      ${input.assessmentTitle ? `<h2 style="margin:2px 0 0;font-size:16px;line-height:1.35;color:white;">${escapeHtml(input.assessmentTitle)}</h2>` : ''}
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;">
+      <div style="padding:10px;border-radius:12px;background:rgba(255,255,255,.12);"><strong style="display:block;font-size:20px;">${escapeHtml(scoreLabel ?? String(summary.correctCount))}</strong><span style="font-size:11px;color:#ccfbf1;">Score</span></div>
+      <div style="padding:10px;border-radius:12px;background:rgba(255,255,255,.12);"><strong style="display:block;font-size:20px;">${summary.missedCount}</strong><span style="font-size:11px;color:#ccfbf1;">To review</span></div>
+      <div style="padding:10px;border-radius:12px;background:rgba(255,255,255,.12);"><strong style="display:block;font-size:20px;">${summary.total}</strong><span style="font-size:11px;color:#ccfbf1;">Questions</span></div>
     </div>
     ${
       summary.missedCount
         ? `<div style="display:flex;gap:8px;flex-wrap:wrap;">
             <button id="rb-explain-misses" ${input.explainAllInFlight ? 'disabled' : ''}
-              style="border:none;border-radius:999px;background:${input.explainAllInFlight ? '#94a3b8' : '#0f766e'};color:white;padding:9px 14px;font-weight:700;font-size:13px;cursor:${input.explainAllInFlight ? 'default' : 'pointer'};">
-              ${input.explainAllInFlight ? 'Building full debrief…' : completedExplanations ? 'Rebuild full debrief' : 'Build full debrief'}
+              style="width:100%;border:none;border-radius:12px;background:${input.explainAllInFlight ? '#99a8a6' : 'white'};color:#0f766e;padding:11px 14px;font-weight:800;font-size:13px;cursor:${input.explainAllInFlight ? 'default' : 'pointer'};">
+              ${input.explainAllInFlight ? 'Analyzing missed questions…' : completedExplanations ? 'Rebuild teaching review' : `Explain my ${summary.missedCount} missed question${summary.missedCount === 1 ? '' : 's'}`}
             </button>
           </div>`
-        : `<p style="margin:0;font-size:13px;color:#15803d;font-weight:600;">Clean sweep — nothing missed on this attempt.</p>`
+        : `<p style="margin:0;font-size:13px;color:#d1fae5;font-weight:700;">Clean sweep — nothing missed on this attempt.</p>`
     }
-  </div>`);
+  </section>`);
   content.appendChild(header);
   header.querySelector('#rb-explain-misses')?.addEventListener('click', () => hooks.onExplainAllMisses());
 
@@ -248,7 +250,7 @@ export function appendHimalayaReviewBoard(
   }
 
   const defaultRowState: ReviewBoardRowState = { expanded: false, loading: false, explanation: null, error: null };
-  const list = createElement(`<ul style="margin:0;padding:0;display:grid;gap:8px;">
+  const list = createElement(`<section style="display:grid;gap:8px;"><div style="display:flex;align-items:end;justify-content:space-between;gap:12px;"><div><p style="margin:0;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#0f766e;font-weight:800;">Question map</p><h2 style="margin:3px 0 0;font-size:17px;color:#18202b;">Review every answer</h2></div><span style="font-size:12px;color:#64748b;">Tap to expand</span></div><ul style="margin:0;padding:0;display:grid;gap:8px;">
     ${rows
       .map((row) =>
         renderRow({
@@ -259,7 +261,7 @@ export function appendHimalayaReviewBoard(
         })
       )
       .join('')}
-  </ul>`);
+  </ul></section>`);
   content.appendChild(list);
 
   list.querySelectorAll<HTMLButtonElement>('[data-toggle-id]').forEach((button) => {

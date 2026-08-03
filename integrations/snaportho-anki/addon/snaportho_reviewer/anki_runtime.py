@@ -2,7 +2,7 @@ import hashlib
 from .resolver import Resolution
 def current_profile_hash(mw):return hashlib.sha256(str(mw.pm.name).encode()).hexdigest()[:16]
 class CollectionGateway:
-    def __init__(self,col):self.col=col
+    def __init__(self,col):self.col=col;self._canonical_cards=None
     def cards_by_guid_ordinal(self,guid,ordinal):
         note_ids=self.col.db.list("select id from notes where guid=?",guid)
         cards=[]
@@ -11,10 +11,29 @@ class CollectionGateway:
                 card=self.col.get_card(cid)
                 if card.ord==ordinal:cards.append(card)
         return cards
+    def cards_by_canonical_id(self,canonical_card_id):
+        """Find Versioned SnapOrtho cards by their stable release marker."""
+        if not canonical_card_id:return[]
+        if self._canonical_cards is None:
+            self._canonical_cards={}
+            for cid in self.col.find_cards(""):
+                card=self.col.get_card(cid)
+                marker=self.installed_identity(card).get("canonicalCardId")
+                if marker:self._canonical_cards.setdefault(marker,[]).append(card)
+        return self._canonical_cards.get(canonical_card_id,[])
     def content_hash(self,card):
         from .editor import proposed_content_hash
         note=card.note();fields=[{"name":name,"value":note[name]}for name in note.keys()]
         return proposed_content_hash(fields,sorted(note.tags),card.ord)
+    def installed_identity(self,card):
+        """Read the immutable identity pinned by the Versioned SnapOrtho deck."""
+        from .sync import field_value,MASTER_ID_FIELDS,VERSION_FIELDS,HASH_FIELDS
+        note=card.note()
+        return{
+            "canonicalCardId":field_value(note,MASTER_ID_FIELDS),
+            "canonicalCardVersionId":field_value(note,VERSION_FIELDS),
+            "contentHash":field_value(note,HASH_FIELDS),
+        }
     def rendered(self,card):return card.question(),card.answer()
     def editable(self,card):
         note=card.note();return[{"name":name,"value":note[name]}for name in note.keys()],sorted(note.tags),self.col.decks.name(card.did)

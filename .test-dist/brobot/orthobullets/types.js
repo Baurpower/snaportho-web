@@ -152,12 +152,71 @@ const CurriculumSectionSchema = zod_1.z.object({
     level: zod_1.z.number().int().min(1).max(6).optional(),
     text: zod_1.z.string().trim().min(1).max(20000),
 });
+function clampString(value, max) {
+    return typeof value === 'string' && value.length > max ? value.slice(0, max) : value;
+}
+function clampArray(value, max, mapItem) {
+    if (!Array.isArray(value))
+        return value;
+    const sliced = value.length > max ? value.slice(0, max) : value;
+    return mapItem ? sliced.map(mapItem) : sliced;
+}
+// Curriculum requests forward the raw extracted page context, but the server
+// reconstructs the page context it actually uses from `curriculum`
+// (see buildCurriculumPageContext in the explain route). Rich curriculum pages
+// routinely exceed the per-field caps in OrthobulletsPageContextSchema — e.g.
+// more than 20 images or 12 breadcrumbs — which previously rejected the whole
+// request as `invalid_request_shape` ("formats do not match"). Clamp the
+// pass-through fields to their caps so a large-but-valid page is accepted
+// rather than failing. Only shortens over-cap data; valid data is untouched.
+function clampCurriculumPageContext(value) {
+    if (!value || typeof value !== 'object')
+        return value;
+    const ctx = { ...value };
+    ctx.title = clampString(ctx.title, 300);
+    ctx.date = clampString(ctx.date, 120);
+    ctx.contentText = clampString(ctx.contentText, 240000);
+    ctx.contentMarkdown = clampString(ctx.contentMarkdown, 240000);
+    ctx.breadcrumbs = clampArray(ctx.breadcrumbs, 12, (item) => clampString(item, 200));
+    ctx.authors = clampArray(ctx.authors, 12, (item) => clampString(item, 200));
+    ctx.sectionHeadings = clampArray(ctx.sectionHeadings, 120, (item) => clampString(item, 240));
+    ctx.references = clampArray(ctx.references, 40, (item) => clampString(item, 1200));
+    ctx.learningObjectives = clampArray(ctx.learningObjectives, 20, (item) => clampString(item, 400));
+    ctx.tablesMarkdown = clampArray(ctx.tablesMarkdown, 8, (item) => clampString(item, 2000));
+    ctx.extractionWarnings = clampArray(ctx.extractionWarnings, 20, (item) => clampString(item, 300));
+    ctx.linkedConcepts = clampArray(ctx.linkedConcepts, 20, (item) => {
+        if (!item || typeof item !== 'object')
+            return item;
+        const concept = { ...item };
+        concept.label = clampString(concept.label, 240);
+        concept.href = clampString(concept.href, 2000);
+        return concept;
+    });
+    ctx.images = clampArray(ctx.images, 20, (item) => {
+        if (!item || typeof item !== 'object')
+            return item;
+        const image = { ...item };
+        image.src = clampString(image.src, 2000);
+        image.alt = clampString(image.alt, 500);
+        image.caption = clampString(image.caption, 1000);
+        return image;
+    });
+    ctx.contentSections = clampArray(ctx.contentSections, 120, (item) => {
+        if (!item || typeof item !== 'object')
+            return item;
+        const section = { ...item };
+        section.heading = clampString(section.heading, 240);
+        section.text = clampString(section.text, 20000);
+        return section;
+    });
+    return ctx;
+}
 exports.CurriculumExplainRequestSchema = zod_1.z.object({
     contractVersion: zod_1.z.literal('curriculum-explain-v2').default('curriculum-explain-v2'),
     task: zod_1.z.literal('curriculum_explain'),
     provider: zod_1.z.enum(['orthobullets', 'rock']),
     sourceUrl: zod_1.z.string().trim().url(),
-    pageContext: exports.OrthobulletsPageContextSchema,
+    pageContext: zod_1.z.preprocess(clampCurriculumPageContext, exports.OrthobulletsPageContextSchema),
     emphasis: curriculum_types_1.CurriculumExplainEmphasisSchema.default('high_yield'),
     curriculum: zod_1.z.object({
         title: zod_1.z.string().trim().min(1).max(300),

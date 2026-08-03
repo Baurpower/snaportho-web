@@ -576,7 +576,7 @@ assert.ok(himalayaOverviewContext.extractionWarnings.includes('himalaya_results_
 
 const himalayaModalHtml = readFileSync(path.join(FIXTURES_DIR, 'himalaya-results-review-modal.html'), 'utf8');
 const { document: himalayaModalDocument } = parseHTML(himalayaModalHtml);
-const himalayaModalContext = extractQuestionContext({
+const himalayaModalContext = extractHimalayaPageContext({
   document: himalayaModalDocument,
   pageUrl: 'https://learn.aaos.org/diweb/?wicket:interface=:4::::',
 });
@@ -596,7 +596,7 @@ assert.equal(himalayaModalContext.classification?.pageKind, 'question');
 // Choices are bare <li> under .answers > ul, remediation lives in hidden uib-tab panes.
 const himalayaTe6ModalHtml = readFileSync(path.join(FIXTURES_DIR, 'himalaya-te6-review-modal.html'), 'utf8');
 const { document: himalayaTe6ModalDocument } = parseHTML(himalayaTe6ModalHtml);
-const himalayaTe6ModalContext = extractQuestionContext({
+const himalayaTe6ModalContext = extractHimalayaPageContext({
   document: himalayaTe6ModalDocument,
   pageUrl: 'https://learn.aaos.org/diweb/?wicket:interface=:3::::',
 });

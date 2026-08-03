@@ -207,6 +207,50 @@ assert.equal(
   'valid question explain payload should pass'
 );
 
+// Regression: a rich curriculum page whose forwarded pageContext exceeds the
+// per-field caps (e.g. >20 images, >12 breadcrumbs, long title) must still be
+// accepted. Previously these were rejected wholesale as `invalid_request_shape`
+// ("extension and server curriculum formats do not match"); the server now
+// clamps the pass-through pageContext because it rebuilds the context it uses
+// from `curriculum`.
+const overCapCurriculumPayload = {
+  contractVersion: 'curriculum-explain-v2' as const,
+  task: 'curriculum_explain' as const,
+  provider: 'rock' as const,
+  sourceUrl: 'https://rock.aaos.org/coursecontent.aspx?id=6004007',
+  pageContext: {
+    ...curriculumPageContext,
+    title: 'General Anesthesia '.repeat(30), // > 300 chars
+    breadcrumbs: Array.from({ length: 18 }, (_, index) => `Breadcrumb ${index + 1}`), // > 12
+    sectionHeadings: Array.from({ length: 140 }, (_, index) => `Heading ${index + 1}`), // > 120
+    references: Array.from({ length: 55 }, (_, index) => `Reference ${index + 1}`), // > 40
+    linkedConcepts: Array.from({ length: 30 }, (_, index) => ({ label: `Concept ${index + 1}` })), // > 20
+    images: Array.from({ length: 30 }, (_, index) => ({
+      src: `https://rock.aaos.org/img/${index}.png`,
+      alt: 'Anatomical figure '.repeat(40), // > 500 chars
+    })), // > 20
+    contentText: null,
+    contentMarkdown: null,
+    contentSections: [],
+  },
+  curriculum: {
+    title: 'General Anesthesia',
+    breadcrumbs: ['Basic Science', 'Anesthesia'],
+    sections: [{ heading: 'ASA Classification', text: 'Preoperative evaluation and ASA classification. '.repeat(30) }],
+  },
+};
+const parsedOverCapCurriculum = CurriculumExplainRequestSchema.safeParse(overCapCurriculumPayload);
+assert.equal(
+  parsedOverCapCurriculum.success,
+  true,
+  parsedOverCapCurriculum.success ? undefined : JSON.stringify(parsedOverCapCurriculum.error.issues)
+);
+if (parsedOverCapCurriculum.success) {
+  assert.ok(parsedOverCapCurriculum.data.pageContext.images.length <= 20, 'images should be clamped to the cap');
+  assert.ok((parsedOverCapCurriculum.data.pageContext.breadcrumbs?.length ?? 0) <= 12, 'breadcrumbs should be clamped to the cap');
+  assert.ok((parsedOverCapCurriculum.data.pageContext.title?.length ?? 0) <= 300, 'title should be clamped to the cap');
+}
+
 assert.equal(
   OrthobulletsChatRequestSchema.safeParse({
     pageContext: {

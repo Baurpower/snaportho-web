@@ -185,6 +185,25 @@ class ReviewerTests(unittest.TestCase):
   body={"resolution":{"status":"resolved","nativeId":"123","canonicalEntities":[{"label":"Patellar instability"}]},"results":results}
   summary=result_summary(body,local)
   self.assertIn("Patellar instability",summary);self.assertIn("2 available locally",summary);self.assertIn("differ from the current canonical version",summary)
+ def test_versioned_deck_markers_are_the_search_identity(self):
+  class MarkerGateway(Gateway):
+   def installed_identity(self,card):
+    return{"canonicalCardId":"card-1","canonicalCardVersionId":"version-1","contentHash":"a"*64}
+  result={"canonicalCardId":"card-1","canonicalCardVersionId":"version-1","contentHash":"a"*64,"noteGuid":"guid","cardOrdinal":0}
+  local=resolve_local_results(MarkerGateway([Card(11,"wrong-recomputed-hash")]),[result])
+  self.assertEqual(local["cardIds"],[11])
+  self.assertEqual(local["dispositions"][0]["status"],"available")
+  stale={**result,"canonicalCardVersionId":"version-2","contentHash":"b"*64}
+  self.assertEqual(resolve_local_results(MarkerGateway([Card(11,"ignored")]),[stale])["dispositions"][0]["status"],"version_mismatch")
+ def test_canonical_marker_lookup_survives_note_guid_changes(self):
+  class MarkerLookupGateway:
+   def cards_by_canonical_id(self,canonical_id):return [Card(42,"")] if canonical_id=="card-1" else []
+   def cards_by_guid_ordinal(self,guid,ordinal):return []
+   def installed_identity(self,card):return{"canonicalCardId":"card-1","canonicalCardVersionId":"version-1","contentHash":"a"*64}
+  result={"canonicalCardId":"card-1","canonicalCardVersionId":"version-1","contentHash":"a"*64,"noteGuid":"new-guid","cardOrdinal":0}
+  resolved=resolve_local_results(MarkerLookupGateway(),[result])
+  self.assertEqual(resolved["cardIds"],[42])
+  self.assertEqual(resolved["dispositions"][0]["status"],"available")
  def test_assignment_surface_is_removed(self):
   api=ReviewerApi("http://127.0.0.1:3000")
   for gone in("assignments","assignment","start_assignment","submit_mapping","submit_proposal","submit_assignment"):
@@ -200,6 +219,11 @@ class ReviewerTests(unittest.TestCase):
   self.assertIn('"errorCode":"browse_open_failed"',relay)
   self.assertNotIn("local_concept_card_ids",relay)
   self.assertIn('"localSupplementCount":0',relay)
+ def test_relay_opens_browse_through_main_window_action(self):
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","resource_search.py"))as source:
+   text=source.read()
+  browse=text[text.index("def open_browse_with_card_ids"):text.index("def result_summary")]
+  self.assertLess(browse.index('mw.onBrowse()'),browse.index('dialogs.open("Browser", mw)'))
  def test_question_relay_does_not_apply_the_topic_page_cap(self):
   with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:
    text=source.read()

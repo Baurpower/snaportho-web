@@ -153,6 +153,39 @@ const invalidResult = validateCurriculumExplainRequest(invalidTablesRequest);
 assert.equal(invalidResult.success, false);
 assert.equal(invalidResult.issues.some((issue) => issue.path === 'curriculum.tables.1.rows.0.0' && issue.code === 'too_big'), true);
 
+// The client validator's emphasis enum must match the server
+// (CurriculumExplainEmphasisSchema): high_yield | clinical | boards | or.
+// A stale list previously rejected every non-default study tab as
+// client_contract_validation_failed.
+for (const emphasis of ['high_yield', 'clinical', 'boards', 'or'] as const) {
+  assert.equal(
+    validateCurriculumExplainRequest({ ...hipResurfacingRequest, emphasis }).success,
+    true,
+    `emphasis "${emphasis}" must satisfy client validation`
+  );
+}
+assert.equal(validateCurriculumExplainRequest({ ...hipResurfacingRequest, emphasis: 'board_review' }).success, false);
+
+// The builder must forward a page context within the server's schema caps even
+// when the source page is metadata-rich (this was the root cause of the
+// "extension and server curriculum formats do not match" error).
+const richMetadataContext: OrthobulletsPageContext = {
+  ...hipResurfacingContext,
+  title: 'General Anesthesia '.repeat(30),
+  breadcrumbs: Array.from({ length: 18 }, (_, index) => `Breadcrumb ${index + 1}`),
+  sectionHeadings: Array.from({ length: 140 }, (_, index) => `Heading ${index + 1}`),
+  references: Array.from({ length: 55 }, (_, index) => `Reference ${index + 1}`),
+  linkedConcepts: Array.from({ length: 30 }, (_, index) => ({ label: `Concept ${index + 1}` })),
+  images: Array.from({ length: 30 }, (_, index) => ({ src: `https://rock.aaos.org/img/${index}.png`, alt: 'Anatomical figure '.repeat(40) })),
+};
+const richMetadataRequest = buildCurriculumExplainRequest(richMetadataContext);
+assert.ok((richMetadataRequest.pageContext.title?.length ?? 0) <= 300, 'title must be bounded to 300');
+assert.ok((richMetadataRequest.pageContext.breadcrumbs?.length ?? 0) <= 12, 'breadcrumbs must be bounded to 12');
+assert.ok((richMetadataRequest.pageContext.references?.length ?? 0) <= 40, 'references must be bounded to 40');
+assert.ok((richMetadataRequest.pageContext.linkedConcepts?.length ?? 0) <= 20, 'linkedConcepts must be bounded to 20');
+assert.equal(richMetadataRequest.pageContext.images.length, 0, 'images are carried in curriculum.images');
+assert.equal(richMetadataRequest.pageContext.sectionHeadings?.length, 0, 'section headings are rebuilt from curriculum');
+
 assert.equal(isCompatibleExtensionBuild({ extensionBuildId: EXTENSION_BUILD_ID, routingContractVersion: ROUTING_CONTRACT_VERSION }), true);
 assert.equal(isCompatibleExtensionBuild({ extensionBuildId: 'stale-build', routingContractVersion: ROUTING_CONTRACT_VERSION }), false);
 

@@ -16,6 +16,13 @@ import {
   CurriculumParseError,
   parseCurriculumStudyResponse,
 } from '@/lib/brobot/orthobullets/curriculum-response-parser';
+import {
+  buildPartialCurriculumResponse,
+  curriculumErrorSummary,
+  CurriculumPipelineError,
+  isCurriculumModelUnavailableError,
+  withCurriculumRetry,
+} from '@/lib/brobot/orthobullets/curriculum-pipeline';
 import { resolveOrthobulletsContext } from '@/lib/brobot/orthobullets/context-resolver';
 import {
   CurriculumExplainRequestSchema,
@@ -26,6 +33,7 @@ import { recordSuccessfulAIUse, recordUsageEvent } from '@/lib/brobot/usage';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 
 const EXTENSION_TOKEN_HEADER = 'x-snaportho-extension-token';
+const MODEL_TIMEOUT_MS = 45_000;
 
 function hashText(value: string | null | undefined): string | null {
   if (!value) return null;
@@ -38,7 +46,7 @@ function disabledResponse() {
       error: 'disabled',
       message: 'BroBot curriculum explanations are currently unavailable.',
     },
-    { status: 403 }
+    { status: 403 },
   );
 }
 
@@ -49,7 +57,7 @@ function limitReachedResponse(dailyCap: number | null) {
       message: 'Daily BroBot limit reached.',
       dailyCap,
     },
-    { status: 429 }
+    { status: 429 },
   );
 }
 
@@ -60,7 +68,14 @@ type SafeValidationIssue = {
   expected?: string;
 };
 
-function sanitizeValidationIssues(issues: readonly { path: PropertyKey[]; code: string; message: string; expected?: unknown }[]): SafeValidationIssue[] {
+function sanitizeValidationIssues(
+  issues: readonly {
+    path: PropertyKey[];
+    code: string;
+    message: string;
+    expected?: unknown;
+  }[],
+): SafeValidationIssue[] {
   return issues.slice(0, 20).map((issue) => ({
     path: issue.path.map(String).join('.'),
     code: issue.code,
@@ -72,15 +87,13 @@ function sanitizeValidationIssues(issues: readonly { path: PropertyKey[]; code: 
 function summarizeCurriculumRequest(value: unknown) {
   if (!value || typeof value !== 'object') return { receivedType: value === null ? 'null' : typeof value };
   const body = value as Record<string, unknown>;
-  const curriculum = body.curriculum && typeof body.curriculum === 'object'
-    ? body.curriculum as Record<string, unknown>
-    : null;
-  const pageContext = body.pageContext && typeof body.pageContext === 'object'
-    ? body.pageContext as Record<string, unknown>
-    : null;
+  const curriculum =
+    body.curriculum && typeof body.curriculum === 'object' ? (body.curriculum as Record<string, unknown>) : null;
+  const pageContext =
+    body.pageContext && typeof body.pageContext === 'object' ? (body.pageContext as Record<string, unknown>) : null;
   const sections = Array.isArray(curriculum?.sections) ? curriculum.sections : [];
-  const firstSection = sections[0] && typeof sections[0] === 'object' ? sections[0] as Record<string, unknown> : null;
-  const stringSize = (input: unknown) => typeof input === 'string' ? input.length : null;
+  const firstSection = sections[0] && typeof sections[0] === 'object' ? (sections[0] as Record<string, unknown>) : null;
+  const stringSize = (input: unknown) => (typeof input === 'string' ? input.length : null);
   return {
     topLevelKeys: Object.keys(body).sort(),
     task: typeof body.task === 'string' ? body.task : typeof body.task,
@@ -104,21 +117,45 @@ function summarizeCurriculumRequest(value: unknown) {
 
 function curriculumValidationError(parsedBody: unknown, issues: SafeValidationIssue[] = []) {
   if (!parsedBody || typeof parsedBody !== 'object') {
-    return { error: 'invalid_request_shape', message: 'The curriculum request format was not recognized.', issues };
+    return {
+      error: 'invalid_request_shape',
+      message: 'The curriculum request format was not recognized.',
+      issues,
+    };
   }
-  const body = parsedBody as { provider?: unknown; curriculum?: { sections?: unknown[]; visibleText?: unknown } };
+  const body = parsedBody as {
+    provider?: unknown;
+    curriculum?: { sections?: unknown[]; visibleText?: unknown };
+  };
   if (body.provider != null && body.provider !== 'rock' && body.provider !== 'orthobullets') {
-    return { error: 'unsupported_provider', message: 'This curriculum provider is not supported.', issues };
+    return {
+      error: 'unsupported_provider',
+      message: 'This curriculum provider is not supported.',
+      issues,
+    };
   }
   const sectionCount = Array.isArray(body.curriculum?.sections) ? body.curriculum.sections.length : 0;
-  const visibleTextLength = typeof body.curriculum?.visibleText === 'string' ? body.curriculum.visibleText.trim().length : 0;
+  const visibleTextLength =
+    typeof body.curriculum?.visibleText === 'string' ? body.curriculum.visibleText.trim().length : 0;
   if (sectionCount === 0 && visibleTextLength === 0) {
-    return { error: 'missing_sections', message: 'No readable curriculum sections were provided.', issues };
+    return {
+      error: 'missing_sections',
+      message: 'No readable curriculum sections were provided.',
+      issues,
+    };
   }
   if (JSON.stringify(parsedBody).length > 500000) {
-    return { error: 'document_too_large', message: 'BroBot prepared the major sections first. Choose a remaining section to continue.', issues };
+    return {
+      error: 'document_too_large',
+      message: 'BroBot prepared the major sections first. Choose a remaining section to continue.',
+      issues,
+    };
   }
-  return { error: 'invalid_request_shape', message: 'The extension and server curriculum formats do not match.', issues };
+  return {
+    error: 'invalid_request_shape',
+    message: 'The extension and server curriculum formats do not match.',
+    issues,
+  };
 }
 
 function buildCurriculumPageContext(request: CurriculumExplainRequest): OrthobulletsPageContext {
@@ -129,12 +166,14 @@ function buildCurriculumPageContext(request: CurriculumExplainRequest): Orthobul
     heading: section.heading?.trim() || request.curriculum.title,
     text: section.text.trim(),
   }));
-  const tableMarkdown = (request.curriculum.tables ?? []).map((table) => {
-    const caption = table.caption ? `${table.caption}\n` : '';
-    const headers = table.headers?.length ? `${table.headers.join(' | ')}\n` : '';
-    const rows = table.rows.map((row) => row.join(' | ')).join('\n');
-    return `${caption}${headers}${rows}`.trim();
-  }).filter(Boolean);
+  const tableMarkdown = (request.curriculum.tables ?? [])
+    .map((table) => {
+      const caption = table.caption ? `${table.caption}\n` : '';
+      const headers = table.headers?.length ? `${table.headers.join(' | ')}\n` : '';
+      const rows = table.rows.map((row) => row.join(' | ')).join('\n');
+      return `${caption}${headers}${rows}`.trim();
+    })
+    .filter(Boolean);
   const contentText =
     request.curriculum.visibleText?.trim() ||
     contentSections.map((section) => `${section.heading}\n${section.text}`).join('\n\n');
@@ -157,11 +196,12 @@ function buildCurriculumPageContext(request: CurriculumExplainRequest): Orthobul
     contentSections,
     tablesMarkdown: tableMarkdown,
     tablesCount: request.curriculum.tables?.length ?? request.pageContext.tablesCount ?? 0,
-    images: request.curriculum.images?.map((image) => ({
-      src: image.src,
-      alt: image.alt,
-      caption: image.caption,
-    })) ?? request.pageContext.images,
+    images:
+      request.curriculum.images?.map((image) => ({
+        src: image.src,
+        alt: image.alt,
+        caption: image.caption,
+      })) ?? request.pageContext.images,
     answerChoices: [],
     percentDistribution: [],
     linkedConcepts: request.pageContext.linkedConcepts ?? [],
@@ -196,7 +236,7 @@ export async function POST(request: Request) {
     });
     return NextResponse.json(
       process.env.NODE_ENV === 'production' ? { error: error.error, message: error.message } : error,
-      { status: 400 }
+      { status: 400 },
     );
   }
   if (!parsedBody || typeof parsedBody !== 'object' || !('contractVersion' in parsedBody)) {
@@ -231,15 +271,24 @@ export async function POST(request: Request) {
   });
   const contentCharCount = pageContext.contentText?.length ?? 0;
   const pageId = stableLearningPageHash(`${parsed.data.sourceUrl}|${pageContext.title ?? ''}`).slice(0, 20);
-  const contentHash = stableLearningPageHash(parsed.data.curriculum.sections
-    .map((section) => `${section.id ?? ''}|${section.heading ?? ''}|${section.text}`)
-    .join('\n'));
+  const contentHash = stableLearningPageHash(
+    parsed.data.curriculum.sections
+      .map((section) => `${section.id ?? ''}|${section.heading ?? ''}|${section.text}`)
+      .join('\n'),
+  );
   const chunks = chunkLearningPage({
     pageId,
     title: pageContext.title ?? 'Curriculum page',
     sections: parsed.data.curriculum.sections.length
       ? parsed.data.curriculum.sections
-      : [{ id: 'visible-text', heading: pageContext.title ?? 'Visible content', level: 1, text: parsed.data.curriculum.visibleText ?? '' }],
+      : [
+          {
+            id: 'visible-text',
+            heading: pageContext.title ?? 'Visible content',
+            level: 1,
+            text: parsed.data.curriculum.visibleText ?? '',
+          },
+        ],
   });
 
   console.log('[brobot-curriculum] explain_request', {
@@ -262,12 +311,17 @@ export async function POST(request: Request) {
 
   try {
     const model = getAnswerModelForRoute({
-        mode: 'oite',
-        ambiguity: 'low',
-        responseDepth: 'standard',
-        subintent: 'oite_traps',
+      mode: 'oite',
+      ambiguity: 'low',
+      responseDepth: 'standard',
+      subintent: 'oite_traps',
     });
-    const chunkResults: Array<{ chunkId: string; sectionIds: string[]; result: unknown } | null> = new Array(chunks.length).fill(null);
+    const chunkResults: Array<{
+      chunkId: string;
+      sectionIds: string[];
+      result: unknown;
+    } | null> = new Array(chunks.length).fill(null);
+    const chunkErrors: unknown[] = [];
     let nextChunk = 0;
     const worker = async () => {
       while (nextChunk < chunks.length) {
@@ -278,45 +332,79 @@ export async function POST(request: Request) {
             ...pageContext,
             contentText: chunk.content,
             contentMarkdown: chunk.content,
-            contentSections: [{ heading: chunk.headingPath.join(' > ') || pageContext.title || 'Section', text: chunk.content }],
+            contentSections: [
+              {
+                heading: chunk.headingPath.join(' > ') || pageContext.title || 'Section',
+                text: chunk.content,
+              },
+            ],
             sectionHeadings: chunk.headingPath,
           },
           kgLookup: null,
         });
         try {
-          const completion = await getOpenAI().chat.completions.create({
-            model,
-            temperature: 0.2,
-            response_format: { type: 'json_object' },
-            messages: buildCurriculumExplainMessages({ context: chunkContext, emphasis: parsed.data.emphasis }),
-          });
+          const completion = await withCurriculumRetry(() =>
+            getOpenAI().chat.completions.create(
+              {
+                model,
+                temperature: 0.2,
+                response_format: { type: 'json_object' },
+                messages: buildCurriculumExplainMessages({
+                  context: chunkContext,
+                  emphasis: parsed.data.emphasis,
+                }),
+              },
+              { timeout: MODEL_TIMEOUT_MS },
+            ),
+          );
           chunkResults[index] = {
             chunkId: chunk.chunkId,
             sectionIds: chunk.sectionIds,
             result: JSON.parse(completion.choices[0]?.message?.content ?? '{}'),
           };
         } catch (chunkError) {
+          chunkErrors.push(chunkError);
           console.warn('[brobot-curriculum] chunk_failure', {
             requestId,
             chunkId: chunk.chunkId,
             sequence: chunk.sequence,
-            error: chunkError instanceof Error ? chunkError.message : 'Unknown error',
+            ...curriculumErrorSummary(chunkError),
           });
         }
       }
     };
     await Promise.all(Array.from({ length: Math.min(2, chunks.length) }, () => worker()));
     const successfulChunks = chunkResults.filter((value): value is NonNullable<typeof value> => value != null);
-    if (!successfulChunks.length) throw new Error('All curriculum chunks failed.');
+    if (!successfulChunks.length) {
+      const modelUnavailableError = chunkErrors.find(isCurriculumModelUnavailableError);
+      if (modelUnavailableError) {
+        throw new CurriculumPipelineError(
+          'model_unavailable',
+          'chunk_generation',
+          'The configured model account has no available API credit.',
+          modelUnavailableError,
+        );
+      }
+      throw new CurriculumPipelineError(
+        'all_chunks_failed',
+        'chunk_generation',
+        'All curriculum section groups failed during model generation.',
+      );
+    }
 
-    const synthesis = await getOpenAI().chat.completions.create({
-      model,
-      temperature: 0.1,
-      response_format: { type: 'json_object' },
-      messages: [
-        {
-          role: 'system',
-          content: `You are BroBot, an orthopaedic teaching attending. Synthesize the supplied per-chunk JSON notes into one coherent page study response. Return JSON only with exactly these keys: oneSentenceTakeaway, inThirtySeconds, mustKnow, clinicalPearls, commonMistakes, attendingQuestions, testableFacts, suggestedFollowUps, warnings. Preserve supported clinical details, numbers, approaches, complications, and limitations; remove duplicates; never add facts absent from the chunk notes. Keep the result concise for a narrow side panel.
+    let synthesisRaw: string;
+    let usedPartialFallback = false;
+    try {
+      const synthesis = await withCurriculumRetry(() =>
+        getOpenAI().chat.completions.create(
+          {
+            model,
+            temperature: 0.1,
+            response_format: { type: 'json_object' },
+            messages: [
+              {
+                role: 'system',
+                content: `You are BroBot, an orthopaedic teaching attending. Synthesize the supplied per-chunk JSON notes into one coherent page study response. Return JSON only with exactly these keys: oneSentenceTakeaway, inThirtySeconds, mustKnow, clinicalPearls, commonMistakes, attendingQuestions, testableFacts, suggestedFollowUps, warnings. Preserve supported clinical details, numbers, approaches, complications, and limitations; remove duplicates; never add facts absent from the chunk notes. Keep the result concise for a narrow side panel.
 
 HARD FORMAT LIMITS (responses violating these are discarded):
 - oneSentenceTakeaway: one sentence, under 280 characters.
@@ -326,36 +414,70 @@ HARD FORMAT LIMITS (responses violating these are discarded):
 - attendingQuestions: question under 240 chars, answer under 400 chars, difficulty EXACTLY one of "MS3", "PGY1", "PGY2+".
 - suggestedFollowUps: 5-8 questions, each under 200 characters.
 - Never return an empty inThirtySeconds array.`,
-        },
-        {
-          role: 'user',
-          content: JSON.stringify({
-            title: pageContext.title,
-            emphasis: parsed.data.emphasis,
-            totalChunks: chunks.length,
-            successfulChunks: successfulChunks.length,
-            failedSectionIds: chunks.filter((_, index) => !chunkResults[index]).flatMap((chunk) => chunk.sectionIds),
-            chunkNotes: successfulChunks,
-          }),
-        },
-      ],
-    });
+              },
+              {
+                role: 'user',
+                content: JSON.stringify({
+                  title: pageContext.title,
+                  emphasis: parsed.data.emphasis,
+                  totalChunks: chunks.length,
+                  successfulChunks: successfulChunks.length,
+                  failedSectionIds: chunks
+                    .filter((_, index) => !chunkResults[index])
+                    .flatMap((chunk) => chunk.sectionIds),
+                  chunkNotes: successfulChunks,
+                }),
+              },
+            ],
+          },
+          { timeout: MODEL_TIMEOUT_MS },
+        ),
+      );
+      synthesisRaw = synthesis.choices[0]?.message?.content ?? '';
+    } catch (synthesisError) {
+      usedPartialFallback = true;
+      console.warn('[brobot-curriculum] synthesis_failure_recovered', {
+        requestId,
+        successfulChunks: successfulChunks.length,
+        failedChunks: chunks.length - successfulChunks.length,
+        ...curriculumErrorSummary(synthesisError),
+      });
+      synthesisRaw = buildPartialCurriculumResponse(successfulChunks, chunks.length - successfulChunks.length);
+    }
 
     const latencyMs = Date.now() - startedAt;
-    const usedAfter = await recordSuccessfulAIUse(subject, latencyMs);
-    const remainingToday =
-      entitlement.aiAccess.dailyCap != null
-        ? Math.max(0, entitlement.aiAccess.dailyCap - usedAfter)
-        : null;
+    const remainingToday = entitlement.aiAccess.unlimited
+      ? null
+      : Math.max(0, (entitlement.aiAccess.remainingToday ?? 1) - 1);
+    let response;
+    try {
+      response = parseCurriculumStudyResponse({
+        raw: synthesisRaw,
+        explanationId: crypto.randomUUID(),
+        emphasis: parsed.data.emphasis,
+        remainingToday,
+        dailyCap: entitlement.aiAccess.dailyCap,
+        unlimited: entitlement.aiAccess.unlimited,
+      });
+    } catch (parseError) {
+      throw new CurriculumPipelineError(
+        'parse_failure',
+        'response_parsing',
+        parseError instanceof Error ? parseError.message : 'Curriculum response parsing failed.',
+        parseError,
+      );
+    }
 
-    const response = parseCurriculumStudyResponse({
-      raw: synthesis.choices[0]?.message?.content ?? '',
-      explanationId: crypto.randomUUID(),
-      emphasis: parsed.data.emphasis,
-      remainingToday,
-      dailyCap: entitlement.aiAccess.dailyCap,
-      unlimited: entitlement.aiAccess.unlimited,
-    });
+    try {
+      await recordSuccessfulAIUse(subject, latencyMs);
+    } catch (usageError) {
+      // The user already has a valid response. Usage persistence is important,
+      // but must not discard completed clinical teaching content.
+      console.error('[brobot-curriculum] usage_recording_failed', {
+        requestId,
+        ...curriculumErrorSummary(usageError),
+      });
+    }
 
     console.log('[brobot-curriculum] explain_success', {
       requestId,
@@ -365,6 +487,7 @@ HARD FORMAT LIMITS (responses violating these are discarded):
       chunkCount: chunks.length,
       successfulChunks: successfulChunks.length,
       coveragePercent: Math.round((successfulChunks.length / chunks.length) * 100),
+      usedPartialFallback,
       remainingToday,
     });
 
@@ -383,16 +506,45 @@ HARD FORMAT LIMITS (responses violating these are discarded):
       error: error instanceof Error ? error.message : 'Unknown error',
     });
 
-    if (error instanceof CurriculumParseError) {
+    if (
+      error instanceof CurriculumParseError ||
+      (error instanceof CurriculumPipelineError && error.code === 'parse_failure')
+    ) {
       return NextResponse.json(
-        { error: 'parse_failure', message: "BroBot's curriculum response could not be parsed. Please try again." },
-        { status: 502 }
+        {
+          error: 'parse_failure',
+          message: "BroBot's curriculum response could not be parsed. Please try again.",
+          requestId,
+        },
+        { status: 502 },
+      );
+    }
+
+    if (error instanceof CurriculumPipelineError) {
+      const status = error.code === 'model_unavailable' || error.code === 'all_chunks_failed' ? 503 : 502;
+      return NextResponse.json(
+        {
+          error: error.code,
+          message:
+            error.code === 'model_unavailable'
+              ? 'BroBot API credits are exhausted. Add OpenAI API credits, then retry.'
+              : error.code === 'all_chunks_failed'
+              ? 'BroBot could not process any section of this page. Please retry.'
+              : 'BroBot could not complete the curriculum explanation. Please retry.',
+          requestId,
+          stage: error.stage,
+        },
+        { status },
       );
     }
 
     return NextResponse.json(
-      { error: 'api_failure', message: 'BroBot could not generate a curriculum explanation.' },
-      { status: 500 }
+      {
+        error: 'api_failure',
+        message: 'BroBot could not generate a curriculum explanation.',
+        requestId,
+      },
+      { status: 500 },
     );
   }
 }

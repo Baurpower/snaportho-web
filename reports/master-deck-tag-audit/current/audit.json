@@ -1,0 +1,1550 @@
+{
+  "contract_version": "snaportho-master-deck-tag-audit.v1",
+  "recommendation": "DO_NOT_PUBLISH",
+  "safety": {
+    "database_access": "read_only",
+    "mutations": 0
+  },
+  "blockers": [
+    "manifest_does_not_cover_full_deck",
+    "clinical_tags_without_assertion_provenance",
+    "canonical_tag_collisions",
+    "known_ontology_path_errors"
+  ],
+  "generated_at": "2026-08-02T00:00:21.758Z",
+  "manifest_id": "bb11f274-4162-45db-8dca-28d098ba087c",
+  "manifest_key": "snaportho-tags-anatomy-hierarchy-v1",
+  "deck_release_id": "a2949ed3-f974-4627-b3fd-b8249fa20ddb",
+  "deck_cards": 5095,
+  "tagged_cards": 3071,
+  "untagged_cards": 2024,
+  "coverage_percent": 60.3,
+  "distinct_rendered_tags": 451,
+  "rendered_tag_assignments": 9688,
+  "one_off_tag_count": 110,
+  "source_kind_counts": [
+    [
+      "assertion",
+      4041
+    ],
+    [
+      "release_marker",
+      5647
+    ]
+  ],
+  "unexplained_clinical_tag_count": 5647,
+  "cards_by_tag_count": [
+    [
+      "1",
+      1088
+    ],
+    [
+      "2",
+      342
+    ],
+    [
+      "3",
+      386
+    ],
+    [
+      "4",
+      520
+    ],
+    [
+      "5",
+      281
+    ],
+    [
+      "6",
+      199
+    ],
+    [
+      "7",
+      125
+    ],
+    [
+      "8",
+      56
+    ],
+    [
+      "9",
+      39
+    ],
+    [
+      "10",
+      13
+    ],
+    [
+      "11",
+      13
+    ],
+    [
+      "12",
+      3
+    ],
+    [
+      "13",
+      1
+    ],
+    [
+      "14",
+      1
+    ],
+    [
+      "15",
+      1
+    ],
+    [
+      "16",
+      1
+    ],
+    [
+      "19",
+      2
+    ]
+  ],
+  "singular_plural_collisions": [
+    [
+      {
+        "tag": "SnapOrtho::Diagnosis::Ankle_Fracture",
+        "count": 10
+      },
+      {
+        "tag": "SnapOrtho::Diagnosis::Ankle_Fractures",
+        "count": 5
+      }
+    ],
+    [
+      {
+        "tag": "SnapOrtho::Diagnosis::Subtrochanteric_Fracture",
+        "count": 4
+      },
+      {
+        "tag": "SnapOrtho::Diagnosis::Subtrochanteric_Fractures",
+        "count": 2
+      }
+    ],
+    [
+      {
+        "tag": "SnapOrtho::Diagnosis::Distal_Radius_Fractures",
+        "count": 4
+      },
+      {
+        "tag": "SnapOrtho::Diagnosis::Distal_Radius_Fracture",
+        "count": 22
+      }
+    ],
+    [
+      {
+        "tag": "SnapOrtho::Diagnosis::Femoral_Neck_Fracture",
+        "count": 16
+      },
+      {
+        "tag": "SnapOrtho::Diagnosis::Femoral_Neck_Fractures",
+        "count": 14
+      }
+    ],
+    [
+      {
+        "tag": "SnapOrtho::Diagnosis::Intertrochanteric_Fracture",
+        "count": 1
+      },
+      {
+        "tag": "SnapOrtho::Diagnosis::Intertrochanteric_Fractures",
+        "count": 2
+      }
+    ],
+    [
+      {
+        "tag": "SnapOrtho::Diagnosis::Tibial_Shaft_Fractures",
+        "count": 13
+      },
+      {
+        "tag": "SnapOrtho::Diagnosis::Tibial_Shaft_Fracture",
+        "count": 7
+      }
+    ],
+    [
+      {
+        "tag": "SnapOrtho::Diagnosis::Distal_Femur_Fracture",
+        "count": 6
+      },
+      {
+        "tag": "SnapOrtho::Diagnosis::Distal_Femur_Fractures",
+        "count": 4
+      }
+    ],
+    [
+      {
+        "tag": "SnapOrtho::Diagnosis::Tibial_Plateau_Fracture",
+        "count": 16
+      },
+      {
+        "tag": "SnapOrtho::Diagnosis::Tibial_Plateau_Fractures",
+        "count": 8
+      }
+    ],
+    [
+      {
+        "tag": "SnapOrtho::Diagnosis::Calcaneus_Fractures",
+        "count": 6
+      },
+      {
+        "tag": "SnapOrtho::Diagnosis::Calcaneus_Fracture",
+        "count": 10
+      }
+    ],
+    [
+      {
+        "tag": "SnapOrtho::Diagnosis::Femoral_Shaft_Fracture",
+        "count": 22
+      },
+      {
+        "tag": "SnapOrtho::Diagnosis::Femoral_Shaft_Fractures",
+        "count": 13
+      }
+    ],
+    [
+      {
+        "tag": "SnapOrtho::Diagnosis::Acetabular_Fractures",
+        "count": 2
+      },
+      {
+        "tag": "SnapOrtho::Diagnosis::Acetabular_Fracture",
+        "count": 7
+      }
+    ],
+    [
+      {
+        "tag": "SnapOrtho::Diagnosis::Humeral_Shaft_Fracture",
+        "count": 8
+      },
+      {
+        "tag": "SnapOrtho::Diagnosis::Humeral_Shaft_Fractures",
+        "count": 5
+      }
+    ],
+    [
+      {
+        "tag": "SnapOrtho::Diagnosis::Distal_Humerus_Fracture",
+        "count": 8
+      },
+      {
+        "tag": "SnapOrtho::Diagnosis::Distal_Humerus_Fractures",
+        "count": 5
+      }
+    ]
+  ],
+  "findings": [
+    {
+      "signal": "deck_spine_missing_matching_specialty",
+      "count": 39,
+      "denominator": 217,
+      "examples": [
+        {
+          "id": "528e1943-d753-483c-a306-5acfb9dff096",
+          "canonical_card_id": "433a5588-ca8e-420d-97b2-9ba30069fd42",
+          "canonical_card_version_id": "c2c6545d-5974-4db9-92a5-d87223f9933b",
+          "rendered_tags": [
+            "SnapOrtho::Specialty::Shoulder_Elbow"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::1) Netter's Concise Orthopaedic Anatomy::02 Spine::02.08 Muscles",
+          "note_guid": "O[3%l%i^s*",
+          "title": "Levator Scapulae Origin: {{c1::C1-C4 transverse process}} Insertion: {{c2::Scapula}} Action: {{c3::Elevate scapula}} Ne…"
+        },
+        {
+          "id": "b29d836d-3ea3-4261-931a-2c41c0989c6a",
+          "canonical_card_id": "6cf8b249-a627-4f87-b904-bef96850f6cb",
+          "canonical_card_version_id": "9a427d7a-0da3-4f63-a52d-79bbaf37261a",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Shoulder_Girdle",
+            "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology",
+            "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology::Clavicle",
+            "SnapOrtho::Specialty::Shoulder_Elbow"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Spine::Spine Basic & Clinical Science::Evaluation::Neck & Upper Extremity Spine Exam",
+          "note_guid": "k~p=Ga6hdr",
+          "title": "Name the nerve root based on the following primary motion, muscle innervation, and sensory area. {{c1::C4}} Motion: Sca…"
+        },
+        {
+          "id": "34c89616-eb81-41b5-93c8-d2a7649cd6d5",
+          "canonical_card_id": "ca772122-2e15-46bd-a063-206a17bb5aba",
+          "canonical_card_version_id": "a377f004-9a8e-4d33-9d6e-485d9395360c",
+          "rendered_tags": [
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::07 Spine::07.02 Trauma::Vertebral Fractures",
+          "note_guid": "Rf!NvTF-Ap",
+          "title": "What is a Hangman's fracture ? {{c1::Traumatic spondylolisthesis of the axis (C2) following fractures to the bilateral…"
+        },
+        {
+          "id": "b60556a3-adb7-431f-9243-69a4476a072e",
+          "canonical_card_id": "56af646c-e972-41e6-b882-2309f4328b1a",
+          "canonical_card_version_id": "31698df0-639f-4811-991a-3c9bcb116cca",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Osteology",
+            "SnapOrtho::Anatomy::Hand::Osteology::Distal_Phalanx",
+            "SnapOrtho::Anatomy::Hand::Osteology::Middle_Phalanx",
+            "SnapOrtho::Specialty::Hand_Upper_Extremity"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::07 Spine::07.02 Trauma::Spinal Conditions",
+          "note_guid": "h[|ujLo$ka",
+          "title": "How is a Hoffman's test performed? {{c1:: Stabilize the middle phalanx of the long finger Flick the distal phalanx into…"
+        },
+        {
+          "id": "5ac4dffa-50db-4288-ab99-ecee8420fa07",
+          "canonical_card_id": "37dda677-4699-4075-a87a-b85ea3cd1e1e",
+          "canonical_card_version_id": "761ada91-1a39-40e5-a58a-b012361f1e2c",
+          "rendered_tags": [
+            "SnapOrtho::Specialty::Hand_Upper_Extremity",
+            "SnapOrtho::Specialty::Shoulder_Elbow"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Spine::Spine Basic & Clinical Science::Evaluation::Neck & Upper Extremity Spine Exam",
+          "note_guid": "IDxOs^xXk^",
+          "title": "Name the nerve root based on the following primary motion, muscle innervation, and sensory area. {{c1::C6}} Motion: Elb…"
+        },
+        {
+          "id": "2ec2947d-e32e-43ee-9726-a72cc32a9dc6",
+          "canonical_card_id": "43ea5837-8161-4759-a663-abf9b30443b7",
+          "canonical_card_version_id": "b34835d6-3596-4d6d-b02f-72c905f8579e",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Shoulder_Girdle",
+            "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology",
+            "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology::Clavicle",
+            "SnapOrtho::Specialty::Shoulder_Elbow"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::1) Netter's Concise Orthopaedic Anatomy::02 Spine::02.08 Muscles",
+          "note_guid": "Aw8_+1$Uza",
+          "title": "Trapezius Origin: {{c1::Spinous process}} Insertion: {{c2::Clavicle}}, {{c2::scapula}} Action: {{c3::Rotate scapula}} N…"
+        },
+        {
+          "id": "fdb01b70-6638-4011-9a77-0cefcb5fb619",
+          "canonical_card_id": "8e50031c-f2f5-4368-850a-0829b7b84adc",
+          "canonical_card_version_id": "6a412a78-5615-4c03-b598-edc1119be371",
+          "rendered_tags": [
+            "SnapOrtho::Diagnosis::Adjacent_Segment_Disease"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Spine::Spine Degenerative::Cervical Conditions::Cervical Adjacent Segment Disease",
+          "note_guid": "i:;$=mtn0+",
+          "title": "To reduce the risk of adjacent segment disease, an anterior cervial plate must be placed >{{c1::5}} mm from the adjacen…"
+        },
+        {
+          "id": "42e891ff-6587-4ff9-b180-67ab65105503",
+          "canonical_card_id": "bf697069-08e5-4cc1-8c47-c650356fe5df",
+          "canonical_card_version_id": "ed8b45ea-9567-47b0-9925-336fc71b7ea8",
+          "rendered_tags": [
+            "SnapOrtho::Diagnosis::Adjacent_Segment_Disease"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Spine::Spine Degenerative::Cervical Conditions::Cervical Adjacent Segment Disease",
+          "note_guid": "ni*OVn),8Z",
+          "title": "Arthrodesis of {{c1::C2-C3::which levels?}} has the lowest risk of developing ASD (adjacent segment disease)."
+        }
+      ]
+    },
+    {
+      "signal": "deck_hand_missing_matching_specialty",
+      "count": 45,
+      "denominator": 256,
+      "examples": [
+        {
+          "id": "064584ad-9b7a-4ca8-8436-e955ea03e3b6",
+          "canonical_card_id": "d722ef3e-7786-494b-89d6-d0629ae25e87",
+          "canonical_card_version_id": "8d0e6a6c-df5c-4106-9bf7-dcd9a5f5f7aa",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Osteology",
+            "SnapOrtho::Anatomy::Hand::Osteology::Middle_Phalanx",
+            "SnapOrtho::Anatomy::Hand::Osteology::Proximal_Phalanx",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Hand::Hand Trauma::Finger Trauma::Phalanx Dislocation",
+          "note_guid": "xJn(,2O>cZ",
+          "title": "This is an example of a {{c1::simple::complex/simple}} {{c1::volar::dorsal/volar}} {{c1::PIPJ::which joint?}} dislocati…"
+        },
+        {
+          "id": "bd339a22-bd6a-4122-9735-7669c7d367f7",
+          "canonical_card_id": "68729e99-e022-4be8-ad0d-c57de65148b7",
+          "canonical_card_version_id": "ed700989-615b-4c24-9bf6-c615ed7013f6",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Ligaments",
+            "SnapOrtho::Anatomy::Hand::Ligaments::Volar_Plate"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::06 Hand::06.02 Hand Conditions::Phalanx",
+          "note_guid": "wc31o4O+*x",
+          "title": "What is a swan neck deformity ? {{c1:: PIPJ hyperextension DIPJ flexion }}"
+        },
+        {
+          "id": "221d661e-d06b-41cd-84db-05ba9f03ee2f",
+          "canonical_card_id": "e87f623e-eb98-402e-add6-e1809b6cc53c",
+          "canonical_card_version_id": "e03d7d85-7035-46b8-ac00-5d8607e4280d",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Ligaments",
+            "SnapOrtho::Anatomy::Hand::Ligaments::Volar_Plate"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::06 Hand::06.02 Hand Conditions::Metacarpal",
+          "note_guid": "VD4HGYfWa",
+          "title": "Hyperextension of the MCPJ may lead to avulsion of what structure ? {{c1::Volar plate}}"
+        },
+        {
+          "id": "752ae2d5-944e-402a-823e-69926be15710",
+          "canonical_card_id": "c034bbe1-edae-4502-825e-206a5d110798",
+          "canonical_card_version_id": "edc94420-a6ae-4cc9-86ae-07ef8d8ff7bd",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Ligaments",
+            "SnapOrtho::Anatomy::Hand::Ligaments::Volar_Plate",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::06 Hand::06.01 General Anatomy",
+          "note_guid": "x>M(LwAr)w",
+          "title": "Which structure may prevent the reduction of an interphalangeal joint dislocation ? {{c1::Volar plate}}"
+        },
+        {
+          "id": "be282b0d-0096-46a6-a480-43b3dc399e96",
+          "canonical_card_id": "60d24195-f821-473f-8ad6-3c091589d7c5",
+          "canonical_card_version_id": "4c76c802-5673-4c2f-8f62-fdf3cc41f851",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Osteology",
+            "SnapOrtho::Anatomy::Hand::Osteology::Proximal_Phalanx",
+            "SnapOrtho::Diagnosis::Proximal_Phalanx_Fracture",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::06 Hand::06.02 Hand Conditions::Phalanx",
+          "note_guid": "H,j=g+]N)V",
+          "title": "What forces create an apex volar deformity following a proximal phalanx fracture ? Proximal fragment: {{c1::Interossei…"
+        },
+        {
+          "id": "0caabd3e-f8ff-473b-a741-6aad477e476f",
+          "canonical_card_id": "d3320829-ba17-4308-8df5-bd8f420c14ca",
+          "canonical_card_version_id": "96914459-bdcd-40fa-b733-ff622cb4ea84",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Ligaments",
+            "SnapOrtho::Anatomy::Hand::Ligaments::Volar_Plate",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::06 Hand::06.02 Hand Conditions::Metacarpal",
+          "note_guid": "xg@I?h2E^~",
+          "title": "Why is traction avoided during the reduction of an MCPJ dislocation ? {{c1::May lead to interposition of the volar plat…"
+        },
+        {
+          "id": "471628e8-29ab-4e02-ac19-e6afbb999963",
+          "canonical_card_id": "44f7f55c-41de-4f32-b091-b7f6f4278a2d",
+          "canonical_card_version_id": "03c56c01-5032-41de-abb1-6806a90b39a7",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Osteology",
+            "SnapOrtho::Anatomy::Hand::Osteology::Pisiform",
+            "SnapOrtho::Anatomy::Hand::Osteology::Proximal_Phalanx"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::1) Netter's Concise Orthopaedic Anatomy::06 Hand::06.12 Muscles",
+          "note_guid": "qms6+dqH2U",
+          "title": "Abductor Digiti Minimi Origin: {{c1::Pisiform}} Insertion: {{c2::Ulnar base of proximal phalanx}} Nerve: {{c3::Ulnar}}…"
+        },
+        {
+          "id": "8952f93b-6697-4187-b059-0bd4669bcf15",
+          "canonical_card_id": "1c316f71-3980-48f1-aa8a-f50decdb571c",
+          "canonical_card_version_id": "b7656d31-57a1-41c6-8768-716cc7c68d80",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Osteology",
+            "SnapOrtho::Anatomy::Hand::Osteology::Capitate",
+            "SnapOrtho::Anatomy::Hand::Osteology::Lunate",
+            "SnapOrtho::Diagnosis::Lunate_Dislocation",
+            "SnapOrtho::Diagnosis::Perilunate_Dislocation",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::06 Hand::06.01 General Anatomy",
+          "note_guid": "HB`B{XQ},<",
+          "title": "What area of the volar palm is susceptible to lunate dislocation ? {{c1::Space of Poirier}}"
+        }
+      ]
+    },
+    {
+      "signal": "deck_foot_missing_matching_specialty",
+      "count": 95,
+      "denominator": 389,
+      "examples": [
+        {
+          "id": "7e45453a-6456-4392-adf7-36c144470586",
+          "canonical_card_id": "7ef683aa-aa1b-42bb-a3ca-35dd5f7a90d5",
+          "canonical_card_version_id": "672e1de8-1875-4837-9f08-f0f5b2d622c2",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Leg_Knee",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology::Fibula",
+            "SnapOrtho::Diagnosis::Ankle_Fracture",
+            "SnapOrtho::Diagnosis::Syndesmotic_Sprain",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::13 Foot & Ankle::13.02 Trauma::Ankle",
+          "note_guid": "k=jw4,XzCX",
+          "title": "What is a Maisonneuve fracture ? {{c1::Proximal third fibula fracture with associated syndesmotic injury}}"
+        },
+        {
+          "id": "478c8944-f808-4fe1-88ae-77fe5b535d32",
+          "canonical_card_id": "3751093d-fd36-44ba-b2fc-967689e88b54",
+          "canonical_card_version_id": "bbbc9c3f-a38d-4cfb-a90e-2c1006392ea7",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Leg_Knee",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology::Fibula"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::13 Foot & Ankle::13.01 General Anatomy",
+          "note_guid": "NgtvTidA2.",
+          "title": "What nerve is at risk with ORIF of the fibula ? {{c1::Superficial peroneal}}"
+        },
+        {
+          "id": "70291296-e611-4ec1-86cb-784f6ea108ce",
+          "canonical_card_id": "93cd4c05-9bef-4734-b55f-ef603f043c55",
+          "canonical_card_version_id": "ac30f362-c999-4bc3-a62e-966871a86b4e",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Leg_Knee",
+            "SnapOrtho::Anatomy::Leg_Knee::Nerves",
+            "SnapOrtho::Anatomy::Leg_Knee::Nerves::Superficial_Peroneal_Nerve",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology::Fibula"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::13 Foot & Ankle::13.01 General Anatomy",
+          "note_guid": "Yifuu>Nrn",
+          "title": "In which direction does the superficial peroneal nerve cross the fibula ? {{c1::Posterior to anterior}}"
+        },
+        {
+          "id": "b708104b-d2b1-4c93-aeaf-700a2e00a52a",
+          "canonical_card_id": "516f3c99-eb88-4e48-91d3-147cf366bfb8",
+          "canonical_card_version_id": "2718d71c-12cc-4ac1-a0f0-ac5b70cddcd0",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Leg_Knee",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology::Fibula",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::13 Foot & Ankle::13.02 Trauma::Ankle",
+          "note_guid": "i#[]`DCbXZ",
+          "title": "What is the classification for distal fibula fractures ? {{c1::Danis-Weber Classification}}"
+        },
+        {
+          "id": "abc6d79e-b7dd-4f98-a2ce-be4c2dd64c7e",
+          "canonical_card_id": "e8393a20-fbd0-4fca-ab2a-aa5887581fdc",
+          "canonical_card_version_id": "2ad83a5a-153c-4097-8135-cc15654f2616",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Foot_Ankle",
+            "SnapOrtho::Anatomy::Foot_Ankle::Osteology",
+            "SnapOrtho::Anatomy::Foot_Ankle::Osteology::Calcaneus",
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Osteology",
+            "SnapOrtho::Anatomy::Hand::Osteology::Proximal_Phalanx"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::1) Netter's Concise Orthopaedic Anatomy::10 Foot/Ankle::10.12 Muscles",
+          "note_guid": "D<XqWVpJ}R",
+          "title": "Extensor Hallucis Brevis (EHB) Origin: {{c1::Dorsolateral calcaneus}} Insertion: {{c2::Base of proximal phalanx of grea…"
+        },
+        {
+          "id": "1ca207d2-a9d9-469d-a00c-fc84274aa6bb",
+          "canonical_card_id": "d50edf1b-326c-4f91-88d5-180dc518c137",
+          "canonical_card_version_id": "679615fe-6d9a-4dbe-b871-575a3dc4c173",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Spine",
+            "SnapOrtho::Anatomy::Spine::Nerves",
+            "SnapOrtho::Anatomy::Spine::Nerves::Spinal_Cord",
+            "SnapOrtho::Specialty::Orthopedic_Oncology",
+            "SnapOrtho::Specialty::Spine"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::13 Foot & Ankle::13.03 Conditions::Cavovarus Foot",
+          "note_guid": "u!tS>(R-7g",
+          "title": "What must be ruled-out in the presence of new onset unilateral cavovarus ? {{c1::Spinal cord tumor or tethering}}"
+        },
+        {
+          "id": "1163234a-a43f-4feb-aae1-d4618abb5f0a",
+          "canonical_card_id": "0f24b431-8984-4406-97d2-51f93d5364b8",
+          "canonical_card_version_id": "575e1c48-c604-4a94-856e-4ee30b7acb05",
+          "rendered_tags": [
+            "SnapOrtho::Diagnosis::Pilon_Fracture",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::13 Foot & Ankle::13.02 Trauma::Pilon",
+          "note_guid": "pvV`N`6v%a",
+          "title": "What is the eponym for the tibial anterolateral fragment in the setting of a pilon fracture ? {{c1::Chaput fragment}}"
+        },
+        {
+          "id": "810569b1-3a07-4ed2-a4d6-3572fb3772fd",
+          "canonical_card_id": "5c714ece-2569-4a98-95f2-7db28a1751d4",
+          "canonical_card_version_id": "cbb0d724-f687-4747-b89e-3e133ffd323e",
+          "rendered_tags": [
+            "SnapOrtho::Diagnosis::Tarsal_Coalition",
+            "SnapOrtho::Specialty::Pediatric_Orthopedics"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::1) Netter's Concise Orthopaedic Anatomy::10 Foot/Ankle::10.16 Pediatric Disorders",
+          "note_guid": "p8SmTY.[b,",
+          "title": "What is tarsal coalition? {{c1::Congenital fusion of 2 tarsal bones}}"
+        }
+      ]
+    },
+    {
+      "signal": "deck_shoulder_missing_matching_specialty",
+      "count": 118,
+      "denominator": 442,
+      "examples": [
+        {
+          "id": "74409688-57c8-4c92-8d52-0c931956f734",
+          "canonical_card_id": "635ee20b-8573-4523-ae97-051c992aa46e",
+          "canonical_card_version_id": "a0d05de1-af94-44cb-9007-2bab59810664",
+          "rendered_tags": [
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity::Shoulder::Scapula Fractures",
+          "note_guid": "kdlk/kK2:k",
+          "title": "Which two (2) approaches are most commonly utilized during fixation of scapular body/neck fractures ? {{c1::Straight po…"
+        },
+        {
+          "id": "48fa968f-1b0e-46ad-810a-62832b435b8b",
+          "canonical_card_id": "78bc027c-9353-4c57-959f-5fda76b03a1a",
+          "canonical_card_version_id": "b52c9dca-c746-4da1-b279-61a0843ab771",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Forearm",
+            "SnapOrtho::Anatomy::Forearm::Osteology",
+            "SnapOrtho::Anatomy::Forearm::Osteology::Ulna",
+            "SnapOrtho::Diagnosis::Radial_Head_Fractures",
+            "SnapOrtho::Treatment::Safe_Zone_Principles"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity::Elbow::Elbow Dislocation",
+          "note_guid": "c:!?h~7fG!",
+          "title": "What percentage of the radial head articulates with the ulna ? {{c1::75%}}"
+        },
+        {
+          "id": "f9494f41-5fed-4a0b-ab99-97da60ff6130",
+          "canonical_card_id": "8e71e0d5-aec3-478d-8829-ed008c995534",
+          "canonical_card_version_id": "cbaaaab8-3b81-4df5-a248-02287f3d2979",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Forearm",
+            "SnapOrtho::Anatomy::Forearm::Nerves",
+            "SnapOrtho::Anatomy::Forearm::Nerves::Anterior_Interosseous_Nerve",
+            "SnapOrtho::Anatomy::Forearm::Osteology",
+            "SnapOrtho::Anatomy::Forearm::Osteology::Ulna",
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Joints",
+            "SnapOrtho::Anatomy::Hand::Joints::DIP_Joint",
+            "SnapOrtho::Specialty::Hand_Upper_Extremity",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity::Elbow::Olecranon Fractures",
+          "note_guid": "OUx~}D:2c[",
+          "title": "During surgical treatment of an olecranon fracture with a tension band construct as seen in the figure below, what nerv…"
+        },
+        {
+          "id": "ea4b1e74-6fea-4faa-98c7-7add21d3028b",
+          "canonical_card_id": "37702c69-02c0-48ea-a600-0d70edb22b23",
+          "canonical_card_version_id": "e0c4cb14-5572-4102-836b-3ebcea531a78",
+          "rendered_tags": [
+            "SnapOrtho::Diagnosis::Olecranon_Fractures",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity::Elbow::Olecranon Fractures",
+          "note_guid": "cyM-JHHwli",
+          "title": "What is the most frequently reported complication following operative fixation of olecranon fractures ? {{c1::Symptomat…"
+        },
+        {
+          "id": "c3a4c7e9-3468-4003-97e3-8987842f8c95",
+          "canonical_card_id": "c9353f91-5fe3-4a37-a184-1bcf8d264e5c",
+          "canonical_card_version_id": "3502de2a-6b1b-47df-a7b9-75fdbec41cdb",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Forearm",
+            "SnapOrtho::Anatomy::Forearm::Joints",
+            "SnapOrtho::Anatomy::Forearm::Joints::Distal_Radioulnar_Joint",
+            "SnapOrtho::Specialty::Hand_Upper_Extremity",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity::Elbow::Radial Head Fractures",
+          "note_guid": "G1nOJIoEOD",
+          "title": "Name the eponym : Radial head fracture + DRUJ injury + intraosseous membrane disruption = {{c1::Essex-Lopresti injury}}"
+        },
+        {
+          "id": "a548a851-6918-472c-bd0b-31ac3f4e2a36",
+          "canonical_card_id": "c8e68a7f-f84b-4ac5-8323-744e25ee04d9",
+          "canonical_card_version_id": "1738ce1b-d604-4c15-a7ee-1af0f7a33e3c",
+          "rendered_tags": [
+            "SnapOrtho::Diagnosis::Olecranon_Fractures",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity::Elbow::Olecranon Fractures",
+          "note_guid": "FqzAG+-I)g",
+          "title": "Four (4) operative treatments for olecranon fractures : {{c1:: Tension band technique Intramedullary fixation Plate and…"
+        },
+        {
+          "id": "489bd2e0-86d9-471e-bbe5-fa48735e0b47",
+          "canonical_card_id": "e73e40b8-0ed0-45d3-84ae-06c0142c7819",
+          "canonical_card_version_id": "96e66224-f664-4a1f-ad45-f81c6feb6d64",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Shoulder_Girdle",
+            "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology",
+            "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology::Clavicle",
+            "SnapOrtho::Diagnosis::Clavicle_Fracture",
+            "SnapOrtho::Diagnosis::Clavicle_Nonunion",
+            "SnapOrtho::Diagnosis::Fracture_Nonunion",
+            "SnapOrtho::Specialty::Trauma",
+            "SnapOrtho::Treatment::Clavicle_ORIF"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity::Shoulder::Midshaft Clavicle Fractures",
+          "note_guid": "k!{tsW@rLg",
+          "title": "Patient suffers a displaced midshaft clavicle fracture and decides to treat it nonoperatively . Nine months later he pr…"
+        },
+        {
+          "id": "9e4da993-6add-4d4e-89f5-14d309bcfa9a",
+          "canonical_card_id": "7f3da2d8-c29a-42a8-ba6c-c83c1dc39590",
+          "canonical_card_version_id": "cd1d883b-b21c-4c48-9131-f4ea323ee2b6",
+          "rendered_tags": [
+            "SnapOrtho::Specialty::Sports_Medicine"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::02 Shoulder Girdle::02.03 Sports::Shoulder Instability & Labrum",
+          "note_guid": "vO<]9onx7*",
+          "title": "A paralabral cyst on MRI is indicative of what pathology? {{c1::Labral tear}}"
+        }
+      ]
+    },
+    {
+      "signal": "deck_pediatrics_missing_matching_specialty",
+      "count": 204,
+      "denominator": 370,
+      "examples": [
+        {
+          "id": "d8ea570b-c9c0-4f5a-8a20-35a76524ee7d",
+          "canonical_card_id": "ac30c063-ee36-4f3e-ad04-7732060f0e10",
+          "canonical_card_version_id": "d92cf58a-1610-48fe-868a-6f23093ec2de",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Arm",
+            "SnapOrtho::Anatomy::Arm::Nerves",
+            "SnapOrtho::Anatomy::Arm::Nerves::Radial_Nerve",
+            "SnapOrtho::Anatomy::Elbow",
+            "SnapOrtho::Anatomy::Elbow::Osteology",
+            "SnapOrtho::Anatomy::Elbow::Osteology::Distal_Humerus",
+            "SnapOrtho::Diagnosis::Radial_Nerve_Palsy",
+            "SnapOrtho::Diagnosis::Supracondylar_Humerus_Fracture",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::14 Pediatrics::14.03 Upper Extremity::Supracondylar Humerus",
+          "note_guid": "ce5;2VcA89",
+          "title": "What is the second most common neurologic injury associated with extension type supracondylar humerus fractures ? {{c1:…"
+        },
+        {
+          "id": "2c21e9f4-405d-44d1-b099-b8bbb018039b",
+          "canonical_card_id": "3a56c9a4-fa08-4f48-ab5e-290274554be9",
+          "canonical_card_version_id": "ac25c0b2-b66c-4f9a-bd6c-074c10779ca0",
+          "rendered_tags": [
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Pediatrics::Pediatric Syndromes::Cerebral Palsy::Cerebral Palsy - Hip Conditions",
+          "note_guid": "hCub?8;t(o",
+          "title": "In patients with Cerebral Palsy , strong tone in hip {{c1::adductor}} and {{c1::flexor}} muscles lead to scissoring and…"
+        },
+        {
+          "id": "958caff2-89b8-49ea-96eb-eb7240f18531",
+          "canonical_card_id": "594e0c74-a434-4b4d-aaf8-e49dae86f10e",
+          "canonical_card_version_id": "eea44ab8-9ca3-414e-8963-5b2cf0757f49",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Pelvis",
+            "SnapOrtho::Anatomy::Pelvis::Osteology",
+            "SnapOrtho::Anatomy::Pelvis::Osteology::Acetabulum"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::14 Pediatrics::14.05 Lower Extremity::Developmental Dysplasia of the Hip (DDH)",
+          "note_guid": "x5.NK1R`iR",
+          "title": "What is the acetabular index (AI) ? {{c1::Angle formed by Hilgreiner's line and the lateral edge of the acetabulum}}"
+        },
+        {
+          "id": "2d21ca2f-84a2-459d-8f9a-da581949844e",
+          "canonical_card_id": "05280ee8-86a8-49a0-8585-7d295724f2f9",
+          "canonical_card_version_id": "9970083f-792c-4fc8-a453-15bc14a2220e",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Basic_Science",
+            "SnapOrtho::Anatomy::Basic_Science::Osteology",
+            "SnapOrtho::Anatomy::Basic_Science::Osteology::Physis",
+            "SnapOrtho::Anatomy::Leg_Knee",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology::Tibia",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::14 Pediatrics::14.05 Lower Extremity::Tibia",
+          "note_guid": "BvZjcaq*v?",
+          "title": "What are the classifications (2) for tibial tubercle fractures ? {{c1:: Ogden Classification Pandya Classification }}"
+        },
+        {
+          "id": "af357099-4349-4f73-b161-02827cea2148",
+          "canonical_card_id": "f29c1b6f-b5c4-4dca-a5eb-d9181a80e52d",
+          "canonical_card_version_id": "fb76e08c-1d40-46e4-a5bd-8c0594293bb5",
+          "rendered_tags": [
+            "SnapOrtho::Diagnosis::Leg_Length_Discrepancy"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Pediatrics::Pediatric Conditions::Leg Conditions::Leg Length Discrepancy (LLD)",
+          "note_guid": "d:6!a&`+4M",
+          "title": "When correcting a leg length discrepancy (LLD) : Femoral lengthening along the mechanical axis: mechanical axis is {{c1…"
+        },
+        {
+          "id": "ed737ba0-1392-4ee5-abc4-9873a744d7c4",
+          "canonical_card_id": "d8ab8a0f-88cd-46f8-9d8b-73a8ada610cf",
+          "canonical_card_version_id": "9a44318b-59d1-4594-8a4b-86eed1ee5591",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Elbow",
+            "SnapOrtho::Anatomy::Elbow::Osteology",
+            "SnapOrtho::Anatomy::Elbow::Osteology::Distal_Humerus",
+            "SnapOrtho::Specialty::Shoulder_Elbow"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::14 Pediatrics::14.03 Upper Extremity::Elbow",
+          "note_guid": "fDz9^1Z[Ic",
+          "title": "What additional x-ray views are recommended to evaluate medial epicondyle fractures ? {{c1::Internal oblique and distal…"
+        },
+        {
+          "id": "b9a3346e-2ec4-45df-add7-6b07cd5fd8ed",
+          "canonical_card_id": "092945b1-01c7-4726-b6d6-1f89c156b607",
+          "canonical_card_version_id": "b8edb897-8006-447a-84ea-f4d70e81a08e",
+          "rendered_tags": [
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Pediatrics::Pediatric Syndromes::Neuromuscular::Myelodysplasia",
+          "note_guid": "omK=C{SBI6",
+          "title": "What is the treatment for hip dislocation in a patient with a myelomeningocele ? {{c1::Observation}}"
+        },
+        {
+          "id": "62c67e77-39dd-4273-a922-05247d514e16",
+          "canonical_card_id": "4b19ec4a-b418-4878-a8c4-ab4e7979273d",
+          "canonical_card_version_id": "6db7e9cd-67d9-4e5e-a222-5dbeb43a482a",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Elbow",
+            "SnapOrtho::Anatomy::Elbow::Osteology",
+            "SnapOrtho::Anatomy::Elbow::Osteology::Distal_Humerus",
+            "SnapOrtho::Diagnosis::Supracondylar_Fracture_Pediatric",
+            "SnapOrtho::Diagnosis::Supracondylar_Humerus_Fracture",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::14 Pediatrics::14.03 Upper Extremity::Supracondylar Humerus",
+          "note_guid": "bXs6$g@*zy",
+          "title": "If you see ecchymosis anteromedially , what direction is the supracondylar humerus fracture displaced ? {{c1::Posterior…"
+        }
+      ]
+    },
+    {
+      "signal": "deck_oncology_missing_matching_specialty",
+      "count": 25,
+      "denominator": 93,
+      "examples": [
+        {
+          "id": "914353b4-e30c-4dad-b6e5-fed9b24dd78f",
+          "canonical_card_id": "0ee8557e-7d96-4959-b7e0-823495ce63da",
+          "canonical_card_version_id": "58dff0a5-8834-410d-ac2f-24c486fba732",
+          "rendered_tags": [
+            "SnapOrtho::Specialty::Metabolic_Bone"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Pathology::Bone Tumors::Tumor-Like Lesions::Paget's Disease",
+          "note_guid": "DWe1KPU-d,",
+          "title": "What is the treatment for Paget's disease? {{c1::Observation with bisphosphonate therapy}}"
+        },
+        {
+          "id": "d74e011d-e38f-461c-a467-0d991a6be882",
+          "canonical_card_id": "65abb7eb-c38c-4e4a-9b0d-f3e055577ae9",
+          "canonical_card_version_id": "21e7eff6-c151-440c-8f00-27f68808114a",
+          "rendered_tags": [
+            "SnapOrtho::Specialty::Adult_Reconstruction"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Recon::Hip Reconstruction::THA Chronic Complications::THA Pseudotumor (Metal on Metal Reactions)",
+          "note_guid": "lqPTmHLes|",
+          "title": "What are the two (2) primary mechanisms that may result in the formation of a THA pseudotumor ? {{c1::Hypersensitivity…"
+        },
+        {
+          "id": "ca311212-acb5-4c1d-bb2a-e6725462f2bb",
+          "canonical_card_id": "50098dfa-8a68-4731-a789-f3fa82f1074b",
+          "canonical_card_version_id": "8d5b9c09-f33e-4f66-9eb9-7e29fd1ad1eb",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Pelvis",
+            "SnapOrtho::Anatomy::Pelvis::Osteology",
+            "SnapOrtho::Anatomy::Pelvis::Osteology::Pelvis"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Pathology::Bone Tumors::Chondrogenic Tumors::Chondrosarcoma",
+          "note_guid": "Iogt`g{8X-",
+          "title": "What are the indications for the following treatments of chondrosarcomas ? Intra-lesional curettage: {{c1::grade 1 in e…"
+        },
+        {
+          "id": "7ad4ec4e-3f6d-4f85-8958-47ccf690b00a",
+          "canonical_card_id": "1ae88d44-b882-447a-8dcf-8bced4845450",
+          "canonical_card_version_id": "b6cee512-f5e6-4878-89a3-a1f79ea83b1d",
+          "rendered_tags": [
+            "SnapOrtho::Specialty::Spine"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Spine::Spine Infections, Tumors, & Systemic Conditions::Spine Infections::Adult Pyogenic Vertebral Osteomyelitis",
+          "note_guid": "i-,Qufxg4~",
+          "title": "Which lab value can be monitored serially to track success of treatment of spinal osteomyelitis ? {{c1::CRP}}"
+        },
+        {
+          "id": "bbbf1732-024a-425f-beaa-cef8a5f2ed23",
+          "canonical_card_id": "d5f8c023-5bb9-497c-b95f-8b9cff9fd767",
+          "canonical_card_version_id": "876a852f-7bfc-4043-92a8-780afa67a875",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Elbow",
+            "SnapOrtho::Anatomy::Elbow::Nerves",
+            "SnapOrtho::Anatomy::Elbow::Nerves::Ulnar_Nerve",
+            "SnapOrtho::Specialty::Hand_Upper_Extremity"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Hand::Hand Tumors & Lesions::Tested Procedures::Wrist Arthroscopy",
+          "note_guid": "mN@Q<:+n:U",
+          "title": "Which structure is at risk with the establishment of the 6U and 6R portals during wrist arthroscopy ? {{c1::Dorsal bran…"
+        },
+        {
+          "id": "31bbba43-4d1e-42b2-a235-bb46cb9d6101",
+          "canonical_card_id": "9e2fe91b-220e-4a85-8931-83736fdf5d42",
+          "canonical_card_version_id": "b498fcaa-69ef-4e09-9a98-99a566ea804a",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Forearm",
+            "SnapOrtho::Anatomy::Forearm::Osteology",
+            "SnapOrtho::Anatomy::Forearm::Osteology::Radius",
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Osteology",
+            "SnapOrtho::Anatomy::Hand::Osteology::Distal_Radius",
+            "SnapOrtho::Anatomy::Leg_Knee",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology::Distal_Femur",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology::Tibia",
+            "SnapOrtho::Anatomy::Pelvis",
+            "SnapOrtho::Anatomy::Pelvis::Osteology",
+            "SnapOrtho::Anatomy::Pelvis::Osteology::Sacrum",
+            "SnapOrtho::Anatomy::Shoulder_Girdle",
+            "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology",
+            "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology::Proximal_Humerus",
+            "SnapOrtho::Anatomy::Thigh_Hip",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femur"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Pathology::Bone Tumors::Unknown Origin::Giant Cell Tumor",
+          "note_guid": "xTi@]-O]t)",
+          "title": "Where in the body are Giant Cell Tumors most commonly found? {{c1::Epiphysis of distal femur and proximal tibia}}"
+        },
+        {
+          "id": "1265d122-ea0f-47f1-a585-3117913b5a75",
+          "canonical_card_id": "084c7dc0-d22e-4045-ac32-5534544a7978",
+          "canonical_card_version_id": "025ad146-580c-4ca1-8b1d-8e4be34cbce3",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Thigh_Hip",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femur",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Proximal_Femur"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Pathology::Bone Tumors::Metastatic Disease::Metastatic Disease of Extremity",
+          "note_guid": "c9i:mKw6[>",
+          "title": "Patient presents with the lesion found below. Would wide resection + proximal femur replacement or wide resection + nai…"
+        },
+        {
+          "id": "a7b77c49-a8cf-454e-89d1-16bcee1209c1",
+          "canonical_card_id": "0777b5cc-1f9d-4713-afb2-09e9ac5ad5d0",
+          "canonical_card_version_id": "f9431d47-6915-48a9-9428-48a1d8b3f9a8",
+          "rendered_tags": [
+            "SnapOrtho::Specialty::Hand_Upper_Extremity"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Pathology::Bone Tumors::Unknown Origin::Giant Cell Tumor",
+          "note_guid": "g3ZDpP?15l",
+          "title": "35 y/o M with pain and swelling of wrist. XR and MRI shown below. Best next step? {{c1::Incisional biopsy}}"
+        }
+      ]
+    },
+    {
+      "signal": "distal_radius_under_hand_osteology",
+      "count": 43,
+      "denominator": 3071,
+      "examples": [
+        {
+          "id": "b9f910c7-bba4-4596-91ce-c039b27ea45f",
+          "canonical_card_id": "d56c6ce1-d31a-4a5a-a5d3-c7eea153934b",
+          "canonical_card_version_id": "162819c2-7f10-4e3c-9e4d-858277ae166c",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Forearm",
+            "SnapOrtho::Anatomy::Forearm::Osteology",
+            "SnapOrtho::Anatomy::Forearm::Osteology::Radius",
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Osteology",
+            "SnapOrtho::Anatomy::Hand::Osteology::Distal_Radius",
+            "SnapOrtho::Specialty::Hand_Upper_Extremity"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::05 Forearm & Wrist::05.01 General Anatomy",
+          "note_guid": "lM,fvGsbYJ",
+          "title": "What is the most common dorsal approach to the distal radius ? {{c1::Incise the 3rd extensor compartment w/ elevation o…"
+        },
+        {
+          "id": "62760310-adb4-40e2-89f8-73471eff496a",
+          "canonical_card_id": "524a5d0e-4b14-435c-bbe5-2cebbaca1849",
+          "canonical_card_version_id": "257299a5-11c8-4545-866a-eaa51a924d6c",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Osteology",
+            "SnapOrtho::Anatomy::Hand::Osteology::Distal_Radius",
+            "SnapOrtho::Diagnosis::Distal_Radius_Fractures",
+            "SnapOrtho::Specialty::Hand_Upper_Extremity",
+            "SnapOrtho::Specialty::Metabolic_Bone",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity::Forearm::Distal Radius",
+          "note_guid": "ANgvp$rb~h",
+          "title": "Number one risk factor for distal radius fractures : {{c1::Osteoporosis}}"
+        },
+        {
+          "id": "ee0f012c-cc50-4a99-8dcd-1a1e8a51c257",
+          "canonical_card_id": "1fdd30e1-bae8-43cd-b955-df021ccf7dbc",
+          "canonical_card_version_id": "358ae8de-a3e5-4579-8683-20e1f7350e94",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Forearm",
+            "SnapOrtho::Anatomy::Forearm::Osteology",
+            "SnapOrtho::Anatomy::Forearm::Osteology::Radius",
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Osteology",
+            "SnapOrtho::Anatomy::Hand::Osteology::Distal_Radius",
+            "SnapOrtho::Anatomy::Leg_Knee",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology::Distal_Femur",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology::Fibula",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology::Tibia",
+            "SnapOrtho::Anatomy::Thigh_Hip",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femur",
+            "SnapOrtho::Specialty::Hand_Upper_Extremity",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::14 Pediatrics::14.02 The Basics::Physis",
+          "note_guid": "s*#ZJt^TV",
+          "title": "What is the most common SH fracture in the distal fibula , distal radius , distal tibia , and distal femur ? Distal Fib…"
+        },
+        {
+          "id": "ec95b377-90b7-431a-a87d-247fe4d8ccb3",
+          "canonical_card_id": "3a4a137b-a40d-4f2b-ae67-9ecb7ba94984",
+          "canonical_card_version_id": "8a5e12d8-1127-4f43-9114-d7142610bcc9",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Forearm",
+            "SnapOrtho::Anatomy::Forearm::Osteology",
+            "SnapOrtho::Anatomy::Forearm::Osteology::Radius",
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Osteology",
+            "SnapOrtho::Anatomy::Hand::Osteology::Distal_Radius",
+            "SnapOrtho::Diagnosis::Distal_Radius_Fractures",
+            "SnapOrtho::Specialty::Hand_Upper_Extremity"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity::Forearm::Distal Radius",
+          "note_guid": "q+=JWbY{Sr",
+          "title": "Most common mechanism of injury for distal radius fractures : {{c1::FOOSH (fall on outstretched hand)}}"
+        },
+        {
+          "id": "a6d7e320-6db8-45d1-bc48-1ad21295be4f",
+          "canonical_card_id": "d573d6a9-1f1c-45e3-8e92-c894f13d1c48",
+          "canonical_card_version_id": "0efe834f-03b3-4c1b-a3b7-b053b637757e",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Forearm",
+            "SnapOrtho::Anatomy::Forearm::Osteology",
+            "SnapOrtho::Anatomy::Forearm::Osteology::Radius",
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Osteology",
+            "SnapOrtho::Anatomy::Hand::Osteology::Distal_Radius",
+            "SnapOrtho::Diagnosis::Distal_Radius_Fracture",
+            "SnapOrtho::Specialty::Hand_Upper_Extremity",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Hand::Hand Introduction::Anatomy::Extensor Tendon Compartments",
+          "note_guid": "px9h-BU<1}",
+          "title": "What are the associated pathology with the following extensor tendon compartments of the wrist? 1: EPB-APL / {{c1::De Q…"
+        },
+        {
+          "id": "e6318a65-252e-47a6-9daa-b588806c2f06",
+          "canonical_card_id": "0ca3d1e8-5740-4c54-ae55-1b6ffaab963a",
+          "canonical_card_version_id": "1ea58f38-67da-4589-b61b-659ec04de5fd",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Forearm",
+            "SnapOrtho::Anatomy::Forearm::Osteology",
+            "SnapOrtho::Anatomy::Forearm::Osteology::Radius",
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Osteology",
+            "SnapOrtho::Anatomy::Hand::Osteology::Distal_Radius",
+            "SnapOrtho::Anatomy::Hand::Other",
+            "SnapOrtho::Anatomy::Hand::Other::Carpal_Tunnel",
+            "SnapOrtho::Diagnosis::Carpal_Tunnel_Syndrome",
+            "SnapOrtho::Diagnosis::Distal_Radius_Fracture",
+            "SnapOrtho::Diagnosis::Distal_Radius_Fractures",
+            "SnapOrtho::Specialty::Hand_Upper_Extremity",
+            "SnapOrtho::Specialty::Trauma",
+            "SnapOrtho::Treatment::Closed_Reduction"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity::Forearm::Distal Radius",
+          "note_guid": "D3?%yF^?CG",
+          "title": "Worsening numbness and wrist pain following distal radius fracture following closed reduction. Next step? {{c1::Emergen…"
+        },
+        {
+          "id": "fa6a95a1-b5af-436c-a006-1b0857c3b0e9",
+          "canonical_card_id": "e83f8170-9e26-4c41-b6a0-3d2cfbbbf17a",
+          "canonical_card_version_id": "47b81107-37ff-4e24-9f6c-e9cfcf41d657",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Forearm",
+            "SnapOrtho::Anatomy::Forearm::Osteology",
+            "SnapOrtho::Anatomy::Forearm::Osteology::Radius",
+            "SnapOrtho::Anatomy::Forearm::Osteology::Ulna",
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Osteology",
+            "SnapOrtho::Anatomy::Hand::Osteology::Distal_Radius",
+            "SnapOrtho::Diagnosis::Distal_Radius_Fracture",
+            "SnapOrtho::Specialty::Hand_Upper_Extremity",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::05 Forearm & Wrist::05.02 Trauma",
+          "note_guid": "rx:o?6eT90",
+          "title": "What is the purpose of the LaFontaine criteria ? {{c1::To evaluate distal radius fracture stability}}"
+        },
+        {
+          "id": "17385d77-3341-4110-a0e3-c5d1f5c97975",
+          "canonical_card_id": "bc223c9d-5cff-43ff-b58c-c0a8b73c1962",
+          "canonical_card_version_id": "dafb8466-9325-41ed-81a9-5db00a4e9805",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Forearm",
+            "SnapOrtho::Anatomy::Forearm::Osteology",
+            "SnapOrtho::Anatomy::Forearm::Osteology::Radius",
+            "SnapOrtho::Anatomy::Hand",
+            "SnapOrtho::Anatomy::Hand::Osteology",
+            "SnapOrtho::Anatomy::Hand::Osteology::Distal_Radius",
+            "SnapOrtho::Diagnosis::Crps",
+            "SnapOrtho::Diagnosis::Distal_Radius_Fracture",
+            "SnapOrtho::Specialty::Hand_Upper_Extremity",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity::Forearm::Distal Radius",
+          "note_guid": "F(bE$Uuc4^",
+          "title": "What medication is recommended to prevent the incidence of reflex sympathetic dystrophy (RSD) following distal radius f…"
+        }
+      ]
+    },
+    {
+      "signal": "medial_meniscus_classed_as_ligament",
+      "count": 8,
+      "denominator": 3071,
+      "examples": [
+        {
+          "id": "9079a626-b8f3-446e-b63a-dd860de37ebd",
+          "canonical_card_id": "42615830-c926-4e43-a56f-6e6477db9f2d",
+          "canonical_card_version_id": "e333edd0-c2b2-436c-bf5c-4d1af2b1ed47",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Leg_Knee",
+            "SnapOrtho::Anatomy::Leg_Knee::Joints",
+            "SnapOrtho::Anatomy::Leg_Knee::Joints::Lateral_Meniscus",
+            "SnapOrtho::Anatomy::Leg_Knee::Ligaments",
+            "SnapOrtho::Anatomy::Leg_Knee::Ligaments::Medial_Meniscus",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+            "SnapOrtho::Anatomy::Leg_Knee::Osteology::Tibia",
+            "SnapOrtho::Specialty::Sports_Medicine"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Knee & Sports::Knee::Knee Evaluation in the Athlete::History and Physical Exam of the Knee",
+          "note_guid": "h5?-KGF8`H",
+          "title": "When performing McMurray's test to evaluate for meniscal pathology, varus and internal rotation of the tibia stresses t…"
+        },
+        {
+          "id": "354930ee-71d7-4a5d-aed0-d8be13fae015",
+          "canonical_card_id": "204cfe5a-db21-4ce0-8307-2a3abd39a676",
+          "canonical_card_version_id": "53f9d16e-4094-462c-b0d7-d2b011d073cd",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Leg_Knee",
+            "SnapOrtho::Anatomy::Leg_Knee::Ligaments",
+            "SnapOrtho::Anatomy::Leg_Knee::Ligaments::Medial_Meniscus",
+            "SnapOrtho::Specialty::Sports_Medicine"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::11 Knee::06.01 General Anatomy",
+          "note_guid": "jM*Vjh-SP2",
+          "title": "When removing the medial meniscus , what structure may be injured with too deep of a resection ? {{c1::Superficial MCL}}"
+        },
+        {
+          "id": "ed00da1f-af0a-4a70-a08c-ff0b408b5cc0",
+          "canonical_card_id": "7968d6b0-d702-43b1-8f19-ca148ac1b9dd",
+          "canonical_card_version_id": "4a0c422b-148e-4c5c-a5dd-cf60c1520076",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Leg_Knee",
+            "SnapOrtho::Anatomy::Leg_Knee::Ligaments",
+            "SnapOrtho::Anatomy::Leg_Knee::Ligaments::Medial_Meniscus",
+            "SnapOrtho::Specialty::Sports_Medicine"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::1) Netter's Concise Orthopaedic Anatomy::09 Leg/Knee::09.13 Disorders",
+          "note_guid": "OoW9!OdAiq",
+          "title": "Which condition is this? {{c1::Terrible triad (torn MCL, ACL, and medial meniscus)}}"
+        },
+        {
+          "id": "43201baa-4c6d-4ed1-893b-b9cc19c05b6b",
+          "canonical_card_id": "b0734bc1-df5b-4394-b6df-d85fab8073db",
+          "canonical_card_version_id": "ec39995e-a4cd-4039-a96f-74da6ce04342",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Leg_Knee",
+            "SnapOrtho::Anatomy::Leg_Knee::Joints",
+            "SnapOrtho::Anatomy::Leg_Knee::Joints::Lateral_Meniscus",
+            "SnapOrtho::Anatomy::Leg_Knee::Ligaments",
+            "SnapOrtho::Anatomy::Leg_Knee::Ligaments::Medial_Meniscus",
+            "SnapOrtho::Specialty::Sports_Medicine"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::11 Knee::06.01 General Anatomy",
+          "note_guid": "d}bJV^W`Nh",
+          "title": "Which meniscus is \"C-shaped\" and which is circular ? {{c1:: Medial meniscus - C shaped Lateral meniscus - circular }}"
+        },
+        {
+          "id": "6762fbb1-5e29-456f-9811-7a63ce2e56e8",
+          "canonical_card_id": "abd8f211-aa5d-4805-b19b-481cc7a4e24d",
+          "canonical_card_version_id": "0c5062e3-60f0-470d-b67e-25e700a56379",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Leg_Knee",
+            "SnapOrtho::Anatomy::Leg_Knee::Joints",
+            "SnapOrtho::Anatomy::Leg_Knee::Joints::Lateral_Meniscus",
+            "SnapOrtho::Anatomy::Leg_Knee::Ligaments",
+            "SnapOrtho::Anatomy::Leg_Knee::Ligaments::Medial_Meniscus",
+            "SnapOrtho::Specialty::Sports_Medicine"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Knee & Sports::Knee::Meniscal Injuries::Meniscus",
+          "note_guid": "vDvbAZXHI=",
+          "title": "The {{c1::medial::medial/lateral}} meniscus has more mobility than the {{c1::lateral::medial/lateral}} meniscus because…"
+        },
+        {
+          "id": "9ecc34ce-caa1-477a-96ab-3d4f50fdb550",
+          "canonical_card_id": "22be44ae-e1c0-4c69-a14c-d94cfc2325c8",
+          "canonical_card_version_id": "9e5b31ee-b148-4cf8-a216-f002d4220c4e",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Leg_Knee",
+            "SnapOrtho::Anatomy::Leg_Knee::Ligaments",
+            "SnapOrtho::Anatomy::Leg_Knee::Ligaments::Medial_Meniscus",
+            "SnapOrtho::Specialty::Sports_Medicine"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::11 Knee::06.01 General Anatomy",
+          "note_guid": "qbOs}eUF!5",
+          "title": "What is the primary restraint to anterior translation in an ACL-deficient knee ? {{c1::Posterior horn of the medial men…"
+        },
+        {
+          "id": "cf606aaf-dfff-4284-9649-31edfae8fb56",
+          "canonical_card_id": "4da1da69-f775-4d34-a086-0a2c73c7db07",
+          "canonical_card_version_id": "f14041b4-f70c-48c2-9959-c678c140e1ce",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Leg_Knee",
+            "SnapOrtho::Anatomy::Leg_Knee::Joints",
+            "SnapOrtho::Anatomy::Leg_Knee::Joints::Lateral_Meniscus",
+            "SnapOrtho::Anatomy::Leg_Knee::Ligaments",
+            "SnapOrtho::Anatomy::Leg_Knee::Ligaments::Medial_Meniscus",
+            "SnapOrtho::Specialty::Sports_Medicine"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::1) Netter's Concise Orthopaedic Anatomy::09 Leg/Knee::09.05 Joints",
+          "note_guid": "I}/PTUxe4H",
+          "title": "The {{c1::medial::lateral/medial}} meniscus is C-shaped. The {{c1::lateral::lateral/medial}} meniscus is circular."
+        },
+        {
+          "id": "bcd77976-704c-4fca-9a56-01659024e21f",
+          "canonical_card_id": "9fde4cd1-ea3e-4137-bd48-b5f890eee451",
+          "canonical_card_version_id": "2915c99c-a4ff-4bb6-9e60-97ff886c87ee",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Leg_Knee",
+            "SnapOrtho::Anatomy::Leg_Knee::Ligaments",
+            "SnapOrtho::Anatomy::Leg_Knee::Ligaments::Medial_Meniscus",
+            "SnapOrtho::Specialty::Sports_Medicine"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::4) Hip and Knee Book::Knee Chapters::Basic Concepts of TKA::Native Knee Kinematics",
+          "note_guid": "gybw.V-(sn",
+          "title": "ACL intact knees: cartilage wear will be {{c1::anterior-medial}} most commonly. ACL deficient knees: cartilage wear wil…"
+        }
+      ]
+    },
+    {
+      "signal": "calcar_under_general_anatomy",
+      "count": 7,
+      "denominator": 3071,
+      "examples": [
+        {
+          "id": "26468d79-d77a-4476-b302-6673697f3edb",
+          "canonical_card_id": "7e093667-c42e-4104-ba9a-5972073611d8",
+          "canonical_card_version_id": "5773d397-6510-46ff-b2cb-564da3f8a8bf",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::General",
+            "SnapOrtho::Anatomy::General::Osteology",
+            "SnapOrtho::Anatomy::General::Osteology::Calcar",
+            "SnapOrtho::Diagnosis::Intertrochanteric_Fracture",
+            "SnapOrtho::Specialty::Trauma",
+            "SnapOrtho::Treatment::Cephalomedullary_Nail",
+            "SnapOrtho::Treatment::Sliding_Hip_Screw"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Lower Extremity::Proximal Femur::Intertrochanteric Fractures",
+          "note_guid": "Ht0MbBBS-%",
+          "title": "If an intertrochanteric fracture is stable, you can use a {{c1::DHS (dynamic hip screw)}} or {{c1::Cephalomedullary nai…"
+        },
+        {
+          "id": "04bc8149-16f2-4553-b31f-c2e9b5ef89a0",
+          "canonical_card_id": "8989ce86-bf1a-4655-a83e-cede0a3d76e5",
+          "canonical_card_version_id": "094a264e-ca71-4d32-837a-2ae0dddf2ba2",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::General",
+            "SnapOrtho::Anatomy::General::Osteology",
+            "SnapOrtho::Anatomy::General::Osteology::Calcar",
+            "SnapOrtho::Anatomy::Shoulder_Girdle",
+            "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology",
+            "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology::Proximal_Humerus",
+            "SnapOrtho::Specialty::Shoulder_Elbow",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::02 Shoulder Girdle::02.02 Trauma::Proximal Humerus",
+          "note_guid": "N]0PC}KeMV",
+          "title": "What fracture characteristic is a good prognostic indicator for maintaining proximal humerus vascularity ? {{c1::≥8mm o…"
+        },
+        {
+          "id": "f60ac210-37b7-48ab-826a-1c6301cf42d9",
+          "canonical_card_id": "4dce3946-b39d-4c7e-923d-002b988f7868",
+          "canonical_card_version_id": "286f6cf8-a40b-4ae8-9d40-edfe9dceb60d",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::General",
+            "SnapOrtho::Anatomy::General::Osteology",
+            "SnapOrtho::Anatomy::General::Osteology::Calcar",
+            "SnapOrtho::Specialty::Trauma",
+            "SnapOrtho::Treatment::Cerclage_Wire",
+            "SnapOrtho::Treatment::Femoral_Stem"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Recon::Hip Reconstruction::THA Acute Complications::THA Periprosthetic Fracture",
+          "note_guid": "Gj@Caq45a/",
+          "title": "During insertion of a cementless femoral stem, a nondisplaced fracture is noticed along the femoral calcar. Which of th…"
+        },
+        {
+          "id": "92b759e6-e075-4fe2-924b-fa854dcc343a",
+          "canonical_card_id": "1fab59ac-752d-4ead-858c-ecb70d392991",
+          "canonical_card_version_id": "4a9afd8c-e5dc-43ce-aa0c-4a90c18ed19a",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::General",
+            "SnapOrtho::Anatomy::General::Osteology",
+            "SnapOrtho::Anatomy::General::Osteology::Calcar",
+            "SnapOrtho::Anatomy::Shoulder_Girdle",
+            "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology",
+            "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology::Proximal_Humerus",
+            "SnapOrtho::Diagnosis::Proximal_Humerus_Fracture",
+            "SnapOrtho::Specialty::Shoulder_Elbow",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity::Humerus::Proximal Humerus Fracture",
+          "note_guid": "Rid&S5m[S&",
+          "title": "Following proximal humerus fracture , the vascularity of the articular segment is more likely to be preserved if ≥ {{c1…"
+        },
+        {
+          "id": "9054905f-a84d-4d20-ac80-11d681d3bad8",
+          "canonical_card_id": "5d1b1d6c-06c9-40ba-afb4-dd564b3becbc",
+          "canonical_card_version_id": "34a4d328-1b04-4023-a1ca-9341b8aa29cd",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::General",
+            "SnapOrtho::Anatomy::General::Osteology",
+            "SnapOrtho::Anatomy::General::Osteology::Calcar",
+            "SnapOrtho::Anatomy::Thigh_Hip",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femur",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Proximal_Femur",
+            "SnapOrtho::Specialty::Adult_Reconstruction",
+            "SnapOrtho::Treatment::Femoral_Component"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::09 Hip::09.04 Reconstruction::Total Hip Arthroplasty (THA)",
+          "note_guid": "y(SO/FdxXS",
+          "title": "What radiographic factors demonstrate a well-fixed femoral component following THA ? 1) {{c1::Stress shielding around t…"
+        },
+        {
+          "id": "580fa87e-65ee-46e1-b146-edb90f143f3d",
+          "canonical_card_id": "7fce4d80-9a91-4187-bd23-4219ab138e34",
+          "canonical_card_version_id": "acab914d-0407-4d63-a4d1-a0ceaab9b8e3",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::General",
+            "SnapOrtho::Anatomy::General::Osteology",
+            "SnapOrtho::Anatomy::General::Osteology::Calcar",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::09 Hip::09.02 Trauma::Intertrochanteric Fractures",
+          "note_guid": "pQ(CGgt?38",
+          "title": "What makes an IT fracture unstable? 1) {{c1::Reverse obliquity}} 2) {{c1::Fracture extension into the subtrochanteric r…"
+        },
+        {
+          "id": "7e9c0d64-0c74-4796-8936-f8ccfd6e10f7",
+          "canonical_card_id": "fd05f780-ad86-4e42-93e8-a49c905f5d2e",
+          "canonical_card_version_id": "cc0a2af8-c108-41d0-9eeb-1802ee32c45b",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::General",
+            "SnapOrtho::Anatomy::General::Osteology",
+            "SnapOrtho::Anatomy::General::Osteology::Calcar"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::09 Hip::09.02 Trauma::Femoral Head & Neck",
+          "note_guid": "IEec3)-XBS",
+          "title": "In which order are the screws placed when utilizing an inverted triangle configuration ? 1) {{c1::Inferiorly along the…"
+        }
+      ]
+    },
+    {
+      "signal": "pelvis_repeated_as_child_of_pelvis",
+      "count": 28,
+      "denominator": 3071,
+      "examples": [
+        {
+          "id": "ca311212-acb5-4c1d-bb2a-e6725462f2bb",
+          "canonical_card_id": "50098dfa-8a68-4731-a789-f3fa82f1074b",
+          "canonical_card_version_id": "8d5b9c09-f33e-4f66-9eb9-7e29fd1ad1eb",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Pelvis",
+            "SnapOrtho::Anatomy::Pelvis::Osteology",
+            "SnapOrtho::Anatomy::Pelvis::Osteology::Pelvis"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Pathology::Bone Tumors::Chondrogenic Tumors::Chondrosarcoma",
+          "note_guid": "Iogt`g{8X-",
+          "title": "What are the indications for the following treatments of chondrosarcomas ? Intra-lesional curettage: {{c1::grade 1 in e…"
+        },
+        {
+          "id": "3ca58d2b-579c-4595-9150-dbc6c2770cc8",
+          "canonical_card_id": "ab908b76-7c4d-4ca9-85b7-19d210abda65",
+          "canonical_card_version_id": "04b46fb8-404a-403f-8c13-370552f7f994",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Pelvis",
+            "SnapOrtho::Anatomy::Pelvis::Osteology",
+            "SnapOrtho::Anatomy::Pelvis::Osteology::Pelvis",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Pelvis Trauma::Acetabulum::Acetabular Fractures",
+          "note_guid": "N4yy$i1tSf",
+          "title": "{{c1::Degree of displacement seen on postoperative CT}} has been shown to most closely correlate with outcomes followin…"
+        },
+        {
+          "id": "0fa4ddcc-0331-412f-ad37-929e0bd6a411",
+          "canonical_card_id": "d5029f9e-15a0-462f-af32-db6e6fe11c8a",
+          "canonical_card_version_id": "6a40ae52-b05e-4c07-8e2a-417363661069",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Pelvis",
+            "SnapOrtho::Anatomy::Pelvis::Osteology",
+            "SnapOrtho::Anatomy::Pelvis::Osteology::Pelvis",
+            "SnapOrtho::Anatomy::Thigh_Hip",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femoral_Neck",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femur",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Proximal_Femur",
+            "SnapOrtho::Diagnosis::Femoral_Neck_Fractures",
+            "SnapOrtho::Diagnosis::Intertrochanteric_Fractures",
+            "SnapOrtho::Specialty::Trauma"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Lower Extremity::Proximal Femur::Femoral Neck Fractures",
+          "note_guid": "I<0$UNUP83",
+          "title": "Classifying proximal femur fractures is easier if the patient is placed in {{c1::traction}} with {{c1::internal rotatio…"
+        },
+        {
+          "id": "acb7615a-d128-4827-9f3a-a8d982e232b0",
+          "canonical_card_id": "aa873d6c-1725-41bc-9480-7f10f3977810",
+          "canonical_card_version_id": "2e18a500-d33e-45a1-ba17-0de89805324f",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Pelvis",
+            "SnapOrtho::Anatomy::Pelvis::Osteology",
+            "SnapOrtho::Anatomy::Pelvis::Osteology::Pelvis"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::01 The Basics::01.01 X-rays::Pelvis",
+          "note_guid": "t(_*uG7^%1",
+          "title": "What are the 6 radiographic lines of the pelvis ? 1) {{c1::Iliopubic line}} 2) {{c1::Ilioischial line}} 3) {{c1::Acetab…"
+        },
+        {
+          "id": "14b24779-ec85-42c8-a443-bd0056e651e3",
+          "canonical_card_id": "a1973fac-e022-4508-a5a0-f7d2387b84e0",
+          "canonical_card_version_id": "a879fcf2-2ec2-4e11-9f97-145c11718303",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Pelvis",
+            "SnapOrtho::Anatomy::Pelvis::Osteology",
+            "SnapOrtho::Anatomy::Pelvis::Osteology::Pelvis"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::1) Netter's Concise Orthopaedic Anatomy::07 Pelvis::07.13 Surgical Approaches",
+          "note_guid": "Q|3}8p%UqD",
+          "title": "Which surgical approach to the pelvis is shown below? {{c1::Ilioinguinal}}"
+        },
+        {
+          "id": "51bde8cf-a03b-4621-828c-fc5dabcae283",
+          "canonical_card_id": "93685cfa-a8d4-44f9-b1b2-dbe06794f56f",
+          "canonical_card_version_id": "56a67a1a-b546-44a4-85c0-29e494817423",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Pelvis",
+            "SnapOrtho::Anatomy::Pelvis::Osteology",
+            "SnapOrtho::Anatomy::Pelvis::Osteology::Pelvis",
+            "SnapOrtho::Anatomy::Thigh_Hip",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femur",
+            "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Proximal_Femur",
+            "SnapOrtho::Diagnosis::Chondrosarcoma",
+            "SnapOrtho::Specialty::Orthopedic_Oncology"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Pathology::Bone Tumors::Chondrogenic Tumors::Chondrosarcoma",
+          "note_guid": "C3/Sq_9fB8",
+          "title": "Which tumor is most likely give the following presentation? Patient age > 40 Painful mass Malignancy in pelvis/proximal…"
+        },
+        {
+          "id": "82fb8a37-fa34-4917-ad3c-9357a438973e",
+          "canonical_card_id": "65bcd23d-ff4c-41b0-992a-e44061a0b21c",
+          "canonical_card_version_id": "eb673678-d60f-4bc4-aca3-1ffe9d7943ef",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Pelvis",
+            "SnapOrtho::Anatomy::Pelvis::Osteology",
+            "SnapOrtho::Anatomy::Pelvis::Osteology::Pelvis"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::1) Netter's Concise Orthopaedic Anatomy::07 Pelvis::07.04 Trauma",
+          "note_guid": "ym=;CY#gd&",
+          "title": "Avulsions from pelvis ASIS: {{c1::sartorius::muscle?}} AIIS: {{c1::rectus femoris::muscle?}} Ischial tuberosity: {{c1::…"
+        },
+        {
+          "id": "83ebead3-728a-4463-bc40-0961bdd0d0b0",
+          "canonical_card_id": "afe97cab-1ac4-4e75-9734-76c472e5e816",
+          "canonical_card_version_id": "cdfea043-b6f9-4adb-a5ef-edd78fa9faf0",
+          "rendered_tags": [
+            "SnapOrtho::Anatomy::Pelvis",
+            "SnapOrtho::Anatomy::Pelvis::Osteology",
+            "SnapOrtho::Anatomy::Pelvis::Osteology::Pelvis"
+          ],
+          "deck_path": "Marty McFlyin's Ortho Deck::1) Netter's Concise Orthopaedic Anatomy::07 Pelvis::07.06 History",
+          "note_guid": "z5c)j{tGB*",
+          "title": "Forceful blow to side of pelvis: {{c1::lateral compression}} injury Forceful impact to the front of pelvis: {{c1::anter…"
+        }
+      ]
+    },
+    {
+      "signal": "clinical_tag_without_assertion_provenance",
+      "count": 5647,
+      "denominator": 9688,
+      "examples": [
+        {
+          "manifest_card_id": "91ae089c-84cc-4739-8613-3ac4fbd3d999",
+          "rendered_tag": "SnapOrtho::Anatomy::Shoulder_Girdle",
+          "source_kind": "release_marker",
+          "assertion_id": null
+        },
+        {
+          "manifest_card_id": "91ae089c-84cc-4739-8613-3ac4fbd3d999",
+          "rendered_tag": "SnapOrtho::Anatomy::Shoulder_Girdle::Muscles",
+          "source_kind": "release_marker",
+          "assertion_id": null
+        },
+        {
+          "manifest_card_id": "91ae089c-84cc-4739-8613-3ac4fbd3d999",
+          "rendered_tag": "SnapOrtho::Anatomy::Shoulder_Girdle::Muscles::Infraspinatus",
+          "source_kind": "release_marker",
+          "assertion_id": null
+        },
+        {
+          "manifest_card_id": "91ae089c-84cc-4739-8613-3ac4fbd3d999",
+          "rendered_tag": "SnapOrtho::Anatomy::Shoulder_Girdle::Muscles::Teres_Minor",
+          "source_kind": "release_marker",
+          "assertion_id": null
+        },
+        {
+          "manifest_card_id": "9fafc675-fa78-4b7e-9f44-c8a43debafe3",
+          "rendered_tag": "SnapOrtho::Anatomy::Hand",
+          "source_kind": "release_marker",
+          "assertion_id": null
+        },
+        {
+          "manifest_card_id": "9fafc675-fa78-4b7e-9f44-c8a43debafe3",
+          "rendered_tag": "SnapOrtho::Anatomy::Hand::Osteology",
+          "source_kind": "release_marker",
+          "assertion_id": null
+        },
+        {
+          "manifest_card_id": "9fafc675-fa78-4b7e-9f44-c8a43debafe3",
+          "rendered_tag": "SnapOrtho::Anatomy::Hand::Osteology::Proximal_Phalanx",
+          "source_kind": "release_marker",
+          "assertion_id": null
+        },
+        {
+          "manifest_card_id": "7e45453a-6456-4392-adf7-36c144470586",
+          "rendered_tag": "SnapOrtho::Anatomy::Leg_Knee",
+          "source_kind": "release_marker",
+          "assertion_id": null
+        }
+      ]
+    }
+  ]
+}

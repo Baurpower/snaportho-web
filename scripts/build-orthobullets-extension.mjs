@@ -147,6 +147,13 @@ function buildClassicContentScriptBundle() {
     throw new Error('Classic content script bundle still contains ESM syntax.');
   }
 
+  // The generic and provider extractors share this classic-script scope. A
+  // duplicate `extractChoices` function is hoisted and causes Himalaya to call
+  // the Orthobullets extractor, whose object result then crashes on `.some()`.
+  if (!/function extractHimalayaChoices\(/.test(bundledSource)) {
+    throw new Error('Classic content script bundle is missing the provider-scoped Himalaya choice extractor.');
+  }
+
   writeFileSync(contentScriptPath, bundledSource);
 }
 

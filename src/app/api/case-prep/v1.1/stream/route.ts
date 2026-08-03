@@ -38,7 +38,12 @@ export const runtime = "nodejs";
 // upstream fetch is capped at 60s, so keep the function alive that long.
 export const maxDuration = 60;
 
-const RequestSchema = z.object({ prompt: z.string().trim().min(1) });
+const RequestSchema = z.object({
+  prompt: z.string().trim().min(1),
+  trainingLevel: z.string().trim().max(40).optional(),
+  entrySurface: z.string().trim().max(80).optional(),
+  clientRequestId: z.string().uuid().optional(),
+});
 
 const KG_DEADLINE_MS = 2500;
 const KG_MAX_CONCEPTS = 8;
@@ -117,7 +122,7 @@ export async function POST(request: Request) {
   if (!parsed.success) {
     return NextResponse.json({ error: "Please enter a case." }, { status: 400 });
   }
-  const { prompt } = parsed.data;
+  const { prompt, trainingLevel, entrySurface, clientRequestId } = parsed.data;
   const startedAt = Date.now();
 
   // 1. Entitlement gate — never open the upstream stream for a denied subject.
@@ -168,7 +173,12 @@ export async function POST(request: Request) {
     upstream = await fetch(`${baseUrl}/case-prep/web/v1.1/stream`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt, entry_surface: "web_case_prep_v1_1_stream" }),
+      body: JSON.stringify({
+        prompt,
+        training_level: trainingLevel,
+        entry_surface: entrySurface ?? "web_case_prep_v1_1_stream",
+        client_request_id: clientRequestId,
+      }),
       signal: controller.signal,
       cache: "no-store",
     });
@@ -285,6 +295,8 @@ export async function POST(request: Request) {
     "Cache-Control": "no-cache, no-transform",
     Connection: "keep-alive",
     "X-Accel-Buffering": "no",
+    "X-CasePrep-Contract-Version": "v1.1",
+    "X-CasePrep-Stream-Protocol-Version": "1",
   });
   if (guestCookie) headers.append("Set-Cookie", guestCookie);
   return new Response(stream, { status: 200, headers });

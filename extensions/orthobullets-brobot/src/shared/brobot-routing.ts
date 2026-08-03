@@ -64,6 +64,24 @@ export const CURRICULUM_CONTRACT_LIMITS = {
   date: 120,
   serializedRequest: 500000,
 } as const;
+// Caps mirrored from the server's OrthobulletsPageContextSchema. The curriculum
+// request forwards a page context that the server validates against these; keep
+// pass-through fields within them so a rich page is not rejected wholesale.
+const PAGE_CONTEXT_LIMITS = {
+  breadcrumbs: 12,
+  breadcrumb: 200,
+  authors: 12,
+  author: 200,
+  references: 40,
+  reference: 1200,
+  learningObjectives: 20,
+  learningObjective: 400,
+  extractionWarnings: 20,
+  extractionWarning: 300,
+  linkedConcepts: 20,
+  linkedConceptLabel: 240,
+  linkedConceptHref: 2000,
+} as const;
 const CURRICULUM_PAGE_TEXT_LIMIT = CURRICULUM_CONTRACT_LIMITS.pageText;
 const CURRICULUM_SINGLE_SECTION_TEXT_LIMIT = CURRICULUM_CONTRACT_LIMITS.sectionText;
 export const CURRICULUM_EXPLAIN_CONTRACT_VERSION = 'curriculum-explain-v2' as const;
@@ -90,7 +108,7 @@ export function validateCurriculumExplainRequest(payload: BroBotCurriculumPayloa
   if (!['rock', 'orthobullets'].includes(payload.provider)) add('provider', 'unsupported_provider', 'Unsupported curriculum provider.');
   try { new URL(payload.sourceUrl); } catch { add('sourceUrl', 'invalid_source_url', 'Expected a valid source URL.'); }
   if (payload.pageContext.mode !== 'curriculum_content') add('pageContext.mode', 'unsupported_page_kind', 'Expected curriculum_content mode.');
-  if (payload.emphasis != null && !['high_yield', 'comprehensive', 'board_review'].includes(String(payload.emphasis))) add('emphasis', 'invalid_enum_value', 'Unsupported curriculum emphasis.');
+  if (payload.emphasis != null && !['high_yield', 'clinical', 'boards', 'or'].includes(String(payload.emphasis))) add('emphasis', 'invalid_enum_value', 'Unsupported curriculum emphasis.');
   if (!payload.curriculum.title.trim()) add('curriculum.title', 'missing_title', 'A page title is required.');
   if (!payload.curriculum.sections.length && !payload.curriculum.visibleText?.trim()) add('curriculum.sections', 'missing_sections', 'At least one readable section is required.');
   if (payload.curriculum.sections.length > 120) add('curriculum.sections', 'too_many_sections', 'At most 120 sections are accepted.');
@@ -202,6 +220,25 @@ export function buildCurriculumExplainRequest(pageContext: OrthobulletsPageConte
     contentSections: [],
     contentText: null,
     contentMarkdown: null,
+    // The server validates the full page context against its schema caps and
+    // rebuilds the context it uses from `curriculum` (title, breadcrumbs,
+    // images, tables, sections). Rich pages routinely exceed those caps, which
+    // would reject the whole request. Represent this metadata via `curriculum`
+    // and keep any surviving pass-through fields within the server caps.
+    title: pageContext.title ? truncateUnicode(pageContext.title, CURRICULUM_CONTRACT_LIMITS.title) : pageContext.title,
+    breadcrumbs: boundedList(pageContext.breadcrumbs, PAGE_CONTEXT_LIMITS.breadcrumbs, PAGE_CONTEXT_LIMITS.breadcrumb),
+    authors: boundedList(pageContext.authors, PAGE_CONTEXT_LIMITS.authors, PAGE_CONTEXT_LIMITS.author),
+    references: boundedList(pageContext.references, PAGE_CONTEXT_LIMITS.references, PAGE_CONTEXT_LIMITS.reference),
+    learningObjectives: boundedList(pageContext.learningObjectives, PAGE_CONTEXT_LIMITS.learningObjectives, PAGE_CONTEXT_LIMITS.learningObjective),
+    extractionWarnings: boundedList(pageContext.extractionWarnings, PAGE_CONTEXT_LIMITS.extractionWarnings, PAGE_CONTEXT_LIMITS.extractionWarning),
+    sectionHeadings: [],
+    tablesMarkdown: [],
+    images: [],
+    linkedConcepts: (pageContext.linkedConcepts ?? []).slice(0, PAGE_CONTEXT_LIMITS.linkedConcepts).map((concept) => ({
+      ...concept,
+      label: truncateUnicode(concept.label ?? '', PAGE_CONTEXT_LIMITS.linkedConceptLabel),
+      href: concept.href ? truncateUnicode(concept.href, PAGE_CONTEXT_LIMITS.linkedConceptHref) : concept.href,
+    })),
     raw: {
       ...(pageContext.raw ?? {}),
       providerSpecific,

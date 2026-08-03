@@ -9,6 +9,14 @@
       <button aria-label="Question 1 CORRECT">✓ 1</button>
       <button aria-label="Question 2 INCORRECT">✕ 2</button>
       <button aria-label="Question 3 UNANSWERED">3</button>
+      <!-- te6 keeps stale question markup mounted behind the results screen. -->
+      <section id="teApp" class="question-attempt">
+        <div class="questionStem">Stale mounted question must not replace the results overview.</div>
+        <div class="answers">
+          <div class="answer"><span class="answer-text">Stale answer A</span></div>
+          <div class="answer"><span class="answer-text">Stale answer B</span></div>
+        </div>
+      </section>
     </main>
   </body>
 </html>
