@@ -2,7 +2,7 @@ import { sectionTitle } from "@/lib/workspace/signout/tokens";
 
 /**
  * Structured clinical fields for the card editor, mirroring the real handoff layout
- * (HPI/Exam · Labs/Imaging/PT · Plan). Fields are stored inside the single encrypted
+ * (HPI/Exam · Labs/Imaging/PT · Plan · To-do). Fields are stored inside the single encrypted
  * body as `## Title` sections, so there is no schema or crypto change — the editor just
  * presents labeled boxes instead of raw markdown, and display still renders the sections.
  */
@@ -20,8 +20,13 @@ export const SIGNOUT_FIELDS = [
   },
   {
     title: "Plan",
-    label: "Plan / to-do",
-    placeholder: "Plan and overnight to-dos — use [ ] for checkboxes, #tags to flag…",
+    label: "Plan",
+    placeholder: "Clinical plan — what we’re doing overnight / next steps…",
+  },
+  {
+    title: "To-do",
+    label: "To-do",
+    placeholder: "Overnight action items",
   },
 ] as const;
 
@@ -32,6 +37,45 @@ export type SignoutFields = {
   values: Record<string, string>; // keyed by section title
   extras: { title: string; text: string }[]; // preserved unknown sections
 };
+
+export type TodoItem = {
+  checked: boolean;
+  text: string;
+};
+
+const TODO_LINE_RE = /^(\s*)\[([ xX])\]\s?(.*)$/;
+
+/** Parse a To-do section body into checklist items. Non-checkbox lines become open items. */
+export function parseTodoLines(text: string): TodoItem[] {
+  if (!text.trim()) return [];
+  const items: TodoItem[] = [];
+  for (const raw of text.split("\n")) {
+    const line = raw.trimEnd();
+    if (!line.trim()) continue;
+    const match = TODO_LINE_RE.exec(line);
+    if (match) {
+      items.push({
+        checked: match[2] !== " ",
+        text: match[3].trimEnd(),
+      });
+    } else {
+      items.push({ checked: false, text: line.trim() });
+    }
+  }
+  return items;
+}
+
+/** Serialize checklist items to `[ ]` / `[x]` lines for the To-do section. */
+export function serializeTodoLines(items: TodoItem[]): string {
+  return items
+    .map((item) => {
+      const text = item.text.trim();
+      if (!text) return "";
+      return `${item.checked ? "[x]" : "[ ]"} ${text}`;
+    })
+    .filter(Boolean)
+    .join("\n");
+}
 
 function trimEdges(text: string): string {
   return text.replace(/^\n+/, "").replace(/\n+$/, "");

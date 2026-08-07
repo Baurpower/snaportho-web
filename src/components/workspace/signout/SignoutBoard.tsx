@@ -19,7 +19,7 @@ import type {
   UpdateCardPatch,
 } from "@/lib/workspace/signout/types";
 import { extractTags } from "@/lib/workspace/signout/tokens";
-import { computePod, podChip } from "@/lib/workspace/signout/pod";
+import { computePod } from "@/lib/workspace/signout/pod";
 import {
   apiCreateCard,
   apiCreateService,
@@ -33,6 +33,7 @@ import {
 } from "@/components/workspace/signout/api";
 import { PatientCard } from "@/components/workspace/signout/PatientCard";
 import { SignoutTable } from "@/components/workspace/signout/SignoutTable";
+import { HandoffSheet } from "@/components/workspace/signout/HandoffSheet";
 import { SEVERITY_META } from "@/components/workspace/signout/severity";
 
 type Props = {
@@ -59,7 +60,16 @@ export function SignoutBoard({
     initialServices[0]?.id ?? null
   );
   const [cards, setCards] = useState<SignoutCard[]>(preview ? previewCards : []);
-  const [view, setView] = useState<View>("card");
+  const [view, setView] = useState<View>(() => {
+    if (typeof window === "undefined") return "table";
+    try {
+      const saved = window.localStorage.getItem("signout:view");
+      if (saved === "card" || saved === "table") return saved;
+    } catch {
+      /* ignore */
+    }
+    return "table";
+  });
   const [loadingCards, setLoadingCards] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [viewers, setViewers] = useState(1);
@@ -84,6 +94,8 @@ export function SignoutBoard({
       cards.filter((c) => {
         if (severityFilter && c.severity !== severityFilter) return false;
         if (postOpOnly) {
+          // Only surgical patients with a past/current surgery date.
+          if (c.managementMode === "nonop") return false;
           const p = computePod(c.surgeryDate);
           if (!p || p.preOp) return false;
         }
@@ -204,6 +216,9 @@ export function SignoutBoard({
         location: "",
         surgery: "",
         surgeryDate: "",
+        nextSurgery: "",
+        nextSurgeryDate: "",
+        managementMode: "",
         status: "active",
         sortOrder: cards.length,
         pinned: false,
@@ -281,8 +296,17 @@ export function SignoutBoard({
     return apiRevealIdentity(cardId);
   }
 
+  function setViewPersist(next: View) {
+    setView(next);
+    try {
+      window.localStorage.setItem("signout:view", next);
+    } catch {
+      /* ignore */
+    }
+  }
+
   function openCard(cardId: string) {
-    setView("card");
+    setViewPersist("card");
     requestAnimationFrame(() => {
       cardRefs.current[cardId]?.scrollIntoView({ behavior: "smooth", block: "center" });
     });
@@ -327,7 +351,7 @@ export function SignoutBoard({
 
   return (
     <div className="min-h-[calc(100vh-52px)] bg-slate-50 print:min-h-0 print:bg-white">
-      <div className="mx-auto max-w-3xl px-4 py-6 print:hidden">
+      <div className="mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 print:hidden">
       {/* Title + service tabs */}
       <div className="flex items-center justify-between gap-2">
         <h1 className="text-2xl font-black tracking-tight text-slate-900">Sign-out</h1>
@@ -391,7 +415,7 @@ export function SignoutBoard({
             <div className="inline-flex overflow-hidden rounded-full border border-slate-200 text-sm">
               <button
                 type="button"
-                onClick={() => setView("card")}
+                onClick={() => setViewPersist("card")}
                 className={`flex items-center gap-1 px-3 py-1 ${
                   view === "card" ? "bg-blue-50 text-blue-800" : "text-slate-500"
                 }`}
@@ -400,7 +424,7 @@ export function SignoutBoard({
               </button>
               <button
                 type="button"
-                onClick={() => setView("table")}
+                onClick={() => setViewPersist("table")}
                 className={`flex items-center gap-1 px-3 py-1 ${
                   view === "table" ? "bg-blue-50 text-blue-800" : "text-slate-500"
                 }`}
@@ -502,7 +526,7 @@ export function SignoutBoard({
               No patients match the filters.
             </p>
           ) : view === "card" ? (
-            <div className="mt-3 flex flex-col gap-2">
+            <div className="mt-3 flex flex-col gap-3">
               {filteredCards.map((card, i) => (
                 <div
                   key={card.id}
@@ -537,40 +561,8 @@ export function SignoutBoard({
       )}
       </div>
 
-      {/* Printable handoff sheet (screen-hidden, print-only). */}
-      <PrintSheet serviceName={activeService?.name ?? ""} cards={cards} />
-    </div>
-  );
-}
-
-function PrintSheet({ serviceName, cards }: { serviceName: string; cards: SignoutCard[] }) {
-  return (
-    <div className="hidden print:block">
-      <h2 className="mb-2 text-lg font-bold">{serviceName} — sign-out</h2>
-      <table className="w-full border-collapse text-[11px]">
-        <thead>
-          <tr className="border-b border-black text-left">
-            <th className="py-1 pr-2">Loc</th>
-            <th className="py-1 pr-2">Patient</th>
-            <th className="py-1 pr-2">Attending</th>
-            <th className="py-1 pr-2">Sev</th>
-            <th className="py-1 pr-2">POD</th>
-            <th className="py-1">Sign-out</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cards.map((c) => (
-            <tr key={c.id} className="border-b border-slate-300 align-top">
-              <td className="py-1 pr-2">{c.location}</td>
-              <td className="py-1 pr-2 font-bold">{c.handle}</td>
-              <td className="py-1 pr-2">{c.attending}</td>
-              <td className="py-1 pr-2">{SEVERITY_META[c.severity].label}</td>
-              <td className="py-1 pr-2">{podChip(c.surgeryDate) ?? ""}</td>
-              <td className="whitespace-pre-wrap py-1">{c.body}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {/* Printable multi-column handoff (location-ordered; screen-hidden). */}
+      <HandoffSheet serviceName={activeService?.name ?? ""} cards={cards} />
     </div>
   );
 }

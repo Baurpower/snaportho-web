@@ -1310,6 +1310,20 @@ export function isLegacyStripeUserProviderConstraintError(error: unknown) {
 }
 
 /**
+ * Fires when the canonical upsert's ON CONFLICT target
+ * (provider, provider_subscription_id, environment) fails to match an existing
+ * row whose `environment` is NULL — Postgres treats NULL as distinct, so it
+ * attempts an INSERT that then collides with the column-level UNIQUE on
+ * `stripe_subscription_id`. Renewals for any row created before `environment`
+ * was populated (e.g. pre-auth / account-billing rows) would otherwise fail
+ * every retry with `upsert_failed`, silently stranding a paid subscription.
+ */
+export function isStripeSubscriptionIdConstraintError(error: unknown) {
+  const message = error instanceof Error ? error.message : String(error);
+  return message.includes('stripe_subscription_id');
+}
+
+/**
  * Stripe-only write path.
  *
  * Primary path: upsert by stripe_subscription_id (supports multiple historical rows).
@@ -1328,6 +1342,66 @@ async function upsertStripeBrobotSubscription(
   try {
     return await upsertCanonicalSubscription(upsertPayload);
   } catch (error) {
+    // Null-environment collision fallback: the ON CONFLICT target could not
+    // match a pre-existing row (its `environment` is NULL) and the INSERT hit
+    // the unique `stripe_subscription_id`. Update that row in place, keyed by
+    // the globally-unique `stripe_subscription_id`, and normalize `environment`
+    // so subsequent upserts match the canonical conflict target.
+    if (isStripeSubscriptionIdConstraintError(error) && upsertPayload.stripe_subscription_id) {
+      console.warn('[stripe] stripe_subscription_id_conflict_fallback_triggered', {
+        provider: 'stripe',
+        stripe_subscription_id: upsertPayload.stripe_subscription_id,
+        user_id: userId.slice(0, 8),
+        hint: 'Existing row has a NULL environment; updating in place by stripe_subscription_id.',
+      });
+
+      const supabase = createAdminClient();
+      const { data, error: updateError } = await supabase
+        .from('subscriptions')
+        .update({
+          user_id: upsertPayload.user_id,
+          environment: upsertPayload.environment,
+          status: upsertPayload.status,
+          current_period_start: upsertPayload.current_period_start,
+          current_period_end: upsertPayload.current_period_end,
+          cancel_at_period_end: upsertPayload.cancel_at_period_end,
+          canceled_at: upsertPayload.canceled_at,
+          provider_customer_id: upsertPayload.provider_customer_id,
+          provider_subscription_id: upsertPayload.provider_subscription_id,
+          provider_product_id: upsertPayload.provider_product_id,
+          provider_price_id: upsertPayload.provider_price_id,
+          provider_transaction_id: upsertPayload.provider_transaction_id,
+          raw_provider_status: upsertPayload.raw_provider_status,
+          provider_metadata: upsertPayload.provider_metadata,
+          plan_code: upsertPayload.plan_code,
+          last_verified_at: upsertPayload.last_verified_at,
+          stripe_customer_id: upsertPayload.stripe_customer_id,
+          stripe_price_id: upsertPayload.stripe_price_id,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('stripe_subscription_id', upsertPayload.stripe_subscription_id)
+        .select('*')
+        .maybeSingle();
+
+      if (updateError) {
+        throw new Error(
+          `Failed to update Stripe subscription row by stripe_subscription_id: ${updateError.message}`
+        );
+      }
+      if (!data) {
+        throw error;
+      }
+
+      console.log('[stripe] stripe_subscription_id_conflict_fallback_applied', {
+        provider: 'stripe',
+        stripe_subscription_id: upsertPayload.stripe_subscription_id,
+        user_id: userId.slice(0, 8),
+        db_row_id: data.id ?? null,
+      });
+
+      return { applied: true, payload: upsertPayload, row: data };
+    }
+
     if (!isLegacyStripeUserProviderConstraintError(error)) {
       throw error;
     }

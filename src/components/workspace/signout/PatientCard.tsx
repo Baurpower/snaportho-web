@@ -11,11 +11,16 @@ import {
   Loader2,
   Check,
   AlertTriangle,
+  Plus,
+  X,
+  Square,
+  CheckSquare,
 } from "lucide-react";
 
 import type {
   PatientIdentifiers,
   SignoutCard,
+  SignoutManagementMode,
   UpdateCardPatch,
 } from "@/lib/workspace/signout/types";
 import type { SaveCardResult } from "@/components/workspace/signout/api";
@@ -23,12 +28,19 @@ import { IdentityPanel } from "@/components/workspace/signout/IdentityPanel";
 import { SEVERITY_META, nextSeverity } from "@/components/workspace/signout/severity";
 import { SmartBody } from "@/components/workspace/signout/SmartBody";
 import { toggleCheckboxAt } from "@/lib/workspace/signout/tokens";
-import { computePod, shortDate } from "@/lib/workspace/signout/pod";
 import {
-  SIGNOUT_FIELDS,
+  computeNextOr,
+  computePod,
+  computeTxDay,
+  shortDate,
+} from "@/lib/workspace/signout/pod";
+import {
   serializeFields,
+  serializeTodoLines,
   splitFields,
+  parseTodoLines,
   type SignoutFields,
+  type TodoItem,
 } from "@/lib/workspace/signout/fields";
 
 type Props = {
@@ -44,6 +56,19 @@ type Props = {
 };
 
 const AUTOSAVE_MS = 800;
+
+/** Resolve management mode for the editor (explicit facet, else light inference). */
+export function resolveManagementMode(card: Pick<
+  SignoutCard,
+  "managementMode" | "surgeryDate" | "surgery"
+>): SignoutManagementMode {
+  if (card.managementMode === "surgery" || card.managementMode === "nonop") {
+    return card.managementMode;
+  }
+  if (card.surgeryDate) return "surgery";
+  if (card.surgery.trim()) return "nonop";
+  return "surgery";
+}
 
 function firstLine(text: string): string {
   const line = text.split("\n").find((l) => l.trim().length > 0) ?? "";
@@ -77,6 +102,15 @@ export function PatientCard({
   const [locationDraft, setLocationDraft] = useState(card.location);
   const [surgeryDraft, setSurgeryDraft] = useState(card.surgery);
   const [surgeryDateDraft, setSurgeryDateDraft] = useState(card.surgeryDate);
+  const [nextSurgeryDraft, setNextSurgeryDraft] = useState(card.nextSurgery);
+  const [nextSurgeryDateDraft, setNextSurgeryDateDraft] = useState(card.nextSurgeryDate);
+  const [managementMode, setManagementMode] = useState<SignoutManagementMode>(() =>
+    resolveManagementMode(card)
+  );
+  const [todoItems, setTodoItems] = useState<TodoItem[]>(() =>
+    parseTodoLines(splitFields(card.body).values["To-do"] ?? "")
+  );
+  const [newTodo, setNewTodo] = useState("");
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "conflict" | "error">(
     "idle"
   );
@@ -88,6 +122,7 @@ export function PatientCard({
 
   const meta = SEVERITY_META[card.severity];
   const discharged = card.status === "discharged";
+  const isNonop = resolveManagementMode(card) === "nonop";
 
   // Adopt an externally-changed card (e.g. after a conflict reload) unless the
   // user has unsaved local edits in flight.
@@ -131,11 +166,17 @@ export function PatientCard({
 
   // Enter the structured editor, seeding fields from the current body.
   function enterEdit() {
-    setFields(splitFields(draftRef.current));
+    const next = splitFields(draftRef.current);
+    setFields(next);
+    setTodoItems(parseTodoLines(next.values["To-do"] ?? ""));
+    setNewTodo("");
     setAttendingDraft(card.attending);
     setLocationDraft(card.location);
     setSurgeryDraft(card.surgery);
     setSurgeryDateDraft(card.surgeryDate);
+    setNextSurgeryDraft(card.nextSurgery);
+    setNextSurgeryDateDraft(card.nextSurgeryDate);
+    setManagementMode(resolveManagementMode(card));
     setEditing(true);
   }
 
@@ -152,6 +193,11 @@ export function PatientCard({
   const updateField = (title: string, value: string) =>
     applyFields({ ...fields, values: { ...fields.values, [title]: value } });
 
+  function applyTodos(items: TodoItem[]) {
+    setTodoItems(items);
+    updateField("To-do", serializeTodoLines(items));
+  }
+
   function saveAttending() {
     if (attendingDraft.trim() !== card.attending) void persist({ attending: attendingDraft });
   }
@@ -165,6 +211,33 @@ export function PatientCard({
     setSurgeryDateDraft(value);
     if (value !== card.surgeryDate) void persist({ surgeryDate: value });
   }
+  function saveNextSurgery() {
+    if (nextSurgeryDraft.trim() !== card.nextSurgery) {
+      void persist({ nextSurgery: nextSurgeryDraft });
+    }
+  }
+  function saveNextSurgeryDate(value: string) {
+    setNextSurgeryDateDraft(value);
+    if (value !== card.nextSurgeryDate) void persist({ nextSurgeryDate: value });
+  }
+
+  function setMode(mode: SignoutManagementMode) {
+    if (mode === managementMode) return;
+    setManagementMode(mode);
+    // Keep surgeryDate — it means surgery date or non-op start date depending on mode.
+    // Clear planned next OR when leaving surgery pathway.
+    if (mode === "nonop") {
+      setNextSurgeryDraft("");
+      setNextSurgeryDateDraft("");
+      void persist({
+        managementMode: "nonop",
+        nextSurgery: "",
+        nextSurgeryDate: "",
+      });
+      return;
+    }
+    void persist({ managementMode: mode });
+  }
 
   // Toggle an action-item checkbox from the rendered (non-editing) view.
   function toggleChecklist(lineIndex: number) {
@@ -174,7 +247,15 @@ export function PatientCard({
     void persist({ body: next });
   }
 
-  const podInfo = computePod(card.surgeryDate);
+  const podInfo = isNonop ? null : computePod(card.surgeryDate);
+  const nextOrInfo = isNonop ? null : computeNextOr(card.nextSurgeryDate);
+  const txDayInfo = isNonop ? computeTxDay(card.surgeryDate) : null;
+  const showProcedureLine =
+    Boolean(
+      card.surgery ||
+        card.surgeryDate ||
+        (!isNonop && (card.nextSurgery || card.nextSurgeryDate))
+    ) && !editing;
 
   return (
     <div
@@ -229,6 +310,43 @@ export function PatientCard({
                 {podInfo.label}
               </span>
             )}
+            {nextOrInfo && (
+              <span
+                className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                  nextOrInfo.upcoming
+                    ? "bg-purple-50 text-purple-800"
+                    : "bg-indigo-50 text-indigo-800"
+                }`}
+                title={
+                  card.nextSurgeryDate
+                    ? `${card.nextSurgery || "Next OR"} · ${shortDate(card.nextSurgeryDate)}`
+                    : undefined
+                }
+              >
+                {nextOrInfo.label}
+              </span>
+            )}
+            {isNonop && (
+              <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-600">
+                Non-op
+              </span>
+            )}
+            {txDayInfo && (
+              <span
+                className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                  txDayInfo.started
+                    ? "bg-teal-50 text-teal-800"
+                    : "bg-slate-100 text-slate-600"
+                }`}
+                title={
+                  card.surgeryDate
+                    ? `Started ${shortDate(card.surgeryDate)}`
+                    : undefined
+                }
+              >
+                {txDayInfo.label}
+              </span>
+            )}
             {discharged && (
               <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-600">
                 Discharged
@@ -252,11 +370,33 @@ export function PatientCard({
           </div>
         </div>
 
-        {(card.surgery || card.surgeryDate) && !editing && (
+        {showProcedureLine && (
           <p className="mt-0.5 pl-6 text-xs text-slate-500">
-            {card.surgery}
-            {card.surgery && card.surgeryDate ? " · " : ""}
-            {shortDate(card.surgeryDate)}
+            {isNonop ? (
+              <>
+                {card.surgery || "Non-op"}
+                {card.surgeryDate ? (
+                  <>
+                    {" · since "}
+                    {shortDate(card.surgeryDate)}
+                    {txDayInfo ? ` · ${txDayInfo.label}` : ""}
+                  </>
+                ) : null}
+              </>
+            ) : (
+              <>
+                {card.surgery}
+                {card.surgery && card.surgeryDate ? " · " : ""}
+                {shortDate(card.surgeryDate)}
+                {(card.nextSurgery || card.nextSurgeryDate) && (
+                  <>
+                    {" · → "}
+                    {card.nextSurgery || "Next OR"}
+                    {card.nextSurgeryDate ? ` ${shortDate(card.nextSurgeryDate)}` : ""}
+                  </>
+                )}
+              </>
+            )}
           </p>
         )}
 
@@ -289,25 +429,101 @@ export function PatientCard({
                     />
                   </FieldBox>
                 </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <FieldBox label="Surgery">
-                    <input
-                      value={surgeryDraft}
-                      onChange={(e) => setSurgeryDraft(e.target.value)}
-                      onBlur={saveSurgery}
-                      placeholder="e.g. ORIF R hip"
-                      className="w-full rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm outline-none focus:border-slate-400"
+
+                <FieldBox label="Management">
+                  <div
+                    className="inline-flex rounded-lg border border-slate-300 bg-slate-50 p-0.5"
+                    role="group"
+                    aria-label="Management pathway"
+                  >
+                    <ModeButton
+                      active={managementMode === "surgery"}
+                      onClick={() => setMode("surgery")}
+                      label="Surgery"
                     />
-                  </FieldBox>
-                  <FieldBox label="Surgery date (POD auto-calcs)">
-                    <input
-                      type="date"
-                      value={surgeryDateDraft}
-                      onChange={(e) => saveSurgeryDate(e.target.value)}
-                      className="w-full rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm outline-none focus:border-slate-400"
+                    <ModeButton
+                      active={managementMode === "nonop"}
+                      onClick={() => setMode("nonop")}
+                      label="Non-op"
                     />
-                  </FieldBox>
-                </div>
+                  </div>
+                </FieldBox>
+
+                {managementMode === "surgery" ? (
+                  <>
+                    <div className="grid grid-cols-2 gap-2">
+                      <FieldBox label="Last surgery">
+                        <input
+                          value={surgeryDraft}
+                          onChange={(e) => setSurgeryDraft(e.target.value)}
+                          onBlur={saveSurgery}
+                          placeholder="e.g. lower extremity I&D"
+                          className="w-full rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm outline-none focus:border-slate-400"
+                        />
+                      </FieldBox>
+                      <FieldBox label="Surgery date (POD auto-calcs)">
+                        <input
+                          type="date"
+                          value={surgeryDateDraft}
+                          onChange={(e) => saveSurgeryDate(e.target.value)}
+                          className="w-full rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm outline-none focus:border-slate-400"
+                        />
+                      </FieldBox>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <FieldBox label="Next OR (optional)">
+                        <input
+                          value={nextSurgeryDraft}
+                          onChange={(e) => setNextSurgeryDraft(e.target.value)}
+                          onBlur={saveNextSurgery}
+                          placeholder="e.g. repeat I&D + vac change"
+                          className="w-full rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm outline-none focus:border-slate-400"
+                        />
+                      </FieldBox>
+                      <FieldBox
+                        label={
+                          nextSurgeryDateDraft && computeNextOr(nextSurgeryDateDraft)
+                            ? `Planned date (${computeNextOr(nextSurgeryDateDraft)!.label})`
+                            : "Planned date (countdown auto-calcs)"
+                        }
+                      >
+                        <input
+                          type="date"
+                          value={nextSurgeryDateDraft}
+                          onChange={(e) => saveNextSurgeryDate(e.target.value)}
+                          className="w-full rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm outline-none focus:border-slate-400"
+                        />
+                      </FieldBox>
+                    </div>
+                  </>
+                ) : (
+                  <div className="grid grid-cols-2 gap-2">
+                    <FieldBox label="Tx">
+                      <input
+                        value={surgeryDraft}
+                        onChange={(e) => setSurgeryDraft(e.target.value)}
+                        onBlur={saveSurgery}
+                        placeholder="e.g. IV ABX, NWB cast"
+                        className="w-full rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm outline-none focus:border-slate-400"
+                      />
+                    </FieldBox>
+                    <FieldBox
+                      label={
+                        surgeryDateDraft && computeTxDay(surgeryDateDraft)
+                          ? `Started (${computeTxDay(surgeryDateDraft)!.label})`
+                          : "Started (days since auto-calcs)"
+                      }
+                    >
+                      <input
+                        type="date"
+                        value={surgeryDateDraft}
+                        onChange={(e) => saveSurgeryDate(e.target.value)}
+                        className="w-full rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm outline-none focus:border-slate-400"
+                      />
+                    </FieldBox>
+                  </div>
+                )}
+
                 <FieldBox label="One-liner">
                   <AutoTextarea
                     value={fields.lead}
@@ -316,15 +532,40 @@ export function PatientCard({
                     minRows={2}
                   />
                 </FieldBox>
-                {SIGNOUT_FIELDS.map((f) => (
-                  <FieldBox key={f.title} label={f.label}>
-                    <AutoTextarea
-                      value={fields.values[f.title] ?? ""}
-                      onChange={(v) => updateField(f.title, v)}
-                      placeholder={f.placeholder}
-                    />
-                  </FieldBox>
-                ))}
+
+                <FieldBox label="HPI / Exam">
+                  <AutoTextarea
+                    value={fields.values["HPI/Exam"] ?? ""}
+                    onChange={(v) => updateField("HPI/Exam", v)}
+                    placeholder="One-liner history, interval events, exam findings…"
+                  />
+                </FieldBox>
+
+                <FieldBox label="Labs / Imaging / PT">
+                  <AutoTextarea
+                    value={fields.values["Labs/Imaging/PT"] ?? ""}
+                    onChange={(v) => updateField("Labs/Imaging/PT", v)}
+                    placeholder="Vitals, labs, cultures, imaging, PT status…"
+                  />
+                </FieldBox>
+
+                <FieldBox label="Plan">
+                  <AutoTextarea
+                    value={fields.values["Plan"] ?? ""}
+                    onChange={(v) => updateField("Plan", v)}
+                    placeholder="Clinical plan — what we’re doing overnight / next steps…"
+                  />
+                </FieldBox>
+
+                <FieldBox label="To-do">
+                  <TodoEditor
+                    items={todoItems}
+                    onChange={applyTodos}
+                    newTodo={newTodo}
+                    setNewTodo={setNewTodo}
+                  />
+                </FieldBox>
+
                 <button
                   type="button"
                   onClick={() => {
@@ -412,14 +653,135 @@ export function PatientCard({
   );
 }
 
+function ModeButton({
+  active,
+  onClick,
+  label,
+}: {
+  active: boolean;
+  onClick: () => void;
+  label: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className={`rounded-md px-3 py-1 text-xs font-semibold transition-colors ${
+        active
+          ? "bg-slate-800 text-white shadow-sm"
+          : "text-slate-600 hover:bg-white hover:text-slate-900"
+      }`}
+    >
+      {label}
+    </button>
+  );
+}
+
+function TodoEditor({
+  items,
+  onChange,
+  newTodo,
+  setNewTodo,
+}: {
+  items: TodoItem[];
+  onChange: (items: TodoItem[]) => void;
+  newTodo: string;
+  setNewTodo: (v: string) => void;
+}) {
+  function addItem() {
+    const text = newTodo.trim();
+    if (!text) return;
+    onChange([...items, { checked: false, text }]);
+    setNewTodo("");
+  }
+
+  return (
+    <div className="rounded-lg border border-slate-300 bg-white">
+      {items.length > 0 && (
+        <ul className="divide-y divide-slate-100">
+          {items.map((item, index) => (
+            <li key={index} className="flex items-start gap-1.5 px-2 py-1.5">
+              <button
+                type="button"
+                aria-label={item.checked ? "Mark incomplete" : "Mark done"}
+                onClick={() => {
+                  const next = items.slice();
+                  next[index] = { ...item, checked: !item.checked };
+                  onChange(next);
+                }}
+                className={`mt-0.5 shrink-0 ${
+                  item.checked ? "text-emerald-500" : "text-slate-400 hover:text-slate-600"
+                }`}
+              >
+                {item.checked ? (
+                  <CheckSquare className="h-4 w-4" />
+                ) : (
+                  <Square className="h-4 w-4" />
+                )}
+              </button>
+              <input
+                value={item.text}
+                onChange={(e) => {
+                  const next = items.slice();
+                  next[index] = { ...item, text: e.target.value };
+                  onChange(next);
+                }}
+                className={`min-w-0 flex-1 bg-transparent text-sm outline-none ${
+                  item.checked ? "text-slate-400 line-through" : "text-slate-800"
+                }`}
+              />
+              <button
+                type="button"
+                aria-label="Remove to-do"
+                onClick={() => onChange(items.filter((_, i) => i !== index))}
+                className="shrink-0 rounded p-0.5 text-slate-300 hover:bg-slate-100 hover:text-slate-600"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <div
+        className={`flex items-center gap-1.5 px-2 py-1.5 ${
+          items.length > 0 ? "border-t border-slate-100" : ""
+        }`}
+      >
+        <Plus className="h-4 w-4 shrink-0 text-slate-300" />
+        <input
+          value={newTodo}
+          onChange={(e) => setNewTodo(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              addItem();
+            }
+          }}
+          placeholder="Add overnight task…"
+          className="min-w-0 flex-1 bg-transparent py-0.5 text-sm text-slate-800 outline-none placeholder:text-slate-400"
+        />
+        <button
+          type="button"
+          onClick={addItem}
+          disabled={!newTodo.trim()}
+          className="rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-600 hover:bg-slate-200 disabled:opacity-40"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function FieldBox({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <label className="block">
+    <div className="block">
       <span className="mb-0.5 block text-[11px] font-semibold uppercase tracking-wide text-slate-400">
         {label}
       </span>
       {children}
-    </label>
+    </div>
   );
 }
 
@@ -455,4 +817,3 @@ function SaveBadge({ status }: { status: string }) {
     return <AlertTriangle className="h-3.5 w-3.5 text-red-500" aria-label="Save failed" />;
   return null;
 }
-

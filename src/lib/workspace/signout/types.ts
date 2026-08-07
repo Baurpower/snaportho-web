@@ -2,6 +2,8 @@
 
 export type SignoutSeverity = "stable" | "watcher" | "unstable";
 export type SignoutStatus = "active" | "discharged";
+/** Operative vs non-operative pathway; null/empty means unset (infer in UI). */
+export type SignoutManagementMode = "surgery" | "nonop";
 
 export const SIGNOUT_SEVERITIES: readonly SignoutSeverity[] = [
   "stable",
@@ -9,6 +11,10 @@ export const SIGNOUT_SEVERITIES: readonly SignoutSeverity[] = [
   "unstable",
 ];
 export const SIGNOUT_STATUSES: readonly SignoutStatus[] = ["active", "discharged"];
+export const SIGNOUT_MANAGEMENT_MODES: readonly SignoutManagementMode[] = [
+  "surgery",
+  "nonop",
+];
 
 export type SignoutService = {
   id: string;
@@ -28,8 +34,26 @@ export type SignoutCard = {
   attending: string;
   location: string;
   surgery: string;
-  /** ISO date (YYYY-MM-DD) of surgery; drives computed POD. "" when none. */
+  /**
+   * ISO date (YYYY-MM-DD). Surgery mode → surgery date (POD). Non-op mode →
+   * treatment start date (Day n since start). "" when none.
+   */
   surgeryDate: string;
+  /**
+   * Planned / next OR procedure text (staged return to OR). Surgery mode only.
+   * "" when none.
+   */
+  nextSurgery: string;
+  /**
+   * ISO date of planned next OR. Drives Next OR countdown chip alongside POD
+   * from surgeryDate. "" when none.
+   */
+  nextSurgeryDate: string;
+  /**
+   * Surgery vs non-op. When "nonop", `surgery` holds treatment (tx) text and
+   * `surgeryDate` is the day treatment started. "" when never set (UI infers).
+   */
+  managementMode: SignoutManagementMode | "";
   severity: SignoutSeverity;
   status: SignoutStatus;
   sortOrder: number;
@@ -67,6 +91,9 @@ export type UpdateCardPatch = {
   location?: string;
   surgery?: string;
   surgeryDate?: string;
+  nextSurgery?: string;
+  nextSurgeryDate?: string;
+  managementMode?: SignoutManagementMode | "";
   severity?: SignoutSeverity;
   status?: SignoutStatus;
   pinned?: boolean;

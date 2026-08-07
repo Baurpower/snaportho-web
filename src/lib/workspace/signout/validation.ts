@@ -1,8 +1,10 @@
 import {
+  SIGNOUT_MANAGEMENT_MODES,
   SIGNOUT_SEVERITIES,
   SIGNOUT_STATUSES,
   type PatientIdentifiers,
   type ReorderItem,
+  type SignoutManagementMode,
   type SignoutSeverity,
   type SignoutStatus,
   type UpdateCardPatch,
@@ -107,7 +109,18 @@ export function parseUpdateCardBody(raw: unknown): {
   if (obj.attending !== undefined) patch.attending = optionalString(obj.attending, "attending", 80);
   if (obj.location !== undefined) patch.location = optionalString(obj.location, "location", 60);
   if (obj.surgery !== undefined) patch.surgery = optionalString(obj.surgery, "surgery", 120);
-  if (obj.surgeryDate !== undefined) patch.surgeryDate = parseIsoDate(obj.surgeryDate);
+  if (obj.surgeryDate !== undefined) {
+    patch.surgeryDate = parseIsoDate(obj.surgeryDate, "surgeryDate");
+  }
+  if (obj.nextSurgery !== undefined) {
+    patch.nextSurgery = optionalString(obj.nextSurgery, "nextSurgery", 120);
+  }
+  if (obj.nextSurgeryDate !== undefined) {
+    patch.nextSurgeryDate = parseIsoDate(obj.nextSurgeryDate, "nextSurgeryDate");
+  }
+  if (obj.managementMode !== undefined) {
+    patch.managementMode = parseManagementMode(obj.managementMode);
+  }
   if (obj.severity !== undefined) patch.severity = parseSeverity(obj.severity);
   if (obj.status !== undefined) patch.status = parseStatus(obj.status);
   if (obj.pinned !== undefined) {
@@ -123,16 +136,27 @@ export function parseUpdateCardBody(raw: unknown): {
   return { expectedVersion: obj.expectedVersion, patch };
 }
 
-function parseIsoDate(value: unknown): string {
+function parseIsoDate(value: unknown, field = "surgeryDate"): string {
   if (value === undefined || value === null || value === "") return "";
   if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value.trim())) {
-    throw new SignoutValidationError("surgeryDate must be an ISO date (YYYY-MM-DD)");
+    throw new SignoutValidationError(`${field} must be an ISO date (YYYY-MM-DD)`);
   }
   const trimmed = value.trim();
   if (Number.isNaN(new Date(`${trimmed}T00:00:00`).getTime())) {
-    throw new SignoutValidationError("surgeryDate is not a valid date");
+    throw new SignoutValidationError(`${field} is not a valid date`);
   }
   return trimmed;
+}
+
+/** Empty string clears the mode; otherwise must be surgery | nonop. */
+function parseManagementMode(value: unknown): SignoutManagementMode | "" {
+  if (value === undefined || value === null || value === "") return "";
+  if (!SIGNOUT_MANAGEMENT_MODES.includes(value as SignoutManagementMode)) {
+    throw new SignoutValidationError(
+      `managementMode must be one of: ${SIGNOUT_MANAGEMENT_MODES.join(", ")} (or empty)`
+    );
+  }
+  return value as SignoutManagementMode;
 }
 
 function optionalString(value: unknown, field: string, max: number): string {

@@ -115,11 +115,11 @@ export function WorkspaceShell({
   }, [mobileDrawerOpen]);
 
   return (
-    <div className="w-full bg-slate-950 pt-[52px]">
-      <div className="flex min-w-0 w-full md:min-h-[calc(100vh-52px)] md:items-stretch">
+    <div className="w-full bg-slate-950 pt-[52px] print:bg-white print:pt-0">
+      <div className="flex min-w-0 w-full md:min-h-[calc(100vh-52px)] md:items-stretch print:min-h-0">
         {/* Desktop-only sidebar rail (md+). Hidden on mobile.
             All original desktop collapse/hide/sticky/width/persistence behavior preserved exactly. */}
-        <div className="hidden shrink-0 md:block">
+        <div className="hidden shrink-0 print:hidden md:block">
           {!sidebarHidden ? (
             <div
               className="sticky shrink-0 self-start"
@@ -155,7 +155,7 @@ export function WorkspaceShell({
         {/* Main content column. On mobile: full width (no sidebar squeeze).
             Mobile header is in-flow (no z-index conflict with global Nav).
             Safe-area padding for iOS bottom bar. overflow-x-clip preserved so child layout issues remain visible for later phases. */}
-        <div className="min-w-0 flex-1 overflow-x-clip pb-[calc(56px+env(safe-area-inset-bottom))] md:pb-0">
+        <div className="min-w-0 flex-1 overflow-x-clip pb-[calc(56px+env(safe-area-inset-bottom))] md:pb-0 print:overflow-visible print:pb-0">
           {/* Mobile-only workspace header.
               Hidden on mobile because the global Nav now provides the single "Workspace" top bar
               (rebranded on /work mobile routes) + hamburger that opens this drawer via custom event.
@@ -189,7 +189,7 @@ export function WorkspaceShell({
           Visible only on mobile, provides clear workspace navigation.
           "More" opens the existing full drawer (which already handles permissions and secondary items).
           Uses the same PRIMARY_NAV data for consistency. Compact, safe-area aware. */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[60] border-t border-slate-200 bg-white pb-[env(safe-area-inset-bottom)]">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[60] border-t border-slate-200 bg-white pb-[env(safe-area-inset-bottom)] print:hidden">
         <div className="flex items-center justify-around h-14 text-[10px] font-medium text-slate-500">
           {PRIMARY_NAV.map((item) => {
             const Icon = item.icon;

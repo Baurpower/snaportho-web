@@ -34,13 +34,38 @@ const surgeryUpd = parseUpdateCardBody({
   location: "SICU",
   surgery: "IM nail",
   surgeryDate: "2026-08-05",
+  managementMode: "surgery",
 });
 assert.equal(surgeryUpd.patch.location, "SICU");
 assert.equal(surgeryUpd.patch.surgery, "IM nail");
 assert.equal(surgeryUpd.patch.surgeryDate, "2026-08-05");
+assert.equal(surgeryUpd.patch.managementMode, "surgery");
 assert.equal(parseUpdateCardBody({ expectedVersion: 1, surgeryDate: "" }).patch.surgeryDate, "");
+assert.equal(
+  parseUpdateCardBody({ expectedVersion: 1, managementMode: "" }).patch.managementMode,
+  ""
+);
+assert.equal(
+  parseUpdateCardBody({ expectedVersion: 1, managementMode: "nonop" }).patch.managementMode,
+  "nonop"
+);
+const nextOr = parseUpdateCardBody({
+  expectedVersion: 1,
+  nextSurgery: "repeat I&D",
+  nextSurgeryDate: "2026-08-08",
+});
+assert.equal(nextOr.patch.nextSurgery, "repeat I&D");
+assert.equal(nextOr.patch.nextSurgeryDate, "2026-08-08");
 assert.throws(
   () => parseUpdateCardBody({ expectedVersion: 1, surgeryDate: "08/05/2026" }),
+  SignoutValidationError
+);
+assert.throws(
+  () => parseUpdateCardBody({ expectedVersion: 1, nextSurgeryDate: "08/08/2026" }),
+  SignoutValidationError
+);
+assert.throws(
+  () => parseUpdateCardBody({ expectedVersion: 1, managementMode: "cast" }),
   SignoutValidationError
 );
 assert.throws(() => parseUpdateCardBody({ expectedVersion: 0, body: "x" }), SignoutValidationError);

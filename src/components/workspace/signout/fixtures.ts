@@ -16,6 +16,12 @@ function daysAgo(n: number): string {
   return localIso(d);
 }
 
+function daysAhead(n: number): string {
+  const d = new Date();
+  d.setDate(d.getDate() + n);
+  return localIso(d);
+}
+
 export const PREVIEW_SERVICES: SignoutService[] = [
   {
     id: "svc-trauma",
@@ -44,6 +50,9 @@ function card(partial: Partial<SignoutCard> & Pick<SignoutCard, "id" | "handle">
     location: "",
     surgery: "",
     surgeryDate: "",
+    nextSurgery: "",
+    nextSurgeryDate: "",
+    managementMode: "",
     status: "active",
     sortOrder: 0,
     pinned: false,
@@ -68,13 +77,17 @@ export const PREVIEW_CARDS: SignoutCard[] = [
     attending: "Dr. Lee",
     surgery: "IM nail R femur",
     surgeryDate: daysAgo(1),
+    nextSurgery: "repeat I&D + vac change",
+    nextSurgeryDate: daysAhead(2),
+    managementMode: "surgery",
     severity: "unstable",
     pinned: true,
     sortOrder: 0,
     body:
       "34M R femur · NWB\n" +
       "## HPI/Exam\nWatch for compartment syndrome. Firm but compressible.\n" +
-      "## Plan\n[ ] Recheck compartments q2h #pending\n[ ] Trend H/H at 2am",
+      "## Plan\nContinue NWB; monitor compartments. Return to OR for washout.\n" +
+      "## To-do\n[ ] Recheck compartments q2h #pending\n[ ] Trend H/H at 2am\n[ ] NPO after midnight #OR",
   }),
   card({
     id: "c2",
@@ -83,6 +96,7 @@ export const PREVIEW_CARDS: SignoutCard[] = [
     attending: "Dr. Patel",
     surgery: "ORIF L hip",
     surgeryDate: daysAgo(2),
+    managementMode: "surgery",
     severity: "watcher",
     sortOrder: 1,
     hasIdentifiers: true,
@@ -90,29 +104,27 @@ export const PREVIEW_CARDS: SignoutCard[] = [
       "72F L hip · WBAT · lovenox\n" +
       "## HPI/Exam\nOvernight mild delirium, resolved with reorientation. Pain controlled.\nPE: incision C/D/I, NVI distally\n" +
       "## Labs/Imaging/PT\nT 37.9 HR 104 BP 118/72 · Hgb 9.1 · Cr 1.4\nPT: 3ft with walker\n" +
-      "## Plan\nAnemia — recheck AM, transfuse if <7.\n[ ] Confirm rehab dispo with PT #dispo",
+      "## Plan\nAnemia — recheck AM, transfuse if <7.\n" +
+      "## To-do\n[ ] Confirm rehab dispo with PT #dispo",
   }),
   card({
     id: "c3",
     handle: "2W-21",
     location: "4 East",
     attending: "Dr. Lee",
-    surgery: "ORIF R ankle",
-    surgeryDate: daysAgo(3),
+    surgery: "NWB boot · clinic 2 wk",
+    surgeryDate: daysAgo(4),
+    managementMode: "nonop",
     severity: "stable",
     sortOrder: 2,
     body:
-      "58M R ankle · NWB\n## Plan\n[ ] Home in AM with ortho follow-up",
+      "58M stable Weber A ankle · NWB\n" +
+      "## Plan\nNon-op. Elevation, ice, f/u clinic.\n" +
+      "## To-do\n[ ] Home in AM with ortho follow-up",
   }),
 ];
 
 // A planned (future) surgery to show pre-op POD styling.
-function daysAhead(n: number): string {
-  const d = new Date();
-  d.setDate(d.getDate() + n);
-  return localIso(d);
-}
-
 PREVIEW_CARDS.push(
   card({
     id: "c4",
@@ -121,8 +133,12 @@ PREVIEW_CARDS.push(
     attending: "Dr. Patel",
     surgery: "Washout R knee",
     surgeryDate: daysAhead(1),
+    managementMode: "surgery",
     severity: "watcher",
     sortOrder: 3,
-    body: "48M septic R knee, OR planned tomorrow\n## Plan\n[ ] NPO after midnight #OR",
+    body:
+      "48M septic R knee, OR planned tomorrow\n" +
+      "## Plan\nIV abx, NPO for OR.\n" +
+      "## To-do\n[ ] NPO after midnight #OR",
   })
 );

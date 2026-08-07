@@ -38,6 +38,9 @@ type CardRow = {
   location: string | null;
   surgery: string | null;
   surgery_date: string | null;
+  next_surgery: string | null;
+  next_surgery_date: string | null;
+  management_mode: "surgery" | "nonop" | null;
   severity: "stable" | "watcher" | "unstable";
   status: "active" | "discharged";
   sort_order: number;
@@ -55,7 +58,7 @@ type CardRow = {
 };
 
 const CARD_COLUMNS =
-  "id, service_id, handle, attending, location, surgery, surgery_date, severity, status, sort_order, pinned, body_ct, body_nonce, key_id, version, discharged_at, created_by, created_at, updated_by, updated_at";
+  "id, service_id, handle, attending, location, surgery, surgery_date, next_surgery, next_surgery_date, management_mode, severity, status, sort_order, pinned, body_ct, body_nonce, key_id, version, discharged_at, created_by, created_at, updated_by, updated_at";
 
 // Same columns plus a presence probe for quarantined identifiers (id only, no PHI).
 const CARD_SELECT = `${CARD_COLUMNS}, signout_patient_ids(id)`;
@@ -91,6 +94,9 @@ function mapCard(row: CardRow): SignoutCard {
     location: row.location ?? "",
     surgery: row.surgery ?? "",
     surgeryDate: row.surgery_date ?? "",
+    nextSurgery: row.next_surgery ?? "",
+    nextSurgeryDate: row.next_surgery_date ?? "",
+    managementMode: row.management_mode ?? "",
     severity: row.severity,
     status: row.status,
     sortOrder: row.sort_order,
@@ -371,6 +377,15 @@ export async function updateCard(
   if (patch.surgery !== undefined) update.surgery = patch.surgery.trim() || null;
   if (patch.surgeryDate !== undefined) {
     update.surgery_date = patch.surgeryDate.trim() || null;
+  }
+  if (patch.nextSurgery !== undefined) {
+    update.next_surgery = patch.nextSurgery.trim() || null;
+  }
+  if (patch.nextSurgeryDate !== undefined) {
+    update.next_surgery_date = patch.nextSurgeryDate.trim() || null;
+  }
+  if (patch.managementMode !== undefined) {
+    update.management_mode = patch.managementMode || null;
   }
   if (patch.severity !== undefined) update.severity = patch.severity;
   if (patch.pinned !== undefined) update.pinned = patch.pinned;
