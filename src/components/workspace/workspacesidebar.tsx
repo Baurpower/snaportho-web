@@ -14,6 +14,7 @@ import {
   GraduationCap,
   BookOpen,
   BriefcaseMedical,
+  ClipboardList,
 } from "lucide-react";
 import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 
@@ -38,6 +39,7 @@ export const PRIMARY_NAV: NavItem[] = [
     href: "/work/call",
     icon: Calendar,
   },
+  { label: "Sign-out", href: "/work/signout", icon: ClipboardList },
   { label: "Time Off", href: "/work/time-off", icon: PlaneTakeoffIcon },
   {
     label: "Academics",
