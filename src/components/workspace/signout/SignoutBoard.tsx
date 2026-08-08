@@ -75,6 +75,13 @@ export function SignoutBoard({
   const [loadingCards, setLoadingCards] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [viewers, setViewers] = useState(1);
+  const cardsRef = useRef(cards);
+  const saveTailsRef = useRef(new Map<string, Promise<void>>());
+  const loadRequestRef = useRef(0);
+
+  useEffect(() => {
+    cardsRef.current = cards;
+  }, [cards]);
 
   const [newService, setNewService] = useState("");
   const [addingService, setAddingService] = useState(false);
@@ -113,21 +120,31 @@ export function SignoutBoard({
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const loadCards = useCallback(async (serviceId: string) => {
+    const requestId = ++loadRequestRef.current;
     setLoadingCards(true);
     setError(null);
     try {
-      setCards(await apiListCards(serviceId));
+      const loaded = await apiListCards(serviceId);
+      if (requestId !== loadRequestRef.current) return;
+      cardsRef.current = loaded;
+      setCards(loaded);
     } catch (e) {
+      if (requestId !== loadRequestRef.current) return;
       setError(e instanceof Error ? e.message : "Failed to load cards");
     } finally {
-      setLoadingCards(false);
+      if (requestId === loadRequestRef.current) setLoadingCards(false);
     }
   }, []);
 
   useEffect(() => {
     if (preview) return;
     if (activeServiceId) void loadCards(activeServiceId);
-    else setCards([]);
+    else {
+      loadRequestRef.current += 1;
+      cardsRef.current = [];
+      setCards([]);
+      setLoadingCards(false);
+    }
   }, [activeServiceId, loadCards, preview]);
 
   // Presence: how many teammates are viewing this service right now.
@@ -147,31 +164,59 @@ export function SignoutBoard({
     return () => {
       void supabase.removeChannel(channel);
     };
-  }, [activeServiceId, currentUserId, currentUserName]);
+  }, [activeServiceId, currentUserId, currentUserName, preview]);
 
   const saveCard = useCallback(
     async (cardId: string, patch: UpdateCardPatch): Promise<SaveCardResult> => {
-      const target = cards.find((c) => c.id === cardId);
-      if (!target) return { ok: false, stale: true, currentVersion: 1 };
-      if (preview) {
-        const updated: SignoutCard = {
-          ...target,
-          ...patch,
-          version: target.version + 1,
-          updatedAt: new Date().toISOString(),
-        };
-        setCards((prev) => prev.map((c) => (c.id === cardId ? updated : c)));
-        return { ok: true, card: updated };
-      }
-      const result = await apiUpdateCard(cardId, target.version, patch);
-      if (result.ok) {
-        setCards((prev) => prev.map((c) => (c.id === cardId ? result.card : c)));
-      } else if (activeServiceId) {
-        await loadCards(activeServiceId); // pull the latest after a conflict
-      }
+      // Optimistic concurrency requires each request to use the version returned
+      // by the preceding request. Queue saves per card while allowing different
+      // patients to save independently.
+      const previous = saveTailsRef.current.get(cardId) ?? Promise.resolve();
+      let result!: SaveCardResult;
+      let failure: unknown;
+      const operation = previous.catch(() => undefined).then(async () => {
+        try {
+          const target = cardsRef.current.find((c) => c.id === cardId);
+          if (!target) {
+            result = { ok: false, stale: true, currentVersion: 1 };
+            return;
+          }
+          if (preview) {
+            const updated: SignoutCard = {
+              ...target,
+              ...patch,
+              version: target.version + 1,
+              updatedAt: new Date().toISOString(),
+            };
+            cardsRef.current = cardsRef.current.map((c) =>
+              c.id === cardId ? updated : c
+            );
+            setCards(cardsRef.current);
+            result = { ok: true, card: updated };
+            return;
+          }
+          result = await apiUpdateCard(cardId, target.version, patch);
+          if (result.ok) {
+            const savedCard = result.card;
+            cardsRef.current = cardsRef.current.map((c) =>
+              c.id === cardId ? savedCard : c
+            );
+            setCards(cardsRef.current);
+          } else if (activeServiceId) {
+            await loadCards(activeServiceId);
+          }
+        } catch (error) {
+          failure = error;
+        }
+      });
+      const tail = operation.then(() => undefined);
+      saveTailsRef.current.set(cardId, tail);
+      await operation;
+      if (saveTailsRef.current.get(cardId) === tail) saveTailsRef.current.delete(cardId);
+      if (failure) throw failure;
       return result;
     },
-    [cards, activeServiceId, loadCards, preview]
+    [activeServiceId, loadCards, preview]
   );
 
   async function handleCreateService() {

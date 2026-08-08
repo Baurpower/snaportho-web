@@ -119,7 +119,10 @@ export function PatientCard({
   );
 
   const dirtyRef = useRef(false);
+  const bodyRevisionRef = useRef(0);
+  const saveRequestRef = useRef(0);
   const draftRef = useRef(draft);
+  const savedBodyRef = useRef(card.body);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   draftRef.current = draft;
 
@@ -130,37 +133,50 @@ export function PatientCard({
   // Adopt an externally-changed card (e.g. after a conflict reload) unless the
   // user has unsaved local edits in flight.
   useEffect(() => {
-    if (!dirtyRef.current) setDraft(card.body);
+    savedBodyRef.current = card.body;
+    if (!dirtyRef.current && !editing) setDraft(card.body);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [card.version]);
 
   async function persist(patch: UpdateCardPatch) {
+    const requestId = ++saveRequestRef.current;
+    const bodyRevision = patch.body === undefined ? null : bodyRevisionRef.current;
     setStatus("saving");
     try {
       const result = await onSave(patch);
       if (result.ok) {
-        if (patch.body !== undefined) dirtyRef.current = false;
-        setStatus("saved");
+        if (patch.body !== undefined) {
+          savedBodyRef.current = result.card.body;
+          // A save finishing must not mark text typed after it began as clean.
+          if (
+            bodyRevision === bodyRevisionRef.current &&
+            draftRef.current === result.card.body
+          ) {
+            dirtyRef.current = false;
+          }
+        }
+        if (requestId === saveRequestRef.current) setStatus("saved");
         window.setTimeout(() => setStatus((s) => (s === "saved" ? "idle" : s)), 1500);
       } else {
-        dirtyRef.current = false; // let the reloaded card sync in
-        setStatus("conflict");
+        // Preserve the local draft. A collaborator may have changed the server
+        // version, but silently replacing in-progress clinical text is unsafe.
+        if (requestId === saveRequestRef.current) setStatus("conflict");
       }
     } catch {
-      setStatus("error");
+      if (requestId === saveRequestRef.current) setStatus("error");
     }
   }
 
   function scheduleBodySave() {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
-      if (draftRef.current !== card.body) void persist({ body: draftRef.current });
+      if (draftRef.current !== savedBodyRef.current) void persist({ body: draftRef.current });
     }, AUTOSAVE_MS);
   }
 
   function flushBodySave() {
     if (timerRef.current) clearTimeout(timerRef.current);
-    if (draftRef.current !== card.body) void persist({ body: draftRef.current });
+    if (draftRef.current !== savedBodyRef.current) void persist({ body: draftRef.current });
   }
 
   useEffect(() => () => {
@@ -188,6 +204,8 @@ export function PatientCard({
     setFields(next);
     const body = serializeFields(next);
     setDraft(body);
+    draftRef.current = body;
+    bodyRevisionRef.current += 1;
     dirtyRef.current = true;
     scheduleBodySave();
   }
@@ -246,6 +264,8 @@ export function PatientCard({
   function toggleChecklist(lineIndex: number) {
     const next = toggleCheckboxAt(draftRef.current, lineIndex);
     setDraft(next);
+    draftRef.current = next;
+    bodyRevisionRef.current += 1;
     dirtyRef.current = true;
     void persist({ body: next });
   }
