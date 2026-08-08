@@ -25,6 +25,7 @@ import type {
 } from "@/lib/workspace/signout/types";
 import type { SaveCardResult } from "@/components/workspace/signout/api";
 import { IdentityPanel } from "@/components/workspace/signout/IdentityPanel";
+import { DraftPanel } from "@/components/workspace/signout/DraftPanel";
 import { SEVERITY_META, nextSeverity } from "@/components/workspace/signout/severity";
 import { SmartBody } from "@/components/workspace/signout/SmartBody";
 import { toggleCheckboxAt } from "@/lib/workspace/signout/tokens";
@@ -51,6 +52,7 @@ type Props = {
   onMove: (dir: "up" | "down") => void;
   onSaveIdentity: (ids: PatientIdentifiers) => Promise<void>;
   onRevealIdentity: () => Promise<PatientIdentifiers>;
+  onGenerateDraft: () => Promise<string>;
   canMoveUp: boolean;
   canMoveDown: boolean;
 };
@@ -91,6 +93,7 @@ export function PatientCard({
   onMove,
   onSaveIdentity,
   onRevealIdentity,
+  onGenerateDraft,
   canMoveUp,
   canMoveDown,
 }: Props) {
@@ -646,6 +649,12 @@ export function PatientCard({
                 onReveal={onRevealIdentity}
               />
             )}
+
+            <DraftPanel
+              hasIdentifiers={card.hasIdentifiers}
+              onGenerate={onGenerateDraft}
+              onReveal={onRevealIdentity}
+            />
           </>
         )}
       </div>

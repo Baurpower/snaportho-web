@@ -294,6 +294,48 @@ As the resident types, recognized tokens render as styled chips and drive facets
   · `compartment check` · `PT/dispo`.
 - Per-program custom snippets later; house style = handles-not-names in the body.
 
+## 9a. Generate-text button — v1 ✅ BUILT 2026-08-06
+
+Delivered files:
+- `src/lib/workspace/signout/draft-prompt.ts` (+test) — `buildDraftMessages`/`draftPayload`;
+  payload carries body fields + surgery/POD context only, NEVER location or identifiers.
+- `src/lib/workspace/signout/repository.ts` — `getCard` (single card, decrypted).
+- `src/app/api/workspace/signout/cards/[cardId]/draft/route.ts` — POST, gated by
+  `SIGNOUT_DRAFT_ENABLED=true`, reuses `openai-client.ts` (`gpt-4o-mini`), returns `{{name}}` draft.
+- `src/components/workspace/signout/DraftPanel.tsx` — inline panel; splices the name
+  client-side via the audited reveal; editable; Copy / Regenerate. `api.ts` `apiDraftCard`.
+- Wired into `PatientCard` (below identity panel) + board `generateDraft` (preview-mocked).
+
+Verified in preview: narrative draft (name · age/sex · presentation → POD/surgery → HPI →
+PE → labs → assessment), no room, no greeting; `{{name}}`→`[Name]` when no identity,
+`{{name}}`→ real name (client-spliced) when identity on file. tsc clean; tests pass.
+**To turn on for real data:** set `SIGNOUT_DRAFT_ENABLED=true` (after an OpenAI BAA) +
+`OPENAI_API_KEY`. Original finalized spec below.
+
+## 9a-spec. Generate-text button — finalized v1 (2026-08-06, from real examples)
+
+Decisions locked with real sample texts the user sends attendings:
+- **Format:** narrative "attending update" (mini-consult prose), NOT terse shorthand. No
+  greeting. No room/location. One-liner (name + age/sex + presentation) → history → PE →
+  labs/imaging (keep "image attached" notes) → assessment/recommendation. Built from the
+  card's structured fields (one-liner, HPI/Exam, Labs/Imaging/PT, Plan).
+- **Scope:** per-card first (inline panel like IdentityPanel). Whole-service + other
+  formats (I-PASS, SMS) are v2.
+- **Name handling (KEY):** LLM emits a literal `{{name}}` token — OpenAI never receives a
+  name. The **browser splices the real name locally** via the audited identity reveal
+  before the user copies. No identity on file → leave `[Name]`. Requires the name to live
+  in the identity panel, not the plaintext bed/handle field.
+- **Backend:** `POST /api/workspace/signout/cards/[cardId]/draft`; reuse existing
+  `src/lib/brobot/openai-client.ts`; small fast model; strict "reformat-only, invent
+  nothing, output {{name}}, no greeting, no room" prompt. Sends body + facets only — never
+  identifiers, never room.
+- **Compliance gate:** de-identified clinical narrative still goes to OpenAI, so gate the
+  feature behind an **OpenAI BAA (zero-retention) + `phi_enabled`** before real-patient
+  use (parallel to identifier gating). Mocked in preview. Name is out of scope for the BAA
+  (client-side splice).
+- **Flow:** draft → splice name → editable textarea → Copy / Regenerate. No send in v1
+  (later: in-app APNs push, never carrier SMS).
+
 ## 9. LLM draft-text feature (v1: draft only)
 
 - Reads decrypted **card bodies only** (handles) — structurally cannot see identifiers.

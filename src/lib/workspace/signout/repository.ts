@@ -280,6 +280,17 @@ export async function listCards(db: Db, serviceId: string): Promise<SignoutCard[
   return (data as CardRow[]).map(mapCard);
 }
 
+/** Load a single card with its decrypted body. Null if not found. */
+export async function getCard(db: Db, cardId: string): Promise<SignoutCard | null> {
+  const { data, error } = await db
+    .from("signout_cards")
+    .select(CARD_SELECT)
+    .eq("id", cardId)
+    .maybeSingle();
+  if (error) throw new Error(`Failed to load sign-out card: ${error.message}`);
+  return data ? mapCard(data as CardRow) : null;
+}
+
 async function writeHistory(
   db: Db,
   cardId: string,

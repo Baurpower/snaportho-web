@@ -20,12 +20,14 @@ import type {
 } from "@/lib/workspace/signout/types";
 import { extractTags } from "@/lib/workspace/signout/tokens";
 import { computePod } from "@/lib/workspace/signout/pod";
+import { splitFields } from "@/lib/workspace/signout/fields";
 import {
   apiCreateCard,
   apiCreateService,
   apiDeleteCard,
   apiListCards,
   apiReorder,
+  apiDraftCard,
   apiRevealIdentity,
   apiSaveIdentity,
   apiUpdateCard,
@@ -296,6 +298,27 @@ export function SignoutBoard({
     return apiRevealIdentity(cardId);
   }
 
+  async function generateDraft(cardId: string): Promise<string> {
+    if (!preview) return apiDraftCard(cardId);
+    // Local mock so the design is verifiable without OpenAI.
+    const card = cards.find((c) => c.id === cardId);
+    if (!card) return "";
+    const f = splitFields(card.body);
+    const pod = computePod(card.surgeryDate);
+    const surgeryLine = [pod?.label, card.surgery ? `s/p ${card.surgery}` : ""]
+      .filter(Boolean)
+      .join(" ");
+    return [
+      `{{name}}, ${f.lead || "patient"}.`,
+      surgeryLine,
+      f.values["HPI/Exam"],
+      f.values["Labs/Imaging/PT"],
+      f.values["Plan"],
+    ]
+      .filter((p) => p && p.trim())
+      .join("\n\n");
+  }
+
   function setViewPersist(next: View) {
     setView(next);
     try {
@@ -542,6 +565,7 @@ export function SignoutBoard({
                     onMove={(dir) => handleMove(card.id, dir)}
                     onSaveIdentity={(ids) => saveIdentity(card.id, ids)}
                     onRevealIdentity={() => revealIdentity(card.id)}
+                    onGenerateDraft={() => generateDraft(card.id)}
                     canMoveUp={i > 0}
                     canMoveDown={i < filteredCards.length - 1}
                   />
