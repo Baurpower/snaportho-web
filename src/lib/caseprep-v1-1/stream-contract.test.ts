@@ -214,6 +214,16 @@ assert.ok(
 );
 assert.match(streamRouteSource, /isCasePrepStreamEnabled\(\)/);
 assert.match(streamRouteSource, /X-Accel-Buffering/);
+assert.match(
+  streamRouteSource,
+  /getRequiredBearerToken\(request\)[\s\S]*getMobileBearerUser\(request\)/,
+  "native bearer identity must be resolved before browser/guest fallback"
+);
+assert.match(
+  streamRouteSource,
+  /if \(authResponse \|\| !subject\)/,
+  "an invalid native credential must not silently become a guest"
+);
 
 const legacyAskRouteSource = readFileSync(
   join(process.cwd(), "src/app/api/brobot/ask/route"),

@@ -26,6 +26,10 @@ import { createGuestSession, getGuestSessionFromRequest } from "@/lib/brobot/gue
 import type { Subject } from "@/lib/brobot/entitlements";
 import { recordSuccessfulAIUse, recordUsageEvent } from "@/lib/brobot/usage";
 import { createClient } from "@/utils/supabase/server";
+import {
+  getMobileBearerUser,
+  getRequiredBearerToken,
+} from "@/app/api/mobile/_utils/auth";
 import { BoundedTtlCache } from "@/lib/brobot/kg/cache";
 import {
   findProductionKgTopics,
@@ -55,20 +59,55 @@ const kgCache = new BoundedTtlCache<{ neighborhood: KgProductionNeighborhood | n
 
 async function resolveSubject(
   request: Request
-): Promise<{ subject: Subject; guestCookie: string | null }> {
+): Promise<{
+  subject: Subject | null;
+  guestCookie: string | null;
+  authResponse: Response | null;
+}> {
+  // iOS authenticates with a Supabase bearer token, while the website uses
+  // cookies. Always resolve the bearer first: silently treating a signed-in
+  // mobile request as a guest applies the guest daily cap to paid users.
+  if (getRequiredBearerToken(request)) {
+    const { user, response } = await getMobileBearerUser(request);
+    if (response || !user) {
+      return { subject: null, guestCookie: null, authResponse: response };
+    }
+    return {
+      subject: { type: "user", id: user.id },
+      guestCookie: null,
+      authResponse: null,
+    };
+  }
+
   try {
     const supabase = await createClient();
     const {
       data: { user },
     } = await supabase.auth.getUser();
-    if (user) return { subject: { type: "user", id: user.id }, guestCookie: null };
+    if (user) {
+      return {
+        subject: { type: "user", id: user.id },
+        guestCookie: null,
+        authResponse: null,
+      };
+    }
   } catch {
     // fall through to guest handling
   }
   const existing = getGuestSessionFromRequest(request);
-  if (existing) return { subject: { type: "guest", id: existing.guestId }, guestCookie: null };
+  if (existing) {
+    return {
+      subject: { type: "guest", id: existing.guestId },
+      guestCookie: null,
+      authResponse: null,
+    };
+  }
   const created = createGuestSession();
-  return { subject: { type: "guest", id: created.session.guestId }, guestCookie: created.cookie };
+  return {
+    subject: { type: "guest", id: created.session.guestId },
+    guestCookie: created.cookie,
+    authResponse: null,
+  };
 }
 
 async function fetchRelatedConcepts(slug: string): Promise<KgProductionNeighborhood | null> {
@@ -126,7 +165,12 @@ export async function POST(request: Request) {
   const startedAt = Date.now();
 
   // 1. Entitlement gate — never open the upstream stream for a denied subject.
-  const { subject, guestCookie } = await resolveSubject(request);
+  const { subject, guestCookie, authResponse } = await resolveSubject(request);
+  if (authResponse || !subject) {
+    // An invalid/expired mobile credential must never fall back to a fresh guest
+    // identity, which would obscure the real account and quota problem.
+    return authResponse ?? NextResponse.json({ error: "Authentication required" }, { status: 401 });
+  }
   const gate = await getBroBotAccessGate(subject);
   if (gate.isLimitReached) {
     const denied =
