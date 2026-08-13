@@ -22,7 +22,9 @@ export type UseCasePrepStream = {
  * into denied/error states so callers can fall back.
  */
 export function useCasePrepStream(): UseCasePrepStream {
-  const [state, setState] = useState<CasePrepPacketState>(createInitialPacketState);
+  const [state, setState] = useState<CasePrepPacketState>(
+    createInitialPacketState,
+  );
   const abortRef = useRef<AbortController | null>(null);
 
   const abort = useCallback(() => {
@@ -44,7 +46,11 @@ export function useCasePrepStream(): UseCasePrepStream {
 
       let response: Response;
       try {
-        response = await fetch("/api/case-prep/v1.1/stream", {
+        const version =
+          process.env.NEXT_PUBLIC_CASEPREP_V1_2_ENABLED === "true"
+            ? "v1.2"
+            : "v1.1";
+        response = await fetch(`/api/case-prep/${version}/stream`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ prompt }),
@@ -62,7 +68,10 @@ export function useCasePrepStream(): UseCasePrepStream {
 
       const contentType = response.headers.get("content-type") ?? "";
       if (!contentType.includes("text/event-stream")) {
-        const body = (await response.json().catch(() => null)) as Record<string, unknown> | null;
+        const body = (await response.json().catch(() => null)) as Record<
+          string,
+          unknown
+        > | null;
         if (response.status === 403 || response.status === 429) {
           setState((prev) => ({ ...prev, status: "denied", deniedMeta: body }));
         } else {
@@ -70,7 +79,8 @@ export function useCasePrepStream(): UseCasePrepStream {
             ...prev,
             status: "error",
             errorMessage:
-              (body?.error as string) || "Case Prep is temporarily unavailable.",
+              (body?.error as string) ||
+              "Case Prep is temporarily unavailable.",
           }));
         }
         return;
@@ -91,21 +101,28 @@ export function useCasePrepStream(): UseCasePrepStream {
         for (;;) {
           const { done, value } = await reader.read();
           if (done) break;
-          const events = parseSseChunk(parseState, decoder.decode(value, { stream: true }));
+          const events = parseSseChunk(
+            parseState,
+            decoder.decode(value, { stream: true }),
+          );
           if (events.length > 0) {
             setState((prev) =>
               events.reduce(
                 (acc, event) => reducePacketEvent(acc, event.event, event.data),
-                prev
-              )
+                prev,
+              ),
             );
           }
         }
         // Stream closed without a done/error event → surface as error, not hang.
         setState((prev) =>
           prev.status === "streaming" || prev.status === "connecting"
-            ? { ...prev, status: "error", errorMessage: "Case Prep stream ended unexpectedly." }
-            : prev
+            ? {
+                ...prev,
+                status: "error",
+                errorMessage: "Case Prep stream ended unexpectedly.",
+              }
+            : prev,
         );
       } catch (error) {
         if ((error as Error)?.name !== "AbortError") {
@@ -119,7 +136,7 @@ export function useCasePrepStream(): UseCasePrepStream {
         if (abortRef.current === controller) abortRef.current = null;
       }
     },
-    [abort]
+    [abort],
   );
 
   return { state, start, abort, reset };

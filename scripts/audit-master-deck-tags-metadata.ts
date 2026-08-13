@@ -143,6 +143,41 @@ async function main() {
     if (error) throw new Error(`anki_sync_v2_note_versions: ${error.message}`);
     noteVersions.push(...(data ?? []));
   }
+  const officialNotes = publishedSyncRelease
+    ? await pages("anki_sync_v2_notes", "id,stable_guid")
+    : [];
+  const publishedDeckRelease = (
+    await db
+      .from("anki_deck_releases")
+      .select("id,release_key,release_version,status,published_at")
+      .eq("status", "published")
+      .order("published_at", { ascending: false })
+      .limit(1)
+      .maybeSingle()
+  ).data;
+  const publishedDeckCards = publishedDeckRelease
+    ? await pages(
+        "anki_deck_release_cards",
+        "note_guid,canonical_card_id,canonical_card_version_id,content_hash,inclusion_status",
+        (query) => query.eq("deck_release_id", publishedDeckRelease.id).eq("inclusion_status", "included"),
+      )
+    : [];
+  const officialNoteById = new Map(officialNotes.map((row) => [row.id, row]));
+  const releaseCardByGuid = new Map(
+    publishedDeckCards.map((row) => [String(row.note_guid), row]),
+  );
+  const officialJoin = releaseNotes.map((member) => {
+    const note = officialNoteById.get(member.note_id);
+    const card = note ? releaseCardByGuid.get(String(note.stable_guid)) : undefined;
+    return {
+      noteId: member.note_id,
+      noteVersionId: member.note_version_id,
+      stableGuid: note ? String(note.stable_guid) : null,
+      canonicalCardVersionId: card?.canonical_card_version_id ?? null,
+    };
+  });
+  const joinedOfficialNotes = officialJoin.filter((row) => row.canonicalCardVersionId);
+  const missingOfficialJoins = officialJoin.filter((row) => !row.canonicalCardVersionId);
 
   const requiredFacets = ["Anatomy", "Diagnosis", "Treatment", "Specialty"];
   const tagPattern = /^(SnapOrtho|Legacy)(::[A-Za-z0-9][A-Za-z0-9_]*)+$/;
@@ -197,6 +232,27 @@ async function main() {
   const publishedAssertions = assertions.filter((row) => releaseAssertionIds.has(row.id));
   const acceptedAssertions = assertions.filter((row) => row.decision === "accepted");
   const acceptedCardIds = new Set(acceptedAssertions.map((row) => row.canonical_card_version_id));
+  const grokRun = pipelineRuns.find((row) => row.run_key === "snaportho-grok-full-review-v1");
+  const grokCompletedVersions = new Set(
+    grokRun
+      ? stageResults
+          .filter((row) => row.pipeline_run_id === grokRun.id && row.stage === "consensus" && row.status === "completed")
+          .map((row) => row.canonical_card_version_id)
+      : [],
+  );
+  const officialNotesWithAcceptedAssertions = joinedOfficialNotes.filter((row) =>
+    acceptedCardIds.has(row.canonicalCardVersionId),
+  ).length;
+  const officialNotesReviewedByGrok = joinedOfficialNotes.filter((row) =>
+    grokCompletedVersions.has(row.canonicalCardVersionId),
+  ).length;
+  const overlayWarning = Boolean(
+    publishedManifest
+      && publishedSyncRelease
+      && publishedManifest.deck_release_id
+      && publishedDeckRelease
+      && publishedManifest.deck_release_id !== publishedDeckRelease.id,
+  );
   const manifestCardIds = new Set(manifestCards.map((row) => row.canonical_card_version_id));
   const sourceTagMap = new Map(sourceTags.map((row) => [row.id, row]));
   const dispositionTagIds = new Set(dispositions.map((row) => row.anki_tag_id));
@@ -274,6 +330,24 @@ async function main() {
         ? `${publishedSyncRelease.release_version} (#${publishedSyncRelease.release_sequence})`
         : null,
       releasedNotes: releaseNotes.length,
+      officialJoinCoverage: {
+        joined: joinedOfficialNotes.length,
+        missing: missingOfficialJoins.length,
+        pct: pct(joinedOfficialNotes.length, releaseNotes.length),
+      },
+      officialNotesWithAcceptedAssertions: {
+        notes: officialNotesWithAcceptedAssertions,
+        total: joinedOfficialNotes.length,
+        pct: pct(officialNotesWithAcceptedAssertions, joinedOfficialNotes.length),
+      },
+      grokReviewCoverage: {
+        runKey: grokRun?.run_key ?? null,
+        runStatus: grokRun?.status ?? null,
+        reviewed: officialNotesReviewedByGrok,
+        remaining: Math.max(0, joinedOfficialNotes.length - officialNotesReviewedByGrok),
+        pct: pct(officialNotesReviewedByGrok, joinedOfficialNotes.length),
+      },
+      overlayWarning,
       pipelineCardCoverage: {
         acceptedAssertionCards: acceptedCardIds.size,
         releasedNotes: releaseNotes.length,
@@ -288,6 +362,30 @@ async function main() {
         notes: completeRequiredFacetNotes,
         total: noteTagMetrics.length,
         pct: pct(completeRequiredFacetNotes, noteTagMetrics.length),
+      },
+    },
+    officialDeck: {
+      syncRelease: publishedSyncRelease
+        ? {
+            id: publishedSyncRelease.id,
+            version: publishedSyncRelease.release_version,
+            sequence: publishedSyncRelease.release_sequence,
+            expectedNoteCount: publishedSyncRelease.expected_note_count,
+            publishedAt: publishedSyncRelease.published_at,
+          }
+        : null,
+      sourceDeckRelease: publishedDeckRelease
+        ? {
+            id: publishedDeckRelease.id,
+            key: publishedDeckRelease.release_key,
+            version: publishedDeckRelease.release_version,
+          }
+        : null,
+      join: {
+        officialNotes: releaseNotes.length,
+        joinedToCanonical: joinedOfficialNotes.length,
+        missing: missingOfficialJoins.length,
+        missingExamples: missingOfficialJoins.slice(0, 20).map((row) => row.stableGuid),
       },
     },
     pipeline: {
@@ -429,6 +527,10 @@ async function main() {
     "",
     `- Published sync release: ${report.verdict.publishedSyncRelease ?? "none"}`,
     `- Released notes: ${report.verdict.releasedNotes}`,
+    `- Official notes joined to canonical cards: ${report.verdict.officialJoinCoverage.joined}/${report.verdict.releasedNotes} (${report.verdict.officialJoinCoverage.pct}%)`,
+    `- Official notes with accepted assertions: ${report.verdict.officialNotesWithAcceptedAssertions.notes}/${report.verdict.officialNotesWithAcceptedAssertions.total} (${report.verdict.officialNotesWithAcceptedAssertions.pct}%)`,
+    `- Grok review coverage: ${report.verdict.grokReviewCoverage.reviewed} reviewed, ${report.verdict.grokReviewCoverage.remaining} remaining (${report.verdict.grokReviewCoverage.pct}%)`,
+    `- Read-time tag overlay warning: ${report.verdict.overlayWarning ? "yes — published manifest is not pinned to the official source deck release" : "no"}`,
     `- Cards with accepted pipeline assertions: ${report.verdict.pipelineCardCoverage.acceptedAssertionCards}/${report.verdict.pipelineCardCoverage.releasedNotes} (${report.verdict.pipelineCardCoverage.pct}%)`,
     `- Cards in published rendered-tag manifest: ${report.verdict.renderedManifestCoverage.cards}/${report.verdict.renderedManifestCoverage.releasedNotes} (${report.verdict.renderedManifestCoverage.pct}%)`,
     `- Notes with all four required facets: ${report.verdict.allFourRequiredFacetCoverage.notes}/${report.verdict.allFourRequiredFacetCoverage.total} (${report.verdict.allFourRequiredFacetCoverage.pct}%)`,

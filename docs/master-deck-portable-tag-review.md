@@ -1,6 +1,8 @@
 # Portable master-deck tag review
 
-This workflow reviews every SnapOrtho master-deck note through immutable, provider-neutral JSON batches. The authoritative input is a published `anki_sync_v2_releases` release and its pinned `anki_sync_v2_note_versions`; legacy `anki_deck_releases` and imported Marty McFlyin records are not valid review sources.
+This workflow reviews every SnapOrtho master-deck note through immutable, provider-neutral JSON batches. The authoritative input is a published `anki_sync_v2_releases` release and its pinned `anki_sync_v2_note_versions`; imported Marty McFlyin `anki_note_tags` are not a valid review source.
+
+The current exporter emits `snaportho-portable-tag-review-packet.2` files that join each official note to a `canonical_card_version_id` by GUID, then lease a `metadata_pipeline_batches` row. Import those packets with `education:anki:review:import`. The Grok operator loop is `docs/education/grok-tag-master-deck.md`.
 
 ## Review objective
 
@@ -35,13 +37,13 @@ Every assertion must use an allowed candidate `termId` and an exact quote from `
 ```bash
 npm run education:anki:review:sync-v2:prepare -- \
   --release-version=0.0.3 \
-  --limit=100 \
-  --batch-size=20 \
+  --cohort-size=100 \
+  --agents=5 \
   --taxonomy-limit=20 \
-  --out=tmp/sync-v2-tag-review/0.0.3-pilot
+  --out=tmp/grok-tag-review/0.0.3/cohort-000001
 ```
 
-The manifest pins the sync release ID, aggregate checksum, ordered note-version IDs, content checksums, and tag checksums. Re-running against the same output directory verifies the source checksum and preserves existing packets. A 100-note pilot produces five independent 20-note packets.
+The exporter joins official sync-v2 notes to the published `anki_deck_releases` inventory by GUID, leases five 20-note packets, and writes `*-pending.json` files plus `manifest.json`. Re-running the same run key skips completed or reserved card versions.
 
 ## Give a packet to any reviewer
 

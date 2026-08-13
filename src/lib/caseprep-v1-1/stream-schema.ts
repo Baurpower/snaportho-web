@@ -34,6 +34,11 @@ export const PacketItemSchema = z
     confidence: z.number().optional().default(0),
     generated: z.boolean().optional().default(false),
     source: z.string().optional(),
+    provenance: z.enum(["certified", "rag", "generated"]).optional(),
+    claim_support: z.enum(["direct", "indirect", "unsupported"]).optional(),
+    procedure_relevance: z
+      .enum(["direct", "indirect", "regional", "unknown"])
+      .optional(),
     rank: z.number().optional(),
     teaching_pearl: z.string().optional(),
     why_attendings_ask: z.string().optional(),
@@ -63,12 +68,13 @@ export const PacketHeaderSchema = z
     common_attending_focus: z.array(z.string()),
     specialty: z.string().nullish(),
     region: z.string().nullish(),
+    coverage_status: z.string().optional(),
   })
   .passthrough();
 
 export const MetaEventSchema = z.object({
   packet_id: z.string(),
-  caseprep_version: z.literal("v1.1"),
+  caseprep_version: z.enum(["v1.1", "v1.2"]),
   engine: z.string(),
   stream_protocol_version: z.number(),
 });
@@ -82,7 +88,9 @@ export const ClarificationEventSchema = z.object({
   case: PacketCaseSchema,
   clarification_reason: z.string(),
   options: z.array(
-    z.object({ label: z.string().nullish(), prompt: z.string().nullish() }).passthrough()
+    z
+      .object({ label: z.string().nullish(), prompt: z.string().nullish() })
+      .passthrough(),
   ),
 });
 
@@ -105,6 +113,21 @@ export const SectionErrorEventSchema = z.object({
 });
 
 export const WarningEventSchema = z.object({ message: z.string() });
+
+export const ResolutionEventSchema = z.object({
+  case: PacketCaseSchema,
+  unresolved_prompt_tokens: z.array(z.string()).default([]),
+  compatibility_status: z.enum(["valid", "needs_clarification"]),
+});
+
+export const CoverageEventSchema = z.object({
+  coverage_status: z.string(),
+  quality_gate: z.string(),
+  grounded_percentage: z.number(),
+  grounded_count: z.number().optional().default(0),
+  generated_count: z.number().optional().default(0),
+  omitted_sections: z.array(z.string()).optional().default([]),
+});
 
 export const DoneEventSchema = z
   .object({
@@ -133,7 +156,14 @@ export type PacketSectionState = {
 };
 
 export type CasePrepPacketState = {
-  status: "idle" | "connecting" | "streaming" | "done" | "error" | "clarification" | "denied";
+  status:
+    | "idle"
+    | "connecting"
+    | "streaming"
+    | "done"
+    | "error"
+    | "clarification"
+    | "denied";
   packetId: string | null;
   caseIdentity: PacketCase | null;
   header: PacketHeader | null;
@@ -143,6 +173,7 @@ export type CasePrepPacketState = {
   errorMessage: string | null;
   deniedMeta: Record<string, unknown> | null;
   timing: Record<string, unknown> | null;
+  coverage: z.infer<typeof CoverageEventSchema> | null;
 };
 
 export function createInitialPacketState(): CasePrepPacketState {
@@ -157,6 +188,7 @@ export function createInitialPacketState(): CasePrepPacketState {
     errorMessage: null,
     deniedMeta: null,
     timing: null,
+    coverage: null,
   };
 }
 
@@ -164,7 +196,7 @@ export function createInitialPacketState(): CasePrepPacketState {
 export function reducePacketEvent(
   state: CasePrepPacketState,
   eventName: string,
-  data: unknown
+  data: unknown,
 ): CasePrepPacketState {
   switch (eventName) {
     case "meta": {
@@ -175,7 +207,11 @@ export function reducePacketEvent(
     case "header": {
       const parsed = HeaderEventSchema.safeParse(data);
       if (!parsed.success) return state;
-      return { ...state, caseIdentity: parsed.data.case, header: parsed.data.header };
+      return {
+        ...state,
+        caseIdentity: parsed.data.case,
+        header: parsed.data.header,
+      };
     }
     case "clarification": {
       const parsed = ClarificationEventSchema.safeParse(data);
@@ -230,15 +266,21 @@ export function reducePacketEvent(
       if (!parsed.success) return state;
       return { ...state, warnings: [...state.warnings, parsed.data.message] };
     }
+    case "core_done": {
+      const parsed = CoverageEventSchema.safeParse(data);
+      return parsed.success ? { ...state, coverage: parsed.data } : state;
+    }
     case "done": {
       const parsed = DoneEventSchema.safeParse(data);
       const timing = parsed.success ? parsed.data.timing : null;
       const warnings = parsed.success ? parsed.data.warnings : [];
+      const coverage = CoverageEventSchema.safeParse(data);
       return {
         ...state,
         status: state.status === "clarification" ? "clarification" : "done",
         warnings: [...new Set([...state.warnings, ...warnings])],
         timing,
+        coverage: coverage.success ? coverage.data : state.coverage,
       };
     }
     case "error": {
@@ -246,7 +288,9 @@ export function reducePacketEvent(
       return {
         ...state,
         status: "error",
-        errorMessage: parsed.success ? parsed.data.message : "Case Prep stream failed.",
+        errorMessage: parsed.success
+          ? parsed.data.message
+          : "Case Prep stream failed.",
       };
     }
     default:

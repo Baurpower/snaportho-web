@@ -16,6 +16,11 @@ export function isCasePrepStreamEnabled(): boolean {
   return process.env.CASEPREP_WEB_V1_1_STREAM_ENABLED === "true";
 }
 
+/** Grounded v1.2 stream. Kept separate for instant rollback to v1.1. */
+export function isCasePrepV12StreamEnabled(): boolean {
+  return process.env.CASEPREP_WEB_V1_2_STREAM_ENABLED === "true";
+}
+
 /** Knowledge-graph "related concepts" injection into the packet stream. */
 export function isCasePrepKgEnabled(): boolean {
   return process.env.CASEPREP_WEB_V1_1_KG_ENABLED === "true";

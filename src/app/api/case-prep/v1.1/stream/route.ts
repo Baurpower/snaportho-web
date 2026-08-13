@@ -14,7 +14,11 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { getCasePrepInternalBaseUrl } from "@/lib/config/brobot";
-import { isCasePrepKgEnabled, isCasePrepStreamEnabled } from "@/lib/caseprep-v1-1/flags";
+import {
+  isCasePrepKgEnabled,
+  isCasePrepStreamEnabled,
+  isCasePrepV12StreamEnabled,
+} from "@/lib/caseprep-v1-1/flags";
 import {
   createSseParseState,
   encodeSseEvent,
@@ -22,7 +26,10 @@ import {
   type SseEvent,
 } from "@/lib/caseprep-v1-1/sse";
 import { getBroBotAccessGate } from "@/lib/brobot/brobot-entitlement-access";
-import { createGuestSession, getGuestSessionFromRequest } from "@/lib/brobot/guest-session";
+import {
+  createGuestSession,
+  getGuestSessionFromRequest,
+} from "@/lib/brobot/guest-session";
 import type { Subject } from "@/lib/brobot/entitlements";
 import { recordSuccessfulAIUse, recordUsageEvent } from "@/lib/brobot/usage";
 import { createClient } from "@/utils/supabase/server";
@@ -36,6 +43,7 @@ import {
   getProductionKgNeighborhood,
   type KgProductionNeighborhood,
 } from "@/lib/education/kg-production";
+import { recordCasePrepPacketTelemetry } from "@/lib/caseprep-v1-2/telemetry";
 
 export const runtime = "nodejs";
 // Cold-cache packets (enrichment + retrieval) can stream for 10-15s; the
@@ -52,14 +60,11 @@ const RequestSchema = z.object({
 const KG_DEADLINE_MS = 2500;
 const KG_MAX_CONCEPTS = 8;
 // Wrapped so a cached "no neighborhood" result is distinguishable from a miss.
-const kgCache = new BoundedTtlCache<{ neighborhood: KgProductionNeighborhood | null }>(
-  200,
-  30 * 60 * 1000
-);
+const kgCache = new BoundedTtlCache<{
+  neighborhood: KgProductionNeighborhood | null;
+}>(200, 30 * 60 * 1000);
 
-async function resolveSubject(
-  request: Request
-): Promise<{
+async function resolveSubject(request: Request): Promise<{
   subject: Subject | null;
   guestCookie: string | null;
   authResponse: Response | null;
@@ -110,12 +115,18 @@ async function resolveSubject(
   };
 }
 
-async function fetchRelatedConcepts(slug: string): Promise<KgProductionNeighborhood | null> {
+async function fetchRelatedConcepts(
+  slug: string,
+): Promise<KgProductionNeighborhood | null> {
   const cached = kgCache.get(slug);
   if (cached !== null) return cached.neighborhood;
   try {
     const supabase = await createClient();
-    const topics = await findProductionKgTopics(supabase, slug.replace(/_/g, " "), 3);
+    const topics = await findProductionKgTopics(
+      supabase,
+      slug.replace(/_/g, " "),
+      3,
+    );
     const first = topics[0];
     const neighborhood = first
       ? await getProductionKgNeighborhood(supabase, first.neighborhood_slug)
@@ -128,19 +139,26 @@ async function fetchRelatedConcepts(slug: string): Promise<KgProductionNeighborh
   }
 }
 
-function relatedConceptsEvent(neighborhood: KgProductionNeighborhood): string | null {
-  const items = neighborhood.entities.slice(0, KG_MAX_CONCEPTS).map((entity, index) => ({
-    id: `kg:${entity.id}`,
-    question: entity.preferredLabel,
-    answer: entity.description ?? entity.entityType.replace(/_/g, " "),
-    supporting_detail: "",
-    category: entity.entityType,
-    source_ids: [neighborhood.releaseId],
-    confidence: entity.reviewTier === "attending_reviewed" ? 0.95 : 0.75,
-    generated: false,
-    source: "kg",
-    rank: index + 1,
-  }));
+function relatedConceptsEvent(
+  neighborhood: KgProductionNeighborhood,
+): string | null {
+  const items = neighborhood.entities
+    .slice(0, KG_MAX_CONCEPTS)
+    .map((entity, index) => ({
+      id: `kg:${entity.id}`,
+      question: entity.preferredLabel,
+      answer: entity.description ?? entity.entityType.replace(/_/g, " "),
+      supporting_detail: "",
+      category: entity.entityType,
+      source_ids: [neighborhood.releaseId],
+      confidence: entity.reviewTier === "attending_reviewed" ? 0.95 : 0.75,
+      generated: false,
+      source: "kg",
+      provenance: "rag",
+      claim_support: "indirect",
+      procedure_relevance: "regional",
+      rank: index + 1,
+    }));
   if (items.length === 0) return null;
   return encodeSseEvent("section", {
     section_id: "related_concepts",
@@ -153,13 +171,22 @@ function relatedConceptsEvent(neighborhood: KgProductionNeighborhood): string | 
   });
 }
 
-export async function POST(request: Request) {
-  if (!isCasePrepStreamEnabled()) {
+async function proxyCasePrepStream(request: Request, version: "v1.1" | "v1.2") {
+  const enabled =
+    version === "v1.2"
+      ? isCasePrepV12StreamEnabled()
+      : isCasePrepStreamEnabled();
+  if (!enabled) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
-  const parsed = RequestSchema.safeParse(await request.json().catch(() => null));
+  const parsed = RequestSchema.safeParse(
+    await request.json().catch(() => null),
+  );
   if (!parsed.success) {
-    return NextResponse.json({ error: "Please enter a case." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Please enter a case." },
+      { status: 400 },
+    );
   }
   const { prompt, trainingLevel, entrySurface, clientRequestId } = parsed.data;
   const startedAt = Date.now();
@@ -169,15 +196,21 @@ export async function POST(request: Request) {
   if (authResponse || !subject) {
     // An invalid/expired mobile credential must never fall back to a fresh guest
     // identity, which would obscure the real account and quota problem.
-    return authResponse ?? NextResponse.json({ error: "Authentication required" }, { status: 401 });
+    return (
+      authResponse ??
+      NextResponse.json({ error: "Authentication required" }, { status: 401 })
+    );
   }
   const gate = await getBroBotAccessGate(subject);
   if (gate.isLimitReached) {
     const denied =
       gate.normalized.data.source === "disabled"
         ? NextResponse.json(
-            { error: "disabled", message: "BroBot access is currently unavailable." },
-            { status: 403 }
+            {
+              error: "disabled",
+              message: "BroBot access is currently unavailable.",
+            },
+            { status: 403 },
           )
         : NextResponse.json(
             {
@@ -187,7 +220,7 @@ export async function POST(request: Request) {
               remaining: 0,
               dailyCap: gate.dailyCap,
             },
-            { status: 429 }
+            { status: 429 },
           );
     if (gate.normalized.data.source !== "disabled") {
       await recordUsageEvent({
@@ -206,7 +239,7 @@ export async function POST(request: Request) {
   } catch {
     return NextResponse.json(
       { error: "Case Prep is temporarily unavailable." },
-      { status: 502 }
+      { status: 502 },
     );
   }
 
@@ -214,13 +247,14 @@ export async function POST(request: Request) {
   const timeout = setTimeout(() => controller.abort(), 60_000);
   let upstream: Response;
   try {
-    upstream = await fetch(`${baseUrl}/case-prep/web/v1.1/stream`, {
+    upstream = await fetch(`${baseUrl}/case-prep/web/${version}/stream`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         prompt,
         training_level: trainingLevel,
-        entry_surface: entrySurface ?? "web_case_prep_v1_1_stream",
+        entry_surface:
+          entrySurface ?? `web_case_prep_${version.replace(".", "_")}_stream`,
         client_request_id: clientRequestId,
       }),
       signal: controller.signal,
@@ -230,14 +264,14 @@ export async function POST(request: Request) {
     clearTimeout(timeout);
     return NextResponse.json(
       { error: "Case Prep is temporarily unavailable." },
-      { status: 502 }
+      { status: 502 },
     );
   }
   if (!upstream.ok || !upstream.body) {
     clearTimeout(timeout);
     return NextResponse.json(
       { error: "Case Prep is temporarily unavailable." },
-      { status: 502 }
+      { status: 502 },
     );
   }
 
@@ -251,6 +285,9 @@ export async function POST(request: Request) {
       const parseState = createSseParseState();
       let usageRecorded = false;
       let kgPromise: Promise<KgProductionNeighborhood | null> | null = null;
+      let packetId: string | null = null;
+      let canonicalSlug: string | null = null;
+      let telemetryPromise: Promise<void> | null = null;
 
       const recordUsageOnce = async () => {
         if (usageRecorded) return;
@@ -258,18 +295,54 @@ export async function POST(request: Request) {
         try {
           await recordSuccessfulAIUse(subject, Date.now() - startedAt, {});
         } catch (error) {
-          console.error("[CASEPREP-V11-STREAM] usage record failed", error);
+          console.error(
+            `[CASEPREP-${version.toUpperCase()}-STREAM] usage record failed`,
+            error,
+          );
         }
       };
 
       const handleEvent = (event: SseEvent) => {
+        if (event.event === "meta") {
+          packetId = (event.data as { packet_id?: string })?.packet_id ?? null;
+        }
         if (event.event === "header" && kgEnabled && !kgPromise) {
-          const slug = (event.data as { case?: { canonical_slug?: string | null } })?.case
-            ?.canonical_slug;
+          const slug = (
+            event.data as { case?: { canonical_slug?: string | null } }
+          )?.case?.canonical_slug;
+          canonicalSlug = slug ?? null;
           if (slug) kgPromise = fetchRelatedConcepts(slug);
+        }
+        if (event.event === "header" && !canonicalSlug) {
+          canonicalSlug =
+            (event.data as { case?: { canonical_slug?: string | null } })?.case
+              ?.canonical_slug ?? null;
         }
         if (event.event === "section" && !usageRecorded) {
           void recordUsageOnce();
+        }
+        if (version === "v1.2" && event.event === "done" && !telemetryPromise) {
+          const done = event.data as {
+            coverage_status?: string;
+            quality_gate?: string;
+            grounded_percentage?: number;
+            grounded_count?: number;
+            generated_count?: number;
+            omitted_sections?: string[];
+          };
+          telemetryPromise = recordCasePrepPacketTelemetry({
+            subject,
+            packetId,
+            canonicalSlug,
+            clientSurface: entrySurface ?? "unknown",
+            coverageStatus: done.coverage_status ?? null,
+            qualityGate: done.quality_gate ?? null,
+            groundedPercentage: done.grounded_percentage ?? null,
+            groundedCount: done.grounded_count ?? 0,
+            generatedCount: done.generated_count ?? 0,
+            omittedSections: done.omitted_sections ?? [],
+            latencyMs: Date.now() - startedAt,
+          });
         }
       };
 
@@ -278,7 +351,9 @@ export async function POST(request: Request) {
         try {
           const neighborhood = await Promise.race([
             kgPromise,
-            new Promise<null>((resolve) => setTimeout(() => resolve(null), KG_DEADLINE_MS)),
+            new Promise<null>((resolve) =>
+              setTimeout(() => resolve(null), KG_DEADLINE_MS),
+            ),
           ]);
           if (neighborhood) {
             const frame = relatedConceptsEvent(neighborhood);
@@ -310,7 +385,8 @@ export async function POST(request: Request) {
               }
             }
           }
-          if (forwardText) streamController.enqueue(encoder.encode(forwardText));
+          if (forwardText)
+            streamController.enqueue(encoder.encode(forwardText));
           if (pendingDoneFrame) {
             await flushKgSection();
             streamController.enqueue(encoder.encode(pendingDoneFrame));
@@ -320,10 +396,18 @@ export async function POST(request: Request) {
         }
       } catch (error) {
         streamController.enqueue(
-          encoder.encode(encodeSseEvent("error", { message: "Case Prep stream interrupted." }))
+          encoder.encode(
+            encodeSseEvent("error", {
+              message: "Case Prep stream interrupted.",
+            }),
+          ),
         );
-        console.error("[CASEPREP-V11-STREAM] proxy error", error);
+        console.error(
+          `[CASEPREP-${version.toUpperCase()}-STREAM] proxy error`,
+          error,
+        );
       } finally {
+        if (telemetryPromise) await telemetryPromise;
         clearTimeout(timeout);
         streamController.close();
       }
@@ -339,9 +423,16 @@ export async function POST(request: Request) {
     "Cache-Control": "no-cache, no-transform",
     Connection: "keep-alive",
     "X-Accel-Buffering": "no",
-    "X-CasePrep-Contract-Version": "v1.1",
-    "X-CasePrep-Stream-Protocol-Version": "1",
+    "X-CasePrep-Contract-Version": version,
+    "X-CasePrep-Stream-Protocol-Version": version === "v1.2" ? "2" : "1",
   });
   if (guestCookie) headers.append("Set-Cookie", guestCookie);
   return new Response(stream, { status: 200, headers });
+}
+
+export async function POST(request: Request) {
+  const version = new URL(request.url).pathname.includes("/v1.2/")
+    ? "v1.2"
+    : "v1.1";
+  return proxyCasePrepStream(request, version);
 }

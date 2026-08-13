@@ -1,22 +1,60 @@
 {
-  "generatedAt": "2026-07-29T20:15:40.992Z",
+  "generatedAt": "2026-08-13T03:37:09.173Z",
   "verdict": {
-    "publishedSyncRelease": "0.0.1 (#1)",
+    "publishedSyncRelease": "0.0.3 (#3)",
     "releasedNotes": 3670,
+    "officialJoinCoverage": {
+      "joined": 3670,
+      "missing": 0,
+      "pct": 100
+    },
+    "officialNotesWithAcceptedAssertions": {
+      "notes": 2915,
+      "total": 3670,
+      "pct": 79.4
+    },
+    "grokReviewCoverage": {
+      "runKey": null,
+      "runStatus": null,
+      "reviewed": 0,
+      "remaining": 3670,
+      "pct": 0
+    },
+    "overlayWarning": true,
     "pipelineCardCoverage": {
       "acceptedAssertionCards": 3287,
       "releasedNotes": 3670,
       "pct": 89.6
     },
     "renderedManifestCoverage": {
-      "cards": 84,
+      "cards": 3071,
       "releasedNotes": 3670,
-      "pct": 2.3
+      "pct": 83.7
     },
     "allFourRequiredFacetCoverage": {
-      "notes": 2,
+      "notes": 33,
       "total": 3670,
-      "pct": 0.1
+      "pct": 0.9
+    }
+  },
+  "officialDeck": {
+    "syncRelease": {
+      "id": "96e5c843-af9f-44a4-a24b-4cae2f1f8911",
+      "version": "0.0.3",
+      "sequence": 3,
+      "expectedNoteCount": 3670,
+      "publishedAt": "2026-08-01T19:47:58.142+00:00"
+    },
+    "sourceDeckRelease": {
+      "id": "7764b632-5622-4f1b-959d-1874908fc46d",
+      "key": "snaportho-master-beta-media",
+      "version": "0.3.1-cloze-media"
+    },
+    "join": {
+      "officialNotes": 3670,
+      "joinedToCanonical": 3670,
+      "missing": 0,
+      "missingExamples": []
     }
   },
   "pipeline": {
@@ -27,14 +65,14 @@
       }
     ],
     "runs": {
-      "total": 5,
+      "total": 6,
       "byStatus": {
-        "cancelled": 2,
+        "cancelled": 3,
         "running": 2,
         "completed": 1
       },
       "byCohort": {
-        "full_import": 5
+        "full_import": 6
       },
       "items": [
         {
@@ -66,44 +104,54 @@
           "status": "running",
           "cohortKind": "full_import",
           "createdAt": "2026-07-29T19:20:24.130865+00:00"
+        },
+        {
+          "runKey": "snaportho-portable-full-review-v1",
+          "status": "cancelled",
+          "cohortKind": "full_import",
+          "createdAt": "2026-08-02T00:13:27.510565+00:00"
         }
       ]
     },
     "batches": {
-      "total": 2349,
-      "cardsDeclared": 20254,
+      "total": 2354,
+      "cardsDeclared": 20354,
       "byStatus": {
         "cancelled": 2207,
         "pending": 100,
-        "completed": 42
+        "completed": 47
       },
       "byCurrentStage": {
         "failed": 2207,
         "identity_validation": 100,
-        "completed": 42
+        "completed": 47
       },
       "retrying": 0
     },
     "stages": {
-      "total": 5099,
+      "total": 5199,
       "failed": 0,
       "withWarnings": 0,
       "byStageAndStatus": {
-        "consensus:completed": 5099
+        "consensus:completed": 5199
       },
       "failureCodes": {}
     },
     "assertions": {
-      "total": 7039,
+      "total": 7121,
       "byFacetAndDecision": {
         "specialty:accepted": 3572,
         "anatomy:accepted": 2312,
         "diagnosis:accepted": 858,
         "treatment:accepted": 264,
+        "specialty:superseded": 62,
+        "anatomy:superseded": 16,
         "specialty:proposed": 16,
         "anatomy:proposed": 13,
+        "treatment:superseded": 3,
         "diagnosis:proposed": 2,
-        "treatment:proposed": 2
+        "treatment:proposed": 2,
+        "diagnosis:superseded": 1
       },
       "acceptedByFacet": {
         "specialty": 3572,
@@ -112,53 +160,48 @@
         "treatment": 264
       },
       "publishedByFacet": {
-        "anatomy": 93,
-        "specialty": 70,
-        "diagnosis": 25,
-        "treatment": 6
+        "specialty": 2955,
+        "anatomy": 2102,
+        "diagnosis": 818,
+        "treatment": 240
       },
       "uniqueCardsWithAcceptedAssertions": 3287,
       "confidenceByFacet": {
         "anatomy": {
-          "count": 2325,
-          "average": 0.9896,
+          "count": 2341,
+          "average": 0.9895,
           "below080": 1,
-          "below098": 9
+          "below098": 24
         },
         "diagnosis": {
-          "count": 860,
+          "count": 861,
           "average": 0.9896,
           "below080": 0,
-          "below098": 8
+          "below098": 9
         },
         "specialty": {
-          "count": 3588,
-          "average": 0.9891,
+          "count": 3650,
+          "average": 0.9887,
           "below080": 1,
-          "below098": 48
+          "below098": 110
         },
         "treatment": {
-          "count": 266,
-          "average": 0.9891,
+          "count": 269,
+          "average": 0.9889,
           "below080": 0,
-          "below098": 4
+          "below098": 7
         }
       },
       "byProvenance": {
-        "model": 7039
+        "model": 7121
       },
       "byDecisionMethod": {
         "automated_policy": 7006,
+        "supersession": 82,
         "pending": 33
       }
     },
     "metadataReleases": [
-      {
-        "key": "snaportho-metadata-provisional-review-v1",
-        "version": "1.0.0-provisional",
-        "status": "published",
-        "publishedAt": "2026-07-28T21:34:42.222+00:00"
-      },
       {
         "key": "snaportho-metadata-cohort-000001",
         "version": "0.2.0-cohort.1",
@@ -170,122 +213,133 @@
         "version": "1.0.0-codex",
         "status": "draft",
         "publishedAt": null
+      },
+      {
+        "key": "snaportho-metadata-provisional-review-v1",
+        "version": "1.0.0-provisional",
+        "status": "superseded",
+        "publishedAt": "2026-07-28T21:34:42.222+00:00"
+      },
+      {
+        "key": "snaportho-metadata-full-codex-v1-reviewed",
+        "version": "1.0.0-codex-reviewed",
+        "status": "published",
+        "publishedAt": "2026-07-29T20:51:01.217+00:00"
       }
     ],
-    "publishedAssertionCount": 194
+    "publishedAssertionCount": 6115
   },
   "renderedManifest": {
     "manifest": {
-      "key": "snaportho-master-deck-provisional-review-v2",
+      "key": "snaportho-tags-anatomy-hierarchy-v1",
       "status": "published",
       "transitionMode": "shadow",
-      "publishedAt": "2026-07-28T21:34:42.222+00:00"
+      "publishedAt": "2026-08-01T19:17:47.932+00:00"
     },
-    "cards": 84,
-    "sources": 8228,
+    "cards": 3071,
+    "sources": 24031,
     "sourceKinds": {
-      "assertion": 8144,
-      "release_marker": 84
+      "assertion": 18300,
+      "release_marker": 5731
     },
-    "staleSourceRows": 7950,
-    "cardsWithAddedTags": 84,
+    "staleSourceRows": 14343,
+    "cardsWithAddedTags": 3071,
     "cardsWithRemovedTags": 0
   },
   "actualPublishedTags": {
     "notes": 3670,
-    "totalAssignments": 218,
-    "uniqueTags": 75,
-    "noGovernedTagNotes": 3602,
-    "completeRequiredFacetNotes": 2,
+    "totalAssignments": 8422,
+    "uniqueTags": 451,
+    "noGovernedTagNotes": 942,
+    "completeRequiredFacetNotes": 33,
     "facets": {
       "Anatomy": {
-        "covered": 40,
+        "covered": 1277,
         "total": 3670,
-        "pct": 1.1
+        "pct": 34.8
       },
       "Diagnosis": {
-        "covered": 22,
+        "covered": 694,
         "total": 3670,
-        "pct": 0.6
+        "pct": 18.9
       },
       "Treatment": {
-        "covered": 5,
+        "covered": 197,
         "total": 3670,
-        "pct": 0.1
+        "pct": 5.4
       },
       "Specialty": {
-        "covered": 53,
+        "covered": 2276,
         "total": 3670,
-        "pct": 1.4
+        "pct": 62
       }
     },
     "tagsPerNote": {
       "min": 0,
-      "median": 0,
-      "p90": 0,
-      "max": 8,
-      "average": 0.06
+      "median": 1,
+      "p90": 6,
+      "max": 19,
+      "average": 2.29
     },
     "malformedTags": [],
     "caseCollisions": [],
     "roots": {
-      "SnapOrtho::Workflow": 68,
-      "SnapOrtho::Anatomy": 60,
-      "SnapOrtho::Specialty": 60,
-      "SnapOrtho::Diagnosis": 24,
-      "SnapOrtho::Treatment": 6
+      "SnapOrtho::Anatomy": 4709,
+      "SnapOrtho::Specialty": 2681,
+      "SnapOrtho::Diagnosis": 800,
+      "SnapOrtho::Treatment": 232
     },
     "topTags": {
-      "SnapOrtho::Workflow::Needs_Metadata_Review": 68,
-      "SnapOrtho::Specialty::Shoulder_Elbow": 16,
-      "SnapOrtho::Specialty::Foot_Ankle": 12,
-      "SnapOrtho::Specialty::Trauma": 9,
-      "SnapOrtho::Anatomy::Fibula": 6,
-      "SnapOrtho::Anatomy::Tibia": 6,
-      "SnapOrtho::Anatomy::Elbow_Joint": 5,
-      "SnapOrtho::Specialty::Hand_Upper_Extremity": 5,
-      "SnapOrtho::Anatomy::Subscapularis": 4,
-      "SnapOrtho::Specialty::Basic_Science": 4,
-      "SnapOrtho::Specialty::Pediatric_Orthopedics": 4,
-      "SnapOrtho::Specialty::Sports_Medicine": 4,
-      "SnapOrtho::Anatomy::Patella": 3,
-      "SnapOrtho::Specialty::Spine": 3,
-      "SnapOrtho::Anatomy::Distal_Radius": 2,
-      "SnapOrtho::Anatomy::Fds": 2,
-      "SnapOrtho::Anatomy::Femoral_Neck": 2,
-      "SnapOrtho::Anatomy::Rotator_Cuff": 2,
-      "SnapOrtho::Anatomy::Talus": 2,
-      "SnapOrtho::Diagnosis::Crps": 2,
-      "SnapOrtho::Diagnosis::Lisfranc_Injury": 2,
-      "SnapOrtho::Specialty::Adult_Reconstruction": 2,
-      "SnapOrtho::Anatomy::Achilles_Tendon": 1,
-      "SnapOrtho::Anatomy::Capitellum": 1,
-      "SnapOrtho::Anatomy::Carpal_Tunnel": 1,
-      "SnapOrtho::Anatomy::Deep_Palmar_Arch": 1,
-      "SnapOrtho::Anatomy::Distal_Femur": 1,
-      "SnapOrtho::Anatomy::Distal_Humerus": 1,
-      "SnapOrtho::Anatomy::Femoral_Nerve": 1,
-      "SnapOrtho::Anatomy::Knee_Extensor_Mechanism": 1,
-      "SnapOrtho::Anatomy::Lateral_Malleolus": 1,
-      "SnapOrtho::Anatomy::Lesser_Trochanter": 1,
-      "SnapOrtho::Anatomy::Lisfranc_Joint": 1,
-      "SnapOrtho::Anatomy::Lunate": 1,
-      "SnapOrtho::Anatomy::Medial_Meniscus": 1,
-      "SnapOrtho::Anatomy::Median_Nerve": 1,
-      "SnapOrtho::Anatomy::Pelvis": 1,
-      "SnapOrtho::Anatomy::Physis": 1,
-      "SnapOrtho::Anatomy::Pip_Joint": 1,
-      "SnapOrtho::Anatomy::Proximal_Femur": 1,
-      "SnapOrtho::Anatomy::Proximal_Humerus": 1,
-      "SnapOrtho::Anatomy::Radius": 1,
-      "SnapOrtho::Anatomy::Scaphoid": 1,
-      "SnapOrtho::Anatomy::Sciatic_Nerve": 1,
-      "SnapOrtho::Anatomy::Subtalar_Joint": 1,
-      "SnapOrtho::Anatomy::Supraspinatus": 1,
-      "SnapOrtho::Anatomy::Syndesmosis": 1,
-      "SnapOrtho::Anatomy::Trochlea": 1,
-      "SnapOrtho::Diagnosis::Achilles_Tendon_Rupture": 1,
-      "SnapOrtho::Diagnosis::ACL_Tear": 1
+      "SnapOrtho::Specialty::Trauma": 693,
+      "SnapOrtho::Specialty::Shoulder_Elbow": 458,
+      "SnapOrtho::Specialty::Hand_Upper_Extremity": 347,
+      "SnapOrtho::Specialty::Foot_Ankle": 317,
+      "SnapOrtho::Anatomy::Leg_Knee": 300,
+      "SnapOrtho::Anatomy::Thigh_Hip": 236,
+      "SnapOrtho::Anatomy::Leg_Knee::Osteology": 235,
+      "SnapOrtho::Specialty::Spine": 219,
+      "SnapOrtho::Anatomy::Shoulder_Girdle": 217,
+      "SnapOrtho::Anatomy::Hand": 212,
+      "SnapOrtho::Anatomy::Thigh_Hip::Osteology": 199,
+      "SnapOrtho::Specialty::Sports_Medicine": 192,
+      "SnapOrtho::Specialty::Pediatric_Orthopedics": 179,
+      "SnapOrtho::Anatomy::Hand::Osteology": 136,
+      "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology": 131,
+      "SnapOrtho::Specialty::Adult_Reconstruction": 125,
+      "SnapOrtho::Anatomy::Foot_Ankle": 115,
+      "SnapOrtho::Anatomy::Forearm": 99,
+      "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femur": 95,
+      "SnapOrtho::Anatomy::Leg_Knee::Osteology::Tibia": 89,
+      "SnapOrtho::Anatomy::Shoulder_Girdle::Muscles": 87,
+      "SnapOrtho::Anatomy::Elbow": 80,
+      "SnapOrtho::Anatomy::Foot_Ankle::Osteology": 77,
+      "SnapOrtho::Anatomy::Forearm::Osteology": 72,
+      "SnapOrtho::Specialty::Orthopedic_Oncology": 68,
+      "SnapOrtho::Anatomy::Pelvis": 65,
+      "SnapOrtho::Anatomy::Pelvis::Osteology": 62,
+      "SnapOrtho::Anatomy::Forearm::Osteology::Radius": 55,
+      "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femoral_Head": 47,
+      "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology::Clavicle": 44,
+      "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femoral_Neck": 44,
+      "SnapOrtho::Anatomy::Leg_Knee::Osteology::Fibula": 43,
+      "SnapOrtho::Anatomy::Shoulder_Girdle::Muscles::Rotator_Cuff": 43,
+      "SnapOrtho::Anatomy::Arm": 42,
+      "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology::Glenoid": 41,
+      "SnapOrtho::Diagnosis::Compartment_Syndrome": 39,
+      "SnapOrtho::Anatomy::Hand::Osteology::Scaphoid": 38,
+      "SnapOrtho::Anatomy::Leg_Knee::Osteology::Patella": 38,
+      "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology::Proximal_Humerus": 37,
+      "SnapOrtho::Anatomy::Foot_Ankle::Osteology::Calcaneus": 36,
+      "SnapOrtho::Anatomy::Forearm::Osteology::Ulna": 35,
+      "SnapOrtho::Anatomy::Hand::Osteology::Distal_Radius": 35,
+      "SnapOrtho::Anatomy::Foot_Ankle::Osteology::Talus": 34,
+      "SnapOrtho::Anatomy::Leg_Knee::Osteology::Distal_Femur": 34,
+      "SnapOrtho::Anatomy::Leg_Knee::Osteology::Tibial_Plateau": 34,
+      "SnapOrtho::Specialty::Metabolic_Bone": 34,
+      "SnapOrtho::Specialty::Basic_Science": 30,
+      "SnapOrtho::Anatomy::Elbow::Osteology": 29,
+      "SnapOrtho::Anatomy::Spine": 28,
+      "SnapOrtho::Anatomy::Spine::Nerves": 28
     }
   },
   "legacySourceTags": {

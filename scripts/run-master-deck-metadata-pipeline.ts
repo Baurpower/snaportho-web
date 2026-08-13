@@ -3,6 +3,7 @@
  *
  * Commands:
  *   bootstrap-full-release  Create/reuse a draft release containing every active current card.
+ *   sync-v2-cohort-export   Export official sync-v2 notes as leased portable review packets.
  *   run                     Run/resume the four-facet agent pipeline in shadow mode.
  *   status                  Report run, batch, assertion, and review-queue progress.
  *
@@ -22,6 +23,13 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { LexicalTaxonomyRetriever, MasterDeckMetadataPipeline, METADATA_FACETS, METADATA_PIPELINE_VERSION, OpenAIMetadataAdapter, metadataChecksum, type CardPacket, type CardPipelineResult, type MetadataFacet, type PipelineCheckpointStore, type RoutedAssertion, type TaxonomyTerm } from "../src/lib/education/master-deck-metadata-pipeline.ts";
 // @ts-expect-error Direct Node strip-types runner imports TypeScript source.
 import { buildTagReleaseManifest, diffCardTags, renderCardTagManifest, type AcceptedTagAssertion, type TagExportPolicy, type TaxonomyTagNode } from "../src/lib/education/anki-tag-rendering.ts";
+// @ts-expect-error Direct Node strip-types runner imports TypeScript source.
+import {
+  GROK_TAG_REVIEW_RUN_KEY,
+  joinOfficialNotesToReleaseCards,
+  pendingPacketFileName,
+  portablePacketChecksumInput,
+} from "../src/lib/education/portable-tag-review-packet.ts";
 
 type Args = Map<string, string>;
 type JsonRow = Record<string, any>;
@@ -641,6 +649,16 @@ type CodexPacket = {
     back: string;
     deckPath: string;
     existingTags: string[];
+    noteId?: string;
+    noteVersionId?: string;
+    stableGuid?: string;
+    priorAssertions?: Array<{
+      facet: MetadataFacet;
+      termId: string;
+      preferredLabel: string;
+      confidence: number;
+      decision: string;
+    }>;
     candidates: Record<MetadataFacet, Array<{
       termId: string;
       preferredLabel: string;
@@ -656,26 +674,7 @@ type CodexPacket = {
 };
 
 function codexPacketInput(packet: Omit<CodexPacket, "inputChecksum"> | CodexPacket) {
-  return {
-    schemaVersion: packet.schemaVersion,
-    runId: packet.runId,
-    runKey: packet.runKey,
-    batchId: packet.batchId,
-    batchKey: packet.batchKey,
-    taxonomyVersion: packet.taxonomyVersion,
-    taxonomyVersionId: packet.taxonomyVersionId,
-    taxonomyLimit: packet.taxonomyLimit,
-    cards: packet.cards.map((card) => ({
-      canonicalCardId: card.canonicalCardId,
-      canonicalCardVersionId: card.canonicalCardVersionId,
-      contentHash: card.contentHash,
-      front: card.front,
-      back: card.back,
-      deckPath: card.deckPath,
-      existingTags: card.existingTags,
-      candidates: card.candidates,
-    })),
-  };
+  return portablePacketChecksumInput(packet);
 }
 
 function codexPacketPath(args: Args, packet: Pick<CodexPacket, "runKey" | "batchKey">) {
@@ -847,6 +846,7 @@ async function ensureSimpleRun(
     pipeline: SIMPLE_RUN_VERSION,
     taxonomyLimit: SIMPLE_DEFAULT_TAXONOMY_LIMIT,
     model: "provider-neutral",
+    packing: "parallel_compact_packets",
   };
   const now = new Date().toISOString();
   const inserted = await db.from("metadata_pipeline_runs").insert({
@@ -1085,6 +1085,345 @@ async function exportSimpleCodexCohort(db: SupabaseClient, args: Args) {
     taxonomyCandidatesPerFacet: taxonomyLimit,
     previouslyProcessedOrReserved: unavailable.size,
     remainingAfterThisCohort: Math.max(0, cards.length - unavailable.size - selected.length),
+    packets,
+  }, null, 2));
+}
+
+function officialFieldText(snapshot: unknown): { front: string; back: string } {
+  if (snapshot && typeof snapshot === "object" && !Array.isArray(snapshot)) {
+    const fields = snapshot as Record<string, unknown>;
+    const front = stripNonClinicalMarkup(String(fields.Text ?? fields.Front ?? fields.Question ?? Object.values(fields)[0] ?? ""));
+    const back = stripNonClinicalMarkup(
+      Object.entries(fields)
+        .filter(([name]) => !["Text", "Front", "Question"].includes(name))
+        .map(([name, value]) => `${name}: ${String(value ?? "")}`)
+        .join("\n"),
+    ).slice(0, 16000);
+    return { front, back };
+  }
+  const fields = fieldText(snapshot);
+  const frontIndex = fields.findIndex((field) => /^(front|question|text|cloze)$/i.test(field.name));
+  const frontField = fields[frontIndex >= 0 ? frontIndex : 0];
+  const remaining = fields.filter((_, index) => index !== (frontIndex >= 0 ? frontIndex : 0));
+  return {
+    front: frontField?.value ?? "",
+    back: remaining.map((field) => `${field.name}: ${field.value}`).join("\n").slice(0, 16000),
+  };
+}
+
+async function exportSyncV2Cohort(db: SupabaseClient, args: Args) {
+  if (!args.has("--run-key")) args.set("--run-key", GROK_TAG_REVIEW_RUN_KEY);
+  const requestedVersion = args.get("--release-version");
+  let officialQuery = db.from("anki_sync_v2_releases").select("*");
+  officialQuery = requestedVersion
+    ? officialQuery.eq("release_version", requestedVersion)
+    : officialQuery.eq("status", "published").order("release_sequence", { ascending: false }).limit(1);
+  const official = await officialQuery.maybeSingle();
+  if (official.error) throw new Error(`sync_v2_release_lookup_failed:${official.error.message}`);
+  if (!official.data || official.data.status !== "published") {
+    throw new Error("published_sync_v2_release_not_found");
+  }
+  const deckRelease = await resolveRelease(db, args);
+  const taxonomyVersion = args.get("--taxonomy-version") ?? DEFAULT_TAXONOMY_VERSION;
+  const taxonomy = await loadTaxonomy(db, taxonomyVersion);
+  const members = await allRows(
+    db,
+    "anki_sync_v2_release_notes",
+    "note_id,note_version_id,ordering_key",
+    (query) => query.eq("release_id", official.data.id).order("ordering_key"),
+  );
+  const officialNotes = await allRows(db, "anki_sync_v2_notes", "id,stable_guid");
+  const officialNoteById = new Map(officialNotes.map((row) => [row.id, row]));
+  const versionIds = members.map((row) => row.note_version_id);
+  const versions: JsonRow[] = [];
+  for (let offset = 0; offset < versionIds.length; offset += 100) {
+    const { data, error } = await db.from("anki_sync_v2_note_versions")
+      .select("id,note_id,field_snapshot,governed_tags,content_checksum,deck_path")
+      .in("id", versionIds.slice(offset, offset + 100));
+    if (error) throw new Error(`sync_v2_note_versions_read_failed:${error.message}`);
+    versions.push(...(data ?? []));
+  }
+  const versionById = new Map(versions.map((row) => [row.id, row]));
+  const releaseCards = await allRows(
+    db,
+    "anki_deck_release_cards",
+    "canonical_card_id,canonical_card_version_id,content_hash,note_guid,deck_path,inclusion_status",
+    (query) => query.eq("deck_release_id", deckRelease.id).eq("inclusion_status", "included"),
+  );
+  const identities = members.map((member) => {
+    const version = versionById.get(member.note_version_id);
+    const note = officialNoteById.get(member.note_id);
+    if (!version || !note) throw new Error(`missing_official_note:${member.note_id}`);
+    return {
+      noteId: String(note.id),
+      noteVersionId: String(version.id),
+      stableGuid: String(note.stable_guid),
+      contentChecksum: String(version.content_checksum),
+      version,
+    };
+  });
+  const join = joinOfficialNotesToReleaseCards(
+    identities.map(({ version: _version, ...identity }) => identity),
+    releaseCards.map((row) => ({
+      noteGuid: String(row.note_guid),
+      canonicalCardId: String(row.canonical_card_id),
+      canonicalCardVersionId: String(row.canonical_card_version_id),
+      contentHash: String(row.content_hash),
+    })),
+  );
+  if (join.missingGuids.length) {
+    throw new Error(`official_note_join_misses:${join.missingGuids.length}:${join.missingGuids.slice(0, 8).join(",")}`);
+  }
+  const identityByVersion = new Map(identities.map((row) => [row.noteVersionId, row]));
+  const releaseCardByCanonical = new Map(
+    releaseCards.map((row) => [String(row.canonical_card_version_id), row]),
+  );
+  const priorAssertions = await allRows(
+    db,
+    "card_metadata_assertions",
+    "canonical_card_version_id,facet,canonical_entity_id,metadata_concept_id,confidence,decision",
+    (query) => query.eq("decision", "accepted"),
+  );
+  const termById = new Map(taxonomy.terms.map((term) => [term.id, term]));
+  const priorsByVersion = new Map<string, NonNullable<CodexPacket["cards"][number]["priorAssertions"]>>();
+  for (const row of priorAssertions) {
+    const termId = String(row.canonical_entity_id ?? row.metadata_concept_id ?? "");
+    const term = termById.get(termId);
+    if (!term) continue;
+    const list = priorsByVersion.get(row.canonical_card_version_id) ?? [];
+    list.push({
+      facet: term.facet,
+      termId,
+      preferredLabel: term.preferredLabel,
+      confidence: Number(row.confidence),
+      decision: String(row.decision),
+    });
+    priorsByVersion.set(row.canonical_card_version_id, list);
+  }
+  const cards = join.joined.map((joined) => {
+    const identity = identityByVersion.get(joined.noteVersionId);
+    const releaseCard = releaseCardByCanonical.get(joined.canonicalCardVersionId);
+    if (!identity || !releaseCard) throw new Error(`joined_card_missing:${joined.canonicalCardVersionId}`);
+    const text = officialFieldText(identity.version.field_snapshot);
+    const packet: CardPacket = {
+      canonicalCardId: joined.canonicalCardId,
+      canonicalCardVersionId: joined.canonicalCardVersionId,
+      contentHash: joined.contentHash,
+      front: text.front,
+      back: text.back,
+      existingTags: Array.isArray(identity.version.governed_tags)
+        ? [...new Set(identity.version.governed_tags.map(String))]
+        : [],
+      deckPath: String(identity.version.deck_path ?? releaseCard.deck_path ?? ""),
+    };
+    return {
+      releaseCard,
+      packet,
+      official: {
+        noteId: joined.noteId,
+        noteVersionId: joined.noteVersionId,
+        stableGuid: joined.stableGuid,
+        priorAssertions: priorsByVersion.get(joined.canonicalCardVersionId) ?? [],
+      },
+    };
+  });
+  const run = await ensureSimpleRun(db, args, deckRelease, taxonomy.version, cards);
+  const cohortSize = integer(args, "--cohort-size", SIMPLE_DEFAULT_COHORT_SIZE, 1, 500);
+  const agentCount = integer(args, "--agents", SIMPLE_DEFAULT_AGENTS, 1, 20);
+  const taxonomyLimit = integer(args, "--taxonomy-limit", 20, 1, 30);
+  const [completedStages, acceptedAssertions, existingBatches] = await Promise.all([
+    allRows(
+      db,
+      "metadata_pipeline_stage_results",
+      "canonical_card_version_id",
+      (query) => query.eq("pipeline_run_id", run.id).eq("stage", "consensus").eq("status", "completed"),
+    ),
+    allRows(
+      db,
+      "card_metadata_assertions",
+      "canonical_card_version_id",
+      (query) => query.eq("pipeline_run_id", run.id).eq("decision", "accepted"),
+    ),
+    allRows(
+      db,
+      "metadata_pipeline_batches",
+      "batch_key,status,ordered_card_version_ids",
+      (query) => query.eq("pipeline_run_id", run.id).order("batch_key"),
+    ),
+  ]);
+  const unavailable = new Set<string>();
+  for (const row of [...completedStages, ...acceptedAssertions]) {
+    if (row.canonical_card_version_id) unavailable.add(row.canonical_card_version_id);
+  }
+  for (const batch of existingBatches) {
+    if (batch.status === "cancelled" || batch.status === "failed") continue;
+    for (const id of batch.ordered_card_version_ids ?? []) unavailable.add(id);
+  }
+  const selected = cards
+    .filter(({ packet }) => !unavailable.has(packet.canonicalCardVersionId))
+    .slice(0, cohortSize);
+  if (!selected.length) {
+    console.log(JSON.stringify({
+      exported: false,
+      reason: "no_unprocessed_cards",
+      runKey: run.run_key,
+      officialRelease: official.data.release_version,
+      processedOrReservedCards: unavailable.size,
+      officialNotes: cards.length,
+    }, null, 2));
+    return;
+  }
+  const priorCohortNumbers = existingBatches.flatMap((batch) => {
+    const match = String(batch.batch_key).match(/^cohort-(\d+)-agent-\d+$/);
+    return match ? [Number(match[1])] : [];
+  });
+  const cohortNumber = Math.max(0, ...priorCohortNumbers) + 1;
+  const actualAgents = Math.min(agentCount, selected.length);
+  const cardsPerAgent = Math.ceil(selected.length / actualAgents);
+  const batchRows: JsonRow[] = [];
+  for (let agentIndex = 0; agentIndex < actualAgents; agentIndex += 1) {
+    const slice = selected.slice(agentIndex * cardsPerAgent, (agentIndex + 1) * cardsPerAgent);
+    if (!slice.length) continue;
+    batchRows.push({
+      pipeline_run_id: run.id,
+      batch_key: `cohort-${String(cohortNumber).padStart(6, "0")}-agent-${String(agentIndex + 1).padStart(2, "0")}`,
+      cohort_key: `cohort-${String(cohortNumber).padStart(6, "0")}`,
+      ordered_card_version_ids: slice.map(({ packet }) => packet.canonicalCardVersionId),
+      batch_checksum: sha(slice.map(({ packet }) => [packet.canonicalCardVersionId, packet.contentHash])),
+      status: "pending",
+      current_stage: "identity_validation",
+    });
+  }
+  const created = await db.from("metadata_pipeline_batches").insert(batchRows)
+    .select("*").order("batch_key");
+  if (created.error) throw new Error(`official_batches_insert_failed:${created.error.message}`);
+  const cardByVersion = new Map(selected.map((card) => [card.packet.canonicalCardVersionId, card]));
+  const retriever = new LexicalTaxonomyRetriever(taxonomy.terms);
+  const outputDirectory = path.resolve(
+    args.get("--out")
+      ?? `tmp/grok-tag-review/${official.data.release_version}/cohort-${String(cohortNumber).padStart(6, "0")}`,
+  );
+  mkdirSync(outputDirectory, { recursive: true });
+  const packets: Array<{ batchKey: string; cards: number; pending: string; leaseOwner: string }> = [];
+  for (const batch of created.data ?? []) {
+    const leaseOwner = `grok-${randomUUID()}`;
+    const leased = await db.from("metadata_pipeline_batches").update({
+      status: "running",
+      current_stage: "consensus",
+      lease_owner: leaseOwner,
+      leased_until: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+      last_heartbeat_at: new Date().toISOString(),
+      started_at: new Date().toISOString(),
+      attempt_count: 1,
+    }).eq("id", batch.id).eq("status", "pending");
+    if (leased.error) throw new Error(`official_batch_lease_failed:${leased.error.message}`);
+    const packetCards: CodexPacket["cards"] = [];
+    for (const versionId of batch.ordered_card_version_ids as string[]) {
+      const card = cardByVersion.get(versionId);
+      if (!card) throw new Error(`official_batch_card_missing:${versionId}`);
+      const candidates = {} as CodexPacket["cards"][number]["candidates"];
+      for (const facet of METADATA_FACETS) {
+        candidates[facet] = (await retriever.retrieve({
+          card: card.packet,
+          facet,
+          limit: taxonomyLimit,
+        })).map((term) => ({
+          termId: term.id,
+          preferredLabel: term.preferredLabel,
+          aliases: term.aliases,
+          parentIds: term.parentIds,
+          retrievalScore: term.retrievalScore,
+        }));
+      }
+      packetCards.push({
+        canonicalCardId: card.packet.canonicalCardId,
+        canonicalCardVersionId: card.packet.canonicalCardVersionId,
+        contentHash: card.packet.contentHash,
+        front: card.packet.front,
+        back: card.packet.back,
+        deckPath: card.packet.deckPath ?? "",
+        existingTags: card.packet.existingTags,
+        noteId: card.official.noteId,
+        noteVersionId: card.official.noteVersionId,
+        stableGuid: card.official.stableGuid,
+        priorAssertions: card.official.priorAssertions,
+        candidates,
+        assertions: [],
+      });
+    }
+    const packetWithoutChecksum = {
+      schemaVersion: CODEX_PACKET_VERSION,
+      runId: run.id,
+      runKey: run.run_key,
+      batchId: batch.id,
+      batchKey: batch.batch_key,
+      leaseOwner,
+      taxonomyVersion,
+      taxonomyVersionId: taxonomy.version.id,
+      taxonomyLimit,
+      instructions: [
+        "Review every official sync-v2 note independently. Fill only reviewer, reviewStatus, reviewNotes, missingConcepts, and card.assertions.",
+        "Tag the primary teaching subject, not every mentioned entity. Deck path, governed tags, and priorAssertions are fallible context.",
+        "Use only listed candidate term IDs and require an exact front/back quote for every assertion.",
+        "Do not classify incidental anatomy, differentials, complications, structures-at-risk, or explanation mentions as primary subjects.",
+        "Use no assertion for a facet when unsupported. Set reviewStatus=completed; use missingConcepts when the correct concept is absent.",
+        "Set reviewer.provider, reviewer.model, and reviewer.reviewedAt. Never invent a termId.",
+      ],
+      cards: packetCards,
+    } satisfies Omit<CodexPacket, "inputChecksum">;
+    const packet: CodexPacket = {
+      ...packetWithoutChecksum,
+      inputChecksum: sha(codexPacketInput(packetWithoutChecksum)),
+    };
+    const output = path.join(outputDirectory, pendingPacketFileName(batch.batch_key));
+    writeFileSync(output, `${JSON.stringify(packet, null, 2)}\n`, { encoding: "utf8", mode: 0o600 });
+    packets.push({
+      batchKey: batch.batch_key,
+      cards: packet.cards.length,
+      pending: output,
+      leaseOwner,
+    });
+  }
+  const manifestPath = path.join(outputDirectory, "manifest.json");
+  writeFileSync(manifestPath, `${JSON.stringify({
+    contract: CODEX_PACKET_VERSION,
+    runKey: run.run_key,
+    runId: run.id,
+    officialRelease: official.data.release_version,
+    officialReleaseId: official.data.id,
+    deckReleaseKey: deckRelease.release_key,
+    deckReleaseId: deckRelease.id,
+    taxonomyVersion,
+    cohort: cohortNumber,
+    cards: selected.length,
+    join: {
+      officialNotes: identities.length,
+      joined: join.joined.length,
+      missing: join.missingGuids.length,
+      duplicateGuids: join.duplicateGuids.length,
+    },
+    packets: packets.map((packet) => ({
+      batchKey: packet.batchKey,
+      cards: packet.cards,
+      pending: path.basename(packet.pending),
+    })),
+  }, null, 2)}\n`, { encoding: "utf8", mode: 0o600 });
+  console.log(JSON.stringify({
+    exported: true,
+    apiCalls: 0,
+    source: "anki_sync_v2",
+    officialRelease: official.data.release_version,
+    runId: run.id,
+    runKey: run.run_key,
+    cohort: cohortNumber,
+    cards: selected.length,
+    agents: packets.length,
+    taxonomyCandidatesPerFacet: taxonomyLimit,
+    previouslyProcessedOrReserved: unavailable.size,
+    remainingAfterThisCohort: Math.max(0, cards.length - unavailable.size - selected.length),
+    joinMisses: join.missingGuids.length,
+    duplicateGuids: join.duplicateGuids.length,
+    out: outputDirectory,
     packets,
   }, null, 2));
 }
@@ -1749,6 +2088,7 @@ async function main() {
   });
   if (command === "bootstrap-full-release") return bootstrapFullRelease(db, args);
   if (command === "codex-cohort-export" || command === "review-cohort-export") return exportSimpleCodexCohort(db, args);
+  if (command === "sync-v2-cohort-export") return exportSyncV2Cohort(db, args);
   if (command === "codex-export" || command === "review-export") return exportCodexBatch(db, args);
   if (command === "codex-import" || command === "review-import") return importCodexBatch(db, args);
   if (command === "classify-legacy-tags") return classifyLegacyTags(db, args);

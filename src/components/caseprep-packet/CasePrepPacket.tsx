@@ -27,7 +27,11 @@ const SECTION_LAYOUT: Array<{
   { id: "summary", label: "Procedure Summary" },
   { id: "key_takeaways", label: "Key Takeaways" },
   { id: "top_things_to_know", label: "Top Things To Know" },
-  { id: "pimp_questions", label: "Common Pimp Questions", kicker: "Pocket Pimped + Attending" },
+  {
+    id: "pimp_questions",
+    label: "Common Pimp Questions",
+    kicker: "Pocket Pimped + Attending",
+  },
   { id: "anatomy", label: "Important Anatomy" },
   { id: "operative_flow", label: "Operative Flow" },
   { id: "teaching_topics", label: "Resident Teaching Topics" },
@@ -35,11 +39,21 @@ const SECTION_LAYOUT: Array<{
   { id: "pitfalls", label: "Pitfalls & Bailouts" },
   { id: "postop", label: "Post-op Protocol" },
   { id: "evidence", label: "High-Yield References" },
-  { id: "related_concepts", label: "Related Concepts", kicker: "Knowledge Graph" },
+  {
+    id: "related_concepts",
+    label: "Related Concepts",
+    kicker: "Knowledge Graph",
+  },
   { id: "sources", label: "Sources" },
 ];
 
-function SectionBody({ id, state }: { id: string; state: CasePrepPacketState }) {
+function SectionBody({
+  id,
+  state,
+}: {
+  id: string;
+  state: CasePrepPacketState;
+}) {
   const section = state.sections[id];
   if (!section) return null;
   switch (id) {
@@ -94,10 +108,16 @@ export function CasePrepPacket({
 }) {
   const slug = state.caseIdentity?.canonical_slug ?? "";
   const { isExpanded, toggle } = useExpandedSections(slug);
-  const streaming = state.status === "connecting" || state.status === "streaming";
+  const streaming =
+    state.status === "connecting" || state.status === "streaming";
 
   if (state.status === "clarification" && state.clarification) {
-    return <ClarificationPrompt clarification={state.clarification} onChoose={onClarify} />;
+    return (
+      <ClarificationPrompt
+        clarification={state.clarification}
+        onChoose={onClarify}
+      />
+    );
   }
   if (state.status === "error") {
     return (
@@ -114,6 +134,21 @@ export function CasePrepPacket({
       ) : (
         <PacketHeaderSkeleton />
       )}
+
+      {state.coverage && state.coverage.quality_gate !== "passed" ? (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950">
+          <p className="font-bold">
+            Grounded coverage is limited for this case.
+          </p>
+          <p className="mt-1 text-amber-800">
+            Unsupported sections were omitted instead of filled with generic AI
+            content.
+            {state.coverage.omitted_sections.length > 0
+              ? ` Missing: ${state.coverage.omitted_sections.join(", ").replaceAll("_", " ")}.`
+              : ""}
+          </p>
+        </div>
+      ) : null}
 
       {SECTION_LAYOUT.map(({ id, label, kicker }) => (
         <SectionShell

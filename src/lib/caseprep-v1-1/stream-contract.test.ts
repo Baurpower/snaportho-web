@@ -8,7 +8,10 @@ import { createInitialPacketState, reducePacketEvent } from "./stream-schema";
 
 type PacketState = ReturnType<typeof createInitialPacketState>;
 
-function reduceAll(frames: string, state: PacketState = createInitialPacketState()) {
+function reduceAll(
+  frames: string,
+  state: PacketState = createInitialPacketState(),
+) {
   const parseState = createSseParseState();
   for (const event of parseSseChunk(parseState, frames)) {
     state = reducePacketEvent(state, event.event, event.data);
@@ -100,7 +103,11 @@ const HEADER = {
       generated_field_paths: ["items[0].teaching_pearl"],
       duration_ms: 10,
     }) +
-    encodeSseEvent("done", { pipeline_status: {}, timing: { total_ms: 900 }, warnings: [] });
+    encodeSseEvent("done", {
+      pipeline_status: {},
+      timing: { total_ms: 900 },
+      warnings: [],
+    });
   const state = reduceAll(frames);
   assert.equal(state.status, "done");
   assert.equal(state.header?.display_name, "Trigger Finger Release");
@@ -117,13 +124,27 @@ const HEADER = {
     encodeSseEvent("section", {
       section_id: "pitfalls",
       status: "complete",
-      items: [{ id: "p1", question: "Mistake", answer: "Avoid it", category: "pitfall" }],
+      items: [
+        {
+          id: "p1",
+          question: "Mistake",
+          answer: "Avoid it",
+          category: "pitfall",
+        },
+      ],
       source: "curated_uncertified",
     }) +
     encodeSseEvent("section", {
       section_id: "summary",
       status: "complete",
-      items: [{ id: "s1", question: "Overview", answer: "Release of the A1 pulley", category: "summary" }],
+      items: [
+        {
+          id: "s1",
+          question: "Overview",
+          answer: "Release of the A1 pulley",
+          category: "summary",
+        },
+      ],
       source: "curated_uncertified",
     });
   const state = reduceAll(frames);
@@ -141,9 +162,18 @@ const HEADER = {
       stream_protocol_version: 1,
     }) +
     encodeSseEvent("clarification", {
-      case: { requested_case: "ctr", canonical_slug: "carpal_tunnel_release", canonical_name: "Carpal Tunnel Release" },
+      case: {
+        requested_case: "ctr",
+        canonical_slug: "carpal_tunnel_release",
+        canonical_name: "Carpal Tunnel Release",
+      },
       clarification_reason: "Choose open or endoscopic.",
-      options: [{ label: "Open Carpal Tunnel Release", prompt: "Open Carpal Tunnel Release" }],
+      options: [
+        {
+          label: "Open Carpal Tunnel Release",
+          prompt: "Open Carpal Tunnel Release",
+        },
+      ],
     }) +
     encodeSseEvent("done", { pipeline_status: {}, timing: {}, warnings: [] });
   const state = reduceAll(frames);
@@ -154,15 +184,32 @@ const HEADER = {
 // ── Degradation: section_error doesn't kill the packet; late error can't downgrade complete ──
 {
   const frames =
-    encodeSseEvent("section_error", { section_id: "evidence", reason: "timed out" }) +
+    encodeSseEvent("section_error", {
+      section_id: "evidence",
+      reason: "timed out",
+    }) +
     encodeSseEvent("section", {
       section_id: "anatomy",
       status: "complete",
-      items: [{ id: "n1", question: "Nerve", answer: "Radial digital nerve", category: "structure_at_risk" }],
+      items: [
+        {
+          id: "n1",
+          question: "Nerve",
+          answer: "Radial digital nerve",
+          category: "structure_at_risk",
+        },
+      ],
       source: "certified",
     }) +
-    encodeSseEvent("section_error", { section_id: "anatomy", reason: "late duplicate" }) +
-    encodeSseEvent("done", { pipeline_status: {}, timing: {}, warnings: ["Enrichment degraded"] });
+    encodeSseEvent("section_error", {
+      section_id: "anatomy",
+      reason: "late duplicate",
+    }) +
+    encodeSseEvent("done", {
+      pipeline_status: {},
+      timing: {},
+      warnings: ["Enrichment degraded"],
+    });
   const state = reduceAll(frames);
   assert.equal(state.status, "done");
   assert.equal(state.sections["evidence"]?.status, "error");
@@ -202,32 +249,73 @@ const HEADER = {
   assert.equal(state.errorMessage, "boom");
 }
 
+// ── v1.2 provenance and coverage remain visible to every client ────────────
+{
+  const frames =
+    encodeSseEvent("meta", {
+      packet_id: "v12-packet",
+      caseprep_version: "v1.2",
+      engine: "grounded_packet_stream",
+      stream_protocol_version: 2,
+    }) +
+    encodeSseEvent("section", {
+      section_id: "pimp_questions",
+      status: "complete",
+      items: [
+        {
+          id: "q1",
+          question: "At risk?",
+          answer: "Median nerve",
+          category: "anatomy",
+          source: "rag",
+          provenance: "rag",
+          claim_support: "direct",
+          procedure_relevance: "direct",
+        },
+      ],
+      source: "rag",
+    }) +
+    encodeSseEvent("core_done", {
+      coverage_status: "grounded_partial",
+      quality_gate: "limited",
+      grounded_percentage: 1,
+      grounded_count: 1,
+      generated_count: 0,
+      omitted_sections: ["operative_flow"],
+    });
+  const state = reduceAll(frames);
+  assert.equal(state.sections.pimp_questions?.items[0]?.provenance, "rag");
+  assert.equal(state.coverage?.quality_gate, "limited");
+  assert.deepEqual(state.coverage?.omitted_sections, ["operative_flow"]);
+}
+
 // ── Route source guards: gate before upstream; frozen routes untouched ──────
 const streamRouteSource = readFileSync(
   join(process.cwd(), "src/app/api/case-prep/v1.1/stream/route"),
-  "utf8"
+  "utf8",
 );
 assert.ok(
   streamRouteSource.indexOf("getBroBotAccessGate") <
-    streamRouteSource.indexOf("/case-prep/web/v1.1/stream"),
-  "entitlement gate must run before the upstream stream is opened"
+    streamRouteSource.indexOf("/case-prep/web/${version}/stream"),
+  "entitlement gate must run before the upstream stream is opened",
 );
 assert.match(streamRouteSource, /isCasePrepStreamEnabled\(\)/);
+assert.match(streamRouteSource, /isCasePrepV12StreamEnabled\(\)/);
 assert.match(streamRouteSource, /X-Accel-Buffering/);
 assert.match(
   streamRouteSource,
   /getRequiredBearerToken\(request\)[\s\S]*getMobileBearerUser\(request\)/,
-  "native bearer identity must be resolved before browser/guest fallback"
+  "native bearer identity must be resolved before browser/guest fallback",
 );
 assert.match(
   streamRouteSource,
   /if \(authResponse \|\| !subject\)/,
-  "an invalid native credential must not silently become a guest"
+  "an invalid native credential must not silently become a guest",
 );
 
 const legacyAskRouteSource = readFileSync(
   join(process.cwd(), "src/app/api/brobot/ask/route"),
-  "utf8"
+  "utf8",
 );
 assert.doesNotMatch(legacyAskRouteSource, /v1\.1\/stream/);
 

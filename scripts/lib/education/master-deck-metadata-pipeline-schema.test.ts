@@ -85,12 +85,16 @@ assert.match(verification, /transaction read only/i);
 assert.match(verification, /rollback/);
 for (const expected of [
   /codex-cohort-export/,
+  /sync-v2-cohort-export/,
   /just_in_time_cohorts/,
   /parallel_compact_packets/,
   /SIMPLE_DEFAULT_TAXONOMY_LIMIT = 12/,
   /remainingAfterThisCohort/,
   /decision_policy_version: SIMPLE_RUN_VERSION/,
   /disposition: "workflow_only"/,
+  /GROK_TAG_REVIEW_RUN_KEY/,
+  /official_note_join_misses/,
+  /pendingPacketFileName/,
 ]) {
   assert.match(runner, expected);
 }
