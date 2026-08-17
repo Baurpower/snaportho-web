@@ -95,6 +95,14 @@ for (const expected of [
   /GROK_TAG_REVIEW_RUN_KEY/,
   /official_note_join_misses/,
   /pendingPacketFileName/,
+  /buildReviewBrief/,
+  /renew-lease/,
+  /packet-size/,
+  /grok_review_omitted/,
+  /confirmedExisting/,
+  /droppedPriors/,
+  /screen-official-notes/,
+  /llm-only/,
 ]) {
   assert.match(runner, expected);
 }

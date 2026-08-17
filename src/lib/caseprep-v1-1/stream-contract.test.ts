@@ -41,6 +41,28 @@ function reduceAll(
 }
 
 // ── Happy path: meta → header → sections → done ─────────────────────────────
+{
+  const state = reduceAll(
+    encodeSseEvent("progress", {
+      phase: "resolving",
+      label: "Identifying the procedure",
+      progress_min: 8,
+      progress_max: 24,
+      elapsed_ms: 250,
+      heartbeat: false,
+    }),
+    {
+      ...createInitialPacketState(),
+      status: "connecting",
+      requestedPrompt: "TKA",
+    },
+  );
+  assert.equal(state.status, "streaming");
+  assert.equal(state.requestedPrompt, "TKA");
+  assert.equal(state.progress?.phase, "resolving");
+  assert.equal(state.progress?.progress_max, 24);
+}
+
 const HEADER = {
   case: {
     requested_case: "trigger thumb release",
@@ -294,6 +316,15 @@ const streamRouteSource = readFileSync(
   join(process.cwd(), "src/app/api/case-prep/v1.1/stream/route"),
   "utf8",
 );
+const packetComponentSource = readFileSync(
+  join(process.cwd(), "src/components/caseprep-packet/CasePrepPacket.tsx"),
+  "utf8",
+);
+assert.ok(
+  packetComponentSource.indexOf('id: "pimp_questions"') <
+    packetComponentSource.indexOf('id: "summary"'),
+  "pimp questions must remain the first packet section so they are not buried below long expanded content",
+);
 assert.ok(
   streamRouteSource.indexOf("getBroBotAccessGate") <
     streamRouteSource.indexOf("/case-prep/web/${version}/stream"),
@@ -311,6 +342,16 @@ assert.match(
   streamRouteSource,
   /if \(authResponse \|\| !subject\)/,
   "an invalid native credential must not silently become a guest",
+);
+
+const streamHookSource = readFileSync(
+  join(process.cwd(), "src/lib/caseprep-v1-1/useCasePrepStream.ts"),
+  "utf8",
+);
+assert.match(
+  streamHookSource,
+  /preferredVersion === "v1\.2" && response\.status === 404[\s\S]*requestStream\("v1\.1"\)/,
+  "a disabled v1.2 server flag must fall back to the v1.1 stream",
 );
 
 const legacyAskRouteSource = readFileSync(

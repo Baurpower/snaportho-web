@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 
 /** Sections expanded by default (above-the-fold content). */
 const DEFAULT_EXPANDED = new Set([
+  "approach_decision",
   "summary",
   "key_takeaways",
   "top_things_to_know",
@@ -26,7 +27,9 @@ export function useExpandedSections(slug: string) {
     setLoaded(false);
     try {
       const stored = window.localStorage.getItem(storageKey(slug));
-      setExpanded(stored ? (JSON.parse(stored) as Record<string, boolean>) : {});
+      setExpanded(
+        stored ? (JSON.parse(stored) as Record<string, boolean>) : {},
+      );
     } catch {
       setExpanded({});
     }
@@ -34,8 +37,9 @@ export function useExpandedSections(slug: string) {
   }, [slug]);
 
   const isExpanded = useCallback(
-    (sectionId: string): boolean => expanded[sectionId] ?? DEFAULT_EXPANDED.has(sectionId),
-    [expanded]
+    (sectionId: string): boolean =>
+      expanded[sectionId] ?? DEFAULT_EXPANDED.has(sectionId),
+    [expanded],
   );
 
   const toggle = useCallback(
@@ -53,7 +57,7 @@ export function useExpandedSections(slug: string) {
         return next;
       });
     },
-    [slug]
+    [slug],
   );
 
   return { isExpanded, toggle, loaded };

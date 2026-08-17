@@ -42,20 +42,43 @@ export function useCasePrepStream(): UseCasePrepStream {
       abort();
       const controller = new AbortController();
       abortRef.current = controller;
-      setState({ ...createInitialPacketState(), status: "connecting" });
+      setState({
+        ...createInitialPacketState(),
+        status: "connecting",
+        requestedPrompt: prompt.trim(),
+        progress: {
+          phase: "connecting",
+          label: "Connecting to BroBot",
+          progress_min: 0,
+          progress_max: 5,
+          elapsed_ms: 0,
+          heartbeat: false,
+        },
+      });
 
       let response: Response;
       try {
-        const version =
+        const preferredVersion =
           process.env.NEXT_PUBLIC_CASEPREP_V1_2_ENABLED === "true"
             ? "v1.2"
             : "v1.1";
-        response = await fetch(`/api/case-prep/${version}/stream`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt }),
-          signal: controller.signal,
-        });
+        const requestStream = (version: "v1.1" | "v1.2") =>
+          fetch(`/api/case-prep/${version}/stream`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt }),
+            signal: controller.signal,
+          });
+
+        response = await requestStream(preferredVersion);
+
+        // The public and server flags are deployed independently. If the
+        // browser bundle selects v1.2 before the server flag is enabled, that
+        // endpoint deliberately returns 404. Roll back to v1.1 so a rollout
+        // mismatch does not take CasePrep offline for signed-in users.
+        if (preferredVersion === "v1.2" && response.status === 404) {
+          response = await requestStream("v1.1");
+        }
       } catch (error) {
         if ((error as Error)?.name === "AbortError") return;
         setState((prev) => ({

@@ -12,7 +12,7 @@ import { useCasePrepStream } from "@/lib/caseprep-v1-1/useCasePrepStream";
  * it never auto-fires on page load.
  */
 export function CasePrepStreamPanel({ prompt }: { prompt: string }) {
-  const { state, start } = useCasePrepStream();
+  const { state, start, abort, reset } = useCasePrepStream();
 
   if (state.status === "idle") {
     return (
@@ -20,10 +20,12 @@ export function CasePrepStreamPanel({ prompt }: { prompt: string }) {
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
           Case Prep Packet
         </p>
-        <h2 className="mt-1.5 text-xl font-black tracking-tight text-slate-950">{prompt}</h2>
+        <h2 className="mt-1.5 text-xl font-black tracking-tight text-slate-950">
+          {prompt}
+        </h2>
         <p className="mt-2 text-sm leading-6 text-slate-600">
-          Build a streamed, attending-style preparation packet: ranked pimp questions,
-          structures at risk, operative flow, and decision points.
+          Build a streamed, attending-style preparation packet: ranked pimp
+          questions, structures at risk, operative flow, and decision points.
         </p>
         <button
           type="button"
@@ -41,7 +43,9 @@ export function CasePrepStreamPanel({ prompt }: { prompt: string }) {
     return (
       <section className="rounded-[1.75rem] border border-amber-200 bg-amber-50 p-6 text-sm text-amber-900">
         <p className="font-bold">Daily BroBot limit reached.</p>
-        <p className="mt-1">Come back tomorrow or upgrade for unlimited case prep.</p>
+        <p className="mt-1">
+          Come back tomorrow or upgrade for unlimited case prep.
+        </p>
       </section>
     );
   }
@@ -50,6 +54,11 @@ export function CasePrepStreamPanel({ prompt }: { prompt: string }) {
     <CasePrepPacket
       state={state}
       onClarify={(clarifiedPrompt) => void start(clarifiedPrompt)}
+      onCancel={() => {
+        abort();
+        reset();
+      }}
+      onRetry={() => void start(state.requestedPrompt || prompt)}
     />
   );
 }

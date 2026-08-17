@@ -551,6 +551,8 @@ export default function BroBotMember() {
               <CasePrepPacket
                 state={casePrepStream.state}
                 debug={packetDebug}
+                onCancel={casePrepStream.reset}
+                onRetry={() => void casePrepStream.start(casePrepStream.state.requestedPrompt || prompt)}
                 onClarify={(clarifiedPrompt) => {
                   setPrompt(clarifiedPrompt);
                   void casePrepStream.start(clarifiedPrompt);

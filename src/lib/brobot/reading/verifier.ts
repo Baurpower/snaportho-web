@@ -13,7 +13,10 @@ export const TRUSTED_READING_DOMAINS = [
   'assh.org',
   'nass.org',
   'aana.org',
-  'ncbi.nlm.nih.gov',
+  'naileditortho.com',
+  'surgeryreference.aofoundation.org',
+  'aofoundation.org',
+  'ncbi.nlm.nih.gov'
 ];
 
 export function isTrustedReadingUrl(url: string) {
@@ -32,9 +35,7 @@ function hasStrongTopicRelevance(input: {
   topic: ReadingTopicContext;
 }) {
   const terms = exactSearchTerms(input.topic).map(normalizeReadingTopic);
-  const haystack = [input.title, input.snippet ?? '', ...(input.tags ?? [])]
-    .map(normalizeReadingTopic)
-    .join(' ');
+  const haystack = [input.title, input.snippet ?? '', ...(input.tags ?? [])].map(normalizeReadingTopic).join(' ');
   if (terms.length === 0) return false;
   return terms.some((term) => haystack.includes(term));
 }
@@ -61,7 +62,7 @@ export function verifyPubMedResultForTopic(
       matchedTerms: [],
       rejectedTerms: [],
       rejectionReason: 'missing_required_pubmed_metadata',
-      relevanceScore: 0,
+      relevanceScore: 0
     };
   }
 
@@ -71,7 +72,7 @@ export function verifyPubMedResultForTopic(
       matchedTerms: [],
       rejectedTerms: [],
       rejectionReason: 'invalid_pubmed_url',
-      relevanceScore: 0,
+      relevanceScore: 0
     };
   }
 
@@ -86,7 +87,7 @@ export function verifyPubMedResultForTopic(
       matchedTerms: [],
       rejectedTerms,
       rejectionReason: 'excluded_topic_term',
-      relevanceScore: 0,
+      relevanceScore: 0
     };
   }
 
@@ -102,7 +103,7 @@ export function verifyPubMedResultForTopic(
     matchedTerms,
     rejectedTerms: topic.comparisonRequested ? rejectedTerms : [],
     rejectionReason: accepted ? undefined : 'missing_exact_topic_match',
-    relevanceScore,
+    relevanceScore
   };
 }
 
@@ -118,7 +119,7 @@ export function verifyTrustedWebResult(result: BroBotReadingRecommendation, topi
       title: result.title,
       snippet: result.whyItMatters,
       tags: result.tags,
-      topic,
+      topic
     })
   );
 }
@@ -155,7 +156,7 @@ export function pubMedArticleToResourceRow(
       topic.topicKey,
       ...topic.synonyms.map(normalizeReadingTopic),
       ...verification.matchedTerms.map(normalizeReadingTopic),
-      `pmid_${article.pmid}`,
+      `pmid_${article.pmid}`
     ],
     modes: ['oite', 'consult', 'clinic', 'research', 'general'],
     procedure_categories: [],
@@ -175,9 +176,9 @@ export function pubMedArticleToResourceRow(
       authors: article.authors,
       publicationTypes: article.publicationTypes,
       matchedTerms: verification.matchedTerms,
-      relevanceScore: verification.relevanceScore,
+      relevanceScore: verification.relevanceScore
     },
     retrieval_query: retrievalQuery,
-    topic_key: topic.topicKey,
+    topic_key: topic.topicKey
   };
 }

@@ -182,6 +182,171 @@ export function verifiedPacketFileName(batchKey: string): string {
   return `${batchKey}-verified.json`;
 }
 
+export function sidecarPacketFileName(batchKey: string): string {
+  return `${batchKey}-sidecar.json`;
+}
+
+export function briefPacketFileName(batchKey: string): string {
+  return `${batchKey}-brief.json`;
+}
+
+export type ReviewBriefCard = {
+  canonicalCardVersionId: string;
+  front: string;
+  back: string;
+  deckPath: string;
+  existingTags: string[];
+  priorAssertions: NonNullable<PortableTagReviewCard["priorAssertions"]>;
+  candidates: Record<MetadataFacet, Array<{ termId: string; preferredLabel: string }>>;
+};
+
+export type ReviewBrief = {
+  batchKey: string;
+  inputChecksum: string;
+  taxonomyVersion: string;
+  cards: ReviewBriefCard[];
+};
+
+const BRIEF_BACK_LIMIT = 800;
+const BRIEF_CANDIDATE_LIMIT = 8;
+
+function slimCandidates(
+  candidates: PortableTagReviewCard["candidates"][MetadataFacet],
+  priorIds: Set<string>,
+  limit = BRIEF_CANDIDATE_LIMIT,
+) {
+  const slim = (candidates ?? []).map((term) => ({
+    termId: term.termId,
+    preferredLabel: term.preferredLabel,
+  }));
+  const kept: Array<{ termId: string; preferredLabel: string }> = [];
+  const seen = new Set<string>();
+  for (const term of slim) {
+    if (priorIds.has(term.termId) && !seen.has(term.termId)) {
+      kept.push(term);
+      seen.add(term.termId);
+    }
+  }
+  for (const term of slim) {
+    if (kept.length >= limit) break;
+    if (seen.has(term.termId)) continue;
+    kept.push(term);
+    seen.add(term.termId);
+  }
+  return kept;
+}
+
+export function buildReviewBrief(packet: PortableTagReviewPacket): ReviewBrief {
+  return {
+    batchKey: packet.batchKey,
+    inputChecksum: packet.inputChecksum,
+    taxonomyVersion: packet.taxonomyVersion,
+    cards: packet.cards.map((card) => {
+      const priorIds = new Set((card.priorAssertions ?? []).map((row) => row.termId));
+      return {
+        canonicalCardVersionId: card.canonicalCardVersionId,
+        front: card.front,
+        back: card.back.length > BRIEF_BACK_LIMIT
+          ? `${card.back.slice(0, BRIEF_BACK_LIMIT)}…`
+          : card.back,
+        deckPath: card.deckPath,
+        existingTags: card.existingTags,
+        priorAssertions: card.priorAssertions ?? [],
+        candidates: {
+          anatomy: slimCandidates(card.candidates.anatomy, priorIds),
+          diagnosis: slimCandidates(card.candidates.diagnosis, priorIds),
+          treatment: slimCandidates(card.candidates.treatment, priorIds),
+          specialty: slimCandidates(card.candidates.specialty, priorIds),
+        },
+      };
+    }),
+  };
+}
+
+export function quoteSupported(card: { front: string; back: string }, quote: string) {
+  if (!quote) return false;
+  const inFront = card.front.includes(quote);
+  const inBack = card.back.includes(quote);
+  if (!inFront && !inBack) return false;
+  if (inFront) return true;
+  const extraAt = card.back.indexOf("Extra:");
+  if (extraAt >= 0 && card.back.indexOf(quote) >= extraAt) return false;
+  return true;
+}
+
+export function trimLowRiskAssertions(card: PortableTagReviewCard): PortableTagReviewCard["assertions"] {
+  const kept = card.assertions.filter((assertion) => {
+    if (assertion.facet === "diagnosis" || assertion.facet === "treatment") return true;
+    const quote = assertion.evidence[0]?.quote ?? "";
+    return quoteSupported(card, quote);
+  });
+  const specialties = kept
+    .filter((assertion) => assertion.facet === "specialty")
+    .sort((left, right) => right.confidence - left.confidence || left.termId.localeCompare(right.termId));
+  const primarySpecialty = specialties[0]?.termId;
+  return kept.filter((assertion) =>
+    assertion.facet !== "specialty" || assertion.termId === primarySpecialty);
+}
+
 export function isPendingPacketFileName(name: string): boolean {
   return /^[A-Za-z0-9][A-Za-z0-9._-]{0,120}-pending\.json$/.test(name);
+}
+
+export type TagReviewSidecarCard = {
+  canonicalCardVersionId: string;
+  reviewStatus: "completed";
+  assertions: PortableTagReviewCard["assertions"];
+  reviewNotes?: string[];
+  missingConcepts?: PortableTagReviewCard["missingConcepts"];
+};
+
+export type TagReviewSidecar = {
+  batchKey: string;
+  inputChecksum: string;
+  reviewer: { provider: string; model: string; reviewedAt: string };
+  cards: TagReviewSidecarCard[];
+};
+
+export function applyTagReviewSidecar(
+  packet: PortableTagReviewPacket,
+  sidecar: TagReviewSidecar,
+): PortableTagReviewPacket {
+  if (sidecar.batchKey !== packet.batchKey) {
+    throw new Error(`sidecar_batch_mismatch:${sidecar.batchKey}:${packet.batchKey}`);
+  }
+  if (sidecar.inputChecksum !== packet.inputChecksum) {
+    throw new Error("sidecar_checksum_mismatch");
+  }
+  if (!sidecar.reviewer?.provider?.trim() || !sidecar.reviewer.model?.trim()
+    || !Number.isFinite(Date.parse(sidecar.reviewer.reviewedAt))) {
+    throw new Error("sidecar_reviewer_required");
+  }
+  const byVersion = new Map(sidecar.cards.map((card) => [card.canonicalCardVersionId, card]));
+  if (byVersion.size !== sidecar.cards.length) throw new Error("sidecar_duplicate_card");
+  if (byVersion.size !== packet.cards.length) {
+    throw new Error(`sidecar_card_count_mismatch:${byVersion.size}:${packet.cards.length}`);
+  }
+  const mergedCards = packet.cards.map((card) => {
+    const patch = byVersion.get(card.canonicalCardVersionId);
+    if (!patch) throw new Error(`sidecar_missing_card:${card.canonicalCardVersionId}`);
+    if (patch.reviewStatus !== "completed") {
+      throw new Error(`sidecar_card_incomplete:${card.canonicalCardVersionId}`);
+    }
+    return {
+      ...card,
+      reviewStatus: "completed" as const,
+      reviewNotes: patch.reviewNotes ?? [],
+      missingConcepts: patch.missingConcepts ?? [],
+      assertions: patch.assertions,
+    };
+  });
+  const merged: PortableTagReviewPacket = {
+    ...packet,
+    reviewer: sidecar.reviewer,
+    cards: mergedCards,
+  };
+  if (sha256(portablePacketChecksumInput(merged)) !== packet.inputChecksum) {
+    throw new Error("sidecar_mutated_protected_fields");
+  }
+  return merged;
 }

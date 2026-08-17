@@ -1,22 +1,13 @@
-import {
-  buildPubMedQuery,
-  exactSearchTerms,
-  retrievePubMedArticles,
-  type PubMedArticle,
-} from './pubmed-client';
+import { buildPubMedQuery, exactSearchTerms, retrievePubMedArticles, type PubMedArticle } from './pubmed-client';
 import { citationCountFor, getCitationCounts } from './citation-client';
 import { normalizeReadingTopic } from './ranker';
 import type { ReadingTopicContext } from './topic-context';
 import {
   filterVerifiedTrustedWebResults,
   retrieveTrustedWebResults,
-  type TrustedWebSearchResult,
+  type TrustedWebSearchResult
 } from './trusted-web-client';
-import type {
-  BroBotReadingGeneratedFrom,
-  BroBotReadingRecommendation,
-  BroBotReadingResourceType,
-} from './types';
+import type { BroBotReadingGeneratedFrom, BroBotReadingRecommendation, BroBotReadingResourceType } from './types';
 import { verifyPubMedResultForTopic } from './verifier';
 
 type SupabaseLike = unknown;
@@ -39,7 +30,7 @@ export const HIGH_IMPACT_ORTHO_JOURNALS = [
   'Injury',
   'JBJS reviews',
   'EFORT open reviews',
-  'Bone & joint open',
+  'Bone & joint open'
 ];
 
 export const ARTICLE_TYPE_WEIGHT = {
@@ -51,7 +42,7 @@ export const ARTICLE_TYPE_WEIGHT = {
   cohort_study: 0.65,
   landmark_original: 0.65,
   case_series: 0.35,
-  case_report: 0.1,
+  case_report: 0.1
 } as const;
 
 type ArticleQualityType = keyof typeof ARTICLE_TYPE_WEIGHT;
@@ -72,7 +63,9 @@ function includesExactTerm(value: string | null | undefined, topic: ReadingTopic
   return exactSearchTerms(topic).some((term) => normalizedIncludes(value, term));
 }
 
-export function classifyArticle(article: Pick<PubMedArticle, 'publicationTypes' | 'title' | 'abstractText'>): ArticleQualityType {
+export function classifyArticle(
+  article: Pick<PubMedArticle, 'publicationTypes' | 'title' | 'abstractText'>
+): ArticleQualityType {
   const publicationTypes = article.publicationTypes.map((type) => type.toLowerCase()).join(' ');
   const text = `${article.title} ${article.abstractText ?? ''}`.toLowerCase();
 
@@ -132,13 +125,7 @@ function articleScore(article: PubMedArticle, topic: ReadingTopicContext, citati
   const citations = citationScore(citationCount);
   const timeBalance = recencyOrLandmark(article, citationCount);
 
-  return (
-    0.35 * relevance +
-    0.2 * typeQuality +
-    0.2 * journal +
-    0.15 * citations +
-    0.1 * timeBalance
-  );
+  return 0.35 * relevance + 0.2 * typeQuality + 0.2 * journal + 0.15 * citations + 0.1 * timeBalance;
 }
 
 function passesQualityGate(params: {
@@ -169,6 +156,15 @@ function articleBadges(article: PubMedArticle, citationCount?: number) {
   return badges;
 }
 
+function articleBestFor(article: PubMedArticle) {
+  const type = classifyArticle(article);
+  if (type === 'guideline') return 'Consensus recommendations and decision thresholds';
+  if (type === 'meta_analysis' || type === 'systematic_review') return 'Best available evidence synthesis';
+  if (type === 'review') return 'Current concepts and a focused literature review';
+  if (type === 'randomized_trial') return 'Comparative treatment evidence';
+  return 'Primary evidence and landmark findings';
+}
+
 function articleToRecommendation(
   article: PubMedArticle,
   topic: ReadingTopicContext,
@@ -191,13 +187,18 @@ function articleToRecommendation(
     citationCount,
     citationSource: typeof citationCount === 'number' ? 'OpenAlex' : undefined,
     whyItMatters: `${article.journal}${article.year ? ` · ${article.year}` : ''} · PMID ${article.pmid}${citationText}`,
+    bestFor: articleBestFor(article),
     badges: articleBadges(article, citationCount),
     tags: [topic.topicKey, ...verification.matchedTerms.map(normalizeReadingTopic), `pmid_${article.pmid}`],
     access: 'abstract_only',
     matchedTerms: process.env.NODE_ENV !== 'production' ? verification.matchedTerms : undefined,
     sourceOrigin: 'pubmed_live',
+    isLandmark: typeof citationCount === 'number' && citationCount >= 250,
+    isBoardRelevant: ['guideline', 'meta_analysis', 'systematic_review', 'review'].includes(
+      classifyArticle(article)
+    ),
     rankScore: articleScore(article, topic, citationCount),
-    rankPosition,
+    rankPosition
   };
 }
 
@@ -217,10 +218,15 @@ function webResultToRecommendation(
     year: undefined,
     access: 'free',
     sourceOrigin: 'trusted_web_live',
-    badges: ['Trusted ortho site'],
+    badges: result.sourceName === 'Nailed It Ortho Podcast'
+      ? ['Podcast', 'Audio review']
+      : ['Trusted ortho site'],
+    bestFor: result.sourceName === 'Nailed It Ortho Podcast'
+      ? 'Listen during a commute or before the case'
+      : undefined,
     matchedTerms,
     rankScore: includesExactTerm(`${result.title} ${result.whyItMatters}`, topic) ? 0.72 : 0,
-    rankPosition,
+    rankPosition
   };
 }
 
@@ -253,27 +259,28 @@ export async function getHybridReadingRecommendations(params: {
     const articles = await retrievePubMedArticles({
       topic: params.topic,
       fetchImpl: params.fetchImpl,
-      retmax: 20,
+      retmax: 20
     });
     const citationCounts = await getCitationCounts({
       resources: articles,
       fetchImpl: params.citationFetchImpl ?? params.fetchImpl ?? fetch,
-      supabase: params.supabase && typeof params.supabase === 'object'
-        ? (params.supabase as Parameters<typeof getCitationCounts>[0]['supabase'])
-        : undefined,
+      supabase:
+        params.supabase && typeof params.supabase === 'object'
+          ? (params.supabase as Parameters<typeof getCitationCounts>[0]['supabase'])
+          : undefined
     });
     const verified = articles
       .filter((article) => verifyPubMedResultForTopic(article, params.topic).accepted)
       .map((article) => ({
         article,
-        citationCount: citationCountFor(citationCounts, article),
+        citationCount: citationCountFor(citationCounts, article)
       }));
     const highQuality = verified.filter((result) =>
       passesQualityGate({
         article: result.article,
         topic: params.topic,
         citationCount: result.citationCount,
-        allowCaseReports: false,
+        allowCaseReports: false
       })
     );
     const allowCaseReports = highQuality.length < 2;
@@ -285,30 +292,26 @@ export async function getHybridReadingRecommendations(params: {
             article: result.article,
             topic: params.topic,
             citationCount: result.citationCount,
-            allowCaseReports,
+            allowCaseReports
           })
         )
-        .map((result, index) =>
-          articleToRecommendation(result.article, params.topic, result.citationCount, index + 1)
-        )
+        .map((result, index) => articleToRecommendation(result.article, params.topic, result.citationCount, index + 1))
     );
   } catch (error) {
     console.error('[brobot] PubMed search failed (non-fatal)', error);
   }
 
-  if (resources.length === 0) {
-    const trusted = filterVerifiedTrustedWebResults(
-      await retrieveTrustedWebResults({ topic: params.topic }).catch(() => []),
-      params.topic
-    );
-    resources.push(...trusted.map((result, index) => webResultToRecommendation(result, params.topic, index + 1)));
-  }
+  const trusted = filterVerifiedTrustedWebResults(
+    await retrieveTrustedWebResults({ topic: params.topic }).catch(() => []),
+    params.topic
+  );
+  resources.push(...trusted.map((result, index) => webResultToRecommendation(result, params.topic, index + 1)));
 
   return {
     recommendationSetId: crypto.randomUUID(),
     topic: params.topic.displayTopic,
     generatedFrom: 'live',
     resources: dedupeAndSort(resources, max),
-    retrievalQuery,
+    retrievalQuery
   };
 }

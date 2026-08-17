@@ -26,10 +26,14 @@ import { buildTagReleaseManifest, diffCardTags, renderCardTagManifest, type Acce
 // @ts-expect-error Direct Node strip-types runner imports TypeScript source.
 import {
   GROK_TAG_REVIEW_RUN_KEY,
+  briefPacketFileName,
+  buildReviewBrief,
   joinOfficialNotesToReleaseCards,
   pendingPacketFileName,
   portablePacketChecksumInput,
 } from "../src/lib/education/portable-tag-review-packet.ts";
+// @ts-expect-error Direct Node strip-types runner imports TypeScript source.
+import { screenOfficialNote } from "../src/lib/education/official-note-screen.ts";
 
 type Args = Map<string, string>;
 type JsonRow = Record<string, any>;
@@ -363,7 +367,10 @@ class SupabaseCheckpointStore implements PipelineCheckpointStore {
     return (data?.result as CardPipelineResult | undefined) ?? null;
   }
 
-  async put(result: CardPipelineResult): Promise<void> {
+  async put(result: CardPipelineResult & {
+    missingConcepts?: Array<{ facet: MetadataFacet; preferredLabel: string; rationale: string }>;
+    priorAssertions?: Array<{ facet: MetadataFacet; termId: string; decision: string }>;
+  }): Promise<{ inserted: number; confirmedExisting: number; dropped: number; missingConcepts: number }> {
     const now = new Date().toISOString();
     const prior = await this.db.from("metadata_pipeline_stage_results")
       .select("attempt_number").eq("pipeline_run_id", this.runId).eq("batch_id", this.batchId)
@@ -392,7 +399,9 @@ class SupabaseCheckpointStore implements PipelineCheckpointStore {
       completed_at: now,
     }).select("id").single();
     if (stage.error) throw new Error(`checkpoint_insert_failed:${stage.error.message}`);
-    if (result.status !== "completed") return;
+    if (result.status !== "completed") {
+      return { inserted: 0, confirmedExisting: 0, dropped: 0, missingConcepts: 0 };
+    }
     const proposalsByKey = new Map(result.proposals.map((proposal) => [`${proposal.facet}:${proposal.termId}`, proposal]));
     const rows = result.assertions.filter((assertion) => {
       const proposal = proposalsByKey.get(`${assertion.facet}:${assertion.termId}`);
@@ -429,20 +438,72 @@ class SupabaseCheckpointStore implements PipelineCheckpointStore {
         model_version: this.model,
       };
     });
-    if (rows.length) {
-      const existing = await this.db.from("card_metadata_assertions")
-        .select("facet,canonical_entity_id,metadata_concept_id")
-        .eq("canonical_card_version_id", result.card.canonicalCardVersionId)
-        .neq("decision", "superseded");
-      if (existing.error) throw new Error(`assertion_identity_read_failed:${existing.error.message}`);
-      const existingKeys = new Set((existing.data ?? []).map((row) =>
-        `${row.facet}:${row.canonical_entity_id ?? row.metadata_concept_id}`));
-      const novelRows = rows.filter((row) =>
-        !existingKeys.has(`${row.facet}:${row.canonical_entity_id ?? row.metadata_concept_id}`));
-      if (!novelRows.length) return;
-      const { error } = await this.db.from("card_metadata_assertions").insert(novelRows);
+    let inserted = 0;
+    let confirmedExisting = 0;
+    const thisRun = await this.db.from("card_metadata_assertions")
+      .select("facet,canonical_entity_id,metadata_concept_id")
+      .eq("pipeline_run_id", this.runId)
+      .eq("canonical_card_version_id", result.card.canonicalCardVersionId)
+      .neq("decision", "superseded");
+    if (thisRun.error) throw new Error(`assertion_identity_read_failed:${thisRun.error.message}`);
+    const thisRunKeys = new Set((thisRun.data ?? []).map((row) =>
+      `${row.facet}:${row.canonical_entity_id ?? row.metadata_concept_id}`));
+    for (const row of rows) {
+      const key = `${row.facet}:${row.canonical_entity_id ?? row.metadata_concept_id}`;
+      if (thisRunKeys.has(key)) continue;
+      const { error } = await this.db.from("card_metadata_assertions").insert(row);
+      if (error?.code === "23505") {
+        confirmedExisting += 1;
+        continue;
+      }
       if (error) throw new Error(`assertion_insert_failed:${error.message}`);
+      inserted += 1;
+      thisRunKeys.add(key);
     }
+    const kept = new Set(rows.map((row) => `${row.facet}:${row.canonical_entity_id ?? row.metadata_concept_id}`));
+    let dropped = 0;
+    for (const omitted of result.priorAssertions ?? []) {
+      const term = this.terms.get(omitted.termId);
+      if (!term || omitted.decision !== "accepted" || term.facet !== omitted.facet) continue;
+      const key = `${omitted.facet}:${omitted.termId}`;
+      if (kept.has(key)) continue;
+      const { error } = await this.db.from("card_metadata_assertions").insert({
+        canonical_card_id: result.card.canonicalCardId,
+        canonical_card_version_id: result.card.canonicalCardVersionId,
+        facet: omitted.facet,
+        canonical_entity_id: omitted.facet === "specialty" ? null : omitted.termId,
+        metadata_concept_id: omitted.facet === "specialty" ? omitted.termId : null,
+        assertion_role: "excluded",
+        polarity: "negative",
+        confidence: 0.99,
+        decision: "proposed",
+        provenance: "model",
+        evidence_spans: [{
+          fieldName: "front",
+          start: 0,
+          end: 1,
+          contentHash: metadataChecksum("grok_review_omitted"),
+        }],
+        rationale_codes: ["grok_review_omitted", "prior_assertion_not_confirmed"],
+        alternatives: [],
+        pipeline_run_id: this.runId,
+        batch_id: this.batchId,
+        stage_result_id: stage.data.id,
+        taxonomy_version_id: this.taxonomyVersionId,
+        rules_version: PIPELINE_RULES_VERSION,
+        prompt_version: CODEX_PACKET_VERSION,
+        model_version: this.model,
+      });
+      if (error?.code === "23505") continue;
+      if (error) throw new Error(`assertion_drop_insert_failed:${error.message}`);
+      dropped += 1;
+    }
+    return {
+      inserted,
+      confirmedExisting,
+      dropped,
+      missingConcepts: result.missingConcepts?.length ?? 0,
+    };
   }
 }
 
@@ -1228,9 +1289,10 @@ async function exportSyncV2Cohort(db: SupabaseClient, args: Args) {
     };
   });
   const run = await ensureSimpleRun(db, args, deckRelease, taxonomy.version, cards);
-  const cohortSize = integer(args, "--cohort-size", SIMPLE_DEFAULT_COHORT_SIZE, 1, 500);
-  const agentCount = integer(args, "--agents", SIMPLE_DEFAULT_AGENTS, 1, 20);
-  const taxonomyLimit = integer(args, "--taxonomy-limit", 20, 1, 30);
+  const packetSize = integer(args, "--packet-size", 10, 1, 20);
+  const agentCount = integer(args, "--agents", 10, 1, 100);
+  const cohortSize = integer(args, "--cohort-size", packetSize * agentCount, 1, 500);
+  const taxonomyLimit = integer(args, "--taxonomy-limit", 8, 1, 30);
   const [completedStages, acceptedAssertions, existingBatches] = await Promise.all([
     allRows(
       db,
@@ -1259,8 +1321,19 @@ async function exportSyncV2Cohort(db: SupabaseClient, args: Args) {
     if (batch.status === "cancelled" || batch.status === "failed") continue;
     for (const id of batch.ordered_card_version_ids ?? []) unavailable.add(id);
   }
+  const llmOnly = args.get("--llm-only");
+  const llmQueue = new Set<string>();
+  if (llmOnly) {
+    const screen = JSON.parse(readFileSync(path.resolve(llmOnly), "utf8")) as {
+      llmReview?: Array<{ canonicalCardVersionId?: string }>;
+    };
+    for (const row of screen.llmReview ?? []) {
+      if (row.canonicalCardVersionId) llmQueue.add(row.canonicalCardVersionId);
+    }
+  }
   const selected = cards
     .filter(({ packet }) => !unavailable.has(packet.canonicalCardVersionId))
+    .filter(({ packet }) => !llmOnly || llmQueue.has(packet.canonicalCardVersionId))
     .slice(0, cohortSize);
   if (!selected.length) {
     console.log(JSON.stringify({
@@ -1278,11 +1351,10 @@ async function exportSyncV2Cohort(db: SupabaseClient, args: Args) {
     return match ? [Number(match[1])] : [];
   });
   const cohortNumber = Math.max(0, ...priorCohortNumbers) + 1;
-  const actualAgents = Math.min(agentCount, selected.length);
-  const cardsPerAgent = Math.ceil(selected.length / actualAgents);
+  const actualAgents = Math.min(agentCount, Math.ceil(selected.length / packetSize));
   const batchRows: JsonRow[] = [];
   for (let agentIndex = 0; agentIndex < actualAgents; agentIndex += 1) {
-    const slice = selected.slice(agentIndex * cardsPerAgent, (agentIndex + 1) * cardsPerAgent);
+    const slice = selected.slice(agentIndex * packetSize, (agentIndex + 1) * packetSize);
     if (!slice.length) continue;
     batchRows.push({
       pipeline_run_id: run.id,
@@ -1304,7 +1376,7 @@ async function exportSyncV2Cohort(db: SupabaseClient, args: Args) {
       ?? `tmp/grok-tag-review/${official.data.release_version}/cohort-${String(cohortNumber).padStart(6, "0")}`,
   );
   mkdirSync(outputDirectory, { recursive: true });
-  const packets: Array<{ batchKey: string; cards: number; pending: string; leaseOwner: string }> = [];
+  const packets: Array<{ batchKey: string; cards: number; pending: string; brief: string; leaseOwner: string }> = [];
   for (const batch of created.data ?? []) {
     const leaseOwner = `grok-${randomUUID()}`;
     const leased = await db.from("metadata_pipeline_batches").update({
@@ -1377,10 +1449,16 @@ async function exportSyncV2Cohort(db: SupabaseClient, args: Args) {
     };
     const output = path.join(outputDirectory, pendingPacketFileName(batch.batch_key));
     writeFileSync(output, `${JSON.stringify(packet, null, 2)}\n`, { encoding: "utf8", mode: 0o600 });
+    const briefPath = path.join(outputDirectory, briefPacketFileName(batch.batch_key));
+    writeFileSync(briefPath, `${JSON.stringify(buildReviewBrief(packet), null, 2)}\n`, {
+      encoding: "utf8",
+      mode: 0o600,
+    });
     packets.push({
       batchKey: batch.batch_key,
       cards: packet.cards.length,
       pending: output,
+      brief: briefPath,
       leaseOwner,
     });
   }
@@ -1406,6 +1484,7 @@ async function exportSyncV2Cohort(db: SupabaseClient, args: Args) {
       batchKey: packet.batchKey,
       cards: packet.cards,
       pending: path.basename(packet.pending),
+      brief: path.basename(packet.brief),
     })),
   }, null, 2)}\n`, { encoding: "utf8", mode: 0o600 });
   console.log(JSON.stringify({
@@ -1520,6 +1599,13 @@ async function importCodexBatch(db: SupabaseClient, args: Args) {
   const validated = validateCodexAssertions(packet, terms);
   const reviewerModel = `${packet.reviewer.provider}:${packet.reviewer.model}`.slice(0, 200);
   const store = new SupabaseCheckpointStore(db, packet.runId, packet.batchId, packet.taxonomyVersionId, terms, reviewerModel);
+  const persist = { inserted: 0, confirmedExisting: 0, dropped: 0, missingConcepts: 0 };
+  const missingConceptRows: Array<{
+    canonicalCardVersionId: string;
+    facet: MetadataFacet;
+    preferredLabel: string;
+    rationale: string;
+  }> = [];
   for (const item of validated) {
     const cardPacket: CardPacket = {
       canonicalCardId: item.card.canonicalCardId,
@@ -1530,7 +1616,7 @@ async function importCodexBatch(db: SupabaseClient, args: Args) {
       existingTags: item.card.existingTags,
       deckPath: item.card.deckPath,
     };
-    await store.put({
+    const counts = await store.put({
       contractVersion: METADATA_PIPELINE_VERSION,
       runId: packet.runId,
       batchId: packet.batchId,
@@ -1544,7 +1630,32 @@ async function importCodexBatch(db: SupabaseClient, args: Args) {
       proposals: item.proposals,
       criticFindings: [],
       assertions: item.assertions,
+      missingConcepts: item.card.missingConcepts ?? [],
+      priorAssertions: item.card.priorAssertions ?? [],
     });
+    persist.inserted += counts.inserted;
+    persist.confirmedExisting += counts.confirmedExisting;
+    persist.dropped += counts.dropped;
+    persist.missingConcepts += counts.missingConcepts;
+    for (const missing of item.card.missingConcepts ?? []) {
+      missingConceptRows.push({
+        canonicalCardVersionId: item.card.canonicalCardVersionId,
+        facet: missing.facet,
+        preferredLabel: missing.preferredLabel,
+        rationale: missing.rationale,
+      });
+    }
+  }
+  if (missingConceptRows.length) {
+    const missingPath = path.resolve(
+      args.get("--missing-out")
+        ?? path.join(path.dirname(path.resolve(input)), `${packet.batchKey}-missing-concepts.jsonl`),
+    );
+    writeFileSync(
+      missingPath,
+      `${missingConceptRows.map((row) => JSON.stringify({ runKey: packet.runKey, batchKey: packet.batchKey, ...row })).join("\n")}\n`,
+      { encoding: "utf8", mode: 0o600 },
+    );
   }
   let autoAccepted = 0;
   if (args.get("--confirm-auto-accept") === "ACCEPT_PORTABLE_REVIEW_0_98"
@@ -1590,7 +1701,12 @@ async function importCodexBatch(db: SupabaseClient, args: Args) {
     imported: true, apiCalls: 0, runId: packet.runId, runKey: packet.runKey,
     batchId: packet.batchId, batchKey: packet.batchKey, cards: packet.cards.length,
     attemptedAssertions: validated.reduce((count, item) => count + item.assertions.length, 0),
-    persistedAssertions: persisted.count, autoAccepted,
+    persistedAssertions: persisted.count,
+    insertedThisRun: persist.inserted,
+    confirmedExisting: persist.confirmedExisting,
+    droppedPriors: persist.dropped,
+    missingConcepts: persist.missingConcepts,
+    autoAccepted,
     remainingBatches: remaining.count,
   }, null, 2));
 }
@@ -2076,6 +2192,223 @@ async function publishProvisionalTags(db: SupabaseClient, args: Args) {
   }, null, 2));
 }
 
+async function screenOfficialDeck(db: SupabaseClient, args: Args) {
+  if (!args.has("--run-key")) args.set("--run-key", GROK_TAG_REVIEW_RUN_KEY);
+  const requestedVersion = args.get("--release-version");
+  let officialQuery = db.from("anki_sync_v2_releases").select("*");
+  officialQuery = requestedVersion
+    ? officialQuery.eq("release_version", requestedVersion)
+    : officialQuery.eq("status", "published").order("release_sequence", { ascending: false }).limit(1);
+  const official = await officialQuery.maybeSingle();
+  if (official.error || !official.data || official.data.status !== "published") {
+    throw new Error("published_sync_v2_release_not_found");
+  }
+  const deckRelease = await resolveRelease(db, args);
+  const taxonomy = await loadTaxonomy(db, args.get("--taxonomy-version") ?? DEFAULT_TAXONOMY_VERSION);
+  const retriever = new LexicalTaxonomyRetriever(taxonomy.terms);
+  const members = await allRows(
+    db,
+    "anki_sync_v2_release_notes",
+    "note_id,note_version_id,ordering_key",
+    (query) => query.eq("release_id", official.data.id).order("ordering_key"),
+  );
+  const notes = await allRows(db, "anki_sync_v2_notes", "id,stable_guid");
+  const noteById = new Map(notes.map((row) => [row.id, row]));
+  const versionIds = members.map((row) => row.note_version_id);
+  const versions: JsonRow[] = [];
+  for (let offset = 0; offset < versionIds.length; offset += 100) {
+    const { data, error } = await db.from("anki_sync_v2_note_versions")
+      .select("id,note_id,field_snapshot,governed_tags,deck_path")
+      .in("id", versionIds.slice(offset, offset + 100));
+    if (error) throw new Error(`sync_v2_note_versions_read_failed:${error.message}`);
+    versions.push(...(data ?? []));
+  }
+  const versionById = new Map(versions.map((row) => [row.id, row]));
+  const releaseCards = await allRows(
+    db,
+    "anki_deck_release_cards",
+    "canonical_card_id,canonical_card_version_id,note_guid,content_hash,inclusion_status",
+    (query) => query.eq("deck_release_id", deckRelease.id).eq("inclusion_status", "included"),
+  );
+  const identities = members.map((member) => {
+    const version = versionById.get(member.note_version_id);
+    const note = noteById.get(member.note_id);
+    if (!version || !note) throw new Error(`missing_official_note:${member.note_id}`);
+    return {
+      noteId: String(note.id),
+      noteVersionId: String(version.id),
+      stableGuid: String(note.stable_guid),
+      contentChecksum: "",
+      version,
+    };
+  });
+  const join = joinOfficialNotesToReleaseCards(
+    identities.map(({ version: _version, ...identity }) => identity),
+    releaseCards.map((row) => ({
+      noteGuid: String(row.note_guid),
+      canonicalCardId: String(row.canonical_card_id),
+      canonicalCardVersionId: String(row.canonical_card_version_id),
+      contentHash: String(row.content_hash),
+    })),
+  );
+  const priors = await allRows(
+    db,
+    "card_metadata_assertions",
+    "canonical_card_version_id,facet,canonical_entity_id,metadata_concept_id,decision",
+    (query) => query.eq("decision", "accepted"),
+  );
+  const termById = new Map(taxonomy.terms.map((term) => [term.id, term]));
+  const priorsByVersion = new Map<string, Array<{ facet: string; termId: string; preferredLabel: string; decision: string }>>();
+  for (const row of priors) {
+    const termId = String(row.canonical_entity_id ?? row.metadata_concept_id ?? "");
+    const term = termById.get(termId);
+    if (!term) continue;
+    const list = priorsByVersion.get(row.canonical_card_version_id) ?? [];
+    list.push({
+      facet: term.facet,
+      termId,
+      preferredLabel: term.preferredLabel,
+      decision: String(row.decision),
+    });
+    priorsByVersion.set(row.canonical_card_version_id, list);
+  }
+  const grokRun = await db.from("metadata_pipeline_runs").select("id")
+    .eq("run_key", args.get("--run-key")).maybeSingle();
+  const completed = new Set<string>();
+  if (grokRun.data) {
+    const stages = await allRows(
+      db,
+      "metadata_pipeline_stage_results",
+      "canonical_card_version_id",
+      (query) => query.eq("pipeline_run_id", grokRun.data.id).eq("stage", "consensus").eq("status", "completed"),
+    );
+    for (const row of stages) completed.add(row.canonical_card_version_id);
+  }
+  const identityByVersion = new Map(identities.map((row) => [row.noteVersionId, row]));
+  const autoConfirm: JsonRow[] = [];
+  const llmReview: JsonRow[] = [];
+  const reasonCounts: Record<string, number> = {};
+  for (const joined of join.joined) {
+    if (completed.has(joined.canonicalCardVersionId)) continue;
+    const identity = identityByVersion.get(joined.noteVersionId);
+    if (!identity) continue;
+    const text = officialFieldText(identity.version.field_snapshot);
+    const packet: CardPacket = {
+      canonicalCardId: joined.canonicalCardId,
+      canonicalCardVersionId: joined.canonicalCardVersionId,
+      contentHash: joined.contentHash,
+      front: text.front,
+      back: text.back,
+      existingTags: Array.isArray(identity.version.governed_tags)
+        ? identity.version.governed_tags.map(String)
+        : [],
+      deckPath: String(identity.version.deck_path ?? ""),
+    };
+    const lexical = [];
+    for (const facet of METADATA_FACETS) {
+      lexical.push(...(await retriever.retrieve({ card: packet, facet, limit: 8 })).map((term) => ({
+        facet,
+        termId: term.id,
+        preferredLabel: term.preferredLabel,
+        retrievalScore: term.retrievalScore,
+      })));
+    }
+    const result = screenOfficialNote({
+      front: packet.front,
+      back: packet.back,
+      deckPath: packet.deckPath ?? "",
+      governedTags: packet.existingTags,
+      priorAccepted: priorsByVersion.get(joined.canonicalCardVersionId) ?? [],
+      lexicalTop: lexical,
+    });
+    for (const reason of result.reasons) reasonCounts[reason] = (reasonCounts[reason] ?? 0) + 1;
+    const row = {
+      canonicalCardVersionId: joined.canonicalCardVersionId,
+      decision: result.decision,
+      reasons: result.reasons,
+    };
+    if (result.decision === "llm_review") llmReview.push(row);
+    else autoConfirm.push(row);
+  }
+  const out = path.resolve(args.get("--out") ?? `tmp/grok-tag-review/${official.data.release_version}/screen.json`);
+  mkdirSync(path.dirname(out), { recursive: true });
+  const report = {
+    officialRelease: official.data.release_version,
+    alreadyReviewed: completed.size,
+    remaining: autoConfirm.length + llmReview.length,
+    autoConfirm: autoConfirm.length,
+    llmReviewCount: llmReview.length,
+    reasonCounts,
+    autoConfirm,
+    llmReview,
+  };
+  writeFileSync(out, `${JSON.stringify(report, null, 2)}\n`, { encoding: "utf8", mode: 0o600 });
+  console.log(JSON.stringify({
+    screened: true,
+    out,
+    alreadyReviewed: completed.size,
+    autoConfirm: autoConfirm.length,
+    llmReview: llmReview.length,
+    reasonCounts,
+  }, null, 2));
+}
+
+async function renewOfficialLease(db: SupabaseClient, args: Args) {
+  const input = args.get("--input");
+  if (!input) throw new Error("--input is required");
+  const packetPath = path.resolve(input);
+  const packet = JSON.parse(readFileSync(packetPath, "utf8")) as CodexPacket;
+  if (packet.schemaVersion !== CODEX_PACKET_VERSION) throw new Error("unsupported_codex_packet_version");
+  if (sha(codexPacketInput(packet)) !== packet.inputChecksum) throw new Error("codex_packet_input_was_modified");
+  const batch = await db.from("metadata_pipeline_batches").select("*")
+    .eq("id", packet.batchId).eq("pipeline_run_id", packet.runId).single();
+  if (batch.error) throw new Error(`lease_batch_lookup_failed:${batch.error.message}`);
+  if (batch.data.status === "completed") throw new Error("cannot_renew_completed_batch");
+  const leaseOwner = `grok-${randomUUID()}`;
+  const leasedUntil = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+  const renewed = await db.from("metadata_pipeline_batches").update({
+    status: "running",
+    current_stage: "consensus",
+    lease_owner: leaseOwner,
+    leased_until: leasedUntil,
+    last_heartbeat_at: new Date().toISOString(),
+  }).eq("id", packet.batchId);
+  if (renewed.error) throw new Error(`lease_renew_failed:${renewed.error.message}`);
+  packet.leaseOwner = leaseOwner;
+  writeFileSync(packetPath, `${JSON.stringify(packet, null, 2)}\n`, { encoding: "utf8", mode: 0o600 });
+  console.log(JSON.stringify({
+    renewed: true,
+    batchKey: packet.batchKey,
+    leaseOwner,
+    leasedUntil,
+    packet: packetPath,
+  }, null, 2));
+}
+
+async function cancelStaleOfficialBatches(db: SupabaseClient, args: Args) {
+  const runKey = args.get("--run-key") ?? GROK_TAG_REVIEW_RUN_KEY;
+  if (args.get("--confirm-cancel") !== "CANCEL_STALE_OFFICIAL_BATCHES") {
+    throw new Error("cancel_requires_--confirm-cancel=CANCEL_STALE_OFFICIAL_BATCHES");
+  }
+  const run = await db.from("metadata_pipeline_runs").select("id,run_key").eq("run_key", runKey).single();
+  if (run.error) throw new Error(`stale_run_lookup_failed:${run.error.message}`);
+  const now = new Date().toISOString();
+  const cancelled = await db.from("metadata_pipeline_batches").update({
+    status: "cancelled",
+    current_stage: "failed",
+    lease_owner: null,
+    leased_until: null,
+    completed_at: now,
+  }).eq("pipeline_run_id", run.data.id).in("status", ["pending", "leased", "running", "failed"])
+    .select("id,batch_key,status");
+  if (cancelled.error) throw new Error(`stale_batch_cancel_failed:${cancelled.error.message}`);
+  console.log(JSON.stringify({
+    cancelled: true,
+    runKey,
+    batches: (cancelled.data ?? []).map((row) => row.batch_key),
+  }, null, 2));
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   const command = args.get("--command") ?? "status";
@@ -2089,6 +2422,9 @@ async function main() {
   if (command === "bootstrap-full-release") return bootstrapFullRelease(db, args);
   if (command === "codex-cohort-export" || command === "review-cohort-export") return exportSimpleCodexCohort(db, args);
   if (command === "sync-v2-cohort-export") return exportSyncV2Cohort(db, args);
+  if (command === "screen-official-notes") return screenOfficialDeck(db, args);
+  if (command === "renew-lease") return renewOfficialLease(db, args);
+  if (command === "cancel-stale-batches") return cancelStaleOfficialBatches(db, args);
   if (command === "codex-export" || command === "review-export") return exportCodexBatch(db, args);
   if (command === "codex-import" || command === "review-import") return importCodexBatch(db, args);
   if (command === "classify-legacy-tags") return classifyLegacyTags(db, args);

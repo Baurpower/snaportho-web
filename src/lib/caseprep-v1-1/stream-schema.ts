@@ -6,6 +6,7 @@ import { z } from "zod";
  */
 
 export const PACKET_SECTION_IDS = [
+  "approach_decision",
   "summary",
   "key_takeaways",
   "top_things_to_know",
@@ -31,19 +32,22 @@ export const PacketItemSchema = z
     supporting_detail: z.string().optional().default(""),
     category: z.string(),
     source_ids: z.array(z.string()).optional().default([]),
-    confidence: z.number().optional().default(0),
-    generated: z.boolean().optional().default(false),
-    source: z.string().optional(),
-    provenance: z.enum(["certified", "rag", "generated"]).optional(),
-    claim_support: z.enum(["direct", "indirect", "unsupported"]).optional(),
+    confidence: z.number().nullish().default(0),
+    generated: z.boolean().nullish().default(false),
+    source: z.string().nullish(),
+    // Backend emits these as explicit `null` on RAG-sourced items. `.nullish()`
+    // (nullable + optional) is required — a plain `.optional()` enum rejects
+    // `null` and drops the whole section event during validation.
+    provenance: z.enum(["certified", "rag", "generated"]).nullish(),
+    claim_support: z.enum(["direct", "indirect", "unsupported"]).nullish(),
     procedure_relevance: z
       .enum(["direct", "indirect", "regional", "unknown"])
-      .optional(),
-    rank: z.number().optional(),
-    teaching_pearl: z.string().optional(),
-    why_attendings_ask: z.string().optional(),
-    common_mistake: z.string().optional(),
-    difficulty: z.enum(["easy", "medium", "hard"]).optional(),
+      .nullish(),
+    rank: z.number().nullish(),
+    teaching_pearl: z.string().nullish(),
+    why_attendings_ask: z.string().nullish(),
+    common_mistake: z.string().nullish(),
+    difficulty: z.enum(["easy", "medium", "hard"]).nullish(),
   })
   .passthrough();
 
@@ -69,6 +73,19 @@ export const PacketHeaderSchema = z
     specialty: z.string().nullish(),
     region: z.string().nullish(),
     coverage_status: z.string().optional(),
+    review_status: z.string().optional().default("unreviewed"),
+    review_label: z.string().optional().default("Unreviewed"),
+    legacy_certification_migrated: z.boolean().optional().default(false),
+    approach_coverage: z
+      .object({
+        known_count: z.number().optional(),
+        complete_count: z.number().optional(),
+        gap_count: z.number().optional(),
+        is_multi_approach: z.boolean().optional(),
+        status: z.string().optional(),
+      })
+      .passthrough()
+      .optional(),
   })
   .passthrough();
 
@@ -77,6 +94,22 @@ export const MetaEventSchema = z.object({
   caseprep_version: z.enum(["v1.1", "v1.2"]),
   engine: z.string(),
   stream_protocol_version: z.number(),
+});
+
+export const ProgressEventSchema = z.object({
+  phase: z.enum([
+    "connecting",
+    "resolving",
+    "assembling",
+    "retrieving",
+    "enhancing",
+    "finalizing",
+  ]),
+  label: z.string(),
+  progress_min: z.number().min(0).max(100),
+  progress_max: z.number().min(0).max(100),
+  elapsed_ms: z.number().optional().default(0),
+  heartbeat: z.boolean().optional().default(false),
 });
 
 export const HeaderEventSchema = z.object({
@@ -165,6 +198,8 @@ export type CasePrepPacketState = {
     | "clarification"
     | "denied";
   packetId: string | null;
+  requestedPrompt: string;
+  progress: z.infer<typeof ProgressEventSchema> | null;
   caseIdentity: PacketCase | null;
   header: PacketHeader | null;
   sections: Partial<Record<string, PacketSectionState>>;
@@ -180,6 +215,8 @@ export function createInitialPacketState(): CasePrepPacketState {
   return {
     status: "idle",
     packetId: null,
+    requestedPrompt: "",
+    progress: null,
     caseIdentity: null,
     header: null,
     sections: {},
@@ -203,6 +240,15 @@ export function reducePacketEvent(
       const parsed = MetaEventSchema.safeParse(data);
       if (!parsed.success) return state;
       return { ...state, status: "streaming", packetId: parsed.data.packet_id };
+    }
+    case "progress": {
+      const parsed = ProgressEventSchema.safeParse(data);
+      if (!parsed.success) return state;
+      return {
+        ...state,
+        status: state.status === "connecting" ? "streaming" : state.status,
+        progress: parsed.data,
+      };
     }
     case "header": {
       const parsed = HeaderEventSchema.safeParse(data);

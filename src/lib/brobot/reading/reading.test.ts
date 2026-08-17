@@ -11,6 +11,10 @@ import { rankReadingResources } from './ranker';
 import { getHybridReadingRecommendations, classifyArticle } from './retrieval-engine';
 import { extractReadingTopicContext } from './topic-context';
 import { isTrustedReadingUrl, verifyPubMedArticle, verifyPubMedResultForTopic } from './verifier';
+import { buildCasePrepReadingTopic } from './caseprep-context';
+import { selectBalancedCasePrepReferences } from './caseprep-references';
+import { parseNailedItSearch, parseOrthobulletsQuickSearch, parseSitemapLocations } from './trusted-web-client';
+import type { BroBotReadingRecommendation } from './types';
 
 const baseResource: BroBotReadingResourceRow = {
   id: '11111111-1111-4111-8111-111111111111',
@@ -260,7 +264,38 @@ assert.match(buildPubMedQuery(femoralNeckTopic), /NOT \(case reports\[Publicatio
 assert.match(buildPubMedQuery(femoralNeckTopic, 'All Fields'), /"femoral neck fracture"\[All Fields\]/);
 
 assert.equal(isTrustedReadingUrl('https://orthoinfo.aaos.org/en/diseases--conditions/foo'), true);
+assert.equal(isTrustedReadingUrl('https://naileditortho.com/femoralneck/'), true);
 assert.equal(isTrustedReadingUrl('https://example.com/fake-orthopedics'), false);
+
+const olecranonCasePrepTopic = buildCasePrepReadingTopic({
+  canonicalSlug: 'olecranon-fracture-orif',
+  displayName: 'Olecranon Fracture ORIF',
+});
+const orthobulletsResults = parseOrthobulletsQuickSearch(`
+  <a href="/trauma/1022/olecranon-fractures?hideLeftMenu=true"
+     data-content-id="1022" data-content-type="1">
+    <span class="title"><span>Olecranon</span> Fractures</span>
+  </a>
+  <a href="/topicview?id=12222&amp;hideLeftMenu=true"
+     data-content-id="12222" data-content-type="31">
+    <span class="title">Olecranon Fracture ORIF with Plate Fixation</span>
+  </a>
+`, olecranonCasePrepTopic);
+assert.equal(orthobulletsResults.length, 2);
+assert.equal(orthobulletsResults[0]?.title, 'Olecranon Fractures');
+assert.equal(orthobulletsResults[0]?.url, 'https://www.orthobullets.com/trauma/1022/olecranon-fractures');
+assert.equal(orthobulletsResults[1]?.resourceType, 'technique_article');
+assert.deepEqual(parseSitemapLocations(`
+  <sitemapindex><sitemap><loc>https://example.com/a&amp;b</loc></sitemap></sitemapindex>
+`), ['https://example.com/a&b']);
+const podcastResults = parseNailedItSearch([{
+  id: 2113,
+  title: 'Trauma Citation Classics 08 &#8211; Femoral Neck Fractures',
+  url: 'https://naileditortho.com/trauma-citation-classics-08-femoral-neck-fractures/',
+  subtype: 'post',
+}], femoralNeckTopic);
+assert.equal(podcastResults[0]?.sourceName, 'Nailed It Ortho Podcast');
+assert.equal(podcastResults[0]?.title, 'Trauma Citation Classics 08 – Femoral Neck Fractures');
 
 assert.equal(
   verifyPubMedArticle(
@@ -946,6 +981,72 @@ const carpalTunnelRanked = rankReadingResources(
 assert.deepEqual(
   carpalTunnelRanked.map((resource) => resource.id),
   [carpalTunnel.id]
+);
+
+const olecranonContext = buildCasePrepReadingTopic({
+  canonicalSlug: 'olecranon_fracture_orif',
+  displayName: 'Olecranon Fracture ORIF',
+  requestedCase: 'olecranon fracture fixation',
+  specialty: 'trauma',
+  region: 'elbow',
+  procedureType: 'fracture fixation',
+  trainingLevel: 'pgy2',
+});
+assert.equal(olecranonContext.topicKey, 'olecranon_fracture_orif');
+assert.ok(olecranonContext.requiredTerms.includes('Olecranon Fracture'));
+assert.ok(olecranonContext.pubmedQueryFocus?.includes('Olecranon Fracture'));
+assert.equal(isTrustedReadingUrl('https://surgeryreference.aofoundation.org/orthopedic-trauma'), true);
+
+function readingRecommendation(
+  id: string,
+  resourceType: BroBotReadingRecommendation['resourceType'],
+  rankScore: number,
+  citationCount?: number
+): BroBotReadingRecommendation {
+  return {
+    id,
+    title: id,
+    resourceType,
+    sourceName: resourceType === 'educational_website' ? 'Orthobullets' : 'PubMed',
+    url: `https://example.com/${id}`,
+    whyItMatters: id,
+    tags: ['olecranon_fracture_orif'],
+    access: 'free',
+    rankScore,
+    rankPosition: 1,
+    citationCount,
+  };
+}
+
+const balanced = selectBalancedCasePrepReferences([
+  readingRecommendation('orthobullets', 'educational_website', 0.9),
+  readingRecommendation('ao', 'technique_article', 0.88),
+  readingRecommendation('systematic', 'systematic_review', 0.86),
+  readingRecommendation('review', 'review_article', 0.82),
+  readingRecommendation('landmark', 'pubmed_article', 0.8, 300),
+  readingRecommendation('trial', 'trial', 0.78),
+]);
+assert.deepEqual(
+  balanced.map((resource) => resource.id),
+  ['orthobullets', 'ao', 'systematic', 'review', 'landmark', 'trial']
+);
+
+const podcast = {
+  ...readingRecommendation('nailed-it', 'educational_website', 0.84),
+  sourceName: 'Nailed It Ortho Podcast',
+};
+const balancedWithPodcast = selectBalancedCasePrepReferences([
+  readingRecommendation('orthobullets', 'educational_website', 0.9),
+  readingRecommendation('ao', 'technique_article', 0.88),
+  podcast,
+  readingRecommendation('systematic', 'systematic_review', 0.86),
+  readingRecommendation('review', 'review_article', 0.82),
+  readingRecommendation('landmark', 'pubmed_article', 0.8, 300),
+  readingRecommendation('trial', 'trial', 0.78),
+]);
+assert.deepEqual(
+  balancedWithPodcast.map((resource) => resource.id),
+  ['orthobullets', 'ao', 'nailed-it', 'systematic', 'review', 'landmark']
 );
 
 runAsyncAssertions()

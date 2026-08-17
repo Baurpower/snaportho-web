@@ -10,3 +10,5 @@ export * from './verifier';
 export * from './cache';
 export * from './retrieval-engine';
 export * from './citation-client';
+export * from './caseprep-context';
+export * from './caseprep-references';
