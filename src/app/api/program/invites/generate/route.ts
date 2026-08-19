@@ -52,6 +52,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const programId = body.programId as string | undefined;
     const expiresInDays = Number(body.expiresInDays ?? 30);
+    const force = Boolean(body.force);
 
     if (!programId) {
       return NextResponse.json(
@@ -108,16 +109,41 @@ export async function POST(req: NextRequest) {
 
     const now = new Date();
 
+    const activeInvites = (existingInvites ?? []).filter((invite) => {
+      if (invite.claimed_at) return false;
+      if (invite.revoked_at) return false;
+      if (!invite.expires_at) return true;
+      return new Date(invite.expires_at) > now;
+    });
+
+    if (force && activeInvites.length > 0) {
+      const { error: revokeError } = await adminSupabase
+        .from("program_invites")
+        .update({ revoked_at: now.toISOString() })
+        .in(
+          "id",
+          activeInvites.map((invite) => invite.id)
+        );
+
+      if (revokeError) {
+        return NextResponse.json(
+          { error: revokeError.message, step: "revoke existing invites" },
+          { status: 500 }
+        );
+      }
+    }
+
     const activeInviteRosterIds = new Set(
-      (existingInvites ?? [])
-        .filter((invite) => {
-          if (invite.claimed_at) return false;
-          if (invite.revoked_at) return false;
-          if (!invite.expires_at) return true;
-          return new Date(invite.expires_at) > now;
-        })
-        .map((invite) => invite.roster_id)
+      force ? [] : activeInvites.map((invite) => invite.roster_id)
     );
+
+    const skipped = roster
+      .filter((person) => activeInviteRosterIds.has(person.id))
+      .map((person) => ({
+        rosterId: person.id,
+        name: person.full_name,
+        reason: "active_invite_exists" as const,
+      }));
 
     const rowsToCreate = roster.filter((person) => !activeInviteRosterIds.has(person.id));
 
@@ -178,11 +204,21 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    const skippedCount = skipped.length;
+
     return NextResponse.json({
       ok: true,
       createdCount: insertRows.length,
-      skippedCount: roster.length - insertRows.length,
+      skippedCount,
+      revokedCount: force ? activeInvites.length : 0,
+      skipped,
       invites: rawInvites,
+      ...(skippedCount > 0 && insertRows.length === 0
+        ? {
+            message:
+              "All roster members already have an active unclaimed invite. Re-run with force: true to revoke those and mint new links.",
+          }
+        : {}),
     });
   } catch (error) {
     return NextResponse.json(

@@ -4,14 +4,14 @@ import { safeRedirectPath } from "@/lib/auth/redirects";
 export default async function SignInPage({
   searchParams,
 }: {
-  searchParams: Promise<{ redirectTo?: string; from?: string }>;
+  searchParams: Promise<{ redirectTo?: string; from?: string; error?: string }>;
 }) {
-  const { redirectTo, from } = await searchParams;
+  const { redirectTo, from, error } = await searchParams;
 
   const dest = safeRedirectPath(
     redirectTo,
     from === "brobot" ? "/brobot/chat" : "/"
   );
 
-  return <SignInClient redirectTo={dest} />;
+  return <SignInClient redirectTo={dest} oauthError={error === "oauth"} />;
 }

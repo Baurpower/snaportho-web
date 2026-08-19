@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { AuthMethodDivider, GoogleSignInButton } from "@/components/auth/GoogleSignInButton";
 import { createClient } from "@/utils/supabase/client";
 import {
   trackAccountCreatedEvent,
@@ -156,6 +157,9 @@ export default function SignUpClient() {
           {message}
         </p>
       ) : null}
+
+      <GoogleSignInButton redirectTo={redirectTo} />
+      <AuthMethodDivider />
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <input

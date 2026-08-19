@@ -13,7 +13,13 @@ import type {
   User,
   AuthError,
   AuthResponse,
+  OAuthResponse,
 } from "@supabase/supabase-js";
+import {
+  trackAccountCreatedEvent,
+  trackCreateAccountConversion,
+} from "@/lib/analytics/googleAds";
+import { buildGoogleOAuthRedirectTo } from "@/lib/auth/redirects";
 
 type ResetResponse = { data: object | null; error: AuthError | null };
 
@@ -22,6 +28,7 @@ interface AuthContextType {
   loading: boolean;
   status: "loading" | "authenticated" | "unauthenticated";
   signIn: (email: string, password: string) => Promise<AuthResponse>;
+  signInWithGoogle: (redirectTo?: string) => Promise<OAuthResponse>;
   signUp: (email: string, password: string) => Promise<AuthResponse>;
   resetPassword: (
     email: string,
@@ -69,11 +76,50 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, [supabase]);
 
+  useEffect(() => {
+    if (!user || typeof window === "undefined") return;
+
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("signup") !== "google") return;
+
+    const storageKey = `google_ads_create_account_conversion:${user.id}`;
+    if (!window.sessionStorage.getItem(storageKey)) {
+      const fired = trackCreateAccountConversion();
+      if (fired) {
+        window.sessionStorage.setItem(storageKey, "true");
+      }
+      trackAccountCreatedEvent({ source: "auth_google" });
+    }
+
+    url.searchParams.delete("signup");
+    const next = `${url.pathname}${url.search}${url.hash}`;
+    window.history.replaceState({}, "", next);
+  }, [user]);
+
   const signIn = async (email: string, password: string) => {
     setLoading(true);
     const response = await supabase.auth.signInWithPassword({ email, password });
     setUser(response.error ? null : response.data.session?.user ?? response.data.user ?? null);
     setLoading(false);
+    return response;
+  };
+
+  const signInWithGoogle = async (redirectTo?: string) => {
+    setLoading(true);
+    const response = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: buildGoogleOAuthRedirectTo(window.location.origin, redirectTo),
+        queryParams: {
+          prompt: "select_account",
+        },
+      },
+    });
+
+    if (response.error) {
+      setLoading(false);
+    }
+
     return response;
   };
 
@@ -104,7 +150,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, status, signIn, signUp, resetPassword, signOut }}
+      value={{
+        user,
+        loading,
+        status,
+        signIn,
+        signInWithGoogle,
+        signUp,
+        resetPassword,
+        signOut,
+      }}
     >
       {children}
     </AuthContext.Provider>

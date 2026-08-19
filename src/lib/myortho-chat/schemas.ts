@@ -9,7 +9,7 @@ export const MyOrthoChatRequestSchema = z.object({
   context: z.object({
     recoveryStage: z.enum(['considering', 'pre_surgery', 'surgery', 'early_recovery', 'long_term']).optional(),
     daysFromSurgery: z.number().int().min(-3650).max(3650).optional(),
-  }).optional(),
+  }).nullish(),
 });
 
 export const MyOrthoUrgencySchema = z.enum([
@@ -27,7 +27,7 @@ export const MyOrthoChatResponseSchema = z.object({
     sourceId: z.string(),
     title: z.string(),
     publisher: z.string(),
-    url: z.string().url(),
+    url: z.string(),
   })).max(4),
   relatedArticles: z.array(z.object({ id: z.string(), title: z.string() })).max(3),
   suggestedQuestions: z.array(z.string().max(180)).max(2),

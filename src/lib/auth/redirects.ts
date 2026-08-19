@@ -44,3 +44,16 @@ export function appendSafeReturnTo(
   url.searchParams.set("returnTo", safeReturnTo);
   return `${url.pathname}${url.search}`;
 }
+
+export const AUTH_CALLBACK_PATH = "/auth/callback";
+
+export function buildGoogleOAuthRedirectTo(
+  origin: string,
+  next?: string | null,
+  fallback = "/"
+): string {
+  const safeNext = safeRedirectPath(next, fallback);
+  const url = new URL(AUTH_CALLBACK_PATH, origin);
+  url.searchParams.set("next", safeNext);
+  return url.toString();
+}

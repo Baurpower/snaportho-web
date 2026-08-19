@@ -4,14 +4,16 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { AuthMethodDivider, GoogleSignInButton } from "@/components/auth/GoogleSignInButton";
 import { useAuth } from "@/context/AuthContext";
 import { safeRedirectPath } from "@/lib/auth/redirects";
 
 interface Props {
   redirectTo: string;
+  oauthError?: boolean;
 }
 
-export default function SignInClient({ redirectTo }: Props) {
+export default function SignInClient({ redirectTo, oauthError = false }: Props) {
   const router = useRouter();
   const { user, loading, signIn } = useAuth();
 
@@ -19,7 +21,9 @@ export default function SignInClient({ redirectTo }: Props) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(
+    oauthError ? "Google sign in failed. Please try again." : null
+  );
 
   async function claimPendingSubscriptionAfterAuth() {
     try {
@@ -81,6 +85,9 @@ export default function SignInClient({ redirectTo }: Props) {
           {errorMsg}
         </div>
       ) : null}
+
+      <GoogleSignInButton redirectTo={safeRedirectTo} />
+      <AuthMethodDivider />
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
