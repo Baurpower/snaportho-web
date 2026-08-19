@@ -5,13 +5,21 @@ import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
+function matchesPath(pathname: string | null, href: string) {
+  return pathname === href || Boolean(pathname?.startsWith(`${href}/`));
+}
+
 export default function Nav() {
   const pathname = usePathname();
-  const isWorkspaceRoute = pathname?.startsWith('/work');
+  // `/workspace` must not match `/work` — `startsWith('/work')` would treat the chooser as residency.
+  const isWorkspaceRoute = matchesPath(pathname, '/work');
+  const isWorkspaceNavActive =
+    matchesPath(pathname, '/workspace') ||
+    isWorkspaceRoute ||
+    matchesPath(pathname, '/student-workspace');
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [openLearn, setOpenLearn] = useState(false);
-  const [openRef, setOpenRef] = useState(false);
   const [openPath, setOpenPath] = useState(false);
   const [openResearch, setOpenResearch] = useState(false);
 
@@ -20,7 +28,6 @@ export default function Nav() {
   const closeAll = () => {
     setMenuOpen(false);
     setOpenLearn(false);
-    setOpenRef(false);
     setOpenPath(false);
     setOpenResearch(false);
   };
@@ -106,11 +113,13 @@ export default function Nav() {
           </Link>
 
           <Link
-            href="/student-workspace"
-            className="block hover:text-blue-300 transition py-2 lg:py-0"
+            href="/workspace"
+            className={`block hover:text-blue-300 transition py-2 lg:py-0 ${
+              isWorkspaceNavActive ? 'text-blue-200' : ''
+            }`}
             onClick={closeAll}
           >
-            Student Workspace
+            Workspace
           </Link>
 
           {/* Learn Dropdown */}
@@ -118,7 +127,6 @@ export default function Nav() {
             <button
               onClick={() => {
                 setOpenLearn((prev) => !prev);
-                setOpenRef(false);
                 setOpenPath(false);
                 setOpenResearch(false);
               }}
@@ -168,56 +176,12 @@ export default function Nav() {
             )}
           </div>
 
-          {/* Reference Dropdown */}
-          <div className="relative">
-            <button
-              onClick={() => {
-                setOpenRef((prev) => !prev);
-                setOpenLearn(false);
-                setOpenPath(false);
-                setOpenResearch(false);
-              }}
-              className="hover:text-blue-300 transition flex items-center gap-1 py-2 lg:py-0 focus:outline-none"
-              aria-haspopup="menu"
-              aria-expanded={openRef}
-              aria-controls="reference-menu"
-            >
-              Reference
-              <svg
-                className={`w-4 h-4 transform transition-transform ${openRef ? 'rotate-180' : ''}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-
-            {openRef && (
-              <div
-                id="reference-menu"
-                role="menu"
-                className="lg:absolute lg:right-0 mt-1 lg:mt-2 w-full lg:w-48 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10"
-              >
-                <Link
-                  href="/reference/read-xray"
-                  className="block px-4 py-2 hover:bg-sky-50"
-                  role="menuitem"
-                  onClick={closeAll}
-                >
-                  Read X-Rays
-                </Link>
-              </div>
-            )}
-          </div>
-
           {/* Path to Ortho Dropdown */}
           <div className="relative">
             <button
               onClick={() => {
                 setOpenPath((prev) => !prev);
                 setOpenLearn(false);
-                setOpenRef(false);
                 setOpenResearch(false);
               }}
               className="hover:text-blue-300 transition flex items-center gap-1 py-2 lg:py-0 focus:outline-none"
@@ -274,7 +238,6 @@ export default function Nav() {
               onClick={() => {
                 setOpenResearch((prev) => !prev);
                 setOpenLearn(false);
-                setOpenRef(false);
                 setOpenPath(false);
               }}
               className="hover:text-blue-300 transition flex items-center gap-1 py-2 lg:py-0 focus:outline-none"
