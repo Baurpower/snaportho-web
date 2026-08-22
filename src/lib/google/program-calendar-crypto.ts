@@ -12,6 +12,10 @@ function encryptionKey() {
   return key;
 }
 
+export function assertProgramCalendarTokenEncryptionConfigured() {
+  encryptionKey();
+}
+
 export function encryptProgramCalendarToken(value: string | null | undefined) {
   if (!value) return null;
   const iv = crypto.randomBytes(12);

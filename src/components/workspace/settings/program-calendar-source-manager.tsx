@@ -96,6 +96,28 @@ export default function ProgramCalendarSourceManager() {
     void refresh().catch((error) => setMessage(error.message));
   }, [refresh]);
 
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const result = url.searchParams.get("calendarSource");
+    if (!result) return;
+
+    const messages: Record<string, string> = {
+      connected:
+        "Google Calendar connected. Choose the authoritative source calendar below.",
+      failed:
+        "Google authorization succeeded, but SnapOrtho could not save the connection. Check the production calendar configuration and try again.",
+      configuration_error:
+        "Google authorization succeeded, but production token encryption is not configured. Add PROGRAM_CALENDAR_TOKEN_ENCRYPTION_KEY to the deployment and try again.",
+      invalid_state:
+        "The Google connection expired or could not be verified. Please try connecting again.",
+      auth_failed:
+        "The Google connection returned to a different SnapOrtho user. Please sign in again and retry.",
+    };
+    setMessage(messages[result] ?? "Google Calendar connection did not complete.");
+    url.searchParams.delete("calendarSource");
+    window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+  }, []);
+
   async function act(name: string, action: () => Promise<unknown>) {
     setBusy(name);
     setMessage(null);

@@ -99,6 +99,10 @@ export async function GET(request: NextRequest) {
     return redirect("connected");
   } catch (error) {
     console.error("[program-calendar/callback]", error);
+    const message = error instanceof Error ? error.message : "";
+    if (message.includes("PROGRAM_CALENDAR_TOKEN_ENCRYPTION_KEY")) {
+      return redirect("configuration_error");
+    }
     return redirect("failed");
   }
 }

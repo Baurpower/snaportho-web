@@ -40,6 +40,13 @@ type SyncOptions = {
   allowDestructiveFullApply?: boolean;
 };
 
+export const PROGRAM_CALENDAR_OAUTH_SCOPES = [
+  // This broader scope is already verified for the SnapOrtho Google project.
+  // The source-of-truth integration remains read-only in application behavior.
+  "https://www.googleapis.com/auth/calendar",
+  "https://www.googleapis.com/auth/userinfo.email",
+];
+
 function googleOAuthClient(connection: ConnectionRow) {
   const client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID!,
