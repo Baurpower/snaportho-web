@@ -24,6 +24,11 @@ export const SIGNOUT_FIELDS = [
     placeholder: "Clinical plan — what we’re doing overnight / next steps…",
   },
   {
+    title: "Pre-op checklist",
+    label: "Pre-op checklist",
+    placeholder: "Pre-operative readiness",
+  },
+  {
     title: "Dispo",
     label: "Disposition",
     placeholder: "Destination and current status — e.g. home pending PT clearance",
@@ -39,6 +44,11 @@ export const SIGNOUT_FIELDS = [
     placeholder: "Overnight action items",
   },
 ] as const;
+
+export const DEFAULT_PREOP_ITEMS: readonly TodoItem[] = [
+  { checked: false, text: "Orders" },
+  { checked: false, text: "Booked" },
+];
 
 const KNOWN = new Set<string>(SIGNOUT_FIELDS.map((f) => f.title));
 

@@ -42,6 +42,7 @@ import {
   serializeTodoLines,
   splitFields,
   parseTodoLines,
+  DEFAULT_PREOP_ITEMS,
   type SignoutFields,
   type TodoItem,
 } from "@/lib/workspace/signout/fields";
@@ -232,6 +233,18 @@ export function PatientCard({
     updateField("Dispo barriers", serializeTodoLines(items));
   }
 
+  function applyPreopItems(items: TodoItem[]) {
+    const current = splitFields(draftRef.current);
+    current.values["Pre-op checklist"] = serializeTodoLines(items);
+    const body = serializeFields(current);
+    setFields(current);
+    setDraft(body);
+    draftRef.current = body;
+    bodyRevisionRef.current += 1;
+    dirtyRef.current = true;
+    void persist({ body });
+  }
+
   function saveAttending() {
     if (attendingDraft.trim() !== card.attending) void persist({ attending: attendingDraft });
   }
@@ -303,6 +316,16 @@ export function PatientCard({
         card.surgeryDate ||
         (!isNonop && (card.nextSurgery || card.nextSurgeryDate))
     ) && !editing;
+  const showPreopChecklist =
+    !isNonop &&
+    Boolean(card.nextSurgery || card.nextSurgeryDate) &&
+    (!nextOrInfo || nextOrInfo.upcoming);
+  const savedPreopItems = parseTodoLines(
+    splitFields(draft).values["Pre-op checklist"] ?? ""
+  );
+  const preopItems = savedPreopItems.length
+    ? savedPreopItems
+    : DEFAULT_PREOP_ITEMS.map((item) => ({ ...item }));
 
   return (
     <div
@@ -478,6 +501,10 @@ export function PatientCard({
           </p>
         )}
 
+        {showPreopChecklist && !editing && (
+          <PreopChecklist items={preopItems} onChange={applyPreopItems} />
+        )}
+
         {collapsed ? (
           <p className="mt-1 truncate pl-6 text-sm text-slate-500">
             {firstLine(draft) || "No notes yet"}
@@ -573,6 +600,9 @@ export function PatientCard({
                         />
                       </FieldBox>
                     </div>
+                    {showPreopChecklist && (
+                      <PreopChecklist items={preopItems} onChange={applyPreopItems} />
+                    )}
                   </>
                 ) : (
                   <div className="grid grid-cols-2 gap-2">
@@ -766,6 +796,50 @@ export function PatientCard({
           </>
         )}
       </div>
+    </div>
+  );
+}
+
+function PreopChecklist({
+  items,
+  onChange,
+}: {
+  items: TodoItem[];
+  onChange: (items: TodoItem[]) => void;
+}) {
+  const complete = items.filter((item) => item.checked).length;
+  return (
+    <div className="mt-1.5 flex flex-wrap items-center gap-1.5 rounded-lg border border-purple-200 bg-purple-50/70 px-2 py-1.5 text-xs">
+      <span className="mr-0.5 font-bold uppercase tracking-wide text-purple-900">Pre-op</span>
+      {items.map((item, index) => (
+        <button
+          key={`${item.text}-${index}`}
+          type="button"
+          aria-pressed={item.checked}
+          onClick={(event) => {
+            event.stopPropagation();
+            const next = items.map((candidate, itemIndex) =>
+              itemIndex === index ? { ...candidate, checked: !candidate.checked } : candidate
+            );
+            onChange(next);
+          }}
+          className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-semibold transition-colors ${
+            item.checked
+              ? "border-emerald-200 bg-emerald-50 text-emerald-800"
+              : "border-purple-200 bg-white text-purple-800 hover:bg-purple-100"
+          }`}
+        >
+          {item.checked ? (
+            <CheckSquare className="h-3.5 w-3.5" />
+          ) : (
+            <Square className="h-3.5 w-3.5" />
+          )}
+          {item.text}
+        </button>
+      ))}
+      <span className="ml-auto text-[10px] font-semibold text-purple-700/70">
+        {complete}/{items.length}
+      </span>
     </div>
   );
 }

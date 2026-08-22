@@ -165,7 +165,10 @@ export function SmartBody({ text, onToggleCheckbox, onRequestEdit }: Props) {
     (section) => section.title.toLowerCase() === "dispo barriers"
   );
   const regularSections = sections.filter(
-    (section) => !["dispo", "dispo barriers"].includes(section.title.toLowerCase())
+    (section) =>
+      !["dispo", "dispo barriers", "pre-op checklist"].includes(
+        section.title.toLowerCase()
+      )
   );
 
   return (

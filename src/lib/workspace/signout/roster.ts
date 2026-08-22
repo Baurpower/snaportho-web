@@ -3,7 +3,12 @@
  * Pure / dependency-free so the UI can show everything without click-to-reveal.
  */
 
-import { splitFields } from "@/lib/workspace/signout/fields";
+import {
+  DEFAULT_PREOP_ITEMS,
+  parseTodoLines,
+  splitFields,
+  type TodoItem,
+} from "@/lib/workspace/signout/fields";
 import {
   computeNextOr,
   computePod,
@@ -86,7 +91,8 @@ export function rosterPlanBlock(body: string): {
 } {
   const fields = splitFields(body);
   const openTodos = extractOpenTodos(body).filter(
-    (item) => item.section?.toLowerCase() !== "dispo barriers"
+    (item) =>
+      !["dispo barriers", "pre-op checklist"].includes(item.section?.toLowerCase() ?? "")
   );
 
   const planRaw = (fields.values["Plan"] ?? "").trim();
@@ -150,6 +156,7 @@ export type RosterRowModel = {
   planEmpty: boolean;
   disposition: string;
   dispoBarriers: OpenTodo[];
+  preopItems: TodoItem[];
   clinicalExtras: ClinicalExtra[];
 };
 
@@ -165,6 +172,11 @@ export function buildRosterRow(card: SignoutCard): RosterRowModel {
   const txDay = nonOp ? computeTxDay(card.surgeryDate) : null;
   const pod = nonOp ? null : computePod(card.surgeryDate);
   const nextOr = nonOp ? null : computeNextOr(card.nextSurgeryDate);
+  const showPreop =
+    !nonOp &&
+    Boolean(card.nextSurgery || card.nextSurgeryDate) &&
+    (!nextOr || nextOr.upcoming);
+  const savedPreopItems = parseTodoLines(fields.values["Pre-op checklist"] ?? "");
   // Non-op with a start date shows Day n; without date, plain "Non-op".
   const podLabel = nonOp
     ? txDayChip(card.surgeryDate) ?? "Non-op"
@@ -191,6 +203,11 @@ export function buildRosterRow(card: SignoutCard): RosterRowModel {
     planEmpty: plan.empty,
     disposition: (fields.values["Dispo"] ?? "").trim(),
     dispoBarriers,
+    preopItems: showPreop
+      ? savedPreopItems.length
+        ? savedPreopItems
+        : DEFAULT_PREOP_ITEMS.map((item) => ({ ...item }))
+      : [],
     clinicalExtras: rosterClinicalExtras(body),
   };
 }

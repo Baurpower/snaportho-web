@@ -11,6 +11,7 @@ const body =
   "34M R femur s/p IM nail · NWB\n" +
   "## HPI/Exam\nWatch compartments\n" +
   "## Plan\nContinue NWB\n" +
+  "## Pre-op checklist\n[x] Orders\n[ ] Booked\n" +
   "## Dispo\nHome pending PT\n" +
   "## Dispo barriers\n[ ] Clear PT\n" +
   "## To-do\n[ ] Recheck q2h";
@@ -18,6 +19,7 @@ const f = splitFields(body);
 assert.equal(f.lead, "34M R femur s/p IM nail · NWB");
 assert.equal(f.values["HPI/Exam"], "Watch compartments");
 assert.equal(f.values["Plan"], "Continue NWB");
+assert.equal(f.values["Pre-op checklist"], "[x] Orders\n[ ] Booked");
 assert.equal(f.values["Dispo"], "Home pending PT");
 assert.equal(f.values["Dispo barriers"], "[ ] Clear PT");
 assert.equal(f.values["To-do"], "[ ] Recheck q2h");

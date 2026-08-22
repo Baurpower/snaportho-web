@@ -113,7 +113,10 @@ function surgeryLine(card: SignoutCard, row: RosterRowModel): string {
   if (row.nonOp || card.managementMode === "nonop") {
     return row.surgery ? `Non-op · ${row.surgery}` : "Non-op";
   }
-  return row.surgery || "";
+  const preop = row.preopItems.length
+    ? `Pre-op ${row.preopItems.filter((item) => item.checked).length}/${row.preopItems.length}`
+    : "";
+  return [row.surgery, preop].filter(Boolean).join("\n");
 }
 
 function toHandoffRow(card: SignoutCard): HandoffRow {

@@ -56,6 +56,7 @@ export function buildCopyUpdate(card: SignoutCard, patientName?: string | null):
       .join("\n")
   );
   add("Plan", fields.values["Plan"] ?? "");
+  add("Pre-op", fields.values["Pre-op checklist"] ?? "");
   add("Dispo", fields.values["Dispo"] ?? "");
   add("Dispo barriers", fields.values["Dispo barriers"] ?? "");
   add("To-do", fields.values["To-do"] ?? "");

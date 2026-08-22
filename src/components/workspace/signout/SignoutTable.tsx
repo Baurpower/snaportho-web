@@ -275,6 +275,22 @@ export function SignoutTable({ cards, onSaveCard, onOpenCard }: Props) {
                         {row.nextOrLabel}
                       </span>
                     )}
+                    {row.preopItems.length > 0 && (
+                      <div className="flex flex-wrap gap-0.5" aria-label="Pre-op checklist">
+                        {row.preopItems.map((item) => (
+                          <span
+                            key={item.text}
+                            className={`rounded px-1 py-0.5 text-[10px] font-bold ${
+                              item.checked
+                                ? "bg-emerald-50 text-emerald-800"
+                                : "bg-purple-50 text-purple-800"
+                            }`}
+                          >
+                            {item.checked ? "✓" : "○"} {item.text}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                     {row.weightBearing.length > 0 && (
                       <div className="flex flex-wrap gap-0.5">
                         {row.weightBearing.map((wb) => (

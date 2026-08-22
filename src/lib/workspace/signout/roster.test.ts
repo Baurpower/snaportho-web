@@ -71,8 +71,8 @@ const card: SignoutCard = {
   location: "SICU 8",
   surgery: "IM nail R femur",
   surgeryDate: localIsoDaysAgo(3),
-  nextSurgery: "",
-  nextSurgeryDate: "",
+  nextSurgery: "repeat I&D",
+  nextSurgeryDate: localIsoDaysAgo(-2),
   managementMode: "surgery",
   severity: "watcher",
   status: "active",
@@ -82,6 +82,7 @@ const card: SignoutCard = {
     "42M s/p lower extremity medial and lateral plateau · NWB\n" +
     "## HPI/Exam\nWatch compartments.\n" +
     "## Plan\n[ ] Recheck q2h #pending\nAnemia watch\n" +
+    "## Pre-op checklist\n[x] Orders\n[ ] Booked\n" +
     "## Dispo\nHome pending PT\n" +
     "## Dispo barriers\n[ ] Clear stairs",
   diagnostics: { version: 1, items: [] },
@@ -104,6 +105,10 @@ assert.ok(row.oneLiner.includes("42M"));
 assert.equal(row.openTodos.length, 1);
 assert.equal(row.disposition, "Home pending PT");
 assert.equal(row.dispoBarriers[0]?.text, "Clear stairs");
+assert.deepEqual(row.preopItems, [
+  { checked: true, text: "Orders" },
+  { checked: false, text: "Booked" },
+]);
 assert.ok(row.planProse.some((p) => p.includes("Anemia")));
 assert.ok(row.tags.includes("pending"));
 assert.equal(row.clinicalExtras[0]?.title, "HPI/Exam");
@@ -114,6 +119,7 @@ assert.ok(cols.clinical.includes("42M"));
 assert.ok(cols.clinical.includes("Watch compartments"));
 assert.ok(cols.plan.includes("Recheck q2h"));
 assert.ok(cols.plan.includes("Anemia"));
+assert.ok(!cols.plan.includes("Booked"));
 assert.equal(cols.dispo, "Home pending PT\n☐ Clear stairs");
 assert.equal(cols.labs, "");
 
