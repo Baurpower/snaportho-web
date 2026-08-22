@@ -1322,18 +1322,25 @@ async function exportSyncV2Cohort(db: SupabaseClient, args: Args) {
     for (const id of batch.ordered_card_version_ids ?? []) unavailable.add(id);
   }
   const llmOnly = args.get("--llm-only");
-  const llmQueue = new Set<string>();
-  if (llmOnly) {
-    const screen = JSON.parse(readFileSync(path.resolve(llmOnly), "utf8")) as {
+  const autoConfirmOnly = args.get("--auto-confirm-only");
+  if (llmOnly && autoConfirmOnly) {
+    throw new Error("cannot_combine_llm_only_and_auto_confirm_only");
+  }
+  const filterQueue = new Set<string>();
+  const filterPath = llmOnly ?? autoConfirmOnly;
+  if (filterPath) {
+    const screen = JSON.parse(readFileSync(path.resolve(filterPath), "utf8")) as {
       llmReview?: Array<{ canonicalCardVersionId?: string }>;
+      autoConfirm?: Array<{ canonicalCardVersionId?: string }>;
     };
-    for (const row of screen.llmReview ?? []) {
-      if (row.canonicalCardVersionId) llmQueue.add(row.canonicalCardVersionId);
+    const rows = llmOnly ? screen.llmReview ?? [] : screen.autoConfirm ?? [];
+    for (const row of rows) {
+      if (row.canonicalCardVersionId) filterQueue.add(row.canonicalCardVersionId);
     }
   }
   const selected = cards
     .filter(({ packet }) => !unavailable.has(packet.canonicalCardVersionId))
-    .filter(({ packet }) => !llmOnly || llmQueue.has(packet.canonicalCardVersionId))
+    .filter(({ packet }) => !filterPath || filterQueue.has(packet.canonicalCardVersionId))
     .slice(0, cohortSize);
   if (!selected.length) {
     console.log(JSON.stringify({

@@ -33,6 +33,12 @@ export function parseCalendarTitle(value: string) {
   };
 }
 
+export function isIgnoredCalendarTitle(value: string) {
+  return /(?:^|[\s\-–—:()])pto(?:$|[\s\-–—:()])/i.test(
+    value.normalize("NFKC").trim(),
+  );
+}
+
 export function enumerateAllDayDates(
   startDate: string,
   endDateExclusive: string,
@@ -74,6 +80,7 @@ export function validateCalendarEvent(params: {
   aliases: CalendarAlias[];
 }) {
   const parsed = parseCalendarTitle(params.title);
+  const ignored = isIgnoredCalendarTitle(parsed.original);
   const issues: ImportIssue[] = [];
   let dates: string[] = [];
 
@@ -111,32 +118,34 @@ export function validateCalendarEvent(params: {
     });
   }
 
-  const alias = resolveCalendarAlias({
-    aliases: params.aliases,
-    normalizedTitle: parsed.normalizedPerson,
-    eventDate: dates[0] ?? "0000-01-01",
-  });
-  if (alias.count === 0) {
+  const alias = ignored
+    ? { match: null, count: 0 }
+    : resolveCalendarAlias({
+        aliases: params.aliases,
+        normalizedTitle: parsed.normalizedPerson,
+        eventDate: dates[0] ?? "0000-01-01",
+      });
+  if (!ignored && alias.count === 0) {
     issues.push({
       code: "unmatched_person",
       severity: "blocked",
       message: `No roster alias matches “${parsed.original}”.`,
     });
-  } else if (alias.count > 1) {
+  } else if (!ignored && alias.count > 1) {
     issues.push({
       code: "ambiguous_person",
       severity: "blocked",
       message: `More than one roster member matches “${parsed.original}”.`,
     });
   }
-  if (parsed.suffix) {
+  if (!ignored && parsed.suffix) {
     issues.push({
       code: "recognized_suffix",
       severity: "warning",
       message: `Recognized title suffix “${parsed.suffix}”.`,
     });
   }
-  if (dates.length > 1) {
+  if (!ignored && dates.length > 1) {
     issues.push({
       code: "multi_day_event",
       severity: "warning",
@@ -149,10 +158,12 @@ export function validateCalendarEvent(params: {
     dates,
     alias: alias.match,
     issues,
-    validationStatus: issues.some((issue) => issue.severity === "blocked")
-      ? ("blocked" as const)
-      : issues.length > 0
-        ? ("warning" as const)
-        : ("valid" as const),
+    validationStatus: ignored
+      ? ("ignored" as const)
+      : issues.some((issue) => issue.severity === "blocked")
+        ? ("blocked" as const)
+        : issues.length > 0
+          ? ("warning" as const)
+          : ("valid" as const),
   };
 }

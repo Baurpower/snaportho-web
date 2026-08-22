@@ -328,12 +328,13 @@ export async function syncProgramCalendarSource(options: SyncOptions) {
           endDateTime: event.end?.dateTime ?? null,
           aliases,
         });
+        const ignored = validation.validationStatus === "ignored";
         let issues: ImportIssue[] = deleted ? [] : validation.issues;
         const datesInWindow = validation.dates.filter(
           (date) =>
             date >= source.effective_start && date <= source.effective_end,
         );
-        if (!deleted && datesInWindow.length === 0) {
+        if (!deleted && !ignored && datesInWindow.length === 0) {
           issues = [
             ...issues,
             {
@@ -343,12 +344,12 @@ export async function syncProgramCalendarSource(options: SyncOptions) {
             },
           ];
         }
-        if (!deleted && datesInWindow.length > 0) {
+        if (!deleted && !ignored && datesInWindow.length > 0) {
           const { data: slotRows, error: slotError } = await admin
             .from("call_assignments")
             .select("call_date, source_kind, source_calendar_source_id")
             .eq("program_id", source.program_id)
-            .eq("call_type", "Primary")
+            .in("call_type", ["Primary", "primary", "weekday", "weekend"])
             .in("call_date", datesInWindow);
           if (slotError) throw new Error(slotError.message);
           const conflictingDates = Array.from(
@@ -367,15 +368,17 @@ export async function syncProgramCalendarSource(options: SyncOptions) {
             issues = [
               ...issues,
               {
-                code: "native_schedule_conflict",
-                severity: "blocked",
-                message: `Existing SnapOrtho assignments conflict on ${conflictingDates.join(", ")}.`,
+                code: "native_schedule_replacement",
+                severity: "warning",
+                message: `Activation will replace the existing SnapOrtho primary-call assignment on ${conflictingDates.join(", ")}.`,
               },
             ];
           }
         }
         const validationStatus = deleted
           ? "valid"
+          : ignored
+            ? "ignored"
           : issues.some((issue) => issue.severity === "blocked")
             ? "blocked"
             : issues.length
@@ -408,10 +411,14 @@ export async function syncProgramCalendarSource(options: SyncOptions) {
               end_datetime: event.end?.dateTime ?? null,
               matched_roster_id: deleted
                 ? null
-                : (validation.alias?.roster_id ?? null),
+                : ignored
+                  ? null
+                  : (validation.alias?.roster_id ?? null),
               matched_membership_id: deleted
                 ? null
-                : (validation.alias?.program_membership_id ?? null),
+                : ignored
+                  ? null
+                  : (validation.alias?.program_membership_id ?? null),
               validation_status: validationStatus,
               validation_issues: issues,
               last_seen_at: now,

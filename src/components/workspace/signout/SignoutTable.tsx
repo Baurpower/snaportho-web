@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Pin, ChevronUp, ChevronDown, Pencil } from "lucide-react";
+import { Pin, ChevronUp, ChevronDown, Pencil, CircleCheckBig } from "lucide-react";
 
 import type { SignoutCard, UpdateCardPatch } from "@/lib/workspace/signout/types";
 import type { SaveCardResult } from "@/components/workspace/signout/api";
@@ -16,6 +16,7 @@ type Props = {
   onSaveCard: (cardId: string, patch: UpdateCardPatch) => Promise<SaveCardResult>;
   /** Opens card for multi-section *editing* only — table is for reading. */
   onOpenCard: (cardId: string) => void;
+  onSignOff?: (cardId: string) => Promise<SaveCardResult>;
 };
 
 const WB_CHIP: Record<WbStatus, string> = {
@@ -35,7 +36,7 @@ function podDays(card: SignoutCard): number {
  * Real multi-column roster table (Google Doc sign-out style).
  * Cells wrap full clinical text — no card list, no click-to-read.
  */
-export function SignoutTable({ cards, onSaveCard, onOpenCard }: Props) {
+export function SignoutTable({ cards, onSaveCard, onOpenCard, onSignOff }: Props) {
   const [sortKey, setSortKey] = useState<SortKey>("severity");
   const [asc, setAsc] = useState(true);
   const [editingHandleId, setEditingHandleId] = useState<string | null>(null);
@@ -220,6 +221,17 @@ export function SignoutTable({ cards, onSaveCard, onOpenCard }: Props) {
                       >
                         <Pencil className="h-3 w-3" />
                       </button>
+                      {onSignOff && (
+                        <button
+                          type="button"
+                          aria-label={`Sign off ${card.handle}`}
+                          title="Move to signed off"
+                          onClick={() => void onSignOff(card.id)}
+                          className="ml-auto shrink-0 rounded p-0.5 text-emerald-500 hover:bg-emerald-50 hover:text-emerald-700"
+                        >
+                          <CircleCheckBig className="h-3.5 w-3.5" />
+                        </button>
+                      )}
                     </div>
                   )}
                 </td>

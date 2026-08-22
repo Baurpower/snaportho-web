@@ -8,6 +8,7 @@ import {
   PinOff,
   Trash2,
   ArchiveRestore,
+  CircleCheckBig,
   Loader2,
   Check,
   AlertTriangle,
@@ -759,14 +760,23 @@ export function PatientCard({
                 </button>
                 <button
                   type="button"
-                  aria-label={discharged ? "Mark active" : "Discharge"}
-                  title={discharged ? "Mark active" : "Discharge"}
+                  aria-label={discharged ? "Restore to active list" : "Move to signed off"}
+                  title={discharged ? "Restore to active list" : "Move to signed off"}
                   onClick={() =>
                     void persist({ status: discharged ? "active" : "discharged" })
                   }
-                  className="rounded p-1 hover:bg-slate-100"
+                  className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-bold ${
+                    discharged
+                      ? "bg-slate-100 text-slate-600 hover:bg-blue-50 hover:text-blue-700"
+                      : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
+                  }`}
                 >
-                  <ArchiveRestore className="h-4 w-4" />
+                  {discharged ? (
+                    <ArchiveRestore className="h-3.5 w-3.5" />
+                  ) : (
+                    <CircleCheckBig className="h-3.5 w-3.5" />
+                  )}
+                  {discharged ? "Restore" : "Sign off"}
                 </button>
                 <button
                   type="button"

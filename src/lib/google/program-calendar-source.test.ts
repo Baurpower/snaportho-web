@@ -36,4 +36,15 @@ const blocked = validateCalendarEvent({
   aliases: [],
 });
 assert.equal(blocked.validationStatus, "blocked");
+
+const pto = validateCalendarEvent({
+  title: "Fang PTO",
+  startDate: "2026-09-21",
+  endDateExclusive: "2026-09-26",
+  aliases: [],
+});
+assert.equal(pto.validationStatus, "ignored");
+assert.equal(pto.alias, null);
+assert.deepEqual(pto.issues, []);
+assert.equal(pto.dates.length, 5);
 console.log("program calendar source tests passed");

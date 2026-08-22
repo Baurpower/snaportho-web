@@ -9,6 +9,9 @@ import {
   Users,
   Loader2,
   X,
+  ChevronDown,
+  ChevronRight,
+  RotateCcw,
 } from "lucide-react";
 
 import { createClient } from "@/utils/supabase/client";
@@ -92,16 +95,26 @@ export function SignoutBoard({
   const [severityFilter, setSeverityFilter] = useState<SignoutSeverity | null>(null);
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
   const [postOpOnly, setPostOpOnly] = useState(false);
+  const [showSignedOff, setShowSignedOff] = useState(false);
+
+  const activeCards = useMemo(
+    () => cards.filter((card) => card.status === "active"),
+    [cards]
+  );
+  const signedOffCards = useMemo(
+    () => cards.filter((card) => card.status === "discharged"),
+    [cards]
+  );
 
   const allTags = useMemo(() => {
     const set = new Set<string>();
-    for (const c of cards) for (const t of extractTags(c.body)) set.add(t);
+    for (const c of activeCards) for (const t of extractTags(c.body)) set.add(t);
     return [...set].sort();
-  }, [cards]);
+  }, [activeCards]);
 
   const filteredCards = useMemo(
     () =>
-      cards.filter((c) => {
+      activeCards.filter((c) => {
         if (severityFilter && c.severity !== severityFilter) return false;
         if (postOpOnly) {
           // Only surgical patients with a past/current surgery date.
@@ -115,7 +128,7 @@ export function SignoutBoard({
         }
         return true;
       }),
-    [cards, severityFilter, postOpOnly, activeTags]
+    [activeCards, severityFilter, postOpOnly, activeTags]
   );
 
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -645,6 +658,13 @@ export function SignoutBoard({
             <p className="mt-8 text-center text-sm text-slate-400">
               No patients yet. Add your first above.
             </p>
+          ) : activeCards.length === 0 && !filtersActive ? (
+            <div className="mt-8 rounded-xl border border-dashed border-slate-300 bg-white px-4 py-8 text-center">
+              <p className="text-sm font-bold text-slate-700">Active list is clear</p>
+              <p className="mt-1 text-xs text-slate-500">
+                Signed-off patients are safely tucked below and can be restored anytime.
+              </p>
+            </div>
           ) : filteredCards.length === 0 ? (
             <p className="mt-8 text-center text-sm text-slate-400">
               No patients match the filters.
@@ -674,8 +694,60 @@ export function SignoutBoard({
             </div>
           ) : (
             <div className="mt-3">
-              <SignoutTable cards={filteredCards} onSaveCard={saveCard} onOpenCard={openCard} />
+              <SignoutTable
+                cards={filteredCards}
+                onSaveCard={saveCard}
+                onOpenCard={openCard}
+                onSignOff={(cardId) => saveCard(cardId, { status: "discharged" })}
+              />
             </div>
+          )}
+
+          {signedOffCards.length > 0 && (
+            <section className="mt-5 overflow-hidden rounded-xl border border-slate-200 bg-white">
+              <button
+                type="button"
+                aria-expanded={showSignedOff}
+                onClick={() => setShowSignedOff((value) => !value)}
+                className="flex w-full items-center gap-2 px-3 py-2.5 text-left hover:bg-slate-50"
+              >
+                {showSignedOff ? (
+                  <ChevronDown className="h-4 w-4 text-slate-400" />
+                ) : (
+                  <ChevronRight className="h-4 w-4 text-slate-400" />
+                )}
+                <span className="text-sm font-bold text-slate-700">Signed off</span>
+                <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-bold text-emerald-700">
+                  {signedOffCards.length}
+                </span>
+                <span className="ml-auto hidden text-xs text-slate-400 sm:inline">
+                  Hidden from the active list and handoff
+                </span>
+              </button>
+              {showSignedOff && (
+                <div className="divide-y divide-slate-100 border-t border-slate-200">
+                  {signedOffCards.map((card) => (
+                    <div key={card.id} className="flex items-center gap-3 px-4 py-2.5">
+                      <div className="min-w-0 flex-1">
+                        <span className="block truncate text-sm font-semibold text-slate-700 hover:underline">
+                          {card.handle}
+                        </span>
+                        <span className="block truncate text-xs text-slate-400">
+                          {[card.location, card.attending].filter(Boolean).join(" · ") || "No location entered"}
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => void saveCard(card.id, { status: "active" })}
+                        className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
+                      >
+                        <RotateCcw className="h-3.5 w-3.5" /> Restore
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
           )}
         </>
       ) : (
@@ -686,7 +758,7 @@ export function SignoutBoard({
       </div>
 
       {/* Printable multi-column handoff (location-ordered; screen-hidden). */}
-      <HandoffSheet serviceName={activeService?.name ?? ""} cards={cards} />
+      <HandoffSheet serviceName={activeService?.name ?? ""} cards={activeCards} />
     </div>
   );
 }

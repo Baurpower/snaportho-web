@@ -103,6 +103,7 @@ for (const expected of [
   /droppedPriors/,
   /screen-official-notes/,
   /llm-only/,
+  /auto-confirm-only/,
 ]) {
   assert.match(runner, expected);
 }

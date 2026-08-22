@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13T03:37:09.173Z",
+  "generatedAt": "2026-08-22T04:48:43.188Z",
   "verdict": {
     "publishedSyncRelease": "0.0.3 (#3)",
     "releasedNotes": 3670,
@@ -14,11 +14,11 @@
       "pct": 79.4
     },
     "grokReviewCoverage": {
-      "runKey": null,
-      "runStatus": null,
-      "reviewed": 0,
-      "remaining": 3670,
-      "pct": 0
+      "runKey": "snaportho-grok-full-review-v1",
+      "runStatus": "running",
+      "reviewed": 2227,
+      "remaining": 1443,
+      "pct": 60.7
     },
     "overlayWarning": true,
     "pipelineCardCoverage": {
@@ -65,14 +65,15 @@
       }
     ],
     "runs": {
-      "total": 6,
+      "total": 7,
       "byStatus": {
         "cancelled": 3,
-        "running": 2,
+        "running": 3,
         "completed": 1
       },
       "byCohort": {
-        "full_import": 6
+        "full_import": 6,
+        "published_release": 1
       },
       "items": [
         {
@@ -110,47 +111,55 @@
           "status": "cancelled",
           "cohortKind": "full_import",
           "createdAt": "2026-08-02T00:13:27.510565+00:00"
+        },
+        {
+          "runKey": "snaportho-grok-full-review-v1",
+          "status": "running",
+          "cohortKind": "published_release",
+          "createdAt": "2026-08-13T03:38:19.802372+00:00"
         }
       ]
     },
     "batches": {
-      "total": 2354,
-      "cardsDeclared": 20354,
+      "total": 2789,
+      "cardsDeclared": 24044,
       "byStatus": {
-        "cancelled": 2207,
-        "pending": 100,
-        "completed": 47
+        "cancelled": 2208,
+        "completed": 336,
+        "running": 145,
+        "pending": 100
       },
       "byCurrentStage": {
-        "failed": 2207,
-        "identity_validation": 100,
-        "completed": 47
+        "failed": 2208,
+        "completed": 336,
+        "consensus": 145,
+        "identity_validation": 100
       },
       "retrying": 0
     },
     "stages": {
-      "total": 5199,
+      "total": 7431,
       "failed": 0,
       "withWarnings": 0,
       "byStageAndStatus": {
-        "consensus:completed": 5199
+        "consensus:completed": 7431
       },
       "failureCodes": {}
     },
     "assertions": {
-      "total": 7121,
+      "total": 9030,
       "byFacetAndDecision": {
         "specialty:accepted": 3572,
         "anatomy:accepted": 2312,
         "diagnosis:accepted": 858,
+        "specialty:proposed": 839,
+        "anatomy:proposed": 654,
         "treatment:accepted": 264,
+        "diagnosis:proposed": 250,
+        "treatment:proposed": 199,
         "specialty:superseded": 62,
         "anatomy:superseded": 16,
-        "specialty:proposed": 16,
-        "anatomy:proposed": 13,
         "treatment:superseded": 3,
-        "diagnosis:proposed": 2,
-        "treatment:proposed": 2,
         "diagnosis:superseded": 1
       },
       "acceptedByFacet": {
@@ -168,37 +177,37 @@
       "uniqueCardsWithAcceptedAssertions": 3287,
       "confidenceByFacet": {
         "anatomy": {
-          "count": 2341,
-          "average": 0.9895,
+          "count": 2982,
+          "average": 0.9884,
           "below080": 1,
-          "below098": 24
+          "below098": 95
         },
         "diagnosis": {
-          "count": 861,
-          "average": 0.9896,
+          "count": 1109,
+          "average": 0.9875,
           "below080": 0,
-          "below098": 9
+          "below098": 65
         },
         "specialty": {
-          "count": 3650,
-          "average": 0.9887,
+          "count": 4473,
+          "average": 0.9839,
           "below080": 1,
-          "below098": 110
+          "below098": 566
         },
         "treatment": {
-          "count": 269,
-          "average": 0.9889,
+          "count": 466,
+          "average": 0.981,
           "below080": 0,
-          "below098": 7
+          "below098": 83
         }
       },
       "byProvenance": {
-        "model": 7121
+        "model": 9030
       },
       "byDecisionMethod": {
         "automated_policy": 7006,
-        "supersession": 82,
-        "pending": 33
+        "pending": 1942,
+        "supersession": 82
       }
     },
     "metadataReleases": [

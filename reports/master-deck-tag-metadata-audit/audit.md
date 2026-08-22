@@ -1,6 +1,6 @@
 # Master Deck tag and metadata audit
 
-Generated: 2026-08-13T03:37:09.173Z
+Generated: 2026-08-22T04:48:43.188Z
 
 ## Executive scorecard
 
@@ -8,7 +8,7 @@ Generated: 2026-08-13T03:37:09.173Z
 - Released notes: 3670
 - Official notes joined to canonical cards: 3670/3670 (100%)
 - Official notes with accepted assertions: 2915/3670 (79.4%)
-- Grok review coverage: 0 reviewed, 3670 remaining (0%)
+- Grok review coverage: 2227 reviewed, 1443 remaining (60.7%)
 - Read-time tag overlay warning: yes — published manifest is not pinned to the official source deck release
 - Cards with accepted pipeline assertions: 3287/3670 (89.6%)
 - Cards in published rendered-tag manifest: 3071/3670 (83.7%)
@@ -32,10 +32,10 @@ Generated: 2026-08-13T03:37:09.173Z
 
 ## Pipeline health
 
-- Runs: 6 ({"cancelled":3,"running":2,"completed":1})
-- Batches: 2354; declared card slots 20354
-- Stage results: 5199; failed 0; warning-bearing 0
-- Assertions: 7121; published 6115
+- Runs: 7 ({"cancelled":3,"running":3,"completed":1})
+- Batches: 2789; declared card slots 24044
+- Stage results: 7431; failed 0; warning-bearing 0
+- Assertions: 9030; published 6115
 
 ## Legacy-tag governance
 
