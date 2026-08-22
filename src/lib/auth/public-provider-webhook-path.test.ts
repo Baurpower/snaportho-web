@@ -1,9 +1,12 @@
 import assert from 'node:assert/strict';
 
-import { isPublicProviderWebhookPath } from './public-provider-webhook-path';
+// @ts-expect-error Node strip-types resolves the explicit TypeScript extension.
+import { isPublicProviderWebhookPath } from './public-provider-webhook-path.ts';
 
 assert.equal(isPublicProviderWebhookPath('/api/stripe/webhook', 'POST'), true);
 assert.equal(isPublicProviderWebhookPath('/api/stripe/donation-webhook', 'POST'), true);
+assert.equal(isPublicProviderWebhookPath('/api/integrations/google/calendar-webhook', 'POST'), true);
+assert.equal(isPublicProviderWebhookPath('/api/integrations/google/calendar-webhook', 'GET'), false);
 assert.equal(isPublicProviderWebhookPath('/api/stripe/webhook', 'GET'), false);
 assert.equal(isPublicProviderWebhookPath('/api/apple/notifications', 'POST'), true);
 assert.equal(isPublicProviderWebhookPath('/api/apple/notifications', 'GET'), true);

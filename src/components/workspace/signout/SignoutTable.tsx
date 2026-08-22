@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Pin, ChevronUp, ChevronDown } from "lucide-react";
+import { Pin, ChevronUp, ChevronDown, Pencil } from "lucide-react";
 
 import type { SignoutCard, UpdateCardPatch } from "@/lib/workspace/signout/types";
 import type { SaveCardResult } from "@/components/workspace/signout/api";
@@ -38,6 +38,14 @@ function podDays(card: SignoutCard): number {
 export function SignoutTable({ cards, onSaveCard, onOpenCard }: Props) {
   const [sortKey, setSortKey] = useState<SortKey>("severity");
   const [asc, setAsc] = useState(true);
+  const [editingHandleId, setEditingHandleId] = useState<string | null>(null);
+  const [handleDraft, setHandleDraft] = useState("");
+
+  async function saveHandle(card: SignoutCard) {
+    const handle = handleDraft.trim();
+    setEditingHandleId(null);
+    if (handle && handle !== card.handle) await onSaveCard(card.id, { handle });
+  }
 
   const sorted = useMemo(() => {
     const copy = [...cards];
@@ -115,13 +123,14 @@ export function SignoutTable({ cards, onSaveCard, onOpenCard }: Props) {
             <th className="min-w-[9rem] border-r border-slate-200 px-2 py-2 normal-case tracking-normal">
               Labs / Imaging
             </th>
-            <th className="min-w-[9rem] px-2 py-2 normal-case tracking-normal">Plan</th>
+            <th className="min-w-[9rem] border-r border-slate-200 px-2 py-2 normal-case tracking-normal">Plan</th>
+            <th className="min-w-[10rem] px-2 py-2 normal-case tracking-normal">Dispo</th>
           </tr>
         </thead>
         <tbody>
           {sorted.map((card) => {
             const meta = SEVERITY_META[card.severity];
-            const { clinical, labs, plan, row } = rosterTableColumns(card);
+            const { clinical, labs, plan, dispo, row } = rosterTableColumns(card);
             const preOp = row.pod?.preOp ?? false;
             const discharged = card.status === "discharged";
             const surgeryLabel =
@@ -175,19 +184,44 @@ export function SignoutTable({ cards, onSaveCard, onOpenCard }: Props) {
 
                 {/* Patient */}
                 <td className="border-r border-slate-100 px-2 py-2">
-                  <button
-                    type="button"
-                    onClick={() => onOpenCard(card.id)}
-                    className="text-left font-bold text-slate-900 hover:underline"
-                    title="Edit full card"
-                  >
-                    <span className="inline-flex items-start gap-1">
-                      {card.pinned && (
-                        <Pin className="mt-0.5 h-3 w-3 shrink-0 text-amber-500" />
-                      )}
-                      <span className="whitespace-pre-wrap">{row.patient || "—"}</span>
-                    </span>
-                  </button>
+                  {editingHandleId === card.id ? (
+                    <input
+                      autoFocus
+                      aria-label="Patient label"
+                      value={handleDraft}
+                      maxLength={40}
+                      onChange={(e) => setHandleDraft(e.target.value)}
+                      onBlur={() => void saveHandle(card)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") e.currentTarget.blur();
+                        if (e.key === "Escape") setEditingHandleId(null);
+                      }}
+                      className="w-full rounded border border-blue-300 px-1.5 py-1 font-bold text-slate-900 outline-none focus:ring-2 focus:ring-blue-100"
+                    />
+                  ) : (
+                    <div className="flex items-start gap-1">
+                      {card.pinned && <Pin className="mt-0.5 h-3 w-3 shrink-0 text-amber-500" />}
+                      <button
+                        type="button"
+                        onClick={() => onOpenCard(card.id)}
+                        className="min-w-0 text-left font-bold text-slate-900 hover:underline"
+                        title="Open full card"
+                      >
+                        <span className="whitespace-pre-wrap">{row.patient || "—"}</span>
+                      </button>
+                      <button
+                        type="button"
+                        aria-label={`Edit ${card.handle}`}
+                        onClick={() => {
+                          setHandleDraft(card.handle);
+                          setEditingHandleId(card.id);
+                        }}
+                        className="rounded p-0.5 text-slate-300 hover:bg-slate-100 hover:text-slate-700"
+                      >
+                        <Pencil className="h-3 w-3" />
+                      </button>
+                    </div>
+                  )}
                 </td>
 
                 {/* Surgery + POD + next OR + WB */}
@@ -271,7 +305,7 @@ export function SignoutTable({ cards, onSaveCard, onOpenCard }: Props) {
                 </td>
 
                 {/* Plan */}
-                <td className="px-2 py-2 text-slate-800">
+                <td className="border-r border-slate-100 px-2 py-2 text-slate-800">
                   {plan ? (
                     <p className="whitespace-pre-wrap">{plan}</p>
                   ) : (
@@ -288,6 +322,15 @@ export function SignoutTable({ cards, onSaveCard, onOpenCard }: Props) {
                         </span>
                       ))}
                     </div>
+                  )}
+                </td>
+
+                {/* Disposition and barriers */}
+                <td className="bg-emerald-50/30 px-2 py-2 text-slate-800">
+                  {dispo ? (
+                    <p className="whitespace-pre-wrap">{dispo}</p>
+                  ) : (
+                    <Empty />
                   )}
                 </td>
               </tr>

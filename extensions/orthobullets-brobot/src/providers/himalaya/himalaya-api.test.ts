@@ -5,6 +5,7 @@ import {
   htmlToText,
   normalizeHimalayaAttempts,
   reconcileHimalayaLiveQuestion,
+  submitHimalayaAnswerForRemediation,
 } from './himalaya-api.js';
 
 // Mirrors the real POST /all-question-attempts/ payload shape captured live from
@@ -81,6 +82,7 @@ assert.equal(first.choices[2]?.selected, true);
 assert.equal(first.isCorrect, true);
 assert.deepEqual(first.selectedChoiceIds, ['C']);
 assert.deepEqual(first.correctChoiceIds, ['C']);
+assert.deepEqual(first.authoritativeCorrectChoiceIds, ['C']);
 assert.equal(first.explanation, 'Synthetic discussion explaining the sanitized finding.');
 assert.match(first.references ?? '', /Sanitized Journal/);
 assert.equal(first.images.length, 1);
@@ -119,6 +121,11 @@ const live = liveQuestions[0];
 assert.equal(live.reviewAvailable, false);
 assert.equal(live.isCorrect, null, 'correctness is unknown mid-attempt');
 assert.deepEqual(live.correctChoiceIds, [], 'no correct answer may be exposed mid-attempt');
+assert.deepEqual(
+  live.authoritativeCorrectChoiceIds,
+  ['A'],
+  'AAOS-authored correctness stays isolated for the explicit in-page check action'
+);
 const reconciledLive = reconcileHimalayaLiveQuestion(first, {
   question: {
     questionAttemptId: first.questionAttemptId,
@@ -148,6 +155,26 @@ assert.equal(
 );
 assert.deepEqual(live.selectedChoiceIds, ['B'], 'the learner selection is still tracked mid-attempt');
 assert.equal(live.explanation, null);
+
+const liveWithConcealedRemediation = normalizeHimalayaAttempts([{
+  question: {
+    questionAttemptId: 778,
+    stem: '<p>Another in-progress synthetic question.</p>',
+    answers: [
+      { id: 11, text: 'Synthetic A' },
+      { id: 12, text: 'Synthetic B' },
+    ],
+    selectedAnswer: 11,
+  },
+  remediation: { correctAnswerIds: [12] },
+  showCorrectAnswer: false,
+}])[0];
+assert.deepEqual(
+  liveWithConcealedRemediation.authoritativeCorrectChoiceIds,
+  ['B'],
+  'the explicit answer check also supports AAOS payloads that keep correctness in remediation ids'
+);
+assert.deepEqual(liveWithConcealedRemediation.correctChoiceIds, [], 'ordinary extraction remains concealed');
 
 // Malformed payloads must degrade to empty rather than throw.
 assert.deepEqual(normalizeHimalayaAttempts(null), []);
@@ -213,7 +240,38 @@ async function testFetchWiring() {
   assert.equal(thrown.ok === false && thrown.reason, 'offline');
 }
 
-testFetchWiring().then(
+async function testRemediationSubmission() {
+  let body: Record<string, unknown> | null = null;
+  const result = await submitHimalayaAnswerForRemediation({
+    testAttemptId: 900,
+    question: {
+      questionAttemptId: 901,
+      type: 'MULTIPLE_CHOICE',
+      stem: 'Synthetic live question',
+      selectedAnswer: 12,
+      answers: [{ id: 11, text: 'A' }, { id: 12, text: 'B' }],
+    },
+    origin: 'https://learn.aaos.org',
+    fetchImpl: async (url, init) => {
+      assert.equal(url, 'https://learn.aaos.org/diweb/ws/rest/te/tracking/answer-remediation/');
+      body = JSON.parse(init.body);
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({ correctResponse: true, correctAnswerIds: [12], feedback: '<p>AAOS discussion.</p>' }),
+      };
+    },
+  });
+  assert.deepEqual(body && body['selectedAnswers'], [12]);
+  assert.deepEqual(result, {
+    ok: true,
+    correct: true,
+    correctAnswerIds: ['12'],
+    explanation: 'AAOS discussion.',
+  });
+}
+
+Promise.all([testFetchWiring(), testRemediationSubmission()]).then(
   () => {
     console.log('Himalaya te6 API tests passed.');
   },

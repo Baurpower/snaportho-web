@@ -15,6 +15,7 @@ export type ReviewBoardRow = {
   selectedAnswer: string | null;
   correctAnswer: string | null;
   hasExplanation: boolean;
+  topicLabel: string;
 };
 
 export type ReviewBoardRowState = {
@@ -130,6 +131,7 @@ function renderRow(input: {
   const borderColor = missed ? '#fecaca' : '#e2e8f0';
   const headerBackground = missed ? '#fef2f2' : 'white';
   const numberLabel = row.questionNumber != null ? `Q${row.questionNumber}` : 'Question';
+  const topicLabel = rowState.explanation?.testedConcept || row.topicLabel;
 
   const body = rowState.expanded
     ? `<div style="padding:0 12px 12px;display:grid;gap:10px;border-top:1px solid ${borderColor};padding-top:10px;">
@@ -148,7 +150,12 @@ function renderRow(input: {
             ? `<p style="margin:0;font-size:12px;color:#a02d1f;line-height:1.5;">${escapeHtml(rowState.error)}</p>`
             : ''
         }
-        ${rowState.explanation ? input.renderExplanation(rowState.explanation, 'question_tutor') : ''}
+        ${rowState.explanation ? `<div style="display:grid;gap:9px;padding:12px;border-radius:12px;background:#f8fafc;border:1px solid #e2e8f0;">
+          <div><p style="margin:0 0 3px;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:#0f766e;font-weight:800;">Bottom line</p><p style="margin:0;font-size:13px;line-height:1.5;color:#18202b;font-weight:700;">${escapeHtml(rowState.explanation.bottomLine)}</p></div>
+          <div><p style="margin:0 0 3px;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:#0f766e;font-weight:800;">Why</p><p style="margin:0;font-size:12px;line-height:1.5;color:#384152;">${escapeHtml(rowState.explanation.whyCorrect)}</p></div>
+          ${rowState.explanation.boardTrap ? `<div><p style="margin:0 0 3px;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:#b45309;font-weight:800;">Trap</p><p style="margin:0;font-size:12px;line-height:1.5;color:#384152;">${escapeHtml(rowState.explanation.boardTrap)}</p></div>` : ''}
+          <div><p style="margin:0 0 3px;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:#0f766e;font-weight:800;">Remember</p><p style="margin:0;font-size:12px;line-height:1.5;color:#384152;">${escapeHtml(rowState.explanation.boardPearl)}</p></div>
+        </div>` : ''}
         ${
           !rowState.explanation && !rowState.loading
             ? `<div><button data-explain-id="${row.questionAttemptId}" style="border:none;border-radius:999px;background:#0f766e;color:white;padding:8px 14px;font-weight:700;font-size:12px;cursor:pointer;">Explain with BroBot</button></div>`
@@ -161,8 +168,8 @@ function renderRow(input: {
     <button data-toggle-id="${row.questionAttemptId}" aria-expanded="${rowState.expanded ? 'true' : 'false'}"
       style="width:100%;box-sizing:border-box;display:flex;align-items:center;gap:10px;padding:10px 12px;background:${headerBackground};border:none;text-align:left;cursor:pointer;font:inherit;">
       ${statusChip(row, escapeHtml)}
-      <span style="flex:none;font-weight:700;font-size:13px;color:#18202b;">${escapeHtml(numberLabel)}</span>
-      <span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:#5c6574;">${escapeHtml(row.stemPreview)}</span>
+      <span style="flex:none;font-weight:800;font-size:12px;color:#18202b;">${escapeHtml(numberLabel)}</span>
+      <span style="flex:1;min-width:0;display:grid;gap:2px;"><strong style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;color:#18202b;">${escapeHtml(topicLabel)}</strong><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:#64748b;">${escapeHtml(row.stemPreview)}</span></span>
       <span style="flex:none;color:#5c6574;font-size:12px;">${rowState.expanded ? '▲' : '▼'}</span>
     </button>
     ${body}
@@ -185,6 +192,8 @@ export function appendHimalayaReviewBoard(
   const { rows, rowStates, hooks, renderers } = input;
   const { escapeHtml } = renderers;
   const summary = summarizeBoard(rows);
+  const missedRows = rows.filter((row) => row.isCorrect === false);
+  const correctRows = rows.filter((row) => row.isCorrect === true);
   const completedExplanations = rows.filter((row) => rowStates.get(row.questionAttemptId)?.explanation).length;
   const concepts = [...new Set(rows.flatMap((row) => {
     const explanation = rowStates.get(row.questionAttemptId)?.explanation;
@@ -208,22 +217,18 @@ export function appendHimalayaReviewBoard(
   }
 
   const scoreLabel = input.score != null && input.maxScore != null ? `${input.score}/${input.maxScore}` : null;
-  const header = createElement(`<section style="padding:16px;border-radius:18px;background:linear-gradient(145deg,#0f766e,#115e59);color:white;display:grid;gap:14px;box-shadow:0 10px 28px rgba(15,118,110,.18);">
+  const header = createElement(`<section style="padding:16px;border-radius:18px;background:linear-gradient(145deg,#0f766e,#115e59);color:white;display:grid;gap:11px;box-shadow:0 10px 28px rgba(15,118,110,.18);">
     <div style="display:grid;gap:4px;">
-      <p style="margin:0;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#ccfbf1;font-weight:800;">Attempt review</p>
-      ${input.assessmentTitle ? `<h2 style="margin:2px 0 0;font-size:16px;line-height:1.35;color:white;">${escapeHtml(input.assessmentTitle)}</h2>` : ''}
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;">
-      <div style="padding:10px;border-radius:12px;background:rgba(255,255,255,.12);"><strong style="display:block;font-size:20px;">${escapeHtml(scoreLabel ?? String(summary.correctCount))}</strong><span style="font-size:11px;color:#ccfbf1;">Score</span></div>
-      <div style="padding:10px;border-radius:12px;background:rgba(255,255,255,.12);"><strong style="display:block;font-size:20px;">${summary.missedCount}</strong><span style="font-size:11px;color:#ccfbf1;">To review</span></div>
-      <div style="padding:10px;border-radius:12px;background:rgba(255,255,255,.12);"><strong style="display:block;font-size:20px;">${summary.total}</strong><span style="font-size:11px;color:#ccfbf1;">Questions</span></div>
+      <p style="margin:0;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#ccfbf1;font-weight:800;">Post-test review</p>
+      <h2 style="margin:2px 0 0;font-size:22px;line-height:1.2;color:white;">${summary.missedCount ? `${summary.missedCount} question${summary.missedCount === 1 ? '' : 's'} to review` : 'Nothing missed'}</h2>
+      <p style="margin:0;font-size:12px;color:#ccfbf1;">${escapeHtml(scoreLabel ?? `${summary.correctCount}/${summary.total}`)} correct${input.assessmentTitle ? ` · ${escapeHtml(input.assessmentTitle.replace(/^Posttest:\s*/i, ''))}` : ''}</p>
     </div>
     ${
       summary.missedCount
         ? `<div style="display:flex;gap:8px;flex-wrap:wrap;">
             <button id="rb-explain-misses" ${input.explainAllInFlight ? 'disabled' : ''}
               style="width:100%;border:none;border-radius:12px;background:${input.explainAllInFlight ? '#99a8a6' : 'white'};color:#0f766e;padding:11px 14px;font-weight:800;font-size:13px;cursor:${input.explainAllInFlight ? 'default' : 'pointer'};">
-              ${input.explainAllInFlight ? 'Analyzing missed questions…' : completedExplanations ? 'Rebuild teaching review' : `Explain my ${summary.missedCount} missed question${summary.missedCount === 1 ? '' : 's'}`}
+              ${input.explainAllInFlight ? 'Summarizing your misses…' : completedExplanations >= summary.missedCount ? 'Refresh summaries' : 'Summarize missed questions'}
             </button>
           </div>`
         : `<p style="margin:0;font-size:13px;color:#d1fae5;font-weight:700;">Clean sweep — nothing missed on this attempt.</p>`
@@ -250,8 +255,8 @@ export function appendHimalayaReviewBoard(
   }
 
   const defaultRowState: ReviewBoardRowState = { expanded: false, loading: false, explanation: null, error: null };
-  const list = createElement(`<section style="display:grid;gap:8px;"><div style="display:flex;align-items:end;justify-content:space-between;gap:12px;"><div><p style="margin:0;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#0f766e;font-weight:800;">Question map</p><h2 style="margin:3px 0 0;font-size:17px;color:#18202b;">Review every answer</h2></div><span style="font-size:12px;color:#64748b;">Tap to expand</span></div><ul style="margin:0;padding:0;display:grid;gap:8px;">
-    ${rows
+  const list = createElement(`<section style="display:grid;gap:8px;"><div style="display:flex;align-items:end;justify-content:space-between;gap:12px;"><div><p style="margin:0;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#0f766e;font-weight:800;">Missed concepts</p><h2 style="margin:3px 0 0;font-size:17px;color:#18202b;">What to tighten up</h2></div><span style="font-size:12px;color:#64748b;">Tap to expand</span></div><ul style="margin:0;padding:0;display:grid;gap:8px;">
+    ${missedRows
       .map((row) =>
         renderRow({
           row,
@@ -270,6 +275,13 @@ export function appendHimalayaReviewBoard(
   list.querySelectorAll<HTMLButtonElement>('[data-explain-id]').forEach((button) => {
     button.addEventListener('click', () => hooks.onExplainRow(Number(button.dataset.explainId)));
   });
+
+  if (correctRows.length) {
+    const correctSection = createElement(`<details style="border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc;overflow:hidden;"><summary style="padding:11px 12px;cursor:pointer;font-size:12px;font-weight:800;color:#475569;">${correctRows.length} correct answer${correctRows.length === 1 ? '' : 's'}</summary><ul style="margin:0;padding:0 8px 8px;display:grid;gap:6px;">${correctRows.map((row) => renderRow({ row, rowState: rowStates.get(row.questionAttemptId) ?? defaultRowState, escapeHtml, renderExplanation: renderers.renderExplanation })).join('')}</ul></details>`);
+    content.appendChild(correctSection);
+    correctSection.querySelectorAll<HTMLButtonElement>('[data-toggle-id]').forEach((button) => button.addEventListener('click', () => hooks.onToggleRow(Number(button.dataset.toggleId))));
+    correctSection.querySelectorAll<HTMLButtonElement>('[data-explain-id]').forEach((button) => button.addEventListener('click', () => hooks.onExplainRow(Number(button.dataset.explainId))));
+  }
 
   const footer = createElement(`<div style="display:flex;gap:8px;flex-wrap:wrap;">
     <button id="rb-unlink" style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:9px 14px;font-weight:700;font-size:12px;cursor:pointer;">Unlink</button>

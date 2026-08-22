@@ -22,6 +22,7 @@ function card(partial: Partial<SignoutCard> & Pick<SignoutCard, "id" | "handle">
     sortOrder: 0,
     pinned: false,
     body: "",
+    diagnostics: { version: 1, items: [] },
     hasIdentifiers: false,
     version: 1,
     dischargedAt: null,

@@ -58,6 +58,9 @@ export type WorkspacePermissions = {
   canExportProgramCallCalendar: boolean;
   canSyncOwnCalendar: boolean;
   canSyncProgramCalendar: boolean;
+  canManageProgramCalendarSource: boolean;
+  canReviewProgramCalendarImports: boolean;
+  canOverrideSourceOwnedSchedule: boolean;
   canRequestTimeOff: boolean;
   canEditOwnTimeOff: boolean;
   canApproveTimeOff: boolean;
@@ -168,6 +171,9 @@ export function getWorkspacePermissions(
     canExportProgramCallCalendar: canViewWorkspace && isAdmin,
     canSyncOwnCalendar: canViewWorkspace && isRosterLinked,
     canSyncProgramCalendar: canViewWorkspace && isAdmin,
+    canManageProgramCalendarSource: canViewWorkspace && isAdmin,
+    canReviewProgramCalendarImports: canViewWorkspace && isAdmin,
+    canOverrideSourceOwnedSchedule: canViewWorkspace && isAdmin,
     canRequestTimeOff: canViewWorkspace && isRosterLinked,
     canEditOwnTimeOff: canViewWorkspace && isRosterLinked,
     canApproveTimeOff: canViewWorkspace && isAdmin,

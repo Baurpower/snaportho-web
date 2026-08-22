@@ -14,6 +14,7 @@ import {
   requireWorkspacePermission,
   WorkspacePermissionError,
 } from "@/lib/workspace/access-control";
+import { findStaleOutboundRows } from "@/lib/google/outbound-range";
 
 type SyncScope = "mine" | "program";
 type SyncMode = "once" | "automatic";
@@ -40,6 +41,8 @@ type ExistingSyncRow = {
   call_assignment_id?: string;
   provider_event_id: string | null;
   provider_calendar_id: string | null;
+  sync_window_start?: string | null;
+  sync_window_end?: string | null;
 };
 
 function normalizeMembership(membership: CallRow["program_memberships"]) {
@@ -235,7 +238,7 @@ export async function POST(request: NextRequest) {
       await admin
         .from("synced_call_events")
         .select(
-          "id, call_assignment_id, provider_event_id, provider_calendar_id"
+          "id, call_assignment_id, provider_event_id, provider_calendar_id, sync_window_start, sync_window_end"
         )
         .eq("user_id", user.id)
         .eq("program_id", activeMembership.program_id)
@@ -247,12 +250,12 @@ export async function POST(request: NextRequest) {
       throw new Error(existingSyncRowsError.message);
     }
 
-    const staleSyncRows = ((existingSyncRows ?? []) as ExistingSyncRow[]).filter(
-      (row) => {
-        if (!row.call_assignment_id) return false;
-        return !currentCallIds.has(row.call_assignment_id);
-      }
-    );
+    const staleSyncRows = findStaleOutboundRows({
+      rows: (existingSyncRows ?? []) as ExistingSyncRow[],
+      currentCallIds,
+      windowStart: monthStart,
+      windowEnd: monthEnd,
+    });
 
     let removedCount = 0;
 
@@ -405,6 +408,8 @@ export async function POST(request: NextRequest) {
             synced_at: new Date().toISOString(),
             program_id: activeMembership.program_id,
             sync_enabled: syncMode === "automatic",
+            sync_window_start: monthStart,
+            sync_window_end: monthEnd,
           },
           {
             onConflict:

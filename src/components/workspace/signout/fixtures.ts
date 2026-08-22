@@ -57,6 +57,7 @@ function card(partial: Partial<SignoutCard> & Pick<SignoutCard, "id" | "handle">
     sortOrder: 0,
     pinned: false,
     body: "",
+    diagnostics: { version: 1, items: [] },
     attending: "",
     hasIdentifiers: false,
     version: 1,
@@ -87,6 +88,8 @@ export const PREVIEW_CARDS: SignoutCard[] = [
       "34M R femur · NWB\n" +
       "## HPI/Exam\nWatch for compartment syndrome. Firm but compressible.\n" +
       "## Plan\nContinue NWB; monitor compartments. Return to OR for washout.\n" +
+      "## Dispo\nSNF\n" +
+      "## Dispo barriers\n[ ] Pain control\n[ ] Final culture plan\n" +
       "## To-do\n[ ] Recheck compartments q2h #pending\n[ ] Trend H/H at 2am\n[ ] NPO after midnight #OR",
   }),
   card({

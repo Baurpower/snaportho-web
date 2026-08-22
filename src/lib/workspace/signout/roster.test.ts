@@ -24,12 +24,13 @@ assert.equal(rosterOneLiner("## Plan\n[ ] only"), "");
 
 // --- open todos ---
 const todosBody =
-  "lead\n## Plan\n[ ] Recheck compartments\n[x] Done thing\n[ ] Trend H/H\n## HPI/Exam\n[ ] also open here";
+  "lead\n## Plan\n[ ] Recheck compartments\n[x] Done thing\n[ ] Trend H/H\n## HPI/Exam\n[ ] also open here\n## Dispo barriers\n[ ] Clear PT";
 const todos = extractOpenTodos(todosBody);
-assert.equal(todos.length, 3);
+assert.equal(todos.length, 4);
 assert.equal(todos[0].text, "Recheck compartments");
 assert.equal(todos[1].text, "Trend H/H");
 assert.equal(todos[2].text, "also open here");
+assert.equal(todos[3].section, "Dispo barriers");
 
 // --- plan block ---
 const plan = rosterPlanBlock(
@@ -80,7 +81,10 @@ const card: SignoutCard = {
   body:
     "42M s/p lower extremity medial and lateral plateau · NWB\n" +
     "## HPI/Exam\nWatch compartments.\n" +
-    "## Plan\n[ ] Recheck q2h #pending\nAnemia watch",
+    "## Plan\n[ ] Recheck q2h #pending\nAnemia watch\n" +
+    "## Dispo\nHome pending PT\n" +
+    "## Dispo barriers\n[ ] Clear stairs",
+  diagnostics: { version: 1, items: [] },
   hasIdentifiers: false,
   version: 1,
   dischargedAt: null,
@@ -98,6 +102,8 @@ assert.equal(row.podLabel, "POD 3");
 assert.deepEqual(row.weightBearing, ["NWB"]);
 assert.ok(row.oneLiner.includes("42M"));
 assert.equal(row.openTodos.length, 1);
+assert.equal(row.disposition, "Home pending PT");
+assert.equal(row.dispoBarriers[0]?.text, "Clear stairs");
 assert.ok(row.planProse.some((p) => p.includes("Anemia")));
 assert.ok(row.tags.includes("pending"));
 assert.equal(row.clinicalExtras[0]?.title, "HPI/Exam");
@@ -108,6 +114,7 @@ assert.ok(cols.clinical.includes("42M"));
 assert.ok(cols.clinical.includes("Watch compartments"));
 assert.ok(cols.plan.includes("Recheck q2h"));
 assert.ok(cols.plan.includes("Anemia"));
+assert.equal(cols.dispo, "Home pending PT\n☐ Clear stairs");
 assert.equal(cols.labs, "");
 
 console.log("Sign-out roster tests passed");

@@ -81,6 +81,20 @@ function renderAttendingQuestions(items: CurriculumStudyResponse['attendingQuest
     .join('');
 }
 
+function renderMiniQuiz(items: CurriculumStudyResponse['miniQuiz']) {
+  if (!items.length) return '';
+  return items.map((item, index) => `<details style="padding:8px 0;border-bottom:${index < items.length - 1 ? '1px solid #e2e8f0' : 'none'};">
+    <summary style="cursor:pointer;font-size:13px;line-height:1.4;font-weight:700;">${escapeHtml(item.question)}</summary>
+    <p style="margin:7px 0 2px;font-size:12px;line-height:1.45;color:#0f766e;font-weight:800;">${escapeHtml(item.answer)}</p>
+    <p style="margin:0;font-size:12px;line-height:1.45;color:#475569;">${escapeHtml(item.explanation)}</p>
+  </details>`).join('');
+}
+
+function renderComparisonTable(table: CurriculumStudyResponse['comparisonTable']) {
+  if (!table?.headers.length || !table.rows.length) return '';
+  return `<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:11px;line-height:1.35;"><thead><tr>${table.headers.map((header) => `<th style="padding:6px;text-align:left;background:#f1f5f9;border:1px solid #cbd5e1;">${escapeHtml(header)}</th>`).join('')}</tr></thead><tbody>${table.rows.map((row) => `<tr>${row.map((cell) => `<td style="padding:6px;vertical-align:top;border:1px solid #e2e8f0;">${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
+
 function sectionsForEmphasis(emphasis: CurriculumExplainEmphasis) {
   const common = ['takeaway', 'thirty', 'mustKnow', 'mistakes'] as const;
   switch (emphasis) {
@@ -89,9 +103,9 @@ function sectionsForEmphasis(emphasis: CurriculumExplainEmphasis) {
     case 'boards':
       return [...common, 'testable', 'attending'];
     case 'or':
-      return [...common, 'attending', 'pearls'];
+      return [...common, 'attending', 'pearls', 'testable', 'comparison', 'quiz', 'memory', 'deepDive'];
     default:
-      return [...common];
+      return [...common, 'pearls', 'testable', 'attending', 'comparison', 'quiz', 'memory', 'deepDive'];
   }
 }
 
@@ -178,7 +192,7 @@ export function renderCurriculumStudyPanel(study: CurriculumStudyResponse, pageC
     cards.push(
       renderCollapsibleCard({
         id: 'pearls',
-        title: 'Practical pearls',
+        title: study.emphasis === 'or' ? 'Operative pearls' : 'Practical pearls',
         contentHtml: renderBulletList(study.clinicalPearls),
         expanded: study.emphasis === 'clinical' || study.emphasis === 'or',
       }),
@@ -189,7 +203,7 @@ export function renderCurriculumStudyPanel(study: CurriculumStudyResponse, pageC
     cards.push(
       renderCollapsibleCard({
         id: 'testable',
-        title: 'Most testable facts',
+        title: 'Board-grade facts & thresholds',
         contentHtml: renderBulletList(study.testableFacts),
         expanded: study.emphasis === 'boards',
       }),
@@ -205,6 +219,22 @@ export function renderCurriculumStudyPanel(study: CurriculumStudyResponse, pageC
         expanded: study.emphasis === 'or' || study.emphasis === 'boards',
       }),
     );
+  }
+
+  if (active.has('comparison') && study.comparisonTable) {
+    cards.push(renderCollapsibleCard({ id: 'comparison', title: 'Compare the options', contentHtml: renderComparisonTable(study.comparisonTable) }));
+  }
+
+  if (active.has('quiz') && study.miniQuiz.length) {
+    cards.push(renderCollapsibleCard({ id: 'quiz', title: 'Active recall', contentHtml: renderMiniQuiz(study.miniQuiz), tone: 'accent' }));
+  }
+
+  if (active.has('memory') && study.memoryHooks.length) {
+    cards.push(renderCollapsibleCard({ id: 'memory', title: 'Memory hooks', contentHtml: renderBulletList(study.memoryHooks) }));
+  }
+
+  if (active.has('deepDive') && study.deepDive.length) {
+    cards.push(renderCollapsibleCard({ id: 'deepDive', title: 'Why it matters', contentHtml: renderBulletList(study.deepDive) }));
   }
 
   const clinicalWarnings = study.warnings.filter(isClinicallyImportantWarning);

@@ -8,6 +8,7 @@ import {
   Printer,
   Users,
   Loader2,
+  X,
 } from "lucide-react";
 
 import { createClient } from "@/utils/supabase/client";
@@ -20,14 +21,12 @@ import type {
 } from "@/lib/workspace/signout/types";
 import { extractTags } from "@/lib/workspace/signout/tokens";
 import { computePod } from "@/lib/workspace/signout/pod";
-import { splitFields } from "@/lib/workspace/signout/fields";
 import {
   apiCreateCard,
   apiCreateService,
   apiDeleteCard,
   apiListCards,
   apiReorder,
-  apiDraftCard,
   apiRevealIdentity,
   apiSaveIdentity,
   apiUpdateCard,
@@ -62,16 +61,16 @@ export function SignoutBoard({
     initialServices[0]?.id ?? null
   );
   const [cards, setCards] = useState<SignoutCard[]>(preview ? previewCards : []);
-  const [view, setView] = useState<View>(() => {
-    if (typeof window === "undefined") return "table";
+  const [view, setView] = useState<View>("table");
+
+  useEffect(() => {
     try {
       const saved = window.localStorage.getItem("signout:view");
-      if (saved === "card" || saved === "table") return saved;
+      if (saved === "card" || saved === "table") setView(saved);
     } catch {
       /* ignore */
     }
-    return "table";
-  });
+  }, []);
   const [loadingCards, setLoadingCards] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [viewers, setViewers] = useState(1);
@@ -87,6 +86,8 @@ export function SignoutBoard({
   const [addingService, setAddingService] = useState(false);
   const [newHandle, setNewHandle] = useState("");
   const [addingCard, setAddingCard] = useState(false);
+  const [showAddCard, setShowAddCard] = useState(false);
+  const newHandleRef = useRef<HTMLInputElement | null>(null);
 
   const [severityFilter, setSeverityFilter] = useState<SignoutSeverity | null>(null);
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
@@ -270,6 +271,7 @@ export function SignoutBoard({
         sortOrder: cards.length,
         pinned: false,
         body: "",
+        diagnostics: { version: 1, items: [] },
         attending: "",
         hasIdentifiers: false,
         version: 1,
@@ -279,16 +281,39 @@ export function SignoutBoard({
         updatedBy: null,
         updatedAt: new Date().toISOString(),
       };
-      setCards((prev) => [...prev, card]);
+      cardsRef.current = [card, ...cardsRef.current].map((item, sortOrder) => ({
+        ...item,
+        sortOrder,
+      }));
+      setCards(cardsRef.current);
       setNewHandle("");
+      setShowAddCard(false);
+      setViewPersist("card");
+      requestAnimationFrame(() => {
+        cardRefs.current[card.id]?.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
       return;
     }
     setAddingCard(true);
     setError(null);
     try {
       const card = await apiCreateCard(activeServiceId, { handle });
-      setCards((prev) => [...prev, card]);
+      const reordered = [card, ...cardsRef.current].map((item, sortOrder) => ({
+        ...item,
+        sortOrder,
+      }));
+      await apiReorder(
+        activeServiceId,
+        reordered.map((item) => ({ id: item.id, sortOrder: item.sortOrder }))
+      );
+      cardsRef.current = reordered;
+      setCards(cardsRef.current);
       setNewHandle("");
+      setShowAddCard(false);
+      setViewPersist("card");
+      requestAnimationFrame(() => {
+        cardRefs.current[card.id]?.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to add patient");
     } finally {
@@ -341,27 +366,6 @@ export function SignoutBoard({
       return { name: "Jane Q. Sample", dob: "1954-03-02", mrn: "MRN-000123" };
     }
     return apiRevealIdentity(cardId);
-  }
-
-  async function generateDraft(cardId: string): Promise<string> {
-    if (!preview) return apiDraftCard(cardId);
-    // Local mock so the design is verifiable without OpenAI.
-    const card = cards.find((c) => c.id === cardId);
-    if (!card) return "";
-    const f = splitFields(card.body);
-    const pod = computePod(card.surgeryDate);
-    const surgeryLine = [pod?.label, card.surgery ? `s/p ${card.surgery}` : ""]
-      .filter(Boolean)
-      .join(" ");
-    return [
-      `{{name}}, ${f.lead || "patient"}.`,
-      surgeryLine,
-      f.values["HPI/Exam"],
-      f.values["Labs/Imaging/PT"],
-      f.values["Plan"],
-    ]
-      .filter((p) => p && p.trim())
-      .join("\n\n");
   }
 
   function setViewPersist(next: View) {
@@ -569,17 +573,69 @@ export function SignoutBoard({
             </div>
           )}
 
-          {/* Quick add */}
-          <div className="mt-3 flex items-center gap-2 rounded-xl border border-dashed border-slate-300 px-3 py-2">
-            <Plus className="h-4 w-4 text-slate-400" />
-            <input
-              value={newHandle}
-              onChange={(e) => setNewHandle(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleAddCard()}
-              placeholder="Add a patient — type a bed like 7W-12 and press enter"
-              className="flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400"
-            />
-            {addingCard && <Loader2 className="h-4 w-4 animate-spin text-slate-400" />}
+          {/* Explicit add flow */}
+          <div className="mt-3">
+            {!showAddCard ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setShowAddCard(true);
+                  requestAnimationFrame(() => newHandleRef.current?.focus());
+                }}
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 bg-white px-3 py-2.5 text-sm font-semibold text-slate-700 hover:border-blue-400 hover:bg-blue-50/40"
+              >
+                <Plus className="h-4 w-4" /> Add patient
+              </button>
+            ) : (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  void handleAddCard();
+                }}
+                className="rounded-xl border border-blue-200 bg-white p-3 shadow-sm"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-sm font-bold text-slate-900">Add patient</p>
+                    <p className="text-xs text-slate-500">Use a concise roster label, name, or bed.</p>
+                  </div>
+                  <button
+                    type="button"
+                    aria-label="Cancel adding patient"
+                    onClick={() => {
+                      setShowAddCard(false);
+                      setNewHandle("");
+                    }}
+                    className="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+                <label className="mt-3 block text-xs font-bold text-slate-700" htmlFor="new-patient-handle">
+                  Patient label
+                </label>
+                <div className="mt-1 flex flex-col gap-2 sm:flex-row">
+                  <input
+                    ref={newHandleRef}
+                    id="new-patient-handle"
+                    value={newHandle}
+                    onChange={(e) => setNewHandle(e.target.value)}
+                    maxLength={40}
+                    placeholder="e.g. Smith, J. or 7W-12"
+                    className="h-10 flex-1 rounded-lg border border-slate-300 px-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                  />
+                  <button
+                    type="submit"
+                    disabled={addingCard || !newHandle.trim()}
+                    className="flex h-10 items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 text-sm font-bold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    {addingCard ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
+                    Add patient
+                  </button>
+                </div>
+                <p className="mt-1.5 text-xs text-slate-400">The patient will appear at the top of the list.</p>
+              </form>
+            )}
           </div>
 
           {/* Body */}
@@ -610,7 +666,6 @@ export function SignoutBoard({
                     onMove={(dir) => handleMove(card.id, dir)}
                     onSaveIdentity={(ids) => saveIdentity(card.id, ids)}
                     onRevealIdentity={() => revealIdentity(card.id)}
-                    onGenerateDraft={() => generateDraft(card.id)}
                     canMoveUp={i > 0}
                     canMoveDown={i < filteredCards.length - 1}
                   />

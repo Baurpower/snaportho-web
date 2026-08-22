@@ -118,14 +118,6 @@ export async function apiSaveIdentity(
   await jsonOrThrow<{ ok: true }>(res, "Failed to save identifiers");
 }
 
-export async function apiDraftCard(cardId: string): Promise<string> {
-  const res = await fetch(`/api/workspace/signout/cards/${cardId}/draft`, {
-    method: "POST",
-  });
-  const { draft } = await jsonOrThrow<{ draft: string }>(res, "Failed to generate text");
-  return draft;
-}
-
 export async function apiRevealIdentity(cardId: string): Promise<PatientIdentifiers> {
   const res = await fetch(
     `/api/workspace/signout/cards/${cardId}/identifiers/reveal`,

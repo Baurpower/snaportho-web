@@ -3,6 +3,7 @@
 import type { CasePrepPacketState } from "@/lib/caseprep-v1-1/stream-schema";
 import { ClarificationPrompt } from "./ClarificationPrompt";
 import { ApproachDecisionSection } from "./ApproachDecisionSection";
+import { ProcedureSummary } from "./ProcedureSummary";
 import { HighYieldReferences } from "./HighYieldReferences";
 import { PacketHeader, PacketHeaderSkeleton } from "./PacketHeader";
 import { PimpQuestionCard } from "./PimpQuestionCard";
@@ -112,7 +113,7 @@ const SECTION_LAYOUT: Array<{
   kicker?: string;
 }> = [
   { id: "approach_decision", label: "Approach Decision" },
-  { id: "summary", label: "Procedure Summary" },
+  { id: "summary", label: "Case Must-Knows" },
   {
     id: "pimp_questions",
     label: "Common Pimp Questions",
@@ -147,9 +148,10 @@ function SectionBody({
       return <ApproachDecisionSection payload={section.payload} />;
     case "summary":
       return (
-        <p className="text-sm leading-7 text-slate-800">
-          {section.items.map((item) => item.answer).join(" ")}
-        </p>
+        <ProcedureSummary
+          items={section.items}
+          decision={state.sections.approach_decision?.payload}
+        />
       );
     case "key_takeaways":
       return <KeyTakeaways items={section.items} />;

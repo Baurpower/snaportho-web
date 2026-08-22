@@ -1,12 +1,109 @@
 import { detectQuestionProvider, extractQuestionContext } from './extractor.js';
 import { startQuestionLifecycleWatch } from './question-lifecycle.js';
 import { installHimalayaDebugInspector } from '../providers/himalaya/himalaya-debug.js';
+import { submitHimalayaAnswerForRemediation } from '../providers/himalaya/himalaya-api.js';
 import {
+  getActiveHimalayaQuestion,
   getHimalayaStoreSnapshot,
   startHimalayaStore,
   subscribeToHimalayaStore,
   waitForHimalayaStoreReady,
 } from '../providers/himalaya/himalaya-store.js';
+
+const revealedHimalayaQuestions = new Set<number>();
+const himalayaRemediationResults = new Map<number, {
+  loading?: boolean;
+  error?: string;
+  correct?: boolean | null;
+  correctAnswerIds?: string[];
+  explanation?: string | null;
+}>();
+
+function renderHimalayaAnswerCheck(root: ShadowRoot | HTMLElement) {
+  const slot = root.querySelector('#brobot-answer-check') as HTMLElement | null;
+  if (!slot) return;
+  const question = getActiveHimalayaQuestion();
+  if (!question || question.reviewAvailable) {
+    slot.replaceChildren();
+    slot.setAttribute('data-visible', 'false');
+    return;
+  }
+
+  const selected = question.choices.find((choice) => choice.selected);
+  const submission = himalayaRemediationResults.get(question.questionAttemptId);
+  const bridgeQuestion = getHimalayaStoreSnapshot().bridgeState?.liveQuestion?.question ?? null;
+  const submittedCorrectLabels = (submission?.correctAnswerIds ?? []).flatMap((rawId) => {
+    const index = bridgeQuestion?.answers?.findIndex((answer) => String(answer.id) === rawId) ?? -1;
+    return index >= 0 ? [question.choices[index]?.id].filter((value): value is string => Boolean(value)) : [];
+  });
+  const correctIds = submittedCorrectLabels.length ? submittedCorrectLabels : question.authoritativeCorrectChoiceIds;
+  const correct = question.choices.find((choice) => correctIds.includes(choice.id));
+  const revealed = revealedHimalayaQuestions.has(question.questionAttemptId);
+  const button = document.createElement('button');
+  button.id = 'brobot-check-answer';
+  button.type = 'button';
+  button.disabled = !selected || submission?.loading === true;
+  button.textContent = submission?.loading
+    ? 'Checking with AAOS…'
+    : !selected
+      ? 'Select an answer to check'
+      : revealed
+        ? 'AAOS answer revealed'
+        : 'Submit & check answer';
+
+  slot.replaceChildren(button);
+  slot.setAttribute('data-visible', 'true');
+  if (revealed && selected && correct) {
+    const result = document.createElement('div');
+    result.id = 'brobot-answer-result';
+    const isCorrect = selected.id === correct.id;
+    result.setAttribute('data-correct', String(isCorrect));
+    const heading = document.createElement('strong');
+    heading.textContent = isCorrect ? 'Correct' : 'Not quite';
+    const detail = document.createElement('span');
+    detail.textContent = `You chose ${selected.label}. AAOS answer: ${correct.label}) ${correct.text}`;
+    result.append(heading, detail);
+    if (submission?.explanation) {
+      const explanation = document.createElement('span');
+      explanation.textContent = submission.explanation;
+      result.appendChild(explanation);
+    }
+    slot.appendChild(result);
+  } else if (submission?.error) {
+    const error = document.createElement('div');
+    error.id = 'brobot-answer-result';
+    error.textContent = submission.error;
+    slot.appendChild(error);
+  }
+  button.addEventListener('click', async () => {
+    if (!selected || !bridgeQuestion) return;
+    if (correct) {
+      revealedHimalayaQuestions.add(question.questionAttemptId);
+      renderHimalayaAnswerCheck(root);
+      return;
+    }
+    const snapshot = getHimalayaStoreSnapshot();
+    const testAttemptId = snapshot.bridgeState?.testAttemptId;
+    if (testAttemptId == null) return;
+    himalayaRemediationResults.set(question.questionAttemptId, { loading: true });
+    renderHimalayaAnswerCheck(root);
+    const result = await submitHimalayaAnswerForRemediation({
+      testAttemptId,
+      question: bridgeQuestion,
+      origin: window.location.origin,
+    });
+    if (result.ok) {
+      himalayaRemediationResults.set(question.questionAttemptId, result);
+      revealedHimalayaQuestions.add(question.questionAttemptId);
+    } else {
+      const suffix = result.status ? ` (${result.status})` : '';
+      himalayaRemediationResults.set(question.questionAttemptId, {
+        error: `AAOS did not release per-question feedback: ${result.reason}${suffix}.`,
+      });
+    }
+    renderHimalayaAnswerCheck(root);
+  });
+}
 
 declare global {
   interface Window {
@@ -29,6 +126,14 @@ function ensureInPageLauncher() {
     #brobot-shell { position: fixed; right: 16px; bottom: 16px; z-index: 2147483000; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     #brobot-launcher { width: 52px; height: 52px; border-radius: 999px; border: 1px solid rgba(15, 118, 110, 0.3); background: #0f766e; color: white; box-shadow: 0 14px 34px rgba(15, 23, 42, 0.24); display: grid; place-items: center; cursor: pointer; padding: 0; }
     #brobot-launcher img { width: 30px; height: 30px; display: block; }
+    #brobot-answer-check { display:none; position:absolute; right:0; bottom:64px; width:300px; padding:10px; border:1px solid rgba(15,23,42,.16); border-radius:14px; background:#fff; box-shadow:0 14px 34px rgba(15,23,42,.2); }
+    #brobot-answer-check[data-visible="true"] { display:grid; gap:8px; }
+    #brobot-check-answer { border:0; border-radius:11px; padding:10px 12px; background:#0f766e; color:#fff; font:700 13px/1.2 system-ui; cursor:pointer; }
+    #brobot-check-answer:disabled { background:#94a3b8; cursor:default; }
+    #brobot-answer-result { display:grid; gap:4px; padding:10px; border-radius:10px; background:#fff7ed; color:#9a3412; font:500 12px/1.4 system-ui; }
+    #brobot-answer-result[data-correct="true"] { background:#ecfdf5; color:#065f46; }
+    #brobot-answer-result strong { font-size:14px; }
+    #brobot-answer-result span { overflow-wrap:anywhere; }
     #brobot-panel { display: none; width: min(420px, calc(100vw - 32px)); height: min(720px, calc(100vh - 92px)); background: #fbfaf6; border: 1px solid rgba(15, 23, 42, 0.16); border-radius: 16px; overflow: hidden; box-shadow: 0 22px 60px rgba(15, 23, 42, 0.26); }
     #brobot-panel[data-open="true"] { display: block; }
     #brobot-panel iframe { width: 100%; height: 100%; border: 0; background: #fbfaf6; display: block; }
@@ -42,6 +147,7 @@ function ensureInPageLauncher() {
   const shell = document.createElement('div');
   shell.id = 'brobot-shell';
   shell.innerHTML = `
+    <div id="brobot-answer-check" data-visible="false" aria-live="polite"></div>
     <div id="brobot-panel" aria-label="BroBot panel">
       <button id="brobot-close" type="button" aria-label="Close BroBot">×</button>
       <iframe title="BroBot" src="${chrome.runtime.getURL('sidepanel.html')}?embedded=1&amp;hostUrl=${encodeURIComponent(window.location.href)}"></iframe>
@@ -59,6 +165,7 @@ function ensureInPageLauncher() {
     panel?.setAttribute('data-open', panel.getAttribute('data-open') === 'true' ? 'false' : 'true');
   });
   close?.addEventListener('click', () => panel?.setAttribute('data-open', 'false'));
+  renderHimalayaAnswerCheck(root);
 }
 
 if (!window.__snapOrthoBroBotContentScriptLoaded) {
@@ -80,6 +187,9 @@ if (!window.__snapOrthoBroBotContentScriptLoaded) {
   const questionLifecycle = startQuestionLifecycleWatch(document, window.location.href);
   if (detectQuestionProvider({ document: document as never, pageUrl: window.location.href }) === 'himalaya') {
     subscribeToHimalayaStore((snapshot) => {
+      const launcherHost = document.getElementById('brobot-extension-root');
+      const launcherRoot = launcherHost?.shadowRoot ?? launcherHost;
+      if (launcherRoot) renderHimalayaAnswerCheck(launcherRoot);
       if (snapshot.readiness === 'ready' || snapshot.readiness === 'error') {
         questionLifecycle.requestCheck('store');
       }

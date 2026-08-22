@@ -48,7 +48,7 @@ export const CurriculumStudyResponseSchema = z.object({
   suggestedFollowUps: z.array(z.string().trim().min(1).max(200)).max(8).default([]),
   nextReviewTopics: z.array(z.string().trim().min(1).max(160)).max(6).default([]),
   learningObjectives: z.array(LearningObjectiveCoverageSchema).max(12).default([]),
-  comparisonTable: ComparisonTableSchema.optional(),
+  comparisonTable: ComparisonTableSchema.nullable().optional(),
   deepDive: z.array(z.string().trim().min(1).max(300)).max(8).default([]),
   referencesNote: z.string().trim().min(1).max(400).optional(),
   fallbackBullets: z.array(z.string().trim().min(1).max(240)).max(6).optional(),

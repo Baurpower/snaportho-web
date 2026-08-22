@@ -174,6 +174,96 @@ async function sendMessage(message: ExtensionMessage): Promise<ExtensionMessageR
   return chrome.runtime.sendMessage(message);
 }
 
+function mergeCurriculumStreamPartial(
+  current: CurriculumStudyResponse | null,
+  raw: unknown,
+  emphasis: CurriculumExplainEmphasis,
+): CurriculumStudyResponse | null {
+  if (!raw || typeof raw !== 'object') return current;
+  const partial = raw as Partial<CurriculumStudyResponse>;
+  const appendUnique = <T>(previous: T[], incoming: unknown): T[] => {
+    if (!Array.isArray(incoming)) return previous;
+    const seen = new Set(previous.map((item) => JSON.stringify(item)));
+    return [...previous, ...incoming.filter((item) => !seen.has(JSON.stringify(item)))] as T[];
+  };
+  const base: CurriculumStudyResponse = current ?? {
+    responseKind: 'curriculum',
+    explanationId: crypto.randomUUID(),
+    emphasis,
+    oneSentenceTakeaway: '',
+    inThirtySeconds: [],
+    mustKnow: [],
+    clinicalPearls: [],
+    commonMistakes: [],
+    attendingQuestions: [],
+    testableFacts: [],
+    miniQuiz: [],
+    memoryHooks: [],
+    suggestedFollowUps: [],
+    nextReviewTopics: [],
+    learningObjectives: [],
+    deepDive: [],
+    warnings: [],
+  };
+  return {
+    ...base,
+    oneSentenceTakeaway:
+      base.oneSentenceTakeaway ||
+      (typeof partial.oneSentenceTakeaway === 'string' ? partial.oneSentenceTakeaway : ''),
+    inThirtySeconds: appendUnique(base.inThirtySeconds, partial.inThirtySeconds),
+    mustKnow: appendUnique(base.mustKnow, partial.mustKnow),
+    clinicalPearls: appendUnique(base.clinicalPearls, partial.clinicalPearls),
+    commonMistakes: appendUnique(base.commonMistakes, partial.commonMistakes),
+    attendingQuestions: appendUnique(base.attendingQuestions, partial.attendingQuestions),
+    testableFacts: appendUnique(base.testableFacts, partial.testableFacts),
+    miniQuiz: appendUnique(base.miniQuiz, partial.miniQuiz),
+    memoryHooks: appendUnique(base.memoryHooks, partial.memoryHooks),
+    suggestedFollowUps: appendUnique(base.suggestedFollowUps, partial.suggestedFollowUps),
+    nextReviewTopics: appendUnique(base.nextReviewTopics, partial.nextReviewTopics),
+    learningObjectives: appendUnique(base.learningObjectives, partial.learningObjectives),
+    deepDive: appendUnique(base.deepDive, partial.deepDive),
+    warnings: appendUnique(base.warnings, partial.warnings),
+    comparisonTable: base.comparisonTable ?? partial.comparisonTable,
+    referencesNote: base.referencesNote ?? partial.referencesNote,
+  };
+}
+
+function buildInstantCurriculumPreview(
+  pageContext: OrthobulletsPageContext,
+  emphasis: CurriculumExplainEmphasis,
+): CurriculumStudyResponse {
+  const title = pageContext.title?.trim() || 'this learning page';
+  const headings = [
+    ...(pageContext.sectionHeadings ?? []),
+    ...(pageContext.contentSections ?? []).map((section) => section.heading),
+  ]
+    .map((heading) => heading?.trim())
+    .filter((heading): heading is string => Boolean(heading))
+    .filter((heading, index, all) => all.indexOf(heading) === index)
+    .filter((heading) => !/^(references|resources|recommended readings)$/i.test(heading))
+    .slice(0, 6);
+  const pageMap = headings.length ? headings : ['Core concepts', 'Clinical application', 'Board-relevant details'];
+  return {
+    responseKind: 'curriculum',
+    explanationId: crypto.randomUUID(),
+    emphasis,
+    oneSentenceTakeaway: `Scanning ${title} now; high-yield teaching notes will replace this page map as each section finishes.`,
+    inThirtySeconds: pageMap.slice(0, 5).map((heading) => `Reviewing: ${heading}`),
+    mustKnow: [{ title: 'Page map', bullets: pageMap }],
+    clinicalPearls: [],
+    commonMistakes: [],
+    attendingQuestions: [],
+    testableFacts: [],
+    miniQuiz: [],
+    memoryHooks: [],
+    suggestedFollowUps: [],
+    nextReviewTopics: [],
+    learningObjectives: [],
+    deepDive: [],
+    warnings: [],
+  };
+}
+
 function createElement<K extends keyof HTMLElementTagNameMap>(
   tag: K,
   options: {
@@ -756,6 +846,8 @@ export function mountSidePanelApp(root: HTMLElement) {
     reviewBoardExplainAllInFlight: boolean;
     reviewBoardLoadedFor: string | null;
     fullTestDebrief: FullTestDebrief | null;
+    curriculumStreamRequestId: string | null;
+    curriculumStreamStatus: string | null;
   } = {
     activePage: null,
     auth: null,
@@ -799,7 +891,69 @@ export function mountSidePanelApp(root: HTMLElement) {
     reviewBoardExplainAllInFlight: false,
     reviewBoardLoadedFor: null,
     fullTestDebrief: null,
+    curriculumStreamRequestId: null,
+    curriculumStreamStatus: null,
   };
+
+  let curriculumWatchdog: ReturnType<typeof setTimeout> | null = null;
+  const clearCurriculumWatchdog = () => {
+    if (curriculumWatchdog) clearTimeout(curriculumWatchdog);
+    curriculumWatchdog = null;
+  };
+  const armCurriculumWatchdog = () => {
+    clearCurriculumWatchdog();
+    const watchedRequestId = state.curriculumStreamRequestId;
+    if (!watchedRequestId) return;
+    curriculumWatchdog = setTimeout(() => {
+      if (state.curriculumStreamRequestId !== watchedRequestId) return;
+      bumpQuestionLifecycleGeneration();
+      state.curriculumStreamRequestId = null;
+      state.curriculumStreamStatus = null;
+      state.operation = 'idle';
+      state.error = {
+        message: 'BroBot stopped receiving section updates. Retry to start a fresh study pass.',
+        code: 'network_failure',
+      };
+      void sendMessage({ type: 'ob:cancel-curriculum-stream', streamRequestId: watchedRequestId });
+      render();
+    }, 105_000);
+  };
+
+  chrome.runtime.onMessage.addListener((message: unknown) => {
+    if (!message || typeof message !== 'object') return;
+    const streamed = message as {
+      type?: string;
+      streamRequestId?: string;
+      event?: string;
+      data?: unknown;
+    };
+    if (
+      streamed.type !== 'ob:curriculum-stream' ||
+      !streamed.streamRequestId ||
+      streamed.streamRequestId !== state.curriculumStreamRequestId
+    ) {
+      return;
+    }
+    armCurriculumWatchdog();
+    if (streamed.event === 'status' && streamed.data && typeof streamed.data === 'object') {
+      const status = streamed.data as { message?: unknown };
+      state.curriculumStreamStatus = typeof status.message === 'string' ? status.message : 'Building study guide…';
+    } else if (streamed.event === 'partial' && streamed.data && typeof streamed.data === 'object') {
+      const partial = streamed.data as { result?: unknown; completed?: number; total?: number };
+      state.curriculumStudy = mergeCurriculumStreamPartial(
+        state.curriculumStudy,
+        partial.result,
+        state.explainEmphasis,
+      );
+      state.curriculumStreamStatus = `Showing notes as they arrive · ${partial.completed ?? 0}/${partial.total ?? '?'} sections`;
+    } else if (streamed.event === 'complete' && isCurriculumStudyResponse(streamed.data as BrobotExplainResult)) {
+      state.curriculumStudy = streamed.data as CurriculumStudyResponse;
+      state.explanation = state.curriculumStudy;
+      state.curriculumStreamStatus = null;
+      clearCurriculumWatchdog();
+    }
+    render();
+  });
 
   const questionTutorController = new QuestionTutorController({
     sendMessage,
@@ -984,13 +1138,13 @@ export function mountSidePanelApp(root: HTMLElement) {
    * Explain one board row. The row carries only a preview, so the full question
    * is pulled from the content script by te6 attempt id before asking BroBot.
    */
-  async function explainReviewBoardRow(questionAttemptId: number) {
+  async function explainReviewBoardRow(questionAttemptId: number, expand = true) {
     const existing = getReviewBoardRowState(questionAttemptId);
     if (existing.loading || existing.explanation) return null;
     if (!state.activePage?.tabId) return 'unsupported_page' as ExtensionErrorCode;
 
     setReviewBoardRowState(questionAttemptId, {
-      expanded: true,
+      expanded: expand ? true : existing.expanded,
       loading: true,
       error: null,
     });
@@ -1060,12 +1214,12 @@ export function mountSidePanelApp(root: HTMLElement) {
 
     state.reviewBoardExplainAllInFlight = true;
     for (const questionAttemptId of summary.missedIds) {
-      setReviewBoardRowState(questionAttemptId, { expanded: true });
+      setReviewBoardRowState(questionAttemptId, { expanded: getReviewBoardRowState(questionAttemptId).expanded });
     }
     render();
 
     for (const questionAttemptId of summary.missedIds) {
-      const errorCode = await explainReviewBoardRow(questionAttemptId);
+      const errorCode = await explainReviewBoardRow(questionAttemptId, false);
       // Stop early rather than burning quota once the account is capped out.
       if (errorCode === 'quota_exceeded') break;
     }
@@ -1382,11 +1536,19 @@ export function mountSidePanelApp(root: HTMLElement) {
   ) {
     bumpQuestionLifecycleGeneration();
     const generation = state.questionLifecycleGeneration;
+    const previousStreamRequestId = state.curriculumStreamRequestId;
+    if (previousStreamRequestId) {
+      void sendMessage({ type: 'ob:cancel-curriculum-stream', streamRequestId: previousStreamRequestId });
+    }
+    clearCurriculumWatchdog();
+    state.curriculumStreamRequestId = null;
+    state.curriculumStreamStatus = null;
     state.questionRefreshing = false;
     state.error = null;
     if (!options.emphasis) {
       state.explanation = null;
       state.curriculumStudy = null;
+      state.curriculumStreamStatus = null;
       state.chatHistory = [];
       state.chatPrompts = [];
       state.chatDraft = '';
@@ -1456,19 +1618,31 @@ export function mountSidePanelApp(root: HTMLElement) {
       task: requestedTask,
       extensionBuildId: EXTENSION_BUILD_ID,
     });
+    if (requestedTask === 'curriculum_explain') {
+      state.curriculumStudy = buildInstantCurriculumPreview(pageContext, state.explainEmphasis);
+      state.curriculumStreamStatus = 'Page map ready · building high-yield section notes…';
+    }
     render();
 
+    const streamRequestId = requestedTask === 'curriculum_explain' ? crypto.randomUUID() : undefined;
+    state.curriculumStreamRequestId = streamRequestId ?? null;
+    if (streamRequestId) state.curriculumStreamStatus = 'Starting the high-yield pass…';
+    armCurriculumWatchdog();
     const explainResult = await sendMessage({
       type: 'brobot:request',
       task: requestedTask,
       pageContext,
       emphasis: state.explainEmphasis,
+      streamRequestId,
     });
 
     if (!isCurrentQuestionLifecycle(generation)) return;
 
     if (!explainResult.ok || !('explanation' in explainResult)) {
       state.operation = 'idle';
+      state.curriculumStreamStatus = null;
+      state.curriculumStreamRequestId = null;
+      clearCurriculumWatchdog();
       state.error = explainResult.ok
         ? { message: 'Failed to explain page.', code: 'unknown' }
         : {
@@ -1483,6 +1657,9 @@ export function mountSidePanelApp(root: HTMLElement) {
     }
 
     state.operation = 'idle';
+    state.curriculumStreamStatus = null;
+    state.curriculumStreamRequestId = null;
+    clearCurriculumWatchdog();
     state.questionRefreshing = false;
     state.explanation = explainResult.explanation;
     state.fetchDiagnostics = explainResult.fetchDiagnostics ?? state.fetchDiagnostics;
@@ -2273,7 +2450,7 @@ export function mountSidePanelApp(root: HTMLElement) {
               ? 'Explain this page with BroBot'
               : 'Explain with BroBot';
 
-      if (isEducationalPage && !state.explanation && !pageLooksHintEligible) {
+      if (isEducationalPage && !state.explanation && !state.curriculumStudy && !pageLooksHintEligible) {
         content.appendChild(
           createElement('div', {
             html: `<div style="padding:14px;border-radius:16px;background:#f0fdfa;border:1px solid #99f6e4;display:grid;gap:10px;">
@@ -2281,7 +2458,7 @@ export function mountSidePanelApp(root: HTMLElement) {
               <p style="margin:0;color:#384152;line-height:1.5;">This looks like a learning page, not a question. BroBot can teach the visible curriculum content instead of forcing Question Tutor mode.</p>
               <div style="display:flex;gap:8px;flex-wrap:wrap;">
                 <button id="explain-page" ${isBusy ? 'disabled' : ''} style="border:none;border-radius:999px;background:${isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">${escapeHtml(explainButtonLabel)}</button>
-                <button id="force-question" ${isBusy ? 'disabled' : ''} style="border:1px solid #d2cab8;border-radius:999px;background:white;color:#18202b;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Try question detection anyway</button>
+                <button id="educational-find-anki" ${isBusy ? 'disabled' : ''} style="border:1px solid #0f766e;border-radius:999px;background:white;color:#0f766e;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Find Anki cards</button>
                 <button id="unlink-edu" ${isBusy ? 'disabled' : ''} style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Unlink</button>
               </div>
             </div>`,
@@ -2292,28 +2469,8 @@ export function mountSidePanelApp(root: HTMLElement) {
           void runExplain();
         });
         content.querySelector('#unlink-edu')?.addEventListener('click', () => void unlink());
-        content.querySelector('#force-question')?.addEventListener('click', async () => {
-          state.forceQuestionMode = true;
-          state.brobotMode = 'question_tutor';
-          const pageContext = await extractPageContext({
-            forceQuestionMode: true,
-          });
-          if (pageContext?.mode === 'question') {
-            await questionTutorController.onInitialPageContext(pageContext);
-            syncQuestionTutorShellState();
-          }
-          if (!pageContext) {
-            const nextClassification = getPageClassification(state.pageContext);
-            state.error = {
-              message: extractionFailureMessage(nextClassification),
-              code: 'extraction_failure',
-            };
-            render();
-            return;
-          }
-          state.error = null;
-          render();
-        });
+        const educationalAnkiButton = content.querySelector<HTMLButtonElement>('#educational-find-anki');
+        educationalAnkiButton?.addEventListener('click', () => void findPageAnkiCards(educationalAnkiButton));
       } else if (isMixedPage && !state.explanation) {
         content.appendChild(
           createElement('div', {
@@ -2372,7 +2529,7 @@ export function mountSidePanelApp(root: HTMLElement) {
         );
       }
 
-      if (showPrimaryExplainControl) {
+      if (showPrimaryExplainControl && !(isEducationalPage && !state.explanation && !pageLooksHintEligible)) {
         const curriculumErrorCopy =
           state.error && isCurriculumPage ? (ERROR_COPY[state.error.code] ?? ERROR_COPY.unknown) : null;
         const curriculumRequestId = state.fetchDiagnostics?.requestId;
@@ -2519,10 +2676,14 @@ export function mountSidePanelApp(root: HTMLElement) {
       );
     }
 
-    if (state.explanation && !state.questionRefreshing && state.brobotMode !== 'question_tutor') {
+    if ((state.explanation || state.curriculumStudy) && !state.questionRefreshing && state.brobotMode !== 'question_tutor') {
       if (state.brobotMode === 'explain_page' && state.curriculumStudy && state.pageContext) {
         const studyPanel = createElement('div', {
-          html: renderCurriculumStudyPanel(state.curriculumStudy, state.pageContext),
+          html: `${
+            state.curriculumStreamStatus
+              ? `<div style="margin-bottom:10px;padding:10px 12px;border-radius:12px;background:#ecfdf5;border:1px solid #a7f3d0;color:#115e59;font-size:12px;font-weight:700;">${escapeHtml(state.curriculumStreamStatus)}</div>`
+              : ''
+          }${renderCurriculumStudyPanel(state.curriculumStudy, state.pageContext)}`,
         });
         content.appendChild(studyPanel);
         studyPanel.querySelectorAll<HTMLButtonElement>('[data-emphasis-tab]').forEach((button) => {
@@ -2556,7 +2717,7 @@ export function mountSidePanelApp(root: HTMLElement) {
         }
       }
 
-      const questionWarnings = state.explanation.warnings.filter(isClinicallyImportantWarning);
+      const questionWarnings = state.explanation?.warnings.filter(isClinicallyImportantWarning) ?? [];
       if (questionWarnings.length && state.brobotMode !== 'explain_page') {
         content.appendChild(
           createElement('div', {

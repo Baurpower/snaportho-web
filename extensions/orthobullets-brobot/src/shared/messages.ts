@@ -86,6 +86,7 @@ export type ExtensionMessage =
   | { type: 'ob:start-link'; deviceName: string }
   | { type: 'ob:poll-link'; linkCode: string }
   | { type: 'ob:clear-link' }
+  | { type: 'ob:cancel-curriculum-stream'; streamRequestId: string }
   // `questionAttemptId` targets one specific AAOS Himalaya question instead of
   // whatever is on screen, so the review board can load any row on demand.
   | {
@@ -101,6 +102,7 @@ export type ExtensionMessage =
       hintLevel?: 1 | 2 | 3;
       selectedAnswerKey?: string | null;
       priorHints?: Array<Pick<OrthobulletsHintResponse, 'hintLevel' | 'title' | 'hint'>>;
+      streamRequestId?: string;
     }
   | {
       type: 'ob:hint';

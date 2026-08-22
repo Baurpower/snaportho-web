@@ -93,7 +93,9 @@ function Section({
 }) {
   const isPlan = /plan|to-?do/i.test(section.title);
   return (
-    <div className={`mt-1.5 border-t pt-1.5 ${isPlan ? "border-slate-200" : "border-slate-100"}`}>
+    <div
+      className={`mt-1.5 border-t pt-1.5 ${isPlan ? "border-slate-200" : "border-slate-100"}`}
+    >
       <div className="mb-0.5 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
         {section.title}
       </div>
@@ -104,9 +106,67 @@ function Section({
   );
 }
 
+function DispoAside({
+  disposition,
+  barriers,
+  onToggleCheckbox,
+}: {
+  disposition?: SignoutSection;
+  barriers?: SignoutSection;
+  onToggleCheckbox: (index: number) => void;
+}) {
+  const openBarriers = barriers?.lines.filter((line) => line.checkbox === "unchecked").length ?? 0;
+  return (
+    <aside className="self-start rounded-lg border border-emerald-200 bg-emerald-50/60 p-2.5">
+      <div className="mb-1.5 flex items-center justify-between gap-2">
+        <span className="text-[11px] font-bold uppercase tracking-wide text-emerald-900">
+          Dispo
+        </span>
+        {barriers && (
+          <span
+            className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
+              openBarriers > 0
+                ? "bg-amber-100 text-amber-900"
+                : "bg-emerald-100 text-emerald-800"
+            }`}
+          >
+            {openBarriers > 0 ? `${openBarriers} open` : "clear"}
+          </span>
+        )}
+      </div>
+      {disposition ? (
+        <div className="font-semibold text-slate-900">
+          {disposition.lines.map((line) => (
+            <Line key={line.index} line={line} onToggle={onToggleCheckbox} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-xs italic text-slate-400">No destination yet</p>
+      )}
+      {barriers && (
+        <div className="mt-2 border-t border-emerald-200/80 pt-1.5">
+          <p className="mb-0.5 text-[10px] font-bold uppercase tracking-wide text-emerald-800/70">
+            Before sign-off
+          </p>
+          {barriers.lines.map((line) => (
+            <Line key={line.index} line={line} onToggle={onToggleCheckbox} />
+          ))}
+        </div>
+      )}
+    </aside>
+  );
+}
+
 export function SmartBody({ text, onToggleCheckbox, onRequestEdit }: Props) {
   const { lead, sections } = parseSections(text);
   const empty = text.trim().length === 0;
+  const disposition = sections.find((section) => section.title.toLowerCase() === "dispo");
+  const barriers = sections.find(
+    (section) => section.title.toLowerCase() === "dispo barriers"
+  );
+  const regularSections = sections.filter(
+    (section) => !["dispo", "dispo barriers"].includes(section.title.toLowerCase())
+  );
 
   return (
     <div
@@ -116,18 +176,33 @@ export function SmartBody({ text, onToggleCheckbox, onRequestEdit }: Props) {
       {empty ? (
         <span className="text-slate-400">Add sign-out… tap to edit</span>
       ) : (
-        <>
-          {lead.map((line) => (
-            <Line key={line.index} line={line} onToggle={onToggleCheckbox} />
-          ))}
-          {sections.map((section) => (
-            <Section
-              key={section.headerIndex}
-              section={section}
+        <div
+          className={
+            disposition || barriers
+              ? "grid gap-3 lg:grid-cols-[minmax(0,1fr)_16rem]"
+              : undefined
+          }
+        >
+          <div className="min-w-0">
+            {lead.map((line) => (
+              <Line key={line.index} line={line} onToggle={onToggleCheckbox} />
+            ))}
+            {regularSections.map((section) => (
+              <Section
+                key={section.headerIndex}
+                section={section}
+                onToggleCheckbox={onToggleCheckbox}
+              />
+            ))}
+          </div>
+          {(disposition || barriers) && (
+            <DispoAside
+              disposition={disposition}
+              barriers={barriers}
               onToggleCheckbox={onToggleCheckbox}
             />
-          ))}
-        </>
+          )}
+        </div>
       )}
     </div>
   );

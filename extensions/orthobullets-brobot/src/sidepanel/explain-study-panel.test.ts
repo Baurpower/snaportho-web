@@ -26,9 +26,9 @@ const sampleStudy: CurriculumStudyResponse = {
   ],
   clinicalPearls: ['Aspirate before injection'],
   commonMistakes: ['Confusing local with regional/neuraxial anesthesia'],
-  attendingQuestions: [],
+  attendingQuestions: [{ question: 'What is the first sign of LAST?', answer: 'Neurologic symptoms usually precede cardiovascular collapse.', difficulty: 'PGY1' }],
   testableFacts: ['LAST treatment includes intralipid when severe'],
-  miniQuiz: [],
+  miniQuiz: [{ question: 'What rescues severe LAST?', answer: 'Lipid emulsion.', explanation: 'It sequesters lipophilic local anesthetic and supports myocardial metabolism.' }],
   memoryHooks: ['LAST = Lipid rescue'],
   suggestedFollowUps: [
     'Why do esters and amides have different allergy risks?',
@@ -37,6 +37,7 @@ const sampleStudy: CurriculumStudyResponse = {
   nextReviewTopics: ['Regional anesthesia'],
   learningObjectives: [{ objective: 'Recognize LAST', status: 'covered' }],
   deepDive: ['Buffering may reduce injection pain'],
+  comparisonTable: { headers: ['Feature', 'Ester', 'Amide'], rows: [['Metabolism', 'Plasma', 'Liver']] },
   warnings: ['Sparse source on dosing details'],
 };
 
@@ -63,6 +64,12 @@ const html = renderCurriculumStudyPanel(sampleStudy, pageContext);
 assert.match(html, /In 30 Seconds/);
 assert.match(html, /Must Know/);
 assert.match(html, /Common Mistakes/);
+assert.match(html, /Board-grade facts &amp; thresholds/);
+assert.match(html, /Active recall/);
+assert.match(html, /Memory hooks/);
+assert.match(html, /Why it matters/);
+assert.match(html, /Compare the options/);
+assert.match(html, /Lipid emulsion/);
 assert.match(html, /One-sentence takeaway/);
 assert.match(html, /data-emphasis-tab="boards"/);
 assert.doesNotMatch(html, /Learning objectives/);

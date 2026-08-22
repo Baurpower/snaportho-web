@@ -2,7 +2,7 @@ import { sectionTitle } from "@/lib/workspace/signout/tokens";
 
 /**
  * Structured clinical fields for the card editor, mirroring the real handoff layout
- * (HPI/Exam · Labs/Imaging/PT · Plan · To-do). Fields are stored inside the single encrypted
+ * (HPI/Exam · Labs/Imaging/PT · Plan · Dispo · To-do). Fields are stored inside the single encrypted
  * body as `## Title` sections, so there is no schema or crypto change — the editor just
  * presents labeled boxes instead of raw markdown, and display still renders the sections.
  */
@@ -22,6 +22,16 @@ export const SIGNOUT_FIELDS = [
     title: "Plan",
     label: "Plan",
     placeholder: "Clinical plan — what we’re doing overnight / next steps…",
+  },
+  {
+    title: "Dispo",
+    label: "Disposition",
+    placeholder: "Destination and current status — e.g. home pending PT clearance",
+  },
+  {
+    title: "Dispo barriers",
+    label: "Barriers to sign-off",
+    placeholder: "What must improve or be completed before orthopaedics can sign off?",
   },
   {
     title: "To-do",

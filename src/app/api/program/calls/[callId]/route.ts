@@ -90,7 +90,7 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     const { data: existingCall, error: existingCallError } = await supabase
       .from("call_assignments")
       .select(
-        "id, program_id, roster_id, program_membership_id, call_type, call_date, start_datetime, end_datetime, site, is_home_call, notes"
+        "id, program_id, roster_id, program_membership_id, call_type, call_date, start_datetime, end_datetime, site, is_home_call, notes, source_kind"
       )
       .eq("id", callId)
       .eq("program_id", access.accessContext.programId)
@@ -100,6 +100,13 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       return NextResponse.json(
         { error: "Call assignment not found for this program" },
         { status: 404 }
+      );
+    }
+
+    if ((existingCall as CallAssignmentRow & { source_kind?: string }).source_kind === "google") {
+      return NextResponse.json(
+        { error: "This assignment is owned by the program Google Calendar. Edit the source event, then reconcile." },
+        { status: 409 }
       );
     }
 
@@ -349,7 +356,7 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
 
     const { data: existingCall, error: existingCallError } = await supabase
       .from("call_assignments")
-      .select("id, roster_id")
+      .select("id, roster_id, source_kind")
       .eq("id", callId)
       .eq("program_id", access.accessContext.programId)
       .single();
@@ -358,6 +365,13 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
       return NextResponse.json(
         { error: "Call assignment not found for this program" },
         { status: 404 }
+      );
+    }
+
+    if (existingCall.source_kind === "google") {
+      return NextResponse.json(
+        { error: "This assignment is owned by the program Google Calendar. Delete the source event instead." },
+        { status: 409 }
       );
     }
 

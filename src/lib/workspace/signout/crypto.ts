@@ -9,7 +9,7 @@ import {
  * Sign-out tracker encryption.
  *
  * Two independent scopes, each with its own key material:
- *   - "card":       per-patient freeform body (handles only).
+ *   - "card":       per-patient freeform body and structured diagnostics.
  *   - "identifier": quarantined name / DOB / MRN. Never fed to the LLM path.
  *
  * AES-256-GCM (authenticated, tamper-evident). Each write gets a fresh 12-byte

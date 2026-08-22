@@ -379,6 +379,7 @@ export default function ERASPage() {
             <nav className="hidden gap-6 text-sm sm:flex">
               <a className="hover:underline" href="#timeline">Timeline</a>
               <a className="hover:underline" href="#application">Application</a>
+              <Link className="hover:underline" href="/pathtoortho/eras/dual-apply">Dual Apply?</Link>
               <a className="hover:underline" href="#selection">Residency Selection</a>
               <a className="hover:underline" href="#checklist">Checklist</a>
               <Link href="/contact" className="hover:underline">Contact</Link>
@@ -559,6 +560,22 @@ export default function ERASPage() {
               </div>
             </div>
           </div>
+
+          <Link
+            href="/pathtoortho/eras/dual-apply"
+            className="mt-6 flex flex-col gap-4 rounded-2xl border border-[#597498]/25 bg-[#597498]/[0.06] p-5 transition hover:-translate-y-0.5 hover:shadow-md sm:flex-row sm:items-center sm:justify-between sm:p-6"
+          >
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#597498]">Application strategy</p>
+              <h3 className="mt-1 text-lg font-semibold text-[#333]">Should I dual apply?</h3>
+              <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-600">
+                Weigh your Match odds honestly, understand the tradeoffs, and build a backup plan you would actually be happy to choose.
+              </p>
+            </div>
+            <span className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-[#597498]">
+              Read the guide <ArrowRight className="h-4 w-4" />
+            </span>
+          </Link>
         </Container>
       </section>
 

@@ -27,6 +27,10 @@ Return valid JSON only, matching exactly this shape:
   "commonMistakes": string[],
   "attendingQuestions": [{"question": string, "answer": string, "difficulty": "MS3" | "PGY1" | "PGY2+"}],
   "testableFacts": string[],
+  "miniQuiz": [{"question": string, "answer": string, "explanation": string}],
+  "memoryHooks": string[],
+  "deepDive": string[],
+  "comparisonTable": {"headers": string[], "rows": string[][]} | null,
   "suggestedFollowUps": string[],
   "warnings": string[]
 }
@@ -44,8 +48,12 @@ FIELD GUIDANCE
 - mustKnow: 1-3 compact groups with 2-4 bullets each.
 - commonMistakes: traps and confusions residents make on this topic.
 - attendingQuestions: 2-4 pimp-style Q/A pairs when relevant to the emphasis tab (OR/clinical/boards).
-- testableFacts: only for boards-heavy or clearly testable pages; otherwise empty.
-- clinicalPearls: only for clinical/OR emphasis or when pearls are clearly supported.
+- testableFacts: 3-6 board-grade facts, thresholds, classifications, indications, contraindications, or sequence rules. Prefer exact source-supported numbers and decision pivots.
+- clinicalPearls: 3-6 practical details that change setup, exposure, implant removal, reconstruction, or complication avoidance.
+- miniQuiz: 2-3 short active-recall prompts with direct answers and one-sentence teaching explanations. No trick questions.
+- memoryHooks: 1-3 memorable contrasts, ordered sequences, or mnemonics. Do not force a mnemonic when none fits.
+- deepDive: 2-5 compact "why" statements explaining mechanisms or tradeoffs behind the most important recommendations.
+- comparisonTable: use only when the page contains a meaningful comparison (techniques, implants, indications, approaches, or complications); otherwise null.
 - suggestedFollowUps: REQUIRED — generate 5-8 specific follow-up QUESTIONS for the Ask BroBot chat section.
 
 SUGGESTED FOLLOW-UPS (critical)
@@ -67,7 +75,10 @@ LOCAL ANESTHESIA / PHARMACOLOGY (when supported by source)
 STYLE
 - Write for orthopaedic residents. Precise clinical language.
 - No markdown inside string values.
-- Whole response should be scannable in under 60 seconds for high_yield emphasis.`;
+- Distinguish source facts from related review; never present a reasonable inference as a quoted AAOS recommendation.
+- For operative pages, prioritize: indication/decision pivot → setup/exposure → ordered technique → danger zones → bailout → postoperative consequence.
+- Avoid generic advice such as "plan carefully" unless paired with the specific action, anatomy, instrument, or consequence.
+- Whole top layer should be scannable in under 60 seconds; deeper cards may support a 3-5 minute review.`;
 
 const CURRICULUM_CHAT_SYSTEM_PROMPT = `You are BroBot, an orthopaedic surgery teaching attending answering a resident's follow-up about ONE ROCK curriculum page.
 

@@ -70,8 +70,9 @@ export function HandoffDocumentView({ doc }: { doc: HandoffDocument }) {
               <th className="w-[11%] py-1 pr-1">Patient</th>
               <th className="w-[12%] py-1 pr-1">Sx / POD</th>
               <th className="w-[22%] py-1 pr-1">Clinical</th>
-              <th className="w-[17%] py-1 pr-1">Labs / Imaging</th>
-              <th className="w-[20%] py-1">Plan</th>
+              <th className="w-[15%] py-1 pr-1">Labs / Imaging</th>
+              <th className="w-[12%] py-1 pr-1">Plan</th>
+              <th className="w-[10%] py-1">Dispo</th>
             </tr>
           </thead>
           <tbody>
@@ -79,7 +80,7 @@ export function HandoffDocumentView({ doc }: { doc: HandoffDocument }) {
               <Fragment key={group.locationKey}>
                 <tr className="break-inside-avoid">
                   <td
-                    colSpan={8}
+                    colSpan={9}
                     className="border-b border-slate-400 bg-slate-100 px-1 py-0.5 text-[8.5pt] font-bold uppercase tracking-wide"
                   >
                     {group.locationLabel}
@@ -162,6 +163,9 @@ function HandoffRowTr({ row }: { row: HandoffRow }) {
             {row.tags.map((t) => `#${t}`).join(" ")}
           </div>
         )}
+      </td>
+      <td className="whitespace-pre-wrap bg-emerald-50/40 px-0.5 py-1">
+        {row.dispo || "—"}
       </td>
     </tr>
   );

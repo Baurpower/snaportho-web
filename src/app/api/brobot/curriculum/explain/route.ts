@@ -309,7 +309,28 @@ export async function POST(request: Request) {
     warningCount: resolvedContext.warnings.length,
   });
 
-  try {
+  const streamRequested = request.headers.get('accept')?.includes('text/event-stream') === true;
+  const stream = streamRequested ? new TransformStream<Uint8Array, Uint8Array>() : null;
+  const streamWriter = stream?.writable.getWriter() ?? null;
+  const encoder = new TextEncoder();
+  const emit = async (event: string, data: unknown) => {
+    if (!streamWriter) return;
+    await streamWriter.write(encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`));
+  };
+  const heartbeat = streamWriter
+    ? setInterval(() => {
+        void streamWriter.write(encoder.encode(': keep-alive\n\n')).catch(() => undefined);
+      }, 15_000)
+    : null;
+
+  const pipeline = (async () => {
+    try {
+      await emit('status', {
+        stage: 'reading',
+        message: `Reading ${chunks.length} section group${chunks.length === 1 ? '' : 's'}…`,
+        completed: 0,
+        total: chunks.length,
+      });
     const model = getAnswerModelForRoute({
       mode: 'oite',
       ambiguity: 'low',
@@ -357,11 +378,33 @@ export async function POST(request: Request) {
               { timeout: MODEL_TIMEOUT_MS },
             ),
           );
+          const rawChunkResult = JSON.parse(completion.choices[0]?.message?.content ?? '{}');
+          let streamChunkResult: unknown = rawChunkResult;
+          try {
+            streamChunkResult = parseCurriculumStudyResponse({
+              raw: JSON.stringify(rawChunkResult),
+              explanationId: crypto.randomUUID(),
+              emphasis: parsed.data.emphasis,
+              remainingToday: null,
+              dailyCap: entitlement.aiAccess.dailyCap,
+              unlimited: entitlement.aiAccess.unlimited,
+            });
+          } catch {
+            // The final synthesis can still recover a chunk whose preview shape
+            // is imperfect, so do not discard usable source notes here.
+          }
           chunkResults[index] = {
             chunkId: chunk.chunkId,
             sectionIds: chunk.sectionIds,
-            result: JSON.parse(completion.choices[0]?.message?.content ?? '{}'),
+            result: rawChunkResult,
           };
+          await emit('partial', {
+            stage: 'section',
+            completed: chunkResults.filter(Boolean).length,
+            total: chunks.length,
+            heading: chunk.headingPath.join(' › ') || pageContext.title || 'Study notes',
+            result: streamChunkResult,
+          });
         } catch (chunkError) {
           chunkErrors.push(chunkError);
           console.warn('[brobot-curriculum] chunk_failure', {
@@ -391,6 +434,13 @@ export async function POST(request: Request) {
         'All curriculum section groups failed during model generation.',
       );
     }
+
+    await emit('status', {
+      stage: 'synthesizing',
+      message: 'Polishing the high-yield synthesis…',
+      completed: successfulChunks.length,
+      total: chunks.length,
+    });
 
     let synthesisRaw: string;
     let usedPartialFallback = false;
@@ -491,8 +541,9 @@ HARD FORMAT LIMITS (responses violating these are discarded):
       remainingToday,
     });
 
+    await emit('complete', response);
     return NextResponse.json(response);
-  } catch (error) {
+    } catch (error) {
     await recordUsageEvent({
       subject,
       outcome: 'failure',
@@ -546,5 +597,37 @@ HARD FORMAT LIMITS (responses violating these are discarded):
       },
       { status: 500 },
     );
-  }
+    }
+  })();
+
+  if (!stream || !streamWriter) return pipeline;
+
+  void pipeline
+    .then(async (response) => {
+      if (response.ok) return;
+      const error = await response.json().catch(() => ({
+        error: 'api_failure',
+        message: 'BroBot could not generate a curriculum explanation.',
+      }));
+      await emit('error', error);
+    })
+    .catch(async (error) => {
+      await emit('error', {
+        error: 'api_failure',
+        message: error instanceof Error ? error.message : 'BroBot could not generate a curriculum explanation.',
+      });
+    })
+    .finally(async () => {
+      if (heartbeat) clearInterval(heartbeat);
+      await streamWriter.close().catch(() => undefined);
+    });
+
+  return new Response(stream.readable, {
+    headers: {
+      'Content-Type': 'text/event-stream; charset=utf-8',
+      'Cache-Control': 'no-cache, no-transform',
+      Connection: 'keep-alive',
+      'X-Accel-Buffering': 'no',
+    },
+  });
 }

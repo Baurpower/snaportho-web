@@ -51,6 +51,9 @@ type WorkspaceInfo = {
       canExportProgramCallCalendar: boolean;
       canSyncOwnCalendar: boolean;
       canSyncProgramCalendar: boolean;
+      canManageProgramCalendarSource: boolean;
+      canReviewProgramCalendarImports: boolean;
+      canOverrideSourceOwnedSchedule: boolean;
       canRequestTimeOff: boolean;
       canEditOwnTimeOff: boolean;
       canApproveTimeOff: boolean;

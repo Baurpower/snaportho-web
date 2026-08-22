@@ -44,7 +44,7 @@ exports.CurriculumStudyResponseSchema = zod_1.z.object({
     suggestedFollowUps: zod_1.z.array(zod_1.z.string().trim().min(1).max(200)).max(8).default([]),
     nextReviewTopics: zod_1.z.array(zod_1.z.string().trim().min(1).max(160)).max(6).default([]),
     learningObjectives: zod_1.z.array(LearningObjectiveCoverageSchema).max(12).default([]),
-    comparisonTable: ComparisonTableSchema.optional(),
+    comparisonTable: ComparisonTableSchema.nullable().optional(),
     deepDive: zod_1.z.array(zod_1.z.string().trim().min(1).max(300)).max(8).default([]),
     referencesNote: zod_1.z.string().trim().min(1).max(400).optional(),
     fallbackBullets: zod_1.z.array(zod_1.z.string().trim().min(1).max(240)).max(6).optional(),

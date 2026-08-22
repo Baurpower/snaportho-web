@@ -25,6 +25,7 @@ function makeQuestion(overrides: Partial<HimalayaApiQuestion> & { questionAttemp
     choices: [],
     selectedChoiceIds: [],
     correctChoiceIds: [],
+    authoritativeCorrectChoiceIds: [],
     isCorrect: null,
     explanation: null,
     references: null,
@@ -222,16 +223,21 @@ appendHimalayaReviewBoard(root, {
 });
 
 const renderedHtml = root.innerHTML;
-assert.equal(root.querySelectorAll('[data-toggle-id]').length, 3, 'one toggle per question');
-assert.equal(root.querySelector('#rb-explain-misses')?.textContent?.trim(), 'Rebuild teaching review');
+assert.equal(root.querySelectorAll('[data-toggle-id]').length, 2, 'misses lead and correct answers remain available; unanswered rows stay out of the review');
+assert.equal(root.querySelector('#rb-explain-misses')?.textContent?.trim(), 'Refresh summaries');
 assert.ok(renderedHtml.includes('1/3'), 'attempt score is shown');
-assert.ok(renderedHtml.includes('To review'), 'miss count is labeled for review');
-assert.equal(root.querySelectorAll('.expl').length, 1, 'only the expanded miss renders an explanation');
+assert.ok(renderedHtml.includes('1 question to review'), 'miss count is the primary result');
+assert.ok(renderedHtml.includes('1 correct answer'), 'correct answers are tucked into a secondary disclosure');
+assert.equal((renderedHtml.match(/Synthetic bottom line/g) ?? []).length, 1, 'only the expanded miss renders its concise teaching summary');
 assert.equal(root.querySelector('[data-toggle-id="102"]')?.getAttribute('aria-expanded'), 'true');
 assert.equal(root.querySelector('[data-toggle-id="101"]')?.getAttribute('aria-expanded'), 'false');
 
 for (const collapsedId of [101, 103]) {
   const row = root.querySelector(`[data-toggle-id="${collapsedId}"]`)?.parentElement;
+  if (collapsedId === 103) {
+    assert.equal(row, undefined, 'unanswered rows are omitted from the focused post-test review');
+    continue;
+  }
   assert.ok(
     !row?.textContent?.includes('Correct answer:'),
     `collapsed row ${collapsedId} must not reveal its answer key`

@@ -6,6 +6,7 @@
 export const PUBLIC_PROVIDER_WEBHOOK_POST_PATHS = [
   '/api/stripe/webhook',
   '/api/stripe/donation-webhook',
+  '/api/integrations/google/calendar-webhook',
   '/api/apple/notifications',
 ] as const;
 

@@ -1,6 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 import { open, seal } from "@/lib/workspace/signout/crypto";
+import { EMPTY_DIAGNOSTICS, normalizeDiagnostics } from "@/lib/workspace/signout/diagnostics";
 import type {
   CreateCardInput,
   CreateServiceInput,
@@ -47,6 +48,9 @@ type CardRow = {
   pinned: boolean;
   body_ct: string | null;
   body_nonce: string | null;
+  diagnostics_ct: string | null;
+  diagnostics_nonce: string | null;
+  diagnostics_key_id: string | null;
   key_id: string;
   version: number;
   discharged_at: string | null;
@@ -58,7 +62,7 @@ type CardRow = {
 };
 
 const CARD_COLUMNS =
-  "id, service_id, handle, attending, location, surgery, surgery_date, next_surgery, next_surgery_date, management_mode, severity, status, sort_order, pinned, body_ct, body_nonce, key_id, version, discharged_at, created_by, created_at, updated_by, updated_at";
+  "id, service_id, handle, attending, location, surgery, surgery_date, next_surgery, next_surgery_date, management_mode, severity, status, sort_order, pinned, body_ct, body_nonce, diagnostics_ct, diagnostics_nonce, diagnostics_key_id, key_id, version, discharged_at, created_by, created_at, updated_by, updated_at";
 
 // Same columns plus a presence probe for quarantined identifiers (id only, no PHI).
 const CARD_SELECT = `${CARD_COLUMNS}, signout_patient_ids(id)`;
@@ -85,6 +89,19 @@ function decryptBody(row: CardRow): string {
   );
 }
 
+function decryptDiagnostics(row: CardRow) {
+  if (!row.diagnostics_ct || !row.diagnostics_nonce || !row.diagnostics_key_id) {
+    return EMPTY_DIAGNOSTICS;
+  }
+  const plaintext = open(
+    Buffer.from(row.diagnostics_ct, "base64"),
+    Buffer.from(row.diagnostics_nonce, "base64"),
+    row.diagnostics_key_id,
+    "card"
+  );
+  return normalizeDiagnostics(JSON.parse(plaintext));
+}
+
 function mapCard(row: CardRow): SignoutCard {
   return {
     id: row.id,
@@ -102,6 +119,7 @@ function mapCard(row: CardRow): SignoutCard {
     sortOrder: row.sort_order,
     pinned: row.pinned,
     body: decryptBody(row),
+    diagnostics: decryptDiagnostics(row),
     hasIdentifiers: (row.signout_patient_ids?.length ?? 0) > 0,
     version: row.version,
     dischargedAt: row.discharged_at,
@@ -118,6 +136,15 @@ function sealedBody(body: string) {
     body_ct: s.ct.toString("base64"),
     body_nonce: s.nonce.toString("base64"),
     key_id: s.keyId,
+  };
+}
+
+function sealedDiagnostics(value: unknown) {
+  const s = seal(JSON.stringify(normalizeDiagnostics(value)), "card");
+  return {
+    diagnostics_ct: s.ct.toString("base64"),
+    diagnostics_nonce: s.nonce.toString("base64"),
+    diagnostics_key_id: s.keyId,
   };
 }
 
@@ -294,7 +321,14 @@ export async function getCard(db: Db, cardId: string): Promise<SignoutCard | nul
 async function writeHistory(
   db: Db,
   cardId: string,
-  sealedFields: { body_ct: string; body_nonce: string; key_id: string },
+  sealedFields: {
+    body_ct: string;
+    body_nonce: string;
+    key_id: string;
+    diagnostics_ct: string;
+    diagnostics_nonce: string;
+    diagnostics_key_id: string;
+  },
   version: number,
   editedBy: string
 ): Promise<void> {
@@ -303,6 +337,9 @@ async function writeHistory(
     body_ct: sealedFields.body_ct,
     body_nonce: sealedFields.body_nonce,
     key_id: sealedFields.key_id,
+    diagnostics_ct: sealedFields.diagnostics_ct,
+    diagnostics_nonce: sealedFields.diagnostics_nonce,
+    diagnostics_key_id: sealedFields.diagnostics_key_id,
     version,
     edited_by: editedBy,
   });
@@ -316,6 +353,7 @@ export async function createCard(
   input: CreateCardInput
 ): Promise<SignoutCard> {
   const sealed = sealedBody(input.body ?? "");
+  const diagnostics = sealedDiagnostics(input.diagnostics ?? EMPTY_DIAGNOSTICS);
   const { data, error } = await db
     .from("signout_cards")
     .insert({
@@ -325,12 +363,13 @@ export async function createCard(
       created_by: input.createdBy,
       updated_by: input.createdBy,
       ...sealed,
+      ...diagnostics,
     })
     .select(CARD_SELECT)
     .single();
   if (error) throw new Error(`Failed to create sign-out card: ${error.message}`);
   const row = data as CardRow;
-  await writeHistory(db, row.id, sealed, row.version, input.createdBy);
+  await writeHistory(db, row.id, { ...sealed, ...diagnostics }, row.version, input.createdBy);
   return mapCard(row);
 }
 
@@ -364,18 +403,33 @@ export async function updateCard(
     return { ok: false, reason: "stale", currentVersion: current.version };
   }
 
-  const sealed =
-    patch.body !== undefined
-      ? sealedBody(patch.body)
-      : {
-          body_ct: current.body_ct ?? sealedBody("").body_ct,
-          body_nonce: current.body_nonce ?? sealedBody("").body_nonce,
-          key_id: current.key_id,
-        };
+  const sealed = (() => {
+    if (patch.body !== undefined) return sealedBody(patch.body);
+    if (current.body_ct && current.body_nonce) {
+      return {
+        body_ct: current.body_ct,
+        body_nonce: current.body_nonce,
+        key_id: current.key_id,
+      };
+    }
+    return sealedBody("");
+  })();
+
+  const sealedDiagnosticFields =
+    patch.diagnostics !== undefined
+      ? sealedDiagnostics(patch.diagnostics)
+      : current.diagnostics_ct && current.diagnostics_nonce && current.diagnostics_key_id
+        ? {
+            diagnostics_ct: current.diagnostics_ct,
+            diagnostics_nonce: current.diagnostics_nonce,
+            diagnostics_key_id: current.diagnostics_key_id,
+          }
+        : sealedDiagnostics(EMPTY_DIAGNOSTICS);
 
   const nextVersion = expectedVersion + 1;
   const update: Record<string, unknown> = {
     ...sealed,
+    ...sealedDiagnosticFields,
     version: nextVersion,
     updated_by: editedBy,
     updated_at: new Date().toISOString(),
@@ -422,7 +476,13 @@ export async function updateCard(
     return { ok: false, reason: "stale", currentVersion: live ?? nextVersion };
   }
 
-  await writeHistory(db, cardId, sealed, nextVersion, editedBy);
+  await writeHistory(
+    db,
+    cardId,
+    { ...sealed, ...sealedDiagnosticFields },
+    nextVersion,
+    editedBy
+  );
   return { ok: true, card: mapCard(updated as CardRow) };
 }
 

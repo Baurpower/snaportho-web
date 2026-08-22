@@ -28,6 +28,25 @@ const upd = parseUpdateCardBody({ expectedVersion: 3, body: "updated", pinned: t
 assert.equal(upd.expectedVersion, 3);
 assert.equal(upd.patch.body, "updated");
 assert.equal(upd.patch.pinned, true);
+const diagnosticsUpd = parseUpdateCardBody({
+  expectedVersion: 1,
+  diagnostics: {
+    version: 1,
+    items: [{
+      id: "lab-1",
+      type: "lab",
+      label: "Hgb",
+      date: "2026-08-21",
+      status: "Recheck",
+      details: "",
+      pinned: true,
+      labValues: [{ id: "value-1", value: "8.1", date: "2026-08-21" }],
+      ptDistance: "",
+      ptRecommendation: "",
+    }],
+  },
+});
+assert.equal(diagnosticsUpd.patch.diagnostics?.items[0].label, "Hgb");
 assert.equal(parseUpdateCardBody({ expectedVersion: 1, status: "discharged" }).patch.status, "discharged");
 const surgeryUpd = parseUpdateCardBody({
   expectedVersion: 1,

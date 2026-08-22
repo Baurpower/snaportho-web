@@ -15,6 +15,7 @@ import {
   X,
   Square,
   CheckSquare,
+  Pencil,
 } from "lucide-react";
 
 import type {
@@ -26,6 +27,7 @@ import type {
 import type { SaveCardResult } from "@/components/workspace/signout/api";
 import { IdentityPanel } from "@/components/workspace/signout/IdentityPanel";
 import { DraftPanel } from "@/components/workspace/signout/DraftPanel";
+import { DiagnosticsPanel, DiagnosticsSummary } from "@/components/workspace/signout/DiagnosticsPanel";
 import { SEVERITY_META, nextSeverity } from "@/components/workspace/signout/severity";
 import { SmartBody } from "@/components/workspace/signout/SmartBody";
 import { toggleCheckboxAt } from "@/lib/workspace/signout/tokens";
@@ -52,7 +54,6 @@ type Props = {
   onMove: (dir: "up" | "down") => void;
   onSaveIdentity: (ids: PatientIdentifiers) => Promise<void>;
   onRevealIdentity: () => Promise<PatientIdentifiers>;
-  onGenerateDraft: () => Promise<string>;
   canMoveUp: boolean;
   canMoveDown: boolean;
 };
@@ -93,7 +94,6 @@ export function PatientCard({
   onMove,
   onSaveIdentity,
   onRevealIdentity,
-  onGenerateDraft,
   canMoveUp,
   canMoveDown,
 }: Props) {
@@ -114,6 +114,12 @@ export function PatientCard({
     parseTodoLines(splitFields(card.body).values["To-do"] ?? "")
   );
   const [newTodo, setNewTodo] = useState("");
+  const [dispoBarriers, setDispoBarriers] = useState<TodoItem[]>(() =>
+    parseTodoLines(splitFields(card.body).values["Dispo barriers"] ?? "")
+  );
+  const [newDispoBarrier, setNewDispoBarrier] = useState("");
+  const [editingHandle, setEditingHandle] = useState(false);
+  const [handleDraft, setHandleDraft] = useState(card.handle);
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "conflict" | "error">(
     "idle"
   );
@@ -189,6 +195,8 @@ export function PatientCard({
     setFields(next);
     setTodoItems(parseTodoLines(next.values["To-do"] ?? ""));
     setNewTodo("");
+    setDispoBarriers(parseTodoLines(next.values["Dispo barriers"] ?? ""));
+    setNewDispoBarrier("");
     setAttendingDraft(card.attending);
     setLocationDraft(card.location);
     setSurgeryDraft(card.surgery);
@@ -219,11 +227,27 @@ export function PatientCard({
     updateField("To-do", serializeTodoLines(items));
   }
 
+  function applyDispoBarriers(items: TodoItem[]) {
+    setDispoBarriers(items);
+    updateField("Dispo barriers", serializeTodoLines(items));
+  }
+
   function saveAttending() {
     if (attendingDraft.trim() !== card.attending) void persist({ attending: attendingDraft });
   }
   function saveLocation() {
     if (locationDraft.trim() !== card.location) void persist({ location: locationDraft });
+  }
+
+  async function saveHandle() {
+    const handle = handleDraft.trim();
+    if (!handle) {
+      setHandleDraft(card.handle);
+      setEditingHandle(false);
+      return;
+    }
+    if (handle !== card.handle) await persist({ handle });
+    setEditingHandle(false);
   }
   function saveSurgery() {
     if (surgeryDraft.trim() !== card.surgery) void persist({ surgery: surgeryDraft });
@@ -304,9 +328,40 @@ export function PatientCard({
             >
               {card.pinned ? <Pin className="h-4 w-4" /> : <PinOff className="h-4 w-4" />}
             </button>
-            <span className="truncate text-base font-bold text-slate-900">
-              {card.handle}
-            </span>
+            {editingHandle ? (
+              <input
+                autoFocus
+                aria-label="Patient label"
+                value={handleDraft}
+                maxLength={40}
+                onChange={(e) => setHandleDraft(e.target.value)}
+                onBlur={() => void saveHandle()}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    e.currentTarget.blur();
+                  }
+                  if (e.key === "Escape") {
+                    setHandleDraft(card.handle);
+                    setEditingHandle(false);
+                  }
+                }}
+                className="min-w-0 max-w-56 rounded border border-blue-300 px-2 py-0.5 text-base font-bold text-slate-900 outline-none focus:ring-2 focus:ring-blue-100"
+              />
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  setHandleDraft(card.handle);
+                  setEditingHandle(true);
+                }}
+                className="group flex min-w-0 items-center gap-1 rounded px-1 text-left hover:bg-slate-100"
+                title="Edit patient label"
+              >
+                <span className="truncate text-base font-bold text-slate-900">{card.handle}</span>
+                <Pencil className="h-3 w-3 shrink-0 text-slate-300 group-hover:text-slate-600" />
+              </button>
+            )}
             {card.location && (
               <span className="shrink-0 rounded bg-slate-100 px-1.5 py-0.5 text-[11px] font-semibold text-slate-600">
                 {card.location}
@@ -564,13 +619,18 @@ export function PatientCard({
                   />
                 </FieldBox>
 
-                <FieldBox label="Labs / Imaging / PT">
+                <FieldBox label="Paste / freeform diagnostics">
                   <AutoTextarea
                     value={fields.values["Labs/Imaging/PT"] ?? ""}
                     onChange={(v) => updateField("Labs/Imaging/PT", v)}
-                    placeholder="Vitals, labs, cultures, imaging, PT status…"
+                    placeholder="Paste an update or keep any notes that do not need tracking…"
                   />
                 </FieldBox>
+
+                <DiagnosticsPanel
+                  diagnostics={card.diagnostics}
+                  onChange={(diagnostics) => void persist({ diagnostics })}
+                />
 
                 <FieldBox label="Plan">
                   <AutoTextarea
@@ -579,6 +639,31 @@ export function PatientCard({
                     placeholder="Clinical plan — what we’re doing overnight / next steps…"
                   />
                 </FieldBox>
+
+                <div className="rounded-xl border border-emerald-200 bg-emerald-50/50 p-3">
+                  <p className="mb-2 text-xs font-bold uppercase tracking-wide text-emerald-900">
+                    Disposition
+                  </p>
+                  <div className="grid items-start gap-2 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+                    <FieldBox label="Destination / status">
+                      <AutoTextarea
+                        value={fields.values["Dispo"] ?? ""}
+                        onChange={(v) => updateField("Dispo", v)}
+                        placeholder="Home pending PT; SNF referrals sent"
+                        minRows={1}
+                      />
+                    </FieldBox>
+                    <FieldBox label="Before sign-off">
+                      <TodoEditor
+                        items={dispoBarriers}
+                        onChange={applyDispoBarriers}
+                        newTodo={newDispoBarrier}
+                        setNewTodo={setNewDispoBarrier}
+                        placeholder="Add barrier…"
+                      />
+                    </FieldBox>
+                  </div>
+                </div>
 
                 <FieldBox label="To-do">
                   <TodoEditor
@@ -601,11 +686,14 @@ export function PatientCard({
                 </button>
               </div>
             ) : (
-              <SmartBody
-                text={draft}
-                onToggleCheckbox={toggleChecklist}
-                onRequestEdit={enterEdit}
-              />
+              <>
+                <SmartBody
+                  text={draft}
+                  onToggleCheckbox={toggleChecklist}
+                  onRequestEdit={enterEdit}
+                />
+                <DiagnosticsSummary diagnostics={card.diagnostics} onEdit={enterEdit} />
+              </>
             )}
 
             {status === "conflict" && (
@@ -671,8 +759,8 @@ export function PatientCard({
             )}
 
             <DraftPanel
+              card={{ ...card, body: draft }}
               hasIdentifiers={card.hasIdentifiers}
-              onGenerate={onGenerateDraft}
               onReveal={onRevealIdentity}
             />
           </>
@@ -712,11 +800,13 @@ function TodoEditor({
   onChange,
   newTodo,
   setNewTodo,
+  placeholder = "Add overnight task…",
 }: {
   items: TodoItem[];
   onChange: (items: TodoItem[]) => void;
   newTodo: string;
   setNewTodo: (v: string) => void;
+  placeholder?: string;
 }) {
   function addItem() {
     const text = newTodo.trim();
@@ -787,7 +877,7 @@ function TodoEditor({
               addItem();
             }
           }}
-          placeholder="Add overnight task…"
+          placeholder={placeholder}
           className="min-w-0 flex-1 bg-transparent py-0.5 text-sm text-slate-800 outline-none placeholder:text-slate-400"
         />
         <button

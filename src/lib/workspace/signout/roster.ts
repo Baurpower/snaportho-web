@@ -15,8 +15,9 @@ import {
   type PodInfo,
   type TxDayInfo,
 } from "@/lib/workspace/signout/pod";
-import { WB_TERMS, extractTags, parseBody } from "@/lib/workspace/signout/tokens";
+import { WB_TERMS, extractTags, parseBody, sectionTitle } from "@/lib/workspace/signout/tokens";
 import type { SignoutCard } from "@/lib/workspace/signout/types";
+import { formatDiagnosticsText } from "@/lib/workspace/signout/diagnostics";
 
 export type WbStatus = (typeof WB_TERMS)[number];
 
@@ -50,6 +51,7 @@ export type OpenTodo = {
   text: string;
   /** Absolute line index in the body, for future toggle-from-table. */
   lineIndex: number;
+  section: string | null;
 };
 
 /**
@@ -58,11 +60,17 @@ export type OpenTodo = {
  */
 export function extractOpenTodos(body: string): OpenTodo[] {
   const out: OpenTodo[] = [];
+  let section: string | null = null;
   body.split("\n").forEach((raw, lineIndex) => {
+    const heading = sectionTitle(raw);
+    if (heading !== null) {
+      section = heading;
+      return;
+    }
     const m = OPEN_ITEM_RE.exec(raw);
     if (!m) return;
     const text = m[1].trim();
-    if (text) out.push({ text, lineIndex });
+    if (text) out.push({ text, lineIndex, section });
   });
   return out;
 }
@@ -77,7 +85,9 @@ export function rosterPlanBlock(body: string): {
   empty: boolean;
 } {
   const fields = splitFields(body);
-  const openTodos = extractOpenTodos(body);
+  const openTodos = extractOpenTodos(body).filter(
+    (item) => item.section?.toLowerCase() !== "dispo barriers"
+  );
 
   const planRaw = (fields.values["Plan"] ?? "").trim();
   const planProse: string[] = [];
@@ -138,13 +148,19 @@ export type RosterRowModel = {
   openTodos: OpenTodo[];
   planProse: string[];
   planEmpty: boolean;
+  disposition: string;
+  dispoBarriers: OpenTodo[];
   clinicalExtras: ClinicalExtra[];
 };
 
 /** Everything the full-visibility table needs for one card. */
 export function buildRosterRow(card: SignoutCard): RosterRowModel {
   const body = card.body ?? "";
+  const fields = splitFields(body);
   const plan = rosterPlanBlock(body);
+  const dispoBarriers = extractOpenTodos(body).filter(
+    (item) => item.section?.toLowerCase() === "dispo barriers"
+  );
   const nonOp = card.managementMode === "nonop";
   const txDay = nonOp ? computeTxDay(card.surgeryDate) : null;
   const pod = nonOp ? null : computePod(card.surgeryDate);
@@ -173,6 +189,8 @@ export function buildRosterRow(card: SignoutCard): RosterRowModel {
     openTodos: plan.openTodos,
     planProse: plan.planProse,
     planEmpty: plan.empty,
+    disposition: (fields.values["Dispo"] ?? "").trim(),
+    dispoBarriers,
     clinicalExtras: rosterClinicalExtras(body),
   };
 }
@@ -192,11 +210,14 @@ export function rosterTableColumns(card: SignoutCard): {
   clinical: string;
   labs: string;
   plan: string;
+  dispo: string;
   row: RosterRowModel;
 } {
   const row = buildRosterRow(card);
   const hpi = row.clinicalExtras.find((e) => e.title === "HPI/Exam")?.text ?? "";
-  const labs = row.clinicalExtras.find((e) => e.title === "Labs/Imaging/PT")?.text ?? "";
+  const legacyLabs = row.clinicalExtras.find((e) => e.title === "Labs/Imaging/PT")?.text ?? "";
+  const structuredLabs = formatDiagnosticsText(card.diagnostics, 3);
+  const labs = [structuredLabs, legacyLabs].filter(Boolean).join("\n");
   const clinicalParts = [row.oneLiner, hpi].filter(Boolean);
   const planParts = [
     ...row.openTodos.map((t) => `☐ ${t.text}`),
@@ -206,6 +227,12 @@ export function rosterTableColumns(card: SignoutCard): {
     clinical: clinicalParts.join("\n\n"),
     labs,
     plan: planParts.join("\n"),
+    dispo: [
+      row.disposition,
+      ...row.dispoBarriers.map((item) => `☐ ${item.text}`),
+    ]
+      .filter(Boolean)
+      .join("\n"),
     row,
   };
 }

@@ -18,6 +18,7 @@ export type HimalayaReviewBoardEntry = {
   selectedAnswer: string | null;
   correctAnswer: string | null;
   hasExplanation: boolean;
+  topicLabel: string;
 };
 
 export function buildHimalayaFingerprint(question: HimalayaApiQuestion) {
@@ -46,6 +47,7 @@ export function buildHimalayaReviewBoard(questions: HimalayaApiQuestion[]): Hima
       selectedAnswer: selected ? `${selected.label}. ${selected.text}` : null,
       correctAnswer: correct ? `${correct.label}. ${correct.text}` : null,
       hasExplanation: Boolean(question.explanation),
+      topicLabel: question.tags.find((tag) => tag.trim())?.trim() || 'Clinical decision-making',
     };
   });
 }

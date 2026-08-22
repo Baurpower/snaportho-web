@@ -1,4 +1,7 @@
 {
+  "crons": [
+    { "path": "/api/cron/program-calendar-sync", "schedule": "0 3 * * *" }
+  ],
   "headers": [
     {
       "source": "/.well-known/apple-app-site-association",

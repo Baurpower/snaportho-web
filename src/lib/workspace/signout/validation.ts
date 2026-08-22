@@ -9,6 +9,7 @@ import {
   type SignoutStatus,
   type UpdateCardPatch,
 } from "@/lib/workspace/signout/types";
+import { normalizeDiagnostics } from "@/lib/workspace/signout/diagnostics";
 
 /**
  * Request-body validation for sign-out routes. Throws SignoutValidationError on
@@ -130,6 +131,13 @@ export function parseUpdateCardBody(raw: unknown): {
     patch.pinned = obj.pinned;
   }
   if (obj.body !== undefined) patch.body = parseBody(obj.body);
+  if (obj.diagnostics !== undefined) {
+    const diagnostics = normalizeDiagnostics(obj.diagnostics);
+    if (JSON.stringify(diagnostics).length > 30_000) {
+      throw new SignoutValidationError("diagnostics must be at most 30000 characters");
+    }
+    patch.diagnostics = diagnostics;
+  }
   if (Object.keys(patch).length === 0) {
     throw new SignoutValidationError("No fields to update");
   }

@@ -9,6 +9,7 @@ import {
   HIMALAYA_REST_BASE_PATH,
   type Te6Answer,
   type Te6QuestionAttempt,
+  type Te6Remediation,
   type HimalayaBridgeState,
 } from './himalaya-te6-types.js';
 import type { HimalayaAnswerChoice } from './himalaya-types.js';
@@ -24,6 +25,13 @@ export type HimalayaApiQuestion = {
   choices: HimalayaAnswerChoice[];
   selectedChoiceIds: string[];
   correctChoiceIds: string[];
+  /**
+   * Correct choices present in AAOS's own question-attempt payload. Kept
+   * separate from `correctChoiceIds` so ordinary extraction and tutoring do
+   * not reveal them during a live attempt. The in-page "Check answer" control
+   * is the only live-attempt consumer and requires an explicit user click.
+   */
+  authoritativeCorrectChoiceIds: string[];
   /** True/false when known; null while an attempt is still in progress. */
   isCorrect: boolean | null;
   /** AAOS "Discussion" tab. */
@@ -122,6 +130,19 @@ function normalizeQuestion(entry: Te6QuestionAttempt, fallbackIndex: number): Hi
       };
     })
     .filter((choice): choice is HimalayaAnswerChoice => choice != null);
+  const authoritativeAnswerIds = new Set(
+    (remediation?.correctAnswerIds ?? []).map((id) => String(id))
+  );
+  const authoritativeCorrectChoiceIds = answers
+    .map((answer, index) => ({ answer, label: choiceLabel(answer, index), text: htmlToText(answer.text) }))
+    .filter(({ answer, text }) => Boolean(text) && (
+      answer.correctResponse === true ||
+      (answer.id != null && authoritativeAnswerIds.has(String(answer.id)))
+    ))
+    .map(({ label }) => label);
+  if (reviewAvailable && authoritativeCorrectChoiceIds.length === 0) {
+    authoritativeCorrectChoiceIds.push(...choices.filter((choice) => choice.correct === true).map((choice) => choice.id));
+  }
 
   const images = (Array.isArray(question.medias) ? question.medias : [])
     .map((media) => ({
@@ -139,6 +160,7 @@ function normalizeQuestion(entry: Te6QuestionAttempt, fallbackIndex: number): Hi
     choices,
     selectedChoiceIds: choices.filter((choice) => choice.selected).map((choice) => choice.id),
     correctChoiceIds: choices.filter((choice) => choice.correct === true).map((choice) => choice.id),
+    authoritativeCorrectChoiceIds,
     isCorrect: reviewAvailable ? remediation?.correctResponse === true : null,
     explanation: reviewAvailable ? htmlToText(remediation?.feedback) || null : null,
     references: reviewAvailable ? htmlToText(remediation?.reference) || null : null,
@@ -204,6 +226,9 @@ export function reconcileHimalayaLiveQuestion(
     correctChoiceIds: reviewAvailable
       ? choices.filter((choice) => choice.correct === true).map((choice) => choice.id)
       : [],
+    authoritativeCorrectChoiceIds: normalized.authoritativeCorrectChoiceIds.length
+      ? normalized.authoritativeCorrectChoiceIds
+      : base.authoritativeCorrectChoiceIds,
     isCorrect: reviewAvailable ? normalized.isCorrect : null,
     explanation: reviewAvailable ? normalized.explanation ?? base.explanation : null,
     references: reviewAvailable ? normalized.references ?? base.references : null,
@@ -220,6 +245,67 @@ type FetchLike = (input: string, init: {
   body: string;
   credentials: 'include' | 'same-origin';
 }) => Promise<{ ok: boolean; status: number; json(): Promise<unknown> }>;
+
+export type HimalayaRemediationResult =
+  | {
+      ok: true;
+      correct: boolean | null;
+      correctAnswerIds: string[];
+      explanation: string | null;
+    }
+  | { ok: false; reason: string; status?: number };
+
+/**
+ * Use TE6's native per-question remediation action. This is intentionally a
+ * submit operation—not a hidden answer lookup. AAOS records the learner's
+ * current choice and, when the assessment permits review-as-you-go, returns
+ * its authoritative correctness and discussion.
+ */
+export async function submitHimalayaAnswerForRemediation(input: {
+  testAttemptId: number;
+  question: NonNullable<HimalayaBridgeState['liveQuestion']>['question'];
+  origin?: string;
+  fetchImpl?: FetchLike;
+}): Promise<HimalayaRemediationResult> {
+  const fetchImpl = (input.fetchImpl ?? (globalThis.fetch as unknown as FetchLike)) ?? null;
+  if (!fetchImpl) return { ok: false, reason: 'fetch_unavailable' };
+  const question = input.question;
+  const multiple = question.type === 'MULTIPLE_RESPONSE' || question.type === 'MULTIPLE_ANSWER';
+  const selectedAnswers = multiple
+    ? (question.answers ?? []).filter((answer) => answer.selectedFlag === true).map((answer) => answer.id)
+    : question.selectedAnswer != null
+      ? [question.selectedAnswer]
+      : [];
+  if (!question.questionAttemptId || selectedAnswers.length === 0) {
+    return { ok: false, reason: 'answer_not_selected' };
+  }
+
+  try {
+    const response = await fetchImpl(`${input.origin ?? ''}${HIMALAYA_REST_BASE_PATH}/answer-remediation/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        testAttemptId: input.testAttemptId,
+        questionAttemptId: question.questionAttemptId,
+        questionResponseTime: 0,
+        selectedAnswers,
+        markForReview: question.markForReview === true,
+      }),
+    });
+    if (!response.ok) return { ok: false, reason: 'http_error', status: response.status };
+    const payload = (await response.json()) as Te6Remediation & { errorCode?: string };
+    if (payload?.errorCode) return { ok: false, reason: payload.errorCode };
+    return {
+      ok: true,
+      correct: typeof payload?.correctResponse === 'boolean' ? payload.correctResponse : null,
+      correctAnswerIds: (payload?.correctAnswerIds ?? []).map((id) => String(id)),
+      explanation: htmlToText(payload?.feedback) || null,
+    };
+  } catch (error) {
+    return { ok: false, reason: error instanceof Error ? error.message : 'network_error' };
+  }
+}
 
 /**
  * te6 answers with a Java error string unless an explicit JSON Accept header is

@@ -4,6 +4,31 @@ export type SignoutSeverity = "stable" | "watcher" | "unstable";
 export type SignoutStatus = "active" | "discharged";
 /** Operative vs non-operative pathway; null/empty means unset (infer in UI). */
 export type SignoutManagementMode = "surgery" | "nonop";
+export type DiagnosticItemType = "lab" | "imaging" | "pt" | "other";
+
+export type DiagnosticLabValue = {
+  id: string;
+  value: string;
+  date: string;
+};
+
+export type DiagnosticItem = {
+  id: string;
+  type: DiagnosticItemType;
+  label: string;
+  date: string;
+  status: string;
+  details: string;
+  pinned: boolean;
+  labValues: DiagnosticLabValue[];
+  ptDistance: string;
+  ptRecommendation: string;
+};
+
+export type SignoutDiagnostics = {
+  version: 1;
+  items: DiagnosticItem[];
+};
 
 export const SIGNOUT_SEVERITIES: readonly SignoutSeverity[] = [
   "stable",
@@ -60,6 +85,7 @@ export type SignoutCard = {
   pinned: boolean;
   /** Decrypted freeform body. Empty string when the card has no body yet. */
   body: string;
+  diagnostics: SignoutDiagnostics;
   /** Whether a quarantined identifier record exists (never the values themselves). */
   hasIdentifiers: boolean;
   version: number;
@@ -82,6 +108,7 @@ export type CreateCardInput = {
   createdBy: string;
   severity?: SignoutSeverity;
   body?: string;
+  diagnostics?: SignoutDiagnostics;
 };
 
 /** Fields an update may change. Body is re-encrypted; facets are written plaintext. */
@@ -98,6 +125,7 @@ export type UpdateCardPatch = {
   status?: SignoutStatus;
   pinned?: boolean;
   body?: string;
+  diagnostics?: SignoutDiagnostics;
 };
 
 export type UpdateCardInput = {

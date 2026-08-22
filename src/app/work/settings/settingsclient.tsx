@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import {
   Check,
+  CalendarSync,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -20,6 +21,7 @@ import {
 import ProgramRotations from "@/components/workspace/settings/programrotations";
 import EditProgramRotations from "@/components/workspace/settings/editprogramrotations";
 import ProgramAttendingsManager from "@/components/workspace/settings/programattendingsmanager";
+import ProgramCalendarSourceManager from "@/components/workspace/settings/program-calendar-source-manager";
 import RotationSettingsSegmentedControl from "@/components/workspace/settings/rotationsettingssegmentedcontrol";
 import RotationTracksManager from "@/components/workspace/settings/rotationtracksmanager";
 import { isVisibleResidentForAcademicYear } from "@/lib/workspace/pgy";
@@ -1244,6 +1246,13 @@ export default function ProgramSettingsPage() {
           ) : null}
 
           <div className="space-y-5">
+            <SectionShell
+              title="Program calendar source"
+              subtitle="Connect the authoritative Google call calendar, preview changes, and monitor synchronization."
+              icon={<CalendarSync className="h-5 w-5" />}
+            >
+              <ProgramCalendarSourceManager />
+            </SectionShell>
             <SectionShell
               title={activeTab === "tracks" ? "Tracks and templates" : "Assignments"}
               subtitle={

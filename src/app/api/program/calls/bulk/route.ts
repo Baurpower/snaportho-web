@@ -173,13 +173,13 @@ export async function POST(request: NextRequest) {
 
     let existingRowsBySlot = new Map<
       string,
-      { id: string; call_date: string | null; call_type: string | null }
+      { id: string; call_date: string | null; call_type: string | null; source_kind?: string | null }
     >();
 
     if (touchedDates.length > 0) {
       const { data: existingRows, error: existingRowsError } = await supabase
         .from("call_assignments")
-        .select("id, call_date, call_type")
+        .select("id, call_date, call_type, source_kind")
         .eq("program_id", access.accessContext.programId)
         .in("call_date", touchedDates);
 
@@ -207,6 +207,17 @@ export async function POST(request: NextRequest) {
         return !incomingSlotKeys.has(slotKey);
       })
       .map(([, row]) => row.id);
+
+    const sourceOwnedMutation = Array.from(existingRowsBySlot.entries()).find(
+      ([slotKey, row]) => row.source_kind === "google" &&
+        (incomingSlotKeys.has(slotKey) || rowsToDelete.includes(row.id))
+    );
+    if (sourceOwnedMutation) {
+      return NextResponse.json(
+        { error: "Bulk changes cannot overwrite Google-owned assignments. Update the authoritative calendar and reconcile." },
+        { status: 409 }
+      );
+    }
 
     await assertValidProgramCallMutationDraft({
       programId: access.accessContext.programId,

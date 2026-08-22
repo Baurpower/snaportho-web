@@ -35,6 +35,7 @@ const STORAGE_KEY = 'snaportho_extension_device_token';
 const EXTENSION_TOKEN_HEADER = 'x-snaportho-extension-token';
 const ADDON_BASE_URL_HEADER = 'x-snaportho-addon-base-url';
 const BACKGROUND_BUILD_ID_MARKER = '2026-07-30-himalaya-live-v4';
+const curriculumStreamControllers = new Map<string, AbortController>();
 
 // Server error codes (from explain/route.ts and friends) map 1:1 onto the
 // extension's own ExtensionErrorCode for known cases; anything else falls
@@ -389,6 +390,109 @@ async function fetchJson(
     responseMessage: response.statusText || 'OK',
   });
   return json;
+}
+
+async function fetchCurriculumStream(
+  pathname: string,
+  init: RequestInit,
+  streamRequestId: string,
+): Promise<unknown> {
+  const attemptedLinkUrl = `${getConfiguredAppOrigin()}${pathname}`;
+  const abortController = new AbortController();
+  curriculumStreamControllers.set(streamRequestId, abortController);
+  const timeoutId = setTimeout(() => abortController.abort(), 5 * 60_000);
+  let response: Response;
+  try {
+    const headers = new Headers(init.headers);
+    headers.set('Accept', 'text/event-stream');
+    response = await fetch(attemptedLinkUrl, {
+      ...init,
+      headers,
+      signal: abortController.signal,
+    });
+  } catch (error) {
+    clearTimeout(timeoutId);
+    curriculumStreamControllers.delete(streamRequestId);
+    throw new CodedError(
+      abortController.signal.aborted
+        ? 'BroBot took too long to finish this page. Please retry.'
+        : 'Could not reach SnapOrtho. Check that the dev server is running, then retry.',
+      'network_failure',
+    );
+  }
+
+  if (!response.ok || !response.body) {
+    clearTimeout(timeoutId);
+    curriculumStreamControllers.delete(streamRequestId);
+    const rawBody = await response.text().catch(() => '');
+    const json = rawBody ? await Promise.resolve().then(() => JSON.parse(rawBody)).catch(() => null) : null;
+    const code: ExtensionErrorCode = KNOWN_ERROR_CODES.has(json?.error) ? json.error : 'unknown';
+    throw new CodedError(json?.message ?? json?.error ?? `Request failed (${response.status})`, code);
+  }
+
+  const contentType = response.headers.get('content-type')?.toLowerCase() ?? '';
+  if (!contentType.includes('text/event-stream')) {
+    clearTimeout(timeoutId);
+    curriculumStreamControllers.delete(streamRequestId);
+    const result = await response.json().catch(() => null);
+    if (result && typeof result === 'object') return result;
+    throw new CodedError('BroBot returned an unreadable curriculum response. Please retry.', 'parse_failure');
+  }
+
+  const publish = (event: string, data: unknown) => {
+    void chrome.runtime
+      .sendMessage({ type: 'ob:curriculum-stream', streamRequestId, event, data })
+      .catch(() => undefined);
+  };
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = '';
+  let completed: unknown = null;
+
+  const consume = (block: string) => {
+    let event = 'message';
+    const dataLines: string[] = [];
+    for (const line of block.split(/\r?\n/)) {
+      if (line.startsWith('event:')) event = line.slice(6).trim();
+      if (line.startsWith('data:')) dataLines.push(line.slice(5).trimStart());
+    }
+    if (!dataLines.length) return;
+    const dataText = dataLines.join('\n');
+    const data = Promise.resolve()
+      .then(() => JSON.parse(dataText))
+      .catch(() => dataText);
+    void data.then((parsed) => publish(event, parsed));
+    if (event === 'complete') completed = JSON.parse(dataText);
+    if (event === 'error') {
+      const parsed = JSON.parse(dataText) as { message?: string; error?: ExtensionErrorCode };
+      throw new CodedError(parsed.message ?? 'BroBot could not generate this study guide.', parsed.error ?? 'unknown');
+    }
+  };
+
+  try {
+    while (true) {
+      const { value, done } = await reader.read();
+      buffer += decoder.decode(value, { stream: !done }).replace(/\r\n/g, '\n');
+      let boundary = buffer.indexOf('\n\n');
+      while (boundary >= 0) {
+        consume(buffer.slice(0, boundary));
+        buffer = buffer.slice(boundary + 2);
+        boundary = buffer.indexOf('\n\n');
+      }
+      if (done) break;
+    }
+    if (buffer.trim()) consume(buffer);
+  } catch (error) {
+    if (abortController.signal.aborted) {
+      throw new CodedError('BroBot took too long to finish this page. Please retry.', 'network_failure');
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeoutId);
+    curriculumStreamControllers.delete(streamRequestId);
+  }
+  if (!completed) throw new CodedError('BroBot stream ended before the study guide was complete.', 'api_failure');
+  return completed;
 }
 
 function isCurriculumExplainPage(pageContext: OrthobulletsPageContext) {
@@ -913,6 +1017,13 @@ chrome.runtime.onMessage.addListener(
           return;
         }
 
+        if (message.type === 'ob:cancel-curriculum-stream') {
+          curriculumStreamControllers.get(message.streamRequestId)?.abort();
+          curriculumStreamControllers.delete(message.streamRequestId);
+          sendResponse({ ok: true, cleared: true });
+          return;
+        }
+
         if (message.type === 'brobot:request' || message.type === 'ob:explain' || message.type === 'ob:hint') {
           const deviceToken = await getStoredDeviceToken();
           if (!deviceToken) {
@@ -1019,25 +1130,25 @@ chrome.runtime.onMessage.addListener(
             omittedSectionCount: Number(message.pageContext.raw?.providerSpecific?.omittedSectionCount ?? 0),
           });
 
-          const result = await fetchJson(
-            endpoint,
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                [EXTENSION_TOKEN_HEADER]: deviceToken,
-              },
-              body: requestBody,
+          const requestInit = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              [EXTENSION_TOKEN_HEADER]: deviceToken,
             },
-            {
-              requestPayload,
-              requestBody,
-              messageType: message.type,
-              onDiagnostics: (diagnostics) => {
-                fetchDiagnostics = diagnostics;
-              },
-            },
-          );
+            body: requestBody,
+          } satisfies RequestInit;
+          const result =
+            task === 'curriculum_explain' && message.type === 'brobot:request' && message.streamRequestId
+              ? await fetchCurriculumStream(endpoint, requestInit, message.streamRequestId)
+              : await fetchJson(endpoint, requestInit, {
+                  requestPayload,
+                  requestBody,
+                  messageType: message.type,
+                  onDiagnostics: (diagnostics) => {
+                    fetchDiagnostics = diagnostics;
+                  },
+                });
 
           if (task === 'question_hint') {
             sendResponse({ ok: true, hint: result, fetchDiagnostics });

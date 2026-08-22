@@ -28,6 +28,7 @@ export type HandoffRow = {
   clinical: string;
   labs: string;
   plan: string;
+  dispo: string;
   tags: string[];
   pinned: boolean;
 };
@@ -116,7 +117,7 @@ function surgeryLine(card: SignoutCard, row: RosterRowModel): string {
 }
 
 function toHandoffRow(card: SignoutCard): HandoffRow {
-  const { clinical, labs, plan, row } = rosterTableColumns(card);
+  const { clinical, labs, plan, dispo, row } = rosterTableColumns(card);
   return {
     cardId: card.id,
     severity: card.severity,
@@ -130,6 +131,7 @@ function toHandoffRow(card: SignoutCard): HandoffRow {
     clinical,
     labs,
     plan,
+    dispo,
     tags: row.tags,
     pinned: card.pinned,
   };
@@ -188,6 +190,7 @@ export function buildHandoffDocument(input: {
   for (const g of groups) {
     for (const row of g.rows) {
       const openLines = row.plan
+        .concat("\n", row.dispo)
         .split("\n")
         .map((l) => l.trim())
         .filter((l) => l.startsWith("☐ "));
