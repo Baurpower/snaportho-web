@@ -7,6 +7,11 @@ import { z } from "zod";
 
 export const PACKET_SECTION_IDS = [
   "approach_decision",
+  "approach_quick_brief",
+  "approach_exposure",
+  "approach_safety",
+  "approach_strategy",
+  "approach_sources",
   "summary",
   "key_takeaways",
   "top_things_to_know",
@@ -38,7 +43,9 @@ export const PacketItemSchema = z
     // Backend emits these as explicit `null` on RAG-sourced items. `.nullish()`
     // (nullable + optional) is required — a plain `.optional()` enum rejects
     // `null` and drops the whole section event during validation.
-    provenance: z.enum(["certified", "rag", "generated"]).nullish(),
+    provenance: z
+      .enum(["certified", "rag", "generated", "approach_library"])
+      .nullish(),
     claim_support: z.enum(["direct", "indirect", "unsupported"]).nullish(),
     procedure_relevance: z
       .enum(["direct", "indirect", "regional", "unknown"])

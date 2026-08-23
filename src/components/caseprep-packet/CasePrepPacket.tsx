@@ -10,6 +10,8 @@ import { PimpQuestionCard } from "./PimpQuestionCard";
 import { SectionShell } from "./SectionShell";
 import {
   AnatomySection,
+  ApproachPrepSection,
+  ApproachSourcesSection,
   CalloutListSection,
   DecisionPointsSection,
   KeyTakeaways,
@@ -113,6 +115,15 @@ const SECTION_LAYOUT: Array<{
   kicker?: string;
 }> = [
   { id: "approach_decision", label: "Approach Decision" },
+  {
+    id: "approach_quick_brief",
+    label: "Approach Quick Brief",
+    kicker: "Position · corridor · landmarks",
+  },
+  { id: "approach_exposure", label: "Approach Exposure" },
+  { id: "approach_safety", label: "Approach Safety" },
+  { id: "approach_strategy", label: "Approach Strategy" },
+  { id: "approach_sources", label: "Approach Coverage & Sources" },
   { id: "summary", label: "Case Must-Knows" },
   {
     id: "pimp_questions",
@@ -137,15 +148,24 @@ const SECTION_LAYOUT: Array<{
 function SectionBody({
   id,
   state,
+  onClarify,
 }: {
   id: string;
   state: CasePrepPacketState;
+  onClarify: (prompt: string) => void;
 }) {
   const section = state.sections[id];
   if (!section) return null;
   switch (id) {
     case "approach_decision":
-      return <ApproachDecisionSection payload={section.payload} />;
+      return <ApproachDecisionSection payload={section.payload} originalPrompt={state.requestedPrompt ?? ""} onChoose={onClarify} />;
+    case "approach_quick_brief":
+    case "approach_exposure":
+    case "approach_safety":
+    case "approach_strategy":
+      return <ApproachPrepSection items={section.items} />;
+    case "approach_sources":
+      return <ApproachSourcesSection section={section} />;
     case "summary":
       return (
         <ProcedureSummary
@@ -284,7 +304,7 @@ export function CasePrepPacket({
             {id === "evidence" ? (
               <HighYieldReferences state={state} active={expanded} />
             ) : (
-              <SectionBody id={id} state={state} />
+              <SectionBody id={id} state={state} onClarify={onClarify} />
             )}
           </SectionShell>
         );

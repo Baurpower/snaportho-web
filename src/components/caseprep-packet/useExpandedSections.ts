@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 /** Sections expanded by default (above-the-fold content). */
 const DEFAULT_EXPANDED = new Set([
   "approach_decision",
+  "approach_quick_brief",
   "summary",
   "key_takeaways",
   "top_things_to_know",

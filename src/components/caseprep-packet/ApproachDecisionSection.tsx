@@ -199,19 +199,27 @@ function ApproachCard({
 
 export function ApproachDecisionSection({
   payload,
+  originalPrompt,
+  onChoose,
 }: {
   payload?: Record<string, unknown>;
+  originalPrompt: string;
+  onChoose: (prompt: string) => void;
 }) {
   const decision = (payload ?? {}) as ApproachDecision;
   const approaches = decision.approaches ?? [];
   const [expandedIds, setExpandedIds] = useState<Record<string, boolean>>({});
+  const [chosenIds, setChosenIds] = useState<string[]>(
+    decision.selected_approach_ids ??
+      (decision.selected_approach_id ? [decision.selected_approach_id] : []),
+  );
 
   if (!approaches.length) return null;
 
   const isExpanded = (option: ApproachOption) => {
     const id = option.approach_id ?? option.name ?? "";
     if (id in expandedIds) return expandedIds[id];
-    if (decision.selected_approach_id && decision.selected_approach_id === option.approach_id) {
+    if (decision.selected_approach_ids?.includes(option.approach_id ?? "") || (decision.selected_approach_id && decision.selected_approach_id === option.approach_id)) {
       return true;
     }
     if (!decision.selected_approach_id && approaches.length === 1) return true;
@@ -225,6 +233,61 @@ export function ApproachDecisionSection({
           {decision.message}
         </div>
       ) : null}
+      {decision.status === "choice_required" ? (
+        <div className="rounded-2xl border border-teal-200 bg-teal-50/60 p-4">
+          <p className="text-sm font-black text-slate-950">
+            Quick follow-up: which approach should I prepare?
+          </p>
+          <p className="mt-1 text-xs text-slate-600">
+            Select one or more. Multiple selections create a side-by-side comparison.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {approaches.map((option) => {
+              const id = option.approach_id ?? "";
+              if (!id) return null;
+              const checked = chosenIds.includes(id);
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  aria-pressed={checked}
+                  onClick={() =>
+                    setChosenIds((current) =>
+                      checked
+                        ? current.filter((value) => value !== id)
+                        : [...current, id],
+                    )
+                  }
+                  className={`rounded-full border px-3 py-2 text-xs font-bold transition ${
+                    checked
+                      ? "border-teal-700 bg-teal-700 text-white"
+                      : "border-teal-200 bg-white text-teal-900 hover:border-teal-500"
+                  }`}
+                >
+                  {option.name ?? id}
+                </button>
+              );
+            })}
+          </div>
+          <button
+            type="button"
+            disabled={chosenIds.length === 0}
+            onClick={() => {
+              const names = approaches
+                .filter((option) => chosenIds.includes(option.approach_id ?? ""))
+                .map((option) => option.name)
+                .filter(Boolean)
+                .join(" and ");
+              onChoose(`${originalPrompt}. Prepare and compare these approaches: ${names}.`);
+            }}
+            className="mt-3 rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-black text-white disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            {chosenIds.length > 1
+              ? `Compare ${chosenIds.length} approaches`
+              : "Prepare selected approach"}
+          </button>
+        </div>
+      ) : null}
       <div className="grid gap-3 lg:grid-cols-2">
         {approaches.map((option) => {
           const id = option.approach_id ?? option.name ?? "approach";
@@ -232,7 +295,7 @@ export function ApproachDecisionSection({
             <ApproachCard
               key={id}
               option={option}
-              selected={decision.selected_approach_id === option.approach_id}
+              selected={(decision.selected_approach_ids ?? [decision.selected_approach_id]).includes(option.approach_id)}
               expanded={isExpanded(option)}
               onToggle={() =>
                 setExpandedIds((prev) => ({

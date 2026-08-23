@@ -1,6 +1,10 @@
 -- Align the authoritative Google source with the Call Hub's primary-slot model.
 -- Call Hub treats Primary, weekday, and weekend as the same visible primary slot.
 
+-- System-created assignments legitimately have no creating auth user. The old
+-- random UUID default can never satisfy the auth.users foreign key.
+alter table public.call_assignments alter column created_by drop default;
+
 create or replace function public.apply_program_calendar_source_run(
   p_source_id uuid,
   p_sync_run_id uuid
@@ -133,12 +137,12 @@ begin
           program_id, roster_id, program_membership_id, call_type, call_date,
           start_datetime, end_datetime, site, is_home_call, notes,
           source_kind, source_calendar_source_id, source_event_id, source_event_etag,
-          source_synced_at, source_deleted_at, updated_at
+          source_synced_at, source_deleted_at, created_by, updated_at
         ) values (
           v_source.program_id, v_event.matched_roster_id, v_event.matched_membership_id,
           v_call_type, v_date, null, null, null, false,
           case when v_event.original_title is distinct from v_event.normalized_title then 'Imported from Google Calendar' else null end,
-          'google', v_source.id, v_event.provider_event_id, v_event.etag, now(), null, now()
+          'google', v_source.id, v_event.provider_event_id, v_event.etag, now(), null, null, now()
         ) returning id into v_call_id;
         v_created := v_created + 1;
       else

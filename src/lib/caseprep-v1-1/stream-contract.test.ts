@@ -3,8 +3,10 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 // Node's type-stripping runner requires the extension; the app tsconfig intentionally disallows it.
-import { createSseParseState, parseSseChunk, encodeSseEvent } from "./sse";
-import { createInitialPacketState, reducePacketEvent } from "./stream-schema";
+// @ts-expect-error Node type stripping requires the runtime extension.
+import { createSseParseState, parseSseChunk, encodeSseEvent } from "./sse.ts";
+// @ts-expect-error Node type stripping requires the runtime extension.
+import { createInitialPacketState, reducePacketEvent } from "./stream-schema.ts";
 
 type PacketState = ReturnType<typeof createInitialPacketState>;
 
@@ -312,8 +314,54 @@ const HEADER = {
 }
 
 // ── Route source guards: gate before upstream; frozen routes untouched ──────
+{
+  const state = reduceAll(
+    encodeSseEvent("section", {
+      section_id: "approach_quick_brief",
+      status: "complete",
+      items: [
+        {
+          id: "approach-1",
+          question: "Corridor",
+          answer: "Between FCR and the radial artery.",
+          category: "corridor",
+          provenance: "approach_library",
+          approach_id: "distal_radius_modified_henry",
+          claim_ids: ["claim-1"],
+          source_ids: ["source-1"],
+        },
+      ],
+      source: "approach_library",
+      generated_field_paths: [],
+    }) +
+      encodeSseEvent("section", {
+        section_id: "approach_sources",
+        status: "complete",
+        payload: {
+          coverage: { content_status: "agent_review_pending", claim_count: 24 },
+          sources: [
+            { source_id: "source-1", title: "AO", url: "https://example.test" },
+          ],
+        },
+        source: "approach_library",
+      }),
+  );
+  assert.equal(
+    state.sections.approach_quick_brief?.items[0]?.provenance,
+    "approach_library",
+  );
+  assert.equal(
+    (
+      state.sections.approach_sources?.payload?.coverage as {
+        claim_count: number;
+      }
+    ).claim_count,
+    24,
+  );
+}
+
 const streamRouteSource = readFileSync(
-  join(process.cwd(), "src/app/api/case-prep/v1.1/stream/route"),
+  join(process.cwd(), "src/app/api/case-prep/v1.1/stream/route.ts"),
   "utf8",
 );
 const packetComponentSource = readFileSync(
@@ -324,7 +372,9 @@ assert.match(packetComponentSource, /Case Must-Knows/);
 assert.match(packetComponentSource, /ProcedureSummary/);
 assert.ok(
   packetComponentSource.indexOf('id: "approach_decision"') <
-    packetComponentSource.indexOf('id: "summary"') &&
+    packetComponentSource.indexOf('id: "approach_quick_brief"') &&
+    packetComponentSource.indexOf('id: "approach_quick_brief"') <
+      packetComponentSource.indexOf('id: "summary"') &&
     packetComponentSource.indexOf('id: "summary"') <
       packetComponentSource.indexOf('id: "pimp_questions"') &&
     packetComponentSource.indexOf('id: "pimp_questions"') <
@@ -361,7 +411,7 @@ assert.match(
 );
 
 const legacyAskRouteSource = readFileSync(
-  join(process.cwd(), "src/app/api/brobot/ask/route"),
+  join(process.cwd(), "src/app/api/brobot/ask/route.ts"),
   "utf8",
 );
 assert.doesNotMatch(legacyAskRouteSource, /v1\.1\/stream/);

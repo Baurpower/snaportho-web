@@ -19,12 +19,15 @@ export type ApproachOption = {
   pitfalls?: string[];
   source_urls?: string[];
   coverage_notes?: string;
+  corridor?: string;
+  aliases?: string[];
   structures_at_risk?: unknown[];
 };
 
 export type ApproachDecision = {
   status?: string;
   selected_approach_id?: string | null;
+  selected_approach_ids?: string[];
   message?: string;
   approaches?: ApproachOption[];
   coverage?: {
