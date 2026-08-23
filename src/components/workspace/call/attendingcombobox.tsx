@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Check, ChevronDown, Search, Star } from "lucide-react";
+import { Check, ChevronDown, Plus, Search, Star } from "lucide-react";
 import type { ProgramAttending } from "@/lib/workspace/call/types";
 import { getAttendingDisplayName } from "@/lib/workspace/call/attendings-shared";
 
@@ -10,6 +10,7 @@ type AttendingComboboxProps = {
   selectedId: string;
   recentIds: string[];
   onSelect: (attendingId: string) => void;
+  onCreate?: (name: string) => void;
   disabled?: boolean;
 };
 
@@ -22,6 +23,7 @@ export default function AttendingCombobox({
   selectedId,
   recentIds,
   onSelect,
+  onCreate,
   disabled = false,
 }: AttendingComboboxProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -113,6 +115,12 @@ export default function AttendingCombobox({
     });
   }
 
+  function createAttending() {
+    onCreate?.(query.trim());
+    setOpen(false);
+    setQuery("");
+  }
+
   return (
     <div ref={containerRef} className="relative min-w-0">
       <button
@@ -144,7 +152,10 @@ export default function AttendingCombobox({
                   if (event.key === "ArrowDown") {
                     event.preventDefault();
                     setActiveIndex((current) =>
-                      Math.min(current + 1, visibleAttendings.length - 1)
+                      Math.max(
+                        0,
+                        Math.min(current + 1, visibleAttendings.length - 1)
+                      )
                     );
                   } else if (event.key === "ArrowUp") {
                     event.preventDefault();
@@ -155,6 +166,13 @@ export default function AttendingCombobox({
                   ) {
                     event.preventDefault();
                     choose(visibleAttendings[activeIndex].id);
+                  } else if (
+                    event.key === "Enter" &&
+                    visibleAttendings.length === 0 &&
+                    onCreate
+                  ) {
+                    event.preventDefault();
+                    createAttending();
                   } else if (event.key === "Escape") {
                     setOpen(false);
                   }
@@ -167,9 +185,21 @@ export default function AttendingCombobox({
 
           <div className="max-h-80 overflow-y-auto p-1.5">
             {visibleAttendings.length === 0 ? (
-              <p className="px-3 py-8 text-center text-sm text-slate-500">
-                No attendings match “{query}”.
-              </p>
+              <div className="px-3 py-6 text-center">
+                <p className="text-sm text-slate-500">
+                  No attendings match “{query}”.
+                </p>
+                {onCreate ? (
+                  <button
+                    type="button"
+                    onClick={createAttending}
+                    className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-teal-600 px-3 py-2 text-xs font-bold text-white transition hover:bg-teal-500"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                    Add {query.trim() ? `“${query.trim()}”` : "new attending"}
+                  </button>
+                ) : null}
+              </div>
             ) : (
               visibleAttendings.map((attending, index) => {
                 const label = attendingLabel(attending);
@@ -233,6 +263,23 @@ export default function AttendingCombobox({
               })
             )}
           </div>
+
+          {onCreate && visibleAttendings.length > 0 ? (
+            <div className="border-t border-slate-200 p-2">
+              <button
+                type="button"
+                onClick={createAttending}
+                className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-teal-700 transition hover:bg-teal-50"
+              >
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-teal-100">
+                  <Plus className="h-4 w-4" />
+                </span>
+                {query.trim()
+                  ? `Add “${query.trim()}” as a new attending`
+                  : "Add a new attending"}
+              </button>
+            </div>
+          ) : null}
         </div>
       ) : null}
     </div>

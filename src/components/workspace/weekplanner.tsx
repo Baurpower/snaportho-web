@@ -54,6 +54,7 @@ export type ExistingScheduleEvent = {
   location: string | null;
   attending: string | null;
   description: string | null;
+  updated_at: string | null;
 };
 
 export type DayDraft = {
@@ -70,6 +71,7 @@ export type DayDraft = {
   description: string;
   loadedFromServer: boolean;
   dirty: boolean;
+  updatedAt: string | null;
 };
 
 type SaveSummary = {
@@ -77,6 +79,28 @@ type SaveSummary = {
   updated: number;
   removed: number;
 };
+
+type PlannerWeekChange =
+  | {
+      action: "delete";
+      date: string;
+      eventId: string;
+      expectedUpdatedAt: string | null;
+    }
+  | {
+      action: "upsert";
+      date: string;
+      eventId: string | null;
+      expectedUpdatedAt: string | null;
+      title: string;
+      category: PlannerCategory;
+      isAllDay: boolean;
+      startTime: string | null;
+      endTime: string | null;
+      location: string | null;
+      attending: string | null;
+      description: string | null;
+    };
 
 function defaultTitleForCategory(category: PlannerCategory) {
   if (category === "or") return "OR";
@@ -125,6 +149,7 @@ export function createDefaultDraft(category: PlannerCategory): DayDraft {
     description: "",
     loadedFromServer: false,
     dirty: false,
+    updatedAt: null,
   };
 }
 
@@ -147,7 +172,32 @@ export function createDraftFromExistingEvent(event: ExistingScheduleEvent): DayD
     description: event.description ?? "",
     loadedFromServer: true,
     dirty: false,
+    updatedAt: event.updated_at,
   };
+}
+
+export function hydrateWeekDrafts(
+  currentDrafts: Record<string, DayDraft>,
+  days: PlannerDay[],
+  events: ExistingScheduleEvent[]
+) {
+  const eventByDate = new Map(events.map((event) => [event.event_date, event]));
+  const next: Record<string, DayDraft> = {};
+
+  for (const day of days) {
+    const current = currentDrafts[day.date];
+    if (current?.dirty) {
+      next[day.date] = current;
+      continue;
+    }
+
+    const existing = eventByDate.get(day.date);
+    next[day.date] = existing
+      ? createDraftFromExistingEvent(existing)
+      : createDefaultDraft("or");
+  }
+
+  return next;
 }
 
 export function applyPreset(draft: DayDraft, preset: DurationPreset): DayDraft {
@@ -347,6 +397,8 @@ export function WeekPlannerPanel({
   }, [days, category, activeDate]);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     async function loadExistingWeekEvents() {
       if (days.length === 0) return;
 
@@ -363,6 +415,8 @@ export function WeekPlannerPanel({
           {
             method: "GET",
             credentials: "include",
+            cache: "no-store",
+            signal: controller.signal,
           }
         );
 
@@ -376,27 +430,14 @@ export function WeekPlannerPanel({
           ? payload.events
           : [];
 
-        setDrafts((prev) => {
-          const next: Record<string, DayDraft> = {};
-
-          for (const day of days) {
-            next[day.date] = prev[day.date] ?? createDefaultDraft(category);
-          }
-
-          for (const event of events) {
-            if (!event.event_date) continue;
-            if (!next[event.event_date]) continue;
-            next[event.event_date] = createDraftFromExistingEvent(event);
-          }
-
-          return next;
-        });
+        setDrafts((prev) => hydrateWeekDrafts(prev, days, events));
 
         const firstLoaded = events[0]?.event_date;
         if (firstLoaded) {
           setActiveDate((current) => current ?? firstLoaded);
         }
       } catch (error) {
+        if (controller.signal.aborted) return;
         setLocalError(
           error instanceof Error ? error.message : "Failed to load existing schedule events"
         );
@@ -406,7 +447,9 @@ export function WeekPlannerPanel({
     }
 
     loadExistingWeekEvents();
-  }, [days, category]);
+
+    return () => controller.abort();
+  }, [days]);
 
   const selectedDates = useMemo(
     () => days.map((day) => day.date).filter((date) => drafts[date]?.selected),
@@ -578,85 +621,6 @@ export function WeekPlannerPanel({
     );
   }
 
-  async function createEventForDate(date: string, draft: DayDraft) {
-    const response = await fetch("/api/me/schedule-events", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: draft.title.trim(),
-        category: draft.category,
-        dates: [date],
-        isAllDay: draft.isAllDay,
-        startTime: draft.isAllDay ? null : draft.startTime,
-        endTime: draft.isAllDay ? null : draft.endTime,
-        location: draft.location.trim() || null,
-        attending: draft.attending.trim() || null,
-        description: draft.description.trim() || null,
-      }),
-    });
-
-    const payload = await response.json().catch(() => null);
-
-    if (!response.ok) {
-      throw new Error(payload?.error ?? `Failed to create ${formatPlannerDate(date)}`);
-    }
-
-    return payload;
-  }
-
-  async function updateEventForDate(date: string, draft: DayDraft) {
-    if (!draft.eventId) {
-      throw new Error(`Missing event id for ${formatPlannerDate(date)}`);
-    }
-
-    const response = await fetch(`/api/me/schedule-events/${draft.eventId}`, {
-      method: "PATCH",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: draft.title.trim(),
-        category: draft.category,
-        eventDate: date,
-        isAllDay: draft.isAllDay,
-        startTime: draft.isAllDay ? null : draft.startTime,
-        endTime: draft.isAllDay ? null : draft.endTime,
-        location: draft.location.trim() || null,
-        attending: draft.attending.trim() || null,
-        description: draft.description.trim() || null,
-      }),
-    });
-
-    const payload = await response.json().catch(() => null);
-
-    if (!response.ok) {
-      throw new Error(payload?.error ?? `Failed to update ${formatPlannerDate(date)}`);
-    }
-
-    return payload;
-  }
-
-  async function deleteEventForDate(date: string, draft: DayDraft) {
-    if (!draft.eventId) return;
-
-    const response = await fetch(`/api/me/schedule-events/${draft.eventId}`, {
-      method: "DELETE",
-      credentials: "include",
-    });
-
-    const payload = await response.json().catch(() => null);
-
-    if (!response.ok) {
-      throw new Error(payload?.error ?? `Failed to remove ${formatPlannerDate(date)}`);
-    }
-
-    return payload;
-  }
-
   async function handleSave() {
     try {
       setLocalError(null);
@@ -690,52 +654,63 @@ export function WeekPlannerPanel({
 
       setSaving(true);
 
-      let added = 0;
-      let updated = 0;
-      let removed = 0;
+      const weekStart = days[0]?.date;
+      const weekEnd = days[days.length - 1]?.date;
+      if (!weekStart || !weekEnd) throw new Error("Weekly plan range is unavailable.");
 
+      const changes: PlannerWeekChange[] = [];
       for (const date of changedDates) {
         const draft = drafts[date];
         if (!draft) continue;
-
         if (!draft.selected) {
-          if (draft.loadedFromServer && draft.eventId) {
-            await deleteEventForDate(date, draft);
-            removed += 1;
+          if (draft.eventId) {
+            changes.push({
+              action: "delete",
+              date,
+              eventId: draft.eventId,
+              expectedUpdatedAt: draft.updatedAt,
+            });
           }
           continue;
         }
-
-        if (draft.loadedFromServer && draft.eventId) {
-          await updateEventForDate(date, draft);
-          updated += 1;
-        } else {
-          await createEventForDate(date, draft);
-          added += 1;
-        }
+        changes.push({
+          action: "upsert",
+          date,
+          eventId: draft.eventId,
+          expectedUpdatedAt: draft.updatedAt,
+          title: draft.title.trim(),
+          category: draft.category,
+          isAllDay: draft.isAllDay,
+          startTime: draft.isAllDay ? null : draft.startTime,
+          endTime: draft.isAllDay ? null : draft.endTime,
+          location: draft.location.trim() || null,
+          attending: draft.attending.trim() || null,
+          description: draft.description.trim() || null,
+        });
       }
 
-      setDrafts((prev) => {
-        const next = { ...prev };
+      if (changes.length === 0) throw new Error("No persisted changes to save.");
 
-        for (const date of Object.keys(next)) {
-          const draft = next[date];
-          if (!draft) continue;
+      const added = changes.filter((change) => change.action === "upsert" && !change.eventId).length;
+      const updated = changes.filter((change) => change.action === "upsert" && change.eventId).length;
+      const removed = changes.filter((change) => change.action === "delete").length;
 
-          if (!draft.selected) {
-            next[date] = createDefaultDraft(category);
-            continue;
-          }
-
-          next[date] = {
-            ...draft,
-            dirty: false,
-            loadedFromServer: true,
-          };
-        }
-
-        return next;
+      const response = await fetch("/api/me/schedule-events/week/save", {
+        method: "PUT",
+        credentials: "include",
+        cache: "no-store",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ weekStart, weekEnd, changes }),
       });
+      const payload = await response.json().catch(() => null);
+      if (!response.ok) {
+        throw new Error(payload?.error ?? "Failed to save weekly plan");
+      }
+
+      const savedEvents: ExistingScheduleEvent[] = Array.isArray(payload?.events)
+        ? payload.events
+        : [];
+      setDrafts(() => hydrateWeekDrafts({}, days, savedEvents));
 
       if (onCreated) {
         await onCreated();
@@ -1264,7 +1239,7 @@ export function WeekPlannerPanel({
               <button
                 type="button"
                 onClick={handleSave}
-                disabled={saving || changedCount === 0}
+                disabled={saving || loadingExisting || changedCount === 0}
                 className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {saving ? (

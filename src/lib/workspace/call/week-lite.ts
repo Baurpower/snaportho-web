@@ -46,6 +46,7 @@ type LiteScheduleEventRow = {
   end_time: string | null
   location: string | null
   attending: string | null
+  description: string | null
 }
 
 export type WeekLiteDay = {
@@ -56,6 +57,7 @@ export type WeekLiteDay = {
   customTitle: string | null
   location: string | null
   attending: string | null
+  description: string | null
   rotationPill: string | null
   rotationColor: string | null
   hasCall: boolean
@@ -185,16 +187,15 @@ function resolvePrimaryLabel(
 ): string | null {
   if (!event) return null
 
+  const savedTitle = event.title?.trim()
+  if (savedTitle) return savedTitle
+
   const normalized = (event.category ?? '').trim().toLowerCase()
-
-  if (normalized === 'custom') {
-    return event.title?.trim() || null
-  }
-
   if (normalized === 'or') return 'OR'
   if (normalized === 'clinic') return 'Clinic'
+  if (normalized === 'custom') return 'Custom'
 
-  return event.title?.trim() || null
+  return null
 }
 
 function resolveCustomTitle(
@@ -274,7 +275,8 @@ export async function getWeekLiteForMembership(
         start_time,
         end_time,
         location,
-        attending
+        attending,
+        description
       `)
       .eq('user_id', userId)
       .gte('event_date', weekStart)
@@ -344,6 +346,7 @@ export async function getWeekLiteForMembership(
       customTitle,
       location: selectedEvent?.location ?? null,
       attending: selectedEvent?.attending ?? null,
+      description: selectedEvent?.description ?? null,
       rotationPill,
       rotationColor: rotationRow?.color ?? null,
       hasCall,

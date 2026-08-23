@@ -12,7 +12,10 @@ import {
 
 function statusLabel(option: ApproachOption, selected: boolean) {
   if (selected) return "Selected from case description";
-  if (option.content_status === "coverage_gap")
+  if (
+    option.content_status === "coverage_gap" ||
+    option.content_status === "source_indexed"
+  )
     return "Known option · module incomplete";
   if (option.role === "primary") return "Current curated approach";
   if (option.role === "conditional") return "Conditional option";
@@ -59,7 +62,9 @@ function ApproachCard({
   expanded: boolean;
   onToggle: () => void;
 }) {
-  const incomplete = option.content_status === "coverage_gap";
+  const incomplete =
+    option.content_status === "coverage_gap" ||
+    option.content_status === "source_indexed";
   const pending = !incomplete && isPendingReview(option);
   const risks = normalizeApproachRisks(option.structures_at_risk);
   const indications = texts(option.selection_indications);
@@ -101,6 +106,11 @@ function ApproachCard({
           {pending ? (
             <span className="rounded-full bg-amber-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-900">
               Curated · review pending
+            </span>
+          ) : null}
+          {selected && incomplete ? (
+            <span className="rounded-full bg-amber-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-900">
+              Source indexed · details from RAG
             </span>
           ) : null}
         </div>

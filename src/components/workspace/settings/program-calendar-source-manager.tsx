@@ -5,10 +5,12 @@ import {
   AlertTriangle,
   CalendarSync,
   CheckCircle2,
+  ChevronDown,
   Loader2,
   Pause,
   Play,
   RefreshCw,
+  Settings2,
 } from "lucide-react";
 
 type Status = {
@@ -59,6 +61,7 @@ export default function ProgramCalendarSourceManager() {
   const [aliasRosterId, setAliasRosterId] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState<boolean | null>(null);
 
   const request = useCallback(async (url: string, init?: RequestInit) => {
     const response = await fetch(url, {
@@ -152,33 +155,119 @@ export default function ProgramCalendarSourceManager() {
   const button =
     "inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/15 disabled:opacity-50";
 
+  const blockedCount = status?.counts?.blocked ?? 0;
+  const warningCount = status?.counts?.warning ?? 0;
+  const isHealthy = Boolean(
+    status?.connected &&
+      status.source?.mode === "active" &&
+      status.source.last_success_at &&
+      blockedCount === 0,
+  );
+  const showDetails = expanded ?? !isHealthy;
+  const lastRefresh = status?.source?.last_success_at
+    ? new Date(status.source.last_success_at).toLocaleString()
+    : "Not yet refreshed";
+
   return (
     <div className="space-y-5">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-        <div>
-          <div className="flex items-center gap-2 text-sky-200">
-            <CalendarSync className="h-5 w-5" />
-            <span className="text-sm font-bold">Google source of truth</span>
+      <button
+        type="button"
+        aria-expanded={showDetails}
+        onClick={() => setExpanded(!showDetails)}
+        className="group flex w-full flex-col gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-left transition hover:border-white/20 hover:bg-white/[0.05] sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div className="flex min-w-0 items-start gap-3 sm:items-center">
+          <div
+            className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl sm:mt-0 ${
+              isHealthy
+                ? "bg-emerald-400/10 text-emerald-200"
+                : "bg-sky-400/10 text-sky-200"
+            }`}
+          >
+            {isHealthy ? (
+              <CheckCircle2 className="h-5 w-5" />
+            ) : (
+              <CalendarSync className="h-5 w-5" />
+            )}
           </div>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300">
-            Import one exact Google calendar into the program call schedule.
-            Setup remains in preview until aliases are resolved and an
-            administrator explicitly activates it.
-          </p>
-        </div>
-        {status?.connected ? (
-          <div className="rounded-xl border border-emerald-300/20 bg-emerald-400/10 px-3 py-2 text-xs text-emerald-100">
-            Connected as{" "}
-            {status.connection?.provider_account_email ?? "Google account"}
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-sm font-bold text-white">
+                Google source of truth
+              </span>
+              {status ? (
+                <span
+                  className={`rounded-full border px-2.5 py-1 text-[11px] font-bold ${
+                    isHealthy
+                      ? "border-emerald-300/20 bg-emerald-400/10 text-emerald-100"
+                      : status.connected
+                        ? "border-amber-300/20 bg-amber-400/10 text-amber-100"
+                        : "border-white/10 bg-white/5 text-slate-300"
+                  }`}
+                >
+                  {isHealthy
+                    ? "Active"
+                    : status.source?.mode
+                      ? status.source.mode
+                      : status.connected
+                        ? "Setup needed"
+                        : "Not connected"}
+                </span>
+              ) : null}
+            </div>
+            <p className="mt-1 truncate text-sm text-slate-300">
+              {!status
+                ? "Checking calendar status…"
+                : status.source
+                  ? `${status.source.provider_calendar_summary ?? "Selected calendar"} · Last refresh ${lastRefresh}`
+                  : status.connected
+                    ? "Connected · Choose a calendar to finish setup"
+                    : "Connect the authoritative program call calendar"}
+            </p>
           </div>
-        ) : null}
-      </div>
-      {message ? (
-        <div className="rounded-xl border border-amber-300/20 bg-amber-400/10 px-4 py-3 text-sm text-amber-100">
-          {message}
         </div>
-      ) : null}
-      {!status?.connected ? (
+        <div className="flex shrink-0 items-center gap-3 self-end sm:self-auto">
+          {status?.source && (blockedCount > 0 || warningCount > 0) ? (
+            <span className="text-xs font-semibold text-amber-200">
+              {blockedCount} blocked · {warningCount} warnings
+            </span>
+          ) : null}
+          <span className="inline-flex items-center gap-2 text-xs font-semibold text-sky-200">
+            <Settings2 className="h-4 w-4" />
+            {showDetails ? "Hide details" : "Edit details"}
+            <ChevronDown
+              className={`h-4 w-4 transition-transform ${showDetails ? "rotate-180" : ""}`}
+            />
+          </span>
+        </div>
+      </button>
+
+      {showDetails ? (
+        <div className="space-y-5">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+            <p className="max-w-3xl text-sm leading-6 text-slate-300">
+              Import one exact Google calendar into the program call schedule.
+              Setup remains in preview until aliases are resolved and an
+              administrator explicitly activates it.
+            </p>
+            {status?.connected ? (
+              <div className="rounded-xl border border-emerald-300/20 bg-emerald-400/10 px-3 py-2 text-xs text-emerald-100">
+                Connected as{" "}
+                {status.connection?.provider_account_email ?? "Google account"}
+              </div>
+            ) : null}
+          </div>
+          {message ? (
+            <div className="rounded-xl border border-amber-300/20 bg-amber-400/10 px-4 py-3 text-sm text-amber-100">
+              {message}
+            </div>
+          ) : null}
+      {!status ? (
+        <div className="flex items-center gap-2 text-sm text-slate-300">
+          <Loader2 className="h-4 w-4 animate-spin" />
+          Loading calendar source…
+        </div>
+      ) : !status.connected ? (
         <button className={button} disabled={busy !== null} onClick={connect}>
           {busy === "connect" ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -462,6 +551,12 @@ export default function ProgramCalendarSourceManager() {
           ) : null}
         </>
       )}
+        </div>
+      ) : message ? (
+        <div className="rounded-xl border border-amber-300/20 bg-amber-400/10 px-4 py-3 text-sm text-amber-100">
+          {message}
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -212,6 +212,17 @@ type ProgramCallItem = {
   isMine: boolean;
 };
 
+type AttendingCoverageResponse = {
+  assignments: Array<{
+    attendingId: string;
+    attendingName: string;
+    attendingDisplayName: string | null;
+    coverageDate: string;
+    slotName?: string | null;
+    slotAbbreviation?: string | null;
+  }>;
+};
+
 type AheadMonth = {
   year: number;
   monthIndex: number;
@@ -417,40 +428,35 @@ function getTodayDateKey() {
   return `${year}-${month}-${day}`;
 }
 
-function getUserScheduleLabelForDay(
-  day:
-    | {
-        dayCategory: "OR" | "Clinic" | "Custom" | null;
-        primaryLabel: string | null;
-        customTitle: string | null;
-      }
-    | null
-    | undefined
-) {
-  if (!day) return "Not planned";
-  if (day.dayCategory === "OR") return "OR";
-  if (day.dayCategory === "Clinic") return "Clinic";
-  if (day.dayCategory === "Custom") {
-    return day.customTitle?.trim() || day.primaryLabel?.trim() || "Custom";
-  }
-  return "Not planned";
+function formatTodayResidentCoverage(calls: ProgramCallItem[]) {
+  if (calls.length === 0) return "No resident assigned";
+
+  return calls
+    .map((call) => {
+      const role = call.callType?.trim();
+      return role ? `${role}: ${call.residentName}` : call.residentName;
+    })
+    .join(" · ");
 }
 
-function formatTodayCallSummary(calls: ProgramCallItem[]) {
-  if (calls.length === 0) return "No call assigned today";
+function formatTodayAttendingCoverage(
+  assignments: AttendingCoverageResponse["assignments"]
+) {
+  if (assignments.length === 0) return "Attending: Not assigned";
 
-  const primary = calls.find((call) => call.callType === "Primary");
-  const backup = calls.find((call) => call.callType === "Backup");
+  const coverage = assignments
+    .map((assignment) => {
+      const name =
+        assignment.attendingDisplayName?.trim() ||
+        assignment.attendingName?.trim() ||
+        "Not assigned";
+      const slot =
+        assignment.slotAbbreviation?.trim() || assignment.slotName?.trim();
+      return slot ? `${slot}: ${name}` : name;
+    })
+    .join(" · ");
 
-  const primaryLabel = primary
-    ? `Primary: ${primary.isMine ? "Me" : primary.residentName}`
-    : "Primary: —";
-
-  const backupLabel = backup
-    ? `Backup: ${backup.isMine ? "Me" : backup.residentName}`
-    : "Backup: —";
-
-  return `${primaryLabel} · ${backupLabel}`;
+  return `Attending${assignments.length === 1 ? "" : "s"}: ${coverage}`;
 }
 
 function StatCard({
@@ -477,7 +483,7 @@ function StatCard({
         </>
       ) : (
         <>
-          <p className="mt-3 text-[1.9rem] font-black tracking-tight text-slate-950">
+          <p className="mt-3 break-words text-[1.6rem] font-black leading-tight tracking-tight text-slate-950 xl:text-[1.9rem]">
             {value}
           </p>
           <p className="mt-2 text-sm text-slate-600">{subtitle}</p>
@@ -719,6 +725,10 @@ export default function SnapOrthoWorkspaceHomeDraft() {
   const [rotationLoading, setRotationLoading] = useState(false);
   const [coverageLoading, setCoverageLoading] = useState(false);
   const [todayCallsLoading, setTodayCallsLoading] = useState(false);
+  const [todayAttendingCoverage, setTodayAttendingCoverage] =
+    useState<AttendingCoverageResponse | null>(null);
+  const [todayAttendingCoverageLoading, setTodayAttendingCoverageLoading] =
+    useState(false);
 
   const [error, setError] = useState<string | null>(null);
 
@@ -1169,6 +1179,56 @@ export default function SnapOrthoWorkspaceHomeDraft() {
   useEffect(() => {
     let cancelled = false;
 
+    async function loadTodayAttendingCoverage() {
+      const now = new Date();
+      const month = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(
+        2,
+        "0"
+      )}`;
+
+      try {
+        setTodayAttendingCoverageLoading(true);
+        const response = await fetch(
+          `/api/program/call-attending-assignments/month?month=${month}`,
+          { credentials: "include", cache: "no-store" }
+        );
+        const payload = await response.json().catch(() => null);
+
+        if (!response.ok) {
+          throw new Error(
+            payload?.error ?? "Failed to load today's attending coverage"
+          );
+        }
+
+        if (!cancelled) {
+          setTodayAttendingCoverage({
+            assignments: Array.isArray(payload?.assignments)
+              ? payload.assignments
+              : [],
+          });
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(
+            err instanceof Error
+              ? err.message
+              : "Failed to load today's attending coverage"
+          );
+        }
+      } finally {
+        if (!cancelled) setTodayAttendingCoverageLoading(false);
+      }
+    }
+
+    void loadTodayAttendingCoverage();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
     async function loadCoverageForActiveMonth() {
       const activeMonth = aheadMonths[activeMonthIndex];
       if (!activeMonth) return;
@@ -1256,10 +1316,6 @@ export default function SnapOrthoWorkspaceHomeDraft() {
 
   const todayKey = useMemo(() => getTodayDateKey(), []);
 
-  const todayWeekDay = useMemo(() => {
-    return weekData?.days.find((day) => day.date === todayKey) ?? null;
-  }, [weekData, todayKey]);
-
   const todayMonthKey = useMemo(() => {
     const now = new Date();
     return `${now.getFullYear()}-${now.getMonth()}`;
@@ -1270,13 +1326,19 @@ export default function SnapOrthoWorkspaceHomeDraft() {
     return monthCalls.filter((call) => call.callDate === todayKey);
   }, [programCallsByMonthKey, todayMonthKey, todayKey]);
 
-  const todayScheduleLabel = useMemo(() => {
-    return getUserScheduleLabelForDay(todayWeekDay);
-  }, [todayWeekDay]);
-
-  const todayCallSummary = useMemo(() => {
-    return formatTodayCallSummary(todayProgramCalls);
-  }, [todayProgramCalls]);
+  const todayResidentCoverage = useMemo(
+    () => formatTodayResidentCoverage(todayProgramCalls),
+    [todayProgramCalls]
+  );
+  const todayAttendingCoverageLabel = useMemo(
+    () =>
+      formatTodayAttendingCoverage(
+        (todayAttendingCoverage?.assignments ?? []).filter(
+          (assignment) => assignment.coverageDate === todayKey
+        )
+      ),
+    [todayAttendingCoverage, todayKey]
+  );
   const isAdminMode = permissions?.mode === "admin";
   const adminQuickLinks = [
     {
@@ -1341,9 +1403,14 @@ export default function SnapOrthoWorkspaceHomeDraft() {
               </span>
             </div>
             <div className="flex justify-between items-center py-0.5 border-t border-white/30">
-              <span className="text-xs text-slate-500">Today</span>
-              <span className="font-semibold text-right truncate max-w-[55%]">
-                {todayScheduleLabel}
+              <span className="text-xs text-slate-500">On call today</span>
+              <span className="font-semibold text-right line-clamp-2 max-w-[62%]">
+                {todayResidentCoverage}
+              </span>
+            </div>
+            <div className="flex justify-end border-t border-white/30 py-0.5">
+              <span className="max-w-[75%] text-right text-xs text-slate-500 line-clamp-2">
+                {todayAttendingCoverageLabel}
               </span>
             </div>
           </div>
@@ -1411,10 +1478,10 @@ export default function SnapOrthoWorkspaceHomeDraft() {
                 />
 
                 <StatCard
-                  title="Today"
-                  value={todayScheduleLabel}
-                  subtitle={todayCallSummary}
-                  loading={weekLoading || todayCallsLoading}
+                  title="On Call Today"
+                  value={todayResidentCoverage}
+                  subtitle={todayAttendingCoverageLabel}
+                  loading={todayCallsLoading || todayAttendingCoverageLoading}
                 />
               </div>
 
@@ -1434,9 +1501,14 @@ export default function SnapOrthoWorkspaceHomeDraft() {
                     </span>
                   </div>
                   <div className="flex justify-between items-center py-0.5 border-t border-white/30">
-                    <span className="text-xs text-slate-500">Today</span>
-                    <span className="font-semibold text-right truncate max-w-[55%]">
-                      {todayScheduleLabel}
+                    <span className="text-xs text-slate-500">On call today</span>
+                    <span className="font-semibold text-right line-clamp-2 max-w-[62%]">
+                      {todayResidentCoverage}
+                    </span>
+                  </div>
+                  <div className="flex justify-end border-t border-white/30 py-0.5">
+                    <span className="max-w-[75%] text-right text-xs text-slate-500 line-clamp-2">
+                      {todayAttendingCoverageLabel}
                     </span>
                   </div>
                 </div>

@@ -11,6 +11,7 @@ import {
   copyDraftToDates,
   createDefaultDraft,
   createDraftFromExistingEvent,
+  hydrateWeekDrafts,
   type DayDraft,
   type ExistingScheduleEvent,
 } from "./weekplanner";
@@ -73,10 +74,29 @@ const existingHalfDayEvent: ExistingScheduleEvent = {
   location: null,
   attending: null,
   description: null,
+  updated_at: "2026-07-01T12:00:00.000Z",
 };
 
 const draftFromExisting = createDraftFromExistingEvent(existingHalfDayEvent);
 assert.equal(draftFromExisting.preset, "am_half", "existing 08:00-12:00 clinic event is detected as am_half");
+assert.equal(draftFromExisting.updatedAt, existingHalfDayEvent.updated_at);
+
+const locallyEditedDraft = {
+  ...createDefaultDraft("custom"),
+  selected: true,
+  title: "Unsaved local change",
+  dirty: true,
+};
+const hydratedWithoutWiping = hydrateWeekDrafts(
+  { "2026-07-06": locallyEditedDraft },
+  [{ date: "2026-07-06", dayKey: "Mon" }],
+  [existingHalfDayEvent]
+);
+assert.equal(
+  hydratedWithoutWiping["2026-07-06"].title,
+  "Unsaved local change",
+  "late hydration never overwrites a dirty local draft"
+);
 
 // ─── copyDraftToDates ────────────────────────────────────────────────────────
 

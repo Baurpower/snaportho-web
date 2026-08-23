@@ -235,8 +235,10 @@ function formatLongDate(dateString: string | null | undefined) {
 }
 
 function getDisplayTitle(day: WeekDayCard) {
-  if (day.dayCategory === "Custom") return day.customTitle ?? day.primaryLabel ?? "Custom";
-  return day.primaryLabel ?? "Unplanned";
+  if (day.dayCategory === "Custom") {
+    return day.customTitle?.trim() || day.primaryLabel?.trim() || "Custom";
+  }
+  return day.primaryLabel?.trim() || "Unplanned";
 }
 
 function getSecondaryLabel(day: WeekDayCard) {

@@ -103,7 +103,7 @@ export default function AttendingCoverageCalendar({
   return (
     <div className="overflow-x-auto pb-1">
       <div className="min-w-[840px]">
-        <div className="mb-2 grid grid-cols-7 gap-2">
+        <div className="mb-1.5 grid grid-cols-7 gap-1.5">
           {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
             <div
               key={day}
@@ -114,7 +114,7 @@ export default function AttendingCoverageCalendar({
           ))}
         </div>
 
-        <div className="grid grid-cols-7 gap-2">
+        <div className="grid grid-cols-7 gap-1.5">
           {days.map((date) => {
             const dateKey = toDateKey(date);
             const inMonth =
@@ -154,7 +154,10 @@ export default function AttendingCoverageCalendar({
                   });
                 }}
                 className={[
-                  "group min-h-[132px] rounded-xl border p-2.5 text-left shadow-sm transition xl:min-h-[142px]",
+                  "group rounded-xl border text-left shadow-sm transition",
+                  editMode
+                    ? "min-h-[92px] p-2 xl:min-h-[98px]"
+                    : "min-h-[116px] p-2.5 xl:min-h-[124px]",
                   inMonth
                     ? "border-slate-200 bg-white hover:border-sky-300 hover:bg-sky-50/40"
                     : "cursor-default border-transparent bg-slate-100/60 opacity-55 shadow-none",

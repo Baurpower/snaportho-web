@@ -31,6 +31,7 @@ export type WeekDayCard = {
   customTitle: string | null;
   location: string | null;
   attending: string | null;
+  description?: string | null;
   rotationPill: string | null;
   rotationColor: string | null;
   hasCall: boolean;
@@ -136,10 +137,10 @@ function getCategoryTone(category: WeekDayCard["dayCategory"]) {
 
 function getDisplayTitle(day: WeekDayCard) {
   if (day.dayCategory === "Custom") {
-    return day.customTitle ?? day.primaryLabel ?? "Custom";
+    return day.customTitle?.trim() || day.primaryLabel?.trim() || "Custom";
   }
 
-  return day.primaryLabel ?? "Plan week";
+  return day.primaryLabel?.trim() || "Plan week";
 }
 
 function getSecondaryLabel(day: WeekDayCard) {
@@ -328,6 +329,16 @@ export function WeekScheduleView({
             const academicSummary = getAcademicEventSummary(primaryAcademicEvent);
             const academicCount = day.academicEvents?.length ?? 0;
             const rotationAbbreviation = getRotationAbbreviation(day.rotationPill);
+            const hasSupportingDetails = Boolean(
+              day.dayCategory ||
+                day.hasCall ||
+                day.timeLabel ||
+                academicCount > 0 ||
+                day.location ||
+                day.attending ||
+                day.description ||
+                day.rotationPill
+            );
 
             return (
               <button
@@ -357,8 +368,12 @@ export function WeekScheduleView({
   <div className="mt-3 h-[30px]" />
 )}
 
-<div className="mt-4 min-h-[48px] xl:mt-5 xl:min-h-[56px]">
-  <p className="line-clamp-2 text-base font-bold tracking-tight xl:text-lg">
+<div
+  className={`mt-4 xl:mt-5 ${
+    hasSupportingDetails ? "min-h-[48px] xl:min-h-[56px]" : "min-h-0 flex-1"
+  }`}
+>
+  <p className="break-words text-sm font-bold leading-snug tracking-tight xl:text-base">
     {title}
   </p>
 
@@ -380,6 +395,12 @@ export function WeekScheduleView({
 </div>
 
 <div className="mt-5 space-y-1.5 text-[11px] xl:text-xs">
+
+    {day.description ? (
+      <p className="whitespace-pre-wrap break-words text-[11px] leading-relaxed opacity-75 xl:text-xs">
+        {day.description}
+      </p>
+    ) : null}
 
     {academicCount > 0 ? (
       <div className="flex min-w-0 max-w-full items-center gap-1.5 overflow-hidden rounded-xl bg-indigo-100 px-2 py-1.5 font-semibold text-indigo-900">
@@ -644,6 +665,10 @@ export function WeekScheduleView({
               )
             }
           />
+
+          {draftDay.description ? (
+            <DetailField label="Notes" value={draftDay.description} />
+          ) : null}
 
           <DetailField
             label="Call status"

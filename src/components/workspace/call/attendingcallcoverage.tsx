@@ -38,6 +38,7 @@ import {
 } from "@/lib/workspace/call/attendings-shared";
 import AttendingCombobox from "./attendingcombobox";
 import AttendingCoverageCalendar from "./attendingcoveragecalendar";
+import CoverageSlotCombobox from "./coverageslotcombobox";
 
 type AssignmentMap = Record<string, Record<string, string>>;
 type ReplacementAssignment = {
@@ -556,10 +557,11 @@ export default function AttendingCallCoverage() {
     setNotice(null);
   }
 
-  function openCreateAttending() {
+  function openCreateAttending(name = "") {
+    const parsed = parseProgramAttendingFullName(name);
     setEditingAttending(null);
-    setNewAttendingFirstName("");
-    setNewAttendingLastName("");
+    setNewAttendingFirstName(parsed.firstName);
+    setNewAttendingLastName(parsed.lastName);
     setShowAttendingModal(true);
   }
 
@@ -698,7 +700,8 @@ export default function AttendingCallCoverage() {
         throw new Error(payload?.error ?? "Failed to create coverage slot.");
       }
       setSlots((current) => [...current, payload.slot]);
-      setPaintSlotId((current) => current || payload.slot.id);
+      setPaintSlotId(payload.slot.id);
+      setLastPaintedDate(null);
       setNewSlotName("");
       setNewSlotAbbreviation("");
       setShowSlotModal(false);
@@ -712,6 +715,13 @@ export default function AttendingCallCoverage() {
     } finally {
       setCreating(false);
     }
+  }
+
+  function openCreateSlot() {
+    setNewSlotName("");
+    setNewSlotAbbreviation("");
+    setNewSlotColor("#38bdf8");
+    setShowSlotModal(true);
   }
 
   function chooseRange(mode: RangeMode) {
@@ -982,26 +992,20 @@ export default function AttendingCallCoverage() {
 
               {editMode && canManageAttendings ? (
                 <div className="grid gap-2 rounded-xl border border-teal-200 bg-teal-50 p-2.5 lg:grid-cols-[180px_minmax(260px,420px)_auto_1fr] lg:items-end">
-                  <label className="block min-w-0">
+                  <div className="block min-w-0">
                     <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-teal-800">
                       Coverage slot
                     </span>
-                    <select
-                      value={paintSlotId}
-                      onChange={(event) => {
-                        setPaintSlotId(event.target.value);
+                    <CoverageSlotCombobox
+                      slots={activeSlots}
+                      selectedId={paintSlotId}
+                      onSelect={(slotId) => {
+                        setPaintSlotId(slotId);
                         setLastPaintedDate(null);
                       }}
-                      className="h-10 w-full min-w-0 rounded-xl border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-800 outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
-                    >
-                      <option value="">Choose slot</option>
-                      {activeSlots.map((slot) => (
-                        <option key={slot.id} value={slot.id}>
-                          {slot.name}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
+                      onCreate={openCreateSlot}
+                    />
+                  </div>
 
                   <div className="min-w-0">
                     <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-teal-800">
@@ -1012,7 +1016,7 @@ export default function AttendingCallCoverage() {
                       selectedId={paintAttendingId}
                       recentIds={recentAttendingIds}
                       onSelect={choosePaintAttending}
-                      disabled={activeAttendings.length === 0}
+                      onCreate={openCreateAttending}
                     />
                   </div>
 
@@ -1328,7 +1332,7 @@ export default function AttendingCallCoverage() {
                 </div>
                 <button
                   type="button"
-                  onClick={openCreateAttending}
+                  onClick={() => openCreateAttending()}
                   className="inline-flex items-center gap-1.5 rounded-full bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white"
                 >
                   <Plus className="h-3.5 w-3.5" />
@@ -1419,7 +1423,7 @@ export default function AttendingCallCoverage() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => setShowSlotModal(true)}
+                  onClick={openCreateSlot}
                   className="inline-flex items-center gap-1.5 rounded-full bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white"
                 >
                   <Plus className="h-3.5 w-3.5" />
