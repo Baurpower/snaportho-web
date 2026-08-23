@@ -54,12 +54,12 @@ export function SectionShell({
   if (section.items.length === 0 && !section.payload) return null;
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+    <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.03)]">
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={expanded}
-        className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left hover:bg-slate-50"
+        className="flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left hover:bg-slate-50"
       >
         <span>
           {kicker ? (
@@ -67,7 +67,7 @@ export function SectionShell({
               {kicker}
             </span>
           ) : null}
-          <span className="text-base font-black tracking-tight text-slate-950">{label}</span>
+          <span className="text-sm font-black tracking-tight text-slate-950">{label}</span>
         </span>
         <span className="flex items-center gap-2">
           {section.status === "partial" ? (
@@ -81,7 +81,7 @@ export function SectionShell({
           />
         </span>
       </button>
-      {expanded ? <div className="border-t border-slate-100 px-4 py-4">{children}</div> : null}
+      {expanded ? <div className="border-t border-slate-100 px-4 py-3">{children}</div> : null}
     </section>
   );
 }

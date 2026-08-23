@@ -113,37 +113,47 @@ const SECTION_LAYOUT: Array<{
   id: string;
   label: string;
   kicker?: string;
+  width?: "full" | "wide" | "half";
 }> = [
-  { id: "approach_decision", label: "Approach Decision" },
+  { id: "approach_decision", label: "Approach Decision", width: "full" },
   {
     id: "approach_quick_brief",
     label: "Approach Quick Brief",
     kicker: "Position · corridor · landmarks",
+    width: "half",
   },
-  { id: "approach_exposure", label: "Approach Exposure" },
-  { id: "approach_safety", label: "Approach Safety" },
-  { id: "approach_strategy", label: "Approach Strategy" },
-  { id: "approach_sources", label: "Approach Coverage & Sources" },
-  { id: "summary", label: "Case Must-Knows" },
+  { id: "approach_exposure", label: "Approach Exposure", width: "half" },
+  { id: "approach_safety", label: "Approach Safety", width: "half" },
+  { id: "approach_strategy", label: "Approach Strategy", width: "half" },
+  { id: "approach_sources", label: "Approach Coverage & Sources", width: "half" },
+  { id: "summary", label: "Case Must-Knows", width: "wide" },
   {
     id: "pimp_questions",
     label: "Common Pimp Questions",
     kicker: "Pocket Pimped + Attending",
+    width: "wide",
   },
-  { id: "key_takeaways", label: "Key Takeaways" },
-  { id: "top_things_to_know", label: "Top Things To Know" },
-  { id: "anatomy", label: "Important Anatomy" },
-  { id: "operative_flow", label: "Operative Flow" },
-  { id: "decision_points", label: "Decision Making" },
-  { id: "postop", label: "Post-op Protocol" },
-  { id: "evidence", label: "High-Yield References" },
+  { id: "key_takeaways", label: "Key Takeaways", width: "half" },
+  { id: "top_things_to_know", label: "Top Things To Know", width: "half" },
+  { id: "anatomy", label: "Important Anatomy", width: "half" },
+  { id: "operative_flow", label: "Operative Flow", width: "half" },
+  { id: "decision_points", label: "Decision Making", width: "half" },
+  { id: "postop", label: "Post-op Protocol", width: "half" },
+  { id: "evidence", label: "High-Yield References", width: "half" },
   {
     id: "related_concepts",
     label: "Related Concepts",
     kicker: "Knowledge Graph",
+    width: "half",
   },
-  { id: "sources", label: "Sources" },
+  { id: "sources", label: "Sources", width: "half" },
 ];
+
+function sectionWidth(width: "full" | "wide" | "half" = "half") {
+  if (width === "full") return "lg:col-span-12";
+  if (width === "wide") return "lg:col-span-6";
+  return "lg:col-span-6 xl:col-span-6";
+}
 
 function SectionBody({
   id,
@@ -257,18 +267,18 @@ export function CasePrepPacket({
   }
 
   return (
-    <div className="grid gap-4">
+    <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-12">
       {streaming ? (
-        <CasePrepLoadingState state={state} onCancel={onCancel} />
+        <div className="lg:col-span-12"><CasePrepLoadingState state={state} onCancel={onCancel} /></div>
       ) : null}
       {state.header && state.caseIdentity ? (
-        <PacketHeader caseIdentity={state.caseIdentity} header={state.header} />
+        <div className="lg:col-span-12"><PacketHeader caseIdentity={state.caseIdentity} header={state.header} /></div>
       ) : streaming ? (
-        <PacketHeaderSkeleton />
+        <div className="lg:col-span-12"><PacketHeaderSkeleton /></div>
       ) : null}
 
       {state.coverage && state.coverage.quality_gate !== "passed" ? (
-        <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950">
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950 lg:col-span-12">
           <p className="font-bold">
             Grounded coverage is limited for this case.
           </p>
@@ -282,11 +292,11 @@ export function CasePrepPacket({
         </div>
       ) : null}
 
-      {SECTION_LAYOUT.map(({ id, label, kicker }) => {
+      {SECTION_LAYOUT.map(({ id, label, kicker, width }) => {
         const expanded = isExpanded(id);
         return (
+          <div key={id} className={sectionWidth(width)}>
           <SectionShell
-            key={id}
             label={label}
             kicker={kicker}
             section={
@@ -307,11 +317,12 @@ export function CasePrepPacket({
               <SectionBody id={id} state={state} onClarify={onClarify} />
             )}
           </SectionShell>
+          </div>
         );
       })}
 
       {state.status === "done" && Object.keys(state.sections).length === 0 ? (
-        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 lg:col-span-12">
           No preparation content is available for this case yet.
         </div>
       ) : null}

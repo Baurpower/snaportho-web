@@ -167,6 +167,7 @@ export default function BroBotMember() {
   // CasePrep v1.1 packet stream (only active when the packet flag is on)
   const casePrepStream = useCasePrepStream();
   const packetStatus = casePrepStream.state.status;
+  const packetActive = CASEPREP_PACKET_MODE && packetStatus !== 'idle';
   const [packetDebug, setPacketDebug] = useState(false);
   useEffect(() => {
     setPacketDebug(window.location.search.includes('debug=1'));
@@ -446,26 +447,26 @@ export default function BroBotMember() {
         )}
       </div>
 
-      <div className="px-6 pb-6 text-center">
+      <div className={`${packetActive ? 'pb-2' : 'pb-4'} px-6 text-center`}>
         <BroBotProductTabs />
       </div>
 
-      <BroBotHeader />
+      <BroBotHeader compact={packetActive} />
 
-      <main className="flex-1 px-6 pt-6 pb-12 relative max-w-3xl mx-auto w-full">
+      <main className={`relative mx-auto w-full flex-1 px-4 pb-12 sm:px-6 ${packetActive ? 'max-w-[1500px] pt-2' : 'max-w-3xl pt-6'}`}>
         {loading && <LoadingOverlay />}
 
         {/* Input form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <Card title="Describe Your Case">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Card title={packetActive ? "Refine this case" : "Describe Your Case"} compact={packetActive}>
             <textarea
-              rows={3}
+              rows={packetActive ? 1 : 3}
               value={prompt}
               onChange={e => setPrompt(e.target.value)}
               placeholder="e.g. 90 y/o femoral neck fracture"
               className="w-full rounded-md border border-gray-300 p-3 shadow-sm focus:ring-2 focus:ring-teal-600"
             />
-            <div className="mt-4 flex flex-wrap items-center gap-4">
+            <div className={`${packetActive ? 'mt-2' : 'mt-4'} flex flex-wrap items-center gap-3`}>
               <button
                 type="submit"
                 disabled={
@@ -489,7 +490,7 @@ export default function BroBotMember() {
             </div>
 
             {/* Persistent BroBot subscription status / action (Phase 1 discoverability) */}
-            {usageMeta && (
+            {usageMeta && !packetActive && (
               <div className="mt-3 text-sm flex flex-wrap items-center gap-x-3 gap-y-1 text-gray-600">
                 {usageMeta.unlimited ? (
                   <>
@@ -535,7 +536,7 @@ export default function BroBotMember() {
 
         {/* CasePrep v1.1 streamed packet (flag-gated) */}
         {CASEPREP_PACKET_MODE && packetStatus !== 'idle' && (
-          <div className="mt-8">
+          <div className="mt-4">
             {packetStatus === 'denied' ? (
               <QuotaHitCard
                 dailyCap={
@@ -846,23 +847,23 @@ function NonQuotaErrorCard({
 
 // ── Static sub-components (unchanged) ────────────────────────────────────────
 
-function BroBotHeader() {
+function BroBotHeader({ compact = false }: { compact?: boolean }) {
   return (
-    <header className="px-6 pb-12 text-center">
-      <div className="mx-auto flex flex-col items-center space-y-4">
+    <header className={`px-6 text-center ${compact ? 'pb-3' : 'pb-10'}`}>
+      <div className={`mx-auto flex items-center justify-center ${compact ? 'gap-2' : 'flex-col space-y-4'}`}>
         <div className="flex items-center space-x-4">
           <Image
             src="/brologo.png"
             alt="Bro Logo"
-            width={80}
-            height={80}
-            className="h-16 w-16 sm:h-20 sm:w-20 rounded-full"
+            width={compact ? 40 : 80}
+            height={compact ? 40 : 80}
+            className={`${compact ? 'h-9 w-9' : 'h-16 w-16 sm:h-20 sm:w-20'} rounded-full`}
           />
-          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-midnight">
+          <h1 className={`${compact ? 'text-xl' : 'text-4xl sm:text-5xl'} font-extrabold tracking-tight text-midnight`}>
             Meet <span className="text-teal-600">Bro</span>
           </h1>
         </div>
-        <p className="max-w-xl text-lg text-gray-800">
+        <p className={`${compact ? 'hidden sm:block text-sm text-gray-500' : 'max-w-xl text-lg text-gray-800'}`}>
           Prepare for ortho cases faster and smarter
         </p>
       </div>
@@ -870,11 +871,11 @@ function BroBotHeader() {
   );
 }
 
-function Card({ title, children }: { title: string; children: React.ReactNode }) {
+function Card({ title, children, compact = false }: { title: string; children: React.ReactNode; compact?: boolean }) {
   return (
-    <div className="rounded-2xl border border-[#d6d2c7] bg-[#fefdfb] shadow-sm px-6 py-8 space-y-4">
-      <h2 className="flex items-center gap-3 text-xl font-semibold text-[#1A1C2C]">
-        <MagnifyingGlassCircleIcon className="h-6 w-6 text-teal-600" />
+    <div className={`border border-[#d6d2c7] bg-white/90 shadow-sm ${compact ? 'rounded-xl px-4 py-3' : 'rounded-2xl px-6 py-8 space-y-4'}`}>
+      <h2 className={`flex items-center gap-2 font-semibold text-[#1A1C2C] ${compact ? 'mb-2 text-sm' : 'text-xl'}`}>
+        <MagnifyingGlassCircleIcon className={`${compact ? 'h-4 w-4' : 'h-6 w-6'} text-teal-600`} />
         {title}
       </h2>
       {children}
