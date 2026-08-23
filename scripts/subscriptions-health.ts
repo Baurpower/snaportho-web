@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { createClient } from '@supabase/supabase-js';
+import { importPKCS8 } from 'jose';
 
 type Check = {
   name: string;
@@ -26,6 +27,13 @@ type SubscriptionRow = {
   updated_at: string | null;
 };
 
+type AppleEventRow = {
+  provider_event_id: string | null;
+  event_type: string | null;
+  received_at: string | null;
+  processed_at: string | null;
+};
+
 function loadDotEnvLocal() {
   const path = join(process.cwd(), '.env.local');
   if (!existsSync(path)) return;
@@ -39,6 +47,14 @@ function loadDotEnvLocal() {
     if (process.env[key]) continue;
     process.env[key] = rawValue.replace(/^["']|["']$/g, '');
   }
+}
+
+function normalizeApplePrivateKey(raw: string) {
+  const trimmed = raw.trim();
+  if (trimmed.includes('BEGIN PRIVATE KEY')) return trimmed.replace(/\\n/g, '\n');
+  const normalized = trimmed.replace(/\s+/g, '');
+  const wrapped = normalized.match(/.{1,64}/g)?.join('\n') ?? normalized;
+  return `-----BEGIN PRIVATE KEY-----\n${wrapped}\n-----END PRIVATE KEY-----`;
 }
 
 function check(name: string, ok: boolean, detail: string, action?: string): Check {
@@ -141,6 +157,19 @@ async function main() {
     'APPLE_ISSUER_ID, APPLE_KEY_ID, APPLE_PRIVATE_KEY, APPLE_BUNDLE_ID checked',
     'Set all App Store Server API variables.'
   ));
+  if (process.env.APPLE_PRIVATE_KEY) {
+    try {
+      await importPKCS8(normalizeApplePrivateKey(process.env.APPLE_PRIVATE_KEY), 'ES256');
+      checks.push(check('Apple private key valid', true, 'APPLE_PRIVATE_KEY parsed as an ES256 PKCS#8 key'));
+    } catch (error) {
+      checks.push(check(
+        'Apple private key valid',
+        false,
+        error instanceof Error ? error.message : String(error),
+        'Replace APPLE_PRIVATE_KEY with the contents of the App Store Connect .p8 key.'
+      ));
+    }
+  }
   checks.push(check(
     'Apple product IDs mapped',
     true,
@@ -163,16 +192,24 @@ async function main() {
     const supabase = createClient(supabaseUrl, serviceRoleKey, {
       auth: { autoRefreshToken: false, persistSession: false },
     });
-    const { data, error } = await supabase
-      .from('subscriptions')
-      .select(`
-        id, user_id, provider, environment, plan_code, status, current_period_end,
-        provider_subscription_id, provider_original_transaction_id, provider_transaction_id,
-        stripe_customer_id, stripe_subscription_id, updated_at
-      `)
-      .eq('plan_code', 'unlimited_brobot')
-      .order('updated_at', { ascending: false })
-      .limit(2000);
+    const [{ data, error }, { data: appleEventData, error: appleEventError }] = await Promise.all([
+      supabase
+        .from('subscriptions')
+        .select(`
+          id, user_id, provider, environment, plan_code, status, current_period_end,
+          provider_subscription_id, provider_original_transaction_id, provider_transaction_id,
+          stripe_customer_id, stripe_subscription_id, updated_at
+        `)
+        .eq('plan_code', 'unlimited_brobot')
+        .order('updated_at', { ascending: false })
+        .limit(2000),
+      supabase
+        .from('subscription_events')
+        .select('provider_event_id, event_type, received_at, processed_at')
+        .eq('provider', 'apple')
+        .order('received_at', { ascending: false })
+        .limit(200),
+    ]);
 
     if (error) {
       checks.push(check('Database subscription audit', false, error.message, 'Verify service-role access and subscriptions schema.'));
@@ -181,6 +218,26 @@ async function main() {
       const issues = detectSubscriptionIssues(rows);
       checks.push(check('Database subscription audit', issues.length === 0, `${rows.length} rows scanned, ${issues.length} issue(s)${issues.length ? `: ${issues.slice(0, 10).join('; ')}` : ''}`, 'Run npm run subscriptions:audit for affected users.'));
       checks.push(check('Resolver consistency', !issues.some((issue) => issue.startsWith('conflicting_active_subscriptions')), 'No user should have multiple currently entitling rows.', 'Inspect conflicting rows and expire/cancel stale provider records.'));
+    }
+
+    if (appleEventError) {
+      checks.push(check('Apple event ledger query', false, appleEventError.message, 'Verify subscription_events schema and service-role access.'));
+    } else {
+      const appleEvents = (appleEventData ?? []) as AppleEventRow[];
+      const unprocessed = appleEvents.filter((event) => !event.processed_at);
+      const newest = appleEvents[0]?.received_at ?? null;
+      checks.push(check(
+        'Apple event ingestion observed',
+        appleEvents.length > 0,
+        `${appleEvents.length} Apple event(s), newest=${newest ?? 'none'}`,
+        'Configure App Store Server Notifications V2 and send an Apple test notification.'
+      ));
+      checks.push(check(
+        'Apple events processed',
+        unprocessed.length === 0,
+        `${unprocessed.length} unprocessed Apple event(s)`,
+        'Inspect webhook/recovery logs and replay failed Apple notifications.'
+      ));
     }
   }
 

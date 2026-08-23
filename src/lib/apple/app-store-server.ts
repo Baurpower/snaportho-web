@@ -100,6 +100,12 @@ export type AppleSubscriptionStatusResponse = {
   }>;
 };
 
+export type AppleNotificationHistoryResponse = {
+  environment: AppleEnvironment;
+  signedPayloads: string[];
+  pagesFetched: number;
+};
+
 export class AppleVerificationError extends Error {
   constructor(message: string, options?: { cause?: unknown }) {
     super(message);
@@ -256,14 +262,104 @@ export async function parseApplePrivateKeyForSigning(rawPrivateKey: string) {
 
 function getAppleApiBaseUrl(environment: AppleEnvironment) {
   return environment === 'sandbox'
-    ? 'https://api.storekit-sandbox.itunes.apple.com'
-    : 'https://api.storekit.itunes.apple.com';
+    ? 'https://api.storekit-sandbox.apple.com'
+    : 'https://api.storekit.apple.com';
+}
+
+export function buildAppleNotificationHistoryWindow(params: {
+  startDate: Date;
+  endDate: Date;
+}) {
+  const startDate = params.startDate.getTime();
+  const endDate = params.endDate.getTime();
+  if (!Number.isFinite(startDate) || !Number.isFinite(endDate) || startDate >= endDate) {
+    throw new Error('Invalid Apple notification history window');
+  }
+  return { startDate, endDate };
+}
+
+export async function fetchAppleNotificationHistory(params: {
+  environment: AppleEnvironment;
+  startDate: Date;
+  endDate: Date;
+  maxPages?: number;
+}): Promise<AppleNotificationHistoryResponse> {
+  if (!isAppleServerConfigured()) {
+    throw new Error('Apple App Store Server API verification is not configured');
+  }
+
+  const token = await createAppleApiToken();
+  const body = buildAppleNotificationHistoryWindow(params);
+  const maxPages = Math.max(1, Math.min(params.maxPages ?? 10, 50));
+  const signedPayloads: string[] = [];
+  let paginationToken: string | null = null;
+  let pagesFetched = 0;
+
+  do {
+    const url = new URL(`${getAppleApiBaseUrl(params.environment)}/inApps/v1/notifications/history`);
+    if (paginationToken) url.searchParams.set('paginationToken', paginationToken);
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: buildAppleApiHeaders(token),
+      body: JSON.stringify(body),
+      cache: 'no-store',
+    });
+    if (!response.ok) {
+      throw new Error(
+        `Apple notification history failed (${params.environment} ${response.status}): ${await response.text()}`
+      );
+    }
+
+    const payload = (await response.json()) as {
+      notificationHistory?: Array<{ signedPayload?: string }>;
+      hasMore?: boolean;
+      paginationToken?: string;
+    };
+    pagesFetched += 1;
+    for (const item of payload.notificationHistory ?? []) {
+      if (item.signedPayload) signedPayloads.push(item.signedPayload);
+    }
+
+    paginationToken = payload.hasMore && payload.paginationToken
+      ? payload.paginationToken
+      : null;
+  } while (paginationToken && pagesFetched < maxPages);
+
+  return {
+    environment: params.environment,
+    signedPayloads,
+    pagesFetched,
+  };
+}
+
+export async function requestAppleTestNotification(environment: AppleEnvironment) {
+  if (!isAppleServerConfigured()) {
+    throw new Error('Apple App Store Server API verification is not configured');
+  }
+  const token = await createAppleApiToken();
+  const response = await fetch(
+    `${getAppleApiBaseUrl(environment)}/inApps/v1/notifications/test`,
+    {
+      method: 'POST',
+      headers: buildAppleApiHeaders(token),
+      body: '{}',
+      cache: 'no-store',
+    }
+  );
+  if (!response.ok) {
+    throw new Error(
+      `Apple test notification request failed (${environment} ${response.status}): ${await response.text()}`
+    );
+  }
+  return (await response.json()) as { testNotificationToken?: string };
 }
 
 function buildAppleApiHeaders(token: string) {
   return {
     Authorization: `Bearer ${token}`,
     Accept: 'application/json',
+    'Content-Type': 'application/json',
   };
 }
 

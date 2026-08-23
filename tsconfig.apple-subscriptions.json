@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false
+  },
+  "include": [
+    "next-env.d.ts",
+    "src/app/api/apple/notifications/**/*.ts",
+    "src/app/api/cron/subscriptions/apple-reconcile/route.ts",
+    "src/app/api/mobile/apple/subscription/sync/route.ts",
+    "src/lib/apple/**/*.ts",
+    "src/lib/subscriptions/**/*.ts",
+    "src/lib/supabase/admin.ts",
+    "src/lib/config/brobot.ts"
+  ],
+  "exclude": ["node_modules"]
+}
