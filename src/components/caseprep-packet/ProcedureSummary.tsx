@@ -10,9 +10,11 @@ import {
 export function ProcedureSummary({
   items,
   decision,
+  showApproachContext = true,
 }: {
   items: PacketItem[];
   decision?: Record<string, unknown>;
+  showApproachContext?: boolean;
 }) {
   const approach = (decision ?? {}) as ApproachDecision;
   const frameItem = items.find(
@@ -45,7 +47,7 @@ export function ProcedureSummary({
         <p className="text-sm leading-7 text-slate-800">{frame}</p>
       ) : null}
 
-      {choiceRequired ? (
+      {showApproachContext && choiceRequired ? (
         <p className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold leading-5 text-amber-950">
           Confirm the planned approach above. These notes follow the certified
           packet until an approach is named.
@@ -63,7 +65,7 @@ export function ProcedureSummary({
         </ol>
       ) : null}
 
-      {selected ? (
+      {showApproachContext && selected ? (
         <div className="rounded-xl border border-emerald-200 bg-emerald-50/60 p-3">
           <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-800">
             For the selected approach

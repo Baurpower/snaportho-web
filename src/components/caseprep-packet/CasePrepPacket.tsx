@@ -1,17 +1,17 @@
 "use client";
 
+import { useState } from "react";
+
 import type { CasePrepPacketState } from "@/lib/caseprep-v1-1/stream-schema";
 import { ClarificationPrompt } from "./ClarificationPrompt";
-import { ApproachDecisionSection } from "./ApproachDecisionSection";
+import { ApproachWorkspace } from "./ApproachWorkspace";
 import { ProcedureSummary } from "./ProcedureSummary";
 import { HighYieldReferences } from "./HighYieldReferences";
 import { PacketHeader, PacketHeaderSkeleton } from "./PacketHeader";
-import { PimpQuestionCard } from "./PimpQuestionCard";
+import { PimpQuestionDeck } from "./PimpQuestionDeck";
 import { SectionShell } from "./SectionShell";
 import {
   AnatomySection,
-  ApproachPrepSection,
-  ApproachSourcesSection,
   CalloutListSection,
   DecisionPointsSection,
   KeyTakeaways,
@@ -108,108 +108,165 @@ function CasePrepLoadingState({
   );
 }
 
-/** Fixed slot order — streaming arrival order never changes visual order. */
-const SECTION_LAYOUT: Array<{
-  id: string;
-  label: string;
-  kicker?: string;
-  width?: "full" | "wide" | "half";
-}> = [
-  { id: "approach_decision", label: "Approach Decision", width: "full" },
-  {
-    id: "approach_quick_brief",
-    label: "Approach Quick Brief",
-    kicker: "Position · corridor · landmarks",
-    width: "half",
-  },
-  { id: "approach_exposure", label: "Approach Exposure", width: "half" },
-  { id: "approach_safety", label: "Approach Safety", width: "half" },
-  { id: "approach_strategy", label: "Approach Strategy", width: "half" },
-  { id: "approach_sources", label: "Approach Coverage & Sources", width: "half" },
-  { id: "summary", label: "Case Must-Knows", width: "wide" },
-  {
-    id: "pimp_questions",
-    label: "Common Pimp Questions",
-    kicker: "Pocket Pimped + Attending",
-    width: "wide",
-  },
-  { id: "key_takeaways", label: "Key Takeaways", width: "half" },
-  { id: "top_things_to_know", label: "Top Things To Know", width: "half" },
-  { id: "anatomy", label: "Important Anatomy", width: "half" },
-  { id: "operative_flow", label: "Operative Flow", width: "half" },
-  { id: "decision_points", label: "Decision Making", width: "half" },
-  { id: "postop", label: "Post-op Protocol", width: "half" },
-  { id: "evidence", label: "High-Yield References", width: "half" },
-  {
-    id: "related_concepts",
-    label: "Related Concepts",
-    kicker: "Knowledge Graph",
-    width: "half",
-  },
-  { id: "sources", label: "Sources", width: "half" },
-];
+const ESSENTIAL_TABS = [
+  { id: "overview", label: "Must-knows" },
+  { id: "anatomy", label: "Anatomy" },
+  { id: "operative_flow", label: "Operative flow" },
+  { id: "decision_points", label: "Decisions" },
+  { id: "pitfalls", label: "Pitfalls" },
+  { id: "teaching_topics", label: "Teaching topics" },
+] as const;
 
-function sectionWidth(width: "full" | "wide" | "half" = "half") {
-  if (width === "full") return "lg:col-span-12";
-  if (width === "wide") return "lg:col-span-6";
-  return "lg:col-span-6 xl:col-span-6";
-}
+function CaseEssentials({ state }: { state: CasePrepPacketState }) {
+  const hasOverview = Boolean(
+    state.sections.summary ||
+      state.sections.key_takeaways ||
+      state.sections.top_things_to_know,
+  );
+  const availableTabs = ESSENTIAL_TABS.filter(({ id }) =>
+    id === "overview" ? hasOverview : Boolean(state.sections[id]),
+  );
+  const [requestedTab, setRequestedTab] = useState<string>("overview");
+  const [mobileExpanded, setMobileExpanded] = useState<Record<string, boolean>>({
+    overview: true,
+  });
+  const activeTab = availableTabs.some(({ id }) => id === requestedTab)
+    ? requestedTab
+    : availableTabs[0]?.id;
 
-function SectionBody({
-  id,
-  state,
-  onClarify,
-}: {
-  id: string;
-  state: CasePrepPacketState;
-  onClarify: (prompt: string) => void;
-}) {
-  const section = state.sections[id];
-  if (!section) return null;
-  switch (id) {
-    case "approach_decision":
-      return <ApproachDecisionSection payload={section.payload} originalPrompt={state.requestedPrompt ?? ""} onChoose={onClarify} />;
-    case "approach_quick_brief":
-    case "approach_exposure":
-    case "approach_safety":
-    case "approach_strategy":
-      return <ApproachPrepSection items={section.items} />;
-    case "approach_sources":
-      return <ApproachSourcesSection section={section} />;
-    case "summary":
+  if (!activeTab) return null;
+
+  const renderContent = (id: string) => {
+    const contentSection = id === "overview" ? undefined : state.sections[id];
+    if (id === "overview") {
       return (
-        <ProcedureSummary
-          items={section.items}
-          decision={state.sections.approach_decision?.payload}
-        />
-      );
-    case "key_takeaways":
-      return <KeyTakeaways items={section.items} />;
-    case "top_things_to_know":
-      return <TopThingsToKnow items={section.items} />;
-    case "pimp_questions":
-      return (
-        <div className="grid gap-3">
-          {section.items.map((item, index) => (
-            <PimpQuestionCard key={item.id} item={item} index={index} />
-          ))}
+        <div className="space-y-5">
+          {state.sections.summary ? (
+            <ProcedureSummary
+              items={state.sections.summary.items}
+              decision={state.sections.approach_decision?.payload}
+              showApproachContext={false}
+            />
+          ) : null}
+          {state.sections.key_takeaways ? (
+            <div>
+              <h3 className="mb-2 text-sm font-black text-slate-950">Key takeaways</h3>
+              <KeyTakeaways items={state.sections.key_takeaways.items} />
+            </div>
+          ) : null}
+          {state.sections.top_things_to_know ? (
+            <div>
+              <h3 className="mb-2 text-sm font-black text-slate-950">Top things to know</h3>
+              <TopThingsToKnow items={state.sections.top_things_to_know.items} />
+            </div>
+          ) : null}
         </div>
       );
-    case "anatomy":
-      return <AnatomySection items={section.items} />;
-    case "operative_flow":
-      return <OperativeFlowSection items={section.items} />;
-    case "decision_points":
-      return <DecisionPointsSection items={section.items} />;
-    case "postop":
-      return <CalloutListSection items={section.items} tone="slate" />;
-    case "related_concepts":
-      return <RelatedConceptsSection items={section.items} />;
-    case "sources":
-      return <SourcesSection section={section} />;
-    default:
-      return null;
-  }
+    }
+    if (id === "anatomy" && contentSection)
+      return <AnatomySection items={contentSection.items} />;
+    if (id === "operative_flow" && contentSection)
+      return <OperativeFlowSection items={contentSection.items} />;
+    if (id === "decision_points" && contentSection)
+      return <DecisionPointsSection items={contentSection.items} />;
+    if ((id === "pitfalls" || id === "teaching_topics") && contentSection)
+      return (
+        <CalloutListSection
+          items={contentSection.items}
+          tone={id === "pitfalls" ? "amber" : "slate"}
+        />
+      );
+    return null;
+  };
+
+  return (
+    <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="border-b border-slate-100 px-5 py-4 sm:px-6">
+        <p className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500">
+          3 · Supporting knowledge
+        </p>
+        <h2 className="mt-1 text-xl font-black tracking-tight text-slate-950">
+          Case Essentials
+        </h2>
+      </div>
+      <div className="p-4 sm:p-6">
+        <div className="hidden gap-1 overflow-x-auto rounded-xl bg-slate-100 p-1 sm:flex" role="tablist">
+          {availableTabs.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={activeTab === tab.id}
+              onClick={() => setRequestedTab(tab.id)}
+              className={`shrink-0 rounded-lg px-3.5 py-2 text-xs font-bold transition sm:flex-1 ${
+                activeTab === tab.id
+                  ? "bg-white text-slate-950 shadow-sm"
+                  : "text-slate-600 hover:text-slate-950"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+        <div className="mt-5 hidden sm:block">
+          {renderContent(activeTab)}
+        </div>
+        <div className="space-y-2 sm:hidden">
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={() => {
+                const allOpen = availableTabs.every((tab) => mobileExpanded[tab.id]);
+                setMobileExpanded(
+                  Object.fromEntries(availableTabs.map((tab) => [tab.id, !allOpen])),
+                );
+              }}
+              className="min-h-10 rounded-lg border border-slate-200 bg-white px-3 text-xs font-bold text-slate-700"
+            >
+              {availableTabs.every((tab) => mobileExpanded[tab.id])
+                ? "Collapse all"
+                : "Expand all"}
+            </button>
+          </div>
+          {availableTabs.map((tab, index) => {
+            const expanded = Boolean(mobileExpanded[tab.id]);
+            const panelId = `essentials-mobile-${tab.id}`;
+            return (
+              <section key={tab.id} className="overflow-hidden rounded-xl border border-slate-200">
+                <button
+                  type="button"
+                  aria-expanded={expanded}
+                  aria-controls={panelId}
+                  onClick={() =>
+                    setMobileExpanded((current) => ({
+                      ...current,
+                      [tab.id]: !expanded,
+                    }))
+                  }
+                  className="flex min-h-14 w-full items-center justify-between gap-3 px-4 py-3 text-left"
+                >
+                  <span>
+                    <span className="mr-2 text-[10px] font-black text-slate-400">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-sm font-black text-slate-950">{tab.label}</span>
+                  </span>
+                  <span className="text-xl font-light text-slate-500" aria-hidden>
+                    {expanded ? "−" : "+"}
+                  </span>
+                </button>
+                {expanded ? (
+                  <div id={panelId} className="border-t border-slate-100 p-3">
+                    {renderContent(tab.id)}
+                  </div>
+                ) : null}
+              </section>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export function CasePrepPacket({
@@ -240,6 +297,10 @@ export function CasePrepPacket({
           generatedFieldPaths: [],
         }
       : undefined);
+  const referenceSection =
+    dynamicReferencesSection ??
+    state.sections.sources ??
+    state.sections.related_concepts;
 
   if (state.status === "clarification" && state.clarification) {
     return (
@@ -267,18 +328,18 @@ export function CasePrepPacket({
   }
 
   return (
-    <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-12">
+    <div className="space-y-4">
       {streaming ? (
-        <div className="lg:col-span-12"><CasePrepLoadingState state={state} onCancel={onCancel} /></div>
+        <CasePrepLoadingState state={state} onCancel={onCancel} />
       ) : null}
       {state.header && state.caseIdentity ? (
-        <div className="lg:col-span-12"><PacketHeader caseIdentity={state.caseIdentity} header={state.header} /></div>
+        <PacketHeader caseIdentity={state.caseIdentity} header={state.header} />
       ) : streaming ? (
-        <div className="lg:col-span-12"><PacketHeaderSkeleton /></div>
+        <PacketHeaderSkeleton />
       ) : null}
 
       {state.coverage && state.coverage.quality_gate !== "passed" ? (
-        <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950 lg:col-span-12">
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950">
           <p className="font-bold">
             Grounded coverage is limited for this case.
           </p>
@@ -292,37 +353,72 @@ export function CasePrepPacket({
         </div>
       ) : null}
 
-      {SECTION_LAYOUT.map(({ id, label, kicker, width }) => {
-        const expanded = isExpanded(id);
-        return (
-          <div key={id} className={sectionWidth(width)}>
-          <SectionShell
-            label={label}
-            kicker={kicker}
-            section={
-              id === "evidence" ? dynamicReferencesSection : state.sections[id]
-            }
-            expanded={expanded}
-            onToggle={() => toggle(id)}
-            streaming={
-              streaming &&
-              // Keep one meaningful pending slot instead of a wall of skeletons.
-              id === "pimp_questions"
-            }
-            debug={debug}
-          >
-            {id === "evidence" ? (
-              <HighYieldReferences state={state} active={expanded} />
-            ) : (
-              <SectionBody id={id} state={state} onClarify={onClarify} />
-            )}
-          </SectionShell>
+      <ApproachWorkspace
+        sections={state.sections}
+        streaming={streaming}
+      />
+
+      {state.sections.pimp_questions ? (
+        <PimpQuestionDeck items={state.sections.pimp_questions.items} />
+      ) : streaming ? (
+        <div className="rounded-2xl border border-teal-200 bg-white p-6">
+          <div className="h-5 w-48 animate-pulse rounded bg-teal-50" />
+          <div className="mt-4 grid gap-3 lg:grid-cols-2" aria-hidden>
+            <div className="h-28 animate-pulse rounded-xl bg-slate-100" />
+            <div className="h-28 animate-pulse rounded-xl bg-slate-100" />
           </div>
-        );
-      })}
+        </div>
+      ) : null}
+
+      <CaseEssentials state={state} />
+
+      <SectionShell
+        label="After the Case"
+        kicker="Post-op protocol"
+        section={state.sections.postop}
+        expanded={isExpanded("postop")}
+        onToggle={() => toggle("postop")}
+        streaming={false}
+        debug={debug}
+      >
+        {state.sections.postop ? (
+          <CalloutListSection items={state.sections.postop.items} tone="slate" />
+        ) : null}
+      </SectionShell>
+
+      <SectionShell
+        label="References & More"
+        kicker="Evidence · sources · related concepts"
+        section={referenceSection}
+        expanded={isExpanded("references")}
+        onToggle={() => toggle("references")}
+        streaming={false}
+        debug={debug}
+      >
+        <div className="space-y-6">
+          {dynamicReferencesSection ? (
+            <div>
+              <h3 className="mb-2 text-sm font-black text-slate-950">High-yield references</h3>
+              <HighYieldReferences state={state} active={isExpanded("references")} />
+            </div>
+          ) : null}
+          {state.sections.sources ? (
+            <div>
+              <h3 className="mb-2 text-sm font-black text-slate-950">Sources</h3>
+              <SourcesSection section={state.sections.sources} />
+            </div>
+          ) : null}
+          {state.sections.related_concepts ? (
+            <div>
+              <h3 className="mb-2 text-sm font-black text-slate-950">Related concepts</h3>
+              <RelatedConceptsSection items={state.sections.related_concepts.items} />
+            </div>
+          ) : null}
+        </div>
+      </SectionShell>
 
       {state.status === "done" && Object.keys(state.sections).length === 0 ? (
-        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 lg:col-span-12">
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
           No preparation content is available for this case yet.
         </div>
       ) : null}

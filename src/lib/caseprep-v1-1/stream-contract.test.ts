@@ -368,18 +368,14 @@ const packetComponentSource = readFileSync(
   join(process.cwd(), "src/components/caseprep-packet/CasePrepPacket.tsx"),
   "utf8",
 );
-assert.match(packetComponentSource, /Case Must-Knows/);
+assert.match(packetComponentSource, /Case Essentials/);
 assert.match(packetComponentSource, /ProcedureSummary/);
 assert.ok(
-  packetComponentSource.indexOf('id: "approach_decision"') <
-    packetComponentSource.indexOf('id: "approach_quick_brief"') &&
-    packetComponentSource.indexOf('id: "approach_quick_brief"') <
-      packetComponentSource.indexOf('id: "summary"') &&
-    packetComponentSource.indexOf('id: "summary"') <
-      packetComponentSource.indexOf('id: "pimp_questions"') &&
-    packetComponentSource.indexOf('id: "pimp_questions"') <
-      packetComponentSource.indexOf('id: "anatomy"'),
-  "approach and must-knows stay above pimp questions; pimp stays above long body sections",
+  packetComponentSource.indexOf("<ApproachWorkspace") <
+    packetComponentSource.indexOf("<PimpQuestionDeck") &&
+    packetComponentSource.indexOf("<PimpQuestionDeck") <
+      packetComponentSource.indexOf("<CaseEssentials"),
+  "approach stays first, pimp questions second, and supporting knowledge third",
 );
 assert.ok(
   streamRouteSource.indexOf("getBroBotAccessGate") <

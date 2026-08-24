@@ -21,7 +21,7 @@ export function isCasePrepV12StreamEnabled(): boolean {
   return process.env.CASEPREP_WEB_V1_2_STREAM_ENABLED === "true";
 }
 
-/** RAG + approach-library v1.3 stream; certified procedure packets are excluded. */
+/** Unified grounded packet + RAG + approach-library v1.3 stream. */
 export function isCasePrepV13StreamEnabled(): boolean {
   return process.env.CASEPREP_WEB_V1_3_STREAM_ENABLED === "true";
 }

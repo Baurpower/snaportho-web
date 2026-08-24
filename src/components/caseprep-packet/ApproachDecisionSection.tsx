@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import {
   type ApproachDecision,
@@ -10,8 +10,13 @@ import {
   texts,
 } from "./approach-decision";
 
-function statusLabel(option: ApproachOption, selected: boolean) {
-  if (selected) return "Selected from case description";
+function statusLabel(
+  option: ApproachOption,
+  selected: boolean,
+  selectedFromCase: boolean,
+) {
+  if (selected)
+    return selectedFromCase ? "Selected from case description" : "Selected approach";
   if (
     option.content_status === "coverage_gap" ||
     option.content_status === "source_indexed"
@@ -20,11 +25,6 @@ function statusLabel(option: ApproachOption, selected: boolean) {
   if (option.role === "primary") return "Current curated approach";
   if (option.role === "conditional") return "Conditional option";
   return "Alternative approach";
-}
-
-function isPendingReview(option: ApproachOption) {
-  const status = option.review_status ?? "";
-  return status === "agent_review_pending" || status === "pending";
 }
 
 function BulletList({
@@ -56,16 +56,19 @@ function ApproachCard({
   selected,
   expanded,
   onToggle,
+  selectedFromCase = false,
+  summaryOnly = false,
 }: {
   option: ApproachOption;
   selected: boolean;
   expanded: boolean;
   onToggle: () => void;
+  selectedFromCase?: boolean;
+  summaryOnly?: boolean;
 }) {
   const incomplete =
     option.content_status === "coverage_gap" ||
     option.content_status === "source_indexed";
-  const pending = !incomplete && isPendingReview(option);
   const risks = normalizeApproachRisks(option.structures_at_risk);
   const indications = texts(option.selection_indications);
   const positioning = texts(option.positioning);
@@ -81,7 +84,7 @@ function ApproachCard({
 
   return (
     <article
-      className={`rounded-2xl border p-4 ${
+      className={`rounded-2xl border p-4 transition ${
         selected
           ? "border-emerald-300 bg-emerald-50/60"
           : incomplete
@@ -101,13 +104,8 @@ function ApproachCard({
                   : "bg-slate-100 text-slate-700"
             }`}
           >
-            {statusLabel(option, selected)}
+            {statusLabel(option, selected, selectedFromCase)}
           </span>
-          {pending ? (
-            <span className="rounded-full bg-amber-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-900">
-              Curated · review pending
-            </span>
-          ) : null}
           {selected && incomplete ? (
             <span className="rounded-full bg-amber-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-900">
               Source indexed · details from RAG
@@ -122,7 +120,13 @@ function ApproachCard({
         </p>
       ) : null}
 
-      {!expanded && risks.length > 0 ? (
+      {summaryOnly && positioning.length > 0 ? (
+        <p className="mt-3 text-xs leading-5 text-slate-700">
+          <strong>Position:</strong> {positioning[0]}
+        </p>
+      ) : null}
+
+      {(!expanded || summaryOnly) && risks.length > 0 ? (
         <p className="mt-3 text-xs leading-5 text-slate-700">
           <strong>Structures at risk:</strong>{" "}
           {risks
@@ -132,7 +136,7 @@ function ApproachCard({
         </p>
       ) : null}
 
-      {expanded ? (
+      {expanded && !summaryOnly ? (
         <div id={`${titleId}-details`} className="mt-1">
           <BulletList label="Positioning" items={positioning} />
           <BulletList label="Interval / layers" items={layers} />
@@ -194,46 +198,134 @@ function ApproachCard({
         </div>
       ) : null}
 
-      <button
-        type="button"
-        className="mt-3 text-xs font-bold text-slate-600 underline decoration-slate-300 underline-offset-2 hover:text-slate-900"
-        aria-expanded={expanded}
-        aria-controls={`${titleId}-details`}
-        onClick={onToggle}
-      >
-        {expanded ? "Hide details" : "Show positioning, interval, and sources"}
-      </button>
+      {summaryOnly ? null : (
+        <button
+          type="button"
+          className="mt-3 text-xs font-bold text-slate-600 underline decoration-slate-300 underline-offset-2 hover:text-slate-900"
+          aria-expanded={expanded}
+          aria-controls={`${titleId}-details`}
+          onClick={onToggle}
+        >
+          {expanded ? "Hide details" : "Show positioning, interval, and sources"}
+        </button>
+      )}
     </article>
+  );
+}
+
+function ApproachSwitcher({
+  approaches,
+  activeId,
+  onSelect,
+}: {
+  approaches: ApproachOption[];
+  activeId: string | null;
+  onSelect: (option: ApproachOption) => void;
+}) {
+  const selectorId = useId();
+  if (approaches.length < 2) return null;
+
+  return (
+    <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-2.5">
+      <label
+        htmlFor={selectorId}
+        className="mb-1.5 block text-[10px] font-black uppercase tracking-[0.16em] text-slate-500 sm:hidden"
+      >
+        Switch approach
+      </label>
+      <select
+        id={selectorId}
+        value={activeId ?? ""}
+        onChange={(event) => {
+          const option = approaches.find(
+            (candidate) =>
+              (candidate.approach_id ?? candidate.name) === event.target.value,
+          );
+          if (option) onSelect(option);
+        }}
+        className="min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm font-bold text-slate-900 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200 sm:hidden"
+      >
+        {!activeId ? <option value="">Choose an approach</option> : null}
+        {approaches.map((option) => {
+          const id = option.approach_id ?? option.name ?? "";
+          return id ? (
+            <option key={id} value={id}>
+              {option.name ?? id}
+            </option>
+          ) : null;
+        })}
+      </select>
+
+      <div
+        className="hidden flex-wrap gap-1.5 sm:flex"
+        role="tablist"
+        aria-label="Surgical approaches"
+      >
+        {approaches.map((option) => {
+          const id = option.approach_id ?? option.name ?? "";
+          if (!id) return null;
+          const selected = id === activeId;
+          return (
+            <button
+              key={id}
+              type="button"
+              role="tab"
+              aria-selected={selected}
+              onClick={() => onSelect(option)}
+              className={`rounded-lg border px-3 py-2 text-left text-xs font-bold leading-4 transition focus:outline-none focus:ring-2 focus:ring-emerald-200 ${
+                selected
+                  ? "border-emerald-300 bg-white text-emerald-900 shadow-sm"
+                  : "border-transparent text-slate-600 hover:border-slate-200 hover:bg-white hover:text-slate-950"
+              }`}
+            >
+              {option.name ?? id}
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
 export function ApproachDecisionSection({
   payload,
-  originalPrompt,
-  onChoose,
+  summaryOnly = false,
+  onActiveApproachChange,
 }: {
   payload?: Record<string, unknown>;
-  originalPrompt: string;
-  onChoose: (prompt: string) => void;
+  summaryOnly?: boolean;
+  onActiveApproachChange?: (option: ApproachOption) => void;
 }) {
   const decision = (payload ?? {}) as ApproachDecision;
   const approaches = decision.approaches ?? [];
   const [expandedIds, setExpandedIds] = useState<Record<string, boolean>>({});
-  const [chosenIds, setChosenIds] = useState<string[]>(
-    decision.selected_approach_ids ??
-      (decision.selected_approach_id ? [decision.selected_approach_id] : []),
-  );
+  const serverSelectedId =
+    decision.selected_approach_ids?.[0] ?? decision.selected_approach_id ?? null;
+  const [chosenActiveId, setChosenActiveId] = useState<string | null>(null);
+  const activeId = chosenActiveId ?? serverSelectedId;
 
   if (!approaches.length) return null;
 
   const isExpanded = (option: ApproachOption) => {
     const id = option.approach_id ?? option.name ?? "";
     if (id in expandedIds) return expandedIds[id];
-    if (decision.selected_approach_ids?.includes(option.approach_id ?? "") || (decision.selected_approach_id && decision.selected_approach_id === option.approach_id)) {
+    if (
+      decision.selected_approach_ids?.includes(option.approach_id ?? "") ||
+      (decision.selected_approach_id &&
+        decision.selected_approach_id === option.approach_id)
+    ) {
       return true;
     }
     if (!decision.selected_approach_id && approaches.length === 1) return true;
     return false;
+  };
+
+  const chooseApproach = (option: ApproachOption) => {
+    const id = option.approach_id ?? option.name;
+    if (!id) return;
+    setChosenActiveId(id);
+    setExpandedIds((prev) => ({ ...prev, [id]: true }));
+    onActiveApproachChange?.(option);
   };
 
   return (
@@ -243,80 +335,38 @@ export function ApproachDecisionSection({
           {decision.message}
         </div>
       ) : null}
-      {decision.status === "choice_required" ? (
-        <div className="rounded-2xl border border-teal-200 bg-teal-50/60 p-4">
-          <p className="text-sm font-black text-slate-950">
-            Quick follow-up: which approach should I prepare?
-          </p>
-          <p className="mt-1 text-xs text-slate-600">
-            Select one or more. Multiple selections create a side-by-side comparison.
-          </p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {approaches.map((option) => {
-              const id = option.approach_id ?? "";
-              if (!id) return null;
-              const checked = chosenIds.includes(id);
+      <ApproachSwitcher
+        approaches={approaches}
+        activeId={activeId}
+        onSelect={chooseApproach}
+      />
+      {activeId ? (
+        <div className="w-full">
+          {approaches
+            .filter(
+              (option) => (option.approach_id ?? option.name) === activeId,
+            )
+            .map((option) => {
+              const id = option.approach_id ?? option.name ?? "approach";
               return (
-                <button
+                <ApproachCard
                   key={id}
-                  type="button"
-                  aria-pressed={checked}
-                  onClick={() =>
-                    setChosenIds((current) =>
-                      checked
-                        ? current.filter((value) => value !== id)
-                        : [...current, id],
-                    )
+                  option={option}
+                  selected
+                  selectedFromCase={activeId === serverSelectedId}
+                  expanded={isExpanded(option)}
+                  summaryOnly={summaryOnly}
+                  onToggle={() =>
+                    setExpandedIds((prev) => ({
+                      ...prev,
+                      [id]: !isExpanded(option),
+                    }))
                   }
-                  className={`rounded-full border px-3 py-2 text-xs font-bold transition ${
-                    checked
-                      ? "border-teal-700 bg-teal-700 text-white"
-                      : "border-teal-200 bg-white text-teal-900 hover:border-teal-500"
-                  }`}
-                >
-                  {option.name ?? id}
-                </button>
+                />
               );
             })}
-          </div>
-          <button
-            type="button"
-            disabled={chosenIds.length === 0}
-            onClick={() => {
-              const names = approaches
-                .filter((option) => chosenIds.includes(option.approach_id ?? ""))
-                .map((option) => option.name)
-                .filter(Boolean)
-                .join(" and ");
-              onChoose(`${originalPrompt}. Prepare and compare these approaches: ${names}.`);
-            }}
-            className="mt-3 rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-black text-white disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            {chosenIds.length > 1
-              ? `Compare ${chosenIds.length} approaches`
-              : "Prepare selected approach"}
-          </button>
         </div>
       ) : null}
-      <div className="grid gap-3 lg:grid-cols-2">
-        {approaches.map((option) => {
-          const id = option.approach_id ?? option.name ?? "approach";
-          return (
-            <ApproachCard
-              key={id}
-              option={option}
-              selected={(decision.selected_approach_ids ?? [decision.selected_approach_id]).includes(option.approach_id)}
-              expanded={isExpanded(option)}
-              onToggle={() =>
-                setExpandedIds((prev) => ({
-                  ...prev,
-                  [id]: !isExpanded(option),
-                }))
-              }
-            />
-          );
-        })}
-      </div>
       {decision.coverage?.gap_count ? (
         <p className="text-xs leading-5 text-slate-500">
           {decision.coverage.complete_count ?? 0} of{" "}
