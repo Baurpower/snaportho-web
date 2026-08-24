@@ -58,12 +58,9 @@ export function useCasePrepStream(): UseCasePrepStream {
 
       let response: Response;
       try {
-        const preferredVersion =
-          process.env.NEXT_PUBLIC_CASEPREP_V1_3_ENABLED === "true"
-            ? "v1.3"
-            : process.env.NEXT_PUBLIC_CASEPREP_V1_2_ENABLED === "true"
-              ? "v1.2"
-              : "v1.1";
+        // v1.3 is the website's current CasePrep contract. Keep the older
+        // endpoints only as availability fallbacks during deployment skew.
+        const preferredVersion = "v1.3" as const;
         const requestStream = (version: "v1.1" | "v1.2" | "v1.3") =>
           fetch(`/api/case-prep/${version}/stream`, {
             method: "POST",
@@ -74,17 +71,14 @@ export function useCasePrepStream(): UseCasePrepStream {
 
         response = await requestStream(preferredVersion);
 
-        // The public and server flags are deployed independently. If the
-        // browser bundle selects v1.2 before the server flag is enabled, that
-        // endpoint deliberately returns 404. Roll back to v1.1 so a rollout
-        // mismatch does not take CasePrep offline for signed-in users.
-        if (preferredVersion === "v1.3" && response.status === 404) {
-          response = await requestStream(
-            process.env.NEXT_PUBLIC_CASEPREP_V1_2_ENABLED === "true"
-              ? "v1.2"
-              : "v1.1",
-          );
-        } else if (preferredVersion === "v1.2" && response.status === 404) {
+        // The browser, web proxy, and CasePrep service can deploy at different
+        // times. A disabled/missing upstream is surfaced by the proxy as 502,
+        // so treat both 404 and 502 as rollout skew and preserve availability.
+        // Never fall back on 403/429: those are authoritative access limits.
+        if (
+          preferredVersion === "v1.3" &&
+          (response.status === 404 || response.status === 502)
+        ) {
           response = await requestStream("v1.1");
         }
       } catch (error) {

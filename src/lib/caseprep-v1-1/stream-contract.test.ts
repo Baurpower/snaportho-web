@@ -406,8 +406,8 @@ const streamHookSource = readFileSync(
 );
 assert.match(
   streamHookSource,
-  /preferredVersion === "v1\.2" && response\.status === 404[\s\S]*requestStream\("v1\.1"\)/,
-  "a disabled v1.2 server flag must fall back to the v1.1 stream",
+  /const preferredVersion = "v1\.3"[\s\S]*response\.status === 404 \|\| response\.status === 502[\s\S]*requestStream\("v1\.1"\)/,
+  "the website must prefer v1.3 and survive rollout skew via v1.1",
 );
 
 const legacyAskRouteSource = readFileSync(
