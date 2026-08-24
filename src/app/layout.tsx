@@ -57,7 +57,6 @@ export const metadata: Metadata = {
   },
 };
 
-const BRANCH_KEY = process.env.NEXT_PUBLIC_BRANCH_KEY ?? "";
 const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ?? "";
 
 export default function RootLayout({
@@ -69,11 +68,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* ✅ Scripts must be in <head> or <body>, not directly under <html> */}
-        <Script
-          src="https://cdn.branch.io/branch-latest.min.js"
-          strategy="beforeInteractive"
-        />
-
         {GOOGLE_ADS_ID ? (
           <>
             <Script
@@ -91,29 +85,6 @@ export default function RootLayout({
             </Script>
           </>
         ) : null}
-
-        {/* ✅ inline init; avoids referencing process.env inside the string */}
-        <Script id="branch-init" strategy="afterInteractive">
-          {`
-            (function() {
-              if (!window.branch) return;
-
-              var key = ${JSON.stringify(BRANCH_KEY)};
-              if (!key) {
-                console.warn("Branch key missing: NEXT_PUBLIC_BRANCH_KEY");
-                return;
-              }
-
-              window.branch.init(key, function(err, data) {
-                if (err) {
-                  console.error("Branch init failed:", err);
-                } else {
-                  console.log("Branch initialized:", data);
-                }
-              });
-            })();
-          `}
-        </Script>
 
         {/* Optional but recommended: helps avoid duplicate URL issues */}
         {/* Next will automatically generate canonical tags once metadataBase exists */}

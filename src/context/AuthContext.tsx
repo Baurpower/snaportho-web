@@ -20,6 +20,7 @@ import {
   trackCreateAccountConversion,
 } from "@/lib/analytics/googleAds";
 import { buildGoogleOAuthRedirectTo } from "@/lib/auth/redirects";
+import { clearBranchIdentity, setBranchIdentity } from "@/lib/branch";
 
 type ResetResponse = { data: object | null; error: AuthError | null };
 
@@ -79,6 +80,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!user || typeof window === "undefined") return;
 
+    void setBranchIdentity(user.id);
+
     const url = new URL(window.location.href);
     if (url.searchParams.get("signup") !== "google") return;
 
@@ -137,6 +140,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   ) => supabase.auth.resetPasswordForEmail(email, options);
 
   const signOut = async () => {
+    await clearBranchIdentity();
     const { error } = await supabase.auth.signOut();
     if (!error) setUser(null);
     return { error };

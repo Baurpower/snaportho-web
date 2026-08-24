@@ -1,5 +1,7 @@
 'use client';
 
+import { trackProductEvent } from '@/lib/analytics/product-events-client';
+
 export type WebsiteBroBotCheckoutParams = {
   interval: 'month' | 'year';
   isAuthenticated: boolean;
@@ -14,6 +16,15 @@ export type WebsiteBroBotCheckoutParams = {
 };
 
 export async function createWebsiteBroBotCheckout(params: WebsiteBroBotCheckoutParams) {
+  trackProductEvent({
+    eventName: 'brobot_checkout_started',
+    surface: params.checkoutSource,
+    productArea: 'billing',
+    source: params.utmSource ?? null,
+    medium: params.utmMedium ?? null,
+    campaign: params.utmCampaign ?? params.campaign ?? null,
+    properties: { interval: params.interval, trial_requested: true },
+  });
   const endpoint = params.isAuthenticated
     ? '/api/billing/checkout'
     : '/api/billing/checkout/guest';

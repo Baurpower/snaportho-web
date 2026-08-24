@@ -14,6 +14,7 @@
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 import { createAdminClient } from '@/lib/supabase/admin';
 import type { Subject } from './entitlements';
+import { recordProductEvent, recordSuccessfulBroBotProductUse } from '@/lib/analytics/product-events-server';
 
 export type UsageOutcome = 'success' | 'failure' | 'limit_hit' | 'cached' | 'disabled';
 
@@ -26,6 +27,9 @@ interface RecordUsageParams {
     ipHash?: string;
     userAgentHash?: string;
   };
+  surface?: string;
+  requestId?: string;
+  entitlementTier?: 'guest' | 'free' | 'unlimited';
 }
 
 /**
@@ -72,7 +76,7 @@ export async function recordUsageEvent(params: RecordUsageParams): Promise<void>
     const userId = params.subject.type === 'user' ? params.subject.id : null;
     const guestId = params.subject.type === 'guest' ? params.subject.id : null;
 
-    await supabase.from('brobot_usage_events').insert({
+    const { error } = await supabase.from('brobot_usage_events').insert({
       user_id: userId,
       guest_id: guestId,
       feature: BROBOT_CONFIG.FEATURE,
@@ -81,6 +85,23 @@ export async function recordUsageEvent(params: RecordUsageParams): Promise<void>
       ip_hash: params.metadata?.ipHash ?? null,
       user_agent_hash: params.metadata?.userAgentHash ?? null,
     });
+    if (error) {
+      console.error('[brobot] recordUsageEvent insert failed', {
+        code: error.code,
+        message: error.message,
+        outcome: params.outcome,
+      });
+    }
+    if (params.outcome === 'limit_hit') {
+      void recordProductEvent({
+        eventName: 'brobot_limit_reached',
+        userId: params.subject.type === 'user' ? params.subject.id : null,
+        anonymousId: params.subject.type === 'guest' ? params.subject.id : null,
+        surface: params.surface ?? 'brobot_api',
+        requestId: params.requestId,
+        entitlementTier: params.entitlementTier ?? (params.subject.type === 'guest' ? 'guest' : 'free'),
+      });
+    }
   } catch (err) {
     // Never let logging break the user experience
     console.error('[brobot] recordUsageEvent failed (non-fatal)', err);
@@ -95,7 +116,8 @@ export async function recordUsageEvent(params: RecordUsageParams): Promise<void>
 export async function recordSuccessfulAIUse(
   subject: Subject,
   latencyMs?: number,
-  metadata?: RecordUsageParams['metadata']
+  metadata?: RecordUsageParams['metadata'],
+  analytics?: Pick<RecordUsageParams, 'surface' | 'requestId' | 'entitlementTier'>
 ): Promise<number> {
   const newCount = await incrementDailyUsage(subject);
 
@@ -105,6 +127,16 @@ export async function recordSuccessfulAIUse(
     outcome: 'success',
     latencyMs,
     metadata,
+    ...analytics,
+  });
+
+  void recordSuccessfulBroBotProductUse({
+    userId: subject.type === 'user' ? subject.id : null,
+    anonymousId: subject.type === 'guest' ? subject.id : null,
+    surface: analytics?.surface ?? 'brobot_api',
+    requestId: analytics?.requestId,
+    entitlementTier: analytics?.entitlementTier ?? (subject.type === 'guest' ? 'guest' : null),
+    latencyMs,
   });
 
   return newCount;

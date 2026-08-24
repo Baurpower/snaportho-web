@@ -15,8 +15,33 @@ import {
   getExistingSubscriptionEvent,
   upsertSubscriptionEvent,
 } from '@/lib/subscriptions/events';
+import { recordProductEvent } from '@/lib/analytics/product-events-server';
+import { sendBranchServerEvent } from '@/lib/analytics/branch-server';
+import { v5 as uuidv5 } from 'uuid';
 
 export const runtime = 'nodejs';
+const PRODUCT_EVENT_NAMESPACE = '72a9706f-0a14-4a7a-885b-b05a3d745e3e';
+
+async function recordStripeProductConversion(params: {
+  eventId: string;
+  eventName: 'brobot_trial_started' | 'brobot_unlimited_activated' | 'brobot_subscription_renewed' | 'brobot_subscription_canceled';
+  userId?: string | null;
+  subscription: Stripe.Subscription;
+}) {
+  if (!params.userId) return;
+  const source = params.subscription.metadata?.checkout_source ?? params.subscription.metadata?.source ?? 'stripe';
+  await recordProductEvent({
+    eventId: uuidv5(`${params.eventId}:${params.eventName}`, PRODUCT_EVENT_NAMESPACE),
+    eventName: params.eventName,
+    userId: params.userId,
+    surface: source,
+    productArea: 'billing',
+    entitlementTier: params.eventName === 'brobot_subscription_canceled' ? null : 'unlimited',
+    subscriptionProvider: 'stripe',
+    source,
+    properties: { subscription_id: params.subscription.id, status: params.subscription.status },
+  });
+}
 
 function summarizeId(value: string | null | undefined) {
   if (!value) return null;
@@ -250,6 +275,14 @@ export async function POST(request: Request) {
           requireUserMapping: !isPreAuthCheckout,
         });
 
+        const conversionUserId = userIdFromSession ?? sub.metadata?.user_id ?? null;
+        if (sub.status === 'trialing') {
+          await recordStripeProductConversion({ eventId: sub.id, eventName: 'brobot_trial_started', userId: conversionUserId, subscription: sub });
+          if (conversionUserId) void sendBranchServerEvent({ name: 'START_TRIAL', userId: conversionUserId, transactionId: sub.id, customData: { source: sub.metadata?.checkout_source ?? 'stripe' } });
+        }
+        await recordStripeProductConversion({ eventId: sub.id, eventName: 'brobot_unlimited_activated', userId: conversionUserId, subscription: sub });
+        if (conversionUserId) void sendBranchServerEvent({ name: 'SUBSCRIBE', userId: conversionUserId, transactionId: sub.id, customData: { status: sub.status } });
+
         const conversionResult = await sendSubscriptionPurchaseConversion(sub);
         logStripeWebhookAction({
           stripe_event_id: event.id,
@@ -294,6 +327,15 @@ export async function POST(request: Request) {
               subscription.metadata?.checkout_mode !== 'pre_auth',
           });
         }
+        if (event.type !== 'customer.subscription.deleted' && subscription.metadata?.user_id && ['active', 'trialing'].includes(subscription.status)) {
+          if (subscription.status === 'trialing') {
+            await recordStripeProductConversion({ eventId: subscription.id, eventName: 'brobot_trial_started', userId: subscription.metadata.user_id, subscription });
+          }
+          await recordStripeProductConversion({ eventId: subscription.id, eventName: 'brobot_unlimited_activated', userId: subscription.metadata.user_id, subscription });
+        }
+        if (event.type === 'customer.subscription.deleted') {
+          await recordStripeProductConversion({ eventId: subscription.id, eventName: 'brobot_subscription_canceled', userId: subscription.metadata?.user_id, subscription });
+        }
         break;
       }
 
@@ -322,6 +364,7 @@ export async function POST(request: Request) {
               stripeEventId: event.id,
               requireUserMapping: false,
             });
+            await recordStripeProductConversion({ eventId: event.id, eventName: 'brobot_subscription_renewed', userId: sub.metadata?.user_id, subscription: sub });
           }
         }
         break;

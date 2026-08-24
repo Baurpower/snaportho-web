@@ -18,6 +18,7 @@ import {
   isCasePrepKgEnabled,
   isCasePrepStreamEnabled,
   isCasePrepV12StreamEnabled,
+  isCasePrepV13StreamEnabled,
 } from "@/lib/caseprep-v1-1/flags";
 import {
   createSseParseState,
@@ -44,6 +45,7 @@ import {
   type KgProductionNeighborhood,
 } from "@/lib/education/kg-production";
 import { recordCasePrepPacketTelemetry } from "@/lib/caseprep-v1-2/telemetry";
+import { recordProductEvent } from "@/lib/analytics/product-events-server";
 
 export const runtime = "nodejs";
 // Cold-cache packets (enrichment + retrieval) can stream for 10-15s; the
@@ -171,11 +173,16 @@ function relatedConceptsEvent(
   });
 }
 
-async function proxyCasePrepStream(request: Request, version: "v1.1" | "v1.2") {
+async function proxyCasePrepStream(
+  request: Request,
+  version: "v1.1" | "v1.2" | "v1.3",
+) {
   const enabled =
-    version === "v1.2"
-      ? isCasePrepV12StreamEnabled()
-      : isCasePrepStreamEnabled();
+    version === "v1.3"
+      ? isCasePrepV13StreamEnabled()
+      : version === "v1.2"
+        ? isCasePrepV12StreamEnabled()
+        : isCasePrepStreamEnabled();
   if (!enabled) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
@@ -202,6 +209,11 @@ async function proxyCasePrepStream(request: Request, version: "v1.1" | "v1.2") {
     );
   }
   const gate = await getBroBotAccessGate(subject);
+  const productIdentity = {
+    userId: subject.type === "user" ? subject.id : null,
+    anonymousId: subject.type === "guest" ? subject.id : null,
+  };
+  const productSurface = entrySurface ?? `web_case_prep_${version.replace(".", "_")}_stream`;
   if (gate.isLimitReached) {
     const denied =
       gate.normalized.data.source === "disabled"
@@ -227,11 +239,24 @@ async function proxyCasePrepStream(request: Request, version: "v1.1" | "v1.2") {
         subject,
         outcome: "limit_hit",
         latencyMs: Date.now() - startedAt,
+        surface: productSurface,
+        requestId: clientRequestId,
+        entitlementTier: subject.type === "guest" ? "guest" : gate.access,
       });
     }
     if (guestCookie) denied.headers.append("Set-Cookie", guestCookie);
     return denied;
   }
+
+  void recordProductEvent({
+    eventName: "caseprep_started",
+    ...productIdentity,
+    surface: productSurface,
+    productArea: "caseprep",
+    caseprepVersion: version,
+    requestId: clientRequestId,
+    entitlementTier: subject.type === "guest" ? "guest" : gate.access,
+  });
 
   let baseUrl: string;
   try {
@@ -262,6 +287,12 @@ async function proxyCasePrepStream(request: Request, version: "v1.1" | "v1.2") {
     });
   } catch {
     clearTimeout(timeout);
+    void recordProductEvent({
+      eventName: "caseprep_failed", ...productIdentity, surface: productSurface,
+      productArea: "caseprep", caseprepVersion: version, requestId: clientRequestId,
+      entitlementTier: subject.type === "guest" ? "guest" : gate.access,
+      properties: { stage: "upstream_connect" },
+    });
     return NextResponse.json(
       { error: "Case Prep is temporarily unavailable." },
       { status: 502 },
@@ -269,6 +300,12 @@ async function proxyCasePrepStream(request: Request, version: "v1.1" | "v1.2") {
   }
   if (!upstream.ok || !upstream.body) {
     clearTimeout(timeout);
+    void recordProductEvent({
+      eventName: "caseprep_failed", ...productIdentity, surface: productSurface,
+      productArea: "caseprep", caseprepVersion: version, requestId: clientRequestId,
+      entitlementTier: subject.type === "guest" ? "guest" : gate.access,
+      properties: { stage: "upstream_response", status: upstream.status },
+    });
     return NextResponse.json(
       { error: "Case Prep is temporarily unavailable." },
       { status: 502 },
@@ -288,12 +325,17 @@ async function proxyCasePrepStream(request: Request, version: "v1.1" | "v1.2") {
       let packetId: string | null = null;
       let canonicalSlug: string | null = null;
       let telemetryPromise: Promise<void> | null = null;
+      let firstSectionRecorded = false;
 
       const recordUsageOnce = async () => {
         if (usageRecorded) return;
         usageRecorded = true; // idempotent per packet
         try {
-          await recordSuccessfulAIUse(subject, Date.now() - startedAt, {});
+          await recordSuccessfulAIUse(subject, Date.now() - startedAt, {}, {
+            surface: productSurface,
+            requestId: clientRequestId,
+            entitlementTier: subject.type === "guest" ? "guest" : gate.access,
+          });
         } catch (error) {
           console.error(
             `[CASEPREP-${version.toUpperCase()}-STREAM] usage record failed`,
@@ -321,7 +363,17 @@ async function proxyCasePrepStream(request: Request, version: "v1.1" | "v1.2") {
         if (event.event === "section" && !usageRecorded) {
           void recordUsageOnce();
         }
-        if (version === "v1.2" && event.event === "done" && !telemetryPromise) {
+        if (event.event === "section" && !firstSectionRecorded) {
+          firstSectionRecorded = true;
+          void recordProductEvent({
+            eventName: "caseprep_first_section_rendered", ...productIdentity,
+            surface: productSurface, productArea: "caseprep", caseprepVersion: version,
+            requestId: clientRequestId,
+            entitlementTier: subject.type === "guest" ? "guest" : gate.access,
+            properties: { latency_ms: Date.now() - startedAt },
+          });
+        }
+        if (version !== "v1.1" && event.event === "done" && !telemetryPromise) {
           const done = event.data as {
             coverage_status?: string;
             quality_gate?: string;
@@ -331,6 +383,7 @@ async function proxyCasePrepStream(request: Request, version: "v1.1" | "v1.2") {
             omitted_sections?: string[];
           };
           telemetryPromise = recordCasePrepPacketTelemetry({
+            version,
             subject,
             packetId,
             canonicalSlug,
@@ -342,6 +395,17 @@ async function proxyCasePrepStream(request: Request, version: "v1.1" | "v1.2") {
             generatedCount: done.generated_count ?? 0,
             omittedSections: done.omitted_sections ?? [],
             latencyMs: Date.now() - startedAt,
+          });
+          void recordProductEvent({
+            eventName: "caseprep_completed", ...productIdentity,
+            surface: productSurface, productArea: "caseprep", caseprepVersion: version,
+            requestId: clientRequestId,
+            entitlementTier: subject.type === "guest" ? "guest" : gate.access,
+            properties: {
+              latency_ms: Date.now() - startedAt,
+              quality_gate: done.quality_gate ?? null,
+              coverage_status: done.coverage_status ?? null,
+            },
           });
         }
       };
@@ -424,15 +488,18 @@ async function proxyCasePrepStream(request: Request, version: "v1.1" | "v1.2") {
     Connection: "keep-alive",
     "X-Accel-Buffering": "no",
     "X-CasePrep-Contract-Version": version,
-    "X-CasePrep-Stream-Protocol-Version": version === "v1.2" ? "2" : "1",
+    "X-CasePrep-Stream-Protocol-Version": version === "v1.1" ? "1" : "2",
   });
   if (guestCookie) headers.append("Set-Cookie", guestCookie);
   return new Response(stream, { status: 200, headers });
 }
 
 export async function POST(request: Request) {
-  const version = new URL(request.url).pathname.includes("/v1.2/")
-    ? "v1.2"
-    : "v1.1";
+  const pathname = new URL(request.url).pathname;
+  const version = pathname.includes("/v1.3/")
+    ? "v1.3"
+    : pathname.includes("/v1.2/")
+      ? "v1.2"
+      : "v1.1";
   return proxyCasePrepStream(request, version);
 }

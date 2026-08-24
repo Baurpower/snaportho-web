@@ -21,6 +21,11 @@ export function isCasePrepV12StreamEnabled(): boolean {
   return process.env.CASEPREP_WEB_V1_2_STREAM_ENABLED === "true";
 }
 
+/** RAG + approach-library v1.3 stream; certified procedure packets are excluded. */
+export function isCasePrepV13StreamEnabled(): boolean {
+  return process.env.CASEPREP_WEB_V1_3_STREAM_ENABLED === "true";
+}
+
 /** Knowledge-graph "related concepts" injection into the packet stream. */
 export function isCasePrepKgEnabled(): boolean {
   return process.env.CASEPREP_WEB_V1_1_KG_ENABLED === "true";

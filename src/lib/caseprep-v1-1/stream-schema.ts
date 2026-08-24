@@ -98,7 +98,7 @@ export const PacketHeaderSchema = z
 
 export const MetaEventSchema = z.object({
   packet_id: z.string(),
-  caseprep_version: z.enum(["v1.1", "v1.2"]),
+  caseprep_version: z.enum(["v1.1", "v1.2", "v1.3"]),
   engine: z.string(),
   stream_protocol_version: z.number(),
 });
