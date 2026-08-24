@@ -16,7 +16,7 @@ const context: ResolvedOrthobulletsContext = {
     answerChoices: [],
     percentDistribution: [],
     linkedConcepts: [],
-    images: [],
+    images: [{ src: 'https://rock.aaos.org/figure-4.jpg', alt: 'AP pelvis radiograph', caption: 'Contained central acetabular deficiency (Paprosky type IIA).' }],
     extractionWarnings: [],
     learningObjectives: ['Recognize LAST'],
   },
@@ -27,10 +27,15 @@ const context: ResolvedOrthobulletsContext = {
 const highYield = buildCurriculumExplainMessages({ context, emphasis: 'high_yield' });
 const boards = buildCurriculumExplainMessages({ context, emphasis: 'boards' });
 
-assert.match(highYield[1]?.content ?? '', /HIGH YIELD/i);
-assert.match(boards[1]?.content ?? '', /BOARDS/i);
+assert.match(highYield[1]?.content ?? '', /COMPLETE STUDY GUIDE/i);
+assert.match(boards[1]?.content ?? '', /COMPLETE STUDY GUIDE/i);
 assert.match(highYield[1]?.content ?? '', /Recognize LAST/);
+assert.match(highYield[1]?.content ?? '', /Paprosky type IIA/);
 assert.match(highYield[0]?.content ?? '', /suggestedFollowUps/);
-assert.notEqual(highYield[1]?.content, boards[1]?.content);
+assert.match(highYield[0]?.content ?? '', /actual named type\/grade/i);
+assert.match(highYield[0]?.content ?? '', /Do not merely state that a classification exists/i);
+assert.match(highYield[0]?.content ?? '', /standalone study guide/i);
+assert.match(highYield[0]?.content ?? '', /8-16 board-grade facts/i);
+assert.match(highYield[1]?.content ?? '', /board testing, clinical decisions, and OR relevance/i);
 
 console.log('Curriculum prompt builder emphasis tests passed.');

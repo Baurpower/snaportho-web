@@ -73,7 +73,15 @@ function salvageCurriculumPayload(parsed, emphasis) {
         bullets: coerceBulletArray(group.bullets, 8, 240),
     }))
         .filter((group) => group.title && group.bullets.length > 0)
-        .slice(0, 6);
+        .slice(0, 8);
+    const classifications = (Array.isArray(parsed.classifications) ? parsed.classifications : [])
+        .filter((group) => Boolean(group) && typeof group === 'object')
+        .map((group) => ({
+        title: typeof group.title === 'string' ? truncate(group.title, 120) : '',
+        bullets: coerceBulletArray(group.bullets, 8, 240),
+    }))
+        .filter((group) => group.title && group.bullets.length > 0)
+        .slice(0, 4);
     const attendingQuestions = (Array.isArray(parsed.attendingQuestions) ? parsed.attendingQuestions : [])
         .filter((item) => Boolean(item) && typeof item === 'object')
         .map((item) => ({
@@ -82,7 +90,7 @@ function salvageCurriculumPayload(parsed, emphasis) {
         difficulty: coerceDifficulty(item.difficulty),
     }))
         .filter((item) => item.question && item.answer)
-        .slice(0, 6);
+        .slice(0, 8);
     // No recognizable curriculum content at all — let the legacy fallback try.
     if (!oneSentenceTakeaway && inThirtySeconds.length === 0 && mustKnow.length === 0) {
         return null;
@@ -92,11 +100,12 @@ function salvageCurriculumPayload(parsed, emphasis) {
         emphasis,
         oneSentenceTakeaway: oneSentenceTakeaway || firstBullets[0] || 'Key points from this page — see bullets below.',
         inThirtySeconds: firstBullets.length ? firstBullets.slice(0, 6) : [oneSentenceTakeaway].filter(Boolean),
+        classifications,
         mustKnow,
-        clinicalPearls: coerceBulletArray(parsed.clinicalPearls, 8, 240),
+        clinicalPearls: coerceBulletArray(parsed.clinicalPearls, 12, 240),
         commonMistakes: coerceBulletArray(parsed.commonMistakes, 8, 240),
         attendingQuestions,
-        testableFacts: coerceBulletArray(parsed.testableFacts, 10, 240),
+        testableFacts: coerceBulletArray(parsed.testableFacts, 16, 240),
         miniQuiz: [],
         memoryHooks: coerceBulletArray(parsed.memoryHooks, 6, 240),
         suggestedFollowUps: coerceBulletArray(parsed.suggestedFollowUps, 8, 200),
@@ -125,6 +134,7 @@ function buildFallbackPayload(parsed, emphasis) {
         inThirtySeconds: fallbackBullets.slice(0, 4).length
             ? fallbackBullets.slice(0, 4)
             : ['Review the extracted page sections for high-yield points.'],
+        classifications: [],
         mustKnow: fallbackBullets.length
             ? [{ title: 'Must Know', bullets: fallbackBullets.slice(0, 4) }]
             : [],

@@ -271,6 +271,7 @@ export interface CurriculumStudyResponse {
   explanationId: string;
   emphasis: CurriculumExplainEmphasis;
   oneSentenceTakeaway: string;
+  classifications: CurriculumMustKnowGroup[];
   inThirtySeconds: string[];
   mustKnow: CurriculumMustKnowGroup[];
   clinicalPearls: string[];

@@ -394,6 +394,13 @@ export class QuestionTutorController {
     this.render();
   }
 
+  closeExplanation() {
+    if (this.store.visiblePanelMode !== 'explanation_open') return;
+    this.store.visiblePanelMode = 'idle';
+    this.store.lastEvent = 'explanation_closed';
+    this.render();
+  }
+
   setChatDraft(value: string) {
     const session = this.getActiveSession();
     if (!session) return;

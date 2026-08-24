@@ -13,6 +13,7 @@ const sampleStudy: CurriculumStudyResponse = {
   explanationId: '00000000-0000-4000-8000-000000000001',
   emphasis: 'high_yield',
   oneSentenceTakeaway: 'Local anesthetics block sodium channels; know ester vs amide and LAST.',
+  classifications: [{ title: 'Local anesthetic classes', bullets: ['Esters: plasma metabolism', 'Amides: hepatic metabolism'] }],
   inThirtySeconds: [
     'Sodium channel blockade stops impulse propagation.',
     'Esters vs amides differ in metabolism.',
@@ -62,16 +63,20 @@ const pageContext: OrthobulletsPageContext = {
 const html = renderCurriculumStudyPanel(sampleStudy, pageContext);
 
 assert.match(html, /In 30 Seconds/);
+assert.match(html, /Local anesthetic classes/);
+assert.match(html, /Esters: plasma metabolism/);
 assert.match(html, /Must Know/);
 assert.match(html, /Common Mistakes/);
-assert.match(html, /Board-grade facts &amp; thresholds/);
+assert.match(html, /Facts to Know · Commonly Tested/);
 assert.match(html, /Active recall/);
 assert.match(html, /Memory hooks/);
 assert.match(html, /Why it matters/);
 assert.match(html, /Compare the options/);
 assert.match(html, /Lipid emulsion/);
 assert.match(html, /One-sentence takeaway/);
-assert.match(html, /data-emphasis-tab="boards"/);
+assert.match(html, /Complete study guide/);
+assert.match(html, /boards \+ clinical \+ OR/);
+assert.doesNotMatch(html, /data-emphasis-tab/);
 assert.doesNotMatch(html, /Learning objectives/);
 assert.doesNotMatch(html, /Deep Dive/);
 assert.doesNotMatch(html, /Next review topics/);

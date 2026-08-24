@@ -1,5 +1,4 @@
 import {
-  CURRICULUM_EMPHASIS_TABS,
   detectTopicLabel,
   estimateStudyMinutes,
   isClinicallyImportantWarning,
@@ -95,23 +94,9 @@ function renderComparisonTable(table: CurriculumStudyResponse['comparisonTable']
   return `<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:11px;line-height:1.35;"><thead><tr>${table.headers.map((header) => `<th style="padding:6px;text-align:left;background:#f1f5f9;border:1px solid #cbd5e1;">${escapeHtml(header)}</th>`).join('')}</tr></thead><tbody>${table.rows.map((row) => `<tr>${row.map((cell) => `<td style="padding:6px;vertical-align:top;border:1px solid #e2e8f0;">${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
 
-function sectionsForEmphasis(emphasis: CurriculumExplainEmphasis) {
-  const common = ['takeaway', 'thirty', 'mustKnow', 'mistakes'] as const;
-  switch (emphasis) {
-    case 'clinical':
-      return [...common, 'pearls', 'attending'];
-    case 'boards':
-      return [...common, 'testable', 'attending'];
-    case 'or':
-      return [...common, 'attending', 'pearls', 'testable', 'comparison', 'quiz', 'memory', 'deepDive'];
-    default:
-      return [...common, 'pearls', 'testable', 'attending', 'comparison', 'quiz', 'memory', 'deepDive'];
-  }
-}
-
 export function renderStudyPanelHeader(
   pageContext: OrthobulletsPageContext,
-  selectedEmphasis: CurriculumExplainEmphasis,
+  _selectedEmphasis: CurriculumExplainEmphasis,
 ) {
   const topic = detectTopicLabel(pageContext);
   const studyMinutes = estimateStudyMinutes(pageContext);
@@ -132,18 +117,12 @@ export function renderStudyPanelHeader(
         ? `<p style="margin:0;font-size:11px;color:#7c2d12;line-height:1.35;">Mostly references — themes may be limited.</p>`
         : ''
     }
-    <div role="tablist" aria-label="Study emphasis" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;">
-      ${CURRICULUM_EMPHASIS_TABS.map(
-        (tab) =>
-          `<button type="button" data-emphasis-tab="${tab.id}" style="border:1px solid ${tab.id === selectedEmphasis ? '#0f766e' : '#cbd5e1'};border-radius:8px;background:${tab.id === selectedEmphasis ? '#0f766e' : 'white'};color:${tab.id === selectedEmphasis ? 'white' : '#18202b'};padding:5px 3px;font-size:11px;font-weight:700;cursor:pointer;">${escapeHtml(tab.label)}</button>`,
-      ).join('')}
-    </div>
+    <p style="margin:0;font-size:11px;color:#0f766e;font-weight:700;">Complete study guide · boards + clinical + OR</p>
   </header>`;
 }
 
 export function renderCurriculumStudyPanel(study: CurriculumStudyResponse, pageContext: OrthobulletsPageContext) {
   const cards: string[] = [];
-  const active = new Set(sectionsForEmphasis(study.emphasis));
 
   cards.push(
     renderCollapsibleCard({
@@ -155,7 +134,22 @@ export function renderCurriculumStudyPanel(study: CurriculumStudyResponse, pageC
     }),
   );
 
-  if (active.has('thirty') && study.inThirtySeconds.length) {
+  if (study.classifications.length) {
+    cards.push(
+      renderCollapsibleCard({
+        id: 'classifications',
+        title: study.classifications.length === 1 ? study.classifications[0].title : 'Key classifications',
+        contentHtml:
+          study.classifications.length === 1
+            ? renderBulletList(study.classifications[0].bullets)
+            : renderMustKnow(study.classifications),
+        expanded: true,
+        tone: 'accent',
+      }),
+    );
+  }
+
+  if (study.inThirtySeconds.length) {
     cards.push(
       renderCollapsibleCard({
         id: 'thirty',
@@ -166,7 +160,7 @@ export function renderCurriculumStudyPanel(study: CurriculumStudyResponse, pageC
     );
   }
 
-  if (active.has('mustKnow') && study.mustKnow.length) {
+  if (study.mustKnow.length) {
     cards.push(
       renderCollapsibleCard({
         id: 'mustKnow',
@@ -177,64 +171,64 @@ export function renderCurriculumStudyPanel(study: CurriculumStudyResponse, pageC
     );
   }
 
-  if (active.has('mistakes') && study.commonMistakes.length) {
+  if (study.commonMistakes.length) {
     cards.push(
       renderCollapsibleCard({
         id: 'mistakes',
         title: 'Common Mistakes',
         contentHtml: renderBulletList(study.commonMistakes),
-        expanded: study.emphasis === 'high_yield',
+        expanded: true,
       }),
     );
   }
 
-  if (active.has('pearls') && study.clinicalPearls.length) {
+  if (study.clinicalPearls.length) {
     cards.push(
       renderCollapsibleCard({
         id: 'pearls',
-        title: study.emphasis === 'or' ? 'Operative pearls' : 'Practical pearls',
+        title: 'Clinical & operative pearls',
         contentHtml: renderBulletList(study.clinicalPearls),
-        expanded: study.emphasis === 'clinical' || study.emphasis === 'or',
+        expanded: true,
       }),
     );
   }
 
-  if (active.has('testable') && study.testableFacts.length) {
+  if (study.testableFacts.length) {
     cards.push(
       renderCollapsibleCard({
         id: 'testable',
-        title: 'Board-grade facts & thresholds',
+        title: 'Facts to Know · Commonly Tested',
         contentHtml: renderBulletList(study.testableFacts),
-        expanded: study.emphasis === 'boards',
+        expanded: true,
       }),
     );
   }
 
-  if (active.has('attending') && study.attendingQuestions.length) {
+  if (study.attendingQuestions.length) {
     cards.push(
       renderCollapsibleCard({
         id: 'attending',
-        title: study.emphasis === 'or' ? 'What attendings ask' : 'Attending questions',
+        title: 'Commonly tested & attending questions',
         contentHtml: renderAttendingQuestions(study.attendingQuestions),
-        expanded: study.emphasis === 'or' || study.emphasis === 'boards',
+        expanded: true,
       }),
     );
   }
 
-  if (active.has('comparison') && study.comparisonTable) {
-    cards.push(renderCollapsibleCard({ id: 'comparison', title: 'Compare the options', contentHtml: renderComparisonTable(study.comparisonTable) }));
+  if (study.comparisonTable) {
+    cards.push(renderCollapsibleCard({ id: 'comparison', title: 'Compare the options', contentHtml: renderComparisonTable(study.comparisonTable), expanded: true }));
   }
 
-  if (active.has('quiz') && study.miniQuiz.length) {
-    cards.push(renderCollapsibleCard({ id: 'quiz', title: 'Active recall', contentHtml: renderMiniQuiz(study.miniQuiz), tone: 'accent' }));
+  if (study.miniQuiz.length) {
+    cards.push(renderCollapsibleCard({ id: 'quiz', title: 'Active recall', contentHtml: renderMiniQuiz(study.miniQuiz), tone: 'accent', expanded: true }));
   }
 
-  if (active.has('memory') && study.memoryHooks.length) {
-    cards.push(renderCollapsibleCard({ id: 'memory', title: 'Memory hooks', contentHtml: renderBulletList(study.memoryHooks) }));
+  if (study.memoryHooks.length) {
+    cards.push(renderCollapsibleCard({ id: 'memory', title: 'Memory hooks', contentHtml: renderBulletList(study.memoryHooks), expanded: true }));
   }
 
-  if (active.has('deepDive') && study.deepDive.length) {
-    cards.push(renderCollapsibleCard({ id: 'deepDive', title: 'Why it matters', contentHtml: renderBulletList(study.deepDive) }));
+  if (study.deepDive.length) {
+    cards.push(renderCollapsibleCard({ id: 'deepDive', title: 'Why it matters', contentHtml: renderBulletList(study.deepDive), expanded: true }));
   }
 
   const clinicalWarnings = study.warnings.filter(isClinicallyImportantWarning);

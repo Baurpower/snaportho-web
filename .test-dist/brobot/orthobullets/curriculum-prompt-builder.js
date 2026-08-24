@@ -4,16 +4,17 @@ exports.buildCurriculumExplainMessages = buildCurriculumExplainMessages;
 exports.renderCurriculumPriorStudy = renderCurriculumPriorStudy;
 exports.buildCurriculumChatMessages = buildCurriculumChatMessages;
 const EMPHASIS_GUIDANCE = {
-    high_yield: 'Emphasis: HIGH YIELD — fastest useful review. Prioritize In 30 Seconds, Must Know, and common learner traps. Keep bullets ultra-scannable.',
-    clinical: 'Emphasis: CLINICAL — real patient care and safety. Prioritize practical pearls, decision points, complications/danger zones, and attending-style questions.',
-    boards: 'Emphasis: BOARDS — OITE/boards style. Prioritize testable facts, common traps, and attending/boards-style questions.',
-    or: 'Emphasis: OR — intraoperative relevance. Prioritize what attendings ask, resident role/scripts, and procedure/anesthesia implications.',
+    high_yield: 'Build one COMPLETE STUDY GUIDE combining high-yield facts, board testing, clinical decisions, and OR relevance.',
+    clinical: 'Build one COMPLETE STUDY GUIDE combining high-yield facts, board testing, clinical decisions, and OR relevance.',
+    boards: 'Build one COMPLETE STUDY GUIDE combining high-yield facts, board testing, clinical decisions, and OR relevance.',
+    or: 'Build one COMPLETE STUDY GUIDE combining high-yield facts, board testing, clinical decisions, and OR relevance.',
 };
 const CURRICULUM_SYSTEM_PROMPT = `You are BroBot, an orthopaedic surgery teaching attending helping a resident study ONE ROCK curriculum or educational page.
 
 Return valid JSON only, matching exactly this shape:
 {
   "oneSentenceTakeaway": string,
+  "classifications": [{"title": string, "bullets": string[]}],
   "inThirtySeconds": string[],
   "mustKnow": [{"title": string, "bullets": string[]}],
   "clinicalPearls": string[],
@@ -29,23 +30,25 @@ Return valid JSON only, matching exactly this shape:
 }
 
 CORE PRODUCT RULE
-- Do NOT summarize the whole page. Identify what is worth remembering, testable, clinically important, and what students usually miss.
-- Be selective. Prefer bullets over prose. No field should read like a paragraph essay.
+- Produce a comprehensive, standalone study guide. A resident should be able to read BroBot instead of rereading the source page and still learn every important source-supported concept.
+- Cover the full page, while removing only repetition, references, navigation artifacts, and low-information prose.
+- Prefer bullets over prose. No field should read like a paragraph essay.
 - Each bullet should be one line when possible (under ~120 characters).
 - Omit fields that are not relevant — return empty arrays instead of filler.
 - Never invent unsupported drug doses, numbers, or facts. If something is important but not in the extracted content, prefix with "Related high-yield review:" in the bullet.
 
 FIELD GUIDANCE
 - oneSentenceTakeaway: single highest-yield sentence.
+- classifications: when the page teaches a named classification, put the actual named type/grade assigned by any shown example first, then give the complete compact type/grade map. Do not merely state that a classification exists or give only its range. Return [] only when no classification is central to the page.
 - inThirtySeconds: 3-5 bullets for a sub-30-second skim.
-- mustKnow: 1-3 compact groups with 2-4 bullets each.
+- mustKnow: 4-8 topic-specific groups when supported. Cover core concepts, indications/selection, workup, technique/workflow, complications, outcomes/evidence, and decision pivots as applicable.
 - commonMistakes: traps and confusions residents make on this topic.
-- attendingQuestions: 2-4 pimp-style Q/A pairs when relevant to the emphasis tab (OR/clinical/boards).
-- testableFacts: 3-6 board-grade facts, thresholds, classifications, indications, contraindications, or sequence rules. Prefer exact source-supported numbers and decision pivots.
-- clinicalPearls: 3-6 practical details that change setup, exposure, implant removal, reconstruction, or complication avoidance.
-- miniQuiz: 2-3 short active-recall prompts with direct answers and one-sentence teaching explanations. No trick questions.
+- attendingQuestions: 4-8 commonly tested or pimp-style Q/A pairs spanning boards, clinic, and OR when supported.
+- testableFacts: 8-16 board-grade facts, thresholds, classifications, indications, contraindications, or sequence rules. Prefer exact source-supported numbers and decision pivots.
+- clinicalPearls: 5-12 practical details that change setup, exposure, implant removal, reconstruction, or complication avoidance.
+- miniQuiz: 3-6 short active-recall prompts with direct answers and one-sentence teaching explanations. No trick questions.
 - memoryHooks: 1-3 memorable contrasts, ordered sequences, or mnemonics. Do not force a mnemonic when none fits.
-- deepDive: 2-5 compact "why" statements explaining mechanisms or tradeoffs behind the most important recommendations.
+- deepDive: 3-8 compact "why" statements explaining mechanisms or tradeoffs behind the most important recommendations.
 - comparisonTable: use only when the page contains a meaningful comparison (techniques, implants, indications, approaches, or complications); otherwise null.
 - suggestedFollowUps: REQUIRED — generate 5-8 specific follow-up QUESTIONS for the Ask BroBot chat section.
 
@@ -71,7 +74,7 @@ STYLE
 - Distinguish source facts from related review; never present a reasonable inference as a quoted AAOS recommendation.
 - For operative pages, prioritize: indication/decision pivot → setup/exposure → ordered technique → danger zones → bailout → postoperative consequence.
 - Avoid generic advice such as "plan carefully" unless paired with the specific action, anatomy, instrument, or consequence.
-- Whole top layer should be scannable in under 60 seconds; deeper cards may support a 3-5 minute review.`;
+- Start with a fast orientation, then provide enough depth for a complete 8-15 minute review in one continuous guide.`;
 const CURRICULUM_CHAT_SYSTEM_PROMPT = `You are BroBot, an orthopaedic surgery teaching attending answering a resident's follow-up about ONE ROCK curriculum page.
 
 Return valid JSON only:
@@ -97,7 +100,14 @@ function buildCurriculumExplainMessages(input) {
     const sections = (input.context.pageContext.contentSections ?? [])
         .map((section) => `${section.heading}\n${section.text}`)
         .join('\n\n');
+    const sourceContent = sections || input.context.pageContext.contentMarkdown || input.context.pageContext.contentText || '(missing)';
     const learningObjectives = input.context.pageContext.learningObjectives ?? [];
+    const imageEvidence = input.context.pageContext.images
+        .map((image, index) => {
+        const description = [image.alt, image.caption].map((value) => value?.trim()).filter(Boolean).join(' — ');
+        return description ? `Figure ${index + 1}: ${description}` : '';
+    })
+        .filter(Boolean);
     return [
         { role: 'system', content: CURRICULUM_SYSTEM_PROMPT },
         {
@@ -114,11 +124,11 @@ function buildCurriculumExplainMessages(input) {
                 `Date: ${input.context.pageContext.date ?? '(missing)'}`,
                 `Section headings: ${(input.context.pageContext.sectionHeadings ?? []).join(' | ') || '(missing)'}`,
                 `Extracted learning objectives (for follow-up ideas only, do not render as a section):\n${learningObjectives.length ? learningObjectives.map((o) => `- ${o}`).join('\n') : '(none detected)'}`,
-                `Extracted sections:\n${sections || '(none)'}`,
-                `Extracted markdown:\n${input.context.pageContext.contentMarkdown ?? input.context.pageContext.contentText ?? '(missing)'}`,
+                `Source content (deduplicated):\n${sourceContent}`,
                 `References count: ${input.context.pageContext.referencesCount ?? input.context.pageContext.references?.length ?? 0}`,
                 `Tables count: ${input.context.pageContext.tablesCount ?? 0}`,
                 `Image count: ${input.context.pageContext.images.length}`,
+                `Image captions and labels (source evidence):\n${imageEvidence.length ? imageEvidence.join('\n') : '(none extracted)'}`,
                 `Extraction warnings: ${input.context.warnings.join(' | ') || '(none)'}`,
             ].join('\n\n'),
         },

@@ -90,7 +90,10 @@ function buildPartialCurriculumResponse(chunkResults, failedChunkCount) {
         .slice(0, 5);
     const mustKnow = notes
         .flatMap((note) => (Array.isArray(note.mustKnow) ? note.mustKnow : []))
-        .slice(0, 3);
+        .slice(0, 8);
+    const classifications = notes
+        .flatMap((note) => (Array.isArray(note.classifications) ? note.classifications : []))
+        .slice(0, 4);
     return JSON.stringify({
         oneSentenceTakeaway: takeaways[0] ||
             inThirtySeconds[0] ||
@@ -98,19 +101,26 @@ function buildPartialCurriculumResponse(chunkResults, failedChunkCount) {
         inThirtySeconds: inThirtySeconds.length
             ? inThirtySeconds
             : takeaways.slice(0, 5),
+        classifications,
         mustKnow,
         clinicalPearls: notes
             .flatMap((note) => strings(note.clinicalPearls))
-            .slice(0, 8),
+            .slice(0, 12),
         commonMistakes: notes
             .flatMap((note) => strings(note.commonMistakes))
             .slice(0, 8),
         attendingQuestions: notes
             .flatMap((note) => Array.isArray(note.attendingQuestions) ? note.attendingQuestions : [])
-            .slice(0, 6),
+            .slice(0, 8),
         testableFacts: notes
             .flatMap((note) => strings(note.testableFacts))
-            .slice(0, 10),
+            .slice(0, 16),
+        miniQuiz: notes
+            .flatMap((note) => (Array.isArray(note.miniQuiz) ? note.miniQuiz : []))
+            .slice(0, 6),
+        memoryHooks: notes.flatMap((note) => strings(note.memoryHooks)).slice(0, 6),
+        deepDive: notes.flatMap((note) => strings(note.deepDive)).slice(0, 8),
+        comparisonTable: notes.find((note) => note.comparisonTable)?.comparisonTable ?? null,
         suggestedFollowUps: notes
             .flatMap((note) => strings(note.suggestedFollowUps))
             .slice(0, 8),

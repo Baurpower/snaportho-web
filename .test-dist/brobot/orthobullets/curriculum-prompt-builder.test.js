@@ -18,7 +18,7 @@ const context = {
         answerChoices: [],
         percentDistribution: [],
         linkedConcepts: [],
-        images: [],
+        images: [{ src: 'https://rock.aaos.org/figure-4.jpg', alt: 'AP pelvis radiograph', caption: 'Contained central acetabular deficiency (Paprosky type IIA).' }],
         extractionWarnings: [],
         learningObjectives: ['Recognize LAST'],
     },
@@ -27,9 +27,14 @@ const context = {
 };
 const highYield = (0, curriculum_prompt_builder_1.buildCurriculumExplainMessages)({ context, emphasis: 'high_yield' });
 const boards = (0, curriculum_prompt_builder_1.buildCurriculumExplainMessages)({ context, emphasis: 'boards' });
-strict_1.default.match(highYield[1]?.content ?? '', /HIGH YIELD/i);
-strict_1.default.match(boards[1]?.content ?? '', /BOARDS/i);
+strict_1.default.match(highYield[1]?.content ?? '', /COMPLETE STUDY GUIDE/i);
+strict_1.default.match(boards[1]?.content ?? '', /COMPLETE STUDY GUIDE/i);
 strict_1.default.match(highYield[1]?.content ?? '', /Recognize LAST/);
+strict_1.default.match(highYield[1]?.content ?? '', /Paprosky type IIA/);
 strict_1.default.match(highYield[0]?.content ?? '', /suggestedFollowUps/);
-strict_1.default.notEqual(highYield[1]?.content, boards[1]?.content);
+strict_1.default.match(highYield[0]?.content ?? '', /actual named type\/grade/i);
+strict_1.default.match(highYield[0]?.content ?? '', /Do not merely state that a classification exists/i);
+strict_1.default.match(highYield[0]?.content ?? '', /standalone study guide/i);
+strict_1.default.match(highYield[0]?.content ?? '', /8-16 board-grade facts/i);
+strict_1.default.match(highYield[1]?.content ?? '', /board testing, clinical decisions, and OR relevance/i);
 console.log('Curriculum prompt builder emphasis tests passed.');

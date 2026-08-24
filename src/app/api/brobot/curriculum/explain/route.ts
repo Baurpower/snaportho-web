@@ -289,6 +289,7 @@ export async function POST(request: Request) {
             text: parsed.data.curriculum.visibleText ?? '',
           },
         ],
+    maxSourceTokens: 4_500,
   });
 
   console.log('[brobot-curriculum] explain_request', {
@@ -398,12 +399,27 @@ export async function POST(request: Request) {
             sectionIds: chunk.sectionIds,
             result: rawChunkResult,
           };
+          const orderedResults = chunkResults.filter((value): value is NonNullable<typeof value> => value != null);
+          let streamSnapshot: unknown = streamChunkResult;
+          try {
+            streamSnapshot = parseCurriculumStudyResponse({
+              raw: buildPartialCurriculumResponse(orderedResults, 0),
+              explanationId: crypto.randomUUID(),
+              emphasis: parsed.data.emphasis,
+              remainingToday: null,
+              dailyCap: entitlement.aiAccess.dailyCap,
+              unlimited: entitlement.aiAccess.unlimited,
+            });
+          } catch {
+            // A single usable chunk is still better than withholding progress.
+          }
           await emit('partial', {
             stage: 'section',
-            completed: chunkResults.filter(Boolean).length,
+            completed: orderedResults.length,
             total: chunks.length,
             heading: chunk.headingPath.join(' › ') || pageContext.title || 'Study notes',
-            result: streamChunkResult,
+            snapshot: true,
+            result: streamSnapshot,
           });
         } catch (chunkError) {
           chunkErrors.push(chunkError);
@@ -416,7 +432,7 @@ export async function POST(request: Request) {
         }
       }
     };
-    await Promise.all(Array.from({ length: Math.min(2, chunks.length) }, () => worker()));
+    await Promise.all(Array.from({ length: Math.min(3, chunks.length) }, () => worker()));
     const successfulChunks = chunkResults.filter((value): value is NonNullable<typeof value> => value != null);
     if (!successfulChunks.length) {
       const modelUnavailableError = chunkErrors.find(isCurriculumModelUnavailableError);
@@ -437,7 +453,7 @@ export async function POST(request: Request) {
 
     await emit('status', {
       stage: 'synthesizing',
-      message: 'Polishing the high-yield synthesis…',
+      message: 'Assembling the complete study guide…',
       completed: successfulChunks.length,
       total: chunks.length,
     });
@@ -454,14 +470,27 @@ export async function POST(request: Request) {
             messages: [
               {
                 role: 'system',
-                content: `You are BroBot, an orthopaedic teaching attending. Synthesize the supplied per-chunk JSON notes into one coherent page study response. Return JSON only with exactly these keys: oneSentenceTakeaway, inThirtySeconds, mustKnow, clinicalPearls, commonMistakes, attendingQuestions, testableFacts, suggestedFollowUps, warnings. Preserve supported clinical details, numbers, approaches, complications, and limitations; remove duplicates; never add facts absent from the chunk notes. Keep the result concise for a narrow side panel.
+                content: `You are BroBot, an orthopaedic teaching attending. Synthesize the supplied per-chunk JSON notes into one comprehensive, standalone study guide. Return JSON only with exactly these keys: oneSentenceTakeaway, classifications, inThirtySeconds, mustKnow, clinicalPearls, commonMistakes, attendingQuestions, testableFacts, miniQuiz, memoryHooks, deepDive, comparisonTable, suggestedFollowUps, warnings. Preserve supported clinical details, numbers, approaches, complications, technique steps, evidence, and limitations; remove duplicates; never add facts absent from the chunk notes.
+
+COMPLETENESS REQUIREMENT:
+- The learner should be able to read this guide instead of rereading the source page.
+- Include all important source-supported facts, not merely a short summary.
+- Combine board-tested facts, clinical decisions, operative workflow, danger zones, complications, outcomes, and attending questions in this one guide.
+- mustKnow should use 4-8 topic-specific groups when the source supports that depth.
+- Do not omit a unique fact merely to keep the response short.
+
+CLASSIFICATION PRIORITY:
+- If a named classification is central, classifications must state the actual type/grade of each source example first and then a compact complete type/grade map.
+- Never substitute a vague range such as "Type I to Type IIIB" for the defining features of the types.
+- Return classifications: [] only if no named classification is central.
 
 HARD FORMAT LIMITS (responses violating these are discarded):
 - oneSentenceTakeaway: one sentence, under 280 characters.
 - inThirtySeconds: 3-5 bullets, each under 200 characters.
-- mustKnow: 1-3 groups {title under 120 chars, 2-4 bullets each under 240 chars}.
-- clinicalPearls / commonMistakes / testableFacts: each bullet under 240 characters.
+- mustKnow: 4-8 groups when supported {title under 120 chars, up to 8 bullets each under 240 chars}.
+- clinicalPearls: up to 12; commonMistakes: up to 8; testableFacts: 8-16 when supported; each bullet under 240 characters.
 - attendingQuestions: question under 240 chars, answer under 400 chars, difficulty EXACTLY one of "MS3", "PGY1", "PGY2+".
+- miniQuiz: 3-6 items; memoryHooks: up to 6; deepDive: 3-8 statements; comparisonTable: one useful table or null.
 - suggestedFollowUps: 5-8 questions, each under 200 characters.
 - Never return an empty inThirtySeconds array.`,
               },

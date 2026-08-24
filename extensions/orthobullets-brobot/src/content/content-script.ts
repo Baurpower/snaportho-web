@@ -11,6 +11,7 @@ import {
 } from '../providers/himalaya/himalaya-store.js';
 
 const revealedHimalayaQuestions = new Set<number>();
+const collapsedHimalayaAnswers = new Set<number>();
 const himalayaRemediationResults = new Map<number, {
   loading?: boolean;
   error?: string;
@@ -48,27 +49,36 @@ function renderHimalayaAnswerCheck(root: ShadowRoot | HTMLElement) {
     : !selected
       ? 'Select an answer to check'
       : revealed
-        ? 'AAOS answer revealed'
+        ? collapsedHimalayaAnswers.has(question.questionAttemptId) ? 'Show checked answer' : 'AAOS answer revealed'
         : 'Submit & check answer';
 
   slot.replaceChildren(button);
   slot.setAttribute('data-visible', 'true');
-  if (revealed && selected && correct) {
+  if (revealed && selected && correct && !collapsedHimalayaAnswers.has(question.questionAttemptId)) {
     const result = document.createElement('div');
     result.id = 'brobot-answer-result';
     const isCorrect = selected.id === correct.id;
     result.setAttribute('data-correct', String(isCorrect));
     const heading = document.createElement('strong');
     heading.textContent = isCorrect ? 'Correct' : 'Not quite';
+    const dismiss = document.createElement('button');
+    dismiss.id = 'brobot-dismiss-answer';
+    dismiss.type = 'button';
+    dismiss.setAttribute('aria-label', 'Minimize checked answer');
+    dismiss.textContent = '×';
     const detail = document.createElement('span');
     detail.textContent = `You chose ${selected.label}. AAOS answer: ${correct.label}) ${correct.text}`;
-    result.append(heading, detail);
+    result.append(heading, dismiss, detail);
     if (submission?.explanation) {
       const explanation = document.createElement('span');
       explanation.textContent = submission.explanation;
       result.appendChild(explanation);
     }
     slot.appendChild(result);
+    dismiss.addEventListener('click', () => {
+      collapsedHimalayaAnswers.add(question.questionAttemptId);
+      renderHimalayaAnswerCheck(root);
+    });
   } else if (submission?.error) {
     const error = document.createElement('div');
     error.id = 'brobot-answer-result';
@@ -77,6 +87,11 @@ function renderHimalayaAnswerCheck(root: ShadowRoot | HTMLElement) {
   }
   button.addEventListener('click', async () => {
     if (!selected || !bridgeQuestion) return;
+    if (revealed && collapsedHimalayaAnswers.has(question.questionAttemptId)) {
+      collapsedHimalayaAnswers.delete(question.questionAttemptId);
+      renderHimalayaAnswerCheck(root);
+      return;
+    }
     if (correct) {
       revealedHimalayaQuestions.add(question.questionAttemptId);
       renderHimalayaAnswerCheck(root);
@@ -131,6 +146,8 @@ function ensureInPageLauncher() {
     #brobot-check-answer { border:0; border-radius:11px; padding:10px 12px; background:#0f766e; color:#fff; font:700 13px/1.2 system-ui; cursor:pointer; }
     #brobot-check-answer:disabled { background:#94a3b8; cursor:default; }
     #brobot-answer-result { display:grid; gap:4px; padding:10px; border-radius:10px; background:#fff7ed; color:#9a3412; font:500 12px/1.4 system-ui; }
+    #brobot-answer-result { position:relative; padding-right:38px; }
+    #brobot-dismiss-answer { position:absolute; top:7px; right:7px; width:26px; height:26px; border-radius:999px; border:1px solid rgba(15,23,42,.14); background:#fff; color:#18202b; font:700 18px/1 system-ui; cursor:pointer; }
     #brobot-answer-result[data-correct="true"] { background:#ecfdf5; color:#065f46; }
     #brobot-answer-result strong { font-size:14px; }
     #brobot-answer-result span { overflow-wrap:anywhere; }

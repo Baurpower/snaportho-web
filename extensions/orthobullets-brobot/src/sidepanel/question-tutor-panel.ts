@@ -4,6 +4,7 @@ import type { QuestionTutorViewState } from './question-session.js';
 export type QuestionTutorPanelHooks = {
   onHintClick: () => void;
   onExplainClick: () => void;
+  onDismissExplanation: () => void;
   onSendToAnki: (
     button: HTMLButtonElement,
     explanation?: import('../shared/types.js').OrthobulletsExplainResponse
@@ -70,19 +71,17 @@ export function appendQuestionTutorPanel(
 
   if (view.showHintCta) {
     const hintDisabled = view.hintButtonDisabled;
-    const hintCard = createElement(`<div style="padding:14px;border-radius:16px;background:#f8fafc;border:1px solid #cbd5e1;display:grid;gap:10px;">
-      <div style="display:grid;gap:6px;">
-        <p style="margin:0;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#0f766e;font-weight:700;">Need a hint?</p>
-        <p style="margin:0;color:#384152;line-height:1.5;">BroBot prefetches hints in the background. Open when you are ready — nothing is shown until you click.</p>
-      </div>
+    const hintCard = createElement(`<details ${view.visiblePanelMode === 'hint_open' ? 'open' : ''} style="padding:12px 14px;border-radius:14px;background:#f8fafc;border:1px solid #cbd5e1;">
+      <summary style="cursor:pointer;font-size:13px;font-weight:700;color:#475569;">Optional: get a reasoning hint</summary>
+      <div style="display:grid;gap:10px;margin-top:10px;">
+      <p style="margin:0;color:#5c6574;line-height:1.45;font-size:12px;">Use this only when you want a nudge before checking your answer.</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button id="qt-hint" ${hintDisabled ? 'disabled' : ''} style="border:none;border-radius:999px;background:${hintDisabled ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${hintDisabled ? 'default' : 'pointer'};">${escapeHtml(view.hintButtonLabel)}</button>
-        <button id="qt-unlink" style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:10px 14px;font-weight:700;cursor:pointer;">Unlink</button>
       </div>
-    </div>`);
+      </div>
+    </details>`);
     content.appendChild(hintCard);
     hintCard.querySelector('#qt-hint')?.addEventListener('click', () => hooks.onHintClick());
-    hintCard.querySelector('#qt-unlink')?.addEventListener('click', () => hooks.onUnlink());
   }
 
   if (view.showExplainCta) {
@@ -132,9 +131,10 @@ export function appendQuestionTutorPanel(
       ? ['Give me a hint', 'What clue should I focus on?', 'Help me narrow the choices']
       : ['Why not the trap answer?', 'Make this simpler', 'Give me an Anki-style card'];
     const visiblePrompts = view.chatPrompts.length ? view.chatPrompts : starterPrompts;
-    const chatCard = createElement(`<div style="padding:14px;border-radius:14px;background:white;border:1px solid #ded7c8;display:grid;gap:12px;">
+    const chatCard = createElement(`<details ${view.visiblePanelMode === 'chat_open' || view.chatHistory.length ? 'open' : ''} style="padding:12px 14px;border-radius:14px;background:white;border:1px solid #ded7c8;">
+      <summary style="cursor:pointer;font-size:13px;font-weight:700;color:#475569;">Optional: ask BroBot about this question</summary>
+      <div style="display:grid;gap:12px;margin-top:10px;">
       <div style="display:grid;gap:4px;">
-        <h3 style="margin:0;font-size:16px;">Ask BroBot</h3>
         <p style="margin:0;color:#5c6574;line-height:1.4;font-size:12px;">${unanswered
           ? 'Ask about this question or get a reasoning nudge. BroBot will not reveal the answer before you submit.'
           : 'Ask about this exact question without opening the full explanation.'}</p>
@@ -149,7 +149,8 @@ export function appendQuestionTutorPanel(
           <button type="submit" ${isBusy ? 'disabled' : ''} style="border:none;border-radius:999px;background:${isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:8px 12px;font-weight:700;font-size:12px;cursor:${isBusy ? 'default' : 'pointer'};">${isBusy ? 'Thinking…' : 'Ask BroBot'}</button>
         </div>
       </form>
-    </div>`);
+      </div>
+    </details>`);
     content.appendChild(chatCard);
 
     const chatInput = chatCard.querySelector('#qt-chat-input') as HTMLTextAreaElement | null;
@@ -189,9 +190,12 @@ export function appendQuestionTutorPanel(
   }
 
   if (view.explanationToRender) {
-    content.appendChild(
-      createElement(renderExplanation(view.explanationToRender as import('../shared/types.js').OrthobulletsExplainResponse, 'question_tutor'))
-    );
+    const explanationCard = createElement(`<section style="position:relative;padding-top:38px;">
+      <button id="qt-dismiss-explanation" type="button" aria-label="Minimize explanation" title="Minimize" style="position:absolute;top:0;right:0;width:30px;height:30px;border-radius:999px;border:1px solid #cbd5e1;background:white;color:#18202b;font-size:19px;font-weight:700;line-height:1;cursor:pointer;">×</button>
+      ${renderExplanation(view.explanationToRender as import('../shared/types.js').OrthobulletsExplainResponse, 'question_tutor')}
+    </section>`);
+    content.appendChild(explanationCard);
+    explanationCard.querySelector('#qt-dismiss-explanation')?.addEventListener('click', () => hooks.onDismissExplanation());
 
     if (input.provider === 'orthobullets' && 'testedConcept' in view.explanationToRender) {
       const questionExplanation = view.explanationToRender;

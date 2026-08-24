@@ -191,6 +191,7 @@ function mergeCurriculumStreamPartial(
     explanationId: crypto.randomUUID(),
     emphasis,
     oneSentenceTakeaway: '',
+    classifications: [],
     inThirtySeconds: [],
     mustKnow: [],
     clinicalPearls: [],
@@ -210,6 +211,7 @@ function mergeCurriculumStreamPartial(
     oneSentenceTakeaway:
       base.oneSentenceTakeaway ||
       (typeof partial.oneSentenceTakeaway === 'string' ? partial.oneSentenceTakeaway : ''),
+    classifications: appendUnique(base.classifications, partial.classifications),
     inThirtySeconds: appendUnique(base.inThirtySeconds, partial.inThirtySeconds),
     mustKnow: appendUnique(base.mustKnow, partial.mustKnow),
     clinicalPearls: appendUnique(base.clinicalPearls, partial.clinicalPearls),
@@ -225,42 +227,6 @@ function mergeCurriculumStreamPartial(
     warnings: appendUnique(base.warnings, partial.warnings),
     comparisonTable: base.comparisonTable ?? partial.comparisonTable,
     referencesNote: base.referencesNote ?? partial.referencesNote,
-  };
-}
-
-function buildInstantCurriculumPreview(
-  pageContext: OrthobulletsPageContext,
-  emphasis: CurriculumExplainEmphasis,
-): CurriculumStudyResponse {
-  const title = pageContext.title?.trim() || 'this learning page';
-  const headings = [
-    ...(pageContext.sectionHeadings ?? []),
-    ...(pageContext.contentSections ?? []).map((section) => section.heading),
-  ]
-    .map((heading) => heading?.trim())
-    .filter((heading): heading is string => Boolean(heading))
-    .filter((heading, index, all) => all.indexOf(heading) === index)
-    .filter((heading) => !/^(references|resources|recommended readings)$/i.test(heading))
-    .slice(0, 6);
-  const pageMap = headings.length ? headings : ['Core concepts', 'Clinical application', 'Board-relevant details'];
-  return {
-    responseKind: 'curriculum',
-    explanationId: crypto.randomUUID(),
-    emphasis,
-    oneSentenceTakeaway: `Scanning ${title} now; high-yield teaching notes will replace this page map as each section finishes.`,
-    inThirtySeconds: pageMap.slice(0, 5).map((heading) => `Reviewing: ${heading}`),
-    mustKnow: [{ title: 'Page map', bullets: pageMap }],
-    clinicalPearls: [],
-    commonMistakes: [],
-    attendingQuestions: [],
-    testableFacts: [],
-    miniQuiz: [],
-    memoryHooks: [],
-    suggestedFollowUps: [],
-    nextReviewTopics: [],
-    learningObjectives: [],
-    deepDive: [],
-    warnings: [],
   };
 }
 
@@ -939,12 +905,11 @@ export function mountSidePanelApp(root: HTMLElement) {
       const status = streamed.data as { message?: unknown };
       state.curriculumStreamStatus = typeof status.message === 'string' ? status.message : 'Building study guide…';
     } else if (streamed.event === 'partial' && streamed.data && typeof streamed.data === 'object') {
-      const partial = streamed.data as { result?: unknown; completed?: number; total?: number };
-      state.curriculumStudy = mergeCurriculumStreamPartial(
-        state.curriculumStudy,
-        partial.result,
-        state.explainEmphasis,
-      );
+      const partial = streamed.data as { result?: unknown; snapshot?: boolean; completed?: number; total?: number };
+      state.curriculumStudy =
+        partial.snapshot && isCurriculumStudyResponse(partial.result as BrobotExplainResult)
+          ? (partial.result as CurriculumStudyResponse)
+          : mergeCurriculumStreamPartial(state.curriculumStudy, partial.result, state.explainEmphasis);
       state.curriculumStreamStatus = `Showing notes as they arrive · ${partial.completed ?? 0}/${partial.total ?? '?'} sections`;
     } else if (streamed.event === 'complete' && isCurriculumStudyResponse(streamed.data as BrobotExplainResult)) {
       state.curriculumStudy = streamed.data as CurriculumStudyResponse;
@@ -1619,8 +1584,8 @@ export function mountSidePanelApp(root: HTMLElement) {
       extensionBuildId: EXTENSION_BUILD_ID,
     });
     if (requestedTask === 'curriculum_explain') {
-      state.curriculumStudy = buildInstantCurriculumPreview(pageContext, state.explainEmphasis);
-      state.curriculumStreamStatus = 'Page map ready · building high-yield section notes…';
+      state.curriculumStudy = null;
+      state.curriculumStreamStatus = 'Reading the page · the first real study section will appear when ready…';
     }
     render();
 
@@ -2421,6 +2386,7 @@ export function mountSidePanelApp(root: HTMLElement) {
         hooks: {
           onHintClick: () => questionTutorController.openHint(),
           onExplainClick: () => questionTutorController.openExplain(),
+          onDismissExplanation: () => questionTutorController.closeExplanation(),
           onSendToAnki: (button, explanation) => void sendQuestionToAnki(button, explanation),
           onRefreshClick: () =>
             void questionTutorController.onManualRefresh().then(() => syncQuestionTutorShellState()),
@@ -2451,6 +2417,16 @@ export function mountSidePanelApp(root: HTMLElement) {
               : 'Explain with BroBot';
 
       if (isEducationalPage && !state.explanation && !state.curriculumStudy && !pageLooksHintEligible) {
+        if (state.operation === 'explaining') {
+          content.appendChild(
+            createElement('div', {
+              html: renderLoadingSkeleton(
+                'Building your study guide',
+                state.curriculumStreamStatus ?? 'Reading the page and identifying the first high-yield section…',
+              ),
+            }),
+          );
+        } else {
         content.appendChild(
           createElement('div', {
             html: `<div style="padding:14px;border-radius:16px;background:#f0fdfa;border:1px solid #99f6e4;display:grid;gap:10px;">
@@ -2471,6 +2447,7 @@ export function mountSidePanelApp(root: HTMLElement) {
         content.querySelector('#unlink-edu')?.addEventListener('click', () => void unlink());
         const educationalAnkiButton = content.querySelector<HTMLButtonElement>('#educational-find-anki');
         educationalAnkiButton?.addEventListener('click', () => void findPageAnkiCards(educationalAnkiButton));
+        }
       } else if (isMixedPage && !state.explanation) {
         content.appendChild(
           createElement('div', {
@@ -2686,13 +2663,6 @@ export function mountSidePanelApp(root: HTMLElement) {
           }${renderCurriculumStudyPanel(state.curriculumStudy, state.pageContext)}`,
         });
         content.appendChild(studyPanel);
-        studyPanel.querySelectorAll<HTMLButtonElement>('[data-emphasis-tab]').forEach((button) => {
-          button.addEventListener('click', () => {
-            const emphasis = button.dataset.emphasisTab as CurriculumExplainEmphasis | undefined;
-            if (!emphasis || emphasis === state.explainEmphasis) return;
-            void runExplain({ emphasis });
-          });
-        });
       } else {
         content.appendChild(
           createElement('div', {
