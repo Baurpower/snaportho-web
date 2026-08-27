@@ -1805,6 +1805,157 @@ async function classifyLegacyTags(db: SupabaseClient, args: Args) {
   }, null, 2));
 }
 
+async function acceptReviewedRun(db: SupabaseClient, args: Args) {
+  if (args.get("--confirm-accept") !== "ACCEPT_GROK_FULL_REVIEW_V1") {
+    throw new Error("accept_requires_--confirm-accept=ACCEPT_GROK_FULL_REVIEW_V1");
+  }
+  const reviewerUserId = args.get("--reviewer-user-id");
+  if (!reviewerUserId) throw new Error("--reviewer-user-id is required for human_review acceptance");
+  const run = await findRun(db, args);
+  const proposed = await allRows(
+    db,
+    "card_metadata_assertions",
+    "id,canonical_card_version_id,facet,assertion_role,canonical_entity_id,metadata_concept_id,decision,pipeline_run_id",
+    (query) => query.eq("pipeline_run_id", run.id).eq("decision", "proposed"),
+  );
+  if (!proposed.length) throw new Error("no_proposed_assertions_to_accept");
+  const grokFacetKeys = new Set(
+    proposed.map((row) => `${row.canonical_card_version_id}|${row.facet}`),
+  );
+  const accepted = await allRows(
+    db,
+    "card_metadata_assertions",
+    "id,canonical_card_version_id,facet,assertion_role,decision,pipeline_run_id",
+    (query) => query.eq("decision", "accepted"),
+  );
+  const conflicting = accepted.filter((row) =>
+    row.pipeline_run_id !== run.id
+    && grokFacetKeys.has(`${row.canonical_card_version_id}|${row.facet}`),
+  );
+  const now = new Date().toISOString();
+  for (let offset = 0; offset < conflicting.length; offset += 200) {
+    const ids = conflicting.slice(offset, offset + 200).map((row) => row.id);
+    const { error } = await db.from("card_metadata_assertions").update({
+      decision: "superseded",
+      decision_method: "supersession",
+    }).in("id", ids).eq("decision", "accepted");
+    if (error) throw new Error(`conflict_supersede_failed:${error.message}`);
+  }
+  for (let offset = 0; offset < proposed.length; offset += 200) {
+    const ids = proposed.slice(offset, offset + 200).map((row) => row.id);
+    const { error } = await db.from("card_metadata_assertions").update({
+      decision: "accepted",
+      decision_method: "human_review",
+      reviewer_user_id: reviewerUserId,
+      reviewed_at: now,
+    }).in("id", ids).eq("decision", "proposed").eq("pipeline_run_id", run.id);
+    if (error) throw new Error(`grok_accept_failed:${error.message}`);
+  }
+  if (run.status !== "completed") {
+    const complete = await db.from("metadata_pipeline_runs").update({
+      status: "completed",
+      completed_at: now,
+      failed_at: null,
+    }).eq("id", run.id);
+    if (complete.error) throw new Error(`grok_run_complete_failed:${complete.error.message}`);
+  }
+  console.log(JSON.stringify({
+    accepted: true,
+    runKey: run.run_key,
+    proposedAccepted: proposed.length,
+    supersededConflictingAccepted: conflicting.length,
+    reviewerUserId,
+    decisionMethod: "human_review",
+    runCompleted: true,
+  }, null, 2));
+}
+
+async function publishMetadataRelease(db: SupabaseClient, args: Args) {
+  if (args.get("--confirm-publish") !== "PUBLISH_METADATA_RELEASE") {
+    throw new Error("publish_requires_--confirm-publish=PUBLISH_METADATA_RELEASE");
+  }
+  const releaseKey = args.get("--metadata-release-key");
+  const manifestKey = args.get("--manifest-key");
+  if (!releaseKey || !manifestKey) {
+    throw new Error("--metadata-release-key and --manifest-key are required");
+  }
+  const release = await db.from("metadata_releases").select("*").eq("release_key", releaseKey).single();
+  if (release.error) throw new Error(`publish_release_lookup_failed:${release.error.message}`);
+  const manifest = await db.from("rendered_anki_tag_manifests").select("*")
+    .eq("manifest_key", manifestKey).eq("metadata_release_id", release.data.id).single();
+  if (manifest.error) throw new Error(`publish_manifest_lookup_failed:${manifest.error.message}`);
+  const [memberCount, cardCount] = await Promise.all([
+    db.from("metadata_release_assertions").select("assertion_id", { count: "exact", head: true })
+      .eq("metadata_release_id", release.data.id),
+    db.from("rendered_anki_tag_manifest_cards").select("id", { count: "exact", head: true })
+      .eq("manifest_id", manifest.data.id),
+  ]);
+  if (memberCount.error || cardCount.error) throw new Error("publish_count_verification_failed");
+  if (!memberCount.count || !cardCount.count) throw new Error("publish_empty_release");
+  const { data: oldReleases, error: oldReleaseError } = await db.from("metadata_releases")
+    .select("*").eq("deck_release_id", release.data.deck_release_id).eq("status", "published")
+    .neq("id", release.data.id);
+  if (oldReleaseError) throw new Error(`old_release_lookup_failed:${oldReleaseError.message}`);
+  const oldRelease = oldReleases?.[0] ?? null;
+  const { data: oldManifests, error: oldManifestError } = await db.from("rendered_anki_tag_manifests")
+    .select("*").eq("status", "published").neq("id", manifest.data.id)
+    .order("published_at", { ascending: false }).limit(5);
+  if (oldManifestError) throw new Error(`old_manifest_lookup_failed:${oldManifestError.message}`);
+  const oldManifest = (oldManifests ?? []).find((row) =>
+    oldRelease ? row.metadata_release_id === oldRelease.id : true,
+  ) ?? oldManifests?.[0] ?? null;
+  const now = new Date().toISOString();
+  if (oldManifest?.status === "published") {
+    const supersededManifest = await db.from("rendered_anki_tag_manifests")
+      .update({ status: "superseded", superseded_at: now })
+      .eq("id", oldManifest.id).eq("status", "published");
+    if (supersededManifest.error) throw new Error(`old_manifest_supersede_failed:${supersededManifest.error.message}`);
+  }
+  if (oldRelease?.status === "published") {
+    const supersededRelease = await db.from("metadata_releases")
+      .update({ status: "superseded", superseded_at: now })
+      .eq("id", oldRelease.id).eq("status", "published");
+    if (supersededRelease.error) throw new Error(`old_release_supersede_failed:${supersededRelease.error.message}`);
+  }
+  if (release.data.status === "draft") {
+    const reviewed = await db.from("metadata_releases").update({
+      status: "review",
+      reviewed_at: now,
+      predecessor_release_id: oldRelease?.id ?? release.data.predecessor_release_id,
+    }).eq("id", release.data.id).eq("status", "draft");
+    if (reviewed.error) throw new Error(`metadata_release_review_failed:${reviewed.error.message}`);
+  }
+  const publishedRelease = await db.from("metadata_releases").update({
+    status: "published",
+    reviewed_at: release.data.reviewed_at ?? now,
+    published_at: now,
+  }).eq("id", release.data.id).in("status", ["review", "published"]);
+  if (publishedRelease.error) throw new Error(`metadata_release_publish_failed:${publishedRelease.error.message}`);
+  if (manifest.data.status === "draft") {
+    const validated = await db.from("rendered_anki_tag_manifests").update({
+      status: "validated",
+      validated_at: now,
+      predecessor_manifest_id: oldManifest?.id ?? manifest.data.predecessor_manifest_id,
+    }).eq("id", manifest.data.id).eq("status", "draft");
+    if (validated.error) throw new Error(`tag_manifest_validation_failed:${validated.error.message}`);
+  }
+  const publishedManifest = await db.from("rendered_anki_tag_manifests").update({
+    status: "published",
+    validated_at: manifest.data.validated_at ?? now,
+    published_at: now,
+  }).eq("id", manifest.data.id).in("status", ["validated", "published"]);
+  if (publishedManifest.error) throw new Error(`tag_manifest_publish_failed:${publishedManifest.error.message}`);
+  console.log(JSON.stringify({
+    published: true,
+    releaseKey,
+    manifestKey,
+    acceptedAssertions: memberCount.count,
+    taggedCards: cardCount.count,
+    supersededReleaseKey: oldRelease?.release_key ?? null,
+    supersededManifestKey: oldManifest?.manifest_key ?? null,
+  }, null, 2));
+}
+
 async function applyAutoPolicy(db: SupabaseClient, args: Args) {
   if (args.get("--confirm-auto-policy") !== "ACCEPT_LOW_RISK_0_98") {
     throw new Error("auto_policy_requires_--confirm-auto-policy=ACCEPT_LOW_RISK_0_98");
@@ -1904,17 +2055,39 @@ async function createMetadataRelease(db: SupabaseClient, args: Args) {
   }
   const run = await findRun(db, args);
   const policyVersion = args.get("--accepted-policy-version");
-  if (!policyVersion && run.status !== "completed") throw new Error("metadata_run_must_be_completed");
-  const accepted = await allRows(
-    db, "card_metadata_assertions", "id,canonical_card_version_id,facet,confidence",
-    (q) => {
-      let query = q.eq("decision", "accepted").order("id");
-      query = policyVersion
-        ? query.eq("decision_policy_version", policyVersion)
-        : query.eq("pipeline_run_id", run.id);
-      return query;
-    },
-  );
+  const membership = args.get("--membership") ?? "run";
+  if (!policyVersion && run.status !== "completed" && membership !== "deck-current-accepted") {
+    throw new Error("metadata_run_must_be_completed");
+  }
+  let accepted: JsonRow[] = [];
+  if (membership === "deck-current-accepted") {
+    const stages = await allRows(
+      db,
+      "metadata_pipeline_stage_results",
+      "canonical_card_version_id",
+      (query) => query.eq("pipeline_run_id", run.id).eq("stage", "consensus").eq("status", "completed"),
+    );
+    const cardVersions = [...new Set(stages.map((row) => String(row.canonical_card_version_id)).filter(Boolean))];
+    const acceptedAll = await allRows(
+      db,
+      "card_metadata_assertions",
+      "id,canonical_card_version_id,facet,confidence",
+      (query) => query.eq("decision", "accepted").order("id"),
+    );
+    const allowed = new Set(cardVersions);
+    accepted = acceptedAll.filter((row) => allowed.has(String(row.canonical_card_version_id)));
+  } else {
+    accepted = await allRows(
+      db, "card_metadata_assertions", "id,canonical_card_version_id,facet,confidence",
+      (q) => {
+        let query = q.eq("decision", "accepted").order("id");
+        query = policyVersion
+          ? query.eq("decision_policy_version", policyVersion)
+          : query.eq("pipeline_run_id", run.id);
+        return query;
+      },
+    );
+  }
   if (!accepted.length) throw new Error("no_accepted_assertions_for_release");
   const releaseKey = args.get("--metadata-release-key") ?? `${run.run_key}-accepted`;
   const releaseVersion = args.get("--metadata-release-version") ?? "0.1.0-draft";
@@ -2439,11 +2612,13 @@ async function main() {
     if (!env.OPENAI_API_KEY) throw new Error("OPENAI_API_KEY is required");
     return runPipeline(db, args, env);
   }
+  if (command === "accept-reviewed-run") return acceptReviewedRun(db, args);
   if (command === "apply-auto-policy") return applyAutoPolicy(db, args);
   if (command === "apply-codex-audit") return applyCodexAuditPolicy(db, args);
   if (command === "create-metadata-release") return createMetadataRelease(db, args);
   if (command === "render-tags") return renderTags(db, args);
   if (command === "publish-provisional-tags") return publishProvisionalTags(db, args);
+  if (command === "publish-metadata-release") return publishMetadataRelease(db, args);
   if (command === "status") return status(db, args);
   throw new Error(`unknown_command:${command}`);
 }

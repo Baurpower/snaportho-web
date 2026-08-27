@@ -1,4 +1,5 @@
 import type {
+  EssentialsPayload,
   PacketItem,
   PacketSectionState,
 } from "@/lib/caseprep-v1-1/stream-schema";
@@ -6,6 +7,119 @@ import { sourceLabel } from "./approach-decision";
 
 /* Section body renderers. The SectionShell handles collapse/skeleton/error;
    these only render items. */
+
+function DetailRow({ label, value }: { label: string; value?: string | null }) {
+  if (!value) return null;
+  return (
+    <p className="text-sm leading-6 text-slate-700">
+      <span className="font-bold text-slate-950">{label}:</span> {value}
+    </p>
+  );
+}
+
+export function EssentialsSection({ payload }: { payload: EssentialsPayload }) {
+  const sections = [
+    {
+      key: "indications",
+      eyebrow: "Why we operate",
+      title: "Indications",
+      summary: payload.indications.summary,
+      points: payload.indications.key_points,
+      footer: payload.indications.case_specific_note,
+    },
+    {
+      key: "critical",
+      eyebrow: "Where the case is won or lost",
+      title: payload.critical_portion.name,
+      summary: payload.critical_portion.summary,
+      points: payload.critical_portion.execution_points,
+      footer: null,
+    },
+  ];
+  const postop = payload.postop_protocol;
+  return (
+    <div className="space-y-4">
+      {sections.map((section) => (
+        <article
+          key={section.key}
+          className="rounded-xl border border-slate-200 bg-slate-50/70 p-4"
+        >
+          <p className="text-[10px] font-black uppercase tracking-[0.18em] text-emerald-700">
+            {section.eyebrow}
+          </p>
+          <h3 className="mt-1 text-base font-black text-slate-950">
+            {section.title}
+          </h3>
+          <p className="mt-2 text-sm leading-6 text-slate-700">
+            {section.summary}
+          </p>
+          {section.key === "critical" ? (
+            <p className="mt-2 text-sm leading-6 text-slate-700">
+              <span className="font-bold text-slate-950">Why it matters:</span>{" "}
+              {payload.critical_portion.why_it_matters}
+            </p>
+          ) : null}
+          {section.points.length ? (
+            <ul className="mt-3 space-y-1.5 pl-5 text-sm leading-6 text-slate-700 marker:text-emerald-600">
+              {section.points.map((point) => (
+                <li key={point} className="list-disc">
+                  {point}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          {section.key === "critical" ? (
+            <p className="mt-3 rounded-lg bg-amber-50 px-3 py-2 text-sm leading-6 text-amber-950">
+              <span className="font-bold">Failure mode:</span>{" "}
+              {payload.critical_portion.failure_mode}
+            </p>
+          ) : section.footer ? (
+            <p className="mt-3 text-sm italic leading-6 text-slate-600">
+              {section.footer}
+            </p>
+          ) : null}
+        </article>
+      ))}
+      <article className="rounded-xl border border-slate-200 bg-slate-50/70 p-4">
+        <p className="text-[10px] font-black uppercase tracking-[0.18em] text-emerald-700">
+          After surgery
+        </p>
+        <h3 className="mt-1 text-base font-black text-slate-950">
+          Post-op protocol
+        </h3>
+        <p className="mt-2 text-sm leading-6 text-slate-700">
+          {postop.summary}
+        </p>
+        {postop.immediate_priorities.length ? (
+          <ul className="mt-3 space-y-1.5 pl-5 text-sm leading-6 text-slate-700 marker:text-emerald-600">
+            {postop.immediate_priorities.map((point) => (
+              <li key={point} className="list-disc">
+                {point}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        <div className="mt-3 space-y-1">
+          <DetailRow label="Immobilization" value={postop.immobilization} />
+          <DetailRow label="Weight bearing" value={postop.weight_bearing} />
+          <DetailRow label="Motion" value={postop.motion} />
+          <DetailRow label="Follow-up" value={postop.follow_up} />
+        </div>
+        {postop.red_flags.length ? (
+          <p className="mt-3 text-sm leading-6 text-slate-700">
+            <span className="font-bold text-slate-950">Red flags:</span>{" "}
+            {postop.red_flags.join("; ")}
+          </p>
+        ) : null}
+        {postop.variability_note ? (
+          <p className="mt-3 text-xs leading-5 text-slate-500">
+            {postop.variability_note}
+          </p>
+        ) : null}
+      </article>
+    </div>
+  );
+}
 
 export function KeyTakeaways({ items }: { items: PacketItem[] }) {
   return (
@@ -260,23 +374,37 @@ export function SourcesSection({ section }: { section: PacketSectionState }) {
     source_id: string;
     url: string;
     title: string;
+    publisher?: string;
+    resource_type?: string;
+    recommended_for?: string;
+    badges?: string[];
+    journal?: string | null;
+    year?: number | null;
   }>;
-  const linked = sources.filter((source) => source.url);
-  if (linked.length === 0) return null;
+  const linked = sources.filter((source) => source.url?.startsWith("https://"));
+  if (linked.length === 0)
+    return <p className="rounded-xl bg-slate-50 p-4 text-sm text-slate-600">No strong case-specific resources were found yet.</p>;
   return (
-    <ul className="space-y-1 text-sm text-slate-600">
+    <ul className="grid gap-3 md:grid-cols-2">
       {linked.map((source) => (
-        <li key={source.source_id}>
+        <li key={source.source_id} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+          <div className="flex flex-wrap gap-1.5">
+            {(source.badges ?? []).slice(0, 2).map((badge) => (
+              <span key={badge} className="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-teal-700">{badge}</span>
+            ))}
+          </div>
           <a
-            className="underline"
+            className="mt-2 block text-sm font-bold text-slate-950 underline decoration-teal-200 underline-offset-2"
             href={source.url}
             rel="noreferrer"
             target="_blank"
           >
-            {source.title === "Published CasePrep source"
-              ? source.url.replace(/^https?:\/\/(www\.)?/, "")
-              : source.title}
+            {source.title}
           </a>
+          <p className="mt-1 text-xs font-semibold text-slate-500">
+            {[source.publisher, source.journal, source.year].filter(Boolean).join(" · ")}
+          </p>
+          <p className="mt-2 text-sm leading-6 text-slate-700">Best for: {source.recommended_for ?? "Diving deeper into this case"}</p>
         </li>
       ))}
     </ul>

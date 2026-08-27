@@ -25,7 +25,7 @@ const PAPER_TYPES = new Set([
   'trial',
 ]);
 
-function sourceHintRecommendation(
+export function sourceHintRecommendation(
   hint: { title?: string; url: string },
   topic: ReadingTopicContext,
 ): BroBotReadingRecommendation | null {
@@ -128,6 +128,28 @@ export function selectBalancedCasePrepReferences(
   }));
 }
 
+export function casePrepSourcesPayload(resources: BroBotReadingRecommendation[]) {
+  const sources = resources.filter((resource) => isTrustedReadingUrl(resource.url)).map((resource) => ({
+    source_id: resource.id,
+    title: resource.title,
+    publisher: resource.sourceName,
+    url: resource.url,
+    resource_type:
+      resource.sourceName === 'Nailed It Ortho Podcast'
+        ? 'podcast'
+        : resource.resourceType,
+    recommended_for: resource.bestFor ?? resource.whyItMatters,
+    badges: resource.badges ?? [],
+    journal: resource.journal ?? null,
+    year: resource.year ?? null,
+  }));
+  return {
+    status: sources.length >= 3 ? 'complete' : sources.length ? 'limited' : 'unavailable',
+    reason: sources.length ? null : 'No strong case-specific resources were found yet.',
+    sources,
+  };
+}
+
 export async function getCasePrepReferences(params: {
   supabase: SupabaseClient;
   topic: ReadingTopicContext;
@@ -140,11 +162,19 @@ export async function getCasePrepReferences(params: {
     topic: params.topic,
   });
   if (cached) {
+    const hinted = (params.sourceHints ?? [])
+      .map((hint) => sourceHintRecommendation(hint, params.topic))
+      .filter((resource): resource is BroBotReadingRecommendation => Boolean(resource));
     return {
       recommendationSetId: cached.recommendationSetId,
       generatedFrom: cached.generatedFrom,
       topic: params.topic.displayTopic,
-      resources: selectBalancedCasePrepReferences(cached.resources, max),
+      // Packet-owned procedure and approach links must not disappear merely
+      // because a general topic recommendation set was already cached.
+      resources: selectBalancedCasePrepReferences(
+        [...hinted, ...cached.resources],
+        max,
+      ),
     };
   }
 

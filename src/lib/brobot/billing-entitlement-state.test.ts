@@ -45,7 +45,10 @@ const freePayload = {
   },
 };
 
-assert.equal(parseMeEntitlementsPayload(stripeTrialingPayload).isUnlimited, true);
+assert.equal(
+  parseMeEntitlementsPayload(stripeTrialingPayload).isUnlimited,
+  true,
+);
 assert.equal(parseMeEntitlementsPayload(stripeTrialingPayload).isPaid, true);
 assert.equal(parseMeEntitlementsPayload(stripeActivePayload).isUnlimited, true);
 assert.equal(parseMeEntitlementsPayload(freePayload).isUnlimited, false);
@@ -56,7 +59,7 @@ assert.equal(
     isPaid: true,
     pollTimedOut: false,
   }),
-  'active'
+  'active',
 );
 
 assert.equal(
@@ -65,7 +68,7 @@ assert.equal(
     isPaid: false,
     pollTimedOut: false,
   }),
-  'activating'
+  'activating',
 );
 
 assert.equal(
@@ -74,7 +77,7 @@ assert.equal(
     isPaid: false,
     pollTimedOut: true,
   }),
-  'delayed'
+  'delayed',
 );
 
 assert.equal(
@@ -82,7 +85,7 @@ assert.equal(
     isUnlimited: false,
     activationPhase: 'activating',
   }),
-  false
+  false,
 );
 
 assert.equal(
@@ -90,17 +93,17 @@ assert.equal(
     isUnlimited: false,
     activationPhase: 'idle',
   }),
-  true
+  true,
 );
 
 assert.equal(
   getBillingPlanLabel({ isUnlimited: true, activationPhase: 'active' }),
-  'Unlimited BroBot'
+  'Unlimited BroBot',
 );
 
 assert.equal(
   getBillingPlanLabel({ isUnlimited: false, activationPhase: 'activating' }),
-  'Activating...'
+  'Activating...',
 );
 
 assert.equal(
@@ -110,7 +113,7 @@ assert.equal(
     status: 'trialing',
     cancelAtPeriodEnd: false,
   }),
-  'trial'
+  'trial',
 );
 
 assert.equal(
@@ -120,7 +123,41 @@ assert.equal(
     status: null,
     cancelAtPeriodEnd: false,
   }),
-  'delayed'
+  'delayed',
+);
+
+const stripePastDuePayload = {
+  access: 'free' as const,
+  planCode: 'free',
+  status: 'past_due',
+  currentPeriodEnd: '2027-08-26T19:32:42.000Z',
+  data: {
+    aiAccess: { unlimited: false, dailyCap: 3, remainingToday: 3 },
+    source: 'free_quota' as const,
+    status: 'past_due',
+    expiresAt: '2027-08-26T19:32:42.000Z',
+    provider: 'stripe',
+    stripeCustomerId: 'cus_past_due',
+    stripeSubscriptionId: 'sub_past_due',
+  },
+};
+const stripePastDueView = parseMeEntitlementsPayload(stripePastDuePayload);
+assert.equal(stripePastDueView.isUnlimited, false);
+assert.equal(stripePastDueView.isPaid, false);
+assert.equal(stripePastDueView.status, 'past_due');
+assert.equal(
+  stripePastDueView.entitlement?.stripeSubscriptionId,
+  'sub_past_due',
+);
+assert.equal(toWebBroBotUsageMeta(stripePastDueView).status, 'past_due');
+assert.equal(
+  getBillingStatusBadge({
+    isUnlimited: false,
+    activationPhase: 'idle',
+    status: 'past_due',
+    cancelAtPeriodEnd: false,
+  }),
+  'payment_failed',
 );
 
 assert.equal(
@@ -128,7 +165,7 @@ assert.equal(
     isUnlimited: true,
     activationPhase: 'active',
   }),
-  false
+  false,
 );
 
 const unlimitedTopLevelOnly = {
@@ -141,7 +178,10 @@ const unlimitedTopLevelOnly = {
 const unlimitedView = parseMeEntitlementsPayload(unlimitedTopLevelOnly);
 assert.equal(unlimitedView.isUnlimited, true);
 assert.equal(toWebUsageSnapshot(unlimitedView).remainingToday, null);
-assert.equal(toWebEntitlementMenuStatus(unlimitedView).label, 'Unlimited BroBot');
+assert.equal(
+  toWebEntitlementMenuStatus(unlimitedView).label,
+  'Unlimited BroBot',
+);
 
 const appleUnlimitedPayload = {
   access: 'unlimited' as const,
@@ -155,10 +195,19 @@ const appleUnlimitedPayload = {
   },
 };
 
-assert.equal(parseMeEntitlementsPayload(appleUnlimitedPayload).isUnlimited, true);
-assert.equal(toWebEntitlementMenuStatus(parseMeEntitlementsPayload(appleUnlimitedPayload)).unlimited, true);
+assert.equal(
+  parseMeEntitlementsPayload(appleUnlimitedPayload).isUnlimited,
+  true,
+);
+assert.equal(
+  toWebEntitlementMenuStatus(parseMeEntitlementsPayload(appleUnlimitedPayload))
+    .unlimited,
+  true,
+);
 
-const usageMeta = toWebBroBotUsageMeta(parseMeEntitlementsPayload(stripeTrialingPayload));
+const usageMeta = toWebBroBotUsageMeta(
+  parseMeEntitlementsPayload(stripeTrialingPayload),
+);
 assert.equal(usageMeta.unlimited, true);
 assert.equal(usageMeta.remainingToday, null);
 assert.equal(usageMeta.source, 'subscription');

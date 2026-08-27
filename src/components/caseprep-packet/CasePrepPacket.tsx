@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 
-import type { CasePrepPacketState } from "@/lib/caseprep-v1-1/stream-schema";
+import {
+  EssentialsPayloadSchema,
+  type CasePrepPacketState,
+} from "@/lib/caseprep-v1-1/stream-schema";
 import { ClarificationPrompt } from "./ClarificationPrompt";
 import { ApproachWorkspace } from "./ApproachWorkspace";
 import { ProcedureSummary } from "./ProcedureSummary";
-import { HighYieldReferences } from "./HighYieldReferences";
 import { PacketHeader, PacketHeaderSkeleton } from "./PacketHeader";
 import { PimpQuestionDeck } from "./PimpQuestionDeck";
 import { SectionShell } from "./SectionShell";
@@ -14,6 +16,7 @@ import {
   AnatomySection,
   CalloutListSection,
   DecisionPointsSection,
+  EssentialsSection,
   KeyTakeaways,
   OperativeFlowSection,
   RelatedConceptsSection,
@@ -118,18 +121,24 @@ const ESSENTIAL_TABS = [
 ] as const;
 
 function CaseEssentials({ state }: { state: CasePrepPacketState }) {
+  const essentials = EssentialsPayloadSchema.safeParse(
+    state.sections.essentials?.payload,
+  );
   const hasOverview = Boolean(
+    essentials.success ||
     state.sections.summary ||
-      state.sections.key_takeaways ||
-      state.sections.top_things_to_know,
+    state.sections.key_takeaways ||
+    state.sections.top_things_to_know,
   );
   const availableTabs = ESSENTIAL_TABS.filter(({ id }) =>
     id === "overview" ? hasOverview : Boolean(state.sections[id]),
   );
   const [requestedTab, setRequestedTab] = useState<string>("overview");
-  const [mobileExpanded, setMobileExpanded] = useState<Record<string, boolean>>({
-    overview: true,
-  });
+  const [mobileExpanded, setMobileExpanded] = useState<Record<string, boolean>>(
+    {
+      overview: true,
+    },
+  );
   const activeTab = availableTabs.some(({ id }) => id === requestedTab)
     ? requestedTab
     : availableTabs[0]?.id;
@@ -139,6 +148,9 @@ function CaseEssentials({ state }: { state: CasePrepPacketState }) {
   const renderContent = (id: string) => {
     const contentSection = id === "overview" ? undefined : state.sections[id];
     if (id === "overview") {
+      if (essentials.success) {
+        return <EssentialsSection payload={essentials.data} />;
+      }
       return (
         <div className="space-y-5">
           {state.sections.summary ? (
@@ -150,14 +162,20 @@ function CaseEssentials({ state }: { state: CasePrepPacketState }) {
           ) : null}
           {state.sections.key_takeaways ? (
             <div>
-              <h3 className="mb-2 text-sm font-black text-slate-950">Key takeaways</h3>
+              <h3 className="mb-2 text-sm font-black text-slate-950">
+                Key takeaways
+              </h3>
               <KeyTakeaways items={state.sections.key_takeaways.items} />
             </div>
           ) : null}
           {state.sections.top_things_to_know ? (
             <div>
-              <h3 className="mb-2 text-sm font-black text-slate-950">Top things to know</h3>
-              <TopThingsToKnow items={state.sections.top_things_to_know.items} />
+              <h3 className="mb-2 text-sm font-black text-slate-950">
+                Top things to know
+              </h3>
+              <TopThingsToKnow
+                items={state.sections.top_things_to_know.items}
+              />
             </div>
           ) : null}
         </div>
@@ -190,7 +208,10 @@ function CaseEssentials({ state }: { state: CasePrepPacketState }) {
         </h2>
       </div>
       <div className="p-4 sm:p-6">
-        <div className="hidden gap-1 overflow-x-auto rounded-xl bg-slate-100 p-1 sm:flex" role="tablist">
+        <div
+          className="hidden gap-1 overflow-x-auto rounded-xl bg-slate-100 p-1 sm:flex"
+          role="tablist"
+        >
           {availableTabs.map((tab) => (
             <button
               key={tab.id}
@@ -208,17 +229,19 @@ function CaseEssentials({ state }: { state: CasePrepPacketState }) {
             </button>
           ))}
         </div>
-        <div className="mt-5 hidden sm:block">
-          {renderContent(activeTab)}
-        </div>
+        <div className="mt-5 hidden sm:block">{renderContent(activeTab)}</div>
         <div className="space-y-2 sm:hidden">
           <div className="flex justify-end">
             <button
               type="button"
               onClick={() => {
-                const allOpen = availableTabs.every((tab) => mobileExpanded[tab.id]);
+                const allOpen = availableTabs.every(
+                  (tab) => mobileExpanded[tab.id],
+                );
                 setMobileExpanded(
-                  Object.fromEntries(availableTabs.map((tab) => [tab.id, !allOpen])),
+                  Object.fromEntries(
+                    availableTabs.map((tab) => [tab.id, !allOpen]),
+                  ),
                 );
               }}
               className="min-h-10 rounded-lg border border-slate-200 bg-white px-3 text-xs font-bold text-slate-700"
@@ -232,7 +255,10 @@ function CaseEssentials({ state }: { state: CasePrepPacketState }) {
             const expanded = Boolean(mobileExpanded[tab.id]);
             const panelId = `essentials-mobile-${tab.id}`;
             return (
-              <section key={tab.id} className="overflow-hidden rounded-xl border border-slate-200">
+              <section
+                key={tab.id}
+                className="overflow-hidden rounded-xl border border-slate-200"
+              >
                 <button
                   type="button"
                   aria-expanded={expanded}
@@ -249,9 +275,14 @@ function CaseEssentials({ state }: { state: CasePrepPacketState }) {
                     <span className="mr-2 text-[10px] font-black text-slate-400">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="text-sm font-black text-slate-950">{tab.label}</span>
+                    <span className="text-sm font-black text-slate-950">
+                      {tab.label}
+                    </span>
                   </span>
-                  <span className="text-xl font-light text-slate-500" aria-hidden>
+                  <span
+                    className="text-xl font-light text-slate-500"
+                    aria-hidden
+                  >
                     {expanded ? "−" : "+"}
                   </span>
                 </button>
@@ -286,20 +317,9 @@ export function CasePrepPacket({
   const { isExpanded, toggle } = useExpandedSections(slug);
   const streaming =
     state.status === "connecting" || state.status === "streaming";
-  const dynamicReferencesSection =
-    state.sections.evidence ??
-    (state.caseIdentity?.canonical_slug && state.header
-      ? {
-          status: "complete" as const,
-          items: [],
-          payload: { dynamic: true },
-          source: "read_next",
-          generatedFieldPaths: [],
-        }
-      : undefined);
   const referenceSection =
-    dynamicReferencesSection ??
     state.sections.sources ??
+    state.sections.evidence ??
     state.sections.related_concepts;
 
   if (state.status === "clarification" && state.clarification) {
@@ -338,25 +358,7 @@ export function CasePrepPacket({
         <PacketHeaderSkeleton />
       ) : null}
 
-      {state.coverage && state.coverage.quality_gate !== "passed" ? (
-        <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950">
-          <p className="font-bold">
-            Grounded coverage is limited for this case.
-          </p>
-          <p className="mt-1 text-amber-800">
-            Unsupported sections were omitted instead of filled with generic AI
-            content.
-            {state.coverage.omitted_sections.length > 0
-              ? ` Missing: ${state.coverage.omitted_sections.join(", ").replaceAll("_", " ")}.`
-              : ""}
-          </p>
-        </div>
-      ) : null}
-
-      <ApproachWorkspace
-        sections={state.sections}
-        streaming={streaming}
-      />
+      <ApproachWorkspace sections={state.sections} streaming={streaming} />
 
       {state.sections.pimp_questions ? (
         <PimpQuestionDeck items={state.sections.pimp_questions.items} />
@@ -382,7 +384,10 @@ export function CasePrepPacket({
         debug={debug}
       >
         {state.sections.postop ? (
-          <CalloutListSection items={state.sections.postop.items} tone="slate" />
+          <CalloutListSection
+            items={state.sections.postop.items}
+            tone="slate"
+          />
         ) : null}
       </SectionShell>
 
@@ -396,22 +401,22 @@ export function CasePrepPacket({
         debug={debug}
       >
         <div className="space-y-6">
-          {dynamicReferencesSection ? (
-            <div>
-              <h3 className="mb-2 text-sm font-black text-slate-950">High-yield references</h3>
-              <HighYieldReferences state={state} active={isExpanded("references")} />
-            </div>
-          ) : null}
           {state.sections.sources ? (
             <div>
-              <h3 className="mb-2 text-sm font-black text-slate-950">Sources</h3>
+              <h3 className="mb-2 text-sm font-black text-slate-950">
+                Sources &amp; further reading
+              </h3>
               <SourcesSection section={state.sections.sources} />
             </div>
           ) : null}
           {state.sections.related_concepts ? (
             <div>
-              <h3 className="mb-2 text-sm font-black text-slate-950">Related concepts</h3>
-              <RelatedConceptsSection items={state.sections.related_concepts.items} />
+              <h3 className="mb-2 text-sm font-black text-slate-950">
+                Related concepts
+              </h3>
+              <RelatedConceptsSection
+                items={state.sections.related_concepts.items}
+              />
             </div>
           ) : null}
         </div>

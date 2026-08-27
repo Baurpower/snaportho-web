@@ -36,9 +36,16 @@ export const BROBOT_CONFIG = {
   FREE_DAILY_CAP: parseInt(process.env.BROBOT_FREE_DAILY_CAP || '3', 10),
 
   /** Personal-statement product boundaries (server-owned, not duplicated in clients). */
-  PS_COMPARISON_PAID_ONLY: process.env.BROBOT_PS_COMPARISON_PAID_ONLY !== 'false',
-  PS_FREE_HISTORY_LIMIT: parseInt(process.env.BROBOT_PS_FREE_HISTORY_LIMIT || '5', 10),
-  PS_PAID_HISTORY_LIMIT: parseInt(process.env.BROBOT_PS_PAID_HISTORY_LIMIT || '50', 10),
+  PS_COMPARISON_PAID_ONLY:
+    process.env.BROBOT_PS_COMPARISON_PAID_ONLY !== 'false',
+  PS_FREE_HISTORY_LIMIT: parseInt(
+    process.env.BROBOT_PS_FREE_HISTORY_LIMIT || '5',
+    10,
+  ),
+  PS_PAID_HISTORY_LIMIT: parseInt(
+    process.env.BROBOT_PS_PAID_HISTORY_LIMIT || '50',
+    10,
+  ),
 
   /** The single feature key used in user_daily_usage for all BroBot AI today.
    *  Future AI surfaces (Anki ortho-context, new tools, etc.) can share this or use their own.
@@ -61,13 +68,14 @@ export const BROBOT_CONFIG = {
    * Stripe Checkout cannot attach Trial Offer objects directly; web Checkout uses
    * a calendar-month trial_end and records this ID in metadata when the trial applies.
    */
-  TRIAL_OFFER_ID: process.env.STRIPE_BROBOT_TRIAL_OFFER_ID || 'to_1Tk6xTArNRAa5suA9q50NzAV',
+  TRIAL_OFFER_ID:
+    process.env.STRIPE_BROBOT_TRIAL_OFFER_ID || 'to_1Tk6xTArNRAa5suA9q50NzAV',
   TRIAL_MONTHS: parseInt(process.env.STRIPE_BROBOT_TRIAL_MONTHS || '1', 10),
 
   /** Human-readable plan codes used in DB and entitlement logic. */
   PAID_PLAN_CODE: 'unlimited_brobot',
 
-  /** Number of days a past_due subscription still grants unlimited access. */
+  /** Repair window during which a past_due Stripe subscription remains manageable in the billing portal. */
   GRACE_PERIOD_DAYS: parseInt(process.env.BROBOT_GRACE_PERIOD_DAYS || '7', 10),
 
   /**
@@ -103,7 +111,7 @@ export function getCasePrepInternalBaseUrl(): string {
   }
 
   throw new Error(
-    'CASEPREP_INTERNAL_BASE_URL is required in production for secure BroBot proxying.'
+    'CASEPREP_INTERNAL_BASE_URL is required in production for secure BroBot proxying.',
   );
 }
 
@@ -115,7 +123,9 @@ export function getBroBotGuestSecret(): string {
   const secret = process.env.BROBOT_GUEST_SECRET;
   if (!secret || secret.length < 32) {
     if (process.env.NODE_ENV === 'production') {
-      throw new Error('BROBOT_GUEST_SECRET must be set to a strong value (≥32 chars) in production');
+      throw new Error(
+        'BROBOT_GUEST_SECRET must be set to a strong value (≥32 chars) in production',
+      );
     }
     // Dev fallback (never use in prod)
     return 'dev-only-insecure-guest-secret-change-me-immediately';

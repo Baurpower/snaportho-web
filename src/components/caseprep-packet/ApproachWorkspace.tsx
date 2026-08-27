@@ -4,17 +4,16 @@ import { useMemo, useState } from "react";
 
 import type { PacketSectionState } from "@/lib/caseprep-v1-1/stream-schema";
 import { ApproachDecisionSection } from "./ApproachDecisionSection";
-import { ApproachPrepSection, ApproachSourcesSection } from "./sections";
+import { ApproachPrepSection } from "./sections";
 import type { ApproachOption } from "./approach-decision";
 
-type ApproachTab = "brief" | "exposure" | "safety" | "strategy" | "sources";
+type ApproachTab = "brief" | "exposure" | "safety" | "strategy";
 
 const TAB_CONFIG: Array<{ id: ApproachTab; label: string; sectionId: string }> = [
   { id: "brief", label: "Setup", sectionId: "approach_quick_brief" },
   { id: "exposure", label: "Exposure", sectionId: "approach_exposure" },
   { id: "safety", label: "Safety", sectionId: "approach_safety" },
   { id: "strategy", label: "Strategy", sectionId: "approach_strategy" },
-  { id: "sources", label: "Sources", sectionId: "approach_sources" },
 ];
 
 export function ApproachWorkspace({
@@ -118,9 +117,7 @@ export function ApproachWorkspace({
               ))}
             </div>
             <div className="mt-4 rounded-xl border border-slate-100 bg-slate-50/50 p-4">
-              {activeConfig?.id === "sources" && activeSection ? (
-                <ApproachSourcesSection section={activeSection} />
-              ) : activeSection ? (
+              {activeSection ? (
                 <ApproachPrepSection items={itemsForApproach(activeSection)} />
               ) : null}
             </div>
@@ -177,11 +174,7 @@ export function ApproachWorkspace({
                     </button>
                     {expanded && section ? (
                       <div id={panelId} className="border-t border-slate-100 bg-slate-50/50 p-3">
-                        {tab.id === "sources" ? (
-                          <ApproachSourcesSection section={section} />
-                        ) : (
-                          <ApproachPrepSection items={itemsForApproach(section)} />
-                        )}
+                        <ApproachPrepSection items={itemsForApproach(section)} />
                       </div>
                     ) : null}
                   </section>

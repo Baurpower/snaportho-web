@@ -158,6 +158,8 @@
     "subscriptions:migrate:stripe-resubscribe": "node --experimental-strip-types scripts/apply-stripe-resubscribe-migration.ts",
     "subscriptions:audit": "node --experimental-strip-types scripts/audit-brobot-entitlement.ts",
     "subscriptions:health": "node --experimental-strip-types scripts/subscriptions-health.ts",
+    "subscriptions:winback": "node --experimental-strip-types scripts/winback-lapsed-subscribers.ts",
+    "subscriptions:winback:dry": "node --experimental-strip-types scripts/winback-lapsed-subscribers.ts --dry-run",
     "subscriptions:test:selection": "node --experimental-strip-types src/lib/brobot/entitlements-selection.test.ts",
     "subscriptions:test:sync": "node --experimental-strip-types src/lib/stripe-subscription-sync.test.ts",
     "subscriptions:test:lifecycle": "node --experimental-strip-types src/lib/brobot/entitlements-lifecycle.test.ts",

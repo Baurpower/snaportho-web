@@ -12,6 +12,7 @@ export const PACKET_SECTION_IDS = [
   "approach_safety",
   "approach_strategy",
   "approach_sources",
+  "essentials",
   "summary",
   "key_takeaways",
   "top_things_to_know",
@@ -147,6 +148,44 @@ export const SectionEventSchema = z
   })
   .passthrough();
 
+const NullableTextSchema = z.string().nullable().optional();
+
+export const EssentialsPayloadSchema = z.object({
+  indications: z.object({
+    summary: z.string(),
+    key_points: z.array(z.string()).default([]),
+    case_specific_note: NullableTextSchema,
+  }),
+  critical_portion: z.object({
+    name: z.string(),
+    summary: z.string(),
+    why_it_matters: z.string(),
+    execution_points: z.array(z.string()).default([]),
+    failure_mode: z.string(),
+  }),
+  postop_protocol: z.object({
+    summary: z.string(),
+    immediate_priorities: z.array(z.string()).default([]),
+    immobilization: NullableTextSchema,
+    weight_bearing: NullableTextSchema,
+    motion: NullableTextSchema,
+    follow_up: NullableTextSchema,
+    red_flags: z.array(z.string()).default([]),
+    variability_note: z.string(),
+  }),
+  citations: z.record(z.string(), z.array(z.string())).optional().default({}),
+  verification: z
+    .object({
+      passed: z.boolean(),
+      errors: z.array(z.string()).default([]),
+      core_claim_coverage: z.number(),
+      cited_evidence_count: z.number(),
+      source_ids: z.array(z.string()).default([]),
+      confidence: z.number(),
+    })
+    .optional(),
+});
+
 export const SectionErrorEventSchema = z.object({
   section_id: z.string(),
   reason: z.string(),
@@ -185,6 +224,7 @@ export type PacketHeader = z.infer<typeof PacketHeaderSchema>;
 export type SectionEvent = z.infer<typeof SectionEventSchema>;
 export type ClarificationEvent = z.infer<typeof ClarificationEventSchema>;
 export type DoneEvent = z.infer<typeof DoneEventSchema>;
+export type EssentialsPayload = z.infer<typeof EssentialsPayloadSchema>;
 
 export type PacketSectionState = {
   status: "complete" | "partial" | "error";

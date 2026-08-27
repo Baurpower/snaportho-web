@@ -46,6 +46,15 @@ import {
 } from "@/lib/education/kg-production";
 import { recordCasePrepPacketTelemetry } from "@/lib/caseprep-v1-2/telemetry";
 import { recordProductEvent } from "@/lib/analytics/product-events-server";
+import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  buildCasePrepReadingTopic,
+  casePrepSourcesPayload,
+  getCasePrepReferences,
+  selectBalancedCasePrepReferences,
+  sourceHintRecommendation,
+  type BroBotReadingRecommendation,
+} from "@/lib/brobot/reading";
 
 export const runtime = "nodejs";
 // Cold-cache packets (enrichment + retrieval) can stream for 10-15s; the
@@ -326,6 +335,52 @@ async function proxyCasePrepStream(
       let canonicalSlug: string | null = null;
       let telemetryPromise: Promise<void> | null = null;
       let firstSectionRecorded = false;
+      let referencesPromise: ReturnType<typeof getCasePrepReferences> | null = null;
+      const sourceHints: Array<{ title?: string; url: string }> = [];
+      let readingTopic: ReturnType<typeof buildCasePrepReadingTopic> | null = null;
+
+      const collectSourceHints = (event: SseEvent) => {
+        if (event.event !== "section") return;
+        const section = event.data as {
+          section_id?: string;
+          payload?: { sources?: Array<{ title?: unknown; url?: unknown }> };
+        };
+        if (section.section_id !== "sources" && section.section_id !== "approach_sources") return;
+        for (const source of section.payload?.sources ?? []) {
+          if (typeof source?.url !== "string" || !source.url.startsWith("https://")) continue;
+          sourceHints.push({
+            title: typeof source.title === "string" ? source.title : undefined,
+            url: source.url,
+          });
+        }
+      };
+
+      const startReferences = (event: SseEvent) => {
+        if (event.event !== "header" || referencesPromise) return;
+        const headerEvent = event.data as {
+          case?: { canonical_slug?: string | null; canonical_name?: string | null; requested_case?: string | null };
+          header?: { display_name?: string; specialty?: string | null; region?: string | null; procedure_type?: string | null };
+        };
+        const slug = headerEvent.case?.canonical_slug;
+        const displayName = headerEvent.header?.display_name ?? headerEvent.case?.canonical_name;
+        if (!slug || !displayName) return;
+        readingTopic = buildCasePrepReadingTopic({
+          canonicalSlug: slug,
+          displayName,
+          requestedCase: headerEvent.case?.requested_case,
+          specialty: headerEvent.header?.specialty,
+          region: headerEvent.header?.region,
+          procedureType: headerEvent.header?.procedure_type,
+          trainingLevel,
+        });
+        // Start alongside packet generation. Failures are converted to an
+        // intentional unavailable Sources state at the terminal boundary.
+        referencesPromise = Promise.resolve().then(() => getCasePrepReferences({
+          supabase: createAdminClient(),
+          topic: readingTopic!,
+          max: 6,
+        }));
+      };
 
       const recordUsageOnce = async () => {
         if (usageRecorded) return;
@@ -345,6 +400,8 @@ async function proxyCasePrepStream(
       };
 
       const handleEvent = (event: SseEvent) => {
+        collectSourceHints(event);
+        startReferences(event);
         if (event.event === "meta") {
           packetId = (event.data as { packet_id?: string })?.packet_id ?? null;
         }
@@ -410,6 +467,38 @@ async function proxyCasePrepStream(
         }
       };
 
+      const flushReferencesSection = async () => {
+        let resources: BroBotReadingRecommendation[] = [];
+        let reason: string | null = null;
+        try {
+          const result = referencesPromise ? await Promise.race([
+            referencesPromise,
+            new Promise<null>((resolve) => setTimeout(() => resolve(null), 10_000)),
+          ]) : null;
+          resources = result?.resources ?? [];
+          if (readingTopic && sourceHints.length) {
+            const hinted = sourceHints
+              .map((hint) => sourceHintRecommendation(hint, readingTopic!))
+              .filter((item): item is BroBotReadingRecommendation => Boolean(item));
+            resources = selectBalancedCasePrepReferences([...hinted, ...resources], 6);
+          }
+        } catch (error) {
+          console.warn("[caseprep] further-reading discovery failed (non-fatal)", error);
+          reason = "No strong case-specific resources were found yet.";
+        }
+        const payload = casePrepSourcesPayload(resources);
+        streamController.enqueue(encoder.encode(encodeSseEvent("section", {
+          section_id: "sources",
+          status: "complete",
+          items: [],
+          payload: reason && payload.sources.length === 0 ? { ...payload, reason } : payload,
+          source: "trusted_recommendations",
+          confidence: null,
+          generated_field_paths: [],
+          duration_ms: 0,
+        })));
+      };
+
       const flushKgSection = async () => {
         if (!kgPromise) return;
         try {
@@ -439,9 +528,9 @@ async function proxyCasePrepStream(
           let forwardText = chunkText;
           for (const event of events) {
             handleEvent(event);
-            if (event.event === "done" && kgPromise) {
-              // Hold the done frame until KG settles (bounded) so the packet's
-              // last data event is still followed by done.
+            if (event.event === "done") {
+              // Hold the terminal frame until optional enrichments settle so
+              // Sources remains the final section and `done` stays terminal.
               const doneIndex = chunkText.lastIndexOf("event: done");
               if (doneIndex >= 0) {
                 forwardText = chunkText.slice(0, doneIndex);
@@ -453,6 +542,7 @@ async function proxyCasePrepStream(
             streamController.enqueue(encoder.encode(forwardText));
           if (pendingDoneFrame) {
             await flushKgSection();
+            if (readingTopic) await flushReferencesSection();
             streamController.enqueue(encoder.encode(pendingDoneFrame));
             pendingDoneFrame = null;
             kgPromise = null;

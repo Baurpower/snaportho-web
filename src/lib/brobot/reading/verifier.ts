@@ -5,18 +5,10 @@ import type { BroBotReadingRecommendation, BroBotReadingResourceRow } from './ty
 
 export const TRUSTED_READING_DOMAINS = [
   'orthobullets.com',
-  'orthoinfo.aaos.org',
-  'aaos.org',
-  'ota.org',
-  'posna.org',
-  'aofas.org',
-  'assh.org',
-  'nass.org',
-  'aana.org',
   'naileditortho.com',
   'surgeryreference.aofoundation.org',
   'aofoundation.org',
-  'ncbi.nlm.nih.gov'
+  'pubmed.ncbi.nlm.nih.gov',
 ];
 
 export function isTrustedReadingUrl(url: string) {

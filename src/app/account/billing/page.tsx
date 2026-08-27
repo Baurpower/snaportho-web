@@ -30,9 +30,14 @@ function BillingContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [billingView, setBillingView] = useState<BillingEntitlementView | null>(null);
+  const [billingView, setBillingView] = useState<BillingEntitlementView | null>(
+    null,
+  );
   const [loading, setLoading] = useState(true);
   const [pollTimedOut, setPollTimedOut] = useState(false);
+  const [billingActionError, setBillingActionError] = useState<string | null>(
+    null,
+  );
 
   const success = searchParams?.get('success') === 'true';
   const canceled = searchParams?.get('canceled') === 'true';
@@ -47,40 +52,47 @@ function BillingContent() {
       const currentFullPath = window.location.pathname + window.location.search;
 
       if (process.env.NODE_ENV !== 'production') {
-        console.log('[billing] No user detected on mount, redirecting to sign-in with full path:', currentFullPath);
+        console.log(
+          '[billing] No user detected on mount, redirecting to sign-in with full path:',
+          currentFullPath,
+        );
       }
 
-      router.push(`/auth/sign-in?redirectTo=${encodeURIComponent(currentFullPath)}`);
+      router.push(
+        `/auth/sign-in?redirectTo=${encodeURIComponent(currentFullPath)}`,
+      );
       return;
     }
 
     let isMounted = true;
     let pollInterval: NodeJS.Timeout | null = null;
 
-    const fetchEntitlement = async (): Promise<BillingEntitlementView | null> => {
-      try {
-        const res = await fetch('/api/me/entitlements?source=billing', {
-          cache: 'no-store',
-          credentials: 'include',
-        });
-        const payload = (await res.json()) as MeEntitlementsPayload;
-        const view = parseMeEntitlementsPayload(payload);
+    const fetchEntitlement =
+      async (): Promise<BillingEntitlementView | null> => {
+        try {
+          const res = await fetch('/api/me/entitlements?source=billing', {
+            cache: 'no-store',
+            credentials: 'include',
+          });
+          const payload = (await res.json()) as MeEntitlementsPayload;
+          const view = parseMeEntitlementsPayload(payload);
 
-        console.info('[billing] entitlement_poll_result', {
-          access: view.access,
-          isPaid: view.isPaid,
-          isUnlimited: view.isUnlimited,
-          status: view.status,
-          provider: view.entitlement?.provider ?? null,
-          selectedSubscriptionId: view.entitlement?.stripeSubscriptionId?.slice(0, 12) ?? null,
-        });
+          console.info('[billing] entitlement_poll_result', {
+            access: view.access,
+            isPaid: view.isPaid,
+            isUnlimited: view.isUnlimited,
+            status: view.status,
+            provider: view.entitlement?.provider ?? null,
+            selectedSubscriptionId:
+              view.entitlement?.stripeSubscriptionId?.slice(0, 12) ?? null,
+          });
 
-        return view;
-      } catch (e) {
-        console.error('[billing] entitlement_poll_failed', e);
-        return null;
-      }
-    };
+          return view;
+        } catch (e) {
+          console.error('[billing] entitlement_poll_failed', e);
+          return null;
+        }
+      };
 
     const applyEntitlementView = (view: BillingEntitlementView | null) => {
       if (!view) return;
@@ -129,10 +141,13 @@ function BillingContent() {
               if (isMounted && afterSync) {
                 applyEntitlementView(afterSync);
                 if (!afterSync.isPaid) {
-                  console.warn('[billing] activation_sync_fallback_incomplete', {
-                    access: afterSync.access,
-                    status: afterSync.status,
-                  });
+                  console.warn(
+                    '[billing] activation_sync_fallback_incomplete',
+                    {
+                      access: afterSync.access,
+                      status: afterSync.status,
+                    },
+                  );
                 }
               }
             } catch (e) {
@@ -153,7 +168,11 @@ function BillingContent() {
 
   useEffect(() => {
     const stripeSubscriptionId = billingView?.entitlement?.stripeSubscriptionId;
-    if (!awaitingCheckoutConfirmation || !billingView?.isPaid || !stripeSubscriptionId) {
+    if (
+      !awaitingCheckoutConfirmation ||
+      !billingView?.isPaid ||
+      !stripeSubscriptionId
+    ) {
       return;
     }
 
@@ -178,7 +197,9 @@ function BillingContent() {
         cache: 'no-store',
         credentials: 'include',
       });
-      const view = parseMeEntitlementsPayload((await res.json()) as MeEntitlementsPayload);
+      const view = parseMeEntitlementsPayload(
+        (await res.json()) as MeEntitlementsPayload,
+      );
       setBillingView(view);
       if (!view.isPaid) {
         setPollTimedOut(true);
@@ -193,6 +214,7 @@ function BillingContent() {
 
   const handleUpgrade = async (interval: 'month' | 'year') => {
     try {
+      setBillingActionError(null);
       trackCheckoutStartedConversion({
         value:
           interval === 'year'
@@ -210,21 +232,27 @@ function BillingContent() {
       const redirectUrl = url ?? portalUrl;
       if (redirectUrl) window.location.href = redirectUrl;
     } catch {
-      alert('Failed to start checkout');
+      setBillingActionError('We couldn’t open checkout. Please try again.');
     }
   };
 
   const handleManageBilling = async () => {
     try {
+      setBillingActionError(null);
       const res = await fetch('/api/billing/portal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ returnTo: returnTo || undefined }),
       });
-      const { url } = await res.json();
-      if (url) window.location.href = url;
+      const payload = await res.json();
+      if (!res.ok || !payload?.url) {
+        throw new Error(payload?.error || 'Billing portal unavailable');
+      }
+      window.location.href = payload.url;
     } catch {
-      alert('Failed to open billing portal');
+      setBillingActionError(
+        'We couldn’t open the payment portal. Please try again or contact support.',
+      );
     }
   };
 
@@ -238,20 +266,28 @@ function BillingContent() {
 
   const isUnlimited = billingView?.isUnlimited === true;
   const isPaid = billingView?.isPaid === true;
+  const isPaymentPastDue =
+    billingView?.status === 'past_due' || billingView?.status === 'unpaid';
   const activationPhase: BillingActivationPhase = deriveBillingActivationPhase({
     awaitingCheckoutConfirmation,
     isPaid,
     pollTimedOut,
   });
-  const planLabel = getBillingPlanLabel({ isUnlimited, activationPhase });
+  const planLabel = isPaymentPastDue
+    ? 'BroBot Unlimited'
+    : getBillingPlanLabel({ isUnlimited, activationPhase });
   const statusBadge = getBillingStatusBadge({
     isUnlimited,
     activationPhase,
     status: billingView?.status ?? null,
     cancelAtPeriodEnd: billingView?.cancelAtPeriodEnd === true,
   });
-  const showFreeQuota = shouldShowFreeQuotaUsage({ isUnlimited, activationPhase });
-  const showUpgradePrompt = !isUnlimited && activationPhase === 'idle';
+  const showFreeQuota = shouldShowFreeQuotaUsage({
+    isUnlimited,
+    activationPhase,
+  });
+  const showUpgradePrompt =
+    !isUnlimited && activationPhase === 'idle' && !isPaymentPastDue;
   const showTrialPromo = showUpgradePrompt;
   const expiresAt = billingView?.expiresAt;
   const remaining = billingView?.remainingToday ?? 0;
@@ -272,7 +308,9 @@ function BillingContent() {
         </div>
 
         <h1 className="mt-6 text-6xl md:text-7xl font-semibold tracking-[-2.5px] leading-[0.95]">
-          Unlimited BroBot.<br />Across every SnapOrtho product.
+          Unlimited BroBot.
+          <br />
+          Across every SnapOrtho product.
         </h1>
 
         <div className="mt-6 flex items-center justify-center gap-3 text-sm">
@@ -284,34 +322,58 @@ function BillingContent() {
           </div>
         </div>
 
-        {(awaitingCheckoutConfirmation || canceled) && (
+        {(awaitingCheckoutConfirmation || canceled || isPaymentPastDue) && (
           <div className="mt-8 max-w-2xl mx-auto">
-            {awaitingCheckoutConfirmation && activationPhase === 'activating' && (
-              <div className="rounded-2xl border border-amber-200 bg-amber-50 px-6 py-4 text-amber-900">
-                <div className="font-semibold">Payment received. Confirming BroBot Unlimited...</div>
-                <div className="text-sm mt-0.5">
-                  We are syncing your subscription now. This usually takes a few seconds.
+            {awaitingCheckoutConfirmation &&
+              activationPhase === 'activating' && (
+                <div className="rounded-2xl border border-amber-200 bg-amber-50 px-6 py-4 text-amber-900">
+                  <div className="font-semibold">
+                    Payment received. Confirming BroBot Unlimited...
+                  </div>
+                  <div className="text-sm mt-0.5">
+                    We are syncing your subscription now. This usually takes a
+                    few seconds.
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
             {awaitingCheckoutConfirmation && activationPhase === 'active' && (
               <div className="rounded-2xl border border-teal-200 bg-teal-50 px-6 py-4 text-teal-800">
-                <div className="font-semibold">Subscription activated successfully.</div>
-                <div className="text-sm mt-0.5">You now have unlimited BroBot access across SnapOrtho.</div>
+                <div className="font-semibold">
+                  Subscription activated successfully.
+                </div>
+                <div className="text-sm mt-0.5">
+                  You now have unlimited BroBot access across SnapOrtho.
+                </div>
               </div>
             )}
             {awaitingCheckoutConfirmation && activationPhase === 'delayed' && (
               <div className="rounded-2xl border border-amber-200 bg-amber-50 px-6 py-4 text-amber-900">
-                <div className="font-semibold">Payment received. Activation is taking longer than expected.</div>
+                <div className="font-semibold">
+                  Payment received. Activation is taking longer than expected.
+                </div>
                 <div className="text-sm mt-0.5">
-                  Use Restore Subscription below or contact support if access does not appear soon.
+                  Use Restore Subscription below or contact support if access
+                  does not appear soon.
                 </div>
               </div>
             )}
             {canceled && (
               <div className="rounded-2xl border border-amber-200 bg-amber-50 px-6 py-4 text-amber-800">
                 <div className="font-semibold">Checkout was canceled.</div>
-                <div className="text-sm mt-0.5">No changes were made to your plan.</div>
+                <div className="text-sm mt-0.5">
+                  No changes were made to your plan.
+                </div>
+              </div>
+            )}
+            {isPaymentPastDue && (
+              <div className="rounded-2xl border border-red-200 bg-red-50 px-6 py-4 text-red-900">
+                <div className="font-semibold">
+                  We couldn’t renew your subscription.
+                </div>
+                <div className="text-sm mt-0.5">
+                  Update your payment method to restore BroBot Unlimited. Your
+                  bank may also be able to explain the decline.
+                </div>
               </div>
             )}
           </div>
@@ -322,9 +384,13 @@ function BillingContent() {
       <div className="max-w-5xl mx-auto px-6 mb-10">
         <div className="rounded-3xl bg-white border shadow-sm p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
-            <div className="uppercase text-xs tracking-[1.5px] text-gray-500 font-medium">Your current plan</div>
+            <div className="uppercase text-xs tracking-[1.5px] text-gray-500 font-medium">
+              Your current plan
+            </div>
             <div className="mt-1 flex items-baseline gap-3">
-              <span className="text-4xl font-semibold tracking-tight">{planLabel}</span>
+              <span className="text-4xl font-semibold tracking-tight">
+                {planLabel}
+              </span>
 
               {statusBadge === 'processing' && (
                 <span className="inline-block rounded-full bg-amber-100 text-amber-700 text-xs font-semibold px-3 py-1 animate-pulse">
@@ -355,19 +421,35 @@ function BillingContent() {
                   CANCELING
                 </span>
               )}
+
+              {statusBadge === 'payment_failed' && (
+                <span className="inline-block rounded-full bg-red-100 text-red-800 text-xs font-semibold px-3 py-1">
+                  PAYMENT FAILED
+                </span>
+              )}
             </div>
 
             {/* Renewal / End date line */}
-            {isPaid && expiresAt && (
+            {isPaid && !isPaymentPastDue && expiresAt && (
               <div className="mt-1.5 text-sm text-gray-500">
                 {isCanceledAtPeriodEnd ? (
-                  <>Your unlimited access ends {new Date(expiresAt).toLocaleDateString('en-US', { 
-                    month: 'long', day: 'numeric', year: 'numeric' 
-                  })}</>
+                  <>
+                    Your unlimited access ends{' '}
+                    {new Date(expiresAt).toLocaleDateString('en-US', {
+                      month: 'long',
+                      day: 'numeric',
+                      year: 'numeric',
+                    })}
+                  </>
                 ) : (
-                  <>Renews {new Date(expiresAt).toLocaleDateString('en-US', { 
-                    month: 'long', day: 'numeric', year: 'numeric' 
-                  })}</>
+                  <>
+                    Renews{' '}
+                    {new Date(expiresAt).toLocaleDateString('en-US', {
+                      month: 'long',
+                      day: 'numeric',
+                      year: 'numeric',
+                    })}
+                  </>
                 )}
               </div>
             )}
@@ -383,13 +465,21 @@ function BillingContent() {
 
             {activationPhase === 'delayed' && (
               <div className="mt-2 text-sm text-amber-800">
-                Your Stripe payment succeeded. We are still syncing your unlimited access.
+                Your Stripe payment succeeded. We are still syncing your
+                unlimited access.
               </div>
             )}
           </div>
 
           <div>
-            {isUnlimited ? (
+            {isPaymentPastDue ? (
+              <button
+                onClick={handleManageBilling}
+                className="rounded-2xl bg-red-700 px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-800"
+              >
+                Update Payment Method
+              </button>
+            ) : isUnlimited ? (
               <button
                 onClick={handleManageBilling}
                 className={`rounded-2xl px-8 py-3 text-sm font-semibold transition-colors ${
@@ -398,7 +488,9 @@ function BillingContent() {
                     : 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 active:bg-gray-100'
                 }`}
               >
-                {isCanceledAtPeriodEnd ? 'Manage or Reactivate Subscription' : 'Manage Billing & Subscription'}
+                {isCanceledAtPeriodEnd
+                  ? 'Manage or Reactivate Subscription'
+                  : 'Manage Billing & Subscription'}
               </button>
             ) : activationPhase === 'delayed' ? (
               <button
@@ -409,9 +501,15 @@ function BillingContent() {
               </button>
             ) : showUpgradePrompt ? (
               <div className="text-sm text-gray-500 max-w-[260px]">
-                Upgrade to remove daily limits and unlock BroBot across the entire SnapOrtho platform.
+                Upgrade to remove daily limits and unlock BroBot across the
+                entire SnapOrtho platform.
               </div>
             ) : null}
+            {billingActionError && (
+              <div className="mt-3 max-w-sm text-sm text-red-700" role="alert">
+                {billingActionError}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -419,28 +517,34 @@ function BillingContent() {
       {/* VALUE PROPOSITION */}
       <div className="max-w-5xl mx-auto px-6 pb-12">
         <div className="text-center mb-8">
-          <div className="text-sm font-semibold tracking-widest text-teal-600">WHY ORTHOPAEDIC LEARNERS UPGRADE</div>
-          <h2 className="mt-3 text-4xl font-semibold tracking-tight">One plan. Every AI tool.</h2>
+          <div className="text-sm font-semibold tracking-widest text-teal-600">
+            WHY ORTHOPAEDIC LEARNERS UPGRADE
+          </div>
+          <h2 className="mt-3 text-4xl font-semibold tracking-tight">
+            One plan. Every AI tool.
+          </h2>
         </div>
 
         <div className="grid md:grid-cols-3 gap-4">
           {[
             {
-              title: "Unlimited BroBot Case Prep",
-              desc: "No daily caps. Prepare for any case, any time — web or mobile."
+              title: 'Unlimited BroBot Case Prep',
+              desc: 'No daily caps. Prepare for any case, any time — web or mobile.',
             },
             {
-              title: "Works Across SnapOrtho",
-              desc: "Web, MyCases mobile app, and every future AI feature included."
+              title: 'Works Across SnapOrtho',
+              desc: 'Web, MyCases mobile app, and every future AI feature included.',
             },
             {
-              title: "Always Getting Better",
-              desc: "Priority access to new orthopaedic AI tools as we release them."
-            }
+              title: 'Always Getting Better',
+              desc: 'Priority access to new orthopaedic AI tools as we release them.',
+            },
           ].map((item, i) => (
             <div key={i} className="rounded-3xl border bg-white p-6">
               <div className="text-lg font-semibold mb-2">{item.title}</div>
-              <p className="text-gray-600 text-[15px] leading-relaxed">{item.desc}</p>
+              <p className="text-gray-600 text-[15px] leading-relaxed">
+                {item.desc}
+              </p>
             </div>
           ))}
         </div>
@@ -450,7 +554,9 @@ function BillingContent() {
       <div className="max-w-5xl mx-auto px-6 pb-16">
         <div className="text-center mb-8">
           <h2 className="text-4xl font-semibold tracking-tight">
-            {isUnlimited ? 'Your BroBot Unlimited Plan' : 'Start Your 1-month Free Trial'}
+            {isUnlimited
+              ? 'Your BroBot Unlimited Plan'
+              : 'Start Your 1-month Free Trial'}
           </h2>
           <p className="mt-2 text-gray-600">
             {isUnlimited
@@ -471,7 +577,8 @@ function BillingContent() {
                 </p>
               </div>
               <p className="max-w-md text-sm leading-6 text-gray-600">
-                Cancel anytime during the trial. Your paid plan starts only after the trial ends.
+                Cancel anytime during the trial. Your paid plan starts only
+                after the trial ends.
               </p>
             </div>
           </div>
@@ -481,14 +588,18 @@ function BillingContent() {
           {/* MONTHLY */}
           <div className="rounded-3xl border bg-white p-8 flex flex-col">
             <div>
-              <div className="text-sm font-semibold tracking-widest text-gray-500">MONTHLY</div>
+              <div className="text-sm font-semibold tracking-widest text-gray-500">
+                MONTHLY
+              </div>
               <div className="mt-4 text-4xl font-semibold tracking-tight">
                 {isUnlimited
                   ? BROBOT_PRICING.unlimited.monthlyPriceLabel
                   : BROBOT_PRICING.unlimited.trialLabel}
               </div>
               <p className="mt-2 text-lg font-medium text-gray-600">
-                {isUnlimited ? 'Monthly billing option' : BROBOT_PRICING.unlimited.monthlyAfterTrialLabel}
+                {isUnlimited
+                  ? 'Monthly billing option'
+                  : BROBOT_PRICING.unlimited.monthlyAfterTrialLabel}
               </p>
               <ul className="mt-6 space-y-3 text-sm text-gray-600">
                 {(isUnlimited
@@ -503,7 +614,8 @@ function BillingContent() {
                       'Unlimited AI questions',
                       'No daily caps',
                       'Cancel anytime during trial',
-                    ]).map((feature) => (
+                    ]
+                ).map((feature) => (
                   <li key={feature} className="flex gap-3">
                     <span className="mt-0.5 text-teal-600">✓</span>
                     <span>{feature}</span>
@@ -521,7 +633,9 @@ function BillingContent() {
                 {isUnlimited ? 'Current Plan' : 'Start 1-month free trial'}
               </button>
               <p className="text-center text-xs text-gray-400 mt-3">
-                {isUnlimited ? 'Billed monthly · Cancel anytime' : 'Then billed monthly · Cancel anytime'}
+                {isUnlimited
+                  ? 'Billed monthly · Cancel anytime'
+                  : 'Then billed monthly · Cancel anytime'}
               </p>
             </div>
           </div>
@@ -535,14 +649,18 @@ function BillingContent() {
             </div>
 
             <div>
-              <div className="text-sm font-semibold tracking-widest text-teal-600">YEARLY</div>
+              <div className="text-sm font-semibold tracking-widest text-teal-600">
+                YEARLY
+              </div>
               <div className="mt-4 text-4xl font-semibold tracking-tight">
                 {isUnlimited
                   ? BROBOT_PRICING.unlimited.yearlyPriceLabel
                   : BROBOT_PRICING.unlimited.trialLabel}
               </div>
               <p className="mt-2 text-lg font-medium text-gray-600">
-                {isUnlimited ? 'Annual billing option' : BROBOT_PRICING.unlimited.yearlyAfterTrialLabel}
+                {isUnlimited
+                  ? 'Annual billing option'
+                  : BROBOT_PRICING.unlimited.yearlyAfterTrialLabel}
               </p>
               <div className="mt-1 text-sm">
                 <span className="line-through text-gray-400">$35.88</span>
@@ -563,7 +681,8 @@ function BillingContent() {
                       'Best long-term value',
                       'Priority access to new AI tools',
                       'Cancel anytime during trial',
-                    ]).map((feature) => (
+                    ]
+                ).map((feature) => (
                   <li key={feature} className="flex gap-3">
                     <span className="mt-0.5 text-teal-600">✓</span>
                     <span>{feature}</span>
@@ -578,10 +697,14 @@ function BillingContent() {
                 disabled={isUnlimited}
                 className="w-full rounded-2xl bg-[#0f766e] hover:bg-[#115e59] py-3.5 text-base font-semibold text-white shadow-sm transition-all active:scale-[0.985] disabled:opacity-70"
               >
-                {isUnlimited ? 'Current Plan' : 'Start 1-month free trial — Yearly'}
+                {isUnlimited
+                  ? 'Current Plan'
+                  : 'Start 1-month free trial — Yearly'}
               </button>
               <p className="text-center text-xs text-gray-400 mt-3">
-                {isUnlimited ? 'Billed annually · Best price' : 'Then billed annually · Best price'}
+                {isUnlimited
+                  ? 'Billed annually · Best price'
+                  : 'Then billed annually · Best price'}
               </p>
             </div>
           </div>
@@ -598,7 +721,13 @@ function BillingContent() {
             <div>Private &amp; secure</div>
           </div>
           <div className="mt-4 text-xs text-gray-400">
-            Questions? <a href="mailto:support@snap-ortho.com" className="underline hover:text-gray-600">support@snap-ortho.com</a>
+            Questions?{' '}
+            <a
+              href="mailto:support@snap-ortho.com"
+              className="underline hover:text-gray-600"
+            >
+              support@snap-ortho.com
+            </a>
           </div>
         </div>
       </div>

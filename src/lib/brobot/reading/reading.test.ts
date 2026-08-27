@@ -12,7 +12,7 @@ import { getHybridReadingRecommendations, classifyArticle } from './retrieval-en
 import { extractReadingTopicContext } from './topic-context';
 import { isTrustedReadingUrl, verifyPubMedArticle, verifyPubMedResultForTopic } from './verifier';
 import { buildCasePrepReadingTopic } from './caseprep-context';
-import { selectBalancedCasePrepReferences } from './caseprep-references';
+import { casePrepSourcesPayload, selectBalancedCasePrepReferences } from './caseprep-references';
 import { parseNailedItSearch, parseOrthobulletsQuickSearch, parseSitemapLocations } from './trusted-web-client';
 import type { BroBotReadingRecommendation } from './types';
 
@@ -263,7 +263,7 @@ assert.match(buildPubMedQuery(femoralNeckTopic), /guideline\[Publication Type\]/
 assert.match(buildPubMedQuery(femoralNeckTopic), /NOT \(case reports\[Publication Type\]/);
 assert.match(buildPubMedQuery(femoralNeckTopic, 'All Fields'), /"femoral neck fracture"\[All Fields\]/);
 
-assert.equal(isTrustedReadingUrl('https://orthoinfo.aaos.org/en/diseases--conditions/foo'), true);
+assert.equal(isTrustedReadingUrl('https://orthoinfo.aaos.org/en/diseases--conditions/foo'), false);
 assert.equal(isTrustedReadingUrl('https://naileditortho.com/femoralneck/'), true);
 assert.equal(isTrustedReadingUrl('https://example.com/fake-orthopedics'), false);
 
@@ -883,7 +883,7 @@ async function runAsyncAssertions() {
   assert.equal(pmids.includes('666'), false);
   assert.ok(pmids.indexOf('333') < pmids.indexOf('444'));
   assert.ok(pmids.indexOf('555') < pmids.indexOf('111'));
-  assert.ok(qualityResults.resources[0]?.badges?.includes('High-impact journal'));
+  assert.ok(qualityResults.resources[0]?.badges?.includes('Premier orthopaedic journal'));
   assert.ok(qualityResults.resources.some((resource) => resource.badges?.includes('Highly cited')));
   assert.equal(classifyArticle({
     title: 'Femoral neck fracture case report',
@@ -1048,6 +1048,22 @@ assert.deepEqual(
   balancedWithPodcast.map((resource) => resource.id),
   ['orthobullets', 'ao', 'nailed-it', 'systematic', 'review', 'landmark']
 );
+const sourcesPayload = casePrepSourcesPayload(balancedWithPodcast.map((resource, index) => ({
+  ...resource,
+  url: index === 2
+    ? 'https://naileditortho.com/olecranon-fracture/'
+    : index < 2
+      ? `https://www.orthobullets.com/trauma/${1000 + index}/olecranon-fractures`
+      : `https://pubmed.ncbi.nlm.nih.gov/${100000 + index}/`,
+})));
+assert.equal(sourcesPayload.status, 'complete');
+assert.equal(sourcesPayload.sources[2]?.resource_type, 'podcast');
+assert.equal(sourcesPayload.sources.every((source) => source.url.startsWith('https://')), true);
+assert.deepEqual(casePrepSourcesPayload([]), {
+  status: 'unavailable',
+  reason: 'No strong case-specific resources were found yet.',
+  sources: [],
+});
 
 runAsyncAssertions()
   .then(() => {

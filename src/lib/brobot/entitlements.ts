@@ -20,8 +20,7 @@ import {
 } from '@/lib/subscriptions/ledger';
 
 export type Subject =
-  | { type: 'user'; id: string }
-  | { type: 'guest'; id: string };
+  { type: 'user'; id: string } | { type: 'guest'; id: string };
 
 export interface BroBotEntitlement {
   aiAccess: {
@@ -33,7 +32,8 @@ export interface BroBotEntitlement {
     remainingToday: number | null;
   };
   /** Where the current entitlement decision came from (for UI + debugging) */
-  source: 'override' | 'subscription' | 'free_quota' | 'guest_quota' | 'disabled';
+  source:
+    'override' | 'subscription' | 'free_quota' | 'guest_quota' | 'disabled';
   planCode?: string;
   expiresAt?: string | null;
   /** Subscription status from DB (active, past_due, etc.) */
@@ -127,18 +127,20 @@ export interface NormalizedBroBotEntitlement {
 
 export function pickBestEntitlingSubscriptionRow(
   rows: SubscriptionEntitlementRow[],
-  now = new Date()
+  now = new Date(),
 ) {
   return pickBestSubscriptionForEntitlement(
     rows.map((row) => ({
       ...row,
       provider: row.provider ?? 'stripe',
     })) as CanonicalSubscriptionRow[],
-    now
+    now,
   ) as SubscriptionEntitlementRow | null;
 }
 
-function normalizeEntitlementProvider(provider: string | null | undefined): EntitlementProvider {
+function normalizeEntitlementProvider(
+  provider: string | null | undefined,
+): EntitlementProvider {
   if (provider === 'apple') return 'apple';
   if (provider === 'stripe' || provider == null) return 'stripe';
   return 'none';
@@ -148,7 +150,7 @@ function getSubscriptionCandidateReason(
   row: SubscriptionEntitlementRow,
   now: Date,
   grantsAccess: boolean,
-  selected: boolean
+  selected: boolean,
 ) {
   if (selected) {
     return `selected_${row.status}_with_latest_valid_current_period_end`;
@@ -158,10 +160,18 @@ function getSubscriptionCandidateReason(
     return 'valid_but_lower_priority_than_selected_subscription';
   }
 
-  const periodEndTs = row.current_period_end ? new Date(row.current_period_end).getTime() : null;
-  const periodEndIsFuture = periodEndTs != null && Number.isFinite(periodEndTs) && periodEndTs > now.getTime();
+  const periodEndTs = row.current_period_end
+    ? new Date(row.current_period_end).getTime()
+    : null;
+  const periodEndIsFuture =
+    periodEndTs != null &&
+    Number.isFinite(periodEndTs) &&
+    periodEndTs > now.getTime();
 
-  if ((row.status === 'active' || row.status === 'trialing') && !periodEndIsFuture) {
+  if (
+    (row.status === 'active' || row.status === 'trialing') &&
+    !periodEndIsFuture
+  ) {
     return 'active_like_status_missing_or_past_current_period_end';
   }
 
@@ -192,7 +202,7 @@ function getSubscriptionCandidateReason(
 
 export function evaluateSubscriptionCandidates(
   rows: SubscriptionEntitlementRow[],
-  now = new Date()
+  now = new Date(),
 ) {
   const selected = pickBestEntitlingSubscriptionRow(rows, now);
   const selectedRowId = selected?.id ?? null;
@@ -210,7 +220,7 @@ export function evaluateSubscriptionCandidates(
         provider: row.provider ?? 'stripe',
         current_period_end: row.current_period_end,
       },
-      now
+      now,
     );
     const rowIdentity =
       row.id ??
@@ -218,14 +228,18 @@ export function evaluateSubscriptionCandidates(
       row.stripe_subscription_id ??
       row.provider_transaction_id ??
       null;
-    const isSelected = Boolean(selectedIdentity && rowIdentity === selectedIdentity);
+    const isSelected = Boolean(
+      selectedIdentity && rowIdentity === selectedIdentity,
+    );
 
     return {
       id: row.id ?? null,
       provider: row.provider ?? 'stripe',
-      providerSubscriptionId: row.provider_subscription_id ?? row.stripe_subscription_id ?? null,
+      providerSubscriptionId:
+        row.provider_subscription_id ?? row.stripe_subscription_id ?? null,
       providerTransactionId: row.provider_transaction_id ?? null,
-      appleOriginalTransactionId: row.provider === 'apple' ? row.provider_subscription_id : null,
+      appleOriginalTransactionId:
+        row.provider === 'apple' ? row.provider_subscription_id : null,
       stripeSubscriptionId: row.stripe_subscription_id ?? null,
       status: row.status,
       planCode: row.plan_code,
@@ -234,7 +248,12 @@ export function evaluateSubscriptionCandidates(
       environment: row.environment ?? null,
       grantsAccess,
       selected: isSelected,
-      reason: getSubscriptionCandidateReason(row, now, grantsAccess, isSelected),
+      reason: getSubscriptionCandidateReason(
+        row,
+        now,
+        grantsAccess,
+        isSelected,
+      ),
     } satisfies EntitlementCandidateDiagnostic;
   });
 
@@ -256,10 +275,15 @@ function getResolutionSource(params: {
   if (params.entitlement.source === 'disabled') return 'disabled';
   if (params.entitlement.source !== 'subscription') return 'free_quota';
 
-  const provider = params.entitlement.provider ?? params.selected?.provider ?? 'stripe';
-  const environment = params.entitlement.environment ?? params.selected?.environment ?? null;
+  const provider =
+    params.entitlement.provider ?? params.selected?.provider ?? 'stripe';
+  const environment =
+    params.entitlement.environment ?? params.selected?.environment ?? null;
   if (provider === 'apple') {
-    if (params.selected?.status === 'grace' || params.selected?.status === 'billing_retry') {
+    if (
+      params.selected?.status === 'grace' ||
+      params.selected?.status === 'billing_retry'
+    ) {
       return 'apple_cached';
     }
     return environment === 'sandbox' ? 'apple_sandbox' : 'apple_live';
@@ -311,9 +335,13 @@ function getResolutionReason(params: {
  * Returns the entitlement for a subject (user or guest).
  * This is the SINGLE source of truth for BroBot access decisions.
  */
-export async function getUserEntitlement(subject: Subject): Promise<BroBotEntitlement> {
+export async function getUserEntitlement(
+  subject: Subject,
+): Promise<BroBotEntitlement> {
   if (process.env.NODE_ENV !== 'production' && subject.type === 'user') {
-    console.log('[entitlements] getUserEntitlement called for user', { userId: subject.id });
+    console.log('[entitlements] getUserEntitlement called for user', {
+      userId: subject.id,
+    });
   }
 
   if (!BROBOT_CONFIG.ENABLED) {
@@ -333,7 +361,11 @@ export async function getUserEntitlement(subject: Subject): Promise<BroBotEntitl
         expiresAt: override.expires_at,
       };
     }
-    if (override && (override.type === 'unlimited_permanent' || override.type === 'unlimited_until')) {
+    if (
+      override &&
+      (override.type === 'unlimited_permanent' ||
+        override.type === 'unlimited_until')
+    ) {
       return {
         aiAccess: { unlimited: true, dailyCap: null, remainingToday: null },
         source: 'override',
@@ -385,15 +417,19 @@ async function getActiveOverride(userId: string) {
 }
 
 /** Checks for an active paid BroBot subscription with proper grace period logic */
-async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEntitlement | null> {
+async function getPaidSubscriptionEntitlement(
+  userId: string,
+): Promise<BroBotEntitlement | null> {
   const supabase = createAdminClient();
   const { data: rows } = await supabase
     .from('subscriptions')
-    .select(`
+    .select(
+      `
       id, user_id, status, plan_code, current_period_start, current_period_end, cancel_at_period_end, canceled_at,
       stripe_customer_id, stripe_subscription_id, stripe_price_id,
       provider, provider_subscription_id, provider_transaction_id, environment, last_verified_at, updated_at, created_at
-    `)
+    `,
+    )
     .eq('user_id', userId)
     .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
     .order('current_period_end', { ascending: false, nullsFirst: false })
@@ -405,7 +441,7 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
     console.log('[BROBOT-ENTITLEMENT-SELECT]', {
       userId: userId.slice(0, 8),
       rowsFound: rows?.length ?? 0,
-      rows: (rows || []).map(r => ({
+      rows: (rows || []).map((r) => ({
         provider: r.provider,
         plan_code: r.plan_code,
         status: r.status,
@@ -424,8 +460,10 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
     user_id: userId,
     selected_subscription_row_id: evaluation.selectedRowId,
     provider: sub?.provider ?? null,
-    provider_subscription_id: sub?.provider_subscription_id ?? sub?.stripe_subscription_id ?? null,
-    original_transaction_id: sub?.provider === 'apple' ? sub.provider_subscription_id : null,
+    provider_subscription_id:
+      sub?.provider_subscription_id ?? sub?.stripe_subscription_id ?? null,
+    original_transaction_id:
+      sub?.provider === 'apple' ? sub.provider_subscription_id : null,
     status: sub?.status ?? null,
     current_period_end: sub?.current_period_end ?? null,
     reason_selected: evaluation.selectionReason,
@@ -452,19 +490,31 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
         provider: sub.provider ?? 'stripe',
         current_period_end: sub.current_period_end,
       },
-      now
+      now,
     );
 
     let reasonIfInactive = null;
     if (!isActiveDecision) {
-      const periodEndTs = sub.current_period_end ? new Date(sub.current_period_end).getTime() : null;
-      if ((sub.status === 'active' || sub.status === 'trialing') && (periodEndTs == null || periodEndTs <= now.getTime())) {
+      const periodEndTs = sub.current_period_end
+        ? new Date(sub.current_period_end).getTime()
+        : null;
+      if (
+        (sub.status === 'active' || sub.status === 'trialing') &&
+        (periodEndTs == null || periodEndTs <= now.getTime())
+      ) {
         reasonIfInactive = 'active_like_but_missing_or_ended_period';
-      } else if (sub.status === 'expired' && periodEndTs && periodEndTs <= now.getTime()) {
+      } else if (
+        sub.status === 'expired' &&
+        periodEndTs &&
+        periodEndTs <= now.getTime()
+      ) {
         reasonIfInactive = 'expired_and_period_ended';
       } else if (sub.status === 'canceled') {
         reasonIfInactive = 'canceled_not_entitling';
-      } else if (!['active','trialing','past_due'].includes(sub.status) && !sub.cancel_at_period_end) {
+      } else if (
+        !['active', 'trialing', 'past_due'].includes(sub.status) &&
+        !sub.cancel_at_period_end
+      ) {
         reasonIfInactive = `status_${sub.status}_not_in_active_set_and_not_cancel_at_period_end`;
       } else {
         reasonIfInactive = 'fell_through_isActive_conditions';
@@ -502,15 +552,16 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
       provider: sub.provider ?? 'stripe',
       current_period_end: sub.current_period_end,
     },
-    now
+    now,
   );
 
   // Compute grace separately so mobile (and future) can show "in grace" messaging
-  const isInGracePeriod =
-    Boolean(
-      (sub.status === 'grace' && sub.provider === 'apple' && sub.current_period_end &&
-        new Date(sub.current_period_end).getTime() > now.getTime())
-    );
+  const isInGracePeriod = Boolean(
+    sub.status === 'grace' &&
+    sub.provider === 'apple' &&
+    sub.current_period_end &&
+    new Date(sub.current_period_end).getTime() > now.getTime(),
+  );
 
   if (isActive) {
     // Also attach today's usage count for the mobile contract (even for unlimited users)
@@ -541,9 +592,11 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
       providerSubscriptionId: sub.provider_subscription_id ?? null,
       providerTransactionId: sub.provider_transaction_id ?? null,
       environment: sub.environment ?? null,
-      appleOriginalTransactionId: sub.provider === 'apple' ? sub.provider_subscription_id : null,
+      appleOriginalTransactionId:
+        sub.provider === 'apple' ? sub.provider_subscription_id : null,
       // Apple product ID is stored in stripe_price_id (semantically equivalent column).
-      appleProductId: sub.provider === 'apple' ? (sub.stripe_price_id ?? null) : null,
+      appleProductId:
+        sub.provider === 'apple' ? (sub.stripe_price_id ?? null) : null,
       appleExpiresAt: sub.provider === 'apple' ? sub.current_period_end : null,
     };
   }
@@ -589,12 +642,17 @@ export async function getUsedCountToday(subject: Subject): Promise<number> {
  */
 export function getDailyResetAt(): string {
   const now = new Date();
-  const tomorrow = new Date(Date.UTC(
-    now.getUTCFullYear(),
-    now.getUTCMonth(),
-    now.getUTCDate() + 1,
-    0, 0, 0, 0
-  ));
+  const tomorrow = new Date(
+    Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate() + 1,
+      0,
+      0,
+      0,
+      0,
+    ),
+  );
   return tomorrow.toISOString();
 }
 
@@ -606,7 +664,8 @@ export async function getRemainingAIUses(subject: Subject) {
   const ent = await getUserEntitlement(subject);
   return {
     ...ent,
-    isLimitReached: !ent.aiAccess.unlimited && (ent.aiAccess.remainingToday ?? 0) <= 0,
+    isLimitReached:
+      !ent.aiAccess.unlimited && (ent.aiAccess.remainingToday ?? 0) <= 0,
   };
 }
 
@@ -614,11 +673,13 @@ async function getSubscriptionDiagnosticsForUser(userId: string, now: Date) {
   const supabase = createAdminClient();
   const { data: rows, error } = await supabase
     .from('subscriptions')
-    .select(`
+    .select(
+      `
       id, user_id, status, plan_code, current_period_start, current_period_end, cancel_at_period_end, canceled_at,
       stripe_customer_id, stripe_subscription_id, stripe_price_id,
       provider, provider_subscription_id, provider_transaction_id, environment, last_verified_at, updated_at, created_at
-    `)
+    `,
+    )
     .eq('user_id', userId)
     .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
     .order('current_period_end', { ascending: false, nullsFirst: false })
@@ -626,10 +687,21 @@ async function getSubscriptionDiagnosticsForUser(userId: string, now: Date) {
     .limit(50);
 
   if (error) {
-    throw new Error(`Failed to load subscription entitlement candidates: ${error.message}`);
+    throw new Error(
+      `Failed to load subscription entitlement candidates: ${error.message}`,
+    );
   }
 
-  return evaluateSubscriptionCandidates((rows ?? []) as SubscriptionEntitlementRow[], now);
+  const typedRows = (rows ?? []) as SubscriptionEntitlementRow[];
+  const evaluation = evaluateSubscriptionCandidates(typedRows, now);
+  const recoveryCandidate =
+    typedRows.find(
+      (row) =>
+        (row.provider ?? 'stripe') === 'stripe' &&
+        ['past_due', 'unpaid', 'incomplete'].includes(row.status),
+    ) ?? null;
+
+  return { ...evaluation, recoveryCandidate };
 }
 
 /**
@@ -645,8 +717,12 @@ async function getSubscriptionDiagnosticsForUser(userId: string, now: Date) {
  */
 export async function getNormalizedBroBotEntitlement(
   subject: Subject,
-  options: { includeDebug?: boolean } = {}
-): Promise<NormalizedBroBotEntitlement & { data: Awaited<ReturnType<typeof getRemainingAIUses>> }> {
+  options: { includeDebug?: boolean } = {},
+): Promise<
+  NormalizedBroBotEntitlement & {
+    data: Awaited<ReturnType<typeof getRemainingAIUses>>;
+  }
+> {
   const now = new Date();
   const legacy = await getRemainingAIUses(subject);
   const used = legacy.usedToday ?? (await getUsedCountToday(subject));
@@ -661,31 +737,65 @@ export async function getNormalizedBroBotEntitlement(
       ? await getSubscriptionDiagnosticsForUser(subject.id, now)
       : null;
   const selected = subscriptionEvaluation?.selected ?? null;
+  const recoveryCandidate = subscriptionEvaluation?.recoveryCandidate ?? null;
   const provider =
     legacy.source === 'subscription'
-      ? normalizeEntitlementProvider(legacy.provider ?? selected?.provider ?? 'stripe')
-      : 'none';
+      ? normalizeEntitlementProvider(
+          legacy.provider ?? selected?.provider ?? 'stripe',
+        )
+      : recoveryCandidate
+        ? normalizeEntitlementProvider(recoveryCandidate.provider ?? 'stripe')
+        : 'none';
   const isUnlimited = legacy.aiAccess.unlimited;
+  const surfacedSubscription = selected ?? recoveryCandidate;
   const selectedSubscriptionId =
-    selected?.provider_subscription_id ??
-    selected?.stripe_subscription_id ??
-    selected?.provider_transaction_id ??
-    selected?.id ??
+    surfacedSubscription?.provider_subscription_id ??
+    surfacedSubscription?.stripe_subscription_id ??
+    surfacedSubscription?.provider_transaction_id ??
+    surfacedSubscription?.id ??
     null;
-  const resolutionSource = getResolutionSource({ entitlement: legacy, selected });
+  const resolutionSource = getResolutionSource({
+    entitlement: legacy,
+    selected,
+  });
   const resolutionReason = getResolutionReason({
     entitlement: legacy,
     selected,
     quotaRemaining,
   });
 
-  const normalized: NormalizedBroBotEntitlement & { data: Awaited<ReturnType<typeof getRemainingAIUses>> } = {
+  const surfacedStatus = legacy.status ?? recoveryCandidate?.status ?? null;
+  const surfacedPeriodEnd =
+    legacy.expiresAt ?? recoveryCandidate?.current_period_end ?? null;
+  const surfacedCancelAtPeriodEnd =
+    legacy.cancelAtPeriodEnd ??
+    recoveryCandidate?.cancel_at_period_end ??
+    false;
+  const decisionData =
+    recoveryCandidate && legacy.source !== 'subscription'
+      ? {
+          ...legacy,
+          status: recoveryCandidate.status,
+          expiresAt: recoveryCandidate.current_period_end,
+          cancelAtPeriodEnd: recoveryCandidate.cancel_at_period_end ?? false,
+          provider: recoveryCandidate.provider ?? 'stripe',
+          providerSubscriptionId: recoveryCandidate.provider_subscription_id,
+          providerTransactionId: recoveryCandidate.provider_transaction_id,
+          environment: recoveryCandidate.environment,
+          stripeCustomerId: recoveryCandidate.stripe_customer_id,
+          stripeSubscriptionId: recoveryCandidate.stripe_subscription_id,
+        }
+      : legacy;
+
+  const normalized: NormalizedBroBotEntitlement & {
+    data: Awaited<ReturnType<typeof getRemainingAIUses>>;
+  } = {
     access: isUnlimited ? 'unlimited' : 'free',
     planCode: isUnlimited ? 'unlimited_brobot' : 'free',
     provider,
-    status: legacy.status ?? null,
-    currentPeriodEnd: legacy.expiresAt ?? null,
-    cancelAtPeriodEnd: legacy.cancelAtPeriodEnd ?? false,
+    status: surfacedStatus,
+    currentPeriodEnd: surfacedPeriodEnd,
+    cancelAtPeriodEnd: surfacedCancelAtPeriodEnd,
     isVerified: true,
     verificationWarning: null,
     freeQuotaUsed: used,
@@ -696,9 +806,9 @@ export async function getNormalizedBroBotEntitlement(
     resolutionReason,
     selectedSubscriptionId,
     selectedProvider: provider,
-    selectedStatus: legacy.status ?? null,
-    selectedCurrentPeriodEnd: legacy.expiresAt ?? null,
-    data: legacy,
+    selectedStatus: surfacedStatus,
+    selectedCurrentPeriodEnd: surfacedPeriodEnd,
+    data: decisionData,
   };
 
   if (options.includeDebug && subscriptionEvaluation) {
@@ -707,7 +817,8 @@ export async function getNormalizedBroBotEntitlement(
       selectedSubscriptionRowId: subscriptionEvaluation.selectedRowId,
       selectionReason: subscriptionEvaluation.selectionReason,
       candidates: subscriptionEvaluation.candidates,
-      policy: 'trust_local_verified_subscription_rows_until_current_period_end; provider write paths perform remote verification',
+      policy:
+        'trust_local_verified_subscription_rows_until_current_period_end; provider write paths perform remote verification',
     };
   }
 
@@ -721,7 +832,8 @@ export async function getNormalizedBroBotEntitlement(
     resolutionSource: normalized.resolutionSource,
     resolutionReason: normalized.resolutionReason,
     selected_subscription_row_id: subscriptionEvaluation?.selectedRowId ?? null,
-    reason_selected: subscriptionEvaluation?.selectionReason ?? 'non_user_or_paid_disabled',
+    reason_selected:
+      subscriptionEvaluation?.selectionReason ?? 'non_user_or_paid_disabled',
   });
 
   return normalized;
@@ -830,14 +942,19 @@ export interface MobileBroBotEntitlement {
  * Thin mapping layer on top of the single centralized entitlement engine.
  * No guest fallback — mobile always requires an authenticated Supabase user.
  */
-export async function getMobileBroBotEntitlement(userId: string): Promise<MobileBroBotEntitlement> {
+export async function getMobileBroBotEntitlement(
+  userId: string,
+): Promise<MobileBroBotEntitlement> {
   const now = new Date().toISOString();
 
   // === CRITICAL ALIGNMENT ===
   // We deliberately call the EXACT same internal path the website trusts:
   //   /api/me/entitlements  →  getRemainingAIUses({ type: "user", id })
-  // This guarantees identical paid subscription decisions (getPaidSubscriptionEntitlement + overrides + grace).
-  const normalized = await getNormalizedBroBotEntitlement({ type: 'user', id: userId });
+  // This guarantees identical paid subscription decisions (getPaidSubscriptionEntitlement + overrides).
+  const normalized = await getNormalizedBroBotEntitlement({
+    type: 'user',
+    id: userId,
+  });
   const ent = normalized.data; // BroBotEntitlement shape + isLimitReached
 
   // Safe debug logs (userId prefix only, no secrets)
@@ -858,14 +975,23 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
   // Map to mobile contract. Paid rows report source='subscriptions' plus a
   // separate provider so Stripe and Apple stay normalized without hiding origin.
   let plan: MobileBroBotEntitlement['plan'] = 'free';
-  let mobileSource: 'stripe' | 'apple' | 'override' | 'free_quota' | 'disabled' = 'free_quota';
+  let mobileSource:
+    'stripe' | 'apple' | 'override' | 'free_quota' | 'disabled' = 'free_quota';
 
   if (ent.source === 'subscription') {
     // Derive plan from the actual subscription data (plan_code stored from Stripe metadata or default).
     // This ensures the iOS app receives a stable, non-null plan identifier instead of hard-coded or missing value.
     plan = ent.planCode || 'unlimited_brobot';
     // Support Apple IAP as first-class source (additive)
-    mobileSource = (ent.provider === 'apple') ? 'apple' : 'stripe';
+    mobileSource = ent.provider === 'apple' ? 'apple' : 'stripe';
+  } else if (
+    normalized.provider === 'stripe' &&
+    normalized.status === 'past_due'
+  ) {
+    // Preserve the billing relationship even though paid access is suspended.
+    // This lets clients explain the failure and open the existing Stripe portal.
+    plan = 'unlimited_brobot';
+    mobileSource = 'stripe';
   } else if (ent.source === 'override') {
     plan = 'promo';
     mobileSource = 'override';
@@ -897,7 +1023,9 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
   const isScheduledToCancel = !isCanceled && cancelAtPeriodEnd;
 
   const nowTs = Date.now();
-  const periodEndTs = currentPeriodEnd ? new Date(currentPeriodEnd).getTime() : null;
+  const periodEndTs = currentPeriodEnd
+    ? new Date(currentPeriodEnd).getTime()
+    : null;
   const periodEndIsFuture = periodEndTs != null && periodEndTs > nowTs;
 
   // renewsAt: only when genuinely renewing — active/trialing, not canceled, not ending
@@ -949,19 +1077,25 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
     });
   }
 
-  const usedToday = ent.usedToday ?? (await getUsedCountToday({ type: 'user', id: userId }));
+  const usedToday =
+    ent.usedToday ?? (await getUsedCountToday({ type: 'user', id: userId }));
 
   // Free quota additive fields (server-owned, derived from the aligned central result + config)
   const isUnlimited = ent.aiAccess.unlimited;
   const freeLimit = isUnlimited ? null : ent.aiAccess.dailyCap;
   const usedThisPeriod = usedToday;
-  const remainingUses = isUnlimited ? null : (ent.aiAccess.remainingToday ?? null);
+  const remainingUses = isUnlimited
+    ? null
+    : (ent.aiAccess.remainingToday ?? null);
   const resetAt = isUnlimited ? null : getDailyResetAt();
 
   let reasonIfBlocked: string | null = null;
   if (ent.source === 'disabled') {
     reasonIfBlocked = 'disabled';
-  } else if (!hasBroBotAccess && (ent.source === 'free_quota' || ent.source === 'guest_quota')) {
+  } else if (
+    !hasBroBotAccess &&
+    (ent.source === 'free_quota' || ent.source === 'guest_quota')
+  ) {
     reasonIfBlocked = 'daily_limit_reached';
   }
 
@@ -988,8 +1122,11 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
     unlimitedAccess: hasUnlimitedBroBot,
     plan,
     source:
-      ent.source === 'subscription'
-        ? (ent.provider === 'apple' ? 'apple' : 'stripe')
+      ent.source === 'subscription' ||
+      (normalized.provider === 'stripe' && normalized.status === 'past_due')
+        ? ent.provider === 'apple'
+          ? 'apple'
+          : 'stripe'
         : ent.source === 'override'
           ? 'promo'
           : ent.source === 'disabled'
@@ -1003,9 +1140,12 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
           : ent.source === 'disabled'
             ? 'disabled'
             : 'free_quota',
-    providerSource: ent.source === 'subscription'
-      ? (ent.provider === 'apple' ? 'apple' : 'stripe')
-      : null,
+    providerSource:
+      ent.source === 'subscription'
+        ? ent.provider === 'apple'
+          ? 'apple'
+          : 'stripe'
+        : null,
     status: subscriptionStatus,
     stripeCustomerId,
     stripeSubscriptionId,
@@ -1013,8 +1153,12 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
     currentPeriodEnd,
     cancelAtPeriodEnd,
     isInGracePeriod,
-    remainingFreeUses: isUnlimited ? null : (ent.aiAccess.remainingToday ?? null),
-    remainingFreePreps: isUnlimited ? null : (ent.aiAccess.remainingToday ?? null),
+    remainingFreeUses: isUnlimited
+      ? null
+      : (ent.aiAccess.remainingToday ?? null),
+    remainingFreePreps: isUnlimited
+      ? null
+      : (ent.aiAccess.remainingToday ?? null),
     dailyLimit: ent.aiAccess.dailyCap,
     usedToday,
     resetTime: resetAt,
@@ -1036,9 +1180,14 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
     reasonIfBlocked,
 
     // Apple IAP fields (populated when provider=apple from the central engine)
-    appleOriginalTransactionId: ent.appleOriginalTransactionId ?? (ent as BroBotEntitlement & { providerSubscriptionId?: string }).providerSubscriptionId ?? null,
+    appleOriginalTransactionId:
+      ent.appleOriginalTransactionId ??
+      (ent as BroBotEntitlement & { providerSubscriptionId?: string })
+        .providerSubscriptionId ??
+      null,
     appleProductId: ent.appleProductId ?? null,
-    appleExpiresAt: ent.appleExpiresAt ?? (ent.provider === 'apple' ? ent.expiresAt : null),
+    appleExpiresAt:
+      ent.appleExpiresAt ?? (ent.provider === 'apple' ? ent.expiresAt : null),
   };
 
   // Additional required safe debug logs after mapping

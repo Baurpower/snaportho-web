@@ -104,6 +104,10 @@ for (const expected of [
   /screen-official-notes/,
   /llm-only/,
   /auto-confirm-only/,
+  /accept-reviewed-run/,
+  /ACCEPT_GROK_FULL_REVIEW_V1/,
+  /publish-metadata-release/,
+  /deck-current-accepted/,
 ]) {
   assert.match(runner, expected);
 }

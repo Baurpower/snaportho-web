@@ -6,7 +6,10 @@ import { join } from "node:path";
 // @ts-expect-error Node type stripping requires the runtime extension.
 import { createSseParseState, parseSseChunk, encodeSseEvent } from "./sse.ts";
 // @ts-expect-error Node type stripping requires the runtime extension.
-import { createInitialPacketState, reducePacketEvent } from "./stream-schema.ts";
+import {
+  createInitialPacketState,
+  reducePacketEvent,
+} from "./stream-schema.ts";
 
 type PacketState = ReturnType<typeof createInitialPacketState>;
 
@@ -174,6 +177,46 @@ const HEADER = {
   const state = reduceAll(frames);
   assert.ok(state.sections["pitfalls"]);
   assert.ok(state.sections["summary"]);
+}
+
+// ── v1.3 Essentials payload survives the generic section reducer ───────────
+{
+  const payload = {
+    indications: {
+      summary: "Surgery is indicated for symptomatic end-stage disease.",
+      key_points: ["Failed appropriate nonoperative treatment"],
+      case_specific_note: null,
+    },
+    critical_portion: {
+      name: "Critical exposure",
+      summary: "Protect the principal structure at risk.",
+      why_it_matters: "Injury causes major morbidity.",
+      execution_points: ["Identify the safe interval"],
+      failure_mode: "Unrecognized injury.",
+    },
+    postop_protocol: {
+      summary:
+        "Protect the reconstruction and begin appropriate rehabilitation.",
+      immediate_priorities: ["Document the neurovascular examination"],
+      immobilization: null,
+      weight_bearing: "Follow construct-specific restrictions.",
+      motion: "Progress according to stability.",
+      follow_up: "Early wound review.",
+      red_flags: ["New neurovascular deficit"],
+      variability_note: "Confirm the operating surgeon's protocol.",
+    },
+  };
+  const state = reduceAll(
+    encodeSseEvent("section", {
+      section_id: "essentials",
+      status: "complete",
+      payload,
+      source: "ai_synthesis",
+      confidence: 0.75,
+      generated_field_paths: ["payload"],
+    }),
+  );
+  assert.deepEqual(state.sections.essentials?.payload, payload);
 }
 
 // ── Clarification path is terminal and carries options ──────────────────────

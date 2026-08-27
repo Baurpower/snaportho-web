@@ -33,6 +33,19 @@ export const HIGH_IMPACT_ORTHO_JOURNALS = [
   'Bone & joint open'
 ];
 
+// Editorial prestige tiers are a stable ranking proxy, not live Journal
+// Citation Reports values (which are licensed and change annually). Revisit
+// this list during the scheduled source-quality review.
+export const PREMIER_ORTHO_JOURNALS = new Set([
+  'The Journal of bone and joint surgery. American volume',
+  'The bone & joint journal',
+  'Clinical orthopaedics and related research',
+  'The American journal of sports medicine',
+  'Arthroscopy',
+  'Spine',
+  'The spine journal',
+]);
+
 export const ARTICLE_TYPE_WEIGHT = {
   guideline: 1,
   meta_analysis: 0.95,
@@ -95,9 +108,12 @@ function pubMedResourceType(article: PubMedArticle): BroBotReadingResourceType {
 
 function journalQuality(journal: string) {
   const normalizedJournal = normalizeReadingTopic(journal);
-  return HIGH_IMPACT_ORTHO_JOURNALS.some((candidate) => normalizeReadingTopic(candidate) === normalizedJournal)
-    ? 1
-    : 0.55;
+  if (Array.from(PREMIER_ORTHO_JOURNALS).some(
+    (candidate) => normalizeReadingTopic(candidate) === normalizedJournal,
+  )) return 1;
+  return HIGH_IMPACT_ORTHO_JOURNALS.some(
+    (candidate) => normalizeReadingTopic(candidate) === normalizedJournal,
+  ) ? 0.82 : 0.55;
 }
 
 function citationScore(citationCount?: number) {
@@ -151,7 +167,8 @@ function articleBadges(article: PubMedArticle, citationCount?: number) {
   if (type === 'meta_analysis') badges.push('Meta-analysis');
   if (type === 'systematic_review') badges.push('Systematic Review');
   if (type === 'review') badges.push('Review');
-  if (journalQuality(article.journal) === 1) badges.push('High-impact journal');
+  if (journalQuality(article.journal) === 1) badges.push('Premier orthopaedic journal');
+  else if (journalQuality(article.journal) >= 0.82) badges.push('Leading specialty journal');
   if (typeof citationCount === 'number' && citationCount >= 100) badges.push('Highly cited');
   return badges;
 }

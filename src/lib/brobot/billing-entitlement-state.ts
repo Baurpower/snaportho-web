@@ -36,16 +36,17 @@ export type WebEntitlementMenuStatus = {
   label: 'Unlimited BroBot' | 'Free BroBot';
 };
 
-export type BillingActivationPhase = 'idle' | 'activating' | 'active' | 'delayed';
+export type BillingActivationPhase =
+  'idle' | 'activating' | 'active' | 'delayed';
 
 export function parseMeEntitlementsPayload(
-  payload: MeEntitlementsPayload | null | undefined
+  payload: MeEntitlementsPayload | null | undefined,
 ): BillingEntitlementView {
   const legacy = payload?.data ?? null;
   const access =
-    payload?.access ??
-    (legacy?.aiAccess?.unlimited ? 'unlimited' : 'free');
-  const isUnlimited = access === 'unlimited' || legacy?.aiAccess?.unlimited === true;
+    payload?.access ?? (legacy?.aiAccess?.unlimited ? 'unlimited' : 'free');
+  const isUnlimited =
+    access === 'unlimited' || legacy?.aiAccess?.unlimited === true;
   const isPaid = isUnlimited || legacy?.source === 'subscription';
 
   return {
@@ -101,10 +102,14 @@ export type WebBroBotUsageMeta = WebUsageSnapshot & {
   expiresAt?: string | null;
 };
 
-export function toWebBroBotUsageMeta(view: WebEntitlementView): WebBroBotUsageMeta {
+export function toWebBroBotUsageMeta(
+  view: WebEntitlementView,
+): WebBroBotUsageMeta {
   return {
     ...toWebUsageSnapshot(view),
-    source: view.entitlement?.source ?? (view.isUnlimited ? 'subscription' : 'free_quota'),
+    source:
+      view.entitlement?.source ??
+      (view.isUnlimited ? 'subscription' : 'free_quota'),
     status: view.status ?? undefined,
     cancelAtPeriodEnd: view.cancelAtPeriodEnd,
     expiresAt: view.expiresAt,
@@ -119,18 +124,24 @@ export function toWebUsageSnapshot(view: WebEntitlementView): WebUsageSnapshot {
   };
 }
 
-export function toWebEntitlementMenuStatus(view: WebEntitlementView): WebEntitlementMenuStatus {
+export function toWebEntitlementMenuStatus(
+  view: WebEntitlementView,
+): WebEntitlementMenuStatus {
   return {
     unlimited: view.isUnlimited,
-    source: view.entitlement?.source ?? (view.isUnlimited ? 'subscription' : 'free_quota'),
+    source:
+      view.entitlement?.source ??
+      (view.isUnlimited ? 'subscription' : 'free_quota'),
     label: view.isUnlimited ? 'Unlimited BroBot' : 'Free BroBot',
   };
 }
 
 export async function fetchMeEntitlementsView(
-  options: { source?: string } = {}
+  options: { source?: string } = {},
 ): Promise<WebEntitlementView | null> {
-  const query = options.source ? `?source=${encodeURIComponent(options.source)}` : '';
+  const query = options.source
+    ? `?source=${encodeURIComponent(options.source)}`
+    : '';
   const response = await fetch(`/api/me/entitlements${query}`, {
     cache: 'no-store',
     credentials: 'include',
@@ -149,13 +160,23 @@ export function getBillingStatusBadge(params: {
   activationPhase: BillingActivationPhase;
   status: string | null;
   cancelAtPeriodEnd: boolean;
-}): 'processing' | 'trial' | 'active' | 'canceling' | 'delayed' | null {
+}):
+  | 'processing'
+  | 'trial'
+  | 'active'
+  | 'canceling'
+  | 'delayed'
+  | 'payment_failed'
+  | null {
   if (params.activationPhase === 'activating') return 'processing';
   if (params.activationPhase === 'delayed') return 'delayed';
+  if (params.status === 'past_due' || params.status === 'unpaid')
+    return 'payment_failed';
   if (!params.isUnlimited) return null;
 
   if (params.cancelAtPeriodEnd) return 'canceling';
   if (params.status === 'trialing') return 'trial';
-  if (params.status === 'active' || params.status === 'trialing') return 'active';
-  return 'active';
+  if (params.status === 'active' || params.status === 'trialing')
+    return 'active';
+  return null;
 }

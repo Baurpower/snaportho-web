@@ -12,6 +12,7 @@ import {
   ChevronDown,
   ChevronRight,
   RotateCcw,
+  Trash2,
 } from "lucide-react";
 
 import { createClient } from "@/utils/supabase/client";
@@ -335,13 +336,23 @@ export function SignoutBoard({
   }
 
   async function handleDelete(cardId: string) {
-    if (!window.confirm("Remove this patient from the sign-out?")) return;
-    const snapshot = cards;
-    setCards((prev) => prev.filter((c) => c.id !== cardId));
+    const patient = cardsRef.current.find((card) => card.id === cardId);
+    if (!patient) return;
+    if (
+      !window.confirm(
+        `Permanently remove ${patient.handle} from the sign-out? This cannot be undone.`
+      )
+    ) {
+      return;
+    }
+    const snapshot = cardsRef.current;
+    cardsRef.current = snapshot.filter((card) => card.id !== cardId);
+    setCards(cardsRef.current);
     if (preview) return;
     try {
       await apiDeleteCard(cardId);
     } catch (e) {
+      cardsRef.current = snapshot;
       setCards(snapshot); // roll back
       setError(e instanceof Error ? e.message : "Failed to remove patient");
     }
@@ -736,13 +747,24 @@ export function SignoutBoard({
                           {[card.location, card.attending].filter(Boolean).join(" · ") || "No location entered"}
                         </span>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => void saveCard(card.id, { status: "active" })}
-                        className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
-                      >
-                        <RotateCcw className="h-3.5 w-3.5" /> Restore
-                      </button>
+                      <div className="flex shrink-0 items-center gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => void saveCard(card.id, { status: "active" })}
+                          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
+                        >
+                          <RotateCcw className="h-3.5 w-3.5" /> Restore
+                        </button>
+                        <button
+                          type="button"
+                          aria-label={`Permanently remove ${card.handle}`}
+                          title="Permanently remove patient"
+                          onClick={() => void handleDelete(card.id)}
+                          className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 text-slate-400 hover:border-red-300 hover:bg-red-50 hover:text-red-600"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>

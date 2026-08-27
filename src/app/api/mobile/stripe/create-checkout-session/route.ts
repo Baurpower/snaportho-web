@@ -22,18 +22,27 @@ const MOBILE_CANCEL_URL = 'snaportho://subscription/cancel';
 
 function sanitizeEntryPoint(value: unknown) {
   if (typeof value !== 'string') return 'ios_unknown';
-  const normalized = value.trim().toLowerCase().replace(/[^a-z0-9_-]+/g, '_').slice(0, 80);
+  const normalized = value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]+/g, '_')
+    .slice(0, 80);
   return normalized || 'ios_unknown';
 }
 
 function summarizeStripeId(value: string | null | undefined) {
   if (!value) return null;
-  return value.length <= 12 ? value : `${value.slice(0, 8)}...${value.slice(-4)}`;
+  return value.length <= 12
+    ? value
+    : `${value.slice(0, 8)}...${value.slice(-4)}`;
 }
 
 export async function POST(request: Request) {
   if (!BroBotConfig.PAID_ENABLED) {
-    return NextResponse.json({ error: 'Paid subscriptions are currently disabled' }, { status: 403 });
+    return NextResponse.json(
+      { error: 'Paid subscriptions are currently disabled' },
+      { status: 403 },
+    );
   }
 
   const { user, response } = await getMobileBearerUser(request);
@@ -42,7 +51,8 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json().catch(() => ({}));
-    const interval: 'month' | 'year' = body.interval === 'year' ? 'year' : 'month';
+    const interval: 'month' | 'year' =
+      body.interval === 'year' ? 'year' : 'month';
     const entryPoint = sanitizeEntryPoint(body.entryPoint);
 
     console.log('[SUB_FLOW] mobile_stripe_checkout_requested', {
@@ -69,12 +79,11 @@ export async function POST(request: Request) {
 
     const hasOngoingAccess =
       existingActive &&
-      (
-        ['active', 'trialing'].includes(existingActive.status) ||
-        (existingActive.status === 'past_due' && existingActive.current_period_end &&
+      (['active', 'trialing'].includes(existingActive.status) ||
+        (existingActive.status === 'past_due' &&
+          existingActive.current_period_end &&
           new Date(existingActive.current_period_end) > new Date()) ||
-        existingActive.cancel_at_period_end
-      );
+        existingActive.cancel_at_period_end);
 
     if (hasOngoingAccess) {
       console.log('[SUB_FLOW] mobile_stripe_checkout_existing_subscription', {
@@ -89,16 +98,27 @@ export async function POST(request: Request) {
       // User already has (or will have) access — return portal session instead of new checkout
       try {
         const { createBillingPortalSession } = await import('@/lib/stripe');
-        const { url: portalUrl } = await createBillingPortalSession(user.id, 'snaportho://subscription/portal-return');
+        const { url: portalUrl } = await createBillingPortalSession(
+          user.id,
+          'snaportho://subscription/portal-return',
+        );
         return NextResponse.json({
           alreadySubscribed: true,
-          message: 'You already have an active BroBot subscription.',
+          message:
+            existingActive.status === 'past_due'
+              ? 'Your payment method needs attention. Update it in the billing portal.'
+              : 'You already have an active BroBot subscription.',
           portalUrl,
+          checkoutUrl: portalUrl,
+          url: portalUrl,
         });
       } catch {
         return NextResponse.json({
           alreadySubscribed: true,
-          message: 'You already have an active BroBot subscription. Please manage it from the app.',
+          message:
+            existingActive.status === 'past_due'
+              ? 'Your payment method needs attention. Please manage it from the app.'
+              : 'You already have an active BroBot subscription. Please manage it from the app.',
         });
       }
     }
@@ -113,11 +133,14 @@ export async function POST(request: Request) {
       {
         enableTrial: true,
         source: `ios_${entryPoint}`,
-      }
+      },
     );
 
     if (!url) {
-      return NextResponse.json({ error: 'Failed to create checkout session' }, { status: 500 });
+      return NextResponse.json(
+        { error: 'Failed to create checkout session' },
+        { status: 500 },
+      );
     }
 
     console.log('[SUB_FLOW] mobile_stripe_checkout_created', {
@@ -126,7 +149,9 @@ export async function POST(request: Request) {
       checkout_url_created: true,
       trial: true,
       price_id: summarizeStripeId(
-        interval === 'year' ? BroBotConfig.YEARLY_PRICE_ID : BroBotConfig.MONTHLY_PRICE_ID
+        interval === 'year'
+          ? BroBotConfig.YEARLY_PRICE_ID
+          : BroBotConfig.MONTHLY_PRICE_ID,
       ),
       user_id: user.id.slice(0, 8),
       plan_code: BroBotConfig.PAID_PLAN_CODE,
@@ -136,8 +161,13 @@ export async function POST(request: Request) {
   } catch (err) {
     console.error('[mobile/stripe/checkout] error', err);
     return NextResponse.json(
-      { error: err instanceof Error ? err.message : 'Failed to create Stripe checkout session' },
-      { status: 500 }
+      {
+        error:
+          err instanceof Error
+            ? err.message
+            : 'Failed to create Stripe checkout session',
+      },
+      { status: 500 },
     );
   }
 }

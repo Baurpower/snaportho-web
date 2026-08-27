@@ -33,11 +33,15 @@ import { useCasePrepStream } from '@/lib/caseprep-v1-1/useCasePrepStream';
 
 // CasePrep v1.1 packet mode (streamed). Off → legacy /api/brobot/ask flow,
 // byte-for-byte unchanged. The iOS-consumed proxy is never touched.
-const CASEPREP_PACKET_MODE = process.env.NEXT_PUBLIC_CASEPREP_PACKET_ENABLED === 'true';
+const CASEPREP_PACKET_MODE =
+  process.env.NEXT_PUBLIC_CASEPREP_PACKET_ENABLED === 'true';
 
 const BROBOT_VERSION = 2.0;
 const BROBOT_RETURN_TO = '/brobot';
-const BROBOT_BILLING_HREF = appendSafeReturnTo('/account/billing?intent=brobot', BROBOT_RETURN_TO);
+const BROBOT_BILLING_HREF = appendSafeReturnTo(
+  '/account/billing?intent=brobot',
+  BROBOT_RETURN_TO,
+);
 
 // ── Domain types (unchanged) ──────────────────────────────────────────────────
 
@@ -182,7 +186,9 @@ export default function BroBotMember() {
   useEffect(() => {
     if (entitlementUsageMeta) {
       setUsageMeta((current) =>
-        isSameUsageMeta(current, entitlementUsageMeta) ? current : entitlementUsageMeta
+        isSameUsageMeta(current, entitlementUsageMeta)
+          ? current
+          : entitlementUsageMeta,
       );
     }
   }, [entitlementUsageMeta]);
@@ -190,7 +196,10 @@ export default function BroBotMember() {
   // Auto-scroll to result / error card whenever it appears
   useEffect(() => {
     if ((data || brobotError) && resultRef.current) {
-      setTimeout(() => resultRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+      setTimeout(
+        () => resultRef.current?.scrollIntoView({ behavior: 'smooth' }),
+        100,
+      );
     }
   }, [data, brobotError]);
 
@@ -283,10 +292,15 @@ export default function BroBotMember() {
               type: 'quota_limit',
               dailyCap: errBody.dailyCap ?? usageMeta?.dailyCap ?? null,
             });
-            setUsageMeta((prev) => (prev ? { ...prev, remainingToday: 0 } : null));
+            setUsageMeta((prev) =>
+              prev ? { ...prev, remainingToday: 0 } : null,
+            );
           } else {
             void refreshEntitlements();
-            setBrobotError({ type: 'generic', message: 'BroBot access is still activating. Please try again.' });
+            setBrobotError({
+              type: 'generic',
+              message: 'BroBot access is still activating. Please try again.',
+            });
           }
           return;
         }
@@ -315,8 +329,8 @@ export default function BroBotMember() {
 
       // Keep the usage badge in sync with what the API just told us
       if (parsed.meta && typeof parsed.meta.remaining === 'number') {
-        setUsageMeta(prev =>
-          prev ? { ...prev, remainingToday: parsed.meta!.remaining! } : null
+        setUsageMeta((prev) =>
+          prev ? { ...prev, remainingToday: parsed.meta!.remaining! } : null,
         );
       }
 
@@ -410,7 +424,7 @@ export default function BroBotMember() {
       {/* Toolbar: history burger + account */}
       <div className="mt-16 px-6 py-2 bg-[#fefcf7] flex justify-between items-center relative">
         <button
-          onClick={() => setMenuOpen(o => !o)}
+          onClick={() => setMenuOpen((o) => !o)}
           className="p-2 bg-white rounded shadow"
         >
           <Bars3Icon className="h-6 w-6 text-gray-700" />
@@ -425,7 +439,7 @@ export default function BroBotMember() {
             ) : sessions.length === 0 ? (
               <p className="p-4 text-sm text-gray-500">No recent prompts</p>
             ) : (
-              sessions.map(s => (
+              sessions.map((s) => (
                 <button
                   key={s.response_id}
                   className="w-full text-left px-4 py-2 hover:bg-gray-100"
@@ -436,7 +450,9 @@ export default function BroBotMember() {
                     setMenuOpen(false);
                   }}
                 >
-                  <p className="truncate font-medium text-[#1A1C2C]">{s.question}</p>
+                  <p className="truncate font-medium text-[#1A1C2C]">
+                    {s.question}
+                  </p>
                   <time className="block text-xs text-gray-500">
                     {new Date(s.created_at).toLocaleString()}
                   </time>
@@ -453,20 +469,27 @@ export default function BroBotMember() {
 
       <BroBotHeader compact={packetActive} />
 
-      <main className={`relative mx-auto w-full flex-1 px-4 pb-12 sm:px-6 ${packetActive ? 'max-w-[1500px] pt-2' : 'max-w-3xl pt-6'}`}>
+      <main
+        className={`relative mx-auto w-full flex-1 px-4 pb-12 sm:px-6 ${packetActive ? 'max-w-[1500px] pt-2' : 'max-w-3xl pt-6'}`}
+      >
         {loading && <LoadingOverlay />}
 
         {/* Input form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <Card title={packetActive ? "Refine this case" : "Describe Your Case"} compact={packetActive}>
+          <Card
+            title={packetActive ? 'Refine this case' : 'Describe Your Case'}
+            compact={packetActive}
+          >
             <textarea
               rows={packetActive ? 1 : 3}
               value={prompt}
-              onChange={e => setPrompt(e.target.value)}
+              onChange={(e) => setPrompt(e.target.value)}
               placeholder="e.g. 90 y/o femoral neck fracture"
               className="w-full rounded-md border border-gray-300 p-3 shadow-sm focus:ring-2 focus:ring-teal-600"
             />
-            <div className={`${packetActive ? 'mt-2' : 'mt-4'} flex flex-wrap items-center gap-3`}>
+            <div
+              className={`${packetActive ? 'mt-2' : 'mt-4'} flex flex-wrap items-center gap-3`}
+            >
               <button
                 type="submit"
                 disabled={
@@ -474,7 +497,8 @@ export default function BroBotMember() {
                   entitlementLoading ||
                   !prompt.trim() ||
                   (CASEPREP_PACKET_MODE &&
-                    (packetStatus === 'connecting' || packetStatus === 'streaming')) ||
+                    (packetStatus === 'connecting' ||
+                      packetStatus === 'streaming')) ||
                   (usageMeta?.remainingToday === 0 && !usageMeta?.unlimited)
                 }
                 className="inline-flex items-center rounded-md bg-teal-600 px-5 py-2 text-white shadow hover:bg-teal-700 disabled:opacity-40 transition-colors"
@@ -484,7 +508,9 @@ export default function BroBotMember() {
               </button>
 
               {entitlementLoading && !usageMeta ? (
-                <span className="text-xs text-gray-400">Checking access...</span>
+                <span className="text-xs text-gray-400">
+                  Checking access...
+                </span>
               ) : null}
               {usageMeta ? <UsageBadge meta={usageMeta} /> : null}
             </div>
@@ -492,19 +518,37 @@ export default function BroBotMember() {
             {/* Persistent BroBot subscription status / action (Phase 1 discoverability) */}
             {usageMeta && !packetActive && (
               <div className="mt-3 text-sm flex flex-wrap items-center gap-x-3 gap-y-1 text-gray-600">
-                {usageMeta.unlimited ? (
+                {usageMeta.status === 'past_due' ||
+                usageMeta.status === 'unpaid' ? (
                   <>
-                    <span className="font-medium text-emerald-700">Unlimited Access</span>
+                    <span className="font-medium text-red-700">
+                      Payment failed — Unlimited access is paused.
+                    </span>
+                    <Link
+                      href={BROBOT_BILLING_HREF}
+                      className="text-red-700 hover:underline font-semibold"
+                    >
+                      Update payment method
+                    </Link>
+                  </>
+                ) : usageMeta.unlimited ? (
+                  <>
+                    <span className="font-medium text-emerald-700">
+                      Unlimited Access
+                    </span>
                     {usageMeta.cancelAtPeriodEnd && usageMeta.expiresAt ? (
                       <span className="text-amber-700">
-                        • ends {new Date(usageMeta.expiresAt).toLocaleDateString()}
+                        • ends{' '}
+                        {new Date(usageMeta.expiresAt).toLocaleDateString()}
                       </span>
                     ) : null}
                     <Link
                       href={BROBOT_BILLING_HREF}
                       className="text-teal-600 hover:underline font-medium"
                     >
-                      {usageMeta.cancelAtPeriodEnd ? 'Manage / Reactivate' : 'Manage Subscription'}
+                      {usageMeta.cancelAtPeriodEnd
+                        ? 'Manage / Reactivate'
+                        : 'Manage Subscription'}
                     </Link>
                   </>
                 ) : (
@@ -523,16 +567,21 @@ export default function BroBotMember() {
         </form>
 
         {/* Proactive upgrade card for logged-in free users at daily limit */}
-        {usageMeta && !usageMeta.unlimited && usageMeta.remainingToday === 0 && !loading && (
-          <div className="mt-6">
-            <QuotaHitCard
-              dailyCap={usageMeta.dailyCap}
-              onUpgrade={handleUpgrade}
-              upgradeLoading={upgradeLoading}
-              onTryTomorrow={() => { /* no-op for proactive case; user can just wait */ }}
-            />
-          </div>
-        )}
+        {usageMeta &&
+          !usageMeta.unlimited &&
+          usageMeta.remainingToday === 0 &&
+          !loading && (
+            <div className="mt-6">
+              <QuotaHitCard
+                dailyCap={usageMeta.dailyCap}
+                onUpgrade={handleUpgrade}
+                upgradeLoading={upgradeLoading}
+                onTryTomorrow={() => {
+                  /* no-op for proactive case; user can just wait */
+                }}
+              />
+            </div>
+          )}
 
         {/* CasePrep v1.1 streamed packet (flag-gated) */}
         {CASEPREP_PACKET_MODE && packetStatus !== 'idle' && (
@@ -540,7 +589,8 @@ export default function BroBotMember() {
             {packetStatus === 'denied' ? (
               <QuotaHitCard
                 dailyCap={
-                  (casePrepStream.state.deniedMeta?.dailyCap as number | null | undefined) ??
+                  (casePrepStream.state.deniedMeta?.dailyCap as
+                    number | null | undefined) ??
                   usageMeta?.dailyCap ??
                   null
                 }
@@ -553,7 +603,11 @@ export default function BroBotMember() {
                 state={casePrepStream.state}
                 debug={packetDebug}
                 onCancel={casePrepStream.reset}
-                onRetry={() => void casePrepStream.start(casePrepStream.state.requestedPrompt || prompt)}
+                onRetry={() =>
+                  void casePrepStream.start(
+                    casePrepStream.state.requestedPrompt || prompt,
+                  )
+                }
                 onClarify={(clarifiedPrompt) => {
                   setPrompt(clarifiedPrompt);
                   void casePrepStream.start(clarifiedPrompt);
@@ -578,7 +632,11 @@ export default function BroBotMember() {
               ) : (
                 <NonQuotaErrorCard
                   errorType={brobotError.type}
-                  message={brobotError.type === 'generic' ? brobotError.message : undefined}
+                  message={
+                    brobotError.type === 'generic'
+                      ? brobotError.message
+                      : undefined
+                  }
                   onRetry={() => setBrobotError(null)}
                 />
               )}
@@ -589,21 +647,29 @@ export default function BroBotMember() {
           {data && !brobotError && !loading && (
             <div className="mt-8 space-y-6">
               <Card title="Prep Summary">
-                <Section label="Common Pimp Questions" bullets={data.pimpQuestions ?? []} />
-                <Section label="Other Useful Facts" bullets={data.otherUsefulFacts ?? []} />
+                <Section
+                  label="Common Pimp Questions"
+                  bullets={data.pimpQuestions ?? []}
+                />
+                <Section
+                  label="Other Useful Facts"
+                  bullets={data.otherUsefulFacts ?? []}
+                />
               </Card>
 
               {data.anatomy && (
                 <Card title="Anatomy">
                   {data.anatomy.approachSelection?.selected?.length ? (
-                    <ApproachQuiz approaches={data.anatomy.approachSelection.selected} />
+                    <ApproachQuiz
+                      approaches={data.anatomy.approachSelection.selected}
+                    />
                   ) : null}
 
                   {data.anatomy.anatomyQuiz?.questions?.length ? (
                     <Section
                       label="Anatomy Quiz"
                       bullets={data.anatomy.anatomyQuiz.questions.map(
-                        q => `Q: ${q.q} A: ${q.answer}`
+                        (q) => `Q: ${q.q} A: ${q.answer}`,
                       )}
                     />
                   ) : null}
@@ -612,7 +678,7 @@ export default function BroBotMember() {
                     <Section
                       label="High-Yield Structures: Identification & Function"
                       bullets={data.anatomy.highYieldAnatomy.structures.map(
-                        s => `${s.name} — ${s.why_high_yield}`
+                        (s) => `${s.name} — ${s.why_high_yield}`,
                       )}
                     />
                   ) : null}
@@ -661,8 +727,7 @@ function UsageBadge({ meta }: { meta: UsageMeta }) {
   if (remaining === 1) {
     return (
       <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-200 px-3 py-1 text-xs font-medium text-amber-700">
-        <ExclamationCircleIcon className="h-3.5 w-3.5" />
-        1 prep remaining today
+        <ExclamationCircleIcon className="h-3.5 w-3.5" />1 prep remaining today
       </span>
     );
   }
@@ -699,8 +764,8 @@ function QuotaHitCard({
             Daily limit reached
           </p>
           <p className="text-amber-700 text-xs mt-0.5 leading-snug">
-            You&apos;ve used {capLabel} BroBot case preps for today.
-            Free access resets at midnight&nbsp;UTC.
+            You&apos;ve used {capLabel} BroBot case preps for today. Free access
+            resets at midnight&nbsp;UTC.
           </p>
         </div>
       </div>
@@ -712,7 +777,9 @@ function QuotaHitCard({
           <div className="flex items-start justify-between gap-4 mb-3">
             <div className="flex items-center gap-2">
               <SparklesIcon className="h-5 w-5 text-teal-300 shrink-0" />
-              <span className="font-semibold text-lg leading-tight">Unlimited BroBot</span>
+              <span className="font-semibold text-lg leading-tight">
+                Unlimited BroBot
+              </span>
             </div>
             <span className="shrink-0 rounded-full bg-teal-400/20 border border-teal-300/30 px-2.5 py-0.5 text-xs font-semibold text-teal-200 tracking-wide uppercase">
               Unlimited
@@ -720,7 +787,8 @@ function QuotaHitCard({
           </div>
 
           <p className="text-teal-100 text-sm leading-relaxed mb-4">
-            Start with a free 1-month trial, then keep BroBot ready for every orthopaedic case.
+            Start with a free 1-month trial, then keep BroBot ready for every
+            orthopaedic case.
           </p>
 
           <ul className="space-y-2">
@@ -728,8 +796,11 @@ function QuotaHitCard({
               'Unlimited AI-powered case preps',
               'Full anatomy & high-yield question libraries',
               'Cancel anytime during trial',
-            ].map(feature => (
-              <li key={feature} className="flex items-center gap-2 text-sm text-teal-100">
+            ].map((feature) => (
+              <li
+                key={feature}
+                className="flex items-center gap-2 text-sm text-teal-100"
+              >
                 <CheckCircleIcon className="h-4 w-4 text-teal-300 shrink-0" />
                 {feature}
               </li>
@@ -827,7 +898,9 @@ function NonQuotaErrorCard({
           {content.icon}
         </span>
         <div>
-          <p className="font-semibold text-gray-800 leading-snug">{content.title}</p>
+          <p className="font-semibold text-gray-800 leading-snug">
+            {content.title}
+          </p>
           <p className="text-sm text-gray-500 mt-0.5 leading-relaxed">
             {message ?? content.message}
           </p>
@@ -850,7 +923,9 @@ function NonQuotaErrorCard({
 function BroBotHeader({ compact = false }: { compact?: boolean }) {
   return (
     <header className={`px-6 text-center ${compact ? 'pb-3' : 'pb-10'}`}>
-      <div className={`mx-auto flex items-center justify-center ${compact ? 'gap-2' : 'flex-col space-y-4'}`}>
+      <div
+        className={`mx-auto flex items-center justify-center ${compact ? 'gap-2' : 'flex-col space-y-4'}`}
+      >
         <div className="flex items-center space-x-4">
           <Image
             src="/brologo.png"
@@ -859,11 +934,15 @@ function BroBotHeader({ compact = false }: { compact?: boolean }) {
             height={compact ? 40 : 80}
             className={`${compact ? 'h-9 w-9' : 'h-16 w-16 sm:h-20 sm:w-20'} rounded-full`}
           />
-          <h1 className={`${compact ? 'text-xl' : 'text-4xl sm:text-5xl'} font-extrabold tracking-tight text-midnight`}>
+          <h1
+            className={`${compact ? 'text-xl' : 'text-4xl sm:text-5xl'} font-extrabold tracking-tight text-midnight`}
+          >
             Meet <span className="text-teal-600">Bro</span>
           </h1>
         </div>
-        <p className={`${compact ? 'hidden sm:block text-sm text-gray-500' : 'max-w-xl text-lg text-gray-800'}`}>
+        <p
+          className={`${compact ? 'hidden sm:block text-sm text-gray-500' : 'max-w-xl text-lg text-gray-800'}`}
+        >
           Prepare for ortho cases faster and smarter
         </p>
       </div>
@@ -871,11 +950,25 @@ function BroBotHeader({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function Card({ title, children, compact = false }: { title: string; children: React.ReactNode; compact?: boolean }) {
+function Card({
+  title,
+  children,
+  compact = false,
+}: {
+  title: string;
+  children: React.ReactNode;
+  compact?: boolean;
+}) {
   return (
-    <div className={`border border-[#d6d2c7] bg-white/90 shadow-sm ${compact ? 'rounded-xl px-4 py-3' : 'rounded-2xl px-6 py-8 space-y-4'}`}>
-      <h2 className={`flex items-center gap-2 font-semibold text-[#1A1C2C] ${compact ? 'mb-2 text-sm' : 'text-xl'}`}>
-        <MagnifyingGlassCircleIcon className={`${compact ? 'h-4 w-4' : 'h-6 w-6'} text-teal-600`} />
+    <div
+      className={`border border-[#d6d2c7] bg-white/90 shadow-sm ${compact ? 'rounded-xl px-4 py-3' : 'rounded-2xl px-6 py-8 space-y-4'}`}
+    >
+      <h2
+        className={`flex items-center gap-2 font-semibold text-[#1A1C2C] ${compact ? 'mb-2 text-sm' : 'text-xl'}`}
+      >
+        <MagnifyingGlassCircleIcon
+          className={`${compact ? 'h-4 w-4' : 'h-6 w-6'} text-teal-600`}
+        />
         {title}
       </h2>
       {children}
@@ -893,7 +986,7 @@ function Section({ label, bullets }: { label: string; bullets: string[] }) {
   return (
     <div className="space-y-2">
       <button
-        onClick={() => setCollapsed(prev => !prev)}
+        onClick={() => setCollapsed((prev) => !prev)}
         className="flex w-full items-center justify-between rounded-md bg-teal-100 px-4 py-2 text-left text-base font-semibold text-teal-900"
       >
         <span>{label}</span>
@@ -947,7 +1040,7 @@ function ToggleItem({ raw }: { raw: string }) {
       <div className="flex justify-between items-center">
         <span className="font-medium text-gray-800">{question}</span>
         <button
-          onClick={() => setShow(s => !s)}
+          onClick={() => setShow((s) => !s)}
           className="ml-4 text-sm text-teal-600 hover:underline shrink-0"
         >
           {show ? 'Hide' : 'Show'} Answer
@@ -966,7 +1059,9 @@ function LoadingOverlay() {
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm">
       <div className="mb-6 h-14 w-14 animate-spin rounded-full border-4 border-t-4 border-gray-200 border-t-teal-600" />
-      <h3 className="text-2xl font-bold text-teal-700 tracking-tight">Powered by SnapOrtho</h3>
+      <h3 className="text-2xl font-bold text-teal-700 tracking-tight">
+        Powered by SnapOrtho
+      </h3>
       <p className="mt-1 text-sm text-[#444]">Memorize • Master • Excel</p>
       <p className="mt-4 max-w-xs text-center text-xs text-[#666]">
         Crafted from the highest-yield orthopaedic student resources.
@@ -997,7 +1092,9 @@ function FeedbackSection({
         <button
           onClick={() => setWasHelpful(true)}
           className={`px-4 py-2 rounded-md ${
-            wasHelpful === true ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-800'
+            wasHelpful === true
+              ? 'bg-green-500 text-white'
+              : 'bg-gray-200 text-gray-800'
           }`}
         >
           Yes
@@ -1005,7 +1102,9 @@ function FeedbackSection({
         <button
           onClick={() => setWasHelpful(false)}
           className={`px-4 py-2 rounded-md ${
-            wasHelpful === false ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-800'
+            wasHelpful === false
+              ? 'bg-red-500 text-white'
+              : 'bg-gray-200 text-gray-800'
           }`}
         >
           No
@@ -1018,7 +1117,7 @@ function FeedbackSection({
           className="w-full mt-4 p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-red-400"
           placeholder="Let us know how we can improve this..."
           value={userFeedback}
-          onChange={e => setUserFeedback(e.target.value)}
+          onChange={(e) => setUserFeedback(e.target.value)}
         />
       )}
 
@@ -1044,7 +1143,7 @@ function ApproachQuiz({
   return (
     <div className="space-y-2">
       <button
-        onClick={() => setCollapsed(p => !p)}
+        onClick={() => setCollapsed((p) => !p)}
         className="flex w-full items-center justify-between rounded-md bg-teal-100 px-4 py-2 text-left text-base font-semibold text-teal-900"
       >
         <span>Recommended Approaches</span>
@@ -1057,7 +1156,7 @@ function ApproachQuiz({
 
       {isOpen && (
         <ul className="space-y-3 pl-1">
-          {approaches.map(a => (
+          {approaches.map((a) => (
             <ApproachItem
               key={a.id}
               name={formatApproachName(a.id)}
@@ -1084,7 +1183,7 @@ function ApproachItem({
       <div className="flex items-center justify-between gap-3">
         <span className="font-medium text-gray-800 truncate">{name}</span>
         <button
-          onClick={() => setShow(s => !s)}
+          onClick={() => setShow((s) => !s)}
           className="ml-2 shrink-0 text-sm text-teal-600 hover:underline"
         >
           {show ? 'Hide' : 'Show'}
@@ -1105,5 +1204,5 @@ function formatApproachName(id: string) {
     .replace(/_/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
-    .replace(/\b\w/g, c => c.toUpperCase());
+    .replace(/\b\w/g, (c) => c.toUpperCase());
 }
