@@ -11,9 +11,14 @@ from snaportho_reviewer.api import ReviewerApi,ApiError
 from snaportho_reviewer.diagnostics import build
 from snaportho_reviewer.dialogs import access_level_label,format_roles,linked_copy,summarize_local_deck
 from snaportho_reviewer.errors import describe,headline
-from snaportho_reviewer.version import ADDON_VERSION
+from snaportho_reviewer.version import ADDON_VERSION, addon_version_at_least
 from snaportho_reviewer.workspace import central_fields,central_tags,split_structured,combo_for_tag,tag_for_label,LEVEL_TAGS,YIELD_TAGS,CENTRAL_TAG_RE
-from snaportho_reviewer.sync import central_sync_hash
+from snaportho_reviewer.sync import (
+  central_sync_hash,
+  guid_probe_indicates_install,
+  installed_deck_presence,
+  local_guid_hits,
+)
 from snaportho_reviewer.brobot_panel import ATTENDING_PROMPT,OITE_PROMPT,card_context,chat_payload,deck_footer_text,plain_text
 from snaportho_reviewer.resource_search import anki_card_query,parse_orthobullets_id,request_payload,resolve_local_results,result_summary
 from snaportho_reviewer.bootstrap import ANKI_DOWNLOAD_URL,MIN_ANKI,UnsupportedAnkiError
@@ -392,6 +397,10 @@ class ReviewerTests(unittest.TestCase):
   self.assertIn("from aqt.import_export.importing import import_file",text)
   self.assertIn("import_file(self.runtime.mw, path)",text)
   self.assertIn("self.dialog.accept()",text)
+  self.assertIn("_probe_local_master_by_guid",text)
+  self.assertIn("stable Anki GUID",text)
+  self.assertIn("Do not use Anki Undo",text)
+  self.assertIn("Cards you moved to other decks stay where you put them",text)
  def test_master_deck_download_resumes_partial_file(self):
   from snaportho_reviewer.master_deck import format_download_size,stream_download_to_part
   class Response:
@@ -488,12 +497,19 @@ class ReviewerTests(unittest.TestCase):
    def note(self):return self.n
   self.assertEqual(central_sync_hash(SyncCard("one")),central_sync_hash(SyncCard("two")))
  def test_note_sync_v2_merge_protects_personal_and_replaces_governed_tags(self):
-  from snaportho_reviewer.deck_sync_v2 import checksum,merge_fields,merge_governed_tags
+  from snaportho_reviewer.deck_sync_v2 import checksum,merge_fields,merge_governed_tags,page_has_more
   self.assertEqual(checksum({"unicode":"≥ µ","a":[1,True,None],"z":{"b":"x"}}),"e6ecd9c1ebaf418390c451e61a9c1caf0547c39c0038a219b89d0546ad7f0dc4")
   result=merge_fields({"Text":"base","Extra":"old"},{"Text":"mine","Extra":"old","Personal_Notes":"private"},{"Text":"remote","Extra":"new","Personal_Notes":"server"},["Text"])
   self.assertEqual(result["fields"]["Text"],"mine");self.assertEqual(result["fields"]["Extra"],"new");self.assertEqual(result["fields"]["Personal_Notes"],"private")
+  kept=merge_fields({"Text":"base"},{"Text":"mine"},{"Text":"base"})
+  self.assertEqual(kept["fields"]["Text"],"mine");self.assertEqual(kept["overwrittenLocal"],[])
+  conflict=merge_fields({"Text":"base"},{"Text":"mine"},{"Text":"remote"})
+  self.assertEqual(conflict["fields"]["Text"],"mine");self.assertEqual(conflict["overwrittenLocal"],["Text"])
   tags=merge_governed_tags(["mine","SnapOrtho::Diagnosis::Old","SnapOrtho_Protect::Text"],["SnapOrtho::Diagnosis::New"],["SnapOrtho::Diagnosis"])
   self.assertEqual(tags,["SnapOrtho::Diagnosis::New","SnapOrtho_Protect::Text","mine"])
+  self.assertTrue(page_has_more({"operations":[1]*100,"remaining":None},100))
+  self.assertFalse(page_has_more({"operations":[1]*40,"remaining":None},100))
+  self.assertFalse(page_has_more({"operations":[1]*100,"remaining":0},100))
  def test_note_sync_v2_cursor_journal_and_idempotent_empty_followup(self):
   from snaportho_reviewer.deck_sync_v2 import CONTRACT,NoteSyncV2Importer,checksum
   class FakeGateway:
@@ -512,12 +528,13 @@ class ReviewerTests(unittest.TestCase):
  def test_note_sync_v2_initial_reconciliation_preserves_local_fields_and_tags(self):
   from snaportho_reviewer.deck_sync_v2 import CONTRACT,NoteSyncV2Importer,checksum
   class ExistingNoteGateway:
-   def __init__(self):self.written=None
+   def __init__(self):self.fields=None;self.tags=None
    def snapshot(self,nid,payload=None):
     self.snapshot_payload=payload
-    return{"fields":{"Text":"old","Personal_Notes":"keep me"},"tags":["favorite","SnapOrtho::Diagnosis::Old"]}
+    return{"fields":{"Text":"old","Personal_Notes":"keep me"},"tags":["favorite","SnapOrtho::Diagnosis::Old"],"ankiNoteId":7,"noteGuid":"existing-guid"}
+   def update_tags(self,nid,tags,payload=None):self.tags=tags
    def upsert_note(self,nid,payload,fields,tags):
-    self.written=(fields,tags)
+    self.fields=fields;self.tags=tags
     return{"ankiNoteId":7,"noteGuid":payload["noteGuid"]}
   release={"id":"release","sequence":1,"version":"1","aggregateChecksum":"a"*64}
   payload={"noteGuid":"existing-guid","noteTypeName":"SnapOrtho Master","deckPath":"SnapOrtho","fields":{"Text":"new","Personal_Notes":"server must not win"},"protectedFields":["Personal_Notes"],"governedTags":["SnapOrtho::Diagnosis::New"],"governedPrefixes":["SnapOrtho::Diagnosis"],"contentChecksum":"b"*64,"tagsChecksum":"c"*64}
@@ -527,8 +544,8 @@ class ReviewerTests(unittest.TestCase):
    store=DraftStore(os.path.join(d,"state.db"),"scope");gateway=ExistingNoteGateway()
    sync=NoteSyncV2Importer(store,gateway);sync.apply_page(page)
    self.assertEqual(gateway.snapshot_payload["noteGuid"],"existing-guid")
-   self.assertEqual(gateway.written[0],{"Text":"new","Personal_Notes":"keep me"})
-   self.assertEqual(gateway.written[1],["SnapOrtho::Diagnosis::New","favorite"])
+   self.assertIsNone(gateway.fields)
+   self.assertEqual(gateway.tags,["SnapOrtho::Diagnosis::New","favorite"])
    store.close()
  def test_note_sync_v2_validates_more_than_four_thousand_ordered_operations(self):
   from snaportho_reviewer.deck_sync_v2 import CONTRACT,checksum,validate_page
@@ -542,4 +559,102 @@ class ReviewerTests(unittest.TestCase):
   class Settings:environment="production";base_url="https://snap-ortho.com"
   data=build({"ankiVersion":"25.09","qtVersion":6,"profileHash":"safe","deckSubscription":{"cursor":9},"deckRecoveryInventory":{"inventoryCards":10},"pendingDeckJournal":0},Settings(),True)
   self.assertEqual(data["apiContract"],"snaportho-anki-note-sync.v2");self.assertEqual(data["localSchemaVersion"],4);self.assertEqual(data["deckSubscription"]["cursor"],9)
+ def test_addon_version_at_least(self):
+  self.assertTrue(addon_version_at_least("1.0.3","1.0.0"))
+  self.assertTrue(addon_version_at_least("1.0.3","1.0.3"))
+  self.assertFalse(addon_version_at_least("1.0.2","1.0.3"))
+  self.assertTrue(addon_version_at_least("1.0.3",None))
+  self.assertFalse(addon_version_at_least(None,"1.0.0"))
+  self.assertTrue(addon_version_at_least("0.10.0","0.9.0"))
+ def test_installed_deck_presence_accepts_notetype_without_markers(self):
+  class FakeNote(dict):
+   def __init__(self,nid,guid,**fields):
+    super().__init__(fields);self.id=nid;self.guid=guid;self.tags=[]
+   def cards(self):
+    card=type("Card",(),{})();card.ord=0;card.id=self.id;card.note=lambda:self
+    return [card]
+  class FakeCol:
+   def __init__(self,notes,queries=None):
+    self.notes={n.id:n for n in notes};self.queries=queries or {};self.db=self
+   def find_notes(self,q):return list(self.queries.get(q) or [])
+   def get_note(self,nid):return self.notes[nid]
+   def find_cards(self,q):return []
+   def get_card(self,cid):raise AssertionError("full scan")
+   def list(self,sql,guid):return [n.id for n in self.notes.values() if n.guid==guid]
+  empty=FakeCol([])
+  self.assertFalse(installed_deck_presence(empty)["installed"])
+  typed=FakeCol([FakeNote(1,"guid-1")],{'note:"SnapOrtho Master"':[1]})
+  presence=installed_deck_presence(typed)
+  self.assertTrue(presence["installed"]);self.assertEqual(presence["reason"],"note_type");self.assertEqual(presence["markerCards"],0)
+  marked=FakeNote(2,"guid-2",SnapOrtho_ID="c",SnapOrtho_Version="v",SnapOrtho_Installed_Hash="h"*64)
+  markers=installed_deck_presence(FakeCol([marked],{"SnapOrtho_ID:*":[2]}))
+  self.assertTrue(markers["installed"]);self.assertEqual(markers["reason"],"markers");self.assertEqual(markers["markerCards"],1)
+  with tempfile.TemporaryDirectory() as d:
+   store=DraftStore(os.path.join(d,"s.db"),"scope")
+   store.save_deck_subscription({"id":"r","sequence":4,"version":"0.0.4","aggregateChecksum":"a"*64},cursor=12,status="current")
+   subscribed=installed_deck_presence(empty,store)
+   self.assertTrue(subscribed["installed"]);self.assertEqual(subscribed["reason"],"subscription")
+   store.close()
+ def test_guid_probe_requires_unambiguous_local_notes(self):
+  class FakeCol:
+   def __init__(self,guids):
+    self.guids=guids;self.db=self
+   def list(self,sql,guid):return self.guids.get(guid) or []
+  ops=[{"payload":{"noteGuid":"a"}},{"payload":{}},{"payload":{"noteGuid":"b"}},{"payload":{"noteGuid":"c"}}]
+  hits,seen=local_guid_hits(FakeCol({"a":[1],"b":[2],"c":[]}),ops)
+  self.assertEqual((hits,seen),(2,3));self.assertTrue(guid_probe_indicates_install(hits,seen))
+  none,seen_none=local_guid_hits(FakeCol({}),ops)
+  self.assertEqual((none,seen_none),(0,3));self.assertFalse(guid_probe_indicates_install(none,seen_none))
+  dup,_=local_guid_hits(FakeCol({"a":[1,2],"b":[3],"c":[4]}),ops)
+  self.assertEqual(dup,2)
+ def test_summarize_local_deck_accepts_notetype_presence(self):
+  empty=summarize_local_deck([])
+  self.assertFalse(empty["installed"])
+  present=summarize_local_deck([],{"installed":True,"masterNotes":3670})
+  self.assertTrue(present["installed"]);self.assertEqual(present["cardCount"],3670)
+  self.assertIn("GUID",present["detail"])
+ def test_v2_gateway_matches_guid_without_relocating_or_duplicating(self):
+  from snaportho_reviewer.anki_runtime import NoteCollectionGatewayV2
+  class FakeNote(dict):
+   def __init__(self,nid,guid,fields,tags,deck_id=1):
+    super().__init__(fields);self.id=nid;self.guid=guid;self.tags=list(tags);self.deck_id=deck_id
+   def cards(self):
+    card=type("Card",(),{})();card.id=self.id;card.ord=0;card.queue=0;card.note=lambda:self
+    return [card]
+  class FakeCol:
+   def __init__(self,notes):
+    self.notes={n.id:n for n in notes};self.db=self;self.models=self;self.decks=self
+    self.updated=[];self.added=[];self.moved=[];self.ids={"SnapOrtho":1,"SnapOrtho::Sports":2}
+   def list(self,sql,guid):return [n.id for n in self.notes.values() if n.guid==guid]
+   def get_note(self,nid):
+    if nid not in self.notes:raise Exception("missing")
+    return self.notes[nid]
+   def by_name(self,name):return {"fields":["Text","Personal_Notes"]} if name=="SnapOrtho Master" else None
+   def id(self,path):
+    self.ids.setdefault(path,len(self.ids)+1);return self.ids[path]
+   def new_note(self,notetype):return FakeNote(99,"",{name:"" for name in notetype["fields"]},[])
+   def add_note(self,note,deck_id):
+    note.deck_id=deck_id;self.notes[note.id]=note;self.added.append(note)
+   def update_note(self,note):self.updated.append(note)
+   def set_deck(self,card_ids,deck_id):self.moved.append((list(card_ids),deck_id))
+   def update_card(self,card):pass
+  with tempfile.TemporaryDirectory() as d:
+   store=DraftStore(os.path.join(d,"s.db"),"scope")
+   existing=FakeNote(7,"existing-guid",{"Text":"old","Personal_Notes":"keep"},["favorite"],deck_id=9)
+   col=FakeCol([existing]);gateway=NoteCollectionGatewayV2(col,store)
+   payload={"noteGuid":"existing-guid","noteTypeName":"SnapOrtho Master","deckPath":"SnapOrtho::Sports"}
+   snapshot=gateway.snapshot("canonical",payload)
+   self.assertEqual(snapshot["noteGuid"],"existing-guid")
+   gateway.upsert_note("canonical",payload,{"Text":"new","Personal_Notes":"keep"},["SnapOrtho::Diagnosis::ACL","favorite"])
+   self.assertEqual(col.moved,[]);self.assertEqual(existing["Text"],"new")
+   gateway.update_tags("canonical",["mine"],payload)
+   self.assertEqual(existing.tags,["mine"])
+   duplicate=FakeNote(8,"dup-guid",{"Text":"a"},[],deck_id=1)
+   col.notes[8]=duplicate;duplicate.guid="dup-guid";existing.guid="dup-guid"
+   with self.assertRaisesRegex(RuntimeError,"note_guid_ambiguous"):
+    gateway.snapshot("other",{"noteGuid":"dup-guid"})
+   missing_payload={"noteGuid":"new-guid","noteTypeName":"SnapOrtho Master","deckPath":"SnapOrtho"}
+   created=gateway.upsert_note("new",missing_payload,{"Text":"created"},["SnapOrtho::Anatomy::Knee"])
+   self.assertEqual(created["noteGuid"],"new-guid");self.assertEqual(len(col.added),1)
+   store.close()
 if __name__=="__main__":unittest.main()

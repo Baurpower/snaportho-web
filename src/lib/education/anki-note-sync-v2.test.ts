@@ -3,6 +3,12 @@ import{checksum,mergeFields,mergeGovernedTags,validateDeltaPage}from"./anki-note
 const merged=mergeFields({base:{Text:"old",Extra:"base",Personal_Notes:"mine"},local:{Text:"local",Extra:"base",Personal_Notes:"private"},remote:{Text:"remote",Extra:"new",Personal_Notes:"server"},protectedFields:["Text"]});
 assert.deepEqual(merged.fields,{Text:"local",Extra:"new",Personal_Notes:"private"});
 assert.deepEqual(merged.preserved,["Personal_Notes","Text"]);
+const kept=mergeFields({base:{Text:"base"},local:{Text:"mine"},remote:{Text:"base"}});
+assert.deepEqual(kept.fields,{Text:"mine"});
+assert.deepEqual(kept.overwrittenLocal,[]);
+const conflict=mergeFields({base:{Text:"base"},local:{Text:"mine"},remote:{Text:"remote"}});
+assert.deepEqual(conflict.fields,{Text:"mine"});
+assert.deepEqual(conflict.overwrittenLocal,["Text"]);
 assert.deepEqual(mergeGovernedTags(["mine","SnapOrtho::Diagnosis::Old","SnapOrtho_Protect::Text"],["SnapOrtho::Diagnosis::New"],["SnapOrtho::Diagnosis"]),["SnapOrtho::Diagnosis::New","SnapOrtho_Protect::Text","mine"]);
 const payload={fields:{Text:"x"}},operation={cursor:4,releaseId:"r",operationIndex:0,operation:"upsert_note"as const,noteId:"n",noteVersionId:"v",payloadChecksum:checksum(payload),payload};
 assert.deepEqual(validateDeltaPage({afterCursor:3,operations:[operation],nextCursor:4,remaining:0,pageChecksum:checksum([operation])}),[]);

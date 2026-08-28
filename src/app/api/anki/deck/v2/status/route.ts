@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- v2 tables precede generated Supabase types. */
 import { NextResponse } from "next/server";
-import { deviceAuth } from "../../_lib";
+import { deviceAuth, requireAddonVersion } from "../../_lib";
 import { NOTE_SYNC_V2 } from "@/lib/education/anki-note-sync-v2";
 
 export async function GET(request:Request){
@@ -11,6 +11,7 @@ export async function GET(request:Request){
     .eq("status","published").order("release_sequence",{ascending:false}).limit(1).maybeSingle();
   if(error)return NextResponse.json({error:"v2 release lookup unavailable"},{status:500});
   if(!data)return NextResponse.json({error:"no published SnapOrtho sync v2 release"},{status:404});
+  const blocked=requireAddonVersion(request,data.minimum_addon_version);if(blocked)return blocked;
   return NextResponse.json({contractVersion:NOTE_SYNC_V2,release:{
     id:data.id,sequence:Number(data.release_sequence),version:data.release_version,
     aggregateChecksum:data.aggregate_checksum,expectedNoteCount:data.expected_note_count,

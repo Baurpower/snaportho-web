@@ -13,6 +13,14 @@ import {
   signAnkiAwsDownload,
 } from "@/lib/education/anki-aws-storage";
 export { addonVersionAtLeast };
+export function requireAddonVersion(request: Request, minimum: string | null) {
+  const client = clientAddonVersion(request);
+  if (addonVersionAtLeast(client, minimum)) return null;
+  return NextResponse.json(
+    { error: "upgrade_required", minimumAddonVersion: minimum },
+    { status: 426 },
+  );
+}
 export const ANKI_DECK_MEDIA_BUCKET = "anki-deck-media";
 // Full media packages can be ~1GB. A fresh URL can also resume a partial Range download.
 export const ANKI_MEDIA_SIGNED_URL_SECONDS = 6 * 60 * 60;

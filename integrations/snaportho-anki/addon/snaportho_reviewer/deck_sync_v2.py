@@ -16,9 +16,24 @@ def merge_fields(base,local,remote,protected=()):
     for name in sorted(set(base)|set(remote)):
         old=base.get(name,"");current=local.get(name,"");incoming=remote.get(name,"")
         if PERSONAL.match(name)or name.lower()in protected:result[name]=current;preserved.append(name);continue
-        if current!=old and current!=incoming:overwritten.append(name)
-        result[name]=incoming
+        if incoming==old or current==incoming:
+            result[name]=current;continue
+        if current==old:
+            result[name]=incoming;continue
+        overwritten.append(name)
+        result[name]=current
     return{"fields":result,"remoteBaseline":dict(remote),"preserved":preserved,"overwrittenLocal":overwritten}
+def central_fields_differ(local,remote):
+    for name,incoming in (remote or{}).items():
+        if PERSONAL.match(name):continue
+        if(local.get(name)or"")!=(incoming or""):return True
+    return False
+def page_has_more(page,limit):
+    ops=page.get("operations")or[]
+    remaining=page.get("remaining")
+    if remaining is None:return len(ops)>=int(limit)
+    try:return int(remaining)>0
+    except(TypeError,ValueError):return len(ops)>=int(limit)
 def merge_governed_tags(local,remote,prefixes):
     def governed(tag):return any(tag==p or tag.startswith(p+"::")for p in prefixes)
     return sorted(set([t for t in local if not governed(t)]+list(remote)))
@@ -53,21 +68,42 @@ class NoteSyncV2Importer:
             self.store.journal_start(self.deck_key,op["cursor"],note_id,kind,before)
             if kind=="upsert_note":
                 baseline=self.store.note_baseline(note_id,self.deck_key)or{}
-                merged=merge_fields(baseline.get("fields")or{},before.get("fields")or{},payload.get("fields")or{},payload.get("protectedFields")or[])
+                local_fields=before.get("fields")or{}
+                remote_fields=payload.get("fields")or{}
                 tags=merge_governed_tags(before.get("tags")or[],payload.get("governedTags")or[],payload.get("governedPrefixes")or[])
-                result=self.gateway.upsert_note(note_id,payload,merged["fields"],tags)
+                exists=bool(before.get("ankiNoteId"))
+                if exists and not baseline:
+                    # First v2 sync of an already-installed note: apply governed
+                    # tags only. Replaying the published field snapshot would
+                    # clobber local edits because there is no prior baseline.
+                    self.gateway.update_tags(note_id,tags,payload)
+                    result={"ankiNoteId":before["ankiNoteId"],"noteGuid":before.get("noteGuid") or payload.get("noteGuid")}
+                    summary["tags"]+=1
+                    merged={"overwrittenLocal":[]}
+                else:
+                    base_fields=baseline.get("fields")or(local_fields if exists else{})
+                    merged=merge_fields(base_fields,local_fields,remote_fields,payload.get("protectedFields")or[])
+                    if exists and not central_fields_differ(local_fields,merged["fields"]):
+                        self.gateway.update_tags(note_id,tags,payload)
+                        result={"ankiNoteId":before["ankiNoteId"],"noteGuid":before.get("noteGuid") or payload.get("noteGuid")}
+                        summary["tags"]+=1
+                    else:
+                        result=self.gateway.upsert_note(note_id,payload,merged["fields"],tags)
+                        summary["notes"]+=1
+                    summary["overwrittenLocal"]+=merged["overwrittenLocal"]
                 self.store.save_note_baseline(note_id,result["ankiNoteId"],result["noteGuid"],op.get("noteVersionId"),payload.get("fields")or{},payload.get("governedTags")or[],payload.get("contentChecksum"),payload.get("tagsChecksum"),self.deck_key)
-                summary["notes"]+=1;summary["overwrittenLocal"]+=merged["overwrittenLocal"]
             elif kind=="retire_note":self.gateway.retire_note(note_id,payload);summary["retired"]+=1
             elif kind=="update_tags":
                 tags=merge_governed_tags(before.get("tags")or[],payload.get("governedTags")or[],payload.get("governedPrefixes")or[])
-                self.gateway.update_tags(note_id,tags);summary["tags"]+=1
-            elif kind=="move_note":self.gateway.move_note(note_id,payload["deckPath"]);summary["moved"]+=1
+                self.gateway.update_tags(note_id,tags,payload);summary["tags"]+=1
+            elif kind=="move_note":self.gateway.move_note(note_id,payload["deckPath"],payload);summary["moved"]+=1
             elif kind=="media_add":self.gateway.media_add(payload);summary["media"]+=1
             elif kind=="media_remove":self.gateway.media_remove(payload);summary["media"]+=1
             elif kind=="update_note_type":self.gateway.update_note_type(payload)
             self.store.journal_finish(self.deck_key,op["cursor"])
             self.store.save_deck_subscription(page["release"],self.deck_key,op["cursor"],"updating")
-        self.store.save_deck_subscription(page["release"],self.deck_key,page["nextCursor"],"current"if page.get("remaining")==0 else"updating")
+        remaining=page.get("remaining")
+        done=remaining is not None and int(remaining)==0
+        self.store.save_deck_subscription(page["release"],self.deck_key,page["nextCursor"],"current"if done else"updating")
         summary["overwrittenLocal"]=sorted(set(summary["overwrittenLocal"]))
         return summary

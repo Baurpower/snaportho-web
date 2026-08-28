@@ -82,9 +82,10 @@ class NoteCollectionGatewayV2:
         if baseline:
             try:return self.col.get_note(baseline["ankiNoteId"])
             except Exception:pass
-        guid=(payload or{}).get("noteGuid")
+        guid=(payload or{}).get("noteGuid") or (baseline or{}).get("noteGuid")
         if guid:
-            ids=self.col.db.list("select id from notes where guid=?",guid)
+            ids=self.col.db.list("select id from notes where guid=?",guid) or []
+            if len(ids)>1:raise RuntimeError("note_guid_ambiguous")
             if len(ids)==1:return self.col.get_note(ids[0])
         return None
     def snapshot(self,canonical_note_id,payload=None):
@@ -100,26 +101,29 @@ class NoteCollectionGatewayV2:
         for name,value in fields.items():
             if name in note:note[name]=value
         note.tags=sorted(set(tags))
-        deck_id=self.col.decks.id(payload["deckPath"])
-        if created:self.col.add_note(note,deck_id)
+        if created:
+            self.col.add_note(note,self.col.decks.id(payload["deckPath"]))
         else:
             self.col.update_note(note)
-            card_ids=[card.id for card in note.cards()]
-            if card_ids:self.col.set_deck(card_ids,deck_id)
+            # Content/tag upserts must not yank cards the learner moved.
+            # Official relocation is a dedicated move_note operation.
         return{"ankiNoteId":note.id,"noteGuid":note.guid}
-    def update_tags(self,canonical_note_id,tags):
-        note=self._note(canonical_note_id)
+    def update_tags(self,canonical_note_id,tags,payload=None):
+        note=self._note(canonical_note_id,payload)
         if not note:raise RuntimeError("note_not_found")
         note.tags=sorted(set(tags));self.col.update_note(note)
-    def move_note(self,canonical_note_id,deck_path):
-        note=self._note(canonical_note_id)
+    def move_note(self,canonical_note_id,deck_path,payload=None):
+        note=self._note(canonical_note_id,payload)
         if not note:raise RuntimeError("note_not_found")
         card_ids=[card.id for card in note.cards()]
         if card_ids:self.col.set_deck(card_ids,self.col.decks.id(deck_path))
-    def retire_note(self,canonical_note_id,payload):
-        note=self._note(canonical_note_id)
+    def retire_note(self,canonical_note_id,payload=None):
+        note=self._note(canonical_note_id,payload)
         if not note:return
-        note.add_tag("SnapOrtho::Workflow::Retired");self.col.update_note(note)
+        add_tag=getattr(note,"add_tag",None)
+        if callable(add_tag):add_tag("SnapOrtho::Workflow::Retired")
+        elif "SnapOrtho::Workflow::Retired" not in note.tags:note.tags.append("SnapOrtho::Workflow::Retired")
+        self.col.update_note(note)
         for card in note.cards():card.queue=-1;self.col.update_card(card)
     def media_add(self,payload):
         import os

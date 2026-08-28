@@ -1,8 +1,10 @@
 // Add-on version gate helpers. Pure (no Next/Supabase deps) so they are unit-testable.
-// The client identifies itself with `X-SnapOrtho-Client: reviewer-addon/<version>`; a release
-// may set a minimum_addon_version floor that older clients must clear before applying a manifest.
+// Clients identify as `reviewer-addon/<version>` or `snaportho-addon/<version>`.
+// A release may set a minimum_addon_version floor that older clients must clear before applying.
 export function addonVersionFromClientHeader(headerValue: string | null): string | null {
-  const match = (headerValue ?? "").match(/reviewer-addon\/([0-9]+(?:\.[0-9]+){0,3})/i);
+  const match = (headerValue ?? "").match(
+    /(?:reviewer-addon|snaportho-addon)\/([0-9]+(?:\.[0-9]+){0,3})/i,
+  );
   return match ? match[1] : null;
 }
 function parseVersion(value: string): number[] {

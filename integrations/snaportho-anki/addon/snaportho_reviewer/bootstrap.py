@@ -157,8 +157,8 @@ class ProfileRuntime:
         try:
             linked=bool(self.credentials.get())
         except Exception:return
-        from .sync import installed_card_inventory
-        try:installed=bool(installed_card_inventory(self.mw.col))
+        from .sync import installed_deck_presence
+        try:installed=bool(installed_deck_presence(self.mw.col,self.store).get("installed"))
         except Exception:installed=False
         if linked and installed:return
         if self.store.cached("onboarding_dismissed_at"):return

@@ -68,7 +68,7 @@ def describe(error):
     if code == "no_bootstrap_artifact":
         return (
             "A release exists, but the starter .apkg package has not been published for it yet. "
-            "Contact the SnapOrtho team, or use Check for updates once your collection already has Master markers."
+            "Contact the SnapOrtho team, or use I've already imported it / Check for updates if the Master notes are already in this profile."
         )
     if code == "upgrade_required":
         body = getattr(error, "body", None) or {}

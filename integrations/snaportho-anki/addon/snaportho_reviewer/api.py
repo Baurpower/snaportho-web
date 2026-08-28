@@ -2,7 +2,7 @@ import json, socket, time, urllib.error, urllib.parse, urllib.request
 from .version import ADDON_VERSION
 
 CONTRACT = "snaportho-anki-reviewer.v1"
-MAX_RESPONSE = 2_000_000
+MAX_RESPONSE = 8_000_000
 # Deck inventory POSTs can be large; chunking keeps each body well under this.
 MAX_REQUEST = 512_000
 
@@ -267,7 +267,7 @@ class ReviewerApi:
     def deck_v2_status(self):
         return self.request("GET", "/api/anki/deck/v2/status")
 
-    def deck_v2_updates(self, after=0, limit=250):
+    def deck_v2_updates(self, after=0, limit=100):
         return self.request("GET", f"/api/anki/deck/v2/updates?after={int(after)}&limit={int(limit)}")
 
     def deck_v2_media(self, release_id, sha256):

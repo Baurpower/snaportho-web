@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- v2 tables precede generated Supabase types. */
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { deviceAuth } from "../../_lib";
+import { deviceAuth, requireAddonVersion } from "../../_lib";
 import { checksum, NOTE_SYNC_V2 } from "@/lib/education/anki-note-sync-v2";
 
 const query=z.object({
@@ -14,10 +14,11 @@ export async function GET(request:Request){
   const url=new URL(request.url),parsed=query.safeParse(Object.fromEntries(url.searchParams));
   if(!parsed.success)return NextResponse.json({error:"invalid v2 cursor request"},{status:400});
   const{data:release,error:releaseError}=await db.from("anki_sync_v2_releases")
-    .select("id,release_sequence,release_version,aggregate_checksum,expected_note_count,expected_card_count,expected_media_count")
+    .select("id,release_sequence,release_version,aggregate_checksum,expected_note_count,expected_card_count,expected_media_count,minimum_addon_version")
     .eq("status","published").order("release_sequence",{ascending:false}).limit(1).maybeSingle();
   if(releaseError)return NextResponse.json({error:"v2 release lookup unavailable"},{status:500});
   if(!release)return NextResponse.json({error:"no published SnapOrtho sync v2 release"},{status:404});
+  const blocked=requireAddonVersion(request,release.minimum_addon_version);if(blocked)return blocked;
   const{data:lineage,error:lineageError}=await db.from("anki_sync_v2_releases")
     .select("id").in("status",["published","superseded"]).lte("release_sequence",release.release_sequence);
   if(lineageError)return NextResponse.json({error:"v2 release lineage unavailable"},{status:500});
@@ -33,12 +34,14 @@ export async function GET(request:Request){
     payloadChecksum:row.payload_checksum,payload:row.payload,
   }));
   const nextCursor=operations.length?operations.at(-1)!.cursor:parsed.data.after;
+  const pageLen=operations.length;
+  const remaining=count==null?(pageLen<parsed.data.limit?0:parsed.data.limit):Math.max(0,count-pageLen);
   return NextResponse.json({
     contractVersion:NOTE_SYNC_V2,
     release:{id:release.id,sequence:Number(release.release_sequence),version:release.release_version,
       aggregateChecksum:release.aggregate_checksum,expectedNoteCount:release.expected_note_count,
       expectedCardCount:release.expected_card_count,expectedMediaCount:release.expected_media_count},
-    afterCursor:parsed.data.after,nextCursor,remaining:Math.max(0,(count??0)-operations.length),
+    afterCursor:parsed.data.after,nextCursor,remaining,
     operations,pageChecksum:checksum(operations),
   });
 }

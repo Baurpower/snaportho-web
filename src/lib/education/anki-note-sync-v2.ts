@@ -18,8 +18,10 @@ export function mergeFields(input:{base:FieldMap;local:FieldMap;remote:FieldMap;
     const base=input.base[name]??"",local=input.local[name]??"",remote=input.remote[name]??"";
     const protect=personal.test(name)||protectedSet.has(name.toLowerCase());
     if(protect){fields[name]=local;preserved.push(name);continue;}
-    if(local!==base&&local!==remote)overwrittenLocal.push(name);
-    fields[name]=remote;
+    if(remote===base||local===remote){fields[name]=local;continue;}
+    if(local===base){fields[name]=remote;continue;}
+    overwrittenLocal.push(name);
+    fields[name]=local;
   }
   return{fields,remoteBaseline:{...input.remote},preserved:preserved.sort(),overwrittenLocal:overwrittenLocal.sort()};
 }

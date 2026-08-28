@@ -481,14 +481,19 @@ class LearnerSidePanel:
         self._render()
 
     def refresh_deck_footer(self):
-        from .sync import installed_card_inventory
+        from .sync import installed_deck_presence
 
         try:
-            inventory = installed_card_inventory(self.mw.col)
+            presence = installed_deck_presence(self.mw.col, self.runtime.store)
         except Exception:
-            inventory = []
-        installed = self.runtime.store.cached("installed_master_release")
-        self.footer.setText(deck_footer_text(installed, None, len(inventory)))
+            presence = {"installed": False, "inventory": [], "markerCards": 0, "masterNotes": 0, "subscription": None}
+        inventory = presence.get("inventory") or []
+        card_count = max(len(inventory), int(presence.get("masterNotes") or 0))
+        if presence.get("installed") and card_count == 0:
+            card_count = 1
+        subscription = presence.get("subscription")
+        installed = (subscription or {}).get("releaseVersion") or self.runtime.store.cached("installed_master_release")
+        self.footer.setText(deck_footer_text(installed, None, card_count))
         try:
             linked = bool(self.runtime.credentials.get())
         except Exception:
@@ -500,18 +505,23 @@ class LearnerSidePanel:
             try:
                 _, body = future.result()
                 release = body.get("release") or body
-                latest = release.get("release_version") or release.get("releaseVersion")
+                latest = (
+                    release.get("version")
+                    or release.get("releaseVersion")
+                    or release.get("release_version")
+                )
                 self.footer.setText(
                     deck_footer_text(
-                        self.runtime.store.cached("installed_master_release"),
+                        (self.runtime.store.deck_subscription() or {}).get("releaseVersion")
+                        or self.runtime.store.cached("installed_master_release"),
                         latest,
-                        len(inventory),
+                        card_count,
                     )
                 )
             except Exception:
                 pass
 
-        self.runtime.background(self.runtime.api.current_deck_release, done)
+        self.runtime.background(self.runtime.api.deck_v2_status, done)
 
     def close(self):
         self.dock.close()

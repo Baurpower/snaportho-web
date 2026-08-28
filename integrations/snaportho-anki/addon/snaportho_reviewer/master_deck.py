@@ -2,8 +2,8 @@
 
 States:
   A) Not linked → link device
-  B) Linked, no local Master markers → download starter .apkg
-  C) Linked, markers present → check / apply updates
+  B) Linked, deck not in this profile → download starter .apkg
+  C) Linked, deck present (markers, SnapOrtho Master notetype, v2 cursor, or GUID probe) → v2 updates
   D) Typed errors with honest copy
 """
 from __future__ import annotations
@@ -16,7 +16,15 @@ import time
 import urllib.request
 
 from .errors import describe, headline
-from .sync import chunk_list, installed_card_inventory, merge_sync_plan_actions
+from .sync import (
+    GUID_PROBE_SAMPLE,
+    chunk_list,
+    guid_probe_indicates_install,
+    installed_card_inventory,
+    installed_deck_presence,
+    local_guid_hits,
+    merge_sync_plan_actions,
+)
 
 STEP_LINK, STEP_INSTALL, STEP_UPDATE = 1, 2, 3
 
@@ -193,6 +201,10 @@ QLabel#downloadProgressLabel {
 
 def has_master_markers(col) -> bool:
     return bool(installed_card_inventory(col))
+
+
+def has_installed_master_deck(col, store=None) -> bool:
+    return bool(installed_deck_presence(col, store).get("installed"))
 
 
 def plan_counts(plan) -> dict:
@@ -542,24 +554,43 @@ class MasterDeckDialog:
         self.details.setPlainText("Device is not linked. Deck download and updates require a device token.")
 
     def _load_release_and_plan(self):
-        inventory = installed_card_inventory(self.runtime.mw.col)
-        has_markers = bool(inventory)
-        self._set_installed_layout(has_markers)
-        if has_markers:
+        presence = installed_deck_presence(self.runtime.mw.col, self.runtime.store)
+        inventory = presence.get("inventory") or []
+        if presence.get("installed"):
+            self._set_installed_layout(True)
             self._load_v2_status(inventory)
             return
 
+        def probe_done(future):
+            try:
+                matched = future.result()
+            except Exception:
+                matched = False
+            if matched:
+                self._set_installed_layout(True)
+                self._load_v2_status(inventory)
+                return
+            self._load_bootstrap_release(inventory)
+
+        self._set_hero("<b>Checking whether this profile already has the Master Deck…</b>", "info")
+        self.runtime.background(self._probe_local_master_by_guid, probe_done)
+
+    def _probe_local_master_by_guid(self):
+        """True when published v2 note GUIDs already exist locally, even without v1 markers."""
+        self.runtime.api.deck_v2_status()
+        _, page = self.runtime.api.deck_v2_updates(0, GUID_PROBE_SAMPLE)
+        hits, seen = local_guid_hits(self.runtime.mw.col, page.get("operations") or [])
+        return guid_probe_indicates_install(hits, seen)
+
+    def _load_bootstrap_release(self, inventory):
         def release_done(future):
             try:
                 _, body = future.result()
                 self.release = body.get("release") or body
             except Exception as error:
-                self._show_release_error(error, has_markers, inventory)
+                self._show_release_error(error, False, inventory)
                 return
-            if not has_markers:
-                self._show_install(self.release)
-                return
-            self._load_plan(self.release, inventory)
+            self._show_install(self.release)
 
         self.runtime.background(self.runtime.api.current_deck_release, release_done)
 
@@ -570,13 +601,21 @@ class MasterDeckDialog:
         self._set_update_progress(0, "Checking immutable release and local cursor…", indeterminate=True)
         subscription=self.runtime.store.deck_subscription()
         after=int((subscription or{}).get("cursor")or 0)
+        pending=self.runtime.store.pending_deck_journal()
         def work():
+            from .api import ApiError
+            from .version import ADDON_VERSION, addon_version_at_least
             _,status=self.runtime.api.deck_v2_status()
-            release=status["release"];pages=[];cursor=after
+            release=status["release"]
+            minimum=release.get("minimumAddonVersion") or release.get("minimum_addon_version")
+            if not addon_version_at_least(ADDON_VERSION, minimum):
+                raise ApiError("upgrade_required", 426, body={"minimumAddonVersion": minimum})
+            from .deck_sync_v2 import page_has_more
+            pages=[];cursor=after;page_limit=100
             while True:
-                _,page=self.runtime.api.deck_v2_updates(cursor,250);pages.append(page)
+                _,page=self.runtime.api.deck_v2_updates(cursor,page_limit);pages.append(page)
                 cursor=int(page["nextCursor"])
-                if int(page.get("remaining")or 0)==0:break
+                if not(page.get("operations")or[])or not page_has_more(page,page_limit):break
             return release,pages
         def done(future):
             self._hide_download_progress()
@@ -592,6 +631,9 @@ class MasterDeckDialog:
                         "info",
                     )
                     self._set_actions("Check again",self.refresh)
+                elif code=="upgrade_required":
+                    self._set_hero(f"<b>Add-on update needed</b><br><br>{describe(error)}","default")
+                    self._set_actions("Check again",self.refresh)
                 else:
                     self._set_hero(f"<b>Update check failed</b><br><br>{describe(error)}","default")
                     self._set_actions("Try again",self.refresh)
@@ -601,12 +643,20 @@ class MasterDeckDialog:
             self.v2_summary=v2_content_summary(operations)
             counts={}
             for op in operations:counts[op["operation"]]=counts.get(op["operation"],0)+1
+            interrupted = (
+                f"<br><br>A previous update paused at {len(pending)} operation(s). "
+                "Resume to finish from the last saved cursor. Do not use Anki Undo — "
+                "that would desync the update cursor from your cards."
+                if pending else ""
+            )
             if not operations:
                 self.runtime.store.save_deck_subscription(release,cursor=after,status="current")
+                self.runtime.store.cache("installed_master_release", release.get("version"))
                 self._set_hero(
                     f"<b>✓ Master Deck {release['version']} is up to date.</b><br><br>"
-                    f"{release['expectedNoteCount']} notes · {release['expectedCardCount']} cards",
-                    "ok",
+                    f"{release['expectedNoteCount']} notes · {release['expectedCardCount']} cards"
+                    + interrupted,
+                    "ok" if not pending else "info",
                 )
                 self._set_step(active=None,done=(STEP_LINK,STEP_INSTALL,STEP_UPDATE))
                 self._set_actions("Check again",self.refresh)
@@ -618,11 +668,20 @@ class MasterDeckDialog:
                 f"{self.v2_summary['managedTagAssignments']} managed tag assignments on "
                 f"{self.v2_summary['taggedNotes']} notes · "
                 f"{self.v2_summary['mediaAssets']} media assets<br><br>"
-                "Personal and protected fields are preserved. Existing scheduling is not changed.",
+                "Personal notes and protected fields stay local. Scheduling is not changed. "
+                "Cards you moved to other decks stay where you put them."
+                + interrupted,
                 "info",
             )
-            self.details.setPlainText(json.dumps({"release":release,"operationCounts":counts,"pages":len(pages)},indent=2))
-            self._set_actions("Update now",self._apply_v2,"Check again",self.refresh)
+            self.details.setPlainText(json.dumps({
+                "release":release,
+                "operationCounts":counts,
+                "pages":len(pages),
+                "localMarkerCards":len(inventory or []),
+                "pendingJournal":len(pending),
+                "cursor":after,
+            },indent=2))
+            self._set_actions("Resume" if pending else "Update now",self._apply_v2,"Check again",self.refresh)
         self.runtime.background(work,done)
 
     def _apply_v2(self):
@@ -669,13 +728,14 @@ class MasterDeckDialog:
             self.runtime.mw.reset();self._busy=False
             self._hide_download_progress()
             summary=self.v2_summary
+            self.runtime.store.cache("installed_master_release", self.v2_release.get("version"))
             self._set_hero(
                 f"<b>✓ Master Deck {self.v2_release['version']} updated</b><br><br>"
                 f"{summary.get('updatedNotes',totals['notes'])} notes refreshed · "
                 f"{summary.get('managedTagAssignments',totals['tags'])} managed tag assignments "
                 f"across {summary.get('taggedNotes',0)} notes · "
                 f"{summary.get('mediaAssets',totals['media'])} media assets<br><br>"
-                "Existing scheduling and protected fields were preserved.",
+                "Existing scheduling, protected fields, and cards you had moved were preserved.",
                 "ok",
             )
             self._set_step(active=None,done=(STEP_LINK,STEP_INSTALL,STEP_UPDATE))
@@ -684,7 +744,8 @@ class MasterDeckDialog:
             self._busy=False
             self._set_hero(
                 f"<b>Update paused safely</b><br><br>{type(error).__name__}: {error}<br><br>"
-                "The cursor was saved after the last completed operation. Check again to resume.",
+                "The cursor was saved after the last completed operation. Click Resume to continue. "
+                "Do not use Anki Undo — that would desync the saved cursor from your collection.",
                 "default",
             )
             self._set_actions("Resume",self.refresh)
@@ -737,7 +798,10 @@ class MasterDeckDialog:
             f"Latest release: <b>{version}</b>{pub_line}<br><br>"
             "Download the SnapOrtho Master .apkg, then use <b>File → Import</b> in Anki "
             "(or drag the file onto Anki). After import, return here and refresh — "
-            "you should see that you're up to date.",
+            "versioned tag updates apply in place and do not replace this starter package.<br><br>"
+            "If this profile already has the Master notes, choose <b>I've already imported it</b>. "
+            "SnapOrtho matches existing notes by their stable Anki GUID, even when the old "
+            "marker fields are empty.",
             "info",
         )
         self._set_actions(

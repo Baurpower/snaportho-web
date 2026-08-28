@@ -4,6 +4,7 @@ import { addonVersionFromClientHeader, addonVersionAtLeast } from "./deck-addon-
 // header parsing
 assert.equal(addonVersionFromClientHeader("reviewer-addon/0.6.0"), "0.6.0");
 assert.equal(addonVersionFromClientHeader("reviewer-addon/0.6.0 (mac)"), "0.6.0");
+assert.equal(addonVersionFromClientHeader("snaportho-addon/1.0.3"), "1.0.3");
 assert.equal(addonVersionFromClientHeader("something-else"), null);
 assert.equal(addonVersionFromClientHeader(null), null);
 

@@ -519,33 +519,25 @@ async function proxyCasePrepStream(
 
       const reader = upstreamBody.getReader();
       try {
-        let pendingDoneFrame: string | null = null;
         for (;;) {
           const { done, value } = await reader.read();
           if (done) break;
           const chunkText = decoder.decode(value, { stream: true });
           const events = parseSseChunk(parseState, chunkText);
-          let forwardText = chunkText;
           for (const event of events) {
             handleEvent(event);
             if (event.event === "done") {
-              // Hold the terminal frame until optional enrichments settle so
-              // Sources remains the final section and `done` stays terminal.
-              const doneIndex = chunkText.lastIndexOf("event: done");
-              if (doneIndex >= 0) {
-                forwardText = chunkText.slice(0, doneIndex);
-                pendingDoneFrame = chunkText.slice(doneIndex);
-              }
+              // Re-encode parsed events instead of slicing the current network
+              // chunk. An SSE frame may span chunks; slicing `chunkText` meant a
+              // split `done` frame was forwarded before Sources and enrichment
+              // was never emitted to iOS.
+              await flushKgSection();
+              if (readingTopic) await flushReferencesSection();
             }
-          }
-          if (forwardText)
-            streamController.enqueue(encoder.encode(forwardText));
-          if (pendingDoneFrame) {
-            await flushKgSection();
-            if (readingTopic) await flushReferencesSection();
-            streamController.enqueue(encoder.encode(pendingDoneFrame));
-            pendingDoneFrame = null;
-            kgPromise = null;
+            streamController.enqueue(
+              encoder.encode(encodeSseEvent(event.event, event.data)),
+            );
+            if (event.event === "done") kgPromise = null;
           }
         }
       } catch (error) {

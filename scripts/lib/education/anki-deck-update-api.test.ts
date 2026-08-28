@@ -24,6 +24,13 @@ const awsMigration = read(
 // Version gate: sync/plan blocks stale add-ons with 426 upgrade_required.
 for (const x of [/addonVersionAtLeast/, /426/, /upgrade_required/]) assert.match(plan, x);
 assert.match(gate, /export function addonVersionAtLeast/);
+assert.match(gate, /snaportho-addon/);
+const v2Status = read("src/app/api/anki/deck/v2/status/route.ts");
+const v2Updates = read("src/app/api/anki/deck/v2/updates/route.ts");
+for (const source of [v2Status, v2Updates]) {
+  assert.match(source, /requireAddonVersion/);
+  assert.match(source, /minimum_addon_version/);
+}
 
 // Media: signed URL, published-release only, never serves excluded assets, verifies hash format.
 for (const x of [/createSignedUrl/, /"published"/, /license_status/, /excluded/, /\[a-f0-9\]\{64\}/])

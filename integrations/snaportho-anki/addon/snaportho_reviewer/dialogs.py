@@ -112,9 +112,25 @@ def access_level_label(roles, status=None, active=True):
     return "Linked — no reviewer role yet"
 
 
-def summarize_local_deck(inventory):
-    """Pure summary of installed Master markers."""
+def summarize_local_deck(inventory, presence=None):
+    """Pure summary of installed Master notes. Markers are sufficient, not required."""
     inventory = list(inventory or [])
+    presence = presence or {}
+    if not inventory and presence.get("installed"):
+        notes = int(presence.get("masterNotes") or 0)
+        return {
+            "installed": True,
+            "cardCount": notes,
+            "versionCount": 0,
+            "versions": [],
+            "headline": f"{notes} Master notes installed" if notes else "Master Deck installed",
+            "detail": (
+                f"{notes} SnapOrtho Master notes are in this profile. "
+                "Versioned updates match notes by stable Anki GUID; marker fields are not required."
+                if notes
+                else "This profile already has a SnapOrtho Master Deck subscription. Check for updates to apply the latest release."
+            ),
+        }
     if not inventory:
         return {
             "installed": False,
@@ -122,7 +138,7 @@ def summarize_local_deck(inventory):
             "versionCount": 0,
             "versions": [],
             "headline": "Not installed",
-            "detail": "No SnapOrtho Master markers found in this profile. Use Get Started / Master Deck to download the starter package.",
+            "detail": "No SnapOrtho Master Deck found in this profile. Use Get Started / Master Deck to download the starter package, or choose I've already imported it if the notes are already here.",
         }
     versions = sorted(
         {
@@ -281,14 +297,14 @@ class SettingsDialog:
             return False
 
     def refresh_status(self):
-        from .sync import installed_card_inventory
+        from .sync import installed_deck_presence
 
-        inventory = []
         try:
-            inventory = installed_card_inventory(self.runtime.mw.col)
+            presence = installed_deck_presence(self.runtime.mw.col, self.runtime.store)
         except Exception:
-            inventory = []
-        local = summarize_local_deck(inventory)
+            presence = {"installed": False, "inventory": [], "masterNotes": 0}
+        inventory = presence.get("inventory") or []
+        local = summarize_local_deck(inventory, presence)
         self.deck_body.setText(local["detail"])
         if local["installed"]:
             self._set_badge(self.deck_badge, f"{local['cardCount']} cards", "ok")
