@@ -164,7 +164,7 @@ export default function ReadingRecommendationsPanel({
           type="button"
           onClick={onClose}
           aria-label="Close Read Next"
-          className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
         >
           <XMarkIcon className="h-4 w-4" />
         </button>
@@ -184,7 +184,7 @@ export default function ReadingRecommendationsPanel({
           <button
             type="button"
             onClick={() => void loadRecommendations()}
-            className="mt-2 rounded-md border border-amber-200 bg-white px-3 py-1.5 text-xs font-semibold text-amber-800 hover:bg-amber-100"
+            className="mt-2 min-h-10 rounded-md border border-amber-200 bg-white px-3 py-2 text-xs font-semibold text-amber-800 hover:bg-amber-100"
           >
             Retry
           </button>
@@ -235,7 +235,7 @@ export default function ReadingRecommendationsPanel({
               <button
                 type="button"
                 onClick={() => void openResource(resource)}
-                className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-sky-600 px-3 py-1.5 text-xs font-bold text-white transition hover:bg-sky-700"
+                className="mt-3 inline-flex min-h-10 items-center gap-1.5 rounded-md bg-sky-600 px-3 py-2 text-xs font-bold text-white transition hover:bg-sky-700"
               >
                 Open
                 <ArrowTopRightOnSquareIcon className="h-3.5 w-3.5" />

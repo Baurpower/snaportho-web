@@ -22,9 +22,15 @@ import {
   CheckCircleIcon,
   ClipboardDocumentIcon,
   BookOpenIcon,
+  StopIcon,
 } from '@heroicons/react/24/outline';
 
 import { useAuth } from '@/context/AuthContext';
+import { useProfile } from '@/app/hooks/useprofile';
+import { BROBOT_EXAMPLE_PROMPTS } from '@/lib/brobot/chat/example-prompts';
+import { shouldSubmitComposerOnEnter } from '@/lib/brobot/chat/composer-keyboard';
+import { selectBroBotAnswerExtras } from '@/lib/brobot/chat/answer-display';
+import { mapProfileToBroBotTrainingLevel } from '@/lib/brobot/chat/training-level';
 import {
   clearPendingBroBotRequest,
   readPendingBroBotRequest,
@@ -157,14 +163,7 @@ type PendingIntent = {
   intent: IntentExpansion;
 };
 
-const promptExamples = [
-  'I have tibial plateau ORIF tomorrow. Prep me in 3 minutes.',
-  'Give me OITE points for SCFE.',
-  'What will my attending ask about reverse TSA?',
-  'How should I think through a periprosthetic distal femur fracture?',
-  'Make this explanation med-student level.',
-  'Give me the top 5 things I may be missing.',
-];
+const promptExamples = BROBOT_EXAMPLE_PROMPTS;
 
 const modeOptions: { value: BroBotChatMode; label: string }[] = [
   { value: 'auto', label: 'Auto' },
@@ -192,9 +191,9 @@ const trainingOptions: { value: BroBotTrainingLevel; label: string }[] = [
   { value: 'attending', label: 'Attending' },
 ];
 
-const COMPOSER_MIN_HEIGHT_INACTIVE = 48;
-const COMPOSER_MIN_HEIGHT_ACTIVE = 64;
-const COMPOSER_MAX_HEIGHT_MOBILE = 132;
+const COMPOSER_MIN_HEIGHT_INACTIVE = 44;
+const COMPOSER_MIN_HEIGHT_ACTIVE = 56;
+const COMPOSER_MAX_HEIGHT_MOBILE = 112;
 const COMPOSER_MAX_HEIGHT_DESKTOP = 168;
 const BROBOT_STREAMING_ENABLED =
   process.env.NEXT_PUBLIC_BROBOT_STREAMING_ENABLED !== 'false';
@@ -469,14 +468,17 @@ function synthesizeDisplayAnswer(priorityPoints: string[]) {
 export default function BroBotChatPage() {
   const router = useRouter();
   const { user, loading: authLoading, status: authStatus } = useAuth();
+  const { profile } = useProfile(user?.id);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [input, setInput] = useState('');
   const [mode, setMode] = useState<BroBotChatMode>('auto');
   const [responseDepth, setResponseDepth] = useState<BroBotResponseDepth>('standard');
   const [trainingLevel, setTrainingLevel] = useState<BroBotTrainingLevel>('pgy2');
+  const [didPrefillTrainingLevel, setDidPrefillTrainingLevel] = useState(false);
   const [requestState, setRequestState] = useState<ChatRequestState>('idle');
   const [error, setError] = useState<ChatError | null>(null);
+  const [confirmNewChat, setConfirmNewChat] = useState(false);
   const [usage, setUsage] = useState<UsageSnapshot | null>(null);
   const {
     usage: memberUsage,
@@ -490,6 +492,7 @@ export default function BroBotChatPage() {
   const messagesViewportRef = useRef<HTMLDivElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const activeRequestControllerRef = useRef<AbortController | null>(null);
+  const stopRequestedRef = useRef(false);
   const isRequestActive =
     requestState === 'classifying_intent' ||
     requestState === 'awaiting_first_token' ||
@@ -512,6 +515,9 @@ export default function BroBotChatPage() {
     latestAssistant.status === 'complete' &&
     !isRequestActive;
   const hasConversation = messages.length > 0;
+  const isQuotaBlocked = Boolean(
+    usage && !usage.unlimited && (usage.remainingToday ?? 0) <= 0
+  );
 
   const scrollContentVersion = useMemo(
     () =>
@@ -548,6 +554,38 @@ export default function BroBotChatPage() {
       window.history.scrollRestoration = previousScrollRestoration;
     };
   }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const visualViewport = window.visualViewport;
+    const syncViewportHeight = () => {
+      const height = visualViewport?.height ?? window.innerHeight;
+      root.style.setProperty('--brobot-vvh', `${Math.round(height)}px`);
+    };
+
+    visualViewport?.addEventListener('resize', syncViewportHeight);
+    visualViewport?.addEventListener('scroll', syncViewportHeight);
+    window.addEventListener('resize', syncViewportHeight);
+    syncViewportHeight();
+
+    return () => {
+      visualViewport?.removeEventListener('resize', syncViewportHeight);
+      visualViewport?.removeEventListener('scroll', syncViewportHeight);
+      window.removeEventListener('resize', syncViewportHeight);
+      root.style.removeProperty('--brobot-vvh');
+    };
+  }, []);
+
+  useEffect(() => {
+    if (didPrefillTrainingLevel || authStatus !== 'authenticated') return;
+    const mapped = mapProfileToBroBotTrainingLevel({
+      trainingLevel: typeof profile.training_level === 'string' ? profile.training_level : null,
+      pgyYear: typeof profile.pgy_year === 'number' ? profile.pgy_year : null,
+    });
+    if (!mapped) return;
+    setTrainingLevel(mapped);
+    setDidPrefillTrainingLevel(true);
+  }, [authStatus, didPrefillTrainingLevel, profile.pgy_year, profile.training_level]);
 
   useEffect(
     () => () => {
@@ -659,6 +697,10 @@ export default function BroBotChatPage() {
   ) {
     const submittedPrompt = (rawMessage ?? input).trim();
     if (!submittedPrompt || isRequestActive) return;
+    if (isQuotaBlocked) {
+      setError({ type: 'quota', dailyCap: usage?.dailyCap ?? null });
+      return;
+    }
     const requestController = new AbortController();
     activeRequestControllerRef.current?.abort();
     activeRequestControllerRef.current = requestController;
@@ -1093,6 +1135,24 @@ export default function BroBotChatPage() {
       void pollForEnrichment(normalizedBody.messageId);
     } catch (caughtError) {
       if (caughtError instanceof DOMException && caughtError.name === 'AbortError') {
+        if (stopRequestedRef.current) {
+          stopRequestedRef.current = false;
+          setMessages((current) => {
+            if (streamingAssistantId && didReceiveStreamingContent) {
+              return current.map((chatMessage) =>
+                chatMessage.id === streamingAssistantId && chatMessage.role === 'assistant'
+                  ? {
+                      ...chatMessage,
+                      status: 'error' as const,
+                      errorMessage: 'Stopped. Retry if you need the full answer.',
+                    }
+                  : chatMessage
+              );
+            }
+
+            return current.filter((chatMessage) => chatMessage.id !== streamingAssistantId);
+          });
+        }
         return;
       }
       setRequestState('error');
@@ -1147,9 +1207,25 @@ export default function BroBotChatPage() {
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
-    if (event.key !== 'Enter' || event.shiftKey) return;
+    const isCoarsePointer =
+      typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+    const isNarrowViewport = typeof window !== 'undefined' && window.innerWidth < 640;
+    if (
+      !shouldSubmitComposerOnEnter(event, {
+        isCoarsePointer,
+        isNarrowViewport,
+      })
+    ) {
+      return;
+    }
     event.preventDefault();
     void sendMessage();
+  }
+
+  function stopGeneration() {
+    if (!isRequestActive) return;
+    stopRequestedRef.current = true;
+    activeRequestControllerRef.current?.abort();
   }
 
   function continueFromIntent(branch?: BranchOption, answerNow = false) {
@@ -1185,8 +1261,8 @@ export default function BroBotChatPage() {
   }
 
   function startNewChat() {
-    if (isRequestActive) return;
-
+    stopRequestedRef.current = true;
+    activeRequestControllerRef.current?.abort();
     setMessages([]);
     setConversationId(null);
     setInput('');
@@ -1194,22 +1270,23 @@ export default function BroBotChatPage() {
     setPendingIntent(null);
     setLastFailedPrompt(null);
     setRestoredPendingPrompt(false);
+    setConfirmNewChat(false);
     setRequestState('idle');
     resetScrollState();
   }
 
   return (
     <div className="fixed inset-0 z-10 overflow-hidden bg-[#fefcf7] text-[#1A1C2C]">
-      <main className="mx-auto flex h-[100dvh] w-full max-w-[1180px] flex-col box-border px-3 pt-16 sm:px-5 sm:pt-[4.75rem] lg:px-6">
+      <main className="mx-auto flex h-[var(--brobot-vvh,100svh)] w-full max-w-[1180px] flex-col box-border px-3 pt-[3.75rem] sm:px-5 sm:pt-[4.75rem] lg:px-6">
         <header
           className={`shrink-0 border-b border-slate-200/80 ${
-            hasConversation ? 'pb-2' : 'pb-2.5 sm:pb-3'
+            hasConversation ? 'pb-2' : 'pb-2'
           }`}
         >
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between">
             <div className="min-w-0 space-y-2">
               <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                <h1 className="text-xl font-extrabold tracking-tight text-midnight sm:text-2xl">
+                <h1 className="text-lg font-extrabold leading-6 tracking-tight text-midnight sm:text-2xl">
                   BroBot Chat
                 </h1>
                 <BroBotProductTabs compact />
@@ -1220,9 +1297,8 @@ export default function BroBotChatPage() {
               {hasConversation && (
                 <button
                   type="button"
-                  onClick={startNewChat}
-                  disabled={isRequestActive}
-                  className="shrink-0 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                  onClick={() => setConfirmNewChat(true)}
+                  className="shrink-0 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
                 >
                   New Chat
                 </button>
@@ -1298,7 +1374,7 @@ export default function BroBotChatPage() {
                           setRestoredPendingPrompt(false);
                           textareaRef.current?.focus();
                         }}
-                        className="rounded-md bg-teal-600 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-700"
+                        className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-teal-700 sm:w-auto"
                       >
                         Continue BroBot
                       </button>
@@ -1344,17 +1420,48 @@ export default function BroBotChatPage() {
           input={input}
           setInput={setInput}
           isRequestActive={isRequestActive}
+          isQuotaBlocked={isQuotaBlocked}
           mode={mode}
           setMode={setMode}
           responseDepth={responseDepth}
           setResponseDepth={setResponseDepth}
           trainingLevel={trainingLevel}
-          setTrainingLevel={setTrainingLevel}
+          setTrainingLevel={(value) => {
+            setDidPrefillTrainingLevel(true);
+            setTrainingLevel(value);
+          }}
           textareaRef={textareaRef}
           onSubmit={handleSubmit}
           onKeyDown={handleKeyDown}
+          onStop={stopGeneration}
         />
       </main>
+      {confirmNewChat ? (
+        <div className="fixed inset-0 z-40 flex items-end justify-center bg-slate-950/40 p-4 sm:items-center">
+          <div className="w-full max-w-sm rounded-xl bg-white p-4 shadow-xl">
+            <h2 className="text-base font-bold text-midnight">Start a new chat?</h2>
+            <p className="mt-1 text-sm leading-5 text-slate-600">
+              This conversation stays on this screen until you start a new one.
+            </p>
+            <div className="mt-4 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+              <button
+                type="button"
+                onClick={() => setConfirmNewChat(false)}
+                className="min-h-11 rounded-md border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={startNewChat}
+                className="min-h-11 rounded-md bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-teal-700"
+              >
+                New Chat
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -1371,7 +1478,7 @@ function BroBotIntentCard({
   const { intent } = pendingIntent;
 
   return (
-    <section className="mt-5 max-w-3xl rounded-2xl border border-teal-200 bg-white p-5 shadow-sm">
+    <section className="mt-3 max-w-3xl rounded-xl border border-teal-200 bg-white p-4 shadow-sm">
       <div className="flex flex-wrap items-center gap-2">
         <span className="rounded-full bg-teal-50 px-3 py-1 text-xs font-bold text-teal-700">
           Detected Mode: {formatMode(intent.mode)}
@@ -1379,12 +1486,12 @@ function BroBotIntentCard({
         <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold capitalize text-slate-600">
           {intent.ambiguity} ambiguity
         </span>
-        <span className="text-xs text-slate-400">
-          {Math.round(intent.confidence * 100)}% intent confidence
-        </span>
+        {intent.confidence < 0.45 ? (
+          <span className="text-xs text-slate-400">Low confidence — pick a focus if this looks off</span>
+        ) : null}
       </div>
 
-      <div className="mt-4">
+      <div className="mt-3">
         <h2 className="text-sm font-bold uppercase tracking-wide text-slate-500">
           Choose your focus
         </h2>
@@ -1426,7 +1533,7 @@ function BroBotIntentCard({
               key={branch.id}
               type="button"
               onClick={() => onSelectBranch(branch)}
-              className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-left transition hover:border-teal-300 hover:bg-teal-50"
+              className="min-h-11 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-left transition hover:border-teal-300 hover:bg-teal-50"
             >
               <div className="text-sm font-bold text-midnight">{branch.label}</div>
               {branch.description && (
@@ -1462,10 +1569,10 @@ function BroBotEmptyState({
   showSignInNotice: boolean;
 }) {
   return (
-    <div className="mx-auto max-w-3xl py-4 sm:py-6">
+    <div className="mx-auto max-w-3xl py-3 sm:py-6">
       {showSignInNotice && (
-        <div className="mb-3 rounded-xl border border-teal-200 bg-teal-50 px-3 py-2 text-sm text-teal-900">
-          You can try BroBot Chat as a guest. Sign in to save conversations or unlock more usage.
+        <div className="mb-2 rounded-xl border border-teal-200 bg-teal-50 px-3 py-1.5 text-xs leading-5 text-teal-900">
+          You can try BroBot Chat as a guest. Sign in to unlock more daily uses.
         </div>
       )}
 
@@ -1482,14 +1589,14 @@ function BroBotEmptyState({
           </div>
         </div>
 
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="mt-3 flex flex-wrap gap-1.5">
           {promptExamples.map((prompt) => (
             <button
               key={prompt}
               type="button"
               disabled={disabled}
               onClick={() => onPickPrompt(prompt)}
-              className="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-left text-xs font-semibold leading-4 text-slate-700 transition hover:border-teal-200 hover:bg-teal-50 hover:text-teal-900 disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
+              className="min-h-9 max-w-full rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-left text-xs font-semibold leading-[18px] text-slate-700 transition hover:border-teal-200 hover:bg-teal-50 hover:text-teal-900 disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
             >
               {prompt}
             </button>
@@ -1510,7 +1617,7 @@ const BroBotMessageList = memo(function BroBotMessageList({
   onPickClarification: (question: string, sourceMessageId: string) => void;
 }) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {messages.map((message) => (
         <div
           key={message.id}
@@ -1537,7 +1644,7 @@ const BroBotMessageList = memo(function BroBotMessageList({
 const UserMessage = memo(function UserMessage({ content }: { content: string }) {
   return (
     <div className="flex justify-end">
-      <div className="max-w-[88%] rounded-2xl rounded-br-md bg-teal-600 px-4 py-3 text-sm leading-6 text-white shadow-sm sm:max-w-[72%]">
+      <div className="max-w-[84%] rounded-2xl rounded-br-md bg-teal-600 px-3.5 py-2.5 text-sm leading-5 text-white shadow-sm sm:max-w-[72%]">
         {content}
       </div>
     </div>
@@ -1586,34 +1693,25 @@ function BroBotAssistantResponse({
   onRetry: () => void;
   onPickClarification: (question: string, sourceMessageId: string) => void;
 }) {
-  const isOrPrep = response.detectedMode === 'or_prep';
-  const isConsult = response.detectedMode === 'consult';
-  const importantConceptsTitle = isConsult
-    ? 'Immediate Priorities'
-    : isOrPrep
-      ? 'Important OR Concepts'
-      : 'Important Concepts';
-  const knowledgeGapsTitle = isConsult
-    ? 'What Information Is Missing?'
-    : isOrPrep
-      ? 'What to Clarify Before Scrub'
-      : 'What to Learn Next?';
+  const extras = selectBroBotAnswerExtras(response);
+  const isComplete = status !== 'pending' && status !== 'streaming';
 
   return (
-    <article className="w-full rounded-2xl rounded-bl-md border border-slate-200/80 bg-white/95 p-4 shadow-sm sm:p-5">
-      <div className="flex flex-wrap items-center gap-2 border-b border-slate-100 pb-3">
-        <span className="rounded-full bg-teal-50 px-2.5 py-1 text-xs font-semibold text-teal-700">
+    <article className="w-full rounded-xl rounded-bl-md border border-slate-200/80 bg-white/95 p-4 shadow-sm sm:rounded-2xl sm:p-5">
+      <div className="flex flex-wrap items-center gap-1.5 border-b border-slate-100 pb-2.5">
+        <span className="rounded-full bg-teal-50 px-2 py-0.5 text-[11px] font-semibold leading-4 text-teal-700">
           {formatMode(response.detectedMode)}
         </span>
-        {typeof response.confidence === 'number' && (
-          <span className="text-xs text-slate-400">
-            {Math.round(response.confidence * 100)}% confidence
-          </span>
-        )}
+        {extras.showLowConfidenceConsult ? (
+          <span className="text-[11px] leading-4 text-amber-700">Missing details — treat this as a starting point</span>
+        ) : null}
+        {response.selectedFocus ? (
+          <span className="text-[11px] leading-4 text-slate-500">{response.selectedFocus}</span>
+        ) : null}
       </div>
 
-      <div className="mt-4 space-y-6">
-        <StructuredSection title="Direct Answer">
+      <div className="mt-3 space-y-4">
+        <div>
           {response.answer && status === 'streaming' ? (
             <StreamingAnswer text={response.answer} />
           ) : response.answer ? (
@@ -1632,52 +1730,45 @@ function BroBotAssistantResponse({
               <button
                 type="button"
                 onClick={onRetry}
-                className="rounded-md border border-amber-300 bg-white px-2 py-1 text-amber-800 hover:bg-amber-100"
+                className="min-h-10 rounded-md border border-amber-300 bg-white px-3 py-2 text-amber-800 hover:bg-amber-100"
               >
                 Retry
               </button>
             </div>
           )}
-        </StructuredSection>
+        </div>
 
-        {status !== 'pending' && status !== 'streaming' &&
-          (response.clarifyingQuestions?.length ?? 0) > 0 && (
+        {isComplete && extras.showPearl && extras.pearl ? (
+          <div className="rounded-xl bg-teal-50/80 px-3 py-2.5 text-sm leading-5 text-teal-950">
+            <p className="text-[11px] font-bold uppercase tracking-wide text-teal-700">Pearl</p>
+            <p className="mt-1">{extras.pearl}</p>
+          </div>
+        ) : null}
+
+        {isComplete && extras.showPitfall && extras.pitfall ? (
+          <div className="rounded-xl bg-amber-50 px-3 py-2.5 text-sm leading-5 text-amber-950">
+            <p className="text-[11px] font-bold uppercase tracking-wide text-amber-700">Pitfall</p>
+            <p className="mt-1">{extras.pitfall}</p>
+          </div>
+        ) : null}
+
+        {isComplete ? (
+          <StructuredList title="What most residents miss" items={extras.residentsMiss} />
+        ) : null}
+
+        {isComplete && extras.consultMissing.length > 0 ? (
+          <ConsultSignals
+            confidence={extras.showLowConfidenceConsult ? 'low' : response.consultConfidence}
+            missingInformation={extras.consultMissing}
+          />
+        ) : null}
+
+        {isComplete && (response.clarifyingQuestions?.length ?? 0) > 0 ? (
           <ClarificationBlock
             response={response}
             onPickClarification={onPickClarification}
           />
-        )}
-
-        {status !== 'pending' && status !== 'streaming' && isConsult && (
-          <ConsultSignals
-            confidence={response.consultConfidence}
-            missingInformation={response.missingInformation ?? []}
-          />
-        )}
-
-        {status !== 'pending' && status !== 'streaming' && (
-          <>
-            <StructuredList title={importantConceptsTitle} items={response.priorityPoints} />
-            <StructuredList
-              title="What Most Residents Miss"
-              items={response.whatMostResidentsMiss ?? []}
-            />
-            <StructuredList title={knowledgeGapsTitle} items={response.knowledgeGaps} />
-          </>
-        )}
-
-        {status !== 'pending' && status !== 'streaming' && response.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 pt-1">
-            {response.tags.slice(0, 8).map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-500"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
+        ) : null}
       </div>
     </article>
   );
@@ -1763,7 +1854,7 @@ function StreamingAnswer({ text }: { text: string }) {
   flushBullets();
 
   return (
-    <div className="space-y-4 whitespace-pre-wrap text-[15px] leading-7 text-slate-700">
+    <div className="space-y-3 whitespace-pre-wrap text-[15px] leading-6 text-slate-700 sm:space-y-4 sm:leading-7">
       {blocks}
     </div>
   );
@@ -1805,7 +1896,7 @@ function ClarificationBlock({
             key={question}
             type="button"
             onClick={() => onPickClarification(question, response.messageId)}
-            className="rounded-full border border-slate-200 bg-white px-3 py-2 text-left text-xs font-semibold leading-4 text-slate-700 shadow-sm transition hover:border-teal-200 hover:bg-teal-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="min-h-10 rounded-xl border border-slate-200 bg-white px-3 py-2 text-left text-xs font-semibold leading-[18px] text-slate-700 shadow-sm transition hover:border-teal-200 hover:bg-teal-50 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {question}
           </button>
@@ -1941,21 +2032,27 @@ function BroBotNextLearningBranches({
   if (branchChips.length === 0) return null;
 
   return (
-    <div className="mt-5 rounded-2xl border border-teal-100 bg-teal-50/40 p-3">
+    <div className="mt-3 rounded-xl border border-teal-100 bg-teal-50/40 p-3">
       <h3 className="mb-2 text-xs font-bold uppercase tracking-wide text-teal-700">
-        Common Next Questions
+        Keep learning
       </h3>
-      <div className="flex flex-wrap gap-2">
-        {branchChips.map((branch) => (
+      <div className="flex flex-col gap-1.5 sm:flex-row sm:flex-wrap">
+        {branchChips.map((branch, index) => (
           <button
             key={branch.id}
             type="button"
             onClick={() => onPickBranch(branch, sourceMessageId)}
-            className="min-h-9 rounded-full border border-teal-200 bg-white px-3 py-2 text-left text-xs font-semibold leading-5 text-teal-700 shadow-sm transition hover:bg-teal-50 sm:text-sm"
+            className="min-h-11 rounded-xl border border-teal-200 bg-white px-3 py-2.5 text-left text-xs font-semibold leading-[18px] text-teal-700 shadow-sm transition hover:bg-teal-50 sm:text-sm"
           >
-            <span className="mr-1.5 text-[10px] font-bold uppercase tracking-wide text-teal-500">
-              {branch.category ?? inferChipCategory(branch.label)}
-            </span>
+            {index === 0 ? (
+              <span className="mr-1.5 rounded-md bg-teal-600 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+                Best next
+              </span>
+            ) : (
+              <span className="mr-1.5 text-[10px] font-bold uppercase tracking-wide text-teal-500">
+                {branch.category ?? inferChipCategory(branch.label)}
+              </span>
+            )}
             {branch.label}
           </button>
         ))}
@@ -1963,7 +2060,7 @@ function BroBotNextLearningBranches({
           <button
             type="button"
             onClick={() => setShowReadingPanel((current) => !current)}
-            className="min-h-9 rounded-full border border-sky-200 bg-white px-3 py-2 text-left text-xs font-bold leading-5 text-sky-700 shadow-sm transition hover:bg-sky-50 sm:text-sm"
+            className="min-h-11 rounded-xl border border-sky-200 bg-white px-3 py-2.5 text-left text-xs font-bold leading-[18px] text-sky-700 shadow-sm transition hover:bg-sky-50 sm:text-sm"
           >
             <span className="mr-1.5 inline-flex align-[-2px] text-sky-500">
               <BookOpenIcon className="h-4 w-4" />
@@ -1989,6 +2086,7 @@ function BroBotChatComposer({
   input,
   setInput,
   isRequestActive,
+  isQuotaBlocked,
   mode,
   setMode,
   responseDepth,
@@ -1998,10 +2096,12 @@ function BroBotChatComposer({
   textareaRef,
   onSubmit,
   onKeyDown,
+  onStop,
 }: {
   input: string;
   setInput: (input: string) => void;
   isRequestActive: boolean;
+  isQuotaBlocked: boolean;
   mode: BroBotChatMode;
   setMode: (mode: BroBotChatMode) => void;
   responseDepth: BroBotResponseDepth;
@@ -2011,9 +2111,16 @@ function BroBotChatComposer({
   textareaRef: RefObject<HTMLTextAreaElement | null>;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   onKeyDown: (event: KeyboardEvent<HTMLTextAreaElement>) => void;
+  onStop: () => void;
 }) {
   const [focused, setFocused] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const isComposerActive = focused || input.trim().length > 0;
+  const selectedModeLabel = modeOptions.find((option) => option.value === mode)?.label ?? mode;
+  const selectedDepthLabel =
+    depthOptions.find((option) => option.value === responseDepth)?.label ?? responseDepth;
+  const selectedLevelLabel =
+    trainingOptions.find((option) => option.value === trainingLevel)?.label ?? trainingLevel;
 
   const resizeTextarea = useCallback(() => {
     const textarea = textareaRef.current;
@@ -2040,16 +2147,32 @@ function BroBotChatComposer({
   return (
     <form
       onSubmit={onSubmit}
-      className="sticky bottom-0 z-20 -mx-3 border-t border-slate-200 bg-[#fefcf7]/95 px-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur sm:-mx-5 sm:px-5 lg:-mx-6 lg:px-6"
+      className="sticky bottom-0 z-20 -mx-3 border-t border-slate-200 bg-[#fefcf7]/95 px-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-1.5 backdrop-blur sm:-mx-5 sm:px-5 lg:-mx-6 lg:px-6"
     >
+      <div className="mx-auto w-full max-w-4xl">
       <div
         className={`w-full rounded-xl border bg-white shadow-sm transition ${
           isComposerActive
-            ? 'border-teal-200 p-2.5 shadow-md ring-2 ring-teal-50'
-            : 'border-slate-200 p-2'
+            ? 'border-teal-200 p-2 shadow-md ring-2 ring-teal-50'
+            : 'border-slate-200 p-1.5'
         }`}
       >
-        <div className="grid grid-cols-3 gap-1.5 border-b border-slate-100 pb-1.5">
+        <button
+          type="button"
+          className="mb-1.5 flex w-full min-w-0 items-center justify-between rounded-md bg-slate-50 px-2 py-1 text-left text-[11px] font-semibold leading-4 text-slate-600 sm:hidden"
+          onClick={() => setSettingsOpen((current) => !current)}
+          aria-expanded={settingsOpen}
+        >
+          <span className="truncate">
+            {selectedModeLabel} · {selectedDepthLabel} · {selectedLevelLabel}
+          </span>
+          <span className="ml-2 shrink-0 text-[10px] uppercase tracking-wide text-slate-400">
+            {settingsOpen ? 'Hide' : 'Edit'}
+          </span>
+        </button>
+        <div
+          className={`${settingsOpen ? 'grid' : 'hidden'} grid-cols-3 gap-1 border-b border-slate-100 pb-1 sm:grid sm:gap-1.5 sm:pb-1.5`}
+        >
           <CompactSelect
             label="Mode"
             value={mode}
@@ -2082,8 +2205,12 @@ function BroBotChatComposer({
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             onKeyDown={onKeyDown}
-            placeholder="Ask BroBot anything ortho..."
-            className={`block max-h-[132px] w-full resize-none rounded-lg border bg-slate-50 py-2.5 pl-3.5 pr-14 text-sm leading-6 outline-none transition focus:bg-white sm:max-h-[168px] ${
+            placeholder={
+              isQuotaBlocked
+                ? 'Daily BroBot uses are paused until tomorrow or upgrade.'
+                : 'Ask BroBot anything ortho...'
+            }
+            className={`block max-h-[112px] w-full resize-none rounded-lg border bg-slate-50 py-2.5 pl-3.5 pr-12 text-sm leading-6 outline-none transition focus:bg-white sm:max-h-[168px] sm:pr-14 ${
               isComposerActive
                 ? 'border-teal-200 focus:border-teal-400'
                 : 'border-slate-200 focus:border-teal-300'
@@ -2094,23 +2221,37 @@ function BroBotChatComposer({
                 : COMPOSER_MIN_HEIGHT_INACTIVE,
             }}
           />
-          <button
-            type="submit"
-            disabled={isRequestActive || !input.trim()}
-            aria-label="Send message"
-            className="absolute bottom-2 right-2 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-teal-600 text-white shadow-sm transition hover:bg-teal-700 disabled:cursor-not-allowed disabled:opacity-40 sm:h-10 sm:w-10"
-          >
-            {isRequestActive ? (
-              <ArrowPathIcon className="h-5 w-5 animate-spin" />
-            ) : (
+          {isRequestActive ? (
+            <button
+              type="button"
+              onClick={onStop}
+              aria-label="Stop generating"
+              className="absolute bottom-2 right-2 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-800 text-white shadow-sm transition hover:bg-slate-900 sm:h-11 sm:w-11"
+            >
+              <StopIcon className="h-5 w-5" />
+            </button>
+          ) : (
+            <button
+              type="submit"
+              disabled={isQuotaBlocked || !input.trim()}
+              aria-label="Send message"
+              className="absolute bottom-2 right-2 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-teal-600 text-white shadow-sm transition hover:bg-teal-700 disabled:cursor-not-allowed disabled:opacity-40 sm:h-11 sm:w-11"
+            >
               <PaperAirplaneIcon className="h-5 w-5" />
-            )}
-          </button>
+            </button>
+          )}
         </div>
 
-        <p className="mt-1 hidden px-1 text-[11px] text-slate-400 sm:block">
-          Enter sends. Shift+Enter adds a new line.
-        </p>
+        {isQuotaBlocked ? (
+          <p className="mt-1 px-1 text-[11px] leading-4 text-amber-700">
+            New questions are paused until access refreshes or you upgrade.
+          </p>
+        ) : (
+          <p className="mt-1 hidden px-1 text-[11px] text-slate-400 sm:block">
+            Enter sends. Shift+Enter adds a new line.
+          </p>
+        )}
+      </div>
       </div>
     </form>
   );
@@ -2128,12 +2269,12 @@ function CompactSelect({
   onChange: (value: string) => void;
 }) {
   return (
-    <label className="flex min-w-0 items-center gap-1 rounded-md bg-slate-50 px-2 py-1 text-[10px] font-semibold text-slate-500 sm:gap-1.5 sm:px-2.5">
+    <label className="flex min-w-0 items-center gap-1 rounded-md bg-slate-50 px-1.5 py-1 text-[9px] font-semibold leading-4 text-slate-500 sm:gap-1.5 sm:px-2.5 sm:text-[10px]">
       <span className="shrink-0">{label}</span>
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="min-w-0 flex-1 truncate bg-transparent text-[11px] font-semibold text-slate-800 outline-none sm:text-xs"
+        className="min-w-0 flex-1 truncate bg-transparent text-[11px] font-semibold leading-4 text-slate-800 outline-none sm:text-xs"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -2154,7 +2295,7 @@ function BroBotUsageBanner({
 }) {
   if (loading) {
     return (
-      <div className="self-start rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-500 shadow-sm sm:self-auto">
+      <div className="self-start rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-[11px] leading-4 text-slate-500 shadow-sm sm:self-auto">
         Checking BroBot access...
       </div>
     );
@@ -2164,14 +2305,14 @@ function BroBotUsageBanner({
 
   if (usage.unlimited) {
     return (
-      <div className="self-start rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 sm:self-auto">
+      <div className="self-start rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-1.5 text-[11px] font-semibold leading-4 text-emerald-700 sm:self-auto">
         Unlimited BroBot
       </div>
     );
   }
 
   return (
-    <div className="self-start rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-600 shadow-sm sm:self-auto">
+    <div className="self-start rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-[11px] leading-4 text-slate-600 shadow-sm sm:self-auto">
       <span className="font-bold text-midnight">{usage.remainingToday ?? 0}</span>
       {usage.dailyCap ? ` / ${usage.dailyCap}` : ''} BroBot AI uses remaining today
       <p className="mt-0.5 hidden text-[11px] text-slate-400 sm:block">Shared across CasePrep and Chat</p>
@@ -2190,24 +2331,24 @@ function BroBotChatError({
 }) {
   if (error.type === 'auth') {
     return (
-      <div className="rounded-2xl border border-amber-200 bg-white p-5 shadow-sm">
+      <div className="rounded-xl border border-amber-200 bg-white p-4 shadow-sm">
         <div className="flex items-start gap-3">
           <ExclamationCircleIcon className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
           <div>
             <h2 className="font-bold text-midnight">Sign in to continue BroBot Chat</h2>
-            <p className="mt-1 text-sm leading-6 text-slate-600">
+            <p className="mt-1 text-sm leading-5 text-slate-600">
               BroBot could not start a guest chat session. Sign in and your prompt will be restored.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <Link
                 href="/auth/sign-in?redirectTo=/brobot/chat&intent=brobot"
-                className="rounded-md bg-teal-600 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-700"
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-teal-700 sm:w-auto"
               >
                 Sign in
               </Link>
               <Link
                 href="/brobot/chat"
-                className="rounded-md border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 sm:w-auto"
               >
                 Try again
               </Link>
@@ -2220,25 +2361,25 @@ function BroBotChatError({
 
   if (error.type === 'quota') {
     return (
-      <div className="rounded-2xl border border-amber-200 bg-white p-5 shadow-sm">
+      <div className="rounded-xl border border-amber-200 bg-white p-4 shadow-sm">
         <div className="flex items-start gap-3">
           <ExclamationCircleIcon className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
           <div>
             <h2 className="font-bold text-midnight">Daily BroBot limit reached</h2>
-            <p className="mt-1 text-sm leading-6 text-slate-600">
+            <p className="mt-1 text-sm leading-5 text-slate-600">
               You have used your BroBot AI uses for today. This limit is shared across CasePrep and Chat.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <Link
                 href="/account/billing?returnTo=/brobot/chat&intent=brobot"
-                className="inline-flex rounded-md bg-teal-600 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-700"
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-teal-700 sm:w-auto"
               >
                 Start 1-month free trial
               </Link>
               {!isAuthenticated && (
                 <Link
                   href="/auth/sign-in?redirectTo=/brobot/chat&intent=brobot"
-                  className="inline-flex rounded-md border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                  className="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 sm:w-auto"
                 >
                   Sign in
                 </Link>
@@ -2252,12 +2393,12 @@ function BroBotChatError({
 
   if (error.type === 'disabled') {
     return (
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
         <div className="flex items-start gap-3">
           <ExclamationCircleIcon className="mt-0.5 h-5 w-5 shrink-0 text-slate-500" />
           <div>
             <h2 className="font-bold text-midnight">BroBot is unavailable</h2>
-            <p className="mt-1 text-sm leading-6 text-slate-600">
+            <p className="mt-1 text-sm leading-5 text-slate-600">
               {error.message || 'BroBot access is currently disabled for this account or temporarily unavailable.'}
             </p>
           </div>
@@ -2272,16 +2413,16 @@ function BroBotChatError({
       : error.message || 'BroBot had trouble responding. Please try again.';
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
       <div className="flex items-start gap-3">
         <ExclamationCircleIcon className="mt-0.5 h-5 w-5 shrink-0 text-slate-400" />
         <div>
           <h2 className="font-bold text-midnight">Something got tangled</h2>
-          <p className="mt-1 text-sm leading-6 text-slate-600">{message}</p>
+          <p className="mt-1 text-sm leading-5 text-slate-600">{message}</p>
           <button
             type="button"
             onClick={onRetry}
-            className="mt-4 inline-flex items-center gap-2 rounded-md border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-md border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50"
           >
             <ArrowPathIcon className="h-4 w-4" />
             Try again
@@ -2296,8 +2437,8 @@ function LoadingMessage() {
   const loadingCopy = 'Prioritizing what matters for your level...';
 
   return (
-    <div className="mt-5 flex justify-start">
-      <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-500 shadow-sm">
+    <div className="mt-3 flex justify-start">
+      <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-500 shadow-sm">
         <ArrowPathIcon className="h-4 w-4 animate-spin text-teal-600" />
         {loadingCopy}
       </div>

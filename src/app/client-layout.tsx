@@ -14,6 +14,8 @@ export default function ClientLayout({
 }) {
   const pathname = usePathname();
   const isMyCasesLanding = pathname === "/mycases/landing";
+  const isBroBotChat =
+    pathname === "/brobot/chat" || Boolean(pathname?.startsWith("/brobot/chat/"));
 
   return (
     <ClientProvider>
@@ -24,7 +26,7 @@ export default function ClientLayout({
         <>
           <Nav />
           <main className="flex-1 w-full">{children}</main>
-          <Footer />
+          {isBroBotChat ? null : <Footer />}
         </>
       )}
     </ClientProvider>

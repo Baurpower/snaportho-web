@@ -248,7 +248,7 @@ function RenderList({
   const ListTag = type;
   return (
     <ListTag
-      className={`${type === 'ol' ? 'list-decimal' : 'list-disc'} ${nested ? 'mt-2 space-y-1.5 pl-5' : 'space-y-2 pl-5'}`}
+      className={`${type === 'ol' ? 'list-decimal' : 'list-disc'} ${nested ? 'mt-2 space-y-1.5 pl-5' : 'space-y-1.5 pl-5'}`}
     >
       {items.map((item, index) => (
         <li key={`${item.text}-${index}`} className="pl-1">
@@ -266,14 +266,14 @@ function BroBotMarkdown({ children }: { children: string }) {
   const blocks = useMemo(() => parseBlocks(children), [children]);
 
   return (
-    <div className="space-y-4 text-[15px] leading-7 text-slate-700">
+    <div className="space-y-3 text-[15px] leading-6 text-slate-700 sm:space-y-4 sm:leading-7">
       {blocks.map((block, index) => {
         if (block.type === 'heading') {
           const HeadingTag = block.level === 2 ? 'h2' : block.level === 3 ? 'h3' : 'h4';
           return (
             <HeadingTag
               key={`${block.type}-${index}`}
-              className="pt-1 text-sm font-extrabold leading-6 text-slate-950"
+              className="pt-0.5 text-sm font-extrabold leading-6 text-slate-950"
             >
               {renderInline(block.text)}
             </HeadingTag>
@@ -288,7 +288,7 @@ function BroBotMarkdown({ children }: { children: string }) {
           return (
             <blockquote
               key={`${block.type}-${index}`}
-              className="rounded-xl border border-amber-100 bg-amber-50/70 px-4 py-3 text-sm leading-6 text-amber-950"
+              className="rounded-xl border border-amber-100 bg-amber-50/70 px-3 py-2.5 text-sm leading-6 text-amber-950"
             >
               {renderInline(block.text)}
             </blockquote>
@@ -299,7 +299,7 @@ function BroBotMarkdown({ children }: { children: string }) {
           return (
             <pre
               key={`${block.type}-${index}`}
-              className="overflow-x-auto rounded-xl border border-slate-200 bg-slate-950 p-4 text-xs leading-6 text-slate-100"
+              className="overflow-x-auto rounded-xl border border-slate-200 bg-slate-950 p-3 text-xs leading-6 text-slate-100"
             >
               {block.language && (
                 <span className="mb-2 block text-[11px] font-bold uppercase tracking-wide text-slate-400">
@@ -321,7 +321,7 @@ function BroBotMarkdown({ children }: { children: string }) {
                 <thead className="bg-slate-50 text-xs font-bold uppercase tracking-wide text-slate-500">
                   <tr>
                     {block.headers.map((header, headerIndex) => (
-                      <th key={`${header}-${headerIndex}`} className="px-3 py-2">
+                      <th key={`${header}-${headerIndex}`} className="px-2.5 py-2">
                         {renderInline(header)}
                       </th>
                     ))}
@@ -331,7 +331,7 @@ function BroBotMarkdown({ children }: { children: string }) {
                   {block.rows.map((row, rowIndex) => (
                     <tr key={`row-${rowIndex}`}>
                       {block.headers.map((_, cellIndex) => (
-                        <td key={`cell-${cellIndex}`} className="px-3 py-2 align-top">
+                        <td key={`cell-${cellIndex}`} className="max-w-full px-2.5 py-2 align-top">
                           {renderInline(row[cellIndex] ?? '')}
                         </td>
                       ))}

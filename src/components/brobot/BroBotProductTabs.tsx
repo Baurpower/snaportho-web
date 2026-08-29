@@ -31,7 +31,7 @@ export default function BroBotProductTabs({ compact = false }: { compact?: boole
             aria-pressed={isActive}
             className={[
               compact
-                ? 'rounded-full px-3 py-1.5 text-xs font-semibold transition'
+                ? 'rounded-full px-2.5 py-1.5 text-xs font-semibold transition'
                 : 'rounded-full px-4 py-2 text-sm font-semibold transition',
               isActive
                 ? 'bg-teal-600 text-white shadow-sm'
