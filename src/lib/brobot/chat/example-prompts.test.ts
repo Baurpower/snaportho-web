@@ -18,6 +18,8 @@ assert.match(BROBOT_EXAMPLE_PROMPTS[0], /tibial plateau/i);
 
 assert.equal(mapProfileToBroBotTrainingLevel({ trainingLevel: 'MD/DO Student' }), 'med_student');
 assert.equal(mapProfileToBroBotTrainingLevel({ trainingLevel: 'MD/DO Resident', pgyYear: 3 }), 'pgy3');
+assert.equal(mapProfileToBroBotTrainingLevel({ trainingLevel: 'MD/DO Resident', pgyYear: 5 }), 'pgy5');
+assert.equal(mapProfileToBroBotTrainingLevel({ trainingLevel: 'MD/DO Resident', pgyYear: null }), 'pgy2');
 assert.equal(mapProfileToBroBotTrainingLevel({ trainingLevel: 'MD/DO Resident' }), 'pgy2');
 assert.equal(mapProfileToBroBotTrainingLevel({ trainingLevel: 'MD/DO Fellow' }), 'pgy5');
 assert.equal(mapProfileToBroBotTrainingLevel({ trainingLevel: 'MD/DO Attending' }), 'attending');

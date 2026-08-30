@@ -16,7 +16,7 @@ export function mapProfileToBroBotTrainingLevel(input: {
   }
 
   if (raw.includes('resident')) {
-    const year = input.pgyYear;
+    const year = input.pgyYear ?? 0;
     if (year === 1) return 'pgy1';
     if (year === 2) return 'pgy2';
     if (year === 3) return 'pgy3';
