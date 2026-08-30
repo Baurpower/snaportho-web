@@ -113,7 +113,7 @@ export async function handleAppleNotification(
           },
         });
         if (notificationType === 'SUBSCRIBED') {
-          void sendBranchServerEvent({
+          await sendBranchServerEvent({
             name: 'SUBSCRIBE',
             userId: result.userId,
             transactionId: result.originalTransactionId ?? notificationUuid,

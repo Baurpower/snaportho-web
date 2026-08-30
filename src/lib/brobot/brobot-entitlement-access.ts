@@ -1,5 +1,6 @@
 import {
   getNormalizedBroBotEntitlement,
+  getCasePrepEntitlement,
   type BroBotEntitlement,
   type NormalizedBroBotEntitlement,
   type Subject,
@@ -49,5 +50,22 @@ export async function getBroBotAccessGate(subject: Subject): Promise<BroBotAcces
     remainingToday: isUnlimited ? null : normalized.data.aiAccess.remainingToday,
     source: normalized.data.source,
     normalized,
+  };
+}
+
+/** Packet generation has a dedicated free allowance, separate from chat. */
+export async function getCasePrepAccessGate(subject: Subject): Promise<BroBotAccessGate> {
+  const entitlement = await getCasePrepEntitlement(subject);
+  const normalized = await getNormalizedBroBotEntitlement(subject);
+  const isUnlimited = entitlement.aiAccess.unlimited;
+
+  return {
+    access: isUnlimited ? 'unlimited' : 'free',
+    isUnlimited,
+    isLimitReached: entitlement.isLimitReached,
+    dailyCap: entitlement.aiAccess.dailyCap,
+    remainingToday: entitlement.aiAccess.remainingToday,
+    source: entitlement.source,
+    normalized: { ...normalized, data: entitlement },
   };
 }

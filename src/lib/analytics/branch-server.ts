@@ -5,6 +5,7 @@ type BranchServerEvent = {
   revenue?: number | null;
   currency?: string | null;
   customData?: Record<string, string | number | boolean | null>;
+  userData?: { os?: string; os_version?: string; idfv?: string };
 };
 
 export async function sendBranchServerEvent(event: BranchServerEvent): Promise<boolean> {
@@ -21,7 +22,7 @@ export async function sendBranchServerEvent(event: BranchServerEvent): Promise<b
         transaction_id: event.transactionId,
         revenue: event.revenue ?? undefined,
         currency: event.currency ?? undefined,
-        user_data: { developer_identity: event.userId },
+        user_data: { developer_identity: event.userId, ...event.userData },
         custom_data: { product: 'brobot', ...event.customData },
       }),
     });

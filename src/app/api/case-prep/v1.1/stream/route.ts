@@ -26,7 +26,8 @@ import {
   parseSseChunk,
   type SseEvent,
 } from "@/lib/caseprep-v1-1/sse";
-import { getBroBotAccessGate } from "@/lib/brobot/brobot-entitlement-access";
+import { getCasePrepAccessGate } from "@/lib/brobot/brobot-entitlement-access";
+import { CASEPREP_FEATURE } from "@/lib/config/brobot";
 import {
   createGuestSession,
   getGuestSessionFromRequest,
@@ -217,7 +218,7 @@ async function proxyCasePrepStream(
       NextResponse.json({ error: "Authentication required" }, { status: 401 })
     );
   }
-  const gate = await getBroBotAccessGate(subject);
+  const gate = await getCasePrepAccessGate(subject);
   const productIdentity = {
     userId: subject.type === "user" ? subject.id : null,
     anonymousId: subject.type === "guest" ? subject.id : null,
@@ -236,10 +237,11 @@ async function proxyCasePrepStream(
         : NextResponse.json(
             {
               error: "daily_limit_reached",
-              message: "Daily limit reached.",
+              message: "You've used today's free CasePrep.",
               isLimitReached: true,
               remaining: 0,
               dailyCap: gate.dailyCap,
+              resetAt: gate.normalized.freeQuotaResetAt,
             },
             { status: 429 },
           );
@@ -251,6 +253,7 @@ async function proxyCasePrepStream(
         surface: productSurface,
         requestId: clientRequestId,
         entitlementTier: subject.type === "guest" ? "guest" : gate.access,
+        feature: CASEPREP_FEATURE,
       });
     }
     if (guestCookie) denied.headers.append("Set-Cookie", guestCookie);
@@ -390,6 +393,7 @@ async function proxyCasePrepStream(
             surface: productSurface,
             requestId: clientRequestId,
             entitlementTier: subject.type === "guest" ? "guest" : gate.access,
+            feature: CASEPREP_FEATURE,
           });
         } catch (error) {
           console.error(

@@ -1,6 +1,9 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  outputFileTracingIncludes: {
+    '/api/anki/addon/download': ['./dist/snaportho-1.0.3.ankiaddon'],
+  },
   webpack(config) {
     config.externals.push({ fs: 'commonjs fs', path: 'commonjs path' });
     return config;

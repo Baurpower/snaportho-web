@@ -49,6 +49,15 @@ import { useChatScrollController } from './useChatScrollController';
 import { safeRedirectPath } from '@/lib/auth/redirects';
 import { fetchMeEntitlementsView, toWebUsageSnapshot } from '@/lib/brobot/billing-entitlement-state';
 import { useBroBotEntitlement } from '@/hooks/useBroBotEntitlement';
+import {
+  archiveBroBotChatSession,
+  listBroBotChatRecents,
+  loadBroBotChatSession,
+  rememberBroBotChatSession,
+  takeBroBotChatRecent,
+  threadTitleFromMessages,
+  type BroBotChatSessionData,
+} from './brobot-chat-session-store';
 
 type BroBotChatResponse = {
   conversationId: string;
@@ -161,6 +170,18 @@ type PendingIntent = {
   message: string;
   userMessageId: string;
   intent: IntentExpansion;
+};
+
+type PersistedChatData = {
+  messages: ChatMessage[];
+  conversationId: string | null;
+  input: string;
+  mode: BroBotChatMode;
+  responseDepth: BroBotResponseDepth;
+  trainingLevel: BroBotTrainingLevel;
+  pendingIntent: PendingIntent | null;
+  lastFailedPrompt: string | null;
+  didPrefillTrainingLevel: boolean;
 };
 
 const promptExamples = BROBOT_EXAMPLE_PROMPTS;
@@ -469,16 +490,29 @@ export default function BroBotChatPage() {
   const router = useRouter();
   const { user, loading: authLoading, status: authStatus } = useAuth();
   const { profile } = useProfile(user?.id);
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [conversationId, setConversationId] = useState<string | null>(null);
-  const [input, setInput] = useState('');
-  const [mode, setMode] = useState<BroBotChatMode>('auto');
-  const [responseDepth, setResponseDepth] = useState<BroBotResponseDepth>('standard');
-  const [trainingLevel, setTrainingLevel] = useState<BroBotTrainingLevel>('pgy2');
-  const [didPrefillTrainingLevel, setDidPrefillTrainingLevel] = useState(false);
+  const restoredSessionRef = useRef(loadBroBotChatSession<PersistedChatData>());
+  const restoredSession = restoredSessionRef.current;
+  const threadIdRef = useRef(restoredSession?.id ?? crypto.randomUUID());
+  const [messages, setMessages] = useState<ChatMessage[]>(restoredSession?.data.messages ?? []);
+  const [conversationId, setConversationId] = useState<string | null>(
+    restoredSession?.data.conversationId ?? null
+  );
+  const [input, setInput] = useState(restoredSession?.data.input ?? '');
+  const [mode, setMode] = useState<BroBotChatMode>(restoredSession?.data.mode ?? 'auto');
+  const [responseDepth, setResponseDepth] = useState<BroBotResponseDepth>(
+    restoredSession?.data.responseDepth ?? 'standard'
+  );
+  const [trainingLevel, setTrainingLevel] = useState<BroBotTrainingLevel>(
+    restoredSession?.data.trainingLevel ?? 'pgy2'
+  );
+  const [didPrefillTrainingLevel, setDidPrefillTrainingLevel] = useState(
+    restoredSession?.data.didPrefillTrainingLevel ?? false
+  );
   const [requestState, setRequestState] = useState<ChatRequestState>('idle');
   const [error, setError] = useState<ChatError | null>(null);
   const [confirmNewChat, setConfirmNewChat] = useState(false);
+  const [recents, setRecents] = useState(() => listBroBotChatRecents<PersistedChatData>());
+  const [showRecents, setShowRecents] = useState(false);
   const [usage, setUsage] = useState<UsageSnapshot | null>(null);
   const {
     usage: memberUsage,
@@ -486,8 +520,12 @@ export default function BroBotChatPage() {
     refresh: refreshEntitlements,
     loading: entitlementLoading,
   } = useBroBotEntitlement('brobot_chat');
-  const [pendingIntent, setPendingIntent] = useState<PendingIntent | null>(null);
-  const [lastFailedPrompt, setLastFailedPrompt] = useState<string | null>(null);
+  const [pendingIntent, setPendingIntent] = useState<PendingIntent | null>(
+    restoredSession?.data.pendingIntent ?? null
+  );
+  const [lastFailedPrompt, setLastFailedPrompt] = useState<string | null>(
+    restoredSession?.data.lastFailedPrompt ?? null
+  );
   const [restoredPendingPrompt, setRestoredPendingPrompt] = useState(false);
   const messagesViewportRef = useRef<HTMLDivElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -518,6 +556,48 @@ export default function BroBotChatPage() {
   const isQuotaBlocked = Boolean(
     usage && !usage.unlimited && (usage.remainingToday ?? 0) <= 0
   );
+
+  const sessionSnapshot = useMemo<BroBotChatSessionData<PersistedChatData>>(
+    () => ({
+      id: conversationId ?? threadIdRef.current,
+      title: threadTitleFromMessages(messages),
+      updatedAt: Date.now(),
+      data: {
+        messages,
+        conversationId,
+        input,
+        mode,
+        responseDepth,
+        trainingLevel,
+        pendingIntent,
+        lastFailedPrompt,
+        didPrefillTrainingLevel,
+      },
+    }),
+    [
+      conversationId,
+      didPrefillTrainingLevel,
+      input,
+      lastFailedPrompt,
+      messages,
+      mode,
+      pendingIntent,
+      responseDepth,
+      trainingLevel,
+    ]
+  );
+  const sessionSnapshotRef = useRef(sessionSnapshot);
+  sessionSnapshotRef.current = sessionSnapshot;
+
+  useEffect(() => {
+    rememberBroBotChatSession(sessionSnapshot);
+  }, [sessionSnapshot]);
+
+  useEffect(() => {
+    return () => {
+      rememberBroBotChatSession(sessionSnapshotRef.current);
+    };
+  }, []);
 
   const scrollContentVersion = useMemo(
     () =>
@@ -1260,9 +1340,18 @@ export default function BroBotChatPage() {
     void sendMessage(previousUserMessage.content, 'manual');
   }
 
+  function persistCurrentThreadIfNeeded() {
+    const snapshot = sessionSnapshotRef.current;
+    if (snapshot.data.messages.length === 0) return;
+    archiveBroBotChatSession(snapshot);
+    setRecents(listBroBotChatRecents<PersistedChatData>());
+  }
+
   function startNewChat() {
+    persistCurrentThreadIfNeeded();
     stopRequestedRef.current = true;
     activeRequestControllerRef.current?.abort();
+    threadIdRef.current = crypto.randomUUID();
     setMessages([]);
     setConversationId(null);
     setInput('');
@@ -1271,7 +1360,31 @@ export default function BroBotChatPage() {
     setLastFailedPrompt(null);
     setRestoredPendingPrompt(false);
     setConfirmNewChat(false);
+    setShowRecents(false);
     setRequestState('idle');
+    rememberBroBotChatSession(null);
+    resetScrollState();
+  }
+
+  function restoreRecentChat(id: string) {
+    persistCurrentThreadIfNeeded();
+    const recent = takeBroBotChatRecent<PersistedChatData>(id);
+    if (!recent) return;
+    threadIdRef.current = recent.id;
+    setMessages(recent.data.messages);
+    setConversationId(recent.data.conversationId);
+    setInput(recent.data.input);
+    setMode(recent.data.mode);
+    setResponseDepth(recent.data.responseDepth);
+    setTrainingLevel(recent.data.trainingLevel);
+    setDidPrefillTrainingLevel(recent.data.didPrefillTrainingLevel);
+    setPendingIntent(recent.data.pendingIntent);
+    setLastFailedPrompt(recent.data.lastFailedPrompt);
+    setError(null);
+    setShowRecents(false);
+    setRequestState('idle');
+    setRecents(listBroBotChatRecents<PersistedChatData>());
+    rememberBroBotChatSession(recent);
     resetScrollState();
   }
 
@@ -1294,11 +1407,37 @@ export default function BroBotChatPage() {
             </div>
 
             <div className="flex items-center gap-2 sm:gap-3">
+              {recents.length > 0 && (
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setShowRecents((current) => !current)}
+                    className="inline-flex min-h-11 shrink-0 items-center rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+                    aria-expanded={showRecents}
+                  >
+                    Recents
+                  </button>
+                  {showRecents ? (
+                    <div className="absolute right-0 z-[60] mt-2 w-72 overflow-hidden rounded-xl border border-slate-200 bg-white py-1 shadow-xl">
+                      {recents.map((recent) => (
+                        <button
+                          key={recent.id}
+                          type="button"
+                          onClick={() => restoreRecentChat(recent.id)}
+                          className="block min-h-11 w-full truncate px-3 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-50"
+                        >
+                          {recent.title}
+                        </button>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              )}
               {hasConversation && (
                 <button
                   type="button"
                   onClick={() => setConfirmNewChat(true)}
-                  className="shrink-0 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+                  className="inline-flex min-h-11 shrink-0 items-center rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
                 >
                   New Chat
                 </button>
@@ -1437,7 +1576,7 @@ export default function BroBotChatPage() {
         />
       </main>
       {confirmNewChat ? (
-        <div className="fixed inset-0 z-40 flex items-end justify-center bg-slate-950/40 p-4 sm:items-center">
+        <div className="fixed inset-0 z-[80] flex items-end justify-center bg-slate-950/40 p-4 sm:items-center">
           <div className="w-full max-w-sm rounded-xl bg-white p-4 shadow-xl">
             <h2 className="text-base font-bold text-midnight">Start a new chat?</h2>
             <p className="mt-1 text-sm leading-5 text-slate-600">
@@ -1550,7 +1689,7 @@ function BroBotIntentCard({
         <button
           type="button"
           onClick={onAnswerNow}
-          className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          className="min-h-11 rounded-lg border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
         >
           Answer Now
         </button>
@@ -1596,7 +1735,7 @@ function BroBotEmptyState({
               type="button"
               disabled={disabled}
               onClick={() => onPickPrompt(prompt)}
-              className="min-h-9 max-w-full rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-left text-xs font-semibold leading-[18px] text-slate-700 transition hover:border-teal-200 hover:bg-teal-50 hover:text-teal-900 disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
+              className="min-h-11 max-w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-left text-xs font-semibold leading-[18px] text-slate-700 transition hover:border-teal-200 hover:bg-teal-50 hover:text-teal-900 disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
             >
               {prompt}
             </button>
@@ -2159,7 +2298,7 @@ function BroBotChatComposer({
       >
         <button
           type="button"
-          className="mb-1.5 flex w-full min-w-0 items-center justify-between rounded-md bg-slate-50 px-2 py-1 text-left text-[11px] font-semibold leading-4 text-slate-600 sm:hidden"
+          className="mb-1.5 flex min-h-11 w-full min-w-0 items-center justify-between rounded-md bg-slate-50 px-2 py-2 text-left text-[11px] font-semibold leading-4 text-slate-600 sm:hidden"
           onClick={() => setSettingsOpen((current) => !current)}
           aria-expanded={settingsOpen}
         >

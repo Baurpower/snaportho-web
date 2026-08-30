@@ -13,6 +13,7 @@ import {
   attemptAppleMobileSyncAuditInsert,
   buildAppleMobileSyncSubscriptionEvent,
 } from '@/lib/subscriptions/apple-sync-events';
+import { sendBranchServerEvent } from '@/lib/analytics/branch-server';
 
 export const runtime = 'nodejs';
 
@@ -26,6 +27,9 @@ type AppleSyncPayload = {
   transactionId?: string;
   originalTransactionId?: string;
   environment?: AppleEnvironment;
+  claimAfterAuthentication?: boolean;
+  branchIDFV?: string;
+  branchOSVersion?: string;
 };
 
 export async function POST(request: Request) {
@@ -122,6 +126,21 @@ export async function POST(request: Request) {
       );
     }
 
+
+    if (transactionInfo.appAccountToken && transactionInfo.appAccountToken !== user.id) {
+      return NextResponse.json(
+        { success: false, error: 'apple_account_token_mismatch' },
+        { status: 409 },
+      );
+    }
+
+    if (!transactionInfo.appAccountToken && body.claimAfterAuthentication !== true) {
+      return NextResponse.json(
+        { success: false, error: 'apple_unowned_transaction_requires_explicit_claim' },
+        { status: 409 },
+      );
+    }
+
     stage = 'subscription_upsert';
     const { row, state } = await upsertAppleSubscriptionForUser({
       userId: user.id,
@@ -172,6 +191,24 @@ export async function POST(request: Request) {
         error: auditResult.errorMessage,
       });
     }
+
+
+    await sendBranchServerEvent({
+      name: 'SUBSCRIBE',
+      userId: user.id,
+      transactionId: transactionInfo.originalTransactionId,
+      customData: {
+        provider: 'apple',
+        source: body.claimAfterAuthentication ? 'post_auth_claim' : 'ios_purchase',
+      },
+      userData: {
+        os: 'iOS',
+        os_version: typeof body.branchOSVersion === 'string' ? body.branchOSVersion.slice(0, 30) : undefined,
+        idfv: typeof body.branchIDFV === 'string' && /^[0-9a-f-]{36}$/i.test(body.branchIDFV)
+          ? body.branchIDFV
+          : undefined,
+      },
+    });
 
     return NextResponse.json({
       success: true,

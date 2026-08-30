@@ -3,6 +3,15 @@ import { BROBOT_EXAMPLE_PROMPTS } from './example-prompts';
 import { mapProfileToBroBotTrainingLevel } from './training-level';
 import { shouldSubmitComposerOnEnter } from './composer-keyboard';
 import { selectBroBotAnswerExtras } from './answer-display';
+import {
+  archiveBroBotChatSession,
+  listBroBotChatRecents,
+  loadBroBotChatSession,
+  rememberBroBotChatSession,
+  resetBroBotChatSessions,
+  takeBroBotChatRecent,
+  threadTitleFromMessages,
+} from '../../../components/brobot/brobot-chat-session-store';
 
 assert.equal(BROBOT_EXAMPLE_PROMPTS.length, 6);
 assert.match(BROBOT_EXAMPLE_PROMPTS[0], /tibial plateau/i);
@@ -50,5 +59,25 @@ const consult = selectBroBotAnswerExtras({
 });
 assert.equal(consult.showLowConfidenceConsult, true);
 assert.equal(consult.consultMissing.length, 2);
+
+resetBroBotChatSessions();
+const session = {
+  id: 'thread-1',
+  title: 'Ankle ORIF',
+  updatedAt: 1,
+  data: { prompt: 'prep me' },
+};
+rememberBroBotChatSession(session);
+assert.equal(loadBroBotChatSession<{ prompt: string }>()?.id, 'thread-1');
+archiveBroBotChatSession({
+  id: 'thread-1',
+  title: 'Ankle ORIF',
+  updatedAt: 1,
+  data: { prompt: 'prep me' },
+});
+assert.equal(listBroBotChatRecents().length, 1);
+assert.equal(takeBroBotChatRecent('thread-1')?.title, 'Ankle ORIF');
+assert.equal(listBroBotChatRecents().length, 0);
+assert.equal(threadTitleFromMessages([{ role: 'user', content: 'Prep me for TKA' }]), 'Prep me for TKA');
 
 console.log('brobot chat ui helper tests passed');

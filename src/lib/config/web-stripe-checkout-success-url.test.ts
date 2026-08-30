@@ -1,15 +1,17 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 process.env.NEXT_PUBLIC_SITE_URL = 'https://snap-ortho.com';
 
-import { getCheckoutSuccessUrl } from './app-url';
+// @ts-expect-error Node's type-stripping runner requires the runtime extension.
+import { getCheckoutSuccessUrl } from './app-url.ts';
 
 const root = process.cwd();
 
 function readSource(relativePath: string) {
-  return readFileSync(join(root, relativePath), 'utf8');
+  const path = join(root, relativePath);
+  return readFileSync(existsSync(path) ? path : `${path}.ts`, 'utf8');
 }
 
 const checkoutSuccess = getCheckoutSuccessUrl();
@@ -29,8 +31,8 @@ const guestCheckoutRoute = readSource('src/app/api/billing/checkout/guest/route'
 assert.ok(guestCheckoutRoute.includes('createGuestBroBotCheckoutSession'));
 
 const stripeLib = readSource('src/lib/stripe');
-assert.ok(stripeLib.includes('success_url: getCheckoutSuccessUrl()'));
-assert.ok(stripeLib.includes('customSuccessUrl || BROBOT_CONFIG.BILLING_SUCCESS_URL'));
+assert.ok(stripeLib.includes('success_url: successUrl'));
+assert.ok(stripeLib.includes('options.customSuccessUrl ?? getCheckoutSuccessUrl()'));
 assert.ok(!stripeLib.includes('brobot/chat?success'));
 assert.ok(!stripeLib.includes('/welcome?checkout_session_id'));
 
@@ -42,5 +44,14 @@ const mobileRoute = readSource('src/app/api/mobile/stripe/create-checkout-sessio
 assert.ok(mobileRoute.includes("const MOBILE_SUCCESS_URL = 'snaportho://subscription/success'"));
 assert.ok(!mobileRoute.includes('getCheckoutSuccessUrl'));
 assert.ok(!mobileRoute.includes('/checkout/success'));
+
+const mobileGuestRoute = readSource('src/app/api/mobile/stripe/create-guest-checkout-session/route');
+assert.ok(mobileGuestRoute.includes('createGuestBroBotCheckoutSession'));
+assert.ok(mobileGuestRoute.includes('checkout_session_id={CHECKOUT_SESSION_ID}'));
+
+const mobileClaimRoute = readSource('src/app/api/mobile/stripe/claim-pending-subscription/route');
+assert.ok(mobileClaimRoute.includes('getMobileBearerUser'));
+assert.ok(mobileClaimRoute.includes('checkoutSessionId: checkoutSessionId || null'));
+assert.ok(mobileClaimRoute.includes('claimPendingBroBotSubscriptionForUser(user.id, user.email'));
 
 console.log('web-stripe-checkout-success-url audit tests passed');

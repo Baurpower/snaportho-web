@@ -125,13 +125,17 @@ export default function SignUpClient() {
         const status = payload?.result?.status;
 
         if (
-          status === "claimed" ||
-          status === "already_has_subscription" ||
-          status === "already_claimed_by_user"
+          (status === "claimed" ||
+            status === "already_has_subscription" ||
+            status === "already_claimed_by_user") &&
+          (redirectTo === "/" || redirectTo.startsWith("/welcome"))
         ) {
           router.replace("/brobot/chat?subscription=active");
           return;
         }
+
+        router.replace(redirectTo);
+        return;
       }
 
       setMessage(

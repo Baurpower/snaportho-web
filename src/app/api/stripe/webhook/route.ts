@@ -55,6 +55,17 @@ function getStripeCustomerId(
   return typeof value === 'string' ? value : value.id ?? null;
 }
 
+function stripeBranchUserData(subscription: Stripe.Subscription) {
+  const idfv = subscription.metadata?.branch_idfv?.trim();
+  const osVersion = subscription.metadata?.branch_os_version?.trim();
+  if (!idfv && !osVersion) return undefined;
+  return {
+    os: 'iOS',
+    os_version: osVersion || undefined,
+    idfv: idfv || undefined,
+  };
+}
+
 function logStripeWebhookAction(details: Record<string, unknown>) {
   console.log('[stripe/webhook] action', {
     provider: 'stripe',
@@ -278,10 +289,22 @@ export async function POST(request: Request) {
         const conversionUserId = userIdFromSession ?? sub.metadata?.user_id ?? null;
         if (sub.status === 'trialing') {
           await recordStripeProductConversion({ eventId: sub.id, eventName: 'brobot_trial_started', userId: conversionUserId, subscription: sub });
-          if (conversionUserId) void sendBranchServerEvent({ name: 'START_TRIAL', userId: conversionUserId, transactionId: sub.id, customData: { source: sub.metadata?.checkout_source ?? 'stripe' } });
+          if (conversionUserId) await sendBranchServerEvent({
+            name: 'START_TRIAL',
+            userId: conversionUserId,
+            transactionId: sub.id,
+            customData: { source: sub.metadata?.checkout_source ?? 'stripe' },
+            userData: stripeBranchUserData(sub),
+          });
         }
         await recordStripeProductConversion({ eventId: sub.id, eventName: 'brobot_unlimited_activated', userId: conversionUserId, subscription: sub });
-        if (conversionUserId) void sendBranchServerEvent({ name: 'SUBSCRIBE', userId: conversionUserId, transactionId: sub.id, customData: { status: sub.status } });
+        if (conversionUserId) await sendBranchServerEvent({
+          name: 'SUBSCRIBE',
+          userId: conversionUserId,
+          transactionId: sub.id,
+          customData: { status: sub.status },
+          userData: stripeBranchUserData(sub),
+        });
 
         const conversionResult = await sendSubscriptionPurchaseConversion(sub);
         logStripeWebhookAction({

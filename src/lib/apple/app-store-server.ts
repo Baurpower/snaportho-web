@@ -668,6 +668,10 @@ export async function upsertAppleSubscriptionForUser(params: {
     state.environment
   );
 
+  if (existingRow?.user_id && existingRow.user_id !== params.userId) {
+    throw new Error('Apple subscription is already linked to another account');
+  }
+
   if (
     existingRow &&
     shouldSkipAppleCanonicalUpdate({

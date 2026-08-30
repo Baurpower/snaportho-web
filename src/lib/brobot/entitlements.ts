@@ -11,7 +11,7 @@
  *   - `dailyCap` and `remainingToday` drive the free/guest experience
  */
 
-import { BROBOT_CONFIG } from '@/lib/config/brobot';
+import { BROBOT_CONFIG, CASEPREP_FEATURE } from '@/lib/config/brobot';
 import { createAdminClient } from '@/lib/supabase/admin';
 import {
   doesSubscriptionGrantEntitlement,
@@ -609,7 +609,7 @@ async function getPaidSubscriptionEntitlement(
  * Exported for reuse by mobile entitlement endpoint and other server code.
  * (Internal implementation details may change; use for count only.)
  */
-export async function getUsedCountToday(subject: Subject): Promise<number> {
+export async function getUsedCountToday(subject: Subject, feature: string = BROBOT_CONFIG.FEATURE): Promise<number> {
   const supabase = createAdminClient();
   const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD UTC
 
@@ -619,7 +619,7 @@ export async function getUsedCountToday(subject: Subject): Promise<number> {
     .from('user_daily_usage')
     .select('count')
     .eq('usage_date', today)
-    .eq('feature', BROBOT_CONFIG.FEATURE);
+    .eq('feature', feature);
 
   if (subject.type === 'user') {
     query = query.eq('user_id', subject.id);
@@ -634,6 +634,31 @@ export async function getUsedCountToday(subject: Subject): Promise<number> {
     return 0; // fail open on read error (worst case: user gets one extra call)
   }
   return data?.count ?? 0;
+}
+
+/** CasePrep quota is independent from conversational BroBot usage. */
+export async function getCasePrepEntitlement(
+  subject: Subject,
+): Promise<BroBotEntitlement & { isLimitReached: boolean }> {
+  const base = await getUserEntitlement(subject);
+  if (base.aiAccess.unlimited || base.source === 'disabled') {
+    return {
+      ...base,
+      isLimitReached: !base.aiAccess.unlimited && (base.aiAccess.remainingToday ?? 0) <= 0,
+    };
+  }
+
+  const dailyCap = subject.type === 'guest'
+    ? BROBOT_CONFIG.CASEPREP_GUEST_DAILY_CAP
+    : BROBOT_CONFIG.CASEPREP_FREE_DAILY_CAP;
+  const usedToday = await getUsedCountToday(subject, CASEPREP_FEATURE);
+  const remainingToday = Math.max(0, dailyCap - usedToday);
+  return {
+    ...base,
+    aiAccess: { unlimited: false, dailyCap, remainingToday },
+    usedToday,
+    isLimitReached: remainingToday <= 0,
+  };
 }
 
 /**

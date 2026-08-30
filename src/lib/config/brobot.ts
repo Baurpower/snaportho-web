@@ -21,6 +21,7 @@ import {
 } from './app-url';
 
 export const BROBOT_FEATURE = 'brobot' as const;
+export const CASEPREP_FEATURE = 'caseprep' as const;
 
 export const BROBOT_CONFIG = {
   /** Master kill switch. When false, all AI calls are rejected. */
@@ -34,6 +35,10 @@ export const BROBOT_CONFIG = {
 
   /** Daily cap for logged-in users who have no active paid subscription */
   FREE_DAILY_CAP: parseInt(process.env.BROBOT_FREE_DAILY_CAP || '3', 10),
+
+  /** Packet generation has its own allowance; chat must not consume it. */
+  CASEPREP_GUEST_DAILY_CAP: parseInt(process.env.CASEPREP_GUEST_DAILY_CAP || '1', 10),
+  CASEPREP_FREE_DAILY_CAP: parseInt(process.env.CASEPREP_FREE_DAILY_CAP || '3', 10),
 
   /** Personal-statement product boundaries (server-owned, not duplicated in clients). */
   PS_COMPARISON_PAID_ONLY:

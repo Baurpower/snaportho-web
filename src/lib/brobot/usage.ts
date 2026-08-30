@@ -30,6 +30,7 @@ interface RecordUsageParams {
   surface?: string;
   requestId?: string;
   entitlementTier?: 'guest' | 'free' | 'unlimited';
+  feature?: string;
 }
 
 /**
@@ -42,7 +43,7 @@ interface RecordUsageParams {
  *
  * Returns the new total count for the day after the increment.
  */
-export async function incrementDailyUsage(subject: Subject): Promise<number> {
+export async function incrementDailyUsage(subject: Subject, feature: string = BROBOT_CONFIG.FEATURE): Promise<number> {
   const supabase = createAdminClient();
   const today = new Date().toISOString().slice(0, 10);
 
@@ -53,7 +54,7 @@ export async function incrementDailyUsage(subject: Subject): Promise<number> {
     p_user_id: userId,
     p_guest_id: guestId,
     p_date: today,
-    p_feature: BROBOT_CONFIG.FEATURE,
+    p_feature: feature,
   });
 
   if (error) {
@@ -79,7 +80,7 @@ export async function recordUsageEvent(params: RecordUsageParams): Promise<void>
     const { error } = await supabase.from('brobot_usage_events').insert({
       user_id: userId,
       guest_id: guestId,
-      feature: BROBOT_CONFIG.FEATURE,
+      feature: params.feature ?? BROBOT_CONFIG.FEATURE,
       outcome: params.outcome,
       latency_ms: params.latencyMs ?? null,
       ip_hash: params.metadata?.ipHash ?? null,
@@ -117,9 +118,9 @@ export async function recordSuccessfulAIUse(
   subject: Subject,
   latencyMs?: number,
   metadata?: RecordUsageParams['metadata'],
-  analytics?: Pick<RecordUsageParams, 'surface' | 'requestId' | 'entitlementTier'>
+  analytics?: Pick<RecordUsageParams, 'surface' | 'requestId' | 'entitlementTier' | 'feature'>
 ): Promise<number> {
-  const newCount = await incrementDailyUsage(subject);
+  const newCount = await incrementDailyUsage(subject, analytics?.feature);
 
   // Fire and forget
   void recordUsageEvent({

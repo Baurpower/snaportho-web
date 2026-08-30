@@ -702,6 +702,8 @@ export async function createBroBotCheckoutSession(
   options: {
     enableTrial?: boolean;
     source?: string;
+    branchIDFV?: string;
+    branchOSVersion?: string;
   } = {}
 ): Promise<{ url: string | null }> {
   const stripe = getStripe();
@@ -716,12 +718,16 @@ export async function createBroBotCheckoutSession(
 
   const customerId = await getOrCreateStripeCustomer(userId, email);
   const trialDecision = buildRequestedBroBotTrialDecision(options.enableTrial);
-  const metadata = buildBroBotCheckoutMetadata({
-    userId,
-    trialDecision,
-    source: options.source ?? null,
-    trialRequested: options.enableTrial,
-  });
+  const metadata = {
+    ...buildBroBotCheckoutMetadata({
+      userId,
+      trialDecision,
+      source: options.source ?? null,
+      trialRequested: options.enableTrial,
+    }),
+    branch_idfv: options.branchIDFV ?? '',
+    branch_os_version: options.branchOSVersion ?? '',
+  };
 
   // Use custom redirect URLs if provided (mobile), otherwise fall back to centralized web URLs.
   // Always call getAppBaseUrl() for the production safety throw when using web defaults.
@@ -829,6 +835,10 @@ export async function createGuestBroBotCheckoutSession(
     utmCampaign?: string | null;
     utmTerm?: string | null;
     utmContent?: string | null;
+    customSuccessUrl?: string;
+    customCancelUrl?: string;
+    branchIDFV?: string;
+    branchOSVersion?: string;
   } = {}
 ): Promise<{ url: string | null }> {
   const stripe = getStripe();
@@ -858,6 +868,8 @@ export async function createGuestBroBotCheckoutSession(
     utm_campaign: options.utmCampaign || '',
     utm_term: options.utmTerm || '',
     utm_content: options.utmContent || '',
+    branch_idfv: options.branchIDFV ?? '',
+    branch_os_version: options.branchOSVersion ?? '',
     ...buildGuestTrialMetadata({
       trialRequested: options.enableTrial,
       trialEnd,
@@ -882,8 +894,8 @@ export async function createGuestBroBotCheckoutSession(
   const sessionParams = {
     mode: 'subscription',
     line_items: [{ price: priceId, quantity: 1 }],
-    success_url: getCheckoutSuccessUrl(),
-    cancel_url: `${getAppBaseUrl()}/brobot/pricing?canceled=true`,
+    success_url: options.customSuccessUrl ?? getCheckoutSuccessUrl(),
+    cancel_url: options.customCancelUrl ?? `${getAppBaseUrl()}/brobot/pricing?canceled=true`,
     customer_creation: 'always',
     metadata,
     subscription_data: subscriptionData,

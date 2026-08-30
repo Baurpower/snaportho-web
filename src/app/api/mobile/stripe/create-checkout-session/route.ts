@@ -54,6 +54,12 @@ export async function POST(request: Request) {
     const interval: 'month' | 'year' =
       body.interval === 'year' ? 'year' : 'month';
     const entryPoint = sanitizeEntryPoint(body.entryPoint);
+    const branchIDFV = typeof body.branchIDFV === 'string' && /^[0-9a-f-]{36}$/i.test(body.branchIDFV)
+      ? body.branchIDFV
+      : undefined;
+    const branchOSVersion = typeof body.branchOSVersion === 'string'
+      ? body.branchOSVersion.slice(0, 30)
+      : undefined;
 
     console.log('[SUB_FLOW] mobile_stripe_checkout_requested', {
       purchase_source: 'stripe',
@@ -133,6 +139,8 @@ export async function POST(request: Request) {
       {
         enableTrial: true,
         source: `ios_${entryPoint}`,
+        branchIDFV,
+        branchOSVersion,
       },
     );
 

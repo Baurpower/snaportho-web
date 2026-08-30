@@ -77,7 +77,11 @@ export default function SignInClient({ redirectTo, oauthError = false }: Props) 
   return (
     <div className="max-w-md mx-auto mt-16 p-6 bg-white rounded-2xl shadow-lg">
       <h2 className="text-2xl font-semibold mb-4 text-center text-navy">
-        {safeRedirectTo.startsWith('/brobot') ? 'Sign in to continue BroBot' : 'Sign In'}
+        {safeRedirectTo.startsWith('/brobot')
+          ? 'Sign in to continue BroBot'
+          : safeRedirectTo.startsWith('/anki')
+            ? 'Sign in to download SnapOrtho for Anki'
+            : 'Sign In'}
       </h2>
 
       {errorMsg ? (

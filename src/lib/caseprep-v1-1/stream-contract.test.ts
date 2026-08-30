@@ -6,10 +6,7 @@ import { join } from "node:path";
 // @ts-expect-error Node type stripping requires the runtime extension.
 import { createSseParseState, parseSseChunk, encodeSseEvent } from "./sse.ts";
 // @ts-expect-error Node type stripping requires the runtime extension.
-import {
-  createInitialPacketState,
-  reducePacketEvent,
-} from "./stream-schema.ts";
+import { createInitialPacketState, reducePacketEvent } from "./stream-schema.ts";
 
 type PacketState = ReturnType<typeof createInitialPacketState>;
 
@@ -421,9 +418,20 @@ assert.ok(
   "approach stays first, pimp questions second, and supporting knowledge third",
 );
 assert.ok(
-  streamRouteSource.indexOf("getBroBotAccessGate") <
+  streamRouteSource.indexOf("getCasePrepAccessGate") >= 0 &&
+    streamRouteSource.indexOf("getCasePrepAccessGate") <
     streamRouteSource.indexOf("/case-prep/web/${version}/stream"),
   "entitlement gate must run before the upstream stream is opened",
+);
+assert.match(
+  streamRouteSource,
+  /recordSuccessfulAIUse[\s\S]*feature: CASEPREP_FEATURE/,
+  "successful packets must consume the dedicated CasePrep allowance",
+);
+assert.match(
+  streamRouteSource,
+  /You've used today's free CasePrep/,
+  "quota responses should explain the CasePrep-specific limit",
 );
 assert.match(streamRouteSource, /isCasePrepStreamEnabled\(\)/);
 assert.match(streamRouteSource, /isCasePrepV12StreamEnabled\(\)/);
