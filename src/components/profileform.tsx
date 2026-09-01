@@ -61,7 +61,7 @@ export default function ProfileForm({
     city = '',
     training_level = '',
     institution = '',
-    receive_emails = true,
+    receive_emails = false,
     subspecialty_interest = '',
     training_history: initialTrainingHistory = [],
   } = initialValues;
@@ -330,7 +330,7 @@ export default function ProfileForm({
               className="mt-1 w-4 h-4"
             />
             <label className="text-sm font-medium text-midnight/80 leading-snug">
-              Receive occasional email updates about new content and features
+              Receive BroBot learning tips, product updates, and occasional offers. You can unsubscribe anytime.
             </label>
           </div>
         </div>

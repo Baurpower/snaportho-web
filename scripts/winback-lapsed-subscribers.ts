@@ -23,6 +23,7 @@ import { join } from 'node:path';
 import { createClient } from '@supabase/supabase-js';
 
 import { sendWorkspaceNotificationEmail } from '../src/lib/workspace/notifications/email.ts';
+import { createMarketingPreferenceToken } from '../src/lib/marketing/preferences-token.ts';
 
 const YEARLY_PRICE_LABEL = '$29.99';
 const YEARLY_SAVINGS_LABEL = 'saves you $5.89 versus paying monthly';
@@ -269,9 +270,10 @@ function buildEmail(params: {
   provider: string | null;
   appUrl: string;
   supportEmail: string;
+  unsubscribeUrl?: string;
 }) {
   const content = buildContent(params.reason, params.provider, params.appUrl);
-  const unsubscribe = `mailto:${params.supportEmail}?subject=Unsubscribe%20from%20SnapOrtho%20emails`;
+  const unsubscribe = params.unsubscribeUrl ?? `mailto:${params.supportEmail}?subject=Unsubscribe%20from%20SnapOrtho%20emails`;
 
   const text = [
     'Hi,',
@@ -365,7 +367,7 @@ async function main() {
 
   const optedOut = new Set(
     (optoutData ?? [])
-      .filter((o: { kind: string | null }) => o.kind === null || o.kind === KIND)
+      .filter((o: { kind: string | null }) => o.kind === null || o.kind === KIND || o.kind === 'offers')
       .map((o: { user_id: string }) => o.user_id),
   );
   const priorSends = new Map<string, { periodEnd: number; sentAt: number }[]>();
@@ -424,11 +426,13 @@ async function main() {
   for (const c of sendable) {
     if (sent >= args.limit) break;
     const email = emailByUser.get(c.userId)!;
+    const preferenceToken = createMarketingPreferenceToken({ userId: c.userId, email, topic: 'offers' });
+    const unsubscribeUrl = `${appUrl.replace(/\/$/, '')}/api/email/preferences?token=${encodeURIComponent(preferenceToken)}`;
     const reason = classifyReason(c.row);
     const label = `${email} [${reason}] provider=${c.row.provider ?? '?'} status=${c.row.status ?? '?'} periodEnd=${c.row.current_period_end ?? '?'}`;
 
     if (args.preview) {
-      const msg = buildEmail({ to: email, reason, provider: c.row.provider, appUrl, supportEmail });
+      const msg = buildEmail({ to: email, reason, provider: c.row.provider, appUrl, supportEmail, unsubscribeUrl });
       const file = join(process.cwd(), `winback-preview-${reason}-${c.row.provider ?? 'unknown'}.html`);
       writeFileSync(file, msg.html, 'utf8');
       console.log(`\n──────── ${label}`);
@@ -447,7 +451,7 @@ async function main() {
 
     try {
       await sendWorkspaceNotificationEmail(
-        buildEmail({ to: email, reason, provider: c.row.provider, appUrl, supportEmail }),
+        buildEmail({ to: email, reason, provider: c.row.provider, appUrl, supportEmail, unsubscribeUrl }),
       );
       const { error: logError } = await supabase.from('lifecycle_emails').insert({
         user_id: c.userId,

@@ -1,0 +1,49 @@
+import { createAdminClient } from '@/lib/supabase/admin';
+import { renderMarketingEmail } from './templates';
+import { sendMarketingEmail } from './resend';
+import type { MarketingRecipient } from './types';
+
+export async function deliverMarketingCampaignEmail(recipient: MarketingRecipient) {
+  const supabase = createAdminClient();
+
+  // Recheck consent and suppression at the last responsible moment.
+  const [{ data: profile, error: profileError }, { data: optouts, error: optoutError }] = await Promise.all([
+    supabase.from('user_profiles').select('receive_emails, marketing_unsubscribed_at').eq('user_id', recipient.userId).maybeSingle(),
+    supabase.from('lifecycle_email_optouts').select('kind').eq('user_id', recipient.userId),
+  ]);
+  if (profileError) throw new Error(`Consent lookup failed: ${profileError.message}`);
+  if (optoutError) throw new Error(`Suppression lookup failed: ${optoutError.message}`);
+  if (profile?.receive_emails !== true || profile.marketing_unsubscribed_at) return { status: 'suppressed' as const };
+  if ((optouts ?? []).some((row) => row.kind === null || row.kind === recipient.topic)) return { status: 'suppressed' as const };
+
+  const { data: log, error: reserveError } = await supabase.from('lifecycle_emails').insert({
+    user_id: recipient.userId,
+    email: recipient.email,
+    kind: recipient.campaignKey,
+    campaign_key: recipient.campaignKey,
+    campaign_step: recipient.campaignStep,
+    topic: recipient.topic,
+    template_version: recipient.templateVersion,
+    send_status: 'sending',
+    metadata: {},
+  }).select('id').single();
+  if (reserveError) {
+    if (reserveError.code === '23505') return { status: 'duplicate' as const };
+    throw new Error(`Campaign reservation failed: ${reserveError.message}`);
+  }
+
+  try {
+    const rendered = renderMarketingEmail(recipient);
+    const result = await sendMarketingEmail({ recipient, email: rendered, unsubscribeUrl: rendered.unsubscribeUrl });
+    const { error } = await supabase.from('lifecycle_emails').update({
+      send_status: 'sent', resend_email_id: result.id, provider_message_id: result.id, sent_at: new Date().toISOString(),
+    }).eq('id', log.id);
+    if (error) throw new Error(`Sent but failed to finalize log: ${error.message}`);
+    return { status: 'sent' as const, id: result.id };
+  } catch (error) {
+    await supabase.from('lifecycle_emails').update({
+      send_status: 'failed', failure_reason: error instanceof Error ? error.message.slice(0, 500) : 'Unknown send failure',
+    }).eq('id', log.id);
+    throw error;
+  }
+}

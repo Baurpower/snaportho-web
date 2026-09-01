@@ -230,7 +230,7 @@ export default function OnboardingFormClient({
             className="mt-1"
           />
           <span className="text-sm text-slate-700">
-            Receive emails and updates.
+            Receive BroBot learning tips, product updates, and occasional offers. You can unsubscribe anytime.
           </span>
         </label>
 

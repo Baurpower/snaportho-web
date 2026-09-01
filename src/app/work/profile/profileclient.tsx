@@ -696,7 +696,7 @@ export default function WorkProfilePage() {
                           className="mt-0.5 h-4 w-4 rounded border-white/20 bg-white/10"
                         />
                         <span>
-                          Receive emails and updates from SnapOrtho.
+                          Receive BroBot learning tips, product updates, and occasional offers. You can unsubscribe anytime.
                         </span>
                       </label>
                     </div>
