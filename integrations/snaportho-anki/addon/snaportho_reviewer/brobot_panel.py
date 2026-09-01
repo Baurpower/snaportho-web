@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import html
+import os
 import re
 import uuid
 
@@ -96,17 +97,25 @@ def deck_footer_text(installed_release, latest_release, card_count):
     latest_release = str(latest_release or "").strip()
     if not card_count:
         return (
-            f"Master Deck not installed · Latest {latest_release}"
+            f"MASTER DECK NOT INSTALLED\nLatest available: {latest_release}"
             if latest_release
-            else "Master Deck not installed"
+            else "MASTER DECK NOT INSTALLED"
         )
     if installed_release and latest_release and installed_release != latest_release:
-        return f"Master Deck {installed_release} → {latest_release} · Update available"
+        return f"UPDATE AVAILABLE\nInstalled: {installed_release}  →  Latest: {latest_release}"
     if installed_release:
-        return f"Master Deck {installed_release} · Up to date"
+        return f"✓ MASTER DECK IS UP TO DATE\nInstalled version: {installed_release}"
     if latest_release:
-        return f"Master Deck · {card_count} cards · Latest {latest_release}"
-    return f"Master Deck · {card_count} cards"
+        return f"MASTER DECK INSTALLED · {card_count} cards\nLatest available: {latest_release}"
+    return f"MASTER DECK INSTALLED · {card_count} cards\nVersion is being checked…"
+
+
+def deck_footer_state(installed_release, latest_release, card_count):
+    if not card_count:
+        return "missing"
+    if installed_release and latest_release and installed_release != latest_release:
+        return "update"
+    return "current" if installed_release else "checking"
 
 
 PANEL_STYLE = """
@@ -140,9 +149,12 @@ QPushButton#newChat {
   border-radius: 7px; padding: 5px 8px; font-size: 10px; font-weight: 650;
 }
 QLabel#footer {
-  background: transparent; color: #64748b; border-top: 1px solid #e2e8f0;
-  padding: 9px 2px 2px 2px; font-size: 10px; font-weight: 600;
+  background: #eef2f7; color: #334155; border: 1px solid #cbd5e1;
+  border-radius: 9px; padding: 9px 10px; font-size: 11px; font-weight: 700;
 }
+QLabel#footer[state="current"] { background:#ecfdf5; color:#047857; border-color:#6ee7b7; }
+QLabel#footer[state="update"] { background:#fff7ed; color:#c2410c; border-color:#fdba74; }
+QLabel#footer[state="missing"] { background:#fef2f2; color:#b91c1c; border-color:#fca5a5; }
 QLabel#notice { color: #92400e; font-size: 11px; padding: 3px; }
 """
 
@@ -151,12 +163,17 @@ class LearnerSidePanel:
     def __init__(self, mw, runtime):
         from aqt.qt import (
             QDockWidget,
+            QEvent,
             QFrame,
             QHBoxLayout,
+            QIcon,
             QLabel,
+            QObject,
             QPlainTextEdit,
             QPushButton,
+            QSize,
             QTextBrowser,
+            QToolButton,
             QVBoxLayout,
             QWidget,
             Qt,
@@ -260,14 +277,67 @@ class LearnerSidePanel:
         composer_row.addWidget(self.send)
         root.addLayout(composer_row)
 
-        self.footer = QLabel("Master Deck · Checking version…")
+        self.footer = QLabel("MASTER DECK\nChecking installed version…")
         self.footer.setObjectName("footer")
+        self.footer.setWordWrap(True)
+        self.footer.setToolTip("Open Tools → SnapOrtho → Get Started / Master Deck to manage updates.")
         root.addWidget(self.footer)
 
         self.dock.setWidget(root_widget)
         mw.addDockWidget(Qt.DockWidgetArea.RightDockWidgetArea, self.dock)
+
+        # A dock's native close button only hides it. Keep a small, branded
+        # affordance on the main window so BroBot is always one click away.
+        self.launcher = QToolButton(mw)
+        self.launcher.setObjectName("snapOrthoBrobotLauncher")
+        bundled_logo = os.path.join(os.path.dirname(__file__), "snaportho-logo.png")
+        # Source checkouts reuse the canonical website asset. The packaged
+        # add-on includes that exact PNG beside this module.
+        source_logo = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "public", "snaportho-logo.png")
+        )
+        self.launcher.setIcon(QIcon(bundled_logo if os.path.exists(bundled_logo) else source_logo))
+        self.launcher.setIconSize(QSize(35, 35))
+        self.launcher.setFixedSize(48, 48)
+        self.launcher.setToolTip("Open BroBot chat")
+        self.launcher.setAccessibleName("Open BroBot chat")
+        self.launcher.setStyleSheet(
+            "QToolButton#snapOrthoBrobotLauncher { background:#ffffff; border:1px solid #cbd5e1; "
+            "border-radius:24px; padding:5px; } "
+            "QToolButton#snapOrthoBrobotLauncher:hover { background:#f0fdfa; border-color:#14b8a6; }"
+        )
+        self.launcher.clicked.connect(self.open)
+
+        panel = self
+        class LauncherPositioner(QObject):
+            def eventFilter(inner, watched, event):
+                if watched is mw and event.type() in (
+                    QEvent.Type.Resize,
+                    QEvent.Type.Show,
+                    QEvent.Type.WindowStateChange,
+                ):
+                    panel._position_launcher()
+                return False
+
+        self._launcher_positioner = LauncherPositioner(mw)
+        mw.installEventFilter(self._launcher_positioner)
+        self._position_launcher()
+        self.launcher.show()
+        self.launcher.raise_()
         self._set_enabled(False)
         self.refresh_deck_footer()
+
+    def _position_launcher(self):
+        margin = 14
+        self.launcher.move(
+            max(margin, self.mw.width() - self.launcher.width() - margin),
+            max(margin, self.mw.height() - self.launcher.height() - margin),
+        )
+
+    def open(self):
+        self.dock.show()
+        self.dock.raise_()
+        self.launcher.raise_()
 
     def _empty_html(self):
         return (
@@ -493,7 +563,7 @@ class LearnerSidePanel:
             card_count = 1
         subscription = presence.get("subscription")
         installed = (subscription or {}).get("releaseVersion") or self.runtime.store.cached("installed_master_release")
-        self.footer.setText(deck_footer_text(installed, None, card_count))
+        self._set_deck_footer(installed, None, card_count)
         try:
             linked = bool(self.runtime.credentials.get())
         except Exception:
@@ -510,19 +580,26 @@ class LearnerSidePanel:
                     or release.get("releaseVersion")
                     or release.get("release_version")
                 )
-                self.footer.setText(
-                    deck_footer_text(
-                        (self.runtime.store.deck_subscription() or {}).get("releaseVersion")
-                        or self.runtime.store.cached("installed_master_release"),
-                        latest,
-                        card_count,
-                    )
+                self._set_deck_footer(
+                    (self.runtime.store.deck_subscription() or {}).get("releaseVersion")
+                    or self.runtime.store.cached("installed_master_release"),
+                    latest,
+                    card_count,
                 )
             except Exception:
                 pass
 
         self.runtime.background(self.runtime.api.deck_v2_status, done)
 
+    def _set_deck_footer(self, installed, latest, card_count):
+        self.footer.setText(deck_footer_text(installed, latest, card_count))
+        self.footer.setProperty("state", deck_footer_state(installed, latest, card_count))
+        self.footer.style().unpolish(self.footer)
+        self.footer.style().polish(self.footer)
+
     def close(self):
+        self.mw.removeEventFilter(self._launcher_positioner)
+        self.launcher.close()
+        self.launcher.deleteLater()
         self.dock.close()
         self.dock.deleteLater()

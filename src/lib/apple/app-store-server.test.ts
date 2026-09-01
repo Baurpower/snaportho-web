@@ -4,10 +4,24 @@ import { SignJWT } from 'jose';
 
 import {
   AppleVerificationError,
+  appleAccountTokensMatch,
   deriveAppleState,
+  isAppleIntroductoryOffer,
   parseApplePrivateKeyForSigning,
   verifyAppStoreServerNotification,
 } from './app-store-server';
+
+assert.equal(
+  appleAccountTokensMatch(
+    '8E3A1B2C-4D5E-6F70-8192-A3B4C5D6E7F8',
+    '8e3a1b2c-4d5e-6f70-8192-a3b4c5d6e7f8'
+  ),
+  true
+);
+assert.equal(appleAccountTokensMatch('8e3a1b2c-4d5e-6f70-8192-a3b4c5d6e7f8', 'other'), false);
+assert.equal(appleAccountTokensMatch('', ''), false);
+assert.equal(isAppleIntroductoryOffer({ offerType: 1 }), true);
+assert.equal(isAppleIntroductoryOffer({ offerType: 3 }), false);
 
 const { privateKey } = generateKeyPairSync('ec', { namedCurve: 'P-256' });
 const validPem = privateKey.export({ format: 'pem', type: 'pkcs8' }).toString();

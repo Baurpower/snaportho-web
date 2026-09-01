@@ -1,4 +1,8 @@
 import { createAdminClient } from '../supabase/admin';
+import {
+  isSubscriptionOwnerConflict,
+  SubscriptionOwnerConflictError,
+} from './ownership';
 
 /**
  * Canonical paid entitlement selection policy.
@@ -109,14 +113,46 @@ export async function upsertCanonicalSubscription(
   }
 
   const supabase = createAdminClient();
+  const conflictTarget = getCanonicalSubscriptionConflictTarget(entry);
+
+  if (conflictTarget === 'provider,provider_subscription_id,environment') {
+    const { data, error } = await supabase.rpc('upsert_subscription_preserving_owner', {
+      payload,
+    });
+
+    if (error) {
+      if (isSubscriptionOwnerConflict(error)) {
+        throw new SubscriptionOwnerConflictError();
+      }
+      throw new Error(`Failed to upsert canonical subscription: ${error.message}`);
+    }
+
+    const row = (data ?? null) as CanonicalSubscriptionRow | null;
+    if (!row) {
+      throw new Error('Failed to upsert canonical subscription: empty result');
+    }
+    if (row.user_id && row.user_id !== entry.user_id) {
+      throw new SubscriptionOwnerConflictError();
+    }
+
+    return { applied: true, payload, row };
+  }
+
   const { data, error } = await supabase
     .from('subscriptions')
-    .upsert(payload, { onConflict: getCanonicalSubscriptionConflictTarget(entry) })
+    .upsert(payload, { onConflict: conflictTarget })
     .select('*')
     .maybeSingle<CanonicalSubscriptionRow>();
 
   if (error) {
+    if (isSubscriptionOwnerConflict(error)) {
+      throw new SubscriptionOwnerConflictError();
+    }
     throw new Error(`Failed to upsert canonical subscription: ${error.message}`);
+  }
+
+  if (data?.user_id && data.user_id !== entry.user_id) {
+    throw new SubscriptionOwnerConflictError();
   }
 
   return { applied: true, payload, row: data ?? null };

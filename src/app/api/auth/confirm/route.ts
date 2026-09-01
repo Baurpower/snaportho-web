@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import type { EmailOtpType } from "@supabase/supabase-js";
 import { safeRedirectPath } from "@/lib/auth/redirects";
+import { getClaimableBillingUser } from "@/lib/auth/claimable-billing-user";
 import { claimPendingBroBotSubscriptionForUser } from "@/lib/stripe";
 
 function getRedirectTarget(url: URL): string {
@@ -76,11 +77,12 @@ export async function GET(request: NextRequest) {
   });
 
   let claimedSubscription = false;
-  if (data.user?.id) {
+  const claimable = data.user ? getClaimableBillingUser(data.user) : null;
+  if (claimable?.ok) {
     try {
       const claimResult = await claimPendingBroBotSubscriptionForUser(
-        data.user.id,
-        data.user.email
+        claimable.user.id,
+        claimable.user.email
       );
       claimedSubscription = [
         "claimed",

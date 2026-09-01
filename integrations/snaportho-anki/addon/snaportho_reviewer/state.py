@@ -51,6 +51,10 @@ class DraftStore:
     def note_baseline(self,canonical_note_id,deck_key="snaportho-master"):
         row=self.db.execute("select anki_note_id,note_guid,note_version_id,fields_json,tags_json,content_checksum,tags_checksum from deck_note_baselines where scope=? and deck_key=? and canonical_note_id=?",(self.scope,deck_key,canonical_note_id)).fetchone()
         return None if not row else{"ankiNoteId":row[0],"noteGuid":row[1],"noteVersionId":row[2],"fields":json.loads(row[3]),"tags":json.loads(row[4]),"contentChecksum":row[5],"tagsChecksum":row[6]}
+    def note_baselines(self,deck_key="snaportho-master"):
+        rows=self.db.execute("select canonical_note_id,anki_note_id,note_guid,note_version_id,fields_json,tags_json,content_checksum,tags_checksum from deck_note_baselines where scope=? and deck_key=? order by canonical_note_id",(self.scope,deck_key)).fetchall()
+        keys=("canonicalNoteId","ankiNoteId","noteGuid","noteVersionId","fields","tags","contentChecksum","tagsChecksum")
+        return[dict(zip(keys,(row[0],row[1],row[2],row[3],json.loads(row[4]),json.loads(row[5]),row[6],row[7])))for row in rows]
     def save_note_baseline(self,canonical_note_id,anki_note_id,note_guid,note_version_id,fields,tags,content_checksum,tags_checksum,deck_key="snaportho-master"):
         self.db.execute("insert or replace into deck_note_baselines values(?,?,?,?,?,?,?,?,?,?,?)",(self.scope,deck_key,canonical_note_id,int(anki_note_id),note_guid,note_version_id,json.dumps(fields,sort_keys=True),json.dumps(sorted(tags)),content_checksum,tags_checksum,int(time.time())));self.db.commit()
     def journal_start(self,deck_key,cursor,canonical_note_id,operation,before):

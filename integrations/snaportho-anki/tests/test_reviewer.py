@@ -19,7 +19,7 @@ from snaportho_reviewer.sync import (
   installed_deck_presence,
   local_guid_hits,
 )
-from snaportho_reviewer.brobot_panel import ATTENDING_PROMPT,OITE_PROMPT,card_context,chat_payload,deck_footer_text,plain_text
+from snaportho_reviewer.brobot_panel import ATTENDING_PROMPT,OITE_PROMPT,card_context,chat_payload,deck_footer_state,deck_footer_text,plain_text
 from snaportho_reviewer.resource_search import anki_card_query,parse_orthobullets_id,request_payload,resolve_local_results,result_summary
 from snaportho_reviewer.bootstrap import ANKI_DOWNLOAD_URL,MIN_ANKI,UnsupportedAnkiError
 class Card:
@@ -73,10 +73,13 @@ class ReviewerTests(unittest.TestCase):
   self.assertNotIn("<b>",plain_text("<b>Hello</b>&nbsp;there"))
   self.assertEqual(plain_text("{{c1::Partial Articular Supraspinatus Tendon Avulsion}}"),"Partial Articular Supraspinatus Tendon Avulsion")
  def test_deck_footer_distinguishes_installed_and_latest_versions(self):
-  self.assertEqual(deck_footer_text(None,None,0),"Master Deck not installed")
-  self.assertIn("Latest 2026.08",deck_footer_text(None,"2026.08",0))
-  self.assertIn("Up to date",deck_footer_text("2026.08","2026.08",100))
-  update=deck_footer_text("2026.07","2026.08",100);self.assertIn("2026.07 → 2026.08",update);self.assertIn("Update available",update)
+  self.assertEqual(deck_footer_text(None,None,0),"MASTER DECK NOT INSTALLED")
+  self.assertIn("Latest available: 2026.08",deck_footer_text(None,"2026.08",0))
+  self.assertIn("UP TO DATE",deck_footer_text("2026.08","2026.08",100))
+  update=deck_footer_text("2026.07","2026.08",100);self.assertIn("Installed: 2026.07",update);self.assertIn("Latest: 2026.08",update);self.assertIn("UPDATE AVAILABLE",update)
+  self.assertEqual(deck_footer_state(None,"2026.08",0),"missing")
+  self.assertEqual(deck_footer_state("2026.07","2026.08",100),"update")
+  self.assertEqual(deck_footer_state("2026.08","2026.08",100),"current")
  def test_resolution(self):
   self.assertEqual(resolve_card(Gateway([]),self.i).status,"not_found");self.assertEqual(resolve_card(Gateway([Card(1,"a"*64),Card(2,"a"*64)]),self.i).status,"ambiguous");self.assertEqual(resolve_card(Gateway([Card(1,"b"*64)]),self.i).status,"hash_mismatch");self.assertEqual(resolve_card(Gateway([Card(1,"a"*64)]),self.i).status,"resolved")
  def test_diff_and_no_silent_overwrite(self):
@@ -93,6 +96,10 @@ class ReviewerTests(unittest.TestCase):
   self.assertIn("from .snaportho_reviewer.bootstrap import register",bootstrap)
   with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:surfaces=source.read()
   self.assertIn("browser_menus_did_init",surfaces);self.assertIn("reviewer_did_show_question",surfaces);self.assertIn("Review Current Card",surfaces);self.assertIn("Get Started / Master Deck",surfaces);self.assertIn("Propose SnapOrtho changes",surfaces);self.assertIn("editor_did_init_buttons",surfaces)
+  learner=surfaces[surfaces.index("        else:",surfaces.index("if self.reviewer_edition:")):surfaces.index("        self._maybe_first_run_prompt()")]
+  self.assertNotIn("Reviewer tools",learner)
+  self.assertNotIn("reviewer_actions",learner)
+  self.assertNotIn("_load_account_capabilities",surfaces)
  def test_user_and_reviewer_editions_have_distinct_runtime_surfaces(self):
   with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:text=source.read()
   self.assertIn("from . import REVIEWER_EDITION",text)
@@ -113,9 +120,16 @@ class ReviewerTests(unittest.TestCase):
  def test_user_edition_installs_browse_search_before_reviewer_gate(self):
   with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:text=source.read()
   browse=text[text.index("    def add_browser_action"):text.index("    def open_resource_search")]
-  self.assertLess(browse.index("install_browser_search_surface"),browse.index("if not self.reviewer_enabled:return"))
-  self.assertLess(browse.index("Search SnapOrtho by Orthobullets ID"),browse.index("if not self.reviewer_enabled:return"))
-  self.assertGreater(browse.index("Propose SnapOrtho changes"),browse.index("if not self.reviewer_enabled:return"))
+  self.assertLess(browse.index("install_browser_search_surface"),browse.index("if not self.reviewer_edition:return"))
+  self.assertLess(browse.index("Search SnapOrtho by Orthobullets ID"),browse.index("if not self.reviewer_edition:return"))
+  self.assertGreater(browse.index("Propose SnapOrtho changes"),browse.index("if not self.reviewer_edition:return"))
+ def test_brobot_logo_reopens_hidden_panel(self):
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","brobot_panel.py"))as source:text=source.read()
+  self.assertIn('snaportho-logo.png',text)
+  self.assertIn('setAccessibleName("Open BroBot chat")',text)
+  open_panel=text[text.index("    def open(self):"):text.index("    def _empty_html")]
+  self.assertIn("self.dock.show()",open_panel)
+  self.assertIn("self.dock.raise_()",open_panel)
  def test_configuration_and_https(self):
   settings=validate({"environment":"local","base_url":"http://127.0.0.1:3000","request_timeout_seconds":15,"diagnostics_enabled":False});self.assertEqual(settings.environment,"local")
   with self.assertRaises(ValueError):validate({"environment":"production","base_url":"http://example.com","request_timeout_seconds":15,"diagnostics_enabled":False})
@@ -516,6 +530,7 @@ class ReviewerTests(unittest.TestCase):
    def __init__(self):self.notes={};self.writes=0
    def snapshot(self,nid,payload=None):return self.notes.get(nid,{"fields":{},"tags":[]})
    def upsert_note(self,nid,payload,fields,tags):self.notes[nid]={"fields":fields,"tags":tags};self.writes+=1;return{"ankiNoteId":7,"noteGuid":payload["noteGuid"]}
+   def verify_tags(self,nid,expected,prefixes,payload=None):self.asserted=(nid,expected,prefixes)
   release={"id":"release","sequence":1,"version":"1","aggregateChecksum":"a"*64}
   payload={"noteGuid":"guid","noteTypeName":"SnapOrtho Master","deckPath":"SnapOrtho","fields":{"Text":"Q"},"governedTags":["SnapOrtho::Diagnosis::ACL"],"governedPrefixes":["SnapOrtho::Diagnosis"],"contentChecksum":"b"*64,"tagsChecksum":"c"*64}
   op={"cursor":1,"releaseId":"release","operationIndex":0,"operation":"upsert_note","noteId":"note","noteVersionId":"version","payloadChecksum":checksum(payload),"payload":payload}
@@ -531,8 +546,9 @@ class ReviewerTests(unittest.TestCase):
    def __init__(self):self.fields=None;self.tags=None
    def snapshot(self,nid,payload=None):
     self.snapshot_payload=payload
-    return{"fields":{"Text":"old","Personal_Notes":"keep me"},"tags":["favorite","SnapOrtho::Diagnosis::Old"],"ankiNoteId":7,"noteGuid":"existing-guid"}
+    return{"fields":{"Text":"old","Personal_Notes":"keep me"},"tags":self.tags or["favorite","SnapOrtho::Diagnosis::Old"],"ankiNoteId":7,"noteGuid":"existing-guid"}
    def update_tags(self,nid,tags,payload=None):self.tags=tags
+   def verify_tags(self,nid,expected,prefixes,payload=None):self.verified=True
    def upsert_note(self,nid,payload,fields,tags):
     self.fields=fields;self.tags=tags
     return{"ankiNoteId":7,"noteGuid":payload["noteGuid"]}
@@ -546,6 +562,26 @@ class ReviewerTests(unittest.TestCase):
    self.assertEqual(gateway.snapshot_payload["noteGuid"],"existing-guid")
    self.assertIsNone(gateway.fields)
    self.assertEqual(gateway.tags,["SnapOrtho::Diagnosis::New","favorite"])
+   self.assertTrue(gateway.verified)
+   store.close()
+ def test_note_sync_v2_repairs_tag_drift_even_when_cursor_is_current(self):
+  from snaportho_reviewer.deck_sync_v2 import NoteSyncV2Importer
+  class RepairGateway:
+   def __init__(self):self.tags=["favorite"]
+   def snapshot(self,nid,payload=None):return{"fields":{},"tags":self.tags,"ankiNoteId":7,"noteGuid":"guid"}
+   def update_tags(self,nid,tags,payload=None):self.tags=tags
+   @staticmethod
+   def tags_match(actual,expected,prefixes):
+    return set(t for t in actual if any(t==p or t.startswith(p+"::")for p in prefixes))==set(expected)
+   def verify_tags(self,nid,expected,prefixes,payload=None):
+    if not self.tags_match(self.tags,expected,prefixes):raise RuntimeError("not persisted")
+  with tempfile.TemporaryDirectory()as d:
+   store=DraftStore(os.path.join(d,"state.db"),"scope")
+   store.save_note_baseline("note",7,"guid","version",{},["SnapOrtho::Diagnosis::ACL"],"a"*64,"b"*64)
+   gateway=RepairGateway();result=NoteSyncV2Importer(store,gateway).reconcile_tags()
+   self.assertEqual(result,{"checked":1,"repaired":1,"missing":0})
+   self.assertEqual(gateway.tags,["SnapOrtho::Diagnosis::ACL","favorite"])
+   self.assertEqual(NoteSyncV2Importer(store,gateway).reconcile_tags()["repaired"],0)
    store.close()
  def test_note_sync_v2_validates_more_than_four_thousand_ordered_operations(self):
   from snaportho_reviewer.deck_sync_v2 import CONTRACT,checksum,validate_page

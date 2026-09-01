@@ -41,7 +41,7 @@ assert.ok(checkoutClient.includes("'/api/billing/checkout'"));
 assert.ok(checkoutClient.includes("'/api/billing/checkout/guest'"));
 
 const mobileRoute = readSource('src/app/api/mobile/stripe/create-checkout-session/route');
-assert.ok(mobileRoute.includes("const MOBILE_SUCCESS_URL = 'snaportho://subscription/success'"));
+assert.ok(mobileRoute.includes("const MOBILE_SUCCESS_URL = 'snaportho://subscription/success?checkout_session_id={CHECKOUT_SESSION_ID}'"));
 assert.ok(!mobileRoute.includes('getCheckoutSuccessUrl'));
 assert.ok(!mobileRoute.includes('/checkout/success'));
 
@@ -51,7 +51,8 @@ assert.ok(mobileGuestRoute.includes('checkout_session_id={CHECKOUT_SESSION_ID}')
 
 const mobileClaimRoute = readSource('src/app/api/mobile/stripe/claim-pending-subscription/route');
 assert.ok(mobileClaimRoute.includes('getMobileBearerUser'));
+assert.ok(mobileClaimRoute.includes('getClaimableBillingUser'));
 assert.ok(mobileClaimRoute.includes('checkoutSessionId: checkoutSessionId || null'));
-assert.ok(mobileClaimRoute.includes('claimPendingBroBotSubscriptionForUser(user.id, user.email'));
+assert.ok(mobileClaimRoute.includes('claimPendingBroBotSubscriptionForUser(claimable.user.id, claimable.user.email'));
 
 console.log('web-stripe-checkout-success-url audit tests passed');

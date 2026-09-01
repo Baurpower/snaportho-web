@@ -172,6 +172,8 @@
     "subscriptions:test:web-persistence": "node --experimental-strip-types src/lib/brobot/web-entitlement-persistence.test.ts",
     "subscriptions:test:stripe-resubscribe": "node --experimental-strip-types src/lib/stripe-resubscribe-fallback.test.ts",
     "subscriptions:test:resolution": "node --experimental-strip-types src/lib/subscriptions/entitlement-resolution.test.ts",
+    "subscriptions:test:ownership": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/subscriptions/ownership.test.ts",
+    "subscriptions:test:branch-conversions": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/analytics/branch-conversion-reliability.test.ts",
     "subscriptions:test:apple-recovery": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/subscriptions/apple-notification-recovery.test.ts",
     "subscriptions:typecheck:apple": "tsc --noEmit -p tsconfig.apple-subscriptions.json",
     "subscriptions:audit:apple-notifications": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs scripts/audit-apple-notifications.ts",

@@ -3,6 +3,7 @@ import hashlib,json,re
 CONTRACT="snaportho-anki-note-sync.v2"
 OPERATIONS={"upsert_note","retire_note","update_tags","move_note","update_note_type","media_add","media_remove"}
 PERSONAL=re.compile(r"^(personal|user|local)(_|::)",re.I)
+GOVERNED_PREFIXES=("SnapOrtho::Anatomy","SnapOrtho::Diagnosis","SnapOrtho::Treatment","SnapOrtho::Specialty","SnapOrtho::Workflow")
 def _stable(value):
     if isinstance(value,list):return"["+",".join(_stable(v)for v in value)+"]"
     if isinstance(value,dict):return"{"+",".join(json.dumps(k,separators=(",",":"))+":"+_stable(value[k])for k in sorted(value))+"}"
@@ -52,6 +53,21 @@ def validate_page(page,after_cursor):
 class NoteSyncV2Importer:
     """Gateway contract is note-based: snapshot, upsert_note, retire_note, move_note and media methods."""
     def __init__(self,store,gateway,deck_key="snaportho-master"):self.store=store;self.gateway=gateway;self.deck_key=deck_key
+    def reconcile_tags(self):
+        """Repair cursor/collection drift from the durable expected baselines."""
+        checked=repaired=missing=0
+        for baseline in self.store.note_baselines(self.deck_key):
+            checked+=1;note_id=baseline["canonicalNoteId"]
+            before=self.gateway.snapshot(note_id,{"noteGuid":baseline.get("noteGuid")})
+            if not before.get("ankiNoteId"):
+                missing+=1;continue
+            expected=baseline.get("tags")or[]
+            tags=merge_governed_tags(before.get("tags")or[],expected,GOVERNED_PREFIXES)
+            if not self.gateway.tags_match(before.get("tags")or[],expected,GOVERNED_PREFIXES):
+                self.gateway.update_tags(note_id,tags,{"noteGuid":baseline.get("noteGuid")})
+                self.gateway.verify_tags(note_id,expected,GOVERNED_PREFIXES,{"noteGuid":baseline.get("noteGuid")})
+                repaired+=1
+        return{"checked":checked,"repaired":repaired,"missing":missing}
     def apply_page(self,page):
         subscription=self.store.deck_subscription(self.deck_key)or{"cursor":0};after=int(subscription.get("cursor")or 0)
         errors=validate_page(page,after)
@@ -77,6 +93,7 @@ class NoteSyncV2Importer:
                     # tags only. Replaying the published field snapshot would
                     # clobber local edits because there is no prior baseline.
                     self.gateway.update_tags(note_id,tags,payload)
+                    self.gateway.verify_tags(note_id,payload.get("governedTags")or[],payload.get("governedPrefixes")or[],payload)
                     result={"ankiNoteId":before["ankiNoteId"],"noteGuid":before.get("noteGuid") or payload.get("noteGuid")}
                     summary["tags"]+=1
                     merged={"overwrittenLocal":[]}
@@ -85,10 +102,12 @@ class NoteSyncV2Importer:
                     merged=merge_fields(base_fields,local_fields,remote_fields,payload.get("protectedFields")or[])
                     if exists and not central_fields_differ(local_fields,merged["fields"]):
                         self.gateway.update_tags(note_id,tags,payload)
+                        self.gateway.verify_tags(note_id,payload.get("governedTags")or[],payload.get("governedPrefixes")or[],payload)
                         result={"ankiNoteId":before["ankiNoteId"],"noteGuid":before.get("noteGuid") or payload.get("noteGuid")}
                         summary["tags"]+=1
                     else:
                         result=self.gateway.upsert_note(note_id,payload,merged["fields"],tags)
+                        self.gateway.verify_tags(note_id,payload.get("governedTags")or[],payload.get("governedPrefixes")or[],payload)
                         summary["notes"]+=1
                     summary["overwrittenLocal"]+=merged["overwrittenLocal"]
                 self.store.save_note_baseline(note_id,result["ankiNoteId"],result["noteGuid"],op.get("noteVersionId"),payload.get("fields")or{},payload.get("governedTags")or[],payload.get("contentChecksum"),payload.get("tagsChecksum"),self.deck_key)
@@ -96,6 +115,7 @@ class NoteSyncV2Importer:
             elif kind=="update_tags":
                 tags=merge_governed_tags(before.get("tags")or[],payload.get("governedTags")or[],payload.get("governedPrefixes")or[])
                 self.gateway.update_tags(note_id,tags,payload);summary["tags"]+=1
+                self.gateway.verify_tags(note_id,payload.get("governedTags")or[],payload.get("governedPrefixes")or[],payload)
             elif kind=="move_note":self.gateway.move_note(note_id,payload["deckPath"],payload);summary["moved"]+=1
             elif kind=="media_add":self.gateway.media_add(payload);summary["media"]+=1
             elif kind=="media_remove":self.gateway.media_remove(payload);summary["media"]+=1

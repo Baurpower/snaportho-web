@@ -1,6 +1,7 @@
 import {
   AppleVerificationError,
   applyAppleNotificationToSubscription,
+  isAppleIntroductoryOffer,
   verifyAppStoreServerNotification,
 } from '@/lib/apple/app-store-server';
 import {
@@ -8,7 +9,7 @@ import {
   upsertSubscriptionEvent,
 } from '@/lib/subscriptions/events';
 import { recordProductEvent } from '@/lib/analytics/product-events-server';
-import { sendBranchServerEvent } from '@/lib/analytics/branch-server';
+import { enqueueAppleSubscriptionConversions } from '@/lib/analytics/branch-conversion-outbox';
 import { v5 as uuidv5 } from 'uuid';
 
 const APPLE_PRODUCT_EVENT_NAMESPACE = '6a4530c2-0d03-488e-999b-b8fb968f2a8c';
@@ -113,11 +114,17 @@ export async function handleAppleNotification(
           },
         });
         if (notificationType === 'SUBSCRIBED') {
-          await sendBranchServerEvent({
-            name: 'SUBSCRIBE',
+          const environment =
+            verified.transactionInfo?.environment?.toLowerCase() === 'sandbox' ||
+            verified.notification.data?.environment?.toLowerCase() === 'sandbox'
+              ? 'sandbox'
+              : 'production';
+          await enqueueAppleSubscriptionConversions({
             userId: result.userId,
-            transactionId: result.originalTransactionId ?? notificationUuid,
-            customData: { provider: 'apple' },
+            originalTransactionId: result.originalTransactionId ?? notificationUuid,
+            environment,
+            introductory: isAppleIntroductoryOffer(verified.transactionInfo),
+            source: 'apple_app_store',
           });
         }
       }

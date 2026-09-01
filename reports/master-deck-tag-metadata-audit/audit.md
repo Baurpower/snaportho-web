@@ -1,41 +1,41 @@
 # Master Deck tag and metadata audit
 
-Generated: 2026-08-22T04:48:43.188Z
+Generated: 2026-08-31T03:28:43.017Z
 
 ## Executive scorecard
 
-- Published sync release: 0.0.3 (#3)
-- Released notes: 3670
-- Official notes joined to canonical cards: 3670/3670 (100%)
-- Official notes with accepted assertions: 2915/3670 (79.4%)
-- Grok review coverage: 2227 reviewed, 1443 remaining (60.7%)
-- Read-time tag overlay warning: yes — published manifest is not pinned to the official source deck release
-- Cards with accepted pipeline assertions: 3287/3670 (89.6%)
-- Cards in published rendered-tag manifest: 3071/3670 (83.7%)
-- Notes with all four required facets: 33/3670 (0.9%)
+- Published sync release: 0.0.5 (#5)
+- Released notes: 3654
+- Official notes joined to canonical cards: 2942/3654 (80.5%)
+- Official notes with accepted assertions: 2897/2942 (98.5%)
+- Grok review coverage: 2942 reviewed, 0 remaining (100%)
+- Read-time tag overlay warning: no
+- Cards with accepted pipeline assertions: 3982/3654 (109%)
+- Cards in published rendered-tag manifest: 2716/3654 (74.3%)
+- Notes with all four required facets: 131/3654 (3.6%)
 
 ## Required facet coverage in actual published note tags
 
-- Anatomy: 1277/3670 (34.8%)
-- Diagnosis: 694/3670 (18.9%)
-- Treatment: 197/3670 (5.4%)
-- Specialty: 2276/3670 (62%)
+- Anatomy: 1622/3654 (44.4%)
+- Diagnosis: 1072/3654 (29.3%)
+- Treatment: 492/3654 (13.5%)
+- Specialty: 3242/3654 (88.7%)
 
 ## Tag hygiene
 
-- Total assignments: 8422
-- Unique tags: 451
-- Notes with zero governed tags: 942
+- Total assignments: 11676
+- Unique tags: 610
+- Notes with zero governed tags: 60
 - Malformed tag paths: 0
 - Case-collision groups: 0
-- Tags/note: average 2.29, median 1, p90 6, max 19
+- Tags/note: average 3.2, median 3, p90 6, max 23
 
 ## Pipeline health
 
-- Runs: 7 ({"cancelled":3,"running":3,"completed":1})
+- Runs: 7 ({"cancelled":3,"completed":2,"running":2})
 - Batches: 2789; declared card slots 24044
-- Stage results: 7431; failed 0; warning-bearing 0
-- Assertions: 9030; published 6115
+- Stage results: 8874; failed 0; warning-bearing 0
+- Assertions: 11541; published 7992
 
 ## Legacy-tag governance
 

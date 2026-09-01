@@ -1,12 +1,26 @@
-type BranchServerEvent = {
+export type BranchServerEvent = {
   name: 'START_TRIAL' | 'SUBSCRIBE' | 'PURCHASE';
   userId: string;
   transactionId: string;
+  idempotencyKey?: string;
   revenue?: number | null;
   currency?: string | null;
   customData?: Record<string, string | number | boolean | null>;
   userData?: { os?: string; os_version?: string; idfv?: string };
 };
+
+export function branchUserDataFromStripeMetadata(
+  metadata: Record<string, string | null | undefined> | null | undefined
+): BranchServerEvent['userData'] {
+  const idfv = metadata?.branch_idfv?.trim();
+  const osVersion = metadata?.branch_os_version?.trim();
+  if (!idfv && !osVersion) return undefined;
+  return {
+    os: 'iOS',
+    os_version: osVersion || undefined,
+    idfv: /^[0-9a-f-]{36}$/i.test(idfv ?? '') ? idfv : undefined,
+  };
+}
 
 export async function sendBranchServerEvent(event: BranchServerEvent): Promise<boolean> {
   const branchKey = process.env.BRANCH_KEY ?? process.env.NEXT_PUBLIC_BRANCH_KEY;
@@ -18,7 +32,7 @@ export async function sendBranchServerEvent(event: BranchServerEvent): Promise<b
       body: JSON.stringify({
         branch_key: branchKey,
         name: event.name,
-        customer_event_alias: event.transactionId,
+        customer_event_alias: event.idempotencyKey ?? event.transactionId,
         transaction_id: event.transactionId,
         revenue: event.revenue ?? undefined,
         currency: event.currency ?? undefined,

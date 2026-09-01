@@ -15,6 +15,7 @@ import { dirname, resolve } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { assembleDeckSyncManifest } from "../src/lib/education/anki-deck-manifest-assemble.ts";
 import { ARTIFACT_SCHEMA_VERSION } from "../src/lib/education/anki-bootstrap-notetype.ts";
+import { overlayPublishedGovernedTags } from "../src/lib/education/anki-bootstrap-governed-tags.ts";
 import {
   buildBootstrapApkg,
   type BootstrapBuildInput,
@@ -152,8 +153,51 @@ async function loadFromRelease(
     media: mediaRows ?? [],
   });
 
+  // First installs must contain the same governed tags that subsequent v2
+  // updates enforce. The deck release remains the content/media source; the
+  // latest published note-centric release is the tag source of truth.
+  const { data: tagRelease, error: tagReleaseError } = await supabase
+    .from("anki_sync_v2_releases")
+    .select("id,release_version")
+    .eq("status", "published")
+    .order("release_sequence", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (tagReleaseError) throw new Error(`tag_release_lookup_failed:${tagReleaseError.message}`);
+  const governedTagsByGuid = new Map<string, string[]>();
+  if (tagRelease) {
+    const { data: tagMembers, error: tagMemberError } = await supabase
+      .from("anki_sync_v2_release_notes")
+      .select("note_id,note_version_id")
+      .eq("release_id", tagRelease.id);
+    if (tagMemberError) throw new Error(`tag_members_lookup_failed:${tagMemberError.message}`);
+    const noteIds = (tagMembers ?? []).map((row) => row.note_id);
+    const versionIdsForTags = (tagMembers ?? []).map((row) => row.note_version_id);
+    const noteRows: any[] = [], tagVersions: any[] = [];
+    for (let offset = 0; offset < noteIds.length; offset += 100) {
+      const { data, error: noteError } = await supabase.from("anki_sync_v2_notes")
+        .select("id,stable_guid").in("id", noteIds.slice(offset, offset + 100));
+      if (noteError) throw new Error(`tag_notes_lookup_failed:${noteError.message}`);
+      noteRows.push(...(data ?? []));
+    }
+    for (let offset = 0; offset < versionIdsForTags.length; offset += 100) {
+      const { data, error: versionError } = await supabase.from("anki_sync_v2_note_versions")
+        .select("id,governed_tags").in("id", versionIdsForTags.slice(offset, offset + 100));
+      if (versionError) throw new Error(`tag_versions_lookup_failed:${versionError.message}`);
+      tagVersions.push(...(data ?? []));
+    }
+    const guidByNoteId = new Map(noteRows.map((row) => [row.id, String(row.stable_guid)]));
+    const tagsByVersionId = new Map(tagVersions.map((row) => [row.id, (row.governed_tags ?? []).map(String)]));
+    for (const member of tagMembers ?? []) {
+      const guid = guidByNoteId.get(member.note_id);
+      const tags = tagsByVersionId.get(member.note_version_id);
+      if (guid && tags) governedTagsByGuid.set(guid, tags);
+    }
+  }
+  const bootstrapCards = overlayPublishedGovernedTags(manifest.cards, governedTagsByGuid);
+
   const needed = new Set<string>();
-  for (const card of manifest.cards) {
+  for (const card of bootstrapCards) {
     if (card.inclusionStatus !== "included") continue;
     for (const h of card.mediaHashes) needed.add(h);
   }
@@ -193,7 +237,7 @@ async function loadFromRelease(
       releaseVersion: manifest.releaseVersion,
       manifestChecksum: manifest.manifestChecksum,
     },
-    cards: manifest.cards.map((c) => ({
+    cards: bootstrapCards.map((c) => ({
       canonicalCardId: c.canonicalCardId,
       canonicalCardVersionId: c.canonicalCardVersionId,
       contentHash: c.contentHash,

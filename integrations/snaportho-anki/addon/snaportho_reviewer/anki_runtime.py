@@ -112,6 +112,13 @@ class NoteCollectionGatewayV2:
         note=self._note(canonical_note_id,payload)
         if not note:raise RuntimeError("note_not_found")
         note.tags=sorted(set(tags));self.col.update_note(note)
+    @staticmethod
+    def tags_match(actual,expected,prefixes):
+        def governed(tag):return any(tag==prefix or tag.startswith(prefix+"::")for prefix in prefixes)
+        return set(t for t in actual if governed(t))==set(expected)
+    def verify_tags(self,canonical_note_id,expected,prefixes,payload=None):
+        actual=self.snapshot(canonical_note_id,payload).get("tags")or[]
+        if not self.tags_match(actual,expected,prefixes):raise RuntimeError("tag_persistence_verification_failed")
     def move_note(self,canonical_note_id,deck_path,payload=None):
         note=self._note(canonical_note_id,payload)
         if not note:raise RuntimeError("note_not_found")

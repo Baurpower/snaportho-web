@@ -1,5 +1,6 @@
 import argparse,hashlib,json,pathlib,zipfile
 ROOT=pathlib.Path(__file__).resolve().parents[1];SOURCE=ROOT/"addon";DIST=ROOT.parents[1]/"dist";VERSION=json.loads((SOURCE/"manifest.json").read_text())["version"]
+OFFICIAL_LOGO=ROOT.parents[1]/"public"/"snaportho-logo.png"
 FORBIDDEN_SUFFIXES={".pyc",".pyo",".db",".sqlite",".sqlite3",".log",".map"};FORBIDDEN_NAMES={".DS_Store","__pycache__"};SECRET_PATTERNS=(b"SUPABASE_SERVICE_ROLE_KEY=",b"BEGIN PRIVATE KEY",b'"access_token":"')
 def files():
     rows=[]
@@ -19,6 +20,7 @@ def main():
     packaged_manifest={**manifest,"conflicts":[]}
     if reviewer:packaged_manifest.update(name="SnapOrtho Reviewer",package="snaportho_reviewer")
     rows=files();assert rows and all("learner" not in p.parts and "tests" not in p.parts for p in rows)
+    assert OFFICIAL_LOGO.is_file(),f"official SnapOrtho logo missing: {OFFICIAL_LOGO}"
     for path in rows:
         data=path.read_bytes();assert not any(pattern in data for pattern in SECRET_PATTERNS),f"secret pattern:{path}"
         if path.suffix==".py":compile(data,path.as_posix(),"exec")
@@ -29,6 +31,8 @@ def main():
             if relative=="manifest.json" or (reviewer and relative=="snaportho_reviewer/__init__.py"):continue
             if reviewer and relative=="snaportho_reviewer/brobot_panel.py":continue
             info=zipfile.ZipInfo(relative,(2026,1,1,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED;info.external_attr=0o644<<16;archive.writestr(info,path.read_bytes(),compress_type=zipfile.ZIP_DEFLATED,compresslevel=9)
+        logo_info=zipfile.ZipInfo("snaportho_reviewer/snaportho-logo.png",(2026,1,1,0,0,0));logo_info.compress_type=zipfile.ZIP_DEFLATED;logo_info.external_attr=0o644<<16
+        archive.writestr(logo_info,OFFICIAL_LOGO.read_bytes(),compress_type=zipfile.ZIP_DEFLATED,compresslevel=9)
         manifest_info=zipfile.ZipInfo("manifest.json",(2026,1,1,0,0,0));manifest_info.compress_type=zipfile.ZIP_DEFLATED;manifest_info.external_attr=0o644<<16
         archive.writestr(manifest_info,json.dumps(packaged_manifest,separators=(",",":")).encode())
         if reviewer:

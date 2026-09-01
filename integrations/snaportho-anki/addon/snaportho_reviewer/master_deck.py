@@ -650,11 +650,19 @@ class MasterDeckDialog:
                 if pending else ""
             )
             if not operations:
+                from .anki_runtime import NoteCollectionGatewayV2
+                from .deck_sync_v2 import NoteSyncV2Importer
+                repair=NoteSyncV2Importer(
+                    self.runtime.store,
+                    NoteCollectionGatewayV2(self.runtime.mw.col,self.runtime.store),
+                ).reconcile_tags()
+                if repair["repaired"]:self.runtime.mw.reset()
                 self.runtime.store.save_deck_subscription(release,cursor=after,status="current")
                 self.runtime.store.cache("installed_master_release", release.get("version"))
                 self._set_hero(
                     f"<b>✓ Master Deck {release['version']} is up to date.</b><br><br>"
                     f"{release['expectedNoteCount']} notes · {release['expectedCardCount']} cards"
+                    + (f"<br><br>Repaired tags on {repair['repaired']} notes." if repair["repaired"] else "")
                     + interrupted,
                     "ok" if not pending else "info",
                 )
@@ -725,6 +733,7 @@ class MasterDeckDialog:
                 result=importer.apply_page(page)
                 for key in("notes","retired","tags","moved","media"):totals[key]+=result[key]
                 totals["overwrittenLocal"]+=result["overwrittenLocal"]
+            repair=importer.reconcile_tags()
             self.runtime.mw.reset();self._busy=False
             self._hide_download_progress()
             summary=self.v2_summary
@@ -735,7 +744,8 @@ class MasterDeckDialog:
                 f"{summary.get('managedTagAssignments',totals['tags'])} managed tag assignments "
                 f"across {summary.get('taggedNotes',0)} notes · "
                 f"{summary.get('mediaAssets',totals['media'])} media assets<br><br>"
-                "Existing scheduling, protected fields, and cards you had moved were preserved.",
+                + (f"Reconciled tags on {repair['repaired']} additional notes.<br><br>" if repair["repaired"] else "")
+                + "Existing scheduling, protected fields, and cards you had moved were preserved.",
                 "ok",
             )
             self._set_step(active=None,done=(STEP_LINK,STEP_INSTALL,STEP_UPDATE))

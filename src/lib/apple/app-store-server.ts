@@ -5,6 +5,7 @@ import { SignJWT, decodeProtectedHeader, importPKCS8, jwtVerify } from 'jose';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 import { upsertCanonicalSubscription } from '@/lib/subscriptions/ledger';
+import { SubscriptionOwnerConflictError } from '@/lib/subscriptions/ownership';
 import {
   appleStateFromExistingRow,
   shouldSkipAppleCanonicalUpdate,
@@ -52,7 +53,21 @@ export type AppleTransactionInfo = {
   revocationDate?: number;
   environment?: string;
   appAccountToken?: string;
+  offerType?: number;
 };
+
+export function appleAccountTokensMatch(
+  left: string | null | undefined,
+  right: string | null | undefined
+) {
+  const normalizedLeft = left?.trim().toLowerCase() ?? '';
+  const normalizedRight = right?.trim().toLowerCase() ?? '';
+  return normalizedLeft.length > 0 && normalizedLeft === normalizedRight;
+}
+
+export function isAppleIntroductoryOffer(transactionInfo?: AppleTransactionInfo | null) {
+  return transactionInfo?.offerType === 1;
+}
 
 export type AppleRenewalInfo = {
   originalTransactionId?: string;
@@ -727,9 +742,18 @@ export async function upsertAppleSubscriptionForUser(params: {
     stripe_subscription_id: null,
   };
 
-  const { row: data } = await upsertCanonicalSubscription(upsertPayload);
-
-  return { row: data, state, skippedStaleUpdate: false };
+  try {
+    const { row: data } = await upsertCanonicalSubscription(upsertPayload);
+    if (data?.user_id && data.user_id !== params.userId) {
+      throw new Error('Apple subscription is already linked to another account');
+    }
+    return { row: data, state, skippedStaleUpdate: false };
+  } catch (error) {
+    if (error instanceof SubscriptionOwnerConflictError) {
+      throw new Error('Apple subscription is already linked to another account');
+    }
+    throw error;
+  }
 }
 
 export async function applyAppleNotificationToSubscription(params: VerifiedAppleNotification) {

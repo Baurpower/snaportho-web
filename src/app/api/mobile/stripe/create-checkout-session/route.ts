@@ -17,7 +17,7 @@ import { BROBOT_CONFIG as BroBotConfig } from '@/lib/config/brobot';
  * Do NOT modify any donation or legacy webhook paths.
  */
 
-const MOBILE_SUCCESS_URL = 'snaportho://subscription/success';
+const MOBILE_SUCCESS_URL = 'snaportho://subscription/success?checkout_session_id={CHECKOUT_SESSION_ID}';
 const MOBILE_CANCEL_URL = 'snaportho://subscription/cancel';
 
 function sanitizeEntryPoint(value: unknown) {

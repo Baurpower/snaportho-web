@@ -18,9 +18,10 @@ export async function POST(request: Request) {
   const branchOSVersion = typeof body.branchOSVersion === 'string'
     ? body.branchOSVersion.slice(0, 30)
     : undefined;
+  const interval: 'month' | 'year' = body.interval === 'year' ? 'year' : 'month';
 
   try {
-    const { url } = await createGuestBroBotCheckoutSession('month', {
+    const { url } = await createGuestBroBotCheckoutSession(interval, {
       enableTrial: true,
       source: 'ios_guest_paywall',
       customSuccessUrl: SUCCESS_URL,

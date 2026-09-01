@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
 
 import {
+  appleAccountTokensMatch,
   fetchVerifiedAppleTransaction,
+  isAppleIntroductoryOffer,
   isAppleServerConfigured,
   type AppleEnvironment,
   upsertAppleSubscriptionForUser,
@@ -13,7 +15,7 @@ import {
   attemptAppleMobileSyncAuditInsert,
   buildAppleMobileSyncSubscriptionEvent,
 } from '@/lib/subscriptions/apple-sync-events';
-import { sendBranchServerEvent } from '@/lib/analytics/branch-server';
+import { enqueueAppleSubscriptionConversions } from '@/lib/analytics/branch-conversion-outbox';
 
 export const runtime = 'nodejs';
 
@@ -127,16 +129,23 @@ export async function POST(request: Request) {
     }
 
 
-    if (transactionInfo.appAccountToken && transactionInfo.appAccountToken !== user.id) {
+    if (
+      transactionInfo.appAccountToken &&
+      !appleAccountTokensMatch(transactionInfo.appAccountToken, user.id)
+    ) {
       return NextResponse.json(
         { success: false, error: 'apple_account_token_mismatch' },
         { status: 409 },
       );
     }
 
-    if (!transactionInfo.appAccountToken && body.claimAfterAuthentication !== true) {
+    // A transaction ID is an identifier, not proof that this caller owns the
+    // Apple purchase. StoreKit must cryptographically bind purchases to the
+    // authenticated SnapOrtho account using appAccountToken. Legacy unbound
+    // transactions require manual support review.
+    if (!transactionInfo.appAccountToken) {
       return NextResponse.json(
-        { success: false, error: 'apple_unowned_transaction_requires_explicit_claim' },
+        { success: false, error: 'apple_unowned_transaction_requires_support' },
         { status: 409 },
       );
     }
@@ -193,14 +202,12 @@ export async function POST(request: Request) {
     }
 
 
-    await sendBranchServerEvent({
-      name: 'SUBSCRIBE',
+    await enqueueAppleSubscriptionConversions({
       userId: user.id,
-      transactionId: transactionInfo.originalTransactionId,
-      customData: {
-        provider: 'apple',
-        source: body.claimAfterAuthentication ? 'post_auth_claim' : 'ios_purchase',
-      },
+      originalTransactionId: transactionInfo.originalTransactionId,
+      environment: verified.environment,
+      introductory: isAppleIntroductoryOffer(transactionInfo),
+      source: body.claimAfterAuthentication ? 'post_auth_claim' : 'ios_purchase',
       userData: {
         os: 'iOS',
         os_version: typeof body.branchOSVersion === 'string' ? body.branchOSVersion.slice(0, 30) : undefined,
@@ -221,24 +228,28 @@ export async function POST(request: Request) {
       auditLogged: auditResult.ok,
     });
   } catch (error) {
+    const details = error instanceof Error ? error.message : 'Apple subscription sync failed';
+    const ownerConflict = details.includes('already linked to another account');
     const errorCode =
       stage === 'verification'
         ? 'apple_verification_failed'
-        : 'apple_subscription_upsert_failed';
+        : ownerConflict
+          ? 'apple_subscription_owner_conflict'
+          : 'apple_subscription_upsert_failed';
     console.error('[mobile/apple/subscription/sync] failed', {
       userId: user.id.slice(0, 8),
       transactionId,
       stage,
-      error: error instanceof Error ? error.message : String(error),
+      error: details,
     });
 
     return NextResponse.json(
       {
         success: false,
         error: errorCode,
-        details: error instanceof Error ? error.message : 'Apple subscription sync failed',
+        details,
       },
-      { status: stage === 'verification' ? 502 : 500 }
+      { status: stage === 'verification' ? 502 : ownerConflict ? 409 : 500 }
     );
   }
 }

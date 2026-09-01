@@ -5,6 +5,7 @@ import type { CookieOptions } from "@supabase/ssr";
 
 import { isNewSupabaseUser } from "@/lib/auth/google";
 import { safeRedirectPath } from "@/lib/auth/redirects";
+import { getClaimableBillingUser } from "@/lib/auth/claimable-billing-user";
 import { claimPendingBroBotSubscriptionForUser } from "@/lib/stripe";
 
 function claimedPendingSubscription(status: string | undefined): boolean {
@@ -69,11 +70,12 @@ export async function GET(request: Request) {
   }
 
   let claimedSubscription = false;
-  if (data.user?.id) {
+  const claimable = data.user ? getClaimableBillingUser(data.user) : null;
+  if (claimable?.ok) {
     try {
       const claimResult = await claimPendingBroBotSubscriptionForUser(
-        data.user.id,
-        data.user.email
+        claimable.user.id,
+        claimable.user.email
       );
       claimedSubscription = claimedPendingSubscription(claimResult.status);
     } catch (claimError) {

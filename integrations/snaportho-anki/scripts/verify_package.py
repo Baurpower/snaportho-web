@@ -13,5 +13,10 @@ with zipfile.ZipFile(package)as archive:
     runtime=archive.read("snaportho_reviewer/bootstrap.py").decode()
     assert "if self.reviewer_edition:" in runtime
     assert "from .brobot_panel import LearnerSidePanel" in runtime
+    assert 'addMenu("Reviewer tools")' not in runtime
+    assert "snaportho_reviewer/snaportho-logo.png" in names
+    assert archive.read("snaportho_reviewer/snaportho-logo.png")==(
+        ROOT.parents[1]/"public"/"snaportho-logo.png"
+    ).read_bytes()
     payload=b"".join(archive.read(n)for n in names);assert b"SUPABASE_SERVICE_ROLE"not in payload and b"BEGIN PRIVATE KEY"not in payload
 digest=hashlib.sha256(package.read_bytes()).hexdigest();expected=package.with_suffix(package.suffix+".sha256").read_text().split()[0];assert digest==expected;print(json.dumps({"verified":True,"package":str(package),"sha256":digest,"files":len(names)}))

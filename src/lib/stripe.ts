@@ -9,6 +9,11 @@ import {
 } from '@/lib/config/app-url'; // Centralized production-safe URL resolution
 import { getRemainingAIUses } from '@/lib/brobot/entitlements';
 import { upsertCanonicalSubscription } from '@/lib/subscriptions/ledger';
+import { evaluatePendingSubscriptionClaimGate } from '@/lib/subscriptions/ownership';
+import {
+  branchUserDataFromStripeMetadata,
+} from '@/lib/analytics/branch-server';
+import { enqueueStripeSubscriptionConversions } from '@/lib/analytics/branch-conversion-outbox';
 
 let stripeClient: Stripe | null = null;
 
@@ -339,7 +344,7 @@ function getStripeCustomerId(value: string | { id?: string } | null | undefined)
   return typeof value === 'string' ? value : value.id ?? null;
 }
 
-function getStripeEnvironment() {
+export function getStripeEnvironment() {
   const secretKey = process.env.STRIPE_SECRET_KEY ?? '';
   if (secretKey.startsWith('sk_live_')) return 'live';
   if (secretKey.startsWith('sk_test_')) return 'test';
@@ -1074,16 +1079,17 @@ export async function claimPendingBroBotSubscriptionForUser(
     return { status: 'not_found' };
   }
 
-  if (pending.claimed_by_user_id === userId && pending.claimed_at) {
-    return {
-      status: 'already_claimed_by_user',
-      subscriptionId: pending.stripe_subscription_id,
-      pendingId: pending.id,
-    };
-  }
-
-  if (pending.claimed_at) {
-    return { status: 'not_claimable', reason: 'already_claimed' };
+  const gate = evaluatePendingSubscriptionClaimGate({ userId, pending });
+  if (gate.action === 'reject') {
+    if (gate.result.status === 'already_claimed_by_user') {
+      await enqueueClaimedStripeBranchConversions({
+        userId,
+        subscriptionId: pending.stripe_subscription_id,
+        metadata: stripeMetadataFromPending(pending),
+        status: pending.status,
+      });
+    }
+    return gate.result;
   }
 
   const stripe = getStripe();
@@ -1094,6 +1100,56 @@ export async function claimPendingBroBotSubscriptionForUser(
   if (!hasClaimableStripeStatus(internalStatus, periodEndIso)) {
     await syncPendingSubscriptionFromStripe(stripeSub);
     return { status: 'not_claimable', reason: `subscription_${internalStatus}` };
+  }
+
+  // Reserve ownership before mutating Stripe or the canonical entitlement
+  // ledger. The conditional update is the compare-and-set boundary that makes
+  // concurrent claims safe. If a later provider call fails, the same user can
+  // retry and resume the reservation; a different user can never take it over.
+  if (gate.action === 'reserve') {
+    const { data: reserved, error: reserveError } = await supabase
+      .from('pending_subscriptions')
+      .update({
+        claimed_by_user_id: userId,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', pending.id)
+      .is('claimed_at', null)
+      .is('claimed_by_user_id', null)
+      .select('*')
+      .maybeSingle<PendingBroBotSubscriptionRow>();
+
+    if (reserveError) {
+      throw new Error(`Failed to reserve pending subscription: ${reserveError.message}`);
+    }
+
+    if (reserved) {
+      pending = reserved;
+    } else {
+      const { data: current, error: currentError } = await supabase
+        .from('pending_subscriptions')
+        .select('*')
+        .eq('id', pending.id)
+        .maybeSingle<PendingBroBotSubscriptionRow>();
+
+      if (currentError) {
+        throw new Error(`Failed to reload pending subscription reservation: ${currentError.message}`);
+      }
+
+      if (current?.claimed_by_user_id === userId && current.claimed_at) {
+        return {
+          status: 'already_claimed_by_user',
+          subscriptionId: current.stripe_subscription_id,
+          pendingId: current.id,
+        };
+      }
+
+      if (current?.claimed_by_user_id === userId) {
+        pending = current;
+      } else {
+        return { status: 'not_claimable', reason: 'claim_race_lost' };
+      }
+    }
   }
 
   await stripe.subscriptions.update(stripeSub.id, {
@@ -1166,6 +1222,7 @@ export async function claimPendingBroBotSubscriptionForUser(
       updated_at: new Date().toISOString(),
     })
     .eq('id', pending.id)
+    .eq('claimed_by_user_id', userId)
     .is('claimed_at', null)
     .select('id');
 
@@ -1174,14 +1231,72 @@ export async function claimPendingBroBotSubscriptionForUser(
   }
 
   if (!claimedRows?.length) {
-    return { status: 'not_claimable', reason: 'claim_race_lost' };
+    const { data: current } = await supabase
+      .from('pending_subscriptions')
+      .select('claimed_by_user_id, claimed_at')
+      .eq('id', pending.id)
+      .maybeSingle<{ claimed_by_user_id: string | null; claimed_at: string | null }>();
+
+    if (current?.claimed_by_user_id === userId && current.claimed_at) {
+      await enqueueClaimedStripeBranchConversions({
+        userId,
+        subscriptionId: stripeSub.id,
+        metadata: stripeSub.metadata,
+        status: stripeSub.status,
+      });
+      return {
+        status: 'already_claimed_by_user',
+        subscriptionId: stripeSub.id,
+        pendingId: pending.id,
+      };
+    }
+
+    return { status: 'not_claimable', reason: 'claim_finalize_lost' };
   }
+
+  await enqueueClaimedStripeBranchConversions({
+    userId,
+    subscriptionId: stripeSub.id,
+    metadata: stripeSub.metadata,
+    status: stripeSub.status,
+  });
 
   return {
     status: 'claimed',
     subscriptionId: stripeSub.id,
     pendingId: pending.id,
   };
+}
+
+function stripeMetadataFromPending(pending: PendingBroBotSubscriptionRow) {
+  const metadata = pending.metadata as {
+    subscription_metadata?: Record<string, string | null | undefined>;
+  } | null;
+  return metadata?.subscription_metadata ?? {};
+}
+
+async function enqueueClaimedStripeBranchConversions(params: {
+  userId: string;
+  subscriptionId: string;
+  metadata: Record<string, string | null | undefined> | null | undefined;
+  status: string;
+}) {
+  try {
+    await enqueueStripeSubscriptionConversions({
+      userId: params.userId,
+      subscriptionId: params.subscriptionId,
+      status: params.status,
+      environment: getStripeEnvironment(),
+      source: params.metadata?.checkout_source ?? 'pending_subscription_claim',
+      userData: branchUserDataFromStripeMetadata(params.metadata),
+    });
+  } catch (error) {
+    console.error('[stripe] failed to enqueue Branch conversion after claim', {
+      userId: params.userId.slice(0, 8),
+      subscriptionId: params.subscriptionId,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
 }
 
 /**

@@ -1,5 +1,9 @@
 import { NextResponse } from 'next/server';
 
+import {
+  claimableBillingUserHttpError,
+  getClaimableBillingUser,
+} from '@/lib/auth/claimable-billing-user';
 import { claimPendingBroBotSubscriptionForUser } from '@/lib/stripe';
 import { createClient } from '@/utils/supabase/server';
 
@@ -16,12 +20,21 @@ export async function POST(request: Request) {
     );
   }
 
+  const claimable = getClaimableBillingUser(user);
+  if (!claimable.ok) {
+    const error = claimableBillingUserHttpError(claimable.reason);
+    return NextResponse.json(
+      { error: error.error, reason: error.reason },
+      { status: error.status }
+    );
+  }
+
   try {
     const body = await request.json().catch(() => ({}));
     const checkoutSessionId =
       typeof body.checkoutSessionId === 'string' ? body.checkoutSessionId : null;
 
-    const result = await claimPendingBroBotSubscriptionForUser(user.id, user.email, {
+    const result = await claimPendingBroBotSubscriptionForUser(claimable.user.id, claimable.user.email, {
       checkoutSessionId,
     });
 

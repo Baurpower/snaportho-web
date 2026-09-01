@@ -73,7 +73,6 @@ class ProfileRuntime:
         if current<MIN_ANKI:raise UnsupportedAnkiError(version)
         self.mw=mw;self.closed=False;self.window=None
         self.reviewer_edition=REVIEWER_EDITION
-        self.reviewer_enabled=REVIEWER_EDITION
         raw=mw.addonManager.getConfig(__name__.split('.')[0]) or {}
         self.settings=validate(raw);self.profile_hash=__import__('hashlib').sha256(str(mw.pm.name).encode()).hexdigest()[:16]
         from .credential_store import MacOSKeychainStore
@@ -89,12 +88,13 @@ class ProfileRuntime:
         menu=QMenu(menu_title,self.mw.form.menuTools)
         menu.setObjectName("snaportho_reviewer_menu" if self.reviewer_edition else "snaportho_menu")
         self.mw.form.menuTools.addMenu(menu);self.menu=menu
-        for label,callback in[
-            ("Get Started / Master Deck…",self.open_deck_sync),
+        common_actions=[
             ("Sign In or Manage Account…",self.link_device),
             ("Settings",self.open_settings),
             ("Sign Out",self.sign_out),
-        ]:
+        ]
+        if self._owns_deck_sync():common_actions.insert(0,("Get Started / Master Deck…",self.open_deck_sync))
+        for label,callback in common_actions:
             action=QAction(label,menu);qconnect(action.triggered,callback);menu.addAction(action)
         reviewer_actions=[
             ("Review Current Card",self.open_current_workspace),
@@ -109,13 +109,8 @@ class ProfileRuntime:
             self.side_panel=ReviewerSidePanel(self.mw,self)
             self._register_editor_propose_button()
         else:
-            self.reviewer_menu=menu.addMenu("Reviewer tools")
-            self.reviewer_menu.menuAction().setVisible(False)
-            for label,callback in reviewer_actions:
-                action=QAction(label,self.reviewer_menu);qconnect(action.triggered,callback);self.reviewer_menu.addAction(action)
             from .brobot_panel import LearnerSidePanel
             self.side_panel=LearnerSidePanel(self.mw,self)
-            self._load_account_capabilities()
         self._maybe_first_run_prompt()
         if self._handles_search_relay():
             self.search_relay_timer=QTimer(self.mw)
@@ -138,6 +133,11 @@ class ProfileRuntime:
         if not self.reviewer_edition:return True
         try:return "snaportho" not in set(self.mw.addonManager.allAddons())
         except Exception:return True
+    def _owns_deck_sync(self):
+        """The user add-on owns deck state when both editions are installed."""
+        if not self.reviewer_edition:return True
+        try:return "snaportho" not in set(self.mw.addonManager.allAddons())
+        except Exception:return True
     def open_dashboard(self):
         from .reviewer_window import ReviewerWindow
         if not self.window:self.window=ReviewerWindow(self.mw,self)
@@ -148,12 +148,17 @@ class ProfileRuntime:
         if not card:showInfo("Open a card in Reviewer, then choose Review Current Card.");return
         self.open_card_workspace(card,"reviewer")
     def open_deck_sync(self):
+        if not self._owns_deck_sync():
+            from aqt.utils import showInfo
+            showInfo("Manage Master Deck downloads and updates from Tools → SnapOrtho.")
+            return
         from .master_deck import MasterDeckDialog
         MasterDeckDialog(self.mw,self).exec()
         if hasattr(self,"side_panel") and hasattr(self.side_panel,"refresh_deck_footer"):
             self.side_panel.refresh_deck_footer()
     def _maybe_first_run_prompt(self):
         """Open resumable setup directly until account and Master Deck are ready."""
+        if not self._owns_deck_sync():return
         try:
             linked=bool(self.credentials.get())
         except Exception:return
@@ -168,19 +173,6 @@ class ProfileRuntime:
             try:self.open_deck_sync()
             except Exception:pass
         QTimer.singleShot(800,show)
-    def _load_account_capabilities(self):
-        try:
-            if not self.credentials.get():return
-        except Exception:return
-        def done(future):
-            try:
-                _,body=future.result()
-                roles=set(body.get("roles")or[])
-                self.reviewer_enabled=bool(roles&{"administrator","clinical_editor","mapping_reviewer","deck_editor","release_manager"})
-                self.reviewer_menu.menuAction().setVisible(self.reviewer_enabled)
-                if self.reviewer_enabled:self._register_editor_propose_button()
-            except Exception:pass
-        self.background(self.api.me,done)
     def open_card_workspace(self,card,source_surface):
         from .anki_runtime import CollectionGateway
         from .workspace import CardWorkspace
@@ -236,7 +228,7 @@ class ProfileRuntime:
         browser.form.menuEdit.addAction(search_action)
 
         # Editing the canonical deck remains a reviewer-only capability.
-        if not self.reviewer_enabled:return
+        if not self.reviewer_edition:return
         action = QAction("Propose SnapOrtho changes…", browser)
         qconnect(action.triggered, lambda: self.open_browser_workspace(browser))
         browser.form.menuEdit.addAction(action)
@@ -450,7 +442,6 @@ class ProfileRuntime:
         from .dialogs import DeviceLinkDialog
         DeviceLinkDialog(self.mw,self,on_linked=self._after_linked).exec()
     def _after_linked(self):
-        self._load_account_capabilities()
         if hasattr(self,"side_panel"):self.side_panel.refresh_deck_footer();self.side_panel._set_enabled(bool(self.side_panel.card))
     def open_settings(self):
         from .dialogs import SettingsDialog
