@@ -6,6 +6,7 @@ export async function sendMarketingEmail(params: { recipient: MarketingRecipient
   if (!apiKey || !from) throw new Error('RESEND_API_KEY and MARKETING_FROM_EMAIL are required');
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
+    signal: AbortSignal.timeout(30_000),
     headers: {
       Authorization: `Bearer ${apiKey}`,
       'Content-Type': 'application/json',

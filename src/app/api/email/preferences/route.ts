@@ -25,8 +25,16 @@ export async function POST(request: Request) {
   try { payload = verifyMarketingPreferenceToken(token); } catch { return new NextResponse('Invalid or expired link', { status: 400 }); }
   const supabase = createAdminClient();
   if (scope === 'topic_on' || scope === 'all_on') {
-    let deletion = supabase.from('lifecycle_email_optouts').delete().eq('user_id', payload.userId);
-    deletion = scope === 'all_on' ? deletion : deletion.or(`kind.is.null,kind.eq.${payload.topic}`);
+    const { data: suppressions, error: suppressionError } = await supabase.from('lifecycle_email_optouts').select('kind,reason').eq('user_id', payload.userId);
+    if (suppressionError) return NextResponse.json({ error: 'Unable to load preferences' }, { status: 500 });
+    if ((suppressions ?? []).some((row) => !['preference_page', 'one_click_unsubscribe'].includes(row.reason))) {
+      return NextResponse.json({ error: 'Email delivery is suppressed. Contact support before resubscribing.' }, { status: 409 });
+    }
+    if (scope === 'topic_on' && (suppressions ?? []).some((row) => row.kind === null)) {
+      return NextResponse.json({ error: 'All marketing is unsubscribed. Choose Subscribe to all marketing to restore email.' }, { status: 409 });
+    }
+    let deletion = supabase.from('lifecycle_email_optouts').delete().eq('user_id', payload.userId).in('reason', ['preference_page', 'one_click_unsubscribe']);
+    deletion = scope === 'all_on' ? deletion : deletion.eq('kind', payload.topic);
     const { error: deleteError } = await deletion;
     if (deleteError) return NextResponse.json({ error: 'Unable to save preference' }, { status: 500 });
     const { error: profileError } = await supabase.from('user_profiles').update({

@@ -38,11 +38,13 @@ export async function POST(request: Request) {
     if (deliveryError) throw deliveryError;
     if (delivery && (event.type === 'email.bounced' || event.type === 'email.complained' || event.type === 'email.suppressed')) {
       const { error: optoutError } = await supabase.from('lifecycle_email_optouts').insert({ user_id: delivery.user_id, email: delivery.email, kind: null, reason: event.type });
-      if (optoutError?.code !== '23505') throw optoutError;
-      await supabase.from('user_profiles').update({ receive_emails: false, marketing_unsubscribed_at: at }).eq('user_id', delivery.user_id);
+      if (optoutError && optoutError.code !== '23505') throw optoutError;
+      const { error: profileError } = await supabase.from('user_profiles').update({ receive_emails: false, marketing_unsubscribed_at: at }).eq('user_id', delivery.user_id);
+      if (profileError) throw profileError;
     }
   }
-  await supabase.from('marketing_email_webhook_events').update({ processed_at: new Date().toISOString() }).eq('provider_event_id', id);
+  const { error: processedError } = await supabase.from('marketing_email_webhook_events').update({ processed_at: new Date().toISOString(), processing_error: null }).eq('provider_event_id', id);
+  if (processedError) throw processedError;
   return NextResponse.json({ received: true });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);

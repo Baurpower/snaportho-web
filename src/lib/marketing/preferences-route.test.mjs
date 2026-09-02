@@ -11,7 +11,7 @@ async function run(scope, results, token = 'valid') {
   const writes = [];
   const admin = { from(table) {
     const query = {
-      select() { return query; }, eq() { return query; }, is() { return query; },
+      delete() { writes.push({table, method:'delete'}); return query; }, in() { return query; }, select() { return query; }, eq() { return query; }, is() { return query; },
       maybeSingle() { return query; },
       insert(data) { writes.push({table, method:'insert', data}); return query; },
       update(data) { writes.push({table, method:'update', data}); return query; },
@@ -63,3 +63,12 @@ result = await run('topic', [], 'invalid');
 assert.equal(result.response.status, 400);
 assert.equal(result.writes.length, 0);
 console.log('Email preference route success, failure, duplicate, one-click and invalid-token tests passed.');
+
+result = await run('all_on', [{data:[{kind:null,reason:'email.bounced'}],error:null}]);
+assert.equal(result.response.status,409);
+assert.equal(result.writes.length,0,'Resubscription must preserve provider suppressions');
+result = await run('topic_on', [{data:[{kind:null,reason:'preference_page'}],error:null}]);
+assert.equal(result.response.status,409);
+assert.equal(result.writes.length,0,'Topic opt-in must not clear a global opt-out');
+result = await run('all_on', [{data:[{kind:null,reason:'preference_page'}],error:null},ok,ok]);
+assert.equal(result.response.status,200);

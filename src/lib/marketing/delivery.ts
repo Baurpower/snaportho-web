@@ -16,6 +16,8 @@ export async function deliverMarketingCampaignEmail(recipient: MarketingRecipien
   if (profile?.receive_emails !== true || profile.marketing_unsubscribed_at) return { status: 'suppressed' as const };
   if ((optouts ?? []).some((row) => row.kind === null || row.kind === recipient.topic)) return { status: 'suppressed' as const };
 
+  // Validate the template before reserving a delivery.
+  const rendered = renderMarketingEmail(recipient);
   const { data: log, error: reserveError } = await supabase.from('lifecycle_emails').insert({
     user_id: recipient.userId,
     email: recipient.email,
@@ -32,9 +34,10 @@ export async function deliverMarketingCampaignEmail(recipient: MarketingRecipien
     throw new Error(`Campaign reservation failed: ${reserveError.message}`);
   }
 
+  let acceptedId: string | undefined;
   try {
-    const rendered = renderMarketingEmail(recipient);
     const result = await sendMarketingEmail({ recipient, email: rendered, unsubscribeUrl: rendered.unsubscribeUrl });
+    acceptedId = result.id;
     const { error } = await supabase.from('lifecycle_emails').update({
       send_status: 'sent', resend_email_id: result.id, provider_message_id: result.id, sent_at: new Date().toISOString(),
     }).eq('id', log.id);
@@ -42,7 +45,10 @@ export async function deliverMarketingCampaignEmail(recipient: MarketingRecipien
     return { status: 'sent' as const, id: result.id };
   } catch (error) {
     await supabase.from('lifecycle_emails').update({
-      send_status: 'failed', failure_reason: error instanceof Error ? error.message.slice(0, 500) : 'Unknown send failure',
+      // Provider/network failures can be ambiguous. Keep the unique reservation
+      // until an operator reconciles it; never automatically resend.
+      ...(acceptedId ? { resend_email_id: acceptedId, provider_message_id: acceptedId } : {}),
+      failure_reason: error instanceof Error ? error.message.slice(0, 500) : 'Unknown send failure',
     }).eq('id', log.id);
     throw error;
   }

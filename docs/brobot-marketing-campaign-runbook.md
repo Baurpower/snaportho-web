@@ -134,3 +134,11 @@ unsubscribe, first-use, and subscription metrics before expanding the cohort.
 The pilot remains intentionally operator-triggered. Add scheduled automation
 only after the pilot demonstrates healthy complaint, bounce, and conversion
 rates.
+
+## September 1 prelaunch follow-up
+
+See [prelaunch findings and audience counts](./brobot-prelaunch-checks-2026-09-01.md).
+Uncertain delivery attempts now keep their unique reservation and require manual
+reconciliation against Resend before retry. Do not mark them failed or change
+template versions simply to bypass duplicate protection. The production runner
+now checks sender/postal configuration and destination readiness and paces sends.
