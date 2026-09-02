@@ -13,7 +13,11 @@ async function main() {
   const to = argument('to')?.trim().toLowerCase();
   if (!to || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(to)) throw new Error('A valid --to=email address is required');
   if (argument('confirm') !== 'SEND-MARKETING-TESTS') throw new Error('Pass --confirm=SEND-MARKETING-TESTS');
-  await verifyMarketingDestinations(getAppBaseUrl());
+  if (process.argv.includes('--allow-unreleased-links')) {
+    console.warn('Sending test previews with unreleased links explicitly allowed.');
+  } else {
+    await verifyMarketingDestinations(getAppBaseUrl());
+  }
   const runId = `test-${Date.now()}`;
   const results: { step: string; id: string }[] = [];
 

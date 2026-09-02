@@ -54,35 +54,29 @@ Supported steps are `activation_1`, `activation_2`, `activation_3`, `habit_1`,
 
 ## Campaign navigation and test review
 
-All main campaign CTAs are Universal Links with explicit native destinations:
+Campaign links must work with the existing app; no iOS update is required.
 
-| Emails | App path | Native screen | Website fallback |
-| --- | --- | --- | --- |
-| Activation 1–3, Habit 1–2, Reengagement | `/app/brobot/chat` | BroBot Chat | `/brobot/chat` |
-| Profile completion | `/app/account/profile` | Profile form after authentication | `/account/profile` |
-| Conversion | `/app/brobot/pricing` | Unlimited plan screen | `/brobot/pricing` |
+| Emails | Main destination | Browser option |
+| --- | --- | --- |
+| Activation 1–3, Habit 1–2, Reengagement | `/app/brobot/guest` — existing guest BroBot route | `/brobot/chat` |
+| Profile completion | `/account/profile` — website profile form | Same |
+| Conversion | `/brobot/pricing` — website plans | Same |
 
-The old `/app/brobot/guest` path remains a Chat alias. New iOS code handles
-both cold launch and links received while CasePrep is already open, preserves
-profile navigation through authentication, and routes app-owned links before
-Branch attribution. The app already had a profile form; the missing piece was
-a deep-link destination pointing to it.
+The existing guest route opens CasePrep, not Chat. Its CTA says “Open BroBot”;
+the secondary link explicitly says “Open Chat on the website.” The app contains
+a profile form but its existing router does not expose a profile deep link.
+Do not generate `/app/brobot/chat`, `/app/account/profile`, or
+`/app/brobot/pricing` for new emails. Browser fallbacks for previously sent test
+links remain, but cannot change what an old installed app does with those URLs.
 
-**Release both the website routes and the iOS routing update before using the
-new links in a customer campaign.** An old installed app does not gain new
-routes when the website deploys. Every email also has a direct website link
-for clients or installed app versions that cannot hand off correctly.
+My campaign-specific iOS changes were removed; other existing iOS work was
+preserved. Deploy the website/email changes as usual. Web campaign guests can
+ask their first question before the sign-in invitation. Existing quotas apply,
+and profile editing still requires sign-in with a return to `/account/profile`.
 
-Web campaign visitors can ask their first question without signing in. The
-sign-in invitation appears after an answer; existing guest quotas still apply.
-Campaign parameters only control this invitation and never authenticate a user
-or grant extra quota. Profile editing still requires authentication.
-
-Run `npm run marketing:campaign:test` for rendered-link and fallback coverage.
-The manual acceptance check is: signed-out web click → chat → first answer →
-sign-in invitation, plus a real iPhone click with the app installed and absent.
-The native app route still needs device verification; browser tests cannot prove
-iOS handoff. Check cold and warm app launches and the actual email client.
+Run `npm run marketing:campaign:test` for destinations, rendered links, preflight,
+and unsubscribe regression coverage. Test the existing guest link on the
+installed app and use the direct website link when Chat is desired.
 
 Resend click tracking rewrites URLs, which can interfere with direct Universal
 Links. Confirm click tracking is disabled on the sending domain before the next

@@ -1,4 +1,4 @@
-import { campaignWebUrl, marketingActionUrl } from './links';
+import { campaignWebUrl, isMarketingAppPath, marketingActionUrl } from './links';
 import type { CampaignStep } from './types';
 
 export async function verifyMarketingDestinations(base: string, request: typeof fetch = fetch) {
@@ -8,7 +8,15 @@ export async function verifyMarketingDestinations(base: string, request: typeof 
     const response = await request(action, { redirect: 'manual', signal: AbortSignal.timeout(15_000) });
     const location = response.headers.get('location');
     const actual = location ? new URL(location, action) : null;
-    if (![301, 302, 303, 307, 308].includes(response.status) || actual?.href !== expected.href) {
+    const redirects = [301, 302, 303, 307, 308].includes(response.status);
+    const correctFallback = redirects && actual?.href === expected.href;
+    const profileSignIn = action.pathname === '/account/profile' && redirects &&
+      actual?.origin === action.origin && actual.pathname === '/auth/sign-in' &&
+      actual.searchParams.get('redirectTo') === action.pathname + action.search;
+    const ready = isMarketingAppPath(action.pathname)
+      ? correctFallback
+      : response.status === 200 || correctFallback || profileSignIn;
+    if (!ready) {
       throw new Error(`Campaign link is not ready: ${action.pathname} returned ${response.status}. Deploy the website fallback before sending tests.`);
     }
   }
