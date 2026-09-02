@@ -29,14 +29,18 @@ export async function POST(request: Request) {
 
   const field: Record<string, string | null> = {
     'email.delivered': 'delivered_at', 'email.clicked': 'first_clicked_at', 'email.bounced': 'bounced_at',
-    'email.complained': 'complained_at', 'email.suppressed': 'suppressed_at',
+    'email.complained': 'complained_at', 'email.suppressed': 'suppressed_at', 'email.failed': null,
   };
   try {
-  if (emailId && event.type && field[event.type]) {
+  if (emailId && event.type && Object.hasOwn(field, event.type)) {
     const at = new Date().toISOString();
-    const { data: delivery, error: deliveryError } = await supabase.from('lifecycle_emails').update({ [field[event.type]!]: at, send_status: event.type.replace('email.', '') }).eq('resend_email_id', emailId).select('user_id,email').maybeSingle();
+    const { data: delivery, error: deliveryError } = await supabase.from('lifecycle_emails').update({ ...(field[event.type] ? { [field[event.type]!]: at } : {}), send_status: event.type === 'email.failed' ? 'delivery_failed' : event.type.replace('email.', '') }).eq('resend_email_id', emailId).select('user_id,email,metadata').maybeSingle();
     if (deliveryError) throw deliveryError;
-    if (delivery && (event.type === 'email.bounced' || event.type === 'email.complained' || event.type === 'email.suppressed')) {
+    // Profile-address failures stay on the delivery record for the bounded
+    // runner to select a confirmed auth fallback. Never send inside the webhook.
+    const profileAddressFailure = delivery?.metadata?.address_source === 'profile' &&
+      (event.type === 'email.bounced' || event.type === 'email.failed');
+    if (delivery && !profileAddressFailure && (event.type === 'email.failed' || event.type === 'email.bounced' || event.type === 'email.complained' || event.type === 'email.suppressed')) {
       const { error: optoutError } = await supabase.from('lifecycle_email_optouts').insert({ user_id: delivery.user_id, email: delivery.email, kind: null, reason: event.type });
       if (optoutError && optoutError.code !== '23505') throw optoutError;
       const { error: profileError } = await supabase.from('user_profiles').update({ receive_emails: false, marketing_unsubscribed_at: at }).eq('user_id', delivery.user_id);

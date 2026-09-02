@@ -142,3 +142,30 @@ Uncertain delivery attempts now keep their unique reservation and require manual
 reconciliation against Resend before retry. Do not mark them failed or change
 template versions simply to bypass duplicate protection. The production runner
 now checks sender/postal configuration and destination readiness and paces sends.
+
+## Profile email first, confirmed authentication email second
+
+New campaign selection prefers `user_profiles.email`. When it is missing or
+malformed, use the confirmed authentication email. When a new profile-address
+delivery receives `email.bounced` or `email.failed`, its delivery record becomes
+eligible for one alternate-address attempt on a later normal campaign run. The
+fallback must be different, currently confirmed, and free of known delivery
+failures. Timeouts, missing receipts, and messages known to have been delivered
+do not trigger fallback.
+
+The sender rechecks both addresses, confirmation, consent, suppression and
+history immediately before reserving a send. Unsubscribes, complaints and
+provider suppressions block both addresses. Profile-address bounce/failure
+events are tracked on the delivery row instead of changing the user's consent.
+Legacy/authentication-address bounces retain their existing global blocks.
+
+The alternate attempt uses the stable reservation version `v1.auth-fallback`
+and metadata linking it to the failed primary delivery, where applicable. This
+is an explicit single alternate-address attempt, not an arbitrary template
+version bump. Never change that key to force another retry. Fallback attempts
+consume the normal daily send budget; the webhook never sends email directly.
+
+Deploy the webhook and sender changes together before resuming production. The
+current rollout remains on its delivery-quality hold. The three pilot bounces
+were authentication-address sends; they are not failed profile sends and are
+not eligible for this fallback. No existing suppressions were cleared.

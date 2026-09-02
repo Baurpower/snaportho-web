@@ -23,6 +23,8 @@ export type MarketingRecipient = {
   userId: string;
   email: string;
   firstName: string | null;
+  addressSource?: 'profile' | 'authentication';
+  fallbackFromDeliveryId?: string;
   topic: MarketingTopic;
   campaignKey: string;
   campaignStep: CampaignStep;

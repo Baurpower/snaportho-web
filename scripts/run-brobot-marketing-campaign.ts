@@ -1,3 +1,4 @@
+import { resolveCampaignAddress, ADDRESS_HISTORY_COLUMNS } from '../src/lib/marketing/recipient-address';
 import { campaignActivity, campaignHistory } from '../src/lib/marketing/audience-history';
 import { doesSubscriptionGrantEntitlement } from '../src/lib/subscriptions/ledger';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
@@ -73,7 +74,7 @@ async function main() {
     allRows(supabase, 'brobot_usage_events', 'user_id,created_at'),
     allRows(supabase, 'brobot_conversations', 'user_id,created_at,updated_at'),
     allRows(supabase, 'subscriptions', 'user_id,plan_code,status,current_period_end,provider'),
-    allRows(supabase, 'lifecycle_emails', 'user_id,campaign_step,sent_at,send_status'),
+    allRows(supabase, 'lifecycle_emails', ADDRESS_HISTORY_COLUMNS),
     allRows(supabase, 'lifecycle_email_optouts', 'user_id,kind'),
   ]);
   const profileByUser = new Map(profiles.map((p) => [String(p.user_id), p]));
@@ -83,18 +84,28 @@ async function main() {
   const suppressed = new Map<string, Set<string>>();
   for (const row of optouts) if (row.user_id) { const set = suppressed.get(String(row.user_id)) ?? new Set<string>(); set.add(row.kind === null ? '*' : String(row.kind)); suppressed.set(String(row.user_id), set); }
 
+  const deliveryByUser = new Map<string, Record<string, unknown>[]>();
+  for (const row of sends) {
+    const key = String(row.user_id);
+    deliveryByUser.set(key, [...(deliveryByUser.get(key) ?? []), row]);
+  }
+  const addresses = new Map<string, NonNullable<ReturnType<typeof resolveCampaignAddress>>>();
   const candidates: CampaignProfile[] = authUsers.map((user) => {
     const profile = profileByUser.get(user.id); const activity = times.get(user.id)?.sort((a, b) => a - b) ?? []; const priorStepAt = prior.get(user.id) ?? new Map();
+    const address = resolveCampaignAddress({ profileEmail: profile?.email, authEmail: user.email, authConfirmed: Boolean(user.email_confirmed_at), campaignKey: config.campaignKey, campaignStep: options.campaign, templateVersion: config.templateVersion, deliveries: deliveryByUser.get(user.id) ?? [] });
+    if (address) addresses.set(user.id, address);
+    const priorSteps = new Set(attempted.get(user.id) ?? []);
+    if (address?.fallbackFromDeliveryId) priorSteps.delete(options.campaign);
     const name = typeof profile?.full_name === 'string' ? profile.full_name.trim().split(/\s+/)[0] : null;
-    return { userId: user.id, email: String(user.email ?? '').trim().toLowerCase(), confirmed: Boolean(user.email_confirmed_at), receiveEmails: profile?.receive_emails === true && !profile?.marketing_unsubscribed_at, firstName: name || null, profileComplete: profile?.is_profile_complete === true, currentlyEntitled: entitled.has(user.id), firstUseAt: activity[0] ?? null, lastUseAt: activity.at(-1) ?? null, priorSteps: attempted.get(user.id) ?? new Set(), priorStepAt, optedOutTopics: suppressed.get(user.id) ?? new Set() };
+    return { userId: user.id, email: address?.email ?? '', confirmed: Boolean(user.email_confirmed_at), receiveEmails: profile?.receive_emails === true && !profile?.marketing_unsubscribed_at, firstName: name || null, profileComplete: profile?.is_profile_complete === true, currentlyEntitled: entitled.has(user.id), firstUseAt: activity[0] ?? null, lastUseAt: activity.at(-1) ?? null, priorSteps, priorStepAt, optedOutTopics: suppressed.get(user.id) ?? new Set() };
   }).filter((profile) => profile.email && isEligibleForCampaign(profile, options.campaign));
   console.log(JSON.stringify({ campaign: options.campaign, eligible: candidates.length, selected: Math.min(options.limit, candidates.length), mode: options.send ? 'send' : options.preview ? 'preview' : 'dry-run' }, null, 2));
   if (!options.send) return;
   let sent = 0, duplicate = 0, skipped = 0, failed = 0;
   for (const [index, candidate] of candidates.slice(0, options.limit).entries()) {
     if (index > 0) await pause(1000);
-    const recipient: MarketingRecipient = { userId: candidate.userId, email: candidate.email, firstName: candidate.firstName, campaignStep: options.campaign, ...config };
-    try { const result = await deliverMarketingCampaignEmail(recipient); if (result.status === 'sent') sent += 1; else if (result.status === 'duplicate') duplicate += 1; else skipped += 1; } catch (error) { failed += 1; console.error(`[marketing] send failed for user=${candidate.userId.slice(0, 8)}: ${error instanceof Error ? error.message : String(error)}`); }
+    const recipient: MarketingRecipient = { userId: candidate.userId, email: candidate.email, firstName: candidate.firstName, campaignStep: options.campaign, ...config, ...addresses.get(candidate.userId)! };
+    try { const result = await deliverMarketingCampaignEmail(recipient); if (result.status === 'sent') sent += 1; else if (result.status === 'duplicate') duplicate += 1; else skipped += 1; } catch (error) { failed += 1; console.error(`[marketing] send failed for user=${candidate.userId.slice(0, 8)}: ${error instanceof Error ? error.message : String(error)}`); break; }
   }
   console.log(JSON.stringify({ sent, duplicate, skipped, failed }, null, 2));
   if (failed) process.exitCode = 1;
