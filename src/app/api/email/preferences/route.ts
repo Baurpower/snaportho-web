@@ -44,9 +44,12 @@ export async function POST(request: Request) {
     const { error: insertError } = await supabase.from('lifecycle_email_optouts').insert({
       user_id: payload.userId, email: payload.email, kind, reason: oneClick ? 'one_click_unsubscribe' : 'preference_page',
     });
-    if (insertError?.code !== '23505') return NextResponse.json({ error: 'Unable to save preference' }, { status: 500 });
+    if (insertError && insertError.code !== '23505') return NextResponse.json({ error: 'Unable to save preference' }, { status: 500 });
   }
-  if (kind === null) await supabase.from('user_profiles').update({ receive_emails: false, marketing_unsubscribed_at: new Date().toISOString() }).eq('user_id', payload.userId);
+  if (kind === null) {
+    const { error } = await supabase.from('user_profiles').update({ receive_emails: false, marketing_unsubscribed_at: new Date().toISOString() }).eq('user_id', payload.userId);
+    if (error) return NextResponse.json({ error: 'Unable to save preference' }, { status: 500 });
+  }
   if (oneClick) return new NextResponse(null, { status: 204 });
   return new NextResponse(page(token, kind === null ? 'You are unsubscribed from all marketing email.' : 'You are unsubscribed from this email topic.'), { headers: { 'content-type': 'text/html; charset=utf-8' } });
 }

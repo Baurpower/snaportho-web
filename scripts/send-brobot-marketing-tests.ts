@@ -2,6 +2,8 @@ import { CAMPAIGN_STEPS, type MarketingRecipient } from '../src/lib/marketing/ty
 import { CAMPAIGN_CONFIG } from '../src/lib/marketing/segments';
 import { renderMarketingEmail } from '../src/lib/marketing/templates';
 import { sendMarketingEmail } from '../src/lib/marketing/resend';
+import { getAppBaseUrl } from '../src/lib/config/app-url';
+import { verifyMarketingDestinations } from '../src/lib/marketing/link-preflight';
 
 function argument(name: string) {
   return process.argv.slice(2).find((value) => value.startsWith(`--${name}=`))?.slice(name.length + 3);
@@ -11,6 +13,7 @@ async function main() {
   const to = argument('to')?.trim().toLowerCase();
   if (!to || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(to)) throw new Error('A valid --to=email address is required');
   if (argument('confirm') !== 'SEND-MARKETING-TESTS') throw new Error('Pass --confirm=SEND-MARKETING-TESTS');
+  await verifyMarketingDestinations(getAppBaseUrl());
   const runId = `test-${Date.now()}`;
   const results: { step: string; id: string }[] = [];
 

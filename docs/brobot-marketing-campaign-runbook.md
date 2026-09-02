@@ -54,21 +54,29 @@ Supported steps are `activation_1`, `activation_2`, `activation_3`, `habit_1`,
 
 ## Campaign navigation and test review
 
-Learning emails use `https://snap-ortho.com/app/brobot/guest`, an existing iOS
-Universal Link. With the app installed, iOS can open its guest BroBot screen.
-When the link opens on the website, the route redirects to `/brobot/chat` and
-preserves campaign attribution. Deploy the fallback before sending revised
-emails: the previous production endpoint returned 404 in the September 1 review.
+All main campaign CTAs are Universal Links with explicit native destinations:
+
+| Emails | App path | Native screen | Website fallback |
+| --- | --- | --- | --- |
+| Activation 1–3, Habit 1–2, Reengagement | `/app/brobot/chat` | BroBot Chat | `/brobot/chat` |
+| Profile completion | `/app/account/profile` | Profile form after authentication | `/account/profile` |
+| Conversion | `/app/brobot/pricing` | Unlimited plan screen | `/brobot/pricing` |
+
+The old `/app/brobot/guest` path remains a Chat alias. New iOS code handles
+both cold launch and links received while CasePrep is already open, preserves
+profile navigation through authentication, and routes app-owned links before
+Branch attribution. The app already had a profile form; the missing piece was
+a deep-link destination pointing to it.
+
+**Release both the website routes and the iOS routing update before using the
+new links in a customer campaign.** An old installed app does not gain new
+routes when the website deploys. Every email also has a direct website link
+for clients or installed app versions that cannot hand off correctly.
 
 Web campaign visitors can ask their first question without signing in. The
 sign-in invitation appears after an answer; existing guest quotas still apply.
 Campaign parameters only control this invitation and never authenticate a user
-or grant extra quota.
-
-Profile completion goes to `/account/profile`, retaining that destination through
-sign-in. Conversion goes to `/brobot/pricing`. These two remain website links
-because the existing iOS router has no account-profile or pricing destination.
-Do not substitute its `onboarding` target: that opens signup, not profile editing.
+or grant extra quota. Profile editing still requires authentication.
 
 Run `npm run marketing:campaign:test` for rendered-link and fallback coverage.
 The manual acceptance check is: signed-out web click → chat → first answer →
@@ -87,9 +95,15 @@ Resend DKIM public key, but no `_dmarc.snap-ortho.com` TXT record. Add a DMARC
 record through the DNS provider (a monitoring policy starts with
 `v=DMARC1; p=none;`), then verify SPF/DKIM/DMARC results in a received message's
 original headers. DNS presence alone does not establish authentication success.
-Distinguish Gmail Spam placement from Promotions before diagnosing delivery;
-copy changes do not guarantee Primary placement. See
+The user confirmed that all eight tests arrived: seven in Promotions and one
+in Primary. This was categorization, not Spam placement; copy changes do not
+guarantee Primary placement. See
 [Gmail sender guidelines](https://support.google.com/mail/answer/81126).
+
+The test sender checks the three website fallback destinations before sending
+any messages. A missing or incorrect fallback stops the batch. It does not
+verify whether the recipient has an updated iOS build. See
+[the email audit](./brobot-email-audit.md) for the full review.
 
 To send the test set using local configuration:
 

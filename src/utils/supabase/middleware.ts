@@ -2,7 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 import { isPublicProviderWebhookPath } from '@/lib/auth/public-provider-webhook-path'
-import { BROBOT_CAMPAIGN_APP_PATH } from '@/lib/marketing/links'
+import { isMarketingAppPath } from '@/lib/marketing/links'
 
 export async function updateSession(request: NextRequest) {
   // Apple must fetch association files without authentication or redirects.
@@ -52,7 +52,7 @@ export async function updateSession(request: NextRequest) {
   // The proxy itself performs authentication (user or signed guest cookie).
   // This unblocks the "Continue as Guest" flow that was previously dead due to this middleware.
   const isPublicBroBotPath =
-    pathname === BROBOT_CAMPAIGN_APP_PATH ||
+    isMarketingAppPath(pathname) ||
     pathname === '/brobot' ||
     pathname.startsWith('/brobot/') ||
     pathname.startsWith('/api/brobot/')
@@ -68,6 +68,10 @@ export async function updateSession(request: NextRequest) {
   const isPublicCheckoutSuccessPath = pathname === '/checkout/success'
 
   const isProviderWebhook = isPublicProviderWebhookPath(pathname, request.method)
+  // These handlers validate signed tokens/webhook signatures themselves.
+  const isPublicMarketingPath =
+    (pathname === '/api/email/preferences' && ['GET', 'POST'].includes(request.method)) ||
+    (pathname === '/api/webhooks/resend' && request.method === 'POST')
 
   if (
     !user &&
@@ -76,7 +80,8 @@ export async function updateSession(request: NextRequest) {
     !isPublicMyCasesPlaybookPath &&
     !isPublicMyCasesLandingPath &&
     !isPublicCheckoutSuccessPath &&
-    !isProviderWebhook
+    !isProviderWebhook &&
+    !isPublicMarketingPath
   ) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/sign-in'
