@@ -2,8 +2,14 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 import { isPublicProviderWebhookPath } from '@/lib/auth/public-provider-webhook-path'
+import { BROBOT_CAMPAIGN_APP_PATH } from '@/lib/marketing/links'
 
 export async function updateSession(request: NextRequest) {
+  // Apple must fetch association files without authentication or redirects.
+  if (request.nextUrl.pathname === '/.well-known/apple-app-site-association' ||
+      request.nextUrl.pathname === '/apple-app-site-association') {
+    return NextResponse.next({ request })
+  }
   let response = NextResponse.next({
     request,
   })
@@ -46,6 +52,7 @@ export async function updateSession(request: NextRequest) {
   // The proxy itself performs authentication (user or signed guest cookie).
   // This unblocks the "Continue as Guest" flow that was previously dead due to this middleware.
   const isPublicBroBotPath =
+    pathname === BROBOT_CAMPAIGN_APP_PATH ||
     pathname === '/brobot' ||
     pathname.startsWith('/brobot/') ||
     pathname.startsWith('/api/brobot/')

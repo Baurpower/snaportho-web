@@ -1,3 +1,4 @@
+import { marketingActionUrl } from './links';
 import { getAppBaseUrl } from '@/lib/config/app-url';
 import { createMarketingPreferenceToken } from './preferences-token';
 import type { CampaignStep, MarketingEmail, MarketingRecipient } from './types';
@@ -6,15 +7,15 @@ function escapeHtml(value: string) {
   return value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
 }
 
-const COPY: Record<CampaignStep, { subject: string; title: string; paragraphs: string[]; cta: string; path: string }> = {
-  activation_1: { subject: 'Your orthopedic AI assistant is ready', title: 'Try BroBot before your next case', paragraphs: ['BroBot is SnapOrtho’s orthopedic learning assistant.', 'Use it to review an approach, prepare for a case, study a classification, or clarify a difficult concept.', 'Try asking: “Prep me for a posterior total hip approach.”'], cta: 'Ask BroBot', path: '/brobot?utm_source=resend&utm_medium=email&utm_campaign=brobot_activation_v1&utm_content=activation_1' },
-  activation_2: { subject: 'Three ways to use BroBot this week', title: 'A useful starting point for BroBot', paragraphs: ['Review an approach before a case.', 'Quiz yourself on a classification.', 'Ask for a concise explanation of a difficult orthopedic concept.'], cta: 'Try a question', path: '/brobot?utm_source=resend&utm_medium=email&utm_campaign=brobot_activation_v1&utm_content=activation_2' },
-  activation_3: { subject: 'A BroBot prompt for your next case', title: 'One prompt to try', paragraphs: ['Open BroBot and ask it to prepare a focused anatomy, approach, and pitfalls review for your next case.'], cta: 'Open BroBot', path: '/brobot?utm_source=resend&utm_medium=email&utm_campaign=brobot_activation_v1&utm_content=activation_3' },
-  habit_1: { subject: 'BroBot can do more than answer questions', title: 'Keep learning with BroBot', paragraphs: ['Use BroBot for case preparation, anatomy and surgical approaches, exam review, and focused follow-up questions.'], cta: 'Continue with BroBot', path: '/brobot?utm_source=resend&utm_medium=email&utm_campaign=brobot_habit_v1&utm_content=habit_1' },
-  habit_2: { subject: 'What are you working on this week?', title: 'Bring this week’s orthopedic questions', paragraphs: ['Ask BroBot about the case, topic, classification, or approach you are reviewing this week.'], cta: 'Ask BroBot', path: '/brobot?utm_source=resend&utm_medium=email&utm_campaign=brobot_habit_v1&utm_content=habit_2' },
-  conversion_1: { subject: 'Keep using BroBot without the limit', title: 'Unlock Unlimited BroBot', paragraphs: ['You’ve already used BroBot for orthopedic learning.', 'Unlimited BroBot lets you keep asking questions, preparing for cases, and reviewing difficult topics without stopping at the free limit.', 'A full year is $29.99—less than $2.50 per month.'], cta: 'Unlock Unlimited BroBot', path: '/brobot/pricing?utm_source=resend&utm_medium=email&utm_campaign=brobot_conversion_v1&utm_content=conversion_1' },
-  profile_completion_1: { subject: 'Make SnapOrtho more relevant to your training', title: 'Personalize your SnapOrtho experience', paragraphs: ['Tell us your training level and orthopedic interests so SnapOrtho can show more relevant learning tools and BroBot starting points.'], cta: 'Complete my profile', path: '/work/profile?utm_source=resend&utm_medium=email&utm_campaign=profile_completion_v1' },
-  reengagement_1: { subject: 'Come back to BroBot', title: 'Bring BroBot your next orthopedic question', paragraphs: ['Pick up where you left off with a case, approach, classification, or exam-review question.'], cta: 'Return to BroBot', path: '/brobot?utm_source=resend&utm_medium=email&utm_campaign=brobot_reengagement_v1' },
+const COPY: Record<CampaignStep, { subject: string; title: string; paragraphs: string[]; cta: string }> = {
+  activation_1: { subject: 'A quick way to review before your next case', title: 'Start with one question', paragraphs: ['Preparing for a case? Ask BroBot to walk you through the approach.', 'Try: “What anatomy should I review before a posterior approach to the hip?”', 'Open BroBot and try a question before signing in.'], cta: 'Ask BroBot' },
+  activation_2: { subject: 'Three ways to use BroBot this week', title: 'A useful starting point for BroBot', paragraphs: ['Review an approach before a case.', 'Quiz yourself on a classification.', 'Ask for a concise explanation of a difficult orthopedic concept.'], cta: 'Try a question' },
+  activation_3: { subject: 'A quick anatomy question to try', title: 'Review one thing before your next case', paragraphs: ['Try asking BroBot: “Which nerves are at risk in a posterior approach to the hip?”', 'Then ask a follow-up about anything you want to understand better.'], cta: 'Open BroBot' },
+  habit_1: { subject: 'BroBot can do more than answer questions', title: 'Keep learning with BroBot', paragraphs: ['Use BroBot for case preparation, anatomy and surgical approaches, exam review, and focused follow-up questions.'], cta: 'Continue with BroBot' },
+  habit_2: { subject: 'Turn a topic into a quick quiz', title: 'Test what you remember', paragraphs: ['Pick a topic you recently studied and ask BroBot to quiz you.', 'Try: “Quiz me on the Garden classification of femoral neck fractures. Ask one question at a time.”', 'Answer in your own words, then ask BroBot to explain anything you missed.'], cta: 'Ask BroBot' },
+  conversion_1: { subject: 'Keep using BroBot without the limit', title: 'Unlock Unlimited BroBot', paragraphs: ['Want more time for case prep and follow-up questions?', 'Unlimited BroBot removes the free daily question limit.', 'A full year is $29.99.'], cta: 'Unlock Unlimited BroBot' },
+  profile_completion_1: { subject: 'Make SnapOrtho more relevant to your training', title: 'Personalize your SnapOrtho experience', paragraphs: ['Tell us your training level and orthopedic interests so SnapOrtho can show more relevant learning tools and BroBot starting points.'], cta: 'Complete my profile' },
+  reengagement_1: { subject: 'Something from rounds you want to review?', title: 'Start with a question from today', paragraphs: ['Bring BroBot a term, classification, or approach you want to understand better.', 'Try: “Explain the Weber ankle fracture classification in simple terms.”', 'You can try a question before signing in.'], cta: 'Return to BroBot' },
 };
 
 export function renderMarketingEmail(recipient: MarketingRecipient): MarketingEmail & { unsubscribeUrl: string } {
@@ -22,7 +23,7 @@ export function renderMarketingEmail(recipient: MarketingRecipient): MarketingEm
   const base = getAppBaseUrl();
   const token = createMarketingPreferenceToken({ userId: recipient.userId, email: recipient.email, topic: recipient.topic });
   const unsubscribeUrl = `${base}/api/email/preferences?token=${encodeURIComponent(token)}`;
-  const actionUrl = new URL(copy.path, base).toString();
+  const actionUrl = marketingActionUrl(recipient.campaignStep, base);
   const postalAddress = process.env.MARKETING_POSTAL_ADDRESS?.trim() || (process.env.NODE_ENV === 'production' ? '' : 'Add MARKETING_POSTAL_ADDRESS before sending');
   if (!postalAddress) throw new Error('MARKETING_POSTAL_ADDRESS is required in production');
   const greeting = recipient.firstName ? `Hi ${escapeHtml(recipient.firstName)},` : 'Hi,';

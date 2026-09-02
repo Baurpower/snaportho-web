@@ -52,6 +52,53 @@ npm run marketing:campaign -- --campaign=activation_1 --limit=100
 Supported steps are `activation_1`, `activation_2`, `activation_3`, `habit_1`,
 `habit_2`, `conversion_1`, `profile_completion_1`, and `reengagement_1`.
 
+## Campaign navigation and test review
+
+Learning emails use `https://snap-ortho.com/app/brobot/guest`, an existing iOS
+Universal Link. With the app installed, iOS can open its guest BroBot screen.
+When the link opens on the website, the route redirects to `/brobot/chat` and
+preserves campaign attribution. Deploy the fallback before sending revised
+emails: the previous production endpoint returned 404 in the September 1 review.
+
+Web campaign visitors can ask their first question without signing in. The
+sign-in invitation appears after an answer; existing guest quotas still apply.
+Campaign parameters only control this invitation and never authenticate a user
+or grant extra quota.
+
+Profile completion goes to `/account/profile`, retaining that destination through
+sign-in. Conversion goes to `/brobot/pricing`. These two remain website links
+because the existing iOS router has no account-profile or pricing destination.
+Do not substitute its `onboarding` target: that opens signup, not profile editing.
+
+Run `npm run marketing:campaign:test` for rendered-link and fallback coverage.
+The manual acceptance check is: signed-out web click → chat → first answer →
+sign-in invitation, plus a real iPhone click with the app installed and absent.
+The native app route still needs device verification; browser tests cannot prove
+iOS handoff. Check cold and warm app launches and the actual email client.
+
+Resend click tracking rewrites URLs, which can interfere with direct Universal
+Links. Confirm click tracking is disabled on the sending domain before the next
+device test. The local sending-only API key cannot inspect domain settings.
+See [Resend tracking](https://resend.com/docs/dashboard/domains/tracking) and
+[Apple Universal Links](https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content).
+
+The September 1 DNS check found an SPF record at `send.snap-ortho.com` and a
+Resend DKIM public key, but no `_dmarc.snap-ortho.com` TXT record. Add a DMARC
+record through the DNS provider (a monitoring policy starts with
+`v=DMARC1; p=none;`), then verify SPF/DKIM/DMARC results in a received message's
+original headers. DNS presence alone does not establish authentication success.
+Distinguish Gmail Spam placement from Promotions before diagnosing delivery;
+copy changes do not guarantee Primary placement. See
+[Gmail sender guidelines](https://support.google.com/mail/answer/81126).
+
+To send the test set using local configuration:
+
+```bash
+NODE_ENV=production node --env-file=.env.local --experimental-strip-types \
+  --experimental-loader ./tmp/alias-loader.mjs scripts/send-brobot-marketing-tests.ts \
+  --to=beccabaur24@gmail.com --confirm=SEND-MARKETING-TESTS
+```
+
 ## Pilot send
 
 Keep the feature flag off during review. When the preview, migration, Resend

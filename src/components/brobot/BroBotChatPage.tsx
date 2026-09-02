@@ -486,7 +486,7 @@ function synthesizeDisplayAnswer(priorityPoints: string[]) {
   return priorityPoints.slice(0, 3).map((point) => `- ${point}`).join('\n');
 }
 
-export default function BroBotChatPage() {
+export default function BroBotChatPage({ campaignEntry = false }: { campaignEntry?: boolean }) {
   const router = useRouter();
   const { user, loading: authLoading, status: authStatus } = useAuth();
   const { profile } = useProfile(user?.id);
@@ -1459,7 +1459,7 @@ export default function BroBotChatPage() {
                   <BroBotEmptyState
                     disabled={isRequestActive}
                     onPickPrompt={(prompt) => void sendMessage(prompt, 'example_prompt')}
-                    showSignInNotice={!authLoading && !user}
+                    showSignInNotice={!campaignEntry && !authLoading && !user}
                   />
                 ) : (
                   <BroBotMessageList
@@ -1496,6 +1496,15 @@ export default function BroBotChatPage() {
                       }}
                     />
                   </div>
+                )}
+
+                {campaignEntry && !authLoading && !user && latestAssistant && !isRequestActive && (
+                  <p className="mt-4 text-sm text-slate-600">
+                    Want more daily questions?{' '}
+                    <Link href="/auth/sign-in?redirectTo=/brobot/chat&intent=brobot" className="font-semibold text-teal-700 underline">
+                      Sign in to continue learning.
+                    </Link>
+                  </p>
                 )}
 
                 {restoredPendingPrompt && !isRequestActive && !error && (

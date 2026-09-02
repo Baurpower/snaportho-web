@@ -29,6 +29,9 @@ async function main() {
     rendered.subject = `[TEST: ${campaignStep}] ${rendered.subject}`;
     const sent = await sendMarketingEmail({ recipient, email: rendered, unsubscribeUrl: rendered.unsubscribeUrl });
     results.push({ step: campaignStep, id: sent.id });
+    console.log(JSON.stringify({ step: campaignStep, id: sent.id, status: 'sent' }));
+    // Space requests to avoid Resend's per-second rate limit.
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   }
 
   console.log(JSON.stringify({ recipient: to, sent: results.length, results }, null, 2));

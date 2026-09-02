@@ -20,7 +20,7 @@ const ProfileForm = dynamic(() => import('@/components/profileform'), {
 
 export default function EditProfilePage() {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const supabase = useMemo(() => createClient(), []);
 
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -29,8 +29,11 @@ export default function EditProfilePage() {
   useEffect(() => {
     let isMounted = true;
 
+    if (authLoading) return;
+
     if (!user) {
-      router.replace('/auth/sign-in');
+      const redirectTo = `/account/profile${window.location.search}`;
+      router.replace(`/auth/sign-in?${new URLSearchParams({ redirectTo })}`);
       return;
     }
 
@@ -78,7 +81,7 @@ export default function EditProfilePage() {
     return () => {
       isMounted = false;
     };
-  }, [user, router, supabase]);
+  }, [user, authLoading, router, supabase]);
 
   if (loading || !profile) {
     return <p className="text-center py-20">Loading profile…</p>;
