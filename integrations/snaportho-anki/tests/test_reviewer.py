@@ -411,8 +411,8 @@ class ReviewerTests(unittest.TestCase):
   self.assertIn("from aqt.import_export.importing import import_file",text)
   self.assertIn("import_file(self.runtime.mw, path)",text)
   self.assertIn("self.dialog.accept()",text)
-  self.assertIn("_probe_local_master_by_guid",text)
-  self.assertIn("stable Anki GUID",text)
+  self.assertNotIn("_probe_local_master_by_guid",text)
+  self.assertIn("Those are not an installed Master Deck",text)
   self.assertIn("Do not use Anki Undo",text)
   self.assertIn("Cards you moved to other decks stay where you put them",text)
  def test_master_deck_download_resumes_partial_file(self):
@@ -629,7 +629,7 @@ class ReviewerTests(unittest.TestCase):
    store=DraftStore(os.path.join(d,"s.db"),"scope")
    store.save_deck_subscription({"id":"r","sequence":4,"version":"0.0.4","aggregateChecksum":"a"*64},cursor=12,status="current")
    subscribed=installed_deck_presence(empty,store)
-   self.assertTrue(subscribed["installed"]);self.assertEqual(subscribed["reason"],"subscription")
+   self.assertFalse(subscribed["installed"]);self.assertEqual(subscribed["reason"],"absent")
    store.close()
  def test_guid_probe_requires_unambiguous_local_notes(self):
   class FakeCol:
@@ -638,7 +638,7 @@ class ReviewerTests(unittest.TestCase):
    def list(self,sql,guid):return self.guids.get(guid) or []
   ops=[{"payload":{"noteGuid":"a"}},{"payload":{}},{"payload":{"noteGuid":"b"}},{"payload":{"noteGuid":"c"}}]
   hits,seen=local_guid_hits(FakeCol({"a":[1],"b":[2],"c":[]}),ops)
-  self.assertEqual((hits,seen),(2,3));self.assertTrue(guid_probe_indicates_install(hits,seen))
+  self.assertEqual((hits,seen),(2,3));self.assertFalse(guid_probe_indicates_install(hits,seen))
   none,seen_none=local_guid_hits(FakeCol({}),ops)
   self.assertEqual((none,seen_none),(0,3));self.assertFalse(guid_probe_indicates_install(none,seen_none))
   dup,_=local_guid_hits(FakeCol({"a":[1,2],"b":[3],"c":[4]}),ops)
@@ -689,8 +689,9 @@ class ReviewerTests(unittest.TestCase):
    col.notes[8]=duplicate;duplicate.guid="dup-guid";existing.guid="dup-guid"
    with self.assertRaisesRegex(RuntimeError,"note_guid_ambiguous"):
     gateway.snapshot("other",{"noteGuid":"dup-guid"})
-   missing_payload={"noteGuid":"new-guid","noteTypeName":"SnapOrtho Master","deckPath":"SnapOrtho"}
+   missing_payload={"noteGuid":"new-guid","noteTypeName":"SnapOrtho Master","deckPath":"Marty McFlyin Ortho Decks::Trauma"}
    created=gateway.upsert_note("new",missing_payload,{"Text":"created"},["SnapOrtho::Anatomy::Knee"])
    self.assertEqual(created["noteGuid"],"new-guid");self.assertEqual(len(col.added),1)
+   self.assertEqual(col.added[0].deck_id,col.ids["SnapOrtho"])
    store.close()
 if __name__=="__main__":unittest.main()

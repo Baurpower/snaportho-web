@@ -1,5 +1,5 @@
 """Pure note-centric SnapOrtho sync v2 merge and resumable apply engine."""
-import hashlib,json,re
+import hashlib,json,re,time
 CONTRACT="snaportho-anki-note-sync.v2"
 OPERATIONS={"upsert_note","retire_note","update_tags","move_note","update_note_type","media_add","media_remove"}
 PERSONAL=re.compile(r"^(personal|user|local)(_|::)",re.I)
@@ -35,6 +35,24 @@ def page_has_more(page,limit):
     if remaining is None:return len(ops)>=int(limit)
     try:return int(remaining)>0
     except(TypeError,ValueError):return len(ops)>=int(limit)
+def fetch_update_pages(api, after, progress=lambda *args: None, cancelled=lambda: False,
+                       max_seconds=180, max_pages=1000, clock=time.monotonic):
+    """Bound the read-only check; never advance the durable installed cursor here."""
+    started=clock();pages=[];cursor=after;count=0;limit=100
+    while True:
+        if cancelled():raise RuntimeError("update_check_cancelled")
+        if clock()-started>=max_seconds:raise RuntimeError("update_check_timeout: retry the check; no updates applied")
+        _,page=api.deck_v2_updates(cursor,limit)
+        if clock()-started>=max_seconds:raise RuntimeError("update_check_timeout: retry the check; no updates applied")
+        errors=validate_page(page,cursor)
+        if errors:raise ValueError("invalid_delta_page:"+",".join(errors))
+        next_cursor=int(page["nextCursor"]);ops=page.get("operations")or[]
+        more=page_has_more(page,limit)
+        if more and (not ops or next_cursor<=cursor):raise ValueError("update_cursor_stalled")
+        pages.append(page);cursor=next_cursor;count+=len(ops)
+        progress(len(pages),count,cursor)
+        if not more:return pages
+        if len(pages)>=max_pages:raise RuntimeError("update_check_page_limit: no updates applied")
 def merge_governed_tags(local,remote,prefixes):
     def governed(tag):return any(tag==p or tag.startswith(p+"::")for p in prefixes)
     return sorted(set([t for t in local if not governed(t)]+list(remote)))

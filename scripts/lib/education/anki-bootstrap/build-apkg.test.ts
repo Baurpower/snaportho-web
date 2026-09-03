@@ -109,14 +109,14 @@ const cardB = {
   canonicalCardVersionId: id("d"),
   noteGuid: "guid-bbb",
   cardOrdinal: 0 as const,
-  deckPath: "Marty McFlyin's Ortho Deck::Hand",
+  deckPath: "Marty McFlyin Ortho Decks::Hand",
   orderingKey: "0002/guid-bbb",
   inclusionStatus: "included",
   fieldSnapshot: [
     { name: "Text", rawValue: "Hand {{c1::question}}" },
     { name: "Extra", rawValue: "µ value" },
   ],
-  centralTags: ["SnapOrtho::Hand"],
+  centralTags: ["SnapOrtho::Hand", "LegacyLooseTag"],
   mediaHashes: [] as string[],
   contentHash: "",
 };
@@ -173,9 +173,10 @@ const input = {
     >;
     const decks = JSON.parse(col.decks) as Record<string, { name: string }>;
     const deckNames = Object.values(decks).map((d) => d.name);
-    assert.ok(deckNames.includes("SnapOrtho"));
-    assert.ok(deckNames.includes("SnapOrtho::Foot"));
-    assert.ok(deckNames.includes("SnapOrtho::Hand"));
+    assert.deepEqual(deckNames.sort(), ["Default", "SnapOrtho"]);
+    const assignments = opened.db.prepare("select distinct did from cards").all() as Array<{did:number}>;
+    assert.equal(assignments.length, 1);
+    assert.equal(decks[String(assignments[0].did)].name, "SnapOrtho");
     assert.ok(!deckNames.some((n) => n.includes("Marty McFlyin")));
     const model = Object.values(models)[0]!;
     assert.equal(model.name, SNAPORTHO_MASTER_NOTE_TYPE);
@@ -202,6 +203,7 @@ const input = {
     assert.equal(mapA[MARKER_HASH], cardA.contentHash);
     assert.match(noteA.tags, /SnapOrtho::Ankle/);
     assert.match(noteA.tags, /SnapOrtho::Foot/);
+    assert.ok(notes.every(n => n.tags.trim().split(/\s+/).filter(Boolean).every(t => t.startsWith("SnapOrtho::"))));
 
     // Central-sync hash of installed fields must equal marker hash / contentHash
     const recomputed = computeCentralSyncHash(

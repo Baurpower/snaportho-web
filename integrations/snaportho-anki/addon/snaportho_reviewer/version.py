@@ -1,4 +1,4 @@
-ADDON_VERSION = "1.0.3"
+ADDON_VERSION = "1.0.4"
 
 
 def addon_version_at_least(client, minimum):

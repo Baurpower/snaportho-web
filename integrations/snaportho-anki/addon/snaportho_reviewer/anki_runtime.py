@@ -102,7 +102,9 @@ class NoteCollectionGatewayV2:
             if name in note:note[name]=value
         note.tags=sorted(set(tags))
         if created:
-            self.col.add_note(note,self.col.decks.id(payload["deckPath"]))
+            # Historical published releases contain source subdeck paths.
+            # New Master notes always belong to the single product deck.
+            self.col.add_note(note,self.col.decks.id("SnapOrtho"))
         else:
             self.col.update_note(note)
             # Content/tag upserts must not yank cards the learner moved.

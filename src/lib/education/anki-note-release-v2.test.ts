@@ -7,7 +7,8 @@ const release=buildInitialNoteRelease([
 assert.equal(release.expectedNoteCount,1);assert.equal(release.expectedCardCount,2);
 assert.deepEqual(release.notes[0].expectedCardOrdinals,[0,1]);
 assert.deepEqual(release.notes[0].governedTags,["SnapOrtho::Diagnosis::ACL"]);
-assert.throws(()=>buildInitialNoteRelease([
+assert.equal(buildInitialNoteRelease([
  {noteGuid:"g",cardOrdinal:0,deckPath:"A",fieldSnapshot:fields,centralTags:[]},
  {noteGuid:"g",cardOrdinal:1,deckPath:"B",fieldSnapshot:fields,centralTags:[]},
-],"x"),/cloze_sibling_deck_mismatch/);
+],"x").notes[0].deckPath,"SnapOrtho");
+assert.equal(release.notes[0].deckPath,"SnapOrtho");

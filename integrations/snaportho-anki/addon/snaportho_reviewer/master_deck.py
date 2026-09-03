@@ -3,7 +3,7 @@
 States:
   A) Not linked → link device
   B) Linked, deck not in this profile → download starter .apkg
-  C) Linked, deck present (markers, SnapOrtho Master notetype, v2 cursor, or GUID probe) → v2 updates
+  C) Linked, deck present (markers or SnapOrtho Master notes) → v2 updates
   D) Typed errors with honest copy
 """
 from __future__ import annotations
@@ -12,17 +12,15 @@ import hashlib
 import json
 import os
 import tempfile
+import threading
 import time
 import urllib.request
 
 from .errors import describe, headline
 from .sync import (
-    GUID_PROBE_SAMPLE,
     chunk_list,
-    guid_probe_indicates_install,
     installed_card_inventory,
     installed_deck_presence,
-    local_guid_hits,
     merge_sync_plan_actions,
 )
 
@@ -263,8 +261,10 @@ class MasterDeckDialog:
         self.v2_release = None
         self.v2_summary = {}
         self._busy = False
+        self._check_cancelled = threading.Event()
 
         self.dialog = QDialog(parent)
+        self.dialog.finished.connect(lambda *_: self._check_cancelled.set())
         self.dialog.setWindowTitle("SnapOrtho Master Deck")
         self.dialog.resize(760, 620)
         self.dialog.setStyleSheet(HUB_STYLE)
@@ -503,6 +503,8 @@ class MasterDeckDialog:
 
     # ── refresh / load ────────────────────────────────────────────
     def refresh(self):
+        self._check_cancelled.set()
+        self._check_cancelled = threading.Event()
         env = self.runtime.settings.environment
         self.subtitle.setText(
             "Install once, then keep your cards current without changing your scheduling."
@@ -561,26 +563,10 @@ class MasterDeckDialog:
             self._load_v2_status(inventory)
             return
 
-        def probe_done(future):
-            try:
-                matched = future.result()
-            except Exception:
-                matched = False
-            if matched:
-                self._set_installed_layout(True)
-                self._load_v2_status(inventory)
-                return
-            self._load_bootstrap_release(inventory)
-
-        self._set_hero("<b>Checking whether this profile already has the Master Deck…</b>", "info")
-        self.runtime.background(self._probe_local_master_by_guid, probe_done)
-
-    def _probe_local_master_by_guid(self):
-        """True when published v2 note GUIDs already exist locally, even without v1 markers."""
-        self.runtime.api.deck_v2_status()
-        _, page = self.runtime.api.deck_v2_updates(0, GUID_PROBE_SAMPLE)
-        hits, seen = local_guid_hits(self.runtime.mw.col, page.get("operations") or [])
-        return guid_probe_indicates_install(hits, seen)
+        # Shared source GUIDs are not installation evidence. In particular a
+        # learner's Marty/AnKing notes must not silently enter the v2 writer.
+        self._set_installed_layout(False)
+        self._load_bootstrap_release(inventory)
 
     def _load_bootstrap_release(self, inventory):
         def release_done(future):
@@ -599,6 +585,9 @@ class MasterDeckDialog:
         self._set_step(active=STEP_UPDATE, done=(STEP_LINK, STEP_INSTALL))
         self._set_hero("<b>Checking the versioned SnapOrtho update service…</b>", "info")
         self._set_update_progress(0, "Checking immutable release and local cursor…", indeterminate=True)
+        cancelled = self._check_cancelled
+        self.v2_pages = []
+        self.details.setPlainText("Requesting release status. No updates applied yet.")
         subscription=self.runtime.store.deck_subscription()
         after=int((subscription or{}).get("cursor")or 0)
         pending=self.runtime.store.pending_deck_journal()
@@ -610,17 +599,21 @@ class MasterDeckDialog:
             minimum=release.get("minimumAddonVersion") or release.get("minimum_addon_version")
             if not addon_version_at_least(ADDON_VERSION, minimum):
                 raise ApiError("upgrade_required", 426, body={"minimumAddonVersion": minimum})
-            from .deck_sync_v2 import page_has_more
-            pages=[];cursor=after;page_limit=100
-            while True:
-                _,page=self.runtime.api.deck_v2_updates(cursor,page_limit);pages.append(page)
-                cursor=int(page["nextCursor"])
-                if not(page.get("operations")or[])or not page_has_more(page,page_limit):break
+            from .deck_sync_v2 import fetch_update_pages
+            def progress(batches, operations, cursor):
+                def display():
+                    if cancelled.is_set() or self.runtime.closed:return
+                    self._set_update_progress(0, f"Checked {batches} batches · {operations} changes…", indeterminate=True)
+                    self.details.setPlainText(f"Update check: {batches} batches, {operations} operations, cursor {cursor}. No updates applied yet.")
+                self.runtime.mw.taskman.run_on_main(display)
+            pages=fetch_update_pages(self.runtime.api, after, progress=progress, cancelled=lambda:cancelled.is_set() or self.runtime.closed)
             return release,pages
         def done(future):
+            if cancelled.is_set() or self.runtime.closed:return
             self._hide_download_progress()
             try:release,pages=future.result()
             except Exception as error:
+                self.details.setPlainText(f"Update check stopped. No updates applied.\n{describe(error)}\n{error}")
                 code=getattr(error,"code","")
                 if code in("not_found","no_release"):
                     self._set_hero(
@@ -809,9 +802,11 @@ class MasterDeckDialog:
             "Download the SnapOrtho Master .apkg, then use <b>File → Import</b> in Anki "
             "(or drag the file onto Anki). After import, return here and refresh — "
             "versioned tag updates apply in place and do not replace this starter package.<br><br>"
-            "If this profile already has the Master notes, choose <b>I've already imported it</b>. "
-            "SnapOrtho matches existing notes by their stable Anki GUID, even when the old "
-            "marker fields are empty.",
+            "<b>Already have Marty/AnKing or other legacy cards?</b> Those are not an installed Master Deck. "
+            "Back up this profile before importing, and review Anki's import summary for existing-note conflicts. "
+            "Do not delete legacy notes or reset scheduling. If notes are skipped because their note types differ, "
+            "stop and request migration help rather than forcing an overwrite. "
+            "Only Master notes or installation markers enable updates after refresh.",
             "info",
         )
         self._set_actions(

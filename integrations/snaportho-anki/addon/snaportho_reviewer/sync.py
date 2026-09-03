@@ -107,7 +107,7 @@ def installed_card_inventory(col):
     """v1 marker rows. Prefer Master-notetype notes so huge personal collections stay fast."""
     rows = []
     note_ids = _candidate_note_ids(col)
-    if note_ids:
+    if note_ids or callable(getattr(col, "find_notes", None)):
         for nid in note_ids:
             try:
                 note = col.get_note(nid)
@@ -150,16 +150,16 @@ def local_guid_hits(col, operations):
 
 
 def guid_probe_indicates_install(hits, seen):
-    if seen <= 0 or hits <= 0:
-        return False
-    return hits >= max(1, (seen + 4) // 5)
+    """Legacy compatibility helper: source GUID overlap never proves installation."""
+    return False
 
 
 def installed_deck_presence(col, store=None):
     """Whether this profile already has the Master deck and can take v2 updates.
 
-    Markers are sufficient but not required. A SnapOrtho Master notetype, a saved
-    v2 cursor, or GUID hits against the published delta all count as installed.
+    Require collection evidence: Master notes or complete installation markers.
+    A saved cursor can outlive a deleted deck; source GUIDs also exist in legacy
+    decks and must never be used as proof of installation.
     """
     inventory = installed_card_inventory(col)
     master_notes = len(find_master_note_ids(col))
@@ -171,13 +171,10 @@ def installed_deck_presence(col, store=None):
             subscription = store.deck_subscription()
         except Exception:
             subscription = None
-    cursor = int((subscription or {}).get("cursor") or 0)
     if inventory:
         reason = "markers"
     elif master_notes:
         reason = "note_type"
-    elif cursor > 0:
-        reason = "subscription"
     else:
         reason = "absent"
     return {

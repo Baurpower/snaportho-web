@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 import { createClient } from "@/utils/supabase/server";
 
-const ADDON_VERSION = "1.0.3";
+const ADDON_VERSION = "1.0.4";
 const ADDON_FILENAME = `snaportho-${ADDON_VERSION}.ankiaddon`;
 
 export async function GET(request: Request) {

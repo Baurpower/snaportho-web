@@ -25,7 +25,7 @@ import {
   validateBootstrapCards,
   type BootstrapCardInput,
 } from "../../../../src/lib/education/anki-bootstrap-notetype.ts";
-import { toProductDeckPath } from "../../../../src/lib/education/anki-deck-path.ts";
+import { PRODUCT_PARENT_DECK } from "../../../../src/lib/education/anki-deck-path.ts";
 import { stripHtmlToText } from "../anki-import/hash.ts";
 
 export type BootstrapMediaInput = {
@@ -297,7 +297,7 @@ function writeCollectionSqlite(
   mod: number,
 ): Map<string, number> {
   // Product-facing parent deck root (Marty McFlyin… → SnapOrtho)
-  const productPaths = included.map((c) => toProductDeckPath(c.deckPath));
+  const productPaths = included.map(() => PRODUCT_PARENT_DECK);
   const { decksJson, deckIdByPath } = buildDeckMap(productPaths, mod);
   const db = new DatabaseSync(path);
   try {
@@ -360,7 +360,7 @@ function writeCollectionSqlite(
         sfld,
         ankiFieldChecksum(sfld),
       );
-      const productPath = toProductDeckPath(card.deckPath);
+      const productPath = PRODUCT_PARENT_DECK;
       const did = deckIdByPath.get(productPath);
       if (!did) throw new Error(`missing_deck_id:${productPath}`);
       insertCard.run(cardId, noteId, did, card.cardOrdinal, mod, newDue);

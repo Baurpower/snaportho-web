@@ -47,7 +47,7 @@ export default async function AnkiDownloadPage() {
               className="mt-8 inline-flex min-h-14 items-center justify-center gap-2 rounded-full bg-[#a3cfff] px-7 py-4 text-base font-black text-[#11162f] transition hover:bg-white focus:outline-none focus:ring-4 focus:ring-white/30"
             >
               <Download className="h-5 w-5" />
-              Download Version 1.0.3
+              Download Version 1.0.4
             </a>
             <p className="mt-4 text-xs text-white/48">SnapOrtho Beta for Anki Desktop</p>
           </div>
