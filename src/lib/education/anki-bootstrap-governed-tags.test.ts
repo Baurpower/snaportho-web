@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-// @ts-expect-error -- direct Node strip-types test requires an explicit TS extension.
 import { overlayPublishedGovernedTags } from "./anki-bootstrap-governed-tags.ts";
 
 const cards = [

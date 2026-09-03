@@ -3,7 +3,6 @@ import {
   enumerateAllDayDates,
   normalizeCalendarPersonName,
   validateCalendarEvent,
-  // @ts-expect-error Node strip-types resolves the explicit TypeScript extension.
 } from "./program-calendar-source.ts";
 
 assert.equal(normalizeCalendarPersonName("  McNair  "), "mcnair");

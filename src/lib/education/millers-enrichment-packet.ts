@@ -144,8 +144,9 @@ export function fieldsFromSnapshot(snapshot: unknown): Record<string, string> {
   if (Array.isArray(snapshot)) {
     for (const f of snapshot) {
       if (f && typeof f === "object" && "name" in f) {
-        const name = String((f as any).name);
-        const value = (f as any).rawValue ?? (f as any).value ?? "";
+        const field = f as Record<string, unknown>;
+        const name = String(field.name);
+        const value = field.rawValue ?? field.value ?? "";
         out[name] = typeof value === "string" ? value : String(value);
       }
     }

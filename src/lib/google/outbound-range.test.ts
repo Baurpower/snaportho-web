@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-// @ts-expect-error Node strip-types resolves the explicit TypeScript extension.
 import { findStaleOutboundRows } from "./outbound-range.ts";
 
 const rows = [

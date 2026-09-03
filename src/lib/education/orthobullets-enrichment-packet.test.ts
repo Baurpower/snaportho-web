@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-// @ts-expect-error Direct Node strip-types runner imports TypeScript source.
 import {
   ORTHOBULLETS_ENRICHMENT_CONTRACT,
   ORTHOBULLETS_ENRICHMENT_RUN_KEY,

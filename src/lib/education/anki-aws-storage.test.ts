@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-// @ts-expect-error Node's strip-types test runner requires the source extension.
 import { AnkiAwsDeliveryError, awsObjectUrl, describeAnkiAwsDeliveryError, loadAnkiAwsStorageConfig, normalizeCloudFrontPrivateKey, signAnkiAwsDownload } from "./anki-aws-storage.ts";
 
 const privateKey = `-----BEGIN PRIVATE KEY-----

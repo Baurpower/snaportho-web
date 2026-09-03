@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-// @ts-expect-error Direct Node strip-types runner imports TypeScript source.
 import {
   GROK_TAG_REVIEW_RUN_KEY,
   PORTABLE_TAG_REVIEW_PACKET_VERSION,

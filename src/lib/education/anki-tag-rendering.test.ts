@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-// @ts-expect-error Direct Node strip-types runner imports TypeScript source.
 import { applyLegacyDispositions, buildGovernedTag, buildTagReleaseManifest, diffCardTags, exportableParentClosure, normalizeLegacyTag, reconcileManagedTags, renderCardTagManifest, validateGovernedTag, type LegacyDispositionRule, type TagExportPolicy, type TaxonomyTagNode } from "./anki-tag-rendering.ts";
 
 const taxonomy: TaxonomyTagNode[] = [

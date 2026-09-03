@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-// @ts-expect-error Direct Node strip-types runner imports TypeScript source.
 import { MasterDeckMetadataPipeline, MemoryCheckpointStore, LexicalTaxonomyRetriever, buildTaxonomyCandidatePacket, metadataChecksum, resolveProposal, type CardPacket, type MetadataFacet, type TaxonomyCandidate, type TaxonomyTerm } from "./master-deck-metadata-pipeline.ts";
 
 const terms = new Map<string, TaxonomyTerm>([

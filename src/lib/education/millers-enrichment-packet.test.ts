@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-// @ts-expect-error Direct Node strip-types runner imports TypeScript source.
 import {
   MILLERS_ENRICHMENT_CONTRACT,
   MILLERS_ENRICHMENT_RUN_KEY,
@@ -79,8 +78,8 @@ assert.equal(overlays[0].stableGuid, "g1");
 assert.ok(overlays[0].millers.includes("p. 42"));
 
 // --- seal determinism (excludes generated output) --------------------------
-const s1 = sealEnrichmentPacket({ ...packet, inputChecksum: undefined as any });
-const s2 = sealEnrichmentPacket({ ...packet, inputChecksum: undefined as any, cards: packet.cards.map((c) => ({ ...c, summary: "different prose entirely here now" })) });
+const s1 = sealEnrichmentPacket(packet);
+const s2 = sealEnrichmentPacket({ ...packet, cards: packet.cards.map((c) => ({ ...c, summary: "different prose entirely here now" })) });
 assert.equal(s1.inputChecksum, s2.inputChecksum, "checksum must ignore generated summary");
 
 // --- sidecar apply ---------------------------------------------------------

@@ -4,7 +4,6 @@ import { join } from 'node:path';
 
 process.env.NEXT_PUBLIC_SITE_URL = 'https://snap-ortho.com';
 
-// @ts-expect-error Node's type-stripping runner requires the runtime extension.
 import { getCheckoutSuccessUrl } from './app-url.ts';
 
 const root = process.cwd();

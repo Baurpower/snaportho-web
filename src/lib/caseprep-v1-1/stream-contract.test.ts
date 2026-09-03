@@ -3,9 +3,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 // Node's type-stripping runner requires the extension; the app tsconfig intentionally disallows it.
-// @ts-expect-error Node type stripping requires the runtime extension.
 import { createSseParseState, parseSseChunk, encodeSseEvent } from "./sse.ts";
-// @ts-expect-error Node type stripping requires the runtime extension.
 import { createInitialPacketState, reducePacketEvent } from "./stream-schema.ts";
 
 type PacketState = ReturnType<typeof createInitialPacketState>;
