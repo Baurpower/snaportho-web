@@ -217,6 +217,27 @@ export function bulletsToHtml(bullets: string[]): string {
   return `<ul>${items}</ul>`;
 }
 
+/**
+ * Detects the "just repeats the question" failure mode: a bullet that echoes the
+ * card's front (usually as a question) and then tacks on the answer, e.g.
+ * "What is Hilgenreiner's line? Horizontal line through the triradiate cartilage."
+ * These add no teaching value over the card itself. We compare the clause before
+ * the first "?" against the card front; a near-containment match in either
+ * direction flags the bullet.
+ */
+export function restatesCardQuestion(bullet: string, front: string): boolean {
+  const frontNorm = normalizeComparable(front);
+  if (frontNorm.length < 15) return false;
+  const questionIdx = bullet.indexOf("?");
+  // The stem before the first "?" is the restated question when present;
+  // otherwise compare the whole bullet (covers question-shaped fronts re-asked
+  // without the literal "?").
+  const stem = questionIdx >= 0 ? bullet.slice(0, questionIdx) : bullet;
+  const stemNorm = normalizeComparable(stem);
+  if (stemNorm.length < 15) return false;
+  return frontNorm.includes(stemNorm) || stemNorm.includes(frontNorm);
+}
+
 export function validateBullets(
   bullets: string[],
   card: { front: string; extra: string },
@@ -246,6 +267,9 @@ export function validateBullets(
     seen.add(normalized);
     if (normalized.length >= 24 && cardText.includes(normalized)) {
       errors.push(`bullet_copied_from_card:${index}`);
+    }
+    if (restatesCardQuestion(bullet, card.front)) {
+      errors.push(`bullet_restates_question:${index}`);
     }
   }
   return errors;

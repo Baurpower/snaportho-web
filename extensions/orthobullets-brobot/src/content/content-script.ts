@@ -138,11 +138,13 @@ function ensureInPageLauncher() {
   const style = document.createElement('style');
   style.textContent = `
     :host, #brobot-shell { all: initial; }
-    #brobot-shell { position: fixed; right: 16px; bottom: 16px; z-index: 2147483000; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    #brobot-launcher { width: 52px; height: 52px; border-radius: 999px; border: 1px solid rgba(15, 118, 110, 0.3); background: #0f766e; color: white; box-shadow: 0 14px 34px rgba(15, 23, 42, 0.24); display: grid; place-items: center; cursor: pointer; padding: 0; }
+    #brobot-shell, #brobot-shell * { box-sizing: border-box; }
+    #brobot-shell { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-height: calc(100vh - 80px); max-height: calc(100dvh - 80px); position: fixed; right: 16px; bottom: 64px; z-index: 2147483000; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #brobot-launcher { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 999px; border: 1px solid rgba(15, 118, 110, 0.3); background: #0f766e; color: white; box-shadow: 0 14px 34px rgba(15, 23, 42, 0.24); display: grid; place-items: center; cursor: pointer; padding: 0; }
     #brobot-launcher img { width: 30px; height: 30px; display: block; }
-    #brobot-answer-check { display:none; position:absolute; right:0; bottom:64px; width:300px; padding:10px; border:1px solid rgba(15,23,42,.16); border-radius:14px; background:#fff; box-shadow:0 14px 34px rgba(15,23,42,.2); }
+    #brobot-answer-check { display:none; flex: 0 0 auto; width: min(320px, calc(100vw - 32px)); max-height: 30vh; overflow-y: auto; overscroll-behavior: contain; padding:10px; border:1px solid rgba(15,23,42,.16); border-radius:14px; background:#fff; box-shadow:0 14px 34px rgba(15,23,42,.2); }
     #brobot-answer-check[data-visible="true"] { display:grid; gap:8px; }
+    #brobot-shell[data-open="true"] #brobot-answer-check { width: 100%; }
     #brobot-check-answer { border:0; border-radius:11px; padding:10px 12px; background:#0f766e; color:#fff; font:700 13px/1.2 system-ui; cursor:pointer; }
     #brobot-check-answer:disabled { background:#94a3b8; cursor:default; }
     #brobot-answer-result { display:grid; gap:4px; padding:10px; border-radius:10px; background:#fff7ed; color:#9a3412; font:500 12px/1.4 system-ui; }
@@ -151,25 +153,26 @@ function ensureInPageLauncher() {
     #brobot-answer-result[data-correct="true"] { background:#ecfdf5; color:#065f46; }
     #brobot-answer-result strong { font-size:14px; }
     #brobot-answer-result span { overflow-wrap:anywhere; }
-    #brobot-panel { display: none; width: min(420px, calc(100vw - 32px)); height: min(720px, calc(100vh - 92px)); background: #fbfaf6; border: 1px solid rgba(15, 23, 42, 0.16); border-radius: 16px; overflow: hidden; box-shadow: 0 22px 60px rgba(15, 23, 42, 0.26); }
+    #brobot-panel { position: relative; flex: 0 1 720px; min-height: 0; display: none; width: min(420px, calc(100vw - 32px)); background: #fbfaf6; border: 1px solid rgba(15, 23, 42, 0.16); border-radius: 16px; overflow: hidden; box-shadow: 0 22px 60px rgba(15, 23, 42, 0.26); }
     #brobot-panel[data-open="true"] { display: block; }
     #brobot-panel iframe { width: 100%; height: 100%; border: 0; background: #fbfaf6; display: block; }
     #brobot-close { position: absolute; top: 8px; right: 8px; z-index: 2; width: 30px; height: 30px; border-radius: 999px; border: 1px solid rgba(15, 23, 42, 0.14); background: white; color: #18202b; font: 700 18px/1 system-ui; cursor: pointer; }
     @media (max-width: 520px) {
-      #brobot-shell { right: 12px; bottom: 12px; }
-      #brobot-panel { width: calc(100vw - 24px); height: min(680px, calc(100vh - 84px)); }
+      #brobot-shell { right: 12px; }
+      #brobot-answer-check { max-width: calc(100vw - 24px); }
+      #brobot-panel { width: calc(100vw - 24px); }
     }
   `;
 
   const shell = document.createElement('div');
   shell.id = 'brobot-shell';
   shell.innerHTML = `
-    <div id="brobot-answer-check" data-visible="false" aria-live="polite"></div>
     <div id="brobot-panel" aria-label="BroBot panel">
       <button id="brobot-close" type="button" aria-label="Close BroBot">×</button>
       <iframe title="BroBot" src="${chrome.runtime.getURL('sidepanel.html')}?embedded=1&amp;hostUrl=${encodeURIComponent(window.location.href)}"></iframe>
     </div>
-    <button id="brobot-launcher" type="button" aria-label="Open BroBot">
+    <div id="brobot-answer-check" data-visible="false" aria-live="polite"></div>
+    <button id="brobot-launcher" type="button" aria-label="Open BroBot" aria-controls="brobot-panel" aria-expanded="false">
       <img alt="" src="${chrome.runtime.getURL('icons/brobot-32.png')}" />
     </button>
   `;
@@ -178,10 +181,14 @@ function ensureInPageLauncher() {
   const panel = root.querySelector('#brobot-panel') as HTMLElement | null;
   const launcher = root.querySelector('#brobot-launcher') as HTMLButtonElement | null;
   const close = root.querySelector('#brobot-close') as HTMLButtonElement | null;
-  launcher?.addEventListener('click', () => {
-    panel?.setAttribute('data-open', panel.getAttribute('data-open') === 'true' ? 'false' : 'true');
-  });
-  close?.addEventListener('click', () => panel?.setAttribute('data-open', 'false'));
+  const setPanelOpen = (open: boolean) => {
+    shell.setAttribute('data-open', String(open));
+    panel?.setAttribute('data-open', String(open));
+    launcher?.setAttribute('aria-expanded', String(open));
+    launcher?.setAttribute('aria-label', open ? 'Close BroBot' : 'Open BroBot');
+  };
+  launcher?.addEventListener('click', () => setPanelOpen(panel?.getAttribute('data-open') !== 'true'));
+  close?.addEventListener('click', () => setPanelOpen(false));
   renderHimalayaAnswerCheck(root);
 }
 

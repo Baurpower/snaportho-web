@@ -12,6 +12,11 @@ export type ReviewBoardRow = {
   questionNumber: number | null;
   isCorrect: boolean | null;
   stemPreview: string;
+  stem?: string;
+  sourceExplanation?: string | null;
+  sourceKeyPoints?: string | null;
+  sourceReferences?: string | null;
+  selectedAnswerKey?: string | null;
   selectedAnswer: string | null;
   correctAnswer: string | null;
   hasExplanation: boolean;
@@ -45,7 +50,8 @@ export function himalayaDebriefText(
   rowStates: Map<number, ReviewBoardRowState>,
   assessmentTitle: string | null
 ) {
-  const ready = rows.flatMap((row) => {
+  const missed = rows.filter((row) => row.isCorrect === false);
+  const ready = missed.flatMap((row) => {
     const explanation = rowStates.get(row.questionAttemptId)?.explanation;
     return explanation ? [{ row, explanation }] : [];
   });
@@ -55,19 +61,29 @@ export function himalayaDebriefText(
     '',
     `${summarizeBoard(rows).correctCount}/${rows.length} correct; ${summarizeBoard(rows).missedCount} missed.`,
     '',
-    '## Pattern diagnosis',
+    '## Concepts to review',
     ...(concepts.length ? concepts.map((concept) => `- ${concept}`) : ['- No completed explanations yet.']),
     '',
     '## Miss analysis',
-    ...ready.flatMap(({ row, explanation }) => [
-      `### Q${row.questionNumber ?? '?'} · ${explanation.testedConcept}`,
-      `- You answered: ${row.selectedAnswer ?? 'unknown'}`,
-      `- Correct answer: ${row.correctAnswer ?? 'unknown'}`,
-      `- Bottom line: ${explanation.bottomLine}`,
-      `- Main trap: ${explanation.boardTrap ?? explanation.whyWrong[0]?.reason ?? 'Not identified'}`,
-      `- Remember: ${explanation.boardPearl}`,
-      '',
-    ]),
+    ...missed.flatMap((row) => {
+      const explanation = rowStates.get(row.questionAttemptId)?.explanation;
+      return [
+        `### Q${row.questionNumber ?? '?'} · ${explanation?.testedConcept ?? row.topicLabel}`,
+        row.stem ?? row.stemPreview,
+        `- You answered: ${row.selectedAnswer ?? 'Not available'}`,
+        `- Correct answer: ${row.correctAnswer ?? 'Not available'}`,
+        ...(row.sourceExplanation ? [`- AAOS discussion: ${row.sourceExplanation}`] : []),
+        ...(row.sourceKeyPoints ? [`- AAOS key points: ${row.sourceKeyPoints}`] : []),
+        ...(explanation ? [
+          `- Key takeaway: ${explanation.bottomLine}`,
+          `- Why: ${explanation.whyCorrect}`,
+          `- Main trap: ${explanation.boardTrap ?? explanation.whyWrong[0]?.reason ?? 'Not identified'}`,
+          `- Remember: ${explanation.boardPearl}`,
+        ] : ['- BroBot summary not generated yet.']),
+        ...(row.sourceReferences ? [`- References: ${row.sourceReferences}`] : []),
+        '',
+      ];
+    }),
     '## Active recall',
     ...ready.map(({ explanation }) => `- Explain ${explanation.testedConcept}, including the decisive clue and main trap.`),
     '',
@@ -135,11 +151,17 @@ function renderRow(input: {
 
   const body = rowState.expanded
     ? `<div style="padding:0 12px 12px;display:grid;gap:10px;border-top:1px solid ${borderColor};padding-top:10px;">
-        <p style="margin:0;font-size:13px;line-height:1.55;color:#18202b;">${escapeHtml(row.stemPreview)}${row.stemPreview.length >= 180 ? '…' : ''}</p>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:#18202b;">${escapeHtml(row.stem ?? row.stemPreview)}</p>
         <div style="display:grid;gap:4px;">
-          ${answerLine('You answered:', row.selectedAnswer, 'miss', escapeHtml)}
-          ${answerLine('Correct answer:', row.correctAnswer, 'correct', escapeHtml)}
+          ${answerLine('You answered:', row.selectedAnswer ?? 'Not available', missed ? 'miss' : 'correct', escapeHtml)}
+          ${answerLine('Correct answer:', row.correctAnswer ?? 'Not available', 'correct', escapeHtml)}
         </div>
+        ${row.sourceExplanation || row.sourceKeyPoints ? `<section style="display:grid;gap:8px;padding:12px;border-radius:12px;background:#f0fdfa;border:1px solid #99f6e4;">
+          <strong style="font-size:12px;color:#0f766e;">AAOS discussion</strong>
+          ${row.sourceExplanation ? `<p style="margin:0;white-space:pre-line;font-size:13px;line-height:1.6;color:#18202b;">${escapeHtml(row.sourceExplanation)}</p>` : ''}
+          ${row.sourceKeyPoints ? `<div><strong style="font-size:12px;color:#0f766e;">Key points</strong><p style="margin:4px 0 0;white-space:pre-line;font-size:13px;line-height:1.6;">${escapeHtml(row.sourceKeyPoints)}</p></div>` : ''}
+        </section>` : `<p style="margin:0;font-size:12px;color:#64748b;">AAOS discussion is not available for this question.</p>`}
+        ${row.sourceReferences ? `<details><summary style="font-size:12px;cursor:pointer;">AAOS references</summary><p style="white-space:pre-line;font-size:12px;line-height:1.5;">${escapeHtml(row.sourceReferences)}</p></details>` : ''}
         ${
           rowState.loading
             ? `<p style="margin:0;font-size:12px;color:#0f766e;font-weight:600;">BroBot is working through this one…</p>`
@@ -151,10 +173,13 @@ function renderRow(input: {
             : ''
         }
         ${rowState.explanation ? `<div style="display:grid;gap:9px;padding:12px;border-radius:12px;background:#f8fafc;border:1px solid #e2e8f0;">
-          <div><p style="margin:0 0 3px;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:#0f766e;font-weight:800;">Bottom line</p><p style="margin:0;font-size:13px;line-height:1.5;color:#18202b;font-weight:700;">${escapeHtml(rowState.explanation.bottomLine)}</p></div>
+          <div><p style="margin:0 0 3px;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:#0f766e;font-weight:800;">BroBot key takeaway</p><p style="margin:0;font-size:13px;line-height:1.5;color:#18202b;font-weight:700;">${escapeHtml(rowState.explanation.bottomLine)}</p></div>
           <div><p style="margin:0 0 3px;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:#0f766e;font-weight:800;">Why</p><p style="margin:0;font-size:12px;line-height:1.5;color:#384152;">${escapeHtml(rowState.explanation.whyCorrect)}</p></div>
+          ${rowState.explanation.whyWrong.filter((choice) => choice.choiceKey === row.selectedAnswerKey).map((choice) => `<div><strong style="font-size:12px;color:#b91c1c;">Why your answer was wrong</strong><p style="margin:4px 0 0;font-size:13px;line-height:1.5;">${escapeHtml(choice.reason)}</p></div>`).join('')}
           ${rowState.explanation.boardTrap ? `<div><p style="margin:0 0 3px;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:#b45309;font-weight:800;">Trap</p><p style="margin:0;font-size:12px;line-height:1.5;color:#384152;">${escapeHtml(rowState.explanation.boardTrap)}</p></div>` : ''}
           <div><p style="margin:0 0 3px;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:#0f766e;font-weight:800;">Remember</p><p style="margin:0;font-size:12px;line-height:1.5;color:#384152;">${escapeHtml(rowState.explanation.boardPearl)}</p></div>
+          ${rowState.explanation.studyNext.length ? `<div><strong style="font-size:12px;color:#0f766e;">Review next</strong><ul style="margin:4px 0 0;padding-left:18px;font-size:12px;line-height:1.5;">${rowState.explanation.studyNext.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul></div>` : ''}
+          <details><summary style="font-size:12px;cursor:pointer;font-weight:700;">Check your recall</summary><p style="font-size:12px;line-height:1.5;">Without looking above, explain ${escapeHtml(rowState.explanation.testedConcept)} and what distinguishes the correct answer from your choice.</p></details>
         </div>` : ''}
         ${
           !rowState.explanation && !rowState.loading
@@ -194,8 +219,8 @@ export function appendHimalayaReviewBoard(
   const summary = summarizeBoard(rows);
   const missedRows = rows.filter((row) => row.isCorrect === false);
   const correctRows = rows.filter((row) => row.isCorrect === true);
-  const completedExplanations = rows.filter((row) => rowStates.get(row.questionAttemptId)?.explanation).length;
-  const concepts = [...new Set(rows.flatMap((row) => {
+  const completedExplanations = missedRows.filter((row) => rowStates.get(row.questionAttemptId)?.explanation).length;
+  const concepts = [...new Set(missedRows.flatMap((row) => {
     const explanation = rowStates.get(row.questionAttemptId)?.explanation;
     return explanation ? [explanation.testedConcept] : [];
   }))];
@@ -226,9 +251,9 @@ export function appendHimalayaReviewBoard(
     ${
       summary.missedCount
         ? `<div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <button id="rb-explain-misses" ${input.explainAllInFlight ? 'disabled' : ''}
+            <button id="rb-explain-misses" ${input.explainAllInFlight || completedExplanations >= summary.missedCount ? 'disabled' : ''}
               style="width:100%;border:none;border-radius:12px;background:${input.explainAllInFlight ? '#99a8a6' : 'white'};color:#0f766e;padding:11px 14px;font-weight:800;font-size:13px;cursor:${input.explainAllInFlight ? 'default' : 'pointer'};">
-              ${input.explainAllInFlight ? 'Summarizing your misses…' : completedExplanations >= summary.missedCount ? 'Refresh summaries' : 'Summarize missed questions'}
+              ${input.explainAllInFlight ? 'Summarizing your misses…' : completedExplanations >= summary.missedCount ? 'Summaries complete' : 'Explain what I need to know'}
             </button>
           </div>`
         : `<p style="margin:0;font-size:13px;color:#d1fae5;font-weight:700;">Clean sweep — nothing missed on this attempt.</p>`
@@ -237,13 +262,13 @@ export function appendHimalayaReviewBoard(
   content.appendChild(header);
   header.querySelector('#rb-explain-misses')?.addEventListener('click', () => hooks.onExplainAllMisses());
 
-  if (completedExplanations || input.explainAllInFlight) {
+  if (missedRows.length) {
     const debriefSummary = createElement(`<section style="padding:14px;border-radius:14px;background:#fff7ed;border:1px solid #fed7aa;display:grid;gap:10px;">
       <div>
         <p style="margin:0;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9a3412;font-weight:800;">Full debrief</p>
         <p style="margin:4px 0 0;font-size:12px;color:#5c6574;">${completedExplanations} of ${summary.missedCount} misses analyzed · saved locally</p>
       </div>
-      ${concepts.length ? `<div><p style="margin:0 0 4px;font-weight:800;font-size:13px;">Pattern diagnosis</p>${concepts.map((concept) => `<p style="margin:2px 0;font-size:12px;color:#384152;">• ${escapeHtml(concept)}</p>`).join('')}</div>` : ''}
+      ${concepts.length ? `<div><p style="margin:0 0 4px;font-weight:800;font-size:13px;">Concepts to review</p>${concepts.map((concept) => `<p style="margin:2px 0;font-size:12px;color:#384152;">• ${escapeHtml(concept)}</p>`).join('')}</div>` : ''}
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button id="rb-copy-debrief" style="border:1px solid #c2410c;border-radius:999px;background:white;color:#9a3412;padding:7px 11px;font-weight:700;font-size:12px;cursor:pointer;">Copy debrief</button>
         <button id="rb-clear-debrief" style="border:none;background:transparent;color:#64748b;padding:7px;font-weight:700;font-size:12px;cursor:pointer;">Clear saved debrief</button>
@@ -255,12 +280,12 @@ export function appendHimalayaReviewBoard(
   }
 
   const defaultRowState: ReviewBoardRowState = { expanded: false, loading: false, explanation: null, error: null };
-  const list = createElement(`<section style="display:grid;gap:8px;"><div style="display:flex;align-items:end;justify-content:space-between;gap:12px;"><div><p style="margin:0;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#0f766e;font-weight:800;">Missed concepts</p><h2 style="margin:3px 0 0;font-size:17px;color:#18202b;">What to tighten up</h2></div><span style="font-size:12px;color:#64748b;">Tap to expand</span></div><ul style="margin:0;padding:0;display:grid;gap:8px;">
+  const list = createElement(`<section style="display:grid;gap:8px;"><div style="display:flex;align-items:end;justify-content:space-between;gap:12px;"><div><p style="margin:0;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#0f766e;font-weight:800;">Missed concepts</p><h2 style="margin:3px 0 0;font-size:17px;color:#18202b;">Everything you missed</h2></div><span style="font-size:12px;color:#64748b;">Tap a heading to collapse</span></div><ul style="margin:0;padding:0;display:grid;gap:8px;">
     ${missedRows
       .map((row) =>
         renderRow({
           row,
-          rowState: rowStates.get(row.questionAttemptId) ?? defaultRowState,
+          rowState: rowStates.get(row.questionAttemptId) ?? { ...defaultRowState, expanded: true },
           escapeHtml,
           renderExplanation: renderers.renderExplanation,
         })

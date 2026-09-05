@@ -1047,7 +1047,7 @@ export function mountSidePanelApp(root: HTMLElement) {
   function getReviewBoardRowState(questionAttemptId: number): ReviewBoardRowState {
     return (
       state.reviewBoardRowStates.get(questionAttemptId) ?? {
-        expanded: false,
+        expanded: getReviewBoardRows(state.pageContext).some((row) => row.questionAttemptId === questionAttemptId && row.isCorrect === false),
         loading: false,
         explanation: null,
         error: null,
@@ -1077,9 +1077,11 @@ export function mountSidePanelApp(root: HTMLElement) {
     if (state.reviewBoardLoadedFor === key) return;
     state.reviewBoardLoadedFor = key;
     const stored = await chrome.storage.local.get(key);
+    if (state.reviewBoardLoadedFor !== key) return;
     const rows = stored[key] as Record<string, ReviewBoardRowState> | undefined;
+    const missedIds = new Set(summarizeBoard(getReviewBoardRows(pageContext)).missedIds);
     state.reviewBoardRowStates = new Map(
-      Object.entries(rows ?? {}).map(([questionAttemptId, rowState]) => [Number(questionAttemptId), rowState]),
+      Object.entries(rows ?? {}).map(([questionAttemptId, rowState]) => [Number(questionAttemptId), { ...rowState, expanded: missedIds.has(Number(questionAttemptId)), loading: false }]),
     );
   }
 
@@ -1095,7 +1097,7 @@ export function mountSidePanelApp(root: HTMLElement) {
   async function clearHimalayaDebrief() {
     if (!state.pageContext) return;
     await chrome.storage.local.remove(himalayaDebriefStorageKey(state.pageContext));
-    state.reviewBoardRowStates.clear();
+    state.reviewBoardRowStates = new Map();
     render();
   }
 
@@ -1107,6 +1109,8 @@ export function mountSidePanelApp(root: HTMLElement) {
     const existing = getReviewBoardRowState(questionAttemptId);
     if (existing.loading || existing.explanation) return null;
     if (!state.activePage?.tabId) return 'unsupported_page' as ExtensionErrorCode;
+    const rowStates = state.reviewBoardRowStates;
+    const isCurrentBoard = () => state.reviewBoardRowStates === rowStates;
 
     setReviewBoardRowState(questionAttemptId, {
       expanded: expand ? true : existing.expanded,
@@ -1121,6 +1125,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       questionAttemptId,
     });
 
+    if (!isCurrentBoard()) return 'unsupported_page' as ExtensionErrorCode;
     if (!extractResult.ok || !('pageContext' in extractResult)) {
       setReviewBoardRowState(questionAttemptId, {
         loading: false,
@@ -1137,6 +1142,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       pageContext: extractResult.pageContext,
     });
 
+    if (!isCurrentBoard()) return 'unsupported_page' as ExtensionErrorCode;
     if (!explainResult.ok || !('explanation' in explainResult)) {
       setReviewBoardRowState(questionAttemptId, {
         loading: false,
@@ -1177,13 +1183,15 @@ export function mountSidePanelApp(root: HTMLElement) {
     const summary = summarizeBoard(getReviewBoardRows(state.pageContext));
     if (!summary.missedIds.length) return;
 
+    const rowStates = state.reviewBoardRowStates;
     state.reviewBoardExplainAllInFlight = true;
     for (const questionAttemptId of summary.missedIds) {
-      setReviewBoardRowState(questionAttemptId, { expanded: getReviewBoardRowState(questionAttemptId).expanded });
+      setReviewBoardRowState(questionAttemptId, { expanded: true });
     }
     render();
 
     for (const questionAttemptId of summary.missedIds) {
+      if (state.reviewBoardRowStates !== rowStates) break;
       const errorCode = await explainReviewBoardRow(questionAttemptId, false);
       // Stop early rather than burning quota once the account is capped out.
       if (errorCode === 'quota_exceeded') break;

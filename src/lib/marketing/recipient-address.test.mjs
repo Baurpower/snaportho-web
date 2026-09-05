@@ -17,3 +17,6 @@ assert.equal(resolveCampaignAddress({...input,deliveries:[primary,{...primary,id
 assert.equal(resolveCampaignAddress({...input,deliveries:[{...primary,metadata:{}}]}).email,'profile@example.com','Legacy auth-first bounces cannot be reclassified as failed profile sends');
 assert.equal(resolveCampaignAddress({...input,deliveries:[{...primary,bounced_at:null,send_status:'delivery_failed'}]}).email,'auth@example.com');
 console.log('Profile-first selection, confirmed-auth fallback, duplicate and ambiguous delivery tests passed.');
+
+assert.equal(resolveCampaignAddress({...input,profileEmail:'relay@privaterelay.appleid.com',authEmail:'relay@privaterelay.appleid.com'}),null,'Known dead relays with no alternate address are excluded');
+assert.equal(resolveCampaignAddress({...input,profileEmail:'relay@privaterelay.appleid.com'}).email,'auth@example.com','Known dead relay uses a distinct confirmed auth address');

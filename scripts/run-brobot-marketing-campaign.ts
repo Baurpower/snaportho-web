@@ -27,7 +27,7 @@ function args(argv: string[]) {
   const campaignValue = argv.find((x) => x.startsWith('--campaign='))?.split('=')[1];
   if (!CAMPAIGN_STEPS.includes(campaignValue as CampaignStep)) throw new Error(`Use --campaign=${CAMPAIGN_STEPS.join('|')}`);
   const limit = Number(argv.find((x) => x.startsWith('--limit='))?.split('=')[1] ?? '100');
-  return { campaign: campaignValue as CampaignStep, limit: Number.isFinite(limit) ? Math.max(1, Math.min(limit, 500)) : 100, preview: argv.includes('--preview'), send: argv.includes('--send'), confirm: argv.find((x) => x.startsWith('--confirm='))?.split('=')[1] };
+  return { campaign: campaignValue as CampaignStep, limit: Number.isFinite(limit) ? Math.max(1, Math.min(limit, 500)) : 100, preview: argv.includes('--preview'), send: argv.includes('--send'), confirm: argv.find((x) => x.startsWith('--confirm='))?.split('=')[1], fallbackOnly: argv.includes('--fallback-only') };
 }
 
 async function allRows(client: ReturnType<typeof createClient>, table: string, columns: string) {
@@ -98,8 +98,9 @@ async function main() {
     if (address?.fallbackFromDeliveryId) priorSteps.delete(options.campaign);
     const name = typeof profile?.full_name === 'string' ? profile.full_name.trim().split(/\s+/)[0] : null;
     return { userId: user.id, email: address?.email ?? '', confirmed: Boolean(user.email_confirmed_at), receiveEmails: profile?.receive_emails === true && !profile?.marketing_unsubscribed_at, firstName: name || null, profileComplete: profile?.is_profile_complete === true, currentlyEntitled: entitled.has(user.id), firstUseAt: activity[0] ?? null, lastUseAt: activity.at(-1) ?? null, priorSteps, priorStepAt, optedOutTopics: suppressed.get(user.id) ?? new Set() };
-  }).filter((profile) => profile.email && isEligibleForCampaign(profile, options.campaign));
-  console.log(JSON.stringify({ campaign: options.campaign, eligible: candidates.length, selected: Math.min(options.limit, candidates.length), mode: options.send ? 'send' : options.preview ? 'preview' : 'dry-run' }, null, 2));
+  }).filter((profile) => profile.email && isEligibleForCampaign(profile, options.campaign))
+    .filter((profile) => !options.fallbackOnly || Boolean(addresses.get(profile.userId)?.fallbackFromDeliveryId));
+  console.log(JSON.stringify({ campaign: options.campaign, eligible: candidates.length, selected: Math.min(options.limit, candidates.length), mode: options.send ? 'send' : options.preview ? 'preview' : 'dry-run', addressMode: options.fallbackOnly ? 'failed-profile-auth-fallback-only' : 'all-eligible' }, null, 2));
   if (!options.send) return;
   let sent = 0, duplicate = 0, skipped = 0, failed = 0;
   for (const [index, candidate] of candidates.slice(0, options.limit).entries()) {

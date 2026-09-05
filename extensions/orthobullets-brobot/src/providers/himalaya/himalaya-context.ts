@@ -15,6 +15,11 @@ export type HimalayaReviewBoardEntry = {
   questionNumber: number | null;
   isCorrect: boolean | null;
   stemPreview: string;
+  stem: string;
+  sourceExplanation: string | null;
+  sourceKeyPoints: string | null;
+  sourceReferences: string | null;
+  selectedAnswerKey: string | null;
   selectedAnswer: string | null;
   correctAnswer: string | null;
   hasExplanation: boolean;
@@ -32,8 +37,8 @@ export function buildHimalayaFingerprint(question: HimalayaApiQuestion) {
 }
 
 /**
- * Compact per-question rows for the results board. Deliberately excludes
- * explanation bodies so the overview stays cheap to render and to transport.
+ * Include the released source discussion so every miss is useful immediately,
+ * without opening a question modal or waiting for a generated explanation.
  */
 export function buildHimalayaReviewBoard(questions: HimalayaApiQuestion[]): HimalayaReviewBoardEntry[] {
   return questions.map((question) => {
@@ -44,6 +49,11 @@ export function buildHimalayaReviewBoard(questions: HimalayaApiQuestion[]): Hima
       questionNumber: question.questionNumber,
       isCorrect: question.isCorrect,
       stemPreview: question.stem.replace(/\s+/g, ' ').slice(0, 180),
+      stem: question.stem,
+      sourceExplanation: question.reviewAvailable ? question.explanation : null,
+      sourceKeyPoints: question.reviewAvailable ? question.keyReferencePoints : null,
+      sourceReferences: question.reviewAvailable ? question.references : null,
+      selectedAnswerKey: selected?.id ?? null,
       selectedAnswer: selected ? `${selected.label}. ${selected.text}` : null,
       correctAnswer: correct ? `${correct.label}. ${correct.text}` : null,
       hasExplanation: Boolean(question.explanation),

@@ -20,10 +20,13 @@ export function resolveCampaignAddress(input: {
   if (!input.authConfirmed) return null;
   const profileEmail = normalizedEmail(input.profileEmail);
   const authEmail = normalizedEmail(input.authEmail);
+  const profileDomain = profileEmail.split('@')[1] ?? '';
+  const knownUndeliverableProfile = profileDomain === 'privaterelay.appleid.com';
+  if (knownUndeliverableProfile && authEmail === profileEmail) return null;
   const failedProfile = input.deliveries.find((row) =>
     normalizedEmail(row.email) === profileEmail && isConfirmedAddressFailure(row) &&
     (row.metadata as Record<string, unknown> | null)?.address_source === 'profile');
-  if (usableEmail(profileEmail) && !failedProfile) {
+  if (usableEmail(profileEmail) && !knownUndeliverableProfile && !failedProfile) {
     return { email: profileEmail, addressSource: 'profile', templateVersion: input.templateVersion };
   }
   if (!usableEmail(authEmail) || (failedProfile && authEmail === profileEmail)) return null;

@@ -6,6 +6,7 @@ const { parseHTML } = require('linkedom');
 import {
   appendHimalayaReviewBoard,
   getReviewBoardRows,
+  himalayaDebriefText,
   summarizeBoard,
   type ReviewBoardRow,
   type ReviewBoardRowState,
@@ -224,7 +225,7 @@ appendHimalayaReviewBoard(root, {
 
 const renderedHtml = root.innerHTML;
 assert.equal(root.querySelectorAll('[data-toggle-id]').length, 2, 'misses lead and correct answers remain available; unanswered rows stay out of the review');
-assert.equal(root.querySelector('#rb-explain-misses')?.textContent?.trim(), 'Refresh summaries');
+assert.equal(root.querySelector('#rb-explain-misses')?.textContent?.trim(), 'Summaries complete');
 assert.ok(renderedHtml.includes('1/3'), 'attempt score is shown');
 assert.ok(renderedHtml.includes('1 question to review'), 'miss count is the primary result');
 assert.ok(renderedHtml.includes('1 correct answer'), 'correct answers are tucked into a secondary disclosure');
@@ -267,3 +268,40 @@ assert.equal(cleanRoot.querySelector('#rb-explain-misses'), null, 'no bulk actio
 assert.ok(cleanRoot.innerHTML.includes('Clean sweep'));
 
 console.log('Himalaya review board tests passed.');
+
+// A debrief is useful before generation: full source discussion and every miss
+// are immediately visible and included in exports, even with partial summaries.
+const defaultsRoot = document.createElement('div');
+const extraMiss = { ...missedRow, questionAttemptId: 104, questionNumber: 4,
+  stem: 'Full question ' + 'detail '.repeat(50),
+  sourceExplanation: 'Source discussion <script>not executable</script>',
+  sourceKeyPoints: 'Decisive source clue', sourceReferences: 'Source reference' };
+const debriefRows = [...rows, extraMiss];
+appendHimalayaReviewBoard(defaultsRoot, {
+  rows: debriefRows, rowStates: new Map([[101, expandedMiss]]),
+  assessmentTitle: null, score: 1, maxScore: 4, explainAllInFlight: false,
+  hooks: { onToggleRow: () => {}, onExplainRow: () => {}, onExplainAllMisses: () => {},
+    onCopyDebrief: () => {}, onClearDebrief: () => {}, onUnlink: () => {} },
+  renderers: { escapeHtml, renderExplanation: () => '' },
+});
+assert.equal(defaultsRoot.querySelector('[data-toggle-id="102"]')?.getAttribute('aria-expanded'), 'true');
+assert.equal(defaultsRoot.querySelector('[data-toggle-id="104"]')?.getAttribute('aria-expanded'), 'true');
+assert.ok(defaultsRoot.textContent?.includes(extraMiss.stem));
+assert.ok(defaultsRoot.textContent?.includes('Synthetic discussion two.'));
+assert.ok(defaultsRoot.textContent?.includes('Decisive source clue'));
+assert.equal(defaultsRoot.querySelector('script'), null, 'source discussion is escaped');
+assert.ok(defaultsRoot.textContent?.includes('0 of 2 misses analyzed'), 'correct-question summaries do not count as analyzed misses');
+assert.equal(defaultsRoot.querySelector('#rb-explain-misses')?.textContent?.trim(), 'Explain what I need to know');
+const exported = himalayaDebriefText(debriefRows, new Map([[102, expandedMiss], [101, expandedMiss]]), 'Test');
+assert.ok(exported.includes('### Q4'), 'unanalyzed misses remain in the export');
+assert.ok(exported.includes(extraMiss.stem));
+assert.ok(exported.includes('AAOS discussion: Synthetic discussion two.'));
+assert.ok(!exported.includes('### Q1'), 'correct-question explanations do not enter miss analysis');
+assert.equal(longRows[0]?.stem, longStem, 'full stem is retained alongside the compact preview');
+const unreleased = getReviewBoardRows(buildHimalayaOverviewContext({
+  bridgeState: null, pageUrl: 'https://learn.aaos.org/diweb/',
+  allQuestions: [makeQuestion({ questionAttemptId: 300, reviewAvailable: false,
+    explanation: 'Unreleased discussion', keyReferencePoints: 'Unreleased key points' })],
+}));
+assert.equal(unreleased[0].sourceExplanation, null);
+assert.equal(unreleased[0].sourceKeyPoints, null);
