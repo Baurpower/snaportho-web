@@ -52,7 +52,31 @@ type Row = Record<string, any>;
 type Args = Map<string, string>;
 
 const DEFAULT_INDEX = "tmp/rock-enrichment/index";
-const MAP_CANDIDATES = 8;
+const MAP_CANDIDATES = 12;
+// The plain query (front + extra only) is the regression-proof baseline: its
+// top candidates are always kept. Tag-enriched retrieval then fills the
+// remaining slots with chapters it surfaces that the plain query missed, so
+// governed tags can only add recall, never displace a good plain candidate.
+const MAP_BASELINE_CANDIDATES = 8;
+
+function mapCandidatesForCard(
+  ix: LoadedRockIndex,
+  card: ReturnType<typeof baseMapCard>,
+): ReturnType<LoadedRockIndex["retrieveChapters"]> {
+  const plainQuery = searchQueryForCard(card.front, card.extra, card.deckPath, []);
+  const baseline = ix.retrieveChapters(plainQuery, MAP_BASELINE_CANDIDATES);
+  if (card.searchQuery === plainQuery) return baseline.slice(0, MAP_CANDIDATES);
+  const enriched = ix.retrieveChapters(card.searchQuery, MAP_CANDIDATES);
+  const merged = [...baseline];
+  const have = new Set(baseline.map((c) => c.id));
+  for (const cand of enriched) {
+    if (merged.length >= MAP_CANDIDATES) break;
+    if (have.has(cand.id)) continue;
+    have.add(cand.id);
+    merged.push(cand);
+  }
+  return merged.sort((a, b) => b.score - a.score);
+}
 const PAGES_PER_CHAPTER = 4;
 
 function parseArgs(values: string[]): Args {
@@ -145,6 +169,7 @@ async function loadOfficialNotes(db: SupabaseClient, release: Row) {
 function baseMapCard(row: Awaited<ReturnType<typeof loadOfficialNotes>>[number]): Omit<RockMapCard, "candidates"> {
   const front = plainText(row.fields.Text ?? row.fields.Front ?? "");
   const extra = plainText(row.fields.Extra ?? "");
+  const governedTags = Array.isArray(row.version.governed_tags) ? row.version.governed_tags.map(String) : [];
   return {
     noteId: String(row.note.id),
     noteVersionId: String(row.version.id),
@@ -153,10 +178,10 @@ function baseMapCard(row: Awaited<ReturnType<typeof loadOfficialNotes>>[number])
     deckPath: String(row.version.deck_path),
     front,
     extra,
-    governedTags: Array.isArray(row.version.governed_tags) ? row.version.governed_tags.map(String) : [],
+    governedTags,
     currentRock: row.fields.ROCK ?? "",
     currentRockLink: row.fields.ROCK_Link ?? "",
-    searchQuery: searchQueryForCard(row.fields.Text ?? front, row.fields.Extra ?? "", String(row.version.deck_path)),
+    searchQuery: searchQueryForCard(row.fields.Text ?? front, row.fields.Extra ?? "", String(row.version.deck_path), governedTags),
   };
 }
 
@@ -255,7 +280,7 @@ async function commandExportMap(db: SupabaseClient, args: Args) {
     const batchKey = `map-${String(cohortNumber).padStart(6, "0")}-agent-${String(agentIndex + 1).padStart(2, "0")}`;
     const cards: RockMapCard[] = slice.map((row) => {
       const card = baseMapCard(row);
-      return { ...card, candidates: ix.retrieveChapters(card.searchQuery, MAP_CANDIDATES) };
+      return { ...card, candidates: mapCandidatesForCard(ix, card) };
     });
     const packet = sealMapPacket({
       schemaVersion: ROCK_ENRICHMENT_CONTRACT,

@@ -64,8 +64,14 @@ export function useCasePrepStream(): UseCasePrepStream {
         const requestStream = (version: "v1.1" | "v1.2" | "v1.3") =>
           fetch(`/api/case-prep/${version}/stream`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ prompt }),
+            headers: {
+              "Content-Type": "application/json",
+              "X-SnapOrtho-Client": "web",
+            },
+            body: JSON.stringify({
+              prompt,
+              entrySurface: `web_case_prep_${version.replace(".", "_")}_stream`,
+            }),
             signal: controller.signal,
           });
 

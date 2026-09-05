@@ -235,14 +235,42 @@ export function plainText(value: string): string {
     .trim();
 }
 
-export function searchQueryForCard(front: string, extra: string, deckPath: string): string {
+// Governed-tag segments that are organizational, not clinical. Dropping them
+// keeps the specific anatomy/diagnosis/treatment leaves (e.g. "Syndesmosis",
+// "Achilles Tendon Rupture") that actually drive chapter recall.
+const TAG_CATEGORY_STOPWORDS = new Set([
+  "SnapOrtho", "Anatomy", "Diagnosis", "Treatment", "Specialty", "Other",
+]);
+
+function tagTermsForQuery(governedTags: string[] = []): string {
+  const seen = new Set<string>();
+  const terms: string[] = [];
+  for (const tag of governedTags) {
+    for (const seg of tag.split("::")) {
+      if (!seg || TAG_CATEGORY_STOPWORDS.has(seg)) continue;
+      const phrase = seg.replace(/_/g, " ").trim().toLowerCase();
+      if (!phrase || seen.has(phrase)) continue;
+      seen.add(phrase);
+      terms.push(phrase);
+    }
+  }
+  return terms.join(" ");
+}
+
+export function searchQueryForCard(
+  front: string,
+  extra: string,
+  deckPath: string,
+  governedTags: string[] = [],
+): string {
   const frontText = plainText(front);
   const extraText = plainText(extra).slice(0, 200);
   const pathTerms = deckPath
     .split("::")
     .filter((seg) => seg && seg !== "SnapOrtho")
     .join(" ");
-  return `${frontText} ${extraText} ${pathTerms}`.replace(/\s+/g, " ").trim();
+  const tagTerms = tagTermsForQuery(governedTags);
+  return `${frontText} ${extraText} ${pathTerms} ${tagTerms}`.replace(/\s+/g, " ").trim();
 }
 
 export function canonicalRockChapterUrl(raw: string, expectedId?: string): { ok: true; canonical: string } | { ok: false; error: string } {

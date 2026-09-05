@@ -444,6 +444,26 @@ assert.match(
   /if \(authResponse \|\| !subject\)/,
   "an invalid native credential must not silently become a guest",
 );
+assert.match(
+  streamRouteSource,
+  /recordCasePrepRun/,
+  "web packet streams must persist assembled runs for quality improvement",
+);
+assert.match(
+  streamRouteSource,
+  /reducePacketEvent/,
+  "the proxy must assemble the packet with the same reducer the website uses",
+);
+assert.match(
+  streamRouteSource,
+  /x-snaportho-client/,
+  "run persistence must read the client platform header so iOS is skipped",
+);
+assert.match(
+  streamRouteSource,
+  /hasBearerToken/,
+  "missing client headers on bearer requests must not be treated as web",
+);
 
 const streamHookSource = readFileSync(
   join(process.cwd(), "src/lib/caseprep-v1-1/useCasePrepStream.ts"),
@@ -453,6 +473,16 @@ assert.match(
   streamHookSource,
   /const preferredVersion = "v1\.3"[\s\S]*response\.status === 404 \|\| response\.status === 502[\s\S]*requestStream\("v1\.1"\)/,
   "the website must prefer v1.3 and survive rollout skew via v1.1",
+);
+assert.match(
+  streamHookSource,
+  /["']X-SnapOrtho-Client["']:\s*["']web["']/,
+  "website CasePrep must identify itself as the web client",
+);
+assert.match(
+  streamHookSource,
+  /entrySurface:\s*`web_case_prep_\$\{version\.replace\("\.", "_"\)\}_stream`/,
+  "website CasePrep must send a web entry surface for persist gating and analytics",
 );
 
 const legacyAskRouteSource = readFileSync(

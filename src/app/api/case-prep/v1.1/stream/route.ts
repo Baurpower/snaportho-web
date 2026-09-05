@@ -8,6 +8,7 @@
  *   3. Quota: exactly one recordSuccessfulAIUse per packet, on first section.
  *      Clarification-only streams do not consume quota.
  *   4. Optional knowledge-graph "related_concepts" section injection.
+ *   5. Web-only caseprep_runs persistence of the prompt + assembled packet.
  */
 
 import { NextResponse } from "next/server";
@@ -46,6 +47,12 @@ import {
   type KgProductionNeighborhood,
 } from "@/lib/education/kg-production";
 import { recordCasePrepPacketTelemetry } from "@/lib/caseprep-v1-2/telemetry";
+import { recordCasePrepRun } from "@/lib/caseprep-v1-2/run-persistence";
+import {
+  createInitialPacketState,
+  reducePacketEvent,
+  type CasePrepPacketState,
+} from "@/lib/caseprep-v1-1/stream-schema";
 import { recordProductEvent } from "@/lib/analytics/product-events-server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import {
@@ -151,9 +158,7 @@ async function fetchRelatedConcepts(
   }
 }
 
-function relatedConceptsEvent(
-  neighborhood: KgProductionNeighborhood,
-): string | null {
+function relatedConceptsSection(neighborhood: KgProductionNeighborhood) {
   const items = neighborhood.entities
     .slice(0, KG_MAX_CONCEPTS)
     .map((entity, index) => ({
@@ -172,15 +177,15 @@ function relatedConceptsEvent(
       rank: index + 1,
     }));
   if (items.length === 0) return null;
-  return encodeSseEvent("section", {
+  return {
     section_id: "related_concepts",
-    status: "complete",
+    status: "complete" as const,
     items,
     source: "kg",
     confidence: null,
-    generated_field_paths: [],
+    generated_field_paths: [] as string[],
     duration_ms: 0,
-  });
+  };
 }
 
 async function proxyCasePrepStream(
@@ -224,6 +229,8 @@ async function proxyCasePrepStream(
     anonymousId: subject.type === "guest" ? subject.id : null,
   };
   const productSurface = entrySurface ?? `web_case_prep_${version.replace(".", "_")}_stream`;
+  const clientHeader = request.headers.get("x-snaportho-client");
+  const hasBearerToken = Boolean(getRequiredBearerToken(request));
   if (gate.isLimitReached) {
     const denied =
       gate.normalized.data.source === "disabled"
@@ -341,6 +348,34 @@ async function proxyCasePrepStream(
       let referencesPromise: ReturnType<typeof getCasePrepReferences> | null = null;
       const sourceHints: Array<{ title?: string; url: string }> = [];
       let readingTopic: ReturnType<typeof buildCasePrepReadingTopic> | null = null;
+      let packetState: CasePrepPacketState = {
+        ...createInitialPacketState(),
+        status: "connecting",
+        requestedPrompt: prompt,
+      };
+      let runPersisted = false;
+      let runPersistPromise: Promise<void> | null = null;
+
+      const applyPacketEvent = (eventName: string, data: unknown) => {
+        packetState = reducePacketEvent(packetState, eventName, data);
+      };
+
+      const persistRun = () => {
+        if (runPersisted) return;
+        runPersisted = true;
+        runPersistPromise = recordCasePrepRun({
+          subject,
+          clientHeader,
+          hasBearerToken,
+          clientSurface: productSurface,
+          version,
+          prompt,
+          trainingLevel: trainingLevel ?? null,
+          requestId: clientRequestId ?? null,
+          state: packetState,
+          latencyMs: Date.now() - startedAt,
+        });
+      };
 
       const collectSourceHints = (event: SseEvent) => {
         if (event.event !== "section") return;
@@ -404,6 +439,7 @@ async function proxyCasePrepStream(
       };
 
       const handleEvent = (event: SseEvent) => {
+        applyPacketEvent(event.event, event.data);
         collectSourceHints(event);
         startReferences(event);
         if (event.event === "meta") {
@@ -491,16 +527,18 @@ async function proxyCasePrepStream(
           reason = "No strong case-specific resources were found yet.";
         }
         const payload = casePrepSourcesPayload(resources);
-        streamController.enqueue(encoder.encode(encodeSseEvent("section", {
+        const section = {
           section_id: "sources",
-          status: "complete",
+          status: "complete" as const,
           items: [],
           payload: reason && payload.sources.length === 0 ? { ...payload, reason } : payload,
           source: "trusted_recommendations",
           confidence: null,
-          generated_field_paths: [],
+          generated_field_paths: [] as string[],
           duration_ms: 0,
-        })));
+        };
+        applyPacketEvent("section", section);
+        streamController.enqueue(encoder.encode(encodeSseEvent("section", section)));
       };
 
       const flushKgSection = async () => {
@@ -513,8 +551,11 @@ async function proxyCasePrepStream(
             ),
           ]);
           if (neighborhood) {
-            const frame = relatedConceptsEvent(neighborhood);
-            if (frame) streamController.enqueue(encoder.encode(frame));
+            const section = relatedConceptsSection(neighborhood);
+            if (section) {
+              applyPacketEvent("section", section);
+              streamController.enqueue(encoder.encode(encodeSseEvent("section", section)));
+            }
           }
         } catch {
           // KG is best-effort; never block or fail the packet on it.
@@ -537,6 +578,9 @@ async function proxyCasePrepStream(
               // was never emitted to iOS.
               await flushKgSection();
               if (readingTopic) await flushReferencesSection();
+              persistRun();
+            } else if (event.event === "error") {
+              persistRun();
             }
             streamController.enqueue(
               encoder.encode(encodeSseEvent(event.event, event.data)),
@@ -544,7 +588,12 @@ async function proxyCasePrepStream(
             if (event.event === "done") kgPromise = null;
           }
         }
+        persistRun();
       } catch (error) {
+        applyPacketEvent("error", {
+          message: "Case Prep stream interrupted.",
+        });
+        persistRun();
         streamController.enqueue(
           encoder.encode(
             encodeSseEvent("error", {
@@ -557,7 +606,9 @@ async function proxyCasePrepStream(
           error,
         );
       } finally {
+        persistRun();
         if (telemetryPromise) await telemetryPromise;
+        if (runPersistPromise) await runPersistPromise;
         clearTimeout(timeout);
         streamController.close();
       }

@@ -91,6 +91,23 @@ When reviewing a fill, confirm the brief's `passages` are teaching prose, not a
 citation list. If they are all citations, the index needs re-running, not a
 hand-written fill.
 
+## Candidate recall (map stage)
+
+Chapter candidates come from two retrievals, unioned so tags can only add:
+
+- **Baseline** (regression-proof): the plain query (`Text` + `Extra`) returns
+  the top `MAP_BASELINE_CANDIDATES` (8); these are always kept.
+- **Tag-enriched**: `searchQueryForCard` also appends the specific leaves of the
+  note's governed tags (e.g. `Achilles_Tendon_Rupture`, `Syndesmosis`), skipping
+  the organizational segments (`Anatomy`, `Diagnosis`, `Treatment`, `Specialty`).
+  Chapters it surfaces fill the remaining slots up to `MAP_CANDIDATES` (12).
+
+Because the baseline is never displaced, adding tags recovers cards whose right
+chapter the plain text missed (e.g. a "PASTA lesion" image cloze now reaches the
+partial-thickness rotator cuff chapter) without dropping any chapter the plain
+query already found. A card whose correct chapter still never appears in the 12
+is a genuine catalog gap — skip it.
+
 ## First calibration
 
 Index the library (or `--limit` a verified subset). Export 25 official notes
