@@ -7,6 +7,9 @@ export function normalizedEmail(value: unknown) {
 function usableEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
+export function isApplePrivateRelayEmail(value: unknown) {
+  return normalizedEmail(value).split('@')[1] === 'privaterelay.appleid.com';
+}
 export function isConfirmedAddressFailure(row: Delivery) {
   // A timeout or a missing receipt is not evidence that an email was not delivered.
   return !row.delivered_at && !row.first_clicked_at &&
@@ -20,16 +23,14 @@ export function resolveCampaignAddress(input: {
   if (!input.authConfirmed) return null;
   const profileEmail = normalizedEmail(input.profileEmail);
   const authEmail = normalizedEmail(input.authEmail);
-  const profileDomain = profileEmail.split('@')[1] ?? '';
-  const knownUndeliverableProfile = profileDomain === 'privaterelay.appleid.com';
-  if (knownUndeliverableProfile && authEmail === profileEmail) return null;
+  const knownUndeliverableProfile = isApplePrivateRelayEmail(profileEmail);
   const failedProfile = input.deliveries.find((row) =>
     normalizedEmail(row.email) === profileEmail && isConfirmedAddressFailure(row) &&
     (row.metadata as Record<string, unknown> | null)?.address_source === 'profile');
   if (usableEmail(profileEmail) && !knownUndeliverableProfile && !failedProfile) {
     return { email: profileEmail, addressSource: 'profile', templateVersion: input.templateVersion };
   }
-  if (!usableEmail(authEmail) || (failedProfile && authEmail === profileEmail)) return null;
+  if (!usableEmail(authEmail) || isApplePrivateRelayEmail(authEmail) || (failedProfile && authEmail === profileEmail)) return null;
   if (input.deliveries.some((row) => normalizedEmail(row.email) === authEmail && isConfirmedAddressFailure(row))) return null;
   const fallbackVersion = `${input.templateVersion}.auth-fallback`;
   // A distinct, stable reservation allows ONE alternate-address attempt, even on concurrent runs.

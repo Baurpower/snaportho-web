@@ -20,3 +20,5 @@ console.log('Profile-first selection, confirmed-auth fallback, duplicate and amb
 
 assert.equal(resolveCampaignAddress({...input,profileEmail:'relay@privaterelay.appleid.com',authEmail:'relay@privaterelay.appleid.com'}),null,'Known dead relays with no alternate address are excluded');
 assert.equal(resolveCampaignAddress({...input,profileEmail:'relay@privaterelay.appleid.com'}).email,'auth@example.com','Known dead relay uses a distinct confirmed auth address');
+assert.equal(resolveCampaignAddress({...input,profileEmail:'',authEmail:'relay@privaterelay.appleid.com'}),null,'Apple relay authentication fallback is excluded when profile email is missing');
+assert.equal(resolveCampaignAddress({...input,profileEmail:'bad address',authEmail:'relay@privaterelay.appleid.com'}),null,'Apple relay authentication fallback is excluded when profile email is invalid');

@@ -1,4 +1,4 @@
-import { resolveCampaignAddress, ADDRESS_HISTORY_COLUMNS } from '../src/lib/marketing/recipient-address';
+import { resolveCampaignAddress, ADDRESS_HISTORY_COLUMNS, isApplePrivateRelayEmail } from '../src/lib/marketing/recipient-address';
 import { campaignActivity, campaignHistory } from '../src/lib/marketing/audience-history';
 import { doesSubscriptionGrantEntitlement } from '../src/lib/subscriptions/ledger';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
@@ -100,10 +100,11 @@ async function main() {
     return { userId: user.id, email: address?.email ?? '', confirmed: Boolean(user.email_confirmed_at), receiveEmails: profile?.receive_emails === true && !profile?.marketing_unsubscribed_at, firstName: name || null, profileComplete: profile?.is_profile_complete === true, currentlyEntitled: entitled.has(user.id), firstUseAt: activity[0] ?? null, lastUseAt: activity.at(-1) ?? null, priorSteps, priorStepAt, optedOutTopics: suppressed.get(user.id) ?? new Set() };
   }).filter((profile) => profile.email && isEligibleForCampaign(profile, options.campaign))
     .filter((profile) => !options.fallbackOnly || Boolean(addresses.get(profile.userId)?.fallbackFromDeliveryId));
-  console.log(JSON.stringify({ campaign: options.campaign, eligible: candidates.length, selected: Math.min(options.limit, candidates.length), mode: options.send ? 'send' : options.preview ? 'preview' : 'dry-run', addressMode: options.fallbackOnly ? 'failed-profile-auth-fallback-only' : 'all-eligible' }, null, 2));
+  const selectedCandidates = candidates.slice(0, options.limit);
+  console.log(JSON.stringify({ campaign: options.campaign, eligible: candidates.length, selected: selectedCandidates.length, selectedApplePrivateRelay: selectedCandidates.filter((candidate) => isApplePrivateRelayEmail(candidate.email)).length, mode: options.send ? 'send' : options.preview ? 'preview' : 'dry-run', addressMode: options.fallbackOnly ? 'failed-profile-auth-fallback-only' : 'all-eligible' }, null, 2));
   if (!options.send) return;
   let sent = 0, duplicate = 0, skipped = 0, failed = 0;
-  for (const [index, candidate] of candidates.slice(0, options.limit).entries()) {
+  for (const [index, candidate] of selectedCandidates.entries()) {
     if (index > 0) await pause(1000);
     const recipient: MarketingRecipient = { userId: candidate.userId, email: candidate.email, firstName: candidate.firstName, campaignStep: options.campaign, ...config, ...addresses.get(candidate.userId)! };
     try { const result = await deliverMarketingCampaignEmail(recipient); if (result.status === 'sent') sent += 1; else if (result.status === 'duplicate') duplicate += 1; else skipped += 1; } catch (error) { failed += 1; console.error(`[marketing] send failed for user=${candidate.userId.slice(0, 8)}: ${error instanceof Error ? error.message : String(error)}`); break; }
