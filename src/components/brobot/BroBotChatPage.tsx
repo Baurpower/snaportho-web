@@ -49,6 +49,7 @@ import { useChatScrollController } from './useChatScrollController';
 import { safeRedirectPath } from '@/lib/auth/redirects';
 import { fetchMeEntitlementsView, toWebUsageSnapshot } from '@/lib/brobot/billing-entitlement-state';
 import { useBroBotEntitlement } from '@/hooks/useBroBotEntitlement';
+import { currentEmailAttribution, trackProductEvent } from '@/lib/analytics/product-events-client';
 import {
   archiveBroBotChatSession,
   listBroBotChatRecents,
@@ -531,6 +532,13 @@ export default function BroBotChatPage({ campaignEntry = false }: { campaignEntr
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const activeRequestControllerRef = useRef<AbortController | null>(null);
   const stopRequestedRef = useRef(false);
+  const trackedCampaignOpenRef = useRef(false);
+
+  useEffect(() => {
+    if (!campaignEntry || trackedCampaignOpenRef.current) return;
+    trackedCampaignOpenRef.current = true;
+    trackProductEvent({ eventName: 'brobot_opened', surface: 'web_brobot_chat', properties: { entry_point: 'email' } });
+  }, [campaignEntry]);
   const isRequestActive =
     requestState === 'classifying_intent' ||
     requestState === 'awaiting_first_token' ||
@@ -924,6 +932,7 @@ export default function BroBotChatPage({ campaignEntry = false }: { campaignEntr
         intentSource: pendingIntent?.intent.source,
         answerNow,
         stream: Boolean(streamingAssistantId),
+        attribution: campaignEntry ? currentEmailAttribution() : undefined,
       };
 
       if (process.env.NODE_ENV !== 'production') {

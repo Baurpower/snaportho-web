@@ -52,6 +52,11 @@ export async function recordSuccessfulBroBotProductUse(input: {
   requestId?: string | null;
   entitlementTier?: ProductEventInput['entitlementTier'];
   latencyMs?: number;
+  source?: string | null;
+  medium?: string | null;
+  campaign?: string | null;
+  branchClickId?: string | null;
+  campaignStep?: string | null;
 }) {
   const common: ProductEventInput = {
     eventName: 'brobot_request_completed',
@@ -60,7 +65,11 @@ export async function recordSuccessfulBroBotProductUse(input: {
     surface: input.surface,
     requestId: input.requestId,
     entitlementTier: input.entitlementTier,
-    properties: { latency_ms: input.latencyMs ?? null },
+    source: input.source,
+    medium: input.medium,
+    campaign: input.campaign,
+    branchClickId: input.branchClickId,
+    properties: { latency_ms: input.latencyMs ?? null, campaign_step: input.campaignStep ?? null },
   };
   await Promise.all([
     recordProductEvent(common),

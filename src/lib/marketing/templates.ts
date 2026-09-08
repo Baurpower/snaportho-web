@@ -1,4 +1,4 @@
-import { campaignWebUrl, marketingActionUrl } from './links';
+import { marketingActionUrl, marketingWebUrl } from './links';
 import { getAppBaseUrl } from '@/lib/config/app-url';
 import { createMarketingPreferenceToken } from './preferences-token';
 import type { CampaignStep, MarketingEmail, MarketingRecipient } from './types';
@@ -24,7 +24,7 @@ export function renderMarketingEmail(recipient: MarketingRecipient): MarketingEm
   const token = createMarketingPreferenceToken({ userId: recipient.userId, email: recipient.email, topic: recipient.topic });
   const unsubscribeUrl = `${base}/api/email/preferences?token=${encodeURIComponent(token)}`;
   const actionUrl = marketingActionUrl(recipient.campaignStep, base);
-  const webUrl = campaignWebUrl(new URL(actionUrl)).toString();
+  const webUrl = marketingWebUrl(recipient.campaignStep, base);
   const webLinkLabel = new URL(webUrl).pathname === '/brobot/chat' ? 'Open Chat on the website' : 'Continue on the website';
   const postalAddress = process.env.MARKETING_POSTAL_ADDRESS?.trim() || (process.env.NODE_ENV === 'production' ? '' : 'Add MARKETING_POSTAL_ADDRESS before sending');
   if (!postalAddress) throw new Error('MARKETING_POSTAL_ADDRESS is required in production');

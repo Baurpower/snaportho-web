@@ -81,7 +81,7 @@ async function findAppleUserId(params: {
   return null;
 }
 
-function buildAppleCanonicalEntry(params: {
+export function buildAppleCanonicalEntry(params: {
   userId: string;
   originalTransactionId: string;
   transactionId: string | null;
@@ -104,7 +104,9 @@ function buildAppleCanonicalEntry(params: {
         ? new Date(params.purchaseDate).toISOString()
         : null,
     current_period_end:
-      params.expiresDate != null
+      params.mappedStatus.status === 'grace' && params.renewalInfo?.gracePeriodExpiresDate != null
+        ? new Date(params.renewalInfo.gracePeriodExpiresDate).toISOString()
+        : params.expiresDate != null
         ? new Date(params.expiresDate).toISOString()
         : null,
     cancel_at_period_end:
@@ -205,7 +207,9 @@ export async function reconcileAppleSubscriptions(options: AppleReconciliationOp
         expiresDate: fallback.transactionInfo.expiresDate,
         mappedStatus: {
           status:
-            fallback.transactionInfo.expiresDate && fallback.transactionInfo.expiresDate > Date.now()
+            fallback.transactionInfo.revocationDate != null
+              ? 'canceled'
+              : fallback.transactionInfo.expiresDate && fallback.transactionInfo.expiresDate > Date.now()
               ? 'active'
               : 'expired',
           raw: 'transaction_lookup_fallback',
@@ -228,6 +232,11 @@ export async function reconcileAppleSubscriptions(options: AppleReconciliationOp
     }
 
     for (const lastTransaction of statusResponse.lastTransactions) {
+      // Apple returns all subscription groups for this customer. Never write a
+      // different original purchase under the identity being reconciled.
+      const returnedOriginal = lastTransaction.transactionInfo?.originalTransactionId ??
+        lastTransaction.originalTransactionId;
+      if (returnedOriginal !== originalTransactionId) continue;
       result.transactionsScanned += 1;
       const userId = await findAppleUserId({
         originalTransactionId,
@@ -254,9 +263,7 @@ export async function reconcileAppleSubscriptions(options: AppleReconciliationOp
           lastTransaction.renewalInfo?.autoRenewProductId ??
           null,
         purchaseDate: lastTransaction.transactionInfo?.purchaseDate,
-        expiresDate:
-          lastTransaction.transactionInfo?.expiresDate ??
-          lastTransaction.renewalInfo?.gracePeriodExpiresDate,
+        expiresDate: lastTransaction.transactionInfo?.expiresDate,
         mappedStatus,
         renewalInfo: lastTransaction.renewalInfo ?? null,
         rawResponse: statusResponse.raw,

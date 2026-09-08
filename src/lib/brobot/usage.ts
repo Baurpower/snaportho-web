@@ -31,6 +31,11 @@ interface RecordUsageParams {
   requestId?: string;
   entitlementTier?: 'guest' | 'free' | 'unlimited';
   feature?: string;
+  source?: string | null;
+  medium?: string | null;
+  campaign?: string | null;
+  branchClickId?: string | null;
+  campaignStep?: string | null;
 }
 
 /**
@@ -118,7 +123,7 @@ export async function recordSuccessfulAIUse(
   subject: Subject,
   latencyMs?: number,
   metadata?: RecordUsageParams['metadata'],
-  analytics?: Pick<RecordUsageParams, 'surface' | 'requestId' | 'entitlementTier' | 'feature'>
+  analytics?: Pick<RecordUsageParams, 'surface' | 'requestId' | 'entitlementTier' | 'feature' | 'source' | 'medium' | 'campaign' | 'branchClickId' | 'campaignStep'>
 ): Promise<number> {
   const newCount = await incrementDailyUsage(subject, analytics?.feature);
 
@@ -138,6 +143,11 @@ export async function recordSuccessfulAIUse(
     requestId: analytics?.requestId,
     entitlementTier: analytics?.entitlementTier ?? (subject.type === 'guest' ? 'guest' : null),
     latencyMs,
+    source: analytics?.source,
+    medium: analytics?.medium,
+    campaign: analytics?.campaign,
+    branchClickId: analytics?.branchClickId,
+    campaignStep: analytics?.campaignStep,
   });
 
   return newCount;

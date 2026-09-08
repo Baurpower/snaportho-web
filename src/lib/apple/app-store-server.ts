@@ -548,7 +548,7 @@ export function deriveAppleState(params: {
   const autoRenewStatus = renewalInfo?.autoRenewStatus;
   const cancelAtPeriodEnd = autoRenewStatus === 0 || autoRenewStatus === false;
 
-  const currentPeriodEnd =
+  let currentPeriodEnd =
     expiresDateMs != null && Number.isFinite(expiresDateMs)
       ? new Date(expiresDateMs).toISOString()
       : null;
@@ -564,6 +564,9 @@ export function deriveAppleState(params: {
       status = 'grace';
       break;
     case 'DID_FAIL_TO_RENEW':
+      status = 'billing_retry';
+      break;
+    case 'GRACE_PERIOD_EXPIRED':
       status = 'billing_retry';
       break;
     case 'EXPIRED':
@@ -588,6 +591,11 @@ export function deriveAppleState(params: {
 
   if (notificationType === 'DID_FAIL_TO_RENEW' && subtype === 'GRACE_PERIOD') {
     status = 'grace';
+  }
+
+  if (status === 'grace' && renewalInfo?.gracePeriodExpiresDate != null &&
+      Number.isFinite(renewalInfo.gracePeriodExpiresDate)) {
+    currentPeriodEnd = new Date(renewalInfo.gracePeriodExpiresDate).toISOString();
   }
 
   return {
@@ -692,6 +700,8 @@ export async function upsertAppleSubscriptionForUser(params: {
     shouldSkipAppleCanonicalUpdate({
       existing: existingRow,
       incomingCurrentPeriodEnd: state.currentPeriodEnd,
+      incomingTransactionId: params.transactionInfo.transactionId,
+      notificationType: params.notificationType,
     })
   ) {
     const existingState = appleStateFromExistingRow(existingRow);

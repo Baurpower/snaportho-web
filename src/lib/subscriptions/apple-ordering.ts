@@ -1,5 +1,6 @@
 export type AppleCanonicalOrderingRow = {
   status: string | null;
+  provider_transaction_id?: string | null;
   current_period_end: string | null;
   cancel_at_period_end?: boolean | null;
   canceled_at?: string | null;
@@ -17,7 +18,16 @@ export function subscriptionPeriodEndMs(value: string | null | undefined) {
 export function shouldSkipAppleCanonicalUpdate(params: {
   existing: AppleCanonicalOrderingRow | null;
   incomingCurrentPeriodEnd: string | null;
+  incomingTransactionId?: string;
+  notificationType?: string;
 }) {
+  // Grace extends the access deadline beyond the paid transaction expiry.
+  // A terminal event for that same transaction must still remove access.
+  if (params.existing?.status === 'grace' && params.incomingTransactionId &&
+      params.incomingTransactionId === params.existing.provider_transaction_id &&
+      ['GRACE_PERIOD_EXPIRED', 'EXPIRED', 'REFUND', 'REVOKE'].includes(params.notificationType ?? '')) {
+    return false;
+  }
   const existingPeriodEnd = subscriptionPeriodEndMs(params.existing?.current_period_end);
   if (existingPeriodEnd == null) return false;
 

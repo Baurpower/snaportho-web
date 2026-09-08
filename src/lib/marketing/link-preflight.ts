@@ -1,9 +1,10 @@
-import { campaignWebUrl, isMarketingAppPath, marketingActionUrl } from './links';
+import { BRANCH_CAMPAIGN_STEPS, configuredBranchUrl, campaignWebUrl, isMarketingAppPath, marketingActionUrl } from './links';
 import type { CampaignStep } from './types';
 
 export async function verifyMarketingDestinations(base: string, request: typeof fetch = fetch) {
   for (const step of ['activation_1', 'profile_completion_1', 'conversion_1'] as CampaignStep[]) {
     const action = new URL(marketingActionUrl(step, base));
+    if (configuredBranchUrl(step)) continue;
     const expected = campaignWebUrl(action);
     const response = await request(action, { redirect: 'manual', signal: AbortSignal.timeout(15_000) });
     const location = response.headers.get('location');
@@ -18,6 +19,14 @@ export async function verifyMarketingDestinations(base: string, request: typeof 
       : response.status === 200 || correctFallback || profileSignIn;
     if (!ready) {
       throw new Error(`Campaign link is not ready: ${action.pathname} returned ${response.status}. Deploy the website fallback before sending tests.`);
+    }
+  }
+
+  for (const step of BRANCH_CAMPAIGN_STEPS) {
+    const branch = configuredBranchUrl(step);
+    if (!branch) {
+      if (process.env.BROBOT_MARKETING_SEND_ENABLED === 'true') throw new Error(`Campaign Branch link is not configured: ${step}`);
+      continue;
     }
   }
 }

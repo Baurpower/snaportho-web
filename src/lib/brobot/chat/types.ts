@@ -160,6 +160,13 @@ export const BroBotChatRequestSchema = z.object({
   researchSubmode: OptionalBroBotResearchSubmodeSchema,
   answerNow: z.boolean().optional(),
   stream: z.boolean().optional(),
+  attribution: z.object({
+    source: z.enum(['branch', 'resend']),
+    medium: z.literal('email'),
+    campaign: z.string().trim().min(1).max(100),
+    content: z.string().trim().min(1).max(80),
+    branchClickId: z.string().trim().min(1).max(128).nullable().optional(),
+  }).optional(),
 });
 
 export type BroBotChatRequest = z.infer<typeof BroBotChatRequestSchema>;

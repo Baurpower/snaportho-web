@@ -29,7 +29,21 @@ export function currentAttribution() {
     source: query.get('utm_source'),
     medium: query.get('utm_medium'),
     campaign: query.get('utm_campaign'),
+    content: query.get('utm_content'),
     branchClickId: query.get('_branch_match_id') ?? query.get('~click_id'),
+  };
+}
+
+export function currentEmailAttribution() {
+  const value = currentAttribution();
+  if ((value.source !== 'branch' && value.source !== 'resend') || value.medium !== 'email' ||
+      !value.campaign || !value.content) return undefined;
+  return {
+    source: value.source,
+    medium: 'email' as const,
+    campaign: value.campaign,
+    content: value.content,
+    branchClickId: value.branchClickId,
   };
 }
 

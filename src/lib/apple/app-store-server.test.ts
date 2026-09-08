@@ -114,3 +114,31 @@ await assert.rejects(
 );
 
 console.log('apple app-store server tests passed');
+
+const graceTransaction = {
+  transactionId: 'grace_transaction',
+  originalTransactionId: 'grace_original',
+  expiresDate: Date.parse('2026-09-01T00:00:00Z'),
+};
+const graceRenewal = { gracePeriodExpiresDate: Date.parse('2099-09-17T00:00:00Z') };
+const grace = deriveAppleState({
+  transactionInfo: graceTransaction,
+  renewalInfo: graceRenewal,
+  notificationType: 'DID_FAIL_TO_RENEW',
+  subtype: 'GRACE_PERIOD',
+});
+assert.equal(grace.status, 'grace');
+assert.equal(grace.currentPeriodEnd, '2099-09-17T00:00:00.000Z');
+const graceEnded = deriveAppleState({
+  transactionInfo: graceTransaction,
+  renewalInfo: graceRenewal,
+  notificationType: 'GRACE_PERIOD_EXPIRED',
+});
+assert.equal(graceEnded.status, 'billing_retry');
+assert.equal(graceEnded.currentPeriodEnd, '2026-09-01T00:00:00.000Z');
+const retryWithoutGrace = deriveAppleState({
+  transactionInfo: graceTransaction,
+  renewalInfo: graceRenewal,
+  notificationType: 'DID_FAIL_TO_RENEW',
+});
+assert.equal(retryWithoutGrace.currentPeriodEnd, '2026-09-01T00:00:00.000Z');

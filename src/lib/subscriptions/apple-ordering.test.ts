@@ -62,3 +62,9 @@ assert.equal(existingState.environment, 'sandbox');
 assert.equal(existingState.productId, 'com.snaportho.brobot.unlimited.monthly');
 
 console.log('apple subscription ordering tests passed');
+
+for (const notificationType of ['GRACE_PERIOD_EXPIRED', 'EXPIRED', 'REFUND', 'REVOKE']) {
+  const existing = { status: 'grace', current_period_end: '2099-09-17T00:00:00Z', provider_transaction_id: 'current' };
+  assert.equal(shouldSkipAppleCanonicalUpdate({existing, incomingCurrentPeriodEnd: '2099-09-01T00:00:00Z', incomingTransactionId: 'current', notificationType}), false);
+  assert.equal(shouldSkipAppleCanonicalUpdate({existing, incomingCurrentPeriodEnd: '2099-09-01T00:00:00Z', incomingTransactionId: 'older', notificationType}), true);
+}

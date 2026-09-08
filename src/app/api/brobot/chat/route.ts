@@ -78,6 +78,7 @@ import {
   createGuestSessionFromId,
 } from '@/lib/brobot/guest-session';
 import { recordSuccessfulAIUse, recordUsageEvent } from '@/lib/brobot/usage';
+import { validatedEmailCampaignAttribution } from '@/lib/marketing/attribution';
 import { enqueueBroBotEvaluationJob } from '@/lib/brobot/evaluator';
 import { enqueueBroBotEnrichmentJob } from '@/lib/brobot/enrichment';
 import {
@@ -289,6 +290,24 @@ function hashForLogging(value: string | null | undefined): string | undefined {
 
 function subjectPrefix(subject: Subject): string {
   return subject.id.slice(0, Math.min(12, subject.id.length));
+}
+
+function successfulUsageAnalytics(request: Request, body: BroBotChatRequest, requestId: string, subject: Subject) {
+  const base = {
+    surface: request.headers.get('x-snaportho-client') === 'web' ? 'web_brobot_chat' : 'ios_brobot_chat',
+    requestId,
+    entitlementTier: subject.type === 'guest' ? 'guest' as const : undefined,
+  };
+  const attribution = validatedEmailCampaignAttribution(body.attribution);
+  if (!attribution) return base;
+  return {
+    ...base,
+    source: attribution.source,
+    medium: attribution.medium,
+    campaign: attribution.campaign,
+    branchClickId: attribution.branchClickId,
+    campaignStep: attribution.content,
+  };
 }
 
 function invalidRequestResponse(message = 'Please enter a BroBot question.') {
@@ -2433,7 +2452,7 @@ async function handleGuestChat(params: {
   const usedAfter = await recordSuccessfulAIUse(subject, latencyMs, {
     ipHash: hashForLogging(ip),
     userAgentHash: hashForLogging(userAgent),
-  });
+  }, successfulUsageAnalytics(request, body, requestId, subject));
   const remainingAfter = limit != null ? Math.max(0, limit - usedAfter) : null;
 
   logBroBot('[BROBOT-CHAT-GENERATION]', {
@@ -3671,7 +3690,7 @@ export async function POST(request: Request) {
       usedAfter = await recordSuccessfulAIUse(subject, latencyMs, {
         ipHash: hashForLogging(ip),
         userAgentHash: hashForLogging(userAgent),
-      });
+      }, successfulUsageAnalytics(request, body, requestId, subject));
     } catch (error) {
       logChatStepError({
         requestId,
@@ -3925,7 +3944,7 @@ async function persistTierOneFastOutput(params: PersistCompletedParams): Promise
   const usedAfter = await recordSuccessfulAIUse(params.subject, params.latencyMs, {
     ipHash: hashForLogging(getClientIp(params.request) ?? undefined),
     userAgentHash: hashForLogging(params.request.headers.get('user-agent') ?? undefined),
-  });
+  }, successfulUsageAnalytics(params.request, params.body, params.requestId, params.subject));
   return {
     ...tierResponseFields(params.brobotOutput),
     conversationId: params.conversationId,
@@ -4291,7 +4310,7 @@ async function persistCompletedBroBotOutput(params: PersistCompletedParams) {
   const usedAfter = await recordSuccessfulAIUse(params.subject, params.latencyMs, {
     ipHash: hashForLogging(ip),
     userAgentHash: hashForLogging(userAgent),
-  });
+  }, successfulUsageAnalytics(params.request, params.body, params.requestId, params.subject));
   const remainingAfter = params.limit != null ? Math.max(0, params.limit - usedAfter) : null;
 
   await recordChatAnalyticsEvent({
@@ -4459,7 +4478,9 @@ function createGuestStreamingChatResponse(params: {
         });
         const usedAfter = await recordSuccessfulAIUse(
           params.subject,
-          Date.now() - params.startedAt
+          Date.now() - params.startedAt,
+          undefined,
+          successfulUsageAnalytics(params.request, params.body, params.requestId, params.subject)
         );
         const remainingAfter =
           params.limit != null ? Math.max(0, params.limit - usedAfter) : null;
