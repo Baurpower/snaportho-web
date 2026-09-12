@@ -15,6 +15,11 @@ declare global {
 const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ?? "";
 const CREATE_ACCOUNT_CONVERSION_SEND_TO =
   "AW-18233960538/YM_gCOS4ksIcENrQ0PZD";
+const BROBOT_FIRST_SUCCESS_CONVERSION_SEND_TO =
+  "AW-18233960538/oyt0CJ3YpvUcENrQ0PZD";
+const BROBOT_FIRST_SUCCESS_SESSION_KEY = "snaportho:google-ads:brobot-first-success";
+const BROBOT_FIRST_SUCCESS_TRANSACTION_KEY =
+  "snaportho:google-ads:brobot-first-success-transaction";
 
 const CONVERSION_LABELS = {
   signup: process.env.NEXT_PUBLIC_GOOGLE_ADS_SIGNUP_CONVERSION_LABEL ?? "",
@@ -221,4 +226,57 @@ export function trackBroBotConversationConversion() {
   trackGoogleAdsConversion({
     conversionLabel: CONVERSION_LABELS.broBotConversation,
   });
+}
+
+export type BroBotSuccessfulUseSurface = "caseprep" | "chat";
+
+/**
+ * Records the first successfully rendered BroBot result in this browser session.
+ *
+ * The session guard prevents retries, streaming metadata, and client re-renders from
+ * producing duplicate tags. Google Ads is also configured to count one conversion
+ * per ad interaction. No prompt or response content is sent to Google.
+ */
+export function trackFirstBroBotSuccessfulUse(surface: BroBotSuccessfulUseSurface) {
+  if (typeof window === "undefined") return false;
+
+  try {
+    if (window.sessionStorage.getItem(BROBOT_FIRST_SUCCESS_SESSION_KEY) === "1") {
+      return false;
+    }
+
+    let transactionId = window.sessionStorage.getItem(
+      BROBOT_FIRST_SUCCESS_TRANSACTION_KEY,
+    );
+    if (!transactionId) {
+      transactionId =
+        typeof window.crypto?.randomUUID === "function"
+          ? window.crypto.randomUUID()
+          : `brobot-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+      window.sessionStorage.setItem(
+        BROBOT_FIRST_SUCCESS_TRANSACTION_KEY,
+        transactionId,
+      );
+    }
+
+    const fired = trackGoogleAdsConversion({
+      sendTo: BROBOT_FIRST_SUCCESS_CONVERSION_SEND_TO,
+      value: 1,
+      currency: "USD",
+      transactionId,
+    });
+
+    if (!fired) return false;
+
+    window.sessionStorage.setItem(BROBOT_FIRST_SUCCESS_SESSION_KEY, "1");
+    trackGoogleAdsEvent("brobot_first_successful_use", { surface });
+    return true;
+  } catch {
+    // Browsers can disable storage. Conversion measurement should never block BroBot.
+    return trackGoogleAdsConversion({
+      sendTo: BROBOT_FIRST_SUCCESS_CONVERSION_SEND_TO,
+      value: 1,
+      currency: "USD",
+    });
+  }
 }

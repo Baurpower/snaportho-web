@@ -50,6 +50,7 @@ import { safeRedirectPath } from '@/lib/auth/redirects';
 import { fetchMeEntitlementsView, toWebUsageSnapshot } from '@/lib/brobot/billing-entitlement-state';
 import { useBroBotEntitlement } from '@/hooks/useBroBotEntitlement';
 import { currentEmailAttribution, trackProductEvent } from '@/lib/analytics/product-events-client';
+import { trackFirstBroBotSuccessfulUse } from '@/lib/analytics/googleAds';
 import {
   archiveBroBotChatSession,
   listBroBotChatRecents,
@@ -1033,6 +1034,7 @@ export default function BroBotChatPage({ campaignEntry = false }: { campaignEntr
               if (!normalizedMetadata) continue;
               didReceiveMetadata = true;
               enrichmentMessageId = normalizedMetadata.messageId;
+              trackFirstBroBotSuccessfulUse('chat');
 
               setConversationId(normalizedMetadata.conversationId);
               const remainingFreeUses = normalizedMetadata.remainingFreeUses;
@@ -1178,6 +1180,8 @@ export default function BroBotChatPage({ campaignEntry = false }: { campaignEntr
         setRequestState('error');
         return;
       }
+
+      trackFirstBroBotSuccessfulUse('chat');
 
       setConversationId(normalizedBody.conversationId);
 

@@ -9,6 +9,7 @@ import {
   ChevronUpIcon,
 } from '@heroicons/react/24/outline';
 import { fetchMeEntitlementsView, toWebUsageSnapshot } from '@/lib/brobot/billing-entitlement-state';
+import { trackFirstBroBotSuccessfulUse } from '@/lib/analytics/googleAds';
 
 // Phase 1: All BroBot AI calls now go through our secure server proxy.
 // The old direct getBroBotResponse (which called the public CasePrep API from the browser)
@@ -127,6 +128,7 @@ export default function BroBotBasic() {
       console.log('✅ parsed response (via secure proxy):', parsed);
       setData(parsed);
       setGuestError(null);
+      trackFirstBroBotSuccessfulUse('caseprep');
 
       // Dynamically import branch and log event (only in browser)
       const branch = (await import('branch-sdk')).default;
