@@ -17,6 +17,7 @@ import { BROBOT_PRICING } from '@/lib/config/brobot-pricing';
 import {
   trackBroBotPricingPageView,
   trackCheckoutStartEvent,
+  rememberPendingBroBotPurchase,
 } from '@/lib/analytics/googleAds';
 import { createWebsiteBroBotCheckout } from '@/lib/brobot/checkout-client';
 
@@ -83,6 +84,7 @@ export default function BroBotPricingClient() {
 
     try {
       setCheckoutLoading(interval);
+      rememberPendingBroBotPurchase({ value, currency: 'USD', interval });
       trackCheckoutStartEvent({
         value,
         currency: 'USD',

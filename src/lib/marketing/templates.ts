@@ -1,4 +1,4 @@
-import { marketingActionUrl, marketingWebUrl } from './links';
+import { marketingActionUrl, marketingWebUrl, marketingFeatureUrl } from './links';
 import { getAppBaseUrl } from '@/lib/config/app-url';
 import { createMarketingPreferenceToken } from './preferences-token';
 import type { CampaignStep, MarketingEmail, MarketingRecipient } from './types';
@@ -14,9 +14,53 @@ const COPY: Record<CampaignStep, { subject: string; title: string; paragraphs: s
   habit_1: { subject: 'BroBot can do more than answer questions', title: 'Keep learning with BroBot', paragraphs: ['Use BroBot for case preparation, anatomy and surgical approaches, exam review, and focused follow-up questions.'], cta: 'Open BroBot' },
   habit_2: { subject: 'Turn a topic into a quick quiz', title: 'Test what you remember', paragraphs: ['Pick a topic you recently studied and ask BroBot to quiz you.', 'Try: “Give me three quiz questions on the Garden classification of femoral neck fractures, with the answers at the end.”', 'Try answering before you read the explanations.'], cta: 'Open BroBot' },
   conversion_1: { subject: 'Keep using BroBot without the limit', title: 'Unlock Unlimited BroBot', paragraphs: ['Want more time for case prep and follow-up questions?', 'Unlimited BroBot removes the free daily question limit.', 'See the available plans and pricing in SnapOrtho.'], cta: 'View Unlimited plans' },
-  profile_completion_1: { subject: 'Make SnapOrtho more relevant to your training', title: 'Personalize your SnapOrtho experience', paragraphs: ['Add your training level, institution, and orthopedic interests to your SnapOrtho profile.'], cta: 'Complete my profile' },
+  profile_completion_1: { subject: 'Finish setting up your SnapOrtho account', title: 'Add your graduation year to SnapOrtho', paragraphs: ['Your SnapOrtho account is missing a couple of details. Adding your graduation year and training level lets us match content to your level of training.', 'It takes about 30 seconds — just two fields.', 'While you’re there: we’ve shipped a lot lately — an expanded Anki deck, CasePrep case summaries, and new surgical-approach walkthroughs in BroBot. Worth a look after you update your profile.'], cta: 'Add my graduation year' },
   reengagement_1: { subject: 'Something from rounds you want to review?', title: 'Start with a question from today', paragraphs: ['Bring BroBot a term, classification, or approach you want to understand better.', 'Try: “Explain the Weber ankle fracture classification in simple terms.”', 'You can try a question before signing in.'], cta: 'Open BroBot' },
 };
+
+// A short, personal note from the founder for the profile-completion campaign.
+// Written to read like a real email, not marketing copy.
+function renderFounderProfileEmail(args: { firstName: string | null; actionUrl: string; brobotUrl: string; ankiUrl: string; unsubscribeUrl: string; postalAddress: string }): MarketingEmail {
+  const { firstName, actionUrl, brobotUrl, ankiUrl, unsubscribeUrl, postalAddress } = args;
+  const link = escapeHtml(actionUrl);
+  const hi = firstName ? `Hi ${escapeHtml(firstName)},` : 'Hi,';
+  const p = (html: string, extra = '') => `<p style="margin:0 0 16px;line-height:1.6;color:#1f2937;font-size:16px${extra}">${html}</p>`;
+  const outlineBtn = (href: string, label: string) => `<a href="${escapeHtml(href)}" style="display:inline-block;background:#fff;color:#0f172a;text-decoration:none;border:1px solid #0f172a;border-radius:8px;padding:10px 16px;font-weight:600;font-size:14px;margin:0 8px 8px 0">${label}</a>`;
+  const html = `<div style="font-family:-apple-system,Segoe UI,Arial,sans-serif;background:#f6f7f9;padding:24px 16px"><div style="max-width:520px;margin:auto;background:#fff;border:1px solid #eceef1;border-radius:12px;overflow:hidden">`
+    + `<div style="background:#0f172a;padding:16px 24px"><span style="color:#fff;font-size:17px;font-weight:700;letter-spacing:.02em">SnapOrtho</span></div>`
+    + `<div style="padding:24px">`
+    + p(hi)
+    + p(`Your profile is missing your training level and graduation year. Adding them takes about 20 seconds and lets us tailor SnapOrtho to your stage of training, whether you're a student, resident, or attending.`)
+    + `<p style="margin:20px 0"><a href="${link}" style="display:inline-block;background:#0f172a;color:#fff;text-decoration:none;border-radius:8px;padding:11px 20px;font-weight:600;font-size:15px">Update my profile</a></p>`
+    + p(`We've also shipped a lot since you signed up. BroBot is much more powerful with a new version of CasePrep and Chat built for orthopaedics. We have also built an Anki add-on with a master versioned orthopaedic deck that will continue to improve. More coming soon!`)
+    + `<p style="margin:0 0 20px">${outlineBtn(brobotUrl, 'Try BroBot: CasePrep &amp; Chat')}${outlineBtn(ankiUrl, 'Get the Anki add-on')}</p>`
+    + p(`Thanks for being here.`)
+    + `<p style="margin:0;line-height:1.4;color:#1f2937;font-size:16px">Alex<br><span style="color:#6b7280;font-size:14px">Founder, SnapOrtho</span></p>`
+    + `</div>`
+    + `<div style="padding:14px 24px;border-top:1px solid #eceef1;font-size:11px;color:#9ca3af;line-height:1.5">SnapOrtho, ${escapeHtml(postalAddress)}<br><a href="${escapeHtml(unsubscribeUrl)}" style="color:#9ca3af">Unsubscribe or manage email preferences</a></div>`
+    + `</div></div>`;
+  const text = [
+    firstName ? `Hi ${firstName},` : 'Hi,',
+    '',
+    "Your profile is missing your training level and graduation year. Adding them takes about 20 seconds and lets us tailor SnapOrtho to your stage of training, whether you're a student, resident, or attending.",
+    '',
+    `Update my profile: ${actionUrl}`,
+    '',
+    "We've also shipped a lot since you signed up. BroBot is much more powerful with a new version of CasePrep and Chat built for orthopaedics. We have also built an Anki add-on with a master versioned orthopaedic deck that will continue to improve. More coming soon!",
+    '',
+    `Try BroBot (CasePrep & Chat): ${brobotUrl}`,
+    `Get the Anki add-on: ${ankiUrl}`,
+    '',
+    'Thanks for being here.',
+    '',
+    'Alex',
+    'Founder, SnapOrtho',
+    '',
+    `Unsubscribe or manage email preferences: ${unsubscribeUrl}`,
+    `SnapOrtho, ${postalAddress}`,
+  ].join('\n');
+  return { subject: 'what year do you graduate?', html, text };
+}
 
 export function renderMarketingEmail(recipient: MarketingRecipient): MarketingEmail & { unsubscribeUrl: string } {
   const copy = COPY[recipient.campaignStep];
@@ -25,6 +69,13 @@ export function renderMarketingEmail(recipient: MarketingRecipient): MarketingEm
   const unsubscribeUrl = `${base}/api/email/preferences?token=${encodeURIComponent(token)}`;
   const actionUrl = marketingActionUrl(recipient.campaignStep, base);
   const webUrl = marketingWebUrl(recipient.campaignStep, base);
+  if (recipient.campaignStep === 'profile_completion_1') {
+    const postalAddress = process.env.MARKETING_POSTAL_ADDRESS?.trim() || (process.env.NODE_ENV === 'production' ? '' : 'Add MARKETING_POSTAL_ADDRESS before sending');
+    if (!postalAddress) throw new Error('MARKETING_POSTAL_ADDRESS is required in production');
+    const brobotUrl = marketingFeatureUrl('brobot', base, { campaignKey: recipient.campaignKey, content: 'brobot_chat' });
+    const ankiUrl = marketingFeatureUrl('anki', base, { campaignKey: recipient.campaignKey, content: 'anki_addon' });
+    return { ...renderFounderProfileEmail({ firstName: recipient.firstName, actionUrl, brobotUrl, ankiUrl, unsubscribeUrl, postalAddress }), unsubscribeUrl };
+  }
   const webLinkLabel = new URL(webUrl).pathname === '/brobot/chat' ? 'Open Chat on the website' : 'Continue on the website';
   const postalAddress = process.env.MARKETING_POSTAL_ADDRESS?.trim() || (process.env.NODE_ENV === 'production' ? '' : 'Add MARKETING_POSTAL_ADDRESS before sending');
   if (!postalAddress) throw new Error('MARKETING_POSTAL_ADDRESS is required in production');

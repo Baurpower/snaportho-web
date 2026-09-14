@@ -1,3 +1,5 @@
+import { BROBOT_PRICING } from "@/lib/config/brobot-pricing";
+
 type GtagEventParams = Record<string, string | number | boolean | (() => void) | undefined>;
 
 type Gtag = (
@@ -117,10 +119,123 @@ export function trackSignupConversion() {
 }
 
 export function trackSubscriptionConversion(params: GoogleAdsConversionParams = {}) {
-  trackGoogleAdsConversion({
+  return trackGoogleAdsConversion({
     ...params,
     conversionLabel: params.conversionLabel || CONVERSION_LABELS.subscription,
   });
+}
+
+const PENDING_PURCHASE_KEY = "snaportho:google-ads:pending-brobot-purchase";
+
+type PendingBroBotPurchase = {
+  value?: number;
+  currency?: string;
+  interval?: "month" | "year";
+};
+
+/**
+ * Resolves the monetary value of a BroBot Unlimited purchase for conversion
+ * reporting. The billing interval is the source of truth; callers that already
+ * know the exact value may pass it through instead.
+ */
+export function resolveBroBotUnlimitedValue(
+  interval?: "month" | "year" | string | null,
+): number {
+  if (typeof interval === "string" && /year|annual/i.test(interval)) {
+    return BROBOT_PRICING.unlimited.yearlyPrice;
+  }
+  return BROBOT_PRICING.unlimited.monthlyPrice;
+}
+
+/**
+ * Records the plan the user is about to buy at checkout-start time, so the
+ * completion surface (which does not always know the interval) can report the
+ * correct conversion value. Best-effort; storage may be disabled.
+ */
+export function rememberPendingBroBotPurchase(pending: PendingBroBotPurchase) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(PENDING_PURCHASE_KEY, JSON.stringify(pending));
+  } catch {
+    // Storage can be disabled; conversion still fires with a derived value.
+  }
+}
+
+function readPendingBroBotPurchase(): PendingBroBotPurchase | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem(PENDING_PURCHASE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as PendingBroBotPurchase;
+    return parsed && typeof parsed === "object" ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function clearPendingBroBotPurchase() {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.removeItem(PENDING_PURCHASE_KEY);
+  } catch {
+    // ignore
+  }
+}
+
+/**
+ * Fires the BroBot Unlimited purchase conversion exactly once per subscription.
+ *
+ * Every checkout completion surface (checkout success page, welcome claim, and
+ * the billing page) routes through this helper so a purchase is reported no
+ * matter which surface the customer lands on, while the shared `dedupeId`
+ * storage guard and the transaction_id sent to Google prevent double-counting.
+ *
+ * The conversion value is resolved from (in order): an explicit value, the
+ * plan stashed at checkout start, the passed interval, then the monthly price.
+ */
+export function trackBroBotUnlimitedPurchaseOnce(params: {
+  dedupeId: string;
+  interval?: "month" | "year" | string | null;
+  value?: number;
+  currency?: string;
+}): boolean {
+  if (typeof window === "undefined") return false;
+
+  const dedupeId = params.dedupeId?.trim();
+  if (!dedupeId) return false;
+
+  const pending = readPendingBroBotPurchase();
+  const value =
+    typeof params.value === "number"
+      ? params.value
+      : typeof pending?.value === "number"
+        ? pending.value
+        : resolveBroBotUnlimitedValue(params.interval ?? pending?.interval);
+  const currency = params.currency ?? pending?.currency ?? "USD";
+
+  const storageKey = `google_ads_subscription_conversion:${dedupeId}`;
+  try {
+    if (window.localStorage.getItem(storageKey) === "sent") {
+      return false;
+    }
+  } catch {
+    // Storage disabled — fall through and let Google's transaction_id dedupe.
+  }
+
+  const fired = trackSubscriptionConversion({
+    value,
+    currency,
+    transactionId: dedupeId,
+  });
+
+  try {
+    window.localStorage.setItem(storageKey, "sent");
+  } catch {
+    // ignore
+  }
+  clearPendingBroBotPurchase();
+
+  return fired;
 }
 
 export function trackCheckoutStartedConversion(params: GoogleAdsConversionParams = {}) {

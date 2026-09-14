@@ -15,10 +15,20 @@ export const PRODUCT_EVENT_NAMES = [
   'caseprep_completed',
   'caseprep_failed',
   'brobot_returned_7d',
+  'anki_landing_viewed',
+  'anki_addon_downloaded',
+  'anki_addon_first_downloaded',
+  'anki_device_linked',
+  'anki_addon_opened',
+  'anki_deck_imported',
+  'anki_deck_update_applied',
+  'anki_brobot_prompt_used',
+  'anki_setup_failed',
 ] as const;
 
 export type ProductEventName = (typeof PRODUCT_EVENT_NAMES)[number];
 export type EntitlementTier = 'guest' | 'free' | 'unlimited';
+export type ProductArea = 'brobot' | 'caseprep' | 'billing' | 'anki';
 
 export type ProductEventInput = {
   eventId?: string;
@@ -29,7 +39,7 @@ export type ProductEventInput = {
   sessionId?: string | null;
   requestId?: string | null;
   surface: string;
-  productArea?: 'brobot' | 'caseprep' | 'billing';
+  productArea?: ProductArea;
   appVersion?: string | null;
   caseprepVersion?: 'v1.1' | 'v1.2' | 'v1.3' | null;
   entitlementTier?: EntitlementTier | null;

@@ -15,7 +15,11 @@ import {
 
 import { useAuth } from '@/context/AuthContext';
 import { safeRedirectPath } from '@/lib/auth/redirects';
-import { trackCheckoutCompletedEvent, trackSubscriptionClaimedEvent } from '@/lib/analytics/googleAds';
+import {
+  trackCheckoutCompletedEvent,
+  trackSubscriptionClaimedEvent,
+  trackBroBotUnlimitedPurchaseOnce,
+} from '@/lib/analytics/googleAds';
 import {
   fetchMeEntitlementsView,
   type WebEntitlementView,
@@ -123,6 +127,18 @@ export default function CheckoutSuccessClient() {
       });
     }
   }, [sessionId]);
+
+  // Stripe returns every web purchase to this page, so this is where the
+  // BroBot Unlimited purchase conversion must fire. The helper dedupes per
+  // subscription, so the billing page firing for the same subscription will
+  // not double-count.
+  useEffect(() => {
+    if (entitlementView?.isUnlimited !== true) return;
+    const dedupeId =
+      entitlementView.entitlement?.stripeSubscriptionId ?? sessionId;
+    if (!dedupeId) return;
+    trackBroBotUnlimitedPurchaseOnce({ dedupeId });
+  }, [entitlementView, sessionId]);
 
   useEffect(() => {
     if (authLoading) return;

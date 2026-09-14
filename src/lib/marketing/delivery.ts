@@ -14,7 +14,14 @@ export async function deliverMarketingCampaignEmail(recipient: MarketingRecipien
   ]);
   if (profileError) throw new Error(`Consent lookup failed: ${profileError.message}`);
   if (optoutError) throw new Error(`Suppression lookup failed: ${optoutError.message}`);
-  if (profile?.receive_emails !== true || profile.marketing_unsubscribed_at) return { status: 'suppressed' as const };
+  // Explicit unsubscribe always suppresses. For consent: opted-in (receive_emails=true)
+  // may receive any campaign; never-indicated (receive_emails null/absent, not
+  // unsubscribed) may receive ONLY the account-oriented profile-completion campaign.
+  if (profile?.marketing_unsubscribed_at) return { status: 'suppressed' as const };
+  const optedIn = profile?.receive_emails === true;
+  const neverIndicated = profile?.receive_emails === null || profile?.receive_emails === undefined;
+  const consentOk = optedIn || (neverIndicated && recipient.campaignKey === 'profile_completion_v1');
+  if (!consentOk) return { status: 'suppressed' as const };
   if ((optouts ?? []).some((row) => row.kind === null || row.kind === recipient.topic)) return { status: 'suppressed' as const };
 
   // Re-resolve immediately before sending so a changed profile/auth address cannot
@@ -25,7 +32,7 @@ export async function deliverMarketingCampaignEmail(recipient: MarketingRecipien
   ]);
   if (authError || historyError) throw new Error('Recipient address recheck failed');
   const baseVersion = recipient.templateVersion.replace(/\.auth-fallback$/, '');
-  const address = resolveCampaignAddress({ profileEmail: profile.email, authEmail: auth.user?.email, authConfirmed: Boolean(auth.user?.email_confirmed_at), campaignKey: recipient.campaignKey, campaignStep: recipient.campaignStep, templateVersion: baseVersion, deliveries: history ?? [] });
+  const address = resolveCampaignAddress({ profileEmail: profile?.email, authEmail: auth.user?.email, authConfirmed: Boolean(auth.user?.email_confirmed_at), campaignKey: recipient.campaignKey, campaignStep: recipient.campaignStep, templateVersion: baseVersion, deliveries: history ?? [] });
   if (!address || address.email !== recipient.email || address.templateVersion !== recipient.templateVersion || address.addressSource !== recipient.addressSource || address.fallbackFromDeliveryId !== recipient.fallbackFromDeliveryId) return { status: 'suppressed' as const };
 
   // Validate the template before reserving a delivery.

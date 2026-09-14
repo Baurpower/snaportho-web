@@ -168,6 +168,9 @@ class ReviewerApi:
             retries=0,
         )
 
+    def heartbeat(self, payload):
+        return self.request("POST", "/api/anki/addon/heartbeat", payload, retries=0)
+
     def me(self):
         return self.request("GET", "/api/anki/reviewer/me")
 

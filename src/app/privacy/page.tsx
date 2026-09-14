@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-const EFFECTIVE_DATE = "June 5, 2026";
+const EFFECTIVE_DATE = "September 12, 2026";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -76,6 +76,13 @@ export default function PrivacyPolicyPage() {
               or crash-related information.
             </li>
             <li>
+              SnapOrtho for Anki product analytics, such as add-on downloads,
+              device linking, add-on version, Anki version, operating system
+              family, BroBot prompt kind, and Master Deck update status. We do
+              not collect Anki card text, personal notes, or review history for
+              analytics.
+            </li>
+            <li>
               Deep linking, referral, and attribution data from Branch and
               similar tools used to understand app opens, campaigns, and
               conversion flows.
@@ -139,6 +146,14 @@ export default function PrivacyPolicyPage() {
             We work with service providers that help us host SnapOrtho, manage
             infrastructure, authenticate users, process subscriptions, measure
             app performance, and support deep linking or attribution.
+          </p>
+          <p>
+            If you use SnapOrtho for Anki, we record first-party product events
+            so we can understand downloads, activation, and feature use. A
+            linked add-on may send one daily heartbeat with add-on version, Anki
+            version, and OS family. You can disable that heartbeat in the add-on
+            config. Service events needed to download the add-on, connect your
+            account, serve BroBot, and update the Master Deck still occur.
           </p>
           <p>
             These providers may include hosting and database vendors,

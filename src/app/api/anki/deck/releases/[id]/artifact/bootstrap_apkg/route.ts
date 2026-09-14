@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment -- Additive Phase 3 tables are absent from generated database types until deployment. */
 // @ts-nocheck Additive Phase 3 tables are absent from generated database types until deployment.
 import { NextResponse } from "next/server";
+import { recordAnkiProductEvent } from "@/lib/analytics/anki-usage";
 import {
   deviceAuth,
   ANKI_DECK_MEDIA_BUCKET,
@@ -93,6 +94,15 @@ export async function GET(
     url = signed?.signedUrl ?? null;
   }
   if (!url) {
+    void recordAnkiProductEvent({
+      eventName: "anki_setup_failed",
+      userId: a.userId,
+      surface: "anki_bootstrap_apkg",
+      properties: {
+        code: deliveryErrorCode ?? "artifact_delivery_unavailable",
+        release_id: release.id,
+      },
+    });
     return NextResponse.json(
       {
         error: "bootstrap artifact temporarily unavailable",
@@ -101,6 +111,13 @@ export async function GET(
       { status: 503 },
     );
   }
+
+  void recordAnkiProductEvent({
+    eventName: "anki_deck_imported",
+    userId: a.userId,
+    surface: "anki_bootstrap_apkg",
+    properties: { release_id: release.id, release_version: release.release_version },
+  });
 
   return NextResponse.json({
     releaseId: release.id,

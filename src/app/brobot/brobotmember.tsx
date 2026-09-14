@@ -20,7 +20,10 @@ import { useAuth } from '@/context/AuthContext';
 import Nav from '@/components/Nav';
 import AccountDropdown from '@/components/accountdropdown';
 import BroBotProductTabs from '@/components/brobot/BroBotProductTabs';
-import { trackCheckoutStartedConversion } from '@/lib/analytics/googleAds';
+import {
+  trackCheckoutStartedConversion,
+  rememberPendingBroBotPurchase,
+} from '@/lib/analytics/googleAds';
 import { appendSafeReturnTo } from '@/lib/auth/redirects';
 import { BROBOT_PRICING } from '@/lib/config/brobot-pricing';
 import { createWebsiteBroBotCheckout } from '@/lib/brobot/checkout-client';
@@ -362,6 +365,11 @@ export default function BroBotMember() {
   async function handleUpgrade() {
     setUpgradeLoading(true);
     try {
+      rememberPendingBroBotPurchase({
+        value: BROBOT_PRICING.unlimited.monthlyPrice,
+        currency: 'USD',
+        interval: 'month',
+      });
       trackCheckoutStartedConversion({
         value: BROBOT_PRICING.unlimited.monthlyPrice,
         currency: 'USD',

@@ -5,6 +5,19 @@ export const BROBOT_CAMPAIGN_APP_PATH = '/app/brobot/guest';
 export const PROFILE_CAMPAIGN_WEB_PATH = '/account/profile';
 export const PRICING_CAMPAIGN_WEB_PATH = '/brobot/pricing';
 
+// Secondary in-email CTAs (used alongside the primary step CTA, e.g. in the
+// profile-completion email). Each can route through a configurable Branch link
+// for app attribution, and otherwise falls back to a UTM-tagged web URL.
+export type MarketingFeature = 'brobot' | 'anki';
+const FEATURE_BRANCH_ENV_KEYS: Record<MarketingFeature, string> = {
+  brobot: 'MARKETING_BRANCH_BROBOT_URL',
+  anki: 'MARKETING_BRANCH_ANKI_URL',
+};
+const FEATURE_WEB_PATHS: Record<MarketingFeature, string> = {
+  brobot: '/brobot/chat',
+  anki: '/anki',
+};
+
 export const BRANCH_CAMPAIGN_STEPS = [
   'activation_1', 'activation_2', 'activation_3',
   'habit_1', 'habit_2', 'reengagement_1',
@@ -88,6 +101,36 @@ export function marketingActionUrl(step: CampaignStep, base: string): string {
   url.searchParams.set('utm_medium', 'email');
   url.searchParams.set('utm_campaign', CAMPAIGN_CONFIG[step].campaignKey);
   url.searchParams.set('utm_content', step);
+  return url.toString();
+}
+
+// A tracked URL for a secondary feature CTA. When a Branch link is configured
+// for the feature it is used (with Branch analytics + UTM labels appended so the
+// click is attributed in the Branch dashboard); otherwise a UTM-tagged web URL.
+export function marketingFeatureUrl(feature: MarketingFeature, base: string, opts: { campaignKey: string; content: string }): string {
+  const configured = process.env[FEATURE_BRANCH_ENV_KEYS[feature]]?.trim();
+  if (configured) {
+    const url = new URL(configured);
+    if (url.protocol !== 'https:' || !APPROVED_BRANCH_HOSTS.has(url.hostname)) {
+      throw new Error(`${FEATURE_BRANCH_ENV_KEYS[feature]} must use an approved SnapOrtho Branch HTTPS domain`);
+    }
+    // Branch reads UTM params automatically and also honors these ~ link-level
+    // analytics labels set at click time, so the visit lands in the right
+    // campaign/channel/feature buckets in the Branch dashboard.
+    url.searchParams.set('utm_source', 'branch');
+    url.searchParams.set('utm_medium', 'email');
+    url.searchParams.set('utm_campaign', opts.campaignKey);
+    url.searchParams.set('utm_content', opts.content);
+    url.searchParams.set('~channel', 'email');
+    url.searchParams.set('~campaign', opts.campaignKey);
+    url.searchParams.set('~feature', opts.content);
+    return url.toString();
+  }
+  const url = new URL(FEATURE_WEB_PATHS[feature], base);
+  url.searchParams.set('utm_source', 'resend');
+  url.searchParams.set('utm_medium', 'email');
+  url.searchParams.set('utm_campaign', opts.campaignKey);
+  url.searchParams.set('utm_content', opts.content);
   return url.toString();
 }
 

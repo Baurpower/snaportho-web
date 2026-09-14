@@ -41,7 +41,12 @@ for (const step of CAMPAIGN_STEPS) {
   assert.ok(rendered.html.includes(web.toString().replaceAll('&', '&amp;')));
   assert.ok(!action.toString().includes('test@example.com'));
   assert.ok(!action.toString().includes('00000000-0000-0000-0000-000000000000'));
-  assert.ok(rendered.html.includes(step === 'profile_completion_1' || step === 'conversion_1' ? 'Continue on the website' : 'Open Chat on the website'));
+  // profile_completion_1 uses the personal founder layout (its CTA is the web
+  // link); other steps use the shared "continue on the web" affordance.
+  assert.ok(rendered.html.includes(
+    step === 'profile_completion_1' ? 'Update my profile'
+      : step === 'conversion_1' ? 'Continue on the website'
+      : 'Open Chat on the website'));
   assert.ok(!rendered.html.includes('/app/brobot/chat?'));
   assert.ok(!rendered.html.includes('/app/account/profile?'));
   assert.ok(!rendered.html.includes('/app/brobot/pricing?'));

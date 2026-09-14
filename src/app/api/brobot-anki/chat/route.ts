@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { authenticateBroBotAnkiRequest, parseJsonBody } from "../_lib";
+import { recordAnkiProductEvent } from "@/lib/analytics/anki-usage";
+import { classifyAnkiBroBotPrompt } from "@/lib/analytics/anki-usage-summary";
 import { getBroBotAccessGate } from "@/lib/brobot/brobot-entitlement-access";
 import { BROBOT_CHAT_MODEL } from "@/lib/brobot/model-config";
 import { getOpenAI } from "@/lib/brobot/openai-client";
@@ -106,6 +108,13 @@ export async function POST(request: Request) {
     const usedToday = await recordSuccessfulAIUse(subject, Date.now() - startedAt);
     const remainingToday =
       gate.dailyCap == null ? null : Math.max(0, gate.dailyCap - usedToday);
+
+    void recordAnkiProductEvent({
+      eventName: "anki_brobot_prompt_used",
+      userId: auth.userId,
+      surface: "anki_brobot_chat",
+      properties: { prompt_kind: classifyAnkiBroBotPrompt(body.message) },
+    });
 
     return NextResponse.json({
       conversationId,

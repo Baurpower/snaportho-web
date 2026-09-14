@@ -50,6 +50,9 @@ export default async function AnkiDownloadPage() {
               Download Version 1.0.4
             </a>
             <p className="mt-4 text-xs text-white/48">SnapOrtho Beta for Anki Desktop</p>
+            <p className="mt-3 max-w-2xl text-xs leading-5 text-white/48">
+              SnapOrtho records that you downloaded the add-on, connected a device, and used features such as BroBot and deck updates so we can improve the product. We do not upload your cards or review history. You can turn off the daily add-on heartbeat in Tools → Add-ons → SnapOrtho → Config (`usage_reporting`).
+            </p>
           </div>
 
           <div className="grid gap-8 p-7 sm:p-10 lg:grid-cols-[1fr_0.9fr]">

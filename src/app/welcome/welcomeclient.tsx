@@ -9,6 +9,7 @@ import { useAuth } from '@/context/AuthContext';
 import {
   trackCheckoutCompletedEvent,
   trackSubscriptionClaimedEvent,
+  trackBroBotUnlimitedPurchaseOnce,
 } from '@/lib/analytics/googleAds';
 
 type ClaimStatus =
@@ -75,6 +76,11 @@ export default function WelcomeClient() {
             source: 'brobot_welcome',
             status,
           });
+          // Only a freshly claimed subscription is a new purchase; an
+          // already-owned one must not re-report a conversion.
+          if (status === 'claimed' && checkoutSessionId) {
+            trackBroBotUnlimitedPurchaseOnce({ dedupeId: checkoutSessionId });
+          }
           router.replace('/brobot/chat?subscription=active');
           return;
         }

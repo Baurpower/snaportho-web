@@ -23,6 +23,7 @@ export interface UserProfile {
   institution?: string;
   receive_emails?: boolean;
   subspecialty_interest?: string;
+  grad_year?: number | string | null;
   training_history?: TrainingEntry[];
   [key: string]: unknown;
 }
@@ -63,6 +64,7 @@ export default function ProfileForm({
     institution = '',
     receive_emails = false,
     subspecialty_interest = '',
+    grad_year: initialGradYear = '',
     training_history: initialTrainingHistory = [],
   } = initialValues;
 
@@ -74,6 +76,9 @@ export default function ProfileForm({
   const [userInstitution, setInstitution] = useState(institution);
   const [receiveEmails, setReceiveEmails] = useState(receive_emails);
   const [subspecialty, setSubspecialty] = useState(subspecialty_interest);
+  const [gradYear, setGradYear] = useState(
+    initialGradYear === null || initialGradYear === undefined ? '' : String(initialGradYear),
+  );
   const [trainingHistory, setTrainingHistory] =
     useState<TrainingEntry[]>(initialTrainingHistory);
 
@@ -191,6 +196,15 @@ export default function ProfileForm({
       return;
     }
 
+    const parsedGradYear = gradYear.trim() === '' ? null : Number(gradYear);
+    if (
+      parsedGradYear !== null &&
+      (!Number.isInteger(parsedGradYear) || parsedGradYear < 2025 || parsedGradYear > 2100)
+    ) {
+      alert('Graduation year must be a valid four-digit year (2025–2100).');
+      return;
+    }
+
     const { error: profErr } = await supabase.from('user_profiles').upsert({
       user_id: currentUser.id,
       email,
@@ -198,9 +212,12 @@ export default function ProfileForm({
       country: userCountry,
       city: userCity,
       training_level: trainingLevel,
+      grad_year: parsedGradYear,
       institution: userInstitution,
       receive_emails: receiveEmails,
       subspecialty_interest: subspecialty,
+      // Close the campaign loop: mark complete only once both target fields are set.
+      ...(trainingLevel.trim() && parsedGradYear !== null ? { is_profile_complete: true } : {}),
     });
 
     if (profErr) {
@@ -300,6 +317,19 @@ export default function ProfileForm({
                 </option>
               ))}
             </select>
+          </FormField>
+
+          <FormField label="Graduation Year">
+            <input
+              type="number"
+              inputMode="numeric"
+              placeholder="e.g. 2027"
+              min={2025}
+              max={2100}
+              className={inputClass}
+              value={gradYear}
+              onChange={(e) => setGradYear(e.target.value)}
+            />
           </FormField>
 
           <FormField label="Current Institution">

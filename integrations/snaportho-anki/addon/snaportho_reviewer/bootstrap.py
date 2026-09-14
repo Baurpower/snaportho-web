@@ -112,12 +112,36 @@ class ProfileRuntime:
             from .brobot_panel import LearnerSidePanel
             self.side_panel=LearnerSidePanel(self.mw,self)
         self._maybe_first_run_prompt()
+        QTimer.singleShot(4000,self._maybe_heartbeat)
         if self._handles_search_relay():
             self.search_relay_timer=QTimer(self.mw)
             self.search_relay_timer.setInterval(10000)
             self.search_relay_timer.timeout.connect(self.poll_search_relay)
             self.search_relay_timer.start()
             QTimer.singleShot(1500,self.poll_search_relay)
+    def _maybe_heartbeat(self):
+        if self.closed or not self.settings.usage_reporting:return
+        try:
+            if not self.credentials.get():return
+        except Exception:
+            return
+        import os
+        from .usage import heartbeat_path,os_family,read_heartbeat_day,should_send_heartbeat,utc_day,write_heartbeat_day
+        path=heartbeat_path(os.path.join(os.path.dirname(__file__),".."))
+        today=utc_day()
+        if not should_send_heartbeat(read_heartbeat_day(path),today):return
+        from anki import version as anki_version
+        from .version import ADDON_VERSION
+        payload={"addonVersion":ADDON_VERSION,"ankiVersion":str(anki_version),"os":os_family()}
+        def send():
+            return self.api.heartbeat(payload)
+        def done(future):
+            try:
+                future.result()
+                write_heartbeat_day(path,today)
+            except Exception:
+                pass
+        self.background(send,done)
     def stop(self):
         self.closed=True
         if self.window:self.window.close();self.window=None

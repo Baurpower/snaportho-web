@@ -8,6 +8,7 @@ const CLIENT_EVENT_ALLOWLIST = new Set([
   'brobot_opened',
   'brobot_pricing_viewed',
   'brobot_checkout_started',
+  'anki_landing_viewed',
 ]);
 
 function text(value: unknown, max = 128) {
@@ -59,7 +60,12 @@ export async function POST(request: Request) {
     anonymousId,
     sessionId,
     surface: text(body.surface, 100) ?? 'web_unknown',
-    productArea: body.eventName === 'brobot_checkout_started' ? 'billing' : 'brobot',
+    productArea:
+      body.eventName === 'brobot_checkout_started'
+        ? 'billing'
+        : body.eventName.startsWith('anki_')
+          ? 'anki'
+          : 'brobot',
     source: text(body.source),
     medium: text(body.medium),
     campaign: text(body.campaign),

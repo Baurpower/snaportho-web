@@ -4,7 +4,7 @@ SUPPORTED_ENVIRONMENTS={"local","staging","production"}
 FORBIDDEN_KEYS={"token","access_token","service_role_key","credential","password","reviewer_identity","card_content"}
 @dataclass(frozen=True)
 class Settings:
-    environment:str; base_url:str; request_timeout_seconds:int; diagnostics_enabled:bool
+    environment:str; base_url:str; request_timeout_seconds:int; diagnostics_enabled:bool; usage_reporting:bool
 def validate(raw):
     if set(raw)&FORBIDDEN_KEYS:raise ValueError("secret or protected configuration key")
     if raw.get("environment") not in SUPPORTED_ENVIRONMENTS:raise ValueError("unsupported environment")
@@ -15,4 +15,6 @@ def validate(raw):
     timeout=raw.get("request_timeout_seconds")
     if not isinstance(timeout,int) or not 5<=timeout<=60:raise ValueError("timeout must be 5-60 seconds")
     if not isinstance(raw.get("diagnostics_enabled"),bool):raise ValueError("diagnostics_enabled must be boolean")
-    return Settings(raw["environment"],raw["base_url"].rstrip("/"),timeout,raw["diagnostics_enabled"])
+    usage_reporting=raw.get("usage_reporting", True)
+    if not isinstance(usage_reporting,bool):raise ValueError("usage_reporting must be boolean")
+    return Settings(raw["environment"],raw["base_url"].rstrip("/"),timeout,raw["diagnostics_enabled"],usage_reporting)

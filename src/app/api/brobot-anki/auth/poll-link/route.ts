@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+import { recordAnkiProductEvent } from "@/lib/analytics/anki-usage";
 import {
   generateDeviceToken,
   getDeviceLinkByCode,
@@ -76,7 +77,7 @@ export async function POST(request: Request) {
     const tokenHash = hashDeviceToken(rawDeviceToken);
     const now = isoNow();
 
-    const { error: tokenError } = await supabase
+    const { data: tokenRow, error: tokenError } = await supabase
       .from("brobot_anki_device_tokens")
       .insert({
         device_link_id: link.id,
@@ -85,7 +86,9 @@ export async function POST(request: Request) {
         token_hash: tokenHash,
         created_at: now,
         updated_at: now,
-      });
+      })
+      .select("id")
+      .single();
 
     if (tokenError) {
       return NextResponse.json({ error: tokenError.message }, { status: 500 });
@@ -103,6 +106,13 @@ export async function POST(request: Request) {
     if (linkError) {
       return NextResponse.json({ error: linkError.message }, { status: 500 });
     }
+
+    void recordAnkiProductEvent({
+      eventName: "anki_device_linked",
+      userId: link.user_id,
+      surface: "anki_device_link",
+      properties: { device_token_id: tokenRow?.id ?? null },
+    });
 
     return NextResponse.json(
       {

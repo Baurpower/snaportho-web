@@ -1,18 +1,36 @@
-import { CAMPAIGN_STEPS, type MarketingRecipient } from '../src/lib/marketing/types';
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { CAMPAIGN_STEPS, type CampaignStep, type MarketingRecipient } from '../src/lib/marketing/types';
 import { CAMPAIGN_CONFIG } from '../src/lib/marketing/segments';
 import { renderMarketingEmail } from '../src/lib/marketing/templates';
 import { sendMarketingEmail } from '../src/lib/marketing/resend';
 import { getAppBaseUrl } from '../src/lib/config/app-url';
 import { verifyMarketingDestinations } from '../src/lib/marketing/link-preflight';
 
+function loadEnv() {
+  for (const filename of ['.env.local', '.env']) {
+    const path = join(process.cwd(), filename);
+    if (!existsSync(path)) continue;
+    for (const line of readFileSync(path, 'utf8').split(/\r?\n/)) {
+      const match = line.match(/^([A-Za-z_][A-Za-z0-9_]*)=(.*)$/);
+      if (!match || process.env[match[1]]) continue;
+      process.env[match[1]] = match[2].trim().replace(/^['"]|['"]$/g, '');
+    }
+  }
+}
+
 function argument(name: string) {
   return process.argv.slice(2).find((value) => value.startsWith(`--${name}=`))?.slice(name.length + 3);
 }
 
 async function main() {
+  loadEnv();
   const to = argument('to')?.trim().toLowerCase();
   if (!to || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(to)) throw new Error('A valid --to=email address is required');
   if (argument('confirm') !== 'SEND-MARKETING-TESTS') throw new Error('Pass --confirm=SEND-MARKETING-TESTS');
+  const onlyStep = argument('step') as CampaignStep | undefined;
+  if (onlyStep && !CAMPAIGN_STEPS.includes(onlyStep)) throw new Error(`--step must be one of ${CAMPAIGN_STEPS.join('|')}`);
+  const steps = onlyStep ? [onlyStep] : CAMPAIGN_STEPS;
   if (process.argv.includes('--allow-unreleased-links')) {
     console.warn('Sending test previews with unreleased links explicitly allowed.');
   } else {
@@ -21,7 +39,7 @@ async function main() {
   const runId = `test-${Date.now()}`;
   const results: { step: string; id: string }[] = [];
 
-  for (const campaignStep of CAMPAIGN_STEPS) {
+  for (const campaignStep of steps) {
     const config = CAMPAIGN_CONFIG[campaignStep];
     const recipient: MarketingRecipient = {
       userId: '00000000-0000-0000-0000-000000000000',

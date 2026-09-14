@@ -460,6 +460,7 @@ class SettingsDialog:
             "base_url": self.url.text().strip(),
             "request_timeout_seconds": self.timeout.value(),
             "diagnostics_enabled": self.runtime.settings.diagnostics_enabled,
+            "usage_reporting": self.runtime.settings.usage_reporting,
         }
         try:
             settings = validate(raw)

@@ -5,8 +5,16 @@ export type CampaignProfile = {
   email: string;
   confirmed: boolean;
   receiveEmails: boolean;
+  // Consent nuance: the account exists and has never expressed an email
+  // preference (receive_emails is null / no profile row) and has NOT explicitly
+  // opted out or unsubscribed. Such accounts may only receive the
+  // account-oriented profile_completion step, never marketing steps.
+  neverIndicated?: boolean;
   firstName: string | null;
   profileComplete: boolean;
+  // True when a targeted profile field (training level or graduation year) is
+  // still missing. Preferred over the coarse profileComplete flag.
+  hasTargetFieldGap?: boolean;
   currentlyEntitled: boolean;
   firstUseAt: number | null;
   lastUseAt: number | null;
@@ -30,7 +38,13 @@ export const CAMPAIGN_CONFIG: Record<CampaignStep, { campaignKey: string; topic:
 
 export function isEligibleForCampaign(profile: CampaignProfile, step: CampaignStep, now = Date.now()) {
   const config = CAMPAIGN_CONFIG[step];
-  if (!profile.confirmed || !profile.receiveEmails || profile.currentlyEntitled) return false;
+  if (!profile.confirmed || profile.currentlyEntitled) return false;
+  // Consent gate. Opted-in accounts may receive any step. Never-indicated
+  // accounts (no stated preference, not opted out) may receive ONLY the
+  // account-oriented profile_completion step. Explicit opt-out / unsubscribe
+  // sets receiveEmails=false with neverIndicated falsy and is blocked here.
+  const consentOk = profile.receiveEmails || (step === 'profile_completion_1' && profile.neverIndicated === true);
+  if (!consentOk) return false;
   if (profile.optedOutTopics.has('*') || profile.optedOutTopics.has(config.topic)) return false;
   if (profile.priorSteps.has(step)) return false;
 
@@ -41,7 +55,7 @@ export function isEligibleForCampaign(profile: CampaignProfile, step: CampaignSt
     case 'habit_1': return profile.firstUseAt !== null && now - profile.firstUseAt <= 2 * DAY;
     case 'habit_2': return profile.firstUseAt !== null && (profile.priorStepAt.get('habit_1') ?? now) <= now - 4 * DAY && profile.lastUseAt !== null && now - profile.lastUseAt >= 3 * DAY;
     case 'conversion_1': return profile.firstUseAt !== null;
-    case 'profile_completion_1': return !profile.profileComplete;
+    case 'profile_completion_1': return profile.hasTargetFieldGap ?? !profile.profileComplete;
     case 'reengagement_1': return profile.lastUseAt !== null && now - profile.lastUseAt >= 30 * DAY;
   }
 }

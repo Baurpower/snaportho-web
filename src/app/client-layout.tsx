@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import ClientProvider from "../components/ClientProvider";
 import Footer from "../components/Footer";
 import Nav from "../components/Nav";
+import AnkiTrafficTracker from "../components/analytics/AnkiTrafficTracker";
 import BroBotTrafficTracker from "../components/analytics/BroBotTrafficTracker";
 
 export default function ClientLayout({
@@ -20,6 +21,7 @@ export default function ClientLayout({
   return (
     <ClientProvider>
       <BroBotTrafficTracker />
+      <AnkiTrafficTracker />
       {isMyCasesLanding ? (
         <main className="flex-1 w-full">{children}</main>
       ) : (

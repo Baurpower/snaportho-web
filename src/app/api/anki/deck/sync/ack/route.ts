@@ -2,6 +2,7 @@
 // @ts-nocheck Additive Phase 3 tables are absent from generated database types until deployment.
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { recordAnkiProductEvent } from "@/lib/analytics/anki-usage";
 import { deviceAuth } from "../../_lib";
 const h = z.string().regex(/^[a-f0-9]{64}$/);
 const schema = z
@@ -60,5 +61,27 @@ export async function POST(request: Request) {
       { error: "could not record acknowledgement" },
       { status: 500 },
     );
+  if (parsed.data.status === "applied") {
+    void recordAnkiProductEvent({
+      eventName: "anki_deck_update_applied",
+      userId: a.userId,
+      surface: "anki_deck_sync_ack",
+      properties: {
+        release_id: parsed.data.targetReleaseId,
+        conflict_count: parsed.data.conflictCount,
+      },
+    });
+  } else if (parsed.data.status === "failed") {
+    void recordAnkiProductEvent({
+      eventName: "anki_setup_failed",
+      userId: a.userId,
+      surface: "anki_deck_sync_ack",
+      properties: {
+        code: "deck_update_failed",
+        release_id: parsed.data.targetReleaseId,
+        conflict_count: parsed.data.conflictCount,
+      },
+    });
+  }
   return NextResponse.json({ recorded: true, id: data.id });
 }

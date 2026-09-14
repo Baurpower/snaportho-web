@@ -18,7 +18,8 @@ import {
 import { BROBOT_PRICING } from '@/lib/config/brobot-pricing';
 import {
   trackCheckoutStartedConversion,
-  trackSubscriptionConversion,
+  trackBroBotUnlimitedPurchaseOnce,
+  rememberPendingBroBotPurchase,
 } from '@/lib/analytics/googleAds';
 import { createWebsiteBroBotCheckout } from '@/lib/brobot/checkout-client';
 import { invalidateBroBotEntitlementCache } from '@/lib/brobot/brobot-entitlement-events';
@@ -176,16 +177,9 @@ function BillingContent() {
       return;
     }
 
-    const storageKey = `google_ads_subscription_conversion:${stripeSubscriptionId}`;
-    if (window.localStorage.getItem(storageKey)) {
-      return;
-    }
-
-    trackSubscriptionConversion({
-      currency: 'USD',
-      transactionId: stripeSubscriptionId,
+    trackBroBotUnlimitedPurchaseOnce({
+      dedupeId: stripeSubscriptionId,
     });
-    window.localStorage.setItem(storageKey, 'sent');
   }, [awaitingCheckoutConfirmation, billingView]);
 
   const handleRestoreSubscription = async () => {
@@ -215,6 +209,11 @@ function BillingContent() {
   const handleUpgrade = async (interval: 'month' | 'year') => {
     try {
       setBillingActionError(null);
+      const value =
+        interval === 'year'
+          ? BROBOT_PRICING.unlimited.yearlyPrice
+          : BROBOT_PRICING.unlimited.monthlyPrice;
+      rememberPendingBroBotPurchase({ value, currency: 'USD', interval });
       trackCheckoutStartedConversion({
         value:
           interval === 'year'

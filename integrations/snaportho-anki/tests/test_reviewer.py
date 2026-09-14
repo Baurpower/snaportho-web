@@ -6,6 +6,7 @@ from snaportho_reviewer.resolver import resolve_card
 from snaportho_reviewer.editor import field_diff,save_local_working_edit
 from snaportho_reviewer.state import DraftStore
 from snaportho_reviewer.config import validate
+from snaportho_reviewer.usage import os_family, should_send_heartbeat, utc_day, write_heartbeat_day, read_heartbeat_day, heartbeat_path
 from snaportho_reviewer.credential_store import FakeCredentialStore,CredentialUnavailable
 from snaportho_reviewer.api import ReviewerApi,ApiError
 from snaportho_reviewer.diagnostics import build
@@ -131,11 +132,32 @@ class ReviewerTests(unittest.TestCase):
   self.assertIn("self.dock.show()",open_panel)
   self.assertIn("self.dock.raise_()",open_panel)
  def test_configuration_and_https(self):
-  settings=validate({"environment":"local","base_url":"http://127.0.0.1:3000","request_timeout_seconds":15,"diagnostics_enabled":False});self.assertEqual(settings.environment,"local")
+  settings=validate({"environment":"local","base_url":"http://127.0.0.1:3000","request_timeout_seconds":15,"diagnostics_enabled":False});self.assertEqual(settings.environment,"local");self.assertTrue(settings.usage_reporting)
+  disabled=validate({"environment":"local","base_url":"http://127.0.0.1:3000","request_timeout_seconds":15,"diagnostics_enabled":False,"usage_reporting":False});self.assertFalse(disabled.usage_reporting)
   with self.assertRaises(ValueError):validate({"environment":"production","base_url":"http://example.com","request_timeout_seconds":15,"diagnostics_enabled":False})
   with self.assertRaises(ValueError):validate({"environment":"local","base_url":"http://127.0.0.1:3000","request_timeout_seconds":15,"diagnostics_enabled":False,"token":"x"})
+  with self.assertRaises(ValueError):validate({"environment":"local","base_url":"http://127.0.0.1:3000","request_timeout_seconds":15,"diagnostics_enabled":False,"usage_reporting":"yes"})
   with open(os.path.join(os.path.dirname(__file__),"..","addon","config.json"))as source:packaged=json.load(source)
-  self.assertEqual(packaged["environment"],"production");self.assertEqual(packaged["base_url"],"https://snap-ortho.com")
+  self.assertEqual(packaged["environment"],"production");self.assertEqual(packaged["base_url"],"https://snap-ortho.com");self.assertTrue(packaged["usage_reporting"])
+ def test_usage_heartbeat_is_daily_and_metadata_only(self):
+  self.assertEqual(os_family("darwin"),"mac");self.assertEqual(os_family("win32"),"windows");self.assertEqual(os_family("linux"),"linux")
+  self.assertTrue(should_send_heartbeat(None,"2026-09-12"))
+  self.assertFalse(should_send_heartbeat("2026-09-12","2026-09-12"))
+  self.assertTrue(should_send_heartbeat("2026-09-11","2026-09-12"))
+  folder=tempfile.mkdtemp();path=heartbeat_path(folder)
+  self.assertIsNone(read_heartbeat_day(path));write_heartbeat_day(path,"2026-09-12")
+  self.assertEqual(read_heartbeat_day(path),"2026-09-12")
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:bootstrap=source.read()
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","api.py"))as source:api=source.read()
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","usage.py"))as source:usage=source.read()
+  heartbeat=bootstrap[bootstrap.index("    def _maybe_heartbeat"):bootstrap.index("    def stop(")]
+  self.assertIn("QTimer.singleShot(4000,self._maybe_heartbeat)",bootstrap)
+  self.assertIn("/api/anki/addon/heartbeat",api)
+  self.assertIn('"addonVersion"',heartbeat)
+  self.assertNotIn("card front",heartbeat.lower())
+  self.assertNotIn("review history",heartbeat.lower())
+  self.assertNotIn("personal notes",usage.lower())
+  self.assertEqual(utc_day().__class__.__name__,"str")
  def test_credentials_namespace_and_failure(self):
   store=FakeCredentialStore();store.set("secret");self.assertEqual(store.get(),"secret");store.delete();self.assertIsNone(store.get())
   with self.assertRaises(CredentialUnavailable):FakeCredentialStore(False).get()
