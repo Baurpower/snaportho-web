@@ -94,7 +94,7 @@ export type NailedItCatalog = {
   episodes: NailedItEpisode[];
 };
 
-export type NailedItIndexStatus = NailedItCatalog["meta"] & {
+export type NailedItIndexStatus = Omit<NailedItCatalog["meta"], "needsReview"> & {
   unmatchedWp: Array<{ wpId: number; title: string; url: string }>;
   needsReview: Array<{ id: string; title: string; reason: string }>;
 };
@@ -476,7 +476,8 @@ export function joinCatalog(input: {
       bodyText: `${bodyText}\n${item.description}`,
     });
     const url = post?.url ?? item.link;
-    const linkable = Boolean(url && canonicalNailedItUrl(url).ok);
+    const canonical = url ? canonicalNailedItUrl(url) : null;
+    const linkable = Boolean(canonical?.ok);
     const id = episodeIdFor(item);
     if (classification.needsReview) {
       needsReviewRows.push({ id, title: item.title, reason: classification.reason ?? "needs_review" });
@@ -486,7 +487,7 @@ export function joinCatalog(input: {
       wpId: post?.wpId ?? null,
       slug: post?.slug ?? (url ? url.replace(/^https:\/\/naileditortho\.com\//, "").replace(/\/$/, "") : null),
       title: item.title,
-      url: linkable ? canonicalNailedItUrl(url!).canonical : null,
+      url: canonical?.ok ? canonical.canonical : null,
       publishedAt: post?.publishedAt ?? item.publishedAt,
       durationSec: item.durationSec,
       series: seriesFor(item.title, categorySlugs),
