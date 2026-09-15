@@ -18,7 +18,7 @@ const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ?? "";
 const CREATE_ACCOUNT_CONVERSION_SEND_TO =
   "AW-18233960538/YM_gCOS4ksIcENrQ0PZD";
 const BROBOT_FIRST_SUCCESS_CONVERSION_SEND_TO =
-  "AW-18233960538/oyt0CJ3YpvUcENrQ0PZD";
+  "AW-18233960538/wGjhCMOf-fgcENrQ0PZD";
 const BROBOT_FIRST_SUCCESS_SESSION_KEY = "snaportho:google-ads:brobot-first-success";
 const BROBOT_FIRST_SUCCESS_TRANSACTION_KEY =
   "snaportho:google-ads:brobot-first-success-transaction";
