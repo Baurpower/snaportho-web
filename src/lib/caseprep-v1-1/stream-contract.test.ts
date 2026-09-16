@@ -408,6 +408,11 @@ const packetComponentSource = readFileSync(
 );
 assert.match(packetComponentSource, /Case Essentials/);
 assert.match(packetComponentSource, /ProcedureSummary/);
+assert.match(
+  packetComponentSource,
+  /approachFollowUpPrompt/,
+  "web approach switching must rebuild the packet like iOS",
+);
 assert.ok(
   packetComponentSource.indexOf("<ApproachWorkspace") <
     packetComponentSource.indexOf("<PimpQuestionDeck") &&
@@ -457,7 +462,7 @@ assert.match(
 assert.match(
   streamRouteSource,
   /x-snaportho-client/,
-  "run persistence must read the client platform header so iOS is skipped",
+  "run persistence must read the client platform header so web and iOS packets are stored",
 );
 assert.match(
   streamRouteSource,

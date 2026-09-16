@@ -246,10 +246,12 @@ export function ApproachDecisionSection({
   payload,
   summaryOnly = false,
   onActiveApproachChange,
+  onRequestApproach,
 }: {
   payload?: Record<string, unknown>;
   summaryOnly?: boolean;
   onActiveApproachChange?: (option: ApproachOption) => void;
+  onRequestApproach?: (option: ApproachOption) => void;
 }) {
   const decision = (payload ?? {}) as ApproachDecision;
   const approaches = decision.approaches ?? [];
@@ -281,6 +283,7 @@ export function ApproachDecisionSection({
     setChosenActiveId(id);
     setExpandedIds((prev) => ({ ...prev, [id]: true }));
     onActiveApproachChange?.(option);
+    if (id !== serverSelectedId) onRequestApproach?.(option);
   };
 
   return (

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 
 import {
+  approachFollowUpPrompt,
   caseFrameFromOverview,
   normalizeApproachRisks,
   sourceLabel,
@@ -46,6 +47,20 @@ import {
       "https://surgeryreference.aofoundation.org/orthopedic-trauma/adult-trauma/proximal-femur/approach/anterior-approach-smith-petersen",
     ),
     /aofoundation\.org/,
+  );
+}
+
+{
+  assert.equal(
+    approachFollowUpPrompt("Intertrochanteric fracture", "Antegrade femoral nailing"),
+    "Intertrochanteric fracture; planned approach: Antegrade femoral nailing",
+  );
+  assert.equal(
+    approachFollowUpPrompt(
+      "Intertrochanteric fracture; planned approach: Limited lateral",
+      "Antegrade femoral nailing",
+    ),
+    "Intertrochanteric fracture; planned approach: Antegrade femoral nailing",
   );
 }
 

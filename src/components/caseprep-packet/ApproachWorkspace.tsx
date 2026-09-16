@@ -19,9 +19,11 @@ const TAB_CONFIG: Array<{ id: ApproachTab; label: string; sectionId: string }> =
 export function ApproachWorkspace({
   sections,
   streaming,
+  onRequestApproach,
 }: {
   sections: Partial<Record<string, PacketSectionState>>;
   streaming: boolean;
+  onRequestApproach?: (option: ApproachOption) => void;
 }) {
   const availableTabs = useMemo(
     () =>
@@ -87,6 +89,7 @@ export function ApproachWorkspace({
           <ApproachDecisionSection
             payload={decision.payload}
             onActiveApproachChange={setActiveApproach}
+            onRequestApproach={streaming ? undefined : onRequestApproach}
           />
         ) : streaming ? (
           <div className="h-28 animate-pulse rounded-2xl bg-slate-100" aria-hidden />

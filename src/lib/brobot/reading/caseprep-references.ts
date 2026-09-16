@@ -79,11 +79,60 @@ function dedupe(resources: BroBotReadingRecommendation[]) {
   return Array.from(byUrl.values());
 }
 
+function haystackFor(resource: BroBotReadingRecommendation) {
+  return [
+    resource.title,
+    resource.whyItMatters,
+    resource.bestFor,
+    resource.url,
+    resource.journal,
+    ...(resource.tags ?? []),
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
+}
+
+function isPinnedTechniqueSource(resource: BroBotReadingRecommendation) {
+  const url = resource.url.toLowerCase();
+  return (
+    url.includes('orthobullets.com') ||
+    url.includes('aofoundation.org') ||
+    url.includes('naileditortho.com')
+  );
+}
+
+export function resourceMatchesCasePrepTopic(
+  resource: BroBotReadingRecommendation,
+  topic: ReadingTopicContext,
+) {
+  const haystack = haystackFor(resource);
+  const excluded = [...topic.excludedTerms, ...topic.exclusions];
+  if (excluded.some((term) => term && haystack.includes(term.toLowerCase()))) {
+    return false;
+  }
+  const required = topic.requiredTerms
+    .map((term) => term.toLowerCase())
+    .filter((term) => term.length >= 4);
+  if (required.some((term) => haystack.includes(term))) return true;
+  if (topic.aliases.some((alias) => {
+    const value = alias.toLowerCase();
+    return value.length >= 6 && haystack.includes(value);
+  })) {
+    return true;
+  }
+  return isPinnedTechniqueSource(resource);
+}
+
 export function selectBalancedCasePrepReferences(
   resources: BroBotReadingRecommendation[],
   max = 6,
+  topic?: ReadingTopicContext,
 ) {
-  const sorted = dedupe(resources).sort((a, b) => b.rankScore - a.rankScore);
+  const relevant = topic
+    ? resources.filter((resource) => resourceMatchesCasePrepTopic(resource, topic))
+    : resources;
+  const sorted = dedupe(relevant).sort((a, b) => b.rankScore - a.rankScore);
   const podcasts = sorted.filter((resource) => resource.sourceName === 'Nailed It Ortho Podcast');
   const educational = sorted.filter(
     (resource) => !PAPER_TYPES.has(resource.resourceType) && resource.sourceName !== 'Nailed It Ortho Podcast',
@@ -174,6 +223,7 @@ export async function getCasePrepReferences(params: {
       resources: selectBalancedCasePrepReferences(
         [...hinted, ...cached.resources],
         max,
+        params.topic,
       ),
     };
   }
@@ -198,6 +248,7 @@ export async function getCasePrepReferences(params: {
   const resources = selectBalancedCasePrepReferences(
     [...hinted, ...curated, ...(live?.resources ?? [])],
     max,
+    params.topic,
   );
   const generatedFrom: BroBotReadingGeneratedFrom =
     curated.length > 0 || hinted.length > 0

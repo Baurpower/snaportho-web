@@ -7,6 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 import type {
+  CasePrepPacketState,
   PacketCase,
   PacketHeader as PacketHeaderData,
 } from "@/lib/caseprep-v1-1/stream-schema";
@@ -46,13 +47,33 @@ export function PacketHeaderSkeleton() {
   );
 }
 
+function coverageChip(coverage: CasePrepPacketState["coverage"] | undefined, certified: boolean) {
+  if (!coverage) return null;
+  if (coverage.quality_gate === "passed" && (coverage.coverage_status === "certified" || certified)) {
+    return { label: "Certified prep", className: "border-emerald-200 bg-emerald-50 text-emerald-900" };
+  }
+  if (coverage.quality_gate === "passed") {
+    return { label: "Grounded prep", className: "border-teal-200 bg-teal-50 text-teal-900" };
+  }
+  if (coverage.quality_gate === "withheld") {
+    return { label: "Needs a clearer case", className: "border-slate-200 bg-slate-50 text-slate-700" };
+  }
+  return {
+    label: "Limited prep — some sections are not verified yet",
+    className: "border-amber-200 bg-amber-50 text-amber-950",
+  };
+}
+
 export function PacketHeader({
   caseIdentity,
   header,
+  coverage,
 }: {
   caseIdentity: PacketCase;
   header: PacketHeaderData;
+  coverage?: CasePrepPacketState["coverage"];
 }) {
+  const coverageLabel = coverageChip(coverage, header.certified);
   return (
     <header className="rounded-2xl border border-emerald-200 bg-gradient-to-r from-white to-emerald-50/50 px-5 py-4 shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -67,6 +88,13 @@ export function PacketHeader({
       </div>
 
       <div className="mt-3 flex flex-wrap gap-2">
+        {coverageLabel ? (
+          <span
+            className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold ${coverageLabel.className}`}
+          >
+            {coverageLabel.label}
+          </span>
+        ) : null}
         <Chip
           icon={<ClockIcon className="h-3.5 w-3.5" />}
           label={`~${header.est_prep_minutes} min prep`}

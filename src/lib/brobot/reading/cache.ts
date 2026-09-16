@@ -7,7 +7,8 @@ import type { BroBotReadingGeneratedFrom, BroBotReadingRecommendation } from './
 const PUBMED_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 
 function cacheKey(topic: ReadingTopicContext) {
-  return `${topic.topicKey}:${topic.mode}:${topic.trainingLevel}`;
+  const generation = topic.mode === 'or_prep' ? ':cpv2' : '';
+  return `${topic.topicKey}:${topic.mode}:${topic.trainingLevel}${generation}`;
 }
 
 function containsTopicTerm(value: string, term: string) {

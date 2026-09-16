@@ -155,6 +155,7 @@ assert.throws(() => applyRockMapSidecar(mapPacket, {
 
 const fillCard: RockFillCard = {
   ...mapCard,
+  skipReason: undefined,
   mappedChapters: mapped.cards[0].chapters!,
   pageCandidates: [{ chapterId: "6003020", title: candidate.title, pdfPage: 2, score: 1, snippet: "s" }],
 };

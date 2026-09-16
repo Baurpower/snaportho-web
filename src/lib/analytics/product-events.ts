@@ -23,6 +23,9 @@ export const PRODUCT_EVENT_NAMES = [
   'anki_deck_imported',
   'anki_deck_update_applied',
   'anki_brobot_prompt_used',
+  'brobot_anki_reference_opened',
+  'brobot_anki_answer_revealed',
+  'brobot_anki_reference_not_relevant',
   'anki_setup_failed',
 ] as const;
 

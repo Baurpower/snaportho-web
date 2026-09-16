@@ -19,11 +19,11 @@ import {
   );
   assert.deepEqual(
     resolveCasePrepPersistDecision({ clientHeader: "ios", hasBearerToken: true }),
-    { persist: false, platform: "ios" },
+    { persist: true, platform: "ios" },
   );
   assert.deepEqual(
     resolveCasePrepPersistDecision({ clientHeader: " ios ", hasBearerToken: false }),
-    { persist: false, platform: "ios" },
+    { persist: true, platform: "ios" },
   );
   assert.deepEqual(
     resolveCasePrepPersistDecision({ clientHeader: null, hasBearerToken: false }),

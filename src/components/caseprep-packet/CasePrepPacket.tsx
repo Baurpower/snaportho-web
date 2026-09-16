@@ -8,6 +8,7 @@ import {
 } from "@/lib/caseprep-v1-1/stream-schema";
 import { ClarificationPrompt } from "./ClarificationPrompt";
 import { ApproachWorkspace } from "./ApproachWorkspace";
+import { approachFollowUpPrompt } from "./approach-decision";
 import { ProcedureSummary } from "./ProcedureSummary";
 import { PacketHeader, PacketHeaderSkeleton } from "./PacketHeader";
 import { PimpQuestionDeck } from "./PimpQuestionDeck";
@@ -317,6 +318,13 @@ export function CasePrepPacket({
   const { isExpanded, toggle } = useExpandedSections(slug);
   const streaming =
     state.status === "connecting" || state.status === "streaming";
+  const linkedSources = (
+    (state.sections.sources?.payload?.sources ?? []) as Array<{ url?: unknown }>
+  ).some(
+    (source) => typeof source.url === "string" && source.url.startsWith("https://"),
+  );
+  const hasRelatedConcepts = (state.sections.related_concepts?.items.length ?? 0) > 0;
+  const showReferences = linkedSources || hasRelatedConcepts;
   const referenceSection =
     state.sections.sources ??
     state.sections.evidence ??
@@ -353,12 +361,24 @@ export function CasePrepPacket({
         <CasePrepLoadingState state={state} onCancel={onCancel} />
       ) : null}
       {state.header && state.caseIdentity ? (
-        <PacketHeader caseIdentity={state.caseIdentity} header={state.header} />
+        <PacketHeader
+          caseIdentity={state.caseIdentity}
+          header={state.header}
+          coverage={state.coverage}
+        />
       ) : streaming ? (
         <PacketHeaderSkeleton />
       ) : null}
 
-      <ApproachWorkspace sections={state.sections} streaming={streaming} />
+      <ApproachWorkspace
+        sections={state.sections}
+        streaming={streaming}
+        onRequestApproach={(option) => {
+          const name = option.name?.trim();
+          if (!name) return;
+          onClarify(approachFollowUpPrompt(state.requestedPrompt, name));
+        }}
+      />
 
       {state.sections.pimp_questions ? (
         <PimpQuestionDeck items={state.sections.pimp_questions.items} />
@@ -391,36 +411,38 @@ export function CasePrepPacket({
         ) : null}
       </SectionShell>
 
-      <SectionShell
-        label="References & More"
-        kicker="Evidence · sources · related concepts"
-        section={referenceSection}
-        expanded={isExpanded("references")}
-        onToggle={() => toggle("references")}
-        streaming={false}
-        debug={debug}
-      >
-        <div className="space-y-6">
-          {state.sections.sources ? (
-            <div>
-              <h3 className="mb-2 text-sm font-black text-slate-950">
-                Sources &amp; further reading
-              </h3>
-              <SourcesSection section={state.sections.sources} />
-            </div>
-          ) : null}
-          {state.sections.related_concepts ? (
-            <div>
-              <h3 className="mb-2 text-sm font-black text-slate-950">
-                Related concepts
-              </h3>
-              <RelatedConceptsSection
-                items={state.sections.related_concepts.items}
-              />
-            </div>
-          ) : null}
-        </div>
-      </SectionShell>
+      {showReferences ? (
+        <SectionShell
+          label="References & More"
+          kicker="Evidence · sources · related concepts"
+          section={referenceSection}
+          expanded={isExpanded("references")}
+          onToggle={() => toggle("references")}
+          streaming={false}
+          debug={debug}
+        >
+          <div className="space-y-6">
+            {linkedSources && state.sections.sources ? (
+              <div>
+                <h3 className="mb-2 text-sm font-black text-slate-950">
+                  Sources &amp; further reading
+                </h3>
+                <SourcesSection section={state.sections.sources} />
+              </div>
+            ) : null}
+            {hasRelatedConcepts && state.sections.related_concepts ? (
+              <div>
+                <h3 className="mb-2 text-sm font-black text-slate-950">
+                  Related concepts
+                </h3>
+                <RelatedConceptsSection
+                  items={state.sections.related_concepts.items}
+                />
+              </div>
+            ) : null}
+          </div>
+        </SectionShell>
+      ) : null}
 
       {state.status === "done" && Object.keys(state.sections).length === 0 ? (
         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">

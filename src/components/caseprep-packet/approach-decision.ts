@@ -41,6 +41,13 @@ export type ApproachDecision = {
   };
 };
 
+export function approachFollowUpPrompt(basePrompt: string, approachName: string) {
+  const cleaned = basePrompt.replace(/;\s*planned approach:.*$/i, "").trim();
+  const name = approachName.replace(/\s+/g, " ").trim();
+  if (!cleaned || !name) return cleaned;
+  return `${cleaned}; planned approach: ${name}`;
+}
+
 function asText(value: unknown): string {
   return typeof value === "string" ? value.replace(/\s+/g, " ").trim() : "";
 }

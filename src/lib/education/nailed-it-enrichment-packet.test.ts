@@ -232,6 +232,7 @@ assert.throws(() => applyNailedItMapSidecar(mapPacket, {
 
 const fillCard: NailedItFillCard = {
   ...mapCard,
+  skipReason: undefined,
   mappedEpisodes: mapped.cards[0]!.episodes!,
   passages: index.retrievePassages(openFx.id, "Gustilo"),
 };

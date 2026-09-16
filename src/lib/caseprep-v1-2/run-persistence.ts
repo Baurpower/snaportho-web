@@ -63,7 +63,7 @@ export function resolveCasePrepPersistDecision(input: {
 }): { persist: boolean; platform: CasePrepClientPlatform | null } {
   const header = input.clientHeader?.trim().toLowerCase() ?? "";
   if (header === "ios") {
-    return { persist: false, platform: "ios" };
+    return { persist: true, platform: "ios" };
   }
   if (header === "web") {
     return { persist: true, platform: "web" };
@@ -138,7 +138,8 @@ export function buildCasePrepRunRow(
 
 /**
  * Fire-and-forget CasePrep corpus write. Never throws to the caller.
- * iOS and other non-web clients are skipped in this slice.
+ * Web and iOS packet-mode clients are stored for quality review; other
+ * clients remain out of this corpus.
  */
 export async function recordCasePrepRun(input: CasePrepRunInput): Promise<void> {
   const decision = resolveCasePrepPersistDecision({

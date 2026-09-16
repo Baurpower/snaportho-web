@@ -12,7 +12,11 @@ import { getHybridReadingRecommendations, classifyArticle } from './retrieval-en
 import { extractReadingTopicContext } from './topic-context';
 import { isTrustedReadingUrl, verifyPubMedArticle, verifyPubMedResultForTopic } from './verifier';
 import { buildCasePrepReadingTopic } from './caseprep-context';
-import { casePrepSourcesPayload, selectBalancedCasePrepReferences } from './caseprep-references';
+import {
+  casePrepSourcesPayload,
+  resourceMatchesCasePrepTopic,
+  selectBalancedCasePrepReferences,
+} from './caseprep-references';
 import { parseNailedItSearch, parseOrthobulletsQuickSearch, parseSitemapLocations } from './trusted-web-client';
 import type { BroBotReadingRecommendation } from './types';
 
@@ -993,8 +997,10 @@ const olecranonContext = buildCasePrepReadingTopic({
   trainingLevel: 'pgy2',
 });
 assert.equal(olecranonContext.topicKey, 'olecranon_fracture_orif');
+assert.ok(olecranonContext.requiredTerms.includes('Olecranon Fracture ORIF'));
 assert.ok(olecranonContext.requiredTerms.includes('Olecranon Fracture'));
-assert.ok(olecranonContext.pubmedQueryFocus?.includes('Olecranon Fracture'));
+assert.ok(olecranonContext.pubmedQueryFocus?.includes('Olecranon Fracture ORIF'));
+assert.equal(olecranonContext.primaryQuery, '"Olecranon Fracture ORIF"');
 assert.equal(isTrustedReadingUrl('https://surgeryreference.aofoundation.org/orthopedic-trauma'), true);
 
 function readingRecommendation(
@@ -1064,6 +1070,57 @@ assert.deepEqual(casePrepSourcesPayload([]), {
   reason: 'No strong case-specific resources were found yet.',
   sources: [],
 });
+
+{
+  const intertrochTopic = buildCasePrepReadingTopic({
+    canonicalSlug: 'intertrochanteric_hip_fracture_orif',
+    displayName: 'Intertrochanteric Hip Fracture ORIF',
+    requestedCase: 'Intertrochanteric fracture',
+  });
+  const salvageTha = {
+    ...readingRecommendation('salvage-tha', 'pubmed_article', 0.99, 400),
+    title:
+      'Conversion total hip arthroplasty for early failure following unstable intertrochanteric hip fracture',
+    url: 'https://pubmed.ncbi.nlm.nih.gov/34657163/',
+  };
+  const nailReview = {
+    ...readingRecommendation('cmn-review', 'review_article', 0.7),
+    title: 'Cephalomedullary nailing for intertrochanteric hip fracture ORIF',
+    url: 'https://pubmed.ncbi.nlm.nih.gov/11111111/',
+  };
+  assert.equal(resourceMatchesCasePrepTopic(salvageTha, intertrochTopic), false);
+  assert.equal(resourceMatchesCasePrepTopic(nailReview, intertrochTopic), true);
+  assert.deepEqual(
+    selectBalancedCasePrepReferences([salvageTha, nailReview], 6, intertrochTopic).map(
+      (resource) => resource.id,
+    ),
+    ['cmn-review'],
+  );
+
+  const tfccTopic = buildCasePrepReadingTopic({
+    canonicalSlug: 'wrist_arthroscopy_tfcc',
+    displayName: 'Wrist Arthroscopy / TFCC Repair',
+    requestedCase: 'Scoped wrist for tfcc tear',
+  });
+  const scapholunate = {
+    ...readingRecommendation('sl-ao', 'technique_article', 0.95),
+    title: 'Scapholunate Reduction AND Ligament Repair',
+    url: 'https://surgeryreference.aofoundation.org/orthopedic-trauma/adult-trauma/carpal-bones/scapholunate',
+  };
+  assert.equal(resourceMatchesCasePrepTopic(scapholunate, tfccTopic), false);
+
+  const clavicleTopic = buildCasePrepReadingTopic({
+    canonicalSlug: 'clavicle_fracture_orif',
+    displayName: 'Clavicle Fracture ORIF',
+    requestedCase: 'clavicle orif',
+  });
+  const dyskinesis = {
+    ...readingRecommendation('dyskinesis', 'review_article', 0.9),
+    title: 'Scapular dyskinesis and its relation to shoulder injury.',
+    url: 'https://pubmed.ncbi.nlm.nih.gov/22661566/',
+  };
+  assert.equal(resourceMatchesCasePrepTopic(dyskinesis, clavicleTopic), false);
+}
 
 runAsyncAssertions()
   .then(() => {

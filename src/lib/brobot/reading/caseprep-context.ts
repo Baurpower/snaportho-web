@@ -45,6 +45,22 @@ function preferredProcedureTerms(value: string) {
   return unique(terms);
 }
 
+const CASEPREP_EXCLUSIONS: Record<string, string[]> = {
+  intertrochanteric_hip_fracture_orif: [
+    'conversion total hip',
+    'conversion arthroplasty',
+    'avascular necrosis',
+  ],
+  wrist_arthroscopy_tfcc: ['scapholunate'],
+  clavicle_fracture_orif: ['scapular dyskinesis'],
+  posterior_lumbar_decompression_fusion: [
+    'metformin',
+    'bariatric',
+    'opioid prescription',
+  ],
+  humeral_shaft_fracture_orif: ['pediatric'],
+};
+
 export function buildCasePrepReadingTopic(input: {
   canonicalSlug: string;
   displayName: string;
@@ -69,17 +85,18 @@ export function buildCasePrepReadingTopic(input: {
     ...aliases.map(normalizeReadingTopic),
   ]);
 
+  const excluded = CASEPREP_EXCLUSIONS[input.canonicalSlug] ?? [];
   return {
     topicKey,
     displayTopic: displayName,
-    primaryQuery: `"${baseTopic.replace(/"/g, '')}"`,
+    primaryQuery: `"${displayName.replace(/"/g, '')}"`,
     aliases,
     synonyms: aliases,
-    requiredTerms: unique([baseTopic, displayName]),
+    requiredTerms: unique([displayName, baseTopic]),
     preferredTerms: preferredProcedureTerms(`${displayName} ${requestedCase}`),
-    excludedTerms: [],
-    exclusions: [],
-    pubmedQueryFocus: unique([baseTopic, displayName]).slice(0, 3),
+    excludedTerms: excluded,
+    exclusions: excluded,
+    pubmedQueryFocus: unique([displayName, baseTopic]).slice(0, 3),
     mode: 'or_prep',
     trainingLevel: (input.trainingLevel || 'pgy2') as BroBotTrainingLevel,
     tags,

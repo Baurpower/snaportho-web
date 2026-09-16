@@ -42,7 +42,7 @@ import type {
   BroBotResponseDepth,
   BroBotTrainingLevel,
 } from '@/lib/brobot/chat';
-import BroBotMarkdown from './BroBotMarkdown';
+import BroBotAnkiReferences from './BroBotAnkiReferences';
 import BroBotProductTabs from './BroBotProductTabs';
 import ReadingRecommendationsPanel from './ReadingRecommendationsPanel';
 import { useChatScrollController } from './useChatScrollController';
@@ -1876,7 +1876,11 @@ function BroBotAssistantResponse({
           {response.answer && status === 'streaming' ? (
             <StreamingAnswer text={response.answer} />
           ) : response.answer ? (
-            <BroBotMarkdown>{response.answer}</BroBotMarkdown>
+            <BroBotAnkiReferences
+              answer={response.answer}
+              messageId={response.messageId}
+              complete={isComplete && status !== 'error'}
+            />
           ) : (
             <p className="text-sm leading-6 text-slate-500">
               BroBot is thinking...

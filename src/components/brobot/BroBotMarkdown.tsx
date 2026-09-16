@@ -1,6 +1,7 @@
 'use client';
 
 import { memo, type ReactNode, useMemo } from 'react';
+import type { AnkiReference } from '@/lib/brobot/chat/anki-references';
 
 type Block =
   | { type: 'heading'; level: 2 | 3 | 4; text: string }
@@ -240,10 +241,14 @@ function RenderList({
   type,
   items,
   nested = false,
+  references = [],
+  onOpenAnkiReference,
 }: {
   type: 'ul' | 'ol';
   items: ListItem[];
   nested?: boolean;
+  references?: AnkiReference[];
+  onOpenAnkiReference?: (id: string) => void;
 }) {
   const ListTag = type;
   return (
@@ -252,9 +257,9 @@ function RenderList({
     >
       {items.map((item, index) => (
         <li key={`${item.text}-${index}`} className="pl-1">
-          <span>{renderInline(item.text)}</span>
+          <span>{renderInlineWithReference(item.text, references, onOpenAnkiReference)}</span>
           {item.children.length > 0 && (
-            <RenderList type="ul" items={item.children} nested />
+            <RenderList type="ul" items={item.children} nested references={references} onOpenAnkiReference={onOpenAnkiReference} />
           )}
         </li>
       ))}
@@ -262,7 +267,42 @@ function RenderList({
   );
 }
 
-function BroBotMarkdown({ children }: { children: string }) {
+function referenceMarker(text: string, references: AnkiReference[], onOpen?: (id: string) => void) {
+  const reference = references.find((item) =>
+    text.includes(item.anchorText) || item.anchorText.includes(text.trim())
+  );
+  if (!reference || !onOpen) return null;
+  return <button type="button" onClick={() => onOpen(reference.id)}
+    className="ml-1 inline rounded-md bg-sky-50 px-1.5 py-0.5 align-baseline text-xs font-bold text-sky-800 hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-500"
+    aria-label={`Open Anki card ${reference.number} for this fact`}>
+    Anki {reference.number}
+  </button>;
+}
+
+function renderInlineWithReference(text: string, references: AnkiReference[], onOpen?: (id: string) => void): ReactNode {
+  const placements = references
+    .map((reference) => ({ reference, start: text.indexOf(reference.anchorText) }))
+    .filter((item) => item.start >= 0)
+    .sort((a, b) => a.start - b.start);
+  if (!placements.length) return renderInline(text);
+  const output: ReactNode[] = [];
+  let cursor = 0;
+  for (const { reference, start } of placements) {
+    const end = start + reference.anchorText.length;
+    if (start < cursor) continue;
+    output.push(<span key={`text-${cursor}`}>{renderInline(text.slice(cursor, end))}</span>);
+    output.push(<span key={`ref-${reference.id}`}>{referenceMarker(reference.anchorText, [reference], onOpen)}</span>);
+    cursor = end;
+  }
+  output.push(<span key="tail">{renderInline(text.slice(cursor))}</span>);
+  return output;
+}
+
+function BroBotMarkdown({ children, references = [], onOpenAnkiReference }: {
+  children: string;
+  references?: AnkiReference[];
+  onOpenAnkiReference?: (id: string) => void;
+}) {
   const blocks = useMemo(() => parseBlocks(children), [children]);
 
   return (
@@ -281,7 +321,7 @@ function BroBotMarkdown({ children }: { children: string }) {
         }
 
         if (block.type === 'ul' || block.type === 'ol') {
-          return <RenderList key={`${block.type}-${index}`} type={block.type} items={block.items} />;
+          return <RenderList key={`${block.type}-${index}`} type={block.type} items={block.items} references={references} onOpenAnkiReference={onOpenAnkiReference} />;
         }
 
         if (block.type === 'blockquote') {
@@ -290,7 +330,7 @@ function BroBotMarkdown({ children }: { children: string }) {
               key={`${block.type}-${index}`}
               className="rounded-xl border border-amber-100 bg-amber-50/70 px-3 py-2.5 text-sm leading-6 text-amber-950"
             >
-              {renderInline(block.text)}
+              {renderInlineWithReference(block.text, references, onOpenAnkiReference)}
             </blockquote>
           );
         }
@@ -346,7 +386,7 @@ function BroBotMarkdown({ children }: { children: string }) {
         if (block.type === 'paragraph') {
           return (
             <p key={`${block.type}-${index}`} className="max-w-none">
-              {renderInline(block.text)}
+              {renderInlineWithReference(block.text, references, onOpenAnkiReference)}
             </p>
           );
         }

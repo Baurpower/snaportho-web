@@ -9,6 +9,9 @@ const CLIENT_EVENT_ALLOWLIST = new Set([
   'brobot_pricing_viewed',
   'brobot_checkout_started',
   'anki_landing_viewed',
+  'brobot_anki_reference_opened',
+  'brobot_anki_answer_revealed',
+  'brobot_anki_reference_not_relevant',
 ]);
 
 function text(value: unknown, max = 128) {

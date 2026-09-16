@@ -520,7 +520,11 @@ async function proxyCasePrepStream(
             const hinted = sourceHints
               .map((hint) => sourceHintRecommendation(hint, readingTopic!))
               .filter((item): item is BroBotReadingRecommendation => Boolean(item));
-            resources = selectBalancedCasePrepReferences([...hinted, ...resources], 6);
+            resources = selectBalancedCasePrepReferences(
+              [...hinted, ...resources],
+              6,
+              readingTopic,
+            );
           }
         } catch (error) {
           console.warn("[caseprep] further-reading discovery failed (non-fatal)", error);
