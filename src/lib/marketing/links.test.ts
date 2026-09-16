@@ -23,9 +23,9 @@ for (const step of CAMPAIGN_STEPS) {
     assert.equal(action.hostname, 'kcyz1.test.app.link');
     assert.equal(web.pathname, '/brobot/chat');
     assert.equal(isBrobotCampaignEntry(Object.fromEntries(web.searchParams)), true);
-  } else if (step === 'profile_completion_1') {
-    assert.equal(action.pathname, '/account/profile');
-    assert.equal(web.pathname, '/account/profile');
+  } else if (step === 'profile_completion_1' || step === 'profile_grad_year_1') {
+    assert.equal(action.pathname, step === 'profile_grad_year_1' ? '/account/grad-year' : '/account/profile');
+    assert.equal(web.pathname, action.pathname);
   } else {
     assert.equal(action.pathname, '/brobot/pricing');
     assert.equal(web.pathname, '/brobot/pricing');
@@ -44,13 +44,28 @@ for (const step of CAMPAIGN_STEPS) {
   // profile_completion_1 uses the personal founder layout (its CTA is the web
   // link); other steps use the shared "continue on the web" affordance.
   assert.ok(rendered.html.includes(
-    step === 'profile_completion_1' ? 'Update my profile'
+    step === 'profile_grad_year_1' ? 'Add my graduation year'
+      : step === 'profile_completion_1' ? 'Update my profile'
       : step === 'conversion_1' ? 'Continue on the website'
       : 'Open Chat on the website'));
   assert.ok(!rendered.html.includes('/app/brobot/chat?'));
   assert.ok(!rendered.html.includes('/app/account/profile?'));
   assert.ok(!rendered.html.includes('/app/brobot/pricing?'));
   assert.ok(rendered.html.includes('Hi &lt;Becca&gt;,'));
+  if (step === 'profile_completion_1') {
+    assert.ok(rendered.html.includes('Open BroBot'));
+    assert.ok(rendered.html.includes('Explore the Anki add-on'));
+    assert.ok(rendered.text.includes('Update my profile:'));
+  }
+  if (step === 'profile_grad_year_1') {
+    assert.equal(rendered.subject, 'A quick note for med students');
+    assert.ok(rendered.text.includes('MD/DO student'));
+    assert.ok(rendered.text.includes('Keep up the good work'));
+    assert.ok(rendered.text.includes('Once you save it'));
+    assert.ok(rendered.text.includes('/account/grad-year?'));
+    assert.ok(!rendered.html.includes('Open BroBot</a>'));
+    assert.ok(!rendered.text.includes('resident'));
+  }
   assert.ok(!rendered.html.includes('/work/profile'));
 }
 

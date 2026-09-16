@@ -14,6 +14,7 @@ export const CAMPAIGN_STEPS = [
   'habit_2',
   'conversion_1',
   'profile_completion_1',
+  'profile_grad_year_1',
   'reengagement_1',
 ] as const;
 

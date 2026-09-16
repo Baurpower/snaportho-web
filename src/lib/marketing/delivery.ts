@@ -1,4 +1,5 @@
 import { resolveCampaignAddress, ADDRESS_HISTORY_COLUMNS } from './recipient-address';
+import { profileCohort } from './segments';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { renderMarketingEmail } from './templates';
 import { sendMarketingEmail } from './resend';
@@ -9,20 +10,22 @@ export async function deliverMarketingCampaignEmail(recipient: MarketingRecipien
 
   // Recheck consent and suppression at the last responsible moment.
   const [{ data: profile, error: profileError }, { data: optouts, error: optoutError }] = await Promise.all([
-    supabase.from('user_profiles').select('email, receive_emails, marketing_unsubscribed_at').eq('user_id', recipient.userId).maybeSingle(),
+    supabase.from('user_profiles').select('email, receive_emails, marketing_unsubscribed_at, training_level, grad_year, country, city, institution, subspecialty_interest').eq('user_id', recipient.userId).maybeSingle(),
     supabase.from('lifecycle_email_optouts').select('kind').eq('user_id', recipient.userId),
   ]);
   if (profileError) throw new Error(`Consent lookup failed: ${profileError.message}`);
   if (optoutError) throw new Error(`Suppression lookup failed: ${optoutError.message}`);
-  // Explicit unsubscribe always suppresses. For consent: opted-in (receive_emails=true)
-  // may receive any campaign; never-indicated (receive_emails null/absent, not
-  // unsubscribed) may receive ONLY the account-oriented profile-completion campaign.
   if (profile?.marketing_unsubscribed_at) return { status: 'suppressed' as const };
-  const optedIn = profile?.receive_emails === true;
-  const neverIndicated = profile?.receive_emails === null || profile?.receive_emails === undefined;
-  const consentOk = optedIn || (neverIndicated && recipient.campaignKey === 'profile_completion_v1');
-  if (!consentOk) return { status: 'suppressed' as const };
+  if (profile?.receive_emails !== true) return { status: 'suppressed' as const };
   if ((optouts ?? []).some((row) => row.kind === null || row.kind === recipient.topic)) return { status: 'suppressed' as const };
+
+  if (recipient.campaignStep === 'profile_completion_1' || recipient.campaignStep === 'profile_grad_year_1') {
+    const { data: workspaceProfile, error: workspaceError } = await supabase.from('student_workspace_profiles')
+      .select('expected_graduation_year').eq('user_id', recipient.userId).maybeSingle();
+    if (workspaceError) throw new Error(`Profile cohort recheck failed: ${workspaceError.message}`);
+    const cohort = profileCohort(profile, workspaceProfile?.expected_graduation_year);
+    if (cohort !== (recipient.campaignStep === 'profile_completion_1' ? 'empty' : 'med_student_grad_year_only')) return { status: 'suppressed' as const };
+  }
 
   // Re-resolve immediately before sending so a changed profile/auth address cannot
   // receive a stale queued message. Consent and account-level blocks above always win.

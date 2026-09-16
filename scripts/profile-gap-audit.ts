@@ -11,6 +11,7 @@ import { join } from 'node:path';
 import { createClient } from '@supabase/supabase-js';
 import { doesSubscriptionGrantEntitlement } from '../src/lib/subscriptions/ledger';
 import { campaignActivity } from '../src/lib/marketing/audience-history';
+import { profileCohort } from '../src/lib/marketing/segments';
 
 function loadEnv() {
   for (const filename of ['.env.local', '.env']) {
@@ -59,7 +60,7 @@ async function main() {
   const soft = (t: string, cols: string, order: string) => allRows(supabase, t, cols, order).catch((e) => { console.warn(`${t} skipped:`, e.message); return [] as Row[]; });
   const [profiles, swProfiles, usage, conversations, subscriptions, optouts,
     productEvents, dailyUsage, caseprepRuns, caseprepEvents, ankiSessions, readingEvents] = await Promise.all([
-    allRows(supabase, 'user_profiles', 'user_id,receive_emails,marketing_unsubscribed_at,is_profile_complete,training_level,grad_year,institution,subspecialty_interest', 'user_id'),
+    allRows(supabase, 'user_profiles', 'user_id,receive_emails,marketing_unsubscribed_at,is_profile_complete,training_level,grad_year,country,city,institution,subspecialty_interest', 'user_id'),
     soft('student_workspace_profiles', 'user_id,expected_graduation_year', 'user_id'),
     allRows(supabase, 'brobot_usage_events', 'user_id,created_at', 'user_id'),
     allRows(supabase, 'brobot_conversations', 'user_id,created_at,updated_at', 'user_id'),
@@ -125,6 +126,8 @@ async function main() {
     reengage: 0,
     // profile-completion addressable: mailable AND missing either target field
     profileCompletionAudience: 0,
+    emptyProfileAudience: 0,
+    medStudentGradYearAudience: 0,
     entitled: 0,
     swGradPresent: 0,
     // TRUE cross-app activity buckets (over mailable, non-entitled)
@@ -191,6 +194,9 @@ async function main() {
       !opted.has('product_updates');
     if (!mailable) continue;
     c.mailable += 1;
+    const cohort = profileCohort(p, swGrad);
+    if (cohort === 'empty') c.emptyProfileAudience += 1;
+    if (cohort === 'med_student_grad_year_only') c.medStudentGradYearAudience += 1;
 
     // True cross-app buckets for this mailable user.
     const xLast = crossLast.get(user.id) ?? 0;
@@ -250,6 +256,9 @@ async function main() {
   console.log(`  total ......................... ${c.profileCompletionAudience}`);
   console.log(`  missing training_level ........ ${c.mailableGapTraining}`);
   console.log(`  missing grad year ............. ${c.mailableGapGrad}`);
+  console.log('\n-- New separate opted-in campaign cohorts (before address/history exclusions) --');
+  console.log(`  no meaningful profile details . ${c.emptyProfileAudience}`);
+  console.log(`  med students missing grad year  ${c.medStudentGradYearAudience}`);
   console.log('\n-- Activity buckets (mailable, non-entitled) --');
   console.log(`  active   (<=30d) .............. ${c.actActive}`);
   console.log(`  cooling  (30-90d) ............. ${c.actCooling}`);

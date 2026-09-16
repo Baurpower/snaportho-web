@@ -2,7 +2,7 @@ import { BRANCH_CAMPAIGN_STEPS, configuredBranchUrl, campaignWebUrl, isMarketing
 import type { CampaignStep } from './types';
 
 export async function verifyMarketingDestinations(base: string, request: typeof fetch = fetch) {
-  for (const step of ['activation_1', 'profile_completion_1', 'conversion_1'] as CampaignStep[]) {
+  for (const step of ['activation_1', 'profile_completion_1', 'profile_grad_year_1', 'conversion_1'] as CampaignStep[]) {
     const action = new URL(marketingActionUrl(step, base));
     if (configuredBranchUrl(step)) continue;
     const expected = campaignWebUrl(action);
@@ -11,7 +11,7 @@ export async function verifyMarketingDestinations(base: string, request: typeof 
     const actual = location ? new URL(location, action) : null;
     const redirects = [301, 302, 303, 307, 308].includes(response.status);
     const correctFallback = redirects && actual?.href === expected.href;
-    const profileSignIn = action.pathname === '/account/profile' && redirects &&
+    const profileSignIn = (action.pathname === '/account/profile' || action.pathname === '/account/grad-year') && redirects &&
       actual?.origin === action.origin && actual.pathname === '/auth/sign-in' &&
       actual.searchParams.get('redirectTo') === action.pathname + action.search;
     const ready = isMarketingAppPath(action.pathname)

@@ -5,7 +5,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { createClient } from '@supabase/supabase-js';
 import { CAMPAIGN_STEPS, type CampaignStep, type MarketingRecipient } from '../src/lib/marketing/types';
-import { CAMPAIGN_CONFIG, isEligibleForCampaign, type CampaignProfile } from '../src/lib/marketing/segments';
+import { CAMPAIGN_CONFIG, isEligibleForCampaign, profileCohort, type CampaignProfile } from '../src/lib/marketing/segments';
 import { renderMarketingEmail } from '../src/lib/marketing/templates';
 import { verifyMarketingDestinations } from '../src/lib/marketing/link-preflight';
 import { setTimeout as pause } from 'node:timers/promises';
@@ -33,7 +33,7 @@ function args(argv: string[]) {
 async function allRows(client: ReturnType<typeof createClient>, table: string, columns: string) {
   const rows: Record<string, unknown>[] = [];
   for (let from = 0; ; from += 1000) {
-    const { data, error } = await client.from(table).select(columns).order(table === 'user_profiles' ? 'user_id' : 'id').range(from, from + 999);
+    const { data, error } = await client.from(table).select(columns).order(table === 'user_profiles' || table === 'student_workspace_profiles' ? 'user_id' : 'id').range(from, from + 999);
     if (error) throw new Error(`${table}: ${error.message}`);
     rows.push(...(data as Record<string, unknown>[]));
     if (data.length < 1000) return rows;
@@ -69,8 +69,9 @@ async function main() {
     authUsers.push(...data.users);
     if (data.users.length < 1000) break;
   }
-  const [profiles, usage, conversations, subscriptions, sends, optouts] = await Promise.all([
-    allRows(supabase, 'user_profiles', 'user_id,email,full_name,receive_emails,is_profile_complete,marketing_unsubscribed_at,training_level,grad_year'),
+  const [profiles, workspaceProfiles, usage, conversations, subscriptions, sends, optouts] = await Promise.all([
+    allRows(supabase, 'user_profiles', 'user_id,email,full_name,receive_emails,is_profile_complete,marketing_unsubscribed_at,training_level,grad_year,country,city,institution,subspecialty_interest'),
+    allRows(supabase, 'student_workspace_profiles', 'user_id,expected_graduation_year'),
     allRows(supabase, 'brobot_usage_events', 'user_id,created_at'),
     allRows(supabase, 'brobot_conversations', 'user_id,created_at,updated_at'),
     allRows(supabase, 'subscriptions', 'user_id,plan_code,status,current_period_end,provider'),
@@ -78,6 +79,7 @@ async function main() {
     allRows(supabase, 'lifecycle_email_optouts', 'user_id,kind'),
   ]);
   const profileByUser = new Map(profiles.map((p) => [String(p.user_id), p]));
+  const workspaceGradByUser = new Map(workspaceProfiles.map((p) => [String(p.user_id), p.expected_graduation_year]));
   const times = campaignActivity([...usage, ...conversations]);
   const entitled = new Set(subscriptions.filter((s) => s.plan_code === 'unlimited_brobot' && doesSubscriptionGrantEntitlement({ status: String(s.status), provider: s.provider as 'apple' | 'stripe', current_period_end: s.current_period_end as string | null })).map((s) => String(s.user_id)));
   const { attempted, prior } = campaignHistory(sends);
@@ -97,10 +99,7 @@ async function main() {
     const priorSteps = new Set(attempted.get(user.id) ?? []);
     if (address?.fallbackFromDeliveryId) priorSteps.delete(options.campaign);
     const name = typeof profile?.full_name === 'string' ? profile.full_name.trim().split(/\s+/)[0] : null;
-    const blank = (v: unknown) => v === null || v === undefined || (typeof v === 'string' && v.trim() === '');
-    const neverIndicated = (profile?.receive_emails === null || profile?.receive_emails === undefined) && !profile?.marketing_unsubscribed_at;
-    const hasTargetFieldGap = blank(profile?.training_level) || blank(profile?.grad_year);
-    return { userId: user.id, email: address?.email ?? '', confirmed: Boolean(user.email_confirmed_at), receiveEmails: profile?.receive_emails === true && !profile?.marketing_unsubscribed_at, neverIndicated, hasTargetFieldGap, firstName: name || null, profileComplete: profile?.is_profile_complete === true, currentlyEntitled: entitled.has(user.id), firstUseAt: activity[0] ?? null, lastUseAt: activity.at(-1) ?? null, priorSteps, priorStepAt, optedOutTopics: suppressed.get(user.id) ?? new Set() };
+    return { userId: user.id, email: address?.email ?? '', confirmed: Boolean(user.email_confirmed_at), receiveEmails: profile?.receive_emails === true && !profile?.marketing_unsubscribed_at, profileCohort: profileCohort(profile, workspaceGradByUser.get(user.id)), firstName: name || null, profileComplete: profile?.is_profile_complete === true, currentlyEntitled: entitled.has(user.id), firstUseAt: activity[0] ?? null, lastUseAt: activity.at(-1) ?? null, priorSteps, priorStepAt, optedOutTopics: suppressed.get(user.id) ?? new Set() };
   }).filter((profile) => profile.email && isEligibleForCampaign(profile, options.campaign))
     .filter((profile) => !options.fallbackOnly || Boolean(addresses.get(profile.userId)?.fallbackFromDeliveryId));
   const selectedCandidates = candidates.slice(0, options.limit);

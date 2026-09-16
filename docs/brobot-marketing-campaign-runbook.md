@@ -50,7 +50,55 @@ npm run marketing:campaign -- --campaign=activation_1 --limit=100
 ```
 
 Supported steps are `activation_1`, `activation_2`, `activation_3`, `habit_1`,
-`habit_2`, `conversion_1`, `profile_completion_1`, and `reengagement_1`.
+`habit_2`, `conversion_1`, `profile_completion_1`, `profile_grad_year_1`, and `reengagement_1`.
+
+## Profile reactivation campaigns (September 16 revision)
+
+These are two separate, mutually exclusive opted-in audiences, not a resend
+of the earlier all-gaps profile email. `profile_completion_1` targets accounts
+with no meaningful profile details beyond name/email: no training level,
+graduation year in either profile table, country, city, institution, or
+subspecialty. `profile_grad_year_1` now targets only accounts whose saved
+training level is exactly `MD/DO Student` and whose graduation year is absent
+from both profile tables. Residents and other training levels are excluded;
+they need separate copy and a separate future campaign. Other partial profiles
+are not in either step. Both require `receive_emails=true`; never-indicated accounts are
+excluded because the revised emails promote product features. Unsubscribes,
+topic opt-outs, paid entitlements, address failures, and prior delivery
+reservations retain their existing safeguards. The sender rechecks the cohort
+immediately before delivery.
+
+The medical-student note is a short message from Alex that acknowledges
+their training, encourages them to keep up the good work, and asks for their
+medical school graduation year. Its single CTA opens `/account/grad-year`,
+which asks for only that field and preserves campaign attribution through
+sign-in. A successful save routes to `/whats-new`, where they can try BroBot
+or download the Anki add-on. The empty-profile note is unchanged and has a
+separate audience. The two steps have distinct campaign keys and UTM labels.
+The new routes must be deployed and tested before another student test email;
+the previously sent test points to the old `/account/profile` link.
+For now, only the medical-student step is a candidate for a pilot. Do not run
+the empty-profile step without a separate decision, or run either step during
+the activation delivery-quality hold. Review copy, current feature destinations, a fresh dry run, and the
+existing bounce/complaint hold with the user before authorizing any pilot.
+
+```bash
+npm run marketing:campaign -- --campaign=profile_completion_1 --preview
+npm run marketing:campaign -- --campaign=profile_grad_year_1 --preview
+npm run marketing:campaign -- --campaign=profile_completion_1 --limit=25
+npm run marketing:campaign -- --campaign=profile_grad_year_1 --limit=25
+```
+
+The old `reports/profile-gap-audit.json` is a historical snapshot of the
+former all-gaps audience, not a send count for these two steps. Re-run the
+audit and both dry runs after live database access is available. Compare
+new-product visits and profile saves alongside delivery, bounce, complaint,
+and unsubscribe metrics before expanding the pilot.
+
+September 16 live dry run after the medical-student filter: 240 eligible for
+`profile_grad_year_1`; 25 would be selected with `--limit=25`; zero selected
+Apple private-relay addresses. This read-only check sent no email. Recalculate
+before any future send because eligibility changes.
 
 ## Campaign navigation and test review
 
@@ -59,7 +107,8 @@ Campaign links must work with the existing app; no iOS update is required.
 | Emails | Main destination | Browser option |
 | --- | --- | --- |
 | Activation 1–3, Habit 1–2, Reengagement | `/app/brobot/guest` — existing guest BroBot route | `/brobot/chat` |
-| Profile completion | `/account/profile` — website profile form | Same |
+| Empty-profile reactivation | BroBot feature link in the email; profile link goes to `/account/profile` | Web profile editor |
+| Medical-student graduation year | `/account/grad-year` one-field form, then `/whats-new` | BroBot Chat or Anki download |
 | Conversion | `/brobot/pricing` — website plans | Same |
 
 The existing guest route opens CasePrep, not Chat. Its CTA says “Open BroBot”;

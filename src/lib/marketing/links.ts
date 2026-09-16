@@ -3,6 +3,7 @@ import type { CampaignStep } from './types';
 
 export const BROBOT_CAMPAIGN_APP_PATH = '/app/brobot/guest';
 export const PROFILE_CAMPAIGN_WEB_PATH = '/account/profile';
+export const STUDENT_GRAD_YEAR_WEB_PATH = '/account/grad-year';
 export const PRICING_CAMPAIGN_WEB_PATH = '/brobot/pricing';
 
 // Secondary in-email CTAs (used alongside the primary step CTA, e.g. in the
@@ -41,6 +42,7 @@ const APPROVED_BRANCH_HOSTS = new Set([
 const WEB_DESTINATIONS: Record<string, string> = {
   [BROBOT_CAMPAIGN_APP_PATH]: '/brobot/chat',
   [PROFILE_CAMPAIGN_WEB_PATH]: '/account/profile',
+  [STUDENT_GRAD_YEAR_WEB_PATH]: '/account/grad-year',
   [PRICING_CAMPAIGN_WEB_PATH]: '/brobot/pricing',
   // Retain browser fallbacks for earlier test emails, but never generate
   // these unsupported native routes in new messages.
@@ -59,8 +61,10 @@ export function isBrobotCampaignEntry(params: { utm_source?: string; utm_medium?
 }
 
 export function marketingWebUrl(step: CampaignStep, base: string): string {
-  const path = step === 'profile_completion_1'
-    ? PROFILE_CAMPAIGN_WEB_PATH
+  const path = step === 'profile_grad_year_1'
+    ? STUDENT_GRAD_YEAR_WEB_PATH
+    : step === 'profile_completion_1'
+      ? PROFILE_CAMPAIGN_WEB_PATH
     : step === 'conversion_1'
       ? PRICING_CAMPAIGN_WEB_PATH
       : '/brobot/chat';
@@ -91,8 +95,10 @@ export function marketingActionUrl(step: CampaignStep, base: string): string {
       (process.env.NODE_ENV === 'production' || process.env.BROBOT_MARKETING_SEND_ENABLED === 'true')) {
     throw new Error(`Missing Branch link for ${step}`);
   }
-  const path = step === 'profile_completion_1'
-    ? PROFILE_CAMPAIGN_WEB_PATH
+  const path = step === 'profile_grad_year_1'
+    ? STUDENT_GRAD_YEAR_WEB_PATH
+    : step === 'profile_completion_1'
+      ? PROFILE_CAMPAIGN_WEB_PATH
     : step === 'conversion_1'
       ? PRICING_CAMPAIGN_WEB_PATH
       : BROBOT_CAMPAIGN_APP_PATH;

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { isEligibleForCampaign, type CampaignProfile } from './segments.ts';
+import { isEligibleForCampaign, profileCohort, type CampaignProfile } from './segments.ts';
 
 const now = Date.now();
 const base: CampaignProfile = { userId: 'u', email: 'u@example.com', confirmed: true, receiveEmails: true, firstName: null, profileComplete: false, currentlyEntitled: false, firstUseAt: null, lastUseAt: null, priorSteps: new Set(), priorStepAt: new Map(), optedOutTopics: new Set() };
@@ -10,17 +10,20 @@ assert.equal(isEligibleForCampaign({ ...base, currentlyEntitled: true }, 'activa
 assert.equal(isEligibleForCampaign({ ...base, firstUseAt: now - 1000, lastUseAt: now - 1000 }, 'conversion_1', now), true);
 assert.equal(isEligibleForCampaign({ ...base, priorSteps: new Set(['activation_1']), priorStepAt: new Map([['activation_1', now - 4 * 86400000]]) }, 'activation_2', now), true);
 assert.equal(isEligibleForCampaign({ ...base, priorSteps: new Set(['activation_1']), priorStepAt: new Map([['activation_1', now - 86400000]]) }, 'activation_2', now), false);
-// Consent tiers + field-level gap for the account-oriented profile step.
-const pc = { ...base, receiveEmails: false, neverIndicated: true, hasTargetFieldGap: true };
-// Never-indicated accounts may receive profile_completion but no marketing step.
-assert.equal(isEligibleForCampaign(pc, 'profile_completion_1', now), true);
-assert.equal(isEligibleForCampaign(pc, 'activation_1', now), false);
-assert.equal(isEligibleForCampaign(pc, 'reengagement_1', now), false);
-// Explicit opt-out (receiveEmails false, not never-indicated) is blocked everywhere.
-assert.equal(isEligibleForCampaign({ ...pc, neverIndicated: false }, 'profile_completion_1', now), false);
-// Unsubscribe/topic opt-out still wins for never-indicated.
-assert.equal(isEligibleForCampaign({ ...pc, optedOutTopics: new Set(['product_updates']) }, 'profile_completion_1', now), false);
-// No target-field gap => no profile_completion send even when opted in.
-assert.equal(isEligibleForCampaign({ ...base, hasTargetFieldGap: false }, 'profile_completion_1', now), false);
-assert.equal(isEligibleForCampaign({ ...base, hasTargetFieldGap: true }, 'profile_completion_1', now), true);
+assert.equal(profileCohort(null), 'empty');
+assert.equal(profileCohort({ training_level: '', grad_year: null, full_name: 'Alex', email: 'a@example.com' }), 'empty');
+assert.equal(profileCohort({ training_level: 'MD/DO Student', grad_year: null }), 'med_student_grad_year_only');
+assert.equal(profileCohort({ training_level: 'MD/DO Student', grad_year: null }, 2027), 'other');
+assert.equal(profileCohort({ training_level: 'MD/DO Resident', grad_year: null }), 'other');
+assert.equal(profileCohort({ training_level: 'MD/DO Fellow', grad_year: null }), 'other');
+assert.equal(profileCohort({ training_level: '', grad_year: null, institution: 'Hospital' }), 'other');
+assert.equal(profileCohort({ training_level: '', grad_year: 2027 }), 'other');
+assert.equal(isEligibleForCampaign({ ...base, profileCohort: 'empty' }, 'profile_completion_1', now), true);
+assert.equal(isEligibleForCampaign({ ...base, profileCohort: 'med_student_grad_year_only' }, 'profile_completion_1', now), false);
+assert.equal(isEligibleForCampaign({ ...base, profileCohort: 'med_student_grad_year_only' }, 'profile_grad_year_1', now), true);
+assert.equal(isEligibleForCampaign({ ...base, profileCohort: 'empty' }, 'profile_grad_year_1', now), false);
+assert.equal(isEligibleForCampaign({ ...base, profileCohort: 'empty', receiveEmails: false }, 'profile_completion_1', now), false);
+assert.equal(isEligibleForCampaign({ ...base, profileCohort: 'med_student_grad_year_only', receiveEmails: false }, 'profile_grad_year_1', now), false);
+assert.equal(isEligibleForCampaign({ ...base, profileCohort: 'empty', optedOutTopics: new Set(['product_updates']) }, 'profile_completion_1', now), false);
+assert.equal(isEligibleForCampaign({ ...base, profileCohort: 'med_student_grad_year_only', priorSteps: new Set(['profile_completion_1']) }, 'profile_grad_year_1', now), false);
 console.log('marketing segment tests passed');

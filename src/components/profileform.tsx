@@ -199,9 +199,9 @@ export default function ProfileForm({
     const parsedGradYear = gradYear.trim() === '' ? null : Number(gradYear);
     if (
       parsedGradYear !== null &&
-      (!Number.isInteger(parsedGradYear) || parsedGradYear < 2025 || parsedGradYear > 2100)
+      (!Number.isInteger(parsedGradYear) || parsedGradYear < 1900 || parsedGradYear > 2100)
     ) {
-      alert('Graduation year must be a valid four-digit year (2025–2100).');
+      alert('Graduation year must be a valid four-digit year (1900–2100).');
       return;
     }
 
@@ -324,7 +324,7 @@ export default function ProfileForm({
               type="number"
               inputMode="numeric"
               placeholder="e.g. 2027"
-              min={2025}
+              min={1900}
               max={2100}
               className={inputClass}
               value={gradYear}

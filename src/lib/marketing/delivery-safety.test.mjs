@@ -5,6 +5,8 @@ import ts from 'typescript';
 
 const addressExports = {};
 vm.runInNewContext(ts.transpileModule(readFileSync(new URL('./recipient-address.ts', import.meta.url), 'utf8'), {compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,{exports:addressExports});
+const segmentExports = {};
+vm.runInNewContext(ts.transpileModule(readFileSync(new URL('./segments.ts', import.meta.url), 'utf8'), {compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,{exports:segmentExports});
 
 function load(path, results, dependencies) {
   const writes = [];
@@ -19,7 +21,7 @@ function load(path, results, dependencies) {
   const source=readFileSync(new URL(path,import.meta.url),'utf8');
   vm.runInNewContext(ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,{
     exports, Date, process:{env:{RESEND_WEBHOOK_SECRET:'test'}},
-    require(name){if(name==='./recipient-address')return addressExports;if(name==='@/lib/supabase/admin')return {createAdminClient:()=>admin};if(name in dependencies)return dependencies[name];throw Error(name);},
+    require(name){if(name==='./recipient-address')return addressExports;if(name==='./segments')return segmentExports;if(name==='@/lib/supabase/admin')return {createAdminClient:()=>admin};if(name in dependencies)return dependencies[name];throw Error(name);},
   });
   return {exports,writes};
 }
@@ -80,3 +82,19 @@ for(const blocked of [false,true]) {
   if(!blocked)assert.equal(writes[0].data.metadata.fallback_from_delivery_id,'primary');
 }
 console.log('Profile failures queue an auth fallback; account opt-outs still block it.');
+
+for (const [campaignStep, profile, workspaceGrad] of [
+  ['profile_completion_1', {receive_emails:true,training_level:'Resident',grad_year:null}, null],
+  ['profile_grad_year_1', {receive_emails:true,training_level:'MD/DO Student',grad_year:null}, 2027],
+  ['profile_grad_year_1', {receive_emails:true,training_level:'MD/DO Resident',grad_year:null}, null],
+  ['profile_completion_1', {receive_emails:false,training_level:null,grad_year:null}, null],
+]) {
+  const {exports,writes}=load('./delivery.ts',[
+    {data:profile,error:null},{data:[],error:null},
+    ...(profile.receive_emails ? [{data:{expected_graduation_year:workspaceGrad},error:null}] : []),
+  ],{'./templates':{renderMarketingEmail:()=>({unsubscribeUrl:'https://example.com'})},'./resend':{async sendMarketingEmail(){throw Error('Should not send');}}});
+  const outcome=await exports.deliverMarketingCampaignEmail({...recipient,campaignStep,campaignKey:campaignStep,topic:'product_updates'});
+  assert.equal(outcome.status,'suppressed');
+  assert.equal(writes.length,0);
+}
+console.log('Profile campaign consent and live-cohort rechecks passed.');
