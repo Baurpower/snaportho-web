@@ -1,7 +1,7 @@
 'use client';
 
 import { createElement, useEffect, useMemo, useState, type ReactNode } from 'react';
-import { renderCloze, type AnkiReference } from '@/lib/brobot/chat/anki-references';
+import { renderCloze, type AnkiCardDetail } from '@/lib/brobot/chat/anki-references';
 
 const BLOCKED = new Set(['script', 'style', 'iframe', 'object', 'embed', 'form', 'input', 'button', 'svg', 'math']);
 const ALLOWED = new Set(['p', 'div', 'span', 'b', 'strong', 'i', 'em', 'u', 'br', 'ul', 'ol', 'li', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'hr', 'a', 'img']);
@@ -38,19 +38,20 @@ export default function RichAnkiField({
   fallback: string;
   targetCloze: number | null;
   revealed: boolean;
-  images: AnkiReference['images'];
+  images: AnkiCardDetail['images'];
 }) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const rendered = useMemo(() => {
     if (!mounted || !html || typeof DOMParser === 'undefined') return null;
-    if (targetCloze !== null && /\{\{c\d+::(?:(?!\}\})[\s\S])*</i.test(html)) return null;
-    const document = new DOMParser().parseFromString(html, 'text/html');
+    const prepared = targetCloze === null ? html : renderCloze(html, targetCloze, revealed);
+    if (/\{\{c\d+::/i.test(prepared)) return null;
+    const document = new DOMParser().parseFromString(prepared, 'text/html');
     const imageByName = new Map(images.map((image) => [image.filename, image]));
     function convert(node: Node, key: string): ReactNode {
       if (node.nodeType === Node.TEXT_NODE) {
         const text = node.textContent ?? '';
-        return targetCloze === null ? text : renderCloze(text, targetCloze, revealed);
+        return text;
       }
       if (node.nodeType !== Node.ELEMENT_NODE) return null;
       const element = node as Element;

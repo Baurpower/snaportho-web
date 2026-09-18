@@ -6,6 +6,8 @@
 
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
+import { createHash } from 'node:crypto';
+import { createAnkiToken } from '@/lib/brobot/chat/anki-tokens';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 
 import {
@@ -2480,6 +2482,9 @@ async function handleGuestChat(params: {
       ...tierResponseFields(brobotOutput),
       conversationId: body.conversationId ?? crypto.randomUUID(),
       messageId: crypto.randomUUID(),
+      ankiLookupToken: params.responseContract === 'web_v2'
+        ? createAnkiToken('guest-answer', subject.id, createHash('sha256').update(brobotOutput.answer).digest('hex'), 3600)
+        : undefined,
       goal: brobotOutput.goal,
       selectedFocus: brobotOutput.selectedFocus,
       answer: brobotOutput.answer,
@@ -4492,6 +4497,10 @@ function createGuestStreamingChatResponse(params: {
           ...tierResponseFields(output),
           conversationId,
           messageId: assistantMessageId,
+          ankiLookupToken: params.responseContract === 'web_v2'
+            ? createAnkiToken('guest-answer', params.subject.id,
+                createHash('sha256').update(output.answer).digest('hex'), 3600)
+            : undefined,
           goal: output.goal,
           selectedFocus: output.selectedFocus,
           answer: output.answer,

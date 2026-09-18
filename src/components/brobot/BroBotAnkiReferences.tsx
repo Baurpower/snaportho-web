@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import type { AnkiReference } from '@/lib/brobot/chat/anki-references';
+import { createPortal } from 'react-dom';
+import type { AnkiCardDetail, AnkiReference } from '@/lib/brobot/chat/anki-references';
+import { answerClaims } from '@/lib/brobot/chat/anki-claims';
 import { trackProductEvent } from '@/lib/analytics/product-events-client';
 import BroBotMarkdown from './BroBotMarkdown';
 import RichAnkiField from './RichAnkiField';
@@ -10,12 +12,18 @@ export default function BroBotAnkiReferences({
   answer,
   messageId,
   complete,
+  guestToken,
 }: {
   answer: string;
   messageId: string;
   complete: boolean;
+  guestToken?: string;
 }) {
   const [references, setReferences] = useState<AnkiReference[]>([]);
+  const [card, setCard] = useState<AnkiCardDetail | null>(null);
+  const [cardLoading, setCardLoading] = useState(false);
+  const [cardError, setCardError] = useState(false);
+  const [cardRetry, setCardRetry] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [revealed, setRevealed] = useState(false);
   const [feedbackSent, setFeedbackSent] = useState(false);
@@ -26,6 +34,7 @@ export default function BroBotAnkiReferences({
   const rootRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
+  const isDialogOpen = selectedIndex !== null;
 
   useEffect(() => {
     const element = rootRef.current;
@@ -50,16 +59,21 @@ export default function BroBotAnkiReferences({
     setLoading(true);
     setLookupError(false);
     fetch(`/api/brobot/messages/${encodeURIComponent(messageId)}/anki-references`, {
+      method: guestToken ? 'POST' : 'GET',
       credentials: 'include',
       signal: controller.signal,
+      ...(guestToken ? { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ answer, token: guestToken }) } : {}),
     })
       .then(async (response) => {
-        if (response.status === 401) return null;
         if (!response.ok) throw new Error('Anki lookup failed');
         return response.json();
       })
       .then((data: { references?: AnkiReference[] } | null) => {
-        if (!controller.signal.aborted) setReferences(Array.isArray(data?.references) ? data.references : []);
+        const claims = new Map(answerClaims(answer).map((claim) => [claim.id, claim.text]));
+        const valid = Array.isArray(data?.references)
+          ? data.references.filter((reference) => claims.get(reference.claimId) === reference.anchorText)
+          : [];
+        if (!controller.signal.aborted) setReferences(valid);
       })
       .catch(() => {
         if (!controller.signal.aborted) {
@@ -71,10 +85,29 @@ export default function BroBotAnkiReferences({
         if (!controller.signal.aborted) setLoading(false);
       });
     return () => controller.abort();
-  }, [visible, complete, messageId, answer, retryCount]);
+  }, [visible, complete, messageId, answer, guestToken, retryCount]);
 
   useEffect(() => {
-    if (selectedIndex === null) return;
+    const selected = selectedIndex === null ? null : references[selectedIndex];
+    if (!selected) return;
+    const controller = new AbortController();
+    setCard(null);
+    setCardLoading(true);
+    setCardError(false);
+    fetch('/api/brobot/anki-card', {
+      credentials: 'include', signal: controller.signal,
+      headers: { 'X-Anki-Card-Token': selected.token },
+    }).then(async (response) => {
+      if (!response.ok) throw new Error('Card unavailable');
+      return response.json() as Promise<AnkiCardDetail>;
+    }).then((detail) => { if (!controller.signal.aborted) setCard(detail); })
+      .catch(() => { if (!controller.signal.aborted) setCardError(true); })
+      .finally(() => { if (!controller.signal.aborted) setCardLoading(false); });
+    return () => controller.abort();
+  }, [selectedIndex, references, cardRetry]);
+
+  useEffect(() => {
+    if (!isDialogOpen) return;
     const before = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const onKeyDown = (event: globalThis.KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -102,7 +135,7 @@ export default function BroBotAnkiReferences({
       document.body.style.overflow = previousOverflow;
       (triggerRef.current ?? before)?.focus();
     };
-  }, [selectedIndex]);
+  }, [isDialogOpen]);
 
   function open(index: number) {
     triggerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -122,7 +155,7 @@ export default function BroBotAnkiReferences({
     setSelectedIndex(index);
   }
   const selected = selectedIndex === null ? null : references[selectedIndex];
-  const hasCloze = selected ? /\{\{c\d+::/i.test(selected.front) : false;
+  const hasCloze = card ? /\{\{c\d+::/i.test(card.front) : false;
 
   return (
     <div ref={rootRef}>
@@ -146,7 +179,7 @@ export default function BroBotAnkiReferences({
           </div>
         </nav>
       )}
-      {loading && <span className="sr-only" role="status">Finding related Anki cards</span>}
+      {loading && <p className="mt-3 text-xs text-slate-500" role="status">Finding Anki cards for this answer…</p>}
       {lookupError && (
         <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
           <span>Anki cards are unavailable right now.</span>
@@ -154,7 +187,7 @@ export default function BroBotAnkiReferences({
             className="font-semibold text-sky-700 underline underline-offset-2">Retry</button>
         </div>
       )}
-      {selected && (
+      {selected && createPortal((
         <div className="fixed inset-0 z-[100] flex items-end justify-center bg-slate-950/60 p-0 sm:items-center sm:p-6"
           onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedIndex(null); }}>
           <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="brobot-anki-card-title"
@@ -168,31 +201,33 @@ export default function BroBotAnkiReferences({
                 className="rounded-full px-3 py-2 text-sm font-bold text-slate-600 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500">Close</button>
             </header>
             <div className="overflow-y-auto px-4 py-5 sm:px-7 sm:py-6">
-              <p className="mb-2 text-xs font-medium text-slate-500">{selected.deckPath.replace(/::/g, ' › ')}</p>
-              <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
+              <p className="mb-2 text-xs font-medium text-slate-500">From {selected.deckPath.replace(/::/g, ' › ')}</p>
+              {cardLoading && <p role="status" className="rounded-2xl bg-white p-5 text-sm text-slate-500">Loading card…</p>}
+              {cardError && <div className="rounded-2xl bg-white p-5 text-sm text-slate-600">Card unavailable. <button type="button" onClick={() => setCardRetry((count) => count + 1)} className="font-semibold text-sky-700 underline">Retry</button></div>}
+              {card && <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
                 <p className="mb-3 text-[11px] font-bold uppercase tracking-widest text-sky-700">{revealed ? 'Answer' : 'Front'}</p>
                 <div className="text-lg leading-8 text-slate-950">
-                  <RichAnkiField html={selected.frontHtml} fallback={selected.front}
-                    targetCloze={hasCloze ? selected.targetCloze : null}
-                    revealed={revealed} images={selected.images ?? []} />
+                  <RichAnkiField html={card.frontHtml} fallback={card.front}
+                    targetCloze={hasCloze ? card.targetCloze : null}
+                    revealed={revealed} images={card.images ?? []} />
                 </div>
-                {revealed && !hasCloze && selected.back && (
+                {revealed && !hasCloze && card.back && (
                   <div className="mt-5 border-t border-slate-200 pt-5 text-base leading-7 text-slate-800">
-                    <RichAnkiField html={selected.backHtml} fallback={selected.back} targetCloze={null}
-                      revealed images={selected.images ?? []} />
+                    <RichAnkiField html={card.backHtml} fallback={card.back} targetCloze={null}
+                      revealed images={card.images ?? []} />
                   </div>
                 )}
-                {revealed && (selected.extra || /<img\b/i.test(selected.extraHtml)) && (
+                {revealed && (card.extra || /<img\b/i.test(card.extraHtml)) && (
                   <section className="mt-5 rounded-xl border border-sky-100 bg-sky-50 p-4">
                     <h3 className="text-xs font-bold uppercase tracking-wider text-sky-800">Extra</h3>
                     <div className="mt-2 text-sm leading-6 text-slate-800">
-                      <RichAnkiField html={selected.extraHtml} fallback={selected.extra} targetCloze={null}
-                        revealed images={selected.images ?? []} />
+                      <RichAnkiField html={card.extraHtml} fallback={card.extra} targetCloze={null}
+                        revealed images={card.images ?? []} />
                     </div>
                   </section>
                 )}
-              </div>
-              {!revealed && (
+              </div>}
+              {card && !revealed && (
                 <button type="button" onClick={() => {
                   setRevealed(true);
                   trackProductEvent({
@@ -208,14 +243,14 @@ export default function BroBotAnkiReferences({
               )}
               <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
                 <p>Viewing this card does not change your Anki review schedule.</p>
-                <button type="button" disabled={feedbackSent} onClick={() => {
-                  setFeedbackSent(true);
-                  trackProductEvent({
+                <button type="button" disabled={feedbackSent} onClick={async () => {
+                  const saved = await trackProductEvent({
                     eventName: 'brobot_anki_reference_not_relevant',
                     surface: 'brobot_web_chat',
                     productArea: 'brobot',
                     properties: { messageId, cardVersionId: selected.cardVersionId, rank: selectedIndex! + 1 },
                   });
+                  if (saved) setFeedbackSent(true);
                 }} className="font-semibold text-slate-600 underline underline-offset-2 hover:text-slate-900 disabled:no-underline">
                   {feedbackSent ? 'Feedback saved' : 'Not relevant?'}
                 </button>
@@ -231,7 +266,7 @@ export default function BroBotAnkiReferences({
             )}
           </div>
         </div>
-      )}
+      ), document.body)}
     </div>
   );
 }

@@ -50,7 +50,7 @@ export function currentEmailAttribution() {
 export function trackProductEvent(
   input: Omit<ProductEventInput, 'eventId' | 'occurredAt' | 'anonymousId' | 'sessionId'>
 ) {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') return Promise.resolve(false);
   const identity = analyticsIdentity();
   const payload = {
     ...currentAttribution(),
@@ -61,11 +61,11 @@ export function trackProductEvent(
   };
 
   void logBranchProductEvent(input.eventName, input.properties);
-  void fetch('/api/analytics/events', {
+  return fetch('/api/analytics/events', {
     method: 'POST',
     credentials: 'include',
     keepalive: true,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
-  }).catch(() => undefined);
+  }).then((response) => response.ok).catch(() => false);
 }

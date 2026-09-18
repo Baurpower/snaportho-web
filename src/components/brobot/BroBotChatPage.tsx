@@ -62,6 +62,7 @@ import {
 } from './brobot-chat-session-store';
 
 type BroBotChatResponse = {
+  ankiLookupToken?: string;
   conversationId: string;
   messageId: string;
   goal?: string;
@@ -283,6 +284,7 @@ function normalizeChatResponse(value: unknown): BroBotChatResponse | null {
   return {
     conversationId: value.conversationId,
     messageId: value.messageId,
+    ankiLookupToken: typeof candidate.ankiLookupToken === 'string' ? candidate.ankiLookupToken : undefined,
     goal: typeof candidate.goal === 'string' ? candidate.goal.trim() : '',
     selectedFocus:
       typeof candidate.selectedFocus === 'string' ? candidate.selectedFocus.trim() : '',
@@ -1879,6 +1881,7 @@ function BroBotAssistantResponse({
             <BroBotAnkiReferences
               answer={response.answer}
               messageId={response.messageId}
+              guestToken={response.ankiLookupToken}
               complete={isComplete && status !== 'error'}
             />
           ) : (

@@ -1,196 +1,129 @@
 import { NextResponse } from 'next/server';
-import { createHash } from 'node:crypto';
-
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient } from '@/utils/supabase/server';
-import { signAnkiAwsDownload, AWS_STORAGE_PROVIDER } from '@/lib/education/anki-aws-storage';
-import {
-  answerSentences,
-  cardFields,
-  clozeFactMatches,
-  searchTerms,
-  type AnkiReference,
-} from '@/lib/brobot/chat/anki-references';
+import { getGuestSessionFromRequest } from '@/lib/brobot/guest-session';
+import { ANKI_LINKER_VERSION, answerHash, latestPublishedRelease, linkAnkiClaims } from '@/lib/brobot/chat/anki-linker';
+import { answerClaims } from '@/lib/brobot/chat/anki-claims';
+import { createAnkiToken, verifyAnkiToken } from '@/lib/brobot/chat/anki-tokens';
+import { cardFields, cardPreview, type AnkiReference } from '@/lib/brobot/chat/anki-references';
 
 export const runtime = 'nodejs';
+export const maxDuration = 60;
 
-type SearchRow = {
-  deck_release_id: string;
-  canonical_card_id: string;
-  canonical_card_version_id: string;
-  card_ordinal: number;
-  content_hash: string;
-  term_coverage: number;
-  sentenceIndex?: number;
-  cachedAnchorText?: string;
-};
+const UUID = /^[0-9a-f-]{36}$/i;
+const guestCache = new Map<string, { expires: number; references: AnkiReference[] }>();
 
-export async function GET(
-  _request: Request,
-  { params }: { params: Promise<{ messageId: string }> },
-) {
+export async function GET(_request: Request, { params }: { params: Promise<{ messageId: string }> }) {
   const { messageId } = await params;
-  if (!/^[0-9a-f-]{36}$/i.test(messageId)) {
-    return NextResponse.json({ error: 'Invalid message ID' }, { status: 400 });
-  }
+  if (!UUID.test(messageId)) return NextResponse.json({ error: 'Invalid message ID' }, { status: 400 });
   const auth = await createClient();
   const { data: { user } } = await auth.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-
   const db = createAdminClient();
-  const { data: message, error: messageError } = await db
-    .from('brobot_messages')
-    .select('id,content,structured_json')
-    .eq('id', messageId)
-    .eq('user_id', user.id)
-    .eq('role', 'assistant')
-    .maybeSingle();
-  if (messageError) return NextResponse.json({ error: 'Unable to load message' }, { status: 500 });
+  const { data: message, error: messageError } = await db.from('brobot_messages')
+    .select('content').eq('id', messageId).eq('user_id', user.id).eq('role', 'assistant').maybeSingle();
+  if (messageError) return NextResponse.json({ error: 'Unable to load message' }, { status: 503 });
   if (!message) return NextResponse.json({ error: 'Message not found' }, { status: 404 });
-
   const answer = String(message.content ?? '');
-  const hash = createHash('sha256').update(answer).digest('hex');
-  const sentences = answerSentences(answer).filter((sentence) => searchTerms(sentence).length >= 2).slice(0, 4);
-  if (!sentences.length) return NextResponse.json({ answerHash: hash, references: [] });
-
-  const { data: cached, error: cacheError } = await db.from('brobot_anki_references')
-    .select('canonical_card_id,canonical_card_version_id,deck_release_id,anchor_text,answer_hash,rank')
-    .eq('message_id', messageId).eq('user_id', user.id).order('rank');
-  const cachedRows = !cacheError && cached?.length && cached.every((row) => row.answer_hash === hash)
-    ? cached : null;
-  let candidateRows: Array<SearchRow & { sentenceIndex: number }> = [];
-  if (cachedRows) {
-    candidateRows = cachedRows.map((row) => ({
-      canonical_card_id: row.canonical_card_id,
-      canonical_card_version_id: row.canonical_card_version_id,
-      deck_release_id: row.deck_release_id,
-      card_ordinal: 0,
-      content_hash: '',
-      term_coverage: 1 - row.rank * 0.01,
-      sentenceIndex: Math.max(0, sentences.indexOf(row.anchor_text)),
-      cachedAnchorText: row.anchor_text,
-    }));
-  } else {
-    const searches = await Promise.all(sentences.map((sentence) =>
-      db.rpc('search_latest_anki_deck_by_concept', {
-        search_terms: searchTerms(sentence),
-        result_limit: 10,
-      }).limit(10)
-    ));
-    if (searches.some((result) => result.error)) {
-      return NextResponse.json({ error: 'Card lookup unavailable' }, { status: 503 });
-    }
-    candidateRows = searches.flatMap((result, sentenceIndex) =>
-      ((result.data ?? []) as SearchRow[]).map((row) => ({ ...row, sentenceIndex }))
-    );
-  }
-  const versionIds = [...new Set(candidateRows.map((row) => row.canonical_card_version_id))];
-  if (!versionIds.length) return NextResponse.json({ answerHash: hash, references: [] });
-
-  // Publication is the current content gate. No cards have production-eligible
-  // entity mappings yet, so factual matching below must pass independently.
-  const eligibleRows = candidateRows;
-
-  const { data: versions, error: versionsError } = await db
-    .from('canonical_card_versions')
-    .select('id,canonical_card_id,content_hash,field_snapshot,is_active')
-    .in('id', [...new Set(eligibleRows.map((row) => row.canonical_card_version_id))]);
-  if (versionsError) return NextResponse.json({ error: 'Card lookup unavailable' }, { status: 503 });
-  const versionById = new Map((versions ?? []).map((row) => [row.id, row]));
-
-  const { data: cards } = await db.from('canonical_cards')
-    .select('id,title,is_active,canonical_status')
-    .in('id', [...new Set(eligibleRows.map((row) => row.canonical_card_id))]);
-  const cardById = new Map((cards ?? []).map((row) => [row.id, row]));
-  const { data: latestRelease } = await db.from('anki_deck_releases')
-    .select('id').eq('status', 'published')
-    .order('published_at', { ascending: false }).limit(1).maybeSingle();
-  if (!latestRelease) return NextResponse.json({ answerHash: hash, references: [] });
-  const { data: members } = await db.from('anki_deck_release_cards')
-    .select('canonical_card_id,canonical_card_version_id,deck_release_id,deck_path,card_ordinal,inclusion_status')
-    .in('canonical_card_version_id', [...new Set(eligibleRows.map((row) => row.canonical_card_version_id))])
-    .eq('deck_release_id', latestRelease.id)
-    .eq('inclusion_status', 'included');
-  const memberByVersion = new Map((members ?? []).map((row) => [row.canonical_card_version_id, row]));
-
-  const seenCards = new Set<string>();
-  const seenSentences = new Set<number>();
-  const references: AnkiReference[] = [];
-  for (const row of eligibleRows.sort((a, b) =>
-    b.term_coverage - a.term_coverage || a.sentenceIndex - b.sentenceIndex
-  )) {
-    const version = versionById.get(row.canonical_card_version_id);
-    const card = cardById.get(row.canonical_card_id);
-    const member = memberByVersion.get(row.canonical_card_version_id);
-    if (!version?.is_active || !card?.is_active || !member
-      || member.deck_release_id !== row.deck_release_id
-      || member.deck_release_id !== latestRelease?.id
-      || (row.content_hash && version.content_hash !== row.content_hash)
-      || card.canonical_status === 'archived'
-      || seenCards.has(row.canonical_card_id) || seenSentences.has(row.sentenceIndex)) continue;
-    const fields = cardFields(version.field_snapshot);
-    const ordinal = member.card_ordinal;
-    const anchorText = row.cachedAnchorText ?? sentences[row.sentenceIndex];
-    if (!fields.front || !clozeFactMatches(anchorText, fields.front, ordinal)) continue;
-    references.push({
-      id: row.canonical_card_version_id,
-      number: references.length + 1,
-      anchorText,
-      cardId: row.canonical_card_id,
-      cardVersionId: row.canonical_card_version_id,
-      releaseId: row.deck_release_id,
-      deckPath: member.deck_path,
-      title: card.title || member.deck_path.split('::').pop() || 'Anki card',
-      front: fields.front,
-      back: fields.back,
-      extra: fields.extra,
-      frontHtml: fields.frontHtml.slice(0, 50_000),
-      backHtml: fields.backHtml.slice(0, 50_000),
-      extraHtml: fields.extraHtml.slice(0, 50_000),
-      targetCloze: ordinal,
-      images: [],
-    });
-    seenCards.add(row.canonical_card_id);
-    seenSentences.add(row.sentenceIndex);
-    if (references.length === 3) break;
-  }
-  if (!cachedRows && !cacheError && references.length) {
-    await db.from('brobot_anki_references').upsert(
-      references.map((reference) => ({
-        user_id: user.id,
-        message_id: messageId,
-        answer_hash: hash,
-        anchor_text: reference.anchorText,
-        canonical_card_id: reference.cardId,
-        canonical_card_version_id: reference.cardVersionId,
-        deck_release_id: reference.releaseId,
-        rank: reference.number,
-      })),
-      { onConflict: 'message_id,rank' },
-    );
-  }
-  if (references.length) {
-    const { data: assets } = await db.from('anki_deck_media_assets')
-      .select('canonical_card_version_id,deck_release_id,logical_filename,mime_type,object_key,license_status,storage_provider,storage_bucket')
-      .in('canonical_card_version_id', references.map((reference) => reference.cardVersionId))
-      .in('mime_type', ['image/png', 'image/jpeg', 'image/gif', 'image/webp'])
-      .neq('license_status', 'excluded');
-    for (const reference of references) {
-      for (const asset of (assets ?? []).filter((item) =>
-        item.canonical_card_version_id === reference.cardVersionId
-        && item.deck_release_id === reference.releaseId
-      ).slice(0, 3)) {
-        try {
-          const url = asset.storage_provider === AWS_STORAGE_PROVIDER
-            ? signAnkiAwsDownload(asset.object_key, 3600)
-            : (await db.storage.from(asset.storage_bucket || 'anki-deck-media')
-                .createSignedUrl(asset.object_key, 3600)).data?.signedUrl;
-          if (url) reference.images.push({ url, alt: asset.logical_filename, filename: asset.logical_filename });
-        } catch {
-          // Card text remains available when an image cannot be signed.
+  const hash = answerHash(answer);
+  try {
+    const releaseId = await latestPublishedRelease();
+    if (!releaseId) return NextResponse.json({ answerHash: hash, references: [] });
+    const { data: lookup } = await db.from('brobot_anki_reference_lookups')
+      .select('answer_hash,deck_release_id,linker_version').eq('message_id', messageId).eq('user_id', user.id).maybeSingle();
+    if (lookup?.answer_hash === hash && lookup.deck_release_id === releaseId
+      && lookup.linker_version === ANKI_LINKER_VERSION) {
+      const { data: rows, error } = await db.from('brobot_anki_references')
+        .select('canonical_card_id,canonical_card_version_id,deck_release_id,anchor_text,claim_id,rank')
+        .eq('message_id', messageId).eq('user_id', user.id).order('rank');
+      if (!error && rows) {
+        const claims = new Map(answerClaims(answer).map((claim) => [claim.id, claim.text]));
+        const { data: members } = rows.length ? await db.from('anki_deck_release_cards')
+          .select('canonical_card_version_id,deck_path,card_ordinal').eq('deck_release_id', releaseId)
+          .eq('inclusion_status', 'included').in('canonical_card_version_id', rows.map((row) => row.canonical_card_version_id))
+          : { data: [] as Array<{ canonical_card_version_id: string; deck_path: string; card_ordinal: number }> };
+        const { data: versions } = rows.length ? await db.from('canonical_card_versions')
+          .select('id,field_snapshot,is_active').in('id', rows.map((row) => row.canonical_card_version_id))
+          : { data: [] as Array<{ id: string; field_snapshot: unknown; is_active: boolean }> };
+        const paths = new Map((members ?? []).map((member) => [member.canonical_card_version_id, member]));
+        const fronts = new Map((versions ?? []).filter((version) => version.is_active)
+          .map((version) => [version.id, cardFields(version.field_snapshot).front]));
+        if (rows.every((row) => row.claim_id && claims.get(row.claim_id) === row.anchor_text
+          && row.deck_release_id === releaseId && paths.has(row.canonical_card_version_id)
+          && fronts.has(row.canonical_card_version_id))) {
+          const references: AnkiReference[] = rows.map((row) => ({
+            id: row.canonical_card_version_id, number: row.rank, claimId: row.claim_id!,
+            anchorText: row.anchor_text, cardId: row.canonical_card_id,
+            cardVersionId: row.canonical_card_version_id, releaseId,
+            deckPath: paths.get(row.canonical_card_version_id)!.deck_path,
+            title: cardPreview(fronts.get(row.canonical_card_version_id)!,
+              paths.get(row.canonical_card_version_id)!.card_ordinal,
+              paths.get(row.canonical_card_version_id)!.deck_path),
+            token: createAnkiToken('card', user.id, `${releaseId}:${row.canonical_card_version_id}`),
+          }));
+          return NextResponse.json({ answerHash: hash, references });
         }
       }
     }
+    const references = await linkAnkiClaims(answer, releaseId, user.id);
+    const { error: deleteError } = await db.from('brobot_anki_references')
+      .delete().eq('message_id', messageId).eq('user_id', user.id);
+    if (deleteError) throw deleteError;
+    if (references.length) {
+      const { error } = await db.from('brobot_anki_references').insert(references.map((reference) => ({
+        user_id: user.id, message_id: messageId, answer_hash: hash,
+        anchor_text: reference.anchorText, claim_id: reference.claimId,
+        canonical_card_id: reference.cardId, canonical_card_version_id: reference.cardVersionId,
+        deck_release_id: releaseId, rank: reference.number,
+      })));
+      if (error) throw error;
+    }
+    const { error: stateError } = await db.from('brobot_anki_reference_lookups').upsert({
+      message_id: messageId, user_id: user.id, answer_hash: hash,
+      deck_release_id: releaseId, linker_version: ANKI_LINKER_VERSION,
+      checked_at: new Date().toISOString(),
+    }, { onConflict: 'message_id' });
+    if (stateError) throw stateError;
+    return NextResponse.json({ answerHash: hash, references });
+  } catch {
+    return NextResponse.json({ error: 'Card lookup unavailable' }, { status: 503 });
   }
-  return NextResponse.json({ answerHash: hash, references });
+}
+
+/** Guest answers are ephemeral; the chat response supplies a signed hash of its answer. */
+export async function POST(request: Request, { params }: { params: Promise<{ messageId: string }> }) {
+  const { messageId } = await params;
+  if (!UUID.test(messageId)) return NextResponse.json({ error: 'Invalid message ID' }, { status: 400 });
+  const origin = request.headers.get('origin');
+  if (origin) {
+    try {
+      if (new URL(origin).host !== new URL(request.url).host) {
+        return NextResponse.json({ error: 'Origin not allowed' }, { status: 403 });
+      }
+    } catch {
+      return NextResponse.json({ error: 'Origin not allowed' }, { status: 403 });
+    }
+  }
+  const guest = getGuestSessionFromRequest(request);
+  if (!guest) return NextResponse.json({ error: 'Guest session required' }, { status: 401 });
+  const body = await request.json().catch(() => null) as { answer?: unknown; token?: unknown } | null;
+  if (typeof body?.answer !== 'string' || body.answer.length > 12000 || typeof body.token !== 'string'
+    || verifyAnkiToken(body.token, 'guest-answer', guest.guestId) !== answerHash(body.answer)) {
+    return NextResponse.json({ error: 'Invalid guest answer' }, { status: 400 });
+  }
+  try {
+    const releaseId = await latestPublishedRelease();
+    const key = `${guest.guestId}:${answerHash(body.answer)}:${releaseId}`;
+    const cached = guestCache.get(key);
+    const references = cached && cached.expires > Date.now()
+      ? cached.references
+      : releaseId ? await linkAnkiClaims(body.answer, releaseId, guest.guestId) : [];
+    if (!cached || cached.expires <= Date.now()) {
+      if (guestCache.size >= 200) guestCache.delete(guestCache.keys().next().value!);
+      guestCache.set(key, { expires: Date.now() + 10 * 60_000, references });
+    }
+    return NextResponse.json({ answerHash: answerHash(body.answer), references });
+  } catch {
+    return NextResponse.json({ error: 'Card lookup unavailable' }, { status: 503 });
+  }
 }

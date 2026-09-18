@@ -43,6 +43,7 @@ export type BroBotChatInternalResult = {
   specialty?: string;
   resolvedTopic?: string;
   entityResolutionState?: string;
+  ankiLookupToken?: string;
 };
 
 export type BroBotLegacyResponse = BroBotChatInternalResult;

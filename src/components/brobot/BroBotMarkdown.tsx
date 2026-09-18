@@ -2,186 +2,7 @@
 
 import { memo, type ReactNode, useMemo } from 'react';
 import type { AnkiReference } from '@/lib/brobot/chat/anki-references';
-
-type Block =
-  | { type: 'heading'; level: 2 | 3 | 4; text: string }
-  | { type: 'paragraph'; text: string }
-  | { type: 'blockquote'; text: string }
-  | { type: 'code'; language: string; text: string }
-  | { type: 'table'; headers: string[]; rows: string[][] }
-  | { type: 'ul' | 'ol'; items: ListItem[] };
-
-type ListItem = {
-  text: string;
-  children: ListItem[];
-};
-
-function stripFence(raw: string) {
-  return raw
-    .trim()
-    .replace(/^```(?:markdown|md)?\s*/i, '')
-    .replace(/\s*```$/i, '')
-    .trim();
-}
-
-function looksLikeJson(raw: string) {
-  const trimmed = raw.trim();
-  return (
-    /^[{[]/.test(trimmed) ||
-    /"answer"\s*:/.test(trimmed) ||
-    /"priorityPoints"\s*:/.test(trimmed)
-  );
-}
-
-function splitTableRow(line: string) {
-  return line
-    .replace(/^\|/, '')
-    .replace(/\|$/, '')
-    .split('|')
-    .map((cell) => cell.trim());
-}
-
-function isTableDivider(line: string) {
-  return /^\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?$/.test(line);
-}
-
-function isTableStart(lines: string[], index: number) {
-  return Boolean(lines[index]?.includes('|') && lines[index + 1] && isTableDivider(lines[index + 1]));
-}
-
-function appendListItem(items: ListItem[], text: string, depth: number) {
-  if (depth <= 0 || items.length === 0) {
-    items.push({ text, children: [] });
-    return;
-  }
-
-  appendListItem(items[items.length - 1].children, text, depth - 1);
-}
-
-function parseBlocks(markdown: string): Block[] {
-  const cleaned = stripFence(markdown);
-  if (!cleaned || looksLikeJson(cleaned)) {
-    return [
-      {
-        type: 'paragraph',
-        text: 'BroBot generated a response, but it could not be rendered cleanly. Please try again or rephrase your question.',
-      },
-    ];
-  }
-
-  const blocks: Block[] = [];
-  const lines = cleaned.split(/\r?\n/);
-  let paragraph: string[] = [];
-  let list: { type: 'ul' | 'ol'; items: ListItem[] } | null = null;
-
-  const flushParagraph = () => {
-    if (!paragraph.length) return;
-    blocks.push({ type: 'paragraph', text: paragraph.join(' ').trim() });
-    paragraph = [];
-  };
-
-  const flushList = () => {
-    if (!list) return;
-    blocks.push(list);
-    list = null;
-  };
-
-  for (let index = 0; index < lines.length; index += 1) {
-    const rawLine = lines[index];
-    const line = rawLine.trim();
-
-    if (!line) {
-      flushParagraph();
-      flushList();
-      continue;
-    }
-
-    const codeFence = /^```(\w+)?\s*$/.exec(line);
-    if (codeFence) {
-      flushParagraph();
-      flushList();
-      const codeLines: string[] = [];
-      index += 1;
-      while (index < lines.length && !/^```\s*$/.test(lines[index].trim())) {
-        codeLines.push(lines[index]);
-        index += 1;
-      }
-      blocks.push({
-        type: 'code',
-        language: codeFence[1] ?? '',
-        text: codeLines.join('\n'),
-      });
-      continue;
-    }
-
-    if (isTableStart(lines, index)) {
-      flushParagraph();
-      flushList();
-      const headers = splitTableRow(lines[index]);
-      index += 2;
-      const rows: string[][] = [];
-      while (index < lines.length && lines[index].trim().includes('|')) {
-        rows.push(splitTableRow(lines[index]));
-        index += 1;
-      }
-      index -= 1;
-      blocks.push({ type: 'table', headers, rows });
-      continue;
-    }
-
-    const heading = /^(#{2,4})\s+(.+)$/.exec(line);
-    if (heading) {
-      flushParagraph();
-      flushList();
-      blocks.push({
-        type: 'heading',
-        level: heading[1].length as 2 | 3 | 4,
-        text: heading[2].trim(),
-      });
-      continue;
-    }
-
-    if (line.startsWith('>')) {
-      flushParagraph();
-      flushList();
-      blocks.push({
-        type: 'blockquote',
-        text: line.replace(/^>\s?/, '').trim(),
-      });
-      continue;
-    }
-
-    const unordered = /^(\s*)[-*]\s+(.+)$/.exec(rawLine);
-    if (unordered) {
-      flushParagraph();
-      if (!list || list.type !== 'ul') {
-        flushList();
-        list = { type: 'ul', items: [] };
-      }
-      appendListItem(list.items, unordered[2].trim(), Math.floor(unordered[1].length / 2));
-      continue;
-    }
-
-    const ordered = /^(\s*)\d+[.)]\s+(.+)$/.exec(rawLine);
-    if (ordered) {
-      flushParagraph();
-      if (!list || list.type !== 'ol') {
-        flushList();
-        list = { type: 'ol', items: [] };
-      }
-      appendListItem(list.items, ordered[2].trim(), Math.floor(ordered[1].length / 2));
-      continue;
-    }
-
-    flushList();
-    paragraph.push(line);
-  }
-
-  flushParagraph();
-  flushList();
-
-  return blocks;
-}
+import { parseAnkiBlocks, claimsForText, type ListItem } from '@/lib/brobot/chat/anki-claims';
 
 function renderInline(text: string): ReactNode[] {
   const nodes: ReactNode[] = [];
@@ -241,12 +62,14 @@ function RenderList({
   type,
   items,
   nested = false,
+  path,
   references = [],
   onOpenAnkiReference,
 }: {
   type: 'ul' | 'ol';
   items: ListItem[];
   nested?: boolean;
+  path: string;
   references?: AnkiReference[];
   onOpenAnkiReference?: (id: string) => void;
 }) {
@@ -257,9 +80,9 @@ function RenderList({
     >
       {items.map((item, index) => (
         <li key={`${item.text}-${index}`} className="pl-1">
-          <span>{renderInlineWithReference(item.text, references, onOpenAnkiReference)}</span>
+          <span>{renderInlineWithReference(item.text, `${path}:${index}`, references, onOpenAnkiReference)}</span>
           {item.children.length > 0 && (
-            <RenderList type="ul" items={item.children} nested references={references} onOpenAnkiReference={onOpenAnkiReference} />
+            <RenderList type="ul" items={item.children} path={`${path}:${index}:child`} nested references={references} onOpenAnkiReference={onOpenAnkiReference} />
           )}
         </li>
       ))}
@@ -267,11 +90,8 @@ function RenderList({
   );
 }
 
-function referenceMarker(text: string, references: AnkiReference[], onOpen?: (id: string) => void) {
-  const reference = references.find((item) =>
-    text.includes(item.anchorText) || item.anchorText.includes(text.trim())
-  );
-  if (!reference || !onOpen) return null;
+function referenceMarker(reference: AnkiReference, onOpen?: (id: string) => void) {
+  if (!onOpen) return null;
   return <button type="button" onClick={() => onOpen(reference.id)}
     className="ml-1 inline rounded-md bg-sky-50 px-1.5 py-0.5 align-baseline text-xs font-bold text-sky-800 hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-500"
     aria-label={`Open Anki card ${reference.number} for this fact`}>
@@ -279,20 +99,17 @@ function referenceMarker(text: string, references: AnkiReference[], onOpen?: (id
   </button>;
 }
 
-function renderInlineWithReference(text: string, references: AnkiReference[], onOpen?: (id: string) => void): ReactNode {
-  const placements = references
-    .map((reference) => ({ reference, start: text.indexOf(reference.anchorText) }))
-    .filter((item) => item.start >= 0)
-    .sort((a, b) => a.start - b.start);
+function renderInlineWithReference(text: string, path: string, references: AnkiReference[], onOpen?: (id: string) => void): ReactNode {
+  const placements = claimsForText(text, path)
+    .map((claim) => ({ claim, reference: references.find((item) => item.claimId === claim.id) }))
+    .filter((item): item is { claim: ReturnType<typeof claimsForText>[number]; reference: AnkiReference } => Boolean(item.reference));
   if (!placements.length) return renderInline(text);
   const output: ReactNode[] = [];
   let cursor = 0;
-  for (const { reference, start } of placements) {
-    const end = start + reference.anchorText.length;
-    if (start < cursor) continue;
-    output.push(<span key={`text-${cursor}`}>{renderInline(text.slice(cursor, end))}</span>);
-    output.push(<span key={`ref-${reference.id}`}>{referenceMarker(reference.anchorText, [reference], onOpen)}</span>);
-    cursor = end;
+  for (const { reference, claim } of placements) {
+    output.push(<span key={`text-${cursor}`}>{renderInline(text.slice(cursor, claim.end))}</span>);
+    output.push(<span key={`ref-${reference.id}`}>{referenceMarker(reference, onOpen)}</span>);
+    cursor = claim.end;
   }
   output.push(<span key="tail">{renderInline(text.slice(cursor))}</span>);
   return output;
@@ -303,7 +120,7 @@ function BroBotMarkdown({ children, references = [], onOpenAnkiReference }: {
   references?: AnkiReference[];
   onOpenAnkiReference?: (id: string) => void;
 }) {
-  const blocks = useMemo(() => parseBlocks(children), [children]);
+  const blocks = useMemo(() => parseAnkiBlocks(children), [children]);
 
   return (
     <div className="space-y-3 text-[15px] leading-6 text-slate-700 sm:space-y-4 sm:leading-7">
@@ -321,7 +138,7 @@ function BroBotMarkdown({ children, references = [], onOpenAnkiReference }: {
         }
 
         if (block.type === 'ul' || block.type === 'ol') {
-          return <RenderList key={`${block.type}-${index}`} type={block.type} items={block.items} references={references} onOpenAnkiReference={onOpenAnkiReference} />;
+          return <RenderList key={`${block.type}-${index}`} type={block.type} items={block.items} path={String(index)} references={references} onOpenAnkiReference={onOpenAnkiReference} />;
         }
 
         if (block.type === 'blockquote') {
@@ -330,7 +147,7 @@ function BroBotMarkdown({ children, references = [], onOpenAnkiReference }: {
               key={`${block.type}-${index}`}
               className="rounded-xl border border-amber-100 bg-amber-50/70 px-3 py-2.5 text-sm leading-6 text-amber-950"
             >
-              {renderInlineWithReference(block.text, references, onOpenAnkiReference)}
+              {renderInlineWithReference(block.text, String(index), references, onOpenAnkiReference)}
             </blockquote>
           );
         }
@@ -372,7 +189,7 @@ function BroBotMarkdown({ children, references = [], onOpenAnkiReference }: {
                     <tr key={`row-${rowIndex}`}>
                       {block.headers.map((_, cellIndex) => (
                         <td key={`cell-${cellIndex}`} className="max-w-full px-2.5 py-2 align-top">
-                          {renderInline(row[cellIndex] ?? '')}
+                          {renderInlineWithReference(row[cellIndex] ?? '', `${index}:row:${rowIndex}:cell:${cellIndex}`, references, onOpenAnkiReference)}
                         </td>
                       ))}
                     </tr>
@@ -386,7 +203,7 @@ function BroBotMarkdown({ children, references = [], onOpenAnkiReference }: {
         if (block.type === 'paragraph') {
           return (
             <p key={`${block.type}-${index}`} className="max-w-none">
-              {renderInlineWithReference(block.text, references, onOpenAnkiReference)}
+              {renderInlineWithReference(block.text, String(index), references, onOpenAnkiReference)}
             </p>
           );
         }
