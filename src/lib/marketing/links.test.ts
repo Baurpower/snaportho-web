@@ -58,10 +58,12 @@ for (const step of CAMPAIGN_STEPS) {
     assert.ok(rendered.text.includes('Update my profile:'));
   }
   if (step === 'profile_grad_year_1') {
-    assert.equal(rendered.subject, 'A quick note for med students');
+    assert.equal(rendered.subject, 'Keep up the good work — one quick question');
     assert.ok(rendered.text.includes('MD/DO student'));
     assert.ok(rendered.text.includes('Keep up the good work'));
-    assert.ok(rendered.text.includes('Once you save it'));
+    assert.ok(rendered.text.includes('Feel free to reach out if you ever have any questions.'));
+    assert.ok(rendered.text.includes('This will help me understand where you are in the process'));
+    assert.ok(rendered.text.includes('our new improved BroBot CasePrep and chat.'));
     assert.ok(rendered.text.includes('/account/grad-year?'));
     assert.ok(!rendered.html.includes('Open BroBot</a>'));
     assert.ok(!rendered.text.includes('resident'));

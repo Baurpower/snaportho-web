@@ -134,11 +134,10 @@ export default function CheckoutSuccessClient() {
   // not double-count.
   useEffect(() => {
     if (entitlementView?.isUnlimited !== true) return;
-    const dedupeId =
-      entitlementView.entitlement?.stripeSubscriptionId ?? sessionId;
+    const dedupeId = entitlementView.entitlement?.stripeSubscriptionId;
     if (!dedupeId) return;
     trackBroBotUnlimitedPurchaseOnce({ dedupeId });
-  }, [entitlementView, sessionId]);
+  }, [entitlementView]);
 
   useEffect(() => {
     if (authLoading) return;

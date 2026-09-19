@@ -15,7 +15,7 @@ const COPY: Record<CampaignStep, { subject: string; title: string; paragraphs: s
   habit_2: { subject: 'Turn a topic into a quick quiz', title: 'Test what you remember', paragraphs: ['Pick a topic you recently studied and ask BroBot to quiz you.', 'Try: “Give me three quiz questions on the Garden classification of femoral neck fractures, with the answers at the end.”', 'Try answering before you read the explanations.'], cta: 'Open BroBot' },
   conversion_1: { subject: 'Keep using BroBot without the limit', title: 'Unlock Unlimited BroBot', paragraphs: ['Want more time for case prep and follow-up questions?', 'Unlimited BroBot removes the free daily question limit.', 'See the available plans and pricing in SnapOrtho.'], cta: 'View Unlimited plans' },
   profile_completion_1: { subject: 'Finish setting up your SnapOrtho account', title: 'Add your graduation year to SnapOrtho', paragraphs: ['Your SnapOrtho account is missing a couple of details. Adding your graduation year and training level lets us match content to your level of training.', 'It takes about 30 seconds — just two fields.', 'While you’re there: we’ve shipped a lot lately — an expanded Anki deck, CasePrep case summaries, and new surgical-approach walkthroughs in BroBot. Worth a look after you update your profile.'], cta: 'Add my graduation year' },
-  profile_grad_year_1: { subject: 'A note for med students', title: 'Keep up the good work', paragraphs: [], cta: 'Update my profile' },
+  profile_grad_year_1: { subject: 'Keep up the good work — one quick question', title: 'Keep up the good work', paragraphs: [], cta: 'Update my profile' },
   reengagement_1: { subject: 'Something from rounds you want to review?', title: 'Start with a question from today', paragraphs: ['Bring BroBot a term, classification, or approach you want to understand better.', 'Try: “Explain the Weber ankle fracture classification in simple terms.”', 'You can try a question before signing in.'], cta: 'Open BroBot' },
 };
 
@@ -72,9 +72,8 @@ function renderFounderProfileEmail(args: { firstName: string | null; actionUrl: 
 function renderMedicalStudentEmail(args: { firstName: string | null; actionUrl: string; unsubscribeUrl: string; postalAddress: string }): MarketingEmail {
   const { firstName, actionUrl, unsubscribeUrl, postalAddress } = args;
   const greeting = firstName ? `Hi ${firstName},` : 'Hi,';
-  const intro = `I saw that you listed yourself as an MD/DO student on SnapOrtho. Keep up the good work — med school is no joke.`;
-  const ask = `I realized we don't have your graduation year yet. It's just one field to add. Once you save it, I'll take you straight to a page where you can try the new BroBot or download the SnapOrtho Anki add-on.`;
-  const closing = `Hope one of them helps with your next case, rotation, or study session.`;
+  const intro = `I saw that you listed yourself as an MD/DO student on SnapOrtho. Keep up the good work! Med school is no joke. Feel free to reach out if you ever have any questions.`;
+  const ask = `I realized we don’t have your graduation year yet. This will help me understand where you are in the process to build the best products to help you succeed and reach your goals. I would love if you tried out our new improved BroBot CasePrep and chat.`;
   const html = `<div style="font-family:-apple-system,Segoe UI,Arial,sans-serif;background:#f6f7f9;padding:24px 16px"><div style="max-width:520px;margin:auto;background:#fff;border:1px solid #eceef1;border-radius:12px;overflow:hidden">`
     + `<div style="background:#0f172a;padding:16px 24px"><span style="color:#fff;font-size:17px;font-weight:700">SnapOrtho</span></div>`
     + `<div style="padding:24px;color:#1f2937;font-size:16px;line-height:1.6">`
@@ -82,11 +81,10 @@ function renderMedicalStudentEmail(args: { firstName: string | null; actionUrl: 
     + `<p style="margin:0 0 16px">${escapeHtml(intro)}</p>`
     + `<p style="margin:0 0 20px">${escapeHtml(ask)}</p>`
     + `<p style="margin:0 0 20px"><a href="${escapeHtml(actionUrl)}" style="display:inline-block;background:#0f172a;color:#fff;text-decoration:none;border-radius:8px;padding:11px 20px;font-weight:600">Add my graduation year</a></p>`
-    + `<p style="margin:0 0 16px">${escapeHtml(closing)}</p>`
     + `<p style="margin:0">Alex<br><span style="color:#6b7280;font-size:14px">Founder, SnapOrtho</span></p>`
     + `</div><div style="padding:14px 24px;border-top:1px solid #eceef1;font-size:11px;color:#9ca3af;line-height:1.5">SnapOrtho, ${escapeHtml(postalAddress)}<br><a href="${escapeHtml(unsubscribeUrl)}" style="color:#9ca3af">Unsubscribe or manage email preferences</a></div></div></div>`;
-  const text = [greeting, '', intro, '', ask, '', `Add my graduation year: ${actionUrl}`, '', closing, '', 'Alex', 'Founder, SnapOrtho', '', `Unsubscribe or manage email preferences: ${unsubscribeUrl}`, `SnapOrtho, ${postalAddress}`].join('\n');
-  return { subject: 'A quick note for med students', html, text };
+  const text = [greeting, '', intro, '', ask, '', `Add my graduation year: ${actionUrl}`, '', 'Alex', 'Founder, SnapOrtho', '', `Unsubscribe or manage email preferences: ${unsubscribeUrl}`, `SnapOrtho, ${postalAddress}`].join('\n');
+  return { subject: 'Keep up the good work — one quick question', html, text };
 }
 
 export function renderMarketingEmail(recipient: MarketingRecipient): MarketingEmail & { unsubscribeUrl: string } {

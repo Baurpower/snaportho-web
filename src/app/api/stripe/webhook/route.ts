@@ -11,7 +11,6 @@ import {
 } from '@/lib/stripe';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
-import { sendSubscriptionPurchaseConversion } from '@/lib/analytics/googleAdsServer';
 import {
   getExistingSubscriptionEvent,
   upsertSubscriptionEvent,
@@ -252,14 +251,6 @@ export async function POST(request: Request) {
             db_row_id: pending.id,
           });
 
-          const conversionResult = await sendSubscriptionPurchaseConversion(sub);
-          logStripeWebhookAction({
-            stripe_event_id: event.id,
-            checkout_session_id: session.id,
-            stripe_subscription_id: sub.id,
-            action: 'google_ads_conversion',
-            ...conversionResult,
-          });
           break;
         }
 
@@ -296,15 +287,6 @@ export async function POST(request: Request) {
             userData: stripeBranchUserData(sub),
           });
         }
-
-        const conversionResult = await sendSubscriptionPurchaseConversion(sub);
-        logStripeWebhookAction({
-          stripe_event_id: event.id,
-          checkout_session_id: session.id,
-          stripe_subscription_id: sub.id,
-          action: 'google_ads_conversion',
-          ...conversionResult,
-        });
 
         if (!userIdFromSession && !sub.metadata?.user_id) {
           console.error('[stripe/webhook] checkout.session.completed unresolved user_id after sync attempt', {

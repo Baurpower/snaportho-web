@@ -126,6 +126,7 @@ export function trackSubscriptionConversion(params: GoogleAdsConversionParams = 
 }
 
 const PENDING_PURCHASE_KEY = "snaportho:google-ads:pending-brobot-purchase";
+const pendingPurchaseRetries = new Map<string, ReturnType<typeof setTimeout>>();
 
 type PendingBroBotPurchase = {
   value?: number;
@@ -199,6 +200,18 @@ export function trackBroBotUnlimitedPurchaseOnce(params: {
   value?: number;
   currency?: string;
 }): boolean {
+  return sendBroBotUnlimitedPurchase(params, 20);
+}
+
+function sendBroBotUnlimitedPurchase(
+  params: {
+    dedupeId: string;
+    interval?: "month" | "year" | string | null;
+    value?: number;
+    currency?: string;
+  },
+  retriesRemaining: number,
+): boolean {
   if (typeof window === "undefined") return false;
 
   const dedupeId = params.dedupeId?.trim();
@@ -213,7 +226,8 @@ export function trackBroBotUnlimitedPurchaseOnce(params: {
         : resolveBroBotUnlimitedValue(params.interval ?? pending?.interval);
   const currency = params.currency ?? pending?.currency ?? "USD";
 
-  const storageKey = `google_ads_subscription_conversion:${dedupeId}`;
+  // The old key could be marked "sent" even when gtag was unavailable.
+  const storageKey = `google_ads_subscription_conversion_v2:${dedupeId}`;
   try {
     if (window.localStorage.getItem(storageKey) === "sent") {
       return false;
@@ -227,6 +241,23 @@ export function trackBroBotUnlimitedPurchaseOnce(params: {
     currency,
     transactionId: dedupeId,
   });
+
+  if (!fired) {
+    if (retriesRemaining > 0 && !pendingPurchaseRetries.has(dedupeId)) {
+      const timer = setTimeout(() => {
+        pendingPurchaseRetries.delete(dedupeId);
+        sendBroBotUnlimitedPurchase(params, retriesRemaining - 1);
+      }, 500);
+      pendingPurchaseRetries.set(dedupeId, timer);
+    }
+    return false;
+  }
+
+  const pendingRetry = pendingPurchaseRetries.get(dedupeId);
+  if (pendingRetry) {
+    clearTimeout(pendingRetry);
+    pendingPurchaseRetries.delete(dedupeId);
+  }
 
   try {
     window.localStorage.setItem(storageKey, "sent");

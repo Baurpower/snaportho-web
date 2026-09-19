@@ -78,8 +78,8 @@ export default function WelcomeClient() {
           });
           // Only a freshly claimed subscription is a new purchase; an
           // already-owned one must not re-report a conversion.
-          if (status === 'claimed' && checkoutSessionId) {
-            trackBroBotUnlimitedPurchaseOnce({ dedupeId: checkoutSessionId });
+          if (status === 'claimed' && typeof payload?.result?.subscriptionId === 'string') {
+            trackBroBotUnlimitedPurchaseOnce({ dedupeId: payload.result.subscriptionId });
           }
           router.replace('/brobot/chat?subscription=active');
           return;
