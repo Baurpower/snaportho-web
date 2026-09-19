@@ -44,6 +44,25 @@ npm run extension:orthobullets:test          # extractor fixtures + auth URL reg
 npm run extension:orthobullets:health-report # extraction health report (JSON + Markdown)
 ```
 
+## Production release and website download
+
+Run `npm run extension:orthobullets:release` from `snaportho-web`. This runs the
+extension tests, builds against `https://snap-ortho.com`, verifies the generated
+extension, and writes
+`public/downloads/snaportho-brobot-<version>.zip` plus a SHA-256 release record.
+The site's `prebuild` script does this before every Next.js production build,
+so `/brobot/extension/download` serves the same version as the manifest. The
+ZIP has `manifest.json` at its root. Increment `manifest.template.json`'s
+version for each release.
+
+The website ZIP uses **Load unpacked** and is a manual installation. Chrome
+Web Store publication is needed for one-click installation and automatic
+updates for general Chrome users. Upload the same verified ZIP in the Chrome
+Web Store Developer Dashboard, complete its listing and privacy disclosures,
+then replace the website's manual download action with the Store listing URL.
+The Store review and a real-browser smoke test of linking, each supported
+provider, and side-panel behavior remain release gates.
+
 ## Load unpacked in Chrome
 
 1. Run the build (above) — output goes to `extensions/orthobullets-brobot/dist/`.

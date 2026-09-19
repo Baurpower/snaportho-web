@@ -10,13 +10,12 @@ export async function deliverMarketingCampaignEmail(recipient: MarketingRecipien
 
   // Recheck consent and suppression at the last responsible moment.
   const [{ data: profile, error: profileError }, { data: optouts, error: optoutError }] = await Promise.all([
-    supabase.from('user_profiles').select('email, receive_emails, marketing_unsubscribed_at, training_level, grad_year, country, city, institution, subspecialty_interest').eq('user_id', recipient.userId).maybeSingle(),
+    supabase.from('user_profiles').select('email, receive_emails, marketing_consent_at, marketing_unsubscribed_at, training_level, grad_year, country, city, institution, subspecialty_interest').eq('user_id', recipient.userId).maybeSingle(),
     supabase.from('lifecycle_email_optouts').select('kind').eq('user_id', recipient.userId),
   ]);
   if (profileError) throw new Error(`Consent lookup failed: ${profileError.message}`);
   if (optoutError) throw new Error(`Suppression lookup failed: ${optoutError.message}`);
-  if (profile?.marketing_unsubscribed_at) return { status: 'suppressed' as const };
-  if (profile?.receive_emails !== true) return { status: 'suppressed' as const };
+  if (profile?.receive_emails !== true || !profile.marketing_consent_at || profile.marketing_unsubscribed_at) return { status: 'suppressed' as const };
   if ((optouts ?? []).some((row) => row.kind === null || row.kind === recipient.topic)) return { status: 'suppressed' as const };
 
   if (recipient.campaignStep === 'profile_completion_1' || recipient.campaignStep === 'profile_grad_year_1') {

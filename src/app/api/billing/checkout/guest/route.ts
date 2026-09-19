@@ -34,6 +34,9 @@ export async function POST(request: Request) {
       utmCampaign: typeof body.utm_campaign === 'string' ? body.utm_campaign : null,
       utmTerm: typeof body.utm_term === 'string' ? body.utm_term : null,
       utmContent: typeof body.utm_content === 'string' ? body.utm_content : null,
+      gclid: typeof body.gclid === 'string' ? body.gclid : null,
+      gbraid: typeof body.gbraid === 'string' ? body.gbraid : null,
+      wbraid: typeof body.wbraid === 'string' ? body.wbraid : null,
     });
 
     if (!url) {

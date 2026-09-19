@@ -707,6 +707,15 @@ export async function createBroBotCheckoutSession(
   options: {
     enableTrial?: boolean;
     source?: string;
+    campaign?: string | null;
+    utmSource?: string | null;
+    utmMedium?: string | null;
+    utmCampaign?: string | null;
+    utmTerm?: string | null;
+    utmContent?: string | null;
+    gclid?: string | null;
+    gbraid?: string | null;
+    wbraid?: string | null;
     branchIDFV?: string;
     branchOSVersion?: string;
   } = {}
@@ -732,6 +741,15 @@ export async function createBroBotCheckoutSession(
     }),
     branch_idfv: options.branchIDFV ?? '',
     branch_os_version: options.branchOSVersion ?? '',
+    campaign: options.campaign ?? '',
+    utm_source: options.utmSource ?? '',
+    utm_medium: options.utmMedium ?? '',
+    utm_campaign: options.utmCampaign ?? '',
+    utm_term: options.utmTerm ?? '',
+    utm_content: options.utmContent ?? '',
+    gclid: options.gclid ?? '',
+    gbraid: options.gbraid ?? '',
+    wbraid: options.wbraid ?? '',
   };
 
   // Use custom redirect URLs if provided (mobile), otherwise fall back to centralized web URLs.
@@ -840,6 +858,9 @@ export async function createGuestBroBotCheckoutSession(
     utmCampaign?: string | null;
     utmTerm?: string | null;
     utmContent?: string | null;
+    gclid?: string | null;
+    gbraid?: string | null;
+    wbraid?: string | null;
     customSuccessUrl?: string;
     customCancelUrl?: string;
     branchIDFV?: string;
@@ -873,6 +894,9 @@ export async function createGuestBroBotCheckoutSession(
     utm_campaign: options.utmCampaign || '',
     utm_term: options.utmTerm || '',
     utm_content: options.utmContent || '',
+    gclid: options.gclid || '',
+    gbraid: options.gbraid || '',
+    wbraid: options.wbraid || '',
     branch_idfv: options.branchIDFV ?? '',
     branch_os_version: options.branchOSVersion ?? '',
     ...buildGuestTrialMetadata({

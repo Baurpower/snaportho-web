@@ -1,6 +1,9 @@
 'use client';
 
-import { trackProductEvent } from '@/lib/analytics/product-events-client';
+import {
+  currentAttribution,
+  trackProductEvent,
+} from '@/lib/analytics/product-events-client';
 
 export type WebsiteBroBotCheckoutParams = {
   interval: 'month' | 'year';
@@ -13,41 +16,54 @@ export type WebsiteBroBotCheckoutParams = {
   utmCampaign?: string | null;
   utmTerm?: string | null;
   utmContent?: string | null;
+  gclid?: string | null;
+  gbraid?: string | null;
+  wbraid?: string | null;
 };
 
 export async function createWebsiteBroBotCheckout(params: WebsiteBroBotCheckoutParams) {
+  const stored = currentAttribution();
+  const attribution = {
+    source: params.utmSource ?? stored.source,
+    medium: params.utmMedium ?? stored.medium,
+    campaign: params.utmCampaign ?? params.campaign ?? stored.campaign,
+    utmTerm: params.utmTerm ?? stored.utmTerm,
+    utmContent: params.utmContent ?? stored.utmContent,
+    gclid: params.gclid ?? stored.gclid,
+    gbraid: params.gbraid ?? stored.gbraid,
+    wbraid: params.wbraid ?? stored.wbraid,
+    branchClickId: stored.branchClickId,
+  };
   trackProductEvent({
     eventName: 'brobot_checkout_started',
     surface: params.checkoutSource,
     productArea: 'billing',
-    source: params.utmSource ?? null,
-    medium: params.utmMedium ?? null,
-    campaign: params.utmCampaign ?? params.campaign ?? null,
+    source: attribution.source,
+    medium: attribution.medium,
+    campaign: attribution.campaign,
+    branchClickId: attribution.branchClickId,
     properties: { interval: params.interval, trial_requested: true },
   });
   const endpoint = params.isAuthenticated
     ? '/api/billing/checkout'
     : '/api/billing/checkout/guest';
 
-  const body = params.isAuthenticated
-    ? {
-        interval: params.interval,
-        returnTo: params.returnTo,
-        trialRequested: true,
-        checkoutSource: params.checkoutSource,
-      }
-    : {
-        interval: params.interval,
-        source: params.checkoutSource,
-        checkoutSource: params.checkoutSource,
-        trialRequested: true,
-        campaign: params.campaign ?? null,
-        utm_source: params.utmSource ?? null,
-        utm_medium: params.utmMedium ?? null,
-        utm_campaign: params.utmCampaign ?? null,
-        utm_term: params.utmTerm ?? null,
-        utm_content: params.utmContent ?? null,
-      };
+  const body = {
+    interval: params.interval,
+    returnTo: params.returnTo,
+    source: params.checkoutSource,
+    checkoutSource: params.checkoutSource,
+    trialRequested: true,
+    campaign: attribution.campaign,
+    utm_source: attribution.source,
+    utm_medium: attribution.medium,
+    utm_campaign: attribution.campaign,
+    utm_term: attribution.utmTerm,
+    utm_content: attribution.utmContent,
+    gclid: attribution.gclid,
+    gbraid: attribution.gbraid,
+    wbraid: attribution.wbraid,
+  };
 
   const response = await fetch(endpoint, {
     method: 'POST',

@@ -60,6 +60,7 @@ import {
   threadTitleFromMessages,
   type BroBotChatSessionData,
 } from './brobot-chat-session-store';
+import { trackBroBotFirstSuccess } from '@/lib/analytics/product-events-client';
 
 type BroBotChatResponse = {
   ankiLookupToken?: string;
@@ -1035,6 +1036,7 @@ export default function BroBotChatPage({ campaignEntry = false }: { campaignEntr
               const normalizedMetadata = normalizeChatResponse(streamEvent.data);
               if (!normalizedMetadata) continue;
               didReceiveMetadata = true;
+              trackBroBotFirstSuccess({ surface: 'brobot_chat_stream' });
               enrichmentMessageId = normalizedMetadata.messageId;
               trackFirstBroBotSuccessfulUse('chat');
 
@@ -1227,6 +1229,7 @@ export default function BroBotChatPage({ campaignEntry = false }: { campaignEntr
       });
       setPendingIntent(null);
       setRequestState('complete');
+      trackBroBotFirstSuccess({ surface: 'brobot_chat' });
       void pollForEnrichment(normalizedBody.messageId);
     } catch (caughtError) {
       if (caughtError instanceof DOMException && caughtError.name === 'AbortError') {

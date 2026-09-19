@@ -30,17 +30,29 @@ async function recordStripeProductConversion(params: {
   subscription: Stripe.Subscription;
 }) {
   if (!params.userId) return;
-  const source = params.subscription.metadata?.checkout_source ?? params.subscription.metadata?.source ?? 'stripe';
+  const metadata = params.subscription.metadata ?? {};
+  const surface = metadata.checkout_source ?? metadata.source ?? 'stripe';
+  const source = metadata.utm_source || surface;
   await recordProductEvent({
     eventId: uuidv5(`${params.eventId}:${params.eventName}`, PRODUCT_EVENT_NAMESPACE),
     eventName: params.eventName,
     userId: params.userId,
-    surface: source,
+    surface,
     productArea: 'billing',
     entitlementTier: params.eventName === 'brobot_subscription_canceled' ? null : 'unlimited',
     subscriptionProvider: 'stripe',
     source,
-    properties: { subscription_id: params.subscription.id, status: params.subscription.status },
+    medium: metadata.utm_medium || null,
+    campaign: metadata.utm_campaign || metadata.campaign || null,
+    properties: {
+      subscription_id: params.subscription.id,
+      status: params.subscription.status,
+      utm_term: metadata.utm_term || null,
+      utm_content: metadata.utm_content || null,
+      gclid: metadata.gclid || null,
+      gbraid: metadata.gbraid || null,
+      wbraid: metadata.wbraid || null,
+    },
   });
 }
 
@@ -360,7 +372,6 @@ export async function POST(request: Request) {
               stripeEventId: event.id,
               requireUserMapping: false,
             });
-            await recordStripeProductConversion({ eventId: event.id, eventName: 'brobot_subscription_renewed', userId: sub.metadata?.user_id, subscription: sub });
           }
         }
         break;
@@ -392,6 +403,17 @@ export async function POST(request: Request) {
               stripeEventId: event.id,
               requireUserMapping: false,
             });
+            if (
+              event.type === 'invoice.payment_succeeded' &&
+              invoice.billing_reason === 'subscription_cycle'
+            ) {
+              await recordStripeProductConversion({
+                eventId: invoice.id ?? event.id,
+                eventName: 'brobot_subscription_renewed',
+                userId: sub.metadata?.user_id,
+                subscription: sub,
+              });
+            }
           }
         }
         break;

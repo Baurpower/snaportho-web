@@ -1,10 +1,13 @@
 import assert from 'node:assert/strict';
-import { isEligibleForCampaign, profileCohort, type CampaignProfile } from './segments.ts';
+import { campaignIneligibilityReason, isEligibleForCampaign, profileCohort, type CampaignProfile } from './segments.ts';
 
 const now = Date.now();
-const base: CampaignProfile = { userId: 'u', email: 'u@example.com', confirmed: true, receiveEmails: true, firstName: null, profileComplete: false, currentlyEntitled: false, firstUseAt: null, lastUseAt: null, priorSteps: new Set(), priorStepAt: new Map(), optedOutTopics: new Set() };
+const base: CampaignProfile = { userId: 'u', email: 'u@example.com', confirmed: true, receiveEmails: true, marketingConsentAt: now - 86400000, accountCreatedAt: now - 2 * 86400000, firstName: null, profileComplete: false, currentlyEntitled: false, hasDeliverySuppression: false, firstUseAt: null, lastUseAt: null, priorSteps: new Set(), priorStepAt: new Map(), optedOutTopics: new Set() };
 assert.equal(isEligibleForCampaign(base, 'activation_1', now), true);
 assert.equal(isEligibleForCampaign({ ...base, receiveEmails: false }, 'activation_1', now), false);
+assert.equal(campaignIneligibilityReason({ ...base, marketingConsentAt: null }, 'activation_1', now), 'explicit_consent_missing');
+assert.equal(campaignIneligibilityReason({ ...base, accountCreatedAt: now - 31 * 86400000 }, 'activation_1', now), 'account_too_old');
+assert.equal(campaignIneligibilityReason({ ...base, hasDeliverySuppression: true }, 'activation_1', now), 'delivery_suppressed');
 assert.equal(isEligibleForCampaign({ ...base, optedOutTopics: new Set(['brobot_learning']) }, 'activation_1', now), false);
 assert.equal(isEligibleForCampaign({ ...base, currentlyEntitled: true }, 'activation_1', now), false);
 assert.equal(isEligibleForCampaign({ ...base, firstUseAt: now - 1000, lastUseAt: now - 1000 }, 'conversion_1', now), true);

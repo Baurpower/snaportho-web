@@ -7,6 +7,7 @@
   },
   "scripts": {
     "dev": "next dev",
+    "prebuild": "npm run extension:orthobullets:release",
     "build": "NODE_OPTIONS='--max-old-space-size=8192' next build",
     "start": "next start",
     "lint": "next lint",
@@ -31,6 +32,7 @@
     "brobot:reaudit:pilot:latest-orprep": "BROBOT_INTERACTION_CONSTRAINTS_ENABLED=false BROBOT_CORRECTION_REPAIR_ENABLED=false BROBOT_STRUCTURED_CONVERSATION_STATE_ENABLED=false BROBOT_LATEST_TURN_TASK_ENABLED=true BROBOT_OR_PREP_TASK_CONTRACT_ENABLED=true node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs scripts/brobot-quality-pilot-runner.ts --arm=latest_orprep",
     "extension:orthobullets:build": "node scripts/build-orthobullets-extension.mjs",
     "extension:orthobullets:build:production": "BROBOT_EXTENSION_APP_ORIGIN=https://snap-ortho.com node scripts/build-orthobullets-extension.mjs",
+    "extension:orthobullets:release": "npm run extension:orthobullets:test && npm run extension:orthobullets:build:production && npm run extension:orthobullets:verify-build && node scripts/package-orthobullets-extension.mjs",
     "extension:orthobullets:verify-build": "node scripts/verify-orthobullets-extension-build.mjs",
     "extension:orthobullets:watch": "./node_modules/.bin/tsc -p extensions/orthobullets-brobot/tsconfig.json --watch",
     "extension:orthobullets:test": "./node_modules/.bin/tsc -p extensions/orthobullets-brobot/tsconfig.test.json && node extensions/orthobullets-brobot/.test-dist/providers/himalaya/himalaya-api.test.js && node extensions/orthobullets-brobot/.test-dist/content/extractor.test.js && node extensions/orthobullets-brobot/.test-dist/content/question-lifecycle.test.js && node extensions/orthobullets-brobot/.test-dist/shared/question-fingerprint.test.js && node extensions/orthobullets-brobot/.test-dist/shared/question-review-state.test.js && node extensions/orthobullets-brobot/.test-dist/sidepanel/himalaya-review-board.test.js && node extensions/orthobullets-brobot/.test-dist/sidepanel/orthobullets-test-debrief.test.js && node extensions/orthobullets-brobot/.test-dist/sidepanel/question-session.test.js && node extensions/orthobullets-brobot/.test-dist/shared/page-classification.test.js && node extensions/orthobullets-brobot/.test-dist/shared/curriculum-chips.test.js && node extensions/orthobullets-brobot/.test-dist/shared/brobot-routing.test.js && node extensions/orthobullets-brobot/.test-dist/sidepanel/explain-study-panel.test.js && node extensions/orthobullets-brobot/.test-dist/shared/runtime.test.js && ./node_modules/.bin/tsc -p tsconfig.brobot-orthobullets-test.json && node .test-dist/brobot/orthobullets/curriculum-response-parser.test.js && node .test-dist/brobot/orthobullets/curriculum-prompt-builder.test.js && node .test-dist/brobot/orthobullets/extension-request-contract.test.js && node .test-dist/brobot/orthobullets/hint-quality.test.js && node .test-dist/brobot/orthobullets/prompt-builder.test.js && node .test-dist/brobot/orthobullets/topic-tutor-prompt-builder.test.js && node .test-dist/brobot/orthobullets/topic-tutor-response-parser.test.js && node --experimental-strip-types src/lib/brobot-anki/url.test.mjs",

@@ -29,6 +29,8 @@ const CONVERSION_LABELS = {
   checkoutStarted: process.env.NEXT_PUBLIC_GOOGLE_ADS_CHECKOUT_STARTED_CONVERSION_LABEL ?? "",
   landingCta: process.env.NEXT_PUBLIC_GOOGLE_ADS_LANDING_CTA_CONVERSION_LABEL ?? "",
   casePrep: process.env.NEXT_PUBLIC_GOOGLE_ADS_CASE_PREP_CONVERSION_LABEL ?? "",
+  broBotFirstSuccess:
+    process.env.NEXT_PUBLIC_GOOGLE_ADS_BROBOT_FIRST_SUCCESS_CONVERSION_LABEL ?? "",
   broBotConversation:
     process.env.NEXT_PUBLIC_GOOGLE_ADS_BROBOT_CONVERSATION_CONVERSION_LABEL ?? "",
 };
@@ -368,8 +370,17 @@ export function trackCasePrepConversion() {
   });
 }
 
+export function trackBroBotFirstSuccessConversion() {
+  return trackGoogleAdsConversion({
+    conversionLabel: CONVERSION_LABELS.broBotFirstSuccess,
+    value: 1,
+    currency: "USD",
+    eventName: "brobot_first_success",
+  });
+}
+
 export function trackBroBotConversationConversion() {
-  trackGoogleAdsConversion({
+  return trackGoogleAdsConversion({
     conversionLabel: CONVERSION_LABELS.broBotConversation,
   });
 }

@@ -180,23 +180,26 @@ function HeroSection() {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <TrackedLink
-                href="/brobot/pricing"
-                trackingEvent="landing_start_trial_click"
+                href="/brobot/chat"
+                trackingEvent="try_brobot_free_click"
                 className="rounded-2xl bg-gold px-6 py-3 text-center text-base font-black text-midnight shadow-[0_22px_50px_rgba(255,210,90,0.24)] transition hover:-translate-y-0.5 hover:bg-[#ffe08a]"
               >
-                Start 1-month free trial
+                Ask BroBot Free
               </TrackedLink>
 
               <TrackedLink
-                href="/brobot/chat"
-                trackingEvent="try_brobot_free_click"
+                href="/brobot/pricing"
+                trackingEvent="landing_start_trial_click"
                 className="rounded-2xl border border-white/20 bg-white/10 px-6 py-3 text-center text-base font-black text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/15"
               >
-                Try BroBot Free
+                See Unlimited plans
               </TrackedLink>
             </div>
+            <a href="/brobot/extension/download" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-teal-200 underline decoration-teal-200/50 underline-offset-4 hover:text-white">
+              Get the BroBot Chrome Extension <span aria-hidden="true">→</span>
+            </a>
             <p className="mt-3 text-sm font-semibold text-white/58">
-              Start BroBot Unlimited with 1 month free, or use free daily access.
+              No card required for free daily access. Upgrade only when you need more.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-2">

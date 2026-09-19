@@ -168,6 +168,15 @@ export async function POST(request: Request) {
       {
         enableTrial: trialRequested,
         source: checkoutSource,
+        campaign: typeof body.campaign === 'string' ? body.campaign : null,
+        utmSource: typeof body.utm_source === 'string' ? body.utm_source : null,
+        utmMedium: typeof body.utm_medium === 'string' ? body.utm_medium : null,
+        utmCampaign: typeof body.utm_campaign === 'string' ? body.utm_campaign : null,
+        utmTerm: typeof body.utm_term === 'string' ? body.utm_term : null,
+        utmContent: typeof body.utm_content === 'string' ? body.utm_content : null,
+        gclid: typeof body.gclid === 'string' ? body.gclid : null,
+        gbraid: typeof body.gbraid === 'string' ? body.gbraid : null,
+        wbraid: typeof body.wbraid === 'string' ? body.wbraid : null,
       },
     );
 

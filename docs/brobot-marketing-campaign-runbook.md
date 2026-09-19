@@ -49,6 +49,14 @@ Count an eligible cohort without sending or printing email addresses:
 npm run marketing:campaign -- --campaign=activation_1 --limit=100
 ```
 
+The dry-run prints aggregate exclusion reasons so operators can see why the
+cohort shrank without revealing addresses. Every marketing campaign requires a
+non-null `marketing_consent_at`; `receive_emails=true` by itself is not enough.
+Activation 1 is limited to accounts created in the last 30 days, and any prior
+bounce, complaint, or provider suppression excludes the user from later sends.
+Legacy users without recorded consent must be asked to opt in inside the
+product. Do not email them to obtain marketing consent.
+
 Supported steps are `activation_1`, `activation_2`, `activation_3`, `habit_1`,
 `habit_2`, `conversion_1`, `profile_completion_1`, `profile_grad_year_1`, and `reengagement_1`.
 
@@ -175,6 +183,9 @@ unsubscribe, first-use, and subscription metrics before expanding the cohort.
 - Activation 2 requires Activation 1 to have been sent at least three days ago.
 - Activation 3 requires Activation 2 to have been sent at least four days ago.
 - Any recorded BroBot use removes a user from all activation steps.
+- Activation 1 only includes accounts created within the previous 30 days.
+- Every campaign requires explicit, timestamped marketing consent.
+- Any prior bounce, complaint, or provider suppression blocks future campaigns.
 - Current paid/trialing users are excluded from every campaign in this runner.
 - Bounces and complaints create global suppression and turn off
   `receive_emails`.
