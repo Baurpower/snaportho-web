@@ -36,6 +36,7 @@ function makeQuestion(overrides: Partial<HimalayaApiQuestion> & { questionAttemp
     tags: [],
     averagePeerPercent: null,
     reviewAvailable: true,
+    questionId: null,
     ...overrides,
   };
 }

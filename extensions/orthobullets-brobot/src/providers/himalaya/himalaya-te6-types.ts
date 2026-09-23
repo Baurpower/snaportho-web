@@ -34,6 +34,8 @@ export type Te6Answer = {
 
 export type Te6Question = {
   questionAttemptId?: number;
+  /** Stable item id when te6 sends one. Distinct from questionAttemptId. */
+  questionId?: number;
   type?: string;
   /** HTML string. */
   stem?: string;
@@ -88,6 +90,7 @@ export type HimalayaBridgeState = {
     currentIndex: number | null;
     total: number | null;
     questionAttemptId: number | null;
+    questionId: number | null;
   } | null;
   /** The in-progress question during a live attempt (te.questions[0]). */
   liveQuestion: {

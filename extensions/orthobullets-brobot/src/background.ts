@@ -5,6 +5,7 @@ import type {
   PageChangeMessage,
   QuestionChangeMessage,
 } from './shared/messages.js';
+import { queueAnkiLaunch } from './shared/anki-launch.js';
 import type {
   ExtensionFetchDiagnostics,
   OrthobulletsExplainResponse,
@@ -679,6 +680,43 @@ chrome.runtime.onMessage.addListener(
             ok: true,
             activePage: await getActiveTabState(message.preferRegisteredHost === true, message.preferredHostUrl),
           });
+          return;
+        }
+
+        if (message.type === 'ob:open-anki-launch') {
+          const queued = queueAnkiLaunch(message.command);
+          if (!queued.ok) {
+            sendResponse({ ok: false, error: 'Launch needs a note GUID and card ordinal.', code: 'invalid_request' });
+            return;
+          }
+          try {
+            const deviceToken = await getStoredDeviceToken();
+            if (!deviceToken) {
+              sendResponse({ ok: false, error: 'Extension is not linked to a SnapOrtho account.', code: 'not_linked' });
+              return;
+            }
+            const created = await fetchJson('/api/brobot-anki/launch', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                [EXTENSION_TOKEN_HEADER]: deviceToken,
+                'x-snaportho-anki-token': deviceToken,
+              },
+              body: JSON.stringify({
+                contractVersion: 'claim-overlap.v1',
+                noteGuid: queued.command.noteGuid,
+                cardOrdinal: queued.command.cardOrdinal,
+                rank: queued.command.rank,
+              }),
+            });
+            sendResponse({ ok: true, launchQueued: queued.command, command: created?.command ?? null });
+          } catch (error) {
+            sendResponse({
+              ok: false,
+              error: error instanceof Error ? error.message : 'Could not queue Anki launch.',
+              code: 'invalid_request',
+            });
+          }
           return;
         }
 

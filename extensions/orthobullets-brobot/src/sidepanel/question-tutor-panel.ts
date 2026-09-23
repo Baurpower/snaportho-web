@@ -1,5 +1,14 @@
 import type { ExtensionErrorCode } from '../shared/messages.js';
 import type { QuestionTutorViewState } from './question-session.js';
+import {
+  bindLearnThisNow,
+  learnThisNowModel,
+  readLearnIdentity,
+  renderLearnThisNow,
+  type LearnFeedbackSignal,
+  type LearnLaunchCommand,
+  type LearnSnapshot,
+} from './learn-this-now.js';
 
 export type QuestionTutorPanelHooks = {
   onHintClick: () => void;
@@ -14,6 +23,8 @@ export type QuestionTutorPanelHooks = {
   onChatDraftChange: (value: string) => void;
   onChatSubmit: () => void;
   onChatPromptClick: (prompt: string) => void;
+  onOpenAnkiCard?: (command: LearnLaunchCommand) => void;
+  onLearnerFeedback?: (feedback: { signal: LearnFeedbackSignal; affectsMatch: false }) => void;
 };
 
 export type QuestionTutorPanelRenderers = {
@@ -45,6 +56,8 @@ export function appendQuestionTutorPanel(
     provider: import('../shared/types.js').QuestionProvider | null;
     isBusy: boolean;
     error: { message: string; code: ExtensionErrorCode } | null;
+    learnSnapshot?: LearnSnapshot | null;
+    learnerLoopEnabled?: boolean;
     hooks: QuestionTutorPanelHooks;
     renderers: QuestionTutorPanelRenderers;
   }
@@ -67,6 +80,20 @@ export function appendQuestionTutorPanel(
         : 'Reading the visible question from this page...';
     content.appendChild(createElement(renderLoadingSkeleton(label, detail)));
     return;
+  }
+
+  const learnModel = learnThisNowModel(
+    readLearnIdentity(view.session?.payload?.raw?.providerSpecific?.sourceIdentity),
+    input.learnSnapshot ?? null,
+    input.learnerLoopEnabled !== false,
+  );
+  if (learnModel.visible) {
+    const learnSection = createElement(renderLearnThisNow(learnModel, escapeHtml));
+    content.appendChild(learnSection);
+    bindLearnThisNow(learnSection, {
+      onOpenAnkiCard: hooks.onOpenAnkiCard,
+      onLearnerFeedback: hooks.onLearnerFeedback,
+    }, input.learnSnapshot ?? null);
   }
 
   if (view.showHintCta) {

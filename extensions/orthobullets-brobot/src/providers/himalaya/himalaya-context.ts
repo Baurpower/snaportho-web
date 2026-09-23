@@ -4,7 +4,11 @@
 // prompt builders, and backend see no difference between the two paths — only
 // `debug.extractorVersion` and `raw.providerSpecific.source` reveal which ran.
 
-import { hashText } from '../../shared/question-fingerprint.js';
+import {
+  buildQuestionSourceIdentity,
+  resolveHimalayaDefinitionId,
+  type QuestionSourceIdentityV1,
+} from '../../shared/question-source-identity.js';
 import type { OrthobulletsPageContext } from '../../shared/types.js';
 import type { HimalayaApiQuestion } from './himalaya-api.js';
 import { HIMALAYA_API_VERSION } from './himalaya-api.js';
@@ -26,14 +30,16 @@ export type HimalayaReviewBoardEntry = {
   topicLabel: string;
 };
 
-export function buildHimalayaFingerprint(question: HimalayaApiQuestion) {
-  return `himalaya:${hashText(
-    JSON.stringify({
-      questionAttemptId: question.questionAttemptId,
-      stem: question.stem.toLowerCase(),
-      choices: question.choices.map((choice) => `${choice.label}:${choice.text.toLowerCase()}`),
-    })
-  )}`;
+export function buildHimalayaFingerprint(question: HimalayaApiQuestion, definitionId?: string | null) {
+  return buildQuestionSourceIdentity({
+    provider: 'rock_himalaya',
+    definitionId: definitionId ?? question.questionId,
+    attemptId: question.questionAttemptId,
+    stem: question.stem,
+    choices: question.choices,
+    reviewVisible: question.reviewAvailable,
+    correct: question.reviewAvailable ? question.isCorrect : null,
+  }).sourceFingerprintHash;
 }
 
 /**
@@ -74,9 +80,22 @@ export function buildHimalayaApiPageContext(input: {
   const selected = question.choices.find((choice) => choice.selected);
   const correct = question.choices.find((choice) => choice.correct === true);
   const explanation = question.explanation;
-  const fingerprint = bridgeState?.testAttemptId != null
-    ? `himalaya:${bridgeState.testAttemptId}:${question.questionAttemptId}`
-    : buildHimalayaFingerprint(question);
+  const definitionId = resolveHimalayaDefinitionId({
+    questionAttemptId: question.questionAttemptId,
+    questionId: question.questionId,
+    questionResults: bridgeState?.questionResults,
+    openModal: bridgeState?.openModal,
+  });
+  const sourceIdentity: QuestionSourceIdentityV1 = buildQuestionSourceIdentity({
+    provider: 'rock_himalaya',
+    definitionId,
+    attemptId: question.questionAttemptId,
+    stem: question.stem,
+    choices: question.choices,
+    reviewVisible: isReview,
+    correct: isReview ? question.isCorrect : null,
+  });
+  const fingerprint = sourceIdentity.sourceFingerprintHash;
   const totalQuestions = bridgeState?.openModal?.total
     ?? bridgeState?.liveQuestion?.totalQuestions
     ?? (input.allQuestions.length || null);
@@ -89,7 +108,7 @@ export function buildHimalayaApiPageContext(input: {
     sourceUrl: pageUrl,
     pageKind: isReview ? 'review' : 'current_test',
     supportedPageKind: isReview ? 'rock_himalaya_review' : 'rock_himalaya_question',
-    questionId: String(question.questionAttemptId),
+    questionId: sourceIdentity.nativeQuestionId,
     title: bridgeState?.assessmentTitle ?? input.documentTitle ?? 'AAOS Himalaya assessment',
     breadcrumbs: ['AAOS', 'Himalaya Assessment'],
     stem: question.stem,
@@ -125,6 +144,7 @@ export function buildHimalayaApiPageContext(input: {
         pageMode: isReview ? 'reviewed-question' : 'active-question',
         reviewState: isReview ? 'answered_review' : selected ? 'selected' : 'unanswered',
         fingerprint,
+        sourceIdentity,
         questionAttemptId: question.questionAttemptId,
         testAttemptId: bridgeState?.testAttemptId ?? null,
         assessmentTitle: bridgeState?.assessmentTitle ?? null,
@@ -208,6 +228,10 @@ export function buildHimalayaOverviewContext(input: {
 }): OrthobulletsPageContext {
   const board = buildHimalayaReviewBoard(input.allQuestions);
   const missedCount = board.filter((entry) => entry.isCorrect === false).length;
+  const sourceIdentity = buildQuestionSourceIdentity({
+    provider: 'rock_himalaya',
+    pageRole: 'results',
+  });
 
   return {
     source: 'himalaya',
@@ -231,6 +255,7 @@ export function buildHimalayaOverviewContext(input: {
         adapter: 'himalaya',
         source: 'te6-api',
         pageMode: 'results-overview',
+        sourceIdentity,
         testAttemptId: input.bridgeState?.testAttemptId ?? null,
         assessmentTitle: input.bridgeState?.assessmentTitle ?? null,
         attemptScore: input.bridgeState?.score ?? null,

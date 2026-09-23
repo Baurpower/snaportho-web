@@ -153,7 +153,11 @@ export type ExtensionMessage =
         searchKeywords: string[];
       }>;
     }
-  | { type: 'ob:get-anki-search-status'; searchRequestId: string };
+  | { type: 'ob:get-anki-search-status'; searchRequestId: string }
+  | {
+      type: 'ob:open-anki-launch';
+      command: { noteGuid: string; cardOrdinal: number; rank: 1 | 2 | 3 };
+    };
 
 // Stable error codes surfaced to the side panel so it can render a specific
 // UI state (and, where relevant, a retry path) instead of a raw message.
@@ -214,6 +218,7 @@ export type ExtensionMessageResponse =
       };
     }
   | { ok: true; cleared: true }
+  | { ok: true; launchQueued: { noteGuid: string; cardOrdinal: number; rank: 1 | 2 | 3 } }
   | {
       ok: false;
       error: string;

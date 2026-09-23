@@ -57,6 +57,7 @@ interface RemoteConfigResponse {
 }
 
 const DEFAULT_APP_STORE_URL = 'https://apps.apple.com/us/app/snaportho/id6742800145';
+const DEFAULT_PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.snaportho.app';
 
 /**
  * Parses a dot-separated numeric version string into an array of integer
@@ -107,10 +108,13 @@ function readMaintenanceScope(envVal: string | undefined): MaintenanceScope {
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const clientAppVersion = searchParams.get('appVersion');
+  const platform = searchParams.get('platform')?.toLowerCase() === 'android' ? 'android' : 'ios';
+  const platformPrefix = platform === 'android' ? 'ANDROID' : 'IOS';
 
-  const minSupportedVersion = process.env.IOS_MIN_SUPPORTED_VERSION || '1.0';
-  const recommendedVersion = process.env.IOS_RECOMMENDED_VERSION || minSupportedVersion;
-  const latestVersion = process.env.IOS_LATEST_VERSION || recommendedVersion;
+  const minSupportedVersion = process.env[`${platformPrefix}_MIN_SUPPORTED_VERSION`] || '1.0';
+  const recommendedVersion =
+    process.env[`${platformPrefix}_RECOMMENDED_VERSION`] || minSupportedVersion;
+  const latestVersion = process.env[`${platformPrefix}_LATEST_VERSION`] || recommendedVersion;
 
   let forceUpdateRequired = false;
   let softUpdateAvailable = false;
@@ -141,11 +145,14 @@ export async function GET(request: Request) {
     softUpdateAvailable,
     updateTitle: forceUpdateRequired ? 'Update Required' : 'Update Available',
     updateMessage:
-      process.env.IOS_FORCE_UPDATE_MESSAGE ||
+      process.env[`${platformPrefix}_FORCE_UPDATE_MESSAGE`] ||
       (forceUpdateRequired
         ? 'Please update SnapOrtho to continue.'
         : 'A new version of SnapOrtho is available with improvements.'),
-    appStoreUrl: process.env.IOS_APP_STORE_URL || DEFAULT_APP_STORE_URL,
+    appStoreUrl:
+      platform === 'android'
+        ? process.env.ANDROID_PLAY_STORE_URL || DEFAULT_PLAY_STORE_URL
+        : process.env.IOS_APP_STORE_URL || DEFAULT_APP_STORE_URL,
 
     maintenanceMode: readBool(process.env.MOBILE_MAINTENANCE_MODE, false),
     maintenanceScope: readMaintenanceScope(process.env.MOBILE_MAINTENANCE_SCOPE),

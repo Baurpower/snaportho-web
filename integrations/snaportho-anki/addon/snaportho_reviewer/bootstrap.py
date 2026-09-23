@@ -119,6 +119,11 @@ class ProfileRuntime:
             self.search_relay_timer.timeout.connect(self.poll_search_relay)
             self.search_relay_timer.start()
             QTimer.singleShot(1500,self.poll_search_relay)
+            self.launch_timer=QTimer(self.mw)
+            self.launch_timer.setInterval(4000)
+            self.launch_timer.timeout.connect(self.poll_launches)
+            self.launch_timer.start()
+            QTimer.singleShot(2000,self.poll_launches)
     def _maybe_heartbeat(self):
         if self.closed or not self.settings.usage_reporting:return
         try:
@@ -149,6 +154,7 @@ class ProfileRuntime:
         if hasattr(self,"menu"):self.menu.deleteLater()
         if hasattr(self,"side_panel"):self.side_panel.close()
         if hasattr(self,"search_relay_timer"):self.search_relay_timer.stop()
+        if hasattr(self,"launch_timer"):self.launch_timer.stop()
     def background(self,operation,success):
         if self.closed:return
         self.mw.taskman.run_in_background(operation,lambda future:None if self.closed else success(future))
@@ -301,6 +307,58 @@ class ProfileRuntime:
                 showInfo(f"SnapOrtho search failed — {describe(error)}")
 
         self.background(lambda: self.api.resource_search(request_payload(native_id)), done)
+
+    def poll_launches(self):
+        if self.closed or getattr(self, "_launch_busy", False):
+            return
+        try:
+            if not self.credentials.get():
+                return
+        except Exception:
+            return
+        self._launch_busy = True
+        def done(future):
+            try:
+                from .anki_runtime import CollectionGateway
+                from .launch_consumer import consume_pending_launches
+                from .resource_search import open_browse_with_card_ids
+                _, body = future.result()
+                commands = body.get("commands") or []
+                if not commands:
+                    return
+                class Client:
+                    def __init__(self, api, pending):
+                        self.api = api
+                        self.pending = pending
+                    def poll_pending(self):
+                        return self.pending
+                    def claim(self, command_id):
+                        try:
+                            self.api.claim_launch(command_id)
+                            return True
+                        except Exception:
+                            return False
+                    def acknowledge(self, ack):
+                        self.api.ack_launch(ack)
+                class Opener:
+                    def __init__(self, mw):
+                        self.mw = mw
+                    def open_card(self, card):
+                        open_browse_with_card_ids(self.mw, [card.id], {
+                            "nativeId": "learn-this-now",
+                            "concept": "",
+                            "tier": "exact_claim_overlap",
+                        })
+                consume_pending_launches(
+                    Client(self.api, commands),
+                    CollectionGateway(self.mw.col),
+                    Opener(self.mw),
+                )
+            except Exception:
+                pass
+            finally:
+                self._launch_busy = False
+        self.background(self.api.pending_launches, done)
 
     def poll_search_relay(self):
         # Finding cards is a learner feature. Reviewer roles only gate curation

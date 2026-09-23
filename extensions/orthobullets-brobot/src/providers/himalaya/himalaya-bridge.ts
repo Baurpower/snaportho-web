@@ -111,6 +111,7 @@ function readOpenModal(angular: AngularLike): HimalayaBridgeState['openModal'] {
         currentIndex: asNumber(scope.currentIndex),
         total: asNumber(scope.total),
         questionAttemptId,
+        questionId: asNumber(question?.questionId),
       },
     };
   });
@@ -195,9 +196,9 @@ function stateKey(state: HimalayaBridgeState) {
     state.testAttemptId ?? '',
     state.archived ? '1' : '0',
     state.questionResults.map((result) => `${result.questionAttemptId ?? ''}:${result.result ?? ''}`).join(','),
-    state.openModal ? `${state.openModal.questionAttemptId ?? ''}@${state.openModal.currentIndex ?? ''}` : '',
+    state.openModal ? `${state.openModal.questionAttemptId ?? ''}@${state.openModal.currentIndex ?? ''}:${state.openModal.questionId ?? ''}` : '',
     state.liveQuestion
-      ? `${state.liveQuestion.question.questionAttemptId ?? ''}:${state.liveQuestion.question.selectedAnswer ?? ''}:${(state.liveQuestion.question.selectedAnswers ?? []).join(',')}:${state.liveQuestion.showCorrectAnswer ? '1' : '0'}`
+      ? `${state.liveQuestion.question.questionAttemptId ?? ''}:${state.liveQuestion.question.questionId ?? ''}:${state.liveQuestion.question.selectedAnswer ?? ''}:${(state.liveQuestion.question.selectedAnswers ?? []).join(',')}:${state.liveQuestion.showCorrectAnswer ? '1' : '0'}`
       : '',
   ].join('|');
 }

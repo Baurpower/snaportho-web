@@ -1,6 +1,7 @@
 import { SELECTOR_SET_VERSION, SELECTORS } from './selectors.js';
 import { classifyPage } from '../shared/page-classification.js';
 import { attachQuestionReviewSignals, firstVisibleText, isElementVisible } from '../shared/question-review-state.js';
+import { buildQuestionSourceIdentity } from '../shared/question-source-identity.js';
 import { extractHimalayaProviderContext, detectHimalayaProvider } from '../providers/himalaya/himalaya-provider.js';
 export { extractHimalayaPageContext, extractHimalayaQuestionSnapshot } from '../providers/himalaya/himalaya-extractor.js';
 import type {
@@ -241,6 +242,10 @@ export function extractOrthobulletsTestResultsContext(input: {
     raw: {
       providerSpecific: {
         adapter: 'orthobullets-test-results',
+        sourceIdentity: buildQuestionSourceIdentity({
+          provider: 'orthobullets',
+          pageRole: 'results',
+        }),
       },
     },
     debug: {
@@ -612,7 +617,7 @@ export function extractOrthobulletsPageContext(input: {
   const images = extractImages(input.document, matchedSelectors);
   const choices = extractChoices(input.document, matchedSelectors);
   const topicId = extractTopicId(input.document, pageUrl, matchedSelectors);
-  const questionId = extractQuestionId(input.document, pageUrl, matchedSelectors);
+  const extractedQuestionId = extractQuestionId(input.document, pageUrl, matchedSelectors);
   const pageKind = detectPageKind({
     pageUrl,
     explanationText,
@@ -631,6 +636,17 @@ export function extractOrthobulletsPageContext(input: {
     extractionWarnings.push('explanation_not_visible');
   }
 
+  const sourceIdentity = buildQuestionSourceIdentity({
+    provider: 'orthobullets',
+    definitionId: extractedQuestionId,
+    stem,
+    choices: choices.answerChoices,
+    reviewVisible: pageKind === 'review' || Boolean(explanationText) || Boolean(choices.correctAnswerKey),
+    correct: choices.selectedAnswerKey && choices.correctAnswerKey
+      ? choices.selectedAnswerKey === choices.correctAnswerKey
+      : null,
+  });
+
   const draftContext: OrthobulletsPageContext = {
     source: 'orthobullets',
     provider: 'orthobullets',
@@ -638,7 +654,7 @@ export function extractOrthobulletsPageContext(input: {
     pageUrl,
     sourceUrl: pageUrl,
     pageKind,
-    questionId,
+    questionId: sourceIdentity.nativeQuestionId,
     topicId,
     title: normalizeWhitespace(input.document.title) || null,
     breadcrumbs,
@@ -663,6 +679,7 @@ export function extractOrthobulletsPageContext(input: {
       providerSpecific: {
         percentDistribution: choices.percentDistribution,
         linkedConcepts,
+        sourceIdentity,
       },
     },
     debug: {
@@ -877,6 +894,20 @@ function extractRockQuestionId(root: DocumentLike, url: string) {
       null;
   } catch {
     return null;
+  }
+}
+
+function extractRockHierarchy(url: string) {
+  try {
+    const parsed = new URL(url);
+    const typeRaw = `${parsed.pathname} ${parsed.searchParams.get('type') ?? ''}`.toLowerCase();
+    return {
+      assessmentDefinitionId: parsed.searchParams.get('did'),
+      chapterId: parsed.searchParams.get('chapterId') ?? parsed.searchParams.get('id'),
+      assessmentType: /pretest/.test(typeRaw) ? 'pretest' as const : /posttest/.test(typeRaw) ? 'posttest' as const : null,
+    };
+  } catch {
+    return { assessmentDefinitionId: null, chapterId: null, assessmentType: null };
   }
 }
 
@@ -1381,6 +1412,7 @@ export function extractRockPageContext(input: {
   const correctChoice = answerChoices.find((choice) => choice.isCorrect);
   const questionId = extractRockQuestionId(input.document, pageUrl);
   const topicId = extractRockTopicId(input.document, pageUrl);
+  const hierarchy = extractRockHierarchy(pageUrl);
   const images = extractRockImages(root, matchedSelectors);
   const hasQuestion = Boolean(stem && answerChoices.length >= 2);
   const curriculum = hasQuestion
@@ -1399,6 +1431,17 @@ export function extractRockPageContext(input: {
     explanation: explanationText,
   }) : 'curriculum_content';
 
+  const sourceIdentity = hasQuestion
+    ? buildQuestionSourceIdentity({
+      provider: 'rock_himalaya',
+      definitionId: questionId,
+      stem,
+      choices: answerChoices,
+      reviewVisible: pageKind === 'review' || Boolean(explanationText) || Boolean(correctChoice),
+      correct: selectedChoice?.key && correctChoice?.key ? selectedChoice.key === correctChoice.key : null,
+    })
+    : null;
+
   const extractionWarnings: string[] = [];
   if (!stem && !hasCurriculumContent) extractionWarnings.push('stem_not_visible');
   if (answerChoices.length === 0 && !hasCurriculumContent) extractionWarnings.push('answer_choices_not_visible');
@@ -1415,7 +1458,7 @@ export function extractRockPageContext(input: {
     pageUrl,
     sourceUrl: pageUrl,
     pageKind,
-    questionId,
+    questionId: hasQuestion ? sourceIdentity?.nativeQuestionId ?? questionId : questionId,
     topicId,
     title,
     breadcrumbs,
@@ -1457,6 +1500,10 @@ export function extractRockPageContext(input: {
         referencesCount: curriculum?.referencesCount ?? 0,
         tablesCount: curriculum?.tablesCount ?? 0,
         extractionStrategy: hasQuestion ? 'question' : curriculum?.extractionStrategy ?? 'not_found',
+        assessmentDefinitionId: hierarchy.assessmentDefinitionId,
+        chapterId: hierarchy.chapterId,
+        assessmentType: hierarchy.assessmentType,
+        ...(sourceIdentity ? { sourceIdentity } : {}),
       },
     },
     extractionWarnings,

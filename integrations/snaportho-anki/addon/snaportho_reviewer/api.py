@@ -199,6 +199,15 @@ class ReviewerApi:
             retries=0,
         )
 
+    def pending_launches(self):
+        return self.request("GET", "/api/brobot-anki/launch/pending", retries=0)
+
+    def claim_launch(self, launch_command_id):
+        return self.request("POST", "/api/brobot-anki/launch/claim", {"launchCommandId": launch_command_id}, retries=0)
+
+    def ack_launch(self, payload):
+        return self.request("POST", "/api/brobot-anki/launch/ack", payload, retries=0)
+
     def pending_search_requests(self):
         return self.request("GET", "/api/anki/search-requests/pending", retries=0)
 

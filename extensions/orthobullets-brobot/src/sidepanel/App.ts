@@ -2402,6 +2402,9 @@ export function mountSidePanelApp(root: HTMLElement) {
           onChatDraftChange: (value) => questionTutorController.setChatDraft(value),
           onChatSubmit: () => void questionTutorController.submitFollowUp(),
           onChatPromptClick: (prompt) => void questionTutorController.submitFollowUp(prompt),
+          onOpenAnkiCard: (command) => {
+            void sendMessage({ type: 'ob:open-anki-launch', command });
+          },
         },
         renderers: {
           escapeHtml,

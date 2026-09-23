@@ -147,6 +147,13 @@ for (const fixture of REAL_FIXTURES) {
     fixture.expectedQuestionId,
     `[${fixture.file}] expected questionId ${fixture.expectedQuestionId}, got ${context.questionId} (${fixture.description})`
   );
+  const attachedIdentity = context.raw?.providerSpecific?.sourceIdentity as { nativeQuestionId?: string | null; identityStatus?: string } | undefined;
+  assert.equal(
+    attachedIdentity?.nativeQuestionId,
+    fixture.expectedQuestionId,
+    `[${fixture.file}] sourceIdentity native id should match QID`
+  );
+  assert.equal(attachedIdentity?.identityStatus, 'stable');
 
   const isPremiumWallFixture = /Question locked|PEAK Premium Subscribers only/i.test(
     readFileSync(path.join(FIXTURES_DIR, fixture.file), 'utf8')
@@ -429,6 +436,7 @@ assert.equal(rockUnansweredContext.provider, 'rock');
 assert.equal(rockUnansweredContext.mode, 'question');
 assert.equal(rockUnansweredContext.pageKind, 'question');
 assert.equal(rockUnansweredContext.questionId, 'ROCK-SYN-001');
+assert.equal((rockUnansweredContext.raw?.providerSpecific?.sourceIdentity as { nativeQuestionId?: string })?.nativeQuestionId, 'ROCK-SYN-001');
 assert.equal(rockUnansweredContext.topicId, 'adult-recon');
 assert.equal(rockUnansweredContext.breadcrumbs.length, 2);
 assert.match(rockUnansweredContext.stem ?? '', /jump distance/i);
@@ -534,6 +542,8 @@ assert.equal(himalayaCorrectContext.provider, 'himalaya');
 assert.equal(himalayaCorrectContext.mode, 'question');
 assert.equal(himalayaCorrectContext.pageKind, 'review');
 assert.equal(himalayaCorrectContext.questionId, 'HIM-SYN-001');
+assert.equal((himalayaCorrectContext.raw?.providerSpecific?.sourceIdentity as { nativeQuestionId?: string; attemptId?: string | null })?.nativeQuestionId, 'HIM-SYN-001');
+assert.notEqual((himalayaCorrectContext.raw?.providerSpecific?.sourceIdentity as { attemptId?: string | null })?.attemptId, 'HIM-SYN-001');
 assert.match(himalayaCorrectContext.stem ?? '', /sanitized learner-facing stem/i);
 assert.equal(himalayaCorrectContext.answerChoices.length, 3);
 assert.equal(himalayaCorrectContext.selectedAnswerKey, 'B');

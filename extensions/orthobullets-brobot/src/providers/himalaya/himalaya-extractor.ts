@@ -1,5 +1,9 @@
 import type { OrthobulletsPageContext } from '../../shared/types.js';
-import { hashText } from '../../shared/question-fingerprint.js';
+import {
+  buildQuestionSourceIdentity,
+  normalizeHimalayaDefinitionId,
+  type QuestionSourceIdentityV1,
+} from '../../shared/question-source-identity.js';
 import { logHimalayaExtraction } from './himalaya-debug.js';
 import type { HimalayaAnswerChoice, HimalayaPageMode, HimalayaQuestionSnapshot } from './himalaya-types.js';
 
@@ -426,35 +430,40 @@ function extractAssessmentTitle(documentRef: DocumentLike) {
     || undefined;
 }
 
-function questionIdFromPage(container: DomElementLike, pageUrl: string) {
-  const attrNode = container.querySelector('[data-question-id], [data-assessment-item-id], [id*="question" i]');
+function explicitDefinitionId(container: DomElementLike) {
+  const attrNode = container.querySelector('[data-question-id], [data-assessment-item-id]');
   const attr =
     normalizeWhitespace(attrNode?.getAttribute('data-question-id')) ||
     normalizeWhitespace(attrNode?.getAttribute('data-assessment-item-id')) ||
     normalizeWhitespace(container.getAttribute('data-question-id'));
-  if (attr) return attr;
-  return pageUrl.match(/[?&](?:questionId|question_id|qid)=([A-Za-z0-9.-]+)/i)?.[1];
+  return normalizeHimalayaDefinitionId(attr);
 }
 
-function buildFingerprint(input: {
-  questionId?: string;
-  questionNumber?: string;
+function attemptIdFromPage(pageUrl: string) {
+  try {
+    return new URL(pageUrl).searchParams.get('questionAttemptId');
+  } catch {
+    return pageUrl.match(/[?&]questionAttemptId=([A-Za-z0-9._:-]+)/i)?.[1] ?? null;
+  }
+}
+
+function himalayaDomIdentity(input: {
+  definitionId: string | null;
+  attemptId: string | null;
   stem: string;
   choices: HimalayaAnswerChoice[];
-  mode?: string;
-}) {
-  const normalized = JSON.stringify({
-    provider: 'himalaya',
-    questionId: input.questionId ?? '',
-    questionNumber: input.questionNumber ?? '',
-    stem: normalizeWhitespace(input.stem).toLowerCase(),
-    choices: input.choices.map((choice) => ({
-      label: choice.label ?? '',
-      text: normalizeWhitespace(choice.text).toLowerCase(),
-    })),
-    mode: input.mode ?? '',
+  reviewVisible: boolean;
+  correct: boolean | null;
+}): QuestionSourceIdentityV1 {
+  return buildQuestionSourceIdentity({
+    provider: 'rock_himalaya',
+    definitionId: input.definitionId,
+    attemptId: input.attemptId,
+    stem: input.stem,
+    choices: input.choices,
+    reviewVisible: input.reviewVisible,
+    correct: input.correct,
   });
-  return `himalaya:${hashText(normalized)}`;
 }
 
 function collectHiddenTexts(root: DomElementLike, selectors: readonly string[]) {
@@ -539,13 +548,26 @@ export function extractHimalayaQuestionSnapshot(input: {
         : pageMode === 'active-question'
           ? 'unanswered'
           : 'unknown';
-    const questionId = questionIdFromPage(active, pageUrl);
+    const definitionId = explicitDefinitionId(active);
+    const attemptId = attemptIdFromPage(pageUrl);
+    const selectedChoice = choices.find((choice) => choice.selected);
+    const correctChoice = choices.find((choice) => choice.correct === true);
+    const identity = himalayaDomIdentity({
+      definitionId,
+      attemptId,
+      stem,
+      choices,
+      reviewVisible: answeredReview,
+      correct: answeredReview && selectedChoice && correctChoice
+        ? selectedChoice.id === correctChoice.id
+        : null,
+    });
     const position = questionPositionFromPage(active, input.document);
     const questionNumber = position.questionNumber ?? questionNumberFromPage(active, pageUrl);
     snapshot = {
       provider: 'himalaya',
       pageMode: answeredReview ? 'reviewed-question' : 'active-question',
-      questionId,
+      questionId: identity.nativeQuestionId ?? undefined,
       questionNumber,
       totalQuestions: position.totalQuestions,
       assessmentTitle: extractAssessmentTitle(input.document),
@@ -556,7 +578,7 @@ export function extractHimalayaQuestionSnapshot(input: {
       keyReferencePoints: keyReferencePoints || undefined,
       references: references || undefined,
       reviewState,
-      fingerprint: buildFingerprint({ questionId, questionNumber, stem, choices, mode: answeredReview ? 'review' : 'live' }),
+      fingerprint: identity.sourceFingerprintHash,
     };
   }
 
@@ -601,7 +623,13 @@ export function extractHimalayaPageContext(input: {
       images: [],
       questionCount,
       extractionWarnings: ['himalaya_results_overview_no_active_question'],
-      raw: { providerSpecific: { adapter: 'himalaya', pageMode } },
+      raw: {
+        providerSpecific: {
+          adapter: 'himalaya',
+          pageMode,
+          sourceIdentity: buildQuestionSourceIdentity({ provider: 'rock_himalaya', pageRole: 'results' }),
+        },
+      },
       classification: {
         pageKind: 'unreadable',
         confidence: 0.9,
@@ -629,6 +657,16 @@ export function extractHimalayaPageContext(input: {
 
   const selectedChoice = snapshot.choices.find((choice) => choice.selected);
   const correctChoice = snapshot.choices.find((choice) => choice.correct === true);
+  const sourceIdentity = himalayaDomIdentity({
+    definitionId: snapshot.questionId ?? null,
+    attemptId: attemptIdFromPage(pageUrl),
+    stem: snapshot.stem,
+    choices: snapshot.choices,
+    reviewVisible: snapshot.reviewState === 'answered_review',
+    correct: snapshot.reviewState === 'answered_review' && selectedChoice && correctChoice
+      ? selectedChoice.id === correctChoice.id
+      : null,
+  });
   const visibleTeachingText = snapshot.explanation ?? snapshot.discussion;
   const answerChoices = snapshot.choices.map((choice) => ({
     key: choice.id,
@@ -668,7 +706,7 @@ export function extractHimalayaPageContext(input: {
     sourceUrl: pageUrl,
     pageKind: snapshot.pageMode === 'reviewed-question' ? 'review' : 'current_test',
     supportedPageKind: snapshot.pageMode === 'reviewed-question' ? 'rock_himalaya_review' : 'rock_himalaya_question',
-    questionId: snapshot.questionId ?? snapshot.fingerprint,
+    questionId: sourceIdentity.nativeQuestionId,
     title: normalizeWhitespace(input.document.title) || 'AAOS Himalaya assessment',
     breadcrumbs: ['AAOS', 'Himalaya Assessment'],
     stem: snapshot.stem,
@@ -692,7 +730,8 @@ export function extractHimalayaPageContext(input: {
         adapter: 'himalaya',
         pageMode,
         reviewState: snapshot.reviewState,
-        fingerprint: snapshot.fingerprint,
+        fingerprint: sourceIdentity.sourceFingerprintHash,
+        sourceIdentity,
         assessmentTitle: snapshot.assessmentTitle ?? null,
         questionNumber: snapshot.questionNumber ?? null,
         totalQuestions: snapshot.totalQuestions ?? null,

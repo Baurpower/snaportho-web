@@ -89,6 +89,8 @@ assert.equal(first.images.length, 1);
 assert.equal(first.images[0]?.src, 'https://example.test/synthetic-figure-1.jpg');
 assert.deepEqual(first.tags, ['Hip']);
 assert.equal(first.reviewAvailable, true);
+assert.equal(first.questionId, null, 'a missing definition id must stay null');
+assert.notEqual(first.questionId, first.questionAttemptId);
 
 assert.equal(missed.isCorrect, false, 'a wrong answer must normalize to isCorrect false');
 assert.deepEqual(missed.selectedChoiceIds, ['A']);

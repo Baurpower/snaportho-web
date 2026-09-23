@@ -5,6 +5,9 @@ import { pathToFileURL, fileURLToPath } from "url";
 const srcRoot = pathResolve(fileURLToPath(new URL(".", import.meta.url)), "src");
 
 export function resolve(specifier, context, nextResolve) {
+  if (specifier === "next/server") {
+    return nextResolve("next/server.js", context);
+  }
   if (specifier.startsWith("@/")) {
     const resolvedPath = pathResolve(srcRoot, specifier.slice(2));
     const resolved = pathToFileURL(

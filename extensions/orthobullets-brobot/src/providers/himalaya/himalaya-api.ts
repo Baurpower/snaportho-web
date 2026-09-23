@@ -19,6 +19,8 @@ export const HIMALAYA_API_VERSION = '2026-07-23-himalaya-api-v1';
 /** Normalized form of one te6 question attempt, ready for prompt building. */
 export type HimalayaApiQuestion = {
   questionAttemptId: number;
+  /** te6 definition id when the payload includes one. Never copied from the attempt id. */
+  questionId: number | null;
   questionNumber: number | null;
   type: string | null;
   stem: string;
@@ -96,6 +98,9 @@ function normalizeQuestion(entry: Te6QuestionAttempt, fallbackIndex: number): Hi
   const question = entry.question;
   if (!question) return null;
   const questionAttemptId = typeof question.questionAttemptId === 'number' ? question.questionAttemptId : null;
+  const questionId = typeof question.questionId === 'number' && Number.isInteger(question.questionId) && question.questionId > 0
+    ? question.questionId
+    : null;
   const stem = htmlToText(question.stem);
   if (!questionAttemptId || !stem) return null;
 
@@ -154,6 +159,7 @@ function normalizeQuestion(entry: Te6QuestionAttempt, fallbackIndex: number): Hi
 
   return {
     questionAttemptId,
+    questionId,
     questionNumber: typeof question.displayOrder === 'number' ? question.displayOrder : fallbackIndex + 1,
     type: typeof question.type === 'string' ? question.type : null,
     stem,
@@ -220,6 +226,7 @@ export function reconcileHimalayaLiveQuestion(
 
   return {
     ...base,
+    questionId: normalized.questionId ?? base.questionId,
     questionNumber: live.displayIndex ?? base.questionNumber,
     choices,
     selectedChoiceIds: choices.filter((choice) => choice.selected).map((choice) => choice.id),

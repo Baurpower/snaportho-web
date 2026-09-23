@@ -59,7 +59,8 @@ function getBearerToken(request: Request): string | null {
 }
 
 function getDeviceToken(request: Request): string | null {
-  const token = request.headers.get("x-snaportho-anki-token")?.trim();
+  const token = request.headers.get("x-snaportho-anki-token")?.trim()
+    || request.headers.get("x-snaportho-extension-token")?.trim();
   return token ? token : null;
 }
 
