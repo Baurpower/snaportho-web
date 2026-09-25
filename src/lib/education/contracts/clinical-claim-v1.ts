@@ -197,9 +197,9 @@ export function normalizeClinicalClaimText(value: string): string {
 
 export function clinicalClaimFingerprintPayload(input: ClinicalClaimFingerprintInput): string {
   const qualifiers = input.qualifiers ?? {};
-  const qualifierStr = Object.keys(qualifiers)
-    .sort()
-    .map((key) => `${key}=${normalizeClinicalClaimText(qualifiers[key] ?? "")}`)
+  const qualifierStr = Object.entries(qualifiers)
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([key, value]) => `${key}=${normalizeClinicalClaimText(value ?? "")}`)
     .join(";");
   return [
     `type=${normalizeClinicalClaimText(input.claimType)}`,

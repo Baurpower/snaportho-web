@@ -2,15 +2,15 @@ import * as assert from 'node:assert/strict';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { parseHTML } = require('linkedom');
 
-import { scoreTrainingModule } from './generic-detector.js';
-import { classifyModulePage } from './classify-page.js';
-import { captureFrameSnapshot } from '../extraction/extract-frame.js';
-import { analyzePageContext } from '../adapters/registry.js';
-import { GenericAdapter } from '../adapters/generic-adapter.js';
-import { detectLikelyPhi, redactSensitiveText } from '../privacy/redact.js';
-import { planModuleAction } from '../actions/action-engine.js';
-import { resolveSafetyOverride } from '../safety/safety.js';
-import type { FrameSnapshot, ModuleState, PageContext } from '../types/module-state.js';
+import { scoreTrainingModule } from './detector/generic-detector.js';
+import { classifyModulePage } from './detector/classify-page.js';
+import { captureFrameSnapshot } from './extraction/extract-frame.js';
+import { analyzePageContext } from './adapters/registry.js';
+import { GenericAdapter } from './adapters/generic-adapter.js';
+import { detectLikelyPhi, redactSensitiveText } from './privacy/redact.js';
+import { planModuleAction } from './actions/action-engine.js';
+import { resolveSafetyOverride } from './safety/safety.js';
+import type { FrameSnapshot, ModuleState, PageContext } from './types/module-state.js';
 
 function documentFrom(html: string) {
   const { document } = parseHTML(`<!doctype html><html><body>${html}</body></html>`);

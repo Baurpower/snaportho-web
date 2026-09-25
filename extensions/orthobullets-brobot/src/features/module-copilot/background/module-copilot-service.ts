@@ -69,7 +69,7 @@ export async function analyzeTab(tabId: number): Promise<ModuleState> {
     },
   });
 
-  const frames = results
+  const frames: FrameSnapshot[] = (results as Array<{ frameId?: number; result?: unknown }>)
     .map((entry: { frameId?: number; result?: unknown }) => asSnapshot(entry.result, entry.frameId))
     .filter((frame: FrameSnapshot | null): frame is FrameSnapshot => Boolean(frame));
 
@@ -149,7 +149,8 @@ export async function performModuleAction(tabId: number, action: ModuleAction): 
     return planned;
   }
 
-  const target = state.controls.find((control) => control.elementId === planned.action.elementId);
+  const selectedAction = planned.action;
+  const target = state.controls.find((control) => control.elementId === selectedAction.elementId);
   const frameIds = typeof target?.frameId === 'number' ? [target.frameId] : undefined;
   const clickResults = await chrome.scripting.executeScript({
     target: frameIds ? { tabId, frameIds } : { tabId, allFrames: true },
@@ -158,7 +159,7 @@ export async function performModuleAction(tabId: number, action: ModuleAction): 
         .__brobotModuleCopilot;
       return api ? api.click(elementId) : { ok: false, error: 'Analyzer is not installed in this frame.' };
     },
-    args: [planned.action.elementId],
+    args: [selectedAction.elementId],
   });
 
   const clickResult = clickResults.find((entry: { result?: { ok?: boolean } }) => entry.result?.ok)?.result ??
@@ -170,8 +171,8 @@ export async function performModuleAction(tabId: number, action: ModuleAction): 
     pageType: state.pageType,
     adapter: state.adapterId,
     adapterConfidence: state.adapterConfidence,
-    action: planned.action.type,
-    elementId: planned.action.elementId,
+    action: selectedAction.type,
+    elementId: selectedAction.elementId,
     method: 'generic-dom',
     success,
   });

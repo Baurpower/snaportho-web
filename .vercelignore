@@ -4,5 +4,10 @@
 .codex/
 docs/
 reports/
-scripts/
+# Most scripts are local-only, but the extension release scripts are part of
+# `npm run prebuild` and must be present in Vercel's source bundle.
+scripts/*
+!scripts/build-orthobullets-extension.mjs
+!scripts/verify-orthobullets-extension-build.mjs
+!scripts/package-orthobullets-extension.mjs
 tmp/

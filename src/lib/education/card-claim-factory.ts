@@ -1508,7 +1508,10 @@ export function runCardClaimFactory(input: {
       evidenceLocator: link.evidenceLocator,
       reasonCodes: link.reasonCodes,
     })),
-    exceptionQueue: output.exceptionQueue.map(({ noteGuid: _noteGuid, ...row }) => row),
+    exceptionQueue: output.exceptionQueue.map(({ noteGuid, ...row }) => {
+      void noteGuid;
+      return row;
+    }),
     gaps: output.gaps,
     metrics: output.metrics,
   });
