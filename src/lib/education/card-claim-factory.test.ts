@@ -5,7 +5,9 @@ import {
   extractQualifiers,
   extractTargetCloze,
   inferClaimType,
+  opposingPolarity,
   runCardClaimFactory,
+  toDeclarativeClaimText,
   type CardClaimFactoryCard,
 } from "./card-claim-factory";
 import { canonicalContentHash, type EntityIndexRow } from "./deck-semantic-mapping";
@@ -90,6 +92,26 @@ assert.equal(extractQualifiers("left revision THA").qualifiers.setting, "revisio
 assert.ok(extractQualifiers("left and right injury").conflicts.includes("laterality_conflict"));
 assert.equal(inferClaimType({ filledText: "cup-cage is preferred", entityType: "condition" }).claimType, "treatment_indication");
 assert.equal(inferClaimType({ filledText: "this is contraindicated", entityType: "procedure" }).claimType, "contraindication");
+assert.equal(inferClaimType({
+  filledText: "What radiograph should be obtained for the femur? Traction view",
+  entityType: "anatomy_structure",
+}).claimType, "imaging_point");
+assert.equal(
+  toDeclarativeClaimText(
+    "What radiograph should be obtained to better delineate the fracture pattern in intertrochanteric femur fractures? Traction view",
+    "Traction view",
+  ),
+  "Traction view should be obtained to better delineate the fracture pattern in intertrochanteric femur fractures.",
+);
+assert.equal(
+  toDeclarativeClaimText(
+    "A LRINEC score of what indicates a 92% positive predictive value of having necrotizing fasciitis? ≥6",
+    "≥6",
+  ),
+  "A LRINEC score of ≥6 indicates a 92% positive predictive value of having necrotizing fasciitis.",
+);
+assert.equal(opposingPolarity("preferred_treatment", "contraindication"), true);
+assert.equal(opposingPolarity("teaches_fact", "teaches_fact"), false);
 
 const policyInput = {
   criticsSupport: true,
@@ -157,11 +179,14 @@ assert.equal(run.assignments.length, 6);
 
 const atomicRow = run.assignments.find((row) => row.canonicalCardId === atomic.canonicalCardId);
 assert.equal(atomicRow?.queue, "auto_approved", JSON.stringify(atomicRow));
-assert.equal(run.autoApprovedLinks.some((link) => link.canonicalCardId === atomic.canonicalCardId), true);
-const claim = run.proposedClaims.find((row) => row.claimId === run.autoApprovedLinks[0]?.claimId);
+const atomicLink = run.autoApprovedLinks.find((link) => link.canonicalCardId === atomic.canonicalCardId);
+assert.ok(atomicLink);
+const claim = run.proposedClaims.find((row) => row.claimId === atomicLink?.claimId);
 assert.ok(claim);
 assert.equal(claim?.claimType, "treatment_indication");
 assert.equal(claim?.objectText, "cup-cage reconstruction");
+assert.match(claim?.claimText ?? "", /preferred reconstruction for pelvic discontinuity is cup-cage reconstruction/i);
+assert.doesNotMatch(claim?.claimText ?? "", /\?/);
 assert.equal(claim?.approvalMethod, "machine_consensus");
 assert.equal(run.autoApprovedLinks[0]?.reviewStatus, "auto_approved");
 assert.equal(run.autoApprovedLinks[0]?.mappingRole, "teaches");
@@ -174,13 +199,18 @@ const siblingQueues = [siblingA, siblingB].map((card) => run.assignments.find((r
 assert.ok(siblingQueues.includes("auto_approved"), JSON.stringify(siblingQueues));
 assert.ok(siblingQueues.includes("duplicate_sibling"), JSON.stringify(siblingQueues));
 
-assert.equal(run.assignments.find((row) => row.canonicalCardId === missing.canonicalCardId)?.queue, "missing_entity");
-assert.equal(run.gaps.some((gap) => gap.gapClass === "missing_claim" && gap.owner === "kg"), true);
+assert.equal(run.assignments.find((row) => row.canonicalCardId === missing.canonicalCardId)?.queue, "auto_approved");
+assert.ok(run.proposedClaims.some((row) => row.objectText === "observation"));
+assert.equal(run.autoApprovedLinks.some((link) => link.canonicalCardId === missing.canonicalCardId), true);
+assert.ok(run.proposedEntities.some((entity) => entity.normalizedLabel.includes("observation")));
+assert.ok(run.assignments.find((row) => row.canonicalCardId === missing.canonicalCardId)?.reasonCodes.includes("ontology_gap_filled"));
+assert.equal(run.gaps.some((gap) => gap.gapClass === "missing_claim" && gap.disposition === "resolved" && gap.claimId), true);
 
-const nonAtomicQueue = run.assignments.find((row) => row.canonicalCardId === nonAtomic.canonicalCardId)?.queue;
+const nonAtomicRow = run.assignments.find((row) => row.canonicalCardId === nonAtomic.canonicalCardId);
+assert.ok(nonAtomicRow);
 assert.ok(
-  nonAtomicQueue === "non_atomic" || nonAtomicQueue === "competing_entities",
-  `expected non-atomic-ish queue, got ${nonAtomicQueue}`,
+  nonAtomicRow.queue === "auto_approved" || nonAtomicRow.queue === "non_atomic",
+  `expected a picked primary or non-atomic, got ${nonAtomicRow.queue}`,
 );
 
 const stale = makeCard({
@@ -227,10 +257,33 @@ const ambiguous = makeCard({
   noteGuid: "guid-ambiguous",
   text: "The preferred reconstruction for pelvic discontinuity is {{c1::cup-cage reconstruction}}.",
 });
-assert.equal(
-  runCardClaimFactory({ cards: [ambiguous], entities: colliding }).assignments[0]?.queue,
-  "competing_entities",
-);
+const ambiguousRun = runCardClaimFactory({ cards: [ambiguous], entities: colliding });
+assert.equal(ambiguousRun.assignments[0]?.queue, "auto_approved");
+assert.ok(ambiguousRun.assignments[0]?.reasonCodes.includes("ontology_gap_filled"));
+assert.ok(ambiguousRun.proposedEntities.some((entity) => entity.normalizedLabel.includes("cup-cage")));
+assert.equal(ambiguousRun.autoApprovedLinks.length, 1);
+
+const sharedEntity = runCardClaimFactory({
+  cards: [
+    makeCard({
+      digit: "1",
+      versionDigit: "2",
+      ordinal: 0,
+      noteGuid: "guid-femur-a",
+      text: "The preferred reconstruction for pelvic discontinuity is {{c1::cup-cage reconstruction}}.",
+    }),
+    makeCard({
+      digit: "6",
+      versionDigit: "7",
+      ordinal: 0,
+      noteGuid: "guid-femur-b",
+      text: "Pelvic discontinuity is recognized on {{c1::Judet views}}.",
+    }),
+  ],
+  entities,
+});
+assert.equal(sharedEntity.assignments.filter((row) => row.queue === "cross_card_contradiction").length, 0);
+assert.ok(sharedEntity.autoApprovedLinks.length >= 1);
 
 assert.throws(
   () => runCardClaimFactory({

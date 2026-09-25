@@ -135,6 +135,24 @@ export function createServiceRoleClient() {
   };
 }
 
+/**
+ * Automation writes are intentionally restricted to the staging project.  These
+ * scripts use a service-role key, so a mistaken environment must fail closed
+ * before any proposal, approval, or canonical-link mutation is attempted.
+ */
+export function requireStagingEnvironment() {
+  const { supabaseUrl } = resolveEnv();
+  const envPath = path.join(process.cwd(), ".env.local");
+  const fileEnv = existsSync(envPath) ? loadEnvFile(envPath) : {};
+  const target = (process.env.KG_TARGET_ENV?.trim() || fileEnv.KG_TARGET_ENV?.trim() || "").toLowerCase();
+  const isKnownStagingProject = supabaseUrl.includes("geznczcokbgybsseipjg.supabase.co");
+  if (target !== "staging" || !isKnownStagingProject) {
+    throw new Error(
+      `Refusing automation write outside staging (KG_TARGET_ENV=${target || "unset"}, url=${supabaseUrl || "unset"}).`
+    );
+  }
+}
+
 export function serializeError(error: unknown) {
   if (error instanceof Error) {
     const ownProps = Object.fromEntries(

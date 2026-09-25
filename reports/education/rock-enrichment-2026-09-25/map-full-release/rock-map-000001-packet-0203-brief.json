@@ -1,0 +1,1091 @@
+{
+  "batchKey": "map-000001-packet-0203",
+  "inputChecksum": "48ca323b63379bed4c8d16348d049a5cd375b0ce0cea10fcaeb2d1f76ec57a62",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "sidecarSchema": {
+    "card": {
+      "stableGuid": "string",
+      "status": "\"mapped\"|\"skipped\"",
+      "chapters": "1-3 {id, role} from this card's candidates; first is primary",
+      "skipReason": "if skipped"
+    }
+  },
+  "cards": [
+    {
+      "stableGuid": "M{`5AlwKv$",
+      "front": "What are the deforming forces that lead to the varus and extension deformity in the setting of a distal femur fracture ? Extension - Gastrocnemius Varus - Adductor magnus",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology::Distal_Femur",
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femur",
+        "SnapOrtho::Diagnosis::Distal_Femur_Fracture",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "6001084",
+          "title": "Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001084",
+          "extractable": true,
+          "score": 58.136,
+          "snippet": "the complex anatomy of the distal femur and the deforming forces that affect distal femur fracture reduction. Determine distal femur fracture mechanisms of injury and the appropriate assessment and documentation of associated injuries. Compare methods of surgical management of distal femur fractures and apply basic fr"
+        },
+        {
+          "id": "6000036",
+          "title": "Physeal Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000036",
+          "extractable": true,
+          "score": 39.952,
+          "snippet": "Objectives Review the pathoanatomy associated with physeal fractures of the distal femur and their associated complications. Formulate a treatment plan for the management of physeal fractures of the distal femur. Predict and manage complications associated with physeal fractures of the distal femur. Overview A physeal"
+        },
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "extractable": true,
+          "score": 35.899,
+          "snippet": "femur and insert into the bones of the knee joint. The anterior muscles of the femur extend the lower leg but also aid in flexing the thigh. The posterior muscles of the femur flex the lower leg but also aid in extending the thigh. A combination of gluteal and thigh muscles also adduct, abduct, and rotate the thigh an"
+        },
+        {
+          "id": "510000529",
+          "title": "Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000529",
+          "extractable": true,
+          "score": 35.461,
+          "snippet": "inferior pubic ramus just distal to the adductor longus origin Insertion: superior linea aspera Motion: adducts and flexes the hip Innervation: anterior and posterior division of the obturator nerve Adductor magnus Origin: inferior ramus Insertion: gluteal tuberosity of the femur, linea aspera, adductor tubercle Motio"
+        },
+        {
+          "id": "6001029",
+          "title": "Surgical Anatomy of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001029",
+          "extractable": true,
+          "score": 32.973,
+          "snippet": "of the tibia relative to the femur. Two bundles Anteromedial bundle is tight in knee flexion and lax in extension. Posterolateral bundle is tight in knee extension and lax in flexion. Posterior cruciate ligament (PCL) Blood supply: middle geniculate artery Prevents posterior translation of the tibia relative to the fe"
+        },
+        {
+          "id": "6004016",
+          "title": "Biomechanics of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004016",
+          "extractable": true,
+          "score": 30.92,
+          "snippet": "2001;34(7):859-871.  Forces at the Hip Joint The only method to measure in vivo forces at the hip joint is via instrumented total hip replacement. Data on 15 subjects who underwent total hip arthroplasty instrumented with the use of force transducers provided valuable information about the forces at the hip joint.6 T"
+        },
+        {
+          "id": "6001012",
+          "title": "Gastrocnemius Contracture",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001012",
+          "extractable": true,
+          "score": 30.881,
+          "snippet": "FEEDBACK 9/3/26, 4:16 PM AAOS | Gastrocnemius Contracture https://rock.aaos.org/coursecontent.aspx?id=6001012 2/19 The muscle belly of the soleus continues much more distal along the tibia than the gastrocnemius muscle fibers. Before the gastrocnemius and soleus tendons merge, they glide independently. The two tendons"
+        },
+        {
+          "id": "510000530",
+          "title": "Anatomy and Biomechanics of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000530",
+          "extractable": true,
+          "score": 28.726,
+          "snippet": "Distal Femur Medial and lateral condyles Medial condyle: larger, angulated, more distal compared with the lateral condyle Results in 5° to 7° physiologic valgus Figure 1 shows the distal medial and lateral bony landmarks of femur. Medial condyle: three osseous prominences Medial epicondyle, adductor tubercle, gastrocn"
+        },
+        {
+          "id": "6001015",
+          "title": "Cavovarus Foot Deformity: Surgical Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001015",
+          "extractable": true,
+          "score": 28.224,
+          "snippet": "lessen first metatarsal plantar flexion, and thereby address the cavus deformity. Tendon Lengthening Posterior tibial tendon lengthening or release (as in cases of tendon transfer) may aid in correcting medial peritalar subluxation and hindfoot varus. Flexor digitorum longus lengthening or release may further aid in c"
+        },
+        {
+          "id": "6000009",
+          "title": "Cavovarus Foot Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000009",
+          "extractable": true,
+          "score": 27.53,
+          "snippet": "ST, ed: Campbell’s Operative Orthopaedics, ed 10. St. Louis, MO, Mosby, 2003.) Forefoot-Driven Deformity SEND FEEDBACK 9/3/26, 7:36 AM AAOS | Cavovarus Foot Deformity https://rock.aaos.org/coursecontent.aspx?id=6000009 4/16  Forefoot-Driven Deformity A cavovarus deformity may be forefoot driven or mixed. The deformin"
+        },
+        {
+          "id": "6001083",
+          "title": "Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001083",
+          "extractable": true,
+          "score": 24.748,
+          "snippet": "greater trochanter and abduct the proximal segment. The iliopsoas inserts on the lesser trochanter and flexes the proximal fragment. The adductor longus, adductor brevis, gracilis, and adductor magnus have a broad area of insertion on the distal femur and contribute to a varus force on the distal segment. SEND FEEDBAC"
+        },
+        {
+          "id": "6001013",
+          "title": "Calcaneal Stress Fracture",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001013",
+          "extractable": true,
+          "score": 22.955,
+          "snippet": "altered bone metabolism have been reported in combination with calcaneal stress fracture. Examples include rheumatoid arthritis15 and long-term use of chemotherapeutics.16 SEND FEEDBACK 9/3/26, 7:35 AM AAOS | Calcaneal Stress Fracture https://rock.aaos.org/coursecontent.aspx?id=6001013 4/16 Figure 2 Clinical photograp"
+        }
+      ]
+    },
+    {
+      "stableGuid": "M{43<2)+<p",
+      "front": "What is the most common physical exam finding for a patient with upper motor neuron dysfunction ? Hoffmann’s sign",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Cervical_Myelopathy",
+        "SnapOrtho::Specialty::Spine"
+      ],
+      "candidates": [
+        {
+          "id": "6001059",
+          "title": "Pediatric Cervical Spine Abnormalities",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001059",
+          "extractable": true,
+          "score": 40.647,
+          "snippet": "with nontraumatic pediatric cervical spine abnormalities. Perform an appropriate evaluation of patients in whom cervical spine abnormalities are suspected, including appropriate imaging studies. Review the nonsurgical and surgical management of cervical spine abnormalities. Discuss the potential complications of manag"
+        },
+        {
+          "id": "6000050",
+          "title": "Cervical Radiculopathy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000050",
+          "extractable": true,
+          "score": 36.293,
+          "snippet": "TD, Riew KD, Wang JC: Degenerative conditions of the cervical spine, in Lieberman JR, ed: AAOS Comprehensive Orthopaedic Review, ed 3. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2020, pp 160-172.  Patient History and Physical Examination A thorough patient history and physical examination are critical in"
+        },
+        {
+          "id": "6004088",
+          "title": "Adult Cervical Spine Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004088",
+          "extractable": true,
+          "score": 36.188,
+          "snippet": "adult cervical spine deformity and the associated radiographic parameters. Identify the underlying pathologic processes that may contribute to cervical spine deformity. Recognize the imaging modalities used to assess cervical spine deformity. Review the surgical management of cervical spine deformity. Pathophysiology/"
+        },
+        {
+          "id": "6004089",
+          "title": "Cervical Spine Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004089",
+          "extractable": true,
+          "score": 35.666,
+          "snippet": "of upper cervical spine fractures is unique to the level and pattern of the fracture. Management of traumatic subaxial cervical spine injuries follows uniform treatment principles.  Pathophysiology/Pathoanatomy Cervical spine injuries can be divided into upper cervical spine injuries and subaxial cervical spine injur"
+        },
+        {
+          "id": "6001074",
+          "title": "Physical Examination of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001074",
+          "extractable": true,
+          "score": 24.058,
+          "snippet": "aids in differentiating upper motor neuron disease from lower motor neuron disease.  Reflex Testing Reflex testing incorporates aspects of sensory and motor pathways and evaluates communication between the integrated components of the reflex arc. Reflex testing aids in the differentiation of upper motor neuron diseas"
+        },
+        {
+          "id": "6004033",
+          "title": "Less Common Objectively Verifiable Peripheral Mononeuropathies",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004033",
+          "extractable": true,
+          "score": 23.347,
+          "snippet": "4:32 PM AAOS | Less Common Objectively Verifiable Peripheral Mononeuropathies https://rock.aaos.org/coursecontent.aspx?id=6004033 28/38 Classification Vascular13 Arterial TOS Venous TOS Neurogenic13 Electrodiagnostically abnormal TOS Discrete and measurable Electrodiagnotically normal TOS Debatable and unmeasurable Ev"
+        },
+        {
+          "id": "6001038",
+          "title": "Hereditary Motor Sensory Neuropathy (Charcot-Marie-Tooth Disease)",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001038",
+          "extractable": true,
+          "score": 19.565,
+          "snippet": "You Know Learning Objectives Describe the natural history, classic presentation, and physical examination findings of hereditary motor sensory neuropathy (Charcot-Marie-Tooth disease). State the etiology and diagnosis of demyelinating and axonal subtypes of hereditary motor sensory neuropathy. Explain operative and no"
+        },
+        {
+          "id": "6002023",
+          "title": "Cervical Myelopathy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002023",
+          "extractable": true,
+          "score": 19.125,
+          "snippet": "bladder (sphincter) dysfunction Loss of motor strength Axial neck pain Patient History SEND FEEDBACK 9/3/26, 7:38 AM AAOS | Cervical Myelopathy https://rock.aaos.org/coursecontent.aspx?id=6002023 7/39  Patient History If DCM is suspected, a careful patient history will reveal a constellation of symptoms that include"
+        },
+        {
+          "id": "6002082",
+          "title": "Upper-Limb Deficiency and Prostheses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002082",
+          "extractable": true,
+          "score": 19.084,
+          "snippet": "elbow), wrist disarticulation, and partial hand amputation.38 Clinical Presentation Patient History and Physical Examination Congenital limb loss is associated with digital deficiencies more commonly than long bone deficiencies and with longitudinal defects more commonly than transverse defects.39 If congenital limb l"
+        },
+        {
+          "id": "510000614",
+          "title": "Physical Examination of the Shoulder",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000614",
+          "extractable": true,
+          "score": 18.326,
+          "snippet": "AM AAOS | Physical Examination of the Shoulder https://rock.aaos.org/coursecontent.aspx?id=510000614 1/36 Physical examination should consist of: Inspection Palpation Range of motion testing: active and passive Strength testing Special tests Physical examination should be used in combination with patient history and i"
+        },
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 17.699,
+          "snippet": "week eight of gestation, with the upper limb completely formed.1,11 Most congenital upper extremity anomalies occur during this period of embryologic development.7 SEND FEEDBACK 9/3/26, 7:46 AM AAOS | Congenital Upper Extremity Differences https://rock.aaos.org/coursecontent.aspx?id=510000651 4/66 Evaluation/Diagnosis"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 17.656,
+          "snippet": ", generally is defined by inability to sense the buckling force of a 5.07 Semmes-Weinstein nylon monofilament. The force that this size monofilament exerts maximally with buckling is 10 g. A patient with this level of sensory loss is at increased risk for ulceration. Motor Examination Dorsiflexion Plantar flexion Inver"
+        }
+      ]
+    },
+    {
+      "stableGuid": "m{S[VVP`*R",
+      "front": "Which Judet view is this? Obturator oblique Which structures are visualized? Anterior column and posterior wall",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Pelvis",
+        "SnapOrtho::Anatomy::Pelvis::Osteology",
+        "SnapOrtho::Anatomy::Pelvis::Osteology::Acetabulum",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "510000589",
+          "title": "Imaging of the Hip and Pelvis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000589",
+          "extractable": true,
+          "score": 36.242,
+          "snippet": "Pelvis https://rock.aaos.org/coursecontent.aspx?id=510000589 21/36 Figure 13 Hip radiographs demonstrate pincer impingement. A, Global acetabular retroversion is defined by the presence of all three signs: (1) crossover sign, in which the acetabular posterior wall (dashed blue line) crosses over the anterior wall (sol"
+        },
+        {
+          "id": "6002009",
+          "title": "Radiographic Evaluation of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002009",
+          "extractable": true,
+          "score": 29.092,
+          "snippet": "oblique view of one hemipelvis and an iliac oblique view of the contralateral hemipelvis. The obturator oblique radiograph is obtained for the evaluation of the anterior column and posterior wall of the acetabulum. The iliac oblique radiograph is obtained for the evaluation of the posterior column and the anterior wal"
+        },
+        {
+          "id": "6003020",
+          "title": "Acetabular Fractures: Evaluation and Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003020",
+          "extractable": true,
+          "score": 26.782,
+          "snippet": "widely used classification system for acetabular fractures is the Letournel classification. Five elementary patterns of acetabular fractures exist: anterior column, posterior column, anterior wall, posterior wall, and transverse patterns. Five associated patterns exist: both columns, posterior column plus posterior wa"
+        },
+        {
+          "id": "510000529",
+          "title": "Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000529",
+          "extractable": true,
+          "score": 26.456,
+          "snippet": "external rotator is important for posterior approaches to the hip. Along the posterior column of the pelvis, the sciatic nerve is anterior to the piriformis tendon and posterior to the conjoined tendon and the quadratus muscle (Figure 2) During exposure of the posterior column of the pelvis via a posterior approach to"
+        },
+        {
+          "id": "6002026",
+          "title": "Acetabular Fractures: Definitive Management and Outcomes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002026",
+          "extractable": true,
+          "score": 25.915,
+          "snippet": ") Iliopectineal line (anterior column) Ilioischial line (posterior column) Radiographic teardrop (anterior quadrilateral surface) Anterior rim Posterior rim Sourcil (roof or dome: superior articular surface) Iliac oblique view Posterior column Anterior wall Cranial extent of the anterior column fracture line Obturator"
+        },
+        {
+          "id": "6002099",
+          "title": "Hip Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002099",
+          "extractable": true,
+          "score": 23.864,
+          "snippet": "the acetabulum. In anterior dislocations, the femoral head appears SEND FEEDBACK 9/3/26, 4:22 PM AAOS | Hip Dislocations https://rock.aaos.org/coursecontent.aspx?id=6002099 17/32 larger and overlaps the medial acetabulum or the obturator foramen. A cross-table lateral radiograph should be used to confirm the direction"
+        },
+        {
+          "id": "6002012",
+          "title": "Postoperative Periprosthetic Fractures of the Femur and Acetabulum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002012",
+          "extractable": true,
+          "score": 23.766,
+          "snippet": "Femur and Acetabulum https://rock.aaos.org/coursecontent.aspx?id=6002012 17/32 Judet views may be obtained by internally and externally rotating the x-ray beam 45°, which may help identify an anterior or posterior column fracture.28 False-profile radiographs are obtained by positioning a patient’s affected hip and foo"
+        },
+        {
+          "id": "6001014",
+          "title": "Posterior Tibial Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001014",
+          "extractable": true,
+          "score": 22.244,
+          "snippet": "Christopher Edward Gross, MD, FAAOS, FAOA (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Review the relevant anatomy of the posterior tibial tendon. Identify the stages of posterior tibial tendon dysfunction. Review nonsurgical strategies to manage po"
+        },
+        {
+          "id": "6002098",
+          "title": "Periprosthetic Fractures Near Total Hip and Knee Arthroplasty Implants",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002098",
+          "extractable": true,
+          "score": 21.69,
+          "snippet": "Imaging Studies Radiographic evaluation of a periprosthetic acetabulum fracture should begin with the same imaging studies used in the evaluation of native acetabulum fractures. Four plain radiographic views of the pelvis should be obtained: AP, obturator oblique (evaluation of the anterior column), iliac oblique (eva"
+        },
+        {
+          "id": "6001040",
+          "title": "Surgical Management of Pelvic Metastatic Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001040",
+          "extractable": true,
+          "score": 20.936,
+          "snippet": "between the psoas and the iliacus Obturator nerve Contributions from L2 through L4 Runs along the pelvic side wall anterior to the obturator vessels Divides into anterior and posterior branches distal to the obturator foramen Anterior branch Adductor longus, brevis, and gracilis Posterior branch Adductor magnus, brevi"
+        },
+        {
+          "id": "6004078",
+          "title": "Posterior Cruciate Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004078",
+          "extractable": true,
+          "score": 20.439,
+          "snippet": "reconstruction of the posterior cruciate ligament. Discuss potential complications, rehabilitation, and outcomes associated with posterior cruciate ligament injury. Pathophysiology/Pathoanatomy     NOTES SEND FEEDBACK 9/3/26, 5:46 PM AAOS | Posterior Cruciate Ligament Injuries https://rock.aaos.org/coursecontent.a"
+        },
+        {
+          "id": "6002011",
+          "title": "Bone Loss Classification: Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002011",
+          "extractable": true,
+          "score": 18.766,
+          "snippet": "variable is the extent of teardrop destruction, which is indicative of medial wall integrity. The third variable is the amount of ischial osteolysis. Ischial bone destruction indicates loss of posterior wall integrity. The fourth variable is an intact or a disrupted ilioischial line, which represents posterior column"
+        }
+      ]
+    },
+    {
+      "stableGuid": "m}/1>%WSno",
+      "front": "Vertical ACL grafts will provide anteroposterior stability, but not rotational stability.",
+      "extra": "Early arthroscopic single-incision transtibial ACL reconstruction often resulted in femoral tunnels which were at the top of the notch (12 o:clock position), rather than at the anatomic origin on the wall. The resulting vertical graft often improved anteroposterior laxity (as tested with the Lachman) but was less able to provide rotational stability (as tested with the Pivot shift).",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::ACL_Tear",
+        "SnapOrtho::Specialty::Sports_Medicine",
+        "SnapOrtho::Treatment::ACL_Tear_Reconstruction"
+      ],
+      "candidates": [
+        {
+          "id": "6004075",
+          "title": "The Biology and Biomechanics of Grafts and Implants in Sports Medicine Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004075",
+          "extractable": true,
+          "score": 41.808,
+          "snippet": "type may affect the postoperative rehabilitation process. Graft Options for ACL Reconstruction Multiple graft options are available for ACL reconstruction, each of which is associated with advantages and disadvantages. Autografts are harvested from the patient— and are the most common type of graft for ACL reconstruct"
+        },
+        {
+          "id": "6004079",
+          "title": "Anatomy of the Ankle for the Sports Medicine Surgeon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004079",
+          "extractable": true,
+          "score": 39.633,
+          "snippet": "highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Review the relevant pathoanatomy for common sports injuries about the ankle. Discuss the relevant surgical anatomy for commonly performed sports medicine procedures about the ankle. List structures at risk during open and arthroscopic"
+        },
+        {
+          "id": "6001183",
+          "title": "Ligamentous Injuries of the Knee: Failed Anterior Cruciate Ligament Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001183",
+          "extractable": true,
+          "score": 36.64,
+          "snippet": "requires stress patterns similar to those of the native ACL, which highlights the importance of anatomic ACL reconstruction. Risk Factors Associated With ACL Reconstruction Failure  Risk Factors Associated with ACL Reconstruction Failure Numerous modifiable and nonmodifiable risk factors are associated with graft fai"
+        },
+        {
+          "id": "6001066",
+          "title": "The Team Physician and the Ethics of Sports Medicine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001066",
+          "extractable": true,
+          "score": 35.801,
+          "snippet": "mainly reflect professional ethics and personal discretion, rather than legal principles. “Ethics refers to idealized codes of behavior and consequently sports medicine ethics cannot be seen as unique or subject to lesser standards. However, it is true that the social context in which sports medicine ethics are operat"
+        },
+        {
+          "id": "510000530",
+          "title": "Anatomy and Biomechanics of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000530",
+          "extractable": true,
+          "score": 32.768,
+          "snippet": "h the ACL was first described in 1836 by Weber and Weber,105 its precise anatomic attachments were confirmed in the last decade of the 20th century.106 Grossly, the ACL runs from the lateral aspect of the femoral intercondylar notch to the anterior part of the tibial intercondylar eminence. The femoral origin at its la"
+        },
+        {
+          "id": "510000621",
+          "title": "Massive Rotator Cuff Tears and Superior Capsule Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000621",
+          "extractable": true,
+          "score": 30.631,
+          "snippet": "Massive Rotator Cuff Tears and Superior Capsule Reconstruction https://rock.aaos.org/coursecontent.aspx?id=510000621 3/22 The stability of SCR is improved with the addition of posterior margin convergence sutures to the remaining intact rotator cuff.17  Biomechanics Although the rotator cuff provides dynamic stabilit"
+        },
+        {
+          "id": "6002092",
+          "title": "Imaging of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002092",
+          "extractable": true,
+          "score": 29.828,
+          "snippet": "of the flexion surface often precedes damage on the extension surface of the femur, particularly on the lateral side).2 Lateral radiographs are particularly useful for evaluation of the patella and the extensor mechanism and provide an orthogonal view of the femur from the anteroposterior. The clinician can assess the"
+        },
+        {
+          "id": "6001006",
+          "title": "Bone Healing and Bone Grafts",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001006",
+          "extractable": true,
+          "score": 29.324,
+          "snippet": "bone adapt to daily mechanical forces via the regulation of osteoblast and osteoclast activity in bone remodeling.1 SEND FEEDBACK 9/3/26, 3:59 PM AAOS | Bone Healing and Bone Grafts https://rock.aaos.org/coursecontent.aspx?id=6001006 2/32 Bone Healing Primary bone healing Occurs if anatomic reduction and absolute stab"
+        },
+        {
+          "id": "6004094",
+          "title": "Femoral Head Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004094",
+          "extractable": true,
+          "score": 29.046,
+          "snippet": "9/3/26, 4:07 PM AAOS | Femoral Head Fractures https://rock.aaos.org/coursecontent.aspx?id=6004094 2/19 Figure 1 Illustrations show the Pipkin classification.A, Type I, infrafoveal femoral head fracture. B, Type II, suprafoveal head fracture. C, Type III, any femoral head fracture with an ipsilateral femoral neck fract"
+        },
+        {
+          "id": "6004057",
+          "title": "Rotational Fractures of the Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004057",
+          "extractable": true,
+          "score": 28.785,
+          "snippet": "fixation in an early weight-bearing protocol and reported similar results.22 Early motion and weight bearing appear to allow patients to return to work more rapidly. A Cochrane review showed no benefit of early range of motion and noted no convincing available evidence for early range of motion or weight bearing;23 the"
+        },
+        {
+          "id": "6004047",
+          "title": "Tumors of Unknown Origin",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004047",
+          "extractable": true,
+          "score": 28.254,
+          "snippet": "bone and soft-tissue tumors of uncertain origin and pathogenesis. Describe the clinical presentation of patients with tumors of uncertain origin. Explain the epidemiology, etiology, and natural history of tumors of uncertain origin. Describe the radiographic and histologic characteristics that define tumors of unknown"
+        },
+        {
+          "id": "6001176",
+          "title": "Congenital Scoliosis and Early-Onset Scoliosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001176",
+          "extractable": true,
+          "score": 28.037,
+          "snippet": "Early supine radiograph16,17 Initial upright PA/lateral radiographs of the entire spine as baseline to evaluate curve progression CT with three-dimensional reconstruction images to evaluate bony anatomy MRI to evaluate for associated intraspinal abnormalities14,15,18 Cardiac echocardiogram/renal ultrasonography/MRI1,1"
+        }
+      ]
+    },
+    {
+      "stableGuid": "M}w1Z@qg!Z",
+      "front": "Which type of SLAP tear is most common ? Type II",
+      "extra": "Type I : Fraying of the superior labrum with an intact bicep anchor Type II: Detachment of the superior labrum and biceps anchor Type III: Bucket-handle tear of the superior labrum with an intact bicep anchor Type IV: Bucket-handle tear of the superior labrum with extension into bicep anchor",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Shoulder_Girdle",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Ligaments",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Ligaments::Glenoid_Labrum",
+        "SnapOrtho::Diagnosis::Slap_Tear",
+        "SnapOrtho::Specialty::Hand_Upper_Extremity",
+        "SnapOrtho::Specialty::Shoulder_Elbow",
+        "SnapOrtho::Specialty::Sports_Medicine"
+      ],
+      "candidates": [
+        {
+          "id": "510000538",
+          "title": "Throwing Shoulder Injuries: Superior Labrum Anterior to Posterior Tears and Proximal Biceps Tendon Lesions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000538",
+          "extractable": true,
+          "score": 87.522,
+          "snippet": "r to posterior (SLAP) tears. A, Type I SLAP tear: degenerative fraying with an intact biceps anchor. B, Type II SLAP tear: unstable biceps anchor is detached from the underlying glenoid. C, Type III SLAP tear: bucket-handle tear with an intact biceps anchor. D, Type IV SLAP tear: bucket-handle tear with extension into"
+        },
+        {
+          "id": "6004083",
+          "title": "Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004083",
+          "extractable": true,
+          "score": 56.769,
+          "snippet": "ype I includes superior labrum fraying and degeneration. Type II involves a detached superior labrum and biceps anchor from the superior glenoid. Type III involves a bucket-handle tear of the superior labrum but an intact biceps anchor. Type IV lesions include a type III bucket-handle tear that extends into the biceps"
+        },
+        {
+          "id": "510000664",
+          "title": "Shoulder Trauma: Scapular and Glenoid Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000664",
+          "extractable": true,
+          "score": 55.495,
+          "snippet": "stabilization. Superior Shoulder Suspensory Complex  Superior Shoulder Suspensory Complex SEND FEEDBACK 9/4/26, 10:43 AM AAOS | Shoulder Trauma: Scapular and Glenoid Fractures https://rock.aaos.org/coursecontent.aspx?id=510000664 25/49 The SSSC, as described by Goss,10 is a bony and soft-tissue ring that is responsib"
+        },
+        {
+          "id": "510000567",
+          "title": "Imaging: Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000567",
+          "extractable": true,
+          "score": 52.636,
+          "snippet": "are noted. B, Type II: The superior labrum and the biceps tendon anchor SEND FEEDBACK 9/3/26, 4:27 PM AAOS | Imaging: Shoulder Instability https://rock.aaos.org/coursecontent.aspx?id=510000567 9/14 are detached from the superior glenoid rim. C, Type III: A bucket-handle tear of the superior labrum is noted; the biceps"
+        },
+        {
+          "id": "6000034",
+          "title": "Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000034",
+          "extractable": true,
+          "score": 45.723,
+          "snippet": "patients with traumatic and atraumatic shoulder instability. Recognize traumatic shoulder instability on imaging studies. Apply common treatment options for shoulder instability. Pathophysiology/Pathoanatomy Laxity is a physiologic term that refers to the passive translation of the humeral head on the glenoid or over"
+        },
+        {
+          "id": "510000625",
+          "title": "Shoulder Instability: Multidirectional Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000625",
+          "extractable": true,
+          "score": 44.121,
+          "snippet": "on active and passive restraints. Passive restraints—The primary passive restraint is the labrum, a cartilaginous ring that encircles the glenoid, deepening the glenoid fossa and serving as an attachment site for capsuloligamentous structures. The glenohumeral ligaments form a second important passive restraint and at"
+        },
+        {
+          "id": "510000613",
+          "title": "Shoulder Anatomy and Function",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000613",
+          "extractable": true,
+          "score": 43.413,
+          "snippet": "meniscoid superior glenoid labrum associated with an extension of articular cartilage over the superior glenoid rim may be a normal variant and must be differentiated from a traumatic disruption of the superior labrum (superior labral anterior to posterior tear) from bone. The region of the anterosuperior labrum and M"
+        },
+        {
+          "id": "6001153",
+          "title": "Hip Labrum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001153",
+          "extractable": true,
+          "score": 37.794,
+          "snippet": "abnormality. A, Normal labrum. B, The outside-in type of labrum tear commonly observed in patients with a Cam lesion. C, The outside-in type of labrum tear commonly observed in patients with a pincer lesion. D, The inside-out labral tear SEND FEEDBACK 9/3/26, 4:23 PM AAOS | Hip Labrum https://rock.aaos.org/courseconte"
+        },
+        {
+          "id": "510000621",
+          "title": "Massive Rotator Cuff Tears and Superior Capsule Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000621",
+          "extractable": true,
+          "score": 33.182,
+          "snippet": "e acromioclavicular joint. The posterior anchor is placed through an accessory portal along the posterior margin of the acromion. The central anchor typically is placed through a Neviaser portal. If the anterior and posterior anchors are placed 2 to 3 mm medial to the glenoid labrum, the superior labrum can be preserve"
+        },
+        {
+          "id": "510000629",
+          "title": "Throwing Shoulder Injuries and Internal Impingement",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000629",
+          "extractable": true,
+          "score": 32.377,
+          "snippet": "the arm is in the 90-90 position, the biceps tendon is shifted more posteriorly (because of external rotation), and the biceps anchor subsequently twists. This places a torsional force on the superior labrum. Although this is a normal adaptation for throwing athletes, it may become pathologic if the anchor becomes uns"
+        },
+        {
+          "id": "6001003",
+          "title": "Biology and Biomechanics of the Meniscus and Labrum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001003",
+          "extractable": true,
+          "score": 29.613,
+          "snippet": "been identified in the human meniscus. Ruffini endings are type I mechanoreceptors, which have a low threshold and adapt slowly to pressure and joint deformation. Pacinian corpuscles (type II mechanoreceptors) have a low threshold but adapt quickly to alterations in tissue tension. Golgi tendon organs (type III mechan"
+        },
+        {
+          "id": "510000536",
+          "title": "Knee Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000536",
+          "extractable": true,
+          "score": 27.621,
+          "snippet": "9/3/26, 4:31 PM AAOS | Knee Dislocations https://rock.aaos.org/coursecontent.aspx?id=510000536 12/43 The Moore classification is used to describe tibial plateau fractures associated with knee dislocations (Figure 11). Type I: coronal split fracture Type II: entire condyle fracture Type III: rim avulsion fracture of th"
+        }
+      ]
+    },
+    {
+      "stableGuid": "m@(sX;K;^+",
+      "front": "What do the following letters/characters stand for?",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [],
+      "candidates": [
+        {
+          "id": "510000501",
+          "title": "Pedal Puncture Wounds",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000501",
+          "extractable": true,
+          "score": 6.929,
+          "snippet": "A tetanus series consists of a minimum of three doses of tetanus- and diphtheria-containing vaccines. These include DTap, DTP, Tdap, DT, and Td. The lowercase letters “d” and “p” are used if the concentration of diphtheria toxoid and pertussis antigen is smaller than that of tetanus. The letters “ap” refer to acellula"
+        },
+        {
+          "id": "6003004",
+          "title": "Surgical Positioning and Monitoring",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003004",
+          "extractable": true,
+          "score": 6.631,
+          "snippet": "50° to 60°, and the knees are flexed approximately 20°.1 The contralateral arm can be secured across the torso with the use of padding and secured in place; alternatively, it can rest at the patient’s side on a padded stand. The surgical extremity can be rested on a sterile stand or a specialized arm-positioning device"
+        },
+        {
+          "id": "6004012",
+          "title": "Radiation Safety",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004012",
+          "extractable": true,
+          "score": 6.588,
+          "snippet": "view, the operator should stand on the image receptor side of the table. Techniques to reduce the dose to the patient also will reduce the dose to the operator. Other techniques to reduce the dose to the operator include the following: Shielding (lead aprons, thyroid shield, leaded glasses, leaded gloves, table drapes"
+        },
+        {
+          "id": "6001188",
+          "title": "Fractures of the Humeral Shaft",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001188",
+          "extractable": true,
+          "score": 6.066,
+          "snippet": "blast injury (eg, gunshot wounds) Associated Injuries Radial nerve neurapraxia Pneumothorax SEND FEEDBACK 9/3/26, 4:14 PM AAOS | Fractures of the Humeral Shaft https://rock.aaos.org/coursecontent.aspx?id=6001188 6/38 Scapulothoracic dissociation Injury Classification The Orthopaedic Trauma Association/AO Foundation cl"
+        },
+        {
+          "id": "6002089",
+          "title": "Female Athlete Triad",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002089",
+          "extractable": true,
+          "score": 4.857,
+          "snippet": "In addition, athletes with oligomenorrhea or subclinical menstrual dysfunction, such as anovulatory cycles, who had not progressed to amenorrhea were found to have mild to moderately low BMD and an increased incidence of stress fractures.4,5 Therefore, the definition was modified in the 2007 ACSM position stand to inc"
+        },
+        {
+          "id": "6001083",
+          "title": "Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001083",
+          "extractable": true,
+          "score": 4.829,
+          "snippet": "type comminuted fracture. The current standard of care is to use fully locked intramedullary nails and allow full–weight bearing postoperatively regardless of the degree of femoral shaft fracture comminution and cortical contact. The Orthopaedic Trauma Association/AO Foundation classification is an alphanumeric system"
+        },
+        {
+          "id": "6003019",
+          "title": "Outcomes of Musculoskeletal Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003019",
+          "extractable": true,
+          "score": 4.709,
+          "snippet": "independent adjudication SEND FEEDBACK 9/3/26, 5:31 PM AAOS | Outcomes of Musculoskeletal Trauma https://rock.aaos.org/coursecontent.aspx?id=6003019 7/26 committee to assess whether the criteria for revision surgery have been met for each patient.19 Functional Outcomes Timed-Up-and-Go Test Measures number of seconds r"
+        },
+        {
+          "id": "6001185",
+          "title": "Adult Thoracolumbar Spine Deformity: Sagittal Imbalance",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001185",
+          "extractable": true,
+          "score": 4.707,
+          "snippet": "column in a skeletally mature individual Comprises a wide spectrum of diseases and diagnoses Deformities may occur in the coronal, sagittal, and axial planes. Cause loss of local, regional, and/or global alignment May result in an imbalance of the spinal column An inability to stand in the cone of economy and maintain"
+        }
+      ]
+    },
+    {
+      "stableGuid": "M@m0Q91`oc",
+      "front": "In Erb’s Palsy , the following deficiency would affect which peripheral nerves? C5: Axillary, suprascapular, musculocutaneous C6: Radial",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Arm",
+        "SnapOrtho::Anatomy::Arm::Nerves",
+        "SnapOrtho::Anatomy::Arm::Nerves::Radial_Nerve",
+        "SnapOrtho::Anatomy::Shoulder_Girdle",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Nerves",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Nerves::Axillary_Nerve",
+        "SnapOrtho::Specialty::Pediatric_Orthopedics",
+        "SnapOrtho::Specialty::Shoulder_Elbow"
+      ],
+      "candidates": [
+        {
+          "id": "510000664",
+          "title": "Shoulder Trauma: Scapular and Glenoid Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000664",
+          "extractable": true,
+          "score": 40.909,
+          "snippet": "the axillary and musculocutaneous nerves. Line A represents the distance from the anterolateral corner of the acromion to the axillary nerve, which is between 5 cm and 7 cm. Line B represents the distance from the coracoid to the point at which the musculocutaneous nerve pierces the short head of the biceps and coraco"
+        },
+        {
+          "id": "510000584",
+          "title": "Elbow Anatomy and Function",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000584",
+          "extractable": true,
+          "score": 36.811,
+          "snippet": "re of the Elbow Muscle Origin Insertion Innervation Action Biceps brachii Long head— superior glenoid/labrum Radial tuberosity Musculocutaneous Elbow flexion/supination Short head— coracoid Brachialis Humerus, intermuscular septum Coronoid Musculocutaneous (medial), radial (lateral) Elbow flexion Brachioradialis"
+        },
+        {
+          "id": "510000613",
+          "title": "Shoulder Anatomy and Function",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000613",
+          "extractable": true,
+          "score": 35.931,
+          "snippet": "artery. This approach involves the use of the internervous plane between the teres minor (axillary nerve) inferiorly and the infraspinatus (suprascapular nerve) superiorly.  Posterior Approach The posterior approach involves the use of the internervous plane between the teres minor (axillary nerve) and the infraspina"
+        },
+        {
+          "id": "510000559",
+          "title": "Nerve Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000559",
+          "extractable": true,
+          "score": 35.611,
+          "snippet": "om stretch or compression. Similarly, nerves may be threatened after joint dislocations. Anatomy and Biomechanics Neural Anatomy The major peripheral nerves of the upper extremity are the terminal branches of the brachial plexus (Figure 16). Musculocutaneous (lateral cord) Ulnar (medial cord) Median (medial and lateral"
+        },
+        {
+          "id": "6002004",
+          "title": "Peripheral Nerve and Spinal Cord Pathophysiology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002004",
+          "extractable": true,
+          "score": 34.168,
+          "snippet": "l nerve injury but also the degree of nerve injury. Nerve Conduction Studies Sensory nerve function Stimulating a mixed (motor and sensory) nerve produces a compound nerve action potential. Stimulating a sensory nerve produces a sensory nerve action potential. Testing the nerve can be done by stimulating the nerve in a"
+        },
+        {
+          "id": "6001173",
+          "title": "Cerebral Palsy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001173",
+          "extractable": true,
+          "score": 31.56,
+          "snippet": "VIEW Pretest Discover What You Know Learning Objectives Review the diagnosis of cerebral palsy and its risk factors. Effectively communicate functional ability in children with cerebral palsy. Perform an appropriate physical assessment of children with cerebral palsy. Recognize common gait deviations in ambulatory chi"
+        },
+        {
+          "id": "6002082",
+          "title": "Upper-Limb Deficiency and Prostheses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002082",
+          "extractable": true,
+          "score": 28.857,
+          "snippet": "radial and ulnar deficiencies.33 Phocomelia, the third type of longitudinal deficiency, is rarer and may represent a severe manifestation of radial and/or ulnar deficiency. Radial deficiencies are 5 to 10 times more prevalent than ulnar deficiencies.25 Radial deficiencies (Figure 3) SEND FEEDBACK 9/4/26, 10:49 AM AAOS"
+        },
+        {
+          "id": "6004073",
+          "title": "Traumatic Brachial Plexus Injuries: Shoulder Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004073",
+          "extractable": true,
+          "score": 25.678,
+          "snippet": "can be transferred to the suprascapular nerve. B, For elbow flexion, intercostal nerves (T3 through T4) can be transferred to the biceps branch of the musculocutaneous nerve. The two inset illustrations are high-magnification views of the nerve anastomosis for the transfer of the spinal accessory nerve to the suprasca"
+        },
+        {
+          "id": "6001007",
+          "title": "Peripheral Nervous System",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001007",
+          "extractable": true,
+          "score": 24.515,
+          "snippet": "Peripheral Nervous System https://rock.aaos.org/coursecontent.aspx?id=6001007 1/48 Peripheral nerves connect the central nervous system (CNS) with tissues, such as bone, joints, muscles, tendons, and skin. Nerves that supply the musculoskeletal system provide motor and sensory function.  Function The peripheral nervo"
+        },
+        {
+          "id": "6004033",
+          "title": "Less Common Objectively Verifiable Peripheral Mononeuropathies",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004033",
+          "extractable": true,
+          "score": 23.445,
+          "snippet": "Objectives Identify causes of measurable peripheral mononeuropathies other than carpal tunnel syndrome and cubital tunnel syndrome. Assess physical examination, radiographic, and electrodiagnostic findings to identify less common verifiable peripheral mononeuropathies. Review nonsurgical and surgical treatment options"
+        },
+        {
+          "id": "510000639",
+          "title": "SICK Scapula Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000639",
+          "extractable": true,
+          "score": 23.055,
+          "snippet": ", dyskinesis, and injuries, in Nicholson GP, ed: Orthopaedic Knowledge Update: Shoulder and Elbow, ed 5. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2021, pp 601-616.) Neurovascular Examination Sensation: axillary, radial, ulnar, median nerves Motor: cranial XI, axillary, musculocutaneous, suprascapular, su"
+        },
+        {
+          "id": "6001188",
+          "title": "Fractures of the Humeral Shaft",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001188",
+          "extractable": true,
+          "score": 21.599,
+          "snippet": "Ulnar nerve, tendon-to- bone healing Extensile ORIF of segmental humerus fracture Diaphyseal and distal intra-articular fracture Lateral paratricipital with lateral reflection Radial and axillary nerves, tendon-to-bone healing, anconeus Proximal humerus fracture with proximal to middle third shaft Deltopectoral with a"
+        }
+      ]
+    },
+    {
+      "stableGuid": "M*yKXr-P8o",
+      "front": "To check for patency of both the radial and ulnar arteries, one can perform a(n) Allen test.",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Hand",
+        "SnapOrtho::Anatomy::Hand::Vasculature",
+        "SnapOrtho::Anatomy::Hand::Vasculature::Radial_Artery",
+        "SnapOrtho::Anatomy::Hand::Vasculature::Ulnar_Artery",
+        "SnapOrtho::Specialty::Hand_Upper_Extremity"
+      ],
+      "candidates": [
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 41.783,
+          "snippet": "the classification of congenital differences in the upper extremity. Perform an appropriate workup of patients with congenital upper extremity differences. Determine the surgical and nonsurgical treatment options for the management of congenital upper extremity differences. Pathophysiology/Pathoanatomy Overview Congen"
+        },
+        {
+          "id": "6000025",
+          "title": "Ulnar Impaction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000025",
+          "extractable": true,
+          "score": 32.33,
+          "snippet": "the radial head (Essex-Lopresti injury) leads to marked positive ulnar variance.18,19 Premature physeal arrest of the distal radius in pediatric patients also may lead to ulnar impaction.20 Finally, ulnar impaction symptoms may occur in patients who are born with positive ulnar variance.21 Natural History Ulnar positi"
+        },
+        {
+          "id": "510000578",
+          "title": "Distal Humerus Physeal Fractures, Pediatric Polytrauma, and Upper Extremity Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000578",
+          "extractable": true,
+          "score": 30.249,
+          "snippet": "of the median, radial, and ulnar nerves must be assessed. Vascular examination, including assessment of the radial pulse and clinical inspection for signs of forearm and hand ischemia, is essential. SEND FEEDBACK 9/3/26, 4:00 PM AAOS | Distal Humerus Physeal Fractures, Pediatric Polytrauma, and Upper Extremity Fractur"
+        },
+        {
+          "id": "510000566",
+          "title": "Surgical Management of Upper Extremity Bone Metastases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000566",
+          "extractable": true,
+          "score": 29.312,
+          "snippet": "that metastasize to the upper extremity. Review the general treatment strategy and indications for surgical management of upper extremity metastases. Determine the best surgical treatment options for each anatomic location. Introduction Metastatic disease is common in the upper extremities. Of patients with metastatic"
+        },
+        {
+          "id": "6002082",
+          "title": "Upper-Limb Deficiency and Prostheses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002082",
+          "extractable": true,
+          "score": 27.969,
+          "snippet": "of the Forearm The two most common longitudinal deficiencies are radial and ulnar deficiencies.33 Phocomelia, the third type of longitudinal deficiency, is rarer and may represent a severe manifestation of radial and/or ulnar deficiency. Radial deficiencies are 5 to 10 times more prevalent than ulnar deficiencies.25 R"
+        },
+        {
+          "id": "510000660",
+          "title": "Radial Head and Neck Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000660",
+          "extractable": true,
+          "score": 24.201,
+          "snippet": "OUTLINE VIEW Pretest Discover What You Know Learning Objectives Understand the common etiology of radial head/neck fractures. Perform appropriate clinical and radiographic assessment of radial head/neck fractures. Determine appropriate indications for the nonsurgical and surgical management of radial head/neck fractur"
+        },
+        {
+          "id": "6004036",
+          "title": "Acute and Chronic Vascular Disorders of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004036",
+          "extractable": true,
+          "score": 21.812,
+          "snippet": "in the more ulnar digits. Signs include the following: Presence of a pulsatile mass Trophic changes in the ulnar digits, including ulceration and change in turgor Decreased ulnar sensibility Absent or slow filling through the ulnar artery via the Allen test Diagnostic testing Duplex ultrasonography Digital pressures a"
+        },
+        {
+          "id": "6001037",
+          "title": "Idiopathic Ulnar Neuropathy at the Cubital Tunnel",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001037",
+          "extractable": true,
+          "score": 21.058,
+          "snippet": "(dorsal ulnar sensory nerve), and the little finger and the ulnar aspect of the ring finger. SEND FEEDBACK 9/3/26, 4:24 PM AAOS | Idiopathic Ulnar Neuropathy at the Cubital Tunnel https://rock.aaos.org/coursecontent.aspx?id=6001037 2/26 Figure 1 Illustration of the bones in the shoulder, arm, and hand shows the path o"
+        },
+        {
+          "id": "6004034",
+          "title": "Hand and Wrist Flexor Tendon Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004034",
+          "extractable": true,
+          "score": 14.839,
+          "snippet": "flexor tendons is via the long and short vincular connections (Figure 2). The FDP muscle belly blood supply in the forearm is predominantly from the ulnar artery. The FPL muscle belly is supplied by the radial artery. The FDS muscle belly is supplied by the radial and ulnar arteries. Figure 2 Illustration of a finger"
+        },
+        {
+          "id": "6002071",
+          "title": "Microsurgery Techniques",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002071",
+          "extractable": true,
+          "score": 14.37,
+          "snippet": "after a very long procedure with minimal sleep. Vein graft options from large to small Saphenous: great option for major named vessels (brachial artery, proximal radial and ulnar arteries) Lesser saphenous: good option for smaller named vessels (distal radial and ulnar arteries) Dorsal foot: palmar arch reconstruction"
+        },
+        {
+          "id": "6004092",
+          "title": "Terrible Triad of Injuries of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004092",
+          "extractable": true,
+          "score": 11.995,
+          "snippet": "the Elbow https://rock.aaos.org/coursecontent.aspx?id=6004092 6/25 radial head. The medial column joins with the lateral column to form the trochlea, a tongue and groove joint that articulates with the proximal ulna (Figure 1). Vascular Anatomy The brachial artery splits into the radial and ulnar arteries at the elbow"
+        },
+        {
+          "id": "6004066",
+          "title": "Medial Epicondyle and Lateral Epicondyle Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004066",
+          "extractable": true,
+          "score": 11.894,
+          "snippet": "elbow. B = brachial artery, IR = interosseous recurrent artery, IUC = inferior ulnar collateral artery, MC = middle collateral artery, PUR = posterior ulnar recurrent artery, R = radial artery, RC = radial collateral artery, RR = radial recurrent artery, SUC = superior ulnar collateral artery. (Adapted with permission"
+        }
+      ]
+    },
+    {
+      "stableGuid": "M/z!&%4V,D",
+      "front": "To attain longitudinal growth, chondryocytes divide and stack into columns within the proliferative zone.",
+      "extra": "Dysfunction in this zone = achondroplasia",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science"
+      ],
+      "candidates": [
+        {
+          "id": "6001049",
+          "title": "Growth and Embryology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001049",
+          "extractable": true,
+          "score": 54.615,
+          "snippet": "SEND FEEDBACK 9/3/26, 4:18 PM AAOS | Growth and Embryology https://rock.aaos.org/coursecontent.aspx?id=6001049 5/27 The proliferative zone is characterized by longitudinal columns of flattened cells. The uppermost cell in each column is the progenitor cell, which is responsible for longitudinal growth. The total longi"
+        },
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 32.042,
+          "snippet": "nfections in orthopaedics, in Einhorn TA, O’Keefe RJ, Buckwalter JA, eds: Orthopaedic Basic Science. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2007, pp 299-314. Types of Musculoskeletal Infection and Clinical Presentation SEND FEEDBACK 9/3/26, 4:48 PM AAOS | Musculoskeletal Infections and Microbiology Bas"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 30.528,
+          "snippet": " Total Hip Arthroplasty: Bearing Surfaces Basic Science  CORE October 02, 2025 Michael J. Taunton, MD (2020-present) Doug Van Citters, PhD (2020-present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Identify the three primary classes of materials used as bearing"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 28.135,
+          "snippet": "with nonsurgical management. Surgical Management Indications Failed nonsurgical management, pseudoparalytic shoulder, and uncontrolled pain with nonsurgical management Contraindications Deltoid dysfunction, patients noncompliant with postoperative rehabilitation, chronic infection, and poor glenohumeral bone stock SEN"
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "extractable": true,
+          "score": 24.886,
+          "snippet": "fibrocartilaginous transition zone appearing red. SEND FEEDBACK 9/3/26, 6:07 PM AAOS | Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing https://rock.aaos.org/coursecontent.aspx?id=510000618 22/29 (Reproduced from Lin KM, Rodeo SA: Tendon and ligament healing, in Aaron R, ed:"
+        },
+        {
+          "id": "6004103",
+          "title": "Skeletal Dysplasias and Mucopolysaccharidoses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004103",
+          "extractable": true,
+          "score": 24.114,
+          "snippet": "is divided into four main zones. The reserve zone has no associated diseases. Achondroplasia affects the proliferative zone. Fractures occur in the hypertrophic zone. In the zone of calcification, type X collagen is present, but type II collagen is predominant. Calcifying fracture callus has some type IV collagen. Ove"
+        },
+        {
+          "id": "6004032",
+          "title": "Dupuytren Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004032",
+          "extractable": true,
+          "score": 14.218,
+          "snippet": "mechanical tension also have been shown to influence fibroblast differentiation into myofibroblasts. Type III collagen is more prevalent in the extracellular matrix in patients with Dupuytren disease. Transforming growth factor-beta 1, transforming growth factor-beta 2, epidermal growth factor, platelet-derived growth"
+        },
+        {
+          "id": "6001001",
+          "title": "Developmental Biology of Musculoskeletal Tissues",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001001",
+          "extractable": true,
+          "score": 12.639,
+          "snippet": "display all the typical growth plate zones, including a proliferative zone (PZ) expressing type II collagen and unliganded retinoic acid receptors (ulRARs), a prehypertrophic zone (PHZ) expressing IHH, a hypertrophic zone (HZ) expressing type X collagen (Col X), and a mineralizing zone expressing vascular endothelial"
+        },
+        {
+          "id": "6001000",
+          "title": "Cell Biology, Cell Differentiation, and Skeletal Stem Cells",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001000",
+          "extractable": true,
+          "score": 11.813,
+          "snippet": "repression of SOX9.7 After the salvage of SOX9 signaling after the repression of Notch, the expansion of chondrogenesis and chondrocyte hypertrophy is mediated by fibroblast growth factors, local hypoxia, and upregulation of hypoxia-inducible factor 1 alpha and transforming growth factor beta.12-14 Bone morphogenetic"
+        },
+        {
+          "id": "6002110",
+          "title": "Tendons and Ligaments",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002110",
+          "extractable": true,
+          "score": 11.207,
+          "snippet": ") rather than regenerative. The length of this phase is on the order of several weeks. The predominant growth factors present during this phase include transforming growth factor-β, insulin-like growth factor 1, vascular endothelial growth factor, platelet-derived growth factor, and basic fibroblast growth factor.3 In"
+        },
+        {
+          "id": "6001008",
+          "title": "Orthopaedic Molecular and Cellular Biology, Genetics, and Immunology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001008",
+          "extractable": true,
+          "score": 11.005,
+          "snippet": "relatively large head; lethal after birth because of respiratory compromise) Hypochondroplasia FGF receptor 3 Inhibition of chondrocyte proliferation Milder dwarfism than achondroplasia Pseudoachondroplasia COMP Abnormality of cartilage formation Short stature (skeletal dysplasia), rhizomelic limb shortening, similar"
+        },
+        {
+          "id": "6004034",
+          "title": "Hand and Wrist Flexor Tendon Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004034",
+          "extractable": true,
+          "score": 10.543,
+          "snippet": "the cell. Fibril formation and intermolecular cross-linking occur within the extracellular matrix. Binding of platelet-derived growth factor to receptors on the fibroblasts stimulates fibroblast proliferation and differentiation and collagen production. Vascular endothelial growth factor is detectable at the tendon re"
+        }
+      ]
+    },
+    {
+      "stableGuid": "M#9.{q:+0T",
+      "front": "Patient presents with numbness, tingling, and weakness of the hand. Decreased palm sensation on physical exam. Diagnosis? Pronator Syndrome",
+      "extra": "Pronator syndrome = proximal median nerve compression Key is proximal because CTS presents with preserved palm sensation due to distal compression.",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Hand",
+        "SnapOrtho::Anatomy::Hand::Nerves",
+        "SnapOrtho::Anatomy::Hand::Nerves::Median_Nerve",
+        "SnapOrtho::Diagnosis::Median_Nerve_Compression",
+        "SnapOrtho::Specialty::Hand_Upper_Extremity"
+      ],
+      "candidates": [
+        {
+          "id": "6001164",
+          "title": "Carpal Tunnel Syndrome and Idiopathic Median Nerve Compression at the Carpal Tunnel",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001164",
+          "extractable": true,
+          "score": 81.135,
+          "snippet": "median nerve is used to evaluate the median nerve in patients with CTS. SEND FEEDBACK 9/3/26, 7:35 AM AAOS | Carpal Tunnel Syndrome and Idiopathic Median Nerve Compression at the Carpal Tunnel https://rock.aaos.org/coursecontent.aspx?id=6001164 8/20 Increased cross-sectional area (CSA) of the median nerve (>10 mm2) at"
+        },
+        {
+          "id": "510000557",
+          "title": "Physical Examination and Anatomy of the Hand, Forearm, and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000557",
+          "extractable": true,
+          "score": 50.404,
+          "snippet": "in Boyer, MD, MSc, FRCSC; and Charles A. Goldfarb, MD, St. Louis, MO.)  Median Nerve The median nerve innervates all musculature of the flexor pronator mass aside from FCU and FDP (ring and little finger), which are innervated by the ulnar nerve. Just distal to the FDS arch, the median nerve branches into the AIN, whi"
+        },
+        {
+          "id": "510000578",
+          "title": "Distal Humerus Physeal Fractures, Pediatric Polytrauma, and Upper Extremity Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000578",
+          "extractable": true,
+          "score": 42.919,
+          "snippet": "compartment syndrome. This scenario is problematic because one of the earliest signs of developing compartment syndrome after a supracondylar fracture is dysesthesia in the median nerve distribution in the hand and progressive weakness of finger flexion, both of which cannot be assessed in patients with median nerve p"
+        },
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 40.498,
+          "snippet": "the classification of congenital differences in the upper extremity. Perform an appropriate workup of patients with congenital upper extremity differences. Determine the surgical and nonsurgical treatment options for the management of congenital upper extremity differences. Pathophysiology/Pathoanatomy Overview Congen"
+        },
+        {
+          "id": "6002020",
+          "title": "Distal Triceps Tendon Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002020",
+          "extractable": true,
+          "score": 37.632,
+          "snippet": "of injury. Patients report pain, swelling, and bruising along the posterior elbow. Delayed presentation is common if some motion and strength is preserved. Patients report numbness or tingling in the ulnar nerve distribution, particularly if they present with a concomitant hematoma.  Patient History Because most dist"
+        },
+        {
+          "id": "510000559",
+          "title": "Nerve Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000559",
+          "extractable": true,
+          "score": 37.055,
+          "snippet": "ervated by the median nerve but not in the palm of the hand (palmar cutaneous nerve distribution)  Median Nerve Injury The median nerve arises from the convergence of the lateral and medial cords in the axilla. Nerve roots contributing to the median nerve include C5 through T1, with sensation provided mostly by latera"
+        },
+        {
+          "id": "6002068",
+          "title": "Psychiatric Hand Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002068",
+          "extractable": true,
+          "score": 36.254,
+          "snippet": "Disorders https://rock.aaos.org/coursecontent.aspx?id=6002068 2/15 Most often, a patient with SSD is unconsciously producing or embellishing physical symptoms because of some underlying psychiatric factors. These symptoms may be interpreted as indicative of a disease state but they cannot be understood in terms of obj"
+        },
+        {
+          "id": "510000639",
+          "title": "SICK Scapula Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000639",
+          "extractable": true,
+          "score": 36.155,
+          "snippet": " SICK Scapula Syndrome  CORE June 11, 2026 Eric Bowman, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Define SICK scapula syndrome and its etiology and presentation. Review the appropriate clinical workup for a patient with SICK scapula syndrome,"
+        },
+        {
+          "id": "510000656",
+          "title": "Distal Radius Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000656",
+          "extractable": true,
+          "score": 33.875,
+          "snippet": "Objectives Recognize anatomy pertinent to the diagnosis and management of distal radius fractures. Identify the elements of a distal radius fracture that may benefit from surgical management. Discuss conditions occasionally associated with distal radius fractures, such as median neuropathy, forearm compartment syndrom"
+        },
+        {
+          "id": "6002004",
+          "title": "Peripheral Nerve and Spinal Cord Pathophysiology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002004",
+          "extractable": true,
+          "score": 33.566,
+          "snippet": "e Conduction Studies Sensory nerve function Stimulating a mixed (motor and sensory) nerve produces a compound nerve action potential. Stimulating a sensory nerve produces a sensory nerve action potential. Testing the nerve can be done by stimulating the nerve in a proximal to distal (antidromic) manner or distal to pro"
+        },
+        {
+          "id": "510000657",
+          "title": "Compartment Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000657",
+          "extractable": true,
+          "score": 32.531,
+          "snippet": "unnel typically also is released. Compression of the median nerve is possible at four sites. In addition to releasing the median nerve at the carpal tunnel, the clinician must assess these other sites to determine the need for possible release.18 Lacertus fibrosis Pronator teres Proximal deep surface of the flexor digi"
+        },
+        {
+          "id": "6001037",
+          "title": "Idiopathic Ulnar Neuropathy at the Cubital Tunnel",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001037",
+          "extractable": true,
+          "score": 32.465,
+          "snippet": "paid to motor nerve conduction velocity across the elbow (Resource 4). Cubital tunnel syndrome is the clinical syndrome of numbness and tingling because of involvement of the ulnar nerve at the elbow. Cubital tunnel syndrome is a clinical diagnosis based on patient history and physical examination findings. Ulnar neur"
+        }
+      ]
+    }
+  ]
+}

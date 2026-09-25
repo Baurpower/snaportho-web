@@ -1,0 +1,1312 @@
+{
+  "schemaVersion": "snaportho-rock-enrichment.v1",
+  "runKey": "snaportho-rock-map-v1",
+  "stage": "map",
+  "sourceReleaseId": "f5312a8e-c51b-4fa7-b3f6-f0fb3d26463e",
+  "sourceReleaseVersion": "0.0.9",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "batchKey": "map-000001-packet-0036",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "cards": [
+    {
+      "noteId": "9a046277-51e0-4091-ab42-46873bbd6989",
+      "noteVersionId": "0f384778-a80c-4bd0-bc33-80a38fa3dbaf",
+      "stableGuid": "C3/Sq_9fB8",
+      "contentChecksum": "ffaf63be13fe25ac41b43a276bf20aca047db32966b45793edae0b9514ed8349",
+      "deckPath": "SnapOrtho",
+      "front": "Which tumor is most likely give the following presentation? Patient age &gt; 40 Painful mass Malignancy in pelvis/proximal femur Biopsy = hypercellular stroma consisting of \"blue balls\" Chondrosarcoma",
+      "extra": "*Treatment = wide resection",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Pelvis",
+        "SnapOrtho::Anatomy::Pelvis::Osteology",
+        "SnapOrtho::Anatomy::Pelvis::Osteology::Pelvis",
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femur",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Proximal_Femur",
+        "SnapOrtho::Diagnosis::Chondrosarcoma",
+        "SnapOrtho::Specialty::Orthopedic_Oncology"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "Which tumor is most likely give the following presentation? Patient age &gt; 40 Painful mass Malignancy in pelvis/proximal femur Biopsy = hypercellular stroma consisting of \"blue balls\" Chondrosarcoma *Treatment = wide resection pelvis osteology thigh hip femur proximal femur chondrosarcoma orthopedic oncology",
+      "candidates": [
+        {
+          "id": "6004039",
+          "title": "Musculoskeletal Tumor Biopsy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004039",
+          "canonicalId": "6004039",
+          "extractable": true,
+          "score": 60.051,
+          "snippet": "process, biopsy is indicated. The biopsy establishes a diagnosis, which helps determine the treatment plan. The intent of biopsy is to make a timely, accurate diagnosis with the least morbidity and least contamination while maintaining all possible treatment options. Biopsy Principles Biopsy should be planned by a sur"
+        },
+        {
+          "id": "6001163",
+          "title": "Tumor and Tumor-like Conditions of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001163",
+          "canonicalId": "6001163",
+          "extractable": true,
+          "score": 59.986,
+          "snippet": "s type may occur on palm side of hand or subungual Biopsy Sentinel lymph node biopsy Management Excision Location on dorsal hand or palm 1- to 2-cm margin for thin tumor Larger than 3-cm margin for thick tumor Amputation Location on digit Disarticulation for thin tumor Ray resection for thick tumor  Melanoma Melanomas"
+        },
+        {
+          "id": "6002062",
+          "title": "Primary Total Hip Arthroplasty for Other Indications: Oncologic Resection and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002062",
+          "canonicalId": "6002062",
+          "extractable": true,
+          "score": 52.136,
+          "snippet": "proximal femur replacement with the use of heavy, nonabsorbable suture or wire after final implant insertion. En bloc resection of the proximal femur is performed for extensive metastatic destruction of the proximal femur or if the proximal femur must be resected for sarcoma. A cemented stem proximal femur replacement"
+        },
+        {
+          "id": "6004043",
+          "title": "Ewing Sarcoma/Primitive Neuroectodermal Tumor",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004043",
+          "canonicalId": "6004043",
+          "extractable": true,
+          "score": 50.57,
+          "snippet": "Ewing sarcoma/primitive neuroectodermal tumors. Describe treatment options for Ewing sarcoma /primitive neuroectodermal tumors. Pathophysiology/Pathoanatomy Overview     NOTES SEND FEEDBACK 9/3/26, 4:06 PM AAOS | Ewing Sarcoma/Primitive Neuroectodermal Tumor https://rock.aaos.org/coursecontent.aspx?id=6004043 1/16"
+        },
+        {
+          "id": "510000518",
+          "title": "Chondrogenic Lesions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000518",
+          "canonicalId": "510000518",
+          "extractable": true,
+          "score": 41.423,
+          "snippet": "12/35 Grade 1, appendicular skeleton: curettage, adjuvant treatment options, cementing, internal fixation if necessary Grade 1, axial skeleton: wide resection Grade 2: wide resection Grade 3: wide resection Dedifferentiated chondrosarcoma: wide resection; chemotherapy also may be used, with the regimen depending on th"
+        },
+        {
+          "id": "510000564",
+          "title": "Soft-Tissue Sarcoma Subtypes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000564",
+          "canonicalId": "510000564",
+          "extractable": true,
+          "score": 41.149,
+          "snippet": "and alveolar associated with poorest survival rates. Large tumor size Higher grade Metastases at presentation Age older than 35 years Staging Given potential lymph node and bone marrow involvement, staging should include resectability, evaluation of regional lymph nodes (with consideration of sentinel lymph node biops"
+        },
+        {
+          "id": "6004037",
+          "title": "Presentation and Evaluation of Bone and Soft-Tissue Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004037",
+          "canonicalId": "6004037",
+          "extractable": true,
+          "score": 40.37,
+          "snippet": "highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Describe the typical presentation of a patient with a benign or malignant bone lesion. Discuss the workup for bone lesions based on patient presentation. Describe the typical presentation of a patient with a benign or malignant soft-t"
+        },
+        {
+          "id": "6001189",
+          "title": "Proximal Third Femur Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001189",
+          "canonicalId": "6001189",
+          "extractable": true,
+          "score": 40.345,
+          "snippet": "proximal third femur fractures and understand their relevance with regard to management. Determine the indications and surgical treatment options for geriatric femoral neck fractures, intertrochanteric femur fractures, and subtrochanteric femur fractures. Analyze commonly discussed aspects of the surgical management o"
+        },
+        {
+          "id": "6002073",
+          "title": "Presentation of Bone Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002073",
+          "canonicalId": "6002073",
+          "extractable": true,
+          "score": 39.327,
+          "snippet": "based on patient age, body region, and bone location. Clinical Presentation Overview The clinical presentation of bone tumors is highly variable, with some patients presenting with an incidentally identified lesion and other patients presenting with a history of pain or a palpable mass. Patient History     NOTES S"
+        },
+        {
+          "id": "510000583",
+          "title": "Musculoskeletal Malignancies and Limb Salvage",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000583",
+          "canonicalId": "510000583",
+          "extractable": true,
+          "score": 36.603,
+          "snippet": "to stage other tumors and predict the response to chemotherapy (potentially guiding the selection of proper margins of resection). Biopsy  Biopsy This is the final step in the diagnostic workup of musculoskeletal tumors. Imaging studies should be obtained before biopsy and may guide the planning of the biopsy. Biopsy"
+        },
+        {
+          "id": "510000561",
+          "title": "Radiation Therapy: Bone Sarcoma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000561",
+          "canonicalId": "510000561",
+          "extractable": true,
+          "score": 35.849,
+          "snippet": "therapy, in Biermann JS, Siegel GW, eds: Orthopedic Knowledge Update: Musculoskeletal Tumors, ed 4. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2021, pp 83-96.) Figure 3 Axial CT scan of the scapula of a patient with Ewing sarcoma shows radiation therapy treatment planning. The patient underwent surgical r"
+        },
+        {
+          "id": "6004038",
+          "title": "Imaging of Musculoskeletal Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004038",
+          "canonicalId": "6004038",
+          "extractable": true,
+          "score": 35.313,
+          "snippet": "of management, and extend disease-free survival is an important component of oncology. The specific imaging modalities depend on the location of the primary tumor and the sites of metastatic spread. Radiographs for local recurrence after primary bone tumor resection MRI with contrast for local recurrence after resectio"
+        }
+      ]
+    },
+    {
+      "noteId": "ba41404e-0cca-4c57-8170-874515b18cd9",
+      "noteVersionId": "ea2c49e5-6e5a-41bd-ac68-8896da841f4d",
+      "stableGuid": "C3b-n@U;+H",
+      "contentChecksum": "244856b2143e697daaa0c492acdedf209d8bac4f79af5e65caa5695207a37975",
+      "deckPath": "SnapOrtho",
+      "front": "Morbid obesity is a risk factor for “ultra-low energy” knee dislocations with activities of daily living .",
+      "extra": "",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Knee_Dislocation",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "Morbid obesity is a risk factor for “ultra-low energy” knee dislocations with activities of daily living . knee dislocation trauma",
+      "candidates": [
+        {
+          "id": "510000536",
+          "title": "Knee Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000536",
+          "canonicalId": "510000536",
+          "extractable": true,
+          "score": 43.712,
+          "snippet": "the mechanism of injury; however, clinicians should maintain a high level of suspicion for knee dislocation in patients describing subluxation events. SEND FEEDBACK 9/3/26, 4:31 PM AAOS | Knee Dislocations https://rock.aaos.org/coursecontent.aspx?id=510000536 21/43 Clinicians also should be aware of ultra-low–velocity"
+        },
+        {
+          "id": "6004072",
+          "title": "Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004072",
+          "canonicalId": "6004072",
+          "extractable": true,
+          "score": 30.411,
+          "snippet": "J Shoulder Elbow Surg 2013;22[6]:775-781.) Posterior Dislocation SEND FEEDBACK 9/4/26, 9:35 AM AAOS | Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability https://rock.aaos.org/coursecontent.aspx?id=6004072 18/26 Posterior SCJ subluxations and dislocations are orthopaedic emergencies requiring a complet"
+        },
+        {
+          "id": "6001070",
+          "title": "Ligamentous Injuries of the Knee: Multiligamentous Knee Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001070",
+          "canonicalId": "6001070",
+          "extractable": true,
+          "score": 29.134,
+          "snippet": "knee dislocations may be a challenge, and some knee dislocations may be misdiagnosed because approximately 50% are reported to reduce before presentation.3 Historically, knee dislocations have been associated with high-energy trauma, such as motor vehicle collisions, falls from height, and farm and industry injuries."
+        },
+        {
+          "id": "510000524",
+          "title": "Congenital Dislocation of the Knee and Patella",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000524",
+          "canonicalId": "510000524",
+          "extractable": true,
+          "score": 28.362,
+          "snippet": "syndromic congenital knee dislocations tend to be more severe than idiopathic congenital knee dislocations,4 and bilateral dislocations suggest a syndromic or neuromuscular etiology. Natural History SEND FEEDBACK 9/3/26, 7:45 AM AAOS | Congenital Dislocation of the Knee and Patella https://rock.aaos.org/coursecontent."
+        },
+        {
+          "id": "6002099",
+          "title": "Hip Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002099",
+          "canonicalId": "6002099",
+          "extractable": true,
+          "score": 25.325,
+          "snippet": "by high- energy trauma. Substantial force is required to dislocate the femoral head from the acetabulum, and associated injuries are common. Traumatic hip dislocation can be divided into simple and complex dislocations. Simple dislocations do not have an associated fracture, whereas complex dislocations occur in combi"
+        },
+        {
+          "id": "6002007",
+          "title": "Risk Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002007",
+          "canonicalId": "6002007",
+          "extractable": true,
+          "score": 24.948,
+          "snippet": "the business world, risk management often is defined as measures taken by a company or organization to identify and minimize actions that may lead to reduced success.1 Risk management may include complex tools for risk identification and analysis with the ultimate goal of risk reduction.2 Effective risk management str"
+        },
+        {
+          "id": "510000510",
+          "title": "Postoperative Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000510",
+          "canonicalId": "510000510",
+          "extractable": true,
+          "score": 23.496,
+          "snippet": "and disorders affecting muscle strength or cognitive function contribute to an increased risk for dislocation after THA.1 Leading surgical factors that affect postoperative instability include surgical approach, component selection and positioning, impingement, and surgeon experience.7 Any factor that increases the ri"
+        },
+        {
+          "id": "6003018",
+          "title": "Amputations in Trauma Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003018",
+          "canonicalId": "6003018",
+          "extractable": true,
+          "score": 23.186,
+          "snippet": "1.6 million people are living in the United States with limb loss, and although only 16% of annual amputations are the result of trauma, more than 45% of those living with an amputation have it because of trauma.3 This is because the population that sustains amputations from trauma typically is young. Only 8% of indiv"
+        },
+        {
+          "id": "6001032",
+          "title": "Nonarthroplasty Management of Knee Osteoarthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001032",
+          "canonicalId": "6001032",
+          "extractable": true,
+          "score": 22.227,
+          "snippet": "radiographically detectable osteoarthritis. Osteoarthritis of the knee is multifactorial, associated with increased age and obesity, and may result from primary or secondary causes. Knowledge of how to manage osteoarthritis of the knee is important for multiple reasons.  Osteoarthritis of the Knee Osteoarthritis of t"
+        },
+        {
+          "id": "6001078",
+          "title": "Thoracic and Lumbar Fractures and Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001078",
+          "canonicalId": "6001078",
+          "extractable": true,
+          "score": 21.514,
+          "snippet": "industrial, bicyclist injuries).4 Risk Factors Thoracolumbar trauma in young patients typically is caused by high-energy trauma. Conversely, thoracolumbar trauma in elderly patients usually is sustained during low-energy trauma. Osteopenia and osteoporosis are major risk factors for vertebral compression fractures in"
+        },
+        {
+          "id": "510000573",
+          "title": "Fractures and Dislocations of the Carpus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000573",
+          "canonicalId": "510000573",
+          "extractable": true,
+          "score": 20.244,
+          "snippet": "patients in whom a scaphoid fracture is suspected is low (approximately 5% in the United States and 15% in the Netherlands), this may lead to a low Bayes adjusted positive predictive values, even for a very sensitive and specific test. SEND FEEDBACK 9/3/26, 4:12 PM AAOS | Fractures and Dislocations of the Carpus https"
+        },
+        {
+          "id": "510000552",
+          "title": "Biomechanics of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000552",
+          "canonicalId": "510000552",
+          "extractable": true,
+          "score": 20.01,
+          "snippet": "angular and linear motions occur about all six degrees of freedom of the joint during activities of daily living. In general, the motion pattern is activity specific. Ligaments and anatomic surface features provide the constraints that define the envelope of knee motion during various activities. Studies1-3show that r"
+        }
+      ]
+    },
+    {
+      "noteId": "45512818-1c38-4d8d-b0ed-068e64a81e2f",
+      "noteVersionId": "dba11d21-fc17-4c43-ae16-65b15a6c85d5",
+      "stableGuid": "c3o!id9eSM",
+      "contentChecksum": "bea3ffba9ea8498de8a17880b22369e32e70e56de4c0886a1e0cf94997291d73",
+      "deckPath": "SnapOrtho",
+      "front": "What are the two (2) classification systems for pelvic ring injuries ? Young-Burgess Classification Tile Classification",
+      "extra": "",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Pelvis",
+        "SnapOrtho::Anatomy::Pelvis::Osteology",
+        "SnapOrtho::Anatomy::Pelvis::Osteology::Pelvis",
+        "SnapOrtho::Diagnosis::Pelvic_Ring_Injury",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "What are the two (2) classification systems for pelvic ring injuries ? Young-Burgess Classification Tile Classification pelvis osteology pelvic ring injury trauma",
+      "candidates": [
+        {
+          "id": "6001082",
+          "title": "Pelvic Ring Fractures: Evaluation and Acute Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001082",
+          "canonicalId": "6001082",
+          "extractable": true,
+          "score": 61.446,
+          "snippet": "fracture and joint disruptions observed with an injury pattern. Tile classification Tile type A: Injuries are rotationally and vertically stable and include avulsion injuries that do not affect the pelvic ring, nondisplaced fractures of the pelvic ring, and isolated transverse fractures of the sacrum. Tile type B: Inj"
+        },
+        {
+          "id": "6004093",
+          "title": "Pelvis Fractures: Definitive Management and Outcomes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004093",
+          "canonicalId": "6004093",
+          "extractable": true,
+          "score": 33.343,
+          "snippet": "the usefulness of the Tile classification system and the Young-Burgess classification system in predicting stability of the pelvic ring. Discuss the role of an examination under anesthesia with regard to determining pelvic ring stability. Describe the treatment options available for stabilization of various anterior a"
+        },
+        {
+          "id": "510000580",
+          "title": "Pelvic and Hip Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000580",
+          "canonicalId": "510000580",
+          "extractable": true,
+          "score": 32.717,
+          "snippet": "ctures with skeletal maturation: Implications for classification and management. J Pediatr Orthop 2002;22[1]:22-26.) Pediatric pelvic ring injuries are commonly described using the Torode and Zieg classification system.28 As a child approaches skeletal maturity, adult classification systems are used. The Tile classific"
+        },
+        {
+          "id": "6001055",
+          "title": "Ligament Injuries: Musculoskeletal Conditions and Injuries in the Young Athlete",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001055",
+          "canonicalId": "6001055",
+          "extractable": true,
+          "score": 28.467,
+          "snippet": "injury-risk profiling. Injury prevention strategies also promote a bent-knee landing style. Associated Injuries Meniscal injuries The incidence and severity of meniscal tears increase with time if ACL injuries are not reconstructed. Cartilage injuries Damage to the cartilage increases with time if ACL injuries are not"
+        },
+        {
+          "id": "6003016",
+          "title": "Evaluation of the Trauma Patient",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003016",
+          "canonicalId": "6003016",
+          "extractable": true,
+          "score": 26.624,
+          "snippet": "the use of a pelvic sheet or binder for volume-expanding pelvic ring disruption. Extremity trauma Bleeding associated with fractures may be life threatening. Circumferential pelvic compression with the use of pelvic binders or sheets currently is recommended for patients in whom pelvic ring disruption and shock are su"
+        },
+        {
+          "id": "510000589",
+          "title": "Imaging of the Hip and Pelvis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000589",
+          "canonicalId": "510000589",
+          "extractable": true,
+          "score": 26.204,
+          "snippet": "to identify structural anatomy and pathoanatomy, degenerative changes, and femoroacetabular joint congruency. Weight-bearing radiographs allow for analysis of the impact of body weight and upright alignment on hip and pelvic anatomy. The main radiographic views include AP pelvis and lateral views (Resource 1). AP Pelv"
+        },
+        {
+          "id": "6000045",
+          "title": "Athletic Pubalgia and Core Muscle Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000045",
+          "canonicalId": "6000045",
+          "extractable": true,
+          "score": 24.465,
+          "snippet": "pain syndromes Differentiate athletic pubalgia and core muscle injury from intra-articular hip pathology. Identify potential pathologies contributing to groin pain syndromes. Identify treatment methods for athletic pubalgia and core muscle injuries. Pathophysiology/Pathoanatomy Overview Common names: sports hernia, sp"
+        },
+        {
+          "id": "6002100",
+          "title": "Femoral Neck Fractures in Young Adults",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002100",
+          "canonicalId": "6002100",
+          "extractable": true,
+          "score": 23.323,
+          "snippet": "characteristics of femoral neck fractures in young adults. Describe classification systems for femoral neck fractures. Explain methods of reduction and fixation of femoral neck fractures in young adults based on their unique fracture patterns. Review the pathophysiology and management of complications associated with"
+        },
+        {
+          "id": "510000579",
+          "title": "Pediatric Spine Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000579",
+          "canonicalId": "510000579",
+          "extractable": true,
+          "score": 23.132,
+          "snippet": "devastating injury greatly associated with nerve root, spinal cord, and/or cauda equina injury. Associated Injuries 40% to 65% of patients with spinal trauma have associated injuries.4,5 The most frequent associated injuries include abdominal injuries, thoracic injuries, head injuries, and long bone fractures. Chance"
+        },
+        {
+          "id": "6001040",
+          "title": "Surgical Management of Pelvic Metastatic Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001040",
+          "canonicalId": "6001040",
+          "extractable": true,
+          "score": 21.538,
+          "snippet": "Metastasis to bone often originates from breast, prostate, thyroid, renal, and lung carcinomas. Classification Systems Harrington Classification System Type I: contained acetabular defects without loss of bony integrity2 (Table 1) Table 1 Classification Systems to Guide Reconstructive Techniques for Periacetabular Bon"
+        },
+        {
+          "id": "6002011",
+          "title": "Bone Loss Classification: Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002011",
+          "canonicalId": "6002011",
+          "extractable": true,
+          "score": 20.397,
+          "snippet": "the posterior column. If this bone is questionable, a three-dimensional model can be created to provide additional detail. Classification of Bone Deficiency Acetabulum American Academy of Orthopaedic Surgeons classification system (Figure 1; Resource 1) Type 1, segmental; type 2, cavitary; type 3, combined segmental a"
+        },
+        {
+          "id": "510000576",
+          "title": "Hip Conditions in the Young Athlete",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000576",
+          "canonicalId": "510000576",
+          "extractable": true,
+          "score": 19.821,
+          "snippet": "Hip Conditions in the Young Athlete https://rock.aaos.org/coursecontent.aspx?id=510000576 4/27  Risk Factors for Hip and Groin Injuries in Athletes Multiple meta-analyses have investigated the risk of athletic groin injury.7,9 Overwhelming support suggests that inadequate rehabilitation and early return from injury i"
+        }
+      ]
+    },
+    {
+      "noteId": "50ac6559-48fc-4704-ac32-e52a0f32192d",
+      "noteVersionId": "95ac0505-4d46-44b3-9d5b-c847eb26847d",
+      "stableGuid": "c3xAN*,w<@",
+      "contentChecksum": "60b1d4f1346a75f16a68a85ed2e1d7185f716645939d34fbc38139d8c543c855",
+      "deckPath": "SnapOrtho",
+      "front": "The Hawkins sign can be seen following talar neck fracture 6-8 weeks after the fracture on mortise radiographs. This is a subchondral lucency that indicates intact vasculature with resorption of subchondral bone .",
+      "extra": "*Positive Hawkins sign = low likelihood of developing osteonecrosis",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Talar_Neck_Fractures",
+        "SnapOrtho::Specialty::Foot_Ankle",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "The Hawkins sign can be seen following talar neck fracture 6-8 weeks after the fracture on mortise radiographs. This is a subchondral lucency that indicates intact vasculature with resorption of subchondral bone . *Positive Hawkins sign = low likelihood of developing osteonecrosis talar neck fractures foot ankle trauma",
+      "candidates": [
+        {
+          "id": "510000546",
+          "title": "Ankle and Foot Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000546",
+          "canonicalId": "510000546",
+          "extractable": true,
+          "score": 50.943,
+          "snippet": "ankle radiographs of the ankle should be evaluated for medial clear space and syndesmotic widening, malleolar fracture, lateral process of the talus fracture, avulsion fracture, and talar osteochondral fracture (Figure 5; Resource 2). Lateral views of the ankle and foot may reveal dorsal talar avulsion fractures, ante"
+        },
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "canonicalId": "6004071",
+          "extractable": true,
+          "score": 48.114,
+          "snippet": "Pediatric Foot and Ankle Trauma https://rock.aaos.org/coursecontent.aspx?id=6004071 25/70 characterizing the fracture and aid in surgical planning. (Courtesy of Julia Sanders, MD, Denver, CO, and Aaron Brandt, MD, Denver, CO.) Injury Classification Categorized as avulsion fractures, talar neck fractures, or talar body"
+        },
+        {
+          "id": "6004057",
+          "title": "Rotational Fractures of the Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004057",
+          "canonicalId": "6004057",
+          "extractable": true,
+          "score": 43.192,
+          "snippet": "ents with an acute ankle fracture; however, it may be useful if concern for a pathologic fracture of the ankle exists. Differential Diagnosis  Differential Diagnosis In general, ankle fracture diagnosis is clear based on clinical examination and plain radiographs. In the absence of obvious ankle fracture on plain radi"
+        },
+        {
+          "id": "6000001",
+          "title": "Acute Lateral Ankle Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000001",
+          "canonicalId": "6000001",
+          "extractable": true,
+          "score": 41.444,
+          "snippet": "is (Table 3) Syndesmotic injury Ankle fracture Subtalar joint instability Table 3 Ankle Injury: Differential Diagnosis Lateral talar process fracture Fifth metatarsal base fracture Anterior process fracture of the calcaneus Soft-tissue impingement lesion Bone impingement lesion Peroneal tendon pathology (tear or tenode"
+        },
+        {
+          "id": "510000604",
+          "title": "Osteonecrosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000604",
+          "canonicalId": "510000604",
+          "extractable": true,
+          "score": 41.223,
+          "snippet": "n proposed as potential mechanisms for the development of subchondral fracture and collapse.  Pathogenesis of Subchondral Fracture and Collapse A large animal study showed an accumulation of microfracture or microcracks in the subchondral bone because of alternation of the mechanical and material properties of the nec"
+        },
+        {
+          "id": "510000644",
+          "title": "Fractures of the Talus: Foot Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000644",
+          "canonicalId": "510000644",
+          "extractable": true,
+          "score": 30.795,
+          "snippet": "of osteonecrosis postoperatively, many surgeons rely on the Hawkins sign. The Hawkins sign refers to the relative osteopenia in the subchondral area of the talar body observed on mortise radiographs of the ankle at 6 to 8 weeks postoperatively. Observing lucency of the bone deep to the subchondral line denotes revascu"
+        },
+        {
+          "id": "6004021",
+          "title": "Arthroplasty and Nonarthroplasty Solutions for Osteonecrosis of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004021",
+          "canonicalId": "6004021",
+          "extractable": true,
+          "score": 30.346,
+          "snippet": "is No radiographic evidence (ARCO stage I) Stage 2: appositional bone formation and bone marrow calcification After several weeks Radiographic changes of radiodensity and osteosclerosis (ARCO stage II) Stage 3: osteoclastic resorption Weakens trabeculae Subchondral fracture Radiographic crescent sign and subchondral co"
+        },
+        {
+          "id": "6000007",
+          "title": "Osteochondral Lesions of the Talus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000007",
+          "canonicalId": "6000007",
+          "extractable": true,
+          "score": 30.332,
+          "snippet": "AAOS | Osteochondral Lesions of the Talus https://rock.aaos.org/coursecontent.aspx?id=6000007 9/28 involvement is subtle. Radiographs may demonstrate fragmentation of the subchondral bone, cystic changes deep to the subchondral bone, or a displaced osteochondral fragment (Figure 2). Figure 2 Mortise radiograph of an an"
+        },
+        {
+          "id": "6004025",
+          "title": "Aseptic Loosening After Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004025",
+          "canonicalId": "6004025",
+          "extractable": true,
+          "score": 28.014,
+          "snippet": "Aseptic Loosening After Total Hip Arthroplasty https://rock.aaos.org/coursecontent.aspx?id=6004025 4/16 load will experience increased bone anabolism and remodeling. Conversely, areas experiencing less force will undergo catabolism. Therefore, bone resorption occurs in patients in whom the bone does not undergo a mech"
+        },
+        {
+          "id": "6001013",
+          "title": "Calcaneal Stress Fracture",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001013",
+          "canonicalId": "6001013",
+          "extractable": true,
+          "score": 26.666,
+          "snippet": "response to displaced fracture.1,8 Healing is via endochondral bone formation.9 Risk Factors Female sex Military recruits High-level or escalating athletic activity Tarsal coalition Pes cavus deformity Low bone mineral density SEND FEEDBACK 9/3/26, 7:35 AM AAOS | Calcaneal Stress Fracture https://rock.aaos.org/coursec"
+        },
+        {
+          "id": "6004048",
+          "title": "Metastatic Bone Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004048",
+          "canonicalId": "6004048",
+          "extractable": true,
+          "score": 26.137,
+          "snippet": "iable supra- acetabular iliac bone available for cage reconstruction options THA with antiprotrusio acetabular cage and Steinmann pins Class V: minimal bony integrity remains in the acetabular or supra-acetabular locations Resection arthroplasty; saddle prosthesis Metastatic Acetabular Classification System Type 1: dom"
+        },
+        {
+          "id": "6002014",
+          "title": "Osteonecrosis: Preiser Disease and Kienböck Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002014",
+          "canonicalId": "6002014",
+          "extractable": true,
+          "score": 24.794,
+          "snippet": "staging system intended to facilitate decision making: Stage I: normal radiographs, positive bone scan Stage II: increased density of proximal pole and generalized osteoporosis Stage III: fragmentation of proximal pole Stage IV: carpal collapse, osteoarthritis Kalainov et al3 distinguished complete osteonecrosis (type"
+        }
+      ]
+    },
+    {
+      "noteId": "51576897-49a1-42fd-bd93-aa3719171238",
+      "noteVersionId": "9a1101ab-8327-465f-879a-f0a83d050fbd",
+      "stableGuid": "C4DuvHWPt&",
+      "contentChecksum": "1750cc22c5abb7adc05003b1f160671156e9e7d67b39fbbd3a257459da738b9e",
+      "deckPath": "SnapOrtho",
+      "front": "How long should cultures be held if there is concern for Propionibacterium acnes infection ? 14-28 days",
+      "extra": "Anaerobe = Slow growing",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "How long should cultures be held if there is concern for Propionibacterium acnes infection ? 14-28 days Anaerobe = Slow growing basic science",
+      "candidates": [
+        {
+          "id": "6000021",
+          "title": "Periprosthetic Joint Infection",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000021",
+          "canonicalId": "6000021",
+          "extractable": true,
+          "score": 38.796,
+          "snippet": "ESR and CRP levels also are less reliable in patients in whom an acute postoperative infection is suspected. CRP levels normalize within 21 days postoperatively, whereas 90 days may be required for ESR to normalize. Continued high CRP levels and ESR should elicit concern for possible infection. ESR and CRP levels also"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "canonicalId": "510000503",
+          "extractable": true,
+          "score": 31.677,
+          "snippet": "fractured ceramic femoral head or liner, a ceramic-on-ceramic or ceramic-on-polyethylene bearing should be used. Metal-on-polyethylene bearings should be avoided to prevent third-body wear and femoral head erosion. SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Total Hip Arthroplasty: Bearing Surfaces Basic Science https://rock"
+        },
+        {
+          "id": "510000534",
+          "title": "Diagnosis and Management of Fracture-Related Infection",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000534",
+          "canonicalId": "510000534",
+          "extractable": true,
+          "score": 31.223,
+          "snippet": "infection and necessary surgical débridement. Types of Fracture-Related Infection FRI is inclusive of postoperative infection, infection associated with nonunion, and osteomyelitis. Postoperative Infection Superficial infection: involving only the skin and subcutaneous tissues Deep infection: involving muscle and bone"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "canonicalId": "6001061",
+          "extractable": true,
+          "score": 30.434,
+          "snippet": "rupture of the long head of the biceps lead to superior migration of the humeral head and acromial impingement, causing additional disruption of the rotator cuff. The loss of stabilization provided by the SEND FEEDBACK 9/4/26, 10:26 AM AAOS | Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes https"
+        },
+        {
+          "id": "6000024",
+          "title": "Complications After Total Knee Arthroplasty: Periprosthetic Joint Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000024",
+          "canonicalId": "6000024",
+          "extractable": true,
+          "score": 28.845,
+          "snippet": "9/3/26, 7:44 AM AAOS | Complications After Total Knee Arthroplasty: Periprosthetic Joint Infections https://rock.aaos.org/coursecontent.aspx?id=6000024 3/33 Type Presentation Definition Management I Acute postoperative infection Acute infection within first month Attempted débridement and prosthetic retention II Late"
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "canonicalId": "510000618",
+          "extractable": true,
+          "score": 23.745,
+          "snippet": " Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing  CORE May 18, 2026 James Gregory, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Assess the natural progression of rotator cuff disease. Understand the b"
+        },
+        {
+          "id": "6001019",
+          "title": "Safety, Infection Prevention, and Antibiotic Prophylaxis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001019",
+          "canonicalId": "6001019",
+          "extractable": true,
+          "score": 21.471,
+          "snippet": "the perioperative setting. In patients with signs and symptoms of a urinary tract infection, treatment should be prioritized and surgical treatment should be postponed if feasible because risks of infection may increase.8 In patients with an acute infection, elective orthopaedic surgery can be reasonably postponed unt"
+        },
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "canonicalId": "6002003",
+          "extractable": true,
+          "score": 20.453,
+          "snippet": "s with sickling hemoglobinopathies in the United States. Shoulder surgery poses an increased risk of infection with C acnes, a slow-growing gram- positive rod. C acnes is the most common pathogen in periprosthetic shoulder infection. Foot puncture wounds are predisposed to infection by Pseudomonas. Multidrug resistant"
+        },
+        {
+          "id": "6000012",
+          "title": "Midfoot Diabetes: Ulceration and Infection",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000012",
+          "canonicalId": "6000012",
+          "extractable": true,
+          "score": 19.66,
+          "snippet": "Pretest Discover What You Know Learning Objectives Understand the pathophysiology of diabetic foot ulceration and infection. Understand how to evaluate and diagnose a patient with a diabetic foot ulceration and infection and how to differentiate infection from arthropathy. Apply major methods of nonsurgical management"
+        },
+        {
+          "id": "6001052",
+          "title": "Septic Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001052",
+          "canonicalId": "6001052",
+          "extractable": true,
+          "score": 15.362,
+          "snippet": "adjacent pathology  Diagnostic Testing Concern for septic arthritis should be met with early laboratory and imaging studies. Given the potential devastating outcomes and broad differential diagnosis, having all the appropriate information may help lead to correct diagnosis and management. Blood tests should include b"
+        },
+        {
+          "id": "6001163",
+          "title": "Tumor and Tumor-like Conditions of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001163",
+          "canonicalId": "6001163",
+          "extractable": true,
+          "score": 15.225,
+          "snippet": "of a theoretic risk of propagating tumor cells. A longitudinal incision along the anticipated limb salvage approach through a single compartment should be used to avoid seeding additional compartments with tumor cells. Take care with hemostasis. Although not routinely necessary, surgeons should consider acquiring cult"
+        },
+        {
+          "id": "6000056",
+          "title": "Postoperative Spine Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000056",
+          "canonicalId": "6000056",
+          "extractable": true,
+          "score": 14.309,
+          "snippet": "5:48 PM AAOS | Postoperative Spine Infections https://rock.aaos.org/coursecontent.aspx?id=6000056 16/27 If infection is suspected, blood cultures should be drawn. If the culture is positive, the organism typically is concordant with that causing the wound infection. Superficial cultures are not helpful; however, early"
+        }
+      ]
+    },
+    {
+      "noteId": "8d8901e7-1199-4ac2-98bd-b563eee09370",
+      "noteVersionId": "b7ab4d9b-5602-4beb-b6ea-65b45248de26",
+      "stableGuid": "C6G[ELT$AV",
+      "contentChecksum": "7b572e194c17e3b75d523c58a6678d7d074549f8350fd800f2fd260dc9f2616a",
+      "deckPath": "SnapOrtho",
+      "front": "What is the difference between a complex and a simple hip dislocation ? Simple - no associated fracture of acetabulum/proximal femur",
+      "extra": "",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Pelvis",
+        "SnapOrtho::Anatomy::Pelvis::Osteology",
+        "SnapOrtho::Anatomy::Pelvis::Osteology::Acetabulum",
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Joints",
+        "SnapOrtho::Anatomy::Thigh_Hip::Joints::Hip_Joint",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Proximal_Femur",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "What is the difference between a complex and a simple hip dislocation ? Simple - no associated fracture of acetabulum/proximal femur pelvis osteology acetabulum thigh hip joints hip joint proximal femur trauma",
+      "candidates": [
+        {
+          "id": "6002012",
+          "title": "Postoperative Periprosthetic Fractures of the Femur and Acetabulum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002012",
+          "canonicalId": "6002012",
+          "extractable": true,
+          "score": 40.542,
+          "snippet": "or acetabulum fractures. Discuss the classification of periprosthetic femur and acetabulum fractures and the subtypes of each fracture. Explain how fracture morphology may dictate management. Recognize the extent of treatment options and understand the principles of fixation that guide the management of periprosthetic"
+        },
+        {
+          "id": "510000589",
+          "title": "Imaging of the Hip and Pelvis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000589",
+          "canonicalId": "510000589",
+          "extractable": true,
+          "score": 39.623,
+          "snippet": "high femoral neck-shaft angle (coxa valga) may be observed in patients with a dysplastic proximal femur. Lateralization of the hip center and proximal femur deformity may cause a break in the Shenton line. Abnormalities in acetabular and proximal femur version commonly are associated with hip dysplasia. Asymmetric vis"
+        },
+        {
+          "id": "6001189",
+          "title": "Proximal Third Femur Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001189",
+          "canonicalId": "6001189",
+          "extractable": true,
+          "score": 38.917,
+          "snippet": "y is associated with a lower dislocation rate than total hip arthroplasty41 (Resource 4). Total hip arthroplasty may be performed in physiologically younger, more active patients who are likely to outlive a hemiarthroplasty or those with preexisting hip arthritis.42,43 Total hip arthroplasty performed to manage a femor"
+        },
+        {
+          "id": "6004095",
+          "title": "Surgical Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004095",
+          "canonicalId": "6004095",
+          "extractable": true,
+          "score": 37.375,
+          "snippet": "Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives List the indications for surgical hip dislocation in patients with a fracture. Review the surgical anatomy and technique for surgical hip dislocation. Discuss complications of surgical hip dislocation. Introduction Surgical hip d"
+        },
+        {
+          "id": "6004072",
+          "title": "Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004072",
+          "canonicalId": "6004072",
+          "extractable": true,
+          "score": 35.059,
+          "snippet": "the sternoclavicular joint. Outline appropriate imaging modalities to aid in the diagnosis of a sternoclavicular joint dislocation. Detail closed and open reduction techniques for the management of a sternoclavicular joint dislocation. Pathophysiology/Pathoanatomy     NOTES SEND FEEDBACK 9/4/26, 9:35 AM AAOS | Sho"
+        },
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "canonicalId": "510000535",
+          "extractable": true,
+          "score": 34.927,
+          "snippet": "pelvis and lower limb, thigh femoral nerve. StatPearls Treasure Island, FL, November 18, 2022. Available at: https://www.ncbi.nlm.nih.gov/books/NBK556065/. Accessed February 3, 2023.) Tendons and Musculature The musculature about the hip contributes to fracture displacement patterns and must be considered in the reduc"
+        },
+        {
+          "id": "510000652",
+          "title": "Shoulder Trauma: Proximal Humerus Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000652",
+          "canonicalId": "510000652",
+          "extractable": true,
+          "score": 31.555,
+          "snippet": "proximal humerus and common fracture patterns. Evaluate and diagnose patients with proximal humerus fractures. Understand treatment options for the management of proximal humerus fractures and determine how patient factors and fracture patterns determine optimal management. Understand the risks, advantages, and compli"
+        },
+        {
+          "id": "510000510",
+          "title": "Postoperative Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000510",
+          "canonicalId": "510000510",
+          "extractable": true,
+          "score": 29.507,
+          "snippet": "and surgical factors that increase the risk of hip dislocation after total hip arthroplasty. Assess spinopelvic parameters in patients undergoing total hip arthroplasty. Discuss the evaluation and management of hip dislocation after total hip arthroplasty. History  History Instability and dislocation after primary to"
+        },
+        {
+          "id": "6002099",
+          "title": "Hip Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002099",
+          "canonicalId": "6002099",
+          "extractable": true,
+          "score": 27.777,
+          "snippet": "dislocation of the hip is an orthopaedic emergency typically caused by high- energy trauma. Substantial force is required to dislocate the femoral head from the acetabulum, and associated injuries are common. Traumatic hip dislocation can be divided into simple and complex dislocations. Simple dislocations do not have"
+        },
+        {
+          "id": "6001084",
+          "title": "Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001084",
+          "canonicalId": "6001084",
+          "extractable": true,
+          "score": 24.635,
+          "snippet": "forces that affect distal femur fracture reduction. Determine distal femur fracture mechanisms of injury and the appropriate assessment and documentation of associated injuries. Compare methods of surgical management of distal femur fractures and apply basic fracture principles. Avoid pitfalls and complications associ"
+        },
+        {
+          "id": "510000524",
+          "title": "Congenital Dislocation of the Knee and Patella",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000524",
+          "canonicalId": "510000524",
+          "extractable": true,
+          "score": 23.062,
+          "snippet": "congenital dislocation of the knee. Recognize the conditions commonly associated with congenital dislocation of the knee and understand how to approach management of concurrent hip and foot conditions. Understand the basic pathoanatomy of congenital dislocation of the patella. Review the basic history and physical exa"
+        },
+        {
+          "id": "510000576",
+          "title": "Hip Conditions in the Young Athlete",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000576",
+          "canonicalId": "510000576",
+          "extractable": true,
+          "score": 22.375,
+          "snippet": "athlete with hip pain. Identify the appropriate imaging studies for the evaluation of an adolescent athlete with hip pain. Review common conditions and treatment options associated with hip pain in adolescent athletes. Discuss outcomes and complications associated with the management of hip conditions in adolescent at"
+        }
+      ]
+    },
+    {
+      "noteId": "4ef3964e-1ad0-42e3-a473-bc2929fd9986",
+      "noteVersionId": "32dc36d3-7eb0-4b6d-9669-d4421af75644",
+      "stableGuid": "c7U<d]y^Xv",
+      "contentChecksum": "8e13c4cb341b00687ef5ed90142aaff687c9827621f9d033fbad76494ce42446",
+      "deckPath": "SnapOrtho",
+      "front": "Plantaris Origin: Lateral femoral supracondylar line Insertion: Calcaneus Nerve: Tibial Action: Plantar flexion",
+      "extra": "",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Foot_Ankle",
+        "SnapOrtho::Anatomy::Foot_Ankle::Osteology",
+        "SnapOrtho::Anatomy::Foot_Ankle::Osteology::Calcaneus",
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology::Femoral_Condyles",
+        "SnapOrtho::Specialty::Foot_Ankle"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "Plantaris Origin: Lateral femoral supracondylar line Insertion: Calcaneus Nerve: Tibial Action: Plantar flexion foot ankle osteology calcaneus leg knee femoral condyles",
+      "candidates": [
+        {
+          "id": "510000645",
+          "title": "Fractures of the Calcaneus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000645",
+          "canonicalId": "510000645",
+          "extractable": true,
+          "score": 45.248,
+          "snippet": "Sural nerve Tibial nerve  Neural Anatomy The most relevant neural anatomy in the calcaneus is the sural nerve, which may transverse the extensile lateral incision proximally and distally. This is an entirely sensory nerve that may form painful neuromas if damaged. In the calcaneal region, the sural nerve typically is"
+        },
+        {
+          "id": "510000530",
+          "title": "Anatomy and Biomechanics of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000530",
+          "canonicalId": "510000530",
+          "extractable": true,
+          "score": 42.929,
+          "snippet": "y from polar vessels.170 Innervation Sciatic (L4 through S3) Tibial nerve Muscular and articular branches about the knee joint Sural nerve Common peroneal nerve: damage leads to footdrop Articular sensory branches Popliteal nerve plexus ® cruciate ligaments Lateral sural cutaneous nerve Femoral (L2 through L4) Anterior"
+        },
+        {
+          "id": "6000008",
+          "title": "Plantar Fasciitis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000008",
+          "canonicalId": "6000008",
+          "extractable": true,
+          "score": 41.881,
+          "snippet": "s to increased strain on the SEND FEEDBACK 9/3/26, 5:49 PM AAOS | Plantar Fasciitis https://rock.aaos.org/coursecontent.aspx?id=6000008 4/23 tension side of the plantar foot, particularly at the plantar fascia, which can break down near its insertion at the plantar medial calcaneus. Natural History Plantar fasciitis of"
+        },
+        {
+          "id": "6000001",
+          "title": "Acute Lateral Ankle Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000001",
+          "canonicalId": "6000001",
+          "extractable": true,
+          "score": 39.661,
+          "snippet": "techniques for the treatment of lateral ankle instability. Overview/Pathophysiology Most lateral ankle sprains occur when the ankle is in a position of plantar flexion and inversion.     NOTES SEND FEEDBACK 9/3/26, 7:10 AM AAOS | Acute Lateral Ankle Instability https://rock.aaos.org/coursecontent.aspx?id=6000001 1"
+        },
+        {
+          "id": "510000546",
+          "title": "Ankle and Foot Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000546",
+          "canonicalId": "510000546",
+          "extractable": true,
+          "score": 39.272,
+          "snippet": "an ankle or foot sports injury. Discuss the surgical and nonsurgical management of common foot and ankle injuries. Outline surgical decision making for ankle and foot injuries. List risk factors associated with common foot and ankle injuries. Review current surgical techniques and outcomes of the management of foot an"
+        },
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "canonicalId": "6004071",
+          "extractable": true,
+          "score": 37.781,
+          "snippet": "lateral radiographs; however, foot and ankle radiographs should be thoroughly reviewed for articular congruity and joint dislocations (Figure 20). Supplemental radiographs, such as Canale views (plantar flexion with pronation of foot) and stress views, can be obtained to evaluate for talar neck and lateral process fra"
+        },
+        {
+          "id": "6000014",
+          "title": "Biomechanics/Gait: Effect of Ankle/Foot Malalignment",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000014",
+          "canonicalId": "6000014",
+          "extractable": true,
+          "score": 32.368,
+          "snippet": "and plantar foot. 1 = peroneal cutaneous nerve, 2 = superficial peroneal nerve branches, 3 = saphenous nerve, 4 = deep peroneal nerve, 5 = sural nerve, 6 = medial plantar nerve, 7 = lateral plantar nerve, 8 = medial calcaneal nerve, 9 = first calcaneal nerve. (Reproduced from Sammarco VJ, Taylor R: Anatomy and biomech"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "canonicalId": "510000641",
+          "extractable": true,
+          "score": 30.102,
+          "snippet": "ews show the cutaneous innervation of the dorsal and plantar foot. 1 = peroneal cutaneous nerve, 2 = superficial peroneal nerve branches, 3 = saphenous nerve, 4 = deep peroneal nerve, 5 = sural nerve, 6 = medial plantar nerve, 7 = lateral plantar nerve, 8 = medial calcaneal nerve, 9 = first calcaneal nerve. (Reproduced"
+        },
+        {
+          "id": "510000643",
+          "title": "Tibial Plafond (Pilon) Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000643",
+          "canonicalId": "510000643",
+          "extractable": true,
+          "score": 28.728,
+          "snippet": "lateral plantar nerve, MCN = medial calcaneal nerve, MPLPN = most posterior lateral plantar nerve, PTA = posterior tibial artery, PTN = posterior tibial nerve. B, The safe zone for proper placement of the posterior tuberosity transcalcaneal pin is shown. The pin is drilled from medial to lateral. The pin starting poin"
+        },
+        {
+          "id": "6001014",
+          "title": "Posterior Tibial Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001014",
+          "canonicalId": "6001014",
+          "extractable": true,
+          "score": 27.137,
+          "snippet": " Posterior Tibial Tendon Disorders  CORE September 08, 2025 Christopher Edward Gross, MD, FAAOS, FAOA (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Review the relevant anatomy of the posterior tibial tendon. Identify the stages of posterior tibial t"
+        },
+        {
+          "id": "6001012",
+          "title": "Gastrocnemius Contracture",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001012",
+          "canonicalId": "6001012",
+          "extractable": true,
+          "score": 26.988,
+          "snippet": "pain compared with only 44% in asymptomatic controls. Anatomy Superficial Posterior Compartment (Tibial Nerve) The gastrocnemius muscle and tendon reside in the superficial posterior compartment of the leg along with the soleus and plantaris muscles and is innervated by the tibial nerve.  Superficial Compartment (Tib"
+        },
+        {
+          "id": "510000586",
+          "title": "Elbow Instability: Lateral Collateral Ligament Complex Insufficiency",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000586",
+          "canonicalId": "510000586",
+          "extractable": true,
+          "score": 26.096,
+          "snippet": "radial collateral ligament (RCL) Origin: anterior to the LUCL on the lateral epicondyle Insertion: blends with the annular ligament fibers Computational models show combined LUCL and lateral RCL ruptures are associated with considerably greater instability than isolated LUCL lesions.10 Accessory lateral collateral lig"
+        }
+      ]
+    },
+    {
+      "noteId": "c0ab7a74-bc18-4d15-9e33-7c66c69804d6",
+      "noteVersionId": "0cdea7b8-7e21-4c77-9268-4f265d20409b",
+      "stableGuid": "c8%%C)ewCL",
+      "contentChecksum": "acb61f34dbbbd0ed2c4b5425f6125269dd69e299d0a8b5b6938664bbec34a9ab",
+      "deckPath": "SnapOrtho",
+      "front": "When performing an ORIF of both bone forearm fractures , which anatomic variable is most important to restore to maximize patients’ functional outcomes ? Radial Bow",
+      "extra": "Schemitsch et al (https://pubmed.ncbi.nlm.nih.gov/1522093/) found that restoration of the normal radial bow was related to the functional outcome. A good functional result (more than 80 percent of normal rotation of the forearm) was associated with restoration of the normal amount and location of the radial bow. Similarly, the recovery of grip strength was associated with restoration of the location of the radial bow toward normal.",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Forearm",
+        "SnapOrtho::Anatomy::Forearm::Osteology",
+        "SnapOrtho::Anatomy::Forearm::Osteology::Radius",
+        "SnapOrtho::Anatomy::Forearm::Osteology::Ulna",
+        "SnapOrtho::Specialty::Hand_Upper_Extremity",
+        "SnapOrtho::Treatment::ORIF"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "When performing an ORIF of both bone forearm fractures , which anatomic variable is most important to restore to maximize patients’ functional outcomes ? Radial Bow Schemitsch et al (https://pubmed.ncbi.nlm.nih.gov/1522093/) found that restoration of the normal radial bow was related to the functional outcome. A good functional result (more than 80 percent of nor forearm osteology radius ulna hand upper extremity orif",
+      "candidates": [
+        {
+          "id": "6004067",
+          "title": "Proximal Radius Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004067",
+          "canonicalId": "6004067",
+          "extractable": true,
+          "score": 59.392,
+          "snippet": "of, etiology of, and risk factors for proximal radius fractures in pediatric patients. Perform an appropriate workup for pediatric patients in whom fracture about the elbow is suspected. Review the surgical and nonsurgical management of radius fractures in pediatric patients. Pathophysiology/Pathoanatomy Overview Most"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "canonicalId": "510000655",
+          "extractable": true,
+          "score": 58.838,
+          "snippet": "ne forearm fractures via plate fixation that involves no complications. Reduced strength in pronation (70% of normal), supination (68% of normal), wrist flexion (84% of normal), wrist extension (63% of normal), and grip (75% of normal) are expected after uncomplicated surgical management of both-bone forearm fractures"
+        },
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "canonicalId": "510000651",
+          "extractable": true,
+          "score": 54.812,
+          "snippet": "the classification of congenital differences in the upper extremity. Perform an appropriate workup of patients with congenital upper extremity differences. Determine the surgical and nonsurgical treatment options for the management of congenital upper extremity differences. Pathophysiology/Pathoanatomy Overview Congen"
+        },
+        {
+          "id": "510000578",
+          "title": "Distal Humerus Physeal Fractures, Pediatric Polytrauma, and Upper Extremity Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000578",
+          "canonicalId": "510000578",
+          "extractable": true,
+          "score": 51.615,
+          "snippet": "in pediatric patients with a supracondylar humerus fracture28 (Resource 2). Outcomes Outcomes after supracondylar humerus fracture management typically are excellent, even in patients with neurologic and vascular injury.  Outcomes SEND FEEDBACK 9/3/26, 4:00 PM AAOS | Distal Humerus Physeal Fractures, Pediatric Polytr"
+        },
+        {
+          "id": "510000566",
+          "title": "Surgical Management of Upper Extremity Bone Metastases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000566",
+          "canonicalId": "510000566",
+          "extractable": true,
+          "score": 45.548,
+          "snippet": "that metastasize to the upper extremity. Review the general treatment strategy and indications for surgical management of upper extremity metastases. Determine the best surgical treatment options for each anatomic location. Introduction Metastatic disease is common in the upper extremities. Of patients with metastatic"
+        },
+        {
+          "id": "510000660",
+          "title": "Radial Head and Neck Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000660",
+          "canonicalId": "510000660",
+          "extractable": true,
+          "score": 44.133,
+          "snippet": "OUTLINE VIEW Pretest Discover What You Know Learning Objectives Understand the common etiology of radial head/neck fractures. Perform appropriate clinical and radiographic assessment of radial head/neck fractures. Determine appropriate indications for the nonsurgical and surgical management of radial head/neck fractur"
+        },
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "canonicalId": "510000535",
+          "extractable": true,
+          "score": 39.434,
+          "snippet": "3). The safest area for screw placement is in the posterior-superior quadrant. Restoration of joint alignment in geriatric patients with a hip fracture is most important for femoral neck fractures managed via arthroplasty. Etiology and Mechanism of Injury Bimodal mechanism of injury Young patients: high-energy mechani"
+        },
+        {
+          "id": "6001057",
+          "title": "Diaphyseal Forearm Fractures, Distal Forearm Fractures, and Monteggia Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001057",
+          "canonicalId": "6001057",
+          "extractable": true,
+          "score": 37.2,
+          "snippet": "Forearm fractures are associated with elbow fractures in 10% to 15% of patients. Etiology/Mechanism of Injury Most forearm shaft fractures result from a fall onto an outstretched hand. Angular and rotational deformities often are present. Associated Injuries SEND FEEDBACK 9/3/26, 3:55 PM AAOS | Diaphyseal Forearm Frac"
+        },
+        {
+          "id": "6003018",
+          "title": "Amputations in Trauma Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003018",
+          "canonicalId": "6003018",
+          "extractable": true,
+          "score": 30.582,
+          "snippet": "AAOS | Amputations in Trauma Patients https://rock.aaos.org/coursecontent.aspx?id=6003018 4/39 Injury Variables Description 3 Contamination embedded in bone, deep soft-tissue, or high- risk environment Bone loss 1 None or minimal 2 Bone missing or devascularized bone fragment 3 Segmental bone loss Reproduced from S"
+        },
+        {
+          "id": "6003019",
+          "title": "Outcomes of Musculoskeletal Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003019",
+          "canonicalId": "6003019",
+          "extractable": true,
+          "score": 28.311,
+          "snippet": "the intervention and outcome is another important distinction in categorizing research studies. Studies that begin collecting data before the outcome has occurred are considered prospective. Researchers first enroll patients in the study and then wait for the outcome to occur. Conversely, retrospective studies are ini"
+        },
+        {
+          "id": "510000646",
+          "title": "Fractures of the Navicular Bone",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000646",
+          "canonicalId": "510000646",
+          "extractable": true,
+          "score": 28.215,
+          "snippet": "bone. Recognize common navicular bone mechanisms of injury and fracture patterns. Become familiar with physical examination findings and imaging studies diagnostic of navicular bone fractures. Implement appropriate treatment options for the management of specific navicular bone fracture types. Pathophysiology/Pathoana"
+        },
+        {
+          "id": "510000656",
+          "title": "Distal Radius Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000656",
+          "canonicalId": "510000656",
+          "extractable": true,
+          "score": 27.676,
+          "snippet": "articular marginal shearing component.23 SEND FEEDBACK 9/3/26, 4:00 PM AAOS | Distal Radius Fractures https://rock.aaos.org/coursecontent.aspx?id=510000656 12/41 Figure 4 Illustrations show the AO Foundation/Orthopaedic Trauma Association classification of distal radius fractures. Type A fractures are extra-articular"
+        }
+      ]
+    },
+    {
+      "noteId": "7a586ffc-4823-4bc4-bad3-973924de5296",
+      "noteVersionId": "5b0820a3-81ca-4960-a82d-8da3500729cb",
+      "stableGuid": "c8<e&!D)Pz",
+      "contentChecksum": "f8d68e5b1125fe6f537a4c15bd8c63492aa4bff591c48d0f6b6339a589f531fb",
+      "deckPath": "SnapOrtho",
+      "front": "What deformity may occur following a distal bicep tendon rupture ? Reverse Popeye deformity",
+      "extra": "",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Elbow",
+        "SnapOrtho::Anatomy::Elbow::Tendons",
+        "SnapOrtho::Anatomy::Elbow::Tendons::Distal_Biceps_Tendon",
+        "SnapOrtho::Diagnosis::Angular_Deformity",
+        "SnapOrtho::Specialty::Shoulder_Elbow"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "What deformity may occur following a distal bicep tendon rupture ? Reverse Popeye deformity elbow tendons distal biceps tendon angular deformity shoulder elbow",
+      "candidates": [
+        {
+          "id": "510000538",
+          "title": "Throwing Shoulder Injuries: Superior Labrum Anterior to Posterior Tears and Proximal Biceps Tendon Lesions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000538",
+          "canonicalId": "510000538",
+          "extractable": true,
+          "score": 35.556,
+          "snippet": "ing to the status of the torn biceps tendon. If less than 25% to 50% of the biceps tendon is involved, the tear and its extension into the tendon are débrided. If 25% to 50% or more of the biceps tendon is involved, biceps tenodesis or tenotomy with labral débridement or repair is indicated. Technique Portals Viewing:"
+        },
+        {
+          "id": "6002110",
+          "title": "Tendons and Ligaments",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002110",
+          "canonicalId": "6002110",
+          "extractable": true,
+          "score": 32.558,
+          "snippet": "stiffness of the tendon; however, recent experimental evidence has disputed this hypothesis. Tendons with SEND FEEDBACK 9/4/26, 9:47 AM AAOS | Tendons and Ligaments https://rock.aaos.org/coursecontent.aspx?id=6002110 3/19 areas of relative avascularity include the supraspinatus tendon, long head of the biceps tendon,"
+        },
+        {
+          "id": "6000038",
+          "title": "Imaging of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000038",
+          "canonicalId": "6000038",
+          "extractable": true,
+          "score": 31.903,
+          "snippet": "the Elbow https://rock.aaos.org/coursecontent.aspx?id=6000038 11/22 Figure 4 Axial fluid-sensitive MRI of an elbow shows the absence of the normal distal biceps insertion onto the radial tuberosity (solid arrow) with surrounding edema in the antecubital fossa, compatible with complete distal biceps rupture. More media"
+        },
+        {
+          "id": "6004083",
+          "title": "Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004083",
+          "canonicalId": "6004083",
+          "extractable": true,
+          "score": 31.096,
+          "snippet": "S | Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes https://rock.aaos.org/coursecontent.aspx?id=6004083 22/36 Week 1 Brace: posterior splint at 90°of elbow flexion ROM: wrist active ROM extension/flexion Elbow postoperative compression dressing 5 to 7 days Exercises Gripping Wrist ROM Shoulder and b"
+        },
+        {
+          "id": "6002020",
+          "title": "Distal Triceps Tendon Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002020",
+          "canonicalId": "6002020",
+          "extractable": true,
+          "score": 30.354,
+          "snippet": "the management of distal triceps injuries. Outline the postoperative protocol for patients who undergo distal triceps tendon repair and review expected outcomes of nonsurgical and surgical management of distal triceps injuries. Pathophysiology/Pathoanatomy Overview     NOTES SEND FEEDBACK 9/3/26, 4:00 PM AAOS | Di"
+        },
+        {
+          "id": "510000637",
+          "title": "Elbow Repair and Reconstruction: Distal Biceps and Triceps Tendon Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000637",
+          "canonicalId": "510000637",
+          "extractable": true,
+          "score": 29.702,
+          "snippet": "of distal triceps rupture. Identify distal triceps tendon rupture on physical examination. Summarize the potential disadvantages and advantages of surgical management compared with nonsurgical management of distal triceps rupture. List the potential advantages and disadvantages of various surgical exposures and fixati"
+        },
+        {
+          "id": "510000656",
+          "title": "Distal Radius Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000656",
+          "canonicalId": "510000656",
+          "extractable": true,
+          "score": 26.022,
+          "snippet": "indicis proprius At risk of irritation, attrition, and rupture with prominent implants (ie, overlong screws) on the dorsal radius Extensor pollicis longus At risk of spontaneous rupture after the following: Nondisplaced or minimally displaced fracture of the distal radius9 Volar plate fixation of a displaced distal ra"
+        },
+        {
+          "id": "6001063",
+          "title": "Rotator Cuff Arthropathy: Reverse Shoulder Technique and Outcome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001063",
+          "canonicalId": "6001063",
+          "extractable": true,
+          "score": 21.652,
+          "snippet": "Learning Objectives Understand key technical aspects of reverse shoulder arthroplasty for the management of rotator cuff arthropathy. Review preoperative considerations for reverse shoulder arthroplasty. Discuss critical surgical steps and intraoperative considerations for successful reverse shoulder arthroplasty. Gai"
+        },
+        {
+          "id": "510000585",
+          "title": "Physical Examination of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000585",
+          "canonicalId": "510000585",
+          "extractable": true,
+          "score": 21.053,
+          "snippet": "elbow effusions may be appreciated by examining for loss of the normal lateral dimple in the anconeus triangle. In patients in whom the long head of the biceps tendon has ruptured, a Popeye deformity may be present. In patients with a retracted distal biceps tendon rupture, a reverse Popeye deformity may be present. "
+        },
+        {
+          "id": "6003000",
+          "title": "Achilles Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003000",
+          "canonicalId": "6003000",
+          "extractable": true,
+          "score": 18.494,
+          "snippet": "Achilles tendon rupture. Discuss the risks and advantages of surgical and nonsurgical management of acute Achilles tendon rupture. Describe the challenges associated with the management of chronic Achilles tendon ruptures. Review various surgical techniques for the management of chronic Achilles tendon ruptures. Intro"
+        },
+        {
+          "id": "6002005",
+          "title": "Tibialis Anterior Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002005",
+          "canonicalId": "6002005",
+          "extractable": true,
+          "score": 18.141,
+          "snippet": "for determining the site of rupture and the quality of the residual tendon. Helpful in planning surgical management (repair vs reconstruction) Figure 2 Images of an ankle with an anterior tibialis tendon rupture. Sagittal (A) and axial (B) proton density MRIs show an anterior tibialis tendon attritional rupture with a"
+        },
+        {
+          "id": "6001062",
+          "title": "Rotator Cuff Arthropathy: Reverse Shoulder Arthroplasty Design and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001062",
+          "canonicalId": "6001062",
+          "extractable": true,
+          "score": 17.712,
+          "snippet": "Cuff Arthropathy: Reverse Shoulder Arthroplasty Design and Biomechanics https://rock.aaos.org/coursecontent.aspx?id=6001062 5/33 Figure 2 Photograph shows the Delta III reverse shoulder prosthesis (DePuy). (Reproduced with permission from Boileau P, Watkinson DJ, Hatzidakis AM, Balg F: Grammont reverse prosthesis: Des"
+        }
+      ]
+    },
+    {
+      "noteId": "65644388-d093-4362-957b-ab83467472f3",
+      "noteVersionId": "7e6df27d-60fb-4680-8c26-08ac11048096",
+      "stableGuid": "c9i:mKw6[>",
+      "contentChecksum": "3b1973c26075c2a942e0320f947ea57755a3bcdbfe8bd5f24232ab58860418b2",
+      "deckPath": "SnapOrtho",
+      "front": "Patient presents with the lesion found below. Would wide resection + proximal femur replacement or wide resection + nailing be indicated? Wide resection + PFR",
+      "extra": "*Similar to primary sarcoma of bone, wide resection and PFR is the treatment modality recommended for metastatic RCC to avoid implant-related complications, decrease tumor recurrence, and increase overall survival rates.",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femur",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Proximal_Femur",
+        "SnapOrtho::Specialty::Adult_Reconstruction",
+        "SnapOrtho::Specialty::Orthopedic_Oncology",
+        "SnapOrtho::Treatment::ORIF"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "Patient presents with the lesion found below. Would wide resection + proximal femur replacement or wide resection + nailing be indicated? Wide resection + PFR *Similar to primary sarcoma of bone, wide resection and PFR is the treatment modality recommended for metastatic RCC to avoid implant-related complications, decrease tumor recurrence, and increase ove thigh hip osteology femur proximal femur adult reconstruction orthopedic oncology orif",
+      "candidates": [
+        {
+          "id": "6002062",
+          "title": "Primary Total Hip Arthroplasty for Other Indications: Oncologic Resection and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002062",
+          "canonicalId": "6002062",
+          "extractable": true,
+          "score": 61.829,
+          "snippet": "proximal femur replacement with the use of heavy, nonabsorbable suture or wire after final implant insertion. En bloc resection of the proximal femur is performed for extensive metastatic destruction of the proximal femur or if the proximal femur must be resected for sarcoma. A cemented stem proximal femur replacement"
+        },
+        {
+          "id": "6004043",
+          "title": "Ewing Sarcoma/Primitive Neuroectodermal Tumor",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004043",
+          "canonicalId": "6004043",
+          "extractable": true,
+          "score": 58.033,
+          "snippet": "| Ewing Sarcoma/Primitive Neuroectodermal Tumor https://rock.aaos.org/coursecontent.aspx?id=6004043 2/16 Epidemiology Demographics Second most common primary malignant bone tumor in children The male-to-female ratio is 3:2. Most commonly occurs in lower extremity (41%) and pelvis (26%) Also may be a soft-tissue sarcom"
+        },
+        {
+          "id": "510000516",
+          "title": "Overview and Management of Bone Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000516",
+          "canonicalId": "510000516",
+          "extractable": true,
+          "score": 56.507,
+          "snippet": "Bone Tumors https://rock.aaos.org/coursecontent.aspx?id=510000516 11/18 Fracture, infection, cellulitis, pulmonary embolism, neurovascular injury or neuropraxia, and tumor recurrence are possible complications after tumor curettage and the use of adjuvants and bone filler.21 Malignant Tumors Local recurrence is a risk"
+        },
+        {
+          "id": "510000533",
+          "title": "Primary Bone Tumors of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000533",
+          "canonicalId": "510000533",
+          "extractable": true,
+          "score": 54.485,
+          "snippet": "9/3/26, 5:50 PM AAOS | Primary Bone Tumors of the Spine https://rock.aaos.org/coursecontent.aspx?id=510000533 1/34 Primary bone tumors of the spine are rare. Approximately 50 patients are diagnosed with metastatic disease of the spine for every one patient diagnosed with a primary tumor of the spine. Primary bone tumo"
+        },
+        {
+          "id": "6004039",
+          "title": "Musculoskeletal Tumor Biopsy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004039",
+          "canonicalId": "6004039",
+          "extractable": true,
+          "score": 52.899,
+          "snippet": "most often used after nondiagnostic core biopsy. Additional indications include SEND FEEDBACK 9/3/26, 4:49 PM AAOS | Musculoskeletal Tumor Biopsy https://rock.aaos.org/coursecontent.aspx?id=6004039 11/17 suspected lymphoma in which additional tumor tissue is necessary for subtyping, bone lesion without extraosseous so"
+        },
+        {
+          "id": "6004048",
+          "title": "Metastatic Bone Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004048",
+          "canonicalId": "6004048",
+          "extractable": true,
+          "score": 52.026,
+          "snippet": "reported in patients with isolated renal cell carcinoma metastasis who undergo wide resection of the lesion and treatment with a megaprosthesis compared with patients who undergo intralesional resection and fixation. Resection and reconstruction also are thought to improve mobility and quality of life in patients with"
+        },
+        {
+          "id": "510000566",
+          "title": "Surgical Management of Upper Extremity Bone Metastases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000566",
+          "canonicalId": "510000566",
+          "extractable": true,
+          "score": 50.411,
+          "snippet": "the clamp-rod implant interface. A deep infection occurred in one patient, and tumor progression that required amputation occurred in another patient. Only 7% of humeral metastatic lesions occur in the distal humerus.15 Although the treatment algorithm for these lesions is similar to that for proximal humerus lesions,"
+        },
+        {
+          "id": "6004049",
+          "title": "Surgical Management of Lower Extremity Metastatic Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004049",
+          "canonicalId": "6004049",
+          "extractable": true,
+          "score": 49.316,
+          "snippet": "and endoprosthetic reconstruction with proximal femur replacement (Figure 5). Each of these treatment options allows for immediate–weight bearing postoperatively. The primary advantages of cephalomedullary nailing include decreased surgical time and a decreased risk for dislocation and abductor dysfunction compared wi"
+        },
+        {
+          "id": "6001077",
+          "title": "Metastatic Bone Disease to the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001077",
+          "canonicalId": "6001077",
+          "extractable": true,
+          "score": 49.208,
+          "snippet": "more effective cancer treatment options, and an aging population increase relevance to the field of spinal metastatic disease. Classification Systems SEND FEEDBACK 9/3/26, 4:44 PM AAOS | Metastatic Bone Disease to the Spine https://rock.aaos.org/coursecontent.aspx?id=6001077 3/44 Classification schema exist to delinea"
+        },
+        {
+          "id": "6001165",
+          "title": "Pathophysiology of Bone Metastasis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001165",
+          "canonicalId": "6001165",
+          "extractable": true,
+          "score": 47.939,
+          "snippet": "This should be routinely performed in patients with metastatic renal carcinoma unless a tourniquet can be used during surgical treatment. C, AP radiograph obtained after resection of the proximal femur demonstrates reconstruction of the defect via a cemented megaprosthesis using a bipolar acetabular implant. (Reproduc"
+        },
+        {
+          "id": "510000562",
+          "title": "Radiation Therapy: Soft-Tissue Sarcoma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000562",
+          "canonicalId": "510000562",
+          "extractable": true,
+          "score": 46.958,
+          "snippet": "tumor grade, tumor size, tumor site, histopathology, patient age, and resection margins.72 Tumor grade, size, and histopathology exerted their effect largely via their influence on metastatic recurrence, whereas, tumor site, patient age, and resection margins exerted their effect via predisposition to local recurrence"
+        },
+        {
+          "id": "510000561",
+          "title": "Radiation Therapy: Bone Sarcoma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000561",
+          "canonicalId": "510000561",
+          "extractable": true,
+          "score": 46.253,
+          "snippet": "of bone sarcoma Ewing sarcoma: with curative intent, if surgical morbidity is excessive Other sensitive tumors: solitary plasmacytoma, chordoma, hemangioendothelioma Unresectable bone sarcoma or positive margin resection Recurrent or metastatic disease not amenable to resection SEND FEEDBACK 9/3/26, 5:57 PM AAOS | Rad"
+        }
+      ]
+    }
+  ],
+  "inputChecksum": "93d7672bbe90a2f4388e4630ce36ca60ab7a0848e6094d58df74d83fda7dac32"
+}

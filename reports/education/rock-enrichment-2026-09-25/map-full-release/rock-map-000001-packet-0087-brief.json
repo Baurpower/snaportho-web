@@ -1,0 +1,1111 @@
+{
+  "batchKey": "map-000001-packet-0087",
+  "inputChecksum": "ff91838e008cf26598aa89e5c3eeb5deadace39ff79a9b40cc837e82b1d65558",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "sidecarSchema": {
+    "card": {
+      "stableGuid": "string",
+      "status": "\"mapped\"|\"skipped\"",
+      "chapters": "1-3 {id, role} from this card's candidates; first is primary",
+      "skipReason": "if skipped"
+    }
+  },
+  "cards": [
+    {
+      "stableGuid": "f4~L~G0Y=r",
+      "front": "TKA aseptic loosening is induced by which cell type ? Macrophage",
+      "extra": "*Macrophage-induced inflammatory response that results in bone loss and implant loosening in the absence of infection",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Aseptic_Loosening",
+        "SnapOrtho::Diagnosis::Aseptic_Loosening_Of_TKA",
+        "SnapOrtho::Diagnosis::Implant_Loosening",
+        "SnapOrtho::Specialty::Adult_Reconstruction"
+      ],
+      "candidates": [
+        {
+          "id": "6004025",
+          "title": "Aseptic Loosening After Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004025",
+          "extractable": true,
+          "score": 55.211,
+          "snippet": "loosening after total hip arthroplasty. Evaluate the radiographic findings of aseptic loosening after total hip arthroplasty. Identify the differential diagnosis for aseptic loosening after total hip arthroplasty. Determine the surgical treatment options for aseptic loosening after total hip arthroplasty. Overview Def"
+        },
+        {
+          "id": "6001034",
+          "title": "Bone Loss Classification: Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001034",
+          "extractable": true,
+          "score": 45.683,
+          "snippet": "implant may be caused by chronic infection, aseptic loosening, osteolysis, fracture, and stress shielding, or may be caused iatrogenically during a revision procedure.1 Evaluating Bone Defects Before Revision TKA     NOTES SEND FEEDBACK 9/3/26, 7:33 AM AAOS | Bone Loss Classification: Knee https://rock.aaos.org/co"
+        },
+        {
+          "id": "6000021",
+          "title": "Periprosthetic Joint Infection",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000021",
+          "extractable": true,
+          "score": 41.928,
+          "snippet": "f any; chronic pain and implant loosening are common Difficult to differentiate from mechanical aseptic loosening, but pain associated with chronic infection worsens with time and is accompanied by deterioration in function Hematogenous seeding Inciting events: Skin infection, dental extraction, respiratory tract infec"
+        },
+        {
+          "id": "6001150",
+          "title": "Cytokines",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001150",
+          "extractable": true,
+          "score": 38.517,
+          "snippet": "loss (or peri-implant osteolysis) is initiated via aseptic inflammatory responses to implant debris, primarily mediated by phagocytosis of small implant wear particles (generally <1 to 5 μm in diameter), resulting in the release of inflammatory and osteolytic cytokines that increase bone loss and loss of implant-tissu"
+        },
+        {
+          "id": "6001000",
+          "title": "Cell Biology, Cell Differentiation, and Skeletal Stem Cells",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001000",
+          "extractable": true,
+          "score": 33.069,
+          "snippet": "stem cells. Adult stem cells may be mobilized to action in response to molecular, cellular, or physical stimuli. When this mobilization occurs, an asymmetric form of cellular division happens, in which an adult stem cell produces one daughter stem cell and another daughter progenitor cell. This progenitor cell has lim"
+        },
+        {
+          "id": "6004018",
+          "title": "Alternative Implant Designs: Hip Resurfacing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004018",
+          "extractable": true,
+          "score": 32.45,
+          "snippet": "f femoral implant loosening, femoral neck fracture, recurrent SEND FEEDBACK 9/3/26, 7:16 AM AAOS | Alternative Implant Designs: Hip Resurfacing https://rock.aaos.org/coursecontent.aspx?id=6004018 13/23 Author(s) (Year) No. Treated Implant Type Mean Patient Age in Years (Range) Mean Follow- up in Years (Range) Results s"
+        },
+        {
+          "id": "6001002",
+          "title": "Immunology and Inflammation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001002",
+          "extractable": true,
+          "score": 31.466,
+          "snippet": "heterogeneity regulate macrophage responses to most external stimuli.6 Chronic Inflammation  Chronic Inflammation Although inflammation typically is self-limiting, chronic inflammation can occur, usually if the initial infection is not cleared from the site or the inflammatory stimulus is generated repeatedly. Exampl"
+        },
+        {
+          "id": "6002011",
+          "title": "Bone Loss Classification: Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002011",
+          "extractable": true,
+          "score": 31.255,
+          "snippet": "bone deficiency: segmental (type 1), cavitary (type 2), combined segmental and cavitary (type 3), pelvic dissociation (type 4), and hip fusion (type 5). (Reproduced from Brady OH, Masri BA, Garbuz DS, Duncan CP: Use of reconstruction rings for the management of acetabular bone loss during revision hip surgery. J Am Ac"
+        },
+        {
+          "id": "6001028",
+          "title": "Postoperative Polyethylene Wear and Osteolysis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001028",
+          "extractable": true,
+          "score": 31.093,
+          "snippet": "inflammatory response. Wear debris also can negatively affect the ability of the body to lay down new bone. Debris can induce mesenchymal stem cell apoptosis and/or block osteoblastic differentiation.9 SEND FEEDBACK 9/3/26, 5:48 PM AAOS | Postoperative Polyethylene Wear and Osteolysis https://rock.aaos.org/courseconte"
+        },
+        {
+          "id": "510000516",
+          "title": "Overview and Management of Bone Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000516",
+          "extractable": true,
+          "score": 30.592,
+          "snippet": "without reconstruction Osteochondroma Periosteal chondroma Prophylactic fixation or reconstruction Giant cell tumor Osteoblastoma  Benign Processes/Tumors Benign aggressive lesions involving major bone destruction, soft-tissue extension, cartilage loss, or fracture may require plate fixation to augment the bone after"
+        },
+        {
+          "id": "6001161",
+          "title": "Retrieval Analysis of Hip and Knee Prostheses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001161",
+          "extractable": true,
+          "score": 30.474,
+          "snippet": "Particle-induced osteolysis results from an inflammatory reaction to an abundance of wear and corrosion debris, which is characterized histopathologically as masses of particle-laden macrophages. This process engages osteoclasts to increase bone resorption and osteoblasts to reduce bone formation. It may lead to impla"
+        },
+        {
+          "id": "6000024",
+          "title": "Complications After Total Knee Arthroplasty: Periprosthetic Joint Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000024",
+          "extractable": true,
+          "score": 29.895,
+          "snippet": "symptoms, if any chronic pain and implant loosening are common. Difficult to differentiate from mechanical aseptic loosening, but pain associated with chronic infection worsens with time and is accompanied by deterioration in function. Hematogenous seeding Inciting events: skin infection, dental extraction, respirator"
+        }
+      ]
+    },
+    {
+      "stableGuid": "f4KMbruPIe",
+      "front": "What is a Clay-Shoveler's fracture ? Spinous process fracture in the lower cervical or upper thoracic spine",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Spine",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "6004085",
+          "title": "Cervical Spine Injuries and Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004085",
+          "extractable": true,
+          "score": 38.294,
+          "snippet": "posterior muscles (clay shoveler fracture); hyperflexion/hyperextension whiplash injuries; direct blows to the spinous process; and avulsion injuries associated with fracture or dislocation of the remainder of the cervical spine34 (Figure 8). Figure 8 Illustrations show examples of cervical spine fractures. A, Clay sh"
+        },
+        {
+          "id": "510000579",
+          "title": "Pediatric Spine Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000579",
+          "extractable": true,
+          "score": 37.785,
+          "snippet": "function.20 Cervical Spine Clearance Pediatric Cervical Spine Clearance Working Group algorithm21  Cervical Spine Clearance The Pediatric Cervical Spine Working Group recently developed standardized guidelines for evidence-based pediatric cervical spine clearance (Resource 5; Figure 2). In patients with intact mental"
+        },
+        {
+          "id": "6004088",
+          "title": "Adult Cervical Spine Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004088",
+          "extractable": true,
+          "score": 36.062,
+          "snippet": "adult cervical spine deformity and the associated radiographic parameters. Identify the underlying pathologic processes that may contribute to cervical spine deformity. Recognize the imaging modalities used to assess cervical spine deformity. Review the surgical management of cervical spine deformity. Pathophysiology/"
+        },
+        {
+          "id": "6001059",
+          "title": "Pediatric Cervical Spine Abnormalities",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001059",
+          "extractable": true,
+          "score": 35.973,
+          "snippet": "with nontraumatic pediatric cervical spine abnormalities. Perform an appropriate evaluation of patients in whom cervical spine abnormalities are suspected, including appropriate imaging studies. Review the nonsurgical and surgical management of cervical spine abnormalities. Discuss the potential complications of manag"
+        },
+        {
+          "id": "6004089",
+          "title": "Cervical Spine Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004089",
+          "extractable": true,
+          "score": 35.3,
+          "snippet": "of upper cervical spine fractures is unique to the level and pattern of the fracture. Management of traumatic subaxial cervical spine injuries follows uniform treatment principles.  Pathophysiology/Pathoanatomy Cervical spine injuries can be divided into upper cervical spine injuries and subaxial cervical spine injur"
+        },
+        {
+          "id": "6003024",
+          "title": "Anatomy of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003024",
+          "extractable": true,
+          "score": 33.535,
+          "snippet": "lar raphe to minimize bleeding. The spinous processes of the cervical vertebra are reached. Spinous processes of cervical vertebra are commonly bifid. Care must be taken during dissection within the bifid spinous process because some patients will have thin or no bone in that area. Following the bone of the spinous pro"
+        },
+        {
+          "id": "6001078",
+          "title": "Thoracic and Lumbar Fractures and Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001078",
+          "extractable": true,
+          "score": 33.188,
+          "snippet": "25% to 40% in the upper thoracic spine and 10% to 14% in the lower lumbar spine and sacrum.6 Compression fractures and transverse process fractures were the most common fracture patterns observed in the thoracic and lumbar spine, respectively.5 Anatomy and Biomechanics The thoracolumbar spine is divided into the thora"
+        },
+        {
+          "id": "6001074",
+          "title": "Physical Examination of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001074",
+          "extractable": true,
+          "score": 32.331,
+          "snippet": "varies substantially by spinal region. Cervical spine: flexion/extension, lateral bending, rotation Thoracic spine: very limited intrinsic motion because of the ribs and sternum Lumbar spine: flexion/extension and lateral bending SEND FEEDBACK 9/4/26, 10:24 AM AAOS | Physical Examination of the Spine https://rock.aaos"
+        },
+        {
+          "id": "6000053",
+          "title": "Thoracic Disk Herniations and Stenosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000053",
+          "extractable": true,
+          "score": 29.439,
+          "snippet": "Know Learning Objectives Review relevant thoracic spine anatomy. Discuss the etiology of thoracic disk herniations and degenerative pathology. Recognize appropriate imaging studies for thoracic level herniations and stenosis. Review treatment options for the management of symptomatic thoracic level compression. Pathoa"
+        },
+        {
+          "id": "6000050",
+          "title": "Cervical Radiculopathy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000050",
+          "extractable": true,
+          "score": 28.967,
+          "snippet": "ave atrophy of involved musculature, especially in the hands. Range of motion of the cervical spine is evaluated. A thorough motor examination is performed for bilateral upper and lower extremities. Surgeons must examine the lower extremities and the upper extremities to evaluate for possible tandem stenosis (combined"
+        },
+        {
+          "id": "6002021",
+          "title": "Imaging of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002021",
+          "extractable": true,
+          "score": 28.348,
+          "snippet": "for spondylolysis Thoracic spine: AP, lateral, and flexion-extension views Cervical spine: AP, lateral, and flexion-extension views Additional views Open-mouth odontoid view to evaluate for upper cervical spine pathology Oblique view to evaluate for foraminal pathology Swimmer view allows for enhanced visualization of"
+        },
+        {
+          "id": "6001077",
+          "title": "Metastatic Bone Disease to the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001077",
+          "extractable": true,
+          "score": 27.355,
+          "snippet": "in surgical, radiotherapy, and medical oncology fields.1 Epidemiology Metastatic spine disease typically occurs in individuals older than 40 years. The spine is the most common site of bone metastasis, with the thoracic spine being the most common spinal site, followed by the lumbar spine and then cervical spine (Figu"
+        }
+      ]
+    },
+    {
+      "stableGuid": "f5VWts5]5l",
+      "front": "How does motion effect callus formation ? Increased motion = increased callus",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science"
+      ],
+      "candidates": [
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 34.589,
+          "snippet": "nfections in orthopaedics, in Einhorn TA, O’Keefe RJ, Buckwalter JA, eds: Orthopaedic Basic Science. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2007, pp 299-314. Types of Musculoskeletal Infection and Clinical Presentation SEND FEEDBACK 9/3/26, 4:48 PM AAOS | Musculoskeletal Infections and Microbiology Bas"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 29.408,
+          "snippet": "occurs, including the forces in the joint and the degree to which that sliding direction changes. Multidirectional sliding motion has SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Total Hip Arthroplasty: Bearing Surfaces Basic Science https://rock.aaos.org/coursecontent.aspx?id=510000503 8/21 been shown to increase wear rates,"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 28.222,
+          "snippet": "patients noncompliant with postoperative rehabilitation, chronic infection, and poor glenohumeral bone stock SEND FEEDBACK 9/4/26, 10:26 AM AAOS | Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes https://rock.aaos.org/coursecontent.aspx?id=6001061 13/20 Techniques/Procedures Surgical Approaches S"
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "extractable": true,
+          "score": 27.172,
+          "snippet": "to rotator cuff repair because healing failure is multifactorial. As patients age, tendons demonstrate decreased cellularity, increased apoptosis, increased fascicular thinning/disruption, and SEND FEEDBACK 9/3/26, 6:07 PM AAOS | Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Heal"
+        },
+        {
+          "id": "6000014",
+          "title": "Biomechanics/Gait: Effect of Ankle/Foot Malalignment",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000014",
+          "extractable": true,
+          "score": 17.054,
+          "snippet": "fth TMT joints are the most mobile, with a range of motion of 5° to 17°. The second TMT is the least mobile, with 1° of motion. MTP joints SEND FEEDBACK 9/3/26, 7:30 AM AAOS | Biomechanics/Gait: Effect of Ankle/Foot Malalignment https://rock.aaos.org/coursecontent.aspx?id=6000014 21/41 The hallux MTP joint has a normal"
+        },
+        {
+          "id": "510000593",
+          "title": "Nonunions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000593",
+          "extractable": true,
+          "score": 12.441,
+          "snippet": "for healing with inadequate mechanical stability Abundant callus Lack of bony bridging Increased uptake Oligotrophic Biologic potential for healing with no initiation of healing Little to no callus formation Increased uptake Atrophic Little to no osteogenic potential Sclerotic bone ends Absence of callus Decreased upt"
+        },
+        {
+          "id": "6000058",
+          "title": "Biomechanics of Plates, Screws, Rods, and External Fixation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000058",
+          "extractable": true,
+          "score": 10.725,
+          "snippet": "chondroblasts and osteoblasts, which ultimately ossify the surrounding matrix, the fourth phase of secondary fracture healing. As the callus stiffness increases, regions in the callus fall below the normal strain of bone (2%). Hard callus formation can then occur via endochondral ossification and calcification of the"
+        },
+        {
+          "id": "6001186",
+          "title": "Bone Healing, Bone Graft Materials, and Bone Graft Substitutes, Including Bone Morphogenetic Proteins",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001186",
+          "extractable": true,
+          "score": 9.752,
+          "snippet": "supply Periosteal stripping from injury Anti-inflammatory medications Microvascular disease Diabetes mellitus Atherosclerosis Smoking Metabolic bone conditions Osteoporosis Renal disease Parathyroid dysfunction  Bone Healing The two basic mechanisms of bone healing are direct intramembranous bone formation and endoch"
+        },
+        {
+          "id": "6001006",
+          "title": "Bone Healing and Bone Grafts",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001006",
+          "extractable": true,
+          "score": 9.261,
+          "snippet": "-11, and -18; transforming growth factor- beta (TGF-ß), platelet-derived growth factor (PDGF), and fibroblast growth factor. Together, these promote the production of a primary cartilaginous callus and angiogenesis. Recruitment of MSCs is thought to be mediated by stromal cell-derived factor 1 and BMPs. Reparative pha"
+        },
+        {
+          "id": "6003002",
+          "title": "Lesser Toe Pathology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003002",
+          "extractable": true,
+          "score": 8.058,
+          "snippet": "Hallux valgus Physical Examination A claw-type deformity of the toe is shown in Figure 2. Metatarsalgia and callus formation under the depressed metatarsal head are common. The flexed interphalangeal joints tend to rub against the toe box of the shoe, resulting in callus formation and tenderness (Figure 3). Long second"
+        },
+        {
+          "id": "6002081",
+          "title": "Pediatric Osteomyelitis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002081",
+          "extractable": true,
+          "score": 7.402,
+          "snippet": "sepsis also have an increased risk of osteomyelitis. Immunodeficient children, such as those with diabetes mellitus, malignancy, HIV, chronic steroid treatment, and malnutrition also have an increased risk.4 Finally, children with sickle cell disease have an increased risk because of functional asplenia, impaired comp"
+        },
+        {
+          "id": "6001188",
+          "title": "Fractures of the Humeral Shaft",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001188",
+          "extractable": true,
+          "score": 7.245,
+          "snippet": "FEEDBACK 9/3/26, 4:14 PM AAOS | Fractures of the Humeral Shaft https://rock.aaos.org/coursecontent.aspx?id=6001188 18/38 elbow motion is painless, and bridging callus is observed radiographically on three of four cortices. If motion is detected at the fracture site on physical examination and minimal callus is observe"
+        }
+      ]
+    },
+    {
+      "stableGuid": "F5WmZp+6mx",
+      "front": "Patients with a stiff spinopelvic junction will have a change in sacral slope of &lt; 10 degrees between standing and sitting radiographs.",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Adult_Reconstruction",
+        "SnapOrtho::Specialty::Spine"
+      ],
+      "candidates": [
+        {
+          "id": "510000510",
+          "title": "Postoperative Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000510",
+          "extractable": true,
+          "score": 36.105,
+          "snippet": "standing and sitting lateral radiographs side by side for spinal stiffness via evaluation of changes in sacral slope (Figure 5). Sacral slope is the angle between a horizontal reference line and a line parallel to the superior end plate of S1. Evaluate the change in sacral slope between the two positions to quantify s"
+        },
+        {
+          "id": "6002095",
+          "title": "Adult Spine Deformity Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002095",
+          "extractable": true,
+          "score": 35.838,
+          "snippet": "her H, eds: Orthopaedic Knowledge Update: Spine, ed 5. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2017, pp 335-355.) Table 9 Comprehensive Etiology-Based Adult Spine Deformity Classification System Type Description Subtype 1 Adult degenerative spine deformity Not applicable 2 Adult idiopathic spine deformi"
+        },
+        {
+          "id": "6003014",
+          "title": "Adult Isthmic Spondylolisthesis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003014",
+          "extractable": true,
+          "score": 28.585,
+          "snippet": "balanced pelvis.23 If the sacral slope is greater than the pelvic tilt or if the pelvis remains within normal values for asymptomatic patients, the pelvis is classified as balanced. If the sacral slope is less than the pelvic tilt or when the sacral slope and pelvic tilt are below normal values for asymptomatic patien"
+        },
+        {
+          "id": "6001074",
+          "title": "Physical Examination of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001074",
+          "extractable": true,
+          "score": 25.707,
+          "snippet": "10:24 AM AAOS | Physical Examination of the Spine https://rock.aaos.org/coursecontent.aspx?id=6001074 14/36 examination in spine care, in Truumees E, Prather H, eds: Orthopaedic Knowledge Update: Spine, ed 5. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2017, pp 63-72.) Tests for Pelvic and Sacral Pathology"
+        },
+        {
+          "id": "6002021",
+          "title": "Imaging of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002021",
+          "extractable": true,
+          "score": 25.651,
+          "snippet": "PM AAOS | Imaging of the Spine https://rock.aaos.org/coursecontent.aspx?id=6002021 4/30 enhance visualization of the lower cervical spine. In the lumbar spine, an oblique view may reveal spondylosis. Full-length spine radiographs are obtained on a 36-inch cassette. A standing scoliosis radiograph is necessary in patie"
+        },
+        {
+          "id": "510000533",
+          "title": "Primary Bone Tumors of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000533",
+          "extractable": true,
+          "score": 24.822,
+          "snippet": "Spine https://rock.aaos.org/coursecontent.aspx?id=510000533 1/34 Primary bone tumors of the spine are rare. Approximately 50 patients are diagnosed with metastatic disease of the spine for every one patient diagnosed with a primary tumor of the spine. Primary bone tumors throughout the body are rare, and tumors within"
+        },
+        {
+          "id": "6001177",
+          "title": "Adolescent Idiopathic Scoliosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001177",
+          "extractable": true,
+          "score": 22.244,
+          "snippet": "Martus JE, ed: Orthopaedic Knowledge Update: Pediatrics, ed 5. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2016, pp 351-363.) Radiography Positioning Assessment of the deformity Sagittal spinopelvic parameters—Pelvic incidence, sacral slope, and pelvic tilt can be measured on lateral radiographs. The spino"
+        },
+        {
+          "id": "510000582",
+          "title": "Pediatric and Adolescent Back Pain: Pediatric Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000582",
+          "extractable": true,
+          "score": 20.537,
+          "snippet": "incidence is a parameter that is individual to each person; it includes sacral slope and pelvic tilt (Figure 1; Resource 2). SEND FEEDBACK 9/3/26, 5:35 PM AAOS | Pediatric and Adolescent Back Pain: Pediatric Spine https://rock.aaos.org/coursecontent.aspx?id=510000582 3/25 Figure 1 Illustration shows pelvic incidence,"
+        },
+        {
+          "id": "6002024",
+          "title": "Perioperative and Postoperative Considerations in Geriatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002024",
+          "extractable": true,
+          "score": 19.07,
+          "snippet": "e77-e137.) Patients with good exercise tolerance (METs >4) typically have a good short-term prognosis. A baseline resting 12-lead electrocardiogram is routinely obtained for all geriatric trauma patients. Advanced cardiac testing (echocardiography, stress testing, extended preoperative telemetry) is only indicated if"
+        },
+        {
+          "id": "6001077",
+          "title": "Metastatic Bone Disease to the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001077",
+          "extractable": true,
+          "score": 16.782,
+          "snippet": "cause fracture of the spinopelvic connection and require spanning spinopelvic fixation.  Sacral Spine Sacral zones of the spine are fixed and immobile but comprise a critical connection between the mobile spine and the pelvis. Therefore, sacral destruction, especially around the critical alar structures of S1, may re"
+        },
+        {
+          "id": "6001185",
+          "title": "Adult Thoracolumbar Spine Deformity: Sagittal Imbalance",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001185",
+          "extractable": true,
+          "score": 16.682,
+          "snippet": "sagittal axis include multiple regions. Regional alignment is variable. Normally, most or approximately two-thirds of lumbar lordosis is present between L4 through S1. The spinopelvic parameters include sacral slope, pelvic tilt, and pelvic incidence and are related by the equation pelvic incidence = pelvic tilt plus"
+        },
+        {
+          "id": "6004088",
+          "title": "Adult Cervical Spine Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004088",
+          "extractable": true,
+          "score": 16.418,
+          "snippet": "These changes result in a spectrum of disorders, ranging from patients who are asymptomatic to patients with neck pain, stiffness, or injury to the spinal cord and nerve roots (Resource 1). Approximately 60% of the population will experience some form of cervical spine degenerative change in their lifetime.7 Patients"
+        }
+      ]
+    },
+    {
+      "stableGuid": "F6%eVS7G3&",
+      "front": "What is the most common single isolated organism in necrotizing fasciitis ? Group A streptococcus",
+      "extra": "Polymicrobial infections are the most common overall",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science"
+      ],
+      "candidates": [
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 54.912,
+          "snippet": "e the next most common pathogens in adults, and Streptococcus pyogenes (group A) is isolated most often. In contrast to septic arthritis in adults, group B Streptococcus (Streptococcus agalactiae) has a predilection for two groups: neonates and infirm, elderly patients, particularly those with diabetes mellitus. Group"
+        },
+        {
+          "id": "6004061",
+          "title": "Complex Pediatric Musculoskeletal Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004061",
+          "extractable": true,
+          "score": 44.776,
+          "snippet": "The prevalence of isolated septic arthritis and isolated pyomyositis was 15% and 32%, respectively. The most common causative organism in pediatric MSKI is S aureus. Other causative organisms to consider include Group B Streptococcus in children younger than 12 months and K kingae and Streptococcus pneumoniae in child"
+        },
+        {
+          "id": "510000665",
+          "title": "Hand and Wrist Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000665",
+          "extractable": true,
+          "score": 37.898,
+          "snippet": "and Wrist Infections https://rock.aaos.org/coursecontent.aspx?id=510000665 17/38 Necrotizing Soft-Tissue Infections Pathoanatomy/Microbiology Necrotizing soft-tissue infections (NSTIs) are limb-threatening and life-threatening emergencies. Type 1 NSTIs are polymicrobial, often caused by aerobic and anaerobic microorga"
+        },
+        {
+          "id": "6000008",
+          "title": "Plantar Fasciitis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000008",
+          "extractable": true,
+          "score": 32.476,
+          "snippet": "factors for plantar fasciitis. Perform an appropriate clinical examination for plantar fasciitis. Understand the surgical and nonsurgical management of plantar fasciitis. Pathophysiology/Pathoanatomy Overview General characteristics  Overview     NOTES SEND FEEDBACK 9/3/26, 5:49 PM AAOS | Plantar Fasciitis https:"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 30.365,
+          "snippet": " Total Hip Arthroplasty: Bearing Surfaces Basic Science  CORE October 02, 2025 Michael J. Taunton, MD (2020-present) Doug Van Citters, PhD (2020-present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Identify the three primary classes of materials used as bearing"
+        },
+        {
+          "id": "6000055",
+          "title": "Spinal Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000055",
+          "extractable": true,
+          "score": 28.928,
+          "snippet": "Epidemiology/Microbiology This section reviews pyogenic spine infections unrelated to prior invasive spine procedures. Although this section excludes the management of SEA, substantial overlap exists because of the concomitant nature of the diagnoses. Pyogenic spine infections result from hematogenous seeding from dis"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 28.357,
+          "snippet": "models.9-12 These altered mechanics subsequently diminish overall shoulder function and cause progressive degenerative changes, resulting in CTA. Etiology Pathogenesis Neer et al1 suggested mechanical, nutritional, and crystal-induced arthropathy pathways (Figure 1); however, no definitive pathogenesis has been identi"
+        },
+        {
+          "id": "6000056",
+          "title": "Postoperative Spine Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000056",
+          "extractable": true,
+          "score": 27.233,
+          "snippet": "and implement prevention methods. Assess and categorize postoperative infections. Specify treatment options for the management of postoperative infections. Postoperative Infections Introduction Basic taxonomy Causes Perioperative Direct inoculation Most common     NOTES SEND FEEDBACK 9/3/26, 5:48 PM AAOS | Postope"
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "extractable": true,
+          "score": 24.897,
+          "snippet": " Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing  CORE May 18, 2026 James Gregory, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Assess the natural progression of rotator cuff disease. Understand the b"
+        },
+        {
+          "id": "6001052",
+          "title": "Septic Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001052",
+          "extractable": true,
+          "score": 24.649,
+          "snippet": "aureus is the most common causative organism. Group A Streptococcus may be associated with preceding varicella infections. Lyme disease may cause acellular monoarthritis and is most common in patients in the northeast region of the United States.  Organisms S aureus, a gram-positive cocci, is the most common organism"
+        },
+        {
+          "id": "6000024",
+          "title": "Complications After Total Knee Arthroplasty: Periprosthetic Joint Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000024",
+          "extractable": true,
+          "score": 18.974,
+          "snippet": "Joint Infections https://rock.aaos.org/coursecontent.aspx?id=6000024 5/33 Proper classification of PJIs as acute, chronic, or hematogenous is crucial because management is guided by this classification. Acute postoperative infections and acute hematogenous infections may be managed via irrigation, débridement, and com"
+        },
+        {
+          "id": "6002081",
+          "title": "Pediatric Osteomyelitis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002081",
+          "extractable": true,
+          "score": 15.905,
+          "snippet": "between 2007 and 2014 revealed a 60% decrease in infections secondary to CA-MRSA.11 Several patient populations are susceptible to unique pathogens that must be considered in the initial selection of antibiotic coverage for pediatric osteomyelitis. Group B Streptococcus is a common pathogen in neonates. Group B Strept"
+        }
+      ]
+    },
+    {
+      "stableGuid": "F6Y=lJL7eJ",
+      "front": "Which ligament complex is most important for pelvic ring stability ? Posterior sacroiliac complex",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Pelvis",
+        "SnapOrtho::Anatomy::Pelvis::Joints",
+        "SnapOrtho::Anatomy::Pelvis::Joints::Sacroiliac_Joint",
+        "SnapOrtho::Anatomy::Pelvis::Osteology",
+        "SnapOrtho::Anatomy::Pelvis::Osteology::Pelvis",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "6001082",
+          "title": "Pelvic Ring Fractures: Evaluation and Acute Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001082",
+          "extractable": true,
+          "score": 44.779,
+          "snippet": "provided by circumferential pelvic compression is not lost. Anterior external fixation of the pelvic ring in patients with an incomplete injury of the posterior pelvic ring is effective in reducing pelvic volume and providing stability to the pelvis; however, in patients with a complete injury of the posterior pelvic"
+        },
+        {
+          "id": "6001076",
+          "title": "Sacroiliac-Mediated Pain",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001076",
+          "extractable": true,
+          "score": 33.73,
+          "snippet": "surface) and force closure (provided by SEND FEEDBACK 9/3/26, 6:07 PM AAOS | Sacroiliac-Mediated Pain https://rock.aaos.org/coursecontent.aspx?id=6001076 5/20 muscular contraction). Multiple ligaments help stabilize the SIJ, including the anterior and posterior sacroiliac ligaments, sacrotuberous ligament, and sacrosp"
+        },
+        {
+          "id": "6000039",
+          "title": "Shoulder Trauma: Acromioclavicular Joint Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000039",
+          "extractable": true,
+          "score": 29.019,
+          "snippet": "role in anterior-posterior and rotational stability The superior and posterior aspects of the ACLC are most important for horizontal stability. Distal clavicle excision causes horizontal instability. Coracoclavicular ligaments Greater role in superior-inferior stability Contributions to anterior-posterior stability in"
+        },
+        {
+          "id": "6004078",
+          "title": "Posterior Cruciate Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004078",
+          "extractable": true,
+          "score": 28.24,
+          "snippet": "reconstruction of the posterior cruciate ligament. Discuss potential complications, rehabilitation, and outcomes associated with posterior cruciate ligament injury. Pathophysiology/Pathoanatomy     NOTES SEND FEEDBACK 9/3/26, 5:46 PM AAOS | Posterior Cruciate Ligament Injuries https://rock.aaos.org/coursecontent.a"
+        },
+        {
+          "id": "6001040",
+          "title": "Surgical Management of Pelvic Metastatic Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001040",
+          "extractable": true,
+          "score": 27.357,
+          "snippet": "Corona mortis Becomes the common femoral artery distal to the inguinal ligament Internal iliac Runs posteriorly and divides into anterior and posterior divisions at the level of the sacroiliac joint Posterior division SEND FEEDBACK 9/4/26, 10:31 AM AAOS | Surgical Management of Pelvic Metastatic Disease https://rock.a"
+        },
+        {
+          "id": "6004072",
+          "title": "Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004072",
+          "extractable": true,
+          "score": 25.496,
+          "snippet": "Trauma: Sternoclavicular Joint Dislocation and Instability https://rock.aaos.org/coursecontent.aspx?id=6004072 3/26 Figure 1 Illustrations show the sternoclavicular (SC) joints. A, The anatomy of the SC joints is shown, viewed from the anterior aspect, with the left joint intact and the right joint in coronal section."
+        },
+        {
+          "id": "510000586",
+          "title": "Elbow Instability: Lateral Collateral Ligament Complex Insufficiency",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000586",
+          "extractable": true,
+          "score": 25.285,
+          "snippet": "varus and posterior rotatory instability of the elbow. Pathophysiology/Pathoanatomy Overview     NOTES SEND FEEDBACK 9/3/26, 4:03 PM AAOS | Elbow Instability: Lateral Collateral Ligament Complex Insufficiency https://rock.aaos.org/coursecontent.aspx?id=510000586 1/24 Elbow instability caused by disruption or insuf"
+        },
+        {
+          "id": "510000589",
+          "title": "Imaging of the Hip and Pelvis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000589",
+          "extractable": true,
+          "score": 25.051,
+          "snippet": "joint congruency. Weight-bearing radiographs allow for analysis of the impact of body weight and upright alignment on hip and pelvic anatomy. The main radiographic views include AP pelvis and lateral views (Resource 1). AP Pelvis Radiographs Useful to assess femoroacetabular coverage, arthritis, and fractures Osteoart"
+        },
+        {
+          "id": "510000664",
+          "title": "Shoulder Trauma: Scapular and Glenoid Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000664",
+          "extractable": true,
+          "score": 23.407,
+          "snippet": "Shoulder Suspensory Complex The superior shoulder suspensory complex (SSSC) is shown in Figure 5. The SSSC consists of the glenoid, coracoid process, distal clavicle, acromion, and ligamentous structures of the acromioclavicular joint and coracoclavicular ligaments. It plays an important role in shoulder stability and"
+        },
+        {
+          "id": "510000580",
+          "title": "Pelvic and Hip Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000580",
+          "extractable": true,
+          "score": 22.089,
+          "snippet": "e that pelvic ring alignment is maintained. Unstable pelvic ring fractures most often are managed surgically to ensure restoration of anatomy and to permit mobilization, especially in polytrauma patients. Contraindications Pelvic ring displacement greater than 2 cm or pelvic asymmetry greater than 1 cm35 (Figure 21) Un"
+        },
+        {
+          "id": "6004093",
+          "title": "Pelvis Fractures: Definitive Management and Outcomes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004093",
+          "extractable": true,
+          "score": 21.204,
+          "snippet": "sacroiliac joint injury. The sacrotuberous, sacrospinous, and anterior sacroiliac ligaments are disrupted along with the pelvic floor, with varying degrees of injury to the posterior sacroiliac ligament complex. Management includes reduction and stabilization of the anterior pelvic ring (symphysis, usually), with or w"
+        },
+        {
+          "id": "510000521",
+          "title": "Posterior Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000521",
+          "extractable": true,
+          "score": 18.964,
+          "snippet": "of posterior shoulder instability based on specific physical examination maneuvers. List injuries associated with posterior glenohumeral instability. Identify and interpret appropriate imaging studies in the workup of posterior glenohumeral instability. Review appropriate nonsurgical and surgical treatment options for"
+        }
+      ]
+    },
+    {
+      "stableGuid": "f7<u1v(&Uu",
+      "front": "What are four (4) biologic risk factors for developing a humeral shaft nonunion ? Metabolic/endocrine abnormalities Infection Patient factors Open fracture",
+      "extra": "*For metabolic/endocrine abnormalities = osteoporosis/vitamin D deficiency most common *Patient factors = smoking, obesity, malnutrition, noncompliance",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Arm",
+        "SnapOrtho::Anatomy::Arm::Osteology",
+        "SnapOrtho::Anatomy::Arm::Osteology::Humeral_Shaft",
+        "SnapOrtho::Diagnosis::Open_Fracture",
+        "SnapOrtho::Specialty::Metabolic_Bone",
+        "SnapOrtho::Specialty::Shoulder_Elbow",
+        "SnapOrtho::Treatment::Complication_Risk_Factors"
+      ],
+      "candidates": [
+        {
+          "id": "6001188",
+          "title": "Fractures of the Humeral Shaft",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001188",
+          "extractable": true,
+          "score": 52.204,
+          "snippet": "union rates are relatively high with humeral shaft fractures, nonunions can occur. Motion, avascularity, smoking, metabolic deficiency, and infection are potential causes of nonunion. Fractures adjacent to a stiff joint have a higher risk of nonunion because of increased motion at the fracture site (such as proximal h"
+        },
+        {
+          "id": "510000593",
+          "title": "Nonunions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000593",
+          "extractable": true,
+          "score": 47.078,
+          "snippet": "Factors associated with nonunion include mechanical instability, inadequate bone contact, infection, and insufficient vascularity. Any single factor or a combination of factors may result in failed fracture healing7,8 (Resources 1 and 2). Many factors contribute to impaired fracture healing, including the mechanical e"
+        },
+        {
+          "id": "510000534",
+          "title": "Diagnosis and Management of Fracture-Related Infection",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000534",
+          "extractable": true,
+          "score": 47.066,
+          "snippet": "(wound dehiscence) Type of wound closure  Risk Factors Risk factors for FRI are broadly categorized into patient factors, injury factors, and management factors. Patients who use nicotine, have obesity, or are otherwise immunosuppressed have an increased risk of FRI. Similarly, patients with increasing severity of op"
+        },
+        {
+          "id": "6002097",
+          "title": "Osteoporosis and Pathologic Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002097",
+          "extractable": true,
+          "score": 42.43,
+          "snippet": "factors and aging males. At age 65 years, approximately 5% of males have osteoporosis compared with 24% of females. Common risk factors include smoking, chronic alcohol use, use of medications that alter BMD, and genetic predisposition. Modifiable risk factors, such as smoking and medication use, cause osteoporosis vi"
+        },
+        {
+          "id": "6001006",
+          "title": "Bone Healing and Bone Grafts",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001006",
+          "extractable": true,
+          "score": 36.602,
+          "snippet": "factors often are classified as patient-dependent and patient-independent factors (Table 1). Table 1 Risk Factors for Nonunion Patient-Dependent Patient-Independent Modifiable Nonmodifiable Smoking Age Open reduction (poor quality of primary open reduction and internal fixation)a Alcohol Male sex Open fracture (more b"
+        },
+        {
+          "id": "6001166",
+          "title": "Metabolic Bone Diseases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001166",
+          "extractable": true,
+          "score": 35.606,
+          "snippet": "criteria alone. To better assess the risk of fracture in an individual, the World Health Organization created a computer algorithm called the Fracture Risk Assessment Tool. This tool considers multiple criteria in evaluating the risk for an osteoporotic fracture. The Fracture Risk Assessment Tool relies on a DEXA scor"
+        },
+        {
+          "id": "6004090",
+          "title": "Open Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004090",
+          "extractable": true,
+          "score": 35.559,
+          "snippet": "temic antibiotic therapy in the management of open fractures at high risk for infection. Nonsurgical Fracture Management Stable fractures may occur and still be open fractures; this commonly occurs in patients with an out-to-in open fracture pattern. In these patients, management of the fracture may include irrigation"
+        },
+        {
+          "id": "6002085",
+          "title": "Proximal Humerus Fractures and Humeral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002085",
+          "extractable": true,
+          "score": 34.967,
+          "snippet": "Humerus Fractures and Humeral Shaft Fractures https://rock.aaos.org/coursecontent.aspx?id=6002085 50/59 Figure 12 Radiographs of the right shoulder of a 9-year-old girl who was struck as a pedestrian by a vehicle. Lateral (A) and AP (B) radiographs demonstrate an open humeral shaft fracture. The patient also sustained"
+        },
+        {
+          "id": "6002082",
+          "title": "Upper-Limb Deficiency and Prostheses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002082",
+          "extractable": true,
+          "score": 34.639,
+          "snippet": "the absence of intermediate parts of the extremity, with preservation of proximal and distal components.25,37 Acquired Deficiency Classified in a manner similar to adult limb loss Examples include intrascapulothoracic, shoulder disarticulation, transhumeral (above the elbow), elbow disarticulation, transradial (below"
+        },
+        {
+          "id": "510000652",
+          "title": "Shoulder Trauma: Proximal Humerus Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000652",
+          "extractable": true,
+          "score": 34.465,
+          "snippet": "with osteoporosis who underwent hemiarthroplasty. A, Lateral shoulder radiograph demonstrates a complex fracture- dislocation of the head of the proximal humeral with an ipsilateral shaft fracture. Postoperative AP (B) and lateral (C) shoulder radiographs demonstrate long-stem hemiarthroplasty with successful repair a"
+        },
+        {
+          "id": "6001013",
+          "title": "Calcaneal Stress Fracture",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001013",
+          "extractable": true,
+          "score": 33.142,
+          "snippet": "Risk Factors Female sex Military recruits High-level or escalating athletic activity Tarsal coalition Pes cavus deformity Low bone mineral density SEND FEEDBACK 9/3/26, 7:35 AM AAOS | Calcaneal Stress Fracture https://rock.aaos.org/coursecontent.aspx?id=6001013 3/16 Impaired bone metabolism  Risk Factors Calcaneal st"
+        },
+        {
+          "id": "6002022",
+          "title": "Perioperative Issues",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002022",
+          "extractable": true,
+          "score": 33.136,
+          "snippet": "key risk factors in the perioperative period. Optimize modifiable risk factors. Modifiable Preoperative Risk Factors Emergent situations do not afford adequate time to alter all modifiable risk factors, which should be considered and optimized in patients undergoing elective procedures. Other factors, such as patient"
+        }
+      ]
+    },
+    {
+      "stableGuid": "f7v^6oH5AE",
+      "front": "If the strain rate is &gt; 10 %, a fibrous union will occur.",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science"
+      ],
+      "candidates": [
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 35.687,
+          "snippet": "nfections in orthopaedics, in Einhorn TA, O’Keefe RJ, Buckwalter JA, eds: Orthopaedic Basic Science. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2007, pp 299-314. Types of Musculoskeletal Infection and Clinical Presentation SEND FEEDBACK 9/3/26, 4:48 PM AAOS | Musculoskeletal Infections and Microbiology Bas"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 29.886,
+          "snippet": "at a high-enough rate. Therefore, the wear rate of polyethylene is highly correlated with the development of osteolysis. The historical wear rate of 28-mm UHMWPE liners is 0.1 to 0.2 mm/yr. Polyethylene liner wear rates of less SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Total Hip Arthroplasty: Bearing Surfaces Basic Science"
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "extractable": true,
+          "score": 27.135,
+          "snippet": " Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing  CORE May 18, 2026 James Gregory, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Assess the natural progression of rotator cuff disease. Understand the b"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 26.997,
+          "snippet": "cellular or genetic mechanisms in the future. Natural History Little data are available on the natural history of massive RCTs and CTA. Neer et al1 estimated that CTA will occur in 4% of patients with a massive RCT. SEND FEEDBACK 9/4/26, 10:26 AM AAOS | Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic C"
+        },
+        {
+          "id": "6004044",
+          "title": "Fibrous/Histiocytic Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004044",
+          "extractable": true,
+          "score": 23.93,
+          "snippet": "Gundle, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Compare and contrast the clinical, radiographic, and histologic characteristics of common fibrous lesions of bone. Discuss appropriate work up and diagnosis of fibrous lesions of bone. Review g"
+        },
+        {
+          "id": "510000593",
+          "title": "Nonunions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000593",
+          "extractable": true,
+          "score": 13.949,
+          "snippet": "reduce strain by controlling the stiffness or flexibility of the fixation construct. Stiff fixation constructs that allow less than 2% strain induce intramembranous or primary bone healing; constructs that allow 2% to 10% strain induce endochondral ossification or secondary bone healing. Decreasing stiffness, such tha"
+        },
+        {
+          "id": "6001006",
+          "title": "Bone Healing and Bone Grafts",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001006",
+          "extractable": true,
+          "score": 11.587,
+          "snippet": "Recommendation for Bone Growth Stimulation Type Reported Case Series Union Rate for Management of Delayed Union or Nonunion Published Grade of Recommendationa Direct current 46%–86% Delayed union or nonunion: C Spinal fusion: B SEND FEEDBACK 9/3/26, 3:59 PM AAOS | Bone Healing and Bone Grafts https://rock.aaos.org/cou"
+        },
+        {
+          "id": "6004019",
+          "title": "Primary Total Hip Arthroplasty for Osteoarthritis: Acetabular Component",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004019",
+          "extractable": true,
+          "score": 10.952,
+          "snippet": "tissue. In general, this occurs 4 to 12 weeks after component implantation but may continue as long as 3 years postoperatively. Micromotion of more than 150 μm leads to fibrous union, micromotion between 40 and 150 μm leads to a combination of osseous and fibrous union, and micromotion of less than 20 μm primarily ren"
+        },
+        {
+          "id": "6001186",
+          "title": "Bone Healing, Bone Graft Materials, and Bone Graft Substitutes, Including Bone Morphogenetic Proteins",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001186",
+          "extractable": true,
+          "score": 10.951,
+          "snippet": "provide relative stability (allowing controlled flexibility). Secondary bone healing involves responses in the periosteum and the surrounding soft tissues. Two types of secondary healing occur: endochondral and intramembranous. Typically, both types occur concurrently at a fracture site. Fracture healing is classicall"
+        },
+        {
+          "id": "6000058",
+          "title": "Biomechanics of Plates, Screws, Rods, and External Fixation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000058",
+          "extractable": true,
+          "score": 9.204,
+          "snippet": "secondary fracture repair, a degree of motion is necessary, but excess strain will inhibit healing. Strain of 2% to 10% induces secondary bone healing. The degree of motion at the fracture site must result in a strain on the healing unit lower than its breaking strain for that material to bridge the fracture gap. Thro"
+        },
+        {
+          "id": "6002012",
+          "title": "Postoperative Periprosthetic Fractures of the Femur and Acetabulum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002012",
+          "extractable": true,
+          "score": 8.975,
+          "snippet": "2 Radiographs of a 79-year-old patient with a Vancouver type AG left periprosthetic femur fracture sustained 6 months after index total hip arthroplasty, a conversion from prior cannulated screw fixation. The stem was well fixed, and the fracture was managed nonsurgically. Follow-up imaging shows a fibrous union at 7"
+        },
+        {
+          "id": "510000516",
+          "title": "Overview and Management of Bone Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000516",
+          "extractable": true,
+          "score": 8.639,
+          "snippet": "proximal femur Vascularized fibula Can be used with an allograft to promote union or as a biologic reconstruction option in children, in whom hypertrophy of the fibula is expected High rates of early complications and revision surgery but overall high rate of union and lower rates of infections and long-term complicat"
+        }
+      ]
+    },
+    {
+      "stableGuid": "f7ZCI:hY<*",
+      "front": "Which two physical exam maneuvers help evaluate for biceps tendinitis? Speed Yergason",
+      "extra": "Yergason - https://www.youtube.com/watch?v=_Cjahul5yuI Speed - https://www.youtube.com/watch?v=gbG_O9Gv8aQ",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Proximal_Biceps_Tendon_Pathology",
+        "SnapOrtho::Specialty::Shoulder_Elbow"
+      ],
+      "candidates": [
+        {
+          "id": "510000637",
+          "title": "Elbow Repair and Reconstruction: Distal Biceps and Triceps Tendon Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000637",
+          "extractable": true,
+          "score": 40.265,
+          "snippet": "tendon. Figure 6 Images of a 53-year-old, right-handed male police officer with a 3-month-old distal biceps tendon tear and proximal retraction. Intraoperative photographs of the elbow show minimal biceps tendon stump (A), an Achilles tendon allograft before inset (B), the Achilles tendon allograft after incorporation"
+        },
+        {
+          "id": "510000614",
+          "title": "Physical Examination of the Shoulder",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000614",
+          "extractable": true,
+          "score": 35.752,
+          "snippet": "of 0.88 and a sensitivity of 0.20.3 SEND FEEDBACK 9/4/26, 10:23 AM AAOS | Physical Examination of the Shoulder https://rock.aaos.org/coursecontent.aspx?id=510000614 21/36 Figure 9 Photograph shows the Speed test for pathology of the long head of the biceps tendon. (Reproduced from Matache BA, Gammon B, Athwal GS, Bickn"
+        },
+        {
+          "id": "6004083",
+          "title": "Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004083",
+          "extractable": true,
+          "score": 34.519,
+          "snippet": "S | Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes https://rock.aaos.org/coursecontent.aspx?id=6004083 22/36 Week 1 Brace: posterior splint at 90°of elbow flexion ROM: wrist active ROM extension/flexion Elbow postoperative compression dressing 5 to 7 days Exercises Gripping Wrist ROM Shoulder and b"
+        },
+        {
+          "id": "510000633",
+          "title": "Throwing Elbow Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000633",
+          "extractable": true,
+          "score": 32.989,
+          "snippet": "Injuries Shoulder injuries are commonly observed in athletes with elbow injuries and vice versa.  Associated Injuries Associated injuries are common in overhead athletes. One example of an associated injury in a patient with an elbow injury is shoulder impingement. Shoulder impingement, which often results from a rel"
+        },
+        {
+          "id": "510000538",
+          "title": "Throwing Shoulder Injuries: Superior Labrum Anterior to Posterior Tears and Proximal Biceps Tendon Lesions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000538",
+          "extractable": true,
+          "score": 26.974,
+          "snippet": "biceps tendon. Discuss the pathophysiology of superior labrum anterior to posterior tears and proximal biceps lesions. Identify clinical and imaging diagnostic methods for superior labrum anterior to posterior tears and proximal biceps lesions. Create appropriate treatment regimens for superior labrum anterior to post"
+        },
+        {
+          "id": "6001159",
+          "title": "History and Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001159",
+          "extractable": true,
+          "score": 23.066,
+          "snippet": " Physical Examination Several studies have published detailed physical examinations that evaluate the hip in a multilayered fashion, including the osteochondral, capsulolabral, musculotendinous, neurovascular, and kinetic chain sections of the physical examination.1 Although this published material is an excellent re"
+        },
+        {
+          "id": "510000585",
+          "title": "Physical Examination of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000585",
+          "extractable": true,
+          "score": 21.985,
+          "snippet": "A biceps crease interval of more than 6 cm is predictive of a distal biceps tendon rupture. Normally, the belly of the biceps muscle should rise and fall with active flexion and extension of the elbow. The hook test can be used to evaluate for a rupture of the distal biceps tendon. In this test, the patient flexes the"
+        },
+        {
+          "id": "6001074",
+          "title": "Physical Examination of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001074",
+          "extractable": true,
+          "score": 21.696,
+          "snippet": "examination maneuvers during physical examination of the spine. Discuss the implications of positive findings with special examination maneuvers during an evaluation of the spine. Overview General Principles     NOTES SEND FEEDBACK 9/4/26, 10:24 AM AAOS | Physical Examination of the Spine https://rock.aaos.org/cou"
+        },
+        {
+          "id": "6001067",
+          "title": "Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001067",
+          "extractable": true,
+          "score": 21.581,
+          "snippet": " Physical Examination of the Hip  CORE August 27, 2026 Mia S. Hagen, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Develop a systematic physical examination for nonarthritic hip pain. Understand the sensitivity and specificity of various physical"
+        },
+        {
+          "id": "510000619",
+          "title": "Rotator Cuff Disease: Impingement Syndrome, Calcific Tendinitis, Partial-Thickness Rotator Cuff Tears, and Full-Thickness Rotator Cuff Tear",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000619",
+          "extractable": true,
+          "score": 19.623,
+          "snippet": "II, Marberry TA: On the disadvantages of radical acromionectomy. J Bone Joint Surg Am 1981;63(3):416-419. Patient Evaluation The patient history, physical examination, and imaging study findings largely are nonspecific; physical examination findings may overlap with subacromial bursitis, labral tears, biceps tendiniti"
+        },
+        {
+          "id": "510000582",
+          "title": "Pediatric and Adolescent Back Pain: Pediatric Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000582",
+          "extractable": true,
+          "score": 19.143,
+          "snippet": "NSAIDs, for the pain? Have you undergone any physical therapy to help the pain? Visceral pain is not relieved by rest or exacerbated by activity. Do you have any family history of degenerative disk disease? Watch the following video (1:20–3:11) by Gresh11 on physical examination and imaging of pediatric back pain, whi"
+        },
+        {
+          "id": "6001069",
+          "title": "Physical Examination of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001069",
+          "extractable": true,
+          "score": 18.062,
+          "snippet": "You Know Learning Objectives Perform a comprehensive physical examination of the knee. Diagnose knee ligament injuries. Recognize the physical examination findings of a meniscal tear. Recognize the physical examination findings of articular cartilage injuries, osteochondritis dissecans, and osteoarthritis. Recognize t"
+        }
+      ]
+    },
+    {
+      "stableGuid": "F9,|9IT}I/",
+      "front": "What is the term given to the tapered distal end of the spinal cord ? Conus medullaris",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Spine",
+        "SnapOrtho::Anatomy::Spine::Nerves",
+        "SnapOrtho::Anatomy::Spine::Nerves::Spinal_Cord",
+        "SnapOrtho::Specialty::Spine"
+      ],
+      "candidates": [
+        {
+          "id": "6002096",
+          "title": "Spinal Cord Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002096",
+          "extractable": true,
+          "score": 53.908,
+          "snippet": "me Mixed syndrome is characterized by diffuse involvement of the entire spinal cord. Affected patients have a good prognosis for recovery. As with all incomplete SCI syndromes, early motor recovery is the best prognostic indicator. Conus Medullaris Syndrome Conus medullaris syndrome results from the compression of the"
+        },
+        {
+          "id": "6002004",
+          "title": "Peripheral Nerve and Spinal Cord Pathophysiology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002004",
+          "extractable": true,
+          "score": 34.533,
+          "snippet": "l scans (increasing cost and time in the magnetic resonance scanner for the patient). SEND FEEDBACK 9/3/26, 5:40 PM AAOS | Peripheral Nerve and Spinal Cord Pathophysiology https://rock.aaos.org/coursecontent.aspx?id=6002004 11/16 Spinal Cord Injury  Spinal Cord Injury Spinal cord injury is one of the most devastating"
+        },
+        {
+          "id": "6003024",
+          "title": "Anatomy of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003024",
+          "extractable": true,
+          "score": 33.053,
+          "snippet": "ing and descending pathways in the spinal cord. (Reproduced from Butler JS, Kurd MF: Spine neuroanatomy and physiology, in Truumees E, Prather H, eds: Orthopaedic Knowledge Update: Spine, ed 5. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2017, pp 17-26.)  Spinal Cord The spinal cord extends from the forame"
+        },
+        {
+          "id": "6001072",
+          "title": "Lumbar Spine Injuries and Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001072",
+          "extractable": true,
+          "score": 28.62,
+          "snippet": "highest risk of spinal cord injury has been noted in diving, skiing, rugby, horseback riding, and American football (Resources 3 through 5)  Epidemiology Epidemiologic data related to sports-related spine and spinal cord injuries vary by country and sport participation. The sports associated with the highest risk of"
+        },
+        {
+          "id": "6000055",
+          "title": "Spinal Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000055",
+          "extractable": true,
+          "score": 26.881,
+          "snippet": "physicians who can interpret necessary data, prescribe effective treatment, and monitor for known complications are essential. In patients with SEA that resulted in a spinal cord level neurologic injury, physical medicine and rehabilitation physicians should be involved early to help coordinate postoperative, spinal c"
+        },
+        {
+          "id": "6001077",
+          "title": "Metastatic Bone Disease to the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001077",
+          "extractable": true,
+          "score": 25.456,
+          "snippet": "on the cord by distinguishing entirely intraosseous (grade 0), epidural (grade 1a: no thecal sac impingement; grade 1b: thecal sac impingement with no cord impingement; grade 1c: spinal cord abutment without compression), and cord- deforming (grade 2: cord compressed but spinal fluid visible; grade 3: cord compressed"
+        },
+        {
+          "id": "510000533",
+          "title": "Primary Bone Tumors of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000533",
+          "extractable": true,
+          "score": 24.002,
+          "snippet": "to the vasculature of the spinal cord, as much as three-level bilateral nerve root sacrifice in spine tumor surgery, even in the lower thoracic spine, often is well tolerated without neurologic deficits.  Vasculature Understanding the blood supply to the spinal cord is critical in the surgical management of spinal tu"
+        },
+        {
+          "id": "6000054",
+          "title": "Spinal Evaluation in the Trauma Patient",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000054",
+          "extractable": true,
+          "score": 22.663,
+          "snippet": "common in patients with a spinal cord injury above the T4 level and is observed in approximately 20% of all patients with a cervical spinal cord injury. Complete spinal cord injuries also are associated with a higher incidence of neurogenic shock than incomplete spinal cord injuries. Spinal shock, which is distinctly"
+        },
+        {
+          "id": "6000057",
+          "title": "Inflammatory Spinal Arthritides",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000057",
+          "extractable": true,
+          "score": 21.773,
+          "snippet": "caudally is more common than misplacement cranially given the difficulty in achieving the necessary angle of approach, particularly in patients with thoracic kyphosis32 (Figure 11). Relatively, injury to the spinal cord is much less likely given the large size of the spinal canal in the upper cervical spine and the tr"
+        },
+        {
+          "id": "6001078",
+          "title": "Thoracic and Lumbar Fractures and Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001078",
+          "extractable": true,
+          "score": 20.987,
+          "snippet": "are essential for maintaining spinal stability and consist of the facet joint capsule, ligamentum flavum, interspinous ligament, and supraspinous ligament. The conus terminalis typically terminates at the L1 vertebral level. Injuries above the conus may cause thoracic SCI. Injuries at or below the conus may cause conu"
+        },
+        {
+          "id": "6002080",
+          "title": "Spinal Muscular Atrophy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002080",
+          "extractable": true,
+          "score": 20.747,
+          "snippet": " Spinal Muscular Atrophy  CORE June 30, 2025 Jason B. Anari, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Interpret the pathophysiology of spinal muscular atrophy. Assess orthopaedic manifestations of spinal muscular atrophy. Determine biologic"
+        },
+        {
+          "id": "510000598",
+          "title": "Evaluation and Management of Spinal Metastases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000598",
+          "extractable": true,
+          "score": 20.291,
+          "snippet": "dural deformity. Stage 1b refers to epidural disease compressing the thecal sac without abutting the spinal cord. Stage 1c describes spinal cord abutment. B, Stage 2 disease deforms the spinal cord without circumferential obliterating the cerebrospinal fluid space. C, Stage 3 describes spinal cord compression with com"
+        }
+      ]
+    }
+  ]
+}

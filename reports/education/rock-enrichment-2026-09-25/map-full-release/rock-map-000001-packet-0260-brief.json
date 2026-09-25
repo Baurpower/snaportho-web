@@ -1,0 +1,1110 @@
+{
+  "batchKey": "map-000001-packet-0260",
+  "inputChecksum": "5b149ed55f6dea5b81ee1756a815cf09318590945bf4305481c3084b231ba2b9",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "sidecarSchema": {
+    "card": {
+      "stableGuid": "string",
+      "status": "\"mapped\"|\"skipped\"",
+      "chapters": "1-3 {id, role} from this card's candidates; first is primary",
+      "skipReason": "if skipped"
+    }
+  },
+  "cards": [
+    {
+      "stableGuid": "P6L9;fFr$Z",
+      "front": "Gracilis Origin: Pubic ramus Insertion: Proximal media tibia Nerve: Obturator Action: Adduction , flexion , internal rotation",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology::Tibia"
+      ],
+      "candidates": [
+        {
+          "id": "510000529",
+          "title": "Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000529",
+          "extractable": true,
+          "score": 43.446,
+          "snippet": "magnus Origin: inferior ramus Insertion: gluteal tuberosity of the femur, linea aspera, adductor tubercle Motion: hip adductor Innervation: posterior division of the obturator nerve Gracilis Origin: inferior pubic ramus medial to the pubic symphysis and lateral to the origin of the adductor brevis origin Insertion: me"
+        },
+        {
+          "id": "6001046",
+          "title": "Stress Fractures of the Leg: Tibia and Fibula",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001046",
+          "extractable": true,
+          "score": 37.099,
+          "snippet": "common than proximal fibular fractures. (Courtesy of Nicholas A. Viens, MD, FAAOS, Durham, NC.) SEND FEEDBACK 9/4/26, 9:41 AM AAOS | Stress Fractures of the Leg: Tibia and Fibula https://rock.aaos.org/coursecontent.aspx?id=6001046 5/13 Figure 4 Lateral radiograph of a tibia and fibula demonstrates cortical thickening"
+        },
+        {
+          "id": "6001029",
+          "title": "Surgical Anatomy of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001029",
+          "extractable": true,
+          "score": 35.45,
+          "snippet": "the saphenous nerve Disrupted during standard approaches to the knee Obturator nerve (L2, L3, L4) Sciatic nerve (L4, L5, S1, S2) Peroneal nerve Potential nerve injury is related to lateral releases performed in patients with a valgus knee deformity.  Nerves The largest nerve of the knee is the posterior articular bra"
+        },
+        {
+          "id": "6000045",
+          "title": "Athletic Pubalgia and Core Muscle Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000045",
+          "extractable": true,
+          "score": 33.166,
+          "snippet": "Acetabulum Proximal femur Vascular Inferior epigastric artery Superficial epigastric artery Neural Lateral femoral cutaneous nerve Obturator nerve Inguinal nerve Sciatic nerve Genitofemoral nerve Tendons Conjoint tendon Psoas tendon Joints and Ligaments Femoroacetabular joint Hip labrum Inguinal ligament Pubic symphys"
+        },
+        {
+          "id": "510000629",
+          "title": "Throwing Shoulder Injuries and Internal Impingement",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000629",
+          "extractable": true,
+          "score": 31.522,
+          "snippet": "Neurovascular Examination Sensation Axillary nerve Radial nerve Ulnar nerve Median nerve Motor Cranial nerve XI Axillary nerve Musculocutaneous nerve Suprascapular nerve Subscapular nerve Radial nerve Ulnar nerve Median nerve Anterior and posterior interosseous nerves SEND FEEDBACK 9/4/26, 9:51 AM AAOS | Throwing Shou"
+        },
+        {
+          "id": "510000530",
+          "title": "Anatomy and Biomechanics of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000530",
+          "extractable": true,
+          "score": 29.92,
+          "snippet": "h at higher flexion angles Originates on a prominence of the lateral femoral epicondyle Inserts on the proximal tibia between the head of the fibula and the Gerdy tubercle Iliotibial Band Functions in the knee as a static restraint against internal tibia rotation, ATT during flexion Changes from extensor to flexor at 3"
+        },
+        {
+          "id": "510000536",
+          "title": "Knee Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000536",
+          "extractable": true,
+          "score": 27.265,
+          "snippet": "4:31 PM AAOS | Knee Dislocations https://rock.aaos.org/coursecontent.aspx?id=510000536 3/43 Tendons Tendons Tendons that cross the knee joint allow motion and provide secondary stability. The patellar tendon extends from the distal patella to the tibia tubercle. Medially, the pes anserinus (sartorius, gracilis and sem"
+        },
+        {
+          "id": "6004047",
+          "title": "Tumors of Unknown Origin",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004047",
+          "extractable": true,
+          "score": 26.534,
+          "snippet": "bone and soft-tissue tumors of uncertain origin and pathogenesis. Describe the clinical presentation of patients with tumors of uncertain origin. Explain the epidemiology, etiology, and natural history of tumors of uncertain origin. Describe the radiographic and histologic characteristics that define tumors of unknown"
+        },
+        {
+          "id": "6003020",
+          "title": "Acetabular Fractures: Evaluation and Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003020",
+          "extractable": true,
+          "score": 26.158,
+          "snippet": "adduction and internal rotation, while a posteriorly directed manual force is applied through the longitudinal axis of the femur. Sequentially, fluoroscopic images are obtained at 0°, 30°, 60°, and 90° of flexion. If the hip remains congruent, imaging is repeated with the addition of slight adduction and internal rota"
+        },
+        {
+          "id": "6002026",
+          "title": "Acetabular Fractures: Definitive Management and Outcomes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002026",
+          "extractable": true,
+          "score": 24.265,
+          "snippet": "f Retzius. Dissection is carried along the superior pubic ramus, releasing the iliopectineal fascia, and posteriorly along the pelvic brim, elevating the iliacus muscle to the anterior aspect of the sacroiliac joint to afford access to the lower third of the internal iliac fossa. The obturator nerve is identified and m"
+        },
+        {
+          "id": "6002060",
+          "title": "Hip Arthroscopy and Periacetabular Osteotomy: Surgical Techniques",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002060",
+          "extractable": true,
+          "score": 23.974,
+          "snippet": "ed proximally to achieve the superior ramus cut. Hip flexion and adduction of the surgical leg are achieved to relax soft-tissue structures overlying the superior ramus. The iliopsoas and the femoral neurovascular bundle are retracted medially, taking care to minimize traction time and force. The superior pubic ramus i"
+        },
+        {
+          "id": "6002111",
+          "title": "Biology and Function of Nerve",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002111",
+          "extractable": true,
+          "score": 23.838,
+          "snippet": "composed of organized groups of nerve fascicles that form nerve branches to innervate end organs. Fascicles within a nerve are larger and fewer in number in more proximal locations; they are smaller and greater in number distally. In the proximal extremity, the nerve fibers that supply the proximal limb tend to be mor"
+        }
+      ]
+    },
+    {
+      "stableGuid": "p7i>@pV2z,",
+      "front": "Hypersensitivity to cobalt-chrome alloy implants is likely secondary to which metal ? Nickel",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science"
+      ],
+      "candidates": [
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 37.216,
+          "snippet": "ALTR is associated with various local joint and tissue findings. Delayed-type hypersensitivity response to metal wear products: perivascular infiltrate of lymphocytes with the development of a typical immunologic response SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Total Hip Arthroplasty: Bearing Surfaces Basic Science https"
+        },
+        {
+          "id": "510000509",
+          "title": "Postoperative Adverse Local Tissue Reaction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000509",
+          "extractable": true,
+          "score": 33.767,
+          "snippet": "22.2- or 28-mm inner head, which only may be available in cobalt-chromium options depending on the manufacturer. Such use of metal heads on trunnions with dissimilar metal composition may potentiate corrosion and trunnionosis, introducing a secondary source of metal debris. Highly porous metal implants may be used dur"
+        },
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 32.819,
+          "snippet": "nfections in orthopaedics, in Einhorn TA, O’Keefe RJ, Buckwalter JA, eds: Orthopaedic Basic Science. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2007, pp 299-314. Types of Musculoskeletal Infection and Clinical Presentation SEND FEEDBACK 9/3/26, 4:48 PM AAOS | Musculoskeletal Infections and Microbiology Bas"
+        },
+        {
+          "id": "6002108",
+          "title": "Orthopaedic Biomaterials",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002108",
+          "extractable": true,
+          "score": 30.066,
+          "snippet": "Is seen in fracture fixation plates, at the interface between a plate made of one metal or metal alloy and screws or constructs made of a different metal or metal alloy  Galvanic Corrosion Corrosion is best avoided via the use of similar metals or metal alloys that are in contact with one another in a construct or de"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 26.644,
+          "snippet": " Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes  CORE May 05, 2026 James M. Gregory, MD (2020–present) Jason Kappa, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Understand the etiology, natural history, and pathoanatomy o"
+        },
+        {
+          "id": "6004018",
+          "title": "Alternative Implant Designs: Hip Resurfacing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004018",
+          "extractable": true,
+          "score": 24.854,
+          "snippet": "childbearing age Serum level increases in metal ions are not considered to be safe in pregnancy; therefore, HRA must be avoided in this patient population. Metal allergy Patients with a documented metal allergy may be at an increased risk of adverse reaction to metal ion debris. Renal failure Metal ions released from"
+        },
+        {
+          "id": "6001161",
+          "title": "Retrieval Analysis of Hip and Knee Prostheses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001161",
+          "extractable": true,
+          "score": 24.751,
+          "snippet": "occurs, retrieval analysis can accurately determine the cause, based on damage features within the fracture surfaces. Corrosion of orthopaedic implants should be minimized by the choice of a metal alloy with excellent corrosion resistance, such as titanium alloys, cobalt- chromium-molybdenum (CoCrMo) alloy, and stainl"
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "extractable": true,
+          "score": 24.434,
+          "snippet": " Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing  CORE May 18, 2026 James Gregory, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Assess the natural progression of rotator cuff disease. Understand the b"
+        },
+        {
+          "id": "6004075",
+          "title": "The Biology and Biomechanics of Grafts and Implants in Sports Medicine Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004075",
+          "extractable": true,
+          "score": 18.517,
+          "snippet": "tear as observed on MRIs and ultrasonographic images. Serial ultrasonography demonstrated an increase in tendon thickness at 12 months postoperatively. No complications related to the implant were reported.26 Implants A wide variety of implants are used in sports medicine. The primary goal of implants in sports medici"
+        },
+        {
+          "id": "6004019",
+          "title": "Primary Total Hip Arthroplasty for Osteoarthritis: Acetabular Component",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004019",
+          "extractable": true,
+          "score": 18.364,
+          "snippet": "patient quality of life scores.10 Although cemented prostheses are lower in cost compared with hybrid and noncemented THA implants, they may not be cost-effective given the higher complication and revision rates over time. Noncemented Acetabular Fixation Basic Science Osseointegration is the attachment of lamellar bon"
+        },
+        {
+          "id": "6001150",
+          "title": "Cytokines",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001150",
+          "extractable": true,
+          "score": 17.319,
+          "snippet": "adaptive immune response to implant debris, including cytokine production. Cytokine testing and metal DTH testing via the lymphocyte transformation test require isolating peripheral blood mononuclear cells from a normal blood draw and exposing the isolated cells to specific suspect challenge agents (such as cobalt or"
+        },
+        {
+          "id": "6002065",
+          "title": "Primary Total Knee Arthroplasty for Osteoarthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002065",
+          "extractable": true,
+          "score": 16.92,
+          "snippet": "years.44 One revision was noted in each group, both of which were unrelated to implant fixation. The long-term results of modern noncemented implants also appear to be encouraging. In a randomized trial comparing 277 cemented TKA implants with 224 noncemented TKA implants, with no patellar resurfacing in either group,"
+        }
+      ]
+    },
+    {
+      "stableGuid": "p7s87`|#|O",
+      "front": "On T2 MRI , what color will calcium deposits show in patients with calcific tendonitis of the rotator cuff ? Black",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Shoulder_Girdle",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Muscles",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Muscles::Rotator_Cuff",
+        "SnapOrtho::Specialty::Sports_Medicine"
+      ],
+      "candidates": [
+        {
+          "id": "510000619",
+          "title": "Rotator Cuff Disease: Impingement Syndrome, Calcific Tendinitis, Partial-Thickness Rotator Cuff Tears, and Full-Thickness Rotator Cuff Tear",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000619",
+          "extractable": true,
+          "score": 45.527,
+          "snippet": "of most degenerative rotator cuff tears. Calcific Tendinitis Pathophysiology SEND FEEDBACK 9/3/26, 6:05 PM AAOS | Rotator Cuff Disease: Impingement Syndrome, Calcific Tendinitis, Partial-Thickness Rotator Cuff Tears, and Full-Thickness Rotator Cuff ... https://rock.aaos.org/coursecontent.aspx?id=510000619 13/55 Calcif"
+        },
+        {
+          "id": "510000616",
+          "title": "Imaging of Rotator Cuff Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000616",
+          "extractable": true,
+          "score": 44.451,
+          "snippet": "within the rotator cuff insertion is known as rotator cuff calcific tendinopathy. Caused by calcium carbonate apatite deposition within the rotator cuff tendon (Figure 2) SEND FEEDBACK 9/3/26, 4:24 PM AAOS | Imaging of Rotator Cuff Disease https://rock.aaos.org/coursecontent.aspx?id=510000616 3/19 Figure 2 AP radiogra"
+        },
+        {
+          "id": "6001063",
+          "title": "Rotator Cuff Arthropathy: Reverse Shoulder Technique and Outcome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001063",
+          "extractable": true,
+          "score": 36.959,
+          "snippet": "for the management of rotator cuff arthropathy. Rotator Cuff Arthropathy Background     NOTES SEND FEEDBACK 9/3/26, 6:04 PM AAOS | Rotator Cuff Arthropathy: Reverse Shoulder Technique and Outcome https://rock.aaos.org/coursecontent.aspx?id=6001063 1/27 Neer first described the clinical and pathologic findings of r"
+        },
+        {
+          "id": "6004075",
+          "title": "The Biology and Biomechanics of Grafts and Implants in Sports Medicine Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004075",
+          "extractable": true,
+          "score": 35.096,
+          "snippet": "and Implants in Sports Medicine Surgery https://rock.aaos.org/coursecontent.aspx?id=6004075 7/27 versus 4.3%).22 Allografts remain a viable option for select patient groups, such as patients older than 40 years, patients with lower physical demands, less active patients, patients with multiligamentous knee injuries, a"
+        },
+        {
+          "id": "510000627",
+          "title": "Shoulder Stiffness: Adhesive Capsulitis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000627",
+          "extractable": true,
+          "score": 34.891,
+          "snippet": "Cervical radiculopathy Rotator cuff disease, including rotator cuff tear, tendonitis, or calcific tendinitis  Differential Diagnosis Primary idiopathic adhesive capsulitis is clinical diagnosis and often is a diagnosis of exclusion. Because shoulder stiffness may be caused by various conditions, other reasons for sho"
+        },
+        {
+          "id": "510000620",
+          "title": "Rotator Cuff Disease: Massive Rotator Cuff Tears and Tendon Transfer",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000620",
+          "extractable": true,
+          "score": 33.753,
+          "snippet": "patients with a functionally irreparable rotator cuff tear. Review the indications, techniques, and outcomes of several tendon transfer procedures. Massive Rotator Cuff Tears Background     NOTES SEND FEEDBACK 9/4/26, 10:27 AM AAOS | Rotator Cuff Disease: Massive Rotator Cuff Tears and Tendon Transfer https://rock"
+        },
+        {
+          "id": "6000034",
+          "title": "Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000034",
+          "extractable": true,
+          "score": 33.57,
+          "snippet": "ligament. (Image reproduced with permission from Itoigawa Y, Itoi E: Anatomy of capsulolabral complex and rotator interval related to glenohumeral instability. Knee Surg Sports Traumatol Arthrosc 24[2]:343-349. Table reproduced from Riboh JC, Singh A: Shoulder instability, rotator cuff disorders, muscular ruptures, ad"
+        },
+        {
+          "id": "510000569",
+          "title": "Massive Rotator Cuff Tears: Biologic Augmentation of Rotator Cuff Repair",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000569",
+          "extractable": true,
+          "score": 33.445,
+          "snippet": "You Know Learning Objectives Describe biologics currently used to augment rotator cuff repair. Discuss the normal rotator cuff insertional anatomy and the healing response after rotator cuff repair. Recognize the potential complications or adverse effects associated with biologics used during rotator cuff repair augme"
+        },
+        {
+          "id": "6004082",
+          "title": "Rehabilitation of Rotator Cuff Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004082",
+          "extractable": true,
+          "score": 32.054,
+          "snippet": "tearing with evidence of continuous tendon disruption between the articular and bursal sides  Definitions Rotator cuff disorders comprise the classification or spectrum of tissue disorders of the rotator cuff tendons, ranging from tendinopathy, to partial-thickness rotator cuff tears, to full-thickness rotator cuff t"
+        },
+        {
+          "id": "6001062",
+          "title": "Rotator Cuff Arthropathy: Reverse Shoulder Arthroplasty Design and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001062",
+          "extractable": true,
+          "score": 28.644,
+          "snippet": "resist proximal translational forces of the deltoid during abduction and elevation.3 In patients with a rotator cuff–deficient shoulder, the compressive forces of the humeral head against the glenoid become imbalanced. With additional loss of rotator cuff integrity because of tearing and fatty degeneration, the rotato"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 28.523,
+          "snippet": "etiology, natural history, and pathoanatomy of rotator cuff tear arthropathy. Apply classification systems for rotator cuff tear arthropathy. Perform an appropriate work up of patients in whom rotator cuff tear arthropathy is suspected. Identify appropriate treatment options for patients with rotator cuff tear arthrop"
+        },
+        {
+          "id": "510000621",
+          "title": "Massive Rotator Cuff Tears and Superior Capsule Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000621",
+          "extractable": true,
+          "score": 27.954,
+          "snippet": "Review massive rotator cuff tears. Review classification systems associated with massive rotator cuff tears. Identify appropriate indications for superior capsule reconstruction. Describe preoperative planning for the management of massive rotator cuff tears. Explain the technique for the management of massive rotator"
+        }
+      ]
+    },
+    {
+      "stableGuid": "P8/`mMsN=o",
+      "front": "Three types of acetabular liners/femoral head implant bearing surfaces used for THA patients? UHMWPE (ultra high molecular weight polyethylene) Co-Cr (cobalt-chrome) Ceramic",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femoral_Head",
+        "SnapOrtho::Specialty::Adult_Reconstruction"
+      ],
+      "candidates": [
+        {
+          "id": "6001028",
+          "title": "Postoperative Polyethylene Wear and Osteolysis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001028",
+          "extractable": true,
+          "score": 80.701,
+          "snippet": "patients in whom UHMWPE was implanted was 11.7% compared with 6.2% in patients in whom cross-linked polyethylene (XLPE) was used. The difference can be attributed to the reduction in rates of osteolysis, dislocation, and loosening.8 Metal head- or ceramic head-on-polyethylene are the most common bearing surfaces used."
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 78.679,
+          "snippet": "Arthroplasty: Bearing Surfaces Basic Science https://rock.aaos.org/coursecontent.aspx?id=510000503 9/21 Premature failures have occurred in rare instances in which the acetabular implant was placed vertically, with thin polyethylene at its rim. This especially is a concern with implants that have larger femoral head s"
+        },
+        {
+          "id": "6002061",
+          "title": "Bearing Surface Options: Wear, Stability, and Revision",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002061",
+          "extractable": true,
+          "score": 67.371,
+          "snippet": "short-term complications, most THA bearing surfaces currently implanted include a hard head that articulates against a soft acetabulum. Popular THA articulation options o A metal head against a highly cross-linked polyethylene acetabulum o A ceramic head against a highly cross-linked polyethylene acetabulum o Dual mob"
+        },
+        {
+          "id": "6004018",
+          "title": "Alternative Implant Designs: Hip Resurfacing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004018",
+          "extractable": true,
+          "score": 54.18,
+          "snippet": "ght bearing is permitted. A stemmed THA femoral implant, with a polyethylene dual-mobility bearing, can be used to match the existing acetabular implant. Blevins et al17 reported that this technique resulted in good outcomes in most patients, reducing the risk of failed ingrowth of a newly implanted acetabular componen"
+        },
+        {
+          "id": "6004025",
+          "title": "Aseptic Loosening After Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004025",
+          "extractable": true,
+          "score": 52.141,
+          "snippet": "defined by the green lines, which include the hip capsule. This is because of the well-fixed nature of the implant on the femoral and acetabular sides, which do not allow egress of synovial fluid from the hip capsule. In patients with a loose femoral implant, the effective joint space is increased to include the green"
+        },
+        {
+          "id": "510000510",
+          "title": "Postoperative Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000510",
+          "extractable": true,
+          "score": 50.568,
+          "snippet": "head to occur.3,24 Dual-Mobility Cups and Constrained Acetabular Liners  Dual-Mobility Cups and Constrained Acetabular Liners Dual-mobility cups and constrained acetabular liners typically are reserved for patients with recurrent instability in whom the failure rate of other surgical treatment options likely would be"
+        },
+        {
+          "id": "6001161",
+          "title": "Retrieval Analysis of Hip and Knee Prostheses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001161",
+          "extractable": true,
+          "score": 48.217,
+          "snippet": "bearings; however, ceramic wear can occur if subluxation, even temporarily, causes contact between ceramic and metal surfaces. If a ceramic-on-ceramic or ceramic-on- polyethylene THA implant needs to be revised, it should only be replaced with another ceramic bearing surface and not a metal bearing surface. Even a few"
+        },
+        {
+          "id": "6004019",
+          "title": "Primary Total Hip Arthroplasty for Osteoarthritis: Acetabular Component",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004019",
+          "extractable": true,
+          "score": 46.194,
+          "snippet": "with modern-generation liners (eg, highly cross-linked polyethylene), the benefits of cemented fixation are less marked on the acetabular side of the joint. Although cemented cups are indicated in specific situations, evidence shows that, in many patients, a combination of cemented and noncemented components, namely a"
+        },
+        {
+          "id": "6004094",
+          "title": "Femoral Head Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004094",
+          "extractable": true,
+          "score": 43.151,
+          "snippet": "9/3/26, 4:07 PM AAOS | Femoral Head Fractures https://rock.aaos.org/coursecontent.aspx?id=6004094 2/19 Figure 1 Illustrations show the Pipkin classification.A, Type I, infrafoveal femoral head fracture. B, Type II, suprafoveal head fracture. C, Type III, any femoral head fracture with an ipsilateral femoral neck fract"
+        },
+        {
+          "id": "6004023",
+          "title": "Evaluation and Workup in Revision Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004023",
+          "extractable": true,
+          "score": 42.472,
+          "snippet": "depth/penetration, stem angulation, and stem rotation. Patient History Patients may present with instability and chronic groin, thigh, or lateral hip pain. Other complaints may include weakness, stiffness, hearing noises from the hip, leg-length discrepancy, or a history of instability/dislocation events. Patients wit"
+        },
+        {
+          "id": "510000509",
+          "title": "Postoperative Adverse Local Tissue Reaction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000509",
+          "extractable": true,
+          "score": 41.462,
+          "snippet": "acetabular cup in patients with a monoblock MoM design. Modular acetabular components may be addressed by exchanging the metal liner with a polyethylene liner in patients with a well-fixed cup that has the option of switching liners. Limited data are available to support retention of a monoblock acetabular component i"
+        },
+        {
+          "id": "510000554",
+          "title": "Surgical Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000554",
+          "extractable": true,
+          "score": 35.813,
+          "snippet": "anch of lateral femoral circumflex artery Anterolateral Watson- Jones Tensor fasciae latae (superior gluteal nerve) Gluteus medius (superior gluteal nerve) Femoral nerve, femoral artery, femoral vein, and lateral femoral circumflex artery Lateral Hardinge Gluteus medius/minimus split (superior gluteal nerve) Non"
+        }
+      ]
+    },
+    {
+      "stableGuid": "p8SmTY.[b,",
+      "front": "What is tarsal coalition? Congenital fusion of 2 tarsal bones",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Tarsal_Coalition",
+        "SnapOrtho::Specialty::Foot_Ankle",
+        "SnapOrtho::Specialty::Pediatric_Orthopedics"
+      ],
+      "candidates": [
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "extractable": true,
+          "score": 41.297,
+          "snippet": "Know Learning Objectives Understand appropriate evaluation and management of foot and ankle trauma in pediatric patients. Review unique features of pediatric foot and ankle injuries and their effect on growth and development. Pediatric Ankle Fractures Background/Epidemiology Ankle fractures represent approximately 5%"
+        },
+        {
+          "id": "6000014",
+          "title": "Biomechanics/Gait: Effect of Ankle/Foot Malalignment",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000014",
+          "extractable": true,
+          "score": 29.327,
+          "snippet": "tions of pes planus Long-term malalignment leads to a valgus hindfoot ankle joint. Cavovarus deformity of the foot Consists of lateral foot pain, increased pressure of the lateral foot leading to stress fracture of the fifth metatarsal, recurrent ankle sprains, and generalized foot stiffness with gait Equinus contractu"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 28.628,
+          "snippet": "3/26, 5:44 PM AAOS | Physical Examination of the Foot and Ankle https://rock.aaos.org/coursecontent.aspx?id=510000641 23/25 Video 16 Faro FD: Video. Evaluating Stability of the Metatarsophalangeal Joints. Lebanon, NH, 2023. Mark as Complete Resources Resource 1: Asla RJ: Biomechanics of the foot and ankle, in Chou LB,"
+        },
+        {
+          "id": "510000546",
+          "title": "Ankle and Foot Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000546",
+          "extractable": true,
+          "score": 26.082,
+          "snippet": "an ankle or foot sports injury. Discuss the surgical and nonsurgical management of common foot and ankle injuries. Outline surgical decision making for ankle and foot injuries. List risk factors associated with common foot and ankle injuries. Review current surgical techniques and outcomes of the management of foot an"
+        },
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 23.728,
+          "snippet": "rited in an autosomal dominant manner.118 Symphalangism is associated with systemic conditions, such as Apert syndrome, Poland syndrome, and conductive hearing loss. It also may present with other musculoskeletal anomalies, such as syndactyly, radiohumeral fusion, carpal synostosis, tarsal coalition, congenital cervica"
+        },
+        {
+          "id": "6000031",
+          "title": "Congenital Vertical Talus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000031",
+          "extractable": true,
+          "score": 21.448,
+          "snippet": "Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Describe the appearance of congenital vertical talus on physical examination and radiographs. Recognize the association between congenital vertical talus and neuromuscular conditions and genetic syndromes. Understand th"
+        },
+        {
+          "id": "6004062",
+          "title": "Pediatric Foot Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004062",
+          "extractable": true,
+          "score": 21.417,
+          "snippet": "r indicated. Tarsal Coalition Pathophysiology/Pathoanatomy The cause of symptoms is not precisely known but may be related to the transition of a cartilaginous coalition to bone during late childhood and early adolescence. Overview An osseous, cartilaginous, or fibrous connection between the tarsal bones  Overview Coa"
+        },
+        {
+          "id": "6001176",
+          "title": "Congenital Scoliosis and Early-Onset Scoliosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001176",
+          "extractable": true,
+          "score": 20.991,
+          "snippet": "You Know Learning Objectives Define and describe the classification of congenital scoliosis. Assess the natural history of congenital scoliosis. Define the treatment objectives for congenital scoliosis and the indications for surgery. Describe the new classification of early-onset scoliosis. Define the treatment objec"
+        },
+        {
+          "id": "6000011",
+          "title": "Arthritides of the Hindfoot",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000011",
+          "extractable": true,
+          "score": 19.574,
+          "snippet": "isolated single joint fusion limiting motion less than double or triple arthrodesis. A talonavicular fusion alone will eliminate almost all hindfoot motion and often is combined with subtalar fusion (frequently referred to as double arthrodesis). Triple arthrodesis (subtalar, talonavicular, and calcaneocuboid fusion)"
+        },
+        {
+          "id": "510000524",
+          "title": "Congenital Dislocation of the Knee and Patella",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000524",
+          "extractable": true,
+          "score": 18.324,
+          "snippet": "congenital dislocation of the knee. Recognize the conditions commonly associated with congenital dislocation of the knee and understand how to approach management of concurrent hip and foot conditions. Understand the basic pathoanatomy of congenital dislocation of the patella. Review the basic history and physical exa"
+        },
+        {
+          "id": "6004064",
+          "title": "Pediatric Lower Extremity Deformities and Limb Deficiencies",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004064",
+          "extractable": true,
+          "score": 16.497,
+          "snippet": "may not initially demonstrate a tarsal coalition. They will demonstrate absent lateral rays (if applicable). Over time, the ankle may develop a spherical shape from accommodation of the tarsal coalition. Magnetic Resonance Imaging MRI may aid in planning ankle reconstruction to determine if a tarsal coalition is presen"
+        },
+        {
+          "id": "6002083",
+          "title": "Foot and Ankle Sports Injuries in Pediatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002083",
+          "extractable": true,
+          "score": 12.962,
+          "snippet": "motor vehicle collisions; etc. and may lead to increasing severity of foot and ankle pathology. Risk Factors Growth rate, joint mobility, sport played, and injury history are risk factors. Ligamentous laxity, previous injury, altered proprioception, and functional movement abilities (eg, presence of tarsal coalition)"
+        }
+      ]
+    },
+    {
+      "stableGuid": "p9(_pTsGnn",
+      "front": "What are two ways to reduce the dislocation rate of posterolateral THA approach ? Repair capsule Repair short external rotators",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Joints",
+        "SnapOrtho::Anatomy::Thigh_Hip::Joints::Hip_Capsule",
+        "SnapOrtho::Diagnosis::Hip_Instability_After_THA",
+        "SnapOrtho::Specialty::Adult_Reconstruction",
+        "SnapOrtho::Specialty::Trauma",
+        "SnapOrtho::Treatment::Posterior_Hip_Approach"
+      ],
+      "candidates": [
+        {
+          "id": "510000521",
+          "title": "Posterior Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000521",
+          "extractable": true,
+          "score": 39.607,
+          "snippet": "FEEDBACK 9/3/26, 5:46 PM AAOS | Posterior Shoulder Instability https://rock.aaos.org/coursecontent.aspx?id=510000521 1/18 Identify technical aspects used in the surgical management of posterior glenohumeral instability. Introduction The glenohumeral joint is inherently unstable and highly susceptible to subluxation, d"
+        },
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "extractable": true,
+          "score": 39.137,
+          "snippet": "greater than 25 mm.34,35 Instability and Dislocation Dislocation rates are higher after THA than after hemiarthroplasty. The surgical approach may influence the risk of dislocation because posterior approaches violate the hip abductors.  Instability and Dislocation Dislocation rates are much higher after THA than aft"
+        },
+        {
+          "id": "510000559",
+          "title": "Nerve Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000559",
+          "extractable": true,
+          "score": 37.083,
+          "snippet": "t, metacarpophalangeal (MCP) joints, and digital joints Minimal extension, abduction, and external rotation of the shoulder should be maintained for the first 4 to 6 weeks postoperatively to prevent tension on the repair, with ROM gradually increased. More distal repairs require similar limitations to distal joints, es"
+        },
+        {
+          "id": "510000510",
+          "title": "Postoperative Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000510",
+          "extractable": true,
+          "score": 35.324,
+          "snippet": "| Postoperative Hip Dislocation https://rock.aaos.org/coursecontent.aspx?id=510000510 7/16 1.55% dislocation rate in patients who underwent THA without previous spinal fusion, a 2.73% dislocation rate in patents who underwent THA who had undergone prior short spinal fusion (one to two levels), and a 4.62% dislocation"
+        },
+        {
+          "id": "510000554",
+          "title": "Surgical Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000554",
+          "extractable": true,
+          "score": 32.775,
+          "snippet": "vis, if necessary, during complex procedures. Because of its wide exposure, it is used in primary and revision THA, hip resurfacing, fixation of acetabular fractures, and drainage of septic hips.9 (Resource 5) Limitations and complications Historically, a higher dislocation rate; repair of the posterior capsule and the"
+        },
+        {
+          "id": "510000621",
+          "title": "Massive Rotator Cuff Tears and Superior Capsule Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000621",
+          "extractable": true,
+          "score": 25.386,
+          "snippet": "rotator cuff tears. Discuss the postoperative rehabilitation plan after the management of massive rotator cuff tears. Review the outcomes of superior capsule reconstruction.     NOTES SEND FEEDBACK 9/3/26, 4:38 PM AAOS | Massive Rotator Cuff Tears and Superior Capsule Reconstruction https://rock.aaos.org/coursecon"
+        },
+        {
+          "id": "510000555",
+          "title": "Component Removal in Revision Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000555",
+          "extractable": true,
+          "score": 24.247,
+          "snippet": "Revision Total Hip Arthroplasty https://rock.aaos.org/coursecontent.aspx?id=510000555 9/50 short external rotators and underlying hip capsule during deep dissection. Deliberate repair of the posterior capsule and the external rotators is recommended to reduce the incidence of dislocation after rTHA.12 The sciatic nerv"
+        },
+        {
+          "id": "6004095",
+          "title": "Surgical Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004095",
+          "extractable": true,
+          "score": 23.275,
+          "snippet": "after femoral head allograft reconstruction via a surgical hip dislocation approach shows fixation of a step-cut digastric osteotomy with the use of 3.5-mm screws. (Courtesy of L. Henry Goodnough, MD, Seattle, WA.) Management Surgical Approach  Surgical Approach To review an surgical approach see Video 1. The patient"
+        },
+        {
+          "id": "510000524",
+          "title": "Congenital Dislocation of the Knee and Patella",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000524",
+          "extractable": true,
+          "score": 21.414,
+          "snippet": "congenital dislocation of the knee. Recognize the conditions commonly associated with congenital dislocation of the knee and understand how to approach management of concurrent hip and foot conditions. Understand the basic pathoanatomy of congenital dislocation of the patella. Review the basic history and physical exa"
+        },
+        {
+          "id": "6004072",
+          "title": "Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004072",
+          "extractable": true,
+          "score": 20.611,
+          "snippet": "stability. The relatively low dislocation rate of the SCJ is secondary to the supporting soft-tissue structures, including the intra-articular disk, capsular, interclavicular, and costoclavicular (rhomboid) ligaments. The joint capsule extends from the manubrium laterally to the clavicular epiphysis and provides restr"
+        },
+        {
+          "id": "6000058",
+          "title": "Biomechanics of Plates, Screws, Rods, and External Fixation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000058",
+          "extractable": true,
+          "score": 19.246,
+          "snippet": "determined by the nail diameter and is proportional to the radius to the third power7 (Resource 6). Biomechanics of External Fixation External fixation is commonly used as a temporary stabilization measure in orthopaedic trauma patients but also may be used for definitive fixation  Biomechanics of External Fixation E"
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "extractable": true,
+          "score": 17.571,
+          "snippet": "however, isolated supraspinatus tears minimally reduce elevation strength biomechanically and often are well tolerated functionally.12 The infraspinatus and teres minor muscles are the primary external rotators of the glenohumeral joint along with the posterior deltoid. Large posterior cuff tears that involve these mu"
+        }
+      ]
+    },
+    {
+      "stableGuid": "p9+F#Qb^Lr",
+      "front": "Syndesmosis injury will present with decreased tibiofibular overlap and increased medial clear space .",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Foot_Ankle",
+        "SnapOrtho::Anatomy::Foot_Ankle::Joints",
+        "SnapOrtho::Anatomy::Foot_Ankle::Joints::Syndesmosis"
+      ],
+      "candidates": [
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 41.814,
+          "snippet": "3/26, 5:44 PM AAOS | Physical Examination of the Foot and Ankle https://rock.aaos.org/coursecontent.aspx?id=510000641 23/25 Video 16 Faro FD: Video. Evaluating Stability of the Metatarsophalangeal Joints. Lebanon, NH, 2023. Mark as Complete Resources Resource 1: Asla RJ: Biomechanics of the foot and ankle, in Chou LB,"
+        },
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "extractable": true,
+          "score": 41.077,
+          "snippet": "Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Understand appropriate evaluation and management of foot and ankle trauma in pediatric patients. Review unique features of pediatric foot and ankle injuries and their effect on growth and development. Pediatric Ankle Fractures Ba"
+        },
+        {
+          "id": "510000546",
+          "title": "Ankle and Foot Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000546",
+          "extractable": true,
+          "score": 36.974,
+          "snippet": "an ankle or foot sports injury. Discuss the surgical and nonsurgical management of common foot and ankle injuries. Outline surgical decision making for ankle and foot injuries. List risk factors associated with common foot and ankle injuries. Review current surgical techniques and outcomes of the management of foot an"
+        },
+        {
+          "id": "6002083",
+          "title": "Foot and Ankle Sports Injuries in Pediatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002083",
+          "extractable": true,
+          "score": 35.583,
+          "snippet": "medial navicular and accessory navicular, if present. Joints and Ligaments The proximity of lateral ankle ligaments to the distal fibular physis means that diagnosis of lateral ankle injuries is based on the anatomic location of the point tenderness on examination.  Joints and Ligaments The ankle is a hinge joint wit"
+        },
+        {
+          "id": "6000002",
+          "title": "Syndesmotic Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000002",
+          "extractable": true,
+          "score": 29.606,
+          "snippet": "radiographs, tibiofibular overlap should be at least 5 mm. Clinicians may suspect syndesmotic injury if decreased tibiofibular overlap is observed. On mortise views, tibiofibular clear space typically is less than 5 mm. More than 6 mm of widening of the tibiofibular clear space indicates syndesmotic disruption. Full-l"
+        },
+        {
+          "id": "6004057",
+          "title": "Rotational Fractures of the Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004057",
+          "extractable": true,
+          "score": 26.298,
+          "snippet": "fixation. On an AP radiograph, tibiofibular overlap of less than 10 mm or a clear space of more than 5 mm suggests a syndesmotic injury. On a mortise radiograph, an MCS that is larger than 5 mm or unequal to the superior clear space suggests a medial- side ligament injury. Tibiofibular overlap of less than 10 mm on a m"
+        },
+        {
+          "id": "6004002",
+          "title": "Ankle Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004002",
+          "extractable": true,
+          "score": 25.036,
+          "snippet": "rotation may produce syndesmotic pain. The length of tenderness along the lateral ankle also is an indicator of injury severity. In patients with syndesmotic disruption, plain radiographs may demonstrate the following signs: Increased tibiofibular clear space Decreased tibiofibular overlap Increased medial clear space"
+        },
+        {
+          "id": "6004074",
+          "title": "Medial Collateral Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004074",
+          "extractable": true,
+          "score": 21.955,
+          "snippet": "the medial epicondyle more proximal and anterior than the typical UCL injury. Valgus extension overload syndrome During throwing, the olecranon is repeatedly and forcefully driven into the olecranon fossa, exerting shear forces on the medial aspect of the olecranon tip and the olecranon fossa, which may cause cartilag"
+        },
+        {
+          "id": "6001184",
+          "title": "Imaging of the Lower Extremity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001184",
+          "extractable": true,
+          "score": 19.902,
+          "snippet": "of Brian C. Lau, MD, Durham, NC.) Medial Clear Space The medial clear space, measured between the medial border of the talus and the most lateral edge of the medial malleolus on a mortise view, should be less than 4 mm.7 Medial clear space greater than 4 mm is indicative of a deltoid ligament injury (Figure 4; Resourc"
+        },
+        {
+          "id": "6001026",
+          "title": "Intraoperative Neurovascular Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001026",
+          "extractable": true,
+          "score": 17.593,
+          "snippet": "of intraoperative neurovascular injuries in total hip and knee arthroplasty. Understand the relevant anatomy and risk factors associated with neurovascular injury. Diagnose neurovascular injury in hip and knee arthroplasty. Implement surgical and nonsurgical treatment options for the management of neurovascular injury"
+        },
+        {
+          "id": "6004079",
+          "title": "Anatomy of the Ankle for the Sports Medicine Surgeon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004079",
+          "extractable": true,
+          "score": 17.579,
+          "snippet": "medial surface of the lateral malleolus just posterior to the trigonal articular cartilage surface. It broadens as it inserts medially on the posterior aspect of the talus, with distinct insertions on the posterolateral tubercle. Distal Tibiofibular Syndesmosis Ligament Complex The distal tibiofibular syndesmosis liga"
+        },
+        {
+          "id": "6004015",
+          "title": "Traumatic Brain Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004015",
+          "extractable": true,
+          "score": 17.028,
+          "snippet": "related to the mechanism of injury Detailed knowledge of the exact mechanism of injury will enhance understanding of the patient’s injury severity and risk of deterioration. The patient history pertinent to TBI must include loss of consciousness and antegrade/retrograde amnesia. SEND FEEDBACK 9/4/26, 10:35 AM AAOS | T"
+        }
+      ]
+    },
+    {
+      "stableGuid": "P98T/j[)%t",
+      "front": "Why is a distal femoral traction pin placed medial to lateral ? To avoid injury to the femoral artery",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "6001083",
+          "title": "Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001083",
+          "extractable": true,
+          "score": 33.305,
+          "snippet": "time in traction may range from 4 to 12 weeks Figure 7 Knee radiographs demonstrate various skeletal traction options. AP (A) and lateral (B) radiographs demonstrate a distal femoral centrally threaded pin. AP (C) and lateral (D) radiographs demonstrate a tensioned distal femur wire. AP (E) and lateral (F) radiographs"
+        },
+        {
+          "id": "6004066",
+          "title": "Medial Epicondyle and Lateral Epicondyle Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004066",
+          "extractable": true,
+          "score": 32.404,
+          "snippet": "elbow. B = brachial artery, IR = interosseous recurrent artery, IUC = inferior ulnar collateral artery, MC = middle collateral artery, PUR = posterior ulnar recurrent artery, R = radial artery, RC = radial collateral artery, RR = radial recurrent artery, SUC = superior ulnar collateral artery. (Adapted with permission"
+        },
+        {
+          "id": "6000036",
+          "title": "Physeal Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000036",
+          "extractable": true,
+          "score": 29.446,
+          "snippet": "PM AAOS | Physeal Fractures of the Distal Femur https://rock.aaos.org/coursecontent.aspx?id=6000036 1/16 Anatomy, Biomechanics, and Mechanism of Injury The physis of the distal femur is responsible for approximately 70% of longitudinal femoral growth. The undulating pattern of the distal femoral physis contributes to"
+        },
+        {
+          "id": "6001026",
+          "title": "Intraoperative Neurovascular Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001026",
+          "extractable": true,
+          "score": 28.259,
+          "snippet": "Neurovascular Injury https://rock.aaos.org/coursecontent.aspx?id=6001026 11/19 The continuation of the femoral artery (the superficial femoral artery) transitions to the popliteal artery as it passes through the adductor hiatus. Branches of the femoral and popliteal arteries contribute to the anastomosis around the kn"
+        },
+        {
+          "id": "510000635",
+          "title": "Medial and Lateral Elbow Enthesopathy (Epicondylitis)",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000635",
+          "extractable": true,
+          "score": 26.717,
+          "snippet": "Objectives Identify pertinent anatomy related to medial and lateral elbow enthesopathy. Identify the pathologic changes observed in patients with lateral or medial elbow enthesopathy. Generate a differential diagnosis for lateral and medial elbow pain if symptoms and signs Generate a differential diagnosis for lateral"
+        },
+        {
+          "id": "6001084",
+          "title": "Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001084",
+          "extractable": true,
+          "score": 26.093,
+          "snippet": "of the knee joint. The popliteal artery gives off five genicular branches: the lateral superior genicular artery, medial superior genicular artery, middle genicular artery, lateral inferior genicular artery, and the medial inferior genicular artery.4 On the medial aspect of the distal femur, the mean distance from add"
+        },
+        {
+          "id": "6001058",
+          "title": "Pediatric Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001058",
+          "extractable": true,
+          "score": 25.012,
+          "snippet": "a role in remodeling potential and extra-physeal fixation options. The distal femoral physis consists of undulations below a fan-shaped metaphysis and is responsible for 70% of total femoral growth. The proximal femoral shaft is primarily bound by the proximal femoral physis (responsible for approximately 30% of total"
+        },
+        {
+          "id": "510000662",
+          "title": "Distal Humerus Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000662",
+          "extractable": true,
+          "score": 24.705,
+          "snippet": "ulnaris. The blood supply to the distal humerus consists of extraosseous and intraosseous vessels that form three vascular arcades: medial, lateral, and posterior.6, 7 The medial arcade is formed by the superior ulnar collateral artery, inferior ulnar collateral artery, and posterior ulnar recurrent artery and supplie"
+        },
+        {
+          "id": "6004094",
+          "title": "Femoral Head Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004094",
+          "extractable": true,
+          "score": 24.31,
+          "snippet": "9/3/26, 4:07 PM AAOS | Femoral Head Fractures https://rock.aaos.org/coursecontent.aspx?id=6004094 2/19 Figure 1 Illustrations show the Pipkin classification.A, Type I, infrafoveal femoral head fracture. B, Type II, suprafoveal head fracture. C, Type III, any femoral head fracture with an ipsilateral femoral neck fract"
+        },
+        {
+          "id": "6002100",
+          "title": "Femoral Neck Fractures in Young Adults",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002100",
+          "extractable": true,
+          "score": 23.386,
+          "snippet": "the blood supply to the femoral head is crucial for proper management of femoral neck fractures in young adults. The main blood supply to the femoral head is based posteriorly via the medial femoral circumflex artery. The medial femoral circumflex artery supplies 82% of the femoral head and 67% of the femoral neck. Th"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "extractable": true,
+          "score": 23.201,
+          "snippet": "SEND FEEDBACK 9/3/26, 4:10 PM AAOS | Forearm Trauma and Diaphyseal Fractures https://rock.aaos.org/coursecontent.aspx?id=510000655 3/36 The radial and ulnar arteries branch from the brachial artery 1 cm distal to the elbow joint at the level of the radial neck. The radial artery is adherent to the deep fascia of the f"
+        },
+        {
+          "id": "6002020",
+          "title": "Distal Triceps Tendon Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002020",
+          "extractable": true,
+          "score": 22.965,
+          "snippet": "The medial triceps tendon inserts directly into the medial aspect of the olecranon process without expansion. The medial aspect of the tendon is thicker than the lateral aspect and consistently shows a distinct, thickened, rolled tendon edge medially. The mean medial to lateral width of the tendon insertional footprin"
+        }
+      ]
+    },
+    {
+      "stableGuid": "p9b0Qq=?^$",
+      "front": "Squeaking can be seen with which bearing THA surfaces ? Ceramic on ceramic",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Adult_Reconstruction",
+        "SnapOrtho::Treatment::Total_Hip_Arthroplasty"
+      ],
+      "candidates": [
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 38.231,
+          "snippet": "follow-up.9 Ceramic Bearings Rationale—Ceramics as a class of materials are exceptionally hard, chemically and biologically inert, and wear resistant.1,2,6 SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Total Hip Arthroplasty: Bearing Surfaces Basic Science https://rock.aaos.org/coursecontent.aspx?id=510000503 14/21 Bearing cou"
+        },
+        {
+          "id": "6002061",
+          "title": "Bearing Surface Options: Wear, Stability, and Revision",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002061",
+          "extractable": true,
+          "score": 36.357,
+          "snippet": "distinct advantages and disadvantages and may determine implant longevity. Indications SEND FEEDBACK 9/3/26, 7:26 AM AAOS | Bearing Surface Options: Wear, Stability, and Revision https://rock.aaos.org/coursecontent.aspx?id=6002061 2/31 To balance longevity and short-term complications, most THA bearing surfaces curren"
+        },
+        {
+          "id": "6004025",
+          "title": "Aseptic Loosening After Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004025",
+          "extractable": true,
+          "score": 34.788,
+          "snippet": "You Know Learning Objectives Review the clinical manifestations of aseptic loosening after total hip arthroplasty. Evaluate the radiographic findings of aseptic loosening after total hip arthroplasty. Identify the differential diagnosis for aseptic loosening after total hip arthroplasty. Determine the surgical treatme"
+        },
+        {
+          "id": "6004019",
+          "title": "Primary Total Hip Arthroplasty for Osteoarthritis: Acetabular Component",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004019",
+          "extractable": true,
+          "score": 34.093,
+          "snippet": "complications. Primary Total Hip Arthroplasty Overview     NOTES SEND FEEDBACK 9/3/26, 5:51 PM AAOS | Primary Total Hip Arthroplasty for Osteoarthritis: Acetabular Component https://rock.aaos.org/coursecontent.aspx?id=6004019 1/20 The ultimate goal of total hip arthroplasty (THA) is to restore normal hip biomechan"
+        },
+        {
+          "id": "6004022",
+          "title": "Advanced Technologies in Primary Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004022",
+          "extractable": true,
+          "score": 33.203,
+          "snippet": "the horizontal plane, and select hip laterality (Figure 4, A). SEND FEEDBACK 9/3/26, 7:15 AM AAOS | Advanced Technologies in Primary Total Hip Arthroplasty https://rock.aaos.org/coursecontent.aspx?id=6004022 12/26 SEND FEEDBACK 9/3/26, 7:15 AM AAOS | Advanced Technologies in Primary Total Hip Arthroplasty https://rock"
+        },
+        {
+          "id": "6000018",
+          "title": "Economics of Total Hip and Total Knee Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000018",
+          "extractable": true,
+          "score": 33.171,
+          "snippet": "Hip and Total Knee Arthroplasty https://rock.aaos.org/coursecontent.aspx?id=6000018 3/30 Figure 1 Line graphs show the Linear (A) and Poisson (B) regression model projections for primary total joint arthroplasty procedure volume in the United States from 2000 to 2030. THA = total hip arthroplasty, TKA = total knee art"
+        },
+        {
+          "id": "6001161",
+          "title": "Retrieval Analysis of Hip and Knee Prostheses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001161",
+          "extractable": true,
+          "score": 24.348,
+          "snippet": "bearings; however, ceramic wear can occur if subluxation, even temporarily, causes contact between ceramic and metal surfaces. If a ceramic-on-ceramic or ceramic-on- polyethylene THA implant needs to be revised, it should only be replaced with another ceramic bearing surface and not a metal bearing surface. Even a few"
+        },
+        {
+          "id": "6004023",
+          "title": "Evaluation and Workup in Revision Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004023",
+          "extractable": true,
+          "score": 19.185,
+          "snippet": "new or continued pain and dysfunction postoperatively.2 Evaluation Pain and dysfunction after THA may result from various causes. The common differential diagnosis for a painful THA implant includes the following: Infection Instability Aseptic loosening Bearing wear/disease Component malpositioning Taper corrosion Ili"
+        },
+        {
+          "id": "6001028",
+          "title": "Postoperative Polyethylene Wear and Osteolysis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001028",
+          "extractable": true,
+          "score": 18.174,
+          "snippet": "n hip arthroplasty. J Am Acad Orthop Surg 2017;25(4):288-296. Nonpolyethylene Wear and Osteolysis Wear is universal regardless of the material used and is not exclusive to polyethylene; however, osteolysis should be considered a rare occurrence with these bearing surfaces.46 Ceramic on ceramic Wear debris from ceramic"
+        },
+        {
+          "id": "6001027",
+          "title": "Postoperative Heterotopic Ossification",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001027",
+          "extractable": true,
+          "score": 16.922,
+          "snippet": "the pelvis or the proximal end of the femur, leaving at least 1 cm between the opposing bone surfaces; class 3, bone spurs originating from the pelvis or the proximal end of the femur, reducing the space between the opposing bone surfaces to less than 1 cm; and class 4, apparent bone ankylosis of the hip (Figure 1). S"
+        },
+        {
+          "id": "6004018",
+          "title": "Alternative Implant Designs: Hip Resurfacing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004018",
+          "extractable": true,
+          "score": 15.992,
+          "snippet": "Resurfacing https://rock.aaos.org/coursecontent.aspx?id=6004018 1/23 Metal-on-metal articulations result in less volumetric wear than metal-on-polyethylene articulations. This decreased wear may reduce the incidence of osteolysis-induced failure. Enthusiasm for the use of metal-on-metal articulations is tempered by co"
+        },
+        {
+          "id": "510000509",
+          "title": "Postoperative Adverse Local Tissue Reaction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000509",
+          "extractable": true,
+          "score": 14.418,
+          "snippet": "PM AAOS | Postoperative Adverse Local Tissue Reaction https://rock.aaos.org/coursecontent.aspx?id=510000509 1/28 Lymphocyte-dominated adverse local tissue reaction (ALTR) may form secondary to the generation of metal wear debris particles in total hip arthroplasty (THA). ALTR often is attributed to metal-on-metal (MoM"
+        }
+      ]
+    },
+    {
+      "stableGuid": "PAMmixEAD,",
+      "front": "When treating a patient with hallux rigidus with arthrodesis , fusing the great toe in a shortened position may result in transfer metatarsalgia .",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Foot_Ankle"
+      ],
+      "candidates": [
+        {
+          "id": "6002006",
+          "title": "Hallux Rigidus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002006",
+          "extractable": true,
+          "score": 78.004,
+          "snippet": "16/28 First MTP joint arthrodesis affords reliable pain relief in patients with moderate to severe hallux rigidus. Arthrodesis is indicated in patients who have pain on grind testing, dorsal great toe pain, and/or pain with push-off, with or without plantar great toe pain suggestive of sesamoid arthritis. The toe is p"
+        },
+        {
+          "id": "6002055",
+          "title": "Metatarsalgia",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002055",
+          "extractable": true,
+          "score": 54.253,
+          "snippet": "no toe purchase, moderately positive drawer test (>50% subluxation) 3 Severe malalignment, dorsal deformity, toes may overlap, possible hammer toe Joint and toe pain, little swelling, no toe purchase, dislocatable on drawer test 4 Severe malalignment, dislocation, fixed hammer toe No toe purchase, dislocated toe Repro"
+        },
+        {
+          "id": "510000500",
+          "title": "Hallux Valgus: Disorders of the First Ray",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000500",
+          "extractable": true,
+          "score": 45.29,
+          "snippet": "include the amount of deformity, shoe preferences, transfer metatarsalgia, and activity level. SEND FEEDBACK 9/3/26, 4:20 PM AAOS | Hallux Valgus: Disorders of the First Ray https://rock.aaos.org/coursecontent.aspx?id=510000500 2/23 Anatomy and Biomechanics Osteology With valgus deviation of the great toe, the metatar"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 43.838,
+          "snippet": "| Physical Examination of the Foot and Ankle https://rock.aaos.org/coursecontent.aspx?id=510000641 4/25 Abduction Ankle Position of foot for examination Normal passive range of motion (estimates vary between individuals and should be compared with the unaffected extremity. Dorsiflexion: 20° Plantar flexion: 50°  Ankl"
+        },
+        {
+          "id": "6003002",
+          "title": "Lesser Toe Pathology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003002",
+          "extractable": true,
+          "score": 39.029,
+          "snippet": "epidemiology, etiology, and risk factors associated with claw toe deformity and hammer toe deformity. Perform an appropriate workup for patients with claw toe deformity and patients with hammer toe deformity. Explain the surgical and nonsurgical management of claw toe deformity and hammer toe deformity. Claw Toe Defor"
+        },
+        {
+          "id": "510000546",
+          "title": "Ankle and Foot Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000546",
+          "extractable": true,
+          "score": 32.456,
+          "snippet": "an ankle or foot sports injury. Discuss the surgical and nonsurgical management of common foot and ankle injuries. Outline surgical decision making for ankle and foot injuries. List risk factors associated with common foot and ankle injuries. Review current surgical techniques and outcomes of the management of foot an"
+        },
+        {
+          "id": "6000014",
+          "title": "Biomechanics/Gait: Effect of Ankle/Foot Malalignment",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000014",
+          "extractable": true,
+          "score": 32.454,
+          "snippet": "By identifying and managing the underlying cause of the gait disturbance, for example a patient with ankle arthritis managed with total ankle arthroplasty or ankle arthrodesis, various parameters of gait can be substantially improved compared with preoperative function.5 However, even patients who undergo ankle arthrod"
+        },
+        {
+          "id": "6000032",
+          "title": "Metatarsus Adductus and Calcaneovalgus Foot",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000032",
+          "extractable": true,
+          "score": 30.47,
+          "snippet": "motion of the ankle and subtalar joints is normal.2 Hyperactivity of the abductor hallucis may contribute to the dynamic component of the foot position, especially in patients younger than 18 months.2 An atavistic or wandering great toe (adduction of the great toe) also may be observed.3 In addition, some patients hav"
+        },
+        {
+          "id": "510000550",
+          "title": "Lesser Toe Pathology: Bunionette Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000550",
+          "extractable": true,
+          "score": 25.831,
+          "snippet": "SEND FEEDBACK 9/3/26, 4:33 PM AAOS | Lesser Toe Pathology: Bunionette Deformity https://rock.aaos.org/coursecontent.aspx?id=510000550 1/8 Epidemiology A female-to-male ratio ranging from 3:1 to 10:1 has been reported in series on symptomatic bunionette deformity.1 Anatomy and Biomechanics Three main bony anatomic vari"
+        },
+        {
+          "id": "6001015",
+          "title": "Cavovarus Foot Deformity: Surgical Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001015",
+          "extractable": true,
+          "score": 24.454,
+          "snippet": "Functional Reconstruction of the Foot and Ankle. Philadelphia, PA, Lippincott Williams and Wilkins, 2000, p 393.) Arthrodesis Used in patients with arthritis or severe/rigid deformity Subtalar arthrodesis (talocalcaneal joint) Talonavicular arthrodesis Calcaneocuboid arthrodesis Triple arthrodesis combines all three o"
+        },
+        {
+          "id": "6003003",
+          "title": "General Principles in Orthoses and Bracing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003003",
+          "extractable": true,
+          "score": 20.996,
+          "snippet": "or carbon fiber Extends from heel to toe Off loads midfoot/forefoot Inserted under insole within midsole SEND FEEDBACK 9/3/26, 4:17 PM AAOS | General Principles in Orthoses and Bracing https://rock.aaos.org/coursecontent.aspx?id=6003003 3/38 Indications: plantar plate injury, midfoot arthritis, hallux rigidus Rocker s"
+        },
+        {
+          "id": "510000650",
+          "title": "Forefoot Trauma: Metatarsal and Phalangeal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000650",
+          "extractable": true,
+          "score": 18.624,
+          "snippet": "Excision of the sesamoid is performed in patients with a chronic symptomatic nonunion. The potential complication of medial sesamoidectomy is hallux valgus, whereas lateral sesamoidectomy may result in varus deformity of the hallux. Excision of both sesamoids may result in a cock-up deformity of the hallux because of"
+        }
+      ]
+    }
+  ]
+}

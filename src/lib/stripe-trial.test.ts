@@ -72,7 +72,7 @@ function mapStripeStatusToInternal(status: string): string {
     unpaid: 'unpaid',
     canceled: 'canceled',
     incomplete: 'incomplete',
-    incomplete_expired: 'canceled',
+    incomplete_expired: 'expired',
     trialing: 'trialing',
     paused: 'past_due',
   };
@@ -126,6 +126,7 @@ assert.equal(
 
 assert.equal(mapStripeStatusToInternal('trialing'), 'trialing');
 assert.equal(mapStripeStatusToInternal('active'), 'active');
+assert.equal(mapStripeStatusToInternal('incomplete_expired'), 'expired');
 
 assert.equal(
   addCalendarMonthsUtc(new Date('2024-01-15T00:00:00.000Z'), 1).toISOString(),

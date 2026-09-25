@@ -1,0 +1,1115 @@
+{
+  "batchKey": "map-000001-packet-0046",
+  "inputChecksum": "da357dda0fb6aace25b5ed341b90cedac2fb37850e4ae60ae95ce8bf138d9da5",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "sidecarSchema": {
+    "card": {
+      "stableGuid": "string",
+      "status": "\"mapped\"|\"skipped\"",
+      "chapters": "1-3 {id, role} from this card's candidates; first is primary",
+      "skipReason": "if skipped"
+    }
+  },
+  "cards": [
+    {
+      "stableGuid": "cW-<,~toWC",
+      "front": "The FPB controls thumb flexion at the MCP joint , while the FPL controls thumb flexion at the IP joint .",
+      "extra": "*FPB innervated by components of median and ulnar nerve *FPL innervated by AIN",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Elbow",
+        "SnapOrtho::Anatomy::Elbow::Nerves",
+        "SnapOrtho::Anatomy::Elbow::Nerves::Ulnar_Nerve",
+        "SnapOrtho::Anatomy::Hand",
+        "SnapOrtho::Anatomy::Hand::Muscles",
+        "SnapOrtho::Anatomy::Hand::Muscles::Flexor_Pollicis_Longus",
+        "SnapOrtho::Specialty::Basic_Science",
+        "SnapOrtho::Specialty::Hand_Upper_Extremity",
+        "SnapOrtho::Specialty::Shoulder_Elbow"
+      ],
+      "candidates": [
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 51.581,
+          "snippet": "IV, the thenar muscles insert on the more radial digit, and the adductor pollicis inserts on the more ulnar digit. In addition, pollex abductus, or an abnormal connection SEND FEEDBACK 9/3/26, 7:46 AM AAOS | Congenital Upper Extremity Differences https://rock.aaos.org/coursecontent.aspx?id=510000651 29/66 between the e"
+        },
+        {
+          "id": "6002004",
+          "title": "Peripheral Nerve and Spinal Cord Pathophysiology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002004",
+          "extractable": true,
+          "score": 45.596,
+          "snippet": "B = extensor pollicis brevis, EPL = extensor pollicis longus, FCR = flexor carpi radialis, FCU = flexor carpi ulnaris, FDI = first dorsal interosseous, FDP = flexor digitorum profundus, FDS = flexor digitorum superficialis, FPB = flexor pollicis brevis, FPL = flexor pollicis longus, OP = opponens pollicis, PI = palmar"
+        },
+        {
+          "id": "6004092",
+          "title": "Terrible Triad of Injuries of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004092",
+          "extractable": true,
+          "score": 44.428,
+          "snippet": "and ulnar arteries at the elbow joint. This area may be injured, particularly in children; however, vascular injury that requires repair is rare after an elbow dislocation. Neural Anatomy Three main nerves traverse the elbow joint: the median, ulnar, and radial nerves. Nerve injuries can occur; however, they usually a"
+        },
+        {
+          "id": "6004031",
+          "title": "Tendinopathy of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004031",
+          "extractable": true,
+          "score": 44.343,
+          "snippet": "tenosynovitis of the flexor tendons The characteristic physical examination finding is catching or locking with flexion (tight fist in particular), tenderness and a bump at the A1 pulley, and often a slight proximal interphalangeal joint flexion contracture (Figure 1) The flexor digitorum profundus tendon is enlarged,"
+        },
+        {
+          "id": "510000557",
+          "title": "Physical Examination and Anatomy of the Hand, Forearm, and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000557",
+          "extractable": true,
+          "score": 40.891,
+          "snippet": "is brevis Transverse carpal ligament, FCR sheath, trapezium, scaphoid Radial base of P1, MCP joint capsule, radial sesamoid Median nerve, 95.0% Ulnar nerve, 2.5% Both, 2.5% Abduction and flexion of the thumb metacarpal Ulnar angulation at the MCP joint Thumb IP joint extension Flexor pollicis brevis Transverse"
+        },
+        {
+          "id": "510000559",
+          "title": "Nerve Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000559",
+          "extractable": true,
+          "score": 40.584,
+          "snippet": "l joint extension, thumb interphalangeal joint extension FCR Median Wrist flexion with radial deviation FCU Ulnar Wrist flexion with ulnar deviation FPL AIN Thumb interphalangeal joint flexion Dorsal and volar interossei Ulnar deep motor branch Digit abduction, adduction Opponens pollicis Median recurrent motor branch"
+        },
+        {
+          "id": "6001164",
+          "title": "Carpal Tunnel Syndrome and Idiopathic Median Nerve Compression at the Carpal Tunnel",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001164",
+          "extractable": true,
+          "score": 34.715,
+          "snippet": "median nerve is used to evaluate the median nerve in patients with CTS. SEND FEEDBACK 9/3/26, 7:35 AM AAOS | Carpal Tunnel Syndrome and Idiopathic Median Nerve Compression at the Carpal Tunnel https://rock.aaos.org/coursecontent.aspx?id=6001164 8/20 Increased cross-sectional area (CSA) of the median nerve (>10 mm2) at"
+        },
+        {
+          "id": "6001037",
+          "title": "Idiopathic Ulnar Neuropathy at the Cubital Tunnel",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001037",
+          "extractable": true,
+          "score": 34.065,
+          "snippet": "nerve. The Froment and Jeanne signs are observed with attempted key pinch. With the Froment sign, thumb interphalangeal joint flexion will be observed because the median innervated flexor pollicis longus will compensate for the weakened adductor pollicis. With the Jeanne sign, hyperextension of the thumb metacarpophal"
+        },
+        {
+          "id": "6004034",
+          "title": "Hand and Wrist Flexor Tendon Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004034",
+          "extractable": true,
+          "score": 33.069,
+          "snippet": "median nerve and enters the muscle belly in the proximal forearm. The FDP has dual innervation; the ring and little FDP are innervated by the ulnar nerve, and the anterior interosseous branch of the median nerve innervates the index and long finger FDP. The FPL is innervated by the anterior interosseous branch of the"
+        },
+        {
+          "id": "6004033",
+          "title": "Less Common Objectively Verifiable Peripheral Mononeuropathies",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004033",
+          "extractable": true,
+          "score": 30.546,
+          "snippet": "Overview Definition: isolated dysfunction of the anterior interosseous nerve (AIN) branch of the median nerve Epidemiology Less than 1% of all upper extremity peripheral neuropathies Anatomy and Biomechanics The AIN contains nerve fibers from C8 and T1 nerve roots. The AIN branches from the median nerve, 4 to 6 cm dis"
+        },
+        {
+          "id": "6000025",
+          "title": "Ulnar Impaction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000025",
+          "extractable": true,
+          "score": 28.785,
+          "snippet": "manage ulnar impaction and degenerative articular disk tears. Discuss the surgical indications for ulnar impaction. Review the outcomes of surgical procedures for the management of ulnar impaction syndrome. Pathophysiology/Pathoanatomy Overview Ulnar impaction syndrome describes the symptoms produced by contact betwee"
+        },
+        {
+          "id": "510000544",
+          "title": "Trapeziometacarpal Joint Osteoarthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000544",
+          "extractable": true,
+          "score": 23.777,
+          "snippet": "IV: involvement of the STT joint Figure 6 Bett radiographs of the thumb carpometacarpal (CMC) joint and the scaphotrapezial joint demonstrate the Eaton staging system for thumb CMC arthritis. A, Eaton stage I thumb CMC arthritis, with normal articular cartilage and a widened joint space. B, Eaton stage II thumb CMC ar"
+        }
+      ]
+    },
+    {
+      "stableGuid": "cw,Tu&IBon",
+      "front": "Overhead throwing athlete has chronic left shoulder pain and presents with the following MRI. What pathology is shwon below? Partial articular-sided supraspinatus-infraspinatus tendon avulsion (PASTA)",
+      "extra": "*Pathophysiology could be from repetitive movement of the posterior undersurface of the supraspinatus tendon against the posterior superior aspect of the glenoid.",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Shoulder_Girdle",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Muscles",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Muscles::Infraspinatus",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Muscles::Supraspinatus",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology::Glenoid",
+        "SnapOrtho::Specialty::Shoulder_Elbow",
+        "SnapOrtho::Specialty::Sports_Medicine"
+      ],
+      "candidates": [
+        {
+          "id": "510000538",
+          "title": "Throwing Shoulder Injuries: Superior Labrum Anterior to Posterior Tears and Proximal Biceps Tendon Lesions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000538",
+          "extractable": true,
+          "score": 82.737,
+          "snippet": "| Throwing Shoulder Injuries: Superior Labrum Anterior to Posterior Tears and Proximal Biceps Tendon Lesions https://rock.aaos.org/coursecontent.aspx?id=510000538 1/20 Overview A superior labrum anterior to posterior (SLAP) lesion is a detachment of the superior portion of the glenoid labrum, including the anterior an"
+        },
+        {
+          "id": "510000629",
+          "title": "Throwing Shoulder Injuries and Internal Impingement",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000629",
+          "extractable": true,
+          "score": 77.887,
+          "snippet": "the supraspinatus and infraspinatus may occur. Posterior/superior labrum susceptible to tearing Possible posterior glenoid articular damage Figure 5 Illustration of the shoulder shows the mechanism of internal impingement. The position of abduction and extreme external rotation that occurs during overhead throwing com"
+        },
+        {
+          "id": "6004083",
+          "title": "Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004083",
+          "extractable": true,
+          "score": 66.803,
+          "snippet": "ram with the goal of returning to overhead throwing.     NOTES SEND FEEDBACK 9/3/26, 5:59 PM AAOS | Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes https://rock.aaos.org/coursecontent.aspx?id=6004083 1/36 Discuss return-to-play tests for overhead throwing athletes. Superior Labrum Anterior to Po"
+        },
+        {
+          "id": "510000633",
+          "title": "Throwing Elbow Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000633",
+          "extractable": true,
+          "score": 63.908,
+          "snippet": "motion. (Reproduced from Hammond J, Cole BJ: Elbow injuries and the throwing athlete, in Nicholson GP, ed: Orthopaedic Knowledge Update: Shoulder and Elbow, ed 4. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2013, pp 495-503.) Neurovascular Examination An elbow examination in the throwing athlete is not com"
+        },
+        {
+          "id": "510000521",
+          "title": "Posterior Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000521",
+          "extractable": true,
+          "score": 60.646,
+          "snippet": "may be degenerative in nature. An avulsion of the posteroinferior aspect of the labrum (Kim lesion) Posteroinferior capsule laxity secondary to plastic deformation caused by recurrent subluxation Reverse humeral avulsion of the glenohumeral ligaments Posterior labrocapsular periosteal sleeve avulsion Bone Increased gl"
+        },
+        {
+          "id": "510000613",
+          "title": "Shoulder Anatomy and Function",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000613",
+          "extractable": true,
+          "score": 55.382,
+          "snippet": "of the scapular body. The glenoid has 5° of superior tilt.  Glenoid The glenoid has an unusual articular pear-shape, which includes a broader inferior than superior diameter with its longest dimension in its vertical axis. At the superior aspect of the glenoid is the supraglenoid tubercle, which is the attachment sit"
+        },
+        {
+          "id": "510000621",
+          "title": "Massive Rotator Cuff Tears and Superior Capsule Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000621",
+          "extractable": true,
+          "score": 54.144,
+          "snippet": "9/3/26, 4:38 PM AAOS | Massive Rotator Cuff Tears and Superior Capsule Reconstruction https://rock.aaos.org/coursecontent.aspx?id=510000621 1/22 Pathoanatomy Overview Although partial repair is associated with positive short-term results, results deteriorate within a few years.1 Tendon transfers are limited in their a"
+        },
+        {
+          "id": "6000034",
+          "title": "Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000034",
+          "extractable": true,
+          "score": 53.8,
+          "snippet": "Traumatic posterior instability: posterior glenohumeral dislocation resulting from a traumatic event with a posteriorly directed force on the arm positioned in forward flexion and adduction Acquired/atraumatic instability: pathologic glenohumeral laxity resulting from repetitive trauma to the capsule and the intraarti"
+        },
+        {
+          "id": "510000614",
+          "title": "Physical Examination of the Shoulder",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000614",
+          "extractable": true,
+          "score": 53.261,
+          "snippet": ", Bicknell RT: The unstable painful shoulder (UPS) as a cause of pain from unrecognized anteroinferior instability in the young athlete. J Shoulder Elbow Surg 2011;20[1]:98-106.) Neurovascular Examination  Neurovascular Examination Shoulder pathology, especially trauma, may compromise the neurovascular status of a pat"
+        },
+        {
+          "id": "510000631",
+          "title": "Acromioclavicular Joint Arthritis and Pathology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000631",
+          "extractable": true,
+          "score": 52.481,
+          "snippet": "on the point of the shoulder. Indirect injuries are rare. Osteoarthritis Patients often report activity-related pain. SEND FEEDBACK 9/3/26, 7:07 AM AAOS | Acromioclavicular Joint Arthritis and Pathology https://rock.aaos.org/coursecontent.aspx?id=510000631 9/25 The pain is localized to the acromioclavicular joint, wit"
+        },
+        {
+          "id": "510000664",
+          "title": "Shoulder Trauma: Scapular and Glenoid Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000664",
+          "extractable": true,
+          "score": 51.813,
+          "snippet": "the posterior aspect of the glenoid or glenoid neck, care must be taken to avoid injuring the suprascapular nerve at the location at which it exits the glenoid notch; this denervates the infraspinatus muscle. SEND FEEDBACK 9/4/26, 10:43 AM AAOS | Shoulder Trauma: Scapular and Glenoid Fractures https://rock.aaos.org/co"
+        },
+        {
+          "id": "510000639",
+          "title": "SICK Scapula Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000639",
+          "extractable": true,
+          "score": 51.622,
+          "snippet": "9/4/26, 9:36 AM AAOS | SICK Scapula Syndrome https://rock.aaos.org/coursecontent.aspx?id=510000639 1/24 Inferior medial border prominence Coracoid pain and malpositioning Kinesis abnormalities (dyskinesis) of scapular movement Related to scapular dyskinesis, which is the dynamic manifestation of this disorder Presents"
+        }
+      ]
+    },
+    {
+      "stableGuid": "cW6GxyNW}N",
+      "front": "It is important to keep the “dog ears” following a below knee amputation to preserve the blood supply of the saphenous and sural arteries.",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 40.704,
+          "snippet": "nfections in orthopaedics, in Einhorn TA, O’Keefe RJ, Buckwalter JA, eds: Orthopaedic Basic Science. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2007, pp 299-314. Types of Musculoskeletal Infection and Clinical Presentation SEND FEEDBACK 9/3/26, 4:48 PM AAOS | Musculoskeletal Infections and Microbiology Bas"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 31.887,
+          "snippet": "superior migration of the humeral head and acromial impingement, causing additional disruption of the rotator cuff. The loss of stabilization provided by the SEND FEEDBACK 9/4/26, 10:26 AM AAOS | Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes https://rock.aaos.org/coursecontent.aspx?id=6001061"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 31.742,
+          "snippet": "to which that sliding direction changes. Multidirectional sliding motion has SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Total Hip Arthroplasty: Bearing Surfaces Basic Science https://rock.aaos.org/coursecontent.aspx?id=510000503 8/21 been shown to increase wear rates, and this motion predominates in the hip, particularly in"
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "extractable": true,
+          "score": 27.606,
+          "snippet": " Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing  CORE May 18, 2026 James Gregory, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Assess the natural progression of rotator cuff disease. Understand the b"
+        },
+        {
+          "id": "6001070",
+          "title": "Ligamentous Injuries of the Knee: Multiligamentous Knee Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001070",
+          "extractable": true,
+          "score": 23.835,
+          "snippet": "with multiligamentous knee injuries.     NOTES SEND FEEDBACK 9/3/26, 4:34 PM AAOS | Ligamentous Injuries of the Knee: Multiligamentous Knee Injuries https://rock.aaos.org/coursecontent.aspx?id=6001070 1/50 Pathophysiology/Pathoanatomy Overview A multiligamentous knee injury (MLKI) is commonly defined as a high-gra"
+        },
+        {
+          "id": "6001029",
+          "title": "Surgical Anatomy of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001029",
+          "extractable": true,
+          "score": 23.378,
+          "snippet": "persistent bleeding after meniscectomy The middle geniculate artery arises from the popliteal artery and provides the blood supply to the cruciate ligaments. Anterior tibial recurrent arteries SEND FEEDBACK 9/4/26, 9:42 AM AAOS | Surgical Anatomy of the Knee https://rock.aaos.org/coursecontent.aspx?id=6001029 4/32 Fig"
+        },
+        {
+          "id": "6000014",
+          "title": "Biomechanics/Gait: Effect of Ankle/Foot Malalignment",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000014",
+          "extractable": true,
+          "score": 22.541,
+          "snippet": "foot and ankle anatomy, function, and biomechanics, as well as the effects of ankle/foot malalignment leading to altered gait and impaired function. Vascular Anatomy Arteries Three major arteries typically supply the ankle and foot. Posterior tibial artery—This artery bifurcates into the medial and lateral plantar art"
+        },
+        {
+          "id": "6001025",
+          "title": "Blood Management in Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001025",
+          "extractable": true,
+          "score": 22.338,
+          "snippet": "n an allogenic transfusion. Advanced donation of blood allows patients’ hemoglobin levels to rise after blood donation but preoperatively while also storing blood to be used rather than allogenic blood. Autologous blood transfusion is not routinely used because studies have shown that approximately 40% of the pre-donat"
+        },
+        {
+          "id": "6001012",
+          "title": "Gastrocnemius Contracture",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001012",
+          "extractable": true,
+          "score": 20.018,
+          "snippet": "is a major plantar flexor of the ankle joint with the knee extended. Knee flexion It also acts as a weak knee flexor given that musculotendinous unit crosses the knee and inserts on the posterior femoral condyles. Sural Nerve The sural nerve initially runs midline in the calf over the gastrocnemius-soleus muscle until"
+        },
+        {
+          "id": "6001162",
+          "title": "Complications After Total Knee Arthroplasty: Intraoperative Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001162",
+          "extractable": true,
+          "score": 19.696,
+          "snippet": "insertion on the tibia At the knee joint line, branches include the medial, middle, and lateral geniculate arteries. Below the knee joint line, branches include the anterior and posterior tibial arteries. Knee hyperflexion displaces the artery more posterior, away from injury from the retractors. Knee hyperextension s"
+        },
+        {
+          "id": "6002093",
+          "title": "Knee Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002093",
+          "extractable": true,
+          "score": 16.437,
+          "snippet": "Primary Portals SEND FEEDBACK 9/3/26, 4:31 PM AAOS | Knee Arthroscopy https://rock.aaos.org/coursecontent.aspx?id=6002093 3/15 Anterolateral portal This standard portal is most often used to begin diagnostic knee arthroscopy and serves as the primary viewing portal. To create this portal, flex the knee to 90°. The sof"
+        },
+        {
+          "id": "6000006",
+          "title": "Neurogenic Conditions: Entrapment Neuropathy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000006",
+          "extractable": true,
+          "score": 16.352,
+          "snippet": "thigh. At approximately 10 cm proximal to the medial femoral condyle of the knee, the saphenous nerve penetrates the subsartorial fascia and enters the adductor canal. This is the most common site of entrapment. Distal to the knee, the saphenous nerve travels along the medial tibia with the greater saphenous vein. The"
+        }
+      ]
+    },
+    {
+      "stableGuid": "CWd+kOG^dV",
+      "front": "What is the eponym for the AVN of the lunate ? Kienbock's disease",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Hand",
+        "SnapOrtho::Anatomy::Hand::Osteology",
+        "SnapOrtho::Anatomy::Hand::Osteology::Lunate",
+        "SnapOrtho::Specialty::Hand_Upper_Extremity"
+      ],
+      "candidates": [
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 36.038,
+          "snippet": "the classification of congenital differences in the upper extremity. Perform an appropriate workup of patients with congenital upper extremity differences. Determine the surgical and nonsurgical treatment options for the management of congenital upper extremity differences. Pathophysiology/Pathoanatomy Overview Congen"
+        },
+        {
+          "id": "510000566",
+          "title": "Surgical Management of Upper Extremity Bone Metastases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000566",
+          "extractable": true,
+          "score": 26.881,
+          "snippet": "that metastasize to the upper extremity. Review the general treatment strategy and indications for surgical management of upper extremity metastases. Determine the best surgical treatment options for each anatomic location. Introduction Metastatic disease is common in the upper extremities. Of patients with metastatic"
+        },
+        {
+          "id": "6002068",
+          "title": "Psychiatric Hand Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002068",
+          "extractable": true,
+          "score": 25.476,
+          "snippet": "c Hand Disorders https://rock.aaos.org/coursecontent.aspx?id=6002068 8/15 A broken window-pane pattern of lymphedema often is observed distal to the constriction. Secretan disease is a type of factitious lymphedema caused by repetitive blows to the dorsum of the hand, resulting in dorsal peritendinous fibrosis.5 Figure"
+        },
+        {
+          "id": "510000578",
+          "title": "Distal Humerus Physeal Fractures, Pediatric Polytrauma, and Upper Extremity Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000578",
+          "extractable": true,
+          "score": 23.512,
+          "snippet": "Pediatric Polytrauma, and Upper Extremity Fractures https://rock.aaos.org/coursecontent.aspx?id=510000578 27/41  Management of Pink, Pulseless Supracondylar Humerus Fractures The optimal management of a pulseless but perfused hand after supracondylar humerus fracture remains controversial. The abundant collateral cir"
+        },
+        {
+          "id": "6002014",
+          "title": "Osteonecrosis: Preiser Disease and Kienböck Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002014",
+          "extractable": true,
+          "score": 22.749,
+          "snippet": "  NOTES SEND FEEDBACK 9/3/26, 5:30 PM AAOS | Osteonecrosis: Preiser Disease and Kienböck Disease https://rock.aaos.org/coursecontent.aspx?id=6002014 1/21 Osteonecrosis of the lunate, also described in 1910 by Robert Kienböck, was identified using the relatively new radiographic technology at that time.2 The causes o"
+        },
+        {
+          "id": "6004032",
+          "title": "Dupuytren Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004032",
+          "extractable": true,
+          "score": 13.067,
+          "snippet": "patients who exhibit disease and those in whom the disease rapidly progresses may be at risk for worse disease; however, whether this can be supported by experimental evidence remains unclear. SEND FEEDBACK 9/3/26, 4:01 PM AAOS | Dupuytren Disease https://rock.aaos.org/coursecontent.aspx?id=6004032 3/25 Some speculate"
+        },
+        {
+          "id": "6002059",
+          "title": "Autoimmune Disease and Steroid Use",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002059",
+          "extractable": true,
+          "score": 11.572,
+          "snippet": "Disease SEND FEEDBACK 9/3/26, 7:25 AM AAOS | Autoimmune Disease and Steroid Use https://rock.aaos.org/coursecontent.aspx?id=6002059 2/19  Pathology of Disease Rheumatoid arthritis is a chronic systemic autoimmune disease caused by a cell- mediated immune response against soft tissues, cartilage, and bone. The disease"
+        },
+        {
+          "id": "6004048",
+          "title": "Metastatic Bone Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004048",
+          "extractable": true,
+          "score": 11.565,
+          "snippet": " Metastatic Bone Disease  CORE August 10, 2026 Joshua M. Lawrenz, MD (2020–present) Amanda N. Goldin, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Review the nonsurgical management of metastatic bone disease. Review the surgical management of me"
+        },
+        {
+          "id": "510000653",
+          "title": "Venous Thromboembolic Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000653",
+          "extractable": true,
+          "score": 11.522,
+          "snippet": "TKA and 0.21% for THA.3,4 Risk Factors for Venous Thromboembolism (Table 1) Risks should be assessed preoperatively. If necessary, patients may benefit from consultation with hematology if a coagulation disorder is suspected. Table 1 Risk Factors for Thromboembolic Disease History of prior thromboembolic event Advance"
+        },
+        {
+          "id": "6002090",
+          "title": "Infectious Disease in the Athlete",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002090",
+          "extractable": true,
+          "score": 11.505,
+          "snippet": "specific infections in athletes, including treatment and return-to-play decisions. Review infection prevention guidelines for specific infectious disease pathogens that are observed in athletes. Immunology and Exercise Immune System Innate immune system     NOTES SEND FEEDBACK 9/4/26, 10:17 AM AAOS | Infectious Di"
+        },
+        {
+          "id": "6001053",
+          "title": "Lyme Disease and Inflammatory Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001053",
+          "extractable": true,
+          "score": 10.458,
+          "snippet": "damage is not as clearly elucidated. Classification Although no true classification system for Lyme disease exists, the disease is divided into distinct clinical stages consisting of early localized, early disseminated, and late Lyme disease. Early Localized Lyme Disease  Early Localized Lyme Disease Early localized"
+        },
+        {
+          "id": "510000616",
+          "title": "Imaging of Rotator Cuff Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000616",
+          "extractable": true,
+          "score": 10.44,
+          "snippet": "available for the evaluation of rotator cuff disease, including radiography, ultrasonography, MRI, and CT arthrography. Discuss the indications, diagnostic utility, and potential shortcomings of each imaging modality in the diagnosis of rotator cuff disease. Perform an appropriate radiographic work up of patients in w"
+        }
+      ]
+    },
+    {
+      "stableGuid": "Cx9cvMaimN",
+      "front": "What condition is commonly associated with an undescended scapula ? Sprengel's deformity",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Pediatric_Orthopedics"
+      ],
+      "candidates": [
+        {
+          "id": "6001059",
+          "title": "Pediatric Cervical Spine Abnormalities",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001059",
+          "extractable": true,
+          "score": 25.768,
+          "snippet": "of C2-C3 and assimilation of C1 with the occiput. The atlantodens interval is grossly widened, indicating instability of C1-C2. (Reproduced from Wills BP, Dormans JP: Nontraumatic upper cervical spine instability in children. J Am Acad Orthop Surg 2006;14[4]:233-245.) Associated conditions include congenital scoliosis"
+        },
+        {
+          "id": "510000527",
+          "title": "Disorders of the Scapula",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000527",
+          "extractable": true,
+          "score": 25.699,
+          "snippet": "muscles are involved in posttraumatic scapular muscle injury. Muscle-Based Scapular Winging With Dyskinesis Posttraumatic scapular muscle injury Sprengel deformity Muscular dystrophy Snapping scapula  Muscle-Based Scapular Winging With Dyskinesis SEND FEEDBACK 9/3/26, 3:56 PM AAOS | Disorders of the Scapula https://r"
+        },
+        {
+          "id": "510000639",
+          "title": "SICK Scapula Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000639",
+          "extractable": true,
+          "score": 24.767,
+          "snippet": "e Inserts on the superomedial angle of the scapula Elevates and anteriorly tilts the scapula Rhomboid major Originates from the spinous processes and inserts on the medial border of the scapula at the level of the scapular spine Medially rotates the scapula SEND FEEDBACK 9/4/26, 9:36 AM AAOS | SICK Scapula Syndrome htt"
+        },
+        {
+          "id": "6002081",
+          "title": "Pediatric Osteomyelitis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002081",
+          "extractable": true,
+          "score": 18.546,
+          "snippet": "rate of pediatric osteomyelitis is decreasing in developed countries over time.3 Risk Factors Risk factors include trauma, sepsis, bacteremia, immunodeficiency, and sickle cell disease  Risk Factors Multiple risk factors are associated with osteomyelitis. As many as 30% of children with pediatric osteomyelitis report"
+        },
+        {
+          "id": "6004062",
+          "title": "Pediatric Foot Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004062",
+          "extractable": true,
+          "score": 18.459,
+          "snippet": "n patient age and disease severity. Köhler Disease Pathophysiology/Pathoanatomy Overview Köhler disease is a self-limiting, painful osteochondrosis of the navicular in young children. SEND FEEDBACK 9/3/26, 5:36 PM AAOS | Pediatric Foot Conditions https://rock.aaos.org/coursecontent.aspx?id=6004062 10/32 Epidemiology Oc"
+        },
+        {
+          "id": "6002087",
+          "title": "Pediatric Hematologic Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002087",
+          "extractable": true,
+          "score": 18.221,
+          "snippet": "Pediatric Hematologic Conditions https://rock.aaos.org/coursecontent.aspx?id=6002087 1/50 Discuss the classic clinical presentation of patients with acute lymphoblastic leukemia/lymphoblastic lymphoma. Discuss the common orthopaedic complications associated with the management of acute lymphoblastic leukemia/lymphobla"
+        },
+        {
+          "id": "6004102",
+          "title": "Pain Associated With Ligamentous Laxity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004102",
+          "extractable": true,
+          "score": 17.738,
+          "snippet": "wrist. Identify specific disease states that are associated with ligamentous laxity. Explain non-dissociative carpal alignment and kinematics (often referred to as instability). Overview Joint laxity is variable. The degree of laxity is associated with variations in collagen and elastin. Some of the variations are ass"
+        },
+        {
+          "id": "6000009",
+          "title": "Cavovarus Foot Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000009",
+          "extractable": true,
+          "score": 14.931,
+          "snippet": "Richardson EG: The foot and ankle: Neurogenic disorders, in Canale ST, ed: Campbell’s Operative Orthopaedics, ed 10. St. Louis, MO, Mosby, 2003.) Forefoot-Driven Deformity SEND FEEDBACK 9/3/26, 7:36 AM AAOS | Cavovarus Foot Deformity https://rock.aaos.org/coursecontent.aspx?id=6000009 4/16  Forefoot-Driven Deformity"
+        },
+        {
+          "id": "6002054",
+          "title": "Progressive Collapsing Foot Deformity (Adult-Acquired Flatfoot Deformity): Clinical and Radiographic Diagnosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002054",
+          "extractable": true,
+          "score": 14.779,
+          "snippet": "a progressive collapsing foot deformity via an in-depth patient history and physical examination. Detect associated factors, stage the condition, and define a treatment rationale for a progressive collapsing foot deformity. Use imaging studies as an auxiliary measure to distinguish and stage different presentations of"
+        },
+        {
+          "id": "6004088",
+          "title": "Adult Cervical Spine Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004088",
+          "extractable": true,
+          "score": 13.857,
+          "snippet": "adult cervical spine deformity and the associated radiographic parameters. Identify the underlying pathologic processes that may contribute to cervical spine deformity. Recognize the imaging modalities used to assess cervical spine deformity. Review the surgical management of cervical spine deformity. Pathophysiology/"
+        },
+        {
+          "id": "6002095",
+          "title": "Adult Spine Deformity Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002095",
+          "extractable": true,
+          "score": 13.774,
+          "snippet": "19–60 Geriatric: >60 Spinal abnormality Scoliotic, kyphotic, lordotic, scoliokyphotic deformity curves Major structural deformity curve standing deformity curve with greatest deviation from age-appropriate NUSA for 98.5% of asymptomatic population (a spinal deformity has only one major structural deformity curve) Scol"
+        },
+        {
+          "id": "510000537",
+          "title": "Adult-Acquired Flatfoot Deformity: Diagnosis and Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000537",
+          "extractable": true,
+          "score": 13.728,
+          "snippet": "patients with adult-acquired flatfoot deformity. Understand the role of osteotomies for deformity correction in patients with adult-acquired flatfoot deformity. Understand the role of arthrodesis in the management of adult-acquired flatfoot deformity. Introduction  Introduction     NOTES 9/3/26, 7:15 AM AAOS | Ad"
+        }
+      ]
+    },
+    {
+      "stableGuid": "cxoJoT-VlC",
+      "front": "What are three elements of a subjective history that suggest an ACL injury ? Non-contact twisting mechanism Audible \"pop\" Immediate swelling (hemarthrosis)",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::ACL_Tear",
+        "SnapOrtho::Specialty::Sports_Medicine"
+      ],
+      "candidates": [
+        {
+          "id": "6004075",
+          "title": "The Biology and Biomechanics of Grafts and Implants in Sports Medicine Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004075",
+          "extractable": true,
+          "score": 39.445,
+          "snippet": "patient age and activity level. Review the basic biomechanical properties of implants available for sports medicine procedures. Describe the common modes of failure with various types of implants. Introduction Soft-tissue grafts are commonly used in sports medicine for ligament or tendon reconstruction (anterior cruci"
+        },
+        {
+          "id": "6001066",
+          "title": "The Team Physician and the Ethics of Sports Medicine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001066",
+          "extractable": true,
+          "score": 36.563,
+          "snippet": "context in which sports medicine ethics are operationalized has distinct characteristics and manifestly structures the behavior of those charged with the duty to act ethically. Studies of the practice of maintaining patient confidentiality in sports medicine show, for example, that the distinct physical environment, p"
+        },
+        {
+          "id": "6001180",
+          "title": "Extensor Mechanism Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001180",
+          "extractable": true,
+          "score": 35.771,
+          "snippet": "bridge the zone of injury with scar tissue and result in a lengthened, biomechanically inefficient tendon. Clinical Presentation The patient may report sudden pain with a subjective pop or tearing sensation, with inability to bear weight on the injured limb and development of a hemarthrosis. Physical examination revea"
+        },
+        {
+          "id": "6004079",
+          "title": "Anatomy of the Ankle for the Sports Medicine Surgeon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004079",
+          "extractable": true,
+          "score": 33.215,
+          "snippet": "Dalmau-Pastor M: Anatomic lectures on structures at risk prior to cadaveric courses reduce injury to the superficial peroneal nerve, the commonest complication in ankle arthroscopy. Knee Surg Sports Traumatol Arthrosc 2020;28[1]:79-85.) SEND FEEDBACK 9/3/26, 7:18 AM AAOS | Anatomy of the Ankle for the Sports Medicine"
+        },
+        {
+          "id": "6001181",
+          "title": "Meniscal Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001181",
+          "extractable": true,
+          "score": 27.808,
+          "snippet": "4:42 PM AAOS | Meniscal Injuries https://rock.aaos.org/coursecontent.aspx?id=6001181 14/40 General history Patient demographic data Preinjury activity level Previous injury Acute versus chronic symptoms Knee-specific history Mechanism of injury Popping, catching, locking Swelling Pain with twisting Pain with deep flexi"
+        },
+        {
+          "id": "510000531",
+          "title": "Articular Cartilage Injury and Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000531",
+          "extractable": true,
+          "score": 27.308,
+          "snippet": "bone bruise. This lateral pattern of injury is typical of that observed with the contact mechanism of injury. (Reproduced with permission from Viskontas DG, Giuffre BM, Duggal N, Graham D, Parker D, Coolican M: Bone bruises associated with ACL rupture: Correlation with injury mechanism. Am J Sports Med 2008;36[5]:927-"
+        },
+        {
+          "id": "6001056",
+          "title": "Meniscal Tears and Discoid Meniscus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001056",
+          "extractable": true,
+          "score": 25.538,
+          "snippet": "4:42 PM AAOS | Meniscal Tears and Discoid Meniscus https://rock.aaos.org/coursecontent.aspx?id=6001056 7/28 Mechanism of Injury  Mechanism of Injury Although specific patterns of meniscal injury can occur from various mechanisms of injury, longitudinal peripheral tears in the red-red or red-white zones often are asso"
+        },
+        {
+          "id": "6004084",
+          "title": "Anterior Cruciate Ligament Injury Prevention",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004084",
+          "extractable": true,
+          "score": 24.47,
+          "snippet": "of ACL injury in collegiate athletes participating in National Collegiate Athletic Association sports. ACL injuries in females exceeded those in male counterparts by a factor of three. Most ACL injuries in females occurred via a noncontact mechanism of injury (60%) versus a contact mechanism of injury for men (59%). T"
+        },
+        {
+          "id": "6003000",
+          "title": "Achilles Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003000",
+          "extractable": true,
+          "score": 21.583,
+          "snippet": "mechanism of injury involves substantial loading of an already contracted musculotendinous unit.10 Acute Rupture Patient History and Physical Examination Patients will report feeling a pop or a feeling of being struck from behind by an object or opponent. In some patients, an audible pop can be heard. Immediate weakne"
+        },
+        {
+          "id": "6000016",
+          "title": "History and Physical Examination of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000016",
+          "extractable": true,
+          "score": 21.281,
+          "snippet": "a knee examination and/or have knee imaging studies that appear benign. Effect of Previous Surgery and Modifiable and Nonmodifiable Comorbidities  Effect of Previous Surgery and Modifiable and Nonmodifiable Comorbidities In obtaining a patient’s history, surgeons must understand the injury and the surgical history of"
+        },
+        {
+          "id": "510000539",
+          "title": "Anterior Cruciate Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000539",
+          "extractable": true,
+          "score": 20.632,
+          "snippet": "Patient History An appropriate and detailed patient history may increase suspicion for an ACL injury.  Patient History A patient who sustains a knee injury during sports activity that is followed by knee swelling within 1 to 6 hours should be evaluated carefully for a possible ACL injury. Patients with a chronic ACL"
+        },
+        {
+          "id": "6000001",
+          "title": "Acute Lateral Ankle Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000001",
+          "extractable": true,
+          "score": 20.25,
+          "snippet": "ankle instability.25 Patient History Determine the mechanism of injury, typically an inversion mechanism. A focused patient history to elicit intrinsic and extrinsic risk factors is useful to target potential etiologies. Ability to bear weight postinjury may help determine injury severity and associated injuries.  Pa"
+        }
+      ]
+    },
+    {
+      "stableGuid": "CxQV=KY7N6",
+      "front": "Osteoprotegerin (OPG) is a decoy receptor that binds RANKL to inhibit bone resorption .",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Metabolic_Bone"
+      ],
+      "candidates": [
+        {
+          "id": "6001151",
+          "title": "Bone Biology and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001151",
+          "extractable": true,
+          "score": 52.001,
+          "snippet": "| Bone Biology and Biomechanics https://rock.aaos.org/coursecontent.aspx?id=6001151 8/15 Differentiation and activity of osteoclasts are regulated primarily by RANKL and osteoprotegerin (OPG, or tumor necrosis factor receptor superfamily member 11B). RANKL binds to its cognate receptor, RANK, on the membrane of monocy"
+        },
+        {
+          "id": "6001166",
+          "title": "Metabolic Bone Diseases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001166",
+          "extractable": true,
+          "score": 44.85,
+          "snippet": "Definition and Function of Osteoclasts RANKL and CSF-1 bind to their respective receptors on osteoclast precursor cells: receptor activator of nuclear factor-κ B and CSF-1R. A second soluble decoy receptor for RANKL, osteoprotegerin, is produced in the bone microenvironment by osteoblasts and inhibits resorption. Dele"
+        },
+        {
+          "id": "6001002",
+          "title": "Immunology and Inflammation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001002",
+          "extractable": true,
+          "score": 42.612,
+          "snippet": "of T cells and dendritic cells.17,18 Because its receptor, a member of the TNF receptor superfamily, was named RANK (receptor activator of nuclear factor-?B),17 the cell-surface cytokine is known as RANK ligand (RANKL). Osteoclast differentiation is tightly controlled by relative changes in transcription of RANKL and"
+        },
+        {
+          "id": "6001165",
+          "title": "Pathophysiology of Bone Metastasis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001165",
+          "extractable": true,
+          "score": 38.133,
+          "snippet": "factor, bone morphogenetic protein). Tumor cells do not directly destroy bone; rather, they express cytokines that influence the bone turnover process. Tumor cells stimulate the secretion of RANKL via osteoblasts, which causes an increase in osteoclast precursors and eventually results in increased osteoclastic bone r"
+        },
+        {
+          "id": "6001077",
+          "title": "Metastatic Bone Disease to the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001077",
+          "extractable": true,
+          "score": 35.404,
+          "snippet": "not destroy bone; cytokines from the tumor stimulate osteoclasts or osteoblasts to destroy or generate new bone, respectively. RANKL pathway: Osteoblasts/stromal cells secrete RANKL, which causes an increase in osteoclast precursors and eventually results in increased bone destruction. Osteoprotegerin is a decoy recep"
+        },
+        {
+          "id": "6004048",
+          "title": "Metastatic Bone Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004048",
+          "extractable": true,
+          "score": 26.184,
+          "snippet": "inhibit bone resorption and subsequently reduce SREs, such as pathologic fracture, the need for radiation therapy or surgical management of the bone, or spinal cord compression. Diphosphonates, such as zoledronic acid, directly induce osteoclast apoptosis, whereas denosumab is a monoclonal antibody that binds to osteo"
+        },
+        {
+          "id": "6002097",
+          "title": "Osteoporosis and Pathologic Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002097",
+          "extractable": true,
+          "score": 21.822,
+          "snippet": "main causes of osteoporosis, a condition characterized by low bone mass and deterioration of normal bone architecture. This imbalance between bone resorption and bone growth occurs slowly after attainment of PBM and escalates in women after the onset of menopause. As bone architecture deteriorates, fracture risk incre"
+        },
+        {
+          "id": "6001006",
+          "title": "Bone Healing and Bone Grafts",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001006",
+          "extractable": true,
+          "score": 20.722,
+          "snippet": "use of external bone stimulators for enhancement of fracture healing. Bone and Joint Biology Structure and Composition Cortical bone Cancellous bone     NOTES SEND FEEDBACK 9/3/26, 3:59 PM AAOS | Bone Healing and Bone Grafts https://rock.aaos.org/coursecontent.aspx?id=6001006 1/32 Woven bone Lamellar bone Bone Cel"
+        },
+        {
+          "id": "6001186",
+          "title": "Bone Healing, Bone Graft Materials, and Bone Graft Substitutes, Including Bone Morphogenetic Proteins",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001186",
+          "extractable": true,
+          "score": 18.539,
+          "snippet": "FEEDBACK 9/3/26, 7:33 AM AAOS | Bone Healing, Bone Graft Materials, and Bone Graft Substitutes, Including Bone Morphogenetic Proteins https://rock.aaos.org/coursecontent.aspx?id=6001186 1/26 Endochondral Key cell types involved in bone healing Osteoblasts Osteoclasts Chondroblasts Fibroblasts Types of bone healing (Re"
+        },
+        {
+          "id": "6004030",
+          "title": "Inflammatory Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004030",
+          "extractable": true,
+          "score": 16.695,
+          "snippet": "Action Abatacept Recombinant fusion protein MHC receptors Binds to MHC receptors on antigen- presenting cells to block T cell activation Anakinra Receptor antagonist IL-1 receptors Binds to IL-1 receptors to block IL-1 proinflammatory signaling pathway Canakinumab Monoclonal IgG antibody IL-1β Binds to IL-1β wit"
+        },
+        {
+          "id": "6004046",
+          "title": "Hematopoietic Bone Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004046",
+          "extractable": true,
+          "score": 16.512,
+          "snippet": "alpha, hepatocyte growth factor, and vascular endothelial growth factor), supporting osteoclast survival and bone resorption. Although many tumor-related osteolytic processes are accompanied by a compensatory attempt at remodeling via osteoblastic bone formation, myeloma bone disease typically is characterized by a co"
+        },
+        {
+          "id": "510000516",
+          "title": "Overview and Management of Bone Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000516",
+          "extractable": true,
+          "score": 16.189,
+          "snippet": "Processes/Tumors Observation: used for asymptomatic inactive/latent bone tumors Aspiration and injection SEND FEEDBACK 9/3/26, 5:32 PM AAOS | Overview and Management of Bone Tumors https://rock.aaos.org/coursecontent.aspx?id=510000516 4/18 Unicameral bone cysts Methylprednisolone acetate Bone marrow Synthetic bone gra"
+        }
+      ]
+    },
+    {
+      "stableGuid": "CXRkl*uaT|",
+      "front": "Osteoinductive materials contain factors that stimulate bone growth and induction of stem cells down a bone-forming lineage .",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science",
+        "SnapOrtho::Specialty::Metabolic_Bone"
+      ],
+      "candidates": [
+        {
+          "id": "6001186",
+          "title": "Bone Healing, Bone Graft Materials, and Bone Graft Substitutes, Including Bone Morphogenetic Proteins",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001186",
+          "extractable": true,
+          "score": 60.119,
+          "snippet": "healing are direct intramembranous bone formation and endochondral bone formation. Direct intramembranous bone formation occurs when pluripotent stem cells differentiate into cells of the osteoblast lineage and secrete unmineralized osteoid matrix, which subsequently mineralizes to form mature bone SEND FEEDBACK 9/3/2"
+        },
+        {
+          "id": "6001000",
+          "title": "Cell Biology, Cell Differentiation, and Skeletal Stem Cells",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001000",
+          "extractable": true,
+          "score": 45.987,
+          "snippet": "and Skeletal Stem Cells https://rock.aaos.org/coursecontent.aspx?id=6001000 1/35 Adult somatic stem cells can divide indefinitely and are capable of generating various types of cells via two types of cell division. Symmetric division, in which somatic stem cells replicate and create more somatic stem cells. Asymmetric"
+        },
+        {
+          "id": "6001006",
+          "title": "Bone Healing and Bone Grafts",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001006",
+          "extractable": true,
+          "score": 44.89,
+          "snippet": "PM AAOS | Bone Healing and Bone Grafts https://rock.aaos.org/coursecontent.aspx?id=6001006 1/32 Woven bone Lamellar bone Bone Cells Bone contains three distinct cell types. Osteoblasts Cuboidal cells located along the bone surface comprising 4% to 6% of the total resident bone cells Form bone through the synthesis of"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 44.069,
+          "snippet": "the trade-offs associated with different bearing materials and their manufacturing treatments. Identify the primary biologic reactions associated with each bearing material. Bearing Materials     NOTES SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Total Hip Arthroplasty: Bearing Surfaces Basic Science https://rock.aaos.org"
+        },
+        {
+          "id": "6002001",
+          "title": "Stem Cells and Cell Therapy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002001",
+          "extractable": true,
+          "score": 43.136,
+          "snippet": "local cells, including stem and progenitor cells if new tissue is desired; transplanting cells, including autogenous stem and progenitor cells; transplanting culture-expanded or modified stem and progenitor cells; and transplanting cells in fully formed tissue generated in vitro or in vivo (Resource 4). Stem cell func"
+        },
+        {
+          "id": "6001151",
+          "title": "Bone Biology and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001151",
+          "extractable": true,
+          "score": 40.496,
+          "snippet": "AAOS | Bone Biology and Biomechanics https://rock.aaos.org/coursecontent.aspx?id=6001151 4/15 Microscopic level Woven bone is primary bone characterized by a random orientation of collagen and mineral. Lamellar bone is secondary bone that results from the remodeling of woven bone into an organized bone tissue. Lacunae"
+        },
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 33.157,
+          "snippet": "nfections in orthopaedics, in Einhorn TA, O’Keefe RJ, Buckwalter JA, eds: Orthopaedic Basic Science. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2007, pp 299-314. Types of Musculoskeletal Infection and Clinical Presentation SEND FEEDBACK 9/3/26, 4:48 PM AAOS | Musculoskeletal Infections and Microbiology Bas"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 30.874,
+          "snippet": "(AC) joint, and the coracoid. (Adapted with permission from Neer CS II, Craig EV, Fukuda H: Cuff-tear arthropathy. J Bone Joint Surg Am 1983;65[9]:1232-1244.) SEND FEEDBACK 9/4/26, 10:26 AM AAOS | Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes https://rock.aaos.org/coursecontent.aspx?id=6001061"
+        },
+        {
+          "id": "6001049",
+          "title": "Growth and Embryology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001049",
+          "extractable": true,
+          "score": 30.22,
+          "snippet": "center of ossification so it becomes the growth region on each end of a newly developing bone. These growth regions differentiate further and become well-defined growth plates. Division within the epiphyseal plate is coupled with the deposition of bone at the metaphyseal side of the bud, and long bone growth begins. A"
+        },
+        {
+          "id": "6001060",
+          "title": "Bone Cysts and Benign Bone Neoplasms",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001060",
+          "extractable": true,
+          "score": 29.287,
+          "snippet": "cartilaginous, fibrous bone, and bone- forming tumors. Describe the expected imaging findings of benign cystic, cartilaginous, fibrous bone, and bone- forming tumors. Identify the imaging characteristics of benign cystic, cartilaginous, fibrous bone, and bone- forming tumors. Discuss the various treatment strategies f"
+        },
+        {
+          "id": "6004076",
+          "title": "Current Applications of Orthobiologic Agents",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004076",
+          "extractable": true,
+          "score": 29.231,
+          "snippet": "autograft, bone allograft, demineralized bone matrix (DBM), calcium phosphate Osteoinduction The process of inducing new bone growth via externally introduced factors that cause mesenchymal cell differentiation into the bone and chondral cells necessary for bone formation3,5 Examples Growth factors, bone morphogenetic"
+        },
+        {
+          "id": "6001166",
+          "title": "Metabolic Bone Diseases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001166",
+          "extractable": true,
+          "score": 25.886,
+          "snippet": "growth, chondrocytes mature and direct the formation of new bone trabeculae in the process of endochondral bone formation and osteoblasts form new bone via periosteal appositional growth. These processes determine the length and width of bones. Bone is remodeled by osteoclasts (bone- resorbing cells) coupled with oste"
+        }
+      ]
+    },
+    {
+      "stableGuid": "CXT*e&_VN,",
+      "front": "What are the three degrees of myelodysplasia that are shown below? A: Spina bifida oculta B: Meningocele C: Myelomeningocele",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Pediatric_Orthopedics",
+        "SnapOrtho::Specialty::Spine"
+      ],
+      "candidates": [
+        {
+          "id": "6001050",
+          "title": "Myelomeningocele",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001050",
+          "extractable": true,
+          "score": 68.781,
+          "snippet": "r vertical tali.8 SEND FEEDBACK 9/3/26, 4:49 PM AAOS | Myelomeningocele https://rock.aaos.org/coursecontent.aspx?id=6001050 5/14 Imaging Studies Most diagnoses of spina bifida are made via prenatal ultrasonography. Diagnosis Genetic diagnoses often are associated with spina bifida. A multidisciplinary team and referral"
+        },
+        {
+          "id": "510000579",
+          "title": "Pediatric Spine Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000579",
+          "extractable": true,
+          "score": 27.875,
+          "snippet": "function.20 Cervical Spine Clearance Pediatric Cervical Spine Clearance Working Group algorithm21  Cervical Spine Clearance The Pediatric Cervical Spine Working Group recently developed standardized guidelines for evidence-based pediatric cervical spine clearance (Resource 5; Figure 2). In patients with intact mental"
+        },
+        {
+          "id": "510000582",
+          "title": "Pediatric and Adolescent Back Pain: Pediatric Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000582",
+          "extractable": true,
+          "score": 25.928,
+          "snippet": "SEND FEEDBACK 9/3/26, 5:35 PM AAOS | Pediatric and Adolescent Back Pain: Pediatric Spine https://rock.aaos.org/coursecontent.aspx?id=510000582 9/25 A detailed musculoskeletal, abdominal, and neurologic examination is necessary (Video 2). Video 2 Brooks JT: Video. Pediatric Spine Physical Examination. Jackson, MS, 2021"
+        },
+        {
+          "id": "6001174",
+          "title": "Clubfoot (Talipes Equinovarus)",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001174",
+          "extractable": true,
+          "score": 21.052,
+          "snippet": "e foot end of the bed so the surgeon can work from the end of the bed Surgical approaches Make a Cincinnati (transverse) incision 1 cm above the posterior heel crease (this extends from just below the lateral tip of fibula to just below the medial malleolus and out onto the medial foot by the cuneiform if necessary). R"
+        },
+        {
+          "id": "6002081",
+          "title": "Pediatric Osteomyelitis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002081",
+          "extractable": true,
+          "score": 18.576,
+          "snippet": " Pediatric Osteomyelitis  CORE February 27, 2026 Erika Daley, MD (2020–2024) Todd J. Blumberg, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Describe the unique pediatric anatomic and physiologic factors that contribute to development of osteomye"
+        },
+        {
+          "id": "6002095",
+          "title": "Adult Spine Deformity Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002095",
+          "extractable": true,
+          "score": 17.967,
+          "snippet": "her H, eds: Orthopaedic Knowledge Update: Spine, ed 5. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2017, pp 335-355.) Table 9 Comprehensive Etiology-Based Adult Spine Deformity Classification System Type Description Subtype 1 Adult degenerative spine deformity Not applicable 2 Adult idiopathic spine deformi"
+        },
+        {
+          "id": "6001059",
+          "title": "Pediatric Cervical Spine Abnormalities",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001059",
+          "extractable": true,
+          "score": 12.369,
+          "snippet": "stenosis19 Diastrophic Dysplasia Mid-cervical kyphosis is unique to this patient population and is present in as many as one- third of all patients.19 Kyphosis less than 60° likely resolves by age 6 years; larger curves are unlikely to resolve.19 Diastrophic dysplasia also is associated with cervical spina bifida occu"
+        },
+        {
+          "id": "6003014",
+          "title": "Adult Isthmic Spondylolisthesis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003014",
+          "extractable": true,
+          "score": 11.44,
+          "snippet": "1 Sanders J: Spondylolysthesis, from Dimar JR II, mod: Looking beyond the curve: Classification and treatment of spinal deformity in the orthopaedic clinic. Presented at the Annual Meeting of the American Academy of Orthopaedic Surgeons, Las Vegas, NV, March 12-16, 2019. Anatomy and Biomechanics Associated conditions"
+        },
+        {
+          "id": "6000037",
+          "title": "Neuromuscular Scoliosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000037",
+          "extractable": true,
+          "score": 9.403,
+          "snippet": "curve is below L1. Posterior-only spinal fusion is indicated for most children; however, patients with neurofibromatosis and some patients with myelomeningocele generally are considered candidates for anterior/posterior fusion because of weakened lamina in neurofibromatosis, which is related to dural ectasia, and abse"
+        },
+        {
+          "id": "510000526",
+          "title": "Kyphosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000526",
+          "extractable": true,
+          "score": 9.194,
+          "snippet": "also varies with the underlying etiology. Children with mucopolysaccharidosis have a gibbus deformity that remains relatively flexible, whereas patients with high-level myelodysplasia may have a very rigid gibbus deformity (Figure 5). Figure 5 Standing lateral radiograph of the spine of an 8-year-old girl demonstrates"
+        },
+        {
+          "id": "6001058",
+          "title": "Pediatric Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001058",
+          "extractable": true,
+          "score": 8.871,
+          "snippet": "vehicle collisions are a more common cause. The mechanism and energy of the trauma determine the complexity of the fracture pattern. Pathologic fractures also occur in children with local pathology (eg, bone cyst, benign or malignant tumors) or systemic conditions (eg, osteogenesis imperfecta, cerebral palsy, myelomen"
+        },
+        {
+          "id": "6004062",
+          "title": "Pediatric Foot Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004062",
+          "extractable": true,
+          "score": 8.762,
+          "snippet": "e walking is a diagnosis of exclusion. Differential Diagnosis Important to rule out other causes, including the following: SEND FEEDBACK 9/3/26, 5:36 PM AAOS | Pediatric Foot Conditions https://rock.aaos.org/coursecontent.aspx?id=6004062 6/32 Congenital short Achilles tendon Cerebral palsy Muscular dystrophy Charcot-Ma"
+        }
+      ]
+    },
+    {
+      "stableGuid": "cY%Sx7%;.n",
+      "front": "Diastrophic Dysplasia is a rare congenital disorder caused by an autosomal recessive mutation in the DTDST gene leading to a defect in the sulfate transporter protein . Patients present with a form of short-limbed dwarfism with characteristic features such as cauliflower ears , hitchhiker thumbs , and severe cervical kyphosis .",
+      "extra": "Other random facts *More common among Finish ancestry *DTDST gene is on chromosome 5",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science",
+        "SnapOrtho::Specialty::Pediatric_Orthopedics",
+        "SnapOrtho::Specialty::Spine"
+      ],
+      "candidates": [
+        {
+          "id": "6004103",
+          "title": "Skeletal Dysplasias and Mucopolysaccharidoses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004103",
+          "extractable": true,
+          "score": 145.827,
+          "snippet": "and glaucoma as adults Diastrophic dysplasia Mutation in sulfate transporter gene affects proteoglycan sulfate groups in cartilage; AR; 1 in 70 people are carriers of this gene in Finland; very rare elsewhere Short stature; rhizomelic shortening, cervical kyphosis, kyphoscoliosis, hitchhiker thumbs, cauliflower ears,"
+        },
+        {
+          "id": "6002051",
+          "title": "Genetic Diseases of Musculoskeletal Tissues",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002051",
+          "extractable": true,
+          "score": 74.274,
+          "snippet": "protein is abnormal. For example, in patients with osteogenesis imperfecta, which is caused by a mutation regulating type I collagen (the major type of collagen in bone), mild or severe clinical findings may be present depending on the actual type of mutation. In patients with mild disease, life expectancy is normal;"
+        },
+        {
+          "id": "6001008",
+          "title": "Orthopaedic Molecular and Cellular Biology, Genetics, and Immunology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001008",
+          "extractable": true,
+          "score": 70.854,
+          "snippet": "10/49 Type Genetic Mutation Functional Defect Characteristic Phenotypes Spondyloepiphyseal dysplasia Type II collagen- encoding gene (COL2A1) Defect in cartilage matrix formation Short stature (skeletal dysplasia), short trunk, malformation of spine, coxa vara, myopia, and retinal degeneration Diastrophic dysplasia Su"
+        },
+        {
+          "id": "6001059",
+          "title": "Pediatric Cervical Spine Abnormalities",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001059",
+          "extractable": true,
+          "score": 67.131,
+          "snippet": "with nontraumatic pediatric cervical spine abnormalities. Perform an appropriate evaluation of patients in whom cervical spine abnormalities are suspected, including appropriate imaging studies. Review the nonsurgical and surgical management of cervical spine abnormalities. Discuss the potential complications of manag"
+        },
+        {
+          "id": "6003012",
+          "title": "Other Conditions With Musculoskeletal Involvement",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003012",
+          "extractable": true,
+          "score": 62.067,
+          "snippet": "type exists (type V osteogenesis imperfecta). The other cases are recessive, all severe, and typically present at birth. They mostly result from mutations in collagen-processing genes. The phenotypes are similar, and management is identical. Gaucher disease is an autosomal recessive disease caused by mutations in the"
+        },
+        {
+          "id": "510000526",
+          "title": "Kyphosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000526",
+          "extractable": true,
+          "score": 55.869,
+          "snippet": "coverage issues. Congenital kyphosis Most likely caused by a genetic defect in the process of somitogenesis between weeks five and eight in utero Type 1 congenital kyphosis (failure of formation) is the most dangerous type because it may cause a sharp, rigid kyphosis over a single segment, leading to possible neurolog"
+        },
+        {
+          "id": "6002086",
+          "title": "Syndromic Scoliosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002086",
+          "extractable": true,
+          "score": 55.739,
+          "snippet": "e long bones38 Spondylodysplastic type 2 Autosomal recessive mutation in B3GALT6 (OMIM #615349) Short stature, developmental delays, and craniofacial abnormalities39 Musculocontractural type 1 Autosomal recessive mutation in CHST14 (OMIM #601776) Craniofacial abnormalities, congenital contractures of digits, clubfeet,"
+        },
+        {
+          "id": "6001049",
+          "title": "Growth and Embryology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001049",
+          "extractable": true,
+          "score": 55.146,
+          "snippet": "achondroplasia Early-onset osteoarthritis Multiple epiphyseal dysplasia COMP or type IX collagen Abnormality of cartilage formation Short stature (skeletal dysplasia) Early-onset osteoarthritis Spondyloepiphyseal dysplasia Type II collagen Defect in cartilage matrix formation Short stature (skeletal dysplasia), short"
+        },
+        {
+          "id": "6001038",
+          "title": "Hereditary Motor Sensory Neuropathy (Charcot-Marie-Tooth Disease)",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001038",
+          "extractable": true,
+          "score": 52.507,
+          "snippet": "type 4 (CMT disease type 4) Severe autosomal recessive form that may have demyelinating or axonal features Onset of symptoms typically in childhood Rare in the United States X-linked Charcot-Marie-Tooth disease (CMT type X1) Second most common form of CMT disease Mutation in gene for connexin-32 protein, which is foun"
+        },
+        {
+          "id": "6002082",
+          "title": "Upper-Limb Deficiency and Prostheses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002082",
+          "extractable": true,
+          "score": 49.588,
+          "snippet": "deficiency.24  Congenital Deficiencies Children with TAR syndrome commonly present with varying degrees of bilateral radius abnormalities with mildly hypoplastic thumbs. They also may have additional skeletal abnormalities involving the lower extremities and the ulna.10 TAR syndrome results from mutations in the RBM8"
+        },
+        {
+          "id": "6003011",
+          "title": "Connective Tissue Diseases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003011",
+          "extractable": true,
+          "score": 48.445,
+          "snippet": "are new mutations. The etiology of EDS is more complex because thirteen types have been identified. Among patients with the classic form of EDS, 40% to 50% of have a mutation inCOL5A1 or COL5A2, the genes for type V collagen; this classic form is autosomal dominant. The other mutation that may result in classic EDS is"
+        },
+        {
+          "id": "6001051",
+          "title": "Arthrogryposis Multiplex Congenita",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001051",
+          "extractable": true,
+          "score": 47.989,
+          "snippet": "nd pterygia persist, and permanent muscle weakness may be present. Autosomal dominant forms of MPS are rare, caused by an MYH3 mutation associated with DA8 or TPM2. A rare form of X-linked MPS exists, which is lethal. Less commonly, a nonhereditary form of MPS can occur in mothers with myasthenia gravis, in which autoa"
+        }
+      ]
+    }
+  ]
+}

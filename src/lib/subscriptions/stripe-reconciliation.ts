@@ -7,6 +7,7 @@ import {
   type CanonicalSubscriptionEntry,
   upsertCanonicalSubscription,
 } from '@/lib/subscriptions/ledger';
+import { getStripeLifecycleReason } from '@/lib/subscriptions/stripe-lifecycle';
 
 type StripeUserResolutionSource =
   | 'existing_customer_mapping'
@@ -256,6 +257,11 @@ function buildStripeCanonicalEntry(params: {
       metadata: subscription.metadata,
       price_lookup_key: price?.lookup_key ?? null,
       quantity: firstItem?.quantity ?? null,
+      lifecycle_reason: getStripeLifecycleReason({
+        status: subscription.status,
+        cancellationReason: subscription.cancellation_details?.reason ?? null,
+        cancelAtPeriodEnd: subscription.cancel_at_period_end,
+      }),
     },
     last_verified_at: new Date().toISOString(),
     stripe_customer_id: customerId,

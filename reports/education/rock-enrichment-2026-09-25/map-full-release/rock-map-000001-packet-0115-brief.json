@@ -1,0 +1,1120 @@
+{
+  "batchKey": "map-000001-packet-0115",
+  "inputChecksum": "6f400e782c48b04d7ff09776fdb4533bbfc56e3985d948658d1fd42157ed5fc2",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "sidecarSchema": {
+    "card": {
+      "stableGuid": "string",
+      "status": "\"mapped\"|\"skipped\"",
+      "chapters": "1-3 {id, role} from this card's candidates; first is primary",
+      "skipReason": "if skipped"
+    }
+  },
+  "cards": [
+    {
+      "stableGuid": "GxmppJx{TY",
+      "front": "What x-ray findings (3) suggest syndesmotic injury ? Decreased tibiofibular overlap Increased tibiofibular clear space Increased medial clear space &gt;5 mm with stress",
+      "extra": "Note: Increased medial clear space is due to deltoid ligament incompetence, but suggestive of syndesmotic injury",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Foot_Ankle",
+        "SnapOrtho::Anatomy::Foot_Ankle::Ligaments",
+        "SnapOrtho::Anatomy::Foot_Ankle::Ligaments::Deltoid_Ligament"
+      ],
+      "candidates": [
+        {
+          "id": "6000002",
+          "title": "Syndesmotic Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000002",
+          "extractable": true,
+          "score": 61.792,
+          "snippet": "radiographs, tibiofibular overlap should be at least 5 mm. Clinicians may suspect syndesmotic injury if decreased tibiofibular overlap is observed. On mortise views, tibiofibular clear space typically is less than 5 mm. More than 6 mm of widening of the tibiofibular clear space indicates syndesmotic disruption. Full-l"
+        },
+        {
+          "id": "6001156",
+          "title": "Deltoid Ligament Instability Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001156",
+          "extractable": true,
+          "score": 52.548,
+          "snippet": "S | Deltoid Ligament Instability Disease https://rock.aaos.org/coursecontent.aspx?id=6001156 15/31 In a 2014 study, Nortunen et al30 reviewed the MRIs of 61 ankles with a deltoid ligament injury. Radiographic findings of medial clear space widening were noted in 33 of the ankles; radiographic findings of medial clear s"
+        },
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "extractable": true,
+          "score": 52.519,
+          "snippet": "ankle, which include the syndesmotic ligaments and the lateral ligamentous complex. The syndesmotic ligaments include the anterior inferior tibiofibular ligament, the posterior inferior tibiofibular ligament, and the interosseous ligament (not shown). The lateral ligamentous complex includes the anterior and posterior"
+        },
+        {
+          "id": "510000546",
+          "title": "Ankle and Foot Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000546",
+          "extractable": true,
+          "score": 47.949,
+          "snippet": "an ankle or foot sports injury. Discuss the surgical and nonsurgical management of common foot and ankle injuries. Outline surgical decision making for ankle and foot injuries. List risk factors associated with common foot and ankle injuries. Review current surgical techniques and outcomes of the management of foot an"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 44.734,
+          "snippet": "perature, and pulses Dorsalis pedis pulse Dorsum of the foot proximal to medial tarsometatarsal joints Posterior tibial pulse Posterior to medial malleolus, posterior tibial tendon, and flexor digitorum longus tendon Provocative and Special Tests Test for syndesmotic integrity or injury External rotation test Squeeze t"
+        },
+        {
+          "id": "6002083",
+          "title": "Foot and Ankle Sports Injuries in Pediatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002083",
+          "extractable": true,
+          "score": 41.121,
+          "snippet": "attachments. The medial deltoid originates on the medial malleolus of the distal tibia, inserting onto the talus (deep and superficial deltoid), calcaneus (superficial deltoid only), and navicular (superficial deltoid only). The lateral ankle ligaments, which include the anterior talofibular ligament, calcaneofibular"
+        },
+        {
+          "id": "6004057",
+          "title": "Rotational Fractures of the Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004057",
+          "extractable": true,
+          "score": 39.955,
+          "snippet": "fixation. On an AP radiograph, tibiofibular overlap of less than 10 mm or a clear space of more than 5 mm suggests a syndesmotic injury. On a mortise radiograph, an MCS that is larger than 5 mm or unequal to the superior clear space suggests a medial- side ligament injury. Tibiofibular overlap of less than 10 mm on a m"
+        },
+        {
+          "id": "6001184",
+          "title": "Imaging of the Lower Extremity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001184",
+          "extractable": true,
+          "score": 38.568,
+          "snippet": "of Brian C. Lau, MD, Durham, NC.) Medial Clear Space The medial clear space, measured between the medial border of the talus and the most lateral edge of the medial malleolus on a mortise view, should be less than 4 mm.7 Medial clear space greater than 4 mm is indicative of a deltoid ligament injury (Figure 4; Resourc"
+        },
+        {
+          "id": "6004074",
+          "title": "Medial Collateral Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004074",
+          "extractable": true,
+          "score": 36.267,
+          "snippet": "Medial Collateral Ligament Injuries https://rock.aaos.org/coursecontent.aspx?id=6004074 1/23 The medial ulnar collateral ligament (UCL) complex consists of the anterior oblique ligament, the posterior oblique ligament, and the transverse ligament. The anterior oblique ligament is the strongest and is the primary stabi"
+        },
+        {
+          "id": "6004002",
+          "title": "Ankle Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004002",
+          "extractable": true,
+          "score": 33.903,
+          "snippet": "rotation may produce syndesmotic pain. The length of tenderness along the lateral ankle also is an indicator of injury severity. In patients with syndesmotic disruption, plain radiographs may demonstrate the following signs: Increased tibiofibular clear space Decreased tibiofibular overlap Increased medial clear space"
+        },
+        {
+          "id": "6001013",
+          "title": "Calcaneal Stress Fracture",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001013",
+          "extractable": true,
+          "score": 26.783,
+          "snippet": "biomechanical, and pathophysiologic factors related to calcaneal stress fractures. Perform appropriate clinical work up of a patient in whom a calcaneal stress fracture is suspected. Formulate an appropriate nonsurgical treatment plan for a patient with a calcaneal stress fracture. Pathophysiology/Pathoanatomy Calcane"
+        },
+        {
+          "id": "6004084",
+          "title": "Anterior Cruciate Ligament Injury Prevention",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004084",
+          "extractable": true,
+          "score": 26.186,
+          "snippet": "strength and hamstrings-to-quadriceps ratio, decreased valgus knee moments, improved lower limb alignment, and increased knee flexion angles.66-68 The 11+ IPP has substantially improved hip kinematics, decreased overall injury rates across multiple sports, SEND FEEDBACK 9/3/26, 7:21 AM AAOS | Anterior Cruciate Ligamen"
+        }
+      ]
+    },
+    {
+      "stableGuid": "GxZk6B3B42",
+      "front": "Tenderness at the greater trochanter can indicate trochanteric bursitis.",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Greater_Trochanter"
+      ],
+      "candidates": [
+        {
+          "id": "6004024",
+          "title": "Extended Trochanteric Osteotomy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004024",
+          "extractable": true,
+          "score": 31.159,
+          "snippet": "FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Lists indications for extended trochanteric osteotomy. Explain how to perform an extended trochanteric osteotomy. Describe the postoperative protocol for extended trochanteric osteotomy. Identify intraoperative and postoperative complications of"
+        },
+        {
+          "id": "510000529",
+          "title": "Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000529",
+          "extractable": true,
+          "score": 25.236,
+          "snippet": "tuberosity (medial side) Insertion: fibular head External rotators of the hip Piriformis Origin: lateral/posterior sacrum Insertion: passes through the greater sciatic notch and inserts at the posterosuperior greater trochanter Motion: external rotation of the hip Innervation: piriformis nerve Obturator externus Origi"
+        },
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "extractable": true,
+          "score": 22.455,
+          "snippet": "on the affected side while walking to compensate for weakness of the hip abductors. Some surgeons have argued that posterior approaches to the hip that violate the hip abductors may contribute to postoperative hip instability. Using a direct anterior versus posterior approach to the hip in the management of femoral ne"
+        },
+        {
+          "id": "510000587",
+          "title": "Hip Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000587",
+          "extractable": true,
+          "score": 20.637,
+          "snippet": "external rotation. SEND FEEDBACK 9/3/26, 4:21 PM AAOS | Hip Arthroscopy https://rock.aaos.org/coursecontent.aspx?id=510000587 8/28 Gentle traction is applied to the surgical limb with the knee and hip extended to 0°, the hip adducted to 0°, and the foot internally rotated 10° to 15°. The anterior superior iliac spine"
+        },
+        {
+          "id": "6001067",
+          "title": "Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001067",
+          "extractable": true,
+          "score": 19.449,
+          "snippet": "1 Differential Diagnoses for Hip and Groin Pain1-4 Intra-articular Diagnosesa Extra-articular Diagnosesa Non-musculoskeletal Diagnosesa Femoroacetabular impingement syndrome Muscle/tendon/bursal injury: Iliopsoas complex (bursitis, tendonitis) Adductor strain Rectus femoris strain Gluteal muscles, greater trochant"
+        },
+        {
+          "id": "6001159",
+          "title": "History and Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001159",
+          "extractable": true,
+          "score": 19.237,
+          "snippet": "Lateral pain (side of leg) The most common diagnosis for lateral pain is greater trochanteric bursitis. The differential diagnosis for lateral hip pain includes greater trochanteric bursitis, iliotibial band (ITB) syndrome, abductor tendinitis, abductor tendon tear, and snapping of the ITB over the trochanter. Posteri"
+        },
+        {
+          "id": "510000555",
+          "title": "Component Removal in Revision Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000555",
+          "extractable": true,
+          "score": 18.979,
+          "snippet": "of the greater trochanteric fragment (Figure 1, C). The greater trochanter is the weakest point in the trans-trochanteric fragment. The capsule surrounding the prosthesis is divided superiorly and inferiorly, leaving the anterior and posterior sleeves intact and the shoulder of the prosthesis exposed. A cerebellar-typ"
+        },
+        {
+          "id": "6001068",
+          "title": "Muscle Injuries: Hip Abductor Tendon Injuries, Proximal Hamstring Injuries, and Rectus Femoris Avulsions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001068",
+          "extractable": true,
+          "score": 18.471,
+          "snippet": "abductor tendon pathology.23 Differential Diagnosis Iliotibial band/tensor fasciae latae tendonitis External coxa sultans Trochanteric bursitis Gluteus medius calcific tendinitis Lumbar radiculopathy Hip osteoarthritis Femoroacetabular impingement syndrome  Differential Diagnosis Abductor tendon tears often occur con"
+        },
+        {
+          "id": "510000588",
+          "title": "Femoroacetabular Impingement Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000588",
+          "extractable": true,
+          "score": 17.964,
+          "snippet": "lateral proximal tibia at the Gerdy tubercle. In its course, the iliotibial band runs directly lateral to the greater trochanter and, therefore, has been implicated as a contributor to trochanteric bursitis and external snapping hip. Trochanteric bursitis may coexist with FAI syndrome. Vap et al27 diagnosed chronic tr"
+        },
+        {
+          "id": "6002064",
+          "title": "Limb Length and Offset",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002064",
+          "extractable": true,
+          "score": 12.218,
+          "snippet": "femur to help assess length and offset changes6 (Resource 6). Alternatively, a flap of the posterior hip capsule can be tagged immediately after capsulotomy. This tag stitch is lifted directly anteriorly so the suture overlies the greater trochanter. The greater trochanter is marked along the length of the suture via"
+        },
+        {
+          "id": "6004095",
+          "title": "Surgical Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004095",
+          "extractable": true,
+          "score": 12.049,
+          "snippet": "incision and, rather than dividing the gluteus maximus, reflected the entire gluteus maximus posteriorly. The modified Gibson approach is a mid-lateral incision over the femur extending proximally, longitudinally over the greater trochanter toward the iliac crest.10 The gluteal fascia is then incised from the distal a"
+        },
+        {
+          "id": "510000580",
+          "title": "Pelvic and Hip Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000580",
+          "extractable": true,
+          "score": 11.322,
+          "snippet": "5:39 PM AAOS | Pelvic and Hip Injuries https://rock.aaos.org/coursecontent.aspx?id=510000580 7/47 The proximal femur consists of the proximal femoral epiphysis, proximal femur physis, and femoral neck, which are proximal to the greater and lesser trochanters. The lesser trochanter is the insertion of the iliopsoas. Th"
+        }
+      ]
+    },
+    {
+      "stableGuid": "gybw.V-(sn",
+      "front": "ACL intact knees: cartilage wear will be anterior-medial most commonly. ACL deficient knees: cartilage wear will be posterior-medial most commonly.",
+      "extra": "*This is why ACL-deficient patients develop wear of their posterior horn of medial meniscus",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Ligaments",
+        "SnapOrtho::Anatomy::Leg_Knee::Ligaments::Medial_Meniscus",
+        "SnapOrtho::Anatomy::Leg_Knee::Other",
+        "SnapOrtho::Anatomy::Leg_Knee::Other::Knee_Articular_Cartilage",
+        "SnapOrtho::Specialty::Sports_Medicine"
+      ],
+      "candidates": [
+        {
+          "id": "6002101",
+          "title": "Articular Cartilage and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002101",
+          "extractable": true,
+          "score": 45.06,
+          "snippet": "articular cartilage.8 SEND FEEDBACK 9/3/26, 7:23 AM AAOS | Articular Cartilage and Biomechanics https://rock.aaos.org/coursecontent.aspx?id=6002101 2/25 Figure 1 Images of articular cartilage. A, Arthroscopic image shows heathy hyaline articular cartilage from a knee joint. Scale bar: 0.1 cm. B, Gross specimen shows n"
+        },
+        {
+          "id": "6002002",
+          "title": "Meniscus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002002",
+          "extractable": true,
+          "score": 44.044,
+          "snippet": "tibial condyle. ACL = anterior cruciate ligament, aML = anterior root of the lateral meniscus, aMM = anterior root of the medial meniscus, LTC = lateral tibial condyle, MTC = medial tibial condyle, PCL = posterior cruciate ligament, pML = posterior root of the lateral meniscus, pMM = posterior root of the medial menis"
+        },
+        {
+          "id": "6004079",
+          "title": "Anatomy of the Ankle for the Sports Medicine Surgeon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004079",
+          "extractable": true,
+          "score": 43.825,
+          "snippet": "articular surface covering the medial malleolus, a small, linear region that is not covered by articular cartilage frequently is present, which is important to consider in performing surgical procedures such as medial malleolar osteotomy.4 The anterior and posterior colliculi are terminal osseous extensions of the med"
+        },
+        {
+          "id": "6002092",
+          "title": "Imaging of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002092",
+          "extractable": true,
+          "score": 42.169,
+          "snippet": "the Knee https://rock.aaos.org/coursecontent.aspx?id=6002092 26/39 Figure 22 T2-weighted sagittal MRI of a knee shows a bucket-handle tear of the posterior horn of the lateral meniscus. Note that the posterior horn of the lateral meniscus is flipped anteriorly and located directly posterior to the anterior horn of the"
+        },
+        {
+          "id": "6001056",
+          "title": "Meniscal Tears and Discoid Meniscus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001056",
+          "extractable": true,
+          "score": 41.685,
+          "snippet": "the lateral meniscus often is anchored to the femur by the ligament of Humphrey and Wrisberg. The medial meniscus is more C-shaped than the circular lateral meniscus, with its posterior horn being wider than its anterior horn. The peripheral aspect of the medial meniscus is firmly attached to the medial capsule and th"
+        },
+        {
+          "id": "6000017",
+          "title": "Radiographic Evaluation of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000017",
+          "extractable": true,
+          "score": 40.409,
+          "snippet": "of the Knee https://rock.aaos.org/coursecontent.aspx?id=6000017 16/30 Figure 9 Sagittal MRI of a knee shows the horizontal posterior horn of the medial meniscus, a fissure in the posterior articular cartilage, and subchondral edema. (Reproduced from Keeney JA: Radiographic evaluation and surgical anatomy of the knee,"
+        },
+        {
+          "id": "6001003",
+          "title": "Biology and Biomechanics of the Meniscus and Labrum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001003",
+          "extractable": true,
+          "score": 34.355,
+          "snippet": "semicircular shape, which covers approximately 50% to 60% of the medial tibial plateau in adulthood.3 The mean size of the posterior horn in the anterior-posterior dimension is 11 mm, whereas the anterior horn is narrower.4 The anterior horn of the medial meniscus attaches to the tibia anterior to the anterior cruciat"
+        },
+        {
+          "id": "6001181",
+          "title": "Meniscal Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001181",
+          "extractable": true,
+          "score": 33.798,
+          "snippet": "and anatomic relationships. ACL = anterior cruciate ligament insertion, LMPR = lateral meniscus posterior root insertion, LTE = lateral tibial eminence, MMPR = medial meniscus posterior root insertion, MTE = medial tibial eminence, PCL = posterior cruciate ligament insertion, SWF = shiny white fibers located in the po"
+        },
+        {
+          "id": "6004078",
+          "title": "Posterior Cruciate Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004078",
+          "extractable": true,
+          "score": 32.975,
+          "snippet": "s Posterior tibial translation >10 mm on posterior drawer test with the knee in neutral rotation The PCL is injured in combination with other structures such as the ACL, posterolateral corner, or medial side ACL = anterior cruciate ligament, PCL = posterior cruciate ligament. Reproduced from Hettrich CM, Marx RG, Parke"
+        },
+        {
+          "id": "510000539",
+          "title": "Anterior Cruciate Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000539",
+          "extractable": true,
+          "score": 29.222,
+          "snippet": "edema patterns (centrolateral femoral condyle near the sulcus terminalis and posterolateral tibial plateau).  Associated Injuries Lateral meniscus tears commonly are associated with acute ACL ruptures, and medial meniscus tears more often are observed in patients with chronic ACL injuries. Medial collateral ligament"
+        },
+        {
+          "id": "510000521",
+          "title": "Posterior Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000521",
+          "extractable": true,
+          "score": 28.172,
+          "snippet": "anchors are placed along the posterior glenoid rim. The capsule is repaired with the arm in 20° of abduction and neutral rotation. Posterior bone graft Useful in patients with an acquired bony defect of the posterior glenoid Can be intra-articular or extra-articular, with capsular advancement anterior and medial to th"
+        },
+        {
+          "id": "510000531",
+          "title": "Articular Cartilage Injury and Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000531",
+          "extractable": true,
+          "score": 27.072,
+          "snippet": "generated, and chondrocyte death and fissures can develop. Articular cartilage fissures may be propagated by repetitive loading. Associated Injuries Articular cartilage injuries are associated with other intra-articular pathology, such as meniscal tears, ACL tears, and patellar dislocations. Chronic posterior cruciate"
+        }
+      ]
+    },
+    {
+      "stableGuid": "Gygk.Y`u0",
+      "front": "Which bone tumor is shown in the histology below ? Osteosarcoma",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Conventional_Intramedullary_Osteosarcoma",
+        "SnapOrtho::Specialty::Orthopedic_Oncology"
+      ],
+      "candidates": [
+        {
+          "id": "510000542",
+          "title": "Nonosteoblastic Osteosarcoma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000542",
+          "extractable": true,
+          "score": 31.933,
+          "snippet": "osteosarcomas.2 This lesson reviews nonosteoblastic osteosarcoma subtypes, including chondroblastic osteosarcoma, fibroblastic osteosarcoma, undifferentiated pleomorphic sarcoma of bone (UPS), telangiectatic osteosarcoma, small cell osteosarcoma, and giant cell–rich osteosarcoma (GCR-OS; Video 1 ). Video 1 Decilveo AP"
+        },
+        {
+          "id": "6004041",
+          "title": "Systemic Management of Bone Sarcomas",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004041",
+          "extractable": true,
+          "score": 28.079,
+          "snippet": "conventional osteosarcoma.4,5 Notably, tumor necrosis in response to preoperative chemotherapy is higher in fibroblastic and telangiectatic subtypes, and lower in chondroblastic subtypes compared with conventional osteoblastic tumors. For all high- grade, intramedullary subtypes, with the exception of chondroblastic s"
+        },
+        {
+          "id": "6002072",
+          "title": "Staging",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002072",
+          "extractable": true,
+          "score": 27.179,
+          "snippet": "of bone Enchondroma Non-ossifying fibroma Conventional osteosarcoma Central chondrosarcoma Undifferentiated pleomorphic sarcoma of bone Common surface tumors of bone Osteochondroma Periosteal chondroma Parosteal osteosarcoma Surface chondrosarcoma Classification specific to malignant primary bone tumors Primary or sec"
+        },
+        {
+          "id": "6001163",
+          "title": "Tumor and Tumor-like Conditions of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001163",
+          "extractable": true,
+          "score": 26.925,
+          "snippet": " Giant Cell Tumor of Bone Giant cell tumor of bone is a unique tumor that is considered benign; however, it may be locally aggressive and has the potential to metastasize. This tumor is thought to develop SEND FEEDBACK 9/4/26, 10:49 AM AAOS | Tumor and Tumor-like Conditions of the Hand and Wrist https://rock.aaos.org/"
+        },
+        {
+          "id": "6004039",
+          "title": "Musculoskeletal Tumor Biopsy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004039",
+          "extractable": true,
+          "score": 25.726,
+          "snippet": "FEEDBACK 9/3/26, 4:49 PM AAOS | Musculoskeletal Tumor Biopsy https://rock.aaos.org/coursecontent.aspx?id=6004039 4/17 Imaging Studies MRI is critical for tumor evaluation and biopsy planning. Positron emission tomography may guide the best area of tumor to sample.  Imaging Studies MRI following protocols for bone and"
+        },
+        {
+          "id": "6001077",
+          "title": "Metastatic Bone Disease to the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001077",
+          "extractable": true,
+          "score": 24.61,
+          "snippet": "growth factor, bone morphogenetic protein). SEND FEEDBACK 9/3/26, 4:44 PM AAOS | Metastatic Bone Disease to the Spine https://rock.aaos.org/coursecontent.aspx?id=6001077 10/44 Receptor activator of nuclear factor-ĸB ligand (RANKL)/osteoprotegerin Tumor cells do not destroy bone; cytokines from the tumor stimulate oste"
+        },
+        {
+          "id": "510000566",
+          "title": "Surgical Management of Upper Extremity Bone Metastases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000566",
+          "extractable": true,
+          "score": 24.367,
+          "snippet": "antegrade intramedullary nailing.20 Intramedullary nailing (Figure 10) SEND FEEDBACK 9/4/26, 9:44 AM AAOS | Surgical Management of Upper Extremity Bone Metastases https://rock.aaos.org/coursecontent.aspx?id=510000566 13/30 If adjunct radiation therapy is considered (eg, in patients with multiple myeloma and metastatic"
+        },
+        {
+          "id": "510000516",
+          "title": "Overview and Management of Bone Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000516",
+          "extractable": true,
+          "score": 23.946,
+          "snippet": "and malignant bone tumors. Describe the surgical principles of benign bone tumor excision. Describe the surgical principles of malignant bone tumor excision. Identify surgical adjuvants used to treat benign and malignant bone tumors. Overview Tumor histology and biologic activity The surgical management of benign and"
+        },
+        {
+          "id": "510000561",
+          "title": "Radiation Therapy: Bone Sarcoma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000561",
+          "extractable": true,
+          "score": 22.884,
+          "snippet": "with a posterior soft-tissue sarcoma show treatment volumes. Gross tumor volume is shown in red, clinical target volume is shown in blue, and planning target volume is shown in pink. (Reproduced from Ahmed SK, Owen D: SEND FEEDBACK 9/3/26, 5:57 PM AAOS | Radiation Therapy: Bone Sarcoma https://rock.aaos.org/coursecont"
+        },
+        {
+          "id": "6002074",
+          "title": "Bone-Producing Lesions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002074",
+          "extractable": true,
+          "score": 22.713,
+          "snippet": "whereas osteosarcoma demonstrates intense uptake.1 Pathology Bone islands histologically appear as cortical bone with a well-defined lamellar structure and haversian systems. The border between the lesion and the surrounding medullary bone shows no endochondral ossification.  Pathology Bone islands histologically app"
+        },
+        {
+          "id": "6004043",
+          "title": "Ewing Sarcoma/Primitive Neuroectodermal Tumor",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004043",
+          "extractable": true,
+          "score": 21.693,
+          "snippet": "/primitive neuroectodermal tumors. Pathophysiology/Pathoanatomy Overview     NOTES SEND FEEDBACK 9/3/26, 4:06 PM AAOS | Ewing Sarcoma/Primitive Neuroectodermal Tumor https://rock.aaos.org/coursecontent.aspx?id=6004043 1/16 Definition of Ewing sarcoma/primitive neuroectodermal tumor (PNET) Malignant tumor composed"
+        },
+        {
+          "id": "510000533",
+          "title": "Primary Bone Tumors of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000533",
+          "extractable": true,
+          "score": 20.773,
+          "snippet": "tumors have been developed over the years. Benign tumors versus malignant tumors versus tumor mimickers Malignant spine tumors Benign spine tumors Tumor mimickers (eg, infection, brown tumor, Paget disease, hemangioma, bone island, sarcoid, tuberculosis) Location (anterior versus posterior aspect of bone) Vertebral bo"
+        }
+      ]
+    },
+    {
+      "stableGuid": "GYXuU[hEQc",
+      "front": "Which Pandya type fracture has the highest risk of compartment syndrome ? Type B",
+      "extra": "Pandya Classification -Type A: Tubercle youth - ossified at tip -Type B: Physeal - epiphysis and tibial tubercle fracture as a unit off of the metaphysis; extra-articular -Type C: Intra-articular -Type D: Tubercle Teen - fracture to the distal aspect of the tubercle",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Compartment_Syndrome",
+        "SnapOrtho::Specialty::Pediatric_Orthopedics"
+      ],
+      "candidates": [
+        {
+          "id": "510000657",
+          "title": "Compartment Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000657",
+          "extractable": true,
+          "score": 47.307,
+          "snippet": "syndrome in adults. Describe the diagnostic findings of acute compartment syndrome in children. Identify the risk factors for compartment syndrome. Describe the pathophysiology of compartment syndrome. Define the natural history of compartment syndrome. Develop treatment plans for the management of compartment syndrom"
+        },
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "extractable": true,
+          "score": 43.798,
+          "snippet": "type III and type IV fractures have a fracture line through the physis and into the articular surface. Type III fractures break through the physis and exit through the epiphysis, whereas type IV fractures transfer energy through the metaphysis and epiphysis. Type V fractures are considered a compression-type injury to"
+        },
+        {
+          "id": "510000578",
+          "title": "Distal Humerus Physeal Fractures, Pediatric Polytrauma, and Upper Extremity Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000578",
+          "extractable": true,
+          "score": 39.925,
+          "snippet": "studies have implicated a high risk of compartment syndrome in patients with a floating elbows,3,4 a more recent systemic review reported a 2% rate of pediatric acute compartment syndrome with these injuries.5 Injury Classification The modified Gartland classification system is used to classify supracondylar humerus f"
+        },
+        {
+          "id": "6002083",
+          "title": "Foot and Ankle Sports Injuries in Pediatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002083",
+          "extractable": true,
+          "score": 37.625,
+          "snippet": "and ankle fractures. Type I is characterized by physeal separation. Type II is characterized by a fracture line that extends transversely through the physis and exits through the metaphysis. Type III is characterized by a fracture that traverses the physis and exits through the epiphysis. Type IV is characterized by a"
+        },
+        {
+          "id": "510000581",
+          "title": "Patellar Fractures, Tibial Spine (Eminence) Fractures, Tibial and Fibular Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000581",
+          "extractable": true,
+          "score": 37.483,
+          "snippet": "resultant risk of compartment syndrome associated with tibial and fibular fractures. Describe the Ogden classification of tibial tubercle fractures. Discuss the principles and general techniques for the surgical management of tibial and fibular fractures. Recognize potential complications of tibial and fibular fractur"
+        },
+        {
+          "id": "6004070",
+          "title": "Tibial and Fibular Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004070",
+          "extractable": true,
+          "score": 36.829,
+          "snippet": "What You Know Learning Objectives Recognize the most common type of proximal metaphyseal tibia fracture. Identify fractures at risk for complications, such as malunion and compartment syndrome. Review factors that influence the management of pediatric tibial shaft fractures. Proximal Tibia Metaphyseal Fractures Pathop"
+        },
+        {
+          "id": "6000048",
+          "title": "Chronic Exertional Compartment Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000048",
+          "extractable": true,
+          "score": 36.134,
+          "snippet": "anterior tibial vein. The lateral compartment contains the peroneus longus, peroneus brevis, and superficial peroneal nerve. The superficial posterior compartment contains the gastrocnemius, soleus, and sural nerve. The deep posterior compartment contains the tibialis posterior, flexor hallucis longus, flexor digitoru"
+        },
+        {
+          "id": "510000588",
+          "title": "Femoroacetabular Impingement Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000588",
+          "extractable": true,
+          "score": 35.506,
+          "snippet": "knotted anchors are used, knots should be placed peripherally to limit the risk for intra- articular knot impingement. SEND FEEDBACK 9/3/26, 4:08 PM AAOS | Femoroacetabular Impingement Syndrome https://rock.aaos.org/coursecontent.aspx?id=510000588 25/36 On completion of labral repair, the cam lesion is addressed. With"
+        },
+        {
+          "id": "6003013",
+          "title": "Slipped Capital Femoral Epiphysis and Femoroacetabular Impingement",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003013",
+          "extractable": true,
+          "score": 34.717,
+          "snippet": "le 1 Classification of SCFE Type of SCFE Able to Bear Weight? Risk of Osteonecrosis Stable Yes Zero Unstable No 47% Adapted with permission from Loder RT: Unstable slipped capital femoral epiphysis. J Pediatr Orthop 2001;21(5):694-699. Classification  Classification The value of this stability classification system is"
+        },
+        {
+          "id": "6000036",
+          "title": "Physeal Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000036",
+          "extractable": true,
+          "score": 34.634,
+          "snippet": "type II fractures are most common.  Injury Classification In a meta-analysis of 11 studies (n = 485), the prevalence of physeal fractures of the distal femur according to the Salter-Harris classification system was as follows: type I, 14%; type II, 57%; type III, 10%; type IV, 12%; and type V, 3%. 5 Patient History a"
+        },
+        {
+          "id": "6001034",
+          "title": "Bone Loss Classification: Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001034",
+          "extractable": true,
+          "score": 33.621,
+          "snippet": "or allograft- prosthetic composite. Figure 1 Illustrations of knees show the Anderson Orthopaedic Research Institute classification of bone defects. A, Type 1, femoral defect. B, Type 1, tibial defect. C, Type 2, femoral defect. D, Type 2, tibial defect. E, Type 3, femoral defect. F, Type 3, tibial defect. (Reproduced"
+        },
+        {
+          "id": "6004097",
+          "title": "Tibial Plateau Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004097",
+          "extractable": true,
+          "score": 32.492,
+          "snippet": "TX.) Tibial Plateau Fractures with an Ipsilateral Tibial Shaft Fracture SEND FEEDBACK 9/4/26, 10:34 AM AAOS | Tibial Plateau Fractures https://rock.aaos.org/coursecontent.aspx?id=6004097 23/31  Tibial Plateau Fractures with an Ipsilateral Tibial Shaft Fracture The principles of tibial plateau fracture reduction and f"
+        }
+      ]
+    },
+    {
+      "stableGuid": "gz$iB.dFY_",
+      "front": "What is the SLAC wrist classification ? Watson Classification",
+      "extra": "Stage I: Arthritis of scaphoid and radial styloid Stage II: Stage I + scaphoid facet arthritis Stage III: Stage II + capitolunate arthritis",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Hand",
+        "SnapOrtho::Anatomy::Hand::Osteology",
+        "SnapOrtho::Anatomy::Hand::Osteology::Scaphoid",
+        "SnapOrtho::Specialty::Hand_Upper_Extremity",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "6004029",
+          "title": "Osteoarthritis of the Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004029",
+          "extractable": true,
+          "score": 75.486,
+          "snippet": "the scaphoid fossa and the radial styloid Stage III: stage II with involvement of the capitolunate articulation Stage IV: not part of original Watson classification pancarpal wrist arthritis. Classification of SNAC13 Stage I: radial styloid affected Stage II: stage I with scaphocapitate articulation affected Stage III"
+        },
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 46.481,
+          "snippet": "the classification of congenital differences in the upper extremity. Perform an appropriate workup of patients with congenital upper extremity differences. Determine the surgical and nonsurgical treatment options for the management of congenital upper extremity differences. Pathophysiology/Pathoanatomy Overview Congen"
+        },
+        {
+          "id": "510000557",
+          "title": "Physical Examination and Anatomy of the Hand, Forearm, and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000557",
+          "extractable": true,
+          "score": 40.429,
+          "snippet": "nch to the superficial palmar arch. SEND FEEDBACK 9/3/26, 5:43 PM AAOS | Physical Examination and Anatomy of the Hand, Forearm, and Wrist https://rock.aaos.org/coursecontent.aspx?id=510000557 20/75 Figure 6 Illustrations show the primary arterial anatomy of the upper extremity. A, Volar forearm, wrist, and hand. B, Dor"
+        },
+        {
+          "id": "510000665",
+          "title": "Hand and Wrist Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000665",
+          "extractable": true,
+          "score": 37.15,
+          "snippet": "with IVDU. Most IVDU-related upper extremity infections are caused by Streptococcus.  Epidemiology/Microbiology Substance abuse is a national health epidemic. Approximately 17% of patients who undergo hand and upper extremity surgery report chronic opioid use. Approximately 20% of acute hand infections are related to"
+        },
+        {
+          "id": "6004036",
+          "title": "Acute and Chronic Vascular Disorders of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004036",
+          "extractable": true,
+          "score": 37.115,
+          "snippet": "III: Physical examination of the hand and wrist: Thumb CMC arthritis tests. Allen test, in Sarwark JF, ed: Essentials of Musculoskeletal Care, ed 4. Rosemont, IL, American SEND FEEDBACK 9/3/26, 7:09 AM AAOS | Acute and Chronic Vascular Disorders of the Hand and Wrist https://rock.aaos.org/coursecontent.aspx?id=6004036"
+        },
+        {
+          "id": "6002014",
+          "title": "Osteonecrosis: Preiser Disease and Kienböck Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002014",
+          "extractable": true,
+          "score": 30.73,
+          "snippet": "et al10 proposed a staging classification for Kienböck disease based on radiography (Figure 2; Resource 1). Stage I: no visible changes on radiographs, changes observed on MRI Stage II: sclerosis of the lunate Stage IIIa: fragmentation of the lunate Stage IIIb: fragmentation of the lunate, fixed rotation/flexion of th"
+        },
+        {
+          "id": "510000656",
+          "title": "Distal Radius Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000656",
+          "extractable": true,
+          "score": 28.976,
+          "snippet": "Radial styloid Relatively volar structure from the radial aspect of the wrist Attachment point of the radioscaphocapitate ligament Radial groove for the first dorsal compartment tendons Lister tubercle On the dorsal surface of the radius In line with the ridge between the scaphoid and lunate facets of the articular su"
+        },
+        {
+          "id": "6004030",
+          "title": "Inflammatory Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004030",
+          "extractable": true,
+          "score": 28.511,
+          "snippet": "lis, IN; Copyright Gary Schnitz, 2007.) SEND FEEDBACK 9/3/26, 4:29 PM AAOS | Inflammatory Arthritis in the Hand and Wrist https://rock.aaos.org/coursecontent.aspx?id=6004030 11/39 Wrist involvement in rheumatoid arthritis 67% within 2 years of diagnosis Higher than 90% within 10 years Management (Table 3) Table 3 Manag"
+        },
+        {
+          "id": "6000026",
+          "title": "Wrist and Hand Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000026",
+          "extractable": true,
+          "score": 27.498,
+          "snippet": "AAOS | Wrist and Hand Arthroscopy https://rock.aaos.org/coursecontent.aspx?id=6000026 11/17 ligament) and the adequacy of scaphoid reduction in waist fractures (Figure 5). The ulnar midcarpal joint may be easier to enter than the radial midcarpal portal. Figure 5 Arthroscopic image from the radial midcarpal portal sho"
+        },
+        {
+          "id": "510000615",
+          "title": "Imaging of Shoulder Arthritis: Classification Schemes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000615",
+          "extractable": true,
+          "score": 27.35,
+          "snippet": "patients in whom shoulder arthritis is suspected. Review common classification schemes for primary glenohumeral arthritis. Review common classification schemes for rotator cuff arthropathy. Review common classification schemes for osteonecrosis of the humeral head.     NOTES SEND FEEDBACK 9/3/26, 4:25 PM AAOS | Im"
+        },
+        {
+          "id": "6004031",
+          "title": "Tendinopathy of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004031",
+          "extractable": true,
+          "score": 26.691,
+          "snippet": "aged 40 to 60 years. SEND FEEDBACK 9/4/26, 9:46 AM AAOS | Tendinopathy of the Hand and Wrist https://rock.aaos.org/coursecontent.aspx?id=6004031 8/17 Patient History and Physical Examination Tenderness and enlargement over the radial styloid and the first dorsal extensor compartment Resisted radial abduction of the wr"
+        },
+        {
+          "id": "510000660",
+          "title": "Radial Head and Neck Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000660",
+          "extractable": true,
+          "score": 26.56,
+          "snippet": "OUTLINE VIEW Pretest Discover What You Know Learning Objectives Understand the common etiology of radial head/neck fractures. Perform appropriate clinical and radiographic assessment of radial head/neck fractures. Determine appropriate indications for the nonsurgical and surgical management of radial head/neck fractur"
+        }
+      ]
+    },
+    {
+      "stableGuid": "gzr<wC(~V%",
+      "front": "What is the most widely used classification for proximal humerus fractures ? Neer",
+      "extra": "Described by the number of parts",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Shoulder_Girdle",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology::Proximal_Humerus",
+        "SnapOrtho::Diagnosis::Proximal_Humerus_Fracture",
+        "SnapOrtho::Specialty::Shoulder_Elbow",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "510000652",
+          "title": "Shoulder Trauma: Proximal Humerus Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000652",
+          "extractable": true,
+          "score": 52.831,
+          "snippet": "classification systems are available for proximal humerus fractures. The most commonly used classification system remains the Neer classification, which is a modification of the original classification system described by Codman in 1934.8 The Neer classification system is based on the parts of the proximal humerus: hu"
+        },
+        {
+          "id": "6002085",
+          "title": "Proximal Humerus Fractures and Humeral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002085",
+          "extractable": true,
+          "score": 43.857,
+          "snippet": "of proximal humerus fractures. Perform an assessment of proximal humerus fractures to understand the mechanism of injury, associated injuries, imaging and diagnostic studies, and classification systems. Review surgical and nonsurgical treatment options for the management of proximal humerus fractures. Review the pitfa"
+        },
+        {
+          "id": "510000664",
+          "title": "Shoulder Trauma: Scapular and Glenoid Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000664",
+          "extractable": true,
+          "score": 41.065,
+          "snippet": "9/4/26, 10:43 AM AAOS | Shoulder Trauma: Scapular and Glenoid Fractures https://rock.aaos.org/coursecontent.aspx?id=510000664 13/49 Figure 6 Orthopaedic Trauma Association/AO Foundation classification of scapular fractures. A, Scapular fractures are classified as process fractures (14A), body fractures (14B), or gleno"
+        },
+        {
+          "id": "510000661",
+          "title": "Elbow Fractures: Olecranon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000661",
+          "extractable": true,
+          "score": 33.925,
+          "snippet": "The most common classification is the Mayo classification system. Diverse number of alternative classifications Additional subclassifications, including the Jupiter modification of the Bado proximal ulna fracture-dislocation, incorporate olecranon fracture patterns.  Injury Classification Of the existing classificati"
+        },
+        {
+          "id": "510000662",
+          "title": "Distal Humerus Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000662",
+          "extractable": true,
+          "score": 32.756,
+          "snippet": "Although rare, ipsilateral forearm fractures, such as Monteggia injuries, olecranon fractures, coronoid fractures, radial head fractures, and ipsilateral proximal humerus fractures, may occur in combination with distal humerus fractures. A complete series of SEND FEEDBACK 9/3/26, 3:56 PM AAOS | Distal Humerus Fracture"
+        },
+        {
+          "id": "510000629",
+          "title": "Throwing Shoulder Injuries and Internal Impingement",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000629",
+          "extractable": true,
+          "score": 29.573,
+          "snippet": "on the shoulder in late cocking/early acceleration, during which the shoulder approaches maximal external rotation. The scapula is retracted, the elbow is flexed, and the humerus is in abduction and external rotation. The subscapularis, pectoralis major, and latissimus dorsi are eccentrically contracting to stabilize"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "extractable": true,
+          "score": 29.567,
+          "snippet": "PM AAOS | Forearm Trauma and Diaphyseal Fractures https://rock.aaos.org/coursecontent.aspx?id=510000655 15/36 Jupiter classification of posterior Monteggia fractures (Figure 8) Figure 8 Illustrations show the Jupiter subtypes of Bado type II Monteggia fractures. Type IIA includes distal olecranon and coronoid process f"
+        },
+        {
+          "id": "6004067",
+          "title": "Proximal Radius Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004067",
+          "extractable": true,
+          "score": 29.103,
+          "snippet": "Associated Injuries Approximately 30% to 50% of radial neck fractures are associated with other injuries, including other fractures about the elbow and collateral ligament injuries.2 Proximal ulna fractures and olecranon fractures may occur in combination with proximal radial neck fractures and are classified as Monte"
+        },
+        {
+          "id": "6001189",
+          "title": "Proximal Third Femur Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001189",
+          "extractable": true,
+          "score": 24.704,
+          "snippet": "31B1: subcapital fractures 31B2: transcervical fractures 31B3: basicervical fractures SEND FEEDBACK 9/3/26, 5:55 PM AAOS | Proximal Third Femur Fractures https://rock.aaos.org/coursecontent.aspx?id=6001189 7/63 Figure 3 AP radiographs (top) and illustrations (bottom) show the Garden classification of femoral neck frac"
+        },
+        {
+          "id": "510000578",
+          "title": "Distal Humerus Physeal Fractures, Pediatric Polytrauma, and Upper Extremity Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000578",
+          "extractable": true,
+          "score": 22.602,
+          "snippet": "fractures are closed injuries. Open fractures are classified according to the Gustilo-Anderson classification system. Mechanics of Fractures Supracondylar humerus fractures may result from an extension or flexion force on the distal humerus. Extension-type supracondylar humerus fractures account for approximately 95%"
+        },
+        {
+          "id": "510000615",
+          "title": "Imaging of Shoulder Arthritis: Classification Schemes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000615",
+          "extractable": true,
+          "score": 21.294,
+          "snippet": "joint and sclerosis. Notably, this classification system is not associated with the same degree of corresponding treatment implications as those associated with the Walch classification system. Walch Classification System  Walch Classification System The Walch classification system is the most widely used classificat"
+        },
+        {
+          "id": "510000632",
+          "title": "Clavicular Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000632",
+          "extractable": true,
+          "score": 20.067,
+          "snippet": "| Clavicular Fractures https://rock.aaos.org/coursecontent.aspx?id=510000632 16/38  Injury Classification Allman originally classified clavicular fractures by dividing the clavicle into thirds and describing fractures based on fracture location. Group I (middle third) fractures account for most clavicular fractures. N"
+        }
+      ]
+    },
+    {
+      "stableGuid": "h_Z|WONGDJ",
+      "front": "Which bone tumor is shown in the histology below ? Giant cell tumor",
+      "extra": "*Notice the mononuclear stromal cells that resemble interstitial fibroblasts",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Giant_Cell_Tumor",
+        "SnapOrtho::Specialty::Orthopedic_Oncology"
+      ],
+      "candidates": [
+        {
+          "id": "6001163",
+          "title": "Tumor and Tumor-like Conditions of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001163",
+          "extractable": true,
+          "score": 49.945,
+          "snippet": ", most surgeons recommend curettage/high-speed burring with possible adjuvant or en bloc resection because recurrence is somewhat higher.1,12 Giant Cell Tumor of Bone (Figure 6) Figure 6 Images show giant cell tumor of bone. A, PA radiograph of a giant cell tumor of a proximal phalanx demonstrate expansion of the bone"
+        },
+        {
+          "id": "6002001",
+          "title": "Stem Cells and Cell Therapy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002001",
+          "extractable": true,
+          "score": 42.518,
+          "snippet": "Review the current landscape of stem cells and cell therapy for the management of musculoskeletal conditions. Define stem cell. Define cell therapy. Specify the evidence for and against the use of cell therapy in the surgical and nonsurgical management of musculoskeletal diseases. Overview of Stem Cells and Cell Thera"
+        },
+        {
+          "id": "6001000",
+          "title": "Cell Biology, Cell Differentiation, and Skeletal Stem Cells",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001000",
+          "extractable": true,
+          "score": 42.498,
+          "snippet": "of cells via two types of cell division. Symmetric division, in which somatic stem cells replicate and create more somatic stem cells. Asymmetric division, producing a stem cell and a progenitor cell, which differentiates into a particular type of cell.  Adult Somatic Stem Cells The musculoskeletal system plays a div"
+        },
+        {
+          "id": "6001006",
+          "title": "Bone Healing and Bone Grafts",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001006",
+          "extractable": true,
+          "score": 33.351,
+          "snippet": "Woven bone Lamellar bone Bone Cells Bone contains three distinct cell types. Osteoblasts Cuboidal cells located along the bone surface comprising 4% to 6% of the total resident bone cells Form bone through the synthesis of bone matrix Derived from bone marrow stromal cells through the expression of specific genes, inc"
+        },
+        {
+          "id": "6001077",
+          "title": "Metastatic Bone Disease to the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001077",
+          "extractable": true,
+          "score": 32.28,
+          "snippet": "hormone–related protein secreted by tumors Pathophysiology/molecular mechanisms Metastatic cascade Primary tumor cells proliferate, stimulate angiogenesis, and cross the basement membrane into capillaries/bloodstream. Tumor cells disseminate, arrest in distant capillary bed, adhere, and extravasate into end- organ env"
+        },
+        {
+          "id": "6001151",
+          "title": "Bone Biology and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001151",
+          "extractable": true,
+          "score": 29.619,
+          "snippet": "AAOS | Bone Biology and Biomechanics https://rock.aaos.org/coursecontent.aspx?id=6001151 4/15 Microscopic level Woven bone is primary bone characterized by a random orientation of collagen and mineral. Lamellar bone is secondary bone that results from the remodeling of woven bone into an organized bone tissue. Lacunae"
+        },
+        {
+          "id": "6004039",
+          "title": "Musculoskeletal Tumor Biopsy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004039",
+          "extractable": true,
+          "score": 29.364,
+          "snippet": "FEEDBACK 9/3/26, 4:49 PM AAOS | Musculoskeletal Tumor Biopsy https://rock.aaos.org/coursecontent.aspx?id=6004039 4/17 Imaging Studies MRI is critical for tumor evaluation and biopsy planning. Positron emission tomography may guide the best area of tumor to sample.  Imaging Studies MRI following protocols for bone and"
+        },
+        {
+          "id": "6001060",
+          "title": "Bone Cysts and Benign Bone Neoplasms",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001060",
+          "extractable": true,
+          "score": 29.278,
+          "snippet": "c osteosarcoma share clinical and radiographic features; however, the tumor cells within the septae of telangiectatic osteosarcoma show cytologic atypia. ABCs may have abundant giant cells; however, a giant cell tumor can be distinguished from an ABC by its epiphyseal location in skeletally mature bone and the presence"
+        },
+        {
+          "id": "510000542",
+          "title": "Nonosteoblastic Osteosarcoma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000542",
+          "extractable": true,
+          "score": 28.649,
+          "snippet": "s observed in skeletally immature patients who have a giant cell tumor with a periosteal reaction.5 Another clue to differentiate GCR-OS from giant cell tumor of bone is location: GCR-OS typically is found in the diaphysis, whereas giant cell tumor of bone usually is metaphyseal and epiphyseal. Anatomy and Biomechanics"
+        },
+        {
+          "id": "510000561",
+          "title": "Radiation Therapy: Bone Sarcoma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000561",
+          "extractable": true,
+          "score": 27.246,
+          "snippet": "with a posterior soft-tissue sarcoma show treatment volumes. Gross tumor volume is shown in red, clinical target volume is shown in blue, and planning target volume is shown in pink. (Reproduced from Ahmed SK, Owen D: SEND FEEDBACK 9/3/26, 5:57 PM AAOS | Radiation Therapy: Bone Sarcoma https://rock.aaos.org/coursecont"
+        },
+        {
+          "id": "510000516",
+          "title": "Overview and Management of Bone Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000516",
+          "extractable": true,
+          "score": 27.187,
+          "snippet": "and malignant bone tumors. Describe the surgical principles of benign bone tumor excision. Describe the surgical principles of malignant bone tumor excision. Identify surgical adjuvants used to treat benign and malignant bone tumors. Overview Tumor histology and biologic activity The surgical management of benign and"
+        },
+        {
+          "id": "510000514",
+          "title": "Molecular Biology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000514",
+          "extractable": true,
+          "score": 26.717,
+          "snippet": "A benign tumor may simply have altered cell division, but a malignant tumor has additional alterations that have been dubbed the hallmarks of cancer: Self-sufficiency of growth—Cancer cells achieve independence from external signals typically by sustaining their own proliferative signaling, allowing them to grow at wi"
+        }
+      ]
+    },
+    {
+      "stableGuid": "h-M%jAyF-K",
+      "front": "What is a Stener lesion ? Adductor pollicis aponeurosis becomes interposed between the avulsed UCL and the thumb",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Hand",
+        "SnapOrtho::Anatomy::Hand::Ligaments",
+        "SnapOrtho::Anatomy::Hand::Ligaments::Thumb_Ulnar_Collateral_Ligament",
+        "SnapOrtho::Specialty::Hand_Upper_Extremity"
+      ],
+      "candidates": [
+        {
+          "id": "6004074",
+          "title": "Medial Collateral Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004074",
+          "extractable": true,
+          "score": 53.004,
+          "snippet": "management of ulnar collateral ligament injuries. Pathophysiology/Pathoanatomy Overview     NOTES SEND FEEDBACK 9/3/26, 4:40 PM AAOS | Medial Collateral Ligament Injuries https://rock.aaos.org/coursecontent.aspx?id=6004074 1/23 The medial ulnar collateral ligament (UCL) complex consists of the anterior oblique lig"
+        },
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 41.07,
+          "snippet": "Wassel type II, the radial digit has the radial collateral ligament insertion, and the ulnar digit has the ulnar collateral ligament insertion of the interphalangeal joint. In Wassel type IV, the thenar muscles insert on the more radial digit, and the adductor pollicis inserts on the more ulnar digit. In addition, pol"
+        },
+        {
+          "id": "510000586",
+          "title": "Elbow Instability: Lateral Collateral Ligament Complex Insufficiency",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000586",
+          "extractable": true,
+          "score": 37.923,
+          "snippet": "varus and posterior rotatory instability of the elbow. Pathophysiology/Pathoanatomy Overview     NOTES SEND FEEDBACK 9/3/26, 4:03 PM AAOS | Elbow Instability: Lateral Collateral Ligament Complex Insufficiency https://rock.aaos.org/coursecontent.aspx?id=510000586 1/24 Elbow instability caused by disruption or insuf"
+        },
+        {
+          "id": "510000658",
+          "title": "Fractures and Dislocations of the Hand and Digits",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000658",
+          "extractable": true,
+          "score": 34.918,
+          "snippet": "arthroplasty. Thumb MCP Joint Ligament Injuries and Dislocations Epidemiology: Thumb MCP joint collateral ligament tears are relatively common. Ulnar collateral ligament (UCL) tears are estimated to be as much as 10 times more common than RCL tears.31 UCL Disruption Gamekeepers thumb may refer to chronic insufficiency"
+        },
+        {
+          "id": "510000525",
+          "title": "Phalangeal, Metacarpal and Carpal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000525",
+          "extractable": true,
+          "score": 21.911,
+          "snippet": "web space to act as a lever to reduction.1,3,5-7 Nondisplaced thumb ulnar collateral ligament avulsion Salter-Harris type III fractures may be managed nonsurgically if congruent and stable. These represent the equivalent of an adult skier’s thumb injury. Similar to adults, the presence of a Stener lesion must be consi"
+        },
+        {
+          "id": "6004081",
+          "title": "Athletic Injuries of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004081",
+          "extractable": true,
+          "score": 21.636,
+          "snippet": "to result in good or satisfactory outcomes in 85% to 90% of patients; however, the presence of a Stener lesion is associated with poorer outcomes.23-25 Surgical Management Indications Grade 3 ligamentous injuries Presence of a Stener lesion The adductor aponeurosis is interposed beneath the avulsed ligament, preventin"
+        },
+        {
+          "id": "510000544",
+          "title": "Trapeziometacarpal Joint Osteoarthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000544",
+          "extractable": true,
+          "score": 20.618,
+          "snippet": "of the thumb carpometacarpal (CMC) joint and the scaphotrapezial joint demonstrate the Eaton staging system for thumb CMC arthritis. A, Eaton stage I thumb CMC arthritis, with normal articular cartilage and a widened joint space. B, Eaton stage II thumb CMC arthritis. Note the slight narrowing at the thumb CMC joint s"
+        },
+        {
+          "id": "510000557",
+          "title": "Physical Examination and Anatomy of the Hand, Forearm, and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000557",
+          "extractable": true,
+          "score": 19.995,
+          "snippet": "igament Thumb MCP joint capsule and radial sesamoid Superficial head: median nerve Deep head: ulnar nerve Flexion of thumb metacarpal and P1 Thumb pronation Thumb IP joint extension Opponens pollicis Transverse carpal ligament, trapezium, thumb CMC capsule Volar-radial distal thumb metacarpal Median nerve, 83%"
+        },
+        {
+          "id": "6001037",
+          "title": "Idiopathic Ulnar Neuropathy at the Cubital Tunnel",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001037",
+          "extractable": true,
+          "score": 17.134,
+          "snippet": "key pinch. With the Froment sign, thumb interphalangeal joint flexion will be observed because the median innervated flexor pollicis longus will compensate for the weakened adductor pollicis. With the Jeanne sign, hyperextension of the thumb metacarpophalangeal joint will occur because of loss of metacarpophalangeal s"
+        },
+        {
+          "id": "510000633",
+          "title": "Throwing Elbow Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000633",
+          "extractable": true,
+          "score": 15.449,
+          "snippet": "epicondylitis or strain. The UCL can be followed from its origin on the medial epicondyle to the sublime tubercle. On coronal MRIs, the UCL can be closely examined for evidence of a tear or a T sign. The distal aspect of the UCL is a common site of injury (Figure 3). Although MRI better defines soft tissue than bony p"
+        },
+        {
+          "id": "6004031",
+          "title": "Tendinopathy of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004031",
+          "extractable": true,
+          "score": 15.441,
+          "snippet": "American Academy of Orthopaedic Surgeons, 2020, pp 334-339.) de Quervain Tendinopathy Tendinopathy of the first extensor compartment in the wrist Patients have enlargement of the abductor pollicis longus and extensor pollicis brevis tendons in the first extensor compartment. The abductor pollicis longus tendon has wid"
+        },
+        {
+          "id": "510000559",
+          "title": "Nerve Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000559",
+          "extractable": true,
+          "score": 15.206,
+          "snippet": "nsion of the MCP joints, restore extension of the proximal interphalangeal joint, restore power pinch and finger flexion Power pinch Smith transfer: ECRB grafted to the adductor pollicis FDS from the ring finger to the adductor pollicis Abductor pollicis longus grafted to the first dorsal interosseous EIP to adductor p"
+        }
+      ]
+    },
+    {
+      "stableGuid": "H,j=g+]N)V",
+      "front": "What forces create an apex volar deformity following a proximal phalanx fracture ? Proximal fragment: Interossei flex fragment Distal fragment: Central slip extends fragment",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Hand",
+        "SnapOrtho::Anatomy::Hand::Osteology",
+        "SnapOrtho::Anatomy::Hand::Osteology::Proximal_Phalanx",
+        "SnapOrtho::Diagnosis::Proximal_Phalanx_Fracture",
+        "SnapOrtho::Specialty::Hand_Upper_Extremity",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 42.793,
+          "snippet": "the classification of congenital differences in the upper extremity. Perform an appropriate workup of patients with congenital upper extremity differences. Determine the surgical and nonsurgical treatment options for the management of congenital upper extremity differences. Pathophysiology/Pathoanatomy Overview Congen"
+        },
+        {
+          "id": "510000578",
+          "title": "Distal Humerus Physeal Fractures, Pediatric Polytrauma, and Upper Extremity Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000578",
+          "extractable": true,
+          "score": 42.742,
+          "snippet": "the proximal fragment. The thumb of this hand is then advanced along the posterior humeral shaft to milk the distal fragment further distally. After the thumb reaches the olecranon, it applies an anterior force to the distal fragment as the fingers continue to push the proximal fragment posteriorly. The hand holding t"
+        },
+        {
+          "id": "510000557",
+          "title": "Physical Examination and Anatomy of the Hand, Forearm, and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000557",
+          "extractable": true,
+          "score": 39.273,
+          "snippet": "ral ligament—The origin is at the pit on the head of the proximal phalanx; the ligament inserts into the lateral tubercle of the base of the middle phalanx. Accessory collateral ligament—Also originates at the pit of the head of the proximal phalanx but just volar to the proper collateral ligament. Inserts into the vol"
+        },
+        {
+          "id": "510000597",
+          "title": "Lower Extremity Deformity Analysis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000597",
+          "extractable": true,
+          "score": 38.795,
+          "snippet": "anatomic lateral proximal femur angle, aLDTA = anatomic lateral distal tibia angle, aMPTA = anatomic medial proximal tibia angle, mLDFA = mechanical lateral distal femur angle, mLPFA = mechanical lateral proximal femur angle, mLDTA = mechanical lateral distal tibia angle, SEND FEEDBACK 9/3/26, 4:35 PM AAOS | Lower Ext"
+        },
+        {
+          "id": "6001084",
+          "title": "Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001084",
+          "extractable": true,
+          "score": 34.639,
+          "snippet": "forces that affect distal femur fracture reduction. Determine distal femur fracture mechanisms of injury and the appropriate assessment and documentation of associated injuries. Compare methods of surgical management of distal femur fractures and apply basic fracture principles. Avoid pitfalls and complications associ"
+        },
+        {
+          "id": "510000656",
+          "title": "Distal Radius Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000656",
+          "extractable": true,
+          "score": 32.097,
+          "snippet": "Association classification of distal radius fractures18 (Figure 4) Type A/bending; extra-articular Dorsal (Colles fracture) Volar (Smith fracture) Type B/shearing; partial articular Dorsal (reverse Barton fracture) Volar (Barton fracture) Radial styloid (occasionally referred to a Chauffer fracture) Type C/compression"
+        },
+        {
+          "id": "6003002",
+          "title": "Lesser Toe Pathology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003002",
+          "extractable": true,
+          "score": 29.655,
+          "snippet": "epidemiology, etiology, and risk factors associated with claw toe deformity and hammer toe deformity. Perform an appropriate workup for patients with claw toe deformity and patients with hammer toe deformity. Explain the surgical and nonsurgical management of claw toe deformity and hammer toe deformity. Claw Toe Defor"
+        },
+        {
+          "id": "510000525",
+          "title": "Phalangeal, Metacarpal and Carpal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000525",
+          "extractable": true,
+          "score": 28.972,
+          "snippet": "of the thumb, which necessitated reduction and fixation. Middle phalanx fractures are characterized in a manner similar to that of proximal phalanx fractures. Fracture alignment often is determined by the surrounding tendinous anatomy. Management is similar to that for proximal phalanx fractures.1-6 Seymour fracture:"
+        },
+        {
+          "id": "6002069",
+          "title": "Hand and Wrist Extensor Tendon Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002069",
+          "extractable": true,
+          "score": 28.4,
+          "snippet": "stability between the EDC tendons at the distal metacarpal level, proximal to the MCP joints Typically, three common junctura tendinum attachments are oriented in oblique vectors. EDC long finger proximal to EDC index finger distal EDC ring finger proximal to EDC long finger distal EDC ring finger proximal to EDC litt"
+        },
+        {
+          "id": "6004081",
+          "title": "Athletic Injuries of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004081",
+          "extractable": true,
+          "score": 27.69,
+          "snippet": "and causing hyperextension deformity. Volar dislocation from hyperflexion injury to the joint with axial compression; central slip may be injured. Lateral dislocation: injury to the collateral ligament and likely partial avulsion of the volar plate MCP joint dislocations Dorsal dislocation occurs more often than volar"
+        },
+        {
+          "id": "6001057",
+          "title": "Diaphyseal Forearm Fractures, Distal Forearm Fractures, and Monteggia Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001057",
+          "extractable": true,
+          "score": 27.161,
+          "snippet": "fracture site + the radial gap 3 to 5 cm proximal to the fracture site] divided by [Lateral view: sum of the dorsal gap a the radiocarpal joint or the proximal carpal row + the dorsal gap at the fracture site + the dorsal gap 3 to 5 cm proximal to the fracture site] <0.8 Gap index Determines the extent of excessive pa"
+        },
+        {
+          "id": "6000009",
+          "title": "Cavovarus Foot Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000009",
+          "extractable": true,
+          "score": 26.426,
+          "snippet": "Proximal phalanges (extensor expansions) Flexion of metatarsophalangeal joints, extension of proximal and distal interphalangeal joints Extrinsic long extensors and flexors Extrinsic long extensors (extensor digitorum longus, extensor hallucis longus, extensor digitorum brevis, extensor hallucis brevis) Extensor hood"
+        }
+      ]
+    }
+  ]
+}

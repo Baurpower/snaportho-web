@@ -1,0 +1,1292 @@
+{
+  "schemaVersion": "snaportho-rock-enrichment.v1",
+  "runKey": "snaportho-rock-map-v1",
+  "stage": "map",
+  "sourceReleaseId": "f5312a8e-c51b-4fa7-b3f6-f0fb3d26463e",
+  "sourceReleaseVersion": "0.0.9",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "batchKey": "map-000001-packet-0137",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "cards": [
+    {
+      "noteId": "e478f19b-6fa0-4075-9160-210db64ab543",
+      "noteVersionId": "7731e3a6-aa06-400b-83da-3dcfcbdb1a66",
+      "stableGuid": "i%)h1Pg9x_",
+      "contentChecksum": "92ec8abe3c9a1c9ad6c0e90589c7c723aced5b6ef1b75f1ee03df9fe212a2efe",
+      "deckPath": "SnapOrtho",
+      "front": "Patient who is s/p THA presents with suspicious ipsilateral hip pain. In addition to infectious labs (ESR, CRP, CBC), cobalt and chromium levels should be ordered to evaluate for which two complications? Trunnionisis Pseudotumor",
+      "extra": "*Obviously would order XRs to start *Would also order a CT to assess osteolysis/component position *Aspiration if labs are suggestive of possible infection",
+      "governedTags": [
+        "SnapOrtho::Specialty::General_Orthopedics"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "Patient who is s/p THA presents with suspicious ipsilateral hip pain. In addition to infectious labs (ESR, CRP, CBC), cobalt and chromium levels should be ordered to evaluate for which two complications? Trunnionisis Pseudotumor *Obviously would order XRs to start *Would also order a CT to assess osteolysis/component position *Aspiration if labs are suggestive of possible infection general orthopedics",
+      "candidates": [
+        {
+          "id": "6004023",
+          "title": "Evaluation and Workup in Revision Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004023",
+          "canonicalId": "6004023",
+          "extractable": true,
+          "score": 64.947,
+          "snippet": "components is fabricated from a cobalt-chromium alloy, then serum cobalt and chromium levels should be obtained to evaluate and monitor for possible metal ion disease. Elevated cobalt levels, particularly a substantial differential elevation of cobalt over chromium is noted, may be suggestive of trunnion corrosion and"
+        },
+        {
+          "id": "6004025",
+          "title": "Aseptic Loosening After Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004025",
+          "canonicalId": "6004025",
+          "extractable": true,
+          "score": 49.253,
+          "snippet": "must be closely monitored if identified. Pain is nonspecific but frequently observed in patients with aseptic loosening. Acetabular component loosening correlates with groin pain, whereas stem loosening typically manifests as thigh pain. Start-up pain is a hallmark of a loose THA implant. Start-up pain is defined as p"
+        },
+        {
+          "id": "510000509",
+          "title": "Postoperative Adverse Local Tissue Reaction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000509",
+          "canonicalId": "510000509",
+          "extractable": true,
+          "score": 47.068,
+          "snippet": "cobalt levels may be fourfold to fivefold higher than chromium levels, and cobalt-to-chromium ion ratios of 2:1 or higher should indicate advanced imaging studies. A low threshold for hip aspiration should exist because this may help differentiate ALVALs from periprosthetic infection. If hip aspiration is performed, a"
+        },
+        {
+          "id": "6000024",
+          "title": "Complications After Total Knee Arthroplasty: Periprosthetic Joint Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000024",
+          "canonicalId": "6000024",
+          "extractable": true,
+          "score": 45.554,
+          "snippet": "and CRP levels may be normal in patients with a PJI caused by indolent organisms. Therefore, other serum tests have been explored recently. CRP levels normalize within 21 days postoperatively, whereas ESR may require as many as 90 days postoperatively to normalize. Continued high CRP levels and ESR should increase sus"
+        },
+        {
+          "id": "6004019",
+          "title": "Primary Total Hip Arthroplasty for Osteoarthritis: Acetabular Component",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004019",
+          "canonicalId": "6004019",
+          "extractable": true,
+          "score": 45.165,
+          "snippet": "Hip Arthroplasty for Osteoarthritis: Acetabular Component https://rock.aaos.org/coursecontent.aspx?id=6004019 1/20 The ultimate goal of total hip arthroplasty (THA) is to restore normal hip biomechanics with adequate sizing, position, and fixation of prosthetic components while minimizing complications (Resource 1). T"
+        },
+        {
+          "id": "6000021",
+          "title": "Periprosthetic Joint Infection",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000021",
+          "canonicalId": "6000021",
+          "extractable": true,
+          "score": 44.448,
+          "snippet": "ESR and CRP levels also are less reliable in patients in whom an acute postoperative infection is suspected. CRP levels normalize within 21 days postoperatively, whereas 90 days may be required for ESR to normalize. Continued high CRP levels and ESR should elicit concern for possible infection. ESR and CRP levels also"
+        },
+        {
+          "id": "6004018",
+          "title": "Alternative Implant Designs: Hip Resurfacing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004018",
+          "canonicalId": "6004018",
+          "extractable": true,
+          "score": 44.179,
+          "snippet": "is a concern for muscle involvement. Workup  Workup Standard AP and lateral radiographs should be evaluated for osteolysis, radiolucency, or neck narrowing. Evaluation of a HRA implant for ALTR also should include the measurement of blood metal ion levels of cobalt and chromium. Although no cutoff blood metal ion lev"
+        },
+        {
+          "id": "6002063",
+          "title": "Primary Total Hip Arthroplasty for Other Indications: Post-Septic Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002063",
+          "canonicalId": "6002063",
+          "extractable": true,
+          "score": 43.745,
+          "snippet": "remote history of native hip infection, the diagnostic workup should begin with serum ESR and CRP levels. If these laboratory values are within normal limits, then a persistent hip infection is unlikely. If ESR and/or CRP level are elevated or clinical suspicion for persistent hip infection remains, then synovial flui"
+        },
+        {
+          "id": "6001036",
+          "title": "Complications After Total Knee Arthroplasty: Other",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001036",
+          "canonicalId": "6001036",
+          "extractable": true,
+          "score": 43.727,
+          "snippet": "S | Complications After Total Knee Arthroplasty: Other https://rock.aaos.org/coursecontent.aspx?id=6001036 17/32 Evaluation Patient History and Physical Examination Osteolysis frequently is asymptomatic and often is observed incidentally in routine radiographs. The initial patient evaluation should focus on ruling out"
+        },
+        {
+          "id": "6002009",
+          "title": "Radiographic Evaluation of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002009",
+          "canonicalId": "6002009",
+          "extractable": true,
+          "score": 41.229,
+          "snippet": "AAOS | Radiographic Evaluation of the Hip https://rock.aaos.org/coursecontent.aspx?id=6002009 1/44 Accurate diagnosis of hip pathology is a challenge and requires a thorough patient history and physical examination. Radiographic evaluation is vital to the diagnostic workup of patients with hip pain.  Overview Various"
+        },
+        {
+          "id": "6001161",
+          "title": "Retrieval Analysis of Hip and Knee Prostheses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001161",
+          "canonicalId": "6001161",
+          "extractable": true,
+          "score": 39.961,
+          "snippet": "10:24 AM AAOS | Retrieval Analysis of Hip and Knee Prostheses https://rock.aaos.org/coursecontent.aspx?id=6001161 5/26 implants should be disinfected to ensure the elimination of biohazards. To protect patient privacy, implants brought into the laboratory should be given a unique laboratory identification number, and"
+        },
+        {
+          "id": "510000555",
+          "title": "Component Removal in Revision Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000555",
+          "canonicalId": "510000555",
+          "extractable": true,
+          "score": 39.828,
+          "snippet": "r perforation exists, intraoperative radiographs should be obtained before reaming the femoral canal. Acetabular Component Removal Removal of a well-fixed acetabular component may be performed via any approach to the hip (Video 13). Care should be taken to preserve as much acetabular bone stock as possible during aceta"
+        }
+      ]
+    },
+    {
+      "noteId": "fde7dea7-fe6c-48f4-b31a-45a4be00555a",
+      "noteVersionId": "3bdbf567-21b3-4f9f-b454-315d8b22eb17",
+      "stableGuid": "I`(MKr150_",
+      "contentChecksum": "8cb0bf787f9fa1e2edd612451b67db844abec1d927e30244600ef2911473f002",
+      "deckPath": "SnapOrtho",
+      "front": "Which physical exam test is shown below ? FABER",
+      "extra": "*Positive test = intra-articular hip lesion, iliopsoas pain, or SI disease",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Joints",
+        "SnapOrtho::Anatomy::Thigh_Hip::Joints::Hip_Joint",
+        "SnapOrtho::Specialty::Sports_Medicine"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "Which physical exam test is shown below ? FABER *Positive test = intra-articular hip lesion, iliopsoas pain, or SI disease thigh hip joints hip joint sports medicine",
+      "candidates": [
+        {
+          "id": "6001067",
+          "title": "Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001067",
+          "canonicalId": "6001067",
+          "extractable": true,
+          "score": 39.754,
+          "snippet": "ction, and internal rotation test (FADIR test) Flexion, abduction, and external rotation test (FABER or Patrick test) Dynamic labral stress tests (Scour test, dynamic external rotatory impingement test [DEXRIT], dynamic internal rotatory impingement test [DIRIT], McCarthy test) Foveal distraction test Thomas test (psoa"
+        },
+        {
+          "id": "6001159",
+          "title": "History and Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001159",
+          "canonicalId": "6001159",
+          "extractable": true,
+          "score": 38.033,
+          "snippet": "Hip Pain Overview of hip pain Causes and symptoms commonly associated with hip pain Hip pain is common, and it may be episodic or chronic. It often is localized to three main areas: the anterior hip and groin area, the posterior hip and buttock, or the lateral hip. Hip pain may be related to intra-articular or extra-a"
+        },
+        {
+          "id": "6001066",
+          "title": "The Team Physician and the Ethics of Sports Medicine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001066",
+          "canonicalId": "6001066",
+          "extractable": true,
+          "score": 33.915,
+          "snippet": "context in which sports medicine ethics are operationalized has distinct characteristics and manifestly structures the behavior of those charged with the duty to act ethically. Studies of the practice of maintaining patient confidentiality in sports medicine show, for example, that the distinct physical environment, p"
+        },
+        {
+          "id": "6004079",
+          "title": "Anatomy of the Ankle for the Sports Medicine Surgeon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004079",
+          "canonicalId": "6004079",
+          "extractable": true,
+          "score": 32.944,
+          "snippet": "Anatomy of the Ankle for the Sports Medicine Surgeon https://rock.aaos.org/coursecontent.aspx?id=6004079 1/29 The tibiotalar joint is broadly categorized as a ginglymus, or hinge-type joint. The distal tibia and fibula create a semirigid osseoligamentous housing, or mortise, for the talus. The talar dome is a biconcav"
+        },
+        {
+          "id": "6000045",
+          "title": "Athletic Pubalgia and Core Muscle Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000045",
+          "canonicalId": "6000045",
+          "extractable": true,
+          "score": 31.455,
+          "snippet": "https://rock.aaos.org/coursecontent.aspx?id=6000045 11/24 Osteoid osteoma Legg-Calvé-Perthes disease Developmental dysplasia Genitourinary and visceral pathology Prostatitis Epididymitis Orchitis Testicular torsion Testicular carcinoma Ovarian disease Endometriosis Pelvic inflammatory disease Inflammatory bowel diseas"
+        },
+        {
+          "id": "6004075",
+          "title": "The Biology and Biomechanics of Grafts and Implants in Sports Medicine Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004075",
+          "canonicalId": "6004075",
+          "extractable": true,
+          "score": 30.713,
+          "snippet": "allografts. Explain how to choose an appropriate graft based on patient age and activity level. Review the basic biomechanical properties of implants available for sports medicine procedures. Describe the common modes of failure with various types of implants. Introduction Soft-tissue grafts are commonly used in sport"
+        },
+        {
+          "id": "6001024",
+          "title": "Nonsurgical Management of Hip Pain",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001024",
+          "canonicalId": "6001024",
+          "extractable": true,
+          "score": 29.58,
+          "snippet": "or their pain, including tumors, infections, fractures, inflammatory arthropathies, osteonecrosis, transient osteoporosis of the hip, abductor tears, trochanteric bursitis, labral tears, and impingement syndromes. A careful patient history and physical examination aid in triaging possible etiologies of hip pain and wil"
+        },
+        {
+          "id": "510000576",
+          "title": "Hip Conditions in the Young Athlete",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000576",
+          "canonicalId": "510000576",
+          "extractable": true,
+          "score": 26.004,
+          "snippet": "Log roll Anterior impingement test SEND FEEDBACK 9/3/26, 4:22 PM AAOS | Hip Conditions in the Young Athlete https://rock.aaos.org/coursecontent.aspx?id=510000576 7/27 Flexion, abduction, external rotation test Dial test Lateral Ober test Hip abduction strength Prone Rotation  Physical Examination A collection of comp"
+        },
+        {
+          "id": "6001153",
+          "title": "Hip Labrum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001153",
+          "canonicalId": "6001153",
+          "extractable": true,
+          "score": 25.665,
+          "snippet": "limitations should be carefully evaluated. Other symptoms, such as back pain, weakness, radiating SEND FEEDBACK 9/3/26, 4:23 PM AAOS | Hip Labrum https://rock.aaos.org/coursecontent.aspx?id=6001153 10/18 pain or numbness, night pain, and bilateral groin pain may help rule out spinal pathology. Typically, patients desc"
+        },
+        {
+          "id": "6001069",
+          "title": "Physical Examination of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001069",
+          "canonicalId": "6001069",
+          "extractable": true,
+          "score": 25.376,
+          "snippet": "differentiate referred spinal pain from knee pain. SEND FEEDBACK 9/3/26, 5:45 PM AAOS | Physical Examination of the Knee https://rock.aaos.org/coursecontent.aspx?id=6001069 3/40 Routine examination of the hip and spine is recommended in evaluating a patient with knee pain, with particular attention paid to loss of hip"
+        },
+        {
+          "id": "510000531",
+          "title": "Articular Cartilage Injury and Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000531",
+          "canonicalId": "510000531",
+          "extractable": true,
+          "score": 24.264,
+          "snippet": "pain. In addition to pain and swelling, patients may report of mechanical symptoms, such as catching or locking.19 Physical Examination Physical examination often elicits tenderness over the area of the OCD lesion, most commonly the anteromedial aspect of the knee. Wilson test to detect potential OCD lesion Internally"
+        },
+        {
+          "id": "6001074",
+          "title": "Physical Examination of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001074",
+          "canonicalId": "6001074",
+          "extractable": true,
+          "score": 23.296,
+          "snippet": "6), including the FABER (flexion, abduction and external rotation) test and/or the Gaenslen test. The FABER test is performed with the patient in a seated position or the supine position.2 In patients with sacroiliitis or joint dysfunction, the FABER test should reproduce symptoms in the sacroiliac region. The FABER t"
+        }
+      ]
+    },
+    {
+      "noteId": "76219f89-b918-43af-98a3-ddeea382941a",
+      "noteVersionId": "709aa714-98e1-4a9a-b018-53e311b7d383",
+      "stableGuid": "I^>?&Wr~fN",
+      "contentChecksum": "b4e8b279c8f55eba8fbcc75f349b766b8f80b8a05fba2dbc3e3db3a61955ceb8",
+      "deckPath": "SnapOrtho",
+      "front": "On lateral view of an elbow x-ray, posterior fad pad elevation indicates fracture.",
+      "extra": "",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Elbow",
+        "SnapOrtho::Anatomy::Elbow::Joints",
+        "SnapOrtho::Anatomy::Elbow::Joints::Elbow_Joint",
+        "SnapOrtho::Specialty::Shoulder_Elbow",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "On lateral view of an elbow x-ray, posterior fad pad elevation indicates fracture. elbow joints elbow joint shoulder elbow trauma",
+      "candidates": [
+        {
+          "id": "6000039",
+          "title": "Shoulder Trauma: Acromioclavicular Joint Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000039",
+          "canonicalId": "6000039",
+          "extractable": true,
+          "score": 38.929,
+          "snippet": "acromioclavicular joint surgical techniques.     NOTES SEND FEEDBACK 9/4/26, 10:42 AM AAOS | Shoulder Trauma: Acromioclavicular Joint Injuries https://rock.aaos.org/coursecontent.aspx?id=6000039 1/45 Overview: Acromioclavicular Joint Separation Common shoulder injury 9% of all shoulder injuries involve the acromio"
+        },
+        {
+          "id": "6004072",
+          "title": "Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004072",
+          "canonicalId": "6004072",
+          "extractable": true,
+          "score": 36.02,
+          "snippet": "J Shoulder Elbow Surg 2013;22[6]:775-781.) Posterior Dislocation SEND FEEDBACK 9/4/26, 9:35 AM AAOS | Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability https://rock.aaos.org/coursecontent.aspx?id=6004072 18/26 Posterior SCJ subluxations and dislocations are orthopaedic emergencies requiring a complet"
+        },
+        {
+          "id": "6000038",
+          "title": "Imaging of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000038",
+          "canonicalId": "6000038",
+          "extractable": true,
+          "score": 29.529,
+          "snippet": "radial head view or an oblique lateral view. This view is obtained with the patient in a sitting position and with the elbow in the same position as that for a lateral view. The x-ray beam is centered on the elbow and angled 45° cephalad. This view demonstrates the radial head without coronoid overlap. If an anterior"
+        },
+        {
+          "id": "510000664",
+          "title": "Shoulder Trauma: Scapular and Glenoid Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000664",
+          "canonicalId": "510000664",
+          "extractable": true,
+          "score": 28.29,
+          "snippet": "in shoulder surgery. J Am Acad Orthop Surg 2020;28[5]:e185-e192. SEND FEEDBACK 9/4/26, 10:43 AM AAOS | Shoulder Trauma: Scapular and Glenoid Fractures https://rock.aaos.org/coursecontent.aspx?id=510000664 8/49 Figure 4 Illustration of the posterior aspect of the shoulder shows muscles and nerves. (Reproduced from Gram"
+        },
+        {
+          "id": "6004083",
+          "title": "Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004083",
+          "canonicalId": "6004083",
+          "extractable": true,
+          "score": 27.472,
+          "snippet": "S | Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes https://rock.aaos.org/coursecontent.aspx?id=6004083 22/36 Week 1 Brace: posterior splint at 90°of elbow flexion ROM: wrist active ROM extension/flexion Elbow postoperative compression dressing 5 to 7 days Exercises Gripping Wrist ROM Shoulder and b"
+        },
+        {
+          "id": "510000635",
+          "title": "Medial and Lateral Elbow Enthesopathy (Epicondylitis)",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000635",
+          "canonicalId": "510000635",
+          "extractable": true,
+          "score": 26.546,
+          "snippet": "FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Identify pertinent anatomy related to medial and lateral elbow enthesopathy. Identify the pathologic changes observed in patients with lateral or medial elbow enthesopathy. Generate a differential diagnosis for lateral and medial elbow pain if s"
+        },
+        {
+          "id": "6001013",
+          "title": "Calcaneal Stress Fracture",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001013",
+          "canonicalId": "6001013",
+          "extractable": true,
+          "score": 25.707,
+          "snippet": "heel (Table 1). Table 1 Differential Diagnosis of Heel Pain Diagnosis Plantar fasciitis Plantar fascia rupture Fat pad atrophy Fat pad contusion SEND FEEDBACK 9/3/26, 7:35 AM AAOS | Calcaneal Stress Fracture https://rock.aaos.org/coursecontent.aspx?id=6001013 11/16 Diagnosis Calcaneal stress fracture Entrapment of the"
+        },
+        {
+          "id": "510000586",
+          "title": "Elbow Instability: Lateral Collateral Ligament Complex Insufficiency",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000586",
+          "canonicalId": "510000586",
+          "extractable": true,
+          "score": 25.398,
+          "snippet": "varus and posterior rotatory instability of the elbow. Pathophysiology/Pathoanatomy Overview     NOTES SEND FEEDBACK 9/3/26, 4:03 PM AAOS | Elbow Instability: Lateral Collateral Ligament Complex Insufficiency https://rock.aaos.org/coursecontent.aspx?id=510000586 1/24 Elbow instability caused by disruption or insuf"
+        },
+        {
+          "id": "6001014",
+          "title": "Posterior Tibial Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001014",
+          "canonicalId": "6001014",
+          "extractable": true,
+          "score": 22.696,
+          "snippet": "Christopher Edward Gross, MD, FAAOS, FAOA (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Review the relevant anatomy of the posterior tibial tendon. Identify the stages of posterior tibial tendon dysfunction. Review nonsurgical strategies to manage po"
+        },
+        {
+          "id": "510000521",
+          "title": "Posterior Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000521",
+          "canonicalId": "510000521",
+          "extractable": true,
+          "score": 21.994,
+          "snippet": "Posterior Shoulder Instability https://rock.aaos.org/coursecontent.aspx?id=510000521 9/18 Imaging Studies Radiography Views True AP in neutral, internal rotation, and external rotation Trans-scapular view or Y view Axillary view Evaluate if the glenohumeral joint is reduced, the status of the posterior glenoid rim (hy"
+        },
+        {
+          "id": "510000585",
+          "title": "Physical Examination of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000585",
+          "canonicalId": "510000585",
+          "extractable": true,
+          "score": 21.521,
+          "snippet": "as he/she brings the upper extremities into forward elevation. Examine shoulder motion and assess for prominent impingement signs, posterior shoulder capsule tightness, and glenohumeral internal rotation deficits. Palpation Laterally, the landmarks of the elbow include the lateral epicondyle, origin of the common exte"
+        },
+        {
+          "id": "6000047",
+          "title": "Elbow Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000047",
+          "canonicalId": "6000047",
+          "extractable": true,
+          "score": 21.509,
+          "snippet": "s to the lateral gutter and the radiocapitellar joint Posterior portals Direct (straight) posterior portal: 3 cm proximal to the tip of the olecranon; the main posterior working portal Posterolateral portal: 3 cm proximal to the olecranon off the lateral edge of the triceps; the main posterior viewing portal Techniques"
+        }
+      ]
+    },
+    {
+      "noteId": "9ee2c80e-b16c-49cb-9a12-34bdb746094a",
+      "noteVersionId": "be798765-3f85-4dcc-95a5-e4f22483fdbd",
+      "stableGuid": "i^MepxA[ob",
+      "contentChecksum": "d04882843690e3b1b91f8f09593b19f311cab1299cfb3a574849b613584ea46f",
+      "deckPath": "SnapOrtho",
+      "front": "A Fulkerson-type osteotomy transfers the tibial tubercle anterior and medial to rectify patellar instability .",
+      "extra": "",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Patellar_Instability",
+        "SnapOrtho::Specialty::Sports_Medicine",
+        "SnapOrtho::Treatment::Patellar_Instability_Reconstruction"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "A Fulkerson-type osteotomy transfers the tibial tubercle anterior and medial to rectify patellar instability . patellar instability sports medicine patellar instability reconstruction",
+      "candidates": [
+        {
+          "id": "6004079",
+          "title": "Anatomy of the Ankle for the Sports Medicine Surgeon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004079",
+          "canonicalId": "6004079",
+          "extractable": true,
+          "score": 42.425,
+          "snippet": "creates an anastomotic network with the anterior tibial artery and the dorsalis pedis artery at the anterior ankle. The anterior tibial artery proximal to the ankle courses between the tibialis anterior and EHL muscle bellies. As it crosses the anterior ankle, the EHL tendon crosses over the anterior tibial artery; th"
+        },
+        {
+          "id": "6004075",
+          "title": "The Biology and Biomechanics of Grafts and Implants in Sports Medicine Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004075",
+          "canonicalId": "6004075",
+          "extractable": true,
+          "score": 39.733,
+          "snippet": "patient age and activity level. Review the basic biomechanical properties of implants available for sports medicine procedures. Describe the common modes of failure with various types of implants. Introduction Soft-tissue grafts are commonly used in sports medicine for ligament or tendon reconstruction (anterior cruci"
+        },
+        {
+          "id": "510000581",
+          "title": "Patellar Fractures, Tibial Spine (Eminence) Fractures, Tibial and Fibular Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000581",
+          "canonicalId": "510000581",
+          "extractable": true,
+          "score": 35.449,
+          "snippet": "months after arthroscopic suture fixation demonstrate a healed type III tibial spine fracture. (Courtesy of Neeraj M. Patel, MD, MPH, MBS, Chicago, IL.) Tibial Tubercle Fractures SEND FEEDBACK 9/3/26, 5:33 PM AAOS | Patellar Fractures, Tibial Spine (Eminence) Fractures, Tibial and Fibular Fractures https://rock.aaos.o"
+        },
+        {
+          "id": "6002067",
+          "title": "Complications After Total Knee Arthroplasty: Patellar Maltracking and Instability/Dislocation, Patellar Clunk, Extensor Mechanism Disruption",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002067",
+          "canonicalId": "6002067",
+          "extractable": true,
+          "score": 32.116,
+          "snippet": "implants and the anterior aspect of the tibia and tubercle. B, The completed anterior tibial trough is ready to accept the allograft extensor mechanism. The host proximal tibial trough is marked in the region of the tibial tubercle or slightly medial to it to allow for improved patellar tracking. The trough is beveled"
+        },
+        {
+          "id": "6000033",
+          "title": "Patellofemoral Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000033",
+          "canonicalId": "6000033",
+          "extractable": true,
+          "score": 32.115,
+          "snippet": "osteotomy to manage genu valgum in skeletally mature patients Derotational osteotomy of the femur and/or tibia Loose body removal or open reduction and internal fixation of an osteochondral fragment Tibial tubercle osteotomy in skeletally mature patients for increased tibial tubercle trochlear groove distance Patellar"
+        },
+        {
+          "id": "6001066",
+          "title": "The Team Physician and the Ethics of Sports Medicine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001066",
+          "canonicalId": "6001066",
+          "extractable": true,
+          "score": 31.269,
+          "snippet": "context in which sports medicine ethics are operationalized has distinct characteristics and manifestly structures the behavior of those charged with the duty to act ethically. Studies of the practice of maintaining patient confidentiality in sports medicine show, for example, that the distinct physical environment, p"
+        },
+        {
+          "id": "510000623",
+          "title": "Shoulder: Anterior Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000623",
+          "canonicalId": "510000623",
+          "extractable": true,
+          "score": 27.852,
+          "snippet": "appropriate nonsurgical and surgical management of anterior shoulder instability. Epidemiology and Overview Incidence—Traumatic anterior shoulder dislocation is the most common form of glenohumeral instability, representing 88% to 98% of all dislocations. Recurrence rate     NOTES SEND FEEDBACK 9/4/26, 9:35 AM AAO"
+        },
+        {
+          "id": "6001183",
+          "title": "Ligamentous Injuries of the Knee: Failed Anterior Cruciate Ligament Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001183",
+          "canonicalId": "6001183",
+          "extractable": true,
+          "score": 27.465,
+          "snippet": "rotatory knee instability, limb alignment, PTS) No instability during daily activities, but instability during high-impact or pivoting sports activity Malpositioned femoral and/or tibial tunnel with vertical graft Insufficient management of concomitant injuries and/or underlying risk factors (eg, meniscal insufficienc"
+        },
+        {
+          "id": "6004097",
+          "title": "Tibial Plateau Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004097",
+          "canonicalId": "6004097",
+          "extractable": true,
+          "score": 26.359,
+          "snippet": "joint load.8 The medial meniscus is C shaped, is intimately attached to the medial collateral ligament, and bears approximately 50% of the medial joint load.8 The anterior and posterior cruciate ligaments insert onto the tibial spines. SEND FEEDBACK 9/4/26, 10:34 AM AAOS | Tibial Plateau Fractures https://rock.aaos.or"
+        },
+        {
+          "id": "6004096",
+          "title": "Patellar Fractures and Extensor Mechanism Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004096",
+          "canonicalId": "6004096",
+          "extractable": true,
+          "score": 25.742,
+          "snippet": "injury.15 Among patients with a patellar tendon rupture, 30% have an associated injury, 18% have a medial meniscus tear, and 18% have an anterior cruciate ligament rupture.15 Distal avulsion from the tibial tubercle is rare but associated with occult multiligamentous knee injury.16 Patellar Fracture High-energy direct"
+        },
+        {
+          "id": "6004077",
+          "title": "Patellofemoral Joint Disorders/Patellofemoral Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004077",
+          "canonicalId": "6004077",
+          "extractable": true,
+          "score": 24.518,
+          "snippet": "management of patellar instability.43 Lateral retinaculum lengthening is performed in an open fashion and affords adjustment in lateral translation to allow for balanced patellar tracking. Avoids medial patellar instability and over-release If performed in combination with a tibial tubercle osteotomy, should be re-app"
+        },
+        {
+          "id": "510000539",
+          "title": "Anterior Cruciate Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000539",
+          "canonicalId": "510000539",
+          "extractable": true,
+          "score": 23.212,
+          "snippet": "This is measured by calculating the angle between the perpendicular axis of the tibial diaphysis and the line at the superior aspect of the anterior and posterior aspects of the medial tibial plateau.14 Computed Tomography CT is more useful in the evaluation of periarticular or avulsion fracture patterns, particularly"
+        }
+      ]
+    },
+    {
+      "noteId": "d02526f6-cdc3-4f61-9d8b-c6f811067b7f",
+      "noteVersionId": "fe8a69cc-ab08-4996-b96b-7e4e6f0d22ec",
+      "stableGuid": "i+(JUP%;4k",
+      "contentChecksum": "164b191a587ad09afc015d3590a3edc623bd13dbbe2e9084358007cfa6abc9b9",
+      "deckPath": "SnapOrtho",
+      "front": "Two (2) indications for observation in patients with possible compartment syndrome : Delta p &gt; 30 Clinical presentation not consistent with compartment syndrome",
+      "extra": "*Delta p = diastolic pressure - compartment pressure",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Compartment_Syndrome",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "Two (2) indications for observation in patients with possible compartment syndrome : Delta p &gt; 30 Clinical presentation not consistent with compartment syndrome *Delta p = diastolic pressure - compartment pressure compartment syndrome trauma",
+      "candidates": [
+        {
+          "id": "510000657",
+          "title": "Compartment Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000657",
+          "canonicalId": "510000657",
+          "extractable": true,
+          "score": 54.185,
+          "snippet": "syndrome in adults. Describe the diagnostic findings of acute compartment syndrome in children. Identify the risk factors for compartment syndrome. Describe the pathophysiology of compartment syndrome. Define the natural history of compartment syndrome. Develop treatment plans for the management of compartment syndrom"
+        },
+        {
+          "id": "6000048",
+          "title": "Chronic Exertional Compartment Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000048",
+          "canonicalId": "6000048",
+          "extractable": true,
+          "score": 44.476,
+          "snippet": "the typical clinical presentation of chronic exertional compartment syndrome. Accurately diagnose and provide effective and evidence-based nonsurgical and surgical treatment for patients with chronic exertional compartment syndrome. Introduction Chronic exertional compartment syndrome (CECS) describes pain and impairm"
+        },
+        {
+          "id": "6002073",
+          "title": "Presentation of Bone Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002073",
+          "canonicalId": "6002073",
+          "extractable": true,
+          "score": 25.238,
+          "snippet": "Describe the classic clinical presentation of patients with various types of bone tumors. Identify the differential diagnosis for bone-forming tumors based on patient age, body region, and bone location. Clinical Presentation Overview The clinical presentation of bone tumors is highly variable, with some patients pres"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "canonicalId": "510000655",
+          "extractable": true,
+          "score": 24.181,
+          "snippet": "of the proximal one- SEND FEEDBACK 9/3/26, 4:10 PM AAOS | Forearm Trauma and Diaphyseal Fractures https://rock.aaos.org/coursecontent.aspx?id=510000655 8/36 third are associated with compartment syndrome.8 Any clinical suspicion of a compartment syndrome should warrant decompression and fasciotomy. Intra- compartment"
+        },
+        {
+          "id": "6001018",
+          "title": "Complex Regional Pain Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001018",
+          "canonicalId": "6001018",
+          "extractable": true,
+          "score": 24.18,
+          "snippet": "etiology and natural history of complex regional pain syndrome, including risk factors. Recognize clinical findings and diagnostic studies that support the diagnosis of complex regional pain syndrome. Specify options for the prevention and management of complex regional pain syndrome. Pathophysiology/Pathoanatomy Over"
+        },
+        {
+          "id": "6003018",
+          "title": "Amputations in Trauma Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003018",
+          "canonicalId": "6003018",
+          "extractable": true,
+          "score": 20.901,
+          "snippet": "antar sensation. Bosse et al13 reported a similar percentage (55%) of patients had normal plantar sensation 2 years after a limb-threatening injury regardless of group: insensate patients who underwent limb salvage compared with sensate patients who underwent limb salvage. Another common misconception is that scoring s"
+        },
+        {
+          "id": "6003009",
+          "title": "Treatment of Geriatric Orthopaedic Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003009",
+          "canonicalId": "6003009",
+          "extractable": true,
+          "score": 20.593,
+          "snippet": "What You Know Learning Objectives Determine medical optimization for early fracture management in geriatric orthopaedic patients. Review delirium prevention in geriatric orthopaedic patients. Describe fall risk assessment and prevention for geriatric orthopaedic patients. Introduction Physiologic Considerations Specia"
+        },
+        {
+          "id": "6004037",
+          "title": "Presentation and Evaluation of Bone and Soft-Tissue Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004037",
+          "canonicalId": "6004037",
+          "extractable": true,
+          "score": 19.958,
+          "snippet": "n patients with metastatic carcinoma. Utility is limited in patients with myeloma because of the lack osteoblastic activity in as many as 30% of patients; skeletal survey usually is preferred in patients with this diagnosis. Positron Emission Tomography SEND FEEDBACK 9/3/26, 5:50 PM AAOS | Presentation and Evaluation o"
+        },
+        {
+          "id": "6002024",
+          "title": "Perioperative and Postoperative Considerations in Geriatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002024",
+          "canonicalId": "6002024",
+          "extractable": true,
+          "score": 19.721,
+          "snippet": "geriatric trauma patients is becoming more common.15 This concept refers to the practice of admitting patients to the orthopaedic service but having the consulting medical specialist take co-ownership of the medical care of patients. The medical consultant often will continue to manage ongoing medical issues. Co-manag"
+        },
+        {
+          "id": "6002083",
+          "title": "Foot and Ankle Sports Injuries in Pediatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002083",
+          "canonicalId": "6002083",
+          "extractable": true,
+          "score": 19.511,
+          "snippet": "patients with Iselin disease but will resolve after ossification is complete. Surgical Management Indications Adult pattern fractures in skeletally mature patients, nonunions Skeletally mature patients with delayed healing or nonunion of Jones fracture No evidence currently supports early surgical treatment in skeleta"
+        },
+        {
+          "id": "510000588",
+          "title": "Femoroacetabular Impingement Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000588",
+          "canonicalId": "510000588",
+          "extractable": true,
+          "score": 18.947,
+          "snippet": "AAOS | Femoroacetabular Impingement Syndrome https://rock.aaos.org/coursecontent.aspx?id=510000588 19/36 Proximal hamstring tendon rupture typically results from a traumatic mechanism of injury because of rapid hip flexion and knee extension. Although discrete trauma is required, FAI syndrome may increase the likeliho"
+        },
+        {
+          "id": "6004028",
+          "title": "Primary Total Knee Arthroplasty for Other Indications",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004028",
+          "canonicalId": "6004028",
+          "extractable": true,
+          "score": 18.591,
+          "snippet": "| Primary Total Knee Arthroplasty for Other Indications https://rock.aaos.org/coursecontent.aspx?id=6004028 20/27 Secondary osteonecrosis typically involves more than one compartment of the knee or the metaphyseal bone. Multifactorial etiology; characterized by loss of bone circulation. Approximately 80% of patients h"
+        }
+      ]
+    },
+    {
+      "noteId": "66d47310-1516-46a4-adc1-397883836142",
+      "noteVersionId": "9532b053-72e4-41c5-af6b-585f484a8308",
+      "stableGuid": "I+RPwxzar*",
+      "contentChecksum": "9507af41e76515bc0082c8815a73223009394a9dc080e3c006a8bb753051deee",
+      "deckPath": "SnapOrtho",
+      "front": "What is a normal Critical Angle of Gissane ? 130-145°",
+      "extra": "",
+      "governedTags": [
+        "SnapOrtho::Specialty::Foot_Ankle"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "What is a normal Critical Angle of Gissane ? 130-145° foot ankle",
+      "candidates": [
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "canonicalId": "510000641",
+          "extractable": true,
+          "score": 28.499,
+          "snippet": "evaluating normal versus pathologic conditions of the foot and ankle through physical examination. Overview The foot and ankle are key anatomic structures that enable individuals to walk erect with a bipedal gait. Both lower extremities must be evaluated to determine normal for a given patient.  Overview     NOTE"
+        },
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "canonicalId": "6004071",
+          "extractable": true,
+          "score": 27.613,
+          "snippet": "be useful in patients with overuse injuries. SEND FEEDBACK 9/3/26, 5:36 PM AAOS | Pediatric Foot and Ankle Trauma https://rock.aaos.org/coursecontent.aspx?id=6004071 34/70 Figure 23 Lateral radiograph of a calcaneus demonstrates the Bohler angle (angle A) and the critical angle of Gissane (angle B). (Reproduced with p"
+        },
+        {
+          "id": "510000546",
+          "title": "Ankle and Foot Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000546",
+          "canonicalId": "510000546",
+          "extractable": true,
+          "score": 27.047,
+          "snippet": "an ankle or foot sports injury. Discuss the surgical and nonsurgical management of common foot and ankle injuries. Outline surgical decision making for ankle and foot injuries. List risk factors associated with common foot and ankle injuries. Review current surgical techniques and outcomes of the management of foot an"
+        },
+        {
+          "id": "6004004",
+          "title": "Systemic Conditions: Diabetic Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004004",
+          "canonicalId": "6004004",
+          "extractable": true,
+          "score": 25.875,
+          "snippet": "Conditions: Diabetic Foot and Ankle https://rock.aaos.org/coursecontent.aspx?id=6004004 8/12 Ankle-brachial index (ABI) is a more reliable measure of peripheral disease than simple palpation of pulses. ABI is the ratio of the systolic pressure in the ankle divided by the systolic pressure measured in the arm. ABI betw"
+        },
+        {
+          "id": "510000645",
+          "title": "Fractures of the Calcaneus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000645",
+          "canonicalId": "510000645",
+          "extractable": true,
+          "score": 10.782,
+          "snippet": "obtained intraoperatively, the axial view will ensure no varus is present (Figure 8). Böhler angle: On a lateral radiograph, a decrease in the Böhler angle is one measure of the severity of joint injury and displacement (depression). A normal Böhler angle is 25° to 40°. If this angle remains greater than 15°, nonsurgi"
+        },
+        {
+          "id": "6001014",
+          "title": "Posterior Tibial Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001014",
+          "canonicalId": "6001014",
+          "extractable": true,
+          "score": 9.948,
+          "snippet": "the medial arch sag angle. The medial arch sag angle is the angle created by a line drawn along the articular surface of the navicular and a line drawn parallel to the first tarsometatarsal joint. On AP radiographs, the talonavicular coverage angle should be measured because it indicates the severity of forefoot abduc"
+        },
+        {
+          "id": "510000537",
+          "title": "Adult-Acquired Flatfoot Deformity: Diagnosis and Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000537",
+          "canonicalId": "510000537",
+          "extractable": true,
+          "score": 8.833,
+          "snippet": "2 Clinical Classification System for Posterior Tibial Tendon Stage Substage Characteristic Clinical Findings Radiographic Findings Treatment I A: inflammatory disease Normal anatomy, tender PTT Normal NSAIDs, immobilization, ice, orthoses, tenosynovectomy, manage specific systemic disease B: partial tear Normal anatom"
+        },
+        {
+          "id": "510000619",
+          "title": "Rotator Cuff Disease: Impingement Syndrome, Calcific Tendinitis, Partial-Thickness Rotator Cuff Tears, and Full-Thickness Rotator Cuff Tear",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000619",
+          "canonicalId": "510000619",
+          "extractable": true,
+          "score": 6.18,
+          "snippet": "in this group. Critical shoulder angle: also known as the lateral acromial angle; measured as the angle between the superior and inferior bony margins of the glenoid and the lateralmost aspect of the acromion. Multiple studies have shown that the critical shoulder angle is associated with an increased incidence of rot"
+        },
+        {
+          "id": "6004077",
+          "title": "Patellofemoral Joint Disorders/Patellofemoral Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004077",
+          "canonicalId": "6004077",
+          "extractable": true,
+          "score": 6.063,
+          "snippet": "outcome in patients who only undergo soft-tissue surgery; consider bony alignment correction. Supine/prone position Measure the quadriceps angle with the use of a goniometer. Angle created by line from anterior superior iliac spine to the middle of the patella, then the middle of the patella through the tibial tubercl"
+        },
+        {
+          "id": "6000009",
+          "title": "Cavovarus Foot Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000009",
+          "canonicalId": "6000009",
+          "extractable": true,
+          "score": 5.866,
+          "snippet": "Available at: http://uwmsk.org/footalignment/doku.php?id=pes_cavus. Accessed December 12, 2022.) Talocalcaneal angle less than 15° (Figure 5) SEND FEEDBACK 9/3/26, 7:36 AM AAOS | Cavovarus Foot Deformity https://rock.aaos.org/coursecontent.aspx?id=6000009 7/16 Figure 5 AP foot radiographs demonstrate a normal talocalc"
+        },
+        {
+          "id": "6004027",
+          "title": "Alignment Strategies in Total Knee Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004027",
+          "canonicalId": "6004027",
+          "extractable": true,
+          "score": 5.839,
+          "snippet": "the AA of the femur typically is between 5° and 7°. The joint line forms an angle that is 93° with the MA of the tibia, or 3° of varus. aLDFA = anatomic lateral distal femoral angle, mLDFA = mechanical lateral distal femoral angle, MPTA = medial proximal tibial angle. (Reproduced with permission from Cherian JJ, Kapad"
+        },
+        {
+          "id": "510000575",
+          "title": "Developmental Dysplasia of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000575",
+          "canonicalId": "510000575",
+          "extractable": true,
+          "score": 5.424,
+          "snippet": "classification system (Table 1) Table 1 Simplified Graf Classification Class Alpha Angle Beta Angle Description Management I >60° <55° Normal None II 43°–60° 55°–77° Delayed ossification Variable SEND FEEDBACK 9/3/26, 7:50 AM AAOS | Developmental Dysplasia of the Hip https://rock.aaos.org/coursecontent.aspx?id=5100005"
+        }
+      ]
+    },
+    {
+      "noteId": "81ac1353-fd78-4515-abfe-af71f0ec7ce5",
+      "noteVersionId": "6d18d1aa-ef10-4657-8e2c-5812667bc157",
+      "stableGuid": "I<0$UNUP83",
+      "contentChecksum": "5c4167fdf64054f1f667f2ec6a3135661c0603d338616f592086e71c038e1342",
+      "deckPath": "SnapOrtho",
+      "front": "Classifying proximal femur fractures is easier if the patient is placed in traction with internal rotation positioning.",
+      "extra": "Koval et al (https://pubmed.ncbi.nlm.nih.gov/18537778/) performed a study in which proximal femur fractures were classified with standard radiographs (AP pelvis, AP hip, cross-table lateral), followed by the addition of a physician-assisted view with traction and 15 degrees of internal rotation. The inclusion of the traction-internal rotation view led to increased agreement in classification between the authors, and was especially helpful for differentiating displaced femoral neck fractures versus stable intertrochanteric fractures.",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Pelvis",
+        "SnapOrtho::Anatomy::Pelvis::Osteology",
+        "SnapOrtho::Anatomy::Pelvis::Osteology::Pelvis",
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femoral_Neck",
+        "SnapOrtho::Diagnosis::Femoral_Neck_Fractures",
+        "SnapOrtho::Diagnosis::Intertrochanteric_Fractures",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "Classifying proximal femur fractures is easier if the patient is placed in traction with internal rotation positioning. Koval et al (https://pubmed.ncbi.nlm.nih.gov/18537778/) performed a study in which proximal femur fractures were classified with standard radiographs (AP pelvis, AP hip, cross-table lateral), followed pelvis osteology thigh hip femoral neck femoral neck fractures intertrochanteric fractures trauma",
+      "candidates": [
+        {
+          "id": "6002100",
+          "title": "Femoral Neck Fractures in Young Adults",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002100",
+          "canonicalId": "6002100",
+          "extractable": true,
+          "score": 64.331,
+          "snippet": "| Femoral Neck Fractures in Young Adults https://rock.aaos.org/coursecontent.aspx?id=6002100 10/29 Associated Injuries Femoral neck fractures may occur in isolation but often occur in combination with femoral shaft, femoral head, pelvic ring, and acetabular injuries. Femoral neck fractures occur in combination with 1%"
+        },
+        {
+          "id": "6001189",
+          "title": "Proximal Third Femur Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001189",
+          "canonicalId": "6001189",
+          "extractable": true,
+          "score": 56.114,
+          "snippet": "mal Third Femur Fractures https://rock.aaos.org/coursecontent.aspx?id=6001189 35/63 Commonly, supine or lateral positioning is used in the management of proximal femur fractures. The surgical table used also is dependent on the procedure, fracture pattern, and surgeon preference.  Patient Positioning Supine patient po"
+        },
+        {
+          "id": "6001083",
+          "title": "Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001083",
+          "canonicalId": "6001083",
+          "extractable": true,
+          "score": 55.431,
+          "snippet": "time in traction may range from 4 to 12 weeks Figure 7 Knee radiographs demonstrate various skeletal traction options. AP (A) and lateral (B) radiographs demonstrate a distal femoral centrally threaded pin. AP (C) and lateral (D) radiographs demonstrate a tensioned distal femur wire. AP (E) and lateral (F) radiographs"
+        },
+        {
+          "id": "6001058",
+          "title": "Pediatric Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001058",
+          "canonicalId": "6001058",
+          "extractable": true,
+          "score": 51.886,
+          "snippet": "and is responsible for 70% of total femoral growth. The proximal femoral shaft is primarily bound by the proximal femoral physis (responsible for approximately 30% of total femoral length), femoral neck, greater trochanteric apophysis (involved in appositional growth of the proximal femur), and intertrochanteric regio"
+        },
+        {
+          "id": "6003016",
+          "title": "Evaluation of the Trauma Patient",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003016",
+          "canonicalId": "6003016",
+          "extractable": true,
+          "score": 50.008,
+          "snippet": "the patient. A Focused Assessment for the Sonographic Evaluation of the Trauma Patient (FAST) may be used for patients in shock. Similar to radiographic evaluation, FAST is performed SEND FEEDBACK 9/3/26, 4:06 PM AAOS | Evaluation of the Trauma Patient https://rock.aaos.org/coursecontent.aspx?id=6003016 13/35 quickly"
+        },
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "canonicalId": "510000535",
+          "extractable": true,
+          "score": 48.736,
+          "snippet": "on a fracture table Hemiarthroplasty or THA Posterior or lateral approach: lateral decubitus position on a standard table Anterior approach: supine on fracture table Anterolateral approach: supine or lateral position on standard table Intertrochanteric femur fractures: supine on fracture table or sloppy lateral on sta"
+        },
+        {
+          "id": "510000589",
+          "title": "Imaging of the Hip and Pelvis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000589",
+          "canonicalId": "510000589",
+          "extractable": true,
+          "score": 45.752,
+          "snippet": "(ACEA) Normal is 20° to 45°  Lateral Pelvis Radiographs Lateral radiographs of the pelvis help define the osseous anatomy of the proximal aspect of the femur, the anterior and posterior joint spaces, and the acetabular rims. Various lateral radiographs can be obtained. For a cross-table lateral radiograph, the patien"
+        },
+        {
+          "id": "6003004",
+          "title": "Surgical Positioning and Monitoring",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003004",
+          "canonicalId": "6003004",
+          "extractable": true,
+          "score": 40.881,
+          "snippet": "hows a patient in the prone position. Traction Table Always attempt to use the least amount of traction necessary. Traction tables are commonly used in the management of femur fractures.  Traction Table Several types of traction tables exist; however, the general principles for patient positioning are similar.1 Common"
+        },
+        {
+          "id": "6001084",
+          "title": "Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001084",
+          "canonicalId": "6001084",
+          "extractable": true,
+          "score": 39.755,
+          "snippet": "from the joint surface proximally. This lesson reviews fractures that involve the supracondylar (metaphyseal) and intercondylar (epiphyseal) areas of the distal femur. Pertinent anatomy, injury assessment, and various treatment options are discussed. Epidemiology Distal femur fractures account for 3% to 6% of all femu"
+        },
+        {
+          "id": "6000036",
+          "title": "Physeal Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000036",
+          "canonicalId": "6000036",
+          "extractable": true,
+          "score": 37.163,
+          "snippet": "Objectives Review the pathoanatomy associated with physeal fractures of the distal femur and their associated complications. Formulate a treatment plan for the management of physeal fractures of the distal femur. Predict and manage complications associated with physeal fractures of the distal femur. Overview A physeal"
+        },
+        {
+          "id": "6002012",
+          "title": "Postoperative Periprosthetic Fractures of the Femur and Acetabulum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002012",
+          "canonicalId": "6002012",
+          "extractable": true,
+          "score": 35.21,
+          "snippet": "7 Radiographs of a 65-year-old woman sustained an acetabular fracture during a fall 3 weeks after index total hip arthroplasty. Preoperative lateral right hip (A) and AP pelvis (B) radiographs demonstrate a type III periprosthetic acetabular fracture. AP (C) and lateral (D) right hip radiographs demonstrate open reduc"
+        },
+        {
+          "id": "6004093",
+          "title": "Pelvis Fractures: Definitive Management and Outcomes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004093",
+          "canonicalId": "6004093",
+          "extractable": true,
+          "score": 35.044,
+          "snippet": "injury on an AP pelvis radiograph should undergo CT to rule out an associated posterior pelvic ring injury. Pelvic fractures classified as lateral compression type I encompass a broad spectrum of injury and instability, with some fractures requiring open reduction internal fixation and other fractures being managed no"
+        }
+      ]
+    },
+    {
+      "noteId": "5ab277ca-28fd-4812-a1e9-8dd5c29e4601",
+      "noteVersionId": "bd1df7b1-b3e7-45f8-8aa5-7bda22bf163f",
+      "stableGuid": "i<Q~Y2NoS-",
+      "contentChecksum": "fe05e4cdc3b5a3acedf356097ba7cabfdfd82abadd74655b7e79a7ae3b2f7910",
+      "deckPath": "SnapOrtho",
+      "front": "The most common orthopaedic manifestation of Munchausen Syndrome by Proxy is usually hip pain .",
+      "extra": "",
+      "governedTags": [
+        "SnapOrtho::Specialty::Pediatric_Orthopedics"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "The most common orthopaedic manifestation of Munchausen Syndrome by Proxy is usually hip pain . pediatric orthopedics",
+      "candidates": [
+        {
+          "id": "6001018",
+          "title": "Complex Regional Pain Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001018",
+          "canonicalId": "6001018",
+          "extractable": true,
+          "score": 32.532,
+          "snippet": "etiology and natural history of complex regional pain syndrome, including risk factors. Recognize clinical findings and diagnostic studies that support the diagnosis of complex regional pain syndrome. Specify options for the prevention and management of complex regional pain syndrome. Pathophysiology/Pathoanatomy Over"
+        },
+        {
+          "id": "510000582",
+          "title": "Pediatric and Adolescent Back Pain: Pediatric Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000582",
+          "canonicalId": "510000582",
+          "extractable": true,
+          "score": 29.14,
+          "snippet": "for various imaging modalities in children with back pain. Outline the various treatment options for mechanical back pain, spondylolysis, and spondylolisthesis. Epidemiology     NOTES SEND FEEDBACK 9/3/26, 5:35 PM AAOS | Pediatric and Adolescent Back Pain: Pediatric Spine https://rock.aaos.org/coursecontent.aspx?i"
+        },
+        {
+          "id": "6002068",
+          "title": "Psychiatric Hand Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002068",
+          "canonicalId": "6002068",
+          "extractable": true,
+          "score": 26.233,
+          "snippet": "6 Imaging studies may increase concern for gas gangrene or necrotizing fasciitis; however, the clinical presentation and laboratory workup does not correspond with infection7 (Resource 1). Munchausen Syndrome Individuals with Munchausen syndrome frequently seek medical attention and may present with drastic symptoms; h"
+        },
+        {
+          "id": "6002084",
+          "title": "Principles of Managing Pediatric Orthopaedic Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002084",
+          "canonicalId": "6002084",
+          "extractable": true,
+          "score": 24.721,
+          "snippet": "of cast immoblization.14 SEND FEEDBACK 9/3/26, 5:53 PM AAOS | Principles of Managing Pediatric Orthopaedic Injuries https://rock.aaos.org/coursecontent.aspx?id=6002084 24/44 Video 2 Sawyer JR: PACS: Pediatric acute compartment syndrome, from Castañeda P, mod: Orthopaedic emergencies. Presented at the 14th Annual Inter"
+        },
+        {
+          "id": "510000657",
+          "title": "Compartment Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000657",
+          "canonicalId": "510000657",
+          "extractable": true,
+          "score": 23.41,
+          "snippet": "syndrome in adults. Describe the diagnostic findings of acute compartment syndrome in children. Identify the risk factors for compartment syndrome. Describe the pathophysiology of compartment syndrome. Define the natural history of compartment syndrome. Develop treatment plans for the management of compartment syndrom"
+        },
+        {
+          "id": "6001024",
+          "title": "Nonsurgical Management of Hip Pain",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001024",
+          "canonicalId": "6001024",
+          "extractable": true,
+          "score": 22.926,
+          "snippet": "on aid in triaging possible etiologies of hip pain and will identify patients who may benefit from degenerative hip pain treatment. Appropriate nonsurgical treatment strategies for adult patients with osteoarthritis are paramount. After a diagnosis of hip osteoarthritis is made, usually via radiographs, and the patient"
+        },
+        {
+          "id": "510000523",
+          "title": "The Pediatric Hip: Legg-Calvé-Perthes Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000523",
+          "canonicalId": "510000523",
+          "extractable": true,
+          "score": 20.868,
+          "snippet": "pain and a limp, 24% present with pain only, and 15% present with painless limp.9 Older children (8 years and older) presented with a more severe limp compared with younger patients. In children who localized their pain, 68% reported hip pain, 23% reported knee pain, 23% reported groin pain, and 24% reported thigh pai"
+        },
+        {
+          "id": "6002087",
+          "title": "Pediatric Hematologic Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002087",
+          "canonicalId": "6002087",
+          "extractable": true,
+          "score": 20.802,
+          "snippet": "Discuss common orthopaedic complications of Gaucher disease. Review common treatment options for patients with Gaucher disease. Describe the typical imaging findings of patients with acute lymphoblastic leukemia/lymphoblastic lymphoma.     NOTES SEND FEEDBACK 9/3/26, 5:37 PM AAOS | Pediatric Hematologic Conditions"
+        },
+        {
+          "id": "510000639",
+          "title": "SICK Scapula Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000639",
+          "canonicalId": "510000639",
+          "extractable": true,
+          "score": 19.905,
+          "snippet": "9/4/26, 9:36 AM AAOS | SICK Scapula Syndrome https://rock.aaos.org/coursecontent.aspx?id=510000639 1/24 Inferior medial border prominence Coracoid pain and malpositioning Kinesis abnormalities (dyskinesis) of scapular movement Related to scapular dyskinesis, which is the dynamic manifestation of this disorder Presents"
+        },
+        {
+          "id": "510000588",
+          "title": "Femoroacetabular Impingement Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000588",
+          "canonicalId": "510000588",
+          "extractable": true,
+          "score": 19.018,
+          "snippet": "the most common causes of hip-related pain in athletes included FAI syndrome (32%), athletic pubalgia (24%), adductor-related pathology (12%), and inguinal pathology (10%).34 Hip dysplasia is the second most common source of nonarthritic hip joint pain (after FAI syndrome) and frequently coexists with cam impingement."
+        },
+        {
+          "id": "510000512",
+          "title": "Nonspecific Pain",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000512",
+          "canonicalId": "510000512",
+          "extractable": true,
+          "score": 18.534,
+          "snippet": "complex regional pain syndrome. Overview Some patients present with pain and no measurable pathophysiology.     NOTES SEND FEEDBACK 9/3/26, 4:51 PM AAOS | Nonspecific Pain https://rock.aaos.org/coursecontent.aspx?id=510000512 1/16 A number of constructs of unclear benefit are suggested for nonspecific pain, includ"
+        },
+        {
+          "id": "6002108",
+          "title": "Orthopaedic Biomaterials",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002108",
+          "canonicalId": "6002108",
+          "extractable": true,
+          "score": 17.62,
+          "snippet": "strength, Ys = yield strength. (Reproduced from Jenkins DR, Moore DC: Biomaterials in orthopaedic practice, in Aaron RK, ed: Orthopaedic Basic Science: Foundations of Clinical Practice, ed 5. Rosemont, IL American Academy of Orthopaedic Surgeons, 2021, pp 63-75.) Properties of Biomaterials SEND FEEDBACK 9/3/26, 5:26 P"
+        }
+      ]
+    },
+    {
+      "noteId": "ca2fb66b-3264-45eb-bc04-63234bc1e69e",
+      "noteVersionId": "0033e6f3-834f-4cc9-9e89-0f47820499c6",
+      "stableGuid": "I={9)8AZ~[",
+      "contentChecksum": "984c70a0d54e15e15bb46799e8b08649edcd360755e51a59d584b4f6a09eae24",
+      "deckPath": "SnapOrtho",
+      "front": "What is the management of a simple elbow dislocation ? Closed reduction Splinting at 90° w/ sling for comfort Early, active ROM exercises",
+      "extra": "After 5-7 days the splint can be discontinued and active ROM started to apply compressive stability to the joint. A hinged brace with an appropriate extension block can facilitate motion through the stable arc.",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Elbow",
+        "SnapOrtho::Anatomy::Elbow::Joints",
+        "SnapOrtho::Anatomy::Elbow::Joints::Elbow_Joint",
+        "SnapOrtho::Specialty::Shoulder_Elbow",
+        "SnapOrtho::Specialty::Trauma",
+        "SnapOrtho::Treatment::Closed_Reduction"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "What is the management of a simple elbow dislocation ? Closed reduction Splinting at 90° w/ sling for comfort Early, active ROM exercises After 5-7 days the splint can be discontinued and active ROM started to apply compressive stability to the joint. A hinged brace with an appropriate extension block can facilitate motion through the s elbow joints elbow joint shoulder elbow trauma closed reduction",
+      "candidates": [
+        {
+          "id": "6000047",
+          "title": "Elbow Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000047",
+          "canonicalId": "6000047",
+          "extractable": true,
+          "score": 60.451,
+          "snippet": "2 PM AAOS | Elbow Arthroscopy https://rock.aaos.org/coursecontent.aspx?id=6000047 15/23 Specific postoperative management recommendations depend on the pathology and the procedures being performed. A general principle to follow is that the elbow joint should not be immobilized more than a few days postoperatively, and"
+        },
+        {
+          "id": "510000586",
+          "title": "Elbow Instability: Lateral Collateral Ligament Complex Insufficiency",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000586",
+          "canonicalId": "510000586",
+          "extractable": true,
+          "score": 52.603,
+          "snippet": "the arm is immobilized for 5 to 7 days. Depending on stability, the splint can be removed to allow for early active ROM exercises with the use of a brace, with or without an extension block as dictated by the extension block splint. Early ROM: full prono-supination from 90° to full flexion Progressive extension of 30°"
+        },
+        {
+          "id": "6000040",
+          "title": "Elbow Stiffness",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000040",
+          "canonicalId": "6000040",
+          "extractable": true,
+          "score": 45.669,
+          "snippet": "the patient's desired activities of daily living. 2. Maintain painless ROM. 3. Maintain elbow stability. Nonsurgical Management Techniques/Procedures Supervised physical therapy NSAIDs and intra-articular corticosteroid injections Splinting/ROM regimen Dynamic splinting Static progressive splinting or turnbuckle ortho"
+        },
+        {
+          "id": "6004083",
+          "title": "Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004083",
+          "canonicalId": "6004083",
+          "extractable": true,
+          "score": 43.112,
+          "snippet": "083 22/36 Week 1 Brace: posterior splint at 90°of elbow flexion ROM: wrist active ROM extension/flexion Elbow postoperative compression dressing 5 to 7 days Exercises Gripping Wrist ROM Shoulder and biceps isometrics (no shoulder external rotation) Cryotherapy to elbow joint and graft site Week 2 Brace: elbow ROM 15° t"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "canonicalId": "510000655",
+          "extractable": true,
+          "score": 42.019,
+          "snippet": "d. Rehabilitation SEND FEEDBACK 9/3/26, 4:10 PM AAOS | Forearm Trauma and Diaphyseal Fractures https://rock.aaos.org/coursecontent.aspx?id=510000655 16/36 Brief immobilization (less than 2 weeks) for comfort, then active, self-assisted stretching exercises With posterior Monteggia lesions, surgeons should consider elbo"
+        },
+        {
+          "id": "6004081",
+          "title": "Athletic Injuries of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004081",
+          "canonicalId": "6004081",
+          "extractable": true,
+          "score": 41.497,
+          "snippet": "Blazar PE, Steinberg DR: Fractures of the proximal interphalangeal joint. J Am Acad Orthop Surg 2000;8[6]:383-390.) Management The goal is to allow for early range of motion through a stable arc while maintaining joint congruence. Nonsurgical Management Indications DIP joint dislocations Perform closed reduction; afte"
+        },
+        {
+          "id": "6000039",
+          "title": "Shoulder Trauma: Acromioclavicular Joint Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000039",
+          "canonicalId": "6000039",
+          "extractable": true,
+          "score": 40.252,
+          "snippet": "for management. Appreciate the biomechanical consequences and complications of various acromioclavicular joint surgical techniques.     NOTES SEND FEEDBACK 9/4/26, 10:42 AM AAOS | Shoulder Trauma: Acromioclavicular Joint Injuries https://rock.aaos.org/coursecontent.aspx?id=6000039 1/45 Overview: Acromioclavicular"
+        },
+        {
+          "id": "6001188",
+          "title": "Fractures of the Humeral Shaft",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001188",
+          "canonicalId": "6001188",
+          "extractable": true,
+          "score": 40.019,
+          "snippet": "to 10 days, after which a fracture brace is applied in the office. Weekly radiographs to assess alignment have been questioned. Immediately on fracture brace application, the patient is encouraged to perform pendulum exercises for shoulder mobility. Isometric biceps, triceps, and deltoid muscle exercises and active wr"
+        },
+        {
+          "id": "510000660",
+          "title": "Radial Head and Neck Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000660",
+          "canonicalId": "510000660",
+          "extractable": true,
+          "score": 39.484,
+          "snippet": "rotation17 Contraindications Type II fractures with mechanical block to motion (especially rotation) Type III/type IV fractures Associated elbow dislocation or fracture Techniques/Procedures Brief period of immobilization (7 to 10 days maximum) in a sling or posterior splint for pain relief, followed by early ROM exer"
+        },
+        {
+          "id": "510000661",
+          "title": "Elbow Fractures: Olecranon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000661",
+          "canonicalId": "510000661",
+          "extractable": true,
+          "score": 37.868,
+          "snippet": "goals of surgical management are anatomic reduction of the articular surface, restoration of elbow congruence and bony alignment, and stable fixation to allow for early ROM. Contraindications Absolute contraindications to surgical management include active infection and medical conditions that preclude surgical manage"
+        },
+        {
+          "id": "510000544",
+          "title": "Trapeziometacarpal Joint Osteoarthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000544",
+          "canonicalId": "510000544",
+          "extractable": true,
+          "score": 35.091,
+          "snippet": "Various surgical treatment options are available for the management of thumb CMC joint osteoarthritis. SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Trapeziometacarpal Joint Osteoarthritis https://rock.aaos.org/coursecontent.aspx?id=510000544 11/19  Surgical Management Available evidence shows that simple trapeziectomy alone"
+        },
+        {
+          "id": "6004072",
+          "title": "Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004072",
+          "canonicalId": "6004072",
+          "extractable": true,
+          "score": 34.947,
+          "snippet": "sternoclavicular joint. Recognize the importance of prompt recognition and reduction of a posterior shoulder dislocation. Discuss the physical examination of the sternoclavicular joint. Outline appropriate imaging modalities to aid in the diagnosis of a sternoclavicular joint dislocation. Detail closed and open reduct"
+        }
+      ]
+    },
+    {
+      "noteId": "20f3eb0d-3248-4c74-81e8-8b4c54e6b64b",
+      "noteVersionId": "1b2389f0-9d09-4a35-ac66-e201a65153a7",
+      "stableGuid": "i>-=lv}`K&",
+      "contentChecksum": "7f500afe7de09c4bf002641c2d3f0265f3a5acc35c3dd0873ee5bd8cee803ed1",
+      "deckPath": "SnapOrtho",
+      "front": "In overhead athletes with valgus extension overload (VEO), early osteophyte formation is most likely to develop at the posteromedial aspect of the olecranon.",
+      "extra": "*At the area labeled B below",
+      "governedTags": [
+        "SnapOrtho::Specialty::Shoulder_Elbow",
+        "SnapOrtho::Specialty::Sports_Medicine"
+      ],
+      "currentRock": "",
+      "currentRockLink": "",
+      "searchQuery": "In overhead athletes with valgus extension overload (VEO), early osteophyte formation is most likely to develop at the posteromedial aspect of the olecranon. *At the area labeled B below shoulder elbow sports medicine",
+      "candidates": [
+        {
+          "id": "6000038",
+          "title": "Imaging of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000038",
+          "canonicalId": "6000038",
+          "extractable": true,
+          "score": 45.086,
+          "snippet": "and a painful pop in his right elbow shows a full-thickness biceps tendon tear (arrow). B = brachialis muscle, O = olecranon. (Reproduced from Fritz J, Carrino JA, Rashidi A: Advanced imaging of the shoulder and elbow, in Nicholson GP, ed: Orthopaedic Knowledge Update: Shoulder and Elbow, ed 5. Rosemont, IL, American"
+        },
+        {
+          "id": "510000633",
+          "title": "Throwing Elbow Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000633",
+          "canonicalId": "510000633",
+          "extractable": true,
+          "score": 42.707,
+          "snippet": "it bothers the patient. Techniques/Procedures: Valgus Extension Overload Preoperative Planning SEND FEEDBACK 9/4/26, 9:50 AM AAOS | Throwing Elbow Injuries https://rock.aaos.org/coursecontent.aspx?id=510000633 26/37 A CT scan will provide critical information on the location of the posteromedial osteophyte. The UCL mu"
+        },
+        {
+          "id": "6000040",
+          "title": "Elbow Stiffness",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000040",
+          "canonicalId": "6000040",
+          "extractable": true,
+          "score": 38.529,
+          "snippet": "id SEND FEEDBACK 9/3/26, 4:04 PM AAOS | Elbow Stiffness https://rock.aaos.org/coursecontent.aspx?id=6000040 7/24 Classification Types Olecranon Fossa fibrosis Coronoid fossa Olecranon fossa Mixed Extrinsic contractures secondary to intrinsic pathology Reproduced from Kovachevich R, Hastings H II: Elbow stiffness:"
+        },
+        {
+          "id": "6004079",
+          "title": "Anatomy of the Ankle for the Sports Medicine Surgeon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004079",
+          "canonicalId": "6004079",
+          "extractable": true,
+          "score": 38.111,
+          "snippet": "extension of the articular surface of the fibula provides a small area of articulation, or contact zone, between the fibula and the tibia at the distal extent of the SEND FEEDBACK 9/3/26, 7:18 AM AAOS | Anatomy of the Ankle for the Sports Medicine Surgeon https://rock.aaos.org/coursecontent.aspx?id=6004079 4/29 syndes"
+        },
+        {
+          "id": "510000585",
+          "title": "Physical Examination of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000585",
+          "canonicalId": "510000585",
+          "extractable": true,
+          "score": 37.047,
+          "snippet": ", ed 4. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2010, pp 347-353. Moving valgus stress test—Described for athletes involved in throwing who have symptomatic attenuation of the medial collateral ligament, this test involves abduction of the shoulder to 90°. A valgus force is applied to the elbow, and the"
+        },
+        {
+          "id": "6004083",
+          "title": "Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004083",
+          "canonicalId": "6004083",
+          "extractable": true,
+          "score": 36.935,
+          "snippet": "S | Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes https://rock.aaos.org/coursecontent.aspx?id=6004083 1/36 Discuss return-to-play tests for overhead throwing athletes. Superior Labrum Anterior to Posterior Tears/Lesions Pathoanatomy/Pathophysiology Overview Superior labrum anterior to posterior (S"
+        },
+        {
+          "id": "6004069",
+          "title": "Olecranon Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004069",
+          "canonicalId": "6004069",
+          "extractable": true,
+          "score": 34.068,
+          "snippet": "Etiology/Mechanism of Injury Olecranon fractures generally occur if a child falls onto an outstretched hand; however, children tend to hyperextend their elbows when they fall, which drives the olecranon into the olecranon fossa. This typically results in a supracondylar fracture rather than an olecranon fracture becau"
+        },
+        {
+          "id": "510000577",
+          "title": "Overuse Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000577",
+          "canonicalId": "510000577",
+          "extractable": true,
+          "score": 27.835,
+          "snippet": "sports, throwing athletes with a partial UCL tear in whom comprehensive rehabilitation programs have failed, and nonthrowing athletes who remain symptomatic despite nonsurgical treatment17 Valgus Extension Overload Syndrome Commonly presents as posteromedial elbow pain with extension during the late acceleration and f"
+        },
+        {
+          "id": "510000661",
+          "title": "Elbow Fractures: Olecranon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000661",
+          "canonicalId": "510000661",
+          "extractable": true,
+          "score": 27.629,
+          "snippet": "as it incorporates into the periosteum.26 This insertion is localized onto the dorsal surface rather than the tip of the olecranon; therefore, in olecranon fractures, the extensor mechanism may be disrupted, leading to with the potential for a decrease or loss in active elbow extension. Etiology/Mechanism of Injury Ol"
+        },
+        {
+          "id": "6004074",
+          "title": "Medial Collateral Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004074",
+          "canonicalId": "6004074",
+          "extractable": true,
+          "score": 26.02,
+          "snippet": "the medial epicondyle more proximal and anterior than the typical UCL injury. Valgus extension overload syndrome During throwing, the olecranon is repeatedly and forcefully driven into the olecranon fossa, exerting shear forces on the medial aspect of the olecranon tip and the olecranon fossa, which may cause cartilag"
+        },
+        {
+          "id": "6001176",
+          "title": "Congenital Scoliosis and Early-Onset Scoliosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001176",
+          "canonicalId": "6001176",
+          "extractable": true,
+          "score": 23.849,
+          "snippet": "boric acid,8 fetal alcohol syndrome,9 and hyperthermia10 Pathoanatomy Failure of formation Wedge vertebra Hemivertebra Failure of segmentation Block vertebra Unilateral bar Mixed failure of formation and failure of segmentation  Pathoanatomy Congenital scoliosis is an abnormal development of the spine.2 It is further"
+        },
+        {
+          "id": "6001072",
+          "title": "Lumbar Spine Injuries and Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001072",
+          "canonicalId": "6001072",
+          "extractable": true,
+          "score": 22.381,
+          "snippet": "in Athletes https://rock.aaos.org/coursecontent.aspx?id=6001072 30/59 Surgical treatment should be considered in athletes without relief via nonsurgical treatment.32 Lumbar Spondylolysis/Spondylolisthesis Lumbar spondylosis and spondylolisthesis often are managed nonsurgically. Early diagnosis is very important for ma"
+        }
+      ]
+    }
+  ],
+  "inputChecksum": "4370626a800f24614ea6b6e659bfd121e9668b15cb046b2ead9ad95dbe82952c"
+}

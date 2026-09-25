@@ -6,6 +6,7 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 import { upsertCanonicalSubscription } from '@/lib/subscriptions/ledger';
 import { SubscriptionOwnerConflictError } from '@/lib/subscriptions/ownership';
+import { getAppleLifecycleReason } from '@/lib/subscriptions/apple-lifecycle';
 import {
   appleStateFromExistingRow,
   shouldSkipAppleCanonicalUpdate,
@@ -53,6 +54,7 @@ export type AppleTransactionInfo = {
   revocationDate?: number;
   environment?: string;
   appAccountToken?: string;
+  bundleId?: string;
   offerType?: number;
 };
 
@@ -74,6 +76,7 @@ export type AppleRenewalInfo = {
   autoRenewProductId?: string;
   autoRenewStatus?: number | boolean;
   gracePeriodExpiresDate?: number;
+  expirationIntent?: number;
 };
 
 export type AppleNotificationPayload = {
@@ -251,6 +254,26 @@ function getRequiredAppleEnv() {
   };
 }
 
+/**
+ * Apple signatures prove that Apple issued a payload, not that it belongs to
+ * this app. Bind every decoded payload to the configured bundle before it can
+ * affect the subscription ledger.
+ */
+function assertAppleBundleId(params: {
+  transactionInfo?: AppleTransactionInfo | null;
+  notification?: AppleNotificationPayload | null;
+}) {
+  const expectedBundleId = process.env.APPLE_BUNDLE_ID?.trim();
+  if (!expectedBundleId) {
+    throw new AppleVerificationError('APPLE_BUNDLE_ID is not configured');
+  }
+
+  const actualBundleId = params.transactionInfo?.bundleId ?? params.notification?.data?.bundleId ?? null;
+  if (!actualBundleId || actualBundleId !== expectedBundleId) {
+    throw new AppleVerificationError('Apple payload bundle ID does not match this application');
+  }
+}
+
 async function createAppleApiToken() {
   const { issuerId, keyId, privateKeyPem, bundleId } = getRequiredAppleEnv();
   const privateKey = await parseApplePrivateKeyForSigning(privateKeyPem);
@@ -401,6 +424,8 @@ export async function verifyAppStoreServerNotification(signedPayload: string): P
     ? await verifyAndDecodeAppleJws<AppleRenewalInfo>(signedRenewalInfo)
     : null;
 
+  assertAppleBundleId({ transactionInfo, notification });
+
   return {
     notification,
     signedPayload,
@@ -446,6 +471,7 @@ export async function fetchVerifiedAppleTransaction(
       }
 
       const transactionInfo = await verifyAndDecodeAppleJws<AppleTransactionInfo>(payload.signedTransactionInfo);
+      assertAppleBundleId({ transactionInfo });
       return {
         transactionInfo,
         signedTransactionInfo: payload.signedTransactionInfo,
@@ -517,6 +543,12 @@ export async function fetchAppleSubscriptionStatus(
               : null,
           }))
       );
+
+      for (const transaction of lastTransactions) {
+        if (transaction.transactionInfo) {
+          assertAppleBundleId({ transactionInfo: transaction.transactionInfo });
+        }
+      }
 
       return {
         environment,
@@ -736,6 +768,12 @@ export async function upsertAppleSubscriptionForUser(params: {
       subtype: params.subtype ?? null,
       renewalInfo: params.renewalInfo ?? null,
       transactionInfo: params.transactionInfo,
+      lifecycle_reason: getAppleLifecycleReason({
+        status: state.status,
+        notificationType: params.notificationType ?? null,
+        notificationSubtype: params.subtype ?? null,
+        expirationIntent: params.renewalInfo?.expirationIntent ?? null,
+      }),
     },
     stripe_price_id: state.productId,
     plan_code: BROBOT_CONFIG.PAID_PLAN_CODE,

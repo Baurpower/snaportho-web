@@ -974,6 +974,23 @@ chrome.runtime.onMessage.addListener(
           return;
         }
 
+        if (message.type === 'ob:generate-question-claim') {
+          const deviceToken = await getStoredDeviceToken();
+          if (!deviceToken) throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');
+          const page = message.pageContext;
+          const reviewed = page.provider === 'orthobullets'
+            && (page.pageKind === 'review' || page.pageKind === 'testview')
+            && Boolean(page.questionId && page.stem?.trim() && page.correctAnswerKey && page.explanationText?.trim());
+          if (!reviewed) throw new CodedError('Open a completed Orthobullets review question before generating a claim.', 'invalid_request');
+          const result = await fetchJson('/api/brobot/extension/question-claims', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', [EXTENSION_TOKEN_HEADER]: deviceToken },
+            body: JSON.stringify({ contractVersion: 'orthobullets-question-claim-v1', pageContext: page }),
+          });
+          sendResponse({ ok: true, questionClaim: result });
+          return;
+        }
+
         if (message.type === 'ob:get-anki-search-status') {
           const deviceToken = await getStoredDeviceToken();
           if (!deviceToken) throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');

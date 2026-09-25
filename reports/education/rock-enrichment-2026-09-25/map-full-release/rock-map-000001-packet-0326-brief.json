@@ -1,0 +1,1045 @@
+{
+  "batchKey": "map-000001-packet-0326",
+  "inputChecksum": "a876fe90c9076385cf88ec8808ca4f24bdf7b01bcd7a11a4709f54075f47ddf2",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "sidecarSchema": {
+    "card": {
+      "stableGuid": "string",
+      "status": "\"mapped\"|\"skipped\"",
+      "chapters": "1-3 {id, role} from this card's candidates; first is primary",
+      "skipReason": "if skipped"
+    }
+  },
+  "cards": [
+    {
+      "stableGuid": "v@(-L*b|.~",
+      "front": "When performing a TKA in mechanical alignment, the lateral side of the tibia will most likely be over-resected.",
+      "extra": "*This occurs because the tibia is naturally in 3 degrees of varus and the cut is at 0 degrees AKA perpendicular to the mechanical axis.",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology::Tibia",
+        "SnapOrtho::Specialty::Adult_Reconstruction"
+      ],
+      "candidates": [
+        {
+          "id": "6004027",
+          "title": "Alignment Strategies in Total Knee Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004027",
+          "extractable": true,
+          "score": 46.767,
+          "snippet": "AAOS | Alignment Strategies in Total Knee Arthroplasty https://rock.aaos.org/coursecontent.aspx?id=6004027 5/17 axis. The longitudinal axis about which the tibia internally and externally rotates is approximately perpendicular to the first two axes. Strategies for Alignment and Balancing in TKA Mechanical Alignment Me"
+        },
+        {
+          "id": "6000023",
+          "title": "Salvage Procedures and Failed Revision Total Knee Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000023",
+          "extractable": true,
+          "score": 33.887,
+          "snippet": "Failed Revision Total Knee Arthroplasty https://rock.aaos.org/coursecontent.aspx?id=6000023 2/35  Modes of Revision TKA Failure Based on Australian Registry Data Revision TKA fails because of the same reasons that primary TKA fails. For example, the incidence of postoperative periprosthetic femur fracture after revis"
+        },
+        {
+          "id": "510000537",
+          "title": "Adult-Acquired Flatfoot Deformity: Diagnosis and Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000537",
+          "extractable": true,
+          "score": 33.272,
+          "snippet": "changes. Hindfoot Reconstruction  Hindfoot Reconstruction Joint-preserving reconstruction can be attempted in patients with a stage IVA valgus ankle. For mild ankle valgus (0° to 3°), aggressive hindfoot realignment alone may be adequate if it adequately medializes the mechanical axis of the leg. Postoperative use of"
+        },
+        {
+          "id": "6000017",
+          "title": "Radiographic Evaluation of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000017",
+          "extractable": true,
+          "score": 32.291,
+          "snippet": "PM AAOS | Radiographic Evaluation of the Knee https://rock.aaos.org/coursecontent.aspx?id=6000017 6/30 SEND FEEDBACK 9/3/26, 5:58 PM AAOS | Radiographic Evaluation of the Knee https://rock.aaos.org/coursecontent.aspx?id=6000017 7/30 Figure 5 Full-length, mechanical axis radiographs of bilateral lower extremities demon"
+        },
+        {
+          "id": "510000552",
+          "title": "Biomechanics of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000552",
+          "extractable": true,
+          "score": 32.21,
+          "snippet": "cruciate ligaments or disruption of the tibiofemoral surface, including the menisci, causes a major change in knee kinematics, leading to articular dysfunction. Successful total knee arthroplasty (TKA) relies on proper positioning of the components to restore proper knee kinematics. If no force is applied during knee"
+        },
+        {
+          "id": "6000001",
+          "title": "Acute Lateral Ankle Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000001",
+          "extractable": true,
+          "score": 29.171,
+          "snippet": "lateral ankle instability. Identify patient factors that increase the risk for chronic lateral ankle instability. Understand the association between hindfoot varus alignment and lateral ligament instability. Understand surgical indications and techniques for the treatment of lateral ankle instability. Overview/Pathoph"
+        },
+        {
+          "id": "6002067",
+          "title": "Complications After Total Knee Arthroplasty: Patellar Maltracking and Instability/Dislocation, Patellar Clunk, Extensor Mechanism Disruption",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002067",
+          "extractable": true,
+          "score": 25.126,
+          "snippet": "soft-tissue retractors are used to expose the lateral border of the patella. Under direct visualization, the lateral retinaculum and the lateral patellofemoral ligament are released, beginning at the inferior pole of the patella and working proximally approximately 1 to 2 cm lateral to the lateral border of the patell"
+        },
+        {
+          "id": "6001046",
+          "title": "Stress Fractures of the Leg: Tibia and Fibula",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001046",
+          "extractable": true,
+          "score": 24.578,
+          "snippet": "biomechanical or alignment abnormalities, which may increase the risk for a stress injury, such as hindfoot varus or valgus (Figure 1). SEND FEEDBACK 9/4/26, 9:41 AM AAOS | Stress Fractures of the Leg: Tibia and Fibula https://rock.aaos.org/coursecontent.aspx?id=6001046 2/13 Figure 1 AP (A) and lateral (B) radiographs"
+        },
+        {
+          "id": "510000597",
+          "title": "Lower Extremity Deformity Analysis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000597",
+          "extractable": true,
+          "score": 24.507,
+          "snippet": "axes. aLDFA = anatomic lateral distal femur angle, aLPFA = anatomic lateral proximal femur angle, aLDTA = anatomic lateral distal tibia angle, aMPTA = anatomic medial proximal tibia angle, mLDFA = mechanical lateral distal femur angle, mLPFA = mechanical lateral proximal femur angle, mLDTA = mechanical lateral distal"
+        },
+        {
+          "id": "6002013",
+          "title": "Unicompartmental Knee Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002013",
+          "extractable": true,
+          "score": 24.221,
+          "snippet": "g augments and stems in this setting. Lateral UKA Indications/Contraindications Ideal candidates for lateral UKA have isolated lateral compartment degenerative changes.  Indications/Contraindications Indications and contraindications for lateral UKA are similar to those for medial UKA. Patients should have isolated la"
+        },
+        {
+          "id": "510000511",
+          "title": "Instability After Total Knee Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000511",
+          "extractable": true,
+          "score": 24.172,
+          "snippet": "may provide information on overall mechanical alignment, joint line obliquity, and the lateral distal femur and medial proximal tibia angles. Lateral radiographs allow for assessment of tibial slope, joint height, and component sizing. AP instability also can be evaluated on lateral radiographs by assessing tibial tra"
+        },
+        {
+          "id": "6004091",
+          "title": "Malunions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004091",
+          "extractable": true,
+          "score": 23.507,
+          "snippet": "frontal Mechanical medial proximal tibia angle Mechanical axis: proximal tibia joint orientation line 87 85–90 Mechanical lateral distal tibia angle Mechanical axis: distal tibia joint orientation line 89 83–92 SEND FEEDBACK 9/3/26, 4:37 PM AAOS | Malunions https://rock.aaos.org/coursecontent.aspx?id=6004091 13/50 Ana"
+        }
+      ]
+    },
+    {
+      "stableGuid": "v@5epje+*B",
+      "front": "For femoral condyle cartilage defects, once malalignment, ligament instability, and meniscal pathology has been addressed... &lt;4 cm2: microfracture or osteochondral autograft transfer &gt;4 cm2: osteochondral allograft transplantation or autologous chondrocyte implantation",
+      "extra": "*Same principles apply for patellofemoral defects once patellofemoral maltracking and malalignment have been addressed *Shown below is MACI (autologous chondrocyte implantation)",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Other",
+        "SnapOrtho::Anatomy::Leg_Knee::Other::Knee_Articular_Cartilage",
+        "SnapOrtho::Diagnosis::Malalignment",
+        "SnapOrtho::Diagnosis::Osteochondral_Defect_Knee",
+        "SnapOrtho::Specialty::Basic_Science",
+        "SnapOrtho::Specialty::Sports_Medicine",
+        "SnapOrtho::Treatment::Osteochondral_Defect_Of_The_Knee_Reconstruction"
+      ],
+      "candidates": [
+        {
+          "id": "510000531",
+          "title": "Articular Cartilage Injury and Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000531",
+          "extractable": true,
+          "score": 96.328,
+          "snippet": "of the defect, patient demands, and whether the procedure is a first- or second-line treatment option. ACI = autologous chondrocyte implantation, ACL = anterior cruciate ligament, AMZ = anteromedialization, MFX = microfracture, OATS = osteochondral autograft transplantation, OCA = osteochondral allograft, PCL = poster"
+        },
+        {
+          "id": "6000033",
+          "title": "Patellofemoral Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000033",
+          "extractable": true,
+          "score": 80.205,
+          "snippet": "surgical management of patellofemoral instability in pediatric and adolescent patients. Pathophysiology/Pathoanatomy Overview     NOTES SEND FEEDBACK 9/3/26, 5:33 PM AAOS | Patellofemoral Instability https://rock.aaos.org/coursecontent.aspx?id=6000033 1/20 Lateral instability most common Common injuries occurring"
+        },
+        {
+          "id": "6000000",
+          "title": "Cartilage Repair and Cartilage Grafts",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000000",
+          "extractable": true,
+          "score": 66.856,
+          "snippet": "Cartilage Lesion Fill or Repair These techniques involve the placement of autograft or allograft tissue in lesions for cartilage lesion management. Attempt to resurface cartilage defects with native-like hyaline cartilage with type II collagen Include cell-based techniques, osteochondral autograft, and osteochondral a"
+        },
+        {
+          "id": "6002101",
+          "title": "Articular Cartilage and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002101",
+          "extractable": true,
+          "score": 58.883,
+          "snippet": "articular cartilage.8 SEND FEEDBACK 9/3/26, 7:23 AM AAOS | Articular Cartilage and Biomechanics https://rock.aaos.org/coursecontent.aspx?id=6002101 2/25 Figure 1 Images of articular cartilage. A, Arthroscopic image shows heathy hyaline articular cartilage from a knee joint. Scale bar: 0.1 cm. B, Gross specimen shows n"
+        },
+        {
+          "id": "6004075",
+          "title": "The Biology and Biomechanics of Grafts and Implants in Sports Medicine Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004075",
+          "extractable": true,
+          "score": 58.329,
+          "snippet": "patient age and activity level. Review the basic biomechanical properties of implants available for sports medicine procedures. Describe the common modes of failure with various types of implants. Introduction Soft-tissue grafts are commonly used in sports medicine for ligament or tendon reconstruction (anterior cruci"
+        },
+        {
+          "id": "6002092",
+          "title": "Imaging of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002092",
+          "extractable": true,
+          "score": 57.644,
+          "snippet": "Knee https://rock.aaos.org/coursecontent.aspx?id=6002092 8/39 Injury of the medial collateral ligament (MCL) Knee pain Osteoarthritis—Radiography may identify subchondral sclerosis, joint space narrowing, subchondral cysts (variable), osteophytes (variable), and joint subluxation (Figure 8). Inflammatory arthropathy:"
+        },
+        {
+          "id": "6000017",
+          "title": "Radiographic Evaluation of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000017",
+          "extractable": true,
+          "score": 56.217,
+          "snippet": "Radiographic Evaluation of the Knee https://rock.aaos.org/coursecontent.aspx?id=6000017 17/30 Figure 10 Coronal MRI of a knee with arthritis shows displacement of the medial meniscus, loss of femoral articular cartilage, and subchondral edema in the medial femoral condyle. (Reproduced from Keeney JA: Radiographic eval"
+        },
+        {
+          "id": "6004077",
+          "title": "Patellofemoral Joint Disorders/Patellofemoral Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004077",
+          "extractable": true,
+          "score": 55.015,
+          "snippet": "MPFL = medial patellofemoral ligament, MPML = medial patellomeniscal ligament, MPTL = medial patellotibial ligament, MQTFL SEND FEEDBACK 9/3/26, 5:34 PM AAOS | Patellofemoral Joint Disorders/Patellofemoral Instability https://rock.aaos.org/coursecontent.aspx?id=6004077 5/30 = medial quadriceps tendon femoral ligament,"
+        },
+        {
+          "id": "6000007",
+          "title": "Osteochondral Lesions of the Talus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000007",
+          "extractable": true,
+          "score": 50.222,
+          "snippet": "paedic Surgeons, 2020, pp 695-703. Autologous chondrocyte implantation (ACI) Two-stage procedure Autograft hyaline cartilage is harvested, grown in a laboratory over the course of several weeks, and replanted into the débrided defect with overlying autologous periosteal coverage. May be considered in patients in whom m"
+        },
+        {
+          "id": "6000013",
+          "title": "Freiberg Infraction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000013",
+          "extractable": true,
+          "score": 47.247,
+          "snippet": "and C, The recipient site is prepared with the osteochondral autologous transplantation system. D, The osteochondral plug is impacted flush with the surrounding cartilage surface of the second metatarsal head. (Reproduced with permission from Georgiannos D, Tsikopoulos K, Kitridis D, Givisis P, Bisbinas I: Osteochondr"
+        },
+        {
+          "id": "510000539",
+          "title": "Anterior Cruciate Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000539",
+          "extractable": true,
+          "score": 42.301,
+          "snippet": "and meniscal deficiency. In addition, hyperlaxity/recurvatum, young age, prior ACL rupture, familial/genetic predisposition, quadriceps dominance, and altered landing mechanics may be contributing factors.1 Associated Injuries Surgeons must assess for other ligamentous or meniscal pathology, osteochondral injury, and"
+        },
+        {
+          "id": "6002067",
+          "title": "Complications After Total Knee Arthroplasty: Patellar Maltracking and Instability/Dislocation, Patellar Clunk, Extensor Mechanism Disruption",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002067",
+          "extractable": true,
+          "score": 41.381,
+          "snippet": "the risk of patellar maltracking and instability during the index TKA include femoral and/or tibial malrotation, femoral trochlear dysplasia, or a previous patellar realignment procedure.7 Several component risk factors also may contribute to patellar maltracking. Femoral or tibial component internal rotation is detri"
+        }
+      ]
+    },
+    {
+      "stableGuid": "v@N}R}5?cI",
+      "front": "Rhomboid major Origin: Spinous process (T2-T5) Insertion: Scapula Action: Adduct scapula Nerve: Dorsal scapular",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [],
+      "candidates": [
+        {
+          "id": "510000639",
+          "title": "SICK Scapula Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000639",
+          "extractable": true,
+          "score": 51.964,
+          "snippet": "d anteriorly tilts the scapula Rhomboid major Originates from the spinous processes and inserts on the medial border of the scapula at the level of the scapular spine Medially rotates the scapula SEND FEEDBACK 9/4/26, 9:36 AM AAOS | SICK Scapula Syndrome https://rock.aaos.org/coursecontent.aspx?id=510000639 7/24 Rhombo"
+        },
+        {
+          "id": "510000527",
+          "title": "Disorders of the Scapula",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000527",
+          "extractable": true,
+          "score": 49.206,
+          "snippet": "scapula. The rhomboid major originates from the thoracic spine and inserts on the medial border of the scapula from the level of the scapular spine and below. The rhomboid minor originates from the cervical spine and inserts on the medial border of the scapula above the rhomboid major. SEND FEEDBACK 9/3/26, 3:56 PM AA"
+        },
+        {
+          "id": "510000664",
+          "title": "Shoulder Trauma: Scapular and Glenoid Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000664",
+          "extractable": true,
+          "score": 37.712,
+          "snippet": "The circumflex scapular artery (specifically its ascending branch) is the vessel most at risk during a posterior approach to the scapula. The medial scapular body is perfused by the anastomosis between the thoracodorsal artery and the dorsal scapular artery. Neural Anatomy The suprascapular nerve travels deep to the t"
+        },
+        {
+          "id": "510000629",
+          "title": "Throwing Shoulder Injuries and Internal Impingement",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000629",
+          "extractable": true,
+          "score": 33.885,
+          "snippet": "Osterma AL: Thoracic outlet syndrome: getting it right so you don’t have to do it again. Instr Course Lect 2017;66:103-113.) Neurovascular Examination Sensation Axillary nerve Radial nerve Ulnar nerve Median nerve Motor Cranial nerve XI Axillary nerve Musculocutaneous nerve Suprascapular nerve Subscapular nerve Radial"
+        },
+        {
+          "id": "510000559",
+          "title": "Nerve Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000559",
+          "extractable": true,
+          "score": 30.002,
+          "snippet": "a cable sural nerve graft, is the ideal treatment option. Preganglionic lesions often require nerve transfers, such as an ulnar nerve fascicle to the musculocutaneous nerve (Oberlin transfer), a spinal accessory nerve fascicle to the suprascapular nerve, or a radial nerve fascicle to the axillary nerve. Pan-plexus ner"
+        },
+        {
+          "id": "6004073",
+          "title": "Traumatic Brachial Plexus Injuries: Shoulder Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004073",
+          "extractable": true,
+          "score": 25.89,
+          "snippet": "of their evaluation. LSS = lower subscapular nerve, MABC = medial antebrachial cutaneous nerve, MBC = medial brachial cutaneous nerve, TD = thoracodorsal nerve, USS = upper subscapular nerve. (Reproduced with permission from the Mayo Foundation for Medical Education and Research, Rochester, MN.) Spinal nerve roots The"
+        },
+        {
+          "id": "6002111",
+          "title": "Biology and Function of Nerve",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002111",
+          "extractable": true,
+          "score": 23.444,
+          "snippet": "highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Describe relevant peripheral nerve anatomy. Explain different degrees of nerve injury. List appropriate imaging or nerve conduction studies in evaluating nerve injury or dysfunction. Review principles of nerve repair and the anticipat"
+        },
+        {
+          "id": "6004047",
+          "title": "Tumors of Unknown Origin",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004047",
+          "extractable": true,
+          "score": 22.763,
+          "snippet": "bone and soft-tissue tumors of uncertain origin and pathogenesis. Describe the clinical presentation of patients with tumors of uncertain origin. Explain the epidemiology, etiology, and natural history of tumors of uncertain origin. Describe the radiographic and histologic characteristics that define tumors of unknown"
+        }
+      ]
+    },
+    {
+      "stableGuid": "v*S{|JSk!m",
+      "front": "What are the four different deformities associated with clubfoot (talipes equinovarus)? C avus midfoot Forefoot A dductus Subtalar V arus Hindfoot E quinus",
+      "extra": "CAVE",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Foot_Ankle",
+        "SnapOrtho::Anatomy::Foot_Ankle::Osteology",
+        "SnapOrtho::Anatomy::Foot_Ankle::Osteology::Midfoot"
+      ],
+      "candidates": [
+        {
+          "id": "6001174",
+          "title": "Clubfoot (Talipes Equinovarus)",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001174",
+          "extractable": true,
+          "score": 107.866,
+          "snippet": "severe). Three midfoot and three hindfoot parameters are scored 0, 0.5, or 1 for mild, moderate, and severe deformities (Figure 2). SEND FEEDBACK 9/3/26, 7:41 AM AAOS | Clubfoot (Talipes Equinovarus) https://rock.aaos.org/coursecontent.aspx?id=6001174 7/29 SEND FEEDBACK 9/3/26, 7:41 AM AAOS | Clubfoot (Talipes Equinov"
+        },
+        {
+          "id": "6000011",
+          "title": "Arthritides of the Hindfoot",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000011",
+          "extractable": true,
+          "score": 42.929,
+          "snippet": "hindfoot that lead to hindfoot deformity and arthritis. dentify appropriate surgical and nonsurgical treatment options for the management of hindfoot arthritis. Pathophysiology/Pathoanatomy  Pathophysiology/Pathoanatomy Hindfoot arthritis may be caused by various pathologies and may result in deformity and pain. The"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 42.058,
+          "snippet": "deviation with plantar flexion and dorsiflexion. Subtalar Normal passive range of motion is estimated. Different foot postures (cavus, planovalgus) are associated with different capabilities of motion. Inversion: 20° Eversion: 10°  Subtalar SEND FEEDBACK 9/3/26, 5:44 PM AAOS | Physical Examination of the Foot and Ank"
+        },
+        {
+          "id": "6004064",
+          "title": "Pediatric Lower Extremity Deformities and Limb Deficiencies",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004064",
+          "extractable": true,
+          "score": 39.68,
+          "snippet": "ith normal ankle Type 2: tibial shortening with dynamic valgus ankle Type 3: fixed equinovalgus ankle Type 3a: equinovalgus of distal tibia, normal subtalar joint Type 3b: normal distal tibia, subtalar coalition in equinovalgus Type 3c: distal tibia and subtalar joint with fixed deformities Type 4: fixed equinovarus (c"
+        },
+        {
+          "id": "6004062",
+          "title": "Pediatric Foot Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004062",
+          "extractable": true,
+          "score": 39.255,
+          "snippet": "toe walking: Etiology, prevalence, classification, and treatment. Foot Ankle Spec 2017;10[4]:337-342.) SEND FEEDBACK 9/3/26, 5:36 PM AAOS | Pediatric Foot Conditions https://rock.aaos.org/coursecontent.aspx?id=6004062 4/32 Figure 2 Photograph of an ankle shows a V-shape on the Achilles tendon, which is observed with"
+        },
+        {
+          "id": "6000014",
+          "title": "Biomechanics/Gait: Effect of Ankle/Foot Malalignment",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000014",
+          "extractable": true,
+          "score": 39.032,
+          "snippet": "ding to stress fracture of the fifth metatarsal, recurrent ankle sprains, and generalized foot stiffness with gait Equinus contracture of the ankle Consists of limited ankle dorsiflexion leading to abnormal increased foot pressure, specifically of the forefoot and midfoot Calcaneovalgus deformity of the foot A flexible"
+        },
+        {
+          "id": "6001015",
+          "title": "Cavovarus Foot Deformity: Surgical Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001015",
+          "extractable": true,
+          "score": 38.217,
+          "snippet": "What You Know Learning Objectives Identify appropriate indications for the surgical management of cavovarus foot deformity. Understand the difference between joint-sparing and arthrodesis procedures. Identify appropriate soft-tissue procedures for specific contractures and deformities. Differentiate and understand app"
+        },
+        {
+          "id": "6004003",
+          "title": "Arthritides of the Midfoot",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004003",
+          "extractable": true,
+          "score": 35.601,
+          "snippet": "first metatarsal, or a long second metatarsal may be predisposed to deformity and arthritis at the midfoot. Common midfoot arthritis deformities are forefoot abduction, collapse of the longitudinal arch, and hindfoot valgus. If the longitudinal arch collapses, plantar tension increases, which compromises midfoot lever"
+        },
+        {
+          "id": "6000009",
+          "title": "Cavovarus Foot Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000009",
+          "extractable": true,
+          "score": 35.42,
+          "snippet": "cavovarus foot deformities. Definition and Overview Cavus describes a high (abnormally elevated) longitudinal arch. Varus describes hindfoot alignment toward the midline (medial to the anatomic axis). The forefoot deformity is one of first-ray plantar flexion, often with forefoot adduction and pronation. The hindfoot"
+        },
+        {
+          "id": "6000032",
+          "title": "Metatarsus Adductus and Calcaneovalgus Foot",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000032",
+          "extractable": true,
+          "score": 30.4,
+          "snippet": "skewfoot. A, Clinical photograph of the feet of a patient with skewfoot. B, AP radiograph of the foot of a patient with skewfoot demonstrates hindfoot valgus, talar plantar flexion, midfoot abduction, and forefoot adduction. (Courtesy of Erin M. Honcharuk, MD, Baltimore, MD.) Differential Diagnosis Clubfoot Hyperactiv"
+        },
+        {
+          "id": "6000031",
+          "title": "Congenital Vertical Talus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000031",
+          "extractable": true,
+          "score": 30.048,
+          "snippet": "d clubfoot are associated with very different clinical and radiographic appearances, many congenital foot anomalies are mislabeled as clubfoot. Although patients with CVT and patients with clubfoot have equinus, the foot positions are otherwise quite different: severe planus versus cavus, forefoot abduction versus addu"
+        },
+        {
+          "id": "510000648",
+          "title": "Midfoot Fractures: Tarsometatarsal (Lisfranc) Fracture-Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000648",
+          "extractable": true,
+          "score": 26.575,
+          "snippet": "fracture-dislocations. Summarize common complications and outcomes of tarsometatarsal injuries. Pathoanatomy Overview     NOTES SEND FEEDBACK 9/3/26, 4:45 PM AAOS | Midfoot Fractures: Tarsometatarsal (Lisfranc) Fracture-Dislocations https://rock.aaos.org/coursecontent.aspx?id=510000648 1/14 Dissimilar from the hin"
+        }
+      ]
+    },
+    {
+      "stableGuid": "v#oyPP3Q0>",
+      "front": "Which surgical approach to the pelvis is shown below? Kocher-Langenbeck",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Pelvis",
+        "SnapOrtho::Anatomy::Pelvis::Osteology",
+        "SnapOrtho::Anatomy::Pelvis::Osteology::Pelvis",
+        "SnapOrtho::Specialty::Trauma",
+        "SnapOrtho::Treatment::Kocher_Langenbeck_Approach"
+      ],
+      "candidates": [
+        {
+          "id": "6004095",
+          "title": "Surgical Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004095",
+          "extractable": true,
+          "score": 31.4,
+          "snippet": "after femoral head allograft reconstruction via a surgical hip dislocation approach shows fixation of a step-cut digastric osteotomy with the use of 3.5-mm screws. (Courtesy of L. Henry Goodnough, MD, Seattle, WA.) Management Surgical Approach  Surgical Approach To review an surgical approach see Video 1. The patient"
+        },
+        {
+          "id": "6002026",
+          "title": "Acetabular Fractures: Definitive Management and Outcomes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002026",
+          "extractable": true,
+          "score": 25.955,
+          "snippet": "s and surgical time are less with the anterior intrapelvic approach compared with the ilioinguinal approach.18 Surgical Hip Dislocation With Digastric Osteotomy Performed with the patient in the lateral position, most often via the Gibson approach but can be performed via the Kocher-Langenbeck approach Allows for surgi"
+        },
+        {
+          "id": "6004094",
+          "title": "Femoral Head Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004094",
+          "extractable": true,
+          "score": 21.91,
+          "snippet": "Know Learning Objectives Review the clinical presentation of femoral head fractures and the Pipkin classification. Discuss indications for the surgical management of femoral head fractures and associated injuries. Appreciate surgical approaches for the surgical management of femoral head fracture and the relative adva"
+        },
+        {
+          "id": "6003016",
+          "title": "Evaluation of the Trauma Patient",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003016",
+          "extractable": true,
+          "score": 21.211,
+          "snippet": "Trauma Outcomes Study conducted by the American College of Surgeons in 1990. SEND FEEDBACK 9/3/26, 4:06 PM AAOS | Evaluation of the Trauma Patient https://rock.aaos.org/coursecontent.aspx?id=6003016 6/35  Trauma Scoring Systems The ISS and AIS are the most used injury scoring systems for trauma patients; however, a w"
+        },
+        {
+          "id": "510000589",
+          "title": "Imaging of the Hip and Pelvis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000589",
+          "extractable": true,
+          "score": 20.05,
+          "snippet": "Normal ranges from 25° to 35° Tönnis angle (acetabular index) Normal is less than 13° Femoro-epiphyseal acetabular roof (FEAR) index Normal is less than 5° SEND FEEDBACK 9/3/26, 4:26 PM AAOS | Imaging of the Hip and Pelvis https://rock.aaos.org/coursecontent.aspx?id=510000589 2/36  AP Pelvis Radiographs An AP pelvis"
+        },
+        {
+          "id": "510000554",
+          "title": "Surgical Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000554",
+          "extractable": true,
+          "score": 18.276,
+          "snippet": "IL, American Academy of Orthopaedic Surgeons, 2014. SEND FEEDBACK 9/4/26, 9:42 AM AAOS | Surgical Anatomy of the Hip https://rock.aaos.org/coursecontent.aspx?id=510000554 29/43 Video 3 Ready JE: Anterior approach with leg-holding traction device, in Schwarzkopf R, ed: Surgical Techniques in Orthopaedics: Total Hip Arth"
+        },
+        {
+          "id": "6004093",
+          "title": "Pelvis Fractures: Definitive Management and Outcomes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004093",
+          "extractable": true,
+          "score": 17.954,
+          "snippet": "associated with an external rotation injury (APC) of the contralateral pelvis. Occasionally, these injuries are referred to as a wind-swept pelvis. These injuries are inherently unstable and require surgical management via reduction and fixation of both sides of the pelvis. SEND FEEDBACK 9/3/26, 5:39 PM AAOS | Pelvis"
+        },
+        {
+          "id": "6004101",
+          "title": "Forefoot Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004101",
+          "extractable": true,
+          "score": 16.107,
+          "snippet": "SEND FEEDBACK 9/3/26, 4:10 PM AAOS | Forefoot Trauma https://rock.aaos.org/coursecontent.aspx?id=6004101 1/22 Review the classification system for and identify the injury grade of turf toe injuries. Discuss the nonsurgical management of turf toe injuries. List surgical indications for and explain the surgical manageme"
+        },
+        {
+          "id": "510000664",
+          "title": "Shoulder Trauma: Scapular and Glenoid Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000664",
+          "extractable": true,
+          "score": 15.745,
+          "snippet": "fractures.50,51 In patients with more considerable displacement or additional disruptions of the SSSC, surgical stabilization of the complex should be pursued.29,52,53 Techniques/Procedures Surgical Approaches The deltopectoral approach is used for anterior and superior glenoid fractures and coracoid fractures. Poster"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "extractable": true,
+          "score": 15.418,
+          "snippet": "nd neutralization versus bridge plating Patient Positioning Supine on a hand table To approach the ulna, the extremity can be flexed at the elbow. Surgical Approaches18 The volar approach to the radius (Henry approach) is commonly used (Figure 13). SEND FEEDBACK 9/3/26, 4:10 PM AAOS | Forearm Trauma and Diaphyseal Frac"
+        },
+        {
+          "id": "6003004",
+          "title": "Surgical Positioning and Monitoring",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003004",
+          "extractable": true,
+          "score": 13.409,
+          "snippet": "d surgical table with a central post works well if fluoroscopy of the extremities is necessary; however, fluoroscopy of the pelvis or spine would require a surgical table that does not have a central post, such as a Jackson table. Check the standards of the surgical table to ensure it can handle the weight of the patie"
+        },
+        {
+          "id": "6001035",
+          "title": "Revision Total Knee Arthroplasty: Surgical Technique",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001035",
+          "extractable": true,
+          "score": 12.723,
+          "snippet": "have undergone prior knee surgery. Implement various advanced surgical tactics to improve exposure. Assess and manage bone defects. Measure and manage knee instability issues. Procedure Techniques Surgical Approaches Use the most lateral incision.     NOTES SEND FEEDBACK 9/3/26, 6:01 PM AAOS | Revision Total Knee"
+        }
+      ]
+    },
+    {
+      "stableGuid": "v#T9kvGJD,",
+      "front": "Supracondylar humerus fractures that displace in which direction have a higher association with AIN palsies ? Posterolateral",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Forearm",
+        "SnapOrtho::Anatomy::Forearm::Nerves",
+        "SnapOrtho::Anatomy::Forearm::Nerves::Ain",
+        "SnapOrtho::Diagnosis::Supracondylar_Humerus_Fracture",
+        "SnapOrtho::Specialty::Shoulder_Elbow",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "extractable": true,
+          "score": 49.054,
+          "snippet": "st are used as a template. SEND FEEDBACK 9/3/26, 4:10 PM AAOS | Forearm Trauma and Diaphyseal Fractures https://rock.aaos.org/coursecontent.aspx?id=510000655 29/36 Figure 17 Preoperative (A) and postoperative (B) AP forearm radiographs demonstrate a both-bone forearm fracture managed via a bridge plating technique. (Re"
+        },
+        {
+          "id": "6000047",
+          "title": "Elbow Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000047",
+          "extractable": true,
+          "score": 44.307,
+          "snippet": "Soft-tissue contraindications, such as local infection, burns, joint contractures, and elbow instability Osseous contraindications, such as bony ankylosis/heterotopic ossification, prior intra- articular elbow trauma, advanced arthritis changes Prior intra-articular elbow open surgery may cause nerves to scar in unpred"
+        },
+        {
+          "id": "6001057",
+          "title": "Diaphyseal Forearm Fractures, Distal Forearm Fractures, and Monteggia Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001057",
+          "extractable": true,
+          "score": 38.611,
+          "snippet": "forearm fractures. Review the incidence of distal forearm fractures. Evaluate a distal forearm injury via appropriate imaging studies and a physical examination. Identify a Galeazzi fracture.     NOTES SEND FEEDBACK 9/3/26, 3:55 PM AAOS | Diaphyseal Forearm Fractures, Distal Forearm Fractures, and Monteggia Fractu"
+        },
+        {
+          "id": "510000661",
+          "title": "Elbow Fractures: Olecranon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000661",
+          "extractable": true,
+          "score": 37.907,
+          "snippet": "to fracture. Olecranon fractures are categorized as simple or complex based on fracture pattern and overall elbow stability. Management includes nonsurgical and surgical treatment modalities. Identification of olecranon fractures with associated elbow instability is critical to successful management. Epidemiology Olec"
+        },
+        {
+          "id": "510000662",
+          "title": "Distal Humerus Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000662",
+          "extractable": true,
+          "score": 36.131,
+          "snippet": "PM AAOS | Distal Humerus Fractures https://rock.aaos.org/coursecontent.aspx?id=510000662 1/37 Fractures of the capitellum constitute approximately 1% of all elbow injuries. Fractures of a single condyle account for 5% of all distal humerus fractures, with lateral condyle fractures being more common than medial condyle"
+        },
+        {
+          "id": "510000578",
+          "title": "Distal Humerus Physeal Fractures, Pediatric Polytrauma, and Upper Extremity Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000578",
+          "extractable": true,
+          "score": 33.305,
+          "snippet": "fracture. Explain how to safely manage a pink, pulseless supracondylar humerus fracture. Review the possible complications associated with supracondylar humerus fractures. Distal Humerus Physeal Fractures Pathophysiology/Pathoanatomy Overview The anatomic considerations for distal humerus transphyseal fractures are th"
+        },
+        {
+          "id": "6002085",
+          "title": "Proximal Humerus Fractures and Humeral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002085",
+          "extractable": true,
+          "score": 25.798,
+          "snippet": "humerus fractures. Understand the epidemiology of humeral shaft fractures. Perform an assessment of humeral shaft fractures to understand the mechanism of injury, associated injuries, imaging and diagnostic studies, and classification systems.     NOTES SEND FEEDBACK 9/3/26, 5:54 PM AAOS | Proximal Humerus Fractur"
+        },
+        {
+          "id": "510000652",
+          "title": "Shoulder Trauma: Proximal Humerus Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000652",
+          "extractable": true,
+          "score": 24.607,
+          "snippet": "complications associated with nonsurgical and surgical management of proximal humerus fractures. Pathophysiology/Pathoanatomy Overview     NOTES SEND FEEDBACK 9/4/26, 10:42 AM AAOS | Shoulder Trauma: Proximal Humerus Fractures https://rock.aaos.org/coursecontent.aspx?id=510000652 1/53  Overview Proximal humerus f"
+        },
+        {
+          "id": "6001065",
+          "title": "Acute and Recurrent Elbow Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001065",
+          "extractable": true,
+          "score": 20.15,
+          "snippet": "to recurrent PLRI of the elbow. Most patients are successfully treated via brief immobilization and early protected range of motion. Tardy posterolateral elbow instability is a potential late complication of a varus supracondylar humerus malunion, which may result in LCL attritional failure. In tardy posterolateral el"
+        },
+        {
+          "id": "6004069",
+          "title": "Olecranon Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004069",
+          "extractable": true,
+          "score": 19.68,
+          "snippet": "be protected in this position and the metaphyseal bone of the supracondylar region of the humerus fails in tension.1 SEND FEEDBACK 9/3/26, 5:25 PM AAOS | Olecranon Fractures https://rock.aaos.org/coursecontent.aspx?id=6004069 5/21 Fractures caused by direct impact to the olecranon have been described but are less comm"
+        },
+        {
+          "id": "6004067",
+          "title": "Proximal Radius Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004067",
+          "extractable": true,
+          "score": 19.315,
+          "snippet": "as osteochondritis of the capitellum. Differential Diagnosis Other fractures about the elbow, including supracondylar fractures, lateral and medial condyle fractures, and olecranon fractures—as well as Monteggia fractures and Monteggia fracture variants—should be included in the differential diagnosis. Management Nons"
+        },
+        {
+          "id": "510000586",
+          "title": "Elbow Instability: Lateral Collateral Ligament Complex Insufficiency",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000586",
+          "extractable": true,
+          "score": 18.86,
+          "snippet": "show decreased healing potential of the LCL, analogous to lateral knee ligamentous structures.11,13,16 Chronic attenuation or attritional injury Cubitus varus deformity Acquired: supracondylar fracture malunion Congenital Tardy posterolateral elbow instability is a potential late complication of a varus supracondylar"
+        }
+      ]
+    },
+    {
+      "stableGuid": "v^?{2dCur9",
+      "front": "The lateral femoral cutaneous nerve can be compressed at or near the ASIS .",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [],
+      "candidates": [
+        {
+          "id": "6002111",
+          "title": "Biology and Function of Nerve",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002111",
+          "extractable": true,
+          "score": 23.999,
+          "snippet": "highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Describe relevant peripheral nerve anatomy. Explain different degrees of nerve injury. List appropriate imaging or nerve conduction studies in evaluating nerve injury or dysfunction. Review principles of nerve repair and the anticipat"
+        },
+        {
+          "id": "510000559",
+          "title": "Nerve Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000559",
+          "extractable": true,
+          "score": 21.127,
+          "snippet": "S = lower subscapular nerve, MABC = medial antebrachial cutaneous nerve, MBC = medial brachial cutaneous nerve, TD = thoracodorsal nerve, USS = upper subscapular nerve. (Reproduced with permission from the Mayo Foundation for Medical Education and Research, Rochester, MN.) Spinal nerve roots The spinal nerve roots are"
+        },
+        {
+          "id": "6001083",
+          "title": "Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001083",
+          "extractable": true,
+          "score": 19.77,
+          "snippet": "with a femoral shaft fracture was 79 years.1 Anatomy and Biomechanics Anatomy (Figure 1) The bony anatomy of the femoral shaft includes an anterior bow. Compartments of the thigh Anterior compartment contains the quadriceps muscles and the femoral nerve Posterior compartment contains the hamstring muscles and the scia"
+        },
+        {
+          "id": "6004094",
+          "title": "Femoral Head Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004094",
+          "extractable": true,
+          "score": 19.76,
+          "snippet": "The superficial plane of the approach. The rec¬tus femoris muscle lies in the interval between the sartorius muscle, which is innervated by the femoral nerve, and the tensor fasciae latae muscle, which is innervated by the superior gluteal nerve. B, The surgeon must avoid injuring the lateral femoral cutaneous nerve,"
+        },
+        {
+          "id": "510000554",
+          "title": "Surgical Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000554",
+          "extractable": true,
+          "score": 18.016,
+          "snippet": "eal nerve) Lateral femoral cutaneous nerve, femoral nerve, and ascending branch of lateral femoral circumflex artery Anterolateral Watson- Jones Tensor fasciae latae (superior gluteal nerve) Gluteus medius (superior gluteal nerve) Femoral nerve, femoral artery, femoral vein, and lateral femoral circumflex artery L"
+        },
+        {
+          "id": "6002004",
+          "title": "Peripheral Nerve and Spinal Cord Pathophysiology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002004",
+          "extractable": true,
+          "score": 17.896,
+          "snippet": "l nerve injury but also the degree of nerve injury. Nerve Conduction Studies Sensory nerve function Stimulating a mixed (motor and sensory) nerve produces a compound nerve action potential. Stimulating a sensory nerve produces a sensory nerve action potential. Testing the nerve can be done by stimulating the nerve in a"
+        },
+        {
+          "id": "510000529",
+          "title": "Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000529",
+          "extractable": true,
+          "score": 17.276,
+          "snippet": "sciatic notch Structures that exit the greater sciatic notch above the piriformis tendon Superior gluteal artery Superior gluteal nerve Structures that exit below the piriformis tendon Mnemonic POPS IQ Pudendal nerve Nerve to the obturator internus Posterior femoral cutaneous nerve Sciatic nerve Inferior gluteal arter"
+        },
+        {
+          "id": "6000001",
+          "title": "Acute Lateral Ankle Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000001",
+          "extractable": true,
+          "score": 16.323,
+          "snippet": "of the heel is observed from the front. B, Lateral radiograph of a foot obtained after a calcaneal lateral slide osteotomy with lateral ligament reconstruction demonstrates lateral ankle instability. A convex upward Meary angle indicates a cavus foot. C, Lateral radiograph of a foot obtained after a calcaneal lateral"
+        }
+      ]
+    },
+    {
+      "stableGuid": "v+3U4?#KFJ",
+      "front": "What angle is being measured below? Lateral center-edge angle What is the normal range? 25-40°",
+      "extra": "*Dysplasia &lt; 20°; overcoverage &gt;40°",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Adult_Reconstruction",
+        "SnapOrtho::Treatment::Adult_Reconstruction_Radiographic_Measurements"
+      ],
+      "candidates": [
+        {
+          "id": "510000575",
+          "title": "Developmental Dysplasia of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000575",
+          "extractable": true,
+          "score": 35.417,
+          "snippet": "The lateral center-edge angle of Wiberg is the angle formed by a vertical line through the center of the femoral head (assuming a level pelvis) and an oblique line through the lateral edge of the sourcil from the center of the femoral head. An angle greater than 25° is normal, and an angle of less than 22° is consider"
+        },
+        {
+          "id": "6002054",
+          "title": "Progressive Collapsing Foot Deformity (Adult-Acquired Flatfoot Deformity): Clinical and Radiographic Diagnosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002054",
+          "extractable": true,
+          "score": 32.134,
+          "snippet": "MD, PhD, Iowa City, IA.) Lateral Foot Radiographs Talus–first metatarsal angle (Meary angle) Talocalcaneal angle (Kite angle) Calcaneal pitch Medial column instability SEND FEEDBACK 9/3/26, 5:54 PM AAOS | Progressive Collapsing Foot Deformity (Adult-Acquired Flatfoot Deformity): Clinical and Radiographic Diagnosis htt"
+        },
+        {
+          "id": "6003014",
+          "title": "Adult Isthmic Spondylolisthesis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003014",
+          "extractable": true,
+          "score": 31.494,
+          "snippet": "be subdivided into type 5A, which is associated with normal or low lumbosacral kyphosis (as measured by Dubousset lumbosacral angle ≥80°) and type 5B, which is associated with high lumbosacral kyphosis (as measured by Dubousset lumbosacral angle <80°). Spinal SEND FEEDBACK 9/3/26, 7:11 AM AAOS | Adult Isthmic Spondylo"
+        },
+        {
+          "id": "6004088",
+          "title": "Adult Cervical Spine Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004088",
+          "extractable": true,
+          "score": 27.348,
+          "snippet": "flexibility. Normal Cervical Alignment The radiographic parameters commonly used to assess cervical spine alignment include the following: Cervical lordosis C2 through C7 sagittal vertical axis (cSVA) Chin-brow vertical angle (CBVA) T1 slope (T1S)  Normal Cervical Alignment SEND FEEDBACK 9/3/26, 7:10 AM AAOS | Adult"
+        },
+        {
+          "id": "6002009",
+          "title": "Radiographic Evaluation of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002009",
+          "extractable": true,
+          "score": 26.447,
+          "snippet": "2020, pp 407-416.) Anterior center-edge angle or angle of Lequesne (Figure 17) Normal: 25° to 40° Dysplasia: less than 20° SEND FEEDBACK 9/3/26, 5:57 PM AAOS | Radiographic Evaluation of the Hip https://rock.aaos.org/coursecontent.aspx?id=6002009 26/44 Figure 17 False-profile radiograph of a hip demonstrates measureme"
+        },
+        {
+          "id": "6001153",
+          "title": "Hip Labrum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001153",
+          "extractable": true,
+          "score": 25.512,
+          "snippet": "or beyond), a frog lateral view is more clinically useful38 (Figure 6). Figure 6 Pelvic radiographs demonstrates angles measured to evaluate the severity of hip dysplasia. A, AP radiograph demonstrates the lateral center edge (LCE) and the Tönnis angle. B, Dunn radiograph demonstrates the alpha angle, which is used to"
+        },
+        {
+          "id": "6004020",
+          "title": "Primary Total Hip Arthroplasty for Other Indications: Developmental Dysplasia of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004020",
+          "extractable": true,
+          "score": 25.176,
+          "snippet": "hypertrophic labrum and ligamentum teres, and a thickened transverse acetabular ligament. DDH presents variably and at different ages, depending on the severity of the dysplasia. Severe dysplasia, with a lateral center-edge angle of less than 10°, early presentation with a limp, and lateral hip and groin pain is assoc"
+        },
+        {
+          "id": "510000589",
+          "title": "Imaging of the Hip and Pelvis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000589",
+          "extractable": true,
+          "score": 21.343,
+          "snippet": "angle Normal is less than 42° to 63° Anterior femoral offset Normal is 15 mm to 25 mm Femoral offset ratio Normal is 0.21 (± 0.03) Anterior center edge angle (ACEA) Normal is 20° to 45°  Lateral Pelvis Radiographs Lateral radiographs of the pelvis help define the osseous anatomy of the proximal aspect of the femur, t"
+        },
+        {
+          "id": "510000587",
+          "title": "Hip Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000587",
+          "extractable": true,
+          "score": 20.189,
+          "snippet": "is between 25° and 40°. A lateral center- edge angle of less than 25° indicates undercoverage, with a borderline dysplasia indicated by a lateral center-edge angle of 20° to 25° and hip dysplasia indicated by a lateral center-edge angle of less than 20°. A lateral center-edge angle greater than 40° is consistent with"
+        },
+        {
+          "id": "510000545",
+          "title": "Athletic Hip Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000545",
+          "extractable": true,
+          "score": 18.104,
+          "snippet": "femoral head. A false-profile view is useful for identifying anterior inferior iliac spine (AIIS) morphology, anterior acetabular coverage, and evaluating anterosuperior joint space narrowing. Key radiographic measurements and findings include the lateral center edge (LCE) angle, alpha angle, anterior center edge angl"
+        },
+        {
+          "id": "6000001",
+          "title": "Acute Lateral Ankle Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000001",
+          "extractable": true,
+          "score": 17.61,
+          "snippet": "of the heel is observed from the front. B, Lateral radiograph of a foot obtained after a calcaneal lateral slide osteotomy with lateral ligament reconstruction demonstrates lateral ankle instability. A convex upward Meary angle indicates a cavus foot. C, Lateral radiograph of a foot obtained after a calcaneal lateral"
+        },
+        {
+          "id": "6004077",
+          "title": "Patellofemoral Joint Disorders/Patellofemoral Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004077",
+          "extractable": true,
+          "score": 15.91,
+          "snippet": "AP, lateral, Merchant views Mechanical axis full-length view Normal distal femur valgus: 7° to 9° Proximal tibia: Neutral to 3° of varus Merchant views 45° of flexion, x-ray beam directed 30° caudal Allows for evaluation of patellar tilt, patella subluxation, trochlear dysplasia Measurements Sulcus angle: trochlear dy"
+        }
+      ]
+    },
+    {
+      "stableGuid": "v<.thU.~RB",
+      "front": "Normal lower extremity alignment Knee axis to femoral anatomic axis: 81 ° Knee axis to femoral mechanical axis: 87 ° Knee axis to vertical axis: 90°",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science"
+      ],
+      "candidates": [
+        {
+          "id": "510000597",
+          "title": "Lower Extremity Deformity Analysis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000597",
+          "extractable": true,
+          "score": 44.305,
+          "snippet": "to the mechanical axis along a line perpendicular to the mechanical axis. If the mechanical axis passes medial to the center of the knee, the lower extremity is in varus; if the mechanical axis passes lateral to the center of the knee, the lower extremity is in valgus (Figure 3). Figure 3 Standing AP lower extremity r"
+        },
+        {
+          "id": "6004027",
+          "title": "Alignment Strategies in Total Knee Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004027",
+          "extractable": true,
+          "score": 42.555,
+          "snippet": "Anatomic axis of the lower extremity Anatomic axis of the femur Approximately 9° valgus relative to the mechanical axis Anatomic axis of the tibia Generally in line with the mechanical axis, absent deformity Anatomic femoral-tibial angle Difference between the femoral anatomic axis (9° valgus) and the tibial anatomic"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 42.149,
+          "snippet": "et al1 suggested mechanical, nutritional, and crystal-induced arthropathy pathways (Figure 1); however, no definitive pathogenesis has been identified. SEND FEEDBACK 9/4/26, 10:26 AM AAOS | Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes https://rock.aaos.org/coursecontent.aspx?id=6001061 3/20 F"
+        },
+        {
+          "id": "6001184",
+          "title": "Imaging of the Lower Extremity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001184",
+          "extractable": true,
+          "score": 39.085,
+          "snippet": "a role complementing the patient history and physical evaluation. Stress and weight-bearing radiographs can increase the diagnostic accuracy of imaging of the lower extremity.  Overview Imaging of the lower extremity provides critical information, aiding in the care of athletes with knee, ankle, and foot problems. Al"
+        },
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 37.303,
+          "snippet": "nfections in orthopaedics, in Einhorn TA, O’Keefe RJ, Buckwalter JA, eds: Orthopaedic Basic Science. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2007, pp 299-314. Types of Musculoskeletal Infection and Clinical Presentation SEND FEEDBACK 9/3/26, 4:48 PM AAOS | Musculoskeletal Infections and Microbiology Bas"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 35.491,
+          "snippet": "femoral head and cup, respectively.8 Larger diameter (42 mm) femoral heads had a twofold lower mean volumetric wear rate SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Total Hip Arthroplasty: Bearing Surfaces Basic Science https://rock.aaos.org/coursecontent.aspx?id=510000503 13/21 than smaller diameter (35 mm) femoral heads (0"
+        },
+        {
+          "id": "6004064",
+          "title": "Pediatric Lower Extremity Deformities and Limb Deficiencies",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004064",
+          "extractable": true,
+          "score": 32.196,
+          "snippet": "mal Femur Knee Lower Leg Mild Normal Delayed ossification and varus AP laxity Normal Moderate Dysplastic Pseudarthrosis Cruciate deficiency Fibular deficiency Severe Absent Complete absence Flexion contracture Severe fibular and foot deficiency PFFD = proximal femoral focal deficiency. Reproduced from Scadu"
+        },
+        {
+          "id": "6004049",
+          "title": "Surgical Management of Lower Extremity Metastatic Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004049",
+          "extractable": true,
+          "score": 27.557,
+          "snippet": "AAOS | Surgical Management of Lower Extremity Metastatic Disease https://rock.aaos.org/coursecontent.aspx?id=6004049 13/34 Meeting of the American Academy of Orthopaedic Surgeons, Las Vegas, NV, March 13- 15, 2019. Femoral Shaft Femoral shaft metastases are commonly managed via intramedullary nailing or plate osteosyn"
+        },
+        {
+          "id": "6000031",
+          "title": "Congenital Vertical Talus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000031",
+          "extractable": true,
+          "score": 27.303,
+          "snippet": "Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Describe the appearance of congenital vertical talus on physical examination and radiographs. Recognize the association between congenital vertical talus and neuromuscular conditions and genetic syndromes. Understand th"
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "extractable": true,
+          "score": 26.44,
+          "snippet": " Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing  CORE May 18, 2026 James Gregory, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Assess the natural progression of rotator cuff disease. Understand the b"
+        },
+        {
+          "id": "6000017",
+          "title": "Radiographic Evaluation of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000017",
+          "extractable": true,
+          "score": 22.922,
+          "snippet": "This view is helpful in assessing the joint space, alignment, tracking, and morphology of the patellofemoral joint. Oblique radiographs can be obtained to evaluate for subtle fractures involving the articular surface. A full-length mechanical axis radiograph allows for visualization of mechanical and anatomic alignmen"
+        },
+        {
+          "id": "6001083",
+          "title": "Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001083",
+          "extractable": true,
+          "score": 22.331,
+          "snippet": "Pelvis/acetabulum fractures Hip dislocation Femoral neck fracture Ligamentous knee injuries Fractures of the patella and tibial plateau  Associated Injuries The two most common associated injuries in patients with a femoral shaft fracture are ipsilateral femoral neck fracture and ligamentous knee injury. Ipsilateral"
+        }
+      ]
+    },
+    {
+      "stableGuid": "v<l1NK/<_5",
+      "front": "What radiograph should be obtained with a suspected Lisfranc injury ? Weight-bearing x-rays of both feet",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Lisfranc_Injury"
+      ],
+      "candidates": [
+        {
+          "id": "510000648",
+          "title": "Midfoot Fractures: Tarsometatarsal (Lisfranc) Fracture-Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000648",
+          "extractable": true,
+          "score": 38.956,
+          "snippet": "with the foot trapped in the stirrup. Currently, these injuries result from various mechanisms of injury, including motor vehicle collisions and pedestrians struck by vehicles. Figure 1 AP weight-bearing radiograph of bilateral feet demonstrates a subtle Lisfranc injury of SEND FEEDBACK 9/3/26, 4:45 PM AAOS | Midfoot"
+        },
+        {
+          "id": "510000502",
+          "title": "Radiography and Fluoroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000502",
+          "extractable": true,
+          "score": 17.561,
+          "snippet": "oblique stress views of the ankle after trauma are used to evaluate the medial clear space to assess for deltoid ligament injury. Weight-bearing views also are useful in many circumstances, such as in the evaluation of pes planus and hallux valgus deformities, equivocal Lisfranc injury, and limb alignment. Weight-bear"
+        },
+        {
+          "id": "510000531",
+          "title": "Articular Cartilage Injury and Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000531",
+          "extractable": true,
+          "score": 17.197,
+          "snippet": "help determine the location of OCD lesions (Figure 16). Figure 16 Radiographs of a knee obtained on the same day. A, AP radiograph obtained with the knee if full extension demonstrates that the osteochondritis dissecans lesion (circle) cannot be visualized. B, Notch radiograph obtained with the knee flexed demonstrate"
+        },
+        {
+          "id": "6004015",
+          "title": "Traumatic Brain Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004015",
+          "extractable": true,
+          "score": 16.035,
+          "snippet": "Life Support protocol. A brief history is obtained using the AMPLE mnemonic: allergies, medications, past illnesses/pregnancy, last meal, and events/environment related to the mechanism of injury Detailed knowledge of the exact mechanism of injury will enhance understanding of the patient’s injury severity and risk of"
+        },
+        {
+          "id": "6002061",
+          "title": "Bearing Surface Options: Wear, Stability, and Revision",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002061",
+          "extractable": true,
+          "score": 15.441,
+          "snippet": "MD (2020–present) Joseph T. Moskal, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Review bearing surface options for primary and revision total hip arthroplasty. Understand bearing surface influence on total hip arthroplasty stability. Appreciate"
+        },
+        {
+          "id": "6000045",
+          "title": "Athletic Pubalgia and Core Muscle Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000045",
+          "extractable": true,
+          "score": 15.343,
+          "snippet": "joints, and lumbar spine should be performed, and the patient should be examined in the supine and standing positions to evaluate for femoral or inguinal hernias. Imaging Studies Radiography SEND FEEDBACK 9/3/26, 7:25 AM AAOS | Athletic Pubalgia and Core Muscle Injury https://rock.aaos.org/coursecontent.aspx?id=600004"
+        },
+        {
+          "id": "6002083",
+          "title": "Foot and Ankle Sports Injuries in Pediatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002083",
+          "extractable": true,
+          "score": 15.024,
+          "snippet": "patients are successfully treated nonsurgically via weight bearing as tolerated in a short leg walking cast or cast shoe. Contraindications Multiple displaced metatarsal fractures or an unstable Lisfranc or medial column injury Surgical Management Indications  Indications Multiple metatarsal fractures and an unstable"
+        },
+        {
+          "id": "6001026",
+          "title": "Intraoperative Neurovascular Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001026",
+          "extractable": true,
+          "score": 14.982,
+          "snippet": "examinations may be necessary. If a nerve injury is identified immediately postoperatively, the nerve limb should be positioned to relax the nerve, and hematoma or external compression should be ruled out. Serial examinations should be undertaken. The patient should be thoroughly educated about the nerve injury. Ortho"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 14.931,
+          "snippet": "the trade-offs associated with different bearing materials and their manufacturing treatments. Identify the primary biologic reactions associated with each bearing material. Bearing Materials     NOTES SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Total Hip Arthroplasty: Bearing Surfaces Basic Science https://rock.aaos.org"
+        },
+        {
+          "id": "6003005",
+          "title": "Computed Tomography",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003005",
+          "extractable": true,
+          "score": 14.558,
+          "snippet": "Computed Tomography https://rock.aaos.org/coursecontent.aspx?id=6003005 8/24 CT should be limited in pediatric patients. Use of intravenous contrast should be limited in patients with renal failure.  Nondiagnostic Features CT is impractical in patients with extreme morbid obesity because of limitations on the apertur"
+        },
+        {
+          "id": "6001184",
+          "title": "Imaging of the Lower Extremity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001184",
+          "extractable": true,
+          "score": 14.153,
+          "snippet": ") Weight-bearing AP view A single weight-bearing AP view of both feet (and equal weight bearing through both feet) obtained on the same cassette may aid in the identification of subtle Lisfranc injury.22 (Figure 15). Figure 15 AP weight-bearing radiograph of bilateral feet on a single cassette demonstrate widening betw"
+        },
+        {
+          "id": "510000558",
+          "title": "Tetraplegia and Brain Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000558",
+          "extractable": true,
+          "score": 13.958,
+          "snippet": "performed, the upper extremity is protected for 3 weeks to mitigate the occurrence of nerve coaptation failure. Brain Injury Pathophysiology/Pathoanatomy Overview7,8 (Resources 7 and 8) SEND FEEDBACK 9/4/26, 9:48 AM AAOS | Tetraplegia and Brain Injury https://rock.aaos.org/coursecontent.aspx?id=510000558 14/36 A brain"
+        }
+      ]
+    }
+  ]
+}

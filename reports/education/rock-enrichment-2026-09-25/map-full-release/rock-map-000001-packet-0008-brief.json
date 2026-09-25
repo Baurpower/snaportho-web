@@ -1,0 +1,1131 @@
+{
+  "batchKey": "map-000001-packet-0008",
+  "inputChecksum": "9dfbaaa458d07f3a169bc87debe645ca3b29bd5513a3d7a36981b782949291dc",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "sidecarSchema": {
+    "card": {
+      "stableGuid": "string",
+      "status": "\"mapped\"|\"skipped\"",
+      "chapters": "1-3 {id, role} from this card's candidates; first is primary",
+      "skipReason": "if skipped"
+    }
+  },
+  "cards": [
+    {
+      "stableGuid": "A7)_Q;Fn>H",
+      "front": "How are the FDS tendons oriented within the carpal tunnel ? The tendons to the middle and ring fingers are superficial to the tendons for the index and small fingers",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Hand",
+        "SnapOrtho::Anatomy::Hand::Muscles",
+        "SnapOrtho::Anatomy::Hand::Muscles::Flexor_Digitorum_Superficialis",
+        "SnapOrtho::Anatomy::Hand::Other",
+        "SnapOrtho::Anatomy::Hand::Other::Carpal_Tunnel",
+        "SnapOrtho::Specialty::Hand_Upper_Extremity"
+      ],
+      "candidates": [
+        {
+          "id": "6001164",
+          "title": "Carpal Tunnel Syndrome and Idiopathic Median Nerve Compression at the Carpal Tunnel",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001164",
+          "extractable": true,
+          "score": 54.559,
+          "snippet": "epidemiology and risk factors for carpal tunnel syndrome. Use patient history and physical examination findings to diagnose carpal tunnel syndrome. Discuss the role of supportive studies, including nerve conduction studies and ultrasonography, in the diagnosis of carpal tunnel syndrome. Identify the relevant anatomy a"
+        },
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 49.42,
+          "snippet": "the classification of congenital differences in the upper extremity. Perform an appropriate workup of patients with congenital upper extremity differences. Determine the surgical and nonsurgical treatment options for the management of congenital upper extremity differences. Pathophysiology/Pathoanatomy Overview Congen"
+        },
+        {
+          "id": "6004031",
+          "title": "Tendinopathy of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004031",
+          "extractable": true,
+          "score": 46.143,
+          "snippet": "a slight proximal interphalangeal joint flexion contracture (Figure 1) The flexor digitorum profundus tendon is enlarged, whereas the flexor digitorum superficialis (FDS) often is unaffected. Idiopathic trigger digit is common. No clear associations exist with other conditions. SEND FEEDBACK 9/4/26, 9:46 AM AAOS | Ten"
+        },
+        {
+          "id": "6004034",
+          "title": "Hand and Wrist Flexor Tendon Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004034",
+          "extractable": true,
+          "score": 39.391,
+          "snippet": "the index finger FDP tendon typically arises separately and has greater independence. Tendons of the nine digital flexors enter the proximal carpal tunnel such that the four FDP tendons are deep to the FDS tendons of the index and little fingers and the FDS tendons of the ring and long digits lie superficial and ulnar"
+        },
+        {
+          "id": "6004033",
+          "title": "Less Common Objectively Verifiable Peripheral Mononeuropathies",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004033",
+          "extractable": true,
+          "score": 37.981,
+          "snippet": "all upper extremity peripheral neuropathies Anatomy and Biomechanics The AIN contains nerve fibers from C8 and T1 nerve roots. The AIN branches from the median nerve, 4 to 6 cm distal to the elbow; travels between the flexor digitorum superficialis (FDS) and flexor digitorum profundus (FDP) initially, then between the"
+        },
+        {
+          "id": "6004081",
+          "title": "Athletic Injuries of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004081",
+          "extractable": true,
+          "score": 37.833,
+          "snippet": "motion Differentiate a contracture (active and passive motion are the same) from a lag (passive motion is greater than active motion) Flexor tendons—Evaluate each joint individually to isolate the flexor digitorum profundus (FDP) tendon and the flexor digitorum superficialis tendon separately in each digit Extensor te"
+        },
+        {
+          "id": "510000557",
+          "title": "Physical Examination and Anatomy of the Hand, Forearm, and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000557",
+          "extractable": true,
+          "score": 36.641,
+          "snippet": "the radial artery, which contributes to the superficial palmar arch. The ulnar artery is the primary contributor to the superficial palmar arch, which is approximately 1 cm distal to the transverse carpal ligament during open carpal tunnel release. The palmar or sentinel fat pad encountered during carpal tunnel releas"
+        },
+        {
+          "id": "510000525",
+          "title": "Phalangeal, Metacarpal and Carpal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000525",
+          "extractable": true,
+          "score": 33.056,
+          "snippet": "of the fracture.5,16 Capitate fractures are the second most common pediatric carpal bone fracture. These usually are minimally displaced but may be associated with other carpal bone injuries.16 Hook of hamate fractures represent 2% of all carpal bone fractures. Other carpal bone fractures, including the lunate, trique"
+        },
+        {
+          "id": "6004030",
+          "title": "Inflammatory Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004030",
+          "extractable": true,
+          "score": 30.375,
+          "snippet": "/39 Rupture of the EDQ and EDC to the little and ring fingers—Side-to-side EDC long to ring and little fingers may be possible; however, the extensor indicis proprius frequently may be transferred to the little finger to restore little finger extension and side-to-side EDC long to ring fingers may provide ring finger e"
+        },
+        {
+          "id": "6001037",
+          "title": "Idiopathic Ulnar Neuropathy at the Cubital Tunnel",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001037",
+          "extractable": true,
+          "score": 27.002,
+          "snippet": "clawing of the ring and little fingers (Duchenne sign). Electrodiagnostic testing can supplement the clinical examination for cubital tunnel syndrome, especially if differentiation between neck, elbow, or wrist pathology is SEND FEEDBACK 9/3/26, 4:24 PM AAOS | Idiopathic Ulnar Neuropathy at the Cubital Tunnel https://"
+        },
+        {
+          "id": "6002110",
+          "title": "Tendons and Ligaments",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002110",
+          "extractable": true,
+          "score": 26.786,
+          "snippet": "process of ligamentization of anterior cruciate ligament grafts. Describe the anatomic and structural differences between direct and indirect insertions of tendons and ligaments at the enthesis. Tendons Anatomy and Function     NOTES SEND FEEDBACK 9/4/26, 9:47 AM AAOS | Tendons and Ligaments https://rock.aaos.org/"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "extractable": true,
+          "score": 21.989,
+          "snippet": "teres deep to the biceps aponeurosis and superficial to the brachialis. The nerve then runs between the flexor digitorum superficialis and the flexor digitorum profundus before entering the carpal tunnel. Proximally, the anterior interosseous nerve separates from the median nerve to innervate the flexor pollicis longu"
+        }
+      ]
+    },
+    {
+      "stableGuid": "A7$$5tJcu_",
+      "front": "Increased external rotation of the shoulder may indicate a subscapularis tear.",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Shoulder_Girdle",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Muscles",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Muscles::Subscapularis",
+        "SnapOrtho::Specialty::Shoulder_Elbow"
+      ],
+      "candidates": [
+        {
+          "id": "6004083",
+          "title": "Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004083",
+          "extractable": true,
+          "score": 31.204,
+          "snippet": "M), external rotation, flexion at 90° Emphasize muscular balance26,27 External rotation/internal rotation ratio: 62% to 72% External rotation/abduction ratio: 64% to 69% Abduction/adduction ratio: 66% to 72% Torque–to–body weight ratios External rotation: 18% to 23% Internal rotation: 26% to 32% Bilateral comparison Ex"
+        },
+        {
+          "id": "6004073",
+          "title": "Traumatic Brachial Plexus Injuries: Shoulder Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004073",
+          "extractable": true,
+          "score": 31.032,
+          "snippet": "l for elbow flexion.4 Despite the encouraging results observed in improvement of shoulder abduction with the nerve transfers, recovery of external rotation of the shoulder continues to lag behind.4 With limited or absent shoulder external rotation, most patients maintain an internal rotation position of the shoulder, w"
+        },
+        {
+          "id": "510000585",
+          "title": "Physical Examination of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000585",
+          "extractable": true,
+          "score": 29.922,
+          "snippet": "cuff pathology, and other conditions of the shoulder girdle may have profound effects on elbow motion and function. Evaluate shoulder motion and scapular rhythm by observing the patient from behind as he/she brings the upper extremities into forward elevation. Examine shoulder motion and assess for prominent impingeme"
+        },
+        {
+          "id": "510000625",
+          "title": "Shoulder Instability: Multidirectional Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000625",
+          "extractable": true,
+          "score": 29.086,
+          "snippet": "Specific shoulder tests for laxity and/or instability Sulcus test (tests the integrity of the rotator interval;2 Figure 2) Figure 2 Clinical photographs show sulcus testing of a left shoulder. A, Inferior traction (white arrow) is applied to the adducted arm in neutral and external rotation (external rotation shown)."
+        },
+        {
+          "id": "510000614",
+          "title": "Physical Examination of the Shoulder",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000614",
+          "extractable": true,
+          "score": 28.786,
+          "snippet": "duction of humerus, depression of humeral head Infraspinatus: external rotation of humerus Subscapular Subscapularis and teres major Subscapularis: internal rotation of humerus Teres major: adduction and internal rotation of humerus Axillary Deltoid and teres minor Deltoid: abduction of humerus SEND FEEDBACK 9/4/26, 10"
+        },
+        {
+          "id": "6001063",
+          "title": "Rotator Cuff Arthropathy: Reverse Shoulder Technique and Outcome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001063",
+          "extractable": true,
+          "score": 25.585,
+          "snippet": "of the shoulder. Pseudoparalysis is broadly defined as active forward flexion of the shoulder of less than 90° with preserved passive forward elevation.3 Weakness with abduction and external rotation is common. Surgeons must assess for an external rotation lag sign and/or a positive hornblower sign. A considerable ext"
+        },
+        {
+          "id": "510000629",
+          "title": "Throwing Shoulder Injuries and Internal Impingement",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000629",
+          "extractable": true,
+          "score": 25.004,
+          "snippet": "on the shoulder in late cocking/early acceleration, during which the shoulder approaches maximal external rotation. The scapula is retracted, the elbow is flexed, and the humerus is in abduction and external rotation. The subscapularis, pectoralis major, and latissimus dorsi are eccentrically contracting to stabilize"
+        },
+        {
+          "id": "510000567",
+          "title": "Imaging: Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000567",
+          "extractable": true,
+          "score": 24.419,
+          "snippet": " NOTES SEND FEEDBACK 9/3/26, 4:27 PM AAOS | Imaging: Shoulder Instability https://rock.aaos.org/coursecontent.aspx?id=510000567 1/14 Indications—Conventional radiographs are appropriate for patients experiencing shoulder pain and have a history of trauma, dislocation, night pain, or chronic shoulder pain.1 Shoulder s"
+        },
+        {
+          "id": "6000034",
+          "title": "Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000034",
+          "extractable": true,
+          "score": 24.103,
+          "snippet": "external rotation. (Reproduced from Dekker TJ, Peebles LA, Millett PJ, Provencher MT: Recurrent anterior shoulder instability, in Nicholson GP, ed: Orthopaedic Knowledge Update Shoulder and Elbow, ed 5. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2013, pp 87-106.) SEND FEEDBACK 9/4/26, 9:30 AM AAOS | Shoul"
+        },
+        {
+          "id": "510000623",
+          "title": "Shoulder: Anterior Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000623",
+          "extractable": true,
+          "score": 23.011,
+          "snippet": "sign—In the supine position, the patient demonstrates apprehension to dislocation with the shoulder in abduction and external rotation. Relocation test—The patient demonstrates a decrease in apprehension with the application of posterior force on the shoulder in abduction and external rotation. Gagey hyperabduction te"
+        },
+        {
+          "id": "510000628",
+          "title": "Posttraumatic and Postoperative Shoulder Stiffness",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000628",
+          "extractable": true,
+          "score": 22.749,
+          "snippet": "of capsular ligamentous complex Anterosuperior capsule (rotator interval) and upper subscapularis muscle: lead to loss of external rotation in adduction Inferior capsule: leads to considerable losses of abduction, forward flexion, and external and internal rotation.? Posterosuperior capsule: rarely involved but causes"
+        },
+        {
+          "id": "510000613",
+          "title": "Shoulder Anatomy and Function",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000613",
+          "extractable": true,
+          "score": 22.258,
+          "snippet": "Teres major Scapula Humerus Lower subscapular Extension, adduction, internal rotation Subscapularis Scapula Lesser tuberosity Upper/lower subscapular Stability, internal rotation Supraspinatus Scapula Greater tuberosity Suprascapular Stability, elevation, external rotation Infraspinatus Scapula Greater tuberosity Supr"
+        }
+      ]
+    },
+    {
+      "stableGuid": "A7DuoX5E/<",
+      "front": "Extensor Digitorum Longus (EDL) Origin: Lateral tibia condyle , Proximal fibula Insertion: Base of phalanges (4 toes) Nerve: Deep peroneal Action: Dorsiflex , extend toes",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology::Fibula",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology::Tibia",
+        "SnapOrtho::Specialty::Foot_Ankle"
+      ],
+      "candidates": [
+        {
+          "id": "6000014",
+          "title": "Biomechanics/Gait: Effect of Ankle/Foot Malalignment",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000014",
+          "extractable": true,
+          "score": 51.575,
+          "snippet": "and fourth metatarsals, cuboid, sustentaculum talus Deep posterior Flexor hallucis longus Fibula, IOM Distal phalanx hallux Tibial PF hallux Deep posterior Flexor digitorum longus Tibia Distal lesser phalanges Tibial PF lesser toes Lateral Peroneus longus Tibia and fibula Medial cuneiform, base of first meta"
+        },
+        {
+          "id": "6000009",
+          "title": "Cavovarus Foot Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000009",
+          "extractable": true,
+          "score": 49.985,
+          "snippet": "Proximal phalanges (extensor expansions) Flexion of metatarsophalangeal joints, extension of proximal and distal interphalangeal joints Extrinsic long extensors and flexors Extrinsic long extensors (extensor digitorum longus, extensor hallucis longus, extensor digitorum brevis, extensor hallucis brevis) Extensor hood"
+        },
+        {
+          "id": "6004057",
+          "title": "Rotational Fractures of the Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004057",
+          "extractable": true,
+          "score": 48.559,
+          "snippet": "repair of medial malleolus fractures. Anterior group On the anterior aspect of the ankle, the extensor retinaculum contains the extensor tendons, including the tibialis anterior, extensor hallucis longus, extensor digitorum longus, and peroneus tertius. Between the extensor hallucis longus and the extensor digitorum l"
+        },
+        {
+          "id": "6000005",
+          "title": "Peroneal Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000005",
+          "extractable": true,
+          "score": 45.569,
+          "snippet": "Peroneus Longus The peroneus longus originates from the head of the fibula, the proximal two-thirds of the fibula, and the intermuscular septum. Approximately 3 to 4 cm proximal to the tip of the fibula, the peroneus longus becomes tendinous. The peroneus longus courses through the peroneal groove posterolateral to th"
+        },
+        {
+          "id": "6002083",
+          "title": "Foot and Ankle Sports Injuries in Pediatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002083",
+          "extractable": true,
+          "score": 45.333,
+          "snippet": "| Foot and Ankle Sports Injuries in Pediatric Patients https://rock.aaos.org/coursecontent.aspx?id=6002083 23/34 propioceptive and balance training are most effective in preventing recurrent lateral ankle injury.14 Surgical Management Lateral ankle ligament reconstruction or imbrications can be performed; however, lim"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 45.01,
+          "snippet": "6/25 Compartment Muscle Origin Insertion Innervation Action Anterior Tibialis anterior Tibia, IOM Medial cuneiform and first metatarsal DPN DF, INV Anterior Extensor hallucis longus Fibula, IOM Distal phalanx hallux DPN DF hallux Anterior Extensor digitorum longus Tibia and fibula, IOM Middle and distal phal"
+        },
+        {
+          "id": "6000001",
+          "title": "Acute Lateral Ankle Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000001",
+          "extractable": true,
+          "score": 43.353,
+          "snippet": "lateral ankle instability. Identify patient factors that increase the risk for chronic lateral ankle instability. Understand the association between hindfoot varus alignment and lateral ligament instability. Understand surgical indications and techniques for the treatment of lateral ankle instability. Overview/Pathoph"
+        },
+        {
+          "id": "6002055",
+          "title": "Metatarsalgia",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002055",
+          "extractable": true,
+          "score": 42.327,
+          "snippet": "https://rock.aaos.org/coursecontent.aspx?id=6002055 3/41 shows the extrinsic and intrinsic musculature. The extensor digitorum longus (EDL) tendon traverses the metatarsophalangeal (MTP) joint dorsally and splits into three parts. The middle slip extends the proximal interphalangeal (PIP) joint. The lateral slips form"
+        },
+        {
+          "id": "6003002",
+          "title": "Lesser Toe Pathology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003002",
+          "extractable": true,
+          "score": 40.139,
+          "snippet": "formed by the extensor digitorum longus (EDL), which divides into three slips over the proximal phalanx. The middle slip inserts into the base of the middle phalanx. Two lateral slips extend over the dorsolateral aspect of the middle phalanx and converge to form the terminal tendon, which inserts into the base of the d"
+        },
+        {
+          "id": "6001046",
+          "title": "Stress Fractures of the Leg: Tibia and Fibula",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001046",
+          "extractable": true,
+          "score": 39.485,
+          "snippet": "common than proximal fibular fractures. (Courtesy of Nicholas A. Viens, MD, FAAOS, Durham, NC.) SEND FEEDBACK 9/4/26, 9:41 AM AAOS | Stress Fractures of the Leg: Tibia and Fibula https://rock.aaos.org/coursecontent.aspx?id=6001046 5/13 Figure 4 Lateral radiograph of a tibia and fibula demonstrates cortical thickening"
+        },
+        {
+          "id": "6000006",
+          "title": "Neurogenic Conditions: Entrapment Neuropathy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000006",
+          "extractable": true,
+          "score": 37.319,
+          "snippet": "pain: Diagnosis and management. J Am Acad Orthop Surg 2014;22[6]:372–380.) Deep Peroneal Nerve The deep peroneal nerve (DPN) travels with the anterior tibial artery in the interval between the extensor digitorum longus and the extensor hallucis longus (EHL). Just proximal to the ankle, the nerve bifurcates into a late"
+        },
+        {
+          "id": "6002069",
+          "title": "Hand and Wrist Extensor Tendon Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002069",
+          "extractable": true,
+          "score": 33.535,
+          "snippet": "extensor fibro-osseous compartments are present at the wrist. Abductor pollicis longus and extensor pollicis brevis Extensor carpi radialis longus and extensor carpi radialis brevis Extensor pollicis longus Extensor digitorum communis (EDC) and extensor indicis proprius (EIP) Extensor digiti minimi or extensor digiti"
+        }
+      ]
+    },
+    {
+      "stableGuid": "Ab,VqqvLHm",
+      "front": "Shown below is the Hawkins-Kennedy Test and a positive test indicates subacromial impingement .",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Shoulder_Elbow"
+      ],
+      "candidates": [
+        {
+          "id": "510000629",
+          "title": "Throwing Shoulder Injuries and Internal Impingement",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000629",
+          "extractable": true,
+          "score": 31.38,
+          "snippet": "and Internal Impingement https://rock.aaos.org/coursecontent.aspx?id=510000629 14/26 Whipple test (shoulder forward flexion, adduction, scapular retraction against resistance) External impingement Hawkins–Kennedy test (Video 3) Neer test (Video 4) Acromioclavicular joint pathology: cross-body adduction Thoracic outlet"
+        },
+        {
+          "id": "510000619",
+          "title": "Rotator Cuff Disease: Impingement Syndrome, Calcific Tendinitis, Partial-Thickness Rotator Cuff Tears, and Full-Thickness Rotator Cuff Tear",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000619",
+          "extractable": true,
+          "score": 31.119,
+          "snippet": "to tearing. One proposed extrinsic factor is subacromial impingement; however, debate exists about the association between acromial morphology and the critical shoulder angle with subacromial impingement. Other extrinsic factors include scapular dyskinesia, subcoracoid impingement, and internal impingement (as observe"
+        },
+        {
+          "id": "510000585",
+          "title": "Physical Examination of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000585",
+          "extractable": true,
+          "score": 28.114,
+          "snippet": "d radius off the distal humerus. The test is repeated in 90° of flexion, and a sensation of instability or palpable subluxation indicates a positive test result. The posterolateral rotatory drawer test is similar to this test; however, in the posterolateral drawer test, a hypersupination force is applied to the forearm"
+        },
+        {
+          "id": "6004083",
+          "title": "Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004083",
+          "extractable": true,
+          "score": 25.388,
+          "snippet": "nce of labral pathology in overhead throwers, including the active SEND FEEDBACK 9/3/26, 5:59 PM AAOS | Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes https://rock.aaos.org/coursecontent.aspx?id=6004083 7/36 compression test, biceps load test, biceps load test II, pain provocation test, resisted su"
+        },
+        {
+          "id": "510000633",
+          "title": "Throwing Elbow Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000633",
+          "extractable": true,
+          "score": 24.898,
+          "snippet": "Injuries Shoulder injuries are commonly observed in athletes with elbow injuries and vice versa.  Associated Injuries Associated injuries are common in overhead athletes. One example of an associated injury in a patient with an elbow injury is shoulder impingement. Shoulder impingement, which often results from a rel"
+        },
+        {
+          "id": "6000038",
+          "title": "Imaging of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000038",
+          "extractable": true,
+          "score": 24.209,
+          "snippet": "and a painful pop in his right elbow shows a full-thickness biceps tendon tear (arrow). B = brachialis muscle, O = olecranon. (Reproduced from Fritz J, Carrino JA, Rashidi A: Advanced imaging of the shoulder and elbow, in Nicholson GP, ed: Orthopaedic Knowledge Update: Shoulder and Elbow, ed 5. Rosemont, IL, American"
+        },
+        {
+          "id": "510000588",
+          "title": "Femoroacetabular Impingement Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000588",
+          "extractable": true,
+          "score": 23.618,
+          "snippet": "the groin or C-sign distribution worsened with activity or hip hyperflexion and rotational maneuvers. Physical examination findings consistent with FAI syndrome include a positive impingement test (flexion, adduction, and internal rotation test) and restricted internal rotation. Several extra-articular hip disorders,"
+        },
+        {
+          "id": "510000614",
+          "title": "Physical Examination of the Shoulder",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000614",
+          "extractable": true,
+          "score": 22.748,
+          "snippet": "rth JR, Burkhart SS, De Beer JF: The bear-hug test: A new and sensitive test for diagnosing a subscapularis tear. Arthroscopy 2006;22[10]:1076-1084.)  Strength Tests Combining positive test results can increase the likelihood ratios and post-test probabilities of a partial-thickness or full-thickness rotator cuff tear"
+        },
+        {
+          "id": "6003013",
+          "title": "Slipped Capital Femoral Epiphysis and Femoroacetabular Impingement",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003013",
+          "extractable": true,
+          "score": 16.466,
+          "snippet": "an acute-on-chronic event Limp Loss of hip range of motion (ROM; especially internal rotation and flexion) SEND FEEDBACK 9/4/26, 9:37 AM AAOS | Slipped Capital Femoral Epiphysis and Femoroacetabular Impingement https://rock.aaos.org/coursecontent.aspx?id=6003013 6/26 Flexion, adduction, and internal rotation test Obli"
+        },
+        {
+          "id": "510000639",
+          "title": "SICK Scapula Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000639",
+          "extractable": true,
+          "score": 12.655,
+          "snippet": ". Scapular assist—Pain with shoulder elevation is reduced if the inferior scapula is manually assisted in abduction or elevation (Figure 9). Labral or SLAP tears Dynamic labral shear test O’Brien active compression test Relocation test (pain) Posterior load/labral shear Dynamic posterior instability test Multiple tests"
+        },
+        {
+          "id": "510000644",
+          "title": "Fractures of the Talus: Foot Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000644",
+          "extractable": true,
+          "score": 12.431,
+          "snippet": "neck fractures (81.2)11 (Figure 2) 81.2.A = Hawkins type I 81.2.B = Hawkins type II 81.2Ba = Hawkins type II with simple fracture line 81.2Bb = Hawkins type II with comminuted fracture line 81.2.C = Hawkins type III 81.2Ca = Hawkins type III with simple fracture line 81.2Cb = Hawkins type III with comminuted fracture"
+        },
+        {
+          "id": "6001159",
+          "title": "History and Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001159",
+          "extractable": true,
+          "score": 11.842,
+          "snippet": "to extend the hip flat indicates a hip flexion contracture. The flexion, abduction, external rotation test can distinguish between sacroiliac joint pain and hip pain. The FADDIR test often is positive in patients with femoroacetabular impingement or a labral tear. A positive Stinchfield test indicates an intra-articul"
+        }
+      ]
+    },
+    {
+      "stableGuid": "Ab2g:qCoU[",
+      "front": "The acetabular cup should be placed with how much anteversion ? 20-30°",
+      "extra": "Too much anteversion may cause impingement on the iliopsoas anteriorly",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Joints",
+        "SnapOrtho::Anatomy::Thigh_Hip::Joints::Hip_Joint",
+        "SnapOrtho::Specialty::Adult_Reconstruction",
+        "SnapOrtho::Treatment::Acetabular_Component"
+      ],
+      "candidates": [
+        {
+          "id": "6004019",
+          "title": "Primary Total Hip Arthroplasty for Osteoarthritis: Acetabular Component",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004019",
+          "extractable": true,
+          "score": 42.697,
+          "snippet": "Hip Arthroplasty for Osteoarthritis: Acetabular Component https://rock.aaos.org/coursecontent.aspx?id=6004019 1/20 The ultimate goal of total hip arthroplasty (THA) is to restore normal hip biomechanics with adequate sizing, position, and fixation of prosthetic components while minimizing complications (Resource 1). T"
+        },
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "extractable": true,
+          "score": 41.849,
+          "snippet": "hip. BMC Musculoskelet Disord 2019;20[1]:611.) Joints and Ligaments The hip is a ball and socket joint. Primary stability results from the osseous anatomy and the fit of the femoral head within the acetabulum, augmented by the labrum and the hip capsule. SEND FEEDBACK 9/3/26, 4:18 PM AAOS | Geriatric Hip Fractures htt"
+        },
+        {
+          "id": "510000554",
+          "title": "Surgical Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000554",
+          "extractable": true,
+          "score": 37.049,
+          "snippet": "(A), posterior view (B), and coronal section view (C) illustrations show the ligaments of the hip joint. ASIS = anterior superior iliac spine. (Reproduced with permission from Wasielewski RC: The hip, in Callaghan JJ, Rosenberg AG, Rubash HE: The Adult Hip. Philadelphia, PA, Lippincott-Raven, 1998, pp 58-72.) Musculat"
+        },
+        {
+          "id": "6001067",
+          "title": "Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001067",
+          "extractable": true,
+          "score": 36.721,
+          "snippet": "AI (sensitivity, 70% to 98%; specificity, 8% to 44%) or osteoarthritis. Increased hip mobility may be a sign of instability of the hip and should prompt an examination for global hypermobility.  Causes of Abnormal Hip Motion Excessive femoral version or torsion may affect ROM. Normal adult femoral anteversion is appro"
+        },
+        {
+          "id": "510000506",
+          "title": "Acetabular Component Revision",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000506",
+          "extractable": true,
+          "score": 36.26,
+          "snippet": "location of acetabular defects. In general, more screws are better, and screws should be placed strategically around the cup to ensure solid fixation. A wide spread of the screws, especially on the inferior half of the acetabular cup, may help reduce micromotion and avoid cup spinout. Surgeons should understand the ne"
+        },
+        {
+          "id": "510000588",
+          "title": "Femoroacetabular Impingement Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000588",
+          "extractable": true,
+          "score": 35.279,
+          "snippet": "that results in repetitive abutment of the acetabular rim and femoral head-neck junction. Pincer impingement is characterized by acetabular- based disorders, such as focal anterior over-coverage, acetabular retroversion, and global over-coverage that create abnormal abutment of the acetabular rim and femoral head-neck"
+        },
+        {
+          "id": "510000510",
+          "title": "Postoperative Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000510",
+          "extractable": true,
+          "score": 23.452,
+          "snippet": "and component malpositioning are a common cause of instability after THA because they cause component-component impingement or affect soft-tissue tension via leg length and offset, which increases bone-bone impingement.1 Inadequate anteversion or low inclination are common reasons for posterior instability, whereas to"
+        },
+        {
+          "id": "510000629",
+          "title": "Throwing Shoulder Injuries and Internal Impingement",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000629",
+          "extractable": true,
+          "score": 23.07,
+          "snippet": "impingement: articular-sided rotator cuff pathology External impingement: bursal-sided rotator cuff pathology Evaluation/Diagnosis Patient History A comprehensive shoulder history should be obtained. Location Onset (trauma history) Progression Exacerbating/relieving factors Frequency and duration SEND FEEDBACK 9/4/26,"
+        },
+        {
+          "id": "6004022",
+          "title": "Advanced Technologies in Primary Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004022",
+          "extractable": true,
+          "score": 22.892,
+          "snippet": "approach for acetabular reaming and/or initial cup positioning. Acetabular component positioning—After acetabular reaming is complete, begin to impact the acetabular component. SEND FEEDBACK 9/3/26, 7:15 AM AAOS | Advanced Technologies in Primary Total Hip Arthroplasty https://rock.aaos.org/coursecontent.aspx?id=60040"
+        },
+        {
+          "id": "6002061",
+          "title": "Bearing Surface Options: Wear, Stability, and Revision",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002061",
+          "extractable": true,
+          "score": 22.165,
+          "snippet": "reached before impingement of the neck onto the acetabular component occurs or before bony impingement occurs between the femur and pelvis.19 Computer models have shown that a larger head size (up to 36 mm) allows for increased range of motion before component impingement. With ideally placed components, extra-articul"
+        },
+        {
+          "id": "6002060",
+          "title": "Hip Arthroscopy and Periacetabular Osteotomy: Surgical Techniques",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002060",
+          "extractable": true,
+          "score": 21.406,
+          "snippet": "on of the periacetabular cuts, a partially threaded Schanz pin is placed into the acetabular fragment in the supra-acetabular region, and the mobility of the fragment is confirmed. A large, universal reduction clamp is placed around the iliac portion of the acetabular fragment and the Schanz pin, allowing for the aceta"
+        },
+        {
+          "id": "6004018",
+          "title": "Alternative Implant Designs: Hip Resurfacing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004018",
+          "extractable": true,
+          "score": 21.332,
+          "snippet": "distance of less than 5 mm is associated with increased metal ion levels and increased rates of prosthetic loosening, wear, and dislocation. Factors that result in decreased CPR distance include a high abduction angle of the acetabular implant, excessive anteversion of the acetabular cup, and cup designs with smaller"
+        }
+      ]
+    },
+    {
+      "stableGuid": "ABS<=$b|,:",
+      "front": "Which physical exam test is shown below ? Stinchfield resisted hip flexion test",
+      "extra": "*Pain = positive test = likely intraarticular hip pathology",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Joints",
+        "SnapOrtho::Anatomy::Thigh_Hip::Joints::Hip_Joint",
+        "SnapOrtho::Specialty::Adult_Reconstruction"
+      ],
+      "candidates": [
+        {
+          "id": "6001159",
+          "title": "History and Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001159",
+          "extractable": true,
+          "score": 39.985,
+          "snippet": "to extend the hip flat indicates a hip flexion contracture. The flexion, abduction, external rotation test can distinguish between sacroiliac joint pain and hip pain. The FADDIR test often is positive in patients with femoroacetabular impingement or a labral tear. A positive Stinchfield test indicates an intra-articul"
+        },
+        {
+          "id": "510000631",
+          "title": "Acromioclavicular Joint Arthritis and Pathology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000631",
+          "extractable": true,
+          "score": 33.151,
+          "snippet": "787-794.) Osteoarthritis SEND FEEDBACK 9/3/26, 7:07 AM AAOS | Acromioclavicular Joint Arthritis and Pathology https://rock.aaos.org/coursecontent.aspx?id=510000631 11/25 Point tenderness is observed at the acromioclavicular joint, which is associated with a reported sensitivity of 96% for acromioclavicular joint patho"
+        },
+        {
+          "id": "6001067",
+          "title": "Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001067",
+          "extractable": true,
+          "score": 31.789,
+          "snippet": "extensors, and flexors is a routine component of the hip examination. A positive resisted straight leg raise (Stinchfield test) suggests intra-articular or iliopsoas pathology. Seated resisted hip flexion is more specific for iliopsoas pathology than intra- articular pathology. SEND FEEDBACK 9/3/26, 5:44 PM AAOS | Phy"
+        },
+        {
+          "id": "510000545",
+          "title": "Athletic Hip Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000545",
+          "extractable": true,
+          "score": 30.495,
+          "snippet": "the acetabulum without straining the extra-articular structures of the hip and is specific but not sensitive for intra-articular etiologies of pain. The Stinchfield test creates anterior hip pain via a resisted straight leg raise and is positive in patients with intra-articular pathology; however, this also may be con"
+        },
+        {
+          "id": "510000585",
+          "title": "Physical Examination of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000585",
+          "extractable": true,
+          "score": 28.837,
+          "snippet": "d radius off the distal humerus. The test is repeated in 90° of flexion, and a sensation of instability or palpable subluxation indicates a positive test result. The posterolateral rotatory drawer test is similar to this test; however, in the posterolateral drawer test, a hypersupination force is applied to the forearm"
+        },
+        {
+          "id": "510000512",
+          "title": "Nonspecific Pain",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000512",
+          "extractable": true,
+          "score": 26.719,
+          "snippet": "complex regional pain syndrome. Overview Some patients present with pain and no measurable pathophysiology.     NOTES SEND FEEDBACK 9/3/26, 4:51 PM AAOS | Nonspecific Pain https://rock.aaos.org/coursecontent.aspx?id=510000512 1/16 A number of constructs of unclear benefit are suggested for nonspecific pain, includ"
+        },
+        {
+          "id": "6004088",
+          "title": "Adult Cervical Spine Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004088",
+          "extractable": true,
+          "score": 26.499,
+          "snippet": "and management. J Am Acad Orthop Surg 2012;20[12]:766-774.) Adult Spine Deformity  Adult Spine Deformity Patients with secondary cervical deformities may have concomitant pathology in the thoracic, lumbar, or sacropelvic spine. Cervical kyphosis may develop in patients with adult spine deformity to maintain horizonta"
+        },
+        {
+          "id": "6001024",
+          "title": "Nonsurgical Management of Hip Pain",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001024",
+          "extractable": true,
+          "score": 26.431,
+          "snippet": "physical examination and patient history can differentiate orthopaedic and non-orthopaedic causes of groin pain.     NOTES SEND FEEDBACK 9/3/26, 4:51 PM AAOS | Nonsurgical Management of Hip Pain https://rock.aaos.org/coursecontent.aspx?id=6001024 1/12 Imaging studies, starting with plain radiographs, may help dete"
+        },
+        {
+          "id": "6000045",
+          "title": "Athletic Pubalgia and Core Muscle Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000045",
+          "extractable": true,
+          "score": 25.995,
+          "snippet": "patient may describe pain that radiates down the medial thigh with active adduction of the leg (Resource 3). Physical Examination Tenderness to palpation over the pubic tubercle, lower rectus abdominis, or adductor tendons Pain with resisted sit-up and leg adduction Thorough regional examination to rule out concomitan"
+        },
+        {
+          "id": "6001074",
+          "title": "Physical Examination of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001074",
+          "extractable": true,
+          "score": 25.961,
+          "snippet": "patient begins to experience pain with passive flexion of the hip, flexion is stopped, and the knee is extended further in combination with passive dorsiflexion of the ankle. The Bowstring test is considered positive if this last maneuver replicates the pain radiating down the leg. The Bowstring test should mirror the"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 24.922,
+          "snippet": "ovocative and Special Tests Test for syndesmotic integrity or injury External rotation test Squeeze test Tape stabilization test Test ligaments for ankle stability Talar tilt test for calcaneofibular ligament integrity Anterior drawer test for anterior talofibular ligament integrity Silfverskiöld test for gastrocnemius"
+        },
+        {
+          "id": "6001076",
+          "title": "Sacroiliac-Mediated Pain",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001076",
+          "extractable": true,
+          "score": 24.051,
+          "snippet": "as the source of pain is important. Asking the patient if the pain provoked is the typical pain or different pain also is important. In Europe, the active straight leg raise test also is frequently used.18 Because simultaneous hip or spine pathology may be present,4 these possible pain generators also should be examin"
+        }
+      ]
+    },
+    {
+      "stableGuid": "AcEEa_6FlH",
+      "front": "Early wound complications in calcaneus fracture patients are highest among which 3 subsets of patients ? Open injuries Diabetics Smokers",
+      "extra": "According to the referenced study by Folk et al (https://pubmed.ncbi.nlm.nih.gov/10406705/), the risk of early wound complications is highest in open injuries, diabetics, and smokers.",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Foot_Ankle",
+        "SnapOrtho::Anatomy::Foot_Ankle::Osteology",
+        "SnapOrtho::Anatomy::Foot_Ankle::Osteology::Calcaneus",
+        "SnapOrtho::Diagnosis::Open_Fracture",
+        "SnapOrtho::Specialty::Foot_Ankle",
+        "SnapOrtho::Specialty::Trauma",
+        "SnapOrtho::Treatment::Complication_Risk_Factors"
+      ],
+      "candidates": [
+        {
+          "id": "6002083",
+          "title": "Foot and Ankle Sports Injuries in Pediatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002083",
+          "extractable": true,
+          "score": 52.744,
+          "snippet": "Know Learning Objectives Describe relevant pediatric foot and ankle anatomy. Recognize and distinguish between unique sports-related foot injuries in pediatric patients. Recognize and distinguish between unique ankle injuries in pediatric patients. Review common nonsurgical and surgical treatment options for pediatric"
+        },
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "extractable": true,
+          "score": 46.179,
+          "snippet": "Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Understand appropriate evaluation and management of foot and ankle trauma in pediatric patients. Review unique features of pediatric foot and ankle injuries and their effect on growth and development. Pediatric Ankle Fractures Ba"
+        },
+        {
+          "id": "510000644",
+          "title": "Fractures of the Talus: Foot Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000644",
+          "extractable": true,
+          "score": 42.353,
+          "snippet": "avulsion fracture 81.1.B: partial articular fracture involving the tibiotalar or subtalar joint 81.1.B1: osteochondral injury 81.1.B2: simple fracture pattern 81.1.B3: comminuted fracture pattern 81.1.C: complete articular fracture involving the tibiotalar and subtalar joints 81.1.C1: simple fracture 81.1.C2: multifra"
+        },
+        {
+          "id": "510000546",
+          "title": "Ankle and Foot Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000546",
+          "extractable": true,
+          "score": 41.327,
+          "snippet": "Review the epidemiology, etiology, and risk factors associated with foot and ankle injuries. Explain an appropriate workup for patients with an ankle or foot sports injury. Discuss the surgical and nonsurgical management of common foot and ankle injuries. Outline surgical decision making for ankle and foot injuries. L"
+        },
+        {
+          "id": "6004090",
+          "title": "Open Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004090",
+          "extractable": true,
+          "score": 33.157,
+          "snippet": "temic antibiotic therapy in the management of open fractures at high risk for infection. Nonsurgical Fracture Management Stable fractures may occur and still be open fractures; this commonly occurs in patients with an out-to-in open fracture pattern. In these patients, management of the fracture may include irrigation"
+        },
+        {
+          "id": "6001013",
+          "title": "Calcaneal Stress Fracture",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001013",
+          "extractable": true,
+          "score": 32.644,
+          "snippet": "cycle perturbation, and low bone density.11 Since then, the analogous male athlete triad has been recognized as a syndrome of low energy availability, low bone mineral density, and hypogonadotropic hypogonadism.12 Multifactorial risk also has been identified among military recruits. Niva et al13 reported considerably"
+        },
+        {
+          "id": "510000645",
+          "title": "Fractures of the Calcaneus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000645",
+          "extractable": true,
+          "score": 32.576,
+          "snippet": "calcaneal fracture.  Patient History Most patients with a calcaneal fracture have fallen from a height. Patients with a displaced calcaneus fracture often are involved in high-energy injuries, such as a motor vehicle collision. Many of these patients have multiple traumatic injuries and warrant assessment for other s"
+        },
+        {
+          "id": "6004017",
+          "title": "Perioperative Treatment of Patients Undergoing Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004017",
+          "extractable": true,
+          "score": 31.542,
+          "snippet": "Higher risk for adverse outcomes after TKA Higher risk for periprosthetic joint infection (PJI) after TKA Higher risk for mortality after THA Modifiable risk factors—Optimization of medical comorbidities may improve TJA outcomes.4 Diabetes mellitus Higher rate of complications and increased risk for revision surgery a"
+        },
+        {
+          "id": "6002007",
+          "title": "Risk Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002007",
+          "extractable": true,
+          "score": 31.364,
+          "snippet": "M AAOS | Risk Management https://rock.aaos.org/coursecontent.aspx?id=6002007 5/15 Inpatient Risk and Management Inpatient risks to patients include falls, infections, VTE, deep vein thrombosis, wound complications, and unplanned return to the operating room. Falls occur at a rate of 0.5% to 2.0% and may result in injur"
+        },
+        {
+          "id": "6002117",
+          "title": "Principles of Wound Closure",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002117",
+          "extractable": true,
+          "score": 30.324,
+          "snippet": "id unnecessary wound healing problems and surgical site infections. Each wound should be analyzed individually with regard to the type of wound, patient risk factors for wound healing problems, the location of the wound, and the size/depth of the wound. Use of the appropriate type of wound closure, suture material, tec"
+        },
+        {
+          "id": "6003018",
+          "title": "Amputations in Trauma Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003018",
+          "extractable": true,
+          "score": 28.275,
+          "snippet": "g begins approximately 6 months postoperatively.43 Complications  Complications A complication associated with the amputation develops in as many as 51% of patients with trauma-related amputation. In addition, the Lower Extremity Assessment Project Study Group reported that as many as 30% of patients are re-hospitaliz"
+        },
+        {
+          "id": "6001162",
+          "title": "Complications After Total Knee Arthroplasty: Intraoperative Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001162",
+          "extractable": true,
+          "score": 25.758,
+          "snippet": "7:43 AM AAOS | Complications After Total Knee Arthroplasty: Intraoperative Injuries https://rock.aaos.org/coursecontent.aspx?id=6001162 13/27  Etiology/Mechanism of Injury The success of TKA largely depends on restoring mechanical limb alignment. Knee stiffness, severe deformity, and inadequate exposure are major ris"
+        }
+      ]
+    },
+    {
+      "stableGuid": "AcF%_Rt-WF",
+      "front": "The sternoclavicular joint is best assessed radiographically by Serendipity view .",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Shoulder_Girdle",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Joints",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Joints::Sternoclavicular_Joint",
+        "SnapOrtho::Specialty::Shoulder_Elbow"
+      ],
+      "candidates": [
+        {
+          "id": "6004072",
+          "title": "Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004072",
+          "extractable": true,
+          "score": 41.307,
+          "snippet": "sternoclavicular joint. Recognize the importance of prompt recognition and reduction of a posterior shoulder dislocation. Discuss the physical examination of the sternoclavicular joint. Outline appropriate imaging modalities to aid in the diagnosis of a sternoclavicular joint dislocation. Detail closed and open reduct"
+        },
+        {
+          "id": "6001175",
+          "title": "Clavicular Fractures and Sternoclavicular and Acromioclavicular Injuries in the Pediatric Patient",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001175",
+          "extractable": true,
+          "score": 26.845,
+          "snippet": "| Clavicular Fractures and Sternoclavicular and Acromioclavicular Injuries in the Pediatric Patient https://rock.aaos.org/coursecontent.aspx?id=6001175 3/25 Subclavian vessels and brachial plexus inferior Structure posterior to the medial clavicle or sternoclavicular joint Innominate artery/vein Internal jugular vein"
+        },
+        {
+          "id": "510000567",
+          "title": "Imaging: Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000567",
+          "extractable": true,
+          "score": 26.303,
+          "snippet": "experiencing shoulder pain and have a history of trauma, dislocation, night pain, or chronic shoulder pain.1 Shoulder series—The standard shoulder series should include orthogonal views of the shoulder, including a true AP view in the scapular plane, an AP view, an axillary view, and a scapular Y view. True AP view in"
+        },
+        {
+          "id": "510000585",
+          "title": "Physical Examination of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000585",
+          "extractable": true,
+          "score": 24.958,
+          "snippet": "cuff pathology, and other conditions of the shoulder girdle may have profound effects on elbow motion and function. Evaluate shoulder motion and scapular rhythm by observing the patient from behind as he/she brings the upper extremities into forward elevation. Examine shoulder motion and assess for prominent impingeme"
+        },
+        {
+          "id": "6000038",
+          "title": "Imaging of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000038",
+          "extractable": true,
+          "score": 23.479,
+          "snippet": "elbow. Identify common radiographic abnormalities of the elbow. Radiography Radiographs of the elbow include AP, lateral, and oblique views. Radiographs should be evaluated for joint congruency of the ulnohumeral and radiocapitellar joints, fractures, joint effusion, and arthritis. In patients with a posttraumatic elb"
+        },
+        {
+          "id": "6004073",
+          "title": "Traumatic Brachial Plexus Injuries: Shoulder Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004073",
+          "extractable": true,
+          "score": 23.447,
+          "snippet": "supraspinatus), which branches off the upper trunk at the Erb point. No terminal branches off the division level exist. Biomechanics of Shoulder Girdle The glenohumeral, acromioclavicular, and sternoclavicular joints and the scapulothoracic articulation create three-dimensional shoulder motion controlled by 14 muscles"
+        },
+        {
+          "id": "510000631",
+          "title": "Acromioclavicular Joint Arthritis and Pathology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000631",
+          "extractable": true,
+          "score": 19.943,
+          "snippet": "A complete neurologic examination of the upper extremity should be performed to rule out brachial plexus injuries. Imaging Studies Radiography Acromioclavicular Joint Separation Plain radiographs include an AP view of the clavicle, a caudal tilt view, and an axillary view. A Zanca view (a modified, underpenetrated AP"
+        },
+        {
+          "id": "510000544",
+          "title": "Trapeziometacarpal Joint Osteoarthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000544",
+          "extractable": true,
+          "score": 14.214,
+          "snippet": " Trapeziometacarpal Joint Osteoarthritis  CORE June 30, 2025 Julie Adams, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives List tools for the diagnosis and evaluation of trapeziometacarpal joint osteoarthritis. Discuss treatment options for trapezio"
+        },
+        {
+          "id": "6000021",
+          "title": "Periprosthetic Joint Infection",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000021",
+          "extractable": true,
+          "score": 14.194,
+          "snippet": "MD, FRCS (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Assess risk factors and identify patients at a high risk for periprosthetic joint infection after primary total joint arthroplasty. Apply preventative measures for periprosthetic joint infection,"
+        },
+        {
+          "id": "6004077",
+          "title": "Patellofemoral Joint Disorders/Patellofemoral Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004077",
+          "extractable": true,
+          "score": 14.103,
+          "snippet": "obtained if indicated. This series should include bilateral weight-bearing AP and Rosenberg views, a lateral view of the affected knee, and a bilateral low-flexion (Merchant) view.19,20 Femoral anteversion will be present on an AP view of the tibia and an oblique view of the distal femur. A lateral view is critical be"
+        },
+        {
+          "id": "6000039",
+          "title": "Shoulder Trauma: Acromioclavicular Joint Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000039",
+          "extractable": true,
+          "score": 13.761,
+          "snippet": "acromioclavicular joint separations from type III acromioclavicular joint separations; however, it is performed sparingly because of patient discomfort and minimal clinical importance. The cross-arm adduction view also is known as the Basmania view. Cross-arm adduction may differentiate a stable acromioclavicular join"
+        },
+        {
+          "id": "6001160",
+          "title": "National Joint Registries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001160",
+          "extractable": true,
+          "score": 13.753,
+          "snippet": "Joint Registries in the United States National joint registries have existed in the United States since 2009. Two major national joint registries in the United States are the American Joint Replacement Registry (AJRR) and the Function and Outcomes Research for Comparative Effectiveness in Total Joint Replacement (FORC"
+        }
+      ]
+    },
+    {
+      "stableGuid": "AcnP2/tkc-",
+      "front": "Fractures of the medial femoral condyle are the most common type of intra-operative fracture during a total knee arthroplasty .",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology::Femoral_Condyles",
+        "SnapOrtho::Diagnosis::Periprosthetic_Knee_Fracture",
+        "SnapOrtho::Specialty::Adult_Reconstruction",
+        "SnapOrtho::Treatment::Total_Knee_Arthroplasty"
+      ],
+      "candidates": [
+        {
+          "id": "6002012",
+          "title": "Postoperative Periprosthetic Fractures of the Femur and Acetabulum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002012",
+          "extractable": true,
+          "score": 41.564,
+          "snippet": "A, Jones HW, Shah N: Complications of total hip arthroplasty: Periprosthetic fractures of the acetabulum. Curr Rev Musculoskelet Med 2013;6(4):357-363. Intraoperative Fractures During component insertion (type I) During component removal (type II)  Intraoperative Fractures Type I fractures may be further distinguishe"
+        },
+        {
+          "id": "510000508",
+          "title": "Intraoperative Periprosthetic Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000508",
+          "extractable": true,
+          "score": 39.702,
+          "snippet": "intraoperative periprosthetic femur fractures. A, Type A1. B, Type A2. C, Type A3. D, Type B1. E, Type B2. F, Type B3. G, Type C1 (left), type C2 (center), and type C3 (right). (Reproduced with permission from Ashraf M: Classifications used in total hip arthroplasty, total hip replacement: An overview, in Vaibhav Baga"
+        },
+        {
+          "id": "6000024",
+          "title": "Complications After Total Knee Arthroplasty: Periprosthetic Joint Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000024",
+          "extractable": true,
+          "score": 38.583,
+          "snippet": "plan for periprosthetic joint infection based on the type of infection. Epidemiology Prevalence     NOTES SEND FEEDBACK 9/3/26, 7:44 AM AAOS | Complications After Total Knee Arthroplasty: Periprosthetic Joint Infections https://rock.aaos.org/coursecontent.aspx?id=6000024 1/33 Periprosthetic joint infection (PJI) i"
+        },
+        {
+          "id": "510000555",
+          "title": "Component Removal in Revision Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000555",
+          "extractable": true,
+          "score": 37.49,
+          "snippet": "al and then be replaced as a guide or reference for the curved-blade removal instruments. Complications Intraoperative fracture: usually technique-related and avoidable Femoral fractures are common near the greater trochanteric region and in the femoral diaphysis during removal of well-fixed femoral implants.31 Femoral"
+        },
+        {
+          "id": "6004100",
+          "title": "Primary Total Hip Arthroplasty for Osteoarthritis: Femoral Component",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004100",
+          "extractable": true,
+          "score": 35.568,
+          "snippet": "Total Hip Arthroplasty for Osteoarthritis: Femoral Component https://rock.aaos.org/coursecontent.aspx?id=6004100 13/26 femoral osteolysis 1% had subsidence 1 periprosthetic fracture required revision HHS = Harris hip score. aSuccess is defined as implant survival. Reproduced from Dalury DJ, Jiranek WA, Waligora A: Pri"
+        },
+        {
+          "id": "6004027",
+          "title": "Alignment Strategies in Total Knee Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004027",
+          "extractable": true,
+          "score": 35.236,
+          "snippet": "Pretest Discover What You Know Learning Objectives Describe key radiographic measurements used in primary total knee arthroplasty. Understand the two primary competing alignment strategies in primary total knee arthroplasty: mechanical and kinematic. Introduction Stability and appropriate load distribution in total kn"
+        },
+        {
+          "id": "6001030",
+          "title": "Implant Designs in Total Knee Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001030",
+          "extractable": true,
+          "score": 35.119,
+          "snippet": "total knee arthroplasty. Review modern cementless fixation as an option for total knee arthroplasty in select patients.     NOTES SEND FEEDBACK 9/3/26, 4:27 PM AAOS | Implant Designs in Total Knee Arthroplasty https://rock.aaos.org/coursecontent.aspx?id=6001030 1/27 Overview Total knee arthroplasty (TKA) designs c"
+        },
+        {
+          "id": "6000023",
+          "title": "Salvage Procedures and Failed Revision Total Knee Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000023",
+          "extractable": true,
+          "score": 35.05,
+          "snippet": "Determine the appropriate workup for a patient in whom failed revision total knee arthroplasty is suspected. Describe salvage procedures for failed revision total knee arthroplasty. Determine host factors that may guide decision making for appropriate salvage procedures after failed revision total knee arthroplasty. I"
+        },
+        {
+          "id": "510000556",
+          "title": "Complications After Total Knee Arthroplasty: Intraoperative and Postoperative Periprosthetic Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000556",
+          "extractable": true,
+          "score": 34.318,
+          "snippet": "the management of periprosthetic knee fractures, including the femur, tibia, and patella. Femoral and Tibial Periprosthetic Fractures Pathophysiology/Pathoanatomy     NOTES SEND FEEDBACK 9/3/26, 7:43 AM AAOS | Complications After Total Knee Arthroplasty: Intraoperative and Postoperative Periprosthetic Fractures ht"
+        },
+        {
+          "id": "510000511",
+          "title": "Instability After Total Knee Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000511",
+          "extractable": true,
+          "score": 31.937,
+          "snippet": "findings associated with instability after total knee arthroplasty. Understand the diagnostic workup for suspected instability after total knee arthroplasty. Discuss the role of various treatment modalities for each type of instability after total knee arthroplasty. Introduction Instability is a common cause of failed"
+        },
+        {
+          "id": "6002098",
+          "title": "Periprosthetic Fractures Near Total Hip and Knee Arthroplasty Implants",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002098",
+          "extractable": true,
+          "score": 31.291,
+          "snippet": "with total knee arthroplasty. Type I, Fracture is proximal to the femoral SEND FEEDBACK 9/3/26, 5:42 PM AAOS | Periprosthetic Fractures Near Total Hip and Knee Arthroplasty Implants https://rock.aaos.org/coursecontent.aspx?id=6002098 27/51 knee component. Type II, Fracture originates at the proximal aspect of the femo"
+        },
+        {
+          "id": "6001162",
+          "title": "Complications After Total Knee Arthroplasty: Intraoperative Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001162",
+          "extractable": true,
+          "score": 31.164,
+          "snippet": "The medial collateral ligament in primary total knee arthroplasty: Anatomy, biomechanics, and injury. J Am Acad Orthop Surg 2020;28[12]:e510-e516.) SEND FEEDBACK 9/3/26, 7:43 AM AAOS | Complications After Total Knee Arthroplasty: Intraoperative Injuries https://rock.aaos.org/coursecontent.aspx?id=6001162 6/27 Figure 2"
+        }
+      ]
+    },
+    {
+      "stableGuid": "Acpdce|`9F",
+      "front": "What conditions/characteristics are associated with each type of tibial bowing? Anterolateral (\"Bad Bowing\"): Neurofibromatosis Type I, pseudoarthrosis Anteromedial: Fibular hemimelia Posteromedial (\"Good Bowing\"): Physiologic, calcaneovalgus foot, leg length discrepancy",
+      "extra": "Remember: P ostero M edial = P robably M ild Fibular hemimelia: Born without femur",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology::Fibula",
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femur",
+        "SnapOrtho::Diagnosis::Leg_Length_Discrepancy",
+        "SnapOrtho::Specialty::Pediatric_Orthopedics"
+      ],
+      "candidates": [
+        {
+          "id": "6004063",
+          "title": "Rotational and Angular Limb Deformities",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004063",
+          "extractable": true,
+          "score": 58.298,
+          "snippet": "Types of Tibial Bowing Type of Bowing Associated Conditions Prognosis Management Anterolateral Neurofibromatosis Progressive bowing Pseudarthrosis Brace management to prevent fracture Osteotomy contraindicated Posteromedial Calcaneal valgus foot Spontaneous improvement in bowing (rarely complete) Limb-length discrepan"
+        },
+        {
+          "id": "6000032",
+          "title": "Metatarsus Adductus and Calcaneovalgus Foot",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000032",
+          "extractable": true,
+          "score": 57.018,
+          "snippet": "patients with a calcaneovalgus foot and differentiate a calcaneovalgus foot from other diagnoses. Interpret the natural history of calcaneovalgus foot deformities. Assess and determine underlying conditions associated with calcaneovalgus foot deformity.     NOTES SEND FEEDBACK 9/3/26, 4:45 PM AAOS | Metatarsus Add"
+        },
+        {
+          "id": "6001046",
+          "title": "Stress Fractures of the Leg: Tibia and Fibula",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001046",
+          "extractable": true,
+          "score": 50.404,
+          "snippet": "(Courtesy of Jeremy Y. Chan, MD, Stanford, CA.) Tibial and fibular stress fractures usually are horizontally oriented diaphyseal fractures, with distal third fibular stress fractures being more common than proximal fibular fractures (Figure 3). Anterior tibial shaft stress fractures are of particular importance becaus"
+        },
+        {
+          "id": "6004070",
+          "title": "Tibial and Fibular Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004070",
+          "extractable": true,
+          "score": 49.448,
+          "snippet": "pediatric tibia shaft fracture have a concomitant fibular fracture.8 Concomitant injuries of the ankle and foot commonly are associated with tibial shaft fractures, especially distal third fractures.  Associated Injuries SEND FEEDBACK 9/4/26, 9:51 AM AAOS | Tibial and Fibular Fractures https://rock.aaos.org/coursecon"
+        },
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "extractable": true,
+          "score": 43.487,
+          "snippet": "the physis15 (Figure 10). SEND FEEDBACK 9/3/26, 5:36 PM AAOS | Pediatric Foot and Ankle Trauma https://rock.aaos.org/coursecontent.aspx?id=6004071 11/70 Figure 10 Illustration shows the Salter-Harris classification of pediatric ankle fractures. A, Type I. B, Type II. C, Type III. D, Type IV. E, Type V. The arrow indic"
+        },
+        {
+          "id": "6004062",
+          "title": "Pediatric Foot Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004062",
+          "extractable": true,
+          "score": 42.98,
+          "snippet": ": fibrous Type III: cartilaginous fusion with distinct squaring off of the cuboid Type IV: complete osseous fusion Talocalcaneal coalition8 (Figure 5) Type I: linear Type II: linear with posterior hook Type III: shingled Type IV: complete osseous Type V: posterior SEND FEEDBACK 9/3/26, 5:36 PM AAOS | Pediatric Foot Con"
+        },
+        {
+          "id": "6004064",
+          "title": "Pediatric Lower Extremity Deformities and Limb Deficiencies",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004064",
+          "extractable": true,
+          "score": 42.063,
+          "snippet": "ng to treatment recommendations. Type 1: intact femur with a mobile hip and knee Type 1a: normal ossification of the femoral head and neck Type 1b: delayed ossification, subtrochanteric type Type 1c: delayed ossification, neck type Type 2: mobile pseudarthrosis with a mobile knee Type 2a: femoral head mobile in the ace"
+        },
+        {
+          "id": "6001029",
+          "title": "Surgical Anatomy of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001029",
+          "extractable": true,
+          "score": 40.53,
+          "snippet": "to the PCL, and the distance increases with knee flexion. The posterior articular branch of the posterior tibial nerve provides innervation. The anterolateral bundle (stronger/stiffer than the posteromedial bundle) is tight in knee flexion, and the posteromedial bundle is tight in knee extension.9 The menisci are cres"
+        },
+        {
+          "id": "6002087",
+          "title": "Pediatric Hematologic Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002087",
+          "extractable": true,
+          "score": 40.451,
+          "snippet": "forms of the neurologic findings observed in patients with type 2149-151 (Table 1). Table 1 Clinical Subtypes of Gaucher Disease SEND FEEDBACK 9/3/26, 5:37 PM AAOS | Pediatric Hematologic Conditions https://rock.aaos.org/coursecontent.aspx?id=6002087 24/50 Clinical Features Type 1 (Non- neuronopathic) Type 2 (Acute Ne"
+        },
+        {
+          "id": "6004097",
+          "title": "Tibial Plateau Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004097",
+          "extractable": true,
+          "score": 38.45,
+          "snippet": "Surgeons, Las Vegas, NV, March 12-16, 2019. Anterolateral Approach The anterolateral approach is the most common approach used to manage tibial plateau fractures and is extensile proximally for the lateral femur and distally for the anterolateral tibia. It provides access for reduction and fixation of lateral and ante"
+        },
+        {
+          "id": "510000581",
+          "title": "Patellar Fractures, Tibial Spine (Eminence) Fractures, Tibial and Fibular Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000581",
+          "extractable": true,
+          "score": 35,
+          "snippet": "of injury to the recurrent anterior tibial artery and the resultant risk of compartment syndrome associated with tibial and fibular fractures. Describe the Ogden classification of tibial tubercle fractures. Discuss the principles and general techniques for the surgical management of tibial and fibular fractures. Recog"
+        },
+        {
+          "id": "6000031",
+          "title": "Congenital Vertical Talus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000031",
+          "extractable": true,
+          "score": 34.471,
+          "snippet": ") Differential Diagnosis Oblique talus: flexible subluxation of the talonavicular joint Positional calcaneovalgus foot: hindfoot eversion and dorsiflexion resulting from soft-tissue contractures and intrauterine positioning Posteromedial bowing of the tibia: idiopathic deformity and growth inhibition of the tibia, asso"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,418 @@
+[
+ {
+  "card_id": "f1592576-86a3-4c0f-988e-c27e66030216",
+  "card_version_id": "f4892296-eb45-48c3-bb43-683d9cb03eae",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "88 y/o F falls onto her left arm and presents with the following injury. Radiographs are shown below. Which treatment option can provide her with the best functional outcome? {{c1::Total elbow arthroplasty}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "7a31ade7-05ca-4b36-b1c6-e5b85f0bb440",
+  "card_version_id": "e2a146c8-965f-4b3d-9c3a-ff12ef137350",
+  "error_text": "unsafe_durable_semantic_artifact:$.proposedClaims[0].claimText:unbounded_text",
+  "resolution_reason": "factory_error",
+  "queue": "factory_error",
+  "reason_codes": [
+   "factory_error"
+  ],
+  "card_front": "Posterior Tibial Tendon Insufficiency Classification: Stage I: {{c5::Tenosynovitis w/o deformity; Can perform single-heel raise}} Stage IIA: {{c4::Flatfoot deformity with flexible hindfoot and normal forefoot; Cannot perform single-leg heel raise; mild sinus tarsi pain}} Stage IIB: {{c3::Flatfoot deformity with flexible hindfoot and forefoot abduction (\"too many toes\"); Cannot perform single-leg heel raise; mild sinus tarsi pain}} Stage III: {{c2::Flatfoot deformity, rigid forefoot abduction, ri",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal correct: multi-blank mega-cards produce unbounded claim text; needs per-blank splitting upstream"
+ },
+ {
+  "card_id": "4b0e3a20-9569-49a9-bb52-48aa126a19a7",
+  "card_version_id": "f17e0bee-e3d2-4ef5-9b71-b30fe658047e",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "What are the three (3) types of fracture patterns for pediatric tibial shaft fractures ? {{c1::Incomplete Complete Tibial spiral fracture (Toddler's Fracture)}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "428d6335-6c6b-4e84-9842-288749e5c58f",
+  "card_version_id": "32f2d5cc-0cc4-4636-bf85-e28a319a75c1",
+  "error_text": "queue:qualifier_conflict",
+  "resolution_reason": "laterality_conflict",
+  "queue": "qualifier_conflict",
+  "reason_codes": [
+   "laterality_conflict"
+  ],
+  "card_front": "For the anterior approach to cervical spine, most surgeons approach on the {{c1::left::left/right}} side because the {{c1::right recurrent laryngeal nerve}} is more susceptible to injury.",
+  "verdict": "needs_human_review",
+  "verdict_reason": "laterality conflict (left/right approach cues); safe to refuse, human should adjudicate"
+ },
+ {
+  "card_id": "3fa1d2d3-491f-4f7b-a21a-df7ad54cb50e",
+  "card_version_id": "48ab3639-efa0-49e5-82d4-2787e40be83e",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "69 y/o man presents with known metastatic lung cancer and the following pathological fracture after falling from standing height. Best treatment? {{c1::Cephalomedullary nail}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "18fdc1b1-aed2-40b4-a563-16d2a1ad56e6",
+  "card_version_id": "cfbe7cab-f938-4d71-941c-7dc9f97834ec",
+  "error_text": "unsafe_durable_semantic_artifact:$.proposedClaims[0].claimText:unbounded_text",
+  "resolution_reason": "factory_error",
+  "queue": "factory_error",
+  "reason_codes": [
+   "factory_error"
+  ],
+  "card_front": "Physical exam of the knee (not including special tests) Inspection (6) 1) {{c1::Skin (i.e. scars, trauma, erythema)}} 2) {{c1::Swelling}} 3) {{c1::Muscle atrophy}} 4) {{c1::Asymmetry}} 5) {{c1::Gait (i.e. antalgia, stride length, muscle weakness)}} 6) {{c1::Alignment (i.e. neutral, varus, valgus, etc.)}} Palpation (2) 1) {{c2::Tenderness}} 2) {{c2::Effusion}} Range of Motion (active and passive): Flexion normal ROM = {{c3::130}}° Extension normal ROM = {{c3::10}}° Rotation at 90° flexion normal ",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal correct: multi-blank mega-cards produce unbounded claim text; needs per-blank splitting upstream"
+ },
+ {
+  "card_id": "65432c8c-cdd2-4588-a940-c10a7c7a175b",
+  "card_version_id": "6d960c32-612f-4119-94d3-fc78b29dd730",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "What is the one long bone that does NOT undergo endochrondral ossification? {{c1::Clavicle}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "7ecfa7e6-f380-446d-b89a-a8d3d8fee8e4",
+  "card_version_id": "554243dc-41a4-4c56-aa5a-a1fa04c40468",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "30 y/o F presents with the following radiographs following FOOSH. Elbow ROM is 30-95° extension/flexion, 45° supination, 65° pronation. No wrist tenderness and radius pull test is symmetric to contralateral side. Most appropriate treatment? {{c1::ORIF}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "a20a1911-11c5-4b91-81a7-d2901b4189c1",
+  "card_version_id": "2f26ff7e-5890-43d1-9236-c983820e17f1",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "Nonoperative indications of 5th MT base fractures : Zone 1: {{c1::No rotational displacement}} Zone 2: {{c2::Recreational athlete}} Zone 3: {{c3::No malalignment of fracture in non-athletes}} Non-operative treatment of 5th MT base fractures : Zone 1: {{c1::Protected weightbearing in stiff soled shoe, boot, or cast}} Zone 2: {{c2::Non-weight bearing short leg cast for 6-8 weeks}} Zone 3: {{c3::Non-weight bearing short leg cast for 6-8 weeks}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "8584ca87-8a65-4cd9-ba24-ae893cbd899e",
+  "card_version_id": "602ae5e1-f7c6-4d0c-bcb9-2bddfca675d0",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "55 y/o pt in motorcycle accident presents with the following fracture. What is the most appropriate treatment? {{c1::Cephalomedullary nail}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "9c1f84c9-985d-420e-ba2e-5a980cdfab91",
+  "card_version_id": "9e20943e-7cc8-4616-86cb-1b73edc9687c",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "{{c1::Russell-Taylor}} Classficiation for Subtrochanteric Fracture: Type IA: no piriformis fossa extension, intact lesser trochanter Type IB: no prifiromis fossa extension, detached lesser trochanter Type IIA: piriformis fossa extension, intact lesser trochanter Type IIB: piriformis fossa extension, detached lesser trochanter",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "88d63150-7c52-486a-8042-a751e2da48d1",
+  "card_version_id": "d7dd20b1-9994-4d43-a9af-ec8657114d98",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "Which two (2) sarcomas are destructive bone lesions in young patients and are treated with wide resection + chemotherapy ? {{c1::Osteosarcoma Ewing's sarcoma}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "ff94213a-9fea-456e-b2ef-2801fb54a69c",
+  "card_version_id": "4cd441bd-2fb4-43dd-8892-fe332cb6bf57",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "What conditions/characteristics are associated with each type of tibial bowing? Anterolateral (\"Bad Bowing\"): {{c3::Neurofibromatosis Type I, pseudoarthrosis}} Anteromedial: {{c2::Fibular hemimelia}} Posteromedial (\"Good Bowing\"): {{c1::Physiologic, calcaneovalgus foot, leg length discrepancy}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "12d7b5ed-f258-4100-8ccb-5c518d46fff6",
+  "card_version_id": "10a181c6-4efb-44c7-834d-d6746120b11b",
+  "error_text": "queue:extraction_failed",
+  "resolution_reason": "cloze_not_extracted",
+  "queue": "extraction_failed",
+  "reason_codes": [
+   "cloze_not_extracted"
+  ],
+  "card_front": "What do the following letters/characters stand for? {{c1:: }}",
+  "verdict": "bad_cloze/source_card",
+  "verdict_reason": "empty cloze body: broken source card, nothing to extract"
+ },
+ {
+  "card_id": "87549aa3-7357-4f96-b3f2-fc9debc17189",
+  "card_version_id": "473fce5f-ad51-4d61-88cd-c663a38d59b1",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "What acetabular index value suggests acetabular dysplasia ? {{c1::>35°}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "107fd37f-e744-4c10-afbc-1ccf549a67d6",
+  "card_version_id": "cf55e35f-511d-430f-91b6-4ff30d21ef88",
+  "error_text": "queue:extraction_failed",
+  "resolution_reason": "cloze_not_extracted",
+  "queue": "extraction_failed",
+  "reason_codes": [
+   "cloze_not_extracted"
+  ],
+  "card_front": "True or false: As part of endochondral bone formation , cartilage is converted to bone . {{c1:: }}",
+  "verdict": "bad_cloze/source_card",
+  "verdict_reason": "empty cloze body: broken source card, nothing to extract"
+ },
+ {
+  "card_id": "e3048055-7e2b-403c-acfa-235af5cf0a79",
+  "card_version_id": "7cd257f3-447d-4588-af89-5b6b45c9a42e",
+  "error_text": "unsafe_durable_semantic_artifact:$.proposedClaims[0].claimText:unbounded_text",
+  "resolution_reason": "factory_error",
+  "queue": "factory_error",
+  "reason_codes": [
+   "factory_error"
+  ],
+  "card_front": "Medical negligence comprises four elements : Duty: {{c1::Duty of the physician is to provide care equal to the same standard of care ordinarily executed by surgeons in the same medical specialty.}} Breach of duty: {{c2::Breach of duty occurs when action or failure to act deviates from the standard of care.}} Causation: {{c3::Causation is present when it is demonstrated that failure to meet the standard of care was the direct cause of the patient's injuries. }} Damages: {{c4::Damages are monies a",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal correct: multi-blank mega-cards produce unbounded claim text; needs per-blank splitting upstream"
+ },
+ {
+  "card_id": "fcb76100-c6b3-499b-9229-922af86ba70e",
+  "card_version_id": "1700be06-ed22-48f9-8b4e-37ae0283444d",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "What is the hook test ? {{c1::Hooking the lateral edge of the bicep tendon with the elbow flexed to 90° and supinated}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "bfe6eb57-aa19-4985-b350-d54ebcbe3613",
+  "card_version_id": "53d254c7-67ff-4d7a-bbaf-9e11520ca3b7",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "The American Association of Neurological Surgeons advise that Methylprednisolone Sodium Succinate (MPSS) {{c1::should not::should/should not}} be used for the treatment of acute spinal cord injury .",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "0ef91732-f547-47a6-bea2-dee2d3ae2d9f",
+  "card_version_id": "e2758a44-23fa-400b-81f0-5309f6386389",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "True or false: For treating subacromial impingement , PT with PRP has shown better outcomes than PT alone . {{c1::False}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "b49377e3-64ef-49f3-a5a8-3e5e5a7d1e7e",
+  "card_version_id": "2ee22d8a-d7ea-4996-94b1-b520f3a248ba",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "What is the issue with the following XRs s/p ORIF 3 weeks ago? {{c1::Fibular malrotation Tibiofibular syndesmotic malreduction}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "f15e785f-bf22-40b2-bad9-80d984ef129d",
+  "card_version_id": "7b88fa8b-dcb8-4aa8-9faa-71d75945d5c0",
+  "error_text": "queue:non_atomic",
+  "resolution_reason": "potential_multiconcept_overload",
+  "queue": "non_atomic",
+  "reason_codes": [
+   "potential_multiconcept_overload"
+  ],
+  "card_front": "A {{c1::Holstein-Lewis fracture}} is a spiral fracture of the distal one-third of the humeral shaft that is commonly associated with neuropraxia of the radial nerve .",
+  "verdict": "needs_human_review",
+  "verdict_reason": "single non-atomic refusal on an atomic-looking card; verify borderline"
+ },
+ {
+  "card_id": "40cc6c31-e1cc-458f-bab5-dc0ab1adcbd3",
+  "card_version_id": "94ecdfce-3382-4521-af6f-f0e260e60eb4",
+  "error_text": "queue:extraction_failed",
+  "resolution_reason": "cloze_not_extracted",
+  "queue": "extraction_failed",
+  "reason_codes": [
+   "cloze_not_extracted"
+  ],
+  "card_front": "What do the following letters/characters stand for? {{c1:: }}",
+  "verdict": "bad_cloze/source_card",
+  "verdict_reason": "empty cloze body: broken source card, nothing to extract"
+ },
+ {
+  "card_id": "1a462fb4-5eab-477f-bac5-db3f0b6dbec6",
+  "card_version_id": "ac5422ba-ed79-46fb-908d-2f1d60df67f5",
+  "error_text": "queue:qualifier_conflict",
+  "resolution_reason": "laterality_conflict",
+  "queue": "qualifier_conflict",
+  "reason_codes": [
+   "laterality_conflict"
+  ],
+  "card_front": "Revision surgery is scheduled for a patient with an anterior discectomy and fusion for cervical radiculopathy . Previous approach was on the left side . Patient has residual, asymptomatic left recurrent laryngeal nerve injury . Should the approach for the revision surgery be right or left? {{c1::Left}}",
+  "verdict": "needs_human_review",
+  "verdict_reason": "laterality conflict (left/right approach cues); safe to refuse, human should adjudicate"
+ },
+ {
+  "card_id": "faabf0b9-737a-48b0-bc39-1b8b026664e0",
+  "card_version_id": "29b6ef25-e765-4022-a58f-6fddd0a5e96e",
+  "error_text": "unsafe_durable_semantic_artifact:$.proposedClaims[0].claimText:unbounded_text",
+  "resolution_reason": "factory_error",
+  "queue": "factory_error",
+  "reason_codes": [
+   "factory_error"
+  ],
+  "card_front": "Name the provocative test based on the description: {{c1::Spurling's}}: it is performed by rotating head toward the affected side, extending the neck, and then applying and axial load (applying downward pressure on the head) {{c1::Hoffman's}}: Hold and secure the middle phalanx of the long finger and then flick the distal phalanx into an extended position. Involuntary contraction of the thumb IP joint is a positive test. {{c1::Lhermitte}}: test is positive cervical flexion or extension leads to ",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal correct: multi-blank mega-cards produce unbounded claim text; needs per-blank splitting upstream"
+ },
+ {
+  "card_id": "200fbf57-2ee0-41d4-b6cf-8c8ff725fafa",
+  "card_version_id": "1c2ab396-35ab-431d-ac04-8a13a34ce3d6",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "Which type of Monteggia fracture is associated with the highest rate of complications ? {{c1::Bado type 2}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "9dd016b7-6b89-4744-9ef2-044db9c81136",
+  "card_version_id": "ec3d018f-49cb-4b77-a71e-f35a57992d68",
+  "error_text": "unsafe_durable_semantic_artifact:$.proposedClaims[0].claimText:unbounded_text",
+  "resolution_reason": "factory_error",
+  "queue": "factory_error",
+  "reason_codes": [
+   "factory_error"
+  ],
+  "card_front": "Name the lysosomal storage diseases : {{c4::Morquio}} syndrome: -Autosomal recessive -Accumulation of keratan sulfate -Odontoid hypoplasia leading to cervical spine instability {{c3::Hurler}} syndrome: -Autosomal recessive -Alpha-L iduronidase deficiency -Accumulation of dermatan sulfate -Cloudy corneas {{c2::San Filippo}} syndrome: -Autosomal recessive -Accumulation of heparan sulfate -Mental retardation, proportionate dwarfism, clear cornea {{c1::Hunter}} syndrome -X-linked recessive -Accumula",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal correct: multi-blank mega-cards produce unbounded claim text; needs per-blank splitting upstream"
+ },
+ {
+  "card_id": "ae8cfabf-79bd-422d-abe6-536ef262b269",
+  "card_version_id": "78fc56e8-5845-46f4-93f6-7b8a32953a1a",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "What is the classification for Kienbock's disease ? {{c1::Lichtman Classification}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "e0391554-7891-48c9-9006-b2e4a292865e",
+  "card_version_id": "3896df45-251d-449d-9022-4d8fdef419b8",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "What did the FAITH study demonstrate when comparing outcomes of cancellous screws and sliding hip screws? {{c1::No difference in reoperation rate at 24 months}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "c334a75f-6711-43fb-b956-3e6a40b26f89",
+  "card_version_id": "64ee7f60-3c35-4fd9-89d5-b9bacb6b1be0",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "How are outcomes of patients with an accompanying ulnar styloid fracture with stable fixation of a distal radius fracture? (Compared to no ulnar styloid fracture) {{c1::No difference}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "02e53019-4344-4ed8-a674-0a62af003cda",
+  "card_version_id": "f4baacb3-6ed7-44be-85f7-8aa2d58dac65",
+  "error_text": "queue:negated_or_distractor",
+  "resolution_reason": "negated_or_distractor",
+  "queue": "negated_or_distractor",
+  "reason_codes": [
+   "negated_or_distractor"
+  ],
+  "card_front": "How do you confirm that the screw is not in the hip joint when fixating a SCFE ? {{c1::Approach-Withdraw technique: Hip range of motion on fluoroscopy}}",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal safe (negation/distractor content must not become positive claims); class needs negation-aware extraction before any support"
+ },
+ {
+  "card_id": "168c2961-bd08-4237-b959-179e147874da",
+  "card_version_id": "fe7cd76d-408d-41ce-8159-7ec212d9c767",
+  "error_text": "unsafe_durable_semantic_artifact:$.proposedClaims[0].claimText:unbounded_text",
+  "resolution_reason": "factory_error",
+  "queue": "factory_error",
+  "reason_codes": [
+   "factory_error"
+  ],
+  "card_front": "Physicians who complete Independent Medical Evaluations (IMEs) in worker's compensation cases must be aware of several legal terms: 1) Apportionment: {{c1::The process of determining the degree to which each of several exposures or injuries has contributed to a specific disability.}} 2) Impairment: {{c2::Loss of function resulting from an anatomic or physiologic derangement. This is a medical designation that forms the basis for determining disability status.}} 3) Disability: {{c3::Limitation of",
+  "verdict": "remain_unsupported",
+  "verdict_reason": "refusal correct: multi-blank mega-cards produce unbounded claim text; needs per-blank splitting upstream"
+ }
+]

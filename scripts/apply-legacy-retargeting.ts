@@ -171,7 +171,7 @@ async function writeCoverageReport(
 }
 
 async function main() {
-  const { createServiceRoleClient, fetchAllRows, ensureOutDir, chunkArray } = await commonModulePromise;
+  const { createServiceRoleClient, fetchAllRows, ensureOutDir, chunkArray, requireStagingEnvironment } = await commonModulePromise;
   const fetchAll = fetchAllRows as <T>(
     buildQuery: (from: number, to: number) => Promise<{ data: T[] | null; error: unknown }>
   ) => Promise<T[]>;
@@ -181,6 +181,7 @@ async function main() {
 
   // --- Rollback path ---
   if (args.rollback) {
+    requireStagingEnvironment();
     const batchKey = args.rollback;
     const cardDeact = await supabase
       .from("card_canonical_entity_links")
@@ -243,6 +244,8 @@ async function main() {
   if (args.node) {
     proposals = proposals.filter((p) => p.metadata?.source_curriculum_node_slug === args.node);
   }
+
+  if (!args.dryRun) requireStagingEnvironment();
 
   const perProposal: Array<Record<string, unknown>> = [];
   const appliedBatchKeys = new Set<string>();

@@ -95,6 +95,13 @@ export type ExtensionMessage =
       questionAttemptId?: number;
     }
   | {
+      // Explicit only: never auto-runs while a learner is taking a test.
+      // The page context is used transiently by the server to derive a
+      // SnapOrtho-authored claim; protected source text is never persisted.
+      type: 'ob:generate-question-claim';
+      pageContext: OrthobulletsPageContext;
+    }
+  | {
       type: 'brobot:request';
       task: BroBotTask;
       pageContext: OrthobulletsPageContext;
@@ -218,7 +225,8 @@ export type ExtensionMessageResponse =
       };
     }
   | { ok: true; cleared: true }
-  | { ok: true; launchQueued: { noteGuid: string; cardOrdinal: number; rank: 1 | 2 | 3 } }
+  | { ok: true; questionClaim: { status: string; claimId?: string; nativeQuestionId?: string; reviewStatus?: string; reason?: string; gapRecorded?: boolean } }
+  | { ok: true; launchQueued: { noteGuid: string; cardOrdinal: number; rank: 1 | 2 | 3 }; command?: unknown }
   | {
       ok: false;
       error: string;

@@ -1,0 +1,1074 @@
+{
+  "batchKey": "map-000001-packet-0155",
+  "inputChecksum": "f9fa9b32795d562c7136582c3754124cf2c5f3b35047052671be791bffc20733",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "sidecarSchema": {
+    "card": {
+      "stableGuid": "string",
+      "status": "\"mapped\"|\"skipped\"",
+      "chapters": "1-3 {id, role} from this card's candidates; first is primary",
+      "skipReason": "if skipped"
+    }
+  },
+  "cards": [
+    {
+      "stableGuid": "J$s?&$%n=Q",
+      "front": "In a young patient with a femoral neck fracture , what is the treatment of choice ? ORIF",
+      "extra": "Dynamic hip screw (DHS) or 3 screws",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femoral_Neck",
+        "SnapOrtho::Diagnosis::Femoral_Neck_Fracture",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "6002100",
+          "title": "Femoral Neck Fractures in Young Adults",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002100",
+          "extractable": true,
+          "score": 53.169,
+          "snippet": "characteristics of femoral neck fractures in young adults. Describe classification systems for femoral neck fractures. Explain methods of reduction and fixation of femoral neck fractures in young adults based on their unique fracture patterns. Review the pathophysiology and management of complications associated with"
+        },
+        {
+          "id": "6004094",
+          "title": "Femoral Head Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004094",
+          "extractable": true,
+          "score": 33.076,
+          "snippet": "9/3/26, 4:07 PM AAOS | Femoral Head Fractures https://rock.aaos.org/coursecontent.aspx?id=6004094 2/19 Figure 1 Illustrations show the Pipkin classification.A, Type I, infrafoveal femoral head fracture. B, Type II, suprafoveal head fracture. C, Type III, any femoral head fracture with an ipsilateral femoral neck fract"
+        },
+        {
+          "id": "510000660",
+          "title": "Radial Head and Neck Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000660",
+          "extractable": true,
+          "score": 31.493,
+          "snippet": "Elbow, ed 4. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2013, pp 531-541.) Mini-fragment screws (2.4 or 2.0 mm) or headless screws with differential pitch (eg, Herbert screw, headless compression screw) should be countersunk to prevent screw prominence. Plates (radial neck) Mini-fragment plates should be"
+        },
+        {
+          "id": "6003016",
+          "title": "Evaluation of the Trauma Patient",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003016",
+          "extractable": true,
+          "score": 31.432,
+          "snippet": "the patient. A Focused Assessment for the Sonographic Evaluation of the Trauma Patient (FAST) may be used for patients in shock. Similar to radiographic evaluation, FAST is performed SEND FEEDBACK 9/3/26, 4:06 PM AAOS | Evaluation of the Trauma Patient https://rock.aaos.org/coursecontent.aspx?id=6003016 13/35 quickly"
+        },
+        {
+          "id": "510000576",
+          "title": "Hip Conditions in the Young Athlete",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000576",
+          "extractable": true,
+          "score": 30.818,
+          "snippet": "hip present in adolescent athletes and should be considered in evaluating hip pain in this patient population. Epidemiology 6% to 12% of adolescents have hip pain.1,2 As many as 100% of ballet dancers may have some form of hip discomfort.3 15% of adolescent basketball players have hip pain and a positive impingement s"
+        },
+        {
+          "id": "510000600",
+          "title": "Treatment of the Polytrauma Patient and Damage Control Orthopaedics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000600",
+          "extractable": true,
+          "score": 27.762,
+          "snippet": "R. Evans, MD, FACS, FAAOS, Providence, RI.) Intramedullary screw fixation Intramedullary screw fixation (antegrade medullary ramus screw/retrograde medullary ramus screw/iliosacral screw, fibula, ulna, etc.) is a very useful treatment modality for SEND FEEDBACK 9/4/26, 10:48 AM AAOS | Treatment of the Polytrauma Patie"
+        },
+        {
+          "id": "510000650",
+          "title": "Forefoot Trauma: Metatarsal and Phalangeal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000650",
+          "extractable": true,
+          "score": 27.104,
+          "snippet": "may result from direct trauma, such as a crush injury, or from indirect trauma, such as twisting mechanisms in sports activity. Evaluation/Diagnosis Patient History SEND FEEDBACK 9/3/26, 4:11 PM AAOS | Forefoot Trauma: Metatarsal and Phalangeal Fractures https://rock.aaos.org/coursecontent.aspx?id=510000650 7/19 A tho"
+        },
+        {
+          "id": "510000580",
+          "title": "Pelvic and Hip Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000580",
+          "extractable": true,
+          "score": 27.067,
+          "snippet": "use of Kirschner wires or cannulated screws for Delbet type I fractures; cannulated screws for type II and type III fractures (some surgeons opt to use physeal-friendly screw options, which are available for certain pediatric proximal femoral locking plates); and a pediatric hip screw, dynamic hip screw, or proximal fe"
+        },
+        {
+          "id": "6001083",
+          "title": "Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001083",
+          "extractable": true,
+          "score": 27.059,
+          "snippet": "Pelvis/acetabulum fractures Hip dislocation Femoral neck fracture Ligamentous knee injuries Fractures of the patella and tibial plateau  Associated Injuries The two most common associated injuries in patients with a femoral shaft fracture are ipsilateral femoral neck fracture and ligamentous knee injury. Ipsilateral"
+        },
+        {
+          "id": "6000054",
+          "title": "Spinal Evaluation in the Trauma Patient",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000054",
+          "extractable": true,
+          "score": 26.373,
+          "snippet": "with a high-energy trauma mechanism of injury. Acute Management of Spinal Trauma Initial Closed Reduction SEND FEEDBACK 9/4/26, 9:39 AM AAOS | Spinal Evaluation in the Trauma Patient https://rock.aaos.org/coursecontent.aspx?id=6000054 17/21 A traumatic cervical facet dislocation can be safely and effectively reduced v"
+        },
+        {
+          "id": "6001058",
+          "title": "Pediatric Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001058",
+          "extractable": true,
+          "score": 25.758,
+          "snippet": "levels should not be attributed to an isolated pediatric femoral shaft fracture.  Evaluation/Diagnosis If a femoral fracture is known or suspected, a detailed patient history, physical examination, and orthopedic trauma imaging studies should be obtained. In children younger than 3 years, nonaccidental trauma should"
+        },
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "extractable": true,
+          "score": 25.479,
+          "snippet": "femoral neck fracture increases the risk of femoral head osteonecrosis. The blood supply also must be considered during the fixation of femoral neck fractures to prevent osteonecrosis, particularly in younger patients. The femoral head also receives vascularity from the lateral femoral circumflex artery. In addition,"
+        }
+      ]
+    },
+    {
+      "stableGuid": "j0mDN_WW=g",
+      "front": "Night pain is a classic presenting symptom for which shoulder tear? Rotator cuff",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Shoulder_Girdle",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Muscles",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Muscles::Rotator_Cuff",
+        "SnapOrtho::Diagnosis::Rotator_Cuff_Tear",
+        "SnapOrtho::Specialty::Sports_Medicine"
+      ],
+      "candidates": [
+        {
+          "id": "510000619",
+          "title": "Rotator Cuff Disease: Impingement Syndrome, Calcific Tendinitis, Partial-Thickness Rotator Cuff Tears, and Full-Thickness Rotator Cuff Tear",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000619",
+          "extractable": true,
+          "score": 44.011,
+          "snippet": "Cuff Disease: Impingement Syndrome, Calcific Tendinitis, Partial-Thickness Rotator Cuff Tears, and Full-Thickness Rotator Cuff ... https://rock.aaos.org/coursecontent.aspx?id=510000619 19/55 Patients may present with acute trauma and shoulder pain or a more insidious onset of shoulder pain. Many rotator cuff tears are"
+        },
+        {
+          "id": "6001063",
+          "title": "Rotator Cuff Arthropathy: Reverse Shoulder Technique and Outcome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001063",
+          "extractable": true,
+          "score": 42.325,
+          "snippet": "for the management of rotator cuff arthropathy. Rotator Cuff Arthropathy Background     NOTES SEND FEEDBACK 9/3/26, 6:04 PM AAOS | Rotator Cuff Arthropathy: Reverse Shoulder Technique and Outcome https://rock.aaos.org/coursecontent.aspx?id=6001063 1/27 Neer first described the clinical and pathologic findings of r"
+        },
+        {
+          "id": "510000620",
+          "title": "Rotator Cuff Disease: Massive Rotator Cuff Tears and Tendon Transfer",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000620",
+          "extractable": true,
+          "score": 42.323,
+          "snippet": "patients with a functionally irreparable rotator cuff tear. Review the indications, techniques, and outcomes of several tendon transfer procedures. Massive Rotator Cuff Tears Background     NOTES SEND FEEDBACK 9/4/26, 10:27 AM AAOS | Rotator Cuff Disease: Massive Rotator Cuff Tears and Tendon Transfer https://rock"
+        },
+        {
+          "id": "6004082",
+          "title": "Rehabilitation of Rotator Cuff Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004082",
+          "extractable": true,
+          "score": 42.124,
+          "snippet": "port the routine use of platelet-rich plasma for the management of rotator cuff tendinopathy or partial- thickness tears.4 Rotator Cuff Rehabilitation Pain Generators Pain generators may be associated with the affected rotator cuff tendon tissue or may lie outside the rotator cuff in the adjacent shoulder structures. P"
+        },
+        {
+          "id": "510000616",
+          "title": "Imaging of Rotator Cuff Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000616",
+          "extractable": true,
+          "score": 39.438,
+          "snippet": "Normal rotator cuff insertion (arrow). B, Partial- thickness rotator cuff tear (arrow). C, Full- thickness, nonretracted rotator cuff tear (arrow). D, Massive, retracted rotator cuff tear (arrow). (Reproduced from Schiffern SC, Hamid N: SEND FEEDBACK 9/3/26, 4:24 PM AAOS | Imaging of Rotator Cuff Disease https://rock."
+        },
+        {
+          "id": "510000569",
+          "title": "Massive Rotator Cuff Tears: Biologic Augmentation of Rotator Cuff Repair",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000569",
+          "extractable": true,
+          "score": 38.943,
+          "snippet": "You Know Learning Objectives Describe biologics currently used to augment rotator cuff repair. Discuss the normal rotator cuff insertional anatomy and the healing response after rotator cuff repair. Recognize the potential complications or adverse effects associated with biologics used during rotator cuff repair augme"
+        },
+        {
+          "id": "6004075",
+          "title": "The Biology and Biomechanics of Grafts and Implants in Sports Medicine Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004075",
+          "extractable": true,
+          "score": 38.612,
+          "snippet": "thick layer of granulation tissue that may resemble tendinous material. A recent study reported on 23 patients who underwent large or massive rotator cuff repair augmented with the use of a bioinductive collagen patch. At 2-year follow-up, 22 of the 23 patients (96%) had complete healing of the rotator cuff tear as obs"
+        },
+        {
+          "id": "6001062",
+          "title": "Rotator Cuff Arthropathy: Reverse Shoulder Arthroplasty Design and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001062",
+          "extractable": true,
+          "score": 37.766,
+          "snippet": "rotator cuff tear arthropathy.4 History of Reverse Shoulder Arthroplasty Designs SEND FEEDBACK 9/4/26, 10:26 AM AAOS | Rotator Cuff Arthropathy: Reverse Shoulder Arthroplasty Design and Biomechanics https://rock.aaos.org/coursecontent.aspx?id=6001062 2/33 Reverse shoulder arthroplasty was first designed in the 1970s f"
+        },
+        {
+          "id": "510000621",
+          "title": "Massive Rotator Cuff Tears and Superior Capsule Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000621",
+          "extractable": true,
+          "score": 35.266,
+          "snippet": "Review massive rotator cuff tears. Review classification systems associated with massive rotator cuff tears. Identify appropriate indications for superior capsule reconstruction. Describe preoperative planning for the management of massive rotator cuff tears. Explain the technique for the management of massive rotator"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 35.24,
+          "snippet": "etiology, natural history, and pathoanatomy of rotator cuff tear arthropathy. Apply classification systems for rotator cuff tear arthropathy. Perform an appropriate work up of patients in whom rotator cuff tear arthropathy is suspected. Identify appropriate treatment options for patients with rotator cuff tear arthrop"
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "extractable": true,
+          "score": 31.566,
+          "snippet": "cholesterol (TC) in patients with normal rotator cuff tendons and patients with a rotator cuff tear. The patients with a rotator cuff tear had a higher incidence of hypercholesterolemia than the patients with normal rotator cuff tendons. (Reproduced from Leiphart RJ, Newton JB, Soslowsky LJ: Preclinical knowledge of r"
+        },
+        {
+          "id": "6004073",
+          "title": "Traumatic Brachial Plexus Injuries: Shoulder Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004073",
+          "extractable": true,
+          "score": 31.537,
+          "snippet": "biceps, latissimus dorsi, pectoralis major, and triceps; and group 4, the accessory stabilizers of the scapula, includes the trapezius, serratus anterior, pectoralis minor, levator scapulae, and rhomboids. Rotator cuff muscles are the primary stabilizers of the glenohumeral joint during shoulder motion. The stabilizin"
+        }
+      ]
+    },
+    {
+      "stableGuid": "J0Pk,)adZ8",
+      "front": "How do you name a scoliotic curve ? Named for the direction of the convexity",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Spine"
+      ],
+      "candidates": [
+        {
+          "id": "6003024",
+          "title": "Anatomy of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003024",
+          "extractable": true,
+          "score": 17.434,
+          "snippet": "al) Joints The orientation of these joints varies throughout the spine based on the predominant direction of allowed motion at that level. Although a smooth transition exists throughout the SEND FEEDBACK 9/3/26, 7:19 AM AAOS | Anatomy of the Spine https://rock.aaos.org/coursecontent.aspx?id=6003024 15/38 spine, the deg"
+        },
+        {
+          "id": "6001074",
+          "title": "Physical Examination of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001074",
+          "extractable": true,
+          "score": 15.644,
+          "snippet": "varies substantially by spinal region. Cervical spine: flexion/extension, lateral bending, rotation Thoracic spine: very limited intrinsic motion because of the ribs and sternum Lumbar spine: flexion/extension and lateral bending SEND FEEDBACK 9/4/26, 10:24 AM AAOS | Physical Examination of the Spine https://rock.aaos"
+        },
+        {
+          "id": "6001185",
+          "title": "Adult Thoracolumbar Spine Deformity: Sagittal Imbalance",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001185",
+          "extractable": true,
+          "score": 15.619,
+          "snippet": "2 Comprehensive Etiology-Based Adult Spine Deformity Classification Column 1 Title Type Description Subtype 1 Adult degenerative spine deformity Not applicable 2 Adult idiopathic spine deformity A: Progressive idiopathic scoliosis without previous surgical management B: Development of spine deformity SEND FEEDBACK 9/3"
+        },
+        {
+          "id": "6002021",
+          "title": "Imaging of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002021",
+          "extractable": true,
+          "score": 14.367,
+          "snippet": "for spondylolysis Thoracic spine: AP, lateral, and flexion-extension views Cervical spine: AP, lateral, and flexion-extension views Additional views Open-mouth odontoid view to evaluate for upper cervical spine pathology Oblique view to evaluate for foraminal pathology Swimmer view allows for enhanced visualization of"
+        },
+        {
+          "id": "6001177",
+          "title": "Adolescent Idiopathic Scoliosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001177",
+          "extractable": true,
+          "score": 11.903,
+          "snippet": "guide surgical treatment decisions for all curve types. It considers coronal and sagittal deformities and curve flexibility on bending radiographs. Lenke type 1 through type 4 curves are major thoracic curves (ie, the thoracic curve is greater in magnitude than the thoracolumbar curve). Lenke type 5 and type 6 curves"
+        },
+        {
+          "id": "6002095",
+          "title": "Adult Spine Deformity Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002095",
+          "extractable": true,
+          "score": 10.992,
+          "snippet": "deviation from age-appropriate NUSA for 98.5% of asymptomatic population (a spinal deformity has only one major structural deformity curve) Scoliotic deformity curves Scoliotic major structural deformity curve higher than age-appropriate NUSA for 98.5% of the population Minor structural scoliotic curves remain >25° on"
+        },
+        {
+          "id": "6002107",
+          "title": "Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002107",
+          "extractable": true,
+          "score": 10.977,
+          "snippet": "material is the energy per unit volume that it can absorb before it breaks. On the stress-strain curve, the toughness is represented by the area under the stress-strain curve. Force-Displacement Curve A force-displacement curve describes the deformation of a particular object under load.  Force-Displacement Curve If"
+        },
+        {
+          "id": "6001080",
+          "title": "Soft-Tissue Injury and Open Fractures: Skin Grafts and Flaps",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001080",
+          "extractable": true,
+          "score": 9.804,
+          "snippet": "the pedicle incorporates a named artery or vein. The pedicle refers to the tissue containing the blood supply to the flap. A common axial flap is the groin flap, which can be used to cover soft-tissue injuries of the hand or wrist. The named blood vessel supplying the SEND FEEDBACK 9/4/26, 9:37 AM AAOS | Soft-Tissue I"
+        },
+        {
+          "id": "6004101",
+          "title": "Forefoot Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004101",
+          "extractable": true,
+          "score": 9.484,
+          "snippet": "injury risk curve that predicted a 50% risk of a turf toe injury if dorsiflexion exceeds 78°. Epidemiology First described in 1976 by Bowers and Martin,25 who reported an increased incidence of first MTP joint toe sprains with the widespread installation of artificial turf fields, giving these injuries the name turf t"
+        },
+        {
+          "id": "6001152",
+          "title": "Tendon and Ligament Biology and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001152",
+          "extractable": true,
+          "score": 9.295,
+          "snippet": "d Ligament Biology and Biomechanics https://rock.aaos.org/coursecontent.aspx?id=6001152 6/21 Figure 2 Graphs show the biomechanics of tendon. A, Load-elongation curve of tendon, with load as the dependent variable and elongation as the independent variable. Various material properties can be derived from this curve. B,"
+        },
+        {
+          "id": "6002108",
+          "title": "Orthopaedic Biomaterials",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002108",
+          "extractable": true,
+          "score": 8.788,
+          "snippet": "area under the stress-strain curve. It describes the energy needed to cause the material to fail (Figure 2). Figure 2 Graph shows that toughness is the energy absorbed prior to failure, indicated by the area under the stress-strain curve. These two materials are equally tough (the areas under the curve are the same),"
+        },
+        {
+          "id": "6001002",
+          "title": "Immunology and Inflammation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001002",
+          "extractable": true,
+          "score": 8.628,
+          "snippet": "phase, neutrophil recruitment typically predominates initially, followed by the recruitment of macrophages. A third group of responses (>96 hours) are a result of antigen presentation by dendritic cells and other phagocytes to induce adaptive immunity. Pattern-recognition receptors were given this name by Charles Jane"
+        }
+      ]
+    },
+    {
+      "stableGuid": "j18IXM;l<#",
+      "front": "Elastic deformation is reversible changes in shape to a material due to a load, whereas plastic deformation is the irreversible changes in shape to a material due to a load.",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science"
+      ],
+      "candidates": [
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 40.535,
+          "snippet": "to its bulk (mm3-scale), particulate matter (sub-mm scale), and any byproducts from chemical changes (eg, oxidation; Table 1). Tribology is the study of friction and wear. All bearing materials experience material loss during use. Material loss may result in mechanical changes to the bearing, and the evolved wear debr"
+        },
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 32.788,
+          "snippet": "hy typically is the first imaging study performed in assessing bone or joint pain. Some findings may be associated with musculoskeletal infection. Joint space SEND FEEDBACK 9/3/26, 4:48 PM AAOS | Musculoskeletal Infections and Microbiology Basic Science­ https://rock.aaos.org/coursecontent.aspx?id=6002003 21/59 changes"
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "extractable": true,
+          "score": 32.544,
+          "snippet": " Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing  CORE May 18, 2026 James Gregory, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Assess the natural progression of rotator cuff disease. Understand the b"
+        },
+        {
+          "id": "6002108",
+          "title": "Orthopaedic Biomaterials",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002108",
+          "extractable": true,
+          "score": 31.572,
+          "snippet": "bonds in a material that resist deformation and return the material to its original shape. The modulus of elasticity does not correlate with the strength of a material (Table 1). A high modulus of elasticity indicates that a material is stiffer and more resistant to elastic deformation than a material with a lower mod"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 30.126,
+          "snippet": "SEND FEEDBACK 9/4/26, 10:26 AM AAOS | Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes https://rock.aaos.org/coursecontent.aspx?id=6001061 2/20 driven by the deltoid. The humeral head abuts against the acromion, leading to additional disruption of normal mechanics, and, over time, results in dege"
+        },
+        {
+          "id": "6002107",
+          "title": "Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002107",
+          "extractable": true,
+          "score": 29.927,
+          "snippet": "J. Giori, MD, PhD, Palo Alto, CA.) Elastic Deformation and Plastic Deformation Elastic deformation occurs in the linear portion of the stress-strain curve. Material that is deformed elastically will return to its original shape if the load is released. Plastic deformation occurs if the material is stressed beyond the"
+        },
+        {
+          "id": "6004085",
+          "title": "Cervical Spine Injuries and Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004085",
+          "extractable": true,
+          "score": 20.615,
+          "snippet": "them to a higher risk for injury from shear forces.18 Etiology/Mechanism of Injury Mechanical deformation of axons alters membrane permeability, cytosolic calcium concentration, and local vasospasm. These changes can affect the ability of axons to conduct signals in a reversible or an irreversible manner, depending on"
+        },
+        {
+          "id": "6001151",
+          "title": "Bone Biology and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001151",
+          "extractable": true,
+          "score": 18.78,
+          "snippet": "osteoblast differentiation and new bone formation. Biomechanics of Bone Elastic deformation: classical, Hookean behavior in which a material will return to its original shape and dimensions if an applied load is released Plastic deformation: permanent deformation of a material as a function of an applied load Viscoel"
+        },
+        {
+          "id": "6001152",
+          "title": "Tendon and Ligament Biology and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001152",
+          "extractable": true,
+          "score": 18.604,
+          "snippet": "d failure load. Material properties (also referred to as mechanical properties) describe the quality of the tissue. Material properties are calculated by obtaining the engineering stress and strain, which normalize load and elongation to account for tissue geometry. Stress is calculated by dividing load by cross-sectio"
+        },
+        {
+          "id": "6000058",
+          "title": "Biomechanics of Plates, Screws, Rods, and External Fixation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000058",
+          "extractable": true,
+          "score": 17.211,
+          "snippet": "to as the elastic zone because a material will return to its original shape after the deforming force is removed. Beyond the yield point, the slope of the stress-strain curve decreases, indicating that less force is required to create additional deformation. As additional load is applied to bone, the ultimate load is"
+        },
+        {
+          "id": "6001183",
+          "title": "Ligamentous Injuries of the Knee: Failed Anterior Cruciate Ligament Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001183",
+          "extractable": true,
+          "score": 16.475,
+          "snippet": "in addition to a fixation device construct have demonstrated plastic deformation (permanent elongation) after cyclic loading because of viscoelastic construct properties.10,11 Viscoelasticity is a material property combining viscous (resistance to deformation) and elastic (ability to return to size and shape after tem"
+        },
+        {
+          "id": "6002000",
+          "title": "Structure, Function, and Biology of the Extracellular Matrix",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002000",
+          "extractable": true,
+          "score": 14.485,
+          "snippet": "e and shape of the sample and its material properties. By normalizing for the geometry of the sample, a complimentary stress-strain curve is obtained (B). Similar information can be calculated from this curve, but these parameters are estimated material properties that are no longer dependent on size and shape. Note th"
+        }
+      ]
+    },
+    {
+      "stableGuid": "j1BrwEI]7[",
+      "front": "Mechanism fof action of apixaban/rivaroxaban : DIRECT inhibitor of factor Xa",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science"
+      ],
+      "candidates": [
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 38.917,
+          "snippet": "4 summarizes the mechanism of action, ribosomal subunit binding, clinical use, adverse effect profiles, and pertinent pearls for the antibiotic agents most frequently prescribed to manage musculoskeletal infections. The mechanisms of antibiotic resistance are outlined in Table 5. Table 4 Summary of Antimicrobial Agents"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 31.352,
+          "snippet": "prevent third-body wear and femoral head erosion. SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Total Hip Arthroplasty: Bearing Surfaces Basic Science https://rock.aaos.org/coursecontent.aspx?id=510000503 15/21 Figure 3 Illustration shows ceramic-on-ceramic bearing surfaces. MF = macrophage, NFκB = nuclear factor kappa-B, TLRs"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 30.934,
+          "snippet": " Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes  CORE May 05, 2026 James M. Gregory, MD (2020–present) Jason Kappa, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Understand the etiology, natural history, and pathoanatomy o"
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "extractable": true,
+          "score": 26.282,
+          "snippet": " Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing  CORE May 18, 2026 James Gregory, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Assess the natural progression of rotator cuff disease. Understand the b"
+        },
+        {
+          "id": "6000020",
+          "title": "Venous Thromboembolism in Knee and Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000020",
+          "extractable": true,
+          "score": 23.859,
+          "snippet": "are oral agents and do not require patients to be monitored. Rivaroxaban and apixaban are direct inhibitors of activated factor X (factor Xa). Dabigatran is a selective and reversible direct thrombin inhibitor. Results from well-performed multicenter, randomized controlled trials have shown that rivaroxaban, apixaban,"
+        },
+        {
+          "id": "510000653",
+          "title": "Venous Thromboembolic Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000653",
+          "extractable": true,
+          "score": 22.332,
+          "snippet": "Rivaroxaban Factor Xa inhibitor Daily dosing beginning 12 to 24 hours postoperatively. 12 days for TKA, 35 days for THA 2.5 mg twice daily for prophylaxis Reversal agent: andexanet alfa Advantages: oral administration, fixed daily dosing, monitoring not required Disadvantages: bleeding risks, reversal agent poorly def"
+        },
+        {
+          "id": "6001180",
+          "title": "Extensor Mechanism Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001180",
+          "extractable": true,
+          "score": 19.032,
+          "snippet": " Extensor Mechanism Injuries  CORE November 29, 2022 Eli T. Sayegh, MD Simon Görtz, MD Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Define quadriceps and patellar tendon injuries and their epidemiology, including predisposing factors. Review the conceptual founda"
+        },
+        {
+          "id": "6004096",
+          "title": "Patellar Fractures and Extensor Mechanism Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004096",
+          "extractable": true,
+          "score": 15.956,
+          "snippet": "turn stretches the extensor mechanism complex. Simultaneously, the quadriceps muscle is contracting (eg,. walking down the stairs). In a direct blow mechanism of injury, the patella is struck, directly creating a fracture. Patellar Fracture Indirect (eccentric loading of the quadriceps): leads to transverse fracture p"
+        },
+        {
+          "id": "6004076",
+          "title": "Current Applications of Orthobiologic Agents",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004076",
+          "extractable": true,
+          "score": 11.964,
+          "snippet": "centrifuge for separation of cell layers, which takes 10 to 26 minutes depending on the system.6 In most systems, 60 mL of marrow aspirate will result in approximately 3 to 6 mL of concentrate, which is the final therapeutic product.7 Mechanism of action  Mechanism of Action BMAC delivers MSCs and growth factors to t"
+        },
+        {
+          "id": "6002097",
+          "title": "Osteoporosis and Pathologic Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002097",
+          "extractable": true,
+          "score": 10.372,
+          "snippet": "monoclonal antibody targeting RANKL Acts as a decoy receptor, blocking interactions between RANKL and receptor activator of nuclear factor-kappa B Infections have been reported with use Anabolic therapies Intermittent PTH (teriparatide) Mechanism: N-terminus 1-34 amino acid sequence of PTH; the precise mechanism is un"
+        },
+        {
+          "id": "6004042",
+          "title": "Systemic Management of Soft-Tissue Sarcoma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004042",
+          "extractable": true,
+          "score": 9.369,
+          "snippet": "York ESO-1 cancer/testis antigen, PD-1 = programmed cell death protein 1, PDGF = platelet-derived growth factor, PDGFR = platelet-derived growth factor receptor, STS = soft-tissue sarcoma, TRK = tropomycin receptor kinase, UPS = undifferentiated pleomorphic sarcoma, VEGF = vascular endothelial growth factor. Adapted f"
+        },
+        {
+          "id": "6002067",
+          "title": "Complications After Total Knee Arthroplasty: Patellar Maltracking and Instability/Dislocation, Patellar Clunk, Extensor Mechanism Disruption",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002067",
+          "extractable": true,
+          "score": 8.614,
+          "snippet": "Maltracking and Instability/Dislocation, Patellar Clunk, Extensor Mechanism Disru... https://rock.aaos.org/coursecontent.aspx?id=6002067 25/42 Extensor mechanism reconstruction with a synthetic mesh technique Primary repair with augmentation Allograft Reconstruction Extensor mechanism allograft reconstruction includes"
+        }
+      ]
+    },
+    {
+      "stableGuid": "j1l7Ta/o%9",
+      "front": "What is first line treatment for patellar tendinitis ? Ice, rest, activity modification, PT",
+      "extra": "*PT focuses on strengthening quads and hamstrings *NO corticosteroids (increases risk of tendon rupture) *If fails, surgery includes resecting the degenerative area and debriding the bone of tendon insertion; then, suture repair/anchors",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Sports_Medicine"
+      ],
+      "candidates": [
+        {
+          "id": "6004079",
+          "title": "Anatomy of the Ankle for the Sports Medicine Surgeon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004079",
+          "extractable": true,
+          "score": 36.783,
+          "snippet": "position of the posterior endoscopic portals and structures at risk are shown. 1, Peroneus brevis tendon; 2, peroneus longus tendon; 3, fibulotalocalcaneal ligament (fascia of the deep posterior compartment or Rouvière and Canela ligament); 4, sural nerve (highlighted in yellow); 5, calcaneal tendon; 6, plantaris tend"
+        },
+        {
+          "id": "510000596",
+          "title": "Tendon and Muscle Disorders: Achilles Tendinopathy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000596",
+          "extractable": true,
+          "score": 34.332,
+          "snippet": "tendon pathology location. List physical examination features specific to various Achilles tendon pathology. Determine appropriate imaging modalities and the features of Achilles tendon pathology. Review nonsurgical treatment options for the management of Achilles tendon pathology. Discuss intraoperative treatment alg"
+        },
+        {
+          "id": "6001066",
+          "title": "The Team Physician and the Ethics of Sports Medicine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001066",
+          "extractable": true,
+          "score": 32.193,
+          "snippet": "context in which sports medicine ethics are operationalized has distinct characteristics and manifestly structures the behavior of those charged with the duty to act ethically. Studies of the practice of maintaining patient confidentiality in sports medicine show, for example, that the distinct physical environment, p"
+        },
+        {
+          "id": "6004075",
+          "title": "The Biology and Biomechanics of Grafts and Implants in Sports Medicine Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004075",
+          "extractable": true,
+          "score": 30.912,
+          "snippet": "tendons. Advantages: decreased complications related to donor-site morbidity, decreased surgical time, smaller incisions, improved cosmesis, and decreased postoperative pain Disadvantages: increased failure rate, variable tissue quality, risk of viral or bacterial disease transmission. Scaffolds are used to augment te"
+        },
+        {
+          "id": "6004096",
+          "title": "Patellar Fractures and Extensor Mechanism Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004096",
+          "extractable": true,
+          "score": 30.511,
+          "snippet": "fall): results in a simple or comminuted fracture pattern Quadriceps Tendon Rupture Indirect, resulting from eccentric contraction of a flexed knee Patellar Tendon Rupture Indirect, resulting from eccentric contraction of a flexed knee Risk Factors Patellar Fracture Osteoporosis Quadriceps Tendon Rupture Several risk"
+        },
+        {
+          "id": "6000033",
+          "title": "Patellofemoral Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000033",
+          "extractable": true,
+          "score": 29.979,
+          "snippet": "19-year-olds.3 More than 50% of instability events occur during sports activity. The risk of sustaining a recurrent instability episode after a first-time dislocation ranges from 36% to 71%.4 Recurrent instability increases the risk for patellofemoral arthritis.5 Anatomy and Biomechanics Osteology The patella is a ses"
+        },
+        {
+          "id": "6001183",
+          "title": "Ligamentous Injuries of the Knee: Failed Anterior Cruciate Ligament Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001183",
+          "extractable": true,
+          "score": 29.631,
+          "snippet": "failure. Activity Level SEND FEEDBACK 9/3/26, 4:34 PM AAOS | Ligamentous Injuries of the Knee: Failed Anterior Cruciate Ligament Surgery https://rock.aaos.org/coursecontent.aspx?id=6001183 10/37 High activity level at the time of primary ACL reconstruction is a risk factor for ipsilateral graft failure and contralater"
+        },
+        {
+          "id": "6000051",
+          "title": "Axial Neck Pain",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000051",
+          "extractable": true,
+          "score": 27.853,
+          "snippet": "American Academy of Orthopaedic Surgeons, 2010, pp 313-335. Management Most patients with axial neck pain respond favorably to nonsurgical treatment. Activity modifications in combination with a brief period of rest or soft-collar immobilization may be appropriate. If not contraindicated, NSAIDs, corticosteroids, and"
+        },
+        {
+          "id": "6000045",
+          "title": "Athletic Pubalgia and Core Muscle Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000045",
+          "extractable": true,
+          "score": 27.839,
+          "snippet": "CM: Sports hernia/athletic pubalgia: Evaluation and management. Sports Health 2014;6[2]:139-144.) Bone Scintigraphy  Bone Scintigraphy SEND FEEDBACK 9/3/26, 7:25 AM AAOS | Athletic Pubalgia and Core Muscle Injury https://rock.aaos.org/coursecontent.aspx?id=6000045 10/24 Technetium Tc-99m bone scintigraphy can detect"
+        },
+        {
+          "id": "6002007",
+          "title": "Risk Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002007",
+          "extractable": true,
+          "score": 26.901,
+          "snippet": "What You Know Learning Objectives Define risk management and its relevance in the field of orthopaedic surgery. Identify specific risks for patients and providers inside and outside the operating room. Discuss risk management processes. Review risk management processes in unique situations. Background Risk management"
+        },
+        {
+          "id": "510000619",
+          "title": "Rotator Cuff Disease: Impingement Syndrome, Calcific Tendinitis, Partial-Thickness Rotator Cuff Tears, and Full-Thickness Rotator Cuff Tear",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000619",
+          "extractable": true,
+          "score": 26.098,
+          "snippet": "reaction requiring anesthesia. SEND FEEDBACK 9/3/26, 6:05 PM AAOS | Rotator Cuff Disease: Impingement Syndrome, Calcific Tendinitis, Partial-Thickness Rotator Cuff Tears, and Full-Thickness Rotator Cuff ... https://rock.aaos.org/coursecontent.aspx?id=510000619 17/55 The preferred treatment option for recalcitrant calc"
+        },
+        {
+          "id": "6001180",
+          "title": "Extensor Mechanism Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001180",
+          "extractable": true,
+          "score": 26.086,
+          "snippet": "patellar tendon are the infrapatellar fat pad and the retinacular structures.5 The proximal and distal attachments of the patellar tendon are relatively avascular and most prone to rupture.3 Biomechanics The ratio of force transmitted through the patellar tendon relative to the quadriceps tendon is more than 1.0 in le"
+        }
+      ]
+    },
+    {
+      "stableGuid": "J1mQI|xSGs",
+      "front": "What is the most sensitive and specific lab test for rheumatoid arthritis ? Anti-CCP (cyclic citrullinated peptide)",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Rheumatoid_Arthritis"
+      ],
+      "candidates": [
+        {
+          "id": "6001016",
+          "title": "Rheumatoid Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001016",
+          "extractable": true,
+          "score": 63.954,
+          "snippet": "Learning Objectives Identify risk factors associated with rheumatoid arthritis. Assess how the inflammatory process of rheumatoid arthritis leads to joint destruction. Determine the appropriate workup and diagnosis of rheumatoid arthritis. Apply the appropriate medical management for rheumatoid arthritis, including fi"
+        },
+        {
+          "id": "6004030",
+          "title": "Inflammatory Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004030",
+          "extractable": true,
+          "score": 27.618,
+          "snippet": "as gout and calcium pyrophosphate deposition disease. Rheumatoid Arthritis     NOTES SEND FEEDBACK 9/3/26, 4:29 PM AAOS | Inflammatory Arthritis in the Hand and Wrist https://rock.aaos.org/coursecontent.aspx?id=6004030 1/39 Rheumatoid arthritis is an autoimmune disorder that results in symmetric, inflammatory arth"
+        },
+        {
+          "id": "6000057",
+          "title": "Inflammatory Spinal Arthritides",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000057",
+          "extractable": true,
+          "score": 26.949,
+          "snippet": "specificity, new serologic tests have been developed that test for the presence of anti-citrullinated protein antibodies or anti- cyclic citrullinated protein. Similar to rheumatoid factor, these tests are positive in only a proportion (67%) of all patients with rheumatoid arthritis but are rarely positive if rheumato"
+        },
+        {
+          "id": "6001064",
+          "title": "Elbow Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001064",
+          "extractable": true,
+          "score": 23.408,
+          "snippet": "with advanced rheumatoid arthritis of the elbow (eg, Larsen stage 3 through stage 5), patients with unsalvageable primary ulnohumeral arthroplasty, and low-demand patients with posttraumatic arthritis. Historically, rheumatoid arthritis was the primary indication for TEA; however, because of disease-modifying antirheu"
+        },
+        {
+          "id": "6002053",
+          "title": "Degenerative Ankle Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002053",
+          "extractable": true,
+          "score": 22.846,
+          "snippet": "because of asymmetric joint degradation. 10% of patients with ankle arthritis have primary osteoarthritis, which is much less common than knee or hip arthritis. The remaining 10% of patients with ankle arthritis have arthritis resulting from other causes (inflammatory, secondary arthritis, osteonecrosis). Inflammatory"
+        },
+        {
+          "id": "6001052",
+          "title": "Septic Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001052",
+          "extractable": true,
+          "score": 20.602,
+          "snippet": "and 6). Table 2 Differential Diagnosis for Pediatric Hip Pain Type Diagnoses Traumatic Fracture Other musculoskeletal injury (eg, muscle strain) Nonaccidental trauma Inflammatory Transient synovitis Juvenile inflammatory arthritis Postinfectious arthritis Reactive arthritis Infectious Adjacent osseous or soft-tissue i"
+        },
+        {
+          "id": "6001053",
+          "title": "Lyme Disease and Inflammatory Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001053",
+          "extractable": true,
+          "score": 19.535,
+          "snippet": "patients with oligoarthritis. More specific rheumatologic laboratory tests should be ordered by a rheumatologist after clinical evaluation. These serologic studies include antinuclear antibody, rheumatoid factor, anti-cyclic citrullinated peptide, and human leukocyte antigen B27 tests. A positive rheumatoid factor or"
+        },
+        {
+          "id": "6002010",
+          "title": "Total Hip Arthroplasty for Other Indications: Inflammatory Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002010",
+          "extractable": true,
+          "score": 17.496,
+          "snippet": "of this discussion. Rheumatoid Arthritis Rheumatoid arthritis is the most common inflammatory arthritis, with an estimated prevalence of 0.5% to 1% in the United States.2 Rheumatoid arthritis is twice as common in women as men. Genetics, environmental exposures, and lifestyle choices appear to contribute to the pathog"
+        },
+        {
+          "id": "6000049",
+          "title": "Nonsurgical Management of Spinal Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000049",
+          "extractable": true,
+          "score": 17.251,
+          "snippet": "a patient’s erythrocyte sedimentation rate, C-reactive protein level, and complete blood count or evaluating a patient’s stool or urine for blood. Tests suggestive of autoimmune diseases, such as a rheumatoid factor test, antinuclear antibody test, cyclic citrullinated peptide test, and human leukocyte antigen-B27 tes"
+        },
+        {
+          "id": "6002059",
+          "title": "Autoimmune Disease and Steroid Use",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002059",
+          "extractable": true,
+          "score": 16.223,
+          "snippet": "(SLE), rheumatoid arthritis, or spondylarthritis (SpA) typically present with joint problems; therefore, orthopaedists must be familiar with the diagnosis and management of these diseases. In addition, patients with rheumatoid arthritis, SLE, or SpA continue to undergo and benefit from arthroplasty; rates of large joi"
+        },
+        {
+          "id": "6001178",
+          "title": "Shoulder Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001178",
+          "extractable": true,
+          "score": 15.696,
+          "snippet": "have had rheumatoid arthritis for more than 5 years. Other less common forms of inflammatory arthritis include spondyloarthropathies; disorders of connective tissue, such as systemic lupus erythematosus; psoriatic arthritis, and crystalline deposition disorders. Pathoanatomy  Pathoanatomy SEND FEEDBACK 9/4/26, 10:41"
+        },
+        {
+          "id": "6001005",
+          "title": "Synovial Joint Biology, Structure, Function, and Cross Talk",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001005",
+          "extractable": true,
+          "score": 15.347,
+          "snippet": "Discover What You Know Learning Objectives Identify resident cell types in normal synovium and their functions. Identify the main components of synovial fluid and their functions. Assess the contribution of synovium to common joint arthritides, such as rheumatoid arthritis, reactive arthritis (Reiter syndrome), primar"
+        }
+      ]
+    },
+    {
+      "stableGuid": "j1q?;;&a{}",
+      "front": "In the event of a medical error or adverse event , effective communication with the patient and family should include which four elements ? Apology Explanation (full disclosure) Accepting responsibility Corrective steps to prevent recurrences",
+      "extra": "Mazor et al. (https://pubmed.ncbi.nlm.nih.gov/15697100/) found patients would more likely change physicians and seek legal advice in situations with a life-threatening outcome where physicians chose non-disclosure.",
+      "deckPath": "SnapOrtho",
+      "governedTags": [],
+      "candidates": [
+        {
+          "id": "6001023",
+          "title": "Medical Ethics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001023",
+          "extractable": true,
+          "score": 54.205,
+          "snippet": "medical decisions involve issues surrounding values, physicians should be aware that diverse cultures may have different priorities. Patients must understand their diagnosis and treatment options. A medical translator is required if the patient and physician speak different languages.  Culturally Competent Care Befor"
+        },
+        {
+          "id": "6001021",
+          "title": "Medicolegal Issues",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001021",
+          "extractable": true,
+          "score": 54.03,
+          "snippet": "of communication between physicians and patients to limit patient grievances. Define the key components of medical malpractice. Implement appropriate checklists to prevent medical errors. Key Terms Abandonment: termination of the physician-patient relationship by the physician without reasonable notice to the patient"
+        },
+        {
+          "id": "6004014",
+          "title": "Patient-Reported Outcome Measures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004014",
+          "extractable": true,
+          "score": 47.633,
+          "snippet": "MPH (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Define patient-reported outcomes and patient-reported outcome measures and how they differ from traditional outcome metrics. Review the types of patient-reported outcome measures. Discuss the manner i"
+        },
+        {
+          "id": "6002008",
+          "title": "Informed Consent",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002008",
+          "extractable": true,
+          "score": 45.075,
+          "snippet": "verbal discussion and obtaining the patient’s signature to affirm the patient’s consent; however, more recently, videos and computer software have been used in acquiring consent. Acquiring informed consent from a patient requires several steps, and clear communication is necessary to minimize patient harm.8,9 These st"
+        },
+        {
+          "id": "6001066",
+          "title": "The Team Physician and the Ethics of Sports Medicine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001066",
+          "extractable": true,
+          "score": 44.865,
+          "snippet": "the oral discussion. The physician obtaining consent should make a good-faith effort to evaluate whether the patient understands the information that has been provided. Patients have the right to decide their own course of treatment, even if their decisions are bad from the physician’s point of view. Patients should b"
+        },
+        {
+          "id": "6002007",
+          "title": "Risk Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002007",
+          "extractable": true,
+          "score": 41.489,
+          "snippet": "it relates to patient care, risk management should reduce or eliminate adverse events. In addition to the effect of medical errors on patients, medical errors cost more than $9 billion annually in the United States alone.5 Medical Errors Medical errors, or adverse events, may contribute to as many as 98,000 deaths per"
+        },
+        {
+          "id": "6003006",
+          "title": "Contracts and Negotiations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003006",
+          "extractable": true,
+          "score": 39.612,
+          "snippet": "that is a physician’s responsibility. The terms should be placed in the three-column grid: deal breakers, pluses/minuses, do not care. Writing Terms and Finding a Lawyer  Writing Terms and Finding a Lawyer After development of the term sheet, physicians should retain legal counsel and give them this term sheet. The l"
+        },
+        {
+          "id": "510000591",
+          "title": "Disaster and Mass Casualty Preparedness",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000591",
+          "extractable": true,
+          "score": 36.258,
+          "snippet": "f MCIs. Another important aspect of patient care is communication, specifically regarding medical records. Many MCIs and hospital trauma protocols state how medical documentation should occur during disaster scenarios. This is especially important during MCIs because medical decisions acutely need to be made and tracke"
+        }
+      ]
+    },
+    {
+      "stableGuid": "J1Wgi5RJ4<",
+      "front": "Which part of the clavicle is most commonly fractured ? Middle third (80%)",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Shoulder_Girdle",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology::Clavicle",
+        "SnapOrtho::Diagnosis::Clavicle_Fracture",
+        "SnapOrtho::Specialty::Shoulder_Elbow",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "510000664",
+          "title": "Shoulder Trauma: Scapular and Glenoid Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000664",
+          "extractable": true,
+          "score": 41.27,
+          "snippet": "in shoulder surgery. J Am Acad Orthop Surg 2020;28[5]:e185-e192. SEND FEEDBACK 9/4/26, 10:43 AM AAOS | Shoulder Trauma: Scapular and Glenoid Fractures https://rock.aaos.org/coursecontent.aspx?id=510000664 8/49 Figure 4 Illustration of the posterior aspect of the shoulder shows muscles and nerves. (Reproduced from Gram"
+        },
+        {
+          "id": "510000652",
+          "title": "Shoulder Trauma: Proximal Humerus Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000652",
+          "extractable": true,
+          "score": 35.297,
+          "snippet": "AM AAOS | Shoulder Trauma: Proximal Humerus Fractures https://rock.aaos.org/coursecontent.aspx?id=510000652 3/53 Figure 1 Illustrations show the anatomy of the shoulder. A, The anatomy of the shoulder is complex, and shoulder function depends on proper alignment and interaction of anatomic structures. Displacement of"
+        },
+        {
+          "id": "6004072",
+          "title": "Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004072",
+          "extractable": true,
+          "score": 30.204,
+          "snippet": "holding the clavicle in reduction (Figure 7). SEND FEEDBACK 9/4/26, 9:35 AM AAOS | Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability https://rock.aaos.org/coursecontent.aspx?id=6004072 21/26 Figure 7 Intraoperative photographs show a medial clavicle physeal fracture. A, The fracture is reduced with t"
+        },
+        {
+          "id": "6000039",
+          "title": "Shoulder Trauma: Acromioclavicular Joint Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000039",
+          "extractable": true,
+          "score": 30.066,
+          "snippet": "of the distal clavicle. C, SEND FEEDBACK 9/4/26, 10:42 AM AAOS | Shoulder Trauma: Acromioclavicular Joint Injuries https://rock.aaos.org/coursecontent.aspx?id=6000039 18/45 Resting position of the distal clavicle before manual reduction. D, The examiner reduces the distal clavicle deformity by applying downward pressu"
+        },
+        {
+          "id": "6001189",
+          "title": "Proximal Third Femur Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001189",
+          "extractable": true,
+          "score": 24.716,
+          "snippet": "surgical management. Gain familiarity with commonly used classification systems for proximal third femur fractures and understand their relevance with regard to management. Determine the indications and surgical treatment options for geriatric femoral neck fractures, intertrochanteric femur fractures, and subtrochante"
+        },
+        {
+          "id": "510000632",
+          "title": "Clavicular Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000632",
+          "extractable": true,
+          "score": 13.013,
+          "snippet": "r fractures, which divides the clavicle into thirds. Group I (middle third) constitutes 69% to 85% of fractures. Group II (distal [lateral] third) constitutes 12% to 28% of fractures. Group III (medial third) constitutes 3% to 6% of fractures. (Reproduced from Cole PA, Gammon SR, Pedri T: Fractures of the clavicle, sca"
+        },
+        {
+          "id": "510000613",
+          "title": "Shoulder Anatomy and Function",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000613",
+          "extractable": true,
+          "score": 12.439,
+          "snippet": "into three segments in relation to the pectoralis minor muscle. First part (suprapectoral) Medial to the pectoralis minor muscle Has one branch: the superior thoracic artery Second part (retropectoral) Deep to the pectoralis minor muscle Has two branches: the thoracoacromial trunk and the lateral thoracic artery Third"
+        },
+        {
+          "id": "510000639",
+          "title": "SICK Scapula Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000639",
+          "extractable": true,
+          "score": 10.748,
+          "snippet": "displacement of the inferior angle (lateral rotation). Vasculature Subclavian artery Suprascapular artery: branches off thyrocervical trunk Axillary artery: three parts; each part has same number of branches as name of that portion. First part: superior thoracic artery Second part: thoracoacromial and lateral thoracic"
+        },
+        {
+          "id": "510000527",
+          "title": "Disorders of the Scapula",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000527",
+          "extractable": true,
+          "score": 10.311,
+          "snippet": "and posterior stabilization between the clavicle and acromion, lateral stability as a tension band, and rotational stability of the clavicle on the scapula and the scapula on the clavicle. The coracoclavicular ligament complex has two components: the conoid and the trapezoid. It provides suspension to the scapula unde"
+        },
+        {
+          "id": "6001175",
+          "title": "Clavicular Fractures and Sternoclavicular and Acromioclavicular Injuries in the Pediatric Patient",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001175",
+          "extractable": true,
+          "score": 10.127,
+          "snippet": "demonstrate convexity of the ends of the nonfused portions of the clavicle (Video 1). Video 1 Rudzki JR: Clavicle trauma: Distal clavicle fractures & SC injuries, from McKee MD, mod: Clavicle trauma: From midshaft fractures in contact athletes to distal clavicle fractures and acromioclavicular joint injuries. Presente"
+        },
+        {
+          "id": "6001054",
+          "title": "Brachial Plexus Birth Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001054",
+          "extractable": true,
+          "score": 9.847,
+          "snippet": "Injuries Clavicle fractures may be difficult to differentiate from BPBI. The incidence of newborn clavicle fractures is 2 to 3 per 1,000 live births.9,10 Among patients with a BPBI, clavicle fractures are present in 7.84% of newborns. Gandhi et al9 reported that the presence of a clavicle fracture and shoulder dystoci"
+        },
+        {
+          "id": "510000631",
+          "title": "Acromioclavicular Joint Arthritis and Pathology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000631",
+          "extractable": true,
+          "score": 9.805,
+          "snippet": "clavicle. B, Posterolateral view. C, Resting position of the distal clavicle before manual reduction. D, The examiner reduces the distal clavicle deformity by applying downward pressure to the clavicle and upward pressure through the elbow. The deformity is completely reducible, indicating the clavicle is not herniate"
+        }
+      ]
+    },
+    {
+      "stableGuid": "J20t9TTk!L",
+      "front": "For comminuted proximal humerus fractures in elderly patients, which arthroplasty procedure has resulted in better clinical outcomes? Reverse Total Shoulder Arthroplasty",
+      "extra": "*Similar complication rates compared to hemi",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Shoulder_Girdle",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology::Proximal_Humerus",
+        "SnapOrtho::Diagnosis::Proximal_Humerus_Fracture",
+        "SnapOrtho::Specialty::Adult_Reconstruction"
+      ],
+      "candidates": [
+        {
+          "id": "510000652",
+          "title": "Shoulder Trauma: Proximal Humerus Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000652",
+          "extractable": true,
+          "score": 55.291,
+          "snippet": "9/4/26, 10:42 AM AAOS | Shoulder Trauma: Proximal Humerus Fractures https://rock.aaos.org/coursecontent.aspx?id=510000652 1/53  Overview Proximal humerus fractures are among the most common and challenging fractures managed by orthopaedic surgeons. They occur in a bimodal distribution: high-energy fractures occur in"
+        },
+        {
+          "id": "6001062",
+          "title": "Rotator Cuff Arthropathy: Reverse Shoulder Arthroplasty Design and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001062",
+          "extractable": true,
+          "score": 49.631,
+          "snippet": "for the management of rotator cuff tear arthropathy, glenohumeral joint arthritis with glenoid bone deficiency, massive rotator cuff tears, proximal humerus fractures, malunion and nonunion of the proximal humerus, and other complex conditions of the shoulder.  History of Reverse Shoulder Arthroplasty Designs Reverse"
+        },
+        {
+          "id": "6002085",
+          "title": "Proximal Humerus Fractures and Humeral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002085",
+          "extractable": true,
+          "score": 39.889,
+          "snippet": "of proximal humerus fractures. Perform an assessment of proximal humerus fractures to understand the mechanism of injury, associated injuries, imaging and diagnostic studies, and classification systems. Review surgical and nonsurgical treatment options for the management of proximal humerus fractures. Review the pitfa"
+        },
+        {
+          "id": "6001063",
+          "title": "Rotator Cuff Arthropathy: Reverse Shoulder Technique and Outcome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001063",
+          "extractable": true,
+          "score": 39.25,
+          "snippet": "Learning Objectives Understand key technical aspects of reverse shoulder arthroplasty for the management of rotator cuff arthropathy. Review preoperative considerations for reverse shoulder arthroplasty. Discuss critical surgical steps and intraoperative considerations for successful reverse shoulder arthroplasty. Gai"
+        },
+        {
+          "id": "510000628",
+          "title": "Posttraumatic and Postoperative Shoulder Stiffness",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000628",
+          "extractable": true,
+          "score": 38.541,
+          "snippet": "and Postoperative Shoulder Stiffness https://rock.aaos.org/coursecontent.aspx?id=510000628 9/28 Figure 2 Drawings show the surgical classification of proximal humerus fracture sequelae. (Reproduced with permission from Boileau P, Trojani C, Walch G, Krishnan SG, Romeo A, Sinnerton R: Shoulder arthroplasty for the trea"
+        },
+        {
+          "id": "510000504",
+          "title": "Primary Hip Arthroplasty for Other Indications: Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000504",
+          "extractable": true,
+          "score": 37.048,
+          "snippet": "Pretest Discover What You Know Learning Objectives Discuss arthroplasty treatment options for the management of femoral neck fractures. Describe the indications and contraindications for hemiarthroplasty and total hip arthroplasty. List the advantages and disadvantages of hemiarthroplasty versus total hip arthroplasty"
+        },
+        {
+          "id": "6004067",
+          "title": "Proximal Radius Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004067",
+          "extractable": true,
+          "score": 37.036,
+          "snippet": "of, etiology of, and risk factors for proximal radius fractures in pediatric patients. Perform an appropriate workup for pediatric patients in whom fracture about the elbow is suspected. Review the surgical and nonsurgical management of radius fractures in pediatric patients. Pathophysiology/Pathoanatomy Overview Most"
+        },
+        {
+          "id": "510000662",
+          "title": "Distal Humerus Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000662",
+          "extractable": true,
+          "score": 35.934,
+          "snippet": "Although rare, ipsilateral forearm fractures, such as Monteggia injuries, olecranon fractures, coronoid fractures, radial head fractures, and ipsilateral proximal humerus fractures, may occur in combination with distal humerus fractures. A complete series of SEND FEEDBACK 9/3/26, 3:56 PM AAOS | Distal Humerus Fracture"
+        },
+        {
+          "id": "6002098",
+          "title": "Periprosthetic Fractures Near Total Hip and Knee Arthroplasty Implants",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002098",
+          "extractable": true,
+          "score": 35.775,
+          "snippet": "implant stability.  Pathophysiology/Pathoanatomy Periprosthetic acetabulum fractures are relatively rare and underreported compared with periprosthetic femur fractures about a total hip arthroplasty implant.1,2 A thorough evaluation of the fracture should be performed, with a focus on the acuity of the fracture from"
+        },
+        {
+          "id": "6002026",
+          "title": "Acetabular Fractures: Definitive Management and Outcomes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002026",
+          "extractable": true,
+          "score": 35.201,
+          "snippet": "for surgical and nonsurgical management of acetabular fractures. Identify the variables that contribute to successful management of acetabular fractures. Review the expected short- and long-term outcomes of acetabular fractures. Explain common complications that can occur after acetabular fracture management. Backgrou"
+        },
+        {
+          "id": "6004017",
+          "title": "Perioperative Treatment of Patients Undergoing Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004017",
+          "extractable": true,
+          "score": 35.032,
+          "snippet": "complication rates are two times higher than those for non–dialysis-dependent patients. Harmful effect on long-term life expectancy in patients who undergo TJA and fewer quality- adjusted life-years even if clinical outcomes are similar Cirrhosis, hepatitis C Higher complication rates reported after TJA Higher complic"
+        },
+        {
+          "id": "6001189",
+          "title": "Proximal Third Femur Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001189",
+          "extractable": true,
+          "score": 34.601,
+          "snippet": "2013;95[23]:e1821-1828.) Etiology/Mechanism of Injury Geriatric fractures tend to be low-energy injuries. SEND FEEDBACK 9/3/26, 5:55 PM AAOS | Proximal Third Femur Fractures https://rock.aaos.org/coursecontent.aspx?id=6001189 6/63 Proximal femur fractures in young patients usually are high-energy injuries  Etiology/M"
+        }
+      ]
+    }
+  ]
+}

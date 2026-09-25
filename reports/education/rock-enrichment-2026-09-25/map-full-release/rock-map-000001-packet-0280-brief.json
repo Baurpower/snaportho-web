@@ -1,0 +1,1111 @@
+{
+  "batchKey": "map-000001-packet-0280",
+  "inputChecksum": "23e551057210842396e7c4fe89488b051b0d66514a971a16b53a1f960e9f5e51",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "sidecarSchema": {
+    "card": {
+      "stableGuid": "string",
+      "status": "\"mapped\"|\"skipped\"",
+      "chapters": "1-3 {id, role} from this card's candidates; first is primary",
+      "skipReason": "if skipped"
+    }
+  },
+  "cards": [
+    {
+      "stableGuid": "qB/T*OX|qc",
+      "front": "Which nerve is at risk when placing the proximal anterolateral portal for elbow arthroscopy ? Radial nerve",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Arm",
+        "SnapOrtho::Anatomy::Arm::Nerves",
+        "SnapOrtho::Anatomy::Arm::Nerves::Radial_Nerve",
+        "SnapOrtho::Specialty::Shoulder_Elbow"
+      ],
+      "candidates": [
+        {
+          "id": "6000047",
+          "title": "Elbow Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000047",
+          "extractable": true,
+          "score": 59.451,
+          "snippet": "d most commonly used medial portal Mid-anteromedial portal: 1 cm proximal and 1 cm anterior to the medial epicondyle Distal (standard) anteromedial portal: 2 cm distal and 2 cm anterior to the medial epicondyle No longer the primary portal; used as an accessory portal for retractors Lateral portals Proximal anterolater"
+        },
+        {
+          "id": "6002093",
+          "title": "Knee Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002093",
+          "extractable": true,
+          "score": 37.761,
+          "snippet": "underreported.11,12 Iatrogenic nerve injury to the saphenous (posteromedial portal) or common peroneal nerve (posterolateral portal) must be considered during portal placement.10 The overall risk of deep vein thrombosis after knee arthroscopy without prophylaxis is approximately 10%, whereas the risk of proximal deep"
+        },
+        {
+          "id": "6004002",
+          "title": "Ankle Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004002",
+          "extractable": true,
+          "score": 35.268,
+          "snippet": "is the nerve most at risk during this procedure on establishment of the anterolateral portal (Figure 10). Transillumination of the anterolateral skin via the arthroscope can help identify the crossing nerve branches. SEND FEEDBACK 9/3/26, 7:20 AM AAOS | Ankle Arthroscopy https://rock.aaos.org/coursecontent.aspx?id=600"
+        },
+        {
+          "id": "6000046",
+          "title": "Shoulder Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000046",
+          "extractable": true,
+          "score": 35.195,
+          "snippet": "process; D, scapular spine; 1, posterior portal; 2, anterior central portal; 3, anterolateral portal; 4, posterolateral portal; 5, superolateral portal; 6, anterosuperior portal; 7, 7-o’clock portal; 8, axillary pouch portal; 9, Neviaser portal; 10, portal of Wilmington; 11, transrotator cuff portal. (Image courtesy o"
+        },
+        {
+          "id": "510000587",
+          "title": "Hip Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000587",
+          "extractable": true,
+          "score": 34.09,
+          "snippet": "medial to the anterolateral portal (Figure 9). Figure 9 Intraoperative photograph of a left hip shows surface landmarks and portals hip arthroscopy. AL = anterolateral portal, ASIS = anterior superior iliac spine, DALA = distal anterolateral accessory portal, MMAP = modified mid-anterior portal, PALA = proximal antero"
+        },
+        {
+          "id": "6000026",
+          "title": "Wrist and Hand Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000026",
+          "extractable": true,
+          "score": 33.257,
+          "snippet": "risk of neurovascular injury: 1-2 portal: potential risk of injury to the superficial branch of the radial nerve with potential for radial artery injury 6U portal: high risk of injury to the dorsal sensory branch of the ulnar nerve if used as a working portal; commonly used as an outflow portal via an 18-gauge needle"
+        },
+        {
+          "id": "510000559",
+          "title": "Nerve Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000559",
+          "extractable": true,
+          "score": 32.307,
+          "snippet": "a cable sural nerve graft, is the ideal treatment option. Preganglionic lesions often require nerve transfers, such as an ulnar nerve fascicle to the musculocutaneous nerve (Oberlin transfer), a spinal accessory nerve fascicle to the suprascapular nerve, or a radial nerve fascicle to the axillary nerve. Pan-plexus ner"
+        },
+        {
+          "id": "6000040",
+          "title": "Elbow Stiffness",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000040",
+          "extractable": true,
+          "score": 31.313,
+          "snippet": "rficial anatomy of the medial aspect of the elbow. The ulnar nerve (UN) is traced. B, Superficial anatomy of the lateral aspect of the elbow. DPP = direct posterior portal, LE = lateral epicondyle, ME = medial epicondyle, P ALP = proximal anterolateral portal, P AMP = proximal anteromedial portal, PLP = posterolateral"
+        },
+        {
+          "id": "510000660",
+          "title": "Radial Head and Neck Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000660",
+          "extractable": true,
+          "score": 30.709,
+          "snippet": "comminution Radial head fracture fixation is associated with a higher failure rate in patients with elbow instability. Radial head excision6,7,28 Not commonly performed because of the role of radial head as an important stabilizer of the elbow Results in increased carrying angle at the elbow and proximal radial migrat"
+        },
+        {
+          "id": "510000633",
+          "title": "Throwing Elbow Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000633",
+          "extractable": true,
+          "score": 30.326,
+          "snippet": "9/4/26, 9:50 AM AAOS | Throwing Elbow Injuries https://rock.aaos.org/coursecontent.aspx?id=510000633 9/37 nerve, and ulnar nerve. In overhead athletes, the most commonly injured/irritated nerve is the ulnar nerve. This typically occurs at the level of the elbow. To completely examine the ulnar nerve, surgeons should a"
+        },
+        {
+          "id": "6000034",
+          "title": "Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000034",
+          "extractable": true,
+          "score": 30.207,
+          "snippet": "Arthroscopy 2014;30[1]:90-98.)  Traumatic Anterior Instability SEND FEEDBACK 9/4/26, 9:30 AM AAOS | Shoulder Instability https://rock.aaos.org/coursecontent.aspx?id=6000034 10/28 Because traumatic anterior shoulder instability is the most common shoulder pathology in this age group, an understanding of this injury is"
+        },
+        {
+          "id": "6002060",
+          "title": "Hip Arthroscopy and Periacetabular Osteotomy: Surgical Techniques",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002060",
+          "extractable": true,
+          "score": 29.061,
+          "snippet": "to the surgical extremity and the joint distracted 6 to 8 mm. A spinal needle, nitinol guide wire, and cannulated trocar are used to establish the anterolateral portal under fluoroscopic guidance. This portal entry site is just proximal and anterior to the greater trochanter. The anterolateral portal is established in"
+        }
+      ]
+    },
+    {
+      "stableGuid": "qbbXKf-/hv",
+      "front": "What pathology is shown below? Accessory navicular",
+      "extra": "*Treat with orthotics followed by excision with reattachment of the posterior tibial tendon",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Foot_Ankle"
+      ],
+      "candidates": [
+        {
+          "id": "6001014",
+          "title": "Posterior Tibial Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001014",
+          "extractable": true,
+          "score": 53.886,
+          "snippet": "5:47 PM AAOS | Posterior Tibial Tendon Disorders https://rock.aaos.org/coursecontent.aspx?id=6001014 1/23 The presence of an accessory navicular is correlated with developing posterior tibial tendon dysfunction (Table 1) Table 1 Classification of Tibialis Posterior Tendon Dysfunction Type Dysfunction 1 Sesamoid bone i"
+        },
+        {
+          "id": "510000646",
+          "title": "Fractures of the Navicular Bone",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000646",
+          "extractable": true,
+          "score": 44.272,
+          "snippet": "of the posterior tibial tendon results in diastasis. SEND FEEDBACK 9/3/26, 4:14 PM AAOS | Fractures of the Navicular Bone https://rock.aaos.org/coursecontent.aspx?id=510000646 4/18  Fractures of the Tuberosity The principal mechanism in fracture of the tuberosity of the navicular bone is eversion and contraction of t"
+        },
+        {
+          "id": "6002083",
+          "title": "Foot and Ankle Sports Injuries in Pediatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002083",
+          "extractable": true,
+          "score": 39.593,
+          "snippet": "heel cords is present. Surgical Management Posterior tibialis tendon splitting excision with tendon repair Accessory navicular excision with posterior tibial tendon advancement (Kidner procedure) SEND FEEDBACK 9/3/26, 4:09 PM AAOS | Foot and Ankle Sports Injuries in Pediatric Patients https://rock.aaos.org/courseconte"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 37.801,
+          "snippet": "sal DPN DF, EV Superficial posterior Gastrocnemius Medial and lateral femoral condyles Calcaneus through Achilles tendon Tibial Ankle PF, knee flexion Superficial posterior Soleus Tibia and fibula Calcaneus through Achilles tendon Tibial PF Superficial posterior Plantaris Lateral femur Calcaneus Tibial PF"
+        },
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "extractable": true,
+          "score": 36.36,
+          "snippet": "Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Understand appropriate evaluation and management of foot and ankle trauma in pediatric patients. Review unique features of pediatric foot and ankle injuries and their effect on growth and development. Pediatric Ankle Fractures Ba"
+        },
+        {
+          "id": "6000014",
+          "title": "Biomechanics/Gait: Effect of Ankle/Foot Malalignment",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000014",
+          "extractable": true,
+          "score": 35.85,
+          "snippet": "fth metatarsal DPN DF, EV Superficial posterior Gastrocnemius Medial and lateral femoral condyles Calcaneus through Achilles tendon Tibial Ankle PF, knee flexion Superficial posterior Soleus Tibia and fibula Calcaneus through Achilles tendon Tibial PF Superficial posterior Plantaris Lateral femur Calcaneus"
+        },
+        {
+          "id": "6002005",
+          "title": "Tibialis Anterior Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002005",
+          "extractable": true,
+          "score": 22.931,
+          "snippet": "dynamic function of the anterior tibial tendon and its sheath. SEND FEEDBACK 9/4/26, 9:55 AM AAOS | Tibialis Anterior Tendon Disorders https://rock.aaos.org/coursecontent.aspx?id=6002005 7/17 With more subtle or linear fissuring, ultrasonography may provide additional value in detecting tendon quality. Particularly us"
+        },
+        {
+          "id": "510000538",
+          "title": "Throwing Shoulder Injuries: Superior Labrum Anterior to Posterior Tears and Proximal Biceps Tendon Lesions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000538",
+          "extractable": true,
+          "score": 22.243,
+          "snippet": "s tendon pathology typically is descriptive. Tear versus synovitis Extent of tear based on percentage of the entire tendon Location of pathology Presence of subluxation or dislocation of the biceps from the bicipital groove Table 1 Classification of Superior Labrum Anterior to Posterior Tears Type Description I Degener"
+        },
+        {
+          "id": "6004097",
+          "title": "Tibial Plateau Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004097",
+          "extractable": true,
+          "score": 21.73,
+          "snippet": "TX.) Tibial Plateau Fractures with an Ipsilateral Tibial Shaft Fracture SEND FEEDBACK 9/4/26, 10:34 AM AAOS | Tibial Plateau Fractures https://rock.aaos.org/coursecontent.aspx?id=6004097 23/31  Tibial Plateau Fractures with an Ipsilateral Tibial Shaft Fracture The principles of tibial plateau fracture reduction and f"
+        },
+        {
+          "id": "6003002",
+          "title": "Lesser Toe Pathology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003002",
+          "extractable": true,
+          "score": 21.136,
+          "snippet": "Lesser Toe Pathology https://rock.aaos.org/coursecontent.aspx?id=6003002 14/40 Figure 6 Intraoperative photograph of a foot shows plantar plate disruption. The flexor tendon can be visualized through the defect. A metatarsal shortening osteotomy allows for improved access. (Courtesy of David R. Richardson, MD, Southave"
+        },
+        {
+          "id": "510000596",
+          "title": "Tendon and Muscle Disorders: Achilles Tendinopathy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000596",
+          "extractable": true,
+          "score": 21.134,
+          "snippet": "tendon pathology location. List physical examination features specific to various Achilles tendon pathology. Determine appropriate imaging modalities and the features of Achilles tendon pathology. Review nonsurgical treatment options for the management of Achilles tendon pathology. Discuss intraoperative treatment alg"
+        },
+        {
+          "id": "6004078",
+          "title": "Posterior Cruciate Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004078",
+          "extractable": true,
+          "score": 21.049,
+          "snippet": "are listed in Table 1. Table 1 Classification of Posterior Cruciate Ligamentous Injuries Type of Injury Characteristics Partial Posterior tibial translation <10 mm on posterior drawer test with the knee in neutral rotation End point is present Complete isolated Posterior tibial translation of 8 to 10 mm on posterior d"
+        }
+      ]
+    },
+    {
+      "stableGuid": "qbOs}eUF!5",
+      "front": "What is the primary restraint to anterior translation in an ACL-deficient knee ? Posterior horn of the medial meniscus",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Ligaments",
+        "SnapOrtho::Anatomy::Leg_Knee::Ligaments::Medial_Meniscus",
+        "SnapOrtho::Diagnosis::ACL_Tear",
+        "SnapOrtho::Specialty::Sports_Medicine"
+      ],
+      "candidates": [
+        {
+          "id": "6002002",
+          "title": "Meniscus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002002",
+          "extractable": true,
+          "score": 47.076,
+          "snippet": "tibial condyle. ACL = anterior cruciate ligament, aML = anterior root of the lateral meniscus, aMM = anterior root of the medial meniscus, LTC = lateral tibial condyle, MTC = medial tibial condyle, PCL = posterior cruciate ligament, pML = posterior root of the lateral meniscus, pMM = posterior root of the medial menis"
+        },
+        {
+          "id": "510000539",
+          "title": "Anterior Cruciate Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000539",
+          "extractable": true,
+          "score": 41.805,
+          "snippet": "posterolateral tibial plateau).  Associated Injuries Lateral meniscus tears commonly are associated with acute ACL ruptures, and medial meniscus tears more often are observed in patients with chronic ACL injuries. Medial collateral ligament injuries are commonly associated with ACL injuries, and lateral collateral or"
+        },
+        {
+          "id": "6004075",
+          "title": "The Biology and Biomechanics of Grafts and Implants in Sports Medicine Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004075",
+          "extractable": true,
+          "score": 41.429,
+          "snippet": "patient age and activity level. Review the basic biomechanical properties of implants available for sports medicine procedures. Describe the common modes of failure with various types of implants. Introduction Soft-tissue grafts are commonly used in sports medicine for ligament or tendon reconstruction (anterior cruci"
+        },
+        {
+          "id": "6001071",
+          "title": "Anterior Cruciate Ligament Rehabilitation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001071",
+          "extractable": true,
+          "score": 38.952,
+          "snippet": "priority during the first week of management after an anterior cruciate ligament (ACL) tear. Effusion can be monitored via a stroke test, which is a reliable clinical test used to grade intracapsular swelling in the knee joint.9 A quiet knee also is the immediate goal after ACL reconstruction. After a quiet knee is ac"
+        },
+        {
+          "id": "6002110",
+          "title": "Tendons and Ligaments",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002110",
+          "extractable": true,
+          "score": 38.319,
+          "snippet": "s and Ligaments https://rock.aaos.org/coursecontent.aspx?id=6002110 11/19 Ligament healing occurs via the same phases as tendon healing: hemostasis/inflammation, matrix and cell proliferation, and remodeling/maturation. Extra-articular ligaments (eg, the medial collateral ligament [MCL] of the knee) have a greater capa"
+        },
+        {
+          "id": "6001056",
+          "title": "Meniscal Tears and Discoid Meniscus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001056",
+          "extractable": true,
+          "score": 37.774,
+          "snippet": "the lateral meniscus often is anchored to the femur by the ligament of Humphrey and Wrisberg. The medial meniscus is more C-shaped than the circular lateral meniscus, with its posterior horn being wider than its anterior horn. The peripheral aspect of the medial meniscus is firmly attached to the medial capsule and th"
+        },
+        {
+          "id": "6001029",
+          "title": "Surgical Anatomy of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001029",
+          "extractable": true,
+          "score": 37.129,
+          "snippet": "and the posterolateral bundle is tight in knee extension.8 The posterolateral bundle of the ACL is responsible for preventing the pivot-shift phenomenon and stabilizes against anterior translation with 30° of knee flexion. The anteromedial bundle of the ACL resists anterior tibial translation at 60° and 90° of knee fl"
+        },
+        {
+          "id": "6001003",
+          "title": "Biology and Biomechanics of the Meniscus and Labrum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001003",
+          "extractable": true,
+          "score": 36.565,
+          "snippet": "semicircular shape, which covers approximately 50% to 60% of the medial tibial plateau in adulthood.3 The mean size of the posterior horn in the anterior-posterior dimension is 11 mm, whereas the anterior horn is narrower.4 The anterior horn of the medial meniscus attaches to the tibia anterior to the anterior cruciat"
+        },
+        {
+          "id": "6001181",
+          "title": "Meniscal Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001181",
+          "extractable": true,
+          "score": 35.278,
+          "snippet": "rigid attachment, the medial meniscus is a more important secondary stabilizer to anterior translation (the primary stabilizer being the ACL). In particular, the posterior horn of the medial meniscus has been demonstrated to act as a brake stop mechanism to anterior tibial translation in ACL-deficient knees.1-3 Conver"
+        },
+        {
+          "id": "6004078",
+          "title": "Posterior Cruciate Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004078",
+          "extractable": true,
+          "score": 35.118,
+          "snippet": "| Posterior Cruciate Ligament Injuries https://rock.aaos.org/coursecontent.aspx?id=6004078 1/28 Overview The posterior cruciate ligament (PCL) is the primary restraint to posterior tibial translation in the intact knee. 5% to 20% of all ligamentous injuries to the knee involve the PCL.  Overview Many PCL injuries go"
+        },
+        {
+          "id": "6002092",
+          "title": "Imaging of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002092",
+          "extractable": true,
+          "score": 33.933,
+          "snippet": "the Knee https://rock.aaos.org/coursecontent.aspx?id=6002092 26/39 Figure 22 T2-weighted sagittal MRI of a knee shows a bucket-handle tear of the posterior horn of the lateral meniscus. Note that the posterior horn of the lateral meniscus is flipped anteriorly and located directly posterior to the anterior horn of the"
+        },
+        {
+          "id": "6002093",
+          "title": "Knee Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002093",
+          "extractable": true,
+          "score": 33.618,
+          "snippet": "knee in extension. May allow for evaluation of the lateral facet of the patella Secondary Portals Posteromedial portal Use: visualization and instrumentation of the posterior horn of the medial meniscus, the posteromedial joint space, and the posterior cruciate ligament (PCL) Location: posterior to the medial collater"
+        }
+      ]
+    },
+    {
+      "stableGuid": "qbUr-&e7),",
+      "front": "Which two (2) sarcomas are destructive bone lesions in young patients and are treated with wide resection + chemotherapy ? Osteosarcoma Ewing's sarcoma",
+      "extra": "*Remember to get a bone marrow biopsy to stage Ewing's, but not needed for osteosarcoma",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Conventional_Intramedullary_Osteosarcoma",
+        "SnapOrtho::Specialty::Orthopedic_Oncology"
+      ],
+      "candidates": [
+        {
+          "id": "6004043",
+          "title": "Ewing Sarcoma/Primitive Neuroectodermal Tumor",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004043",
+          "extractable": true,
+          "score": 75.543,
+          "snippet": "and pelvis (26%) Also may be a soft-tissue sarcoma  Epidemiology Ewing sarcoma is the second most common primary bone malignancy in children (after osteosarcoma). It accounts for approximately 10% of all primary malignant bone tumors3 (Resource 2). Although Ewing sarcoma has been reported in patients of all ages, it"
+        },
+        {
+          "id": "6004041",
+          "title": "Systemic Management of Bone Sarcomas",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004041",
+          "extractable": true,
+          "score": 67.857,
+          "snippet": "Ewing sarcoma is managed with the use of VDC/IE. Management typically involves six cycles of neoadjuvant chemotherapy, surgical resection, and eight cycles of adjuvant chemotherapy. Tumor necrosis greater than 90% after neoadjuvant chemotherapy is an important positive prognostic factor.  Systemic Management of Ewing"
+        },
+        {
+          "id": "510000561",
+          "title": "Radiation Therapy: Bone Sarcoma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000561",
+          "extractable": true,
+          "score": 58.851,
+          "snippet": "of bone sarcoma Ewing sarcoma: with curative intent, if surgical morbidity is excessive Other sensitive tumors: solitary plasmacytoma, chordoma, hemangioendothelioma Unresectable bone sarcoma or positive margin resection Recurrent or metastatic disease not amenable to resection SEND FEEDBACK 9/3/26, 5:57 PM AAOS | Rad"
+        },
+        {
+          "id": "6002062",
+          "title": "Primary Total Hip Arthroplasty for Other Indications: Oncologic Resection and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002062",
+          "extractable": true,
+          "score": 56.674,
+          "snippet": "region is a common site of primary bone tumors, including Ewing sarcoma, osteosarcoma, and chondrosarcoma. In some patients with metastatic tumors and failed healing of a pathologic fracture or massive bone loss, replacement of the bone may afford the best pain relief and functional improvement. Metastatic and primary"
+        },
+        {
+          "id": "510000517",
+          "title": "Soft-Tissue Sarcomas",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000517",
+          "extractable": true,
+          "score": 55.904,
+          "snippet": "defined according to Enneking et al:2 SEND FEEDBACK 9/4/26, 9:38 AM AAOS | Soft-Tissue Sarcomas https://rock.aaos.org/coursecontent.aspx?id=510000517 6/10 Intralesional: resection through the tumor mass for gross total resection Marginal: resection through the reactive zone Wide: resection with a cuff of normal tissue"
+        },
+        {
+          "id": "510000542",
+          "title": "Nonosteoblastic Osteosarcoma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000542",
+          "extractable": true,
+          "score": 55.852,
+          "snippet": "osteosarcomas.2 This lesson reviews nonosteoblastic osteosarcoma subtypes, including chondroblastic osteosarcoma, fibroblastic osteosarcoma, undifferentiated pleomorphic sarcoma of bone (UPS), telangiectatic osteosarcoma, small cell osteosarcoma, and giant cell–rich osteosarcoma (GCR-OS; Video 1 ). Video 1 Decilveo AP"
+        },
+        {
+          "id": "510000533",
+          "title": "Primary Bone Tumors of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000533",
+          "extractable": true,
+          "score": 55.687,
+          "snippet": "(eg, osteoid osteoma, ABC, osteoblastoma) Location (extradural, intradural extramedullary, or intramedullary) Extradural (eg, primary bone tumors) Intradural extramedullary (eg, nerve sheath tumors [schwannoma, neurofibroma], meningioma, myxopapillary ependymoma) Intradural intramedullary (eg, astrocytoma, ependymoma,"
+        },
+        {
+          "id": "6004038",
+          "title": "Imaging of Musculoskeletal Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004038",
+          "extractable": true,
+          "score": 53.96,
+          "snippet": "or initial staging and good sensitivity for assessment of recurrence of soft-tissue and bone sarcomas.18 Ability to evaluate osseous and non-osseous sites, including the lymphatic system In bone sarcomas PET/CT is replacing bone scintigraphy for initial staging. FDG PET may substitute for bone marrow biopsy in Ewing sa"
+        },
+        {
+          "id": "510000583",
+          "title": "Musculoskeletal Malignancies and Limb Salvage",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000583",
+          "extractable": true,
+          "score": 52.5,
+          "snippet": "lesions in 3% to 5% of patients. Skip Lesions Skip lesions are lesions that are discontinuous from the primary lesion (separated from it by normal marrow) within the same bone. SEND FEEDBACK 9/3/26, 4:48 PM AAOS | Musculoskeletal Malignancies and Limb Salvage https://rock.aaos.org/coursecontent.aspx?id=510000583 8/40"
+        },
+        {
+          "id": "510000516",
+          "title": "Overview and Management of Bone Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000516",
+          "extractable": true,
+          "score": 52.484,
+          "snippet": "the biopsy tract also should be excised. Intraoperative Techniques Benign Processes/Tumors Observation: used for asymptomatic inactive/latent bone tumors Aspiration and injection SEND FEEDBACK 9/3/26, 5:32 PM AAOS | Overview and Management of Bone Tumors https://rock.aaos.org/coursecontent.aspx?id=510000516 4/18 Unica"
+        },
+        {
+          "id": "510000562",
+          "title": "Radiation Therapy: Soft-Tissue Sarcoma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000562",
+          "extractable": true,
+          "score": 52.161,
+          "snippet": "patients (7.5%) with an atypical lipomatous tumor.27 Extraskeletal Ewing Sarcoma The rarity of extraskeletal Ewing sarcoma EES precludes determination of any benefit of the use of adjuvant radiation therapy in patients treated surgically; however, current recommendations are for treatment via the same protocols as tho"
+        },
+        {
+          "id": "510000515",
+          "title": "Surgical Management of Soft-Tissue Sarcomas",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000515",
+          "extractable": true,
+          "score": 50.539,
+          "snippet": "Outline surgical margins and determine appropriate goals for resection of soft-tissue sarcoma. Assess physical examination findings and imaging studies to determine the appropriateness of surgical resection of soft-tissue sarcoma. Review extra-orthopaedic consultations and wound management strategies to optimize outco"
+        }
+      ]
+    },
+    {
+      "stableGuid": "QBwHhp?jYG",
+      "front": "What is the most common associated injury with radial head fractures ? Lateral collateral ligament (LCL) injury",
+      "extra": "*Incidence of ~80% on MRI following injury",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Elbow",
+        "SnapOrtho::Anatomy::Elbow::Ligaments",
+        "SnapOrtho::Anatomy::Elbow::Ligaments::Lateral_Collateral_Ligament",
+        "SnapOrtho::Diagnosis::Radial_Head_Fractures"
+      ],
+      "candidates": [
+        {
+          "id": "510000586",
+          "title": "Elbow Instability: Lateral Collateral Ligament Complex Insufficiency",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000586",
+          "extractable": true,
+          "score": 53.967,
+          "snippet": "radial collateral ligament (RCL) Origin: anterior to the LUCL on the lateral epicondyle Insertion: blends with the annular ligament fibers Computational models show combined LUCL and lateral RCL ruptures are associated with considerably greater instability than isolated LUCL lesions.10 Accessory lateral collateral lig"
+        },
+        {
+          "id": "510000660",
+          "title": "Radial Head and Neck Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000660",
+          "extractable": true,
+          "score": 52.556,
+          "snippet": "many as 76% of patients with a radial head fracture evaluated via MRI. Type III fractures or fractures with complete loss of contact between the radial head and the capitellum are often associated with a concomitant elbow dislocation.4,13 Other associated injuries include collateral ligament injuries, coronoid fractur"
+        },
+        {
+          "id": "510000540",
+          "title": "Ligamentous Injuries of the Knee: Collateral Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000540",
+          "extractable": true,
+          "score": 39.404,
+          "snippet": "Ligament Injuries https://rock.aaos.org/coursecontent.aspx?id=510000540 1/46 Review the surgical and nonoperative management of medial collateral ligament and posteromedial corner injuries. Explain commonly encountered complications and long-term sequela of medial collateral ligament and posteromedial corner injuries."
+        },
+        {
+          "id": "6001065",
+          "title": "Acute and Recurrent Elbow Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001065",
+          "extractable": true,
+          "score": 38.272,
+          "snippet": "nerve injury. Joints and Ligaments The stability of the elbow joint is provided by static and dynamic constraints (Figure 1). Primary static constraints Ulnohumeral articulation Anterior bundle of the medial collateral ligament (MCL) Lateral collateral ligament (LCL) complex, including the lateral ulnar collateral lig"
+        },
+        {
+          "id": "6004092",
+          "title": "Terrible Triad of Injuries of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004092",
+          "extractable": true,
+          "score": 38.052,
+          "snippet": "Diagram shows how the static constraints of the elbow are analogous to the defenses of a fortress. The primary static constraints to elbow instability are the ulnohumeral articulation, the anterior bundle of the medial collateral ligament (MCL), and the lateral collateral ligament (LCL) complex, including the lateral"
+        },
+        {
+          "id": "510000661",
+          "title": "Elbow Fractures: Olecranon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000661",
+          "extractable": true,
+          "score": 37.417,
+          "snippet": "type and elbow stability to distinguish fracture patterns and provides a treatment algorithm based on fracture type.45 Fractures are stratified into nondisplaced fractures (type I), displaced fractures with a stable ulnohumeral joint (type II), and displaced fractures with presumed injuries to the collateral ligaments"
+        },
+        {
+          "id": "510000584",
+          "title": "Elbow Anatomy and Function",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000584",
+          "extractable": true,
+          "score": 37.133,
+          "snippet": "Long head— superior glenoid/labrum Radial tuberosity Musculocutaneous Elbow flexion/supination Short head— coracoid Brachialis Humerus, intermuscular septum Coronoid Musculocutaneous (medial), radial (lateral) Elbow flexion Brachioradialis Humerus Radial styloid Radial Elbow flexion Triceps brachii Medial hea"
+        },
+        {
+          "id": "6004074",
+          "title": "Medial Collateral Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004074",
+          "extractable": true,
+          "score": 34.051,
+          "snippet": "management of ulnar collateral ligament injuries. Pathophysiology/Pathoanatomy Overview     NOTES SEND FEEDBACK 9/3/26, 4:40 PM AAOS | Medial Collateral Ligament Injuries https://rock.aaos.org/coursecontent.aspx?id=6004074 1/23 The medial ulnar collateral ligament (UCL) complex consists of the anterior oblique lig"
+        },
+        {
+          "id": "6004066",
+          "title": "Medial Epicondyle and Lateral Epicondyle Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004066",
+          "extractable": true,
+          "score": 31.792,
+          "snippet": "in a medial epicondyle fracture. These fractures may appear comminuted and minimally displaced.1,3 Lateral Epicondyle Fractures A direct blow is the most common mechanism of injury.  Lateral Epicondyle Fractures The most common etiology is a direct blow to the lateral elbow; however, avulsion fractures associated wit"
+        },
+        {
+          "id": "6004094",
+          "title": "Femoral Head Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004094",
+          "extractable": true,
+          "score": 30.401,
+          "snippet": "strategies for femoral head fractures. Recognize clinical and radiographic features of irreducible hip dislocations. Explain characteristic complications that arise after the management of femoral head fractures. Introduction     NOTES SEND FEEDBACK 9/3/26, 4:07 PM AAOS | Femoral Head Fractures https://rock.aaos.o"
+        },
+        {
+          "id": "6004084",
+          "title": "Anterior Cruciate Ligament Injury Prevention",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004084",
+          "extractable": true,
+          "score": 28.449,
+          "snippet": "Objectives Discuss the epidemiology, etiology, and risk factors associated with anterior cruciate ligament injuries. Describe the common mechanisms of anterior cruciate ligament injury. Review the current injury prevention literature and define the biomechanics associated with anterior cruciate injury mitigation. Expl"
+        },
+        {
+          "id": "6001055",
+          "title": "Ligament Injuries: Musculoskeletal Conditions and Injuries in the Young Athlete",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001055",
+          "extractable": true,
+          "score": 27.243,
+          "snippet": "cruciate ligament (ACL) tears are increasing in the adolescent population. Medial collateral ligament (MCL) sprains are the most common ligament tears in the pediatric knee but rarely require surgical management. Complete MCL tears occur less frequently. Posterior cruciate ligament (PCL) and lateral collateral ligamen"
+        }
+      ]
+    },
+    {
+      "stableGuid": "QbZIN{.5)L",
+      "front": "What is the blood supply of the ACL ? Middle genicular artery",
+      "extra": "Leaves the popliteal artery and pierces the posterior capsule",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Vasculature",
+        "SnapOrtho::Anatomy::Leg_Knee::Vasculature::Popliteal_Artery",
+        "SnapOrtho::Specialty::Basic_Science",
+        "SnapOrtho::Specialty::Sports_Medicine"
+      ],
+      "candidates": [
+        {
+          "id": "6004075",
+          "title": "The Biology and Biomechanics of Grafts and Implants in Sports Medicine Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004075",
+          "extractable": true,
+          "score": 40.994,
+          "snippet": "patient age and activity level. Review the basic biomechanical properties of implants available for sports medicine procedures. Describe the common modes of failure with various types of implants. Introduction Soft-tissue grafts are commonly used in sports medicine for ligament or tendon reconstruction (anterior cruci"
+        },
+        {
+          "id": "6004079",
+          "title": "Anatomy of the Ankle for the Sports Medicine Surgeon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004079",
+          "extractable": true,
+          "score": 35.968,
+          "snippet": "reported a predominant blood supply from the posterior tibial artery, potentially preserving blood supply to the talar body after talar neck trauma.18  Blood Supply of the Talus Blood supply to the ankle is provided by contributions from the posterior tibial artery, peroneal artery, and anterior tibial artery. The po"
+        },
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 34.486,
+          "snippet": "nfections in orthopaedics, in Einhorn TA, O’Keefe RJ, Buckwalter JA, eds: Orthopaedic Basic Science. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2007, pp 299-314. Types of Musculoskeletal Infection and Clinical Presentation SEND FEEDBACK 9/3/26, 4:48 PM AAOS | Musculoskeletal Infections and Microbiology Bas"
+        },
+        {
+          "id": "6001066",
+          "title": "The Team Physician and the Ethics of Sports Medicine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001066",
+          "extractable": true,
+          "score": 33.081,
+          "snippet": "context in which sports medicine ethics are operationalized has distinct characteristics and manifestly structures the behavior of those charged with the duty to act ethically. Studies of the practice of maintaining patient confidentiality in sports medicine show, for example, that the distinct physical environment, p"
+        },
+        {
+          "id": "6001029",
+          "title": "Surgical Anatomy of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001029",
+          "extractable": true,
+          "score": 32.228,
+          "snippet": "superior geniculate arteries arise from the popliteal artery. The medial and lateral inferior geniculate arteries arise from the popliteal artery. Pass deep to their respective collateral ligaments At risk for persistent bleeding after meniscectomy The middle geniculate artery arises from the popliteal artery and prov"
+        },
+        {
+          "id": "6004078",
+          "title": "Posterior Cruciate Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004078",
+          "extractable": true,
+          "score": 31.85,
+          "snippet": "reconstruction of the posterior cruciate ligament. Discuss potential complications, rehabilitation, and outcomes associated with posterior cruciate ligament injury. Pathophysiology/Pathoanatomy     NOTES SEND FEEDBACK 9/3/26, 5:46 PM AAOS | Posterior Cruciate Ligament Injuries https://rock.aaos.org/coursecontent.a"
+        },
+        {
+          "id": "6002002",
+          "title": "Meniscus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002002",
+          "extractable": true,
+          "score": 31.565,
+          "snippet": "the menisci arises from the geniculate arteries as they branch from the popliteal artery (Figures 11 and 12). 10% to 30% medially via the medial inferior genicular artery 10% to 25% laterally via the lateral inferior genicular artery Posterior horns via the middle genicular artery SEND FEEDBACK 9/3/26, 4:43 PM AAOS |"
+        },
+        {
+          "id": "510000540",
+          "title": "Ligamentous Injuries of the Knee: Collateral Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000540",
+          "extractable": true,
+          "score": 24.534,
+          "snippet": "lateral capsule. The coronary ligament is located in the posterior aspect of the capsule and is a meniscotibial ligament responsible for securing the posterior root of the lateral meniscus to the tibial plateau.4 Neurovascular Structures Peroneal nerve Inferior lateral genicular artery SEND FEEDBACK 9/3/26, 4:33 PM AA"
+        },
+        {
+          "id": "6001162",
+          "title": "Complications After Total Knee Arthroplasty: Intraoperative Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001162",
+          "extractable": true,
+          "score": 23.152,
+          "snippet": "Wrisberg (posterior) Blood supply: middle geniculate artery Strength: 2,500 to 3,000 N Popliteus Internally rotates the tibia during knee flexion Origin: posteromedial tibia Insertion: lateral femoral condyle; anterior and distal to the LCL origin Innervation: tibial nerve (L4 through S1) Blood supply: medial inferior"
+        },
+        {
+          "id": "6001181",
+          "title": "Meniscal Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001181",
+          "extractable": true,
+          "score": 23.015,
+          "snippet": "has been divided into three regions or zones. Red-red Red-white White-white Increased vascular supply at anterior and posterior horns Decreased supply at popliteal hiatus  Vascular Anatomy The menisci receive nutrient supply via two different mechanisms: vascular supply and diffusion from synovial fluid. The superior"
+        },
+        {
+          "id": "6001025",
+          "title": "Blood Management in Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001025",
+          "extractable": true,
+          "score": 20.913,
+          "snippet": "n an allogenic transfusion. Advanced donation of blood allows patients’ hemoglobin levels to rise after blood donation but preoperatively while also storing blood to be used rather than allogenic blood. Autologous blood transfusion is not routinely used because studies have shown that approximately 40% of the pre-donat"
+        },
+        {
+          "id": "6001084",
+          "title": "Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001084",
+          "extractable": true,
+          "score": 20.504,
+          "snippet": "intercondylar fossa of the femur and against the posterior capsule of the knee joint. The popliteal artery gives off five genicular branches: the lateral superior genicular artery, medial superior genicular artery, middle genicular artery, lateral inferior genicular artery, and the medial inferior genicular artery.4 O"
+        }
+      ]
+    },
+    {
+      "stableGuid": "qC^si_R>3#",
+      "front": "Two mechanisms of injury for patellar fractures : Direct impact injury Indirect eccentric contraction",
+      "extra": "Direct impact injury - failure in compression, occurs from a fall or dashboard Indirect eccentric contraction - failure in tension, occurs from rapid knee flexion against a contracted quadriceps",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Patella_Fracture",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "6004096",
+          "title": "Patellar Fractures and Extensor Mechanism Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004096",
+          "extractable": true,
+          "score": 52.066,
+          "snippet": "a fracture. Patellar Fracture Indirect (eccentric loading of the quadriceps): leads to transverse fracture patterns Direct blow (eg, from a fall): results in a simple or comminuted fracture pattern Quadriceps Tendon Rupture Indirect, resulting from eccentric contraction of a flexed knee Patellar Tendon Rupture Indirec"
+        },
+        {
+          "id": "510000524",
+          "title": "Congenital Dislocation of the Knee and Patella",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000524",
+          "extractable": true,
+          "score": 48.728,
+          "snippet": "knee flexion is necessary to prevent hamstring tension from pulling the femoral head superior and lateral.14 In terms of the foot, the gastrocnemius remains under tension until the knee is flexed.14 Those who manage the knee and foot concurrently concede that foot correction is easier after 90° of knee flexion is atta"
+        },
+        {
+          "id": "510000581",
+          "title": "Patellar Fractures, Tibial Spine (Eminence) Fractures, Tibial and Fibular Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000581",
+          "extractable": true,
+          "score": 42.233,
+          "snippet": "is caused by concentric quadriceps contraction while jumping or eccentric quadriceps contraction with forced knee flexion.  Etiology/Mechanism of Injury Similar to the mechanism injury that may result in a patellar body fracture, patellar tendon rupture, or patellar sleeve avulsion, tibial tubercle fractures often re"
+        },
+        {
+          "id": "510000650",
+          "title": "Forefoot Trauma: Metatarsal and Phalangeal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000650",
+          "extractable": true,
+          "score": 36.501,
+          "snippet": "injuries. They may result from direct or indirect trauma and may result from low-energy trauma or of high-energy trauma, such as crush injuries. Metatarsal fractures are the most common fractures sustained during motorcycle trauma. Metatarsal fractures are most common in individuals in their teenage years to forties."
+        },
+        {
+          "id": "6002067",
+          "title": "Complications After Total Knee Arthroplasty: Patellar Maltracking and Instability/Dislocation, Patellar Clunk, Extensor Mechanism Disruption",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002067",
+          "extractable": true,
+          "score": 34.862,
+          "snippet": "tension group: knee Minimal tension group: brace Minimal tension group:SEND FEEDBACK 9/3/26, 7:44 AM AAOS | Complications After Total Knee Arthroplasty: Patellar Maltracking and Instability/Dislocation, Patellar Clunk, Extensor Mechanism Disru... https://rock.aaos.org/coursecontent.aspx?id=6002067 30/42 (2004) minimal"
+        },
+        {
+          "id": "510000648",
+          "title": "Midfoot Fractures: Tarsometatarsal (Lisfranc) Fracture-Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000648",
+          "extractable": true,
+          "score": 32.634,
+          "snippet": "forefoot may be fixed while the hindfoot travels with the rest of the body. Other injury force combinations include bending and axial load. Fractures of the cuboid Compression fractures of the cuboid resulting from a nutcracker mechanism of injury may be part of a Lisfranc fracture-dislocation; isolated fractures of t"
+        },
+        {
+          "id": "6001083",
+          "title": "Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001083",
+          "extractable": true,
+          "score": 32.149,
+          "snippet": "Pelvis/acetabulum fractures Hip dislocation Femoral neck fracture Ligamentous knee injuries Fractures of the patella and tibial plateau  Associated Injuries The two most common associated injuries in patients with a femoral shaft fracture are ipsilateral femoral neck fracture and ligamentous knee injury. Ipsilateral"
+        },
+        {
+          "id": "6004015",
+          "title": "Traumatic Brain Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004015",
+          "extractable": true,
+          "score": 32.105,
+          "snippet": "individuals with mild TBI (cerebral concussion). SEND FEEDBACK 9/4/26, 10:35 AM AAOS | Traumatic Brain Injury https://rock.aaos.org/coursecontent.aspx?id=6004015 3/28  Overview Focal brain injury patterns are induced via direct concussion/compression forces or penetrating trauma mechanisms. Conversely, diffuse brain"
+        },
+        {
+          "id": "510000552",
+          "title": "Biomechanics of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000552",
+          "extractable": true,
+          "score": 29.992,
+          "snippet": "articular dysfunction. Successful total knee arthroplasty (TKA) relies on proper positioning of the components to restore proper knee kinematics. If no force is applied during knee flexion, the knee joint progresses with a combination of rolling and sliding posteriorly4 (Figure 1). Anterior slip during knee flexion ha"
+        },
+        {
+          "id": "6001180",
+          "title": "Extensor Mechanism Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001180",
+          "extractable": true,
+          "score": 29.979,
+          "snippet": "occur as the extensor mechanism contracts eccentrically (as the muscle lengthens), which generates higher forces than during concentric contraction. This often occurs in combination with loading the knee in flexion with full body weight, but it also may occur after a direct blow to the knee. The quadriceps or patellar"
+        },
+        {
+          "id": "6001079",
+          "title": "Osteoporotic Vertebral Compression Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001079",
+          "extractable": true,
+          "score": 29.597,
+          "snippet": "duced from Lee YP, Bhatia N: Vertebral compression fractures, in Grauer JN, ed. Orthopaedic Knowledge Update, ed 12. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2017, pp 673-680.) Management of Osteoporotic Vertebral Fractures SEND FEEDBACK 9/3/26, 5:30 PM AAOS | Osteoporotic Vertebral Compression Fractures"
+        },
+        {
+          "id": "6001183",
+          "title": "Ligamentous Injuries of the Knee: Failed Anterior Cruciate Ligament Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001183",
+          "extractable": true,
+          "score": 27.797,
+          "snippet": "or failure (early versus delayed) and the circumstances (daily versus sports activities) that trigger recurrent instability may provide information about the cause of failure. Therefore, obtaining a detailed patient history is an essential aspect of failure analysis. Traumatic Failure  Traumatic Failure Traumatic gra"
+        }
+      ]
+    },
+    {
+      "stableGuid": "Qc$0aBDGsX",
+      "front": "The anteromedial bundle of the ACL restrains anterior tibial translation ( anterior drawer test ), while the posterolateral bundle of the ACL provides rotational stability ( pivot shift ).",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Ligaments",
+        "SnapOrtho::Anatomy::Leg_Knee::Ligaments::Anterior_Cruciate_Ligament",
+        "SnapOrtho::Specialty::Sports_Medicine"
+      ],
+      "candidates": [
+        {
+          "id": "6001071",
+          "title": "Anterior Cruciate Ligament Rehabilitation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001071",
+          "extractable": true,
+          "score": 65.412,
+          "snippet": "9/3/26, 7:21 AM AAOS | Anterior Cruciate Ligament Rehabilitation https://rock.aaos.org/coursecontent.aspx?id=6001071 7/15 Orthopaedic Knowledge Update: Sports Medicine, ed 6. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2022, pp 433-441.) SEND FEEDBACK 9/3/26, 7:21 AM AAOS | Anterior Cruciate Ligament Rehab"
+        },
+        {
+          "id": "510000539",
+          "title": "Anterior Cruciate Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000539",
+          "extractable": true,
+          "score": 63.119,
+          "snippet": "anteriorly with the other hand. A sense of increased movement and lack of a solid end point indicate ACL injury. Grades of ACL injury using the Lachman test are shown in Table 1. The anterior drawer test is performed with the knee in 90° of flexion. Anterior translation of the tibia is assessed in relation to the dist"
+        },
+        {
+          "id": "6001183",
+          "title": "Ligamentous Injuries of the Knee: Failed Anterior Cruciate Ligament Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001183",
+          "extractable": true,
+          "score": 62.738,
+          "snippet": "anterior cruciate ligament surgery.     NOTES SEND FEEDBACK 9/3/26, 4:34 PM AAOS | Ligamentous Injuries of the Knee: Failed Anterior Cruciate Ligament Surgery https://rock.aaos.org/coursecontent.aspx?id=6001183 1/37 Etiology Overview  Overview Given the reported failure rate of 3% to 10% after primary anterior cr"
+        },
+        {
+          "id": "6001055",
+          "title": "Ligament Injuries: Musculoskeletal Conditions and Injuries in the Young Athlete",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001055",
+          "extractable": true,
+          "score": 50.214,
+          "snippet": "test Anterior drawer test SEND FEEDBACK 9/3/26, 4:33 PM AAOS | Ligament Injuries: Musculoskeletal Conditions and Injuries in the Young Athlete https://rock.aaos.org/coursecontent.aspx?id=6001055 7/36 Pivot-shift test PCL Posterior drawer test Dial test MCL Valgus stress (in 30° of knee flexion) LCL/Posterolateral corn"
+        },
+        {
+          "id": "510000536",
+          "title": "Knee Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000536",
+          "extractable": true,
+          "score": 49.817,
+          "snippet": "(Table 1). The four major ligamentous stabilizers of the knee are the anterior cruciate ligament (ACL), posterior cruciate ligament (PCL), medial collateral ligament (MCL), and fibular collateral ligament (FCL). Table 1 Soft-Tissue Stabilizers of the Knee Structure Function ACL Primary: resists anterior translation of"
+        },
+        {
+          "id": "6001182",
+          "title": "Cruciate Ligament Injuries in the Skeletally Immature Athlete",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001182",
+          "extractable": true,
+          "score": 48.842,
+          "snippet": "central tibial plateau.1 The ACL consists of two bundles, the anteromedial bundle and the posterolateral bundle, named for the locations they implant on the tibial plateau. The anteromedial and posterolateral bundles are necessary for normal function of the ACL because they play distinct roles.1 The anteromedial bundl"
+        },
+        {
+          "id": "510000540",
+          "title": "Ligamentous Injuries of the Knee: Collateral Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000540",
+          "extractable": true,
+          "score": 39.212,
+          "snippet": "of rotational instability compared with the contralateral knee Dial test (Figure 3) External rotation and recurvatum test (Figure 4) Posterolateral drawer test Reverse pivot-shift test Peroneal nerve examination and ankle-brachial index (ABI) Gait examination Figure 3 Clinical photograph of a patient in the prone posi"
+        },
+        {
+          "id": "6001070",
+          "title": "Ligamentous Injuries of the Knee: Multiligamentous Knee Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001070",
+          "extractable": true,
+          "score": 38.654,
+          "snippet": "tibia Provides rotational stability, prevents hyperextension Posterior drawer test at 90° Posterior sag test Dial test at 90° Quadriceps active test ACL Prevents anterior translation of tibia Provides anterolateral rotational stability, prevents hyperextension Anterior drawer test at 90° Lachman test Pivot shift test"
+        },
+        {
+          "id": "6004057",
+          "title": "Rotational Fractures of the Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004057",
+          "extractable": true,
+          "score": 38.015,
+          "snippet": "of the Ankle https://rock.aaos.org/coursecontent.aspx?id=6004057 7/102 Vascular Anatomy The medial and lateral malleoli are supplied with terminal branches from the anterior tibial, posterior tibial, and peroneal arteries. Nerves  Nerves Motor innervation to the superficial and deep posterior compartment muscles come"
+        },
+        {
+          "id": "6001029",
+          "title": "Surgical Anatomy of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001029",
+          "extractable": true,
+          "score": 35.828,
+          "snippet": "provides innervation. The anteromedial bundle is tight in knee flexion, and the posterolateral bundle is tight in knee extension.8 The posterolateral bundle of the ACL is responsible for preventing the pivot-shift phenomenon and stabilizes against anterior translation with 30° of knee flexion. The anteromedial bundle"
+        },
+        {
+          "id": "6004078",
+          "title": "Posterior Cruciate Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004078",
+          "extractable": true,
+          "score": 35.335,
+          "snippet": "n 10 to 12 mm of posterior translation with the knee at 90°.1 The Slocum test, which can be used to assess for anteromedial rotatory instability, is performed by externally rotating the tibia and performing an anterior drawer test with the knee flexed to 90°.8 The posterolateral drawer test is performed by providing a"
+        },
+        {
+          "id": "6004084",
+          "title": "Anterior Cruciate Ligament Injury Prevention",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004084",
+          "extractable": true,
+          "score": 34.34,
+          "snippet": "  NOTES SEND FEEDBACK 9/3/26, 7:21 AM AAOS | Anterior Cruciate Ligament Injury Prevention https://rock.aaos.org/coursecontent.aspx?id=6004084 1/19 The anterior cruciate ligament (ACL) is a crucial stabilizer of the tibiofemoral joint. It prevents anterior translation of the tibia on the femur and tibial torsion duri"
+        }
+      ]
+    },
+    {
+      "stableGuid": "QC0YM4[&1=",
+      "front": "A triplane fracture is defined as a traumatic ankle fracture seen in children 10-17 years of age that is characterized by a complex salter harris IV fracture pattern in multiple planes .",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Ankle_Fracture",
+        "SnapOrtho::Specialty::Foot_Ankle"
+      ],
+      "candidates": [
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "extractable": true,
+          "score": 52.551,
+          "snippet": "and Ankle Trauma https://rock.aaos.org/coursecontent.aspx?id=6004071 5/70 Figure 3 Radiographs of an ankle with a triplane fracture. A, AP radiograph demonstrates the Salter-Harris type III portion of the triplane fracture (coronal fracture line). B, Lateral radiograph demonstrates the Salter-Harris type II component"
+        },
+        {
+          "id": "6002083",
+          "title": "Foot and Ankle Sports Injuries in Pediatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002083",
+          "extractable": true,
+          "score": 36.071,
+          "snippet": "and ankle fractures. Type I is characterized by physeal separation. Type II is characterized by a fracture line that extends transversely through the physis and exits through the metaphysis. Type III is characterized by a fracture that traverses the physis and exits through the epiphysis. Type IV is characterized by a"
+        },
+        {
+          "id": "510000546",
+          "title": "Ankle and Foot Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000546",
+          "extractable": true,
+          "score": 31.143,
+          "snippet": "an ankle or foot sports injury. Discuss the surgical and nonsurgical management of common foot and ankle injuries. Outline surgical decision making for ankle and foot injuries. List risk factors associated with common foot and ankle injuries. Review current surgical techniques and outcomes of the management of foot an"
+        },
+        {
+          "id": "6004062",
+          "title": "Pediatric Foot Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004062",
+          "extractable": true,
+          "score": 28.565,
+          "snippet": "age 10 years.  Natural History SEND FEEDBACK 9/3/26, 5:36 PM AAOS | Pediatric Foot Conditions https://rock.aaos.org/coursecontent.aspx?id=6004062 2/32 A Swedish study followed 1,401 healthy children without known motor or neurologic developmental conditions. The overall prevalence of toe walkers at age 5.5 years was"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 28.073,
+          "snippet": "3/26, 5:44 PM AAOS | Physical Examination of the Foot and Ankle https://rock.aaos.org/coursecontent.aspx?id=510000641 23/25 Video 16 Faro FD: Video. Evaluating Stability of the Metatarsophalangeal Joints. Lebanon, NH, 2023. Mark as Complete Resources Resource 1: Asla RJ: Biomechanics of the foot and ankle, in Chou LB,"
+        },
+        {
+          "id": "6004004",
+          "title": "Systemic Conditions: Diabetic Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004004",
+          "extractable": true,
+          "score": 27.921,
+          "snippet": "sleeping. The pattern is symmetric loss of sensation beginning distally and progressing proximally. SEND FEEDBACK 9/4/26, 9:45 AM AAOS | Systemic Conditions: Diabetic Foot and Ankle https://rock.aaos.org/coursecontent.aspx?id=6004004 3/12 Large nerve fibers are affected later in the disease process, impairing proprioc"
+        },
+        {
+          "id": "6002084",
+          "title": "Principles of Managing Pediatric Orthopaedic Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002084",
+          "extractable": true,
+          "score": 27.796,
+          "snippet": "fractures. Type I is characterized by physeal separation. Type II is characterized by a fracture line that extends transversely through the physis and exits through the metaphysis. Type III is characterized by a fracture that traverses the physis and exits through the epiphysis. Type IV is characterized by a fracture"
+        },
+        {
+          "id": "6001018",
+          "title": "Complex Regional Pain Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001018",
+          "extractable": true,
+          "score": 27.652,
+          "snippet": "n HLA-DQ8 and HLA-B627 Incidence of 4.36% after foot and ankle surgery16 CRPS has been described as a complication after multiple elective foot and ankle procedures, including hammer toe correction, bunion correction, midfoot fusion, subtalar fusion, ankle open reduction and internal fixation, ankle arthroscopy, ankle"
+        },
+        {
+          "id": "6004015",
+          "title": "Traumatic Brain Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004015",
+          "extractable": true,
+          "score": 27.255,
+          "snippet": "pathophysiology of traumatic brain injury (TBI) relates to the notion that the extent of neurologic injury is not determined by the extent of the initial traumatic impact itself but evolves over time. The evolution of secondary brain injury is characterized by a complex cascade of molecular and biochemical reactions t"
+        },
+        {
+          "id": "6001013",
+          "title": "Calcaneal Stress Fracture",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001013",
+          "extractable": true,
+          "score": 24.642,
+          "snippet": "ankle deformities, in Marecek GS, ed: AAOS Comprehensive Orthopaedic Review, ed 4. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2025, pp 1337-1349.) Figure 3 Lateral foot and ankle radiograph demonstrates a calcaneonavicular collation and an anteater nose sign. (Reproduced from Murphy RF: Foot and ankle con"
+        },
+        {
+          "id": "510000525",
+          "title": "Phalangeal, Metacarpal and Carpal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000525",
+          "extractable": true,
+          "score": 23.218,
+          "snippet": "Physeal fractures are described according to the Salter-Harris classification system. Salter-Harris type II fracture at the base of the proximal phalanx is the most common type.1 Extra-octave fracture is the eponym for a Salter Harris type II fracture in the little finger caused by forced abduction.1,3,5-7 Salter-Harr"
+        },
+        {
+          "id": "6004057",
+          "title": "Rotational Fractures of the Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004057",
+          "extractable": true,
+          "score": 22.603,
+          "snippet": "ents with an acute ankle fracture; however, it may be useful if concern for a pathologic fracture of the ankle exists. Differential Diagnosis  Differential Diagnosis In general, ankle fracture diagnosis is clear based on clinical examination and plain radiographs. In the absence of obvious ankle fracture on plain radi"
+        }
+      ]
+    },
+    {
+      "stableGuid": "qclf`=5=PB",
+      "front": "Neurofibromatosis exhibits autosomal dominant inheritance pattern with a mutation in NF1 gene on chromosome 17q11.2 .",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Pediatric_Orthopedics"
+      ],
+      "candidates": [
+        {
+          "id": "6002051",
+          "title": "Genetic Diseases of Musculoskeletal Tissues",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002051",
+          "extractable": true,
+          "score": 50.472,
+          "snippet": "underlying genetic defect is not corrected by the surgical procedure.  Tumor-Related Genes Neurofibromatosis type I and multiple enchondromatosis are examples of disorders that fall into this category. The mutation in neurofibromatosis type I is germ line in the NF1 gene; the protein product of this gene regulates ac"
+        },
+        {
+          "id": "6001038",
+          "title": "Hereditary Motor Sensory Neuropathy (Charcot-Marie-Tooth Disease)",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001038",
+          "extractable": true,
+          "score": 36.134,
+          "snippet": "the PMP22 gene on chromosome 17 account for 40% to 50% of all cases of HMSN. Other commonly affected genes include GJB1, encoding for connexin- 32 (10% of all cases); MPZ; and MFN2. Most commonly, HMSN is inherited in an autosomal dominant pattern; however, autosomal recessive, X-linked, and sporadic mutations are des"
+        },
+        {
+          "id": "6002086",
+          "title": "Syndromic Scoliosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002086",
+          "extractable": true,
+          "score": 35.841,
+          "snippet": "n laxity, and joint hypermobility39-44 (Table 1). Table 1Types of Ehlers-Danlos Syndrome Type Mutation Orthopaedic Manifestation Classic Autosomal dominant mutation in COL5A1 (OMIM #130000) Hypermobility and tissue fragility Cardiac valvular Autosomal recessive mutation in COL1A2 (OMIM #225320) Cardiac and valvular abn"
+        },
+        {
+          "id": "6002109",
+          "title": "Genetics, Gene Expression, and Epigenetics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002109",
+          "extractable": true,
+          "score": 32.738,
+          "snippet": "the formation of abnormal proteins that cause cancers, such as Ewing sarcoma. Inheritance patterns of genetic disease Autosomal mutation—A gene mutation located on a chromosome other than the X or Y chromosome Sex-linked mutation—A gene mutation located on the X or Y chromosome; a disease caused by an X-linked mutatio"
+        },
+        {
+          "id": "6004103",
+          "title": "Skeletal Dysplasias and Mucopolysaccharidoses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004103",
+          "extractable": true,
+          "score": 30.224,
+          "snippet": "II collagen) and type X1 collagen.  MED MED is caused by both autosomal dominant and autosomal recessive mutations. Patients with the autosomal recessive form typically present with findings at birth, such as clubfoot. Multiple genes are responsible for the dominant form; therefore, gene panels that test multiple gen"
+        },
+        {
+          "id": "6002087",
+          "title": "Pediatric Hematologic Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002087",
+          "extractable": true,
+          "score": 29.37,
+          "snippet": "FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Describe the epidemiology and pathophysiology of sickle cell disease. Discuss the inheritance pattern and classic clinical manifestations of sickle cell disease. Discuss the surgical risks and complications associated with sickle cell disease. D"
+        },
+        {
+          "id": "6004104",
+          "title": "Muscular Dystrophies and Selected Neurodegenerative Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004104",
+          "extractable": true,
+          "score": 29.198,
+          "snippet": "is 0.9 to 2.3 in 100,000 individuals.1 Pathogenesis The disease is commonly divided based on the pattern of inheritance into autosomal dominant and autosomal recessive types. Currently, eight subtypes of LGMD type 1 (autosomal dominant) and 26 subtypes of LGMD type 2 (autosomal recessive) exist. SEND FEEDBACK 9/3/26,"
+        },
+        {
+          "id": "6003011",
+          "title": "Connective Tissue Diseases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003011",
+          "extractable": true,
+          "score": 27.546,
+          "snippet": "AR, ed: Orthopaedic Knowledge Update, ed 8. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2005, p 246. SEND FEEDBACK 9/3/26, 7:47 AM AAOS | Connective Tissue Diseases https://rock.aaos.org/coursecontent.aspx?id=6003011 4/20 Etiology  Etiology Marfan syndrome is an autosomal dominant genetic mutation within"
+        },
+        {
+          "id": "6004062",
+          "title": "Pediatric Foot Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004062",
+          "extractable": true,
+          "score": 26.92,
+          "snippet": "30% of patients with postaxial polydactyly have a positive family history. Postaxial polydactyly typically is autosomal dominant. Hox genes have been identified as loci. Abnormalities in the BMP4 gene may cause preaxial and postaxial polydactyly. Curly toes In general, patients have a positive family history, and the"
+        },
+        {
+          "id": "6004064",
+          "title": "Pediatric Lower Extremity Deformities and Limb Deficiencies",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004064",
+          "extractable": true,
+          "score": 26.407,
+          "snippet": "cases occur spontaneously; however, autosomal dominant and autosomal recessive1 patterns have been reported. Four distinct autosomal dominant syndromes Tibial hemimelia–foot polydactyly–triphalangeal thumbs syndrome (Warner syndrome) Tibial hemimelia diplopodia syndrome Tibial hemimelia–split hand and foot syndrome SE"
+        },
+        {
+          "id": "6003012",
+          "title": "Other Conditions With Musculoskeletal Involvement",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003012",
+          "extractable": true,
+          "score": 24.747,
+          "snippet": "dominant) that lead to an increased level of fibroblast growth factor-23, causing renal phosphate wasting. This leads to increased phosphate losses from bone and rickets. Trisomy 21 (Down syndrome) Pathoanatomy: typically, two copies of maternal chromosome 21, resulting in three copies of chromosome 21 Osteogenesis im"
+        },
+        {
+          "id": "6001008",
+          "title": "Orthopaedic Molecular and Cellular Biology, Genetics, and Immunology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001008",
+          "extractable": true,
+          "score": 24.074,
+          "snippet": "and Immunology https://rock.aaos.org/coursecontent.aspx?id=6001008 20/49 Inheritance patterns of genetic disease Autosomal mutation—Gene mutation located on a chromosome other than the X or Y chromosome. Diseases that result from autosomal mutations include osteogenesis imperfecta, Marfan syndrome, achondroplasia, and"
+        }
+      ]
+    }
+  ]
+}

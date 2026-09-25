@@ -136,6 +136,25 @@ export const OrthobulletsExplainRequestSchema = z.object({
   emphasis: CurriculumExplainEmphasisSchema.optional(),
 });
 
+// This contract deliberately carries the source page only for an in-memory
+// derivation request. Routes using it must never persist the page context;
+// source prose is licensed content and the graph stores only an original,
+// bounded SnapOrtho claim plus hashes/provenance.
+export const OrthobulletsQuestionClaimRequestSchema = z.object({
+  contractVersion: z.literal('orthobullets-question-claim-v1'),
+  pageContext: StrictQuestionPageContextSchema,
+}).superRefine((value, ctx) => {
+  if (value.pageContext.provider !== 'orthobullets') {
+    ctx.addIssue({ code: 'custom', path: ['pageContext', 'provider'], message: 'Only Orthobullets questions are supported.' });
+  }
+  if (!['review', 'testview'].includes(value.pageContext.pageKind)) {
+    ctx.addIssue({ code: 'custom', path: ['pageContext', 'pageKind'], message: 'Claims require a completed review page.' });
+  }
+  if (!value.pageContext.correctAnswerKey || !value.pageContext.explanationText?.trim()) {
+    ctx.addIssue({ code: 'custom', path: ['pageContext'], message: 'Claims require visible answer and explanation signals.' });
+  }
+});
+
 const PriorHintSchema = z.object({
   hintLevel: z.union([z.literal(1), z.literal(2)]),
   title: z.string().trim().min(1).max(120),

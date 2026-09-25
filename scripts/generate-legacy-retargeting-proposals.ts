@@ -49,7 +49,7 @@ type CardLink = { id: string; canonical_card_id: string; curriculum_node_id: str
 type QuestionLink = { id: string; external_question_id: string; curriculum_node_id: string | null };
 
 async function main() {
-  const { createServiceRoleClient, fetchAllRows, ensureOutDir, toConfidenceTier, defaultReviewStatus, chunkArray } =
+  const { createServiceRoleClient, fetchAllRows, ensureOutDir, toConfidenceTier, defaultReviewStatus, chunkArray, requireStagingEnvironment } =
     await commonModulePromise;
   // Typed view over the dynamically-imported (any) helper so generic calls + their
   // range callbacks type-check.
@@ -329,6 +329,7 @@ async function main() {
   let inserted = 0;
   let updated = 0;
   if (!args.dryRun && proposals.length > 0) {
+    requireStagingEnvironment();
     const fingerprints = proposals.map((p) => p.proposal_fingerprint);
     const existing: Array<{ id: string; proposal_fingerprint: string; review_status: string }> = [];
     for (const chunk of chunkArray(fingerprints, 100)) {

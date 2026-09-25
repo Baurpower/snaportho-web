@@ -69,7 +69,7 @@ function getTargetEntityLabel(proposal: ProposalRow) {
 }
 
 async function main() {
-  const { ACTIVE_PROPOSAL_REVIEW_STATUSES, createServiceRoleClient, normalizeLabel, resolveReviewerIdentity } =
+  const { ACTIVE_PROPOSAL_REVIEW_STATUSES, createServiceRoleClient, normalizeLabel, resolveReviewerIdentity, requireStagingEnvironment } =
     await commonModulePromise;
   const args = parseArgs(process.argv);
   const reviewer = resolveReviewerIdentity(process.argv);
@@ -139,6 +139,12 @@ async function main() {
           );
         }
       }
+      if (
+        (proposal.proposal_type === "retarget_card_to_entity" || proposal.proposal_type === "retarget_question_to_entity") &&
+        (proposal.metadata.safe_retarget !== true || proposal.metadata.match_basis !== "exact_label")
+      ) {
+        reasons.push("retarget proposal is not an exact-label safe_retarget");
+      }
     }
 
     if (reasons.length > 0) {
@@ -156,6 +162,7 @@ async function main() {
   }
 
   if (!args.dryRun) {
+    requireStagingEnvironment();
     for (const proposal of eligible) {
       const { error: updateError } = await supabase
         .from("kg_automation_proposals")

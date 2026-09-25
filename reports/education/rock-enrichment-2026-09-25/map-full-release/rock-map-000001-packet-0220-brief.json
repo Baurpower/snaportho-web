@@ -1,0 +1,1082 @@
+{
+  "batchKey": "map-000001-packet-0220",
+  "inputChecksum": "4f23120f86a39196e7900a37439e6c6b66216e4d70ac89156d2326bd6ce61420",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "sidecarSchema": {
+    "card": {
+      "stableGuid": "string",
+      "status": "\"mapped\"|\"skipped\"",
+      "chapters": "1-3 {id, role} from this card's candidates; first is primary",
+      "skipReason": "if skipped"
+    }
+  },
+  "cards": [
+    {
+      "stableGuid": "n!$.`:T=@/",
+      "front": "What are the non-arthroplasty surgical treatment options for IT fractures ? 1) Sliding hip screw (SHS) 2) Cephalomedullary nail (CMN)",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Trauma",
+        "SnapOrtho::Treatment::Cephalomedullary_Nail",
+        "SnapOrtho::Treatment::Sliding_Hip_Screw"
+      ],
+      "candidates": [
+        {
+          "id": "6004049",
+          "title": "Surgical Management of Lower Extremity Metastatic Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004049",
+          "extractable": true,
+          "score": 34.964,
+          "snippet": "should be strongly considered, even in patients who are asymptomatic. Surgical treatment options include cephalomedullary nailing, arthroplasty, or segmental resection and endoprosthetic reconstruction with proximal femur replacement (Figure 5). Each of these treatment options allows for immediate–weight bearing posto"
+        },
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "extractable": true,
+          "score": 33.769,
+          "snippet": "Intertrochanteric Hip Repair With a Cephalomedullary Nail [video]. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2019. https://www.aaos.org/videos/video-detail-page/20327__Videos. Accessed July 14, 2021.  Intertrochanteric Fractures Intertrochanteric femur fractures usually are managed with the use of an SH"
+        },
+        {
+          "id": "6002100",
+          "title": "Femoral Neck Fractures in Young Adults",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002100",
+          "extractable": true,
+          "score": 29.251,
+          "snippet": "joint, and minimize complications. Nondisplaced fractures are managed via in situ fixation. Displaced fractures are managed via open reduction and internal fixation. The most commonly used implants are multiple parallel interfragmentary screws and/or a sliding hip screw (SHS); however, various other options exist. The"
+        },
+        {
+          "id": "510000554",
+          "title": "Surgical Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000554",
+          "extractable": true,
+          "score": 27.528,
+          "snippet": "Anterior approach without a traction device, in Schwarzkopf R, ed: Surgical Techniques in Orthopaedics: Total Hip Arthroplasty [DVD]. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2014. SEND FEEDBACK 9/4/26, 9:42 AM AAOS | Surgical Anatomy of the Hip https://rock.aaos.org/coursecontent.aspx?id=510000554 29/43"
+        },
+        {
+          "id": "6004017",
+          "title": "Perioperative Treatment of Patients Undergoing Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004017",
+          "extractable": true,
+          "score": 26.874,
+          "snippet": "joint arthroplasty. Introduction     NOTES SEND FEEDBACK 9/3/26, 5:40 PM AAOS | Perioperative Treatment of Patients Undergoing Arthroplasty https://rock.aaos.org/coursecontent.aspx?id=6004017 1/11 Perioperative management of a patient undergoing total hip or total knee arthroplasty encompasses the period around or"
+        },
+        {
+          "id": "510000504",
+          "title": "Primary Hip Arthroplasty for Other Indications: Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000504",
+          "extractable": true,
+          "score": 25.985,
+          "snippet": "the advantages and disadvantages of hemiarthroplasty versus total hip arthroplasty.. Review the outcomes of hemiarthroplasty and total hip arthroplasty. Femoral Neck Fractures Background     NOTES SEND FEEDBACK 9/3/26, 5:50 PM AAOS | Primary Hip Arthroplasty for Other Indications: Hip Fractures https://rock.aaos.o"
+        },
+        {
+          "id": "6004095",
+          "title": "Surgical Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004095",
+          "extractable": true,
+          "score": 24.807,
+          "snippet": "Know Learning Objectives List the indications for surgical hip dislocation in patients with a fracture. Review the surgical anatomy and technique for surgical hip dislocation. Discuss complications of surgical hip dislocation. Introduction Surgical hip dislocation represents a solution to the challenge of achieving sa"
+        },
+        {
+          "id": "6004101",
+          "title": "Forefoot Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004101",
+          "extractable": true,
+          "score": 24.682,
+          "snippet": "imaging studies. Distinguish features of a sesamoid fracture from those of other sesamoid pathology. Identify clinical features and explain the workup for a sesamoid stress fracture, including a physical examination and appropriate imaging studies. Outline nonsurgical and surgical treatment options for sesamoid stress"
+        },
+        {
+          "id": "6002062",
+          "title": "Primary Total Hip Arthroplasty for Other Indications: Oncologic Resection and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002062",
+          "extractable": true,
+          "score": 24.495,
+          "snippet": "about the hip. Explain the balance of the extent of surgical management in relation to disease-specific outcomes. Review common hip arthroplasty treatment options for patients undergoing oncologic resection and reconstruction.     NOTES SEND FEEDBACK 9/3/26, 5:51 PM AAOS | Primary Total Hip Arthroplasty for Other"
+        },
+        {
+          "id": "510000650",
+          "title": "Forefoot Trauma: Metatarsal and Phalangeal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000650",
+          "extractable": true,
+          "score": 24.426,
+          "snippet": "injuries. They may result from direct or indirect trauma and may result from low-energy trauma or of high-energy trauma, such as crush injuries. Metatarsal fractures are the most common fractures sustained during motorcycle trauma. Metatarsal fractures are most common in individuals in their teenage years to forties."
+        },
+        {
+          "id": "6003004",
+          "title": "Surgical Positioning and Monitoring",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003004",
+          "extractable": true,
+          "score": 24.116,
+          "snippet": "bles are commonly used in the management of femur fractures.  Traction Table Several types of traction tables exist; however, the general principles for patient positioning are similar.1 Common surgical procedures in which a traction table is used include femoral fracture fixation, anterior total hip arthroplasty, and"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 23.788,
+          "snippet": "longer distance slide results in higher amounts of material loss. Polymer wear is a strong function of how the sliding occurs, including the forces in the joint and the degree to which that sliding direction changes. Multidirectional sliding motion has SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Total Hip Arthroplasty: Beari"
+        }
+      ]
+    },
+    {
+      "stableGuid": "N!8yzrTKc&",
+      "front": "For tibial shaft fractures , to avoid longer time to union and worse functional outcomes , external fixators should be converted to IM nail within 7-21 days.",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology::Tibial_Shaft",
+        "SnapOrtho::Diagnosis::Tibial_Shaft_Fractures",
+        "SnapOrtho::Specialty::Trauma",
+        "SnapOrtho::Treatment::Im_Nail"
+      ],
+      "candidates": [
+        {
+          "id": "6001190",
+          "title": "Tibial Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001190",
+          "extractable": true,
+          "score": 49.882,
+          "snippet": "tibial shaft fracture. Describe the acute management of open tibial shaft fractures. Recognize the indications and contraindications for nonsurgical versus surgical management of tibial shaft fractures and for intramedullary nailing versus plate fixation. Compare the advantages and disadvantages of various approaches"
+        },
+        {
+          "id": "6001083",
+          "title": "Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001083",
+          "extractable": true,
+          "score": 43.317,
+          "snippet": "k fractures. With one device, a cephalomedullary or reconstruction nail may be used. With two devices, a retrograde nail with cannulated screws or a sliding hip screw is recommended. Open femoral shaft fractures SEND FEEDBACK 9/3/26, 4:08 PM AAOS | Femoral Shaft Fractures https://rock.aaos.org/coursecontent.aspx?id=600"
+        },
+        {
+          "id": "6004070",
+          "title": "Tibial and Fibular Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004070",
+          "extractable": true,
+          "score": 41.462,
+          "snippet": "factors may favor surgical management. Tibial shaft fractures in nonambulatory children should increase suspicion for child abuse. SEND FEEDBACK 9/4/26, 9:51 AM AAOS | Tibial and Fibular Fractures https://rock.aaos.org/coursecontent.aspx?id=6004070 6/18 Epidemiology Tibial shaft fractures are among the most common ped"
+        },
+        {
+          "id": "6001046",
+          "title": "Stress Fractures of the Leg: Tibia and Fibula",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001046",
+          "extractable": true,
+          "score": 41.209,
+          "snippet": "multiple transverse radiolucent lines indicative of a chronic stress fracture. (Courtesy of Jeremy Y. Chan, MD, Stanford, CA.) Tibial and fibular stress fractures usually are horizontally oriented diaphyseal fractures, with distal third fibular stress fractures being more common than proximal fibular fractures (Figure"
+        },
+        {
+          "id": "6000058",
+          "title": "Biomechanics of Plates, Screws, Rods, and External Fixation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000058",
+          "extractable": true,
+          "score": 39.819,
+          "snippet": "canal, and nail slotting. Torsional rigidity is proportional to the nail radius to the fourth power. Nail contact in the medullary canal creates a frictional force to limit movement between the nail and the bone. Nail slotting leads to reduced torsional rigidity; therefore, slotted nails are no longer used in current"
+        },
+        {
+          "id": "6001058",
+          "title": "Pediatric Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001058",
+          "extractable": true,
+          "score": 38.515,
+          "snippet": "shaft fractures displace in a predictable pattern according to their location and associated muscular attachments (Figure 2). SEND FEEDBACK 9/3/26, 5:36 PM AAOS | Pediatric Femoral Shaft Fractures https://rock.aaos.org/coursecontent.aspx?id=6001058 5/31 In subtrochanteric femur fractures, a common clinical challenge w"
+        },
+        {
+          "id": "6001188",
+          "title": "Fractures of the Humeral Shaft",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001188",
+          "extractable": true,
+          "score": 37.946,
+          "snippet": "and nonsurgical management of humeral shaft fractures. Describe surgical approaches for the management of humeral shaft fractures. Discuss complications of the management of humeral shaft fractures. Pathophysiology/Anatomy Epidemiology     NOTES SEND FEEDBACK 9/3/26, 4:14 PM AAOS | Fractures of the Humeral Shaft h"
+        },
+        {
+          "id": "510000581",
+          "title": "Patellar Fractures, Tibial Spine (Eminence) Fractures, Tibial and Fibular Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000581",
+          "extractable": true,
+          "score": 36.406,
+          "snippet": "tibial spine fracture. (Courtesy of Neeraj M. Patel, MD, MPH, MBS, Chicago, IL.) Tibial Tubercle Fractures SEND FEEDBACK 9/3/26, 5:33 PM AAOS | Patellar Fractures, Tibial Spine (Eminence) Fractures, Tibial and Fibular Fractures https://rock.aaos.org/coursecontent.aspx?id=510000581 23/39 Pathophysiology/Pathoanatomy Ep"
+        },
+        {
+          "id": "510000650",
+          "title": "Forefoot Trauma: Metatarsal and Phalangeal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000650",
+          "extractable": true,
+          "score": 34.819,
+          "snippet": "injuries. They may result from direct or indirect trauma and may result from low-energy trauma or of high-energy trauma, such as crush injuries. Metatarsal fractures are the most common fractures sustained during motorcycle trauma. Metatarsal fractures are most common in individuals in their teenage years to forties."
+        },
+        {
+          "id": "6002026",
+          "title": "Acetabular Fractures: Definitive Management and Outcomes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002026",
+          "extractable": true,
+          "score": 30.467,
+          "snippet": "for surgical and nonsurgical management of acetabular fractures. Identify the variables that contribute to successful management of acetabular fractures. Review the expected short- and long-term outcomes of acetabular fractures. Explain common complications that can occur after acetabular fracture management. Backgrou"
+        },
+        {
+          "id": "6003019",
+          "title": "Outcomes of Musculoskeletal Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003019",
+          "extractable": true,
+          "score": 28.41,
+          "snippet": "evaluated to more objectively measure and report fracture union, including the Radiographic Union Score for Tibial Fractures (RUST), modified RUST, and Radiographic Union Scale for the Hip scores.  Bony Union SEND FEEDBACK 9/3/26, 5:31 PM AAOS | Outcomes of Musculoskeletal Trauma https://rock.aaos.org/coursecontent.a"
+        },
+        {
+          "id": "6004097",
+          "title": "Tibial Plateau Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004097",
+          "extractable": true,
+          "score": 28.214,
+          "snippet": "TX.) Tibial Plateau Fractures with an Ipsilateral Tibial Shaft Fracture SEND FEEDBACK 9/4/26, 10:34 AM AAOS | Tibial Plateau Fractures https://rock.aaos.org/coursecontent.aspx?id=6004097 23/31  Tibial Plateau Fractures with an Ipsilateral Tibial Shaft Fracture The principles of tibial plateau fracture reduction and f"
+        }
+      ]
+    },
+    {
+      "stableGuid": "N?c<Gb4V)p",
+      "front": "The two milder forms of Osteogenesis Imperfecta are autosomal dominant and types I and IV.",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Pediatric_Orthopedics"
+      ],
+      "candidates": [
+        {
+          "id": "6003012",
+          "title": "Other Conditions With Musculoskeletal Involvement",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003012",
+          "extractable": true,
+          "score": 33.494,
+          "snippet": "bony abnormality. Osteogenesis imperfecta Osteogenesis imperfecta should be considered in children undergoing a nonaccidental trauma workup. In addition, osteogenesis imperfecta also should be considered all children who have three or more fractures before the teenage years or any spinal compression fractures without"
+        },
+        {
+          "id": "6001059",
+          "title": "Pediatric Cervical Spine Abnormalities",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001059",
+          "extractable": true,
+          "score": 25.058,
+          "snippet": "as achondroplasia, osteogenesis imperfecta, Morquio syndrome, and spondyloepiphyseal dysplasia (Figure 1) Motor and sensory disturbances occur in 85% of individuals with basilar invagination. Patients may present with headache, neck ache, and neurologic compromise.2 Figure 1 Images of the cervical spine of a 14-year-o"
+        },
+        {
+          "id": "6002051",
+          "title": "Genetic Diseases of Musculoskeletal Tissues",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002051",
+          "extractable": true,
+          "score": 24.593,
+          "snippet": "Multiple hereditary exostosis Beckwith-Wiedemann syndrome Li-Fraumeni syndrome Retinoblastoma- osteosarcoma Familial adenomatous polyposis Autosomal dominant inheritance Overgrowth of select tissue types Overgrowth worsens with growth Risk of malignant degeneration Overgrowth may recur postoperatively May have a sligh"
+        },
+        {
+          "id": "6004062",
+          "title": "Pediatric Foot Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004062",
+          "extractable": true,
+          "score": 23.597,
+          "snippet": "30% of patients with postaxial polydactyly have a positive family history. Postaxial polydactyly typically is autosomal dominant. Hox genes have been identified as loci. Abnormalities in the BMP4 gene may cause preaxial and postaxial polydactyly. Curly toes In general, patients have a positive family history, and the"
+        },
+        {
+          "id": "6004103",
+          "title": "Skeletal Dysplasias and Mucopolysaccharidoses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004103",
+          "extractable": true,
+          "score": 22.407,
+          "snippet": "is affected. The uncommon X-linked recessive form is SED tarda, which is milder with later onset from ages 8 to 10 years and is thought to involve the SEDL gene.  SED Patients with SED may present with autosomal recessive and autosomal dominant forms. Many different types exist, some more severe than others. Many dif"
+        },
+        {
+          "id": "6004064",
+          "title": "Pediatric Lower Extremity Deformities and Limb Deficiencies",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004064",
+          "extractable": true,
+          "score": 22.189,
+          "snippet": "cases occur spontaneously; however, autosomal dominant and autosomal recessive1 patterns have been reported. Four distinct autosomal dominant syndromes Tibial hemimelia–foot polydactyly–triphalangeal thumbs syndrome (Warner syndrome) Tibial hemimelia diplopodia syndrome Tibial hemimelia–split hand and foot syndrome SE"
+        },
+        {
+          "id": "6001051",
+          "title": "Arthrogryposis Multiplex Congenita",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001051",
+          "extractable": true,
+          "score": 21.884,
+          "snippet": "of breech positioning, many babies are delivered via Caesarian section. Fractures at birth may occur because of positioning and intrauterine disuse osteopenia but should increase suspicion for Bruck syndrome (arthrogryposis and osteogenesis imperfecta). SEND FEEDBACK 9/3/26, 7:23 AM AAOS | Arthrogryposis Multiplex Cong"
+        },
+        {
+          "id": "6002081",
+          "title": "Pediatric Osteomyelitis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002081",
+          "extractable": true,
+          "score": 21.704,
+          "snippet": " Pediatric Osteomyelitis  CORE February 27, 2026 Erika Daley, MD (2020–2024) Todd J. Blumberg, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Describe the unique pediatric anatomic and physiologic factors that contribute to development of osteomye"
+        },
+        {
+          "id": "6003011",
+          "title": "Connective Tissue Diseases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003011",
+          "extractable": true,
+          "score": 21.543,
+          "snippet": "mutation inCOL5A1 or COL5A2, the genes for type V collagen; this classic form is autosomal dominant. The other mutation that may result in classic EDS is in type I collagen, COL1A1, mutations in which typically result in osteogenesis imperfecta. Kyphoscoliotic EDS (previously known as type VI) is autosomal recessive a"
+        },
+        {
+          "id": "6002086",
+          "title": "Syndromic Scoliosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002086",
+          "extractable": true,
+          "score": 19.291,
+          "snippet": "l Manifestations Spinal deformity in osteogenesis imperfecta is related to the severity of osseous involvement.80-84 Anissipour et al80 evaluated the progression of scoliosis in a large cohort of patients with various types of osteogenesis imperfecta and found the most rapid progression in patients with type III osteog"
+        },
+        {
+          "id": "6001008",
+          "title": "Orthopaedic Molecular and Cellular Biology, Genetics, and Immunology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001008",
+          "extractable": true,
+          "score": 17.428,
+          "snippet": "and Immunology https://rock.aaos.org/coursecontent.aspx?id=6001008 20/49 Inheritance patterns of genetic disease Autosomal mutation—Gene mutation located on a chromosome other than the X or Y chromosome. Diseases that result from autosomal mutations include osteogenesis imperfecta, Marfan syndrome, achondroplasia, and"
+        },
+        {
+          "id": "6001038",
+          "title": "Hereditary Motor Sensory Neuropathy (Charcot-Marie-Tooth Disease)",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001038",
+          "extractable": true,
+          "score": 17.399,
+          "snippet": "the PMP22 gene on chromosome 17 account for 40% to 50% of all cases of HMSN. Other commonly affected genes include GJB1, encoding for connexin- 32 (10% of all cases); MPZ; and MFN2. Most commonly, HMSN is inherited in an autosomal dominant pattern; however, autosomal recessive, X-linked, and sporadic mutations are des"
+        }
+      ]
+    },
+    {
+      "stableGuid": "n?Lt_yQ*S",
+      "front": "What is the primary imaging modality for Developmental Dysplasia of the Hip in patients &lt;6 months of age? Ultrasound",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [],
+      "candidates": [
+        {
+          "id": "510000575",
+          "title": "Developmental Dysplasia of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000575",
+          "extractable": true,
+          "score": 64.916,
+          "snippet": "the hip joint. Explain the epidemiology, pathoanatomy, risk factors, and natural history of developmental dysplasia of the hip. Perform an appropriate work up of patients in whom developmental dysplasia of the hip is suspected. Review the nonsurgical and surgical management of developmental dysplasia of the hip and th"
+        },
+        {
+          "id": "6004020",
+          "title": "Primary Total Hip Arthroplasty for Other Indications: Developmental Dysplasia of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004020",
+          "extractable": true,
+          "score": 47.58,
+          "snippet": "developmental dysplasia of the hip. Classify developmental dysplasia of the hip according to the most commonly used classification systems. Describe surgical techniques for total hip arthroplasty in patients with developmental dysplasia of the hip. Discuss risks and common complications of total hip arthroplasty in pa"
+        },
+        {
+          "id": "510000589",
+          "title": "Imaging of the Hip and Pelvis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000589",
+          "extractable": true,
+          "score": 29.255,
+          "snippet": "of arthroscopic hip procedures performed. Radiography, MRI, CT, and ultrasonography are the key imaging modalities for evaluation of the hip and pelvis. Specific considerations are important in evaluating a painful hip joint in patients who may have femoroacetabular impingement (FAI), labral tears, developmental dyspl"
+        },
+        {
+          "id": "6001153",
+          "title": "Hip Labrum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001153",
+          "extractable": true,
+          "score": 23.908,
+          "snippet": "patients describe hip pain as a deep interior hip pain, often pointing with one finger or making the typical C sign. Range of motion is key in distinguishing a loose hip (ie, unstable, as in hip dysplasia) from a rigid hip (ie, constrained, as in FAI).33 Commonly, dysplasia is observed in young female patients who hav"
+        },
+        {
+          "id": "6001001",
+          "title": "Developmental Biology of Musculoskeletal Tissues",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001001",
+          "extractable": true,
+          "score": 23.209,
+          "snippet": "GDF-5 expression is increased in stressed cartilage and in newly forming cartilage during tissue remodeling after knee injury26 (Resource 13). Developmental Dysplasia of the Hip  Developmental Dysplasia of the Hip SEND FEEDBACK 9/3/26, 7:50 AM AAOS | Developmental Biology of Musculoskeletal Tissues https://rock.aaos."
+        },
+        {
+          "id": "510000504",
+          "title": "Primary Hip Arthroplasty for Other Indications: Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000504",
+          "extractable": true,
+          "score": 21.373,
+          "snippet": "the advantages and disadvantages of hemiarthroplasty versus total hip arthroplasty.. Review the outcomes of hemiarthroplasty and total hip arthroplasty. Femoral Neck Fractures Background     NOTES SEND FEEDBACK 9/3/26, 5:50 PM AAOS | Primary Hip Arthroplasty for Other Indications: Hip Fractures https://rock.aaos.o"
+        },
+        {
+          "id": "510000580",
+          "title": "Pelvic and Hip Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000580",
+          "extractable": true,
+          "score": 19.987,
+          "snippet": "allow for preoperative planning. Magnetic Resonance Imaging MRI is useful in identifying minimally displaced fractures, pathologic fractures, and stress fractures. Preferred imaging modality in assessing for nondisplaced or stress fractures Also can be performed if osteonecrosis is a concern postinjury Differential Dia"
+        },
+        {
+          "id": "6002063",
+          "title": "Primary Total Hip Arthroplasty for Other Indications: Post-Septic Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002063",
+          "extractable": true,
+          "score": 19.972,
+          "snippet": "hip arthroplasty in patients with a history of septic arthritis of the hip. Review surgical considerations for total hip arthroplasty in patients with post-septic arthritis of the hip. Explain the outcomes of total hip arthroplasty in patients with post-septic arthritis of the hip. Pathophysiology/Pathoanatomy Overvie"
+        }
+      ]
+    },
+    {
+      "stableGuid": "n?pBG<~8(?",
+      "front": "Name the disorder: Bursitis at insertion of Achilles tendon on calcaneus History of posterior heel pain Red bump that is tender to palpation Retrocalcaneal bursitis (Haglund's disease)",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Foot_Ankle",
+        "SnapOrtho::Anatomy::Foot_Ankle::Osteology",
+        "SnapOrtho::Anatomy::Foot_Ankle::Osteology::Calcaneus",
+        "SnapOrtho::Anatomy::Foot_Ankle::Tendons",
+        "SnapOrtho::Anatomy::Foot_Ankle::Tendons::Achilles_Tendon",
+        "SnapOrtho::Specialty::Foot_Ankle"
+      ],
+      "candidates": [
+        {
+          "id": "510000596",
+          "title": "Tendon and Muscle Disorders: Achilles Tendinopathy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000596",
+          "extractable": true,
+          "score": 72.159,
+          "snippet": "Achilles tendon pathology. Determine appropriate imaging modalities and the features of Achilles tendon pathology. Review nonsurgical treatment options for the management of Achilles tendon pathology. Discuss intraoperative treatment algorithms for isolated insertional Achilles tendon pathology and midsubstance tendon"
+        },
+        {
+          "id": "6000014",
+          "title": "Biomechanics/Gait: Effect of Ankle/Foot Malalignment",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000014",
+          "extractable": true,
+          "score": 45.211,
+          "snippet": "fth metatarsal DPN DF, EV Superficial posterior Gastrocnemius Medial and lateral femoral condyles Calcaneus through Achilles tendon Tibial Ankle PF, knee flexion Superficial posterior Soleus Tibia and fibula Calcaneus through Achilles tendon Tibial PF Superficial posterior Plantaris Lateral femur Calcaneus"
+        },
+        {
+          "id": "510000546",
+          "title": "Ankle and Foot Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000546",
+          "extractable": true,
+          "score": 45.1,
+          "snippet": "an ankle or foot sports injury. Discuss the surgical and nonsurgical management of common foot and ankle injuries. Outline surgical decision making for ankle and foot injuries. List risk factors associated with common foot and ankle injuries. Review current surgical techniques and outcomes of the management of foot an"
+        },
+        {
+          "id": "6003000",
+          "title": "Achilles Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003000",
+          "extractable": true,
+          "score": 43.502,
+          "snippet": "Achilles tendon rupture. Discuss the risks and advantages of surgical and nonsurgical management of acute Achilles tendon rupture. Describe the challenges associated with the management of chronic Achilles tendon ruptures. Review various surgical techniques for the management of chronic Achilles tendon ruptures. Intro"
+        },
+        {
+          "id": "6001014",
+          "title": "Posterior Tibial Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001014",
+          "extractable": true,
+          "score": 42.122,
+          "snippet": "foot. The posterior tibial edema sign is described as objective evidence of posterior tibialis tendon dysfunction if pitting edema is observed along the course of the posterior tibialis tendon posterior to the medial malleolus. A single-limb heel raise is a crucial test for evaluating the posterior tibialis tendon. Th"
+        },
+        {
+          "id": "6004062",
+          "title": "Pediatric Foot Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004062",
+          "extractable": true,
+          "score": 41.458,
+          "snippet": "toe walking: Etiology, prevalence, classification, and treatment. Foot Ankle Spec 2017;10[4]:337-342.) SEND FEEDBACK 9/3/26, 5:36 PM AAOS | Pediatric Foot Conditions https://rock.aaos.org/coursecontent.aspx?id=6004062 4/32 Figure 2 Photograph of an ankle shows a V-shape on the Achilles tendon, which is observed with"
+        },
+        {
+          "id": "6004002",
+          "title": "Ankle Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004002",
+          "extractable": true,
+          "score": 40.81,
+          "snippet": "the Achilles tendon and under direct visualization. Débridement with the use of a 4.0-mm shaver is appropriate for removal of bursitis and pathogenic tendon, if present. After débridement, the posterior calcaneal prominence and the Achilles tendon insertion can be observed. Resection of the Haglund prominence from the"
+        },
+        {
+          "id": "510000645",
+          "title": "Fractures of the Calcaneus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000645",
+          "extractable": true,
+          "score": 39.241,
+          "snippet": "nerve rests posterior to the posterior tibial artery and must be protected during medial approaches to the calcaneus. Tendons Achilles tendon Plantaris tendon  Tendons SEND FEEDBACK 9/3/26, 4:13 PM AAOS | Fractures of the Calcaneus https://rock.aaos.org/coursecontent.aspx?id=510000645 6/57 The Achilles tendon is form"
+        },
+        {
+          "id": "6002083",
+          "title": "Foot and Ankle Sports Injuries in Pediatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002083",
+          "extractable": true,
+          "score": 38.63,
+          "snippet": "therapy may be useful if an associated contracture of the heel cords is present. Surgical Management Posterior tibialis tendon splitting excision with tendon repair Accessory navicular excision with posterior tibial tendon advancement (Kidner procedure) SEND FEEDBACK 9/3/26, 4:09 PM AAOS | Foot and Ankle Sports Injuri"
+        },
+        {
+          "id": "6000005",
+          "title": "Peroneal Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000005",
+          "extractable": true,
+          "score": 33.562,
+          "snippet": "fragment of bone is avulsed from the fibula, with the tendons displaced beneath the fibular fragment. In grade IV injury, the SPR is torn from its posterior attachment to the calcaneus and deep investing fascia of the Achilles tendon, with the retinaculum lying deep to the dislocating tendon. (Adapted with permission"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 31.484,
+          "snippet": "oes Anterior Peroneus tertius Fibula Base of fifth metatarsal DPN DF, EV Superficial posterior Gastrocnemius Medial and lateral femoral condyles Calcaneus through Achilles tendon Tibial Ankle PF, knee flexion Superficial posterior Soleus Tibia and fibula Calcaneus through Achilles tendon Tibial PF Superfici"
+        },
+        {
+          "id": "6001159",
+          "title": "History and Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001159",
+          "extractable": true,
+          "score": 29.08,
+          "snippet": "Lateral pain (side of leg) The most common diagnosis for lateral pain is greater trochanteric bursitis. The differential diagnosis for lateral hip pain includes greater trochanteric bursitis, iliotibial band (ITB) syndrome, abductor tendinitis, abductor tendon tear, and snapping of the ITB over the trochanter. Posteri"
+        }
+      ]
+    },
+    {
+      "stableGuid": "N.6ZQynQ-!",
+      "front": "The Arg-Gly-Asp (RGD) sequence of extracellular bone proteins allows binding of integrins on the surface of osteoclasts .",
+      "extra": "*This process enables bone resorption *Integrins, on the surface of osteoclasts bind to extracellular proteins on bone, such as vibronectin, to facilitate bone resorption at the ruffled border. The Arg-Gly-Asp (RGD) sequence plays an important roll in the binding of integrins and extraceullar proteins such as vibronectin and fibronectin. After binding, the intracellular side of these proteins binds to intracellular proteins to allow for change in the intracellular structures and function.",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science"
+      ],
+      "candidates": [
+        {
+          "id": "6002000",
+          "title": "Structure, Function, and Biology of the Extracellular Matrix",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002000",
+          "extractable": true,
+          "score": 57.079,
+          "snippet": "n Tetranectin Osteoglycin/mimecan Osteoadherin SIBLING Proteins Vitamin K–Dependent Proteins (Gla- proteins) Osteopontin (2ar, spp1) Osteocalcin Bone sialoprotein Matrix Gla-protein DMP-1 Periostin Dentin sialophosphoprotein MEPE RGD-Containing Proteins Growth Factors/Cytokines Fibronectin BMPs Thrombospondins BMP anta"
+        },
+        {
+          "id": "6001008",
+          "title": "Orthopaedic Molecular and Cellular Biology, Genetics, and Immunology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001008",
+          "extractable": true,
+          "score": 54.27,
+          "snippet": "including ligand molecules binding to cell surface receptors, mechanical forces, ECM interactions, contact with other cells, and stimulation by hormones and cytokines. These pathways are critical for proper development, cellular division, cellular differentiation, and homeostasis. For example, bone morphogenetic prote"
+        },
+        {
+          "id": "6001151",
+          "title": "Bone Biology and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001151",
+          "extractable": true,
+          "score": 51.779,
+          "snippet": "metabolism.1,2 Non-collagenous ECM proteins in bone Vitamin K–dependent proteins: osteocalcin, periostin, matrix gla-protein Small integrin-binding ligand N-linked glycoproteins: osteopontin, bone sialoprotein, dentin matrix protein-1, dentin sialophosphoprotein, matrix extracellular phopsphoglycoprotein RGD-containin"
+        },
+        {
+          "id": "6001186",
+          "title": "Bone Healing, Bone Graft Materials, and Bone Graft Substitutes, Including Bone Morphogenetic Proteins",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001186",
+          "extractable": true,
+          "score": 51.25,
+          "snippet": "subsequently communicate with cells on the bone surface about increasing formation or resorption. Osteoclasts are large multinucleated cells, similar to macrophages, derived from the hematopoietic lineage. Osteoclasts facilitate resorption of mineralized tissue and attach to the bone surface at sites of active bone re"
+        },
+        {
+          "id": "6001166",
+          "title": "Metabolic Bone Diseases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001166",
+          "extractable": true,
+          "score": 45.46,
+          "snippet": "bone matrix. They communicate with other osteocytes, osteoblasts, and osteoclasts on the bone surface via an interconnected complex of microscopic cell processes and bone channels called canaliculi. They sense mechanical force and send signals to osteoclasts and osteoblasts on the endosteal surface of bone to arrange"
+        },
+        {
+          "id": "6002109",
+          "title": "Genetics, Gene Expression, and Epigenetics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002109",
+          "extractable": true,
+          "score": 42.545,
+          "snippet": "AGC AUA ACA AAA Lys AGA Arg AUG Met ACG AAG AGG GUU Val GCU Ala GAU Asp GGU Gly GUU GCC GAC GGC GUA GCA GAA Glu GGA GUG GCG GAG GGG Ala = alanine, Arg = arginine, Asn = asparagine, Asp = asparatic acid, Cys = cysteine, Gln = glutamine, Glu = glutamic acid, Gly = glycine, His = histidine, Ile = isoleucine, Leu = leucin"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 37.286,
+          "snippet": "linear wear Next-generation UHMWPE (antioxidants)6 Because of trade-offs associated with thermal treatment after radiation-induced cross-linking (eg, reduction in toughness), next-generation UHMWPE, including antioxidants, has been SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Total Hip Arthroplasty: Bearing Surfaces Basic Sci"
+        },
+        {
+          "id": "6001006",
+          "title": "Bone Healing and Bone Grafts",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001006",
+          "extractable": true,
+          "score": 32.594,
+          "snippet": "Bone and Joint Biology Structure and Composition Cortical bone Cancellous bone     NOTES SEND FEEDBACK 9/3/26, 3:59 PM AAOS | Bone Healing and Bone Grafts https://rock.aaos.org/coursecontent.aspx?id=6001006 1/32 Woven bone Lamellar bone Bone Cells Bone contains three distinct cell types. Osteoblasts Cuboidal cells"
+        },
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 32.451,
+          "snippet": "ons grow too rapidly for the periosteum to respond with even thin shells of new bone; only the edges of the raised periosteum have time to ossify. Observed tangentially on radiographs, the reactive bone forms an angle with the bone surface. This layer of reactive bone at the margin of the lesion is termed the Codman tr"
+        },
+        {
+          "id": "6001000",
+          "title": "Cell Biology, Cell Differentiation, and Skeletal Stem Cells",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001000",
+          "extractable": true,
+          "score": 32.264,
+          "snippet": "er roles for Osx in conducting bone homeostasis and balancing bone deposition with cartilaginous resorption.27 Bone primarily consists of type I collagen that has been ingrained with calcium and phosphate in the form of hydroxyapatite.30 Osteoblasts lay the extracellular groundwork for bone and facilitate bone minerali"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 30.115,
+          "snippet": "wear into the anterior part of the acromion, the acromioclavicular (AC) joint, and the coracoid. (Adapted with permission from Neer CS II, Craig EV, Fukuda H: Cuff-tear arthropathy. J Bone Joint Surg Am 1983;65[9]:1232-1244.) SEND FEEDBACK 9/4/26, 10:26 AM AAOS | Rotator Cuff Arthropathy: Basic Science Mechanical and"
+        },
+        {
+          "id": "6001004",
+          "title": "Biology and Function of Skeletal Muscle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001004",
+          "extractable": true,
+          "score": 28.5,
+          "snippet": "myosin and actin filament (Figure 6). The myosin molecule has two heads or globular domains: one for binding to actin and the other as a site for ATP binding. On attachment to the myosin globular domain, ATP is hydrolyzed into ADP and inorganic phosphate. The energy liberated from this process activates myosin, changi"
+        }
+      ]
+    },
+    {
+      "stableGuid": "n.Z(Gf$Qc[",
+      "front": "Biomechanical studies show that the quadruple semitendinosus and gracilis grafted tendons for ACL reconstruction are the strongest of the tissues on maximal load to failure testing .",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::ACL_Tear",
+        "SnapOrtho::Specialty::Basic_Science",
+        "SnapOrtho::Specialty::Sports_Medicine",
+        "SnapOrtho::Treatment::ACL_Tear_Reconstruction"
+      ],
+      "candidates": [
+        {
+          "id": "6002110",
+          "title": "Tendons and Ligaments",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002110",
+          "extractable": true,
+          "score": 49.717,
+          "snippet": "e ACL injuries typically do not heal. Surgical reconstruction of the ACL often is necessary to restore stability in the injured knee. Several graft materials have been used to reconstruct the ACL, including autografts and allografts.  Injury, Repair, and Healing Autografts, including bone-patellar tendon-bone, semiten"
+        },
+        {
+          "id": "6004079",
+          "title": "Anatomy of the Ankle for the Sports Medicine Surgeon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004079",
+          "extractable": true,
+          "score": 34.148,
+          "snippet": " Anatomy of the Ankle for the Sports Medicine Surgeon  CORE March 02, 2023 Kyle Duchman, MD Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Review the relevant pathoanatomy for common sports injuries about the ankle. Discuss the relevant surgical anatomy for commonl"
+        },
+        {
+          "id": "6001066",
+          "title": "The Team Physician and the Ethics of Sports Medicine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001066",
+          "extractable": true,
+          "score": 33.326,
+          "snippet": "context in which sports medicine ethics are operationalized has distinct characteristics and manifestly structures the behavior of those charged with the duty to act ethically. Studies of the practice of maintaining patient confidentiality in sports medicine show, for example, that the distinct physical environment, p"
+        },
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 33.157,
+          "snippet": "nfections in orthopaedics, in Einhorn TA, O’Keefe RJ, Buckwalter JA, eds: Orthopaedic Basic Science. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2007, pp 299-314. Types of Musculoskeletal Infection and Clinical Presentation SEND FEEDBACK 9/3/26, 4:48 PM AAOS | Musculoskeletal Infections and Microbiology Bas"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 33.052,
+          "snippet": "AAOS | Total Hip Arthroplasty: Bearing Surfaces Basic Science https://rock.aaos.org/coursecontent.aspx?id=510000503 5/21 introduced. Incorporation of antioxidants into UHMWPE allows for cross-linking via radiation in the absence of a postirradiation thermal treatment. Clinical results show near-zero oxidation of antio"
+        },
+        {
+          "id": "6004075",
+          "title": "The Biology and Biomechanics of Grafts and Implants in Sports Medicine Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004075",
+          "extractable": true,
+          "score": 31.983,
+          "snippet": "consists of harvesting the patient’s ipsilateral semitendinosus and/or gracilis at the site of insertion on the tibia. The tendons can be harvested via an anteromedial incision, and the same incision can be used to drill the tibial tunnel during ACL reconstruction. Biomechanical studies have shown that quadruple hamst"
+        },
+        {
+          "id": "510000530",
+          "title": "Anatomy and Biomechanics of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000530",
+          "extractable": true,
+          "score": 25.031,
+          "snippet": "g of tibial ACL tunnels. Between the fossa and the medial plateau, an elevation referred to as the ACL ridge has been identified, with a protuberance called the ACL tubercle at its lateral-most edge.108 The center of the ACL tibial attachment is a mean of 10.5 mm posterior to the ACL ridge. SEND FEEDBACK 9/4/26, 10:09"
+        },
+        {
+          "id": "510000621",
+          "title": "Massive Rotator Cuff Tears and Superior Capsule Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000621",
+          "extractable": true,
+          "score": 22.222,
+          "snippet": "scars; complete assessment of ROM; strength testing; a neurovascular examination of the affected extremity; and special testing as necessary. In addition, the clinician should assess for pseudoparalysis, defined by most studies as active elevation of less than 90° with full passive ROM. Imaging Studies Radiography Pla"
+        },
+        {
+          "id": "6001001",
+          "title": "Developmental Biology of Musculoskeletal Tissues",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001001",
+          "extractable": true,
+          "score": 21.401,
+          "snippet": "Various tissues, such as cartilage and bone, develop during various stages of skeletal system development. The musculoskeletal system tissues, such as bone, muscle, and cartilage, are derived from mesoderm, with neural crest contributing to some tissues. Therefore, mesodem forms nearly all the connective tissues of th"
+        },
+        {
+          "id": "6001183",
+          "title": "Ligamentous Injuries of the Knee: Failed Anterior Cruciate Ligament Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001183",
+          "extractable": true,
+          "score": 21.095,
+          "snippet": "requires stress patterns similar to those of the native ACL, which highlights the importance of anatomic ACL reconstruction. Risk Factors Associated With ACL Reconstruction Failure  Risk Factors Associated with ACL Reconstruction Failure Numerous modifiable and nonmodifiable risk factors are associated with graft fai"
+        },
+        {
+          "id": "6001152",
+          "title": "Tendon and Ligament Biology and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001152",
+          "extractable": true,
+          "score": 19.663,
+          "snippet": "s after ACL reconstruction. The traditional understanding is that autograft fibroblasts undergo necrosis soon after reconstruction and are replaced by host-derived fibroblasts; however, this is based on animal studies, most of which are failed reconstruction procedures with residual laxity. In that setting, stress depr"
+        },
+        {
+          "id": "510000559",
+          "title": "Nerve Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000559",
+          "extractable": true,
+          "score": 19.471,
+          "snippet": "ry reconstruction addresses the remaining deficits (or the salvage of failed reconstruction attempts) and attempts to improve on the results. Reconstruction after BPI may require several stages of management to yield maximal results. Secondary reconstruction procedures include tendon transfers, FFMTs, arthrodesis, and"
+        }
+      ]
+    },
+    {
+      "stableGuid": "n(F@*hs&n{",
+      "front": "Russel-Taylor Classification of Subtrochanteric Femur Fractures Type I: No extension into piriformis fossa Type II: Extension into greater trochanter with involvement of piriformis fossa",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femur",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Greater_Trochanter",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "6001189",
+          "title": "Proximal Third Femur Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001189",
+          "extractable": true,
+          "score": 60.849,
+          "snippet": "5 PM AAOS | Proximal Third Femur Fractures https://rock.aaos.org/coursecontent.aspx?id=6001189 11/63 Subtrochanteric Femur Fractures Russell-Taylor classification system Type I: no extension into piriformis fossa Type II: extension into the greater trochanter and involvement of the piriformis fossa  Subtrochanteric Fe"
+        },
+        {
+          "id": "6001084",
+          "title": "Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001084",
+          "extractable": true,
+          "score": 37.232,
+          "snippet": "e Associated femoral shaft fracture Proximal femur/acetabular fracture Injury Classification The Orthopaedic Trauma Association/AO Foundation classification is the universally accepted system for classifying injuries of the distal femur. Type A fractures are extra-articular injuries. Type B fractures are partially arti"
+        },
+        {
+          "id": "510000529",
+          "title": "Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000529",
+          "extractable": true,
+          "score": 36.632,
+          "snippet": "tuberosity (medial side) Insertion: fibular head External rotators of the hip Piriformis Origin: lateral/posterior sacrum Insertion: passes through the greater sciatic notch and inserts at the posterosuperior greater trochanter Motion: external rotation of the hip Innervation: piriformis nerve Obturator externus Origi"
+        },
+        {
+          "id": "6002011",
+          "title": "Bone Loss Classification: Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002011",
+          "extractable": true,
+          "score": 31.922,
+          "snippet": "type 5, hip arthrodesis. SEND FEEDBACK 9/3/26, 7:33 AM AAOS | Bone Loss Classification: Hip https://rock.aaos.org/coursecontent.aspx?id=6002011 3/22 Figure 1 Illustrations show the American Academy of Orthopaedic Surgeons classification of acetabular bone deficiency: segmental (type 1), cavitary (type 2), combined seg"
+        },
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "extractable": true,
+          "score": 31.711,
+          "snippet": "classification system. This classification system differentiates femoral neck fractures based on regions, including the subcapital, transcervical, and basicervical, and displacement.7 Unstable intertrochanteric fractures are those with posteromedial comminution, reverse obliquity, a thin lateral cortex, or subtrochant"
+        },
+        {
+          "id": "6001187",
+          "title": "Management of Atypical Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001187",
+          "extractable": true,
+          "score": 30.729,
+          "snippet": "femur fracture is suspected. Review the surgical and nonsurgical management of atypical femur fractures. Specify the postoperative management of patients with an atypical femur fracture and osteoporosis. Pathophysiology/Pathoanatomy Overview Atypical femur fractures (AFFs) are unusual fragility fractures that occur in"
+        },
+        {
+          "id": "510000554",
+          "title": "Surgical Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000554",
+          "extractable": true,
+          "score": 30.363,
+          "snippet": "h the lesser sciatic foramen. The gemelli muscles have an approximate location to the obturator internus. The piriformis muscle originates from the greater sciatic foramen and inserts onto the greater trochanter. The piriformis forms the reference structure for the posterior part of the hip. Structures are identified b"
+        },
+        {
+          "id": "6002012",
+          "title": "Postoperative Periprosthetic Fractures of the Femur and Acetabulum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002012",
+          "extractable": true,
+          "score": 29.381,
+          "snippet": "postoperatively.14 Management Classification Vancouver classification of postoperative periprosthetic femur fractures (Figure 1) Type A: fracture in the trochanteric region Type AG (greater trochanter) Protected–weight bearing Type AL (lesser trochanter) Protected–weight bearing Type B: fracture located around or just"
+        },
+        {
+          "id": "6001058",
+          "title": "Pediatric Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001058",
+          "extractable": true,
+          "score": 27.029,
+          "snippet": "21/31 Figure 6 Anterior view (A) and superior view (B) illustrations of the proximal femur show the piriformis fossa (white arrow in A; white circle in B), the tip of the greater trochanter (solid arrow in A; black circle in B), and the lateral aspect of the greater trochanter (dashed arrow in A; grey circle in B) wit"
+        },
+        {
+          "id": "6000036",
+          "title": "Physeal Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000036",
+          "extractable": true,
+          "score": 26.85,
+          "snippet": "type II fractures are most common.  Injury Classification In a meta-analysis of 11 studies (n = 485), the prevalence of physeal fractures of the distal femur according to the Salter-Harris classification system was as follows: type I, 14%; type II, 57%; type III, 10%; type IV, 12%; and type V, 3%. 5 Patient History a"
+        },
+        {
+          "id": "6003012",
+          "title": "Other Conditions With Musculoskeletal Involvement",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003012",
+          "extractable": true,
+          "score": 25.069,
+          "snippet": "With Musculoskeletal Involvement https://rock.aaos.org/coursecontent.aspx?id=6003012 6/14 and range from a very severe, often lethal phenotype (type II) to a milder phenotype with few fractures in childhood but early-onset adult osteoporosis (type I). Type III typically manifests as deforming fractures in childhood th"
+        },
+        {
+          "id": "6002026",
+          "title": "Acetabular Fractures: Definitive Management and Outcomes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002026",
+          "extractable": true,
+          "score": 22.91,
+          "snippet": "for surgical and nonsurgical management of acetabular fractures. Identify the variables that contribute to successful management of acetabular fractures. Review the expected short- and long-term outcomes of acetabular fractures. Explain common complications that can occur after acetabular fracture management. Backgrou"
+        }
+      ]
+    },
+    {
+      "stableGuid": "N(J*KZq$I:",
+      "front": "When performing revision THA for trunnionosis , what are the preferred materials for the new head and sleeve ? Head - ceramic Sleeve - titanium",
+      "extra": "*New polyethlyene liner as well",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Adult_Reconstruction",
+        "SnapOrtho::Treatment::Revision_Arthroplasty"
+      ],
+      "candidates": [
+        {
+          "id": "6001161",
+          "title": "Retrieval Analysis of Hip and Knee Prostheses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001161",
+          "extractable": true,
+          "score": 42.11,
+          "snippet": "bearings; however, ceramic wear can occur if subluxation, even temporarily, causes contact between ceramic and metal surfaces. If a ceramic-on-ceramic or ceramic-on- polyethylene THA implant needs to be revised, it should only be replaced with another ceramic bearing surface and not a metal bearing surface. Even a few"
+        },
+        {
+          "id": "6002061",
+          "title": "Bearing Surface Options: Wear, Stability, and Revision",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002061",
+          "extractable": true,
+          "score": 42.057,
+          "snippet": "Wear, Stability, and Revision https://rock.aaos.org/coursecontent.aspx?id=6002061 2/31 To balance longevity and short-term complications, most THA bearing surfaces currently implanted include a hard head that articulates against a soft acetabulum. Popular THA articulation options o A metal head against a highly cross-"
+        },
+        {
+          "id": "6000023",
+          "title": "Salvage Procedures and Failed Revision Total Knee Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000023",
+          "extractable": true,
+          "score": 36.493,
+          "snippet": "Determine the appropriate workup for a patient in whom failed revision total knee arthroplasty is suspected. Describe salvage procedures for failed revision total knee arthroplasty. Determine host factors that may guide decision making for appropriate salvage procedures after failed revision total knee arthroplasty. I"
+        },
+        {
+          "id": "510000555",
+          "title": "Component Removal in Revision Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000555",
+          "extractable": true,
+          "score": 33.879,
+          "snippet": "l left hip (F) radiographs obtained after revision to a modular, tapered, fluted titanium stem. (Courtesy of Leonard T. Buller, MD, Fishers, IN.) SEND FEEDBACK 9/3/26, 7:44 AM AAOS | Component Removal in Revision Total Hip Arthroplasty https://rock.aaos.org/coursecontent.aspx?id=510000555 28/50 Video 11 Westrich GH: Pe"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 33.262,
+          "snippet": "femoral stem may be retained and revised with the use of a fourth-generation ceramic head with a titanium sleeve. If damage beyond simple scratches or corrosion is present, then revision of the femoral implant is necessary. During revision for a fractured ceramic femoral head or liner, a ceramic-on-ceramic or ceramic-"
+        },
+        {
+          "id": "6004019",
+          "title": "Primary Total Hip Arthroplasty for Osteoarthritis: Acetabular Component",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004019",
+          "extractable": true,
+          "score": 29.789,
+          "snippet": "a similar or lower risk of revision compared with that of hybrid THA implants but demonstrated poorer functional outcomes and patient quality of life scores.10 Although cemented prostheses are lower in cost compared with hybrid and noncemented THA implants, they may not be cost-effective given the higher complication"
+        },
+        {
+          "id": "6001028",
+          "title": "Postoperative Polyethylene Wear and Osteolysis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001028",
+          "extractable": true,
+          "score": 29.07,
+          "snippet": "1 case) Cemented constrained liner exchange Callaghan et al50 31 3.9 94 Technical error (1 case), instability postseizure (1 case) Liner exchange versus acetabular revision Lie et al51 716 (318 liner exchanges, 398 revisions of well-fixed acetabular components) 10 (approximately) Liner exchange: 84 Acetabular revision:"
+        },
+        {
+          "id": "510000510",
+          "title": "Postoperative Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000510",
+          "extractable": true,
+          "score": 28.953,
+          "snippet": "and surgical factors that increase the risk of hip dislocation after total hip arthroplasty. Assess spinopelvic parameters in patients undergoing total hip arthroplasty. Discuss the evaluation and management of hip dislocation after total hip arthroplasty. History  History Instability and dislocation after primary to"
+        },
+        {
+          "id": "510000509",
+          "title": "Postoperative Adverse Local Tissue Reaction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000509",
+          "extractable": true,
+          "score": 28.701,
+          "snippet": "often are coupled with a ceramic head with a titanium alloy sleeve. Cobalt-chromium alloy stems may be revised to a sleeved ceramic head or a cobalt-chromium head, with no current consensus on which option is optimal. Revision to a ceramic head without a titanium sleeve is not recommended because of the risk of cerami"
+        },
+        {
+          "id": "510000507",
+          "title": "Femoral Component Revision",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000507",
+          "extractable": true,
+          "score": 27.251,
+          "snippet": "   NOTES SEND FEEDBACK 9/3/26, 4:07 PM AAOS | Femoral Component Revision https://rock.aaos.org/coursecontent.aspx?id=510000507 1/20 available host bone may help surgeons develop an algorithm to guide management. In addition, understanding the options for femoral revision implants is paramount to developing a system"
+        },
+        {
+          "id": "510000506",
+          "title": "Acetabular Component Revision",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000506",
+          "extractable": true,
+          "score": 26.919,
+          "snippet": "(24) Revision with trabecular metal revision shell Trabecular metal augments used in 21 hips 67 (38– 81) 41 (24– 62) For loosening: 96 For any revision: 91 For augment loosening: NR 1 patient had radiologic loosening and did not undergo revision 2 patients underwent revision with constrained liner or tripolar implant"
+        },
+        {
+          "id": "6004023",
+          "title": "Evaluation and Workup in Revision Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004023",
+          "extractable": true,
+          "score": 26.874,
+          "snippet": "report substantial improvements in pain and function after THA, a minority of patients will report at least some degree of new or continued pain and dysfunction postoperatively.2 Evaluation Pain and dysfunction after THA may result from various causes. The common differential diagnosis for a painful THA implant includ"
+        }
+      ]
+    },
+    {
+      "stableGuid": "N(SsB}(G&}",
+      "front": "What is a bimalleolar-equivalent ankle fracture ? Fibula fracture with widening of the medial clear space indicating an unstable ankle",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology::Fibula",
+        "SnapOrtho::Diagnosis::Ankle_Fracture",
+        "SnapOrtho::Specialty::Foot_Ankle",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "extractable": true,
+          "score": 47.309,
+          "snippet": "| Pediatric Foot and Ankle Trauma https://rock.aaos.org/coursecontent.aspx?id=6004071 39/70 Figure 26 Images of a foot with a navicular fracture. A, Lateral radiograph demonstrates a comminuted fracture of the navicular (nutcracker fracture pattern). These fractures result from high-energy mechanisms of injury and an"
+        },
+        {
+          "id": "6002083",
+          "title": "Foot and Ankle Sports Injuries in Pediatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002083",
+          "extractable": true,
+          "score": 38.107,
+          "snippet": "occur in the foot and ankle. Salter-Harris type I and type II fractures account for 90% of isolated distal fibula fractures. Based on MRIs, ankle sprains are more common than Salter-Harris type I distal fibula fractures.1,2  Epidemiology Foot and ankle fractures are common in pediatric patients, accounting for a comb"
+        },
+        {
+          "id": "510000644",
+          "title": "Fractures of the Talus: Foot Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000644",
+          "extractable": true,
+          "score": 37.236,
+          "snippet": "avulsion fracture 81.1.B: partial articular fracture involving the tibiotalar or subtalar joint 81.1.B1: osteochondral injury 81.1.B2: simple fracture pattern 81.1.B3: comminuted fracture pattern 81.1.C: complete articular fracture involving the tibiotalar and subtalar joints 81.1.C1: simple fracture 81.1.C2: multifra"
+        },
+        {
+          "id": "6004057",
+          "title": "Rotational Fractures of the Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004057",
+          "extractable": true,
+          "score": 36.514,
+          "snippet": "Surgeons, 2013, pp 443-449.) Figure 2 AP radiographs of an isolated right distal fibula fracture. A, The medial clear space appears normal on a static view. B, Note the increased medial clear space, suggestive of widening with gravity stress. (Reproduced from Halvorson JJ, Carroll EA: Surgical treatment of ankle fract"
+        },
+        {
+          "id": "6000014",
+          "title": "Biomechanics/Gait: Effect of Ankle/Foot Malalignment",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000014",
+          "extractable": true,
+          "score": 34.358,
+          "snippet": "tions of pes planus Long-term malalignment leads to a valgus hindfoot ankle joint. Cavovarus deformity of the foot Consists of lateral foot pain, increased pressure of the lateral foot leading to stress fracture of the fifth metatarsal, recurrent ankle sprains, and generalized foot stiffness with gait Equinus contractu"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 27.094,
+          "snippet": "AAOS | Physical Examination of the Foot and Ankle https://rock.aaos.org/coursecontent.aspx?id=510000641 6/25 Compartment Muscle Origin Insertion Innervation Action Anterior Tibialis anterior Tibia, IOM Medial cuneiform and first metatarsal DPN DF, INV Anterior Extensor hallucis longus Fibula, IOM Distal phalanx"
+        },
+        {
+          "id": "510000546",
+          "title": "Ankle and Foot Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000546",
+          "extractable": true,
+          "score": 26.917,
+          "snippet": "evaluation if full–weight bearing is too painful. AP and mortise ankle radiographs of the ankle should be evaluated for medial clear space and syndesmotic widening, malleolar fracture, lateral process of the talus fracture, avulsion fracture, and talar osteochondral fracture (Figure 5; Resource 2). Lateral views of th"
+        },
+        {
+          "id": "6004002",
+          "title": "Ankle Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004002",
+          "extractable": true,
+          "score": 26.32,
+          "snippet": "Anterior Arthroscopic Treatment Options Anterior Ankle Impingement Bony and soft-tissue impingement of the anterior ankle may result from the following: Chronic joint synovitis, including in the setting of a previous ankle fracture Ankle instability Repeated loading and dorsiflexion of the ankle (especially during spo"
+        },
+        {
+          "id": "6002053",
+          "title": "Degenerative Ankle Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002053",
+          "extractable": true,
+          "score": 25.85,
+          "snippet": "Posttraumatic arthritis may result from a fracture (bone injury) or a chronic soft-tissue injury, such as chronic lateral ankle ligament instability. 76% to 78% of patients with ankle arthritis have posttraumatic arthritis.     NOTES SEND FEEDBACK 9/3/26, 7:49 AM AAOS | Degenerative Ankle Arthritis https://rock.aa"
+        },
+        {
+          "id": "6000001",
+          "title": "Acute Lateral Ankle Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000001",
+          "extractable": true,
+          "score": 24.966,
+          "snippet": "is (Table 3) Syndesmotic injury Ankle fracture Subtalar joint instability Table 3 Ankle Injury: Differential Diagnosis Lateral talar process fracture Fifth metatarsal base fracture Anterior process fracture of the calcaneus Soft-tissue impingement lesion Bone impingement lesion Peroneal tendon pathology (tear or tenode"
+        },
+        {
+          "id": "6001046",
+          "title": "Stress Fractures of the Leg: Tibia and Fibula",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001046",
+          "extractable": true,
+          "score": 24.438,
+          "snippet": "a complete fracture, with or without displacement (Figure 2). SEND FEEDBACK 9/4/26, 9:41 AM AAOS | Stress Fractures of the Leg: Tibia and Fibula https://rock.aaos.org/coursecontent.aspx?id=6001046 3/13 Figure 2 Lateral radiograph of the tibia and fibula of a patient with a chronic anterior tibial stress fracture demon"
+        },
+        {
+          "id": "6000004",
+          "title": "Arthritides of the Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000004",
+          "extractable": true,
+          "score": 23.681,
+          "snippet": "9/3/26, 7:22 AM AAOS | Arthritides of the Ankle https://rock.aaos.org/coursecontent.aspx?id=6000004 16/33 Figure 9 Radiograph of an ankle demonstrates Scandinavian Total Ankle Replacement (Stryker). (Reproduced from Harnroongroj T, Demetracopoulos CA: Ankle arthritis: Part II. Total ankle arthroplasty, in Chou LB, ed:"
+        }
+      ]
+    }
+  ]
+}

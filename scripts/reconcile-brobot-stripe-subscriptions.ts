@@ -340,6 +340,19 @@ async function main() {
           provider: 'stripe',
           source: mapping.source,
           metadata: subscription.metadata,
+          lifecycle_reason:
+            subscription.status === 'incomplete_expired'
+              ? 'initial_payment_not_completed'
+              : subscription.cancellation_details?.reason
+                ?? (subscription.status === 'canceled' && subscription.cancel_at_period_end
+                  ? 'scheduled_cancellation'
+                  : subscription.status === 'canceled'
+                    ? 'cancellation_reason_unavailable'
+                    : subscription.status === 'past_due'
+                      ? 'renewal_payment_failed'
+                      : subscription.status === 'unpaid'
+                        ? 'renewal_payment_unpaid'
+                        : null),
         },
         last_verified_at: new Date().toISOString(),
         stripe_customer_id: customer.id,

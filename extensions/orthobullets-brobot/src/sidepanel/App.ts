@@ -2110,6 +2110,32 @@ export function mountSidePanelApp(root: HTMLElement) {
     button.textContent = ankiConnectionTimeoutCopy();
   }
 
+  async function generateQuestionClaim(button: HTMLButtonElement) {
+    const page = state.pageContext;
+    if (!page) return;
+    button.disabled = true;
+    button.textContent = 'Generating graph claim…';
+    const result = await sendMessage({ type: 'ob:generate-question-claim', pageContext: page });
+    if (!result.ok || !('questionClaim' in result)) {
+      button.disabled = false;
+      button.textContent = result.ok ? 'Try generating claim again' : `Try again — ${result.error}`;
+      return;
+    }
+    const claim = result.questionClaim;
+    if (claim.status === 'created') {
+      button.textContent = 'Claim queued for automated review';
+      return;
+    }
+    button.disabled = false;
+    if (claim.gapRecorded) {
+      button.textContent = claim.reason
+        ? `Queued metadata gap — ${claim.reason.replaceAll('_', ' ')}`
+        : 'Queued metadata gap for automated resolution';
+      return;
+    }
+    button.textContent = claim.reason ? `Quarantined — ${claim.reason.replaceAll('_', ' ')}` : 'Claim was not created';
+  }
+
   async function findTestAnkiCards(button: HTMLButtonElement, debrief: FullTestDebrief | null) {
     if (!state.pageContext || !getOrthobulletsTestReview(state.pageContext)) return;
     button.disabled = true;
@@ -2416,6 +2442,23 @@ export function mountSidePanelApp(root: HTMLElement) {
           providerLabel,
         },
       });
+      const page = state.pageContext;
+      const canGenerateClaim = page?.provider === 'orthobullets'
+        && (page.pageKind === 'review' || page.pageKind === 'testview')
+        && Boolean(page.questionId && page.correctAnswerKey && page.explanationText?.trim());
+      if (canGenerateClaim) {
+        const claimCard = createElement('div', {
+          html: `<section style="padding:12px;border-radius:12px;background:#f8fafc;border:1px solid #cbd5e1;display:grid;gap:7px;">
+            <p style="margin:0;font-size:12px;font-weight:800;color:#0f766e;">Knowledge graph curation</p>
+            <p style="margin:0;font-size:12px;line-height:1.4;color:#475569;">Creates one original, sanitized claim from this completed review question. It remains out of production until automated evidence checks pass.</p>
+            <button id="generate-question-claim" style="justify-self:start;border:1px solid #0f766e;border-radius:999px;background:white;color:#0f766e;padding:7px 11px;font-weight:800;font-size:12px;cursor:pointer;">Generate graph claim</button>
+          </section>`,
+        });
+        content.appendChild(claimCard);
+        claimCard.querySelector<HTMLButtonElement>('#generate-question-claim')?.addEventListener('click', (event) => {
+          void generateQuestionClaim(event.currentTarget as HTMLButtonElement);
+        });
+      }
     } else {
       const isBusy = state.operation !== 'idle';
       const explainButtonLabel =

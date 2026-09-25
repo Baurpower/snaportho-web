@@ -1,0 +1,1114 @@
+{
+  "batchKey": "map-000001-packet-0193",
+  "inputChecksum": "8c35912c7388fb7ff5054bd997eecfd9ffbe712300d9f4ebc0ef09843bf8d3d3",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "sidecarSchema": {
+    "card": {
+      "stableGuid": "string",
+      "status": "\"mapped\"|\"skipped\"",
+      "chapters": "1-3 {id, role} from this card's candidates; first is primary",
+      "skipReason": "if skipped"
+    }
+  },
+  "cards": [
+    {
+      "stableGuid": "lCJ0YK[+>_",
+      "front": "What is believed to contribute to pseudoarthrosis of the clavicle ? Pulsatile compression from the subclavian",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Shoulder_Girdle",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology",
+        "SnapOrtho::Anatomy::Shoulder_Girdle::Osteology::Clavicle",
+        "SnapOrtho::Specialty::Shoulder_Elbow"
+      ],
+      "candidates": [
+        {
+          "id": "510000664",
+          "title": "Shoulder Trauma: Scapular and Glenoid Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000664",
+          "extractable": true,
+          "score": 31.229,
+          "snippet": "in shoulder surgery. J Am Acad Orthop Surg 2020;28[5]:e185-e192. SEND FEEDBACK 9/4/26, 10:43 AM AAOS | Shoulder Trauma: Scapular and Glenoid Fractures https://rock.aaos.org/coursecontent.aspx?id=510000664 8/49 Figure 4 Illustration of the posterior aspect of the shoulder shows muscles and nerves. (Reproduced from Gram"
+        },
+        {
+          "id": "6004073",
+          "title": "Traumatic Brachial Plexus Injuries: Shoulder Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004073",
+          "extractable": true,
+          "score": 26.311,
+          "snippet": "minor. Reconstruction of prime movers/stabilizers of the glenohumeral joint is prioritized, followed by scapular stabilizers/movers in BPIs  Biomechanics of Shoulder Girdle Knowledge of shoulder anatomy and biomechanics is critical to apprehend shoulder reconstruction in BPIs. Goldner2 divided the muscles about the s"
+        },
+        {
+          "id": "6004083",
+          "title": "Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004083",
+          "extractable": true,
+          "score": 23.33,
+          "snippet": "S | Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes https://rock.aaos.org/coursecontent.aspx?id=6004083 22/36 Week 1 Brace: posterior splint at 90°of elbow flexion ROM: wrist active ROM extension/flexion Elbow postoperative compression dressing 5 to 7 days Exercises Gripping Wrist ROM Shoulder and b"
+        },
+        {
+          "id": "510000584",
+          "title": "Elbow Anatomy and Function",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000584",
+          "extractable": true,
+          "score": 22.677,
+          "snippet": "Gary F. Updegrove, MD Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Learn the anatomic components of the elbow. Understand how the bony and soft-tissue structures contribute to elbow stability. Appreciate the biomechanics of elbow joint motion. Anatomic Components"
+        },
+        {
+          "id": "6001079",
+          "title": "Osteoporotic Vertebral Compression Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001079",
+          "extractable": true,
+          "score": 17.36,
+          "snippet": "Specify the principles and treatment options for optimizing bone health in patients with a history of osteoporotic vertebral compression fractures. Determine the appropriate evaluation and treatment options for osteoporotic vertebral compression fractures. Pathophysiology/Pathoanatomy Introduction     NOTES SEND F"
+        },
+        {
+          "id": "6004036",
+          "title": "Acute and Chronic Vascular Disorders of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004036",
+          "extractable": true,
+          "score": 17.046,
+          "snippet": "to deviate radially into the Guyon canal. In turn, the ulnar artery is believed to be at risk for compression against the hook of the hamate. SEND FEEDBACK 9/3/26, 7:09 AM AAOS | Acute and Chronic Vascular Disorders of the Hand and Wrist https://rock.aaos.org/coursecontent.aspx?id=6004036 5/16 Repetitive trauma is bel"
+        },
+        {
+          "id": "6001175",
+          "title": "Clavicular Fractures and Sternoclavicular and Acromioclavicular Injuries in the Pediatric Patient",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001175",
+          "extractable": true,
+          "score": 14.116,
+          "snippet": "brachial plexus palsy.2 Clavicular fractures may be confused with congenital pseudarthrosis of the clavicle. Congenital pseudarthrosis results from a congenital failure of fusion of the medial and lateral ossification centers of the clavicle; may be related to external compression by the subclavian artery against the"
+        },
+        {
+          "id": "6001164",
+          "title": "Carpal Tunnel Syndrome and Idiopathic Median Nerve Compression at the Carpal Tunnel",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001164",
+          "extractable": true,
+          "score": 13.396,
+          "snippet": "cross-sectional dimensions. A recent meta-analysis of carpal tunnel ultrasonography for median neuropathy diagnosis identified a mean CSA of 11.6 mm2 for mild median nerve compression, a mean CSA of 13.7 mm2 for moderate median nerve compression, and a mean CSA of 16.8 mm2 for severe median nerve compression, with ele"
+        },
+        {
+          "id": "6004072",
+          "title": "Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004072",
+          "extractable": true,
+          "score": 12.888,
+          "snippet": "lying on the ground. A, If a compression force is applied to the posterolateral aspect of the shoulder, the medial end of the clavicle will be displaced posteriorly. B, If a lateral compression force is directed from the anterior position, the medial end of the clavicle will be dislocated anteriorly. (Reproduced from"
+        },
+        {
+          "id": "510000629",
+          "title": "Throwing Shoulder Injuries and Internal Impingement",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000629",
+          "extractable": true,
+          "score": 11.452,
+          "snippet": "dorsolateral scapula and inserts on the greater tuberosity Externally rotates arm Pectoralis major Originates from the ribs, clavicle, and sternum and inserts on the humerus Internally rotates and adducts the arm Pectoralis minor Originates from the ribs and attaches to the coracoid Protracts the scapula Deltoid Origi"
+        },
+        {
+          "id": "510000639",
+          "title": "SICK Scapula Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000639",
+          "extractable": true,
+          "score": 11.309,
+          "snippet": "a and inserts on the greater tuberosity Externally rotates arm Pectoralis major Originates from the ribs, clavicle, sternum; inserts on humerus. Internally rotates and adducts the arm Pectoralis minor Originates from the ribs and attaches to the coracoid Protracts the scapula Deltoid Originates from the clavicle (anter"
+        },
+        {
+          "id": "510000613",
+          "title": "Shoulder Anatomy and Function",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000613",
+          "extractable": true,
+          "score": 11.191,
+          "snippet": "shoulder stabilization and motion. (Resource 1) Osteology Clavicle The clavicle is the first bone to ossify (fifth week of gestation); it is the only long bone to ossify via intramembranous ossification. The medial (sternal) epiphysis is the last ossification center to fuse (age 20 to 25 years). The clavicle is a flat"
+        }
+      ]
+    },
+    {
+      "stableGuid": "ldDQfnNIO|",
+      "front": "Which pedicle is the shortest in length ? T4",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Spine"
+      ],
+      "candidates": [
+        {
+          "id": "6002064",
+          "title": "Limb Length and Offset",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002064",
+          "extractable": true,
+          "score": 20.458,
+          "snippet": "appropriate limb length and offset can be accomplished by varying femoral stem size or position, using modular head and neck length options, or altering acetabular cup position.  Reconstruction Limb length and offset can be altered intraoperatively by adjusting the location or size of the components. Limb length can"
+        },
+        {
+          "id": "6002021",
+          "title": "Imaging of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002021",
+          "extractable": true,
+          "score": 18.72,
+          "snippet": "for spondylolysis Thoracic spine: AP, lateral, and flexion-extension views Cervical spine: AP, lateral, and flexion-extension views Additional views Open-mouth odontoid view to evaluate for upper cervical spine pathology Oblique view to evaluate for foraminal pathology Swimmer view allows for enhanced visualization of"
+        },
+        {
+          "id": "6003024",
+          "title": "Anatomy of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003024",
+          "extractable": true,
+          "score": 18.582,
+          "snippet": "and 1 coccygeal. In the cervical spine, the numbered nerve exits at the level above the corresponding pedicle (eg, the C4 nerve exits between C3 and C4). In the lumber spine, the numbered nerve exits at the level below the corresponding pedicle (eg, the L4 nerve exits between L4 and L5).  Nerve Roots The nerve roots e"
+        },
+        {
+          "id": "6001075",
+          "title": "Lumbar Spine Stenosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001075",
+          "extractable": true,
+          "score": 17.876,
+          "snippet": " NOTES SEND FEEDBACK 9/3/26, 4:36 PM AAOS | Lumbar Spine Stenosis https://rock.aaos.org/coursecontent.aspx?id=6001075 1/23 Lumbar spine stenosis is one of the most common conditions that occurs in the elderly population. In patients older than 65 years, spinal stenosis is the most common reason to undergo lumbar spin"
+        },
+        {
+          "id": "6004088",
+          "title": "Adult Cervical Spine Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004088",
+          "extractable": true,
+          "score": 17.453,
+          "snippet": "adult cervical spine deformity and the associated radiographic parameters. Identify the underlying pathologic processes that may contribute to cervical spine deformity. Recognize the imaging modalities used to assess cervical spine deformity. Review the surgical management of cervical spine deformity. Pathophysiology/"
+        },
+        {
+          "id": "6001176",
+          "title": "Congenital Scoliosis and Early-Onset Scoliosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001176",
+          "extractable": true,
+          "score": 10.366,
+          "snippet": "more likely to have poorer pulmonary function compared with patients with longer thoracic height (Figure 4). Figure 4 Graph shows thoracic height (ht) at the time of follow-up compared with the percentage of predicted forced vital capacity (FVC). Patients with the shortest thoracic spine height (measured from T1 to T1"
+        },
+        {
+          "id": "510000513",
+          "title": "Soft-Tissue Coverage",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000513",
+          "extractable": true,
+          "score": 8.159,
+          "snippet": "distant flaps (eg, posterior interosseous artery or reverse pedicle radial forearm flap)  Thumb–Index Finger Web Space Reconstruction If greater length is necessary, four-flap Z-plasty can increase length by 2.6 times. All limbs of a Z-plasty should be of equal length. Adequate length of flap for transposition can be"
+        },
+        {
+          "id": "6004016",
+          "title": "Biomechanics of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004016",
+          "extractable": true,
+          "score": 7.52,
+          "snippet": "increasing the length of the femoral neck, decreasing the neck-shaft angle, or medializing the femoral head while increasing neck length increase femoral offset).12 Another consideration is correction of leg-length inequality while maintaining hip stability. Hip arthroplasty patients with symptomatic leg- length inequ"
+        },
+        {
+          "id": "6002071",
+          "title": "Microsurgery Techniques",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002071",
+          "extractable": true,
+          "score": 7.256,
+          "snippet": "of the arteriotomy. D, If sutures are placed transversely, leakage will occur at the corners. Donor Vessels Replantation Stay out of zone of injury as much as is possible. Same rules as those already mentioned apply. Microvascular reconstruction Pedicle length should be maximized; additional pedicle length should be a"
+        },
+        {
+          "id": "6001080",
+          "title": "Soft-Tissue Injury and Open Fractures: Skin Grafts and Flaps",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001080",
+          "extractable": true,
+          "score": 6.433,
+          "snippet": "ratio to the length of the flap to maximize viability. Elevation of the surrounding skin with advancement to cover an open wound is an example of a random pattern flap. An axial flap is a piece of tissue in which the pedicle incorporates a named artery or vein. The pedicle refers to the tissue containing the blood sup"
+        },
+        {
+          "id": "6000050",
+          "title": "Cervical Radiculopathy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000050",
+          "extractable": true,
+          "score": 6.193,
+          "snippet": "and join to form a cervical spinal nerve. Each nerve exits above the same numbered pedicle in the cervical spine. For example, the C6 nerve exits above the C6 pedicle at the C5-6 level. The C8 root exits above the T1 pedicle at the C7-T1 level. Within the foramen, the dorsal root is located more rostrally compared wit"
+        },
+        {
+          "id": "6002107",
+          "title": "Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002107",
+          "extractable": true,
+          "score": 6.125,
+          "snippet": "length divided by the original length of an object that has deformed under load. Strain is a unitless quantity (meters/meters) and is commonly presented as a percentage.  Strain A 10% strain indicates that the elongation of the object is equal to 10% of the resting length of the object. Strain within the substance of"
+        }
+      ]
+    },
+    {
+      "stableGuid": "LDIz`/%!!_",
+      "front": "What is the most common surgical treatment for subtrochanteric femur fractures ? Intramedullary nail",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Proximal_Femur",
+        "SnapOrtho::Diagnosis::Subtrochanteric_Fractures",
+        "SnapOrtho::Specialty::Trauma",
+        "SnapOrtho::Treatment::Intramedullary_Nail_Fixation"
+      ],
+      "candidates": [
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "extractable": true,
+          "score": 40.57,
+          "snippet": "to fracture displacement patterns and must be considered in the reduction of proximal femur fractures. Subtrochanteric femur fractures characteristically present with the proximal fragment flexed, abducted, and externally rotated because of the pull of the external rotators, abductors, and iliopsoas. Intertrochanteric"
+        },
+        {
+          "id": "6001189",
+          "title": "Proximal Third Femur Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001189",
+          "extractable": true,
+          "score": 35.384,
+          "snippet": "proximal third femur fractures and understand their relevance with regard to management. Determine the indications and surgical treatment options for geriatric femoral neck fractures, intertrochanteric femur fractures, and subtrochanteric femur fractures. Analyze commonly discussed aspects of the surgical management o"
+        },
+        {
+          "id": "510000652",
+          "title": "Shoulder Trauma: Proximal Humerus Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000652",
+          "extractable": true,
+          "score": 33.18,
+          "snippet": "complications associated with nonsurgical and surgical management of proximal humerus fractures. Pathophysiology/Pathoanatomy Overview     NOTES SEND FEEDBACK 9/4/26, 10:42 AM AAOS | Shoulder Trauma: Proximal Humerus Fractures https://rock.aaos.org/coursecontent.aspx?id=510000652 1/53  Overview Proximal humerus f"
+        },
+        {
+          "id": "6000058",
+          "title": "Biomechanics of Plates, Screws, Rods, and External Fixation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000058",
+          "extractable": true,
+          "score": 31.134,
+          "snippet": "Fixation External fixation is commonly used as a temporary stabilization measure in orthopaedic trauma patients but also may be used for definitive fixation  Biomechanics of External Fixation External fixation typically is used for acute fractures with considerable soft-tissue damage. Stable external fixation constru"
+        },
+        {
+          "id": "6004049",
+          "title": "Surgical Management of Lower Extremity Metastatic Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004049",
+          "extractable": true,
+          "score": 29.588,
+          "snippet": "patients with metastatic disease of the femur. (Reproduced from Swanson KC, Pritchard DJ, Sim FH: Surgical treatment of metastatic disease of the femur. J Am Acad Orthop Surg 2000;8[1]:56-65.) Regardless, pathologic fractures of the lower extremity, particularly about the femur or tibia, generally are managed surgical"
+        },
+        {
+          "id": "6004095",
+          "title": "Surgical Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004095",
+          "extractable": true,
+          "score": 28.802,
+          "snippet": "Know Learning Objectives List the indications for surgical hip dislocation in patients with a fracture. Review the surgical anatomy and technique for surgical hip dislocation. Discuss complications of surgical hip dislocation. Introduction Surgical hip dislocation represents a solution to the challenge of achieving sa"
+        },
+        {
+          "id": "6001084",
+          "title": "Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001084",
+          "extractable": true,
+          "score": 26.92,
+          "snippet": "e Distal Femur https://rock.aaos.org/coursecontent.aspx?id=6001084 25/35 Extra-articular fractures without comminution Extra-articular fractures with comminution Intra-articular fractures  Surgical Approach For simple fractures, direct reduction with absolute stability (lag screw and neutralization plate versus compre"
+        },
+        {
+          "id": "6001187",
+          "title": "Management of Atypical Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001187",
+          "extractable": true,
+          "score": 26.806,
+          "snippet": "femur fracture is suspected. Review the surgical and nonsurgical management of atypical femur fractures. Specify the postoperative management of patients with an atypical femur fracture and osteoporosis. Pathophysiology/Pathoanatomy Overview Atypical femur fractures (AFFs) are unusual fragility fractures that occur in"
+        },
+        {
+          "id": "6001058",
+          "title": "Pediatric Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001058",
+          "extractable": true,
+          "score": 25.969,
+          "snippet": "fracture Body weight >49 kg (108 lb) or length-unstable fracture Flexible intramedullary nails Flexible intramedullary nails ± concomitant spica versus submuscular plate Rigid lateral-entry intramedullary nail (>8 yr) >11 yr Most fractures Younger skeletal age Very proximal or distal fractures Rigid lateral-entry intr"
+        },
+        {
+          "id": "6000036",
+          "title": "Physeal Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000036",
+          "extractable": true,
+          "score": 24.603,
+          "snippet": "Objectives Review the pathoanatomy associated with physeal fractures of the distal femur and their associated complications. Formulate a treatment plan for the management of physeal fractures of the distal femur. Predict and manage complications associated with physeal fractures of the distal femur. Overview A physeal"
+        },
+        {
+          "id": "6002012",
+          "title": "Postoperative Periprosthetic Fractures of the Femur and Acetabulum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002012",
+          "extractable": true,
+          "score": 22.519,
+          "snippet": "management of periprosthetic femur and acetabulum fractures. Postoperative Periprosthetic Femur Fractures     NOTES SEND FEEDBACK 9/3/26, 5:48 PM AAOS | Postoperative Periprosthetic Fractures of the Femur and Acetabulum https://rock.aaos.org/coursecontent.aspx?id=6002012 1/32 Pathophysiology/Pathoanatomy Epidemiol"
+        },
+        {
+          "id": "6001083",
+          "title": "Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001083",
+          "extractable": true,
+          "score": 21.281,
+          "snippet": "having full knee range of motion.10 Surgical Management A reamed, statically locked intramedullary nail is the standard of care for femoral shaft fractures. Central placement of an intramedullary nail within the femoral canal results in lower tensile and shear stresses on the implant compared with plate fixation. Intr"
+        }
+      ]
+    },
+    {
+      "stableGuid": "LE:fp&Dj;C",
+      "front": "Gold standard for ORIF of transverse patellar fracture : Tension band construct",
+      "extra": "This can be with K wires/cannulated screws with figure of 8 wire using an 18-gauge stainless steel wire OR braided polyester suture. Important note: This works because if performed correctly, the fixation will convert the tension forces from the muscle pulling into compression forces at the articular surface.",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology::Patella",
+        "SnapOrtho::Diagnosis::Patella_Fracture",
+        "SnapOrtho::Specialty::Trauma",
+        "SnapOrtho::Treatment::Patella_ORIF",
+        "SnapOrtho::Treatment::Tension_Band_Fixation"
+      ],
+      "candidates": [
+        {
+          "id": "510000524",
+          "title": "Congenital Dislocation of the Knee and Patella",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000524",
+          "extractable": true,
+          "score": 44.834,
+          "snippet": "of the knee  Physical Examination In some children with congenital dislocation of the patella, gait may appear essentially normal; therefore, assessment for knee flexion contracture, active knee extension lag, and ability to palpate the patella on the lateral aspect of the knee are important. Imaging Studies Radiogra"
+        },
+        {
+          "id": "6000058",
+          "title": "Biomechanics of Plates, Screws, Rods, and External Fixation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000058",
+          "extractable": true,
+          "score": 44.679,
+          "snippet": "the far fracture fragment relative to the proximal aspect within the near fracture, achieving fracture compression. Cannulated Screws Cannulated screws are hollow, which allow them to be placed over a guidewire. However, to have a hollow core, the inner diameter of a cannulated screw is increased relative to the outer"
+        },
+        {
+          "id": "6002117",
+          "title": "Principles of Wound Closure",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002117",
+          "extractable": true,
+          "score": 37.404,
+          "snippet": "ng the wound in layers may be an important preventive measure. Incisions around joints also require special consideration because tension around these areas is higher. Sutures Table 1 summarizes common suture materials used in orthopaedic surgery.7 Table 1 Common Suture Materials Used in Orthopaedic Surgery Suture Comp"
+        },
+        {
+          "id": "6004069",
+          "title": "Olecranon Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004069",
+          "extractable": true,
+          "score": 37.14,
+          "snippet": "absorbable suture or sternal wire as the tension band (Figure 7) Figure 7 Postoperative AP (A) and lateral (B) radiographs of an elbow demonstrate fixation of a pediatric olecranon fracture with the use of a tension-band wire construct. (Courtesy of Elizabeth Hubbard, MD, Durham, NC.)  Surgical Fracture Fixation Tens"
+        },
+        {
+          "id": "6002067",
+          "title": "Complications After Total Knee Arthroplasty: Patellar Maltracking and Instability/Dislocation, Patellar Clunk, Extensor Mechanism Disruption",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002067",
+          "extractable": true,
+          "score": 35.283,
+          "snippet": "tension group: knee Minimal tension group: brace Minimal tension group:SEND FEEDBACK 9/3/26, 7:44 AM AAOS | Complications After Total Knee Arthroplasty: Patellar Maltracking and Instability/Dislocation, Patellar Clunk, Extensor Mechanism Disru... https://rock.aaos.org/coursecontent.aspx?id=6002067 30/42 (2004) minimal"
+        },
+        {
+          "id": "6004075",
+          "title": "The Biology and Biomechanics of Grafts and Implants in Sports Medicine Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004075",
+          "extractable": true,
+          "score": 34.663,
+          "snippet": "s are made with braided ultra-high–molecular-weight polyethylene (UHMWPE). These nonabsorbable sutures have been shown to be superior in biomechanical studies compared with conventional braided polyester sutures.27 Suture Anchor Materials  Suture Anchor Materials Suture anchors play a pivotal role in arthroscopic proc"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "extractable": true,
+          "score": 33.597,
+          "snippet": "and Diaphyseal Fractures https://rock.aaos.org/coursecontent.aspx?id=510000655 10/36 Figure 4 PA radiograph of a wrist demonstrates an isolated radial shaft fracture, which also is known as a fracture of necessity in adults. (Courtesy of Frank A. Liporace, MD, Jersey City, NJ.) Galeazzi Fracture A radial shaft fractu"
+        },
+        {
+          "id": "510000648",
+          "title": "Midfoot Fractures: Tarsometatarsal (Lisfranc) Fracture-Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000648",
+          "extractable": true,
+          "score": 32.402,
+          "snippet": "the metatarsals is performed after removing any interposed tissues, and reduction is provisionally maintained with the use of wires. Supination and adduction of the forefoot often aids in reduction. Because the surfaces of the joints are flat, it may be tricky to reduce the joints anatomically. Intraoperative imaging"
+        },
+        {
+          "id": "6002108",
+          "title": "Orthopaedic Biomaterials",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002108",
+          "extractable": true,
+          "score": 31.066,
+          "snippet": "a duct or tube. Stainless Steel The most commonly used stainless steel alloy is A316L, in which iron is alloyed with substantial amounts of chromium to enhance corrosion resistance and nickel to enhance its corrosion resistance and formability.  Stainless Steel Because they contain potentially allergenic metals, nota"
+        },
+        {
+          "id": "510000658",
+          "title": "Fractures and Dislocations of the Hand and Digits",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000658",
+          "extractable": true,
+          "score": 30.261,
+          "snippet": "to maintain alignment as it heals Largely related to initial displacement Fracture location, fracture morphology, bone quality, comminution, and soft-tissue injury also are important considerations. Considerations for fixation (Table 2) Table 2 Fracture Stabilization Techniques Technique Indications Advantages Disadva"
+        },
+        {
+          "id": "6001035",
+          "title": "Revision Total Knee Arthroplasty: Surgical Technique",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001035",
+          "extractable": true,
+          "score": 28.548,
+          "snippet": "falls and additional disruptions to the extensor mechanism. Patellar Fracture Patellar fracture after total knee arthroplasty is uncommon, but it may be a considerable source of morbidity. Management depends on the integrity of the extensor mechanism, fixation status of the patellar component, and quality of the resid"
+        },
+        {
+          "id": "510000581",
+          "title": "Patellar Fractures, Tibial Spine (Eminence) Fractures, Tibial and Fibular Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000581",
+          "extractable": true,
+          "score": 28.296,
+          "snippet": "Learning Objectives Identify the mechanism of injury of patellar fractures. Diagnose a patellar sleeve fracture in young children. Differentiate a patellar fracture from a bipartite patella. Discuss the indications for surgical management of patellar fractures and the concept of the tension band technique. Recognize p"
+        }
+      ]
+    },
+    {
+      "stableGuid": "lE:P]=iT)>",
+      "front": "What scoring system is used for generalized soft tissue laxity ? Beighton Score",
+      "extra": "Passive hyperextension of the small finger &gt;90° (1 point each side) Passive abduction of the thumb to the volar forearm (1 point each side) Hyperextension of the knee &gt;10° (1 point each side) Hyperextension of the elbow &gt;10° (1 point each side) Palms touch the ground with forward bending at the waist while knees extended (1 point)",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Hand_Upper_Extremity",
+        "SnapOrtho::Specialty::Shoulder_Elbow",
+        "SnapOrtho::Specialty::Sports_Medicine"
+      ],
+      "candidates": [
+        {
+          "id": "6004102",
+          "title": "Pain Associated With Ligamentous Laxity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004102",
+          "extractable": true,
+          "score": 58.262,
+          "snippet": "show criteria for a positive Beighton score for joint laxity. A, Photograph of both arms shows elbow hyperextensibility greater than 10°. B, Photograph of the hand and wrist shows small finger hyperextensibility. C, Photograph of the hand and wrist shows ability to flex the thumb to touch the volar forearm. D, Photogr"
+        },
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 55.518,
+          "snippet": "the classification of congenital differences in the upper extremity. Perform an appropriate workup of patients with congenital upper extremity differences. Determine the surgical and nonsurgical treatment options for the management of congenital upper extremity differences. Pathophysiology/Pathoanatomy Overview Congen"
+        },
+        {
+          "id": "510000513",
+          "title": "Soft-Tissue Coverage",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000513",
+          "extractable": true,
+          "score": 48.007,
+          "snippet": "advancement) Kutler (side digital V-Y advancement) Thenar flap FTSG Healing via secondary intention Finger Side finger flap Lateral finger rotation flap Iselin (axial flag) flap Arterialized side finger flap Cross-finger flap Reverse cross-finger flap Homodigital reverse adipofascial turndown flap FTSG Thumb tip Mober"
+        },
+        {
+          "id": "510000625",
+          "title": "Shoulder Instability: Multidirectional Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000625",
+          "extractable": true,
+          "score": 47.726,
+          "snippet": "Sign Passive hyperextension of the little finger (measured bilaterally) 2 >90° Passive thumb apposition to the forearm (measured bilaterally) 2 Thumb touches forearm SEND FEEDBACK 9/4/26, 9:32 AM AAOS | Shoulder Instability: Multidirectional Instability https://rock.aaos.org/coursecontent.aspx?id=510000625 7/17 Elbow"
+        },
+        {
+          "id": "6004081",
+          "title": "Athletic Injuries of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004081",
+          "extractable": true,
+          "score": 46.264,
+          "snippet": "dislocations comprised 17% of hand injuries.2 Etiology/Mechanism of Injury The most common direction is dorsal dislocation from a hyperextension injury to the joint with axial compression, resulting in volar plate and collateral injury, commonly from a ball striking the digit and causing hyperextension deformity. Vola"
+        },
+        {
+          "id": "6000034",
+          "title": "Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000034",
+          "extractable": true,
+          "score": 44.569,
+          "snippet": "patients with traumatic and atraumatic shoulder instability. Recognize traumatic shoulder instability on imaging studies. Apply common treatment options for shoulder instability. Pathophysiology/Pathoanatomy Laxity is a physiologic term that refers to the passive translation of the humeral head on the glenoid or over"
+        },
+        {
+          "id": "510000521",
+          "title": "Posterior Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000521",
+          "extractable": true,
+          "score": 43.244,
+          "snippet": "radiographs can confirm the diagnosis in patients with a volitional component. Left thumb Passive DF to flexor forearm 1 Right thumb Passive DF to flexor forearm 1 Left elbow Hyperextension >10° 1 Right elbow Hyperextension >10° 1 Left knee Hyperextension >10° 1 Right knee Hyperextension >10° 1 Trunk mobility Palms an"
+        },
+        {
+          "id": "6001069",
+          "title": "Physical Examination of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001069",
+          "extractable": true,
+          "score": 42.05,
+          "snippet": "on the uninjured knee. Table 1 The 9-Point Beighton Score of Hypermobility Description Bilateral Testing Score Passive dorsiflexion of the fifth metacarpophalangeal joint to =90° Yes 2 Passive hyperextension of the elbow to =10° Yes 2 Passive hyperextension of the knee to =10° Yes 2 Passive apposition of the thumb to"
+        },
+        {
+          "id": "510000623",
+          "title": "Shoulder: Anterior Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000623",
+          "extractable": true,
+          "score": 40.829,
+          "snippet": "the extremity is in 90° of abduction, the clinician externally rotates the extremity while continuing traction, abduction, and oscillation. Reduction should occur at 120° abduction, at which time the clinician internally rotates the shoulder, flexes the elbow, and brings the extremity over the chest.41, 42 For the Mil"
+        },
+        {
+          "id": "510000557",
+          "title": "Physical Examination and Anatomy of the Hand, Forearm, and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000557",
+          "extractable": true,
+          "score": 39.516,
+          "snippet": "igament Thumb MCP joint capsule and radial sesamoid Superficial head: median nerve Deep head: ulnar nerve Flexion of thumb metacarpal and P1 Thumb pronation Thumb IP joint extension Opponens pollicis Transverse carpal ligament, trapezium, thumb CMC capsule Volar-radial distal thumb metacarpal Median nerve, 83%"
+        },
+        {
+          "id": "6001057",
+          "title": "Diaphyseal Forearm Fractures, Distal Forearm Fractures, and Monteggia Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001057",
+          "extractable": true,
+          "score": 38.828,
+          "snippet": "the thumb Sensory: volar tip of thumb/index finger Anterior interosseous nerve: flex at the thumb interphalangeal joint and the index finger distal interphalangeal joint Ulnar nerve Motor: abduct index finger against gravity (without wrist flexion) Sensory: volar tip of the little finger Radial nerve Motor: extend the"
+        },
+        {
+          "id": "6001080",
+          "title": "Soft-Tissue Injury and Open Fractures: Skin Grafts and Flaps",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001080",
+          "extractable": true,
+          "score": 32.628,
+          "snippet": "local flap options involving skin and subcutaneous tissue have been described. For defects of the volar thumb, the Moberg flap, which isolates the volar skin on the bilateral digital neurovascular pedicles, has been well described (Figure 2). For defects of the dorsal thumb, the first dorsal metacarpal artery flap com"
+        }
+      ]
+    },
+    {
+      "stableGuid": "lEC(nF#Tu9",
+      "front": "What is the most common complication after TEA &lt;10 years after surgery? Bushing wear",
+      "extra": "*Most common complication &gt;10 years is aseptic loosening *Seen below is bushing wear",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Aseptic_Loosening"
+      ],
+      "candidates": [
+        {
+          "id": "6004025",
+          "title": "Aseptic Loosening After Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004025",
+          "extractable": true,
+          "score": 54.527,
+          "snippet": "You Know Learning Objectives Review the clinical manifestations of aseptic loosening after total hip arthroplasty. Evaluate the radiographic findings of aseptic loosening after total hip arthroplasty. Identify the differential diagnosis for aseptic loosening after total hip arthroplasty. Determine the surgical treatme"
+        },
+        {
+          "id": "6001028",
+          "title": "Postoperative Polyethylene Wear and Osteolysis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001028",
+          "extractable": true,
+          "score": 34.104,
+          "snippet": "t that neutralizes free radicals.31 Wear of UHMWPE Compared With XLPE SEND FEEDBACK 9/3/26, 5:48 PM AAOS | Postoperative Polyethylene Wear and Osteolysis https://rock.aaos.org/coursecontent.aspx?id=6001028 9/22  Wear of UHMWPE Compared With XLPE Wear rates of greater than 0.1 mm per year are associated with the develo"
+        },
+        {
+          "id": "6001036",
+          "title": "Complications After Total Knee Arthroplasty: Other",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001036",
+          "extractable": true,
+          "score": 27.561,
+          "snippet": "fracture (Resource 1). Aseptic Loosening Overview Aseptic loosening is the most common reason for late revision after TKA. Causes of aseptic loosening include mechanical loosening, osteolysis, and instability. According to several follow-up studies, aseptic loosening after TKA is the most common cause of late failure"
+        },
+        {
+          "id": "6002061",
+          "title": "Bearing Surface Options: Wear, Stability, and Revision",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002061",
+          "extractable": true,
+          "score": 26.383,
+          "snippet": "Options: Wear, Stability, and Revision https://rock.aaos.org/coursecontent.aspx?id=6002061 12/31 No increase in wear rates has been observed with elevated liners;51 however, increased linear and volumetric wear has been observed with lateralized liners.49,52,53 Aseptic loosening No increase in loosening rates has been"
+        },
+        {
+          "id": "6001064",
+          "title": "Elbow Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001064",
+          "extractable": true,
+          "score": 22.18,
+          "snippet": "throplasty can be revised to TEA. Total Elbow Arthroplasty Outcomes  Outcomes A study of 461 TEA procedures in patients with rheumatoid arthritis reported that implant survival was 92% at 10 years postoperatively, 83% at 15 years postoperatively, and 68% at 20 years postoperatively.8 Few studies have evaluated the out"
+        },
+        {
+          "id": "510000511",
+          "title": "Instability After Total Knee Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000511",
+          "extractable": true,
+          "score": 21.908,
+          "snippet": "Introduction Knee instability is one of the most common causes of patient dissatisfaction and implant failure after TKA, necessitating revision surgery.1 Instability may present early (immediately postoperatively) because of gap or coronal imbalance, poor design, and/or component malpositioning. Instability also may d"
+        },
+        {
+          "id": "6000024",
+          "title": "Complications After Total Knee Arthroplasty: Periprosthetic Joint Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000024",
+          "extractable": true,
+          "score": 20.337,
+          "snippet": "definitive sign of infection Late chronic infection Frequently caused by less-virulent organisms: coagulase- negative staphylococci and Propionibacterium acnes Occurs several months to 2 yr after prosthesis implantation Subtle signs and symptoms, if any chronic pain and implant loosening are common. Difficult to diffe"
+        },
+        {
+          "id": "510000556",
+          "title": "Complications After Total Knee Arthroplasty: Intraoperative and Postoperative Periprosthetic Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000556",
+          "extractable": true,
+          "score": 20.335,
+          "snippet": "common complication requiring revision across all studies involving DFR, with a reported mean incidence of 5%.45 The mortality rate ranged from 6.6% after 1 year to 45% after 34 months. The overall amputation rate was 2.1%.29 The rate of aseptic loosening 5 years after DFR is reported to be 10%.34 Other complications"
+        },
+        {
+          "id": "6001162",
+          "title": "Complications After Total Knee Arthroplasty: Intraoperative Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001162",
+          "extractable": true,
+          "score": 19.013,
+          "snippet": "Complications The literature on the long-term outcomes after intraoperative TKA complications is limited. However, a few retrospective studies have shown that the most common complication after ligamentous repair or reconstruction is persistent laxity or extensor lag. This complication led to increased rates of instab"
+        },
+        {
+          "id": "6000021",
+          "title": "Periprosthetic Joint Infection",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000021",
+          "extractable": true,
+          "score": 17.904,
+          "snippet": "3% for hips and 6% for knees.  Epidemiology PJI is a devastating complication that may occur after total joint arthroplasty (TJA) of the hip or knee. It is a relatively uncommon complication, with a prevalence of approximately 1% to 3% after primary TKA and 0.5% to 2% after primary THA.1 PJI is associated with substa"
+        },
+        {
+          "id": "6002065",
+          "title": "Primary Total Knee Arthroplasty for Osteoarthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002065",
+          "extractable": true,
+          "score": 17.528,
+          "snippet": "contemporary TKA designs.18,19 Historically, polyethylene wear and osteolysis also were major contributors to aseptic failure; however, with improved tibial tray locking mechanisms and polyethylene fabrication methods, these currently are less of a concern.7,20 The etiology of late aseptic loosening in cemented primar"
+        },
+        {
+          "id": "6004023",
+          "title": "Evaluation and Workup in Revision Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004023",
+          "extractable": true,
+          "score": 17.198,
+          "snippet": "Linear wear: measured by the distance the femoral head penetrates the polyethylene liner Smaller heads are associated with higher rates of linear wear but lower rates of volumetric wear. Larger femoral heads are associated with higher rates of volumetric wear but lower rates of linear wear. Excessive wear is defined a"
+        }
+      ]
+    },
+    {
+      "stableGuid": "leTxu(sx,N",
+      "front": "Mechanism of action of Tranexamic acid : Prevents plasminogen activation",
+      "extra": "*TXA is an antifibrinolynic, thus it stabilizes clot formation since plasmin can’t break it down",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science"
+      ],
+      "candidates": [
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 40.114,
+          "snippet": "4 summarizes the mechanism of action, ribosomal subunit binding, clinical use, adverse effect profiles, and pertinent pearls for the antibiotic agents most frequently prescribed to manage musculoskeletal infections. The mechanisms of antibiotic resistance are outlined in Table 5. Table 4 Summary of Antimicrobial Agents"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 37.919,
+          "snippet": "Basic Science https://rock.aaos.org/coursecontent.aspx?id=510000503 1/21 Bearing materials and their byproducts must be selected to be bioinert, wear-resistant, mechanically robust (tough), and chemically stable. These functional requirements are universal for all total hip arthroplasty (THA) applications. Three class"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 35.684,
+          "snippet": " Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes  CORE May 05, 2026 James M. Gregory, MD (2020–present) Jason Kappa, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Understand the etiology, natural history, and pathoanatomy o"
+        },
+        {
+          "id": "6001025",
+          "title": "Blood Management in Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001025",
+          "extractable": true,
+          "score": 34.766,
+          "snippet": "ts who were administered epinephrine injections. Tranexamic Acid TXA has revolutionized modern blood management in THA and TKA by substantially reducing blood loss and transfusion rates (Resource 3). TXA is an antifibrinolytic agent and a synthetic derivative of the amino acid lysine, which may inhibit the activation o"
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "extractable": true,
+          "score": 24.473,
+          "snippet": " Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing  CORE May 18, 2026 James Gregory, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Assess the natural progression of rotator cuff disease. Understand the b"
+        },
+        {
+          "id": "6001180",
+          "title": "Extensor Mechanism Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001180",
+          "extractable": true,
+          "score": 22.681,
+          "snippet": " Extensor Mechanism Injuries  CORE November 29, 2022 Eli T. Sayegh, MD Simon Görtz, MD Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Define quadriceps and patellar tendon injuries and their epidemiology, including predisposing factors. Review the conceptual founda"
+        },
+        {
+          "id": "6004076",
+          "title": "Current Applications of Orthobiologic Agents",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004076",
+          "extractable": true,
+          "score": 20.925,
+          "snippet": "use hyaluronic acid as an injection in the clinic setting for the management of joint derangements, including osteoarthritis and inflammation. Hyaluronic acid injections are commercially available and are derived from animal sources (ie, rooster comb) or via modern techniques using bio-fermentation by genetically modi"
+        },
+        {
+          "id": "6004061",
+          "title": "Complex Pediatric Musculoskeletal Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004061",
+          "extractable": true,
+          "score": 17.742,
+          "snippet": "Musculoskeletal Infections https://rock.aaos.org/coursecontent.aspx?id=6004061 9/22 Figure 2 Illustrations show the manner in which Staphylococcus aureus hijacks the fibrinolytic system to disseminate. A, As the S aureus colony density increases, the bacteria begin expressing staphylokinase, which converts plasminogen"
+        },
+        {
+          "id": "6004096",
+          "title": "Patellar Fractures and Extensor Mechanism Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004096",
+          "extractable": true,
+          "score": 16.219,
+          "snippet": "Discuss the epidemiology of, etiology of, and risk factors for patellar fractures and extensor mechanism injuries of the knee (patella and quadriceps tendon). Perform an appropriate workup for patients in whom patellar or extensor mechanism injury is suspected. Review the surgical and nonsurgical management of patella"
+        },
+        {
+          "id": "510000604",
+          "title": "Osteonecrosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000604",
+          "extractable": true,
+          "score": 15.03,
+          "snippet": "t to inhibit the SEND FEEDBACK 9/3/26, 5:29 PM AAOS | Osteonecrosis https://rock.aaos.org/coursecontent.aspx?id=510000604 5/32 fibrinolytic pathway via an increase in the activity of plasma plasminogen activator inhibitor and a reduction in tissue plasminogen activator activity.8 This process results in decreased conve"
+        },
+        {
+          "id": "6004030",
+          "title": "Inflammatory Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004030",
+          "extractable": true,
+          "score": 14.31,
+          "snippet": "but are not considered disease-modifying agents. Biologic and non-biologic DMARDs exist3 (Table 1). Table 1 Disease-Modifying Antirheumatic Drugs Commonly Used to Manage Rheumatoid Arthritis Drug Drug Type Target Mechanism of Action Abatacept Recombinant fusion protein MHC receptors Binds to MHC receptors on antigen"
+        },
+        {
+          "id": "6001154",
+          "title": "Skeletal Muscle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001154",
+          "extractable": true,
+          "score": 13.118,
+          "snippet": "Eccentric: muscular contraction accommodates an increase in muscle length; this occurs if the resisting load is greater than the muscle force generated. Isotonic and isokinetic contractions can demonstrate concentric action or eccentric action; however, isometric contractions do not fit the definition of concentric or"
+        }
+      ]
+    },
+    {
+      "stableGuid": "lf]0f[zZrG",
+      "front": "In spastic Developmental Dysplasia of the Hip , where is the acetabular deficiency ? Posterosuperior",
+      "extra": "Spasticity or contracture usually involves the adductor and iliopsoas muscles. Because of the pull of these muscles, the majority of hips subluxate in the posterosuperior direction.",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Joints",
+        "SnapOrtho::Anatomy::Thigh_Hip::Joints::Hip_Joint"
+      ],
+      "candidates": [
+        {
+          "id": "510000575",
+          "title": "Developmental Dysplasia of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000575",
+          "extractable": true,
+          "score": 72.745,
+          "snippet": "the hip joint. Explain the epidemiology, pathoanatomy, risk factors, and natural history of developmental dysplasia of the hip. Perform an appropriate work up of patients in whom developmental dysplasia of the hip is suspected. Review the nonsurgical and surgical management of developmental dysplasia of the hip and th"
+        },
+        {
+          "id": "6004020",
+          "title": "Primary Total Hip Arthroplasty for Other Indications: Developmental Dysplasia of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004020",
+          "extractable": true,
+          "score": 51.232,
+          "snippet": "developmental dysplasia of the hip. Identify the clinical presentation of developmental dysplasia of the hip. Classify developmental dysplasia of the hip according to the most commonly used classification systems. Describe surgical techniques for total hip arthroplasty in patients with developmental dysplasia of the h"
+        },
+        {
+          "id": "510000554",
+          "title": "Surgical Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000554",
+          "extractable": true,
+          "score": 40.939,
+          "snippet": "terior gluteus medius off the insertion on the greater trochanter. (Courtesy of Aaron Rosenberg, MD, Chicago, IL.) Hip adductor muscles—The adductor muscles of the hip include the adductor brevis, adductor longus, adductors magnus, pectineus, and gracilis. External rotator muscles SEND FEEDBACK 9/4/26, 9:42 AM AAOS | S"
+        },
+        {
+          "id": "6004016",
+          "title": "Biomechanics of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004016",
+          "extractable": true,
+          "score": 37.655,
+          "snippet": "the triangular cross-section lies along the acetabular rim. The acetabular labrum is continuous with the acetabular articular cartilage. SEND FEEDBACK 9/3/26, 7:30 AM AAOS | Biomechanics of the Hip https://rock.aaos.org/coursecontent.aspx?id=6004016 7/24 Biomechanical function—the acetabular labrum creates a deeper so"
+        },
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "extractable": true,
+          "score": 36.156,
+          "snippet": "These tendons and muscles also serve as important landmarks during approaches to the hip.  Tendons and Musculature The primary hip flexors are the iliopsoas, rectus femoris, and sartorius muscles. Secondary flexors include the tensor fascia lata (TFL), pectineus, adductor longus/brevis/magnus, and gracilis muscles (F"
+        },
+        {
+          "id": "510000529",
+          "title": "Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000529",
+          "extractable": true,
+          "score": 35.575,
+          "snippet": "structural instability is present in the hip joint (dysplasia and severe impingement levering out the hip joint). Surgical Approaches Smith-Petersen Approach Anterior approach that provides exposure to the anterior hip joint and ilium Indications Total hip arthroplasty Irrigation and débridement of septic arthritis Op"
+        },
+        {
+          "id": "6001067",
+          "title": "Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001067",
+          "extractable": true,
+          "score": 32.155,
+          "snippet": "| Physical Examination of the Hip https://rock.aaos.org/coursecontent.aspx?id=6001067 2/36 Intra-articular Diagnosesa Extra-articular Diagnosesa Non-musculoskeletal Diagnosesa Loose body Coxa saltans (internal, external) Osteoarthritis Apophyseal avulsion fracture Osteonecrosis Iliofemoral ligament sprain Developmenta"
+        },
+        {
+          "id": "6000045",
+          "title": "Athletic Pubalgia and Core Muscle Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000045",
+          "extractable": true,
+          "score": 31.542,
+          "snippet": "The pubic aponeurosis, which consists of the rectus abdominis, conjoint tendon (internal oblique and transversus abdominis), and external oblique, inserts on the pubic tubercle and exerts a superior force. The medial thigh and adductor muscles, consisting of the gracilis, pectineus, adductor brevis, adductor longus, a"
+        },
+        {
+          "id": "6001153",
+          "title": "Hip Labrum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001153",
+          "extractable": true,
+          "score": 31.074,
+          "snippet": "patients describe hip pain as a deep interior hip pain, often pointing with one finger or making the typical C sign. Range of motion is key in distinguishing a loose hip (ie, unstable, as in hip dysplasia) from a rigid hip (ie, constrained, as in FAI).33 Commonly, dysplasia is observed in young female patients who hav"
+        },
+        {
+          "id": "6002060",
+          "title": "Hip Arthroscopy and Periacetabular Osteotomy: Surgical Techniques",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002060",
+          "extractable": true,
+          "score": 30.498,
+          "snippet": "he patient and attempts to normalize hip joint structure and biomechanics. In classic acetabular dysplasia, the acetabulum usually is repositioned with adduction (lateral coverage), internal rotation (maintenance of anteversion), and some forward tilt or extension (anterior coverage). The fragment is then translated me"
+        },
+        {
+          "id": "510000532",
+          "title": "Hip Rehabilitation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000532",
+          "extractable": true,
+          "score": 30.098,
+          "snippet": "individuals without dysplasia include the following: Decreased sagittal plane hip excursion and peak hip extension compared with individuals without hip pain Increased hip adduction and external rotation angle may be present. Decreased peak hip flexion angle (patients with severe dysplasia); increased peak hip flexion"
+        },
+        {
+          "id": "6002082",
+          "title": "Upper-Limb Deficiency and Prostheses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002082",
+          "extractable": true,
+          "score": 29.757,
+          "snippet": "defects, anal atresia, cardiac defects, tracheoesophageal fistula, renal dysplasia, limb deficiency Radial aplasia, hypoplastic humerus, aplasia in lower limb Diamond-Blackfan anemia Bone marrow failure disorder with anemia and reticulocytopenia Radial longitudinal deficiency Maternal factors and intrauterine growth M"
+        }
+      ]
+    },
+    {
+      "stableGuid": "lF}HP*o7yz",
+      "front": "Subchondral bone is found directly beneath the articular cartilage.",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science"
+      ],
+      "candidates": [
+        {
+          "id": "6002101",
+          "title": "Articular Cartilage and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002101",
+          "extractable": true,
+          "score": 47.686,
+          "snippet": "the subchondral bone and mineralization of the ECM.8,11 The cement line separates calcified cartilage from subchondral bone.19 The subchondral bone consists of the subchondral bone plate (cortical bone), which is directly below the calcified zone, and the subarticular spongiosa (trabecular bone), which includes the tr"
+        },
+        {
+          "id": "510000531",
+          "title": "Articular Cartilage Injury and Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000531",
+          "extractable": true,
+          "score": 39.483,
+          "snippet": "Articular cartilage is aneural and lacks a blood supply, which contributes to its poor healing potential.  Basic Science of Articular Cartilage Articular cartilage is composed of type II hyaline cartilage that decreases force through the joint by dissipating stress to the subchondral bone. Articular cartilage lacks a"
+        },
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 36.659,
+          "snippet": "nfections in orthopaedics, in Einhorn TA, O’Keefe RJ, Buckwalter JA, eds: Orthopaedic Basic Science. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2007, pp 299-314. Types of Musculoskeletal Infection and Clinical Presentation SEND FEEDBACK 9/3/26, 4:48 PM AAOS | Musculoskeletal Infections and Microbiology Bas"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 35.761,
+          "snippet": "arthropathy (CTA). A, Nutritional factors include the loss of a so-called watertight joint space and a reduction in the pressure of the joint fluid that is required for the perfusion of nutrients to the articular cartilage. Both contribute to the atrophy of cartilage and disuse osteoporosis in the subchondral bone of"
+        },
+        {
+          "id": "6000000",
+          "title": "Cartilage Repair and Cartilage Grafts",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000000",
+          "extractable": true,
+          "score": 31.214,
+          "snippet": "31-57.) SEND FEEDBACK 9/3/26, 7:36 AM AAOS | Cartilage Repair and Cartilage Grafts https://rock.aaos.org/coursecontent.aspx?id=6000000 4/20 Cartilage Maintenance and Injury Synovium tissue and synovial fluid support articular cartilage. Cartilage has a limited ability to heal itself or generate new native articular ca"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 31.184,
+          "snippet": "bulk form and manufacturing. Implants can be molded directly to form, or they can be machined from bar or sheet stock. If a hydrogen is removed from the carbon backbone, a free radical (unpaired electron) remains. SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Total Hip Arthroplasty: Bearing Surfaces Basic Science https://rock."
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "extractable": true,
+          "score": 27.701,
+          "snippet": " Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing  CORE May 18, 2026 James Gregory, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Assess the natural progression of rotator cuff disease. Understand the b"
+        },
+        {
+          "id": "6001151",
+          "title": "Bone Biology and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001151",
+          "extractable": true,
+          "score": 18.483,
+          "snippet": "metaphysis and is synonymous with longitudinal growth of the bone and limb. The epiphysis is composed of trabecular bone surrounded by a relatively thin layer of cortical bone. The articular portion of the bone has a specialized subchondral region underlying the articular cartilage with cortical morphology. Flat bones"
+        },
+        {
+          "id": "6001186",
+          "title": "Bone Healing, Bone Graft Materials, and Bone Graft Substitutes, Including Bone Morphogenetic Proteins",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001186",
+          "extractable": true,
+          "score": 17.638,
+          "snippet": "FEEDBACK 9/3/26, 7:33 AM AAOS | Bone Healing, Bone Graft Materials, and Bone Graft Substitutes, Including Bone Morphogenetic Proteins https://rock.aaos.org/coursecontent.aspx?id=6001186 1/26 Endochondral Key cell types involved in bone healing Osteoblasts Osteoclasts Chondroblasts Fibroblasts Types of bone healing (Re"
+        },
+        {
+          "id": "6002074",
+          "title": "Bone-Producing Lesions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002074",
+          "extractable": true,
+          "score": 16.114,
+          "snippet": "Epidemiology Demographics Bone islands frequently occur in adults; however, their true incidence is unknown because they usually are found incidentally. Etiology Genetics/etiology Possible arrested resorption of mature bone during endochondral ossification Evaluation and Diagnosis Patient History Clinical presentation"
+        },
+        {
+          "id": "6001006",
+          "title": "Bone Healing and Bone Grafts",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001006",
+          "extractable": true,
+          "score": 15.641,
+          "snippet": "use of external bone stimulators for enhancement of fracture healing. Bone and Joint Biology Structure and Composition Cortical bone Cancellous bone     NOTES SEND FEEDBACK 9/3/26, 3:59 PM AAOS | Bone Healing and Bone Grafts https://rock.aaos.org/coursecontent.aspx?id=6001006 1/32 Woven bone Lamellar bone Bone Cel"
+        },
+        {
+          "id": "6004048",
+          "title": "Metastatic Bone Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004048",
+          "extractable": true,
+          "score": 15.307,
+          "snippet": "iable supra- acetabular iliac bone available for cage reconstruction options THA with antiprotrusio acetabular cage and Steinmann pins Class V: minimal bony integrity remains in the acetabular or supra-acetabular locations Resection arthroplasty; saddle prosthesis Metastatic Acetabular Classification System Type 1: dom"
+        }
+      ]
+    },
+    {
+      "stableGuid": "LF#o3w{*2^",
+      "front": "What is the order of ossification of the pediatric elbow ? At what age does each center ossify ? Capitellum - 1 year old Radial head - 3 years old Medial \"Internal\" epicondyle - 5 years old Trochlea - 7 years old Olecranon - 9 years old Lateral \"External\" epicondyle - 11 years old",
+      "extra": "Remember \" C - R - I - T - O - E \"",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Elbow",
+        "SnapOrtho::Anatomy::Elbow::Joints",
+        "SnapOrtho::Anatomy::Elbow::Joints::Elbow_Joint",
+        "SnapOrtho::Specialty::Metabolic_Bone",
+        "SnapOrtho::Specialty::Pediatric_Orthopedics",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "6004066",
+          "title": "Medial Epicondyle and Lateral Epicondyle Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004066",
+          "extractable": true,
+          "score": 89.4,
+          "snippet": "Girls (Years) Boys (Years) Capitellum 1 1 12–14 13–16 Radial head 5 6 14–16 14–16 Medial epicondyle 5–8 7–9 14+ 17+ SEND FEEDBACK 9/3/26, 4:41 PM AAOS | Medial Epicondyle and Lateral Epicondyle Fractures https://rock.aaos.org/coursecontent.aspx?id=6004066 3/23 Anatomic Area Ossification Fusion Girls (Years) Boys (Year"
+        },
+        {
+          "id": "6004069",
+          "title": "Olecranon Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004069",
+          "extractable": true,
+          "score": 70.13,
+          "snippet": "Fusion at the Elbow Anatomic Area Ossification Fusion Girls (Years) Boys (Years) Girls (Years) Boys (Years) Capitellum 1 1 12–14 13–16 Radial head 5 6 14–16 14–16 Medial epicondyle 5–8 7–9 14+ 17+ Olecranon 8.7 10.5 14–16 14–16 Trochlea 9.0 10.7 12–14 13–16 Lateral epicondyle 8–11 9–13 12–14 13–16 Courtesy of Elizabet"
+        },
+        {
+          "id": "510000635",
+          "title": "Medial and Lateral Elbow Enthesopathy (Epicondylitis)",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000635",
+          "extractable": true,
+          "score": 60.718,
+          "snippet": "Objectives Identify pertinent anatomy related to medial and lateral elbow enthesopathy. Identify the pathologic changes observed in patients with lateral or medial elbow enthesopathy. Generate a differential diagnosis for lateral and medial elbow pain if symptoms and signs Generate a differential diagnosis for lateral"
+        },
+        {
+          "id": "510000660",
+          "title": "Radial Head and Neck Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000660",
+          "extractable": true,
+          "score": 56.335,
+          "snippet": "the distal radioulnar joint, pain at the medial side of the elbow (medial collateral ligament), and pain at the lateral side of the elbow (lateral collateral ligament). Lateral elbow pain and SEND FEEDBACK 9/3/26, 5:56 PM AAOS | Radial Head and Neck Fractures https://rock.aaos.org/coursecontent.aspx?id=510000660 6/25"
+        },
+        {
+          "id": "6000038",
+          "title": "Imaging of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000038",
+          "extractable": true,
+          "score": 54.791,
+          "snippet": "with and of a smaller diameter than the capitellum and the medial lip of the trochlea. The posterior continuation of the lateral condyle from the capitellum is the most posterior cortex. Typically, an elbow trauma radiographic series will include a radial head view or an oblique lateral view. This view is obtained wit"
+        },
+        {
+          "id": "510000661",
+          "title": "Elbow Fractures: Olecranon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000661",
+          "extractable": true,
+          "score": 53.469,
+          "snippet": "AAOS | Elbow Fractures: Olecranon https://rock.aaos.org/coursecontent.aspx?id=510000661 20/44 Figure 2 Radiographs of an elbow demonstrate the tension-band wiring technique. Preoperative lateral (A) and AP (B) radiographs demonstrate a simple, stable fracture SEND FEEDBACK 9/3/26, 4:02 PM AAOS | Elbow Fractures: Olecr"
+        },
+        {
+          "id": "6004068",
+          "title": "Nursemaids Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004068",
+          "extractable": true,
+          "score": 51.827,
+          "snippet": "2/10 Anatomic Area Ossification Fusion Girls (Years) Boys (Years) Girls (Years) Boys (Years) Capitellum 1 1 12–14 13–16 Radial head 5 6 14–16 14–16 Medial epicondyle 5–8 7–9 14+ 17+ Olecranon 8.7 10.5 14–16 14–16 Trochlea 9.0 10.7 12–14 13–16 Lateral epicondyle 8–11 9–13 12–14 13–16 Adapted from Miesel E, Kay RM: Pedi"
+        },
+        {
+          "id": "510000586",
+          "title": "Elbow Instability: Lateral Collateral Ligament Complex Insufficiency",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000586",
+          "extractable": true,
+          "score": 50.781,
+          "snippet": "the fascia from distal to proximal to center over the lateral epicondyle. Full-thickness capsular flaps: graft to run over closed capsule (Video 1) Figure 2 Intraoperative photographs show the standard Kocher approach to the elbow. A, Photograph shows the landmarks and incision. L = lateral epicondyle, RH = radial hea"
+        },
+        {
+          "id": "510000584",
+          "title": "Elbow Anatomy and Function",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000584",
+          "extractable": true,
+          "score": 48.507,
+          "snippet": "Long head— superior glenoid/labrum Radial tuberosity Musculocutaneous Elbow flexion/supination Short head— coracoid Brachialis Humerus, intermuscular septum Coronoid Musculocutaneous (medial), radial (lateral) Elbow flexion Brachioradialis Humerus Radial styloid Radial Elbow flexion Triceps brachii Medial hea"
+        },
+        {
+          "id": "510000578",
+          "title": "Distal Humerus Physeal Fractures, Pediatric Polytrauma, and Upper Extremity Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000578",
+          "extractable": true,
+          "score": 45.582,
+          "snippet": "of diagnosis is distinguishing a transphyseal fracture from an elbow dislocation. The key to distinguishing a transphyseal separation from a true elbow dislocation is the radial head-capitellum relationship. In an elbow dislocation, the radial head does not articulate with the capitellum; however, in a transphyseal fr"
+        },
+        {
+          "id": "6004067",
+          "title": "Proximal Radius Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004067",
+          "extractable": true,
+          "score": 45.457,
+          "snippet": "Table 1 Sequence of Ossification and Fusion at the Elbow Anatomic Area Ossification Fusion Girls (Years) Boys (Years) Girls (Years) Boys (Years) Capitellum 1 1 12–14 13–16 Radial head 5 6 14–16 14–16 Medial epicondyle 5–8 7–9 14+ 17+ Olecranon 8.7 10.5 14–16 14–16 Trochlea 9.0 10.7 12–14 13–16 Lateral epicondyle 8–11"
+        },
+        {
+          "id": "510000662",
+          "title": "Distal Humerus Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000662",
+          "extractable": true,
+          "score": 45.061,
+          "snippet": "posterior ulnar recurrent artery and supplies the medial epicondyle, medial aspect of the trochlea, and posteromedial aspect of the olecranon. The blood supply to the lateral epicondyle, capitellum, and lateral trochlea comes from the lateral arcade, which arises from the radial recurrent, radial collateral, and inter"
+        }
+      ]
+    }
+  ]
+}

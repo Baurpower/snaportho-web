@@ -266,7 +266,10 @@ async function commandExportMap(db: SupabaseClient, args: Args) {
   });
   const selected = eligible.slice(offset, limit == null ? undefined : offset + limit);
   mkdirSync(out, { recursive: true });
-  const actualAgents = Math.min(agents, Math.ceil(selected.length / packetSize) || 0);
+  // `agents` is a reviewer-concurrency hint, not a cohort limit.  The former
+  // implementation looped only `actualAgents` times and silently dropped every
+  // card after agents * packetSize (400 with the defaults).
+  const packetCount = Math.ceil(selected.length / packetSize);
   const packets: Array<{ batchKey: string; cards: number; pending: string; brief: string }> = [];
   const instructions = [
     "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
@@ -274,10 +277,10 @@ async function commandExportMap(db: SupabaseClient, args: Args) {
     "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
     "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org.",
   ];
-  for (let agentIndex = 0; agentIndex < actualAgents; agentIndex += 1) {
-    const slice = selected.slice(agentIndex * packetSize, (agentIndex + 1) * packetSize);
+  for (let packetIndex = 0; packetIndex < packetCount; packetIndex += 1) {
+    const slice = selected.slice(packetIndex * packetSize, (packetIndex + 1) * packetSize);
     if (!slice.length) continue;
-    const batchKey = `map-${String(cohortNumber).padStart(6, "0")}-agent-${String(agentIndex + 1).padStart(2, "0")}`;
+    const batchKey = `map-${String(cohortNumber).padStart(6, "0")}-packet-${String(packetIndex + 1).padStart(4, "0")}`;
     const cards: RockMapCard[] = slice.map((row) => {
       const card = baseMapCard(row);
       return { ...card, candidates: mapCandidatesForCard(ix, card) };
@@ -315,6 +318,7 @@ async function commandExportMap(db: SupabaseClient, args: Args) {
     sourceReleaseId: release.id,
     sourceReleaseVersion: release.release_version,
     corpusChecksum: ix.catalogChecksum,
+    reviewerConcurrencyHint: agents,
     skipFilled,
     eligible: eligible.length,
     exported: selected.length,
@@ -390,7 +394,9 @@ async function commandExportFill(db: SupabaseClient, args: Args) {
   }
   const sliced = selected.slice(offset, limit == null ? undefined : offset + limit);
   mkdirSync(out, { recursive: true });
-  const actualAgents = Math.min(agents, Math.ceil(sliced.length / packetSize) || 0);
+  // Export every selected mapping. `agents` controls how reviewers may divide
+  // the work; it must never truncate a cohort.
+  const packetCount = Math.ceil(sliced.length / packetSize);
   const packets: Array<{ batchKey: string; cards: number; pending: string; brief: string }> = [];
   const instructions = [
     "Source of truth: retrieved ROCK PDF passages for the mapped chapters only.",
@@ -399,10 +405,10 @@ async function commandExportFill(db: SupabaseClient, args: Args) {
     "Do not invent chapter IDs or URLs. Do not fetch rock.aaos.org. Do not edit Extra.",
     "Skip the card when none of the passages teach this cloze.",
   ];
-  for (let agentIndex = 0; agentIndex < actualAgents; agentIndex += 1) {
-    const slice = sliced.slice(agentIndex * packetSize, (agentIndex + 1) * packetSize);
+  for (let packetIndex = 0; packetIndex < packetCount; packetIndex += 1) {
+    const slice = sliced.slice(packetIndex * packetSize, (packetIndex + 1) * packetSize);
     if (!slice.length) continue;
-    const batchKey = `fill-${String(cohortNumber).padStart(6, "0")}-agent-${String(agentIndex + 1).padStart(2, "0")}`;
+    const batchKey = `fill-${String(cohortNumber).padStart(6, "0")}-packet-${String(packetIndex + 1).padStart(4, "0")}`;
     const cards: RockFillCard[] = slice.map((item) => {
       const base = baseMapCard(item.row);
       const pageCandidates = item.mapped.flatMap((ch) => ix.retrievePages(ch.id, item.searchQuery, PAGES_PER_CHAPTER));
@@ -449,6 +455,7 @@ async function commandExportFill(db: SupabaseClient, args: Args) {
     sourceReleaseId: release.id,
     sourceReleaseVersion: release.release_version,
     corpusChecksum: ix.catalogChecksum,
+    reviewerConcurrencyHint: agents,
     mapped: mapped.size,
     exported: sliced.length,
     packets,

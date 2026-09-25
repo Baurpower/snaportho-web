@@ -1,0 +1,1114 @@
+{
+  "batchKey": "map-000001-packet-0052",
+  "inputChecksum": "ac1915207c61c25fdc50656797b8f3cc874f0737e430b38b22a8e208768487e4",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "sidecarSchema": {
+    "card": {
+      "stableGuid": "string",
+      "status": "\"mapped\"|\"skipped\"",
+      "chapters": "1-3 {id, role} from this card's candidates; first is primary",
+      "skipReason": "if skipped"
+    }
+  },
+  "cards": [
+    {
+      "stableGuid": "d^{gxTs4>$",
+      "front": "Which ligament in the elbow is the most important restraint against valgus stresses ? MUCL",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Elbow",
+        "SnapOrtho::Anatomy::Elbow::Ligaments",
+        "SnapOrtho::Anatomy::Elbow::Ligaments::Medial_Collateral_Ligament",
+        "SnapOrtho::Specialty::Shoulder_Elbow"
+      ],
+      "candidates": [
+        {
+          "id": "510000540",
+          "title": "Ligamentous Injuries of the Knee: Collateral Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000540",
+          "extractable": true,
+          "score": 37.455,
+          "snippet": "Ligament Injuries https://rock.aaos.org/coursecontent.aspx?id=510000540 1/46 Review the surgical and nonoperative management of medial collateral ligament and posteromedial corner injuries. Explain commonly encountered complications and long-term sequela of medial collateral ligament and posteromedial corner injuries."
+        },
+        {
+          "id": "510000635",
+          "title": "Medial and Lateral Elbow Enthesopathy (Epicondylitis)",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000635",
+          "extractable": true,
+          "score": 34.224,
+          "snippet": "Objectives Identify pertinent anatomy related to medial and lateral elbow enthesopathy. Identify the pathologic changes observed in patients with lateral or medial elbow enthesopathy. Generate a differential diagnosis for lateral and medial elbow pain if symptoms and signs Generate a differential diagnosis for lateral"
+        },
+        {
+          "id": "6004066",
+          "title": "Medial Epicondyle and Lateral Epicondyle Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004066",
+          "extractable": true,
+          "score": 30.466,
+          "snippet": "of the medial epicondyle in the elbow joint. C, AP intraoperative fluoroscopic image shows an unstable elbow with valgus stress and the medial epicondyle in the elbow joint. (Courtesy of Lauren Lamont, MD, Fort Worth, TX.) Differential Diagnosis Medial Epicondyle Fractures Elbow dislocation with an associated medial e"
+        },
+        {
+          "id": "6002110",
+          "title": "Tendons and Ligaments",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002110",
+          "extractable": true,
+          "score": 29.431,
+          "snippet": "s and Ligaments https://rock.aaos.org/coursecontent.aspx?id=6002110 11/19 Ligament healing occurs via the same phases as tendon healing: hemostasis/inflammation, matrix and cell proliferation, and remodeling/maturation. Extra-articular ligaments (eg, the medial collateral ligament [MCL] of the knee) have a greater capa"
+        },
+        {
+          "id": "6000038",
+          "title": "Imaging of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000038",
+          "extractable": true,
+          "score": 28.902,
+          "snippet": "Ligament Complex Structures  Lateral Collateral Ligament Complex Structures The lateral collateral ligament complex consists of the radial collateral ligament (RCL), LUCL, accessory collateral ligament, and annular ligament. The LUCL is the only bone-to- bone attachment along the lateral joint and typically is though"
+        },
+        {
+          "id": "510000584",
+          "title": "Elbow Anatomy and Function",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000584",
+          "extractable": true,
+          "score": 28.857,
+          "snippet": "more than individual parts3 (Figures 5 and 6; Resource 4) Lateral UCL Annular ligament Lateral (radial) collateral ligament Accessory collateral ligament Figure 5 Illustration of the lateral aspect of the elbow shows the lateral collateral ligament complex. (Reproduced from Gramstad G: Anatomy of the shoulder, arm"
+        },
+        {
+          "id": "510000586",
+          "title": "Elbow Instability: Lateral Collateral Ligament Complex Insufficiency",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000586",
+          "extractable": true,
+          "score": 28.524,
+          "snippet": "AAOS | Elbow Instability: Lateral Collateral Ligament Complex Insufficiency https://rock.aaos.org/coursecontent.aspx?id=510000586 3/24 Secondary static constraints to elbow Capsule (most stabilizing effect with elbow extended) Radiocapitellar articulation (important secondary valgus stabilizer) Ulnohumeral articulatio"
+        },
+        {
+          "id": "6004092",
+          "title": "Terrible Triad of Injuries of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004092",
+          "extractable": true,
+          "score": 27.613,
+          "snippet": "including the lateral ulnar collateral ligament, the radial collateral ligament, and the annular ligament. MCL (Figure 8) The anterior bundle of the MCL is the most important stabilizer of valgus stress to the elbow. If the MCL is injured, the radial head becomes an important secondary stabilizer to valgus instability"
+        },
+        {
+          "id": "6001065",
+          "title": "Acute and Recurrent Elbow Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001065",
+          "extractable": true,
+          "score": 25.086,
+          "snippet": "collateral ligament (MCL) Lateral collateral ligament (LCL) complex, including the lateral ulnar collateral ligament (LUCL) Secondary static constraints Capsule (most stabilizing effect with elbow extended) Radiocapitellar articulation (important secondary valgus stabilizer) Common flexor and extensor tendon origins D"
+        },
+        {
+          "id": "6001156",
+          "title": "Deltoid Ligament Instability Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001156",
+          "extractable": true,
+          "score": 24.065,
+          "snippet": "Figure 1 Illustrations of ankles show deltoid ligament anatomy. A, The superficial deltoid ligament consists of the superficial posterior tibiotalar ligament, the tibiocalcaneal ligament, the tibiospring ligament, and the tibionavicular ligament. B, The deep deltoid ligament consists of the deep posterior tibiotalar l"
+        },
+        {
+          "id": "6004074",
+          "title": "Medial Collateral Ligament Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004074",
+          "extractable": true,
+          "score": 22.333,
+          "snippet": "Medial Collateral Ligament Injuries https://rock.aaos.org/coursecontent.aspx?id=6004074 1/23 The medial ulnar collateral ligament (UCL) complex consists of the anterior oblique ligament, the posterior oblique ligament, and the transverse ligament. The anterior oblique ligament is the strongest and is the primary stabi"
+        },
+        {
+          "id": "510000500",
+          "title": "Hallux Valgus: Disorders of the First Ray",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000500",
+          "extractable": true,
+          "score": 21.955,
+          "snippet": "First MTP joint arthrodesis Used for management of degenerative MTP joint arthritis Severe MTP joint deformity (>45°) Incompetent medial collateral ligament Combined procedures SEND FEEDBACK 9/3/26, 4:20 PM AAOS | Hallux Valgus: Disorders of the First Ray https://rock.aaos.org/coursecontent.aspx?id=510000500 17/23 Aki"
+        }
+      ]
+    },
+    {
+      "stableGuid": "d^z^_2=g+6",
+      "front": "What are the Kanavel signs for pyogenic flexor tenosynovitis ? (4) Flexed posturing of the involved digit Tenderness to palpation over the tendon sheath Marked pain with passive extension of the digit Fusiform swelling of the digit",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Hand_Upper_Extremity"
+      ],
+      "candidates": [
+        {
+          "id": "510000665",
+          "title": "Hand and Wrist Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000665",
+          "extractable": true,
+          "score": 72.744,
+          "snippet": "pyogenic flexor tenosynovitis are fusiform digital swelling, pain with passive digital extension, flexed posture of the digit, and tenderness along the flexor tendon sheath. Some patients may present with a fever.  Clinical Presentation The four classic Kanavel signs of pyogenic flexor tenosynovitis are fusiform digi"
+        },
+        {
+          "id": "6004034",
+          "title": "Hand and Wrist Flexor Tendon Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004034",
+          "extractable": true,
+          "score": 45.597,
+          "snippet": "anatomy of the flexor tendons and the flexor sheath in the finger. Determine options for repair and reconstruction of the flexor tendon. Assess the complexity of flexor tendon injuries and their complications. Overview Zone II flexor tendon injuries frequently involve the flexor digitorum profundus (FDP) and the flexo"
+        },
+        {
+          "id": "6004031",
+          "title": "Tendinopathy of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004031",
+          "extractable": true,
+          "score": 41.614,
+          "snippet": "may have a prodromal period of wrist pain over the Lister tubercle with use of the EPL, pain with passive extension of the interphalangeal joint over the Lister tubercle, and weakness or pain with active extension of the thumb interphalangeal joint;11 however, this pain may be difficult to discern during recovery from"
+        },
+        {
+          "id": "6002069",
+          "title": "Hand and Wrist Extensor Tendon Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002069",
+          "extractable": true,
+          "score": 39.419,
+          "snippet": "Tendon gliding Related to tendon excursion; tendon gliding is the ability of a tendon to move without excess resistance. SEND FEEDBACK 9/3/26, 4:20 PM AAOS | Hand and Wrist Extensor Tendon Repair and Reconstruction https://rock.aaos.org/coursecontent.aspx?id=6002069 2/23 Scar adhesions limit tendon gliding. Impaired t"
+        },
+        {
+          "id": "6004081",
+          "title": "Athletic Injuries of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004081",
+          "extractable": true,
+          "score": 37.288,
+          "snippet": "same) from a lag (passive motion is greater than active motion) Flexor tendons—Evaluate each joint individually to isolate the flexor digitorum profundus (FDP) tendon and the flexor digitorum superficialis tendon separately in each digit Extensor tendons At the distal interphalangeal (DIP) joint level, assess for exte"
+        },
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 33.792,
+          "snippet": "the classification of congenital differences in the upper extremity. Perform an appropriate workup of patients with congenital upper extremity differences. Determine the surgical and nonsurgical treatment options for the management of congenital upper extremity differences. Pathophysiology/Pathoanatomy Overview Congen"
+        },
+        {
+          "id": "6001039",
+          "title": "Hand Surgery Using Local Anesthesia with Epinephrine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001039",
+          "extractable": true,
+          "score": 33.307,
+          "snippet": "a volar wrist ganglion). Applications Flexor Tendon Repair General anesthesia or sedation and regional were typically blocks used for flexor tendon repair to keep the patient still as the tendon is sutured. Prolonged tourniquet use and supine positioning are difficult. A cooperative, non-sedated patient will hold stil"
+        },
+        {
+          "id": "6002068",
+          "title": "Psychiatric Hand Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002068",
+          "extractable": true,
+          "score": 32.399,
+          "snippet": "Schroeder, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Describe common psychiatric conditions for the upper extremity. Discuss potential presentations of psychiatric conditions. Identify treatment strategies for psychiatric conditions. Somatic S"
+        },
+        {
+          "id": "6000005",
+          "title": "Peroneal Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000005",
+          "extractable": true,
+          "score": 28.777,
+          "snippet": "9/3/26, 5:42 PM AAOS | Peroneal Tendon Disorders https://rock.aaos.org/coursecontent.aspx?id=6000005 13/35 between peroneal tendinopathy or tenosynovitis from a peroneal tendon tear is difficult. MRI and ultrasonography may help differentiate a peroneal tendon tear from tenosynovitis. Both conditions typically result"
+        },
+        {
+          "id": "6002020",
+          "title": "Distal Triceps Tendon Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002020",
+          "extractable": true,
+          "score": 26.532,
+          "snippet": "formation and compression of the ulnar nerve. Physical Examination Tenderness to palpation over the posterior aspect of the elbow; a palpable defect of the tendon proximal to the olecranon may or may not be present (Figure 2). Passive motion usually is preserved; however, active extension may be compromised or present"
+        },
+        {
+          "id": "6004030",
+          "title": "Inflammatory Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004030",
+          "extractable": true,
+          "score": 24.378,
+          "snippet": "t, and the digital flexor tendon sheaths. In the early aspects of disease, synovial tissue remains thin, and inflammatory fluid distends the tendon sheath. Over time, the synovium hypertrophies and can adhere to or even invade into the tendon substance. Dorsal extensor tenosynovitis commonly is one of the first signs o"
+        },
+        {
+          "id": "6002005",
+          "title": "Tibialis Anterior Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002005",
+          "extractable": true,
+          "score": 24.368,
+          "snippet": "location of tendon retraction Patient Positioning Supine Surgical Approaches A curvilinear incision is made over the tibialis anterior tendon, with care taken to protect the cutaneous nerves (Video 1). The tibialis anterior tendon sheath is opened, and the tendon is exposed. The tendon is examined for evidence of tend"
+        }
+      ]
+    },
+    {
+      "stableGuid": "D+`6Ok`*z3",
+      "front": "Low Ca triggers PTH release. PTH stimulates... 1) Osteoblasts (which stimulate osteoclasts to resorb bone) 2) Osteocytes to release Ca++ 3) Kidney to increase Ca++ reabsorption",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science",
+        "SnapOrtho::Specialty::Metabolic_Bone"
+      ],
+      "candidates": [
+        {
+          "id": "6001166",
+          "title": "Metabolic Bone Diseases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001166",
+          "extractable": true,
+          "score": 65.892,
+          "snippet": "FEEDBACK 9/3/26, 4:43 PM AAOS | Metabolic Bone Diseases https://rock.aaos.org/coursecontent.aspx?id=6001166 1/55 Bone is constantly reforming under the influence of: Osteoclasts, which remove bone Osteoblasts, which form bone Osteocytes, which sense mechanical force on bone and coordinate the activity of osteoclasts a"
+        },
+        {
+          "id": "6001151",
+          "title": "Bone Biology and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001151",
+          "extractable": true,
+          "score": 44.125,
+          "snippet": "Woven bone is primary bone characterized by a random orientation of collagen and mineral. Lamellar bone is secondary bone that results from the remodeling of woven bone into an organized bone tissue. Lacunae are ellipsoidal spaces in bone occupied by osteocytes. Small channels through the bone called canaliculi connec"
+        },
+        {
+          "id": "6001165",
+          "title": "Pathophysiology of Bone Metastasis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001165",
+          "extractable": true,
+          "score": 43.849,
+          "snippet": "normally is stored in the bone and released during normal bone turnover, will stimulate breast cancer cells to secrete parathyroid hormone-related protein. Parathyroid hormone-related protein from cancer cells is a potent activator of the RANKL pathway, in which RANKL from osteoblasts stimulates osteoclast precursors"
+        },
+        {
+          "id": "6001006",
+          "title": "Bone Healing and Bone Grafts",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001006",
+          "extractable": true,
+          "score": 39.585,
+          "snippet": "Bone and Joint Biology Structure and Composition Cortical bone Cancellous bone     NOTES SEND FEEDBACK 9/3/26, 3:59 PM AAOS | Bone Healing and Bone Grafts https://rock.aaos.org/coursecontent.aspx?id=6001006 1/32 Woven bone Lamellar bone Bone Cells Bone contains three distinct cell types. Osteoblasts Cuboidal cells"
+        },
+        {
+          "id": "6001186",
+          "title": "Bone Healing, Bone Graft Materials, and Bone Graft Substitutes, Including Bone Morphogenetic Proteins",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001186",
+          "extractable": true,
+          "score": 33.947,
+          "snippet": "FEEDBACK 9/3/26, 7:33 AM AAOS | Bone Healing, Bone Graft Materials, and Bone Graft Substitutes, Including Bone Morphogenetic Proteins https://rock.aaos.org/coursecontent.aspx?id=6001186 1/26 Endochondral Key cell types involved in bone healing Osteoblasts Osteoclasts Chondroblasts Fibroblasts Types of bone healing (Re"
+        },
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 33.083,
+          "snippet": "cyte lacuna- canalicular network invasion refers to the invasion of the submicron channels deep within the cortical bone. Buried within the dense mineral matrix of bone are osteocytes, which are interconnected through canaliculi containing their cell processes.10,11 Intracellular colonization of nonprofessional phagocy"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 33.077,
+          "snippet": "to decreased wear rates with laboratory-reported reductions of as much as tenfold over never-irradiated material. Highly cross-linked polyethylene3 SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Total Hip Arthroplasty: Bearing Surfaces Basic Science https://rock.aaos.org/coursecontent.aspx?id=510000503 4/21 Because irradiation"
+        },
+        {
+          "id": "6002000",
+          "title": "Structure, Function, and Biology of the Extracellular Matrix",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002000",
+          "extractable": true,
+          "score": 32.785,
+          "snippet": "s four distinct cell types: osteoblasts, osteoclasts, osteocytes, and bone lining cells. These cells maintain bone through anabolic or catabolic functions. Osteocytes and osteoblasts synthesize and secrete the organic components (primarily type I collagen) of bone and control its mineralization. Osteoclasts resorb bone"
+        },
+        {
+          "id": "6001077",
+          "title": "Metastatic Bone Disease to the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001077",
+          "extractable": true,
+          "score": 32.276,
+          "snippet": "growth factor, bone morphogenetic protein). SEND FEEDBACK 9/3/26, 4:44 PM AAOS | Metastatic Bone Disease to the Spine https://rock.aaos.org/coursecontent.aspx?id=6001077 10/44 Receptor activator of nuclear factor-ĸB ligand (RANKL)/osteoprotegerin Tumor cells do not destroy bone; cytokines from the tumor stimulate oste"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 29.375,
+          "snippet": "bone stock SEND FEEDBACK 9/4/26, 10:26 AM AAOS | Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes https://rock.aaos.org/coursecontent.aspx?id=6001061 13/20 Techniques/Procedures Surgical Approaches Surgical procedures Arthroscopic débridement Unpredictable outcomes Indication: pain relief in pati"
+        },
+        {
+          "id": "6001000",
+          "title": "Cell Biology, Cell Differentiation, and Skeletal Stem Cells",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001000",
+          "extractable": true,
+          "score": 26.073,
+          "snippet": "eir way through the passages. These canaliculi connect osteocytes with osteoblasts, osteoclasts, and other osteocytes and facilitate intercellular communication via gap junctions bridging cell membranes and paracrine signaling.46 Osteocytes are thought to play a role in maintaining the delicate homeostatic balance betw"
+        },
+        {
+          "id": "6001002",
+          "title": "Immunology and Inflammation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001002",
+          "extractable": true,
+          "score": 25.86,
+          "snippet": "produce RANKL in response to the macrophage- derived pro-inflammatory cytokines and, thereby, substantially increase osteoclast differentiation.21,25 Evidence shows that bone formation by osteoblasts is modestly reduced during particle-induced osteolysis.26 Although the decreased bone formation is quantitatively much"
+        }
+      ]
+    },
+    {
+      "stableGuid": "d+v4bEtpjP",
+      "front": "Vastus medialis Origin: Intertrochanteric line , medial linea aspera Insertion: Medial patella , tibia tubercle Nerve: Femoral Action: Extend leg",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology::Patella",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology::Tibia",
+        "SnapOrtho::Specialty::Basic_Science"
+      ],
+      "candidates": [
+        {
+          "id": "510000529",
+          "title": "Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000529",
+          "extractable": true,
+          "score": 56.218,
+          "snippet": "the proximal femur Insertion: lateral quadriceps tendon Vastus intermedius Origin: anterior and lateral surface of the femur, including the lateral intermuscular septum of the thigh Insertion: forms deep portion of the quadriceps tendon Vastus medialis Origin: intertrochanteric line, spiral line, linea aspera, and med"
+        },
+        {
+          "id": "510000530",
+          "title": "Anatomy and Biomechanics of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000530",
+          "extractable": true,
+          "score": 50.131,
+          "snippet": ", vastus medialis, vastus lateralis, and vastus intermedius. The vastus lateralis may have an oblique head and a long head, which are called the vastus lateralis obliquus (VLO) and the vastus lateralis longus (VLL). The vastus medialis has an oblique component, the vastus medialis obliquus (VMO), and a longitudinal com"
+        },
+        {
+          "id": "510000524",
+          "title": "Congenital Dislocation of the Knee and Patella",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000524",
+          "extractable": true,
+          "score": 38.636,
+          "snippet": "patients, proximal release of the quadriceps, advancement of the vastus medialis obliquus, and medial transfer of the patellar tendon; in mature patients, tibial tubercle osteotomy32 Lateral release and partial transfer of the patellar insertion Extensive distal lateral release, transfer of the patella into a new syno"
+        },
+        {
+          "id": "6001046",
+          "title": "Stress Fractures of the Leg: Tibia and Fibula",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001046",
+          "extractable": true,
+          "score": 38.12,
+          "snippet": "MD, FAAOS, Durham, NC.) SEND FEEDBACK 9/4/26, 9:41 AM AAOS | Stress Fractures of the Leg: Tibia and Fibula https://rock.aaos.org/coursecontent.aspx?id=6001046 5/13 Figure 4 Lateral radiograph of a tibia and fibula demonstrates cortical thickening of the anterior tibia and a radiolucent fracture line (dreaded black lin"
+        },
+        {
+          "id": "510000552",
+          "title": "Biomechanics of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000552",
+          "extractable": true,
+          "score": 38.043,
+          "snippet": "cruciate ligaments or disruption of the tibiofemoral surface, including the menisci, causes a major change in knee kinematics, leading to articular dysfunction. Successful total knee arthroplasty (TKA) relies on proper positioning of the components to restore proper knee kinematics. If no force is applied during knee"
+        },
+        {
+          "id": "6002093",
+          "title": "Knee Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002093",
+          "extractable": true,
+          "score": 37.869,
+          "snippet": "is placed to allow valgus stress of the knee and to better visualize the medial compartment. If a leg holder is used, careful attention should be paid to ensure that the leg holder does not compress the lateral femoral cutaneous nerve. The nonsurgical leg often is placed in a well-leg holder or padded for safety. Surg"
+        },
+        {
+          "id": "6001069",
+          "title": "Physical Examination of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001069",
+          "extractable": true,
+          "score": 36.675,
+          "snippet": "femoral condyle. The knee is then extended (black arrow), entrapping the meniscus. B, In the medial McMurray circumduction examination, the patient’s knee is fully flexed and the tibia is externally rotated (white arrow), engaging the posterior horn of the medial meniscus under the medial femoral condyle. The knee is"
+        },
+        {
+          "id": "6001162",
+          "title": "Complications After Total Knee Arthroplasty: Intraoperative Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001162",
+          "extractable": true,
+          "score": 36.003,
+          "snippet": "Wrisberg (posterior) Blood supply: middle geniculate artery Strength: 2,500 to 3,000 N Popliteus Internally rotates the tibia during knee flexion Origin: posteromedial tibia Insertion: lateral femoral condyle; anterior and distal to the LCL origin Innervation: tibial nerve (L4 through S1) Blood supply: medial inferior"
+        },
+        {
+          "id": "6000033",
+          "title": "Patellofemoral Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000033",
+          "extractable": true,
+          "score": 33.179,
+          "snippet": "(Video 2). À la carte procedures to manage specific anatomic abnormalities Lateral release Medial retinacular or MPFL repair Medial plication or advancement of vastus medialis obliquus fascia MPFL reconstruction (Figure 6) Medial quadriceps tendon–femoral ligament reconstruction9 Guided growth with hemiepiphysiodesis"
+        },
+        {
+          "id": "6004077",
+          "title": "Patellofemoral Joint Disorders/Patellofemoral Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004077",
+          "extractable": true,
+          "score": 32.25,
+          "snippet": "mm medial to the superior pole on the patella 10 to 20 mm at its origin (medial femoral epicondyle) 20 to 30 mm at its insertion to the patella13 Medial quadriceps tendon femoral ligament: broad insertion on the superomedial corner of the patella Component of medial patellofemoral complex Deep: medial patellomeniscal"
+        },
+        {
+          "id": "6001029",
+          "title": "Surgical Anatomy of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001029",
+          "extractable": true,
+          "score": 31.851,
+          "snippet": "Most weight bearing occurs through the medial tibial plateau. Femur Articulates with the patella and the tibia The medial and lateral femoral condyles articulate with the corresponding medial and lateral tibial plateaus. The femoral trochlea articulates with the patella. Patella The patella is the largest sesamoid bon"
+        },
+        {
+          "id": "6002067",
+          "title": "Complications After Total Knee Arthroplasty: Patellar Maltracking and Instability/Dislocation, Patellar Clunk, Extensor Mechanism Disruption",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002067",
+          "extractable": true,
+          "score": 29.146,
+          "snippet": "genicular arterial branch to the patella to limit the risk of patellar osteonecrosis. Vastus medialis imbrication The vastus medialis should be mobilized proximally up the thigh. Via a pants-over-vest suture technique, the vastus medialis can be imbricated over the superolateral patella and the vastus medialis to incr"
+        }
+      ]
+    },
+    {
+      "stableGuid": "D<XqWVpJ}R",
+      "front": "Extensor Hallucis Brevis (EHB) Origin: Dorsolateral calcaneus Insertion: Base of proximal phalanx of great toe Nerve: Deep peroneal Action: Extends great toe at MCPJ",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Foot_Ankle",
+        "SnapOrtho::Anatomy::Foot_Ankle::Osteology",
+        "SnapOrtho::Anatomy::Foot_Ankle::Osteology::Calcaneus",
+        "SnapOrtho::Anatomy::Hand",
+        "SnapOrtho::Anatomy::Hand::Osteology",
+        "SnapOrtho::Anatomy::Hand::Osteology::Proximal_Phalanx",
+        "SnapOrtho::Specialty::Foot_Ankle"
+      ],
+      "candidates": [
+        {
+          "id": "510000645",
+          "title": "Fractures of the Calcaneus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000645",
+          "extractable": true,
+          "score": 63.124,
+          "snippet": "PM AAOS | Fractures of the Calcaneus https://rock.aaos.org/coursecontent.aspx?id=510000645 7/57 Extensor digitorum brevis Extensor hallucis brevis Quadratus plantae Flexor digitorum brevis  Musculature Most of the musculature of the calcaneus is avoided during the management of calcaneal fractures; however, the exten"
+        },
+        {
+          "id": "6000014",
+          "title": "Biomechanics/Gait: Effect of Ankle/Foot Malalignment",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000014",
+          "extractable": true,
+          "score": 63.026,
+          "snippet": "and plantar foot. 1 = peroneal cutaneous nerve, 2 = superficial peroneal nerve branches, 3 = saphenous nerve, 4 = deep peroneal nerve, 5 = sural nerve, 6 = medial plantar nerve, 7 = lateral plantar nerve, 8 = medial calcaneal nerve, 9 = first calcaneal nerve. (Reproduced from Sammarco VJ, Taylor R: Anatomy and biomech"
+        },
+        {
+          "id": "6003002",
+          "title": "Lesser Toe Pathology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003002",
+          "extractable": true,
+          "score": 48.755,
+          "snippet": "ation. Tendons The central dorsal structure of the toe is formed by the extensor digitorum longus (EDL), which divides into three slips over the proximal phalanx. The middle slip inserts into the base of the middle phalanx. Two lateral slips extend over the dorsolateral aspect of the middle phalanx and converge to form"
+        },
+        {
+          "id": "6000005",
+          "title": "Peroneal Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000005",
+          "extractable": true,
+          "score": 46.603,
+          "snippet": "vol 1, p 1211.) Innervation Both the peroneus longus and brevis are innervated by the superficial peroneal nerve. The superficial peroneal nerve is a branch of the common peroneal nerve that courses in the lateral compartment, with branches to the peroneus longus peroneus brevis, until it pierces the deep crural fasci"
+        },
+        {
+          "id": "6000009",
+          "title": "Cavovarus Foot Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000009",
+          "extractable": true,
+          "score": 45.697,
+          "snippet": "brevis Fifth metatarsal base Eversion Tibialis posterior Intrinsics (lumbricals, interossei) Proximal phalanges (extensor expansions) Flexion of metatarsophalangeal joints, extension of proximal and distal interphalangeal joints Extrinsic long extensors and flexors Extrinsic long extensors (extensor digitorum longus,"
+        },
+        {
+          "id": "6001015",
+          "title": "Cavovarus Foot Deformity: Surgical Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001015",
+          "extractable": true,
+          "score": 45.566,
+          "snippet": "transfer may be useful for balancing the deforming forces. If rigid, proximal interphalangeal fusion and metacarpophalangeal release (including extensor digitorum longus lengthening) are indicated. A clawed great toe can be managed via arthrodesis of the interphalangeal joint in combination with transfer of the extens"
+        },
+        {
+          "id": "6000032",
+          "title": "Metatarsus Adductus and Calcaneovalgus Foot",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000032",
+          "extractable": true,
+          "score": 44.738,
+          "snippet": "motion of the ankle and subtalar joints is normal.2 Hyperactivity of the abductor hallucis may contribute to the dynamic component of the foot position, especially in patients younger than 18 months.2 An atavistic or wandering great toe (adduction of the great toe) also may be observed.3 In addition, some patients hav"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 44.571,
+          "snippet": "ews show the cutaneous innervation of the dorsal and plantar foot. 1 = peroneal cutaneous nerve, 2 = superficial peroneal nerve branches, 3 = saphenous nerve, 4 = deep peroneal nerve, 5 = sural nerve, 6 = medial plantar nerve, 7 = lateral plantar nerve, 8 = medial calcaneal nerve, 9 = first calcaneal nerve. (Reproduced"
+        },
+        {
+          "id": "510000557",
+          "title": "Physical Examination and Anatomy of the Hand, Forearm, and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000557",
+          "extractable": true,
+          "score": 43.912,
+          "snippet": "al SBRN, 25% PIN, 45% Radial nerve, 30% Superficial Extensor Muscles Anconeus Posterolateral epicondyle Lateral-dorsal ulna Radial nerve Extensor carpi ulnaris Most medial common extensor Superior ulnar border Base of the little finger metacarpal PIN EDM Common extensor origin Little finger extensor apparat"
+        },
+        {
+          "id": "6000006",
+          "title": "Neurogenic Conditions: Entrapment Neuropathy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000006",
+          "extractable": true,
+          "score": 40.028,
+          "snippet": "pain: Diagnosis and management. J Am Acad Orthop Surg 2014;22[6]:372–380.) Deep Peroneal Nerve The deep peroneal nerve (DPN) travels with the anterior tibial artery in the interval between the extensor digitorum longus and the extensor hallucis longus (EHL). Just proximal to the ankle, the nerve bifurcates into a late"
+        },
+        {
+          "id": "6002006",
+          "title": "Hallux Rigidus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002006",
+          "extractable": true,
+          "score": 36.017,
+          "snippet": "the MTP articulation. Tendons Flexor hallucis longus Flexor hallucis brevis Extensor hallucis longus Extensor hallucis brevis Abductor hallucis Adductor hallucis Joints and Ligaments Medial and lateral collateral ligaments MTP joint and medial and lateral sesamoid articulations Musculature Flexor hallucis longus Flexo"
+        },
+        {
+          "id": "510000500",
+          "title": "Hallux Valgus: Disorders of the First Ray",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000500",
+          "extractable": true,
+          "score": 35.29,
+          "snippet": "sensory nerves may be compressed over the medial eminence. Tendons Dorsal extensor tendons: extensor hallucis longus and brevis Plantar tendons from medial to lateral forming the plantar plate Abductor hallucis Flexor hallucis brevis medial head and sesamoid Flexor hallucis longus Flexor hallucis brevis lateral head a"
+        }
+      ]
+    },
+    {
+      "stableGuid": "D=,$Bpb]s5",
+      "front": "Patient presents with bisphosphonate-related changes of her femur with vague hip pain . Next step? Prophylactic intramedullary nail of left femur",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femur",
+        "SnapOrtho::Specialty::Trauma",
+        "SnapOrtho::Treatment::Intramedullary_Nail_Fixation"
+      ],
+      "candidates": [
+        {
+          "id": "6001187",
+          "title": "Management of Atypical Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001187",
+          "extractable": true,
+          "score": 33.582,
+          "snippet": "the right hip shows a fracture through the hypertrophied cortex (circle), which the patient sustained the next day in her hospital room as she stood and turned. At a later date, the patient presented with left prodromal thigh pain. D, AP radiograph of the left knee demonstrates prophylactic nailing, which the patient"
+        },
+        {
+          "id": "6000058",
+          "title": "Biomechanics of Plates, Screws, Rods, and External Fixation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000058",
+          "extractable": true,
+          "score": 30.857,
+          "snippet": "determined by the nail diameter and is proportional to the radius to the third power7 (Resource 6). Biomechanics of External Fixation External fixation is commonly used as a temporary stabilization measure in orthopaedic trauma patients but also may be used for definitive fixation  Biomechanics of External Fixation E"
+        },
+        {
+          "id": "6000054",
+          "title": "Spinal Evaluation in the Trauma Patient",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000054",
+          "extractable": true,
+          "score": 30.267,
+          "snippet": "the Trauma Patient https://rock.aaos.org/coursecontent.aspx?id=6000054 4/21 figure. The patient suffered a spinal cord injury while vacationing overseas and was immobilized on a spine board for 30 hours during repatriation. On arrival, the patient had an obviously necrotic pressure sore measuring 10 cm in diameter on"
+        },
+        {
+          "id": "6001084",
+          "title": "Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001084",
+          "extractable": true,
+          "score": 30.204,
+          "snippet": "e shaft Laterally based locked plate Retrograde intramedullary nail Laterally based locked plate and retrograde intramedullary nail Laterally based locked plate and medially based plate Intramedullary nails Modern intramedullary nails with multiple screw options have become an effective fixation method. Reduction of th"
+        },
+        {
+          "id": "6003016",
+          "title": "Evaluation of the Trauma Patient",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003016",
+          "extractable": true,
+          "score": 29.702,
+          "snippet": "5 Oriented Localized pain 4 Spontaneous Confused Withdraws from pain SEND FEEDBACK 9/3/26, 4:06 PM AAOS | Evaluation of the Trauma Patient https://rock.aaos.org/coursecontent.aspx?id=6003016 3/35 3 To voice Inappropriate Flexion to pain 2 To pain Incomprehensible Extension to pain 1 None None None Reproduced from Gary"
+        },
+        {
+          "id": "510000534",
+          "title": "Diagnosis and Management of Fracture-Related Infection",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000534",
+          "extractable": true,
+          "score": 25.42,
+          "snippet": "of the patient to undergo the process of eradication. Prognosis is well correlated with the physiologic patient subclassification. Figure 2 Drawings show the Cierny-Mader anatomic classification of osteomyelitis. Type I is intramedullary osteomyelitis. Type II is superficial osteomyelitis with no intramedullary involv"
+        },
+        {
+          "id": "6001189",
+          "title": "Proximal Third Femur Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001189",
+          "extractable": true,
+          "score": 23.698,
+          "snippet": "l femur fracture, or patients who are poor candidates for arthroplasty (eg, a patient with multiple chronic infections, a patient who uses intravenous drugs, a patient with uncontrolled epilepsy, etc.). This decision is individualized based on the patient47 (Figure 11). Figure 11 Images of the hip of a 56-year-old pati"
+        },
+        {
+          "id": "6002012",
+          "title": "Postoperative Periprosthetic Fractures of the Femur and Acetabulum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002012",
+          "extractable": true,
+          "score": 23.158,
+          "snippet": "AAOS | Postoperative Periprosthetic Fractures of the Femur and Acetabulum https://rock.aaos.org/coursecontent.aspx?id=6002012 11/32 Figure 4 Radiographs of a 72-year-old woman who sustained a femur fracture. A, Preoperative AP radiograph of the pelvis demonstrates a Vancouver type B3 left periprosthetic femur fracture"
+        },
+        {
+          "id": "6001165",
+          "title": "Pathophysiology of Bone Metastasis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001165",
+          "extractable": true,
+          "score": 22.716,
+          "snippet": "of Orthopaedic Surgeons, 2020, 1628-1642. Patient History Patients typically present with symptoms of progressive pain that are worse with weight bearing (functional pain). Bone cancer pain may begin as intermittent pain but often becomes more constant and less controlled with increasing doses of analgesic agents. Pai"
+        },
+        {
+          "id": "510000512",
+          "title": "Nonspecific Pain",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000512",
+          "extractable": true,
+          "score": 22.433,
+          "snippet": "complex regional pain syndrome. Overview Some patients present with pain and no measurable pathophysiology.     NOTES SEND FEEDBACK 9/3/26, 4:51 PM AAOS | Nonspecific Pain https://rock.aaos.org/coursecontent.aspx?id=510000512 1/16 A number of constructs of unclear benefit are suggested for nonspecific pain, includ"
+        },
+        {
+          "id": "6001024",
+          "title": "Nonsurgical Management of Hip Pain",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001024",
+          "extractable": true,
+          "score": 22.322,
+          "snippet": "or their pain, including tumors, infections, fractures, inflammatory arthropathies, osteonecrosis, transient osteoporosis of the hip, abductor tears, trochanteric bursitis, labral tears, and impingement syndromes. A careful patient history and physical examination aid in triaging possible etiologies of hip pain and wil"
+        },
+        {
+          "id": "510000594",
+          "title": "Patient Optimization",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000594",
+          "extractable": true,
+          "score": 21.872,
+          "snippet": "for breakthrough pain in the setting of surgery. SEND FEEDBACK 9/3/26, 5:34 PM AAOS | Patient Optimization https://rock.aaos.org/coursecontent.aspx?id=510000594 23/34  Substance Abuse and Pain Management Patients undergoing chronic opioid therapy (for chronic pain or an opioid use disorder) pose a considerable challe"
+        }
+      ]
+    },
+    {
+      "stableGuid": "D=2`SS4ur8",
+      "front": "Osteo porosis : bone mass decreased , mineralization normal Osteo malacia : bone mass variable , mineralization decreased",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science",
+        "SnapOrtho::Specialty::Metabolic_Bone"
+      ],
+      "candidates": [
+        {
+          "id": "6001166",
+          "title": "Metabolic Bone Diseases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001166",
+          "extractable": true,
+          "score": 37.964,
+          "snippet": "to interact with bone mineral and produce bone loss. Osteoporosis occurs if rates of SEND FEEDBACK 9/3/26, 4:43 PM AAOS | Metabolic Bone Diseases https://rock.aaos.org/coursecontent.aspx?id=6001166 22/55 bone resorption exceed rates of bone formation, causing local or systemic bone loss, or if bone quality, which is d"
+        },
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 33.135,
+          "snippet": "nfections in orthopaedics, in Einhorn TA, O’Keefe RJ, Buckwalter JA, eds: Orthopaedic Basic Science. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2007, pp 299-314. Types of Musculoskeletal Infection and Clinical Presentation SEND FEEDBACK 9/3/26, 4:48 PM AAOS | Musculoskeletal Infections and Microbiology Bas"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 29.939,
+          "snippet": "wear rate of 28-mm UHMWPE liners is 0.1 to 0.2 mm/yr. Polyethylene liner wear rates of less SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Total Hip Arthroplasty: Bearing Surfaces Basic Science https://rock.aaos.org/coursecontent.aspx?id=510000503 10/21 than 0.1 mm/yr are associated with decreased development of osteolysis beca"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 28.538,
+          "snippet": "loss of stable humeral head compression, leading to superior migration SEND FEEDBACK 9/4/26, 10:26 AM AAOS | Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes https://rock.aaos.org/coursecontent.aspx?id=6001061 2/20 driven by the deltoid. The humeral head abuts against the acromion, leading to add"
+        },
+        {
+          "id": "510000591",
+          "title": "Disaster and Mass Casualty Preparedness",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000591",
+          "extractable": true,
+          "score": 20.364,
+          "snippet": "prepare for disasters and mass casualty incidents. Discuss examples of the role of the orthopaedic surgeon in disasters and mass casualty incidents. Introduction Disasters can be natural or man-made.     NOTES SEND FEEDBACK 9/3/26, 3:55 PM AAOS | Disaster and Mass Casualty Preparedness https://rock.aaos.org/course"
+        },
+        {
+          "id": "6001186",
+          "title": "Bone Healing, Bone Graft Materials, and Bone Graft Substitutes, Including Bone Morphogenetic Proteins",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001186",
+          "extractable": true,
+          "score": 17.658,
+          "snippet": "FEEDBACK 9/3/26, 7:33 AM AAOS | Bone Healing, Bone Graft Materials, and Bone Graft Substitutes, Including Bone Morphogenetic Proteins https://rock.aaos.org/coursecontent.aspx?id=6001186 1/26 Endochondral Key cell types involved in bone healing Osteoblasts Osteoclasts Chondroblasts Fibroblasts Types of bone healing (Re"
+        },
+        {
+          "id": "6001006",
+          "title": "Bone Healing and Bone Grafts",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001006",
+          "extractable": true,
+          "score": 16.597,
+          "snippet": "use of external bone stimulators for enhancement of fracture healing. Bone and Joint Biology Structure and Composition Cortical bone Cancellous bone     NOTES SEND FEEDBACK 9/3/26, 3:59 PM AAOS | Bone Healing and Bone Grafts https://rock.aaos.org/coursecontent.aspx?id=6001006 1/32 Woven bone Lamellar bone Bone Cel"
+        },
+        {
+          "id": "6001060",
+          "title": "Bone Cysts and Benign Bone Neoplasms",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001060",
+          "extractable": true,
+          "score": 15.785,
+          "snippet": "cartilaginous, fibrous bone, and bone- forming tumors. Describe the expected imaging findings of benign cystic, cartilaginous, fibrous bone, and bone- forming tumors. Identify the imaging characteristics of benign cystic, cartilaginous, fibrous bone, and bone- forming tumors. Discuss the various treatment strategies f"
+        },
+        {
+          "id": "6001151",
+          "title": "Bone Biology and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001151",
+          "extractable": true,
+          "score": 15.68,
+          "snippet": "AAOS | Bone Biology and Biomechanics https://rock.aaos.org/coursecontent.aspx?id=6001151 4/15 Microscopic level Woven bone is primary bone characterized by a random orientation of collagen and mineral. Lamellar bone is secondary bone that results from the remodeling of woven bone into an organized bone tissue. Lacunae"
+        },
+        {
+          "id": "6004037",
+          "title": "Presentation and Evaluation of Bone and Soft-Tissue Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004037",
+          "extractable": true,
+          "score": 15.603,
+          "snippet": "s with a soft-tissue mass associated with a bone lesion, MRI also is very useful to determine the extent of disease and help identify relevant anatomy adjacent to the soft-tissue mass. Bone Scintigraphy Technetium-99m bone scintigraphy Technetium-99m forms chemical adducts to sites of new bone formation. Detects multip"
+        },
+        {
+          "id": "6002073",
+          "title": "Presentation of Bone Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002073",
+          "extractable": true,
+          "score": 15.382,
+          "snippet": "of which are benign, such as multiple hereditary exostosis, Ollier disease, osteofibrous dysplasia, fibrous dysplasia, aneurysmal bone cyst, and unicameral bone cyst. Initial Workup Imaging Studies Radiographs of entire bone MRI with and without contrast of entire bone Chest CT scan Positron emission tomography scan o"
+        },
+        {
+          "id": "6004046",
+          "title": "Hematopoietic Bone Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004046",
+          "extractable": true,
+          "score": 14.132,
+          "snippet": "bone lesion. The typical workup for a patient with a skeletal lesion suspicious for metastatic carcinoma involves technetium-99m bone scintigraphy to identify additional sites of disease. Because bone scintigraphy involves the use of technetium-99m, it is a marker of bone formation, which is not characteristic of myel"
+        }
+      ]
+    },
+    {
+      "stableGuid": "d=x.w{w6Vi",
+      "front": "Three (3) presenting symptoms for spondylolysis : Buttock pain Hamstring tightness Radicular pain (L5 nerve root)",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Spine"
+      ],
+      "candidates": [
+        {
+          "id": "510000582",
+          "title": "Pediatric and Adolescent Back Pain: Pediatric Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000582",
+          "extractable": true,
+          "score": 36.875,
+          "snippet": "back pain, three potential etiologies should be considered. Mechanical back pain with no underlying cause Back pain secondary to spondylolysis or spondylolisthesis Back pain secondary to a more serious cause that may require extensive workup Older children and adolescents commonly experience adult-like low back pain ("
+        },
+        {
+          "id": "6001074",
+          "title": "Physical Examination of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001074",
+          "extractable": true,
+          "score": 29.357,
+          "snippet": "Tests for Cervical Spine Pathology Several maneuvers can be used to elucidate the etiology of symptoms in the cervical spine region and the upper extremities. The most common provocative test for cervical radicular symptoms is the Spurling maneuver (Figure 1). The Spurling maneuver may elicit symptoms associated with"
+        },
+        {
+          "id": "6001075",
+          "title": "Lumbar Spine Stenosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001075",
+          "extractable": true,
+          "score": 26.856,
+          "snippet": "disk height that results in alterations in the structure and mechanics of the lumbar spine. The end result of sustained neural compression is alterations in nerve root microcirculation, nerve dysfunction, and the release of inflammatory mediators resulting in pain.  Pathophysiology Lumbar spine stenosis results from"
+        },
+        {
+          "id": "6002021",
+          "title": "Imaging of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002021",
+          "extractable": true,
+          "score": 25.264,
+          "snippet": "for spondylolysis Thoracic spine: AP, lateral, and flexion-extension views Cervical spine: AP, lateral, and flexion-extension views Additional views Open-mouth odontoid view to evaluate for upper cervical spine pathology Oblique view to evaluate for foraminal pathology Swimmer view allows for enhanced visualization of"
+        },
+        {
+          "id": "6003024",
+          "title": "Anatomy of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003024",
+          "extractable": true,
+          "score": 25.257,
+          "snippet": "and 1 coccygeal. In the cervical spine, the numbered nerve exits at the level above the corresponding pedicle (eg, the C4 nerve exits between C3 and C4). In the lumber spine, the numbered nerve exits at the level below the corresponding pedicle (eg, the L4 nerve exits between L4 and L5).  Nerve Roots The nerve roots e"
+        },
+        {
+          "id": "6000051",
+          "title": "Axial Neck Pain",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000051",
+          "extractable": true,
+          "score": 22.311,
+          "snippet": "should be paid to red-flag symptoms, such as night pain, unremitting pain even at rest, fevers, weight loss, or antecedent infection or trauma. Neurologic symptoms or deficits are not uncommon in patients with neck pain. Therefore, a complete patient history and physical examination are essential. Symptoms typically a"
+        },
+        {
+          "id": "510000559",
+          "title": "Nerve Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000559",
+          "extractable": true,
+          "score": 22.296,
+          "snippet": "a cable sural nerve graft, is the ideal treatment option. Preganglionic lesions often require nerve transfers, such as an ulnar nerve fascicle to the musculocutaneous nerve (Oberlin transfer), a spinal accessory nerve fascicle to the suprascapular nerve, or a radial nerve fascicle to the axillary nerve. Pan-plexus ner"
+        },
+        {
+          "id": "6001076",
+          "title": "Sacroiliac-Mediated Pain",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001076",
+          "extractable": true,
+          "score": 21.658,
+          "snippet": "the main source of pain. Differential Diagnosis  Differential Diagnosis SEND FEEDBACK 9/3/26, 6:07 PM AAOS | Sacroiliac-Mediated Pain https://rock.aaos.org/coursecontent.aspx?id=6001076 10/20 Other sources of pain that may mimic SIJ pain should be ruled out. Other potential pain generators include the hip joint, quad"
+        },
+        {
+          "id": "6001068",
+          "title": "Muscle Injuries: Hip Abductor Tendon Injuries, Proximal Hamstring Injuries, and Rectus Femoris Avulsions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001068",
+          "extractable": true,
+          "score": 21.446,
+          "snippet": "of injury, location of pain, and previous hamstring injuries should be noted. Posterior thigh pain and pain with sitting may be present. On physical examination, ecchymosis in the posterior thigh may be observed in patients with a proximal avulsion or a high-grade myotendinous tear. Pain may occur with palpation at th"
+        },
+        {
+          "id": "6001072",
+          "title": "Lumbar Spine Injuries and Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001072",
+          "extractable": true,
+          "score": 21.414,
+          "snippet": "their morphology. Central: may not cause substantial radiculopathy but causes low back pain Posterolateral/subarticular: compresses the traversing nerve root SEND FEEDBACK 9/3/26, 4:36 PM AAOS | Lumbar Spine Injuries and Disorders in Athletes https://rock.aaos.org/coursecontent.aspx?id=6001072 7/59 Foraminal: compress"
+        },
+        {
+          "id": "6001159",
+          "title": "History and Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001159",
+          "extractable": true,
+          "score": 20.86,
+          "snippet": "Hip Pain Overview of hip pain Causes and symptoms commonly associated with hip pain Hip pain is common, and it may be episodic or chronic. It often is localized to three main areas: the anterior hip and groin area, the posterior hip and buttock, or the lateral hip. Hip pain may be related to intra-articular or extra-a"
+        },
+        {
+          "id": "510000512",
+          "title": "Nonspecific Pain",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000512",
+          "extractable": true,
+          "score": 20.549,
+          "snippet": "evolve and remain subjective. Current criteria include the following: Nonspecific pain and symptoms in multiple areas of the body Symptoms lasting at least 3 months No other health problem that explains the pain and symptoms  Fibromyalgia SEND FEEDBACK 9/3/26, 4:51 PM AAOS | Nonspecific Pain https://rock.aaos.org/cou"
+        }
+      ]
+    },
+    {
+      "stableGuid": "d>?bAcre[r",
+      "front": "What is the inheritance pattern of Duchenne Muscular Dystrophy ? X-linked recessive",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science"
+      ],
+      "candidates": [
+        {
+          "id": "6004104",
+          "title": "Muscular Dystrophies and Selected Neurodegenerative Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004104",
+          "extractable": true,
+          "score": 50.895,
+          "snippet": "dystrophy (EDMD) Limb-girdle muscular dystrophies (LGMDs) Facioscapulohumeral muscular dystrophy (FSHD) Table 1 Pathogenesis of Dystrophies SEND FEEDBACK 9/3/26, 4:47 PM AAOS | Muscular Dystrophies and Selected Neurodegenerative Conditions https://rock.aaos.org/coursecontent.aspx?id=6004104 2/62 Disease Transcribed Pr"
+        },
+        {
+          "id": "6002051",
+          "title": "Genetic Diseases of Musculoskeletal Tissues",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002051",
+          "extractable": true,
+          "score": 34.681,
+          "snippet": "to abnormal muscle tone. The course of these disorders is variable; however, several are associated with progressive weakness. Various inheritance patterns exist; however, many of these disorders are linked to the X chromosome. Duchenne muscular dystrophy is inherited in an X-linked recessive manner, and Rett syndrome"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 34.288,
+          "snippet": "ceramics, metals In some cases, metals Ultimate adverse reaction Foreign body granuloma Necrosis, fibrosis, possible pseudotumor CD69 = cluster of differentiation 69, DAMP = damage-associated molecular pattern, IL-2R = interleukin 2 receptor, NLR = nucleotide-binding oligomerization domain–like receptors, PAMP = patho"
+        },
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 32.042,
+          "snippet": "nfections in orthopaedics, in Einhorn TA, O’Keefe RJ, Buckwalter JA, eds: Orthopaedic Basic Science. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2007, pp 299-314. Types of Musculoskeletal Infection and Clinical Presentation SEND FEEDBACK 9/3/26, 4:48 PM AAOS | Musculoskeletal Infections and Microbiology Bas"
+        },
+        {
+          "id": "6002080",
+          "title": "Spinal Muscular Atrophy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002080",
+          "extractable": true,
+          "score": 29.421,
+          "snippet": "muscular atrophy. Determine biologic interventions for spinal muscular atrophy that are changing the natural history of the disease. Pathophysiology/Pathoanatomy Overview Spinal muscular atrophy (SMA) is a genetic disease that is most commonly fatal during childhood. Incidence of 1 in 11,000 live births The inheritanc"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 26.644,
+          "snippet": " Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes  CORE May 05, 2026 James M. Gregory, MD (2020–present) Jason Kappa, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Understand the etiology, natural history, and pathoanatomy o"
+        },
+        {
+          "id": "6001038",
+          "title": "Hereditary Motor Sensory Neuropathy (Charcot-Marie-Tooth Disease)",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001038",
+          "extractable": true,
+          "score": 24.599,
+          "snippet": "2 is defined by axonal degeneration with an intact myelin sheath and preserved conduction velocity. It is far less common than HMSN type 1. Numerous genetic mutations result in CMT disease type 2 with no predominant pattern. Autosomal dominant inheritance is the most common mode of inheritance; however, autosomal rece"
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "extractable": true,
+          "score": 23.327,
+          "snippet": " Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing  CORE May 18, 2026 James Gregory, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Assess the natural progression of rotator cuff disease. Understand the b"
+        },
+        {
+          "id": "6001051",
+          "title": "Arthrogryposis Multiplex Congenita",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001051",
+          "extractable": true,
+          "score": 22.528,
+          "snippet": "t congruent flattening of opposing joint surfaces. In severe cases, arthrofibrosis will occur during childhood, more severely threatening the ability to gain motion. In most forms of arthrogryposis, the muscles are the final common pathway for fetal akinesia. Whether the etiology is primarily muscular (distal arthrogry"
+        },
+        {
+          "id": "6000037",
+          "title": "Neuromuscular Scoliosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000037",
+          "extractable": true,
+          "score": 20.184,
+          "snippet": "caregiver-reported outcomes, after spinal fusion. Background Neuromuscular scoliosis is caused by various diagnoses that affect neurologic function     NOTES SEND FEEDBACK 9/3/26, 4:53 PM AAOS | Neuromuscular Scoliosis https://rock.aaos.org/coursecontent.aspx?id=6000037 1/27 Diagnoses include Cerebral palsy Spinal"
+        },
+        {
+          "id": "6001008",
+          "title": "Orthopaedic Molecular and Cellular Biology, Genetics, and Immunology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001008",
+          "extractable": true,
+          "score": 16.862,
+          "snippet": "molecular and cellular biology, genetics, and immunology, in Lieberman JR, ed: AAOS Comprehensive Orthopaedic Review, ed 3. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2020, pp 553-570. Table 6 Other Musculoskeletal Disorders Type Affected Site or Substance Functional Defect Characteristic Phenotypes Duche"
+        },
+        {
+          "id": "6002087",
+          "title": "Pediatric Hematologic Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002087",
+          "extractable": true,
+          "score": 15.42,
+          "snippet": "FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Describe the epidemiology and pathophysiology of sickle cell disease. Discuss the inheritance pattern and classic clinical manifestations of sickle cell disease. Discuss the surgical risks and complications associated with sickle cell disease. D"
+        }
+      ]
+    },
+    {
+      "stableGuid": "d|UzkS>/MO",
+      "front": "Absence of the fibula causes anteromedial bowing of the tibia .",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology::Fibula",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology::Tibia",
+        "SnapOrtho::Specialty::Pediatric_Orthopedics"
+      ],
+      "candidates": [
+        {
+          "id": "6001046",
+          "title": "Stress Fractures of the Leg: Tibia and Fibula",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001046",
+          "extractable": true,
+          "score": 39.414,
+          "snippet": "common than proximal fibular fractures. (Courtesy of Nicholas A. Viens, MD, FAAOS, Durham, NC.) SEND FEEDBACK 9/4/26, 9:41 AM AAOS | Stress Fractures of the Leg: Tibia and Fibula https://rock.aaos.org/coursecontent.aspx?id=6001046 5/13 Figure 4 Lateral radiograph of a tibia and fibula demonstrates cortical thickening"
+        },
+        {
+          "id": "6002081",
+          "title": "Pediatric Osteomyelitis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002081",
+          "extractable": true,
+          "score": 24.431,
+          "snippet": "presence of chronic infarcted and necrotic bone.5 Anatomic Considerations SEND FEEDBACK 9/3/26, 5:38 PM AAOS | Pediatric Osteomyelitis https://rock.aaos.org/coursecontent.aspx?id=6002081 2/33 Most commonly occurs in the metaphyseal region of long bones In joints with an intracapsular metaphysis (proximal femur, proxim"
+        },
+        {
+          "id": "6001070",
+          "title": "Ligamentous Injuries of the Knee: Multiligamentous Knee Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001070",
+          "extractable": true,
+          "score": 24.242,
+          "snippet": "tendon Flexor of knee and internal rotator of tibia Prevents external rotation of tibia External rotation recurvatum test Dial test Reverse Lachman test SEND FEEDBACK 9/3/26, 4:34 PM AAOS | Ligamentous Injuries of the Knee: Multiligamentous Knee Injuries https://rock.aaos.org/coursecontent.aspx?id=6001070 3/50 Poplite"
+        },
+        {
+          "id": "6004062",
+          "title": "Pediatric Foot Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004062",
+          "extractable": true,
+          "score": 23.978,
+          "snippet": ", knee, and ankle motion during gait. Assess neutral standing position, evaluate leg lengths, and assess for muscle atrophy. Evaluate the range of motion of the hips, knees, ankles, and subtalar joints. Assess callosities on the plantar aspect of the forefoot and/or absence of thickened glabrous skin along the plantar"
+        },
+        {
+          "id": "6002083",
+          "title": "Foot and Ankle Sports Injuries in Pediatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002083",
+          "extractable": true,
+          "score": 23.712,
+          "snippet": "Salter-Harris type I distal fibula fractures.1,2  Epidemiology Foot and ankle fractures are common in pediatric patients, accounting for a combined 10% of pediatric fractures and almost 20% of physeal injuries. Salter-Harris type I and type II distal fibula fractures account for 90% of isolated distal fibula fracture"
+        },
+        {
+          "id": "6004064",
+          "title": "Pediatric Lower Extremity Deformities and Limb Deficiencies",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004064",
+          "extractable": true,
+          "score": 20.284,
+          "snippet": "of the tibia; distal epiphysis is absent. Type III: distal epiphysis is present with a short segment of tibia; proximal epiphysis is absent. Least common type Type IV Tibia is short. Fibula is relatively longer and displaced proximally at the knee. Diastasis of the tibia and fibula at the ankle The Paley classificatio"
+        },
+        {
+          "id": "6004063",
+          "title": "Rotational and Angular Limb Deformities",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004063",
+          "extractable": true,
+          "score": 18.132,
+          "snippet": "for patients in whom posteromedial bowing of the tibia is suspected. Differentiate posteromedial bowing of the tibia from a calcaneovalgus foot. Review surgical and nonsurgical treatment principles for patients with posteromedial bowing of the tibia. Anterolateral Bowing Pathophysiology/Pathoanatomy Overview Three typ"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 14.981,
+          "snippet": "CTA is multifactorial and currently is incompletely understood. Intrinsic and extrinsic causes are thought to be contributing factors. Intrinsic causes include age-related degeneration of the rotator cuff tendons, tendon vascular supply and anatomy, regional variation in tendon material properties, and structural abno"
+        },
+        {
+          "id": "6000032",
+          "title": "Metatarsus Adductus and Calcaneovalgus Foot",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000032",
+          "extractable": true,
+          "score": 13.924,
+          "snippet": "leg. The heel is in a valgus position. Imaging Studies Radiography In the absence of concern for posteromedial bowing of the tibia, radiographs are not indicated. Plain radiography is recommended to confirm a suspected diagnosis of posteromedial bowing of the tibia. Advanced imaging studies are not required. Diagnosi"
+        },
+        {
+          "id": "6000006",
+          "title": "Neurogenic Conditions: Entrapment Neuropathy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000006",
+          "extractable": true,
+          "score": 13.155,
+          "snippet": "common site of entrapment. Distal to the knee, the saphenous nerve travels along the medial tibia with the greater saphenous vein. The terminal branches arise approximately 15 cm proximal to the ankle and supply sensation to the anteromedial ankle and foot. Etiology Tibial nerve Various causes of TTS have been describ"
+        },
+        {
+          "id": "6004044",
+          "title": "Fibrous/Histiocytic Tumors",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004044",
+          "extractable": true,
+          "score": 13.12,
+          "snippet": "less than 0.5% of all primary bone tumors OFD is unlikely after age 15 years. Anatomy Typically arising in the proximal to middle third of the tibia Ipsilateral involvement of fibula observed in 20% of patients Involvement in long bones besides the tibia or fibula is extremely rare. SEND FEEDBACK 9/3/26, 4:09 PM AAOS"
+        },
+        {
+          "id": "6001184",
+          "title": "Imaging of the Lower Extremity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001184",
+          "extractable": true,
+          "score": 12.792,
+          "snippet": "ultimately, failed ligament reconstruction procedures. The first step in interpreting standard three-view ankle radiographs is assessing the quality of the radiograph. A standard AP ankle radiograph is obtained with the foot parallel to the x-ray beam. In this view, the fibula shoulder is slightly superimposed over th"
+        }
+      ]
+    }
+  ]
+}

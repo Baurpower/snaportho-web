@@ -9,6 +9,7 @@ import {
 } from '@/lib/config/app-url'; // Centralized production-safe URL resolution
 import { getRemainingAIUses } from '@/lib/brobot/entitlements';
 import { upsertCanonicalSubscription } from '@/lib/subscriptions/ledger';
+import { getStripeLifecycleReason } from '@/lib/subscriptions/stripe-lifecycle';
 import { evaluatePendingSubscriptionClaimGate } from '@/lib/subscriptions/ownership';
 import {
   branchUserDataFromStripeMetadata,
@@ -818,6 +819,8 @@ export async function createBroBotCheckoutSession(
   const session = await stripe.checkout.sessions.create({
     customer: customerId,
     mode: 'subscription',
+    // Retain a payment method during a trial so it can renew automatically.
+    payment_method_collection: 'always',
     line_items: [{ price: priceId, quantity: 1 }],
     success_url: successUrl,
     cancel_url: cancelUrl,
@@ -922,6 +925,8 @@ export async function createGuestBroBotCheckoutSession(
 
   const sessionParams = {
     mode: 'subscription',
+    // Do not let a zero-dollar trial bypass payment-method collection.
+    payment_method_collection: 'always',
     line_items: [{ price: priceId, quantity: 1 }],
     success_url: options.customSuccessUrl ?? getCheckoutSuccessUrl(),
     cancel_url: options.customCancelUrl ?? `${getAppBaseUrl()}/brobot/pricing?canceled=true`,
@@ -1211,6 +1216,11 @@ export async function claimPendingBroBotSubscriptionForUser(
       provider: 'stripe',
       claim_source: 'pending_subscription',
       metadata: stripeSub.metadata ?? {},
+      lifecycle_reason: getStripeLifecycleReason({
+        status: stripeSub.status,
+        cancellationReason: stripeSub.cancellation_details?.reason ?? null,
+        cancelAtPeriodEnd: stripeSub.cancel_at_period_end,
+      }),
     },
     plan_code: pending.plan_code || BROBOT_CONFIG.PAID_PLAN_CODE,
     status: internalStatus as
@@ -1439,7 +1449,7 @@ export function mapStripeStatusToInternal(status: Stripe.Subscription.Status): s
     unpaid: 'unpaid',
     canceled: 'canceled',
     incomplete: 'incomplete',
-    incomplete_expired: 'canceled',
+    incomplete_expired: 'expired',
     trialing: 'trialing',
     paused: 'past_due',
   };
@@ -1720,6 +1730,11 @@ export async function syncSubscriptionFromStripe(
     provider_metadata: {
       provider: 'stripe',
       metadata: stripeSub.metadata ?? {},
+      lifecycle_reason: getStripeLifecycleReason({
+        status: stripeSub.status,
+        cancellationReason: stripeSub.cancellation_details?.reason ?? null,
+        cancelAtPeriodEnd: stripeSub.cancel_at_period_end,
+      }),
     },
     plan_code: planCode,
     status: internalStatus as

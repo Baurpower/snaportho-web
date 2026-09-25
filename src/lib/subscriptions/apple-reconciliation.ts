@@ -12,6 +12,7 @@ import {
   type CanonicalSubscriptionEntry,
   upsertCanonicalSubscription,
 } from '@/lib/subscriptions/ledger';
+import { getAppleLifecycleReason } from '@/lib/subscriptions/apple-lifecycle';
 
 export type AppleReconciliationResult = {
   dryRun: boolean;
@@ -112,10 +113,9 @@ export function buildAppleCanonicalEntry(params: {
     cancel_at_period_end:
       params.renewalInfo?.autoRenewStatus === 0 ||
       params.renewalInfo?.autoRenewStatus === false,
-    canceled_at:
-      params.mappedStatus.status === 'canceled' || params.mappedStatus.status === 'expired'
-        ? new Date().toISOString()
-        : null,
+    // Expiry is not a cancellation timestamp. In particular, an expired Apple
+    // renewal can be a billing failure, not a customer action.
+    canceled_at: null,
     provider_customer_id: null,
     provider_subscription_id: params.originalTransactionId,
     provider_product_id: params.productId,
@@ -127,6 +127,10 @@ export function buildAppleCanonicalEntry(params: {
       provider: 'apple',
       renewalInfo: params.renewalInfo,
       rawResponse: params.rawResponse,
+      lifecycle_reason: getAppleLifecycleReason({
+        status: params.mappedStatus.status,
+        expirationIntent: params.renewalInfo?.expirationIntent ?? null,
+      }),
     },
     last_verified_at: new Date().toISOString(),
     stripe_customer_id: null,

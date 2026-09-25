@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OrthobulletsHintResponseSchema = exports.OrthobulletsChatResponseSchema = exports.OrthobulletsChatRequestSchema = exports.OrthobulletsChatTurnSchema = exports.OrthobulletsExplainResponseSchema = exports.CurriculumExplainRequestSchema = exports.OrthobulletsHintRequestSchema = exports.OrthobulletsExplainRequestSchema = exports.OrthobulletsPageContextSchema = void 0;
+exports.OrthobulletsHintResponseSchema = exports.OrthobulletsChatResponseSchema = exports.OrthobulletsChatRequestSchema = exports.OrthobulletsChatTurnSchema = exports.OrthobulletsExplainResponseSchema = exports.CurriculumExplainRequestSchema = exports.OrthobulletsHintRequestSchema = exports.OrthobulletsQuestionClaimRequestSchema = exports.OrthobulletsExplainRequestSchema = exports.OrthobulletsPageContextSchema = void 0;
 const zod_1 = require("zod");
 const curriculum_types_1 = require("./curriculum-types");
 const OrthobulletsChoiceSchema = zod_1.z.object({
@@ -125,6 +125,24 @@ exports.OrthobulletsExplainRequestSchema = zod_1.z.object({
     task: zod_1.z.literal('question_explain').default('question_explain'),
     pageContext: StrictQuestionPageContextSchema,
     emphasis: curriculum_types_1.CurriculumExplainEmphasisSchema.optional(),
+});
+// This contract deliberately carries the source page only for an in-memory
+// derivation request. Routes using it must never persist the page context;
+// source prose is licensed content and the graph stores only an original,
+// bounded SnapOrtho claim plus hashes/provenance.
+exports.OrthobulletsQuestionClaimRequestSchema = zod_1.z.object({
+    contractVersion: zod_1.z.literal('orthobullets-question-claim-v1'),
+    pageContext: StrictQuestionPageContextSchema,
+}).superRefine((value, ctx) => {
+    if (value.pageContext.provider !== 'orthobullets') {
+        ctx.addIssue({ code: 'custom', path: ['pageContext', 'provider'], message: 'Only Orthobullets questions are supported.' });
+    }
+    if (!['review', 'testview'].includes(value.pageContext.pageKind)) {
+        ctx.addIssue({ code: 'custom', path: ['pageContext', 'pageKind'], message: 'Claims require a completed review page.' });
+    }
+    if (!value.pageContext.correctAnswerKey || !value.pageContext.explanationText?.trim()) {
+        ctx.addIssue({ code: 'custom', path: ['pageContext'], message: 'Claims require visible answer and explanation signals.' });
+    }
 });
 const PriorHintSchema = zod_1.z.object({
     hintLevel: zod_1.z.union([zod_1.z.literal(1), zod_1.z.literal(2)]),

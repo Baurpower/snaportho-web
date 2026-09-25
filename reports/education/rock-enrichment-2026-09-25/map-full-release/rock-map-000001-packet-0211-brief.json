@@ -1,0 +1,1110 @@
+{
+  "batchKey": "map-000001-packet-0211",
+  "inputChecksum": "6ae1c6fec8cea0ba07945dc0c3752034b78aaad2c61cfad00e79f30423aed4a8",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "sidecarSchema": {
+    "card": {
+      "stableGuid": "string",
+      "status": "\"mapped\"|\"skipped\"",
+      "chapters": "1-3 {id, role} from this card's candidates; first is primary",
+      "skipReason": "if skipped"
+    }
+  },
+  "cards": [
+    {
+      "stableGuid": "MF0EipZ5i%",
+      "front": "What additional radiograph must be obtained preoperatively for intertrochanteric femur fractures ? Full length femur x-ray",
+      "extra": "To evaluate for distal hardware that may prevent passage of a nail.",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femur",
+        "SnapOrtho::Diagnosis::Intertrochanteric_Fractures",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "6001084",
+          "title": "Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001084",
+          "extractable": true,
+          "score": 45.87,
+          "snippet": "from the joint surface proximally. This lesson reviews fractures that involve the supracondylar (metaphyseal) and intercondylar (epiphyseal) areas of the distal femur. Pertinent anatomy, injury assessment, and various treatment options are discussed. Epidemiology Distal femur fractures account for 3% to 6% of all femu"
+        },
+        {
+          "id": "6000036",
+          "title": "Physeal Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000036",
+          "extractable": true,
+          "score": 43.99,
+          "snippet": "Objectives Review the pathoanatomy associated with physeal fractures of the distal femur and their associated complications. Formulate a treatment plan for the management of physeal fractures of the distal femur. Predict and manage complications associated with physeal fractures of the distal femur. Overview A physeal"
+        },
+        {
+          "id": "6001189",
+          "title": "Proximal Third Femur Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001189",
+          "extractable": true,
+          "score": 38.592,
+          "snippet": "proximal third femur fractures and understand their relevance with regard to management. Determine the indications and surgical treatment options for geriatric femoral neck fractures, intertrochanteric femur fractures, and subtrochanteric femur fractures. Analyze commonly discussed aspects of the surgical management o"
+        },
+        {
+          "id": "6002012",
+          "title": "Postoperative Periprosthetic Fractures of the Femur and Acetabulum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002012",
+          "extractable": true,
+          "score": 32.793,
+          "snippet": "management of periprosthetic femur and acetabulum fractures. Postoperative Periprosthetic Femur Fractures     NOTES SEND FEEDBACK 9/3/26, 5:48 PM AAOS | Postoperative Periprosthetic Fractures of the Femur and Acetabulum https://rock.aaos.org/coursecontent.aspx?id=6002012 1/32 Pathophysiology/Pathoanatomy Epidemiol"
+        },
+        {
+          "id": "6001083",
+          "title": "Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001083",
+          "extractable": true,
+          "score": 32.641,
+          "snippet": "Shaft Fractures https://rock.aaos.org/coursecontent.aspx?id=6001083 8/48 Figure 4 Diagram shows the Orthopaedic Trauma Association/AO Foundation classification of femoral shaft fractures. (Reproduced from Gage MJ, Yoon RS: Fractures of the femoral shaft and SEND FEEDBACK 9/3/26, 4:08 PM AAOS | Femoral Shaft Fractures"
+        },
+        {
+          "id": "6002025",
+          "title": "Management of Osteoporotic Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002025",
+          "extractable": true,
+          "score": 31.964,
+          "snippet": "se complex periarticular injuries; examples include acetabular fractures managed via total hip arthroplasty alone or in combination with open reduction and internal fixation;44 distal humerus fractures managed via total elbow arthroplasty;45 distal femur fractures managed via total knee arthroplasty or distal femur rep"
+        },
+        {
+          "id": "6001057",
+          "title": "Diaphyseal Forearm Fractures, Distal Forearm Fractures, and Monteggia Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001057",
+          "extractable": true,
+          "score": 31.88,
+          "snippet": "forearm fractures. Review the incidence of distal forearm fractures. Evaluate a distal forearm injury via appropriate imaging studies and a physical examination. Identify a Galeazzi fracture.     NOTES SEND FEEDBACK 9/3/26, 3:55 PM AAOS | Diaphyseal Forearm Fractures, Distal Forearm Fractures, and Monteggia Fractu"
+        },
+        {
+          "id": "6002064",
+          "title": "Limb Length and Offset",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002064",
+          "extractable": true,
+          "score": 30.851,
+          "snippet": "this intraoperative measurement depends on placing the acetabular component in the same position as that on the template. Finally, an intraoperative radiograph can be obtained with the trial implants in place to directly evaluate limb length. Although often helpful, this radiograph may be deceiving. Obtaining a high-q"
+        },
+        {
+          "id": "510000662",
+          "title": "Distal Humerus Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000662",
+          "extractable": true,
+          "score": 29.746,
+          "snippet": "PM AAOS | Distal Humerus Fractures https://rock.aaos.org/coursecontent.aspx?id=510000662 1/37 Fractures of the capitellum constitute approximately 1% of all elbow injuries. Fractures of a single condyle account for 5% of all distal humerus fractures, with lateral condyle fractures being more common than medial condyle"
+        },
+        {
+          "id": "6001058",
+          "title": "Pediatric Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001058",
+          "extractable": true,
+          "score": 28.786,
+          "snippet": "AP radiographs of the proximal (C) and distal (D) femur show management with the use of a lateral-entry rigid intramedullary nail. AP radiographs of the proximal (E) and distal (F) femur demonstrate uneventful healing. More than 1 year later, the patient reported local symptoms at the distal interlocking screw. AP flu"
+        },
+        {
+          "id": "510000505",
+          "title": "Primary Total Hip Arthroplasty for Other Indications: Posttraumatic Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000505",
+          "extractable": true,
+          "score": 28.397,
+          "snippet": "In patients with ankylosis, the femoral neck may be osteotomized in situ or constrictive osteophytes may be removed before hip dislocation to prevent iatrogenic fractures. Patients with femoral neck hardware should undergo a hip dislocation before implant removal to prevent fractures. In patients with a history of acet"
+        },
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "extractable": true,
+          "score": 26.934,
+          "snippet": "Intertrochanteric Hip Repair With a Cephalomedullary Nail [video]. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2019. https://www.aaos.org/videos/video-detail-page/20327__Videos. Accessed July 14, 2021.  Intertrochanteric Fractures Intertrochanteric femur fractures usually are managed with the use of an SH"
+        }
+      ]
+    },
+    {
+      "stableGuid": "mfIPOEM{Wj",
+      "front": "Treatment for prosthetic joint infection in elderly non-ambulatory patients is resection arthroplasty .",
+      "extra": "*Total knee success rate is 50% to 89% *Total hip success rate is 60% to 100%",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Prosthetic_Joint_Infection"
+      ],
+      "candidates": [
+        {
+          "id": "6002062",
+          "title": "Primary Total Hip Arthroplasty for Other Indications: Oncologic Resection and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002062",
+          "extractable": true,
+          "score": 45.638,
+          "snippet": "surgical management in relation to disease-specific outcomes. Review common hip arthroplasty treatment options for patients undergoing oncologic resection and reconstruction.     NOTES SEND FEEDBACK 9/3/26, 5:51 PM AAOS | Primary Total Hip Arthroplasty for Other Indications: Oncologic Resection and Reconstruction"
+        },
+        {
+          "id": "6004017",
+          "title": "Perioperative Treatment of Patients Undergoing Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004017",
+          "extractable": true,
+          "score": 45.077,
+          "snippet": "joint arthroplasty. Introduction     NOTES SEND FEEDBACK 9/3/26, 5:40 PM AAOS | Perioperative Treatment of Patients Undergoing Arthroplasty https://rock.aaos.org/coursecontent.aspx?id=6004017 1/11 Perioperative management of a patient undergoing total hip or total knee arthroplasty encompasses the period around or"
+        },
+        {
+          "id": "6000021",
+          "title": "Periprosthetic Joint Infection",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000021",
+          "extractable": true,
+          "score": 44.763,
+          "snippet": "n  Resection Arthroplasty Definitive resection arthroplasty without planned reimplantation is a treatment option for some patients with PJI. If multiple exchange arthroplasty procedures fail to eradicate an infection, it is unlikely that additional attempts will succeed. Treatment options for such patients include res"
+        },
+        {
+          "id": "6000023",
+          "title": "Salvage Procedures and Failed Revision Total Knee Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000023",
+          "extractable": true,
+          "score": 42.609,
+          "snippet": "total knee arthroplasty. Incidence of Revision Total Knee Arthroplasty Failure     NOTES SEND FEEDBACK 9/3/26, 6:08 PM AAOS | Salvage Procedures and Failed Revision Total Knee Arthroplasty https://rock.aaos.org/coursecontent.aspx?id=6000023 1/35 Approximately 25% of aseptic total knee arthroplasty (TKA) revisions"
+        },
+        {
+          "id": "6000019",
+          "title": "Outpatient Total Joint Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000019",
+          "extractable": true,
+          "score": 42.209,
+          "snippet": "Total Joint Arthroplasty https://rock.aaos.org/coursecontent.aspx?id=6000019 6/20 heart failure, and uncontrolled or undiagnosed obstructive sleep apnea should be considered contraindications for outpatient total joint arthroplasty. Specifically, preoperative anemia (hemoglobin level, <11 g/dL) should be evaluated and"
+        },
+        {
+          "id": "6000024",
+          "title": "Complications After Total Knee Arthroplasty: Periprosthetic Joint Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000024",
+          "extractable": true,
+          "score": 40.933,
+          "snippet": "s exchange arthroplasty procedures Acceptable as an alternative in elderly, nonambulatory patients Disadvantages Shortened limbs Poor function Patient dissatisfaction Outcomes: overall success rate of resection arthroplasty in eradicating infection depends on if the hip or the knee is involved. For total hip arthroplas"
+        },
+        {
+          "id": "6000018",
+          "title": "Economics of Total Hip and Total Knee Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000018",
+          "extractable": true,
+          "score": 37.506,
+          "snippet": "AAOS | Economics of Total Hip and Total Knee Arthroplasty https://rock.aaos.org/coursecontent.aspx?id=6000018 4/30 Figure 2 Line graph shows projected primary and revision total joint replacement in younger patients (<65 years) between 2010 and 2030. THA = total hip arthroplasty, TKA = total knee arthroplasty. (Reprod"
+        },
+        {
+          "id": "6003009",
+          "title": "Treatment of Geriatric Orthopaedic Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003009",
+          "extractable": true,
+          "score": 36.236,
+          "snippet": "surgical treatment is not necessary in patients with a hip fracture who are being treated with the use of DOACs on admission because patients who underwent early surgical treatment had no increase in hemoglobin level loss, transfusion rates, or mortality.34 Evidence-based guidelines on urgent surgical treatment in pat"
+        },
+        {
+          "id": "510000556",
+          "title": "Complications After Total Knee Arthroplasty: Intraoperative and Postoperative Periprosthetic Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000556",
+          "extractable": true,
+          "score": 35.876,
+          "snippet": "Figure 2 Treatment algorithm for the management of periprosthetic knee fractures. TKA = total knee arthroplasty. (Reproduced from Kuzyk PRT, Watts E, Backstein D: Revision SEND FEEDBACK 9/3/26, 7:43 AM AAOS | Complications After Total Knee Arthroplasty: Intraoperative and Postoperative Periprosthetic Fractures https:/"
+        },
+        {
+          "id": "6002065",
+          "title": "Primary Total Knee Arthroplasty for Osteoarthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002065",
+          "extractable": true,
+          "score": 34.468,
+          "snippet": "survivorship. Discuss considerations for surgical techniques for noncemented total knee arthroplasty. Recognize improvements in clinical outcomes with modern noncemented total knee arthroplasty designs.     NOTES SEND FEEDBACK 9/3/26, 5:52 PM AAOS | Primary Total Knee Arthroplasty for Osteoarthritis https://rock.a"
+        },
+        {
+          "id": "510000511",
+          "title": "Instability After Total Knee Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000511",
+          "extractable": true,
+          "score": 34.091,
+          "snippet": "findings associated with instability after total knee arthroplasty. Understand the diagnostic workup for suspected instability after total knee arthroplasty. Discuss the role of various treatment modalities for each type of instability after total knee arthroplasty. Introduction Instability is a common cause of failed"
+        },
+        {
+          "id": "6004019",
+          "title": "Primary Total Hip Arthroplasty for Osteoarthritis: Acetabular Component",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004019",
+          "extractable": true,
+          "score": 33.941,
+          "snippet": "complications. Primary Total Hip Arthroplasty Overview     NOTES SEND FEEDBACK 9/3/26, 5:51 PM AAOS | Primary Total Hip Arthroplasty for Osteoarthritis: Acetabular Component https://rock.aaos.org/coursecontent.aspx?id=6004019 1/20 The ultimate goal of total hip arthroplasty (THA) is to restore normal hip biomechan"
+        }
+      ]
+    },
+    {
+      "stableGuid": "MFQ^,EL}{|",
+      "front": "In a clubfoot , what is a common finding between the talus and calcaneus on a dorsiflexion lateral radiograph of the foot ? Parallelism between talus and calcaneus",
+      "extra": "The talus and calcaneus in a normal foot converge",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Foot_Ankle",
+        "SnapOrtho::Anatomy::Foot_Ankle::Osteology",
+        "SnapOrtho::Anatomy::Foot_Ankle::Osteology::Calcaneus",
+        "SnapOrtho::Anatomy::Foot_Ankle::Osteology::Talus",
+        "SnapOrtho::Specialty::Foot_Ankle",
+        "SnapOrtho::Specialty::Pediatric_Orthopedics"
+      ],
+      "candidates": [
+        {
+          "id": "6002083",
+          "title": "Foot and Ankle Sports Injuries in Pediatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002083",
+          "extractable": true,
+          "score": 49.152,
+          "snippet": "Know Learning Objectives Describe relevant pediatric foot and ankle anatomy. Recognize and distinguish between unique sports-related foot injuries in pediatric patients. Recognize and distinguish between unique ankle injuries in pediatric patients. Review common nonsurgical and surgical treatment options for pediatric"
+        },
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "extractable": true,
+          "score": 48.567,
+          "snippet": "Know Learning Objectives Understand appropriate evaluation and management of foot and ankle trauma in pediatric patients. Review unique features of pediatric foot and ankle injuries and their effect on growth and development. Pediatric Ankle Fractures Background/Epidemiology Ankle fractures represent approximately 5%"
+        },
+        {
+          "id": "6001174",
+          "title": "Clubfoot (Talipes Equinovarus)",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001174",
+          "extractable": true,
+          "score": 46.345,
+          "snippet": "routinely obtained unless associated limb deformities are noted during physical examination. The talus and calcaneus are less divergent/more parallel on AP and lateral radiographs of a clubfoot compared with a normal foot. CT/MRI/ultrasonography are not routinely performed in initial diagnosis/management of clubfoot."
+        },
+        {
+          "id": "6000031",
+          "title": "Congenital Vertical Talus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000031",
+          "extractable": true,
+          "score": 44.525,
+          "snippet": "o reduction of the midfoot on the hindfoot. B, Lateral radiograph of a plantarflexed foot with congenital vertical talus demonstrates measurement of the lateral talar axis–first metatarsal base angle (3), the lateral talocalcaneal angle (4), and the lateral tibiocalcaneal angle (5). C, AP radiograph of a foot with cong"
+        },
+        {
+          "id": "510000644",
+          "title": "Fractures of the Talus: Foot Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000644",
+          "extractable": true,
+          "score": 42.19,
+          "snippet": "(Resource 8) Has ligamentous attachments to the fibula and calcaneus SEND FEEDBACK 9/3/26, 4:15 PM AAOS | Fractures of the Talus: Foot Trauma https://rock.aaos.org/coursecontent.aspx?id=510000644 37/60 May involve subtalar or lateral talar gutter articular surfaces  Fractures of the Lateral Process of the Talus The l"
+        },
+        {
+          "id": "6000001",
+          "title": "Acute Lateral Ankle Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000001",
+          "extractable": true,
+          "score": 41.971,
+          "snippet": "radiograph of a foot obtained after a calcaneal lateral slide osteotomy with lateral ligament reconstruction demonstrates lateral ankle instability. A convex upward Meary angle indicates a cavus foot. C, Lateral radiograph of a foot obtained after a calcaneal lateral slide osteotomy with lateral ligament reconstructio"
+        },
+        {
+          "id": "510000546",
+          "title": "Ankle and Foot Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000546",
+          "extractable": true,
+          "score": 39.124,
+          "snippet": "an ankle or foot sports injury. Discuss the surgical and nonsurgical management of common foot and ankle injuries. Outline surgical decision making for ankle and foot injuries. List risk factors associated with common foot and ankle injuries. Review current surgical techniques and outcomes of the management of foot an"
+        },
+        {
+          "id": "510000645",
+          "title": "Fractures of the Calcaneus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000645",
+          "extractable": true,
+          "score": 36.976,
+          "snippet": "Calcaneus https://rock.aaos.org/coursecontent.aspx?id=510000645 10/57 Figure 4 Lateral view illustration (A) and lateral radiograph (B) of the same calcaneal fracture shown in Figure 3. The shaded area represents the posterior facet, which is depressed below the outer lateral wall and into the substance of the calcane"
+        },
+        {
+          "id": "6000032",
+          "title": "Metatarsus Adductus and Calcaneovalgus Foot",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000032",
+          "extractable": true,
+          "score": 34.298,
+          "snippet": "y is in the distal tibia1 (Figure 5). Calcaneovalgus foot also should be differentiated from vertical talus by examining the hindfoot. In patients with a calcaneovalgus foot, the calcaneus is dorsiflexed (in calcaneus), whereas in patients with a vertical talus, the calcaneus is in equinus and, which gives the foot a c"
+        },
+        {
+          "id": "6000009",
+          "title": "Cavovarus Foot Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000009",
+          "extractable": true,
+          "score": 33.53,
+          "snippet": "deformity is more than just a high arch. A cavovarus deformity, similar to pes planovalgus, may be a part of the normal spectrum of foot architecture; however, recognition of even a mild idiopathic cavovarus foot is critical in the management of several common foot and ankle disorders. A posttraumatic or neurologic de"
+        },
+        {
+          "id": "6004062",
+          "title": "Pediatric Foot Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004062",
+          "extractable": true,
+          "score": 31.654,
+          "snippet": "s common) SEND FEEDBACK 9/3/26, 5:36 PM AAOS | Pediatric Foot Conditions https://rock.aaos.org/coursecontent.aspx?id=6004062 11/32 Swelling (less common) Physical Examination Tenderness to palpation of the navicular Imaging Studies Radiography Radiographs confirm the diagnosis, with flattening, sclerosis, and fragmenta"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 31.004,
+          "snippet": "Nomenclature Ankle (sagittal) Plantar flexion Dorsiflexion Hindfoot (coronal) Inversion Eversion Forefoot (axial) Adduction Abduction Composite motions Supination Plantar flexion Inversion Adduction Pronation Dorsiflexion Eversion SEND FEEDBACK 9/3/26, 5:44 PM AAOS | Physical Examination of the Foot and Ankle https://"
+        }
+      ]
+    },
+    {
+      "stableGuid": "MfQQc](F`p",
+      "front": "TEA for rheumatoid arthritis has been shown to have very positive survival analysis up to 15 years, with studies showing rates of survival rates of over 90 %.",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Rheumatoid_Arthritis"
+      ],
+      "candidates": [
+        {
+          "id": "6001016",
+          "title": "Rheumatoid Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001016",
+          "extractable": true,
+          "score": 47.921,
+          "snippet": "Learning Objectives Identify risk factors associated with rheumatoid arthritis. Assess how the inflammatory process of rheumatoid arthritis leads to joint destruction. Determine the appropriate workup and diagnosis of rheumatoid arthritis. Apply the appropriate medical management for rheumatoid arthritis, including fi"
+        },
+        {
+          "id": "6001064",
+          "title": "Elbow Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001064",
+          "extractable": true,
+          "score": 36.192,
+          "snippet": "omes  Outcomes A study of 461 TEA procedures in patients with rheumatoid arthritis reported that implant survival was 92% at 10 years postoperatively, 83% at 15 years postoperatively, and 68% at 20 years postoperatively.8 Few studies have evaluated the outcomes of TEA in patients with noninflammatory conditions; howev"
+        },
+        {
+          "id": "6004030",
+          "title": "Inflammatory Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004030",
+          "extractable": true,
+          "score": 25.896,
+          "snippet": "lis, IN; Copyright Gary Schnitz, 2007.) SEND FEEDBACK 9/3/26, 4:29 PM AAOS | Inflammatory Arthritis in the Hand and Wrist https://rock.aaos.org/coursecontent.aspx?id=6004030 11/39 Wrist involvement in rheumatoid arthritis 67% within 2 years of diagnosis Higher than 90% within 10 years Management (Table 3) Table 3 Manag"
+        },
+        {
+          "id": "6002010",
+          "title": "Total Hip Arthroplasty for Other Indications: Inflammatory Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002010",
+          "extractable": true,
+          "score": 24.552,
+          "snippet": "of this discussion. Rheumatoid Arthritis Rheumatoid arthritis is the most common inflammatory arthritis, with an estimated prevalence of 0.5% to 1% in the United States.2 Rheumatoid arthritis is twice as common in women as men. Genetics, environmental exposures, and lifestyle choices appear to contribute to the pathog"
+        },
+        {
+          "id": "6001052",
+          "title": "Septic Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001052",
+          "extractable": true,
+          "score": 24.485,
+          "snippet": "Describe the pathophysiology of septic arthritis in the pediatric population. Characterize common organisms responsible for septic arthritis and associated risk factors. Understand and apply physical examination findings, imaging studies, and diagnostic tests in patients with septic arthritis. Determine a treatment pl"
+        },
+        {
+          "id": "6001053",
+          "title": "Lyme Disease and Inflammatory Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001053",
+          "extractable": true,
+          "score": 22.907,
+          "snippet": "three criteria satisfied, and 100% with all four criteria satisfied. In patients who do not fit these criteria, the authors recommend Lyme serologic tests. Imaging Studies  Imaging Studies Traditionally, imaging studies have not been used for the diagnosis of Lyme arthritis; however, more recent studies have elucidat"
+        },
+        {
+          "id": "6001178",
+          "title": "Shoulder Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001178",
+          "extractable": true,
+          "score": 21.869,
+          "snippet": "have had rheumatoid arthritis for more than 5 years. Other less common forms of inflammatory arthritis include spondyloarthropathies; disorders of connective tissue, such as systemic lupus erythematosus; psoriatic arthritis, and crystalline deposition disorders. Pathoanatomy  Pathoanatomy SEND FEEDBACK 9/4/26, 10:41"
+        },
+        {
+          "id": "6002053",
+          "title": "Degenerative Ankle Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002053",
+          "extractable": true,
+          "score": 20.443,
+          "snippet": "because of asymmetric joint degradation. 10% of patients with ankle arthritis have primary osteoarthritis, which is much less common than knee or hip arthritis. The remaining 10% of patients with ankle arthritis have arthritis resulting from other causes (inflammatory, secondary arthritis, osteonecrosis). Inflammatory"
+        },
+        {
+          "id": "510000597",
+          "title": "Lower Extremity Deformity Analysis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000597",
+          "extractable": true,
+          "score": 19.129,
+          "snippet": "Pretest Discover What You Know Learning Objectives Review the principles of lower extremity limb deformity analysis. Describe the proper techniques for using lower extremity radiographs in limb deformity analysis. Review the natural history of lower extremity alignment in the pediatric population and the consequences"
+        },
+        {
+          "id": "6001161",
+          "title": "Retrieval Analysis of Hip and Knee Prostheses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001161",
+          "extractable": true,
+          "score": 18.886,
+          "snippet": "tissue retrieval analysis. Assess the tools and techniques used for implant and tissue retrieval analysis. Motivation  Motivation     NOTES SEND FEEDBACK 9/4/26, 10:24 AM AAOS | Retrieval Analysis of Hip and Knee Prostheses https://rock.aaos.org/coursecontent.aspx?id=6001161 1/26 The analysis of retrieved implant"
+        },
+        {
+          "id": "6000057",
+          "title": "Inflammatory Spinal Arthritides",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000057",
+          "extractable": true,
+          "score": 17.785,
+          "snippet": "is clinically suspected, laboratory studies may be helpful in confirming the diagnosis. A positive rheumatoid factor is present in approximately 85% of patients; however, it is not specific for rheumatoid arthritis and may be present in healthy individuals. Also, a negative rheumatoid factor does not rule out rheumato"
+        },
+        {
+          "id": "510000631",
+          "title": "Acromioclavicular Joint Arthritis and Pathology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000631",
+          "extractable": true,
+          "score": 17.228,
+          "snippet": "overhead or lifting activities Previous acromioclavicular joint separations may result in earlier and more progressive acromioclavicular arthritis. The radiographic severity of arthritis does not always correlate with patient symptoms, and many affected patients are asymptomatic. Distal Clavicle Osteolysis SEND FEEDBA"
+        }
+      ]
+    },
+    {
+      "stableGuid": "mG1_)PFxQD",
+      "front": "What is the primary method of nonoperative management for scapula fractures ? Sling for 2-3 weeks, followed by early motion",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Scapula_Fractures",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "510000527",
+          "title": "Disorders of the Scapula",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000527",
+          "extractable": true,
+          "score": 28.235,
+          "snippet": "(subscapularis) bursa. Mechanics Scapular motion optimizes the balance between scapular stability, serving as a base for glenohumeral motion and scapular mobility in coordination with arm motion.1 Scapular motion is coupled with clavicular and humeral motion to create SHR.2 Scapular motion can be divided into four pha"
+        },
+        {
+          "id": "510000639",
+          "title": "SICK Scapula Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000639",
+          "extractable": true,
+          "score": 26.585,
+          "snippet": "in the scapula. (Reproduced from Zuckerman JD, Koval KJ, Cuomo F: Fractures of the scapula. Instr Course Lect 1993;42:271-281.) SEND FEEDBACK 9/4/26, 9:36 AM AAOS | SICK Scapula Syndrome https://rock.aaos.org/coursecontent.aspx?id=510000639 3/24 Biomechanics Scapular motion Elevation: trapezius, levator scapulae, rhom"
+        },
+        {
+          "id": "510000664",
+          "title": "Shoulder Trauma: Scapular and Glenoid Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000664",
+          "extractable": true,
+          "score": 25.072,
+          "snippet": "of scapular fractures. A, Scapular fractures are classified as process fractures (14A), body fractures (14B), or glenoid fossa fractures (14F). Scapula process fractures are subclassified as coracoid fractures (14A1), acromion SEND FEEDBACK 9/4/26, 10:43 AM AAOS | Shoulder Trauma: Scapular and Glenoid Fractures https:"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "extractable": true,
+          "score": 24.177,
+          "snippet": "F, ed: Orthopaedic Knowledge Update: Trauma, ed 5. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2016, pp 309- 336.) Management Nonsurgical management with short-term (2 weeks) immobilization, followed by active ROM is recommended for fractures with no evidence of wrist, elbow, or interosseous instability. Su"
+        },
+        {
+          "id": "510000650",
+          "title": "Forefoot Trauma: Metatarsal and Phalangeal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000650",
+          "extractable": true,
+          "score": 22.67,
+          "snippet": "injuries. They may result from direct or indirect trauma and may result from low-energy trauma or of high-energy trauma, such as crush injuries. Metatarsal fractures are the most common fractures sustained during motorcycle trauma. Metatarsal fractures are most common in individuals in their teenage years to forties."
+        },
+        {
+          "id": "6002025",
+          "title": "Management of Osteoporotic Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002025",
+          "extractable": true,
+          "score": 21.271,
+          "snippet": "the buttock (vertebral compression fracture, pelvic fracture). Vertebral compression fractures are the most common type of osteoporotic fracture diagnosed, followed by hip fractures and distal radius fractures (Figure 1). However, not all osteoporotic fractures result from a low-energy mechanism of injury. Elderly pat"
+        },
+        {
+          "id": "510000644",
+          "title": "Fractures of the Talus: Foot Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000644",
+          "extractable": true,
+          "score": 20.908,
+          "snippet": "months after injury and initial management. Management Nonsurgical Management Nondisplaced fractures of the talar head can be managed with immobilization. Fracture must be stable with talonavicular motion No intra-articular debris  Nonsurgical Management SEND FEEDBACK 9/3/26, 4:15 PM AAOS | Fractures of the Talus: Fo"
+        },
+        {
+          "id": "6001176",
+          "title": "Congenital Scoliosis and Early-Onset Scoliosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001176",
+          "extractable": true,
+          "score": 19.662,
+          "snippet": "For larger and non-idiopathic curvatures, cast immobilization has been used to delay surgical management. If EOS can no longer be controlled via nonsurgical management, then surgical management is required to maintain a balanced spine while preserving growth and flexibility (Resource 6). Surgical Management Techniques"
+        },
+        {
+          "id": "6001175",
+          "title": "Clavicular Fractures and Sternoclavicular and Acromioclavicular Injuries in the Pediatric Patient",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001175",
+          "extractable": true,
+          "score": 18.411,
+          "snippet": "| Clavicular Fractures and Sternoclavicular and Acromioclavicular Injuries in the Pediatric Patient https://rock.aaos.org/coursecontent.aspx?id=6001175 11/25 Management: Medial Clavicle Fractures and Sternoclavicular Dislocations Nonsurgical Management Sling and figure-of-8 harness Anterior displacement medial clavicl"
+        },
+        {
+          "id": "6001187",
+          "title": "Management of Atypical Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001187",
+          "extractable": true,
+          "score": 18.041,
+          "snippet": "an appropriate work up of patients in whom an atypical femur fracture is suspected. Review the surgical and nonsurgical management of atypical femur fractures. Specify the postoperative management of patients with an atypical femur fracture and osteoporosis. Pathophysiology/Pathoanatomy Overview Atypical femur fractur"
+        },
+        {
+          "id": "6003020",
+          "title": "Acetabular Fractures: Evaluation and Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003020",
+          "extractable": true,
+          "score": 17.946,
+          "snippet": "Discover What You Know Learning Objectives Explain the epidemiology and etiology of acetabular fractures. Review the early evaluation and diagnostic principles for acetabular fractures. Discuss the surgical and nonsurgical management of acetabular fractures. Review the various approaches and indications for the surgic"
+        },
+        {
+          "id": "510000592",
+          "title": "Orthopaedic Fractures: Postoperative Management and Rehabilitation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000592",
+          "extractable": true,
+          "score": 17.602,
+          "snippet": "after the surgical management of fractures. Introduction Postoperative management is critical to treatment success. Complications can be limited via preventive measures and early recognition with appropriate management.     NOTES SEND FEEDBACK 9/3/26, 5:26 PM AAOS | Orthopaedic Fractures: Postoperative Management"
+        }
+      ]
+    },
+    {
+      "stableGuid": "MGA(8~KFy]",
+      "front": "What is the Intermetatarsal Angle (IMA) ? Angle created by the shafts of the first and second metatarsals",
+      "extra": "Normal: ≤9°",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Foot_Ankle"
+      ],
+      "candidates": [
+        {
+          "id": "510000500",
+          "title": "Hallux Valgus: Disorders of the First Ray",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000500",
+          "extractable": true,
+          "score": 50.824,
+          "snippet": "Location Importance Normal HVA Between long axes of the first proximal phalanx and the first metatarsal, bisecting the diaphysis Identifies the degree of deformity at the MTP joint =15° IMA Between long axes of the first and second metatarsals, bisecting the shafts of the first and second metatarsals Not influenc"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 34.077,
+          "snippet": "evaluating normal versus pathologic conditions of the foot and ankle through physical examination. Overview The foot and ankle are key anatomic structures that enable individuals to walk erect with a bipedal gait. Both lower extremities must be evaluated to determine normal for a given patient.  Overview     NOTE"
+        },
+        {
+          "id": "510000550",
+          "title": "Lesser Toe Pathology: Bunionette Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000550",
+          "extractable": true,
+          "score": 30.911,
+          "snippet": "ead with a normal metatarsal shaft and normal alignment. B, Type 2 is associated with lateral bowing (outward curvature) of the fifth metatarsal. C, Type 3 is associated with increased lateral bowing of the fifth metatarsal (intermetatarsal angle >8° between the fourth and fifth metatarsal shafts). (Reproduced with per"
+        },
+        {
+          "id": "6000014",
+          "title": "Biomechanics/Gait: Effect of Ankle/Foot Malalignment",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000014",
+          "extractable": true,
+          "score": 29.64,
+          "snippet": "tions of pes planus Long-term malalignment leads to a valgus hindfoot ankle joint. Cavovarus deformity of the foot Consists of lateral foot pain, increased pressure of the lateral foot leading to stress fracture of the fifth metatarsal, recurrent ankle sprains, and generalized foot stiffness with gait Equinus contractu"
+        },
+        {
+          "id": "6002083",
+          "title": "Foot and Ankle Sports Injuries in Pediatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002083",
+          "extractable": true,
+          "score": 29.359,
+          "snippet": "Know Learning Objectives Describe relevant pediatric foot and ankle anatomy. Recognize and distinguish between unique sports-related foot injuries in pediatric patients. Recognize and distinguish between unique ankle injuries in pediatric patients. Review common nonsurgical and surgical treatment options for pediatric"
+        },
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "extractable": true,
+          "score": 26.755,
+          "snippet": "Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Understand appropriate evaluation and management of foot and ankle trauma in pediatric patients. Review unique features of pediatric foot and ankle injuries and their effect on growth and development. Pediatric Ankle Fractures Ba"
+        },
+        {
+          "id": "6000032",
+          "title": "Metatarsus Adductus and Calcaneovalgus Foot",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000032",
+          "extractable": true,
+          "score": 20.217,
+          "snippet": "the second through fourth metatarsals is safe and appears to be the most effective surgical treatment option.2 Complications of osteotomies include undercorrection or overcorrection. Damage to the physis of the first metatarsal, with subsequent shortening of that bone, is a complication of a first metatarsal osteotomy"
+        },
+        {
+          "id": "510000650",
+          "title": "Forefoot Trauma: Metatarsal and Phalangeal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000650",
+          "extractable": true,
+          "score": 17.292,
+          "snippet": "of the fifth metatarsal Tibialis anterior: inserts on the base of the first metatarsal (also on the medial and plantar aspects of the first cuneiform) Joints and Ligaments No direct proximal ligamentous connection is present between the first and second metatarsals. The medial (first tarsometatarsal joint) and middle"
+        },
+        {
+          "id": "510000648",
+          "title": "Midfoot Fractures: Tarsometatarsal (Lisfranc) Fracture-Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000648",
+          "extractable": true,
+          "score": 16.865,
+          "snippet": "reason the second through fifth metatarsals often move together in midfoot injuries but the first metatarsal may diverge. It also is the reason the first metatarsal is prone to move away (abduct) from the other metatarsals, as observed in patients who have hallux valgus with a large first intermetatarsal angle The Lis"
+        },
+        {
+          "id": "6004003",
+          "title": "Arthritides of the Midfoot",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004003",
+          "extractable": true,
+          "score": 16.075,
+          "snippet": "can be mobilized medially or laterally to access the first, second, and third TMT joints. If a surgeon prefers a two-incision approach, the first incision typically is made between the first and second metatarsals, which will provide access to the first TMT joint and a large portion of the second TMT joint (Figure 6)."
+        },
+        {
+          "id": "6002055",
+          "title": "Metatarsalgia",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002055",
+          "extractable": true,
+          "score": 13.545,
+          "snippet": "the AP view (A), the second metatarsal appears longer than the first and third metatarsals. On the lateral view (B), the outline of first, second, and third metatarsal heads is difficult to clearly visualize because of overlap. On the metatarsal head view (C), the second metatarsal is at approximately the same level a"
+        },
+        {
+          "id": "6001014",
+          "title": "Posterior Tibial Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001014",
+          "extractable": true,
+          "score": 12.047,
+          "snippet": "the medial arch sag angle. The medial arch sag angle is the angle created by a line drawn along the articular surface of the navicular and a line drawn parallel to the first tarsometatarsal joint. On AP radiographs, the talonavicular coverage angle should be measured because it indicates the severity of forefoot abduc"
+        }
+      ]
+    },
+    {
+      "stableGuid": "mGEW0JKhpp",
+      "front": "What are the nine (9) compartments of the foot ? Medial Lateral Interosseous x4 Central x3",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "6004066",
+          "title": "Medial Epicondyle and Lateral Epicondyle Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004066",
+          "extractable": true,
+          "score": 30.168,
+          "snippet": "communication with vessels in the distal humeral metaphysis in skeletally immature patients. Trochlea Lateral ridge (lateral crista) receives blood supply from the vascular supply of the lateral condyle. Medial ridge (medial crista) relieves blood supply from vessels that cross the peripheral physis into the epiphysis"
+        },
+        {
+          "id": "510000635",
+          "title": "Medial and Lateral Elbow Enthesopathy (Epicondylitis)",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000635",
+          "extractable": true,
+          "score": 28.91,
+          "snippet": "Objectives Identify pertinent anatomy related to medial and lateral elbow enthesopathy. Identify the pathologic changes observed in patients with lateral or medial elbow enthesopathy. Generate a differential diagnosis for lateral and medial elbow pain if symptoms and signs Generate a differential diagnosis for lateral"
+        },
+        {
+          "id": "510000644",
+          "title": "Fractures of the Talus: Foot Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000644",
+          "extractable": true,
+          "score": 26.325,
+          "snippet": "by the medial and lateral posterior processes of the talus as it changes direction to travel through the foot to its insertion. Joints and Ligaments Anterior talofibular ligament: attaches along the lateral process Talocalcaneal ligament: from the lateral process of the talus Posterior talofibular ligament: attaches t"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "extractable": true,
+          "score": 22.06,
+          "snippet": "via the interosseous ligament. SEND FEEDBACK 9/3/26, 4:10 PM AAOS | Forearm Trauma and Diaphyseal Fractures https://rock.aaos.org/coursecontent.aspx?id=510000655 5/36 The proportion of axial load is estimated to be 80% radius at the wrist, with an increasing amount of load borne proximally by the ulna, depending on el"
+        },
+        {
+          "id": "6000014",
+          "title": "Biomechanics/Gait: Effect of Ankle/Foot Malalignment",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000014",
+          "extractable": true,
+          "score": 21.863,
+          "snippet": "hindfoot ankle joint. Cavovarus deformity of the foot Consists of lateral foot pain, increased pressure of the lateral foot leading to stress fracture of the fifth metatarsal, recurrent ankle sprains, and generalized foot stiffness with gait Equinus contracture of the ankle Consists of limited ankle dorsiflexion leadin"
+        },
+        {
+          "id": "6000032",
+          "title": "Metatarsus Adductus and Calcaneovalgus Foot",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000032",
+          "extractable": true,
+          "score": 19.861,
+          "snippet": "lateral border of the foot remains straight. In patients with internal tibial torsion, the foot is rotated in and the lateral border of the foot is straight. A decreased intermalleolar axis also will be observed. In patients with skewfoot, a Z-shaped or serpentine foot with the hindfoot in valgus and the forefoot in a"
+        },
+        {
+          "id": "510000650",
+          "title": "Forefoot Trauma: Metatarsal and Phalangeal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000650",
+          "extractable": true,
+          "score": 19.774,
+          "snippet": "fourth), and fifth metatarsal Epidemiology Metatarsal fractures account for as many as 35% of all foot fractures. Metatarsal fractures may occur in isolation or in combination with other lower extremity injuries. They may result from direct or indirect trauma and may result from low-energy trauma or of high-energy tra"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 19.637,
+          "snippet": "IOM Distal phalanx hallux Tibial PF hallux Deep posterior Flexor digitorum longus Tibia Distal lesser phalanges Tibial PF lesser toes SEND FEEDBACK 9/3/26, 5:44 PM AAOS | Physical Examination of the Foot and Ankle https://rock.aaos.org/coursecontent.aspx?id=510000641 7/25 Lateral Peroneus longus Tibia and fibu"
+        },
+        {
+          "id": "6004101",
+          "title": "Forefoot Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004101",
+          "extractable": true,
+          "score": 18.79,
+          "snippet": "Forefoot Trauma https://rock.aaos.org/coursecontent.aspx?id=6004101 12/22 Figure 4 AP weight-bearing bilateral foot radiograph demonstrates proximal migration of the medial and lateral sesamoids at the right hallux metatarsophalangeal joint. (Courtesy of John Campbell, MD, Baltimore, MD.) SEND FEEDBACK 9/3/26, 4:10 PM"
+        },
+        {
+          "id": "6000001",
+          "title": "Acute Lateral Ankle Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000001",
+          "extractable": true,
+          "score": 17.814,
+          "snippet": "of the heel is observed from the front. B, Lateral radiograph of a foot obtained after a calcaneal lateral slide osteotomy with lateral ligament reconstruction demonstrates lateral ankle instability. A convex upward Meary angle indicates a cavus foot. C, Lateral radiograph of a foot obtained after a calcaneal lateral"
+        },
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "extractable": true,
+          "score": 17.113,
+          "snippet": "metaphysis with the lateral tibial epiphysis, and the calcaneofibular ligament connects the distal fibula epiphysis with the lateral aspect of the calcaneus. The medial ligamentous structures include the superficial deltoid ligament, which connects the medial malleolus to the medial calcaneus and the medial aspect of"
+        },
+        {
+          "id": "6001015",
+          "title": "Cavovarus Foot Deformity: Surgical Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001015",
+          "extractable": true,
+          "score": 16.858,
+          "snippet": "point of the arch is the lateral plantar surface of the cuboid. B, Medial view of a right foot shows the area of bone (shaded area) to be removed. The two limbs of the osteotomy are shown. C, Lateral view of a right foot shows that the two limbs of the cut meet at the lowest point (ie, the plantar cortex of the cuboid"
+        }
+      ]
+    },
+    {
+      "stableGuid": "MGh!>)X.2e",
+      "front": "55 y/o pt in motorcycle accident presents with the following fracture. What is the most appropriate treatment? Cephalomedullary nail",
+      "extra": "The radiographs demonstrate a reverse obliquity intertrochanteric femur fracture. Compared to the more stable intertrochanteric femur fracture, a reverse oblique intertrochanteric hip fracture is not optimally treated with a sliding hip screw. Compression along a sliding hip screw is designed to create compression along the plane of the fracture, however in a reverse obliquity fracture pattern as seen here, shear force is created causing medial displacement of the femoral shaft and screw cutout.",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femur",
+        "SnapOrtho::Specialty::Trauma",
+        "SnapOrtho::Treatment::Sliding_Hip_Screw"
+      ],
+      "candidates": [
+        {
+          "id": "6001189",
+          "title": "Proximal Third Femur Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001189",
+          "extractable": true,
+          "score": 46.519,
+          "snippet": "r Type IE: four-part fracture with displacement of the greater and lesser trochanters Type II: fracture extends caudally and laterally from the lesser trochanter (reverse obliquity).  Intertrochanteric Femur Fractures The Evans classification system divides intertrochanteric fractures into stable and unstable fracture"
+        },
+        {
+          "id": "6001084",
+          "title": "Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001084",
+          "extractable": true,
+          "score": 35.852,
+          "snippet": "forces that affect distal femur fracture reduction. Determine distal femur fracture mechanisms of injury and the appropriate assessment and documentation of associated injuries. Compare methods of surgical management of distal femur fractures and apply basic fracture principles. Avoid pitfalls and complications associ"
+        },
+        {
+          "id": "6004049",
+          "title": "Surgical Management of Lower Extremity Metastatic Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004049",
+          "extractable": true,
+          "score": 33.664,
+          "snippet": "Radiographs demonstrate treatment options for pathologic femur fractures. AP (A) and lateral (B) radiographs of the right hip of a patient with renal cell carcinoma demonstrate a pathologic fracture managed with the use of a proximal femur endoprosthesis. AP radiographs of the proximal (C) and distal (D) right femur o"
+        },
+        {
+          "id": "6000036",
+          "title": "Physeal Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000036",
+          "extractable": true,
+          "score": 30.991,
+          "snippet": "Plain radiographs are adequate if the fracture is visualized; however, radiographs also may be unremarkable. SEND FEEDBACK 9/3/26, 5:43 PM AAOS | Physeal Fractures of the Distal Femur https://rock.aaos.org/coursecontent.aspx?id=6000036 4/16 If plain radiographs are unremarkable or insufficient to guide treatment decis"
+        },
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "extractable": true,
+          "score": 30.635,
+          "snippet": "Intertrochanteric Hip Repair With a Cephalomedullary Nail [video]. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2019. https://www.aaos.org/videos/video-detail-page/20327__Videos. Accessed July 14, 2021.  Intertrochanteric Fractures Intertrochanteric femur fractures usually are managed with the use of an SH"
+        },
+        {
+          "id": "6002100",
+          "title": "Femoral Neck Fractures in Young Adults",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002100",
+          "extractable": true,
+          "score": 30.347,
+          "snippet": "signs of nonunion include a persistently visible fracture line, change in fracture or screw position, screw backout, or screw cutout of the femoral head. Varus malunion results in poor abductor mechanics and gait abnormalities. Approximately 30% of young adults with a femoral neck fracture require additional surgical"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "extractable": true,
+          "score": 27.965,
+          "snippet": "of Frank A. Liporace, MD, Jersey City, NJ.) Galeazzi Fracture A radial shaft fracture associated with a DRUJ dislocation (Figure 5) SEND FEEDBACK 9/3/26, 4:10 PM AAOS | Forearm Trauma and Diaphyseal Fractures https://rock.aaos.org/coursecontent.aspx?id=510000655 11/36 Figure 5 AP (A) and lateral (B) radiographs of a"
+        },
+        {
+          "id": "510000529",
+          "title": "Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000529",
+          "extractable": true,
+          "score": 27.755,
+          "snippet": "Anatomy of the Hip https://rock.aaos.org/coursecontent.aspx?id=510000529 5/24 Origin: intertrochanteric line, anterior and inferior greater trochanter, linea aspera, and gluteal tuberosity of the proximal femur Insertion: lateral quadriceps tendon Vastus intermedius Origin: anterior and lateral surface of the femur, i"
+        },
+        {
+          "id": "6002012",
+          "title": "Postoperative Periprosthetic Fractures of the Femur and Acetabulum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002012",
+          "extractable": true,
+          "score": 25.256,
+          "snippet": "7 Radiographs of a 65-year-old woman sustained an acetabular fracture during a fall 3 weeks after index total hip arthroplasty. Preoperative lateral right hip (A) and AP pelvis (B) radiographs demonstrate a type III periprosthetic acetabular fracture. AP (C) and lateral (D) right hip radiographs demonstrate open reduc"
+        },
+        {
+          "id": "6001058",
+          "title": "Pediatric Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001058",
+          "extractable": true,
+          "score": 24.677,
+          "snippet": "femoral shaft fracture. Intraoperative AP fluoroscopic image (B) and postoperative AP radiographs of the proximal (C) and distal (D) femur show management with the use of a lateral-entry rigid intramedullary nail. AP radiographs of the proximal (E) and distal (F) femur demonstrate uneventful healing. More than 1 year"
+        },
+        {
+          "id": "510000560",
+          "title": "Burns and Frostbite, Fingertip and Nail Bed Injuries, and Injection and Extravasation Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000560",
+          "extractable": true,
+          "score": 23.289,
+          "snippet": "Nailbed Laceration Some debate exists about the treatment of patients with a subungual hematoma and presumed nail bed laceration. Proposed treatment options include nail plate removal and suture repair of the nail bed, nail plate removal and skin adhesive repair of the nailbed, and nail plate trephination; however, in"
+        },
+        {
+          "id": "510000580",
+          "title": "Pelvic and Hip Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000580",
+          "extractable": true,
+          "score": 23.045,
+          "snippet": "of the iliac apophysis or an infolding fracture of the wing of the ilium. A Torode type IIIA fracture (simple anterior ring fracture) consists of a stable anterior fracture involving the pubic rami or the pubic symphysis. A Torode type IIIB fracture (stable anterior and posterior ring fracture) consists of anterior and"
+        }
+      ]
+    },
+    {
+      "stableGuid": "MH>Krs([z}",
+      "front": "What is the most common form of wrist arthritis ? SLAC wrist",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Hand_Upper_Extremity"
+      ],
+      "candidates": [
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 37.28,
+          "snippet": "the classification of congenital differences in the upper extremity. Perform an appropriate workup of patients with congenital upper extremity differences. Determine the surgical and nonsurgical treatment options for the management of congenital upper extremity differences. Pathophysiology/Pathoanatomy Overview Congen"
+        },
+        {
+          "id": "6004029",
+          "title": "Osteoarthritis of the Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004029",
+          "extractable": true,
+          "score": 35.101,
+          "snippet": "Collapse SLAC and SNAC are among the most common patterns of wrist arthritis.11 They share similar epidemiologic characteristics because they are primarily associated with trauma, which is most common among younger males. SLAC may less commonly occur in association with other conditions that cause secondary osteoarthr"
+        },
+        {
+          "id": "6004036",
+          "title": "Acute and Chronic Vascular Disorders of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004036",
+          "extractable": true,
+          "score": 31.517,
+          "snippet": "of reconstruction is satisfactory, a high rate of re-occlusion has been reported, which does not appear to affect outcomes7 (Resources 1 and 2). Embolic Disease General Common sources of upper extremity emboli are the heart (most common), subclavian artery, and superficial palmar arch. 70% of upper extremity emboli ar"
+        },
+        {
+          "id": "6004081",
+          "title": "Athletic Injuries of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004081",
+          "extractable": true,
+          "score": 29.408,
+          "snippet": "What You Know Learning Objectives Discuss common hand and wrist injuries in the athletic patient population. Review decision making with regard to surgical versus nonsurgical management of hand and wrist injuries in the athletic patient population to achieve the best outcomes. Discuss rehabilitation of hand and wrist"
+        },
+        {
+          "id": "510000557",
+          "title": "Physical Examination and Anatomy of the Hand, Forearm, and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000557",
+          "extractable": true,
+          "score": 26.601,
+          "snippet": "nch to the superficial palmar arch. SEND FEEDBACK 9/3/26, 5:43 PM AAOS | Physical Examination and Anatomy of the Hand, Forearm, and Wrist https://rock.aaos.org/coursecontent.aspx?id=510000557 20/75 Figure 6 Illustrations show the primary arterial anatomy of the upper extremity. A, Volar forearm, wrist, and hand. B, Dor"
+        },
+        {
+          "id": "6004030",
+          "title": "Inflammatory Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004030",
+          "extractable": true,
+          "score": 20.397,
+          "snippet": "lis, IN; Copyright Gary Schnitz, 2007.) SEND FEEDBACK 9/3/26, 4:29 PM AAOS | Inflammatory Arthritis in the Hand and Wrist https://rock.aaos.org/coursecontent.aspx?id=6004030 11/39 Wrist involvement in rheumatoid arthritis 67% within 2 years of diagnosis Higher than 90% within 10 years Management (Table 3) Table 3 Manag"
+        },
+        {
+          "id": "6004031",
+          "title": "Tendinopathy of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004031",
+          "extractable": true,
+          "score": 19.649,
+          "snippet": "Objectives Identify common tendinopathies of the hand and wrist. Explain the epidemiology and pathophysiology of common tendinopathies of the hand and wrist. Describe the physical examination and specific tests to diagnose common tendinopathies of the hand and wrist. List treatment options for common tendinopathies of"
+        },
+        {
+          "id": "510000665",
+          "title": "Hand and Wrist Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000665",
+          "extractable": true,
+          "score": 19.611,
+          "snippet": "Arthritis of the Wrist Gout Pseudogout Rheumatoid arthritis Lyme disease Osteoarthritis/scapholunate advanced collapse arthritis/caphoid nonunion advanced collapse arthritis Intra-articular fracture Hemarthrosis Neuropathic arthropathy Cellulitis/soft-tissue infection Adapted with permission from Margaretten ME, Kohlw"
+        },
+        {
+          "id": "6004033",
+          "title": "Less Common Objectively Verifiable Peripheral Mononeuropathies",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004033",
+          "extractable": true,
+          "score": 19.543,
+          "snippet": "Etiology Zone 1: ganglia most common Zone 2: ganglia most common Zone 3: ulnar artery thrombosis or aneurysm (hypothenar hammer syndrome) most common Other space-occupying lesions (lipoma) Bony anomalies (hook of the hamate fracture, pisiform dislocation) SEND FEEDBACK 9/3/26, 4:32 PM AAOS | Less Common Objectively Ve"
+        },
+        {
+          "id": "6001016",
+          "title": "Rheumatoid Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001016",
+          "extractable": true,
+          "score": 17.883,
+          "snippet": "Midfoot Talonavicular arthritis: talonavicular fusion Tarsometatarsal arthritis: tarsometatarsal fusion SEND FEEDBACK 9/3/26, 6:02 PM AAOS | Rheumatoid Arthritis https://rock.aaos.org/coursecontent.aspx?id=6001016 15/20 Hindfoot arthritis: subtalar arthrodesis Ankle arthritis: ankle replacement or ankle fusion Patient"
+        },
+        {
+          "id": "6001178",
+          "title": "Shoulder Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001178",
+          "extractable": true,
+          "score": 17.535,
+          "snippet": "arthritis is the most prevalent form of inflammatory arthritis affecting the shoulder. Shoulder symptoms develop in 91% of patients who have had rheumatoid arthritis for more than 5 years. Other less common forms of inflammatory arthritis include spondyloarthropathies; disorders of connective tissue, such as systemic"
+        },
+        {
+          "id": "6000026",
+          "title": "Wrist and Hand Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000026",
+          "extractable": true,
+          "score": 16.314,
+          "snippet": "Figure 3 Arthroscopic image from the 3-4 portal shows the scaphoid above and the radius below. The radioscapholunate and the long radiolunate ligaments are visualized volarly. (Image copyright Charles A. Goldfarb, MD, St. Louis, MO.) SEND FEEDBACK 9/4/26, 10:01 AM AAOS | Wrist and Hand Arthroscopy https://rock.aaos.org"
+        }
+      ]
+    },
+    {
+      "stableGuid": "mH3)3q5:QB",
+      "front": "When performing ORIF of an isolated femoral head fracture (Pipkin II) , the approach should be anterior and the fixation should be with mini-frag screws .",
+      "extra": "Marecek et al. (https://pubmed.ncbi.nlm.nih.gov/27490911/) authored a review article on femoral head fractures. They described these injuries as being generally associated with hip dislocations and require prompt reduction. They noted that the surgical fixation of the femoral head is generally done through the direct anterior approach or via a surgical hip dislocation depending on associated injuries. The authors also discussed the importance of using mini-frag screws to avoid hardware prominence. They also noted that while heterotopic ossification is a common finding after the anterior approach for these injuries, it is rarely proven to be symptomatic. They also state that an anterior surgical approach is preferred for fixation of Pipkin II type injuries.",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology",
+        "SnapOrtho::Anatomy::Thigh_Hip::Osteology::Femoral_Head",
+        "SnapOrtho::Diagnosis::Heterotopic_Ossification",
+        "SnapOrtho::Specialty::Trauma",
+        "SnapOrtho::Treatment::Surgical_Hip_Dislocation"
+      ],
+      "candidates": [
+        {
+          "id": "6004094",
+          "title": "Femoral Head Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004094",
+          "extractable": true,
+          "score": 81.954,
+          "snippet": "9/3/26, 4:07 PM AAOS | Femoral Head Fractures https://rock.aaos.org/coursecontent.aspx?id=6004094 2/19 Figure 1 Illustrations show the Pipkin classification.A, Type I, infrafoveal femoral head fracture. B, Type II, suprafoveal head fracture. C, Type III, any femoral head fracture with an ipsilateral femoral neck fract"
+        },
+        {
+          "id": "6001027",
+          "title": "Postoperative Heterotopic Ossification",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001027",
+          "extractable": true,
+          "score": 62.839,
+          "snippet": "heterotopic ossification. Risk factors for heterotopic ossification must be recognized to initiate prophylaxis. Surgeons should wait for at least 12 months before surgical excision of heterotopic ossification unless heterotopic ossification is very severe. Surgeons should recognize the risks of excessive bleeding and"
+        },
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "extractable": true,
+          "score": 56.398,
+          "snippet": "femoral neck fracture increases the risk of femoral head osteonecrosis. The blood supply also must be considered during the fixation of femoral neck fractures to prevent osteonecrosis, particularly in younger patients. The femoral head also receives vascularity from the lateral femoral circumflex artery. In addition,"
+        },
+        {
+          "id": "510000660",
+          "title": "Radial Head and Neck Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000660",
+          "extractable": true,
+          "score": 53.594,
+          "snippet": "Head and Neck Fractures https://rock.aaos.org/coursecontent.aspx?id=510000660 5/25  Associated Injuries Associated injuries are related to patient age, mechanism of injury, and fracture complexity. Kaas et al10,11 reported associated injuries in as many as 76% of patients with a radial head fracture evaluated via MRI"
+        },
+        {
+          "id": "6002099",
+          "title": "Hip Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002099",
+          "extractable": true,
+          "score": 50.875,
+          "snippet": "show the Pipkin classification of femoral head fractures. A, Type I, infrafoveal femoral head fracture. B, Type II, suprafoveal femoral head fracture. C, Type III, any femoral head fracture with an ipsilateral femoral neck fracture. D, Type IV, any femoral head fracture with an associated posterior wall fracture. (Cou"
+        },
+        {
+          "id": "510000580",
+          "title": "Pelvic and Hip Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000580",
+          "extractable": true,
+          "score": 47.551,
+          "snippet": "atient Positioning Depends on anticipated approach if open reduction will be performed Radiolucent table: flat top or fracture table SEND FEEDBACK 9/3/26, 5:39 PM AAOS | Pelvic and Hip Injuries https://rock.aaos.org/coursecontent.aspx?id=510000580 11/47 Surgical Approaches If open reduction is necessary, options includ"
+        },
+        {
+          "id": "510000648",
+          "title": "Midfoot Fractures: Tarsometatarsal (Lisfranc) Fracture-Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000648",
+          "extractable": true,
+          "score": 47.13,
+          "snippet": "fracture pattern. Fractures of the cuboid with compression may result in collapse of the lateral column of the foot. External fixation may be used to restore length of the lateral column and disimpact fragments. Fixation and bone grafting may be required for impacted fractures of the cuboid. Avulsion fractures are man"
+        },
+        {
+          "id": "6002026",
+          "title": "Acetabular Fractures: Definitive Management and Outcomes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002026",
+          "extractable": true,
+          "score": 47.095,
+          "snippet": "Orthopaedic Surgeons, 2020, pp 571-578.) Surgical Approaches Multiple surgical approaches have been described for the surgical reduction and fixation of acetabular fractures. Selection of the most appropriate approach is based on the fracture pattern, associated soft- tissue injury, and condition of the patient. Some"
+        },
+        {
+          "id": "6004095",
+          "title": "Surgical Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004095",
+          "extractable": true,
+          "score": 45.415,
+          "snippet": "cranial femoral head with subchondral edema.(C, AP radiograph obtained immediately after femoral head allograft reconstruction via a surgical hip dislocation approach shows fixation of a step-cut digastric osteotomy with the use of 3.5-mm screws. (Courtesy of L. Henry Goodnough, MD, Seattle, WA.) Management Surgical A"
+        },
+        {
+          "id": "510000658",
+          "title": "Fractures and Dislocations of the Hand and Digits",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000658",
+          "extractable": true,
+          "score": 45.188,
+          "snippet": "around the metacarpal head. Finger MCP Joint Ligament Injuries Epidemiology: lesser metacarpal injuries less common than injuries to the thumb Radial-sided injuries more common than ulnar-sided injuries The long finger is most frequently involved. Associated injuries Sagittal band injuries and associated extensor tend"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "extractable": true,
+          "score": 43.914,
+          "snippet": ".) Type I: ulnar fracture with apex anterior angulation and anterior dislocation of the radial head Type II: ulnar fracture with apex posterior angulation and posterior dislocation of the radial head Type III: ulnar fracture with apex lateral angulation and lateral dislocation of the radial head Type IV: fracture of pr"
+        },
+        {
+          "id": "6001083",
+          "title": "Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001083",
+          "extractable": true,
+          "score": 42.347,
+          "snippet": "PM AAOS | Femoral Shaft Fractures https://rock.aaos.org/coursecontent.aspx?id=6001083 4/48 Associated Injuries Pelvis/acetabulum fractures Hip dislocation Femoral neck fracture Ligamentous knee injuries Fractures of the patella and tibial plateau  Associated Injuries The two most common associated injuries in patient"
+        }
+      ]
+    }
+  ]
+}

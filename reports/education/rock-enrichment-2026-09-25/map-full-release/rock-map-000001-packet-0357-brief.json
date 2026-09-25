@@ -1,0 +1,1113 @@
+{
+  "batchKey": "map-000001-packet-0357",
+  "inputChecksum": "b765237726b2824bc67779fe7a2037c6118ef0c0cfb3d36712a1ba6b1881916b",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "sidecarSchema": {
+    "card": {
+      "stableGuid": "string",
+      "status": "\"mapped\"|\"skipped\"",
+      "chapters": "1-3 {id, role} from this card's candidates; first is primary",
+      "skipReason": "if skipped"
+    }
+  },
+  "cards": [
+    {
+      "stableGuid": "yj+Q+F|/ug",
+      "front": "Galeazzi fracture Fracture of the distal 1/3 radius , dislocation of the ulna .",
+      "extra": "\"GRUesome MURder\" G aleazzi involves the R adius with U lnar dislocation M onteggia involves the U lna with R adial dislocation",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Forearm",
+        "SnapOrtho::Anatomy::Forearm::Osteology",
+        "SnapOrtho::Anatomy::Forearm::Osteology::Radius",
+        "SnapOrtho::Anatomy::Forearm::Osteology::Ulna",
+        "SnapOrtho::Diagnosis::Galeazzi_Fracture",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "510000656",
+          "title": "Distal Radius Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000656",
+          "extractable": true,
+          "score": 42.906,
+          "snippet": "Radius Fractures https://rock.aaos.org/coursecontent.aspx?id=510000656 26/41 Figure 12 Radiographs of a wrist with a distal radius fracture. PA (A) and lateral (B) radiographs demonstrate dorsally displaced distal radius fractures. PA (C) and lateral (D) radiographs demonstrate internal fixation via volar plate fixati"
+        },
+        {
+          "id": "6004067",
+          "title": "Proximal Radius Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004067",
+          "extractable": true,
+          "score": 30.924,
+          "snippet": "a varus force across the elbow while falling onto an outstretched hand, he or she may sustain a fracture of the olecranon/proximal ulna with a dislocation of the radial head (Monteggia fracture) or a fracture through the radial neck (Monteggia fracture variant).1 In the latter circumstance, the radial head and the pro"
+        },
+        {
+          "id": "510000557",
+          "title": "Physical Examination and Anatomy of the Hand, Forearm, and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000557",
+          "extractable": true,
+          "score": 30.208,
+          "snippet": "ament (LTIL) stabilize the proximal carpal row. The capitate (Cap) and hamate (H) are identified in the distal carpal row. C, Dorsal view of the distal radioulnar joint. The distal ulna articulates with the distal radius at the distal radioulnar joint, at which the distal radial articular surface (sigmoid notch) has a"
+        },
+        {
+          "id": "6001057",
+          "title": "Diaphyseal Forearm Fractures, Distal Forearm Fractures, and Monteggia Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001057",
+          "extractable": true,
+          "score": 28.451,
+          "snippet": "is available. A rare but often missed distal forearm fracture is a Galeazzi fracture-dislocation. This represents a disruption of the DRUJ in an isolated distal third radius fracture, usually with dorsal dislocation of the ulna. Galeazzi fracture-dislocations must be suspected in patients with an isolated distal third"
+        },
+        {
+          "id": "510000662",
+          "title": "Distal Humerus Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000662",
+          "extractable": true,
+          "score": 26.494,
+          "snippet": "Discover What You Know Learning Objectives Specify the epidemiology of distal humerus fractures and the anatomy of the distal humerus. Perform an appropriate workup of patients with a distal humerus fracture. Identify the fracture patterns and classification systems for distal humerus factures. Understand the nonsurgi"
+        },
+        {
+          "id": "6004092",
+          "title": "Terrible Triad of Injuries of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004092",
+          "extractable": true,
+          "score": 24.187,
+          "snippet": "block to motion. Type 3: comminuted fracture; block to motion. Type 4: fracture with associated elbow dislocation Figure 10 Illustrations show the Mason classification of radial head fractures. A, Type I, nondisplaced. B, Type II, displaced partial articular fracture. C, Type III, comminuted fracture. D, A type IV inj"
+        },
+        {
+          "id": "6004072",
+          "title": "Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004072",
+          "extractable": true,
+          "score": 23.239,
+          "snippet": "holding the clavicle in reduction (Figure 7). SEND FEEDBACK 9/4/26, 9:35 AM AAOS | Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability https://rock.aaos.org/coursecontent.aspx?id=6004072 21/26 Figure 7 Intraoperative photographs show a medial clavicle physeal fracture. A, The fracture is reduced with t"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "extractable": true,
+          "score": 22.896,
+          "snippet": "or dislocation of the radial head Type II: ulnar fracture with apex posterior angulation and posterior dislocation of the radial head Type III: ulnar fracture with apex lateral angulation and lateral dislocation of the radial head Type IV: fracture of proximal one-third of the ulna and radius, with dislocation of the r"
+        },
+        {
+          "id": "6000035",
+          "title": "Child Abuse (Nonaccidental Trauma)",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000035",
+          "extractable": true,
+          "score": 22.591,
+          "snippet": "bruises, frenulum tears, intracranial hemorrhage, subconjunctival hemorrhage, and abdominal or genital injury.34 Transphyseal Distal Humerus Fracture  Transphyseal Distal Humerus Fracture SEND FEEDBACK 9/3/26, 7:39 AM AAOS | Child Abuse (Nonaccidental Trauma) https://rock.aaos.org/coursecontent.aspx?id=6000035 7/21 T"
+        },
+        {
+          "id": "510000578",
+          "title": "Distal Humerus Physeal Fractures, Pediatric Polytrauma, and Upper Extremity Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000578",
+          "extractable": true,
+          "score": 20.13,
+          "snippet": "child had a normal neurovascular examination. AP (C) and lateral (D) radiographs of the elbow demonstrate an extension type III supracondylar humerus fracture. E, AP radiograph of the ipsilateral forearm demonstrates a segmental fracture of the distal radius and a distal ulna fracture. Because of concern for compartme"
+        },
+        {
+          "id": "6004095",
+          "title": "Surgical Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004095",
+          "extractable": true,
+          "score": 18.591,
+          "snippet": "hip dislocation. Subsequently, Siebenrock et al7 performed Ganz surgical hip dislocation (the Kocher- Langenbeck approach with trochanteric flip osteotomy and surgical dislocation) in patients with an acute fracture. Twelve patients with an acetabular fracture were treated, with a minimum follow-up of 2 years. Eight p"
+        },
+        {
+          "id": "510000510",
+          "title": "Postoperative Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000510",
+          "extractable": true,
+          "score": 18.398,
+          "snippet": "9/3/26, 5:47 PM AAOS | Postoperative Hip Dislocation https://rock.aaos.org/coursecontent.aspx?id=510000510 8/16 dislocation occurs days after reduction and component malalignment is observed on radiographs.16 Surgical treatment options for postoperative instability or recurrent dislocation depend on the cause of the d"
+        }
+      ]
+    },
+    {
+      "stableGuid": "yjhn6cRNM>",
+      "front": "What is a Paronychia ? Infection of the nail fold",
+      "extra": "Acute - Caused by trauma (eg, nail biting, thumb sucking, manicure). Chronic - Caused by occupations w/ prolonged exposure to irritants. Risk factors include diabetes, psoriasis, steroids, or retroviral drugs.",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Hand_Upper_Extremity",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "510000665",
+          "title": "Hand and Wrist Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000665",
+          "extractable": true,
+          "score": 41.638,
+          "snippet": "topical gentian violet dye treatment. Surgical management may necessitate nail plate removal and eponychial marsupialization.  Chronic Paronychia SEND FEEDBACK 9/3/26, 4:20 PM AAOS | Hand and Wrist Infections https://rock.aaos.org/coursecontent.aspx?id=510000665 3/38 Chronic paronychia may represent long-term infecti"
+        },
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 39.453,
+          "snippet": "the classification of congenital differences in the upper extremity. Perform an appropriate workup of patients with congenital upper extremity differences. Determine the surgical and nonsurgical treatment options for the management of congenital upper extremity differences. Pathophysiology/Pathoanatomy Overview Congen"
+        },
+        {
+          "id": "6000012",
+          "title": "Midfoot Diabetes: Ulceration and Infection",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000012",
+          "extractable": true,
+          "score": 39.228,
+          "snippet": "may be the priority. SEND FEEDBACK 9/3/26, 4:45 PM AAOS | Midfoot Diabetes: Ulceration and Infection https://rock.aaos.org/coursecontent.aspx?id=6000012 4/27 Epidemiology and Microbiology Affects approximately 12% of patients with diabetes mellitus Responsible for approximately 85% of lower-extremity amputations in pa"
+        },
+        {
+          "id": "6004036",
+          "title": "Acute and Chronic Vascular Disorders of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004036",
+          "extractable": true,
+          "score": 36.116,
+          "snippet": "and pseudoaneurysm. List the most common acute and chronic causes of vascular insufficiency of the upper extremity. Review Raynaud phenomenon and Raynaud disease and the various treatment options General Information     NOTES SEND FEEDBACK 9/3/26, 7:09 AM AAOS | Acute and Chronic Vascular Disorders of the Hand and"
+        },
+        {
+          "id": "510000560",
+          "title": "Burns and Frostbite, Fingertip and Nail Bed Injuries, and Injection and Extravasation Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000560",
+          "extractable": true,
+          "score": 35.222,
+          "snippet": "in patients with factors that increase the risk of infection. Nailbed Laceration Some debate exists about the treatment of patients with a subungual hematoma and presumed nail bed laceration. Proposed treatment options include nail plate removal and suture repair of the nail bed, nail plate removal and skin adhesive r"
+        },
+        {
+          "id": "6001019",
+          "title": "Safety, Infection Prevention, and Antibiotic Prophylaxis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001019",
+          "extractable": true,
+          "score": 34.512,
+          "snippet": "prevent infections are critical. Preoperative Patient Selection Risk factors for infection are divided into those that are modifiable and those that are nonmodifiable.1 Optimizing modifiable risk factors and considering the risk-to-benefit ratio in the context of the overall risk factor profile are critical before ele"
+        },
+        {
+          "id": "6002082",
+          "title": "Upper-Limb Deficiency and Prostheses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002082",
+          "extractable": true,
+          "score": 33.169,
+          "snippet": "include the Assisting Hand Assessment, the Prosthetic Upper Extremity Functional Index, the University of New Brunswick Test of Prosthetics Function, the Child Amputee Prosthetic Project-Functional Status Inventory, the Child Amputee Prosthetic Project-Functional Status Inventory for Preschool, the Shriners Hospital U"
+        },
+        {
+          "id": "510000566",
+          "title": "Surgical Management of Upper Extremity Bone Metastases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000566",
+          "extractable": true,
+          "score": 31.722,
+          "snippet": "that metastasize to the upper extremity. Review the general treatment strategy and indications for surgical management of upper extremity metastases. Determine the best surgical treatment options for each anatomic location. Introduction Metastatic disease is common in the upper extremities. Of patients with metastatic"
+        },
+        {
+          "id": "510000534",
+          "title": "Diagnosis and Management of Fracture-Related Infection",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000534",
+          "extractable": true,
+          "score": 30.824,
+          "snippet": "| Diagnosis and Management of Fracture-Related Infection https://rock.aaos.org/coursecontent.aspx?id=510000534 9/24 Types of Osteomyelitis Acute osteomyelitis Characterized by rapid presentation and a rapidly evident purulent infection; represents the first episode of bone infection. Acute osteomyelitis may become chr"
+        },
+        {
+          "id": "510000557",
+          "title": "Physical Examination and Anatomy of the Hand, Forearm, and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000557",
+          "extractable": true,
+          "score": 29.619,
+          "snippet": "uperficial layer and the deep layer Table 2 lists the muscles of the volar forearm and wrist. Other Structures Anatomy of the Nail Bed Perionychium: the area that includes the nail, nail bed, and surrounding skin (Figure 22) Paronychium: the lateral nail fold Hyponychium: the skin immediately distal and palmar to the n"
+        },
+        {
+          "id": "6000021",
+          "title": "Periprosthetic Joint Infection",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000021",
+          "extractable": true,
+          "score": 29.015,
+          "snippet": "risk factors. A number of demographic factors, surgical factors, and comorbidities influence the risk of infection. A validated risk calculator developed by Tan et al7 assigns weighted values to risk factors to determine a patient’s risk of PJI (Resource 1). Prevention Host Factors Preoperative optimization by address"
+        },
+        {
+          "id": "6003007",
+          "title": "Diabetes Mellitus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003007",
+          "extractable": true,
+          "score": 28.131,
+          "snippet": "is related to genetic and environmental risk factors. Patients with first- degree relatives who have type 2 diabetes mellitus are at high risk for type 2 diabetes mellitus. Type 2 DM diabetes mellitus a stronger familial association than type 1 diabetes mellitus. Environmental risk factors, namely obesity and a sedent"
+        }
+      ]
+    },
+    {
+      "stableGuid": "ykwY+b~tU;",
+      "front": "What additional intraoperative stress maneuver can be performed to assess syndesmotic integrity ? Cotton Test",
+      "extra": "Cotton Test: A manual stress test used to identify the amount of lateral translation of the talus within the ankle mortise. The examiner stabilizes the proximal ankle while shifting the talus laterally.",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Foot_Ankle",
+        "SnapOrtho::Anatomy::Foot_Ankle::Osteology",
+        "SnapOrtho::Anatomy::Foot_Ankle::Osteology::Talus",
+        "SnapOrtho::Specialty::Foot_Ankle"
+      ],
+      "candidates": [
+        {
+          "id": "6000002",
+          "title": "Syndesmotic Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000002",
+          "extractable": true,
+          "score": 61.48,
+          "snippet": "ankle shows an anterior tibiofibular ligament tear. (Courtesy of Christopher Kreulen, MD, MS; Eric Giza, MD; and Erin Haggerty, MD, Sacramento, CA.) Differential Diagnosis Lateral ankle sprain Medial ankle sprain Ankle fracture Maisonneuve fracture  Differential Diagnosis The differential diagnosis includes lateral a"
+        },
+        {
+          "id": "6000001",
+          "title": "Acute Lateral Ankle Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000001",
+          "extractable": true,
+          "score": 53.186,
+          "snippet": "lateral ankle instability. Identify patient factors that increase the risk for chronic lateral ankle instability. Understand the association between hindfoot varus alignment and lateral ligament instability. Understand surgical indications and techniques for the treatment of lateral ankle instability. Overview/Pathoph"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 51.029,
+          "snippet": "ovocative and Special Tests Test for syndesmotic integrity or injury External rotation test Squeeze test Tape stabilization test Test ligaments for ankle stability Talar tilt test for calcaneofibular ligament integrity Anterior drawer test for anterior talofibular ligament integrity Silfverskiöld test for gastrocnemius"
+        },
+        {
+          "id": "6004057",
+          "title": "Rotational Fractures of the Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004057",
+          "extractable": true,
+          "score": 48.192,
+          "snippet": "lity. Stress radiographs may be indicated to assess stability if the talus and syndesmosis appear reduced but the injury mechanism or pattern suggests an unstable ankle. A manual external rotation or gravity stress mortise radiograph can be obtained to assess deltoid ligament integrity and talar stability in patients w"
+        },
+        {
+          "id": "510000644",
+          "title": "Fractures of the Talus: Foot Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000644",
+          "extractable": true,
+          "score": 46.398,
+          "snippet": "blocking ankle motion. Imaging Studies AP, lateral, and mortise radiographs of the ankle are common initial imaging studies. Lateral radiograph to assess the posterolateral process AP ankle radiograph to assess the posteromedial process SEND FEEDBACK 9/3/26, 4:15 PM AAOS | Fractures of the Talus: Foot Trauma https://r"
+        },
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "extractable": true,
+          "score": 42.011,
+          "snippet": "ankle mortise (B), and lateral (C) radiographs of the ankle of a 15-year-old girl who presented after a fall demonstrate a lateral process fracture of the talus. (Courtesy of Julia Sanders, MD, Denver, CO, and Aaron Brandt, MD, Denver, CO.) Management SEND FEEDBACK 9/3/26, 5:36 PM AAOS | Pediatric Foot and Ankle Traum"
+        },
+        {
+          "id": "6000007",
+          "title": "Osteochondral Lesions of the Talus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000007",
+          "extractable": true,
+          "score": 41.477,
+          "snippet": "AAOS | Osteochondral Lesions of the Talus https://rock.aaos.org/coursecontent.aspx?id=6000007 1/28 May result from acute trauma, such as ankle sprains and ankle fractures, or repetitive microtrauma or may be atraumatic Epidemiology Relatively common in patients with ankle trauma, observed in as many as 73% of ankle fr"
+        },
+        {
+          "id": "510000546",
+          "title": "Ankle and Foot Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000546",
+          "extractable": true,
+          "score": 41.362,
+          "snippet": "evaluation if full–weight bearing is too painful. AP and mortise ankle radiographs of the ankle should be evaluated for medial clear space and syndesmotic widening, malleolar fracture, lateral process of the talus fracture, avulsion fracture, and talar osteochondral fracture (Figure 5; Resource 2). Lateral views of th"
+        },
+        {
+          "id": "6004002",
+          "title": "Ankle Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004002",
+          "extractable": true,
+          "score": 40.903,
+          "snippet": "can aid in determining the extent of the injury. A midcalf squeeze test (Hopkin test) and ankle dorsiflexion with external rotation may produce syndesmotic pain. The length of tenderness along the lateral ankle also is an indicator of injury severity. In patients with syndesmotic disruption, plain radiographs may demo"
+        },
+        {
+          "id": "6004079",
+          "title": "Anatomy of the Ankle for the Sports Medicine Surgeon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004079",
+          "extractable": true,
+          "score": 38.805,
+          "snippet": "peroneal retinaculum originates and confers additional stability to the peroneal tendons as they traverse the ankle joint. Talus The talus rests within the mortise created by the distal tibia and the fibula. The talus articulates with all portions of the ankle mortise, yielding the tibiotalar articulation, while also"
+        },
+        {
+          "id": "6001184",
+          "title": "Imaging of the Lower Extremity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001184",
+          "extractable": true,
+          "score": 38.123,
+          "snippet": "the Lower Extremity https://rock.aaos.org/coursecontent.aspx?id=6001184 3/30  Standard Ankle Radiographs Standard radiographs of the ankle include AP, lateral, and mortise views. Weight-bearing radiographs are essential, if possible, for identifying and assessing bony alignment of the foot and ankle. For example, in"
+        },
+        {
+          "id": "6001156",
+          "title": "Deltoid Ligament Instability Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001156",
+          "extractable": true,
+          "score": 37.744,
+          "snippet": "the talus in the ankle mortise.  Radiography Currently, dynamic imaging via stress radiography is standard practice for the detection of tibiotalar instability.21 The gravity stress test can be performed to assess the deltoid ligament (Figure 5). Figure 5 Clinical photograph of a lower leg shows that gravity stress r"
+        }
+      ]
+    },
+    {
+      "stableGuid": "yky.s8db+Y",
+      "front": "What symptom is typically present in neonatal forearm compartment syndrome , but not adult compartment syndrome ? Skin lesions",
+      "extra": "*Eschars, ulcers, bullate and digital/hand ischemia",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Compartment_Syndrome",
+        "SnapOrtho::Specialty::Hand_Upper_Extremity",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "510000657",
+          "title": "Compartment Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000657",
+          "extractable": true,
+          "score": 56.484,
+          "snippet": "syndrome in adults. Describe the diagnostic findings of acute compartment syndrome in children. Identify the risk factors for compartment syndrome. Describe the pathophysiology of compartment syndrome. Define the natural history of compartment syndrome. Develop treatment plans for the management of compartment syndrom"
+        },
+        {
+          "id": "6000048",
+          "title": "Chronic Exertional Compartment Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000048",
+          "extractable": true,
+          "score": 44.708,
+          "snippet": "the individual compartments of the upper and lower extremities. Describe the typical clinical presentation of chronic exertional compartment syndrome. Accurately diagnose and provide effective and evidence-based nonsurgical and surgical treatment for patients with chronic exertional compartment syndrome. Introduction"
+        },
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 40.679,
+          "snippet": "the classification of congenital differences in the upper extremity. Perform an appropriate workup of patients with congenital upper extremity differences. Determine the surgical and nonsurgical treatment options for the management of congenital upper extremity differences. Pathophysiology/Pathoanatomy Overview Congen"
+        },
+        {
+          "id": "510000557",
+          "title": "Physical Examination and Anatomy of the Hand, Forearm, and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000557",
+          "extractable": true,
+          "score": 38.447,
+          "snippet": "MO.) Compartments of the Forearm Three compartments are present in the forearm or antebrachium. Dorsal compartment Volar compartment Mobile wad Figure 4 shows cross sections through the proximal, middle, and distal third of the forearm. SEND FEEDBACK 9/3/26, 5:43 PM AAOS | Physical Examination and Anatomy of the Hand,"
+        },
+        {
+          "id": "6002082",
+          "title": "Upper-Limb Deficiency and Prostheses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002082",
+          "extractable": true,
+          "score": 34.114,
+          "snippet": "syndrome, Klippel-Feil syndrome, Moebius syndrome, Poland syndrome, and terminal transverse deficiency.24  Congenital Deficiencies Children with TAR syndrome commonly present with varying degrees of bilateral radius abnormalities with mildly hypoplastic thumbs. They also may have additional skeletal abnormalities inv"
+        },
+        {
+          "id": "510000578",
+          "title": "Distal Humerus Physeal Fractures, Pediatric Polytrauma, and Upper Extremity Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000578",
+          "extractable": true,
+          "score": 33.971,
+          "snippet": "injury to the upper extremity; therefore, great attention should be paid to the neurovascular status of the child. Although previous studies have implicated a high risk of compartment syndrome in patients with a floating elbows,3,4 a more recent systemic review reported a 2% rate of pediatric acute compartment syndrom"
+        },
+        {
+          "id": "510000566",
+          "title": "Surgical Management of Upper Extremity Bone Metastases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000566",
+          "extractable": true,
+          "score": 33.541,
+          "snippet": "that metastasize to the upper extremity. Review the general treatment strategy and indications for surgical management of upper extremity metastases. Determine the best surgical treatment options for each anatomic location. Introduction Metastatic disease is common in the upper extremities. Of patients with metastatic"
+        },
+        {
+          "id": "6004036",
+          "title": "Acute and Chronic Vascular Disorders of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004036",
+          "extractable": true,
+          "score": 32.288,
+          "snippet": "variability likely exists among individuals.2 SEND FEEDBACK 9/3/26, 7:09 AM AAOS | Acute and Chronic Vascular Disorders of the Hand and Wrist https://rock.aaos.org/coursecontent.aspx?id=6004036 3/16 Figure 1 Palmar view illustration shows the vascular anatomy of the forearm and hand. (Reproduced from Rozental TD: Acut"
+        },
+        {
+          "id": "6004031",
+          "title": "Tendinopathy of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004031",
+          "extractable": true,
+          "score": 30.469,
+          "snippet": "Objectives Identify common tendinopathies of the hand and wrist. Explain the epidemiology and pathophysiology of common tendinopathies of the hand and wrist. Describe the physical examination and specific tests to diagnose common tendinopathies of the hand and wrist. List treatment options for common tendinopathies of"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "extractable": true,
+          "score": 28.365,
+          "snippet": "that compartment syndrome will persist without release of these areas, compartment pressures can be remeasured intraoperatively. The flexor digitorum profundus and the flexor pollicis longus (the deepest volar muscles) typically are affected most severely in patients with Volkmann ischemic contracture.  Special Consi"
+        },
+        {
+          "id": "6001057",
+          "title": "Diaphyseal Forearm Fractures, Distal Forearm Fractures, and Monteggia Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001057",
+          "extractable": true,
+          "score": 27.981,
+          "snippet": "Forearm fractures are associated with elbow fractures in 10% to 15% of patients. Etiology/Mechanism of Injury Most forearm shaft fractures result from a fall onto an outstretched hand. Angular and rotational deformities often are present. Associated Injuries SEND FEEDBACK 9/3/26, 3:55 PM AAOS | Diaphyseal Forearm Frac"
+        },
+        {
+          "id": "6001039",
+          "title": "Hand Surgery Using Local Anesthesia with Epinephrine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001039",
+          "extractable": true,
+          "score": 27.836,
+          "snippet": "anesthetic agents in the emergency room to manage fingertip injuries or injuries on the dorsum of the hand and forearm in which hemostasis is easier to maintain with pressure. Traditional use involves injecting margins of the cut in the hand or forearm with 1% or 2% lidocaine 1:100,000 or 1:200,000 with epinephrine. B"
+        }
+      ]
+    },
+    {
+      "stableGuid": "yL<7`h{k~(",
+      "front": "For distraction osteogenesis for leg length discrepancy (LLD) , what is the recommended distraction amount per day : 1 mm/day",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Diagnosis::Leg_Length_Discrepancy"
+      ],
+      "candidates": [
+        {
+          "id": "6002064",
+          "title": "Limb Length and Offset",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002064",
+          "extractable": true,
+          "score": 29.167,
+          "snippet": "length and femoral offset to restore appropriate hip biomechanics. Equalization of functional limb length allows for improved gait. Restoration of appropriate offset improves hip biomechanics via proper tensioning of the abductor muscle complex and contributes to stability and wear properties of the prosthesis. Limb-L"
+        },
+        {
+          "id": "6004064",
+          "title": "Pediatric Lower Extremity Deformities and Limb Deficiencies",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004064",
+          "extractable": true,
+          "score": 19.578,
+          "snippet": "the ankle joint Type 2: complete absence of fibula Birch classification system: matches clinical findings with treatment recommendations. Type 1: foot reconstructible (≥3 rays) Type 1a: limb-length discrepancy (LLD) of less than 6% Type 1b: LLD of 6% to 10% Type 1c: LLD of 11% to 30% Type 1d: LLD of greater than 30% Ty"
+        },
+        {
+          "id": "6001159",
+          "title": "History and Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001159",
+          "extractable": true,
+          "score": 18.502,
+          "snippet": "or true leg-length discrepancy (LLD). Common causes of pelvic obliquity include scoliosis, hip flexion contracture, or true LLD. In patients with hip arthritis who have true LLD, blocks can be placed under the affected foot to estimate the degree of LLD (Video 2). SEND FEEDBACK 9/3/26, 4:23 PM AAOS | History and Physi"
+        },
+        {
+          "id": "6001046",
+          "title": "Stress Fractures of the Leg: Tibia and Fibula",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001046",
+          "extractable": true,
+          "score": 17.479,
+          "snippet": "OUTLINE VIEW Pretest Discover What You Know Learning Objectives Identify the clinical presentation of lower leg stress fractures. Describe the typical workup for a lower leg stress fracture. Outline the typical nonsurgical and surgical treatment options for the management of a lower leg stress fracture. Definition Str"
+        },
+        {
+          "id": "510000593",
+          "title": "Nonunions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000593",
+          "extractable": true,
+          "score": 16.39,
+          "snippet": "BC, French BG, Fowler TT, Russell J, Poka A: Induced membrane technique for reconstruction to manage bone loss. J Am Acad Orthop Surg 2012;20[3]:142-150.) Distraction Osteogenesis SEND FEEDBACK 9/3/26, 5:24 PM AAOS | Nonunions https://rock.aaos.org/coursecontent.aspx?id=510000593 42/80 The technique of distraction ost"
+        },
+        {
+          "id": "6004103",
+          "title": "Skeletal Dysplasias and Mucopolysaccharidoses",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004103",
+          "extractable": true,
+          "score": 16.159,
+          "snippet": "projections from the occiput AD = autosomal dominant, AR = autosomal recessive, CBFA1 = core-binding factor α-1, COMP = cartilage oligomeric matrix protein, DDH = developmental dysplasia of the hip, EVC = Ellis-van Creveld, FGFR3 = fibroblast growth factor receptor 3, LLD = limb-length discrepancy, LMX1β = Lim homeobo"
+        },
+        {
+          "id": "6002084",
+          "title": "Principles of Managing Pediatric Orthopaedic Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002084",
+          "extractable": true,
+          "score": 13.956,
+          "snippet": "are rapidly growing physes, abnormalities should be identified promptly and management should be initiated because considerable genu varum/valgum or limb- length inequality may occur quickly. Management of a physeal disturbance is based on the size of the bar and the amount of growth remaining of the physis. If more t"
+        },
+        {
+          "id": "6000043",
+          "title": "Medical Aspects of Sports Participation Sports Nutrition",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000043",
+          "extractable": true,
+          "score": 11.076,
+          "snippet": "5 g/kg per day Moderate (1-hour training per day): 5 to 7 g/kg per day High (1 to 3 hours of moderate/high-intensity training per day): 6 to 10 g/kg per day Very high (4 to 5 hours of moderate/high-intensity training per day): 8 to 12 g/kg per day1 Timing for peak performance 1 to 4 hours before exercise: 1 to 4 g/kg"
+        },
+        {
+          "id": "6001083",
+          "title": "Femoral Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001083",
+          "extractable": true,
+          "score": 10.618,
+          "snippet": "Shanz pin or a tensioned Kirschner wire Location: distal femur or proximal tibia  Management Temporary stabilization of all femoral shaft fractures is highly recommended. A study by Bumpass et al8 compared patients with a femoral shaft fracture who underwent initial stabilization via a long leg splint versus distal f"
+        },
+        {
+          "id": "6003015",
+          "title": "Lumbar Degenerative Spondylolisthesis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003015",
+          "extractable": true,
+          "score": 10.181,
+          "snippet": "absence of neurologic deterioration, initial nonsurgical management is almost always recommended. Treatment modalities include the following: Activity modifications and weight loss Smoking cessation6 NSAIDs Physical therapy Corticosteroid injections Opioids are not a recommended treatment modality for degenerative spo"
+        },
+        {
+          "id": "6001067",
+          "title": "Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001067",
+          "extractable": true,
+          "score": 9.908,
+          "snippet": "the iliac crests to evaluate for pelvic obliquity,16 which may be a sign of true leg- length discrepancy, hip contracture, or structural scoliosis. In patients with a leg-length discrepancy, the Coleman block test may be used to level the pelvis, with a suspected true or apparent leg-length discrepancy later confirmed"
+        },
+        {
+          "id": "510000587",
+          "title": "Hip Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000587",
+          "extractable": true,
+          "score": 9.8,
+          "snippet": "hip joint. General anesthesia with muscle relaxation typically is necessary for hip joint distraction and arthroscopic access; however, some surgeons use spinal anesthesia. The patient is placed in the supine position on a hip distraction table (Figure 7). Both hip distractors, using a large perineal post or post-free"
+        }
+      ]
+    },
+    {
+      "stableGuid": "yM][J9L~sN",
+      "front": "When performing an inside-out lateral meniscal repair , capsule exposure is established by incising the IT band and biceps tendon interval, then retracting the lateral head of the gastrocnemius posteriorly.",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Shoulder_Elbow",
+        "SnapOrtho::Specialty::Sports_Medicine"
+      ],
+      "candidates": [
+        {
+          "id": "6004079",
+          "title": "Anatomy of the Ankle for the Sports Medicine Surgeon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004079",
+          "extractable": true,
+          "score": 41.337,
+          "snippet": "n the lateral border of the Achilles tendon and the peroneal tendons has been SEND FEEDBACK 9/3/26, 7:18 AM AAOS | Anatomy of the Ankle for the Sports Medicine Surgeon https://rock.aaos.org/coursecontent.aspx?id=6004079 21/29 reported during establishment of the posterolateral ankle arthroscopy portal, Achilles tendon"
+        },
+        {
+          "id": "6000034",
+          "title": "Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000034",
+          "extractable": true,
+          "score": 39.266,
+          "snippet": "repair. (Reproduced from Patzkowski JC, Owens BD: Shoulder instability, in Miller MD, ed. Orthopaedic Knowledge Update: Sports Medicine, ed 5. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2016, pp 3-16.)  Diagnostic Studies If a shoulder instability event is suspected, radiographs should be obtained to doc"
+        },
+        {
+          "id": "6004083",
+          "title": "Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004083",
+          "extractable": true,
+          "score": 39.092,
+          "snippet": "S | Rehabilitation for Shoulder and Elbow Injuries in Overhead Athletes https://rock.aaos.org/coursecontent.aspx?id=6004083 22/36 Week 1 Brace: posterior splint at 90°of elbow flexion ROM: wrist active ROM extension/flexion Elbow postoperative compression dressing 5 to 7 days Exercises Gripping Wrist ROM Shoulder and b"
+        },
+        {
+          "id": "510000637",
+          "title": "Elbow Repair and Reconstruction: Distal Biceps and Triceps Tendon Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000637",
+          "extractable": true,
+          "score": 37.719,
+          "snippet": "the biceps and the long head of the biceps. As the confluence of the short head of the biceps tendon and the long head of the biceps tendon approaches the insertion point, the tendon rotates 90° externally, resulting in the more distal insertion of the short head of the biceps tendon (Figure 1). This distal insertion"
+        },
+        {
+          "id": "510000585",
+          "title": "Physical Examination of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000585",
+          "extractable": true,
+          "score": 37.444,
+          "snippet": "shoulder motion restrictions/weakness/scapular dyskinesia. General Inspection The elbow is examined for incisions/scars, regions of swelling/erythema, muscle atrophy, and asymmetry. Intra-articular elbow effusions may be appreciated by examining for loss of the normal lateral dimple in the anconeus triangle. In patien"
+        },
+        {
+          "id": "6004094",
+          "title": "Femoral Head Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004094",
+          "extractable": true,
+          "score": 35.398,
+          "snippet": "the rectus facilitate access to the anterior hip capsule overlying the femoral neck for an arthrotomy. Sharp elevation of the iliocapsularis affords full exposure to the anterior capsule. Release of the reflected (indirect) head of the rectus can provide additional exposure of the capsule. Capsulotomy of the anterior"
+        },
+        {
+          "id": "510000621",
+          "title": "Massive Rotator Cuff Tears and Superior Capsule Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000621",
+          "extractable": true,
+          "score": 33.442,
+          "snippet": "s an arthroscopic approach in the lateral decubitus position28: First, a standard posterolateral viewing portal is established. The subscapularis tendon is visualized and repaired, if necessary, before the procedure. The tendon is managed according to pathology findings; if it is diseased or unstable, it can undergo te"
+        },
+        {
+          "id": "6000046",
+          "title": "Shoulder Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000046",
+          "extractable": true,
+          "score": 32.819,
+          "snippet": "of tasks to be accomplished during diagnostic shoulder arthroscopy Item Number Task 1 Inspect/probe the long head of the biceps tendon. 2 Apply tension to the biceps tendon with the probe to move it from the bicipital groove into the joint. 3 Examine the biceps sling. 4 Inspect/probe the superior glenoid labrum. 5 Ins"
+        },
+        {
+          "id": "6001056",
+          "title": "Meniscal Tears and Discoid Meniscus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001056",
+          "extractable": true,
+          "score": 31.17,
+          "snippet": "anterior the lateral head of the gastrocnemius but posterior to the lateral joint capsule. SEND FEEDBACK 9/3/26, 4:42 PM AAOS | Meniscal Tears and Discoid Meniscus https://rock.aaos.org/coursecontent.aspx?id=6001056 16/28 Video 3 Provencher MT: Meniscus repair: All inside versus inside-out technique, from Cole BJ, mod"
+        },
+        {
+          "id": "6001012",
+          "title": "Gastrocnemius Contracture",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001012",
+          "extractable": true,
+          "score": 30.864,
+          "snippet": "(Figure 1). SEND FEEDBACK 9/3/26, 4:16 PM AAOS | Gastrocnemius Contracture https://rock.aaos.org/coursecontent.aspx?id=6001012 3/19 Figure 1 Illustration of the leg shows the gastrocnemius-soleus complex. A = lateral head of the gastrocnemius muscle, B = sural nerve, C = medial head of the gastrocnemius muscle, D = ga"
+        },
+        {
+          "id": "6001181",
+          "title": "Meniscal Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001181",
+          "extractable": true,
+          "score": 30.772,
+          "snippet": "l management is necessary, all efforts should be made to repair meniscal tears, if possible. Medial repair places the saphenous nerve at risk. Lateral repair places the peroneal nerve and popliteal vessels at risk. Vascular supply and biologic environment determine healing potential after meniscal repair. In meniscal a"
+        },
+        {
+          "id": "510000538",
+          "title": "Throwing Shoulder Injuries: Superior Labrum Anterior to Posterior Tears and Proximal Biceps Tendon Lesions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000538",
+          "extractable": true,
+          "score": 30.58,
+          "snippet": "ing to the status of the torn biceps tendon. If less than 25% to 50% of the biceps tendon is involved, the tear and its extension into the tendon are débrided. If 25% to 50% or more of the biceps tendon is involved, biceps tenodesis or tenotomy with labral débridement or repair is indicated. Technique Portals Viewing:"
+        }
+      ]
+    },
+    {
+      "stableGuid": "ym=;CY#gd&",
+      "front": "Avulsions from pelvis ASIS: sartorius AIIS: rectus femoris Ischial tuberosity: hamstrings",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Pelvis",
+        "SnapOrtho::Anatomy::Pelvis::Osteology",
+        "SnapOrtho::Anatomy::Pelvis::Osteology::Pelvis"
+      ],
+      "candidates": [
+        {
+          "id": "510000529",
+          "title": "Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000529",
+          "extractable": true,
+          "score": 54.925,
+          "snippet": "ischial tuberosity (medial side) Insertion: medial surface of the tibia at the pes anserinus Semimembranosus Origin: ischial tuberosity (lateral side) Insertion: medial surface of the tibia at the pes anserinus Long and short head of the biceps femoris Origin: ischial tuberosity (medial side) Insertion: fibular head E"
+        },
+        {
+          "id": "6001068",
+          "title": "Muscle Injuries: Hip Abductor Tendon Injuries, Proximal Hamstring Injuries, and Rectus Femoris Avulsions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001068",
+          "extractable": true,
+          "score": 53.731,
+          "snippet": "injuries, and rectus femoris avulsions. Assess patients for hip abductor (gluteus medius and minimus) tendon injuries, proximal hamstring injuries, and rectus femoris avulsions. Determine the treatment options and outcomes for hip abductor (gluteus medius and minimus) tendon injuries, proximal hamstring injuries, and"
+        },
+        {
+          "id": "510000580",
+          "title": "Pelvic and Hip Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000580",
+          "extractable": true,
+          "score": 41.077,
+          "snippet": "ry to sciatic nerve and lateral femoral cutaneous nerve damage because these nerves may be affected by ischial tuberosity and ASIS avulsions, respectively. Imaging Studies Radiography AP pelvis radiograph Judet views or a false-profile lateral view may be helpful to assess for subtle displacement of ASIS and AIIS fract"
+        },
+        {
+          "id": "6002060",
+          "title": "Hip Arthroscopy and Periacetabular Osteotomy: Surgical Techniques",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002060",
+          "extractable": true,
+          "score": 28.254,
+          "snippet": "ed in line with the muscle fibers, and the muscle belly is retraced laterally. The interval between the tensor fasciae latae and the sartorius is developed while protecting the LFCN within the fascia overlying the sartorius. This dissection is then extended deep onto the origin of the rectus femoris at the anterior inf"
+        },
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "extractable": true,
+          "score": 26.128,
+          "snippet": "The hip abductors may play the most important role, with key implications for the risk of dislocation events after arthroplasty. These tendons and muscles also serve as important landmarks during approaches to the hip.  Tendons and Musculature The primary hip flexors are the iliopsoas, rectus femoris, and sartorius m"
+        },
+        {
+          "id": "510000554",
+          "title": "Surgical Anatomy of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000554",
+          "extractable": true,
+          "score": 23.538,
+          "snippet": "rami/obturator membrane MGT Obturator internus L5 through S2 (A) Superior gemellus Outer ischial spine MGT Obturator internus L5 through S2 (A) SEND FEEDBACK 9/4/26, 9:42 AM AAOS | Surgical Anatomy of the Hip https://rock.aaos.org/coursecontent.aspx?id=510000554 17/43 Inferior gemellus Ischial tuberosity MGT Obt"
+        },
+        {
+          "id": "510000589",
+          "title": "Imaging of the Hip and Pelvis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000589",
+          "extractable": true,
+          "score": 19.892,
+          "snippet": "ilioischial impingement Key findings Ischiofemoral space narrowing Edema of the quadratus femoris muscle SEND FEEDBACK 9/3/26, 4:26 PM AAOS | Imaging of the Hip and Pelvis https://rock.aaos.org/coursecontent.aspx?id=510000589 29/36 Bursae formation along the quadratus femoris or the obturator externus Osseous changes"
+        },
+        {
+          "id": "6004094",
+          "title": "Femoral Head Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004094",
+          "extractable": true,
+          "score": 19.453,
+          "snippet": "rectus femoris is bluntly developed from within the sheath. The floor of the sheath is incised, and the ascending branches of the lateral femoral circumflex vessels are identified and ligated. Lateral retraction of the tensor fascia and medial retraction of the rectus facilitate access to the anterior hip capsule over"
+        },
+        {
+          "id": "6001067",
+          "title": "Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001067",
+          "extractable": true,
+          "score": 18.852,
+          "snippet": "ly cause areas of tenderness unless it occurs in combination with iliopsoas tendonitis, greater trochanteric pain syndrome, athletic pubalgia, or other pathology Areas of palpation may include the adductor longus origin, rectus abdominis insertion, pubic symphysis/tubercle, inguinal ring, anterolateral joint line (rect"
+        },
+        {
+          "id": "6000045",
+          "title": "Athletic Pubalgia and Core Muscle Injury",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000045",
+          "extractable": true,
+          "score": 18.088,
+          "snippet": "Rectus abdominis Internal oblique External oblique Transversus abdominus SEND FEEDBACK 9/3/26, 7:25 AM AAOS | Athletic Pubalgia and Core Muscle Injury https://rock.aaos.org/coursecontent.aspx?id=6000045 3/24 Adductor longus Adductor brevis Adductor magnus Gracilis Obturator externus Pectineus Sartorius Iliacus Psoas Q"
+        },
+        {
+          "id": "510000576",
+          "title": "Hip Conditions in the Young Athlete",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000576",
+          "extractable": true,
+          "score": 17.675,
+          "snippet": "the pelvis are the anatomic locations of apophysitis (overuse) and apophyseal avulsions (acute).  Anatomy Developmental anatomy of the hip and the pelvis in youth athletes is primarily focused on closure of the multiple apophyses (secondary ossification centers) in the proximal femur and pelvis. Parvaresh et al8 inve"
+        },
+        {
+          "id": "6001029",
+          "title": "Surgical Anatomy of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001029",
+          "extractable": true,
+          "score": 16.958,
+          "snippet": "medial meniscus and provides posteromedial rotatory stability to the knee. The superficial layer contains the biceps femoris muscle and the iliotibial band. The biceps femoris originates from the ischium and the posterior femur and inserts onto the fibular head posterior to the ligamentous complexes. The biceps femori"
+        }
+      ]
+    },
+    {
+      "stableGuid": "yn[@;^GO[,",
+      "front": "The recurrent laryngeal nerve (RLN) is the most commonly injured nerve during anterior cervical discectomy and fusion .",
+      "extra": "*It is more common than injury to the sympathetic chain and injury to the C5 nerve root. *Permanent or transient injury has been reported to occur at rates of 1-11% following ACDF and manifests with dysphonia, hoarseness, airway obstruction, vocal fatigue, persistent cough, aspiration, and dysphagia.",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Spine",
+        "SnapOrtho::Treatment::Acdf_Approach"
+      ],
+      "candidates": [
+        {
+          "id": "6004088",
+          "title": "Adult Cervical Spine Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004088",
+          "extractable": true,
+          "score": 46.898,
+          "snippet": "or posteriorly based on spinal pathology and indications. An anterior approach is beneficial if instability or deformity (shortening) of the anterior column is present. Osteotomies are reserved to correct severe kyphotic deformities. Common anterior techniques used to improve cervical lordosis include ACDF, anterior c"
+        },
+        {
+          "id": "6003024",
+          "title": "Anatomy of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003024",
+          "extractable": true,
+          "score": 41.187,
+          "snippet": "oid and the carotid sheath laterally. The recurrent and superior laryngeal nerves are at risk of injury during this approach. Injury may lead to temporary or permanent vocal cord paralysis. The recurrent laryngeal nerve (RLN) is a branch of the vagus nerve/tenth cranial nerve. On the left, it turns beneath the aortic a"
+        },
+        {
+          "id": "6004085",
+          "title": "Cervical Spine Injuries and Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004085",
+          "extractable": true,
+          "score": 40.319,
+          "snippet": "may be associated with a risk of permanent neurologic damage. Various injuries to the cervical spine can occur in athletes, including cervical strain, cervical disk herniation, transient brachial plexus neurapraxia, transient quadriparesis, spinal canal stenosis, cervical spine fracture, or spinal cord injury (SCI). A"
+        },
+        {
+          "id": "6004089",
+          "title": "Cervical Spine Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004089",
+          "extractable": true,
+          "score": 39.545,
+          "snippet": "(C3 through C7) Background, Diagnosis, and Classification Subaxial trauma represents 65% of cervical spine fractures and 75% of cervical spine dislocations39 (Resource 4) Several classification systems are available, including the Cervical Spine Injury Severity Score, the Subaxial Cervical Spine Injury Classification,"
+        },
+        {
+          "id": "510000579",
+          "title": "Pediatric Spine Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000579",
+          "extractable": true,
+          "score": 34.355,
+          "snippet": "function.20 Cervical Spine Clearance Pediatric Cervical Spine Clearance Working Group algorithm21  Cervical Spine Clearance The Pediatric Cervical Spine Working Group recently developed standardized guidelines for evidence-based pediatric cervical spine clearance (Resource 5; Figure 2). In patients with intact mental"
+        },
+        {
+          "id": "6000050",
+          "title": "Cervical Radiculopathy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000050",
+          "extractable": true,
+          "score": 33.4,
+          "snippet": "cal Radiculopathy https://rock.aaos.org/coursecontent.aspx?id=6000050 18/24 Studies show equivalent fusion rates between ACDF with an autograft and ACDF with an allograft and a plate. Persistent speech and swallowing complications (2% to 5%) are associated with anterior exposure and retraction of the esophagus and the"
+        },
+        {
+          "id": "510000559",
+          "title": "Nerve Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000559",
+          "extractable": true,
+          "score": 31.486,
+          "snippet": "g at or beyond the bifurcation of the radial nerve, thereby affecting the PIN.45 Median Nerve Injury Median nerve injury presentation varies based on the level of the nerve injury. High median nerve injury results in dysfunction of the finger flexors and thumb flexors and opposition, whereas low median nerve injury pri"
+        },
+        {
+          "id": "6004084",
+          "title": "Anterior Cruciate Ligament Injury Prevention",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004084",
+          "extractable": true,
+          "score": 31.142,
+          "snippet": "Objectives Discuss the epidemiology, etiology, and risk factors associated with anterior cruciate ligament injuries. Describe the common mechanisms of anterior cruciate ligament injury. Review the current injury prevention literature and define the biomechanics associated with anterior cruciate injury mitigation. Expl"
+        },
+        {
+          "id": "6001059",
+          "title": "Pediatric Cervical Spine Abnormalities",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001059",
+          "extractable": true,
+          "score": 30.649,
+          "snippet": "is high. Anterior pins most commonly injure the supraorbital nerve. With halo traction, the sixth cranial (abducens) nerve is the most commonly injured nerve, which manifests as a loss of lateral gaze. If neurologic injury is noted with halo traction, traction should be removed.2 Consider halo vest immobilization afte"
+        },
+        {
+          "id": "510000533",
+          "title": "Primary Bone Tumors of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000533",
+          "extractable": true,
+          "score": 30.288,
+          "snippet": "sacral, cervical, and lumbar nerve roots, in that order (Table 2). Table 2 Considerations for Sacrificing Nerve Roots SEND FEEDBACK 9/3/26, 5:50 PM AAOS | Primary Bone Tumors of the Spine https://rock.aaos.org/coursecontent.aspx?id=510000533 7/34 Nerve Root Level Notes C2 Sacrifice common during C1-2 fusion; only effe"
+        },
+        {
+          "id": "6002023",
+          "title": "Cervical Myelopathy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002023",
+          "extractable": true,
+          "score": 29.556,
+          "snippet": "hology over two levels or fewer, because interbody fusion is an opportunity to re-create this alignment, or if compression spans fewer levels. Anterior procedures consist of: SEND FEEDBACK 9/3/26, 7:38 AM AAOS | Cervical Myelopathy https://rock.aaos.org/coursecontent.aspx?id=6002023 24/39 Anterior cervical diskectomy a"
+        },
+        {
+          "id": "6001065",
+          "title": "Acute and Recurrent Elbow Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001065",
+          "extractable": true,
+          "score": 28.18,
+          "snippet": "of injury is most commonly a fall onto an outstretched hand. Males have a propensity to dislocate during contact sports, such as football, wrestling, and basketball.1 Females most commonly dislocate during gymnastics and skating sports.1 Although less common, dislocations occur in adults and often are associated with"
+        }
+      ]
+    },
+    {
+      "stableGuid": "yN}SVcd5>$",
+      "front": "Which structure may impede closed reduction of the DRUJ ? ECU",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Forearm",
+        "SnapOrtho::Anatomy::Forearm::Joints",
+        "SnapOrtho::Anatomy::Forearm::Joints::Distal_Radioulnar_Joint",
+        "SnapOrtho::Specialty::Hand_Upper_Extremity",
+        "SnapOrtho::Treatment::Closed_Reduction"
+      ],
+      "candidates": [
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 41.095,
+          "snippet": "the classification of congenital differences in the upper extremity. Perform an appropriate workup of patients with congenital upper extremity differences. Determine the surgical and nonsurgical treatment options for the management of congenital upper extremity differences. Pathophysiology/Pathoanatomy Overview Congen"
+        },
+        {
+          "id": "510000578",
+          "title": "Distal Humerus Physeal Fractures, Pediatric Polytrauma, and Upper Extremity Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000578",
+          "extractable": true,
+          "score": 39.778,
+          "snippet": "and elbow dislocation. Management Nonsurgical Management Closed reduction and percutaneous pinning are the mainstays of management, with pin configurations comparable to those used for supracondylar fractures. An arthrogram often is obtained after closed reduction and pinning to confirm appropriate reduction. Closed r"
+        },
+        {
+          "id": "510000557",
+          "title": "Physical Examination and Anatomy of the Hand, Forearm, and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000557",
+          "extractable": true,
+          "score": 36.198,
+          "snippet": "tate (Cap) and hamate (H) are identified in the distal carpal row. C, Dorsal view of the distal radioulnar joint. The distal ulna articulates with the distal radius at the distal radioulnar joint, at which the distal radial articular surface (sigmoid notch) has a greater radius of curvature than that of the ulnar head"
+        },
+        {
+          "id": "510000566",
+          "title": "Surgical Management of Upper Extremity Bone Metastases",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000566",
+          "extractable": true,
+          "score": 32.184,
+          "snippet": "that metastasize to the upper extremity. Review the general treatment strategy and indications for surgical management of upper extremity metastases. Determine the best surgical treatment options for each anatomic location. Introduction Metastatic disease is common in the upper extremities. Of patients with metastatic"
+        },
+        {
+          "id": "6000025",
+          "title": "Ulnar Impaction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000025",
+          "extractable": true,
+          "score": 17.187,
+          "snippet": "diagnosis of UCI syndrome is made if the symptoms and the physical examination correspond with radiographic pathology.  Physical Examination Examples of pathologies that may cause pain on the ulnar side of the wrist include distal radioulnar joint (DRUJ) laxity, DRUJ arthritis, extensor carpi ulnaris (ECU) tendinitis"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "extractable": true,
+          "score": 16.355,
+          "snippet": "n an outstretched hand Management If the DRUJ cannot be reduced, then exploration to remove interposed soft tissues (most commonly the extensor carpi ulnaris, extensor digiti minimi, or extensor digitorum communis) is considered.10 DRUJ usually is stable after anatomic plate-and-screw fixation of the radius. If the DRU"
+        },
+        {
+          "id": "6002000",
+          "title": "Structure, Function, and Biology of the Extracellular Matrix",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002000",
+          "extractable": true,
+          "score": 16.248,
+          "snippet": " Structure, Function, and Biology of the Extracellular Matrix  CORE July 02, 2024 Stavros Thomopoulos, PhD Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Define the extracellular matrix building blocks of musculoskeletal tissues. Examine the composition and structu"
+        },
+        {
+          "id": "6001005",
+          "title": "Synovial Joint Biology, Structure, Function, and Cross Talk",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001005",
+          "extractable": true,
+          "score": 13.969,
+          "snippet": "family of genes. Apoptosis then occurs within the so-called interzone, and the tissues separate via cavitation. Joint-specific development then ensues via a control mechanism not yet understood. Structure The anatomy of each joint varies according to the location and demands of motion placed on the joint. Joint struct"
+        },
+        {
+          "id": "6001057",
+          "title": "Diaphyseal Forearm Fractures, Distal Forearm Fractures, and Monteggia Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001057",
+          "extractable": true,
+          "score": 12.793,
+          "snippet": "Forearm Fractures, and Monteggia Fractures https://rock.aaos.org/coursecontent.aspx?id=6001057 9/44 Reproduced from Dua K, Hosseinzadeh P, Baldwin KD, Abzug JM: Management of pediatric forearm fractures after failed closed reduction. Instr Course Lect 2019;68:395- 406. Outcomes As many as 10% of fractures managed via"
+        },
+        {
+          "id": "6004031",
+          "title": "Tendinopathy of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004031",
+          "extractable": true,
+          "score": 10.956,
+          "snippet": "Hand and Wrist https://rock.aaos.org/coursecontent.aspx?id=6004031 13/17 Occasionally, ECU tendinopathy is associated with subluxation of the tendon within its sheath; however, a recent study of ECU subluxation observed on MRIs reported no correlation with pain.15 Patient History and Physical Examination Isolated tend"
+        },
+        {
+          "id": "6000026",
+          "title": "Wrist and Hand Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000026",
+          "extractable": true,
+          "score": 10.621,
+          "snippet": "the 4-5 portal; useful for evaluating and visualizing the relationship between the scaphoid and the lunate (scapholunate ligament) and the lunate and the triquetrum (lunotriquetral SEND FEEDBACK 9/4/26, 10:01 AM AAOS | Wrist and Hand Arthroscopy https://rock.aaos.org/coursecontent.aspx?id=6000026 11/17 ligament) and t"
+        },
+        {
+          "id": "6001175",
+          "title": "Clavicular Fractures and Sternoclavicular and Acromioclavicular Injuries in the Pediatric Patient",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001175",
+          "extractable": true,
+          "score": 7.897,
+          "snippet": "weeks Posterior displacement without visceral injury to mediastinal structures Closed reduction (35%) Anterior displacement13 Supine with bolster between scapulae14 Longitudinal traction to both upper extremities while retracting scapulae Posterior displacement Closed reduction should be performed in the operating roo"
+        }
+      ]
+    },
+    {
+      "stableGuid": "yo*4Q7~kmj",
+      "front": "What is a discoid meniscus ? Anatomical variant of a thicker and fuller crescent-shaped meniscus",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Joints",
+        "SnapOrtho::Anatomy::Leg_Knee::Joints::Lateral_Meniscus",
+        "SnapOrtho::Specialty::Sports_Medicine"
+      ],
+      "candidates": [
+        {
+          "id": "6001056",
+          "title": "Meniscal Tears and Discoid Meniscus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001056",
+          "extractable": true,
+          "score": 63.51,
+          "snippet": "variant of the meniscus is called a discoid meniscus. This variant is almost exclusively found in the lateral meniscus; however, scattered case reports of discoid medial menisci exist. Discoid meniscus refers to an abnormally large meniscus that does not have the usual contour. Discoid menisci also have an inherently"
+        },
+        {
+          "id": "6004079",
+          "title": "Anatomy of the Ankle for the Sports Medicine Surgeon",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004079",
+          "extractable": true,
+          "score": 35.175,
+          "snippet": "cadaveric courses reduce injury to the superficial peroneal nerve, the commonest complication in ankle arthroscopy. Knee Surg Sports Traumatol Arthrosc 2020;28[1]:79-85.)  Lateral Ankle Ligament Complex The lateral ankle ligament complex includes the ATFL, CFL, and PTFL. The ATFL is a wide, short, trapezoidal shaped"
+        },
+        {
+          "id": "6002002",
+          "title": "Meniscus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002002",
+          "extractable": true,
+          "score": 34.195,
+          "snippet": "meniscotibial capsular margins SEND FEEDBACK 9/3/26, 4:43 PM AAOS | Meniscus https://rock.aaos.org/coursecontent.aspx?id=6002002 5/44 Medial meniscus has less mobility with more rigid peripheral fixation than the lateral meniscus. Meniscofemoral ligaments (variable incidence) Function as stabilizers of the lateral men"
+        },
+        {
+          "id": "6001066",
+          "title": "The Team Physician and the Ethics of Sports Medicine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001066",
+          "extractable": true,
+          "score": 30.793,
+          "snippet": "context in which sports medicine ethics are operationalized has distinct characteristics and manifestly structures the behavior of those charged with the duty to act ethically. Studies of the practice of maintaining patient confidentiality in sports medicine show, for example, that the distinct physical environment, p"
+        },
+        {
+          "id": "6004075",
+          "title": "The Biology and Biomechanics of Grafts and Implants in Sports Medicine Surgery",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004075",
+          "extractable": true,
+          "score": 29.728,
+          "snippet": "allografts. Explain how to choose an appropriate graft based on patient age and activity level. Review the basic biomechanical properties of implants available for sports medicine procedures. Describe the common modes of failure with various types of implants. Introduction Soft-tissue grafts are commonly used in sport"
+        },
+        {
+          "id": "6001181",
+          "title": "Meniscal Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001181",
+          "extractable": true,
+          "score": 28.144,
+          "snippet": "ecause these tears may be complex and problematic, subclassification may be beneficial.11 Discoid meniscus Discoid meniscus is a larger-than-normal meniscus from lack of central cell apoptosis in utero. Discoid meniscus is rare. It more commonly affects the lateral meniscus (1.4% to 15%) than the medial meniscus (<1%;"
+        },
+        {
+          "id": "6001003",
+          "title": "Biology and Biomechanics of the Meniscus and Labrum",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001003",
+          "extractable": true,
+          "score": 27.662,
+          "snippet": "meniscus of the knee and labrum of the shoulder. Specify the regional variation in the macrostructure and microstructure of the meniscus attributed to its complex mechanical function. Determine biomechanical factors to consider for repair and reconstruction of the meniscus. Meniscus The knee meniscus is consists of tw"
+        },
+        {
+          "id": "6000017",
+          "title": "Radiographic Evaluation of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000017",
+          "extractable": true,
+          "score": 22.182,
+          "snippet": "a knee obtained after unicompartmental knee arthroplasty shows increased signal intensity surrounding the tibial component, which is concerning for aseptic loosening. (Reproduced with permission from van der Bruggen W, Hirschmann MT, Strobel K, et al: SPECT/CT in the postoperative painful knee. Semin Nucl Med 2018;48["
+        },
+        {
+          "id": "6001029",
+          "title": "Surgical Anatomy of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001029",
+          "extractable": true,
+          "score": 15.342,
+          "snippet": "30% of the peripheral medial meniscus and 10% to 25% of the peripheral lateral meniscus. The menisci are attached to collateral ligaments via the coronary ligaments. The medial meniscus is crescent shaped and attaches more anterior and posterior.10 The lateral meniscus is circular and covers a larger proportion of the"
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "extractable": true,
+          "score": 12.716,
+          "snippet": "the crescent from stress, in a suspension-bridge model. As patients age, relative avascularity of the rotator crescent leads to progressive thinning of the area, putting more strain on the rotator cable.4 Tears in the cable increase tear gap distance and strain compared with those in the crescent. Cable-disrupted tear"
+        },
+        {
+          "id": "6001069",
+          "title": "Physical Examination of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001069",
+          "extractable": true,
+          "score": 9.353,
+          "snippet": "the meniscus. B, In the medial McMurray circumduction examination, the patient’s knee is fully flexed and the tibia is externally rotated (white arrow), engaging the posterior horn of the medial meniscus under the medial femoral condyle. The knee is then extended (black arrow), entrapping the meniscus. (Reproduced fro"
+        },
+        {
+          "id": "510000632",
+          "title": "Clavicular Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000632",
+          "extractable": true,
+          "score": 9.225,
+          "snippet": "clavicle. SEND FEEDBACK 9/3/26, 7:41 AM AAOS | Clavicular Fractures https://rock.aaos.org/coursecontent.aspx?id=510000632 8/38 Figure 5 Coronal histologic section through the acromioclavicular joint shows the thicker superior capsular ligament (single arrow) compared with the thinner inferior capsular ligament (double"
+        }
+      ]
+    }
+  ]
+}

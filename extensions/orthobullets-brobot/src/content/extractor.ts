@@ -75,11 +75,14 @@ function firstElement(root: DocumentLike, selectors: readonly string[], debugKey
 }
 
 function parseQuestionIdFromUrl(url: string) {
-  const obQuestionMatch = url.match(/\b((?:OBQ|SBQ)[A-Z0-9.-]+)\b/i);
-  if (obQuestionMatch?.[1]) return obQuestionMatch[1].toUpperCase();
-
   const queryMatch = url.match(/[?&](?:questionId|question_id|qid)=([A-Za-z0-9.-]+)/i);
   if (queryMatch?.[1]) return queryMatch[1].toUpperCase();
+
+  // testview URLs contain both the durable numeric qid and a `test=OBQ...`
+  // value. Prefer qid so a test identifier can never be mistaken for the
+  // question identity (and silently quarantine otherwise valid captures).
+  const obQuestionMatch = url.match(/\b((?:OBQ|SBQ)[A-Z0-9.-]+)\b/i);
+  if (obQuestionMatch?.[1]) return obQuestionMatch[1].toUpperCase();
 
   return undefined;
 }
@@ -575,6 +578,12 @@ function extractQuestionId(root: DocumentLike, url: string, matched: Record<stri
   return codeMatch?.[1] || undefined;
 }
 
+function extractQuestionAliases(root: DocumentLike) {
+  const text = textOf(root.querySelector('body')) || textOf(root);
+  const code = text.match(/\b((?:OBQ|SBQ)\d+\.\d+)\b/i)?.[1]?.toUpperCase();
+  return code ? [code] : [];
+}
+
 function extractTopicId(root: DocumentLike, url: string, matched: Record<string, string[]>) {
   const fromUrl = parseTopicIdFromUrl(url);
   if (fromUrl) return fromUrl;
@@ -618,6 +627,7 @@ export function extractOrthobulletsPageContext(input: {
   const choices = extractChoices(input.document, matchedSelectors);
   const topicId = extractTopicId(input.document, pageUrl, matchedSelectors);
   const extractedQuestionId = extractQuestionId(input.document, pageUrl, matchedSelectors);
+  const questionAliases = extractQuestionAliases(input.document);
   const pageKind = detectPageKind({
     pageUrl,
     explanationText,
@@ -680,6 +690,7 @@ export function extractOrthobulletsPageContext(input: {
         percentDistribution: choices.percentDistribution,
         linkedConcepts,
         sourceIdentity,
+        questionAliases,
       },
     },
     debug: {

@@ -1,0 +1,1112 @@
+{
+  "batchKey": "map-000001-packet-0253",
+  "inputChecksum": "3358b9f150ea0d16ee19872dd4ab8bc027150e5a0e4fe37c43b7831239be33b2",
+  "corpusChecksum": "925a8d94eedbd6450eac4612781b380c0489fa4d57d324e6db7326305604f0d8",
+  "instructions": [
+    "Source of truth: the candidate ROCK chapters in this brief. Do not invent chapter IDs.",
+    "Pick 1–3 chapters from this card's candidates. First is primary; others must independently teach the cloze.",
+    "Do not attach alias duplicates of the same title. Skip when no candidate honestly teaches this cloze.",
+    "Do not edit Extra, Text, tags, identities, or checksums. Do not fetch rock.aaos.org."
+  ],
+  "sidecarSchema": {
+    "card": {
+      "stableGuid": "string",
+      "status": "\"mapped\"|\"skipped\"",
+      "chapters": "1-3 {id, role} from this card's candidates; first is primary",
+      "skipReason": "if skipped"
+    }
+  },
+  "cards": [
+    {
+      "stableGuid": "p:X)QxtN4E",
+      "front": "Two (2) advantages of direct lateral THA approach : Less dislocation (compared to posterior) Allows access to anterior and posterior hip joint",
+      "extra": "Two disadvantages: -Less commonly used bc of violation of abductors and thus postoperative limp -Heterotopic ossification",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Thigh_Hip",
+        "SnapOrtho::Anatomy::Thigh_Hip::Joints",
+        "SnapOrtho::Anatomy::Thigh_Hip::Joints::Hip_Joint",
+        "SnapOrtho::Diagnosis::Heterotopic_Ossification",
+        "SnapOrtho::Specialty::Adult_Reconstruction",
+        "SnapOrtho::Treatment::Direct_Lateral_Hip_Approach"
+      ],
+      "candidates": [
+        {
+          "id": "6001027",
+          "title": "Postoperative Heterotopic Ossification",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001027",
+          "extractable": true,
+          "score": 78.688,
+          "snippet": "severe heterotopic ossification (Brooker classes 3 and 4) with the direct anterior approach (DAA, 3% in grade 3; zero in grade 4) compared with the posterior approach (4.2% in grade 3; 3.3% in grade 4; P = 0.04) for THA. Similarly, Alijanipour et al32 compared the direct lateral approach with the DAA and reported a lo"
+        },
+        {
+          "id": "510000510",
+          "title": "Postoperative Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000510",
+          "extractable": true,
+          "score": 54.177,
+          "snippet": "dislocations in this high-risk THA cohort. Management of Hip Dislocation After THA  Management of Hip Dislocation After THA Nonsurgical and surgical treatment options are available for the management of hip dislocation after THA. Management depends on a complex array of factors, such as the mechanism and acuity of di"
+        },
+        {
+          "id": "6004095",
+          "title": "Surgical Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004095",
+          "extractable": true,
+          "score": 44.249,
+          "snippet": "traumatically disrupted.1     NOTES SEND FEEDBACK 9/4/26, 9:42 AM AAOS | Surgical Hip Dislocation https://rock.aaos.org/coursecontent.aspx?id=6004095 1/10 Anterior approaches allow for dislocation of the femoral head but afford limited access to the posterior acetabulum. A direct comparison of anterior and posteri"
+        },
+        {
+          "id": "510000535",
+          "title": "Geriatric Hip Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000535",
+          "extractable": true,
+          "score": 36.433,
+          "snippet": "on the affected side while walking to compensate for weakness of the hip abductors. Some surgeons have argued that posterior approaches to the hip that violate the hip abductors may contribute to postoperative hip instability. Using a direct anterior versus posterior approach to the hip in the management of femoral ne"
+        },
+        {
+          "id": "510000505",
+          "title": "Primary Total Hip Arthroplasty for Other Indications: Posttraumatic Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000505",
+          "extractable": true,
+          "score": 35.493,
+          "snippet": "via open reduction and internal fixation,1 despite anatomic reduction. After hip dislocation the incidence of posttraumatic osteoarthritis is 17% (anterior dislocation) and 30% (posterior dislocation) if reduction takes place within 6 hours of dislocation, and 76% if reduction is performed more than 6 hours postinjury"
+        },
+        {
+          "id": "6004023",
+          "title": "Evaluation and Workup in Revision Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004023",
+          "extractable": true,
+          "score": 33.062,
+          "snippet": "twisting event, bending at the waist beyond 90°, or sitting in a low chair. Depending on the surgical approach, different positions are more conducive to dislocation. Anterior approach: more likely to dislocate in positions of hip extension and external rotation Posterior approach: more likely to dislocate in position"
+        },
+        {
+          "id": "510000555",
+          "title": "Component Removal in Revision Total Hip Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000555",
+          "extractable": true,
+          "score": 32.527,
+          "snippet": "Removal in Revision Total Hip Arthroplasty https://rock.aaos.org/coursecontent.aspx?id=510000555 15/50 (Video 4) direct anterior approach (Video 5), posterior approach (Video 6), or direct lateral approach can be used. Anatomic considerations during rTHA include pelvic landmarks and proximal femur and femoral diaphyse"
+        },
+        {
+          "id": "6004094",
+          "title": "Femoral Head Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004094",
+          "extractable": true,
+          "score": 32.419,
+          "snippet": "be used. This is performed with the patient in the lateral position. Surgical hip dislocation allows for circumferential assessment and access to the femoral head while sparing the blood supply.12-14 The main advantage of a posterior approach compared with an anterior approach is access to wall fractures and capsulola"
+        },
+        {
+          "id": "6004018",
+          "title": "Alternative Implant Designs: Hip Resurfacing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004018",
+          "extractable": true,
+          "score": 31.94,
+          "snippet": "l Technique Numerous surgical approaches can be used for HRA. Compared with traditional THA, some modifications to the standard approach are necessary to ensure adequate visualization, access, and protection of vascularity. Dissimilar from traditional THA, HRA requires complete exposure of the head/neck junction, which"
+        },
+        {
+          "id": "6002060",
+          "title": "Hip Arthroscopy and Periacetabular Osteotomy: Surgical Techniques",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002060",
+          "extractable": true,
+          "score": 31.926,
+          "snippet": "st and uses the classic, direct anterior approach to the hip joint for the distal aspect. An anterior approach to the hip is used via a modified Smith-Petersen interval for exposure. The incision is C-shaped and begins proximally about the iliac crest and extends lateral to the ASIS. The incision continues distal in a"
+        },
+        {
+          "id": "510000509",
+          "title": "Postoperative Adverse Local Tissue Reaction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000509",
+          "extractable": true,
+          "score": 31.154,
+          "snippet": "and direct lateral approaches.18,19 Location and accessibility of the pseudotumor and the exposure necessary to accomplish goals should be considered in selecting a surgical approach. For example, femoral pathology necessitating osteotomy for removal of well-fixed implants may be feasible but technically demanding if"
+        },
+        {
+          "id": "6004072",
+          "title": "Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004072",
+          "extractable": true,
+          "score": 31.089,
+          "snippet": "reproduces pain. Anterior subluxation may be obvious via direct inspection; however, posterior subluxation may be more subtle. Anterior injuries often exhibit some dynamic subluxation of the medial clavicle, whereas posterior injuries are more static in nature. Anterior Dislocations  Anterior Dislocations Patients wi"
+        }
+      ]
+    },
+    {
+      "stableGuid": "P:Zo|5TI@T",
+      "front": "What unique physical exam finding is seen in a patient with a SCFE ? Obligatory external rotation with passive flexion",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Pediatric_Orthopedics"
+      ],
+      "candidates": [
+        {
+          "id": "6001175",
+          "title": "Clavicular Fractures and Sternoclavicular and Acromioclavicular Injuries in the Pediatric Patient",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001175",
+          "extractable": true,
+          "score": 23.212,
+          "snippet": "in the Pediatric Patient https://rock.aaos.org/coursecontent.aspx?id=6001175 7/25 patient younger than 10 years often heal well with little clinical importance. The only two classification systems that are unique to pediatric and adolescent clavicle injuries are the FACTS adolescent clavicle classification and the Roc"
+        },
+        {
+          "id": "6001074",
+          "title": "Physical Examination of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001074",
+          "extractable": true,
+          "score": 23.183,
+          "snippet": "leg raise. During the Bowstring test, the leg is brought toward 90° with maintenance of some knee flexion. As the patient begins to experience pain with passive flexion of the hip, flexion is stopped, and the knee is extended further in combination with passive dorsiflexion of the ankle. The Bowstring test is consider"
+        },
+        {
+          "id": "510000614",
+          "title": "Physical Examination of the Shoulder",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000614",
+          "extractable": true,
+          "score": 22.254,
+          "snippet": "AM AAOS | Physical Examination of the Shoulder https://rock.aaos.org/coursecontent.aspx?id=510000614 1/36 Physical examination should consist of: Inspection Palpation Range of motion testing: active and passive Strength testing Special tests Physical examination should be used in combination with patient history and i"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 22.139,
+          "snippet": "syndesmosis, if intact, stabilizes the joint. An unstable syndesmosis elicits a positive response to the external rotation test, the squeeze test, and the tape stabilization test. For the external rotation test, stabilize tibia and externally rotate the foot and ankle. A painful response is positive for syndesmotic inj"
+        },
+        {
+          "id": "6004071",
+          "title": "Pediatric Foot and Ankle Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004071",
+          "extractable": true,
+          "score": 22.135,
+          "snippet": "AAOS | Pediatric Foot and Ankle Trauma https://rock.aaos.org/coursecontent.aspx?id=6004071 59/70 This patient would benefit from reduction of the interphalangeal joint and pinning. (Courtesy of Julia Sanders, MD, Denver, CO, and Aaron Brandt, MD, Denver, CO.) Evaluation/Diagnosis Patient History and Physical Examinati"
+        },
+        {
+          "id": "6001067",
+          "title": "Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001067",
+          "extractable": true,
+          "score": 21.984,
+          "snippet": "END FEEDBACK 9/3/26, 5:44 PM AAOS | Physical Examination of the Hip https://rock.aaos.org/coursecontent.aspx?id=6001067 20/36 Logroll test (passive supine rotation test) Flexion, adduction, and internal rotation test (FADIR test) Flexion, abduction, and external rotation test (FABER or Patrick test) Dynamic labral stre"
+        },
+        {
+          "id": "6001059",
+          "title": "Pediatric Cervical Spine Abnormalities",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001059",
+          "extractable": true,
+          "score": 21.981,
+          "snippet": "flexion and extension, may confirm spinal cord compression in patients with signs and symptoms suggestive of spine cord compression who have normal plain radiographs.25 Management Congenital Muscular Torticollis Initial management is physical therapy. Earlier management is associated with better success of physical th"
+        },
+        {
+          "id": "6003013",
+          "title": "Slipped Capital Femoral Epiphysis and Femoroacetabular Impingement",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003013",
+          "extractable": true,
+          "score": 21.639,
+          "snippet": "may reveal obligate external rotation (external rotation of the hip as the hip is brought into flexion). The foot and knee progression angles usually are externally rotated. Physical Examination  Physical Examination Antalgic gait or a limp, decreased hip flexion and internal rotation, mild limb-length discrepancy, ob"
+        },
+        {
+          "id": "6001069",
+          "title": "Physical Examination of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001069",
+          "extractable": true,
+          "score": 21.245,
+          "snippet": "in evaluating a patient with knee pain, with particular attention paid to loss of hip rotation. Order of Physical Examination Inspection Gait Limb alignment Palpation Range of motion Strength and special tests  Order of Physical Examination The knee physical examination begins with inspection and assessment of patien"
+        },
+        {
+          "id": "6001159",
+          "title": "History and Physical Examination of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001159",
+          "extractable": true,
+          "score": 20.689,
+          "snippet": "https://rock.aaos.org/coursecontent.aspx?id=6001159 8/19 Supine Portion of Hip Physical Examination A comprehensive supine physical examination of the hip should include a leg length assessment; inspection of the skin and previous incisions; passive ROM assessment, including evaluation for the presence of a hip flexio"
+        },
+        {
+          "id": "510000588",
+          "title": "Femoroacetabular Impingement Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000588",
+          "extractable": true,
+          "score": 20.485,
+          "snippet": "rotation. The test is positive if the patient’s symptoms are reproduced with passive hip flexion, adduction, and internal rotation. Patients with FAI syndrome also demonstrate reduced passive internal rotation. A study by Wyss et al28 demonstrated an inverse relationship between the degree of passive internal rotation"
+        },
+        {
+          "id": "510000585",
+          "title": "Physical Examination of the Elbow",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000585",
+          "extractable": true,
+          "score": 19.577,
+          "snippet": "the components of a thorough patient history and physical examination to create a differential diagnosis for elbow pathology. Perform an appropriate physical examination of the elbow to guide a patient evaluation and additional imaging studies, if indicated. Specify individual components of the physical examination to"
+        }
+      ]
+    },
+    {
+      "stableGuid": "p:ZsdId|kv",
+      "front": "In the lumbar spine , a paracentral disc herniation affects which nerve root ? Traversing (lower) nerve root",
+      "extra": "A paracentral herniation at L4/5 affects L5",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Spine"
+      ],
+      "candidates": [
+        {
+          "id": "6001072",
+          "title": "Lumbar Spine Injuries and Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001072",
+          "extractable": true,
+          "score": 60.495,
+          "snippet": "long-term results similar to those treated nonsurgically.37 Lumbar Spine Fractures Management of lumbar spine fractures includes preventing neurologic injury, restoring stability, and restoring normal function. Isolated lumbar spine fractures can be managed via bracing.  Lumbar Spine Fractures The primary goals of th"
+        },
+        {
+          "id": "6001075",
+          "title": "Lumbar Spine Stenosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001075",
+          "extractable": true,
+          "score": 47.846,
+          "snippet": "complaints. Pathophysiology Lumbar spine stenosis is the end result of a self-propagating cycle beginning with disk degeneration and loss of disk height that results in alterations in the structure and mechanics of the lumbar spine. The end result of sustained neural compression is alterations in nerve root microcircu"
+        },
+        {
+          "id": "6004087",
+          "title": "Disk Herniations/Herniated Nucleus Pulposus",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004087",
+          "extractable": true,
+          "score": 42.143,
+          "snippet": "and natural history of lumbar disk herniation. Identify patient history and physical examination findings consistent with lumbar disk herniation. Describe neurologic findings associated with lumbar disk herniations depending on the level and location of the herniation. Describe nonsurgical treatment options and outcom"
+        },
+        {
+          "id": "6000050",
+          "title": "Cervical Radiculopathy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000050",
+          "extractable": true,
+          "score": 30.717,
+          "snippet": "AAOS | Cervical Radiculopathy https://rock.aaos.org/coursecontent.aspx?id=6000050 4/24 Etiology and Pathoanatomy The clinical manifestations of cervical radiculopathy arise from a combination of nerve root compression and inflammation. Compressive lesions Disk herniation Soft disk herniation (Figure 3): nuclear materi"
+        },
+        {
+          "id": "6001074",
+          "title": "Physical Examination of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001074",
+          "extractable": true,
+          "score": 27.618,
+          "snippet": "used to rule out ulnar compressive neuropathy. Tests for Lumbar Spine Pathology Dural tension signs, such as the straight leg raise test, Lasègue sign, slump test, and femoral nerve stretch test, are used to assess for nerve compression in the lumbar spine.  Tests for Lumbar Spine Pathology The straight leg raise tes"
+        },
+        {
+          "id": "510000559",
+          "title": "Nerve Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000559",
+          "extractable": true,
+          "score": 26.595,
+          "snippet": "a cable sural nerve graft, is the ideal treatment option. Preganglionic lesions often require nerve transfers, such as an ulnar nerve fascicle to the musculocutaneous nerve (Oberlin transfer), a spinal accessory nerve fascicle to the suprascapular nerve, or a radial nerve fascicle to the axillary nerve. Pan-plexus ner"
+        },
+        {
+          "id": "6000053",
+          "title": "Thoracic Disk Herniations and Stenosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000053",
+          "extractable": true,
+          "score": 26.47,
+          "snippet": "stiffer thoracic spine transitions to the more mobile lumbar spine and greater degeneration occurs19,20 (Figure 1). The area of the conus medullaris should be considered because a herniation at this level may result in unique patient presentations involving bowel and bladder function. The location of the herniation wi"
+        },
+        {
+          "id": "6004085",
+          "title": "Cervical Spine Injuries and Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004085",
+          "extractable": true,
+          "score": 26.212,
+          "snippet": "the difference between a paramedian disk herniation abutting a nerve root and a central disk herniation compressing the spinal cord. D, A left posterolateral disk protrusion (arrow) results in mild deformity of the spinal cord and compression of the exiting nerve root. E, Central canal stenosis and spinal cord impinge"
+        },
+        {
+          "id": "6002021",
+          "title": "Imaging of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002021",
+          "extractable": true,
+          "score": 24.454,
+          "snippet": "the herniation is paracentral or far lateral to correlate with specific nerve root impingement and physical examination deficits (Resource 2; Figures 5 and 6). SEND FEEDBACK 9/3/26, 4:27 PM AAOS | Imaging of the Spine https://rock.aaos.org/coursecontent.aspx?id=6002021 15/30 Figure 5 Sagittal (A) and axial (B) T2-weig"
+        },
+        {
+          "id": "510000582",
+          "title": "Pediatric and Adolescent Back Pain: Pediatric Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000582",
+          "extractable": true,
+          "score": 24.093,
+          "snippet": "Knowledge Update: Spine, ed 5. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2017, pp 63-71.) Physical examination findings may include paraspinal muscle spasms, tight hamstrings, and limited lumbar mobility. High-grade spondylolisthesis can produce a waddling gait (Phalen-Dickson syndrome) and hyperlordosis"
+        },
+        {
+          "id": "6003024",
+          "title": "Anatomy of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003024",
+          "extractable": true,
+          "score": 23.922,
+          "snippet": "bra and the anterior third of L5 are associated with the lowest risk of lumbar plexus nerve injury.  Lateral Lumbar Approaches The lateral approach to the lumbar spine affords access the anterior column of the spine from T12-L5 without requiring an access surgeon. Lateral approaches to the lumbar spine can be categori"
+        },
+        {
+          "id": "510000533",
+          "title": "Primary Bone Tumors of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000533",
+          "extractable": true,
+          "score": 22.552,
+          "snippet": "nerve root may be the most redundant, and its sacrifice is better tolerated than other nerve root sacrifice; however, deficits are still be expected. Lumbar Nerve Roots SEND FEEDBACK 9/3/26, 5:50 PM AAOS | Primary Bone Tumors of the Spine https://rock.aaos.org/coursecontent.aspx?id=510000533 9/34 In general, lumbar ne"
+        }
+      ]
+    },
+    {
+      "stableGuid": "p!=.(?#{N?",
+      "front": "What are the two surgical techniques for leg compartment release ? Two incision approach Single incision approach",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Trauma",
+        "SnapOrtho::Treatment::Leg_Fasciotomy"
+      ],
+      "candidates": [
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "extractable": true,
+          "score": 32.821,
+          "snippet": "7/36 Figure 3 Dorsal and volar illustrations of forearms show the skin incisions for forearm fasciotomy. Adequate volar fasciotomy includes mobile wad fasciotomy, lacertus fibrosus release, volar extrinsic muscle fasciotomy, and carpal tunnel release. Dorsal compartment pressures often decrease with volar fasciotomy."
+        },
+        {
+          "id": "6002060",
+          "title": "Hip Arthroscopy and Periacetabular Osteotomy: Surgical Techniques",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002060",
+          "extractable": true,
+          "score": 29.458,
+          "snippet": "rs for any reason was 29% (95% CI, 17% to 42%). Surgical Technique PAO is a powerful surgical technique used to manage acetabular dysplasia (and associated instability) and acetabular retroversion with associated pincer impingement (Videos 2 and 3). The surgical technique requires surgical exposure, multiple pelvic ost"
+        },
+        {
+          "id": "510000657",
+          "title": "Compartment Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000657",
+          "extractable": true,
+          "score": 25.957,
+          "snippet": "AOS | Compartment Syndrome https://rock.aaos.org/coursecontent.aspx?id=510000657 23/33 A dorsal incision is used to release the dorsal compartment if a crush injury is present and pressures remain elevated after release of the volar compartment. The carpal tunnel typically is released as a part of a forearm compartment"
+        },
+        {
+          "id": "6001190",
+          "title": "Tibial Shaft Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001190",
+          "extractable": true,
+          "score": 25.031,
+          "snippet": "Tibial Shaft Fractures https://rock.aaos.org/coursecontent.aspx?id=6001190 13/42 Figure 6 Illustrations of the lower leg show the single-incision or perifibular approach, which allows access to all four compartments via a lateral incision. A, The skin incision is made in line with and directly over the fibula. B, Rele"
+        },
+        {
+          "id": "6000048",
+          "title": "Chronic Exertional Compartment Syndrome",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000048",
+          "extractable": true,
+          "score": 24.501,
+          "snippet": "satisfaction and return to activity with surgical management.43 Open Fasciotomy  Open Fasciotomy Open fasciotomy has been the standard approach to release all four compartments of the leg. A 10-cm incision is initially made between the tibia and fibula on the anterolateral aspect to release the anterior and lateral c"
+        },
+        {
+          "id": "510000551",
+          "title": "Surgical Management of the Diabetic Foot",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000551",
+          "extractable": true,
+          "score": 23.751,
+          "snippet": "indications for the surgical management of manifestations of diabetes mellitus in the foot. Stratify the risk of compilations from surgical treatment in a patient with diabetes mellitus. Review the expected outcomes of surgical procedures for the management of diabetic foot problems. Review the following procedures: p"
+        },
+        {
+          "id": "6002071",
+          "title": "Microsurgery Techniques",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002071",
+          "extractable": true,
+          "score": 23.014,
+          "snippet": "situations, surgeons must resolve the intrinsic venous outflow. Microvascular Techniques The specific techniques used are less important than good execution of technique. Any of the techniques are adequate if performed well; however, if minor missteps with the techniques occur, then the anastomosis will thrombose.2,3"
+        },
+        {
+          "id": "6004095",
+          "title": "Surgical Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004095",
+          "extractable": true,
+          "score": 19.233,
+          "snippet": "after femoral head allograft reconstruction via a surgical hip dislocation approach shows fixation of a step-cut digastric osteotomy with the use of 3.5-mm screws. (Courtesy of L. Henry Goodnough, MD, Seattle, WA.) Management Surgical Approach  Surgical Approach To review an surgical approach see Video 1. The patient"
+        },
+        {
+          "id": "6001029",
+          "title": "Surgical Anatomy of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001029",
+          "extractable": true,
+          "score": 18.991,
+          "snippet": "e advanced exposure techniques, such as a rectus snip or a tibial tubercle osteotomy. Primary Surgical Approaches Skin Incision Use the most lateral skin incision that allows access to the joint. Bridge prior skin incisions by approximately 7 cm if the prior incision cannot be used. Make the incision medial to the tibi"
+        },
+        {
+          "id": "6003004",
+          "title": "Surgical Positioning and Monitoring",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003004",
+          "extractable": true,
+          "score": 18.981,
+          "snippet": "uld be placed on all bony prominences, including the fibular head, lateral leg, and lateral malleolus of the down leg, as well as between the knees to minimize excessive pressure.11 The trunk and the down leg should be safely secured to the surgical table. Patients may be flexed in the lateral position to attain better"
+        },
+        {
+          "id": "6001015",
+          "title": "Cavovarus Foot Deformity: Surgical Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001015",
+          "extractable": true,
+          "score": 18.773,
+          "snippet": "2014;22[8]:512-520.) Surgical Procedures Soft-Tissue Procedures SEND FEEDBACK 9/3/26, 7:36 AM AAOS | Cavovarus Foot Deformity: Surgical Management https://rock.aaos.org/coursecontent.aspx?id=6001015 5/21 Plantar Fascia Release Release of the plantar fascia is used to lessen first metatarsal plantar flexion, and thereb"
+        },
+        {
+          "id": "510000563",
+          "title": "Surgical Management of Benign Soft-Tissue Lesions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000563",
+          "extractable": true,
+          "score": 18.61,
+          "snippet": "secondary surgery with wide margins. Incision location that may be extended for secondary surgery Longitudinal incisions in line with the anatomic compartment Incision centered over the mass Limit dissection to necessary planes and avoid unnecessary exploration of critical neurovascular structures. Narrow suture lines"
+        }
+      ]
+    },
+    {
+      "stableGuid": "P!Qj~)yKLe",
+      "front": "Two (2) common septic arthritis pathogens (besides staph aureus) in patients with sickle cell disease ? Salmonella Strep pneumo",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Basic_Science"
+      ],
+      "candidates": [
+        {
+          "id": "6001052",
+          "title": "Septic Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001052",
+          "extractable": true,
+          "score": 65.179,
+          "snippet": "Describe the pathophysiology of septic arthritis in the pediatric population. Characterize common organisms responsible for septic arthritis and associated risk factors. Understand and apply physical examination findings, imaging studies, and diagnostic tests in patients with septic arthritis. Determine a treatment pl"
+        },
+        {
+          "id": "6002003",
+          "title": "Musculoskeletal Infections and Microbiology Basic Science­­­",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002003",
+          "extractable": true,
+          "score": 40.208,
+          "snippet": "https://rock.aaos.org/coursecontent.aspx?id=6002003 2/59 Infection and Clinical Setting Most Common Pathogens Empiric Antibiotic Therapy Osteomyelitis and septic arthritis Immunocompromised adult or child Gram-positive cocci Gram-negative organisms Penicillinase-resistant penicillin and aminoglycoside Septic arthritis"
+        },
+        {
+          "id": "6002081",
+          "title": "Pediatric Osteomyelitis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002081",
+          "extractable": true,
+          "score": 37.376,
+          "snippet": "child S aureus Cefazolin or penicillinase- resistant penicillin Child with sickle cell disease Salmonella species S aureus Ceftriaxone or vancomycin Adult S aureus Suspected MRSA Penicillinase-resistant penicillin Vancomycin plus ceftriaxone Immunocompromised adult or child Gram-positive cocci Gram-negative organisms"
+        },
+        {
+          "id": "6002063",
+          "title": "Primary Total Hip Arthroplasty for Other Indications: Post-Septic Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002063",
+          "extractable": true,
+          "score": 32.492,
+          "snippet": "as pyogenic or suppurative arthritis, septic arthritis describes an infection of the joint space. The hip, as well as the knee, shoulder, elbow, and wrist, are common locations for septic arthritis in adults and children (Resource 1). In some patients, septic arthritis of the hip may result in irreversible damage to a"
+        },
+        {
+          "id": "6001053",
+          "title": "Lyme Disease and Inflammatory Arthritis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001053",
+          "extractable": true,
+          "score": 31.87,
+          "snippet": "of inflammatory arthropathy and Lyme arthritis. Differentiate between Lyme arthritis and septic arthritis. Lyme Disease     NOTES SEND FEEDBACK 9/3/26, 4:36 PM AAOS | Lyme Disease and Inflammatory Arthritis https://rock.aaos.org/coursecontent.aspx?id=6001053 1/27  Overview Lyme disease is the most common tick-bor"
+        },
+        {
+          "id": "510000503",
+          "title": "Total Hip Arthroplasty: Bearing Surfaces Basic Science",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000503",
+          "extractable": true,
+          "score": 31.025,
+          "snippet": "Immune Reaction Innate (Nonspecific) Adaptive (Antigen Specific) Type IV (Cell Mediated) Specific receptors PAMPs, PRRs, TLRs, DAMPs, NLRs, RLRs IL-2R, CD69 activation antigen SEND FEEDBACK 9/4/26, 9:56 AM AAOS | Total Hip Arthroplasty: Bearing Surfaces Basic Science https://rock.aaos.org/coursecontent.aspx?id=5100005"
+        },
+        {
+          "id": "510000618",
+          "title": "Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000618",
+          "extractable": true,
+          "score": 30.113,
+          "snippet": " Rotator Cuff Disease: Natural History and Basic Science of Tendon Tears, Repair, and Healing  CORE May 18, 2026 James Gregory, MD (2020–present) Highlight Show highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Assess the natural progression of rotator cuff disease. Understand the b"
+        },
+        {
+          "id": "6001061",
+          "title": "Rotator Cuff Arthropathy: Basic Science Mechanical and Biologic Causes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001061",
+          "extractable": true,
+          "score": 29.844,
+          "snippet": "appropriate work up of patients in whom rotator cuff tear arthropathy is suspected. Identify appropriate treatment options for patients with rotator cuff tear arthropathy. Pathophysiology/Pathoanatomy Overview     NOTES SEND FEEDBACK 9/4/26, 10:26 AM AAOS | Rotator Cuff Arthropathy: Basic Science Mechanical and Bi"
+        },
+        {
+          "id": "6002087",
+          "title": "Pediatric Hematologic Conditions",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002087",
+          "extractable": true,
+          "score": 27.307,
+          "snippet": "FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Describe the epidemiology and pathophysiology of sickle cell disease. Discuss the inheritance pattern and classic clinical manifestations of sickle cell disease. Discuss the surgical risks and complications associated with sickle cell disease. D"
+        },
+        {
+          "id": "6001000",
+          "title": "Cell Biology, Cell Differentiation, and Skeletal Stem Cells",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001000",
+          "extractable": true,
+          "score": 26.6,
+          "snippet": "d from Zuscik MJ, Xing L, Boyce BF, Lee, FY: Cell biology, cell differentiation, and stem cells of the skeletal system, in Aaron RK, ed: Orthopaedic Basic Science: Foundations of Clinical Practice, ed 5. Rosemont, IL, American Academy of Orthopaedic Surgeons, 2021, pp 19-28.) SEND FEEDBACK 9/3/26, 7:37 AM AAOS | Cell B"
+        },
+        {
+          "id": "6002090",
+          "title": "Infectious Disease in the Athlete",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002090",
+          "extractable": true,
+          "score": 20.987,
+          "snippet": "primary VZV infection. However, oral valacyclovir or acyclovir may be considered for patients with primary VZV infection (chickenpox) who are at risk of moderate to severe disease, patients with primary infection who are older than 12 years, patients with chronic cutaneous or pulmonary disorders, and patients being tr"
+        },
+        {
+          "id": "6004017",
+          "title": "Perioperative Treatment of Patients Undergoing Arthroplasty",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004017",
+          "extractable": true,
+          "score": 20.921,
+          "snippet": "red cell salvage, topical fibrin sprays, and sealants. Staphylococcus aureus colonization Methicillin-resistant S aureus and methicillin-sensitive S aureus colonization have been shown to result in a higher incidence of postoperative SSI among patients undergoing elective TJA. Screening and nasal decolonization of S a"
+        }
+      ]
+    },
+    {
+      "stableGuid": "P??ri56^Mc",
+      "front": "Name the eponym: Depressed fracture of the lunate fossa of the articular surface of the distal radius. Die-Punch Fracture",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Forearm",
+        "SnapOrtho::Anatomy::Forearm::Osteology",
+        "SnapOrtho::Anatomy::Forearm::Osteology::Radius",
+        "SnapOrtho::Anatomy::Hand",
+        "SnapOrtho::Anatomy::Hand::Osteology",
+        "SnapOrtho::Anatomy::Hand::Osteology::Distal_Radius",
+        "SnapOrtho::Anatomy::Hand::Osteology::Lunate",
+        "SnapOrtho::Specialty::Hand_Upper_Extremity",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "510000656",
+          "title": "Distal Radius Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000656",
+          "extractable": true,
+          "score": 48.177,
+          "snippet": "Association classification of distal radius fractures18 (Figure 4) Type A/bending; extra-articular Dorsal (Colles fracture) Volar (Smith fracture) Type B/shearing; partial articular Dorsal (reverse Barton fracture) Volar (Barton fracture) Radial styloid (occasionally referred to a Chauffer fracture) Type C/compression"
+        },
+        {
+          "id": "510000578",
+          "title": "Distal Humerus Physeal Fractures, Pediatric Polytrauma, and Upper Extremity Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000578",
+          "extractable": true,
+          "score": 46.23,
+          "snippet": "with a distal humerus fracture who may have intra- articular extension. Differential Diagnosis Transphyseal distal humerus fracture Elbow dislocation Lateral condyle fracture  Differential Diagnosis SEND FEEDBACK 9/3/26, 4:00 PM AAOS | Distal Humerus Physeal Fractures, Pediatric Polytrauma, and Upper Extremity Fractu"
+        },
+        {
+          "id": "510000651",
+          "title": "Congenital Upper Extremity Differences",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000651",
+          "extractable": true,
+          "score": 44.939,
+          "snippet": "the classification of congenital differences in the upper extremity. Perform an appropriate workup of patients with congenital upper extremity differences. Determine the surgical and nonsurgical treatment options for the management of congenital upper extremity differences. Pathophysiology/Pathoanatomy Overview Congen"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "extractable": true,
+          "score": 41.977,
+          "snippet": "st are used as a template. SEND FEEDBACK 9/3/26, 4:10 PM AAOS | Forearm Trauma and Diaphyseal Fractures https://rock.aaos.org/coursecontent.aspx?id=510000655 29/36 Figure 17 Preoperative (A) and postoperative (B) AP forearm radiographs demonstrate a both-bone forearm fracture managed via a bridge plating technique. (Re"
+        },
+        {
+          "id": "510000557",
+          "title": "Physical Examination and Anatomy of the Hand, Forearm, and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000557",
+          "extractable": true,
+          "score": 39.421,
+          "snippet": "ament (LTIL) stabilize the proximal carpal row. The capitate (Cap) and hamate (H) are identified in the distal carpal row. C, Dorsal view of the distal radioulnar joint. The distal ulna articulates with the distal radius at the distal radioulnar joint, at which the distal radial articular surface (sigmoid notch) has a"
+        },
+        {
+          "id": "510000662",
+          "title": "Distal Humerus Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000662",
+          "extractable": true,
+          "score": 24.949,
+          "snippet": "Discover What You Know Learning Objectives Specify the epidemiology of distal humerus fractures and the anatomy of the distal humerus. Perform an appropriate workup of patients with a distal humerus fracture. Identify the fracture patterns and classification systems for distal humerus factures. Understand the nonsurgi"
+        },
+        {
+          "id": "6004067",
+          "title": "Proximal Radius Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004067",
+          "extractable": true,
+          "score": 24.684,
+          "snippet": "the radiocapitellar joint and a valgus force to the elbow applies an angular force to the neck, which may result in a proximal radius fracture (Figure 4). SEND FEEDBACK 9/3/26, 5:55 PM AAOS | Proximal Radius Fractures https://rock.aaos.org/coursecontent.aspx?id=6004067 5/26 Figure 4 Illustrations of an elbow show prox"
+        },
+        {
+          "id": "6004029",
+          "title": "Osteoarthritis of the Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004029",
+          "extractable": true,
+          "score": 21.008,
+          "snippet": "The pisiform does not articulate as part of the distal row proper but acts as a sesamoid embedded within the flexor carpi ulnaris tendon (Figure 1). The distal radius articulates with the scaphoid and lunate, with two distinct fossae separated by the interfacet prominence. The distal radius has a mean volar tilt of 10"
+        },
+        {
+          "id": "6002101",
+          "title": "Articular Cartilage and Biomechanics",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002101",
+          "extractable": true,
+          "score": 20.803,
+          "snippet": "articular cartilage.8 SEND FEEDBACK 9/3/26, 7:23 AM AAOS | Articular Cartilage and Biomechanics https://rock.aaos.org/coursecontent.aspx?id=6002101 2/25 Figure 1 Images of articular cartilage. A, Arthroscopic image shows heathy hyaline articular cartilage from a knee joint. Scale bar: 0.1 cm. B, Gross specimen shows n"
+        },
+        {
+          "id": "6001084",
+          "title": "Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001084",
+          "extractable": true,
+          "score": 20.602,
+          "snippet": "forces that affect distal femur fracture reduction. Determine distal femur fracture mechanisms of injury and the appropriate assessment and documentation of associated injuries. Compare methods of surgical management of distal femur fractures and apply basic fracture principles. Avoid pitfalls and complications associ"
+        },
+        {
+          "id": "6000025",
+          "title": "Ulnar Impaction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000025",
+          "extractable": true,
+          "score": 20.531,
+          "snippet": "corner of the lunate. Ulnar variance is measured as the distance between two lines perpendicular to the longitudinal axis of the radius, one line tangential to the distal point of the ulnar head and the other line tangential to the distal articular surface of the lunate fossa. Variation in the measurement of ulnar var"
+        },
+        {
+          "id": "6002014",
+          "title": "Osteonecrosis: Preiser Disease and Kienböck Disease",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002014",
+          "extractable": true,
+          "score": 20.53,
+          "snippet": "articular changes and that arthroscopic findings may alter treatment recommendations for patients with Kienböck disease. Grade 0: all articular surfaces normal Grade 1: abnormal proximal lunate articular surface Grade 2a: two abnormal surfaces Proximal lunate and lunate facet abnormal Grade 2b: two abnormal surfaces P"
+        }
+      ]
+    },
+    {
+      "stableGuid": "P?+?08!Ys&",
+      "front": "What are the normal radiographic parameters for the wrist films: Radial height: 11 mm Volar tilt: 11 ° Radial inclination: 22 °",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Trauma",
+        "SnapOrtho::Treatment::Trauma_Radiographic_Measurements"
+      ],
+      "candidates": [
+        {
+          "id": "6004029",
+          "title": "Osteoarthritis of the Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004029",
+          "extractable": true,
+          "score": 35.436,
+          "snippet": "the ligamentous anatomy of the wrist. A, Arthroscopic image of the volar wrist ligaments shows the radioscaphocapitate (RSC) ligament and the long radiolunate (LRL) ligament. B, Photograph of an anatomic cadaver model shows the SEND FEEDBACK 9/3/26, 5:28 PM AAOS | Osteoarthritis of the Wrist https://rock.aaos.org/cour"
+        },
+        {
+          "id": "510000655",
+          "title": "Forearm Trauma and Diaphyseal Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000655",
+          "extractable": true,
+          "score": 29.387,
+          "snippet": "), wrist flexion (11° less than normal), and wrist extension (5° less than normal) are expected after surgical fixation of both-bone forearm fractures via plate fixation that involves no complications. Reduced strength in pronation (70% of normal), supination (68% of normal), wrist flexion (84% of normal), wrist extens"
+        },
+        {
+          "id": "6004081",
+          "title": "Athletic Injuries of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004081",
+          "extractable": true,
+          "score": 26.83,
+          "snippet": "and causing hyperextension deformity. Volar dislocation from hyperflexion injury to the joint with axial compression; central slip may be injured. Lateral dislocation: injury to the collateral ligament and likely partial avulsion of the volar plate MCP joint dislocations Dorsal dislocation occurs more often than volar"
+        },
+        {
+          "id": "6002009",
+          "title": "Radiographic Evaluation of the Hip",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002009",
+          "extractable": true,
+          "score": 25.5,
+          "snippet": "junction in relation to the overall height of the pelvis. Type I: less than 50% proximal migration in relation to femoral head height or less than 10% vertical displacement in relation to pelvic height Type II: 50% to 75% proximal migration in relation to femoral head height or 10% to 15% vertical displacement in rela"
+        },
+        {
+          "id": "6004031",
+          "title": "Tendinopathy of the Hand and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004031",
+          "extractable": true,
+          "score": 25.232,
+          "snippet": "Patient History and Physical Examination Patients have pain along the volar radial wrist at the level of the radiocarpal joint. Physical examination findings include tenderness over the FCR tendon at the wrist flexion crease and pain with resisted flexion and radial deviation of the wrist. Management NSAIDs, splint or"
+        },
+        {
+          "id": "510000665",
+          "title": "Hand and Wrist Infections",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000665",
+          "extractable": true,
+          "score": 25.134,
+          "snippet": "factors for and the pathoanatomy of closed space infections of the hand and wrist, including fingertip infections, septic arthritis, and pyogenic flexor tenosynovitis. Discuss the nonsurgical versus surgical treatment of patients with a hand and wrist infection with appropriate urgency. Review treatment options for pa"
+        },
+        {
+          "id": "510000660",
+          "title": "Radial Head and Neck Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000660",
+          "extractable": true,
+          "score": 24.626,
+          "snippet": "OUTLINE VIEW Pretest Discover What You Know Learning Objectives Understand the common etiology of radial head/neck fractures. Perform appropriate clinical and radiographic assessment of radial head/neck fractures. Determine appropriate indications for the nonsurgical and surgical management of radial head/neck fractur"
+        },
+        {
+          "id": "510000656",
+          "title": "Distal Radius Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000656",
+          "extractable": true,
+          "score": 24.544,
+          "snippet": "measurement of radial height (a), radial inclination (b), ulnar variance (c), volar tilt (d), and the teardrop angle (e). (Reproduced from Chhabra AB, Yildirim B: Adult distal radius fracture management. J Am Acad Orthop Surg 2021 [ePub ahead of print].) Radial styloid Relatively volar structure from the radial aspect"
+        },
+        {
+          "id": "510000557",
+          "title": "Physical Examination and Anatomy of the Hand, Forearm, and Wrist",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000557",
+          "extractable": true,
+          "score": 24.196,
+          "snippet": "ether hand perfusion will persist if the radial artery is injured.17 Surgeons also should perform the Allen test before proceeding with surgical management that may alter or potentially injure the radial or ulnar arteries, such as removal of a volar radial wrist ganglion or trapeziectomy. In the standard Allen test, th"
+        },
+        {
+          "id": "6000017",
+          "title": "Radiographic Evaluation of the Knee",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000017",
+          "extractable": true,
+          "score": 24.16,
+          "snippet": "diagnosis of knee pathology. Apply basic knowledge regarding radiographic evaluation of the knee to clinical practice, particularly arthroplasty. Overview Introduction Plain radiography often is the initial imaging modality.     NOTES SEND FEEDBACK 9/3/26, 5:58 PM AAOS | Radiographic Evaluation of the Knee https:/"
+        },
+        {
+          "id": "6000026",
+          "title": "Wrist and Hand Arthroscopy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000026",
+          "extractable": true,
+          "score": 24.135,
+          "snippet": "to the superficial branch of the radial nerve with potential for radial artery injury 6U portal: high risk of injury to the dorsal sensory branch of the ulnar nerve if used as a working portal; commonly used as an outflow portal via an 18-gauge needle Radial and ulnar midcarpal portals—Approximately 1 to 1.5 cm distal"
+        },
+        {
+          "id": "6002069",
+          "title": "Hand and Wrist Extensor Tendon Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002069",
+          "extractable": true,
+          "score": 21.882,
+          "snippet": "involve a bony avulsion from the dorsal base of the distal phalanx and necessitate radiographic evaluation. SEND FEEDBACK 9/3/26, 4:20 PM AAOS | Hand and Wrist Extensor Tendon Repair and Reconstruction https://rock.aaos.org/coursecontent.aspx?id=6002069 11/23 Video 1 Adams JE: Physical examination of the hand and wris"
+        }
+      ]
+    },
+    {
+      "stableGuid": "p?$R3dWB*$",
+      "front": "What is a Bosworth fracture-dislocation ? Distal fibula fracture with a fixed posterior fibular dislocation",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Leg_Knee",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology",
+        "SnapOrtho::Anatomy::Leg_Knee::Osteology::Fibula",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "6004070",
+          "title": "Tibial and Fibular Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004070",
+          "extractable": true,
+          "score": 31.281,
+          "snippet": "pediatric tibia shaft fracture have a concomitant fibular fracture.8 Concomitant injuries of the ankle and foot commonly are associated with tibial shaft fractures, especially distal third fractures.  Associated Injuries SEND FEEDBACK 9/4/26, 9:51 AM AAOS | Tibial and Fibular Fractures https://rock.aaos.org/coursecon"
+        },
+        {
+          "id": "510000524",
+          "title": "Congenital Dislocation of the Knee and Patella",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000524",
+          "extractable": true,
+          "score": 30.987,
+          "snippet": "treatment approaches for congenital dislocation of the patella. Congenital Dislocation of the Knee     NOTES SEND FEEDBACK 9/3/26, 7:45 AM AAOS | Congenital Dislocation of the Knee and Patella https://rock.aaos.org/coursecontent.aspx?id=510000524 1/27 Pathophysiology/Pathoanatomy Overview Congenital dislocation of"
+        },
+        {
+          "id": "510000536",
+          "title": "Knee Dislocations",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000536",
+          "extractable": true,
+          "score": 28.192,
+          "snippet": "knee radiographs demonstrate a unicondylar femur fracture. D, SEND FEEDBACK 9/3/26, 4:31 PM AAOS | Knee Dislocations https://rock.aaos.org/coursecontent.aspx?id=510000536 7/43 Coronal CT scan of a knee shows tibial spine and rim avulsion fractures. E, AP knee radiograph demonstrates an arcuate fracture. F, AP knee rad"
+        },
+        {
+          "id": "6001046",
+          "title": "Stress Fractures of the Leg: Tibia and Fibula",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001046",
+          "extractable": true,
+          "score": 27.686,
+          "snippet": "and Fibula https://rock.aaos.org/coursecontent.aspx?id=6001046 4/13 Figure 3 AP (A) and lateral (B) radiographs of an ankle demonstrate a distal fibular stress fracture. Tibial and fibular stress fractures usually are horizontally oriented diaphyseal fractures, with distal third fibular stress fractures being more com"
+        },
+        {
+          "id": "6001070",
+          "title": "Ligamentous Injuries of the Knee: Multiligamentous Knee Injuries",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001070",
+          "extractable": true,
+          "score": 27.518,
+          "snippet": "groups. Anteromedial Anterolateral Posteromedial Posterolateral Most common rotational dislocation Usually irreducible Figure 2 Illustration shows the Kennedy classification of knee dislocations. A, Posterior dislocation. B, Anterior dislocation. C, Medial or lateral dislocation. D, Rotational dislocation. (Reproduced"
+        },
+        {
+          "id": "6004072",
+          "title": "Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004072",
+          "extractable": true,
+          "score": 26.031,
+          "snippet": "J Shoulder Elbow Surg 2013;22[6]:775-781.) Posterior Dislocation SEND FEEDBACK 9/4/26, 9:35 AM AAOS | Shoulder Trauma: Sternoclavicular Joint Dislocation and Instability https://rock.aaos.org/coursecontent.aspx?id=6004072 18/26 Posterior SCJ subluxations and dislocations are orthopaedic emergencies requiring a complet"
+        },
+        {
+          "id": "6004095",
+          "title": "Surgical Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004095",
+          "extractable": true,
+          "score": 21.678,
+          "snippet": "dislocation (the Kocher- Langenbeck approach with trochanteric flip osteotomy and surgical dislocation) in patients with an acute fracture. Twelve patients with an acetabular fracture were treated, with a minimum follow-up of 2 years. Eight patients underwent an anterior dislocation, and four patients underwent a post"
+        },
+        {
+          "id": "6001014",
+          "title": "Posterior Tibial Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001014",
+          "extractable": true,
+          "score": 21.677,
+          "snippet": "Other reported risk factors include hypertension and diabetes mellitus Anatomy and Biomechanics The tibialis posterior muscle is innervated by the posterior tibial nerve (L4-L5) and originates from the posterior fibula, tibia, and interosseous membrane.  Anatomy and Biomechanics The tendon travels distally, running p"
+        },
+        {
+          "id": "510000510",
+          "title": "Postoperative Hip Dislocation",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000510",
+          "extractable": true,
+          "score": 20.649,
+          "snippet": "9/3/26, 5:47 PM AAOS | Postoperative Hip Dislocation https://rock.aaos.org/coursecontent.aspx?id=510000510 8/16 dislocation occurs days after reduction and component malalignment is observed on radiographs.16 Surgical treatment options for postoperative instability or recurrent dislocation depend on the cause of the d"
+        },
+        {
+          "id": "510000581",
+          "title": "Patellar Fractures, Tibial Spine (Eminence) Fractures, Tibial and Fibular Fractures",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000581",
+          "extractable": true,
+          "score": 19.22,
+          "snippet": "Tibial Spine (Eminence) Fractures, Tibial and Fibular Fractures https://rock.aaos.org/coursecontent.aspx?id=510000581 3/39 Patellar body fractures may occur secondary to direct impact, and marginal avulsion fractures may occur during patellar dislocation events. Injury Classification Categorized based on location, fra"
+        },
+        {
+          "id": "510000521",
+          "title": "Posterior Shoulder Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000521",
+          "extractable": true,
+          "score": 19.07,
+          "snippet": "FEEDBACK 9/3/26, 5:46 PM AAOS | Posterior Shoulder Instability https://rock.aaos.org/coursecontent.aspx?id=510000521 1/18 Identify technical aspects used in the surgical management of posterior glenohumeral instability. Introduction The glenohumeral joint is inherently unstable and highly susceptible to subluxation, d"
+        },
+        {
+          "id": "6001084",
+          "title": "Fractures of the Distal Femur",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001084",
+          "extractable": true,
+          "score": 18.533,
+          "snippet": "forces that affect distal femur fracture reduction. Determine distal femur fracture mechanisms of injury and the appropriate assessment and documentation of associated injuries. Compare methods of surgical management of distal femur fractures and apply basic fracture principles. Avoid pitfalls and complications associ"
+        }
+      ]
+    },
+    {
+      "stableGuid": "P?AydbeJ}W",
+      "front": "Anterior penetration of an iliosacral screw through the sacral ala would most likely lead to dysfunction about the L5 nerve root .",
+      "extra": "",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Anatomy::Spine",
+        "SnapOrtho::Anatomy::Spine::Nerves",
+        "SnapOrtho::Anatomy::Spine::Nerves::Exiting_Nerve_Root",
+        "SnapOrtho::Specialty::Trauma"
+      ],
+      "candidates": [
+        {
+          "id": "510000579",
+          "title": "Pediatric Spine Trauma",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000579",
+          "extractable": true,
+          "score": 31.845,
+          "snippet": "trauma is suspected. Identify key features of cervical and thoracolumbar spine injuries specific to the pediatric population. Review the surgical and nonsurgical management of pediatric spine trauma. Pathophysiology/Pathoanatomy Overview     NOTES SEND FEEDBACK 9/4/26, 10:38 AM AAOS | Pediatric Spine Trauma https:"
+        },
+        {
+          "id": "510000533",
+          "title": "Primary Bone Tumors of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000533",
+          "extractable": true,
+          "score": 31.114,
+          "snippet": "nerve root may be the most redundant, and its sacrifice is better tolerated than other nerve root sacrifice; however, deficits are still be expected. Lumbar Nerve Roots SEND FEEDBACK 9/3/26, 5:50 PM AAOS | Primary Bone Tumors of the Spine https://rock.aaos.org/coursecontent.aspx?id=510000533 9/34 In general, lumbar ne"
+        },
+        {
+          "id": "6001072",
+          "title": "Lumbar Spine Injuries and Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001072",
+          "extractable": true,
+          "score": 30.046,
+          "snippet": "their morphology. Central: may not cause substantial radiculopathy but causes low back pain Posterolateral/subarticular: compresses the traversing nerve root SEND FEEDBACK 9/3/26, 4:36 PM AAOS | Lumbar Spine Injuries and Disorders in Athletes https://rock.aaos.org/coursecontent.aspx?id=6001072 7/59 Foraminal: compress"
+        },
+        {
+          "id": "6001075",
+          "title": "Lumbar Spine Stenosis",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001075",
+          "extractable": true,
+          "score": 28.181,
+          "snippet": "complaints. Pathophysiology Lumbar spine stenosis is the end result of a self-propagating cycle beginning with disk degeneration and loss of disk height that results in alterations in the structure and mechanics of the lumbar spine. The end result of sustained neural compression is alterations in nerve root microcircu"
+        },
+        {
+          "id": "510000559",
+          "title": "Nerve Repair and Reconstruction",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000559",
+          "extractable": true,
+          "score": 24.561,
+          "snippet": "a cable sural nerve graft, is the ideal treatment option. Preganglionic lesions often require nerve transfers, such as an ulnar nerve fascicle to the musculocutaneous nerve (Oberlin transfer), a spinal accessory nerve fascicle to the suprascapular nerve, or a radial nerve fascicle to the axillary nerve. Pan-plexus ner"
+        },
+        {
+          "id": "6002111",
+          "title": "Biology and Function of Nerve",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002111",
+          "extractable": true,
+          "score": 23.313,
+          "snippet": "highlights FULL VIEW OUTLINE VIEW Pretest Discover What You Know Learning Objectives Describe relevant peripheral nerve anatomy. Explain different degrees of nerve injury. List appropriate imaging or nerve conduction studies in evaluating nerve injury or dysfunction. Review principles of nerve repair and the anticipat"
+        },
+        {
+          "id": "6002004",
+          "title": "Peripheral Nerve and Spinal Cord Pathophysiology",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002004",
+          "extractable": true,
+          "score": 22.396,
+          "snippet": "l nerve injury but also the degree of nerve injury. Nerve Conduction Studies Sensory nerve function Stimulating a mixed (motor and sensory) nerve produces a compound nerve action potential. Stimulating a sensory nerve produces a sensory nerve action potential. Testing the nerve can be done by stimulating the nerve in a"
+        },
+        {
+          "id": "510000623",
+          "title": "Shoulder: Anterior Instability",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000623",
+          "extractable": true,
+          "score": 21.205,
+          "snippet": "stretching of anterior capsulolabral soft tissue and loss of more than 20% of the width of the anterior glenoid alter the biomechanics of the glenohumeral joint and are risk factors for recurrent anterior instability.1,16 The anteroinferior labrum is the soft-tissue structure most commonly injured during traumatic ant"
+        },
+        {
+          "id": "6002005",
+          "title": "Tibialis Anterior Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002005",
+          "extractable": true,
+          "score": 20.545,
+          "snippet": "9/4/26, 9:55 AM AAOS | Tibialis Anterior Tendon Disorders https://rock.aaos.org/coursecontent.aspx?id=6002005 12/17 Deep vein thrombosis SEND FEEDBACK 9/4/26, 9:55 AM AAOS | Tibialis Anterior Tendon Disorders https://rock.aaos.org/coursecontent.aspx?id=6002005 13/17 SEND FEEDBACK 9/4/26, 9:55 AM AAOS | Tibialis Anteri"
+        },
+        {
+          "id": "6001082",
+          "title": "Pelvic Ring Fractures: Evaluation and Acute Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001082",
+          "extractable": true,
+          "score": 18.691,
+          "snippet": "to the lower extremities. Variations in sacral anatomy are common with sacral dysmorphism, characterized by altered osseous anatomy and neural tunnels in the upper sacral segment (Figure 3). Figure 3 AP three-dimensional, surface-rendered CT reconstruction image of a pelvis shows sacral dysmorphism, with an upsloping"
+        },
+        {
+          "id": "6001077",
+          "title": "Metastatic Bone Disease to the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001077",
+          "extractable": true,
+          "score": 17.96,
+          "snippet": "equina nerve roots must pass through the lumbar spine on their path toward the sacrum. The base of the spine at the lumbosacral-pelvic articulation is critical for overall spinal alignment, and sagittal deformity principles should be considered in planning lumbar spine reconstruction.8 Sacral Spine Sacral nerve roots"
+        },
+        {
+          "id": "6003024",
+          "title": "Anatomy of the Spine",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003024",
+          "extractable": true,
+          "score": 17.475,
+          "snippet": "ead to spondylolisthesis. Spondylolysis is the most common cause of back pain in young patients. Sacrum The sacrum is a single structure formed by the five fused embryologic sacral vertebrae. It has four sacral foramina through which the S1 through S4 nerve roots run. The broad superior sacral ala is similar to the tra"
+        }
+      ]
+    },
+    {
+      "stableGuid": "p?r.#A:3i#",
+      "front": "What neurologic condition is the most common cause of bilateral cavovarus deformities ? Charcot-Marie-Tooth (CMT)",
+      "extra": "*Normal PT and peroneus long *Weak peroneus brevis and tib ant",
+      "deckPath": "SnapOrtho",
+      "governedTags": [
+        "SnapOrtho::Specialty::Foot_Ankle"
+      ],
+      "candidates": [
+        {
+          "id": "6001038",
+          "title": "Hereditary Motor Sensory Neuropathy (Charcot-Marie-Tooth Disease)",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001038",
+          "extractable": true,
+          "score": 91.811,
+          "snippet": "CMT disease type 1A HMSN type 2 (CMT disease type 2): axonal Mutations result in axonal degeneration. Autosomal dominant inheritance is the most common. Much less common than HMSN type 1 Normal or slightly decreased nerve conduction velocity (>38 m/s) HMSN type 3 (CMT disease type 3; also known as Dejerine-Sottas dise"
+        },
+        {
+          "id": "6000009",
+          "title": "Cavovarus Foot Deformity",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000009",
+          "extractable": true,
+          "score": 69.013,
+          "snippet": "Tibialis anterior Navicular, medial cuneiform Strong dorsiflexion, weak inversion Peroneus longus Tibialis posterior Medial column (wide insertion at medial and plantar midfoot and forefoot) Strong inversion, weak plantar flexion Peroneus brevis Peroneus longus First metatarsal base, medial cuneiform Strong plantar fl"
+        },
+        {
+          "id": "6001015",
+          "title": "Cavovarus Foot Deformity: Surgical Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6001015",
+          "extractable": true,
+          "score": 50.885,
+          "snippet": "these patients, simultaneous correction of the cavovarus deformity to protect the ligament repair usually is necessary. Tendon Transfers Peroneal Tendons Transferring the peroneus longus to the peroneus brevis eliminates strong plantar flexion of the first ray and augments ankle eversion/dorsiflexion. SEND FEEDBACK 9/"
+        },
+        {
+          "id": "6000011",
+          "title": "Arthritides of the Hindfoot",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000011",
+          "extractable": true,
+          "score": 45.976,
+          "snippet": "into valgus. The posterior tibial tendon inserts onto the navicular tuberosity. The peroneal tendons are responsible for plantar flexion of the first ray (peroneus longus) and eversion of the hindfoot (peroneus brevis and longus). The peroneus brevis inserts onto the fifth metatarsal base and the peroneus longus inser"
+        },
+        {
+          "id": "510000641",
+          "title": "Physical Examination of the Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000641",
+          "extractable": true,
+          "score": 41.734,
+          "snippet": "evaluating normal versus pathologic conditions of the foot and ankle through physical examination. Overview The foot and ankle are key anatomic structures that enable individuals to walk erect with a bipedal gait. Both lower extremities must be evaluated to determine normal for a given patient.  Overview     NOTE"
+        },
+        {
+          "id": "6000010",
+          "title": "Cavovarus Foot Deformity: Nonsurgical Management",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000010",
+          "extractable": true,
+          "score": 39.414,
+          "snippet": "from Chilvers M, Manoli A II: The subtle cavus foot and association with ankle instability and lateral foot overload. Foot Ankle Clin N Am 2008;13[2]:315-324.) SEND FEEDBACK 9/3/26, 7:36 AM AAOS | Cavovarus Foot Deformity: Nonsurgical Management https://rock.aaos.org/coursecontent.aspx?id=6000010 4/11 Figure 2 Illustr"
+        },
+        {
+          "id": "6004004",
+          "title": "Systemic Conditions: Diabetic Foot and Ankle",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004004",
+          "extractable": true,
+          "score": 36.822,
+          "snippet": "and manage the condition at the same time. Charcot Arthropathy Versus Infection Infection and acute Charcot arthropathy often are confused in the clinical setting because they result in similar symptoms. Swollen, erythematous foot Increased pain in the extremity Presence of an ulcer and deformity Charcot arthropathy R"
+        },
+        {
+          "id": "510000546",
+          "title": "Ankle and Foot Disorders in Athletes",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=510000546",
+          "extractable": true,
+          "score": 36.168,
+          "snippet": "an ankle or foot sports injury. Discuss the surgical and nonsurgical management of common foot and ankle injuries. Outline surgical decision making for ankle and foot injuries. List risk factors associated with common foot and ankle injuries. Review current surgical techniques and outcomes of the management of foot an"
+        },
+        {
+          "id": "6004063",
+          "title": "Rotational and Angular Limb Deformities",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6004063",
+          "extractable": true,
+          "score": 28.805,
+          "snippet": ") Proximal tibia/fibula SEND FEEDBACK 9/3/26, 6:02 PM AAOS | Rotational and Angular Limb Deformities https://rock.aaos.org/coursecontent.aspx?id=6004063 9/22 Condition Age (Years) Typical History Location of Deformity Other Angular Deformities Laterality Management osteotomy Adolescent 9–11 Morbid obesity Proximal tib"
+        },
+        {
+          "id": "6003001",
+          "title": "Ankle Diabetes: Charcot Neuropathy",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6003001",
+          "extractable": true,
+          "score": 28.393,
+          "snippet": "Review the pathophysiology of Charcot arthropathy of the foot and ankle. Evaluate and diagnose a patient with Charcot arthropathy. Differentiate Charcot arthropathy from infection. Review the major methods of nonsurgical management for Charcot arthropathy. Outline the surgical indications for, treatment options for, s"
+        },
+        {
+          "id": "6002083",
+          "title": "Foot and Ankle Sports Injuries in Pediatric Patients",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6002083",
+          "extractable": true,
+          "score": 26.529,
+          "snippet": "and Ankle Sports Injuries in Pediatric Patients https://rock.aaos.org/coursecontent.aspx?id=6002083 5/34 The peroneus longus and brevis tendons wrap around the lateral malleolus and are held in place by the osseous constraint of the distal fibula and the soft-tissue restraint of the superior peroneal retinaculum. The"
+        },
+        {
+          "id": "6000005",
+          "title": "Peroneal Tendon Disorders",
+          "url": "https://rock.aaos.org/coursecontent.aspx?id=6000005",
+          "extractable": true,
+          "score": 26.273,
+          "snippet": "are well-vascularized throughout, without avascular regions.13,14 Biomechanics The peroneus longus and the peroneus brevis serve as the primary foot evertors. Because of their location posterior to the center of the ankle joint, the peroneus longus and the peroneus brevis also serve as weak ankle plantar flexors. The"
+        }
+      ]
+    }
+  ]
+}
