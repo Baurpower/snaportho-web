@@ -90,6 +90,11 @@ export type ExtensionMessage =
   // `questionAttemptId` targets one specific AAOS Himalaya question instead of
   // whatever is on screen, so the review board can load any row on demand.
   | {
+      type: 'ob:start-question-claim-run';
+      testKey: string;
+      questions: Array<{ nativeQuestionId: string; reviewLocator: string }>;
+    }
+  | {
       type: 'ob:extract-page-context';
       tabId: number;
       questionAttemptId?: number;
@@ -100,6 +105,8 @@ export type ExtensionMessage =
       // SnapOrtho-authored claim; protected source text is never persisted.
       type: 'ob:generate-question-claim';
       pageContext: OrthobulletsPageContext;
+      runId?: string;
+      runItemId?: string;
     }
   | {
       type: 'brobot:request';
@@ -225,7 +232,8 @@ export type ExtensionMessageResponse =
       };
     }
   | { ok: true; cleared: true }
-  | { ok: true; questionClaim: { status: string; claimId?: string; nativeQuestionId?: string; reviewStatus?: string; reason?: string; gapRecorded?: boolean } }
+  | { ok: true; questionClaimRun: { runId: string; algorithmVersion: string; items: Array<{ id: string; native_question_id: string; status: string; claim_id?: string | null; linked_card_count?: number; last_error_code?: string | null }> } }
+  | { ok: true; questionClaim: { status: string; claimId?: string; claimVersionId?: string; nativeQuestionId?: string; reviewStatus?: string; reason?: string; gapRecorded?: boolean; cardCount?: number; runItemId?: string } }
   | { ok: true; launchQueued: { noteGuid: string; cardOrdinal: number; rank: 1 | 2 | 3 }; command?: unknown }
   | {
       ok: false;

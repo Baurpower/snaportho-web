@@ -325,7 +325,14 @@ class ProfileRuntime:
                 _, body = future.result()
                 commands = body.get("commands") or []
                 if not commands:
+                    self._launch_empty_streak = getattr(self, "_launch_empty_streak", 0) + 1
+                    if self._launch_empty_streak >= 8:
+                        try:self.launch_timer.setInterval(30000)
+                        except Exception:pass
                     return
+                self._launch_empty_streak = 0
+                try:self.launch_timer.setInterval(4000)
+                except Exception:pass
                 class Client:
                     def __init__(self, api, pending):
                         self.api = api
@@ -371,7 +378,16 @@ class ProfileRuntime:
         def pending_done(future):
             try:
                 _,body=future.result();requests=body.get("requests")or[]
-                if not requests:self._search_relay_busy=False;return
+                if not requests:
+                    self._search_relay_busy=False
+                    self._search_relay_empty_streak=getattr(self,"_search_relay_empty_streak",0)+1
+                    if self._search_relay_empty_streak>=6:
+                        try:self.search_relay_timer.setInterval(60000)
+                        except Exception:pass
+                    return
+                self._search_relay_empty_streak=0
+                try:self.search_relay_timer.setInterval(10000)
+                except Exception:pass
                 request=requests[0]
                 self.background(lambda:self.api.claim_search_request(request["id"]),lambda f:self._claimed_search(f,request))
             except Exception:self._search_relay_busy=False

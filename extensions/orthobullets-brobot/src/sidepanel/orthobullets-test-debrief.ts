@@ -11,6 +11,12 @@ export type TestDebriefQuestion = {
   explanation: OrthobulletsExplainResponse | null;
   status: 'pending' | 'collecting' | 'ready' | 'error';
   error: string | null;
+  reviewCount?: number;
+  lastRating?: 'again' | 'hard' | 'got_it' | null;
+  lastReviewedAt?: string | null;
+  claimStatus?: 'pending' | 'processing' | 'accepted' | 'accepted_no_card' | 'retryable' | 'unresolved_automatic';
+  claimId?: string | null;
+  linkedCardCount?: number;
 };
 
 export type FullTestDebrief = {
@@ -29,6 +35,8 @@ export type TestDebriefHooks = {
   onBuildDebrief: () => void;
   onExportDebrief: () => void;
   onClearDebrief: () => void;
+  onRateQuestion: (questionId: string, rating: 'again' | 'hard' | 'got_it') => void;
+  onReviewNext: () => void;
   onUnlink: () => void;
 };
 
@@ -116,6 +124,18 @@ export function groupMissedQuestions(rows: OrthobulletsTestResultRow[]) {
     );
 }
 
+export function claimRunRows(rows: OrthobulletsTestResultRow[]) {
+  return [...new Map(rows
+    .filter((row) => row.questionId && row.reviewUrl)
+    .map((row) => [row.questionId, row])).values()]
+    .sort((left, right) => left.order - right.order);
+}
+
+function weakness(question: TestDebriefQuestion) {
+  const ratingWeight = question.lastRating === 'again' ? 6 : question.lastRating === 'hard' ? 3 : question.lastRating === 'got_it' ? -2 : 4;
+  return ratingWeight + Math.min(question.reviewCount ?? 0, 4);
+}
+
 export function appendOrthobulletsTestDebrief(
   content: HTMLElement,
   input: {
@@ -136,17 +156,14 @@ export function appendOrthobulletsTestDebrief(
   const header = createElement(`<section style="padding:16px;border-radius:16px;background:#f0fdfa;border:1px solid #99f6e4;display:grid;gap:12px;">
     <div style="display:grid;gap:5px;">
       <p style="margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#0f766e;font-weight:800;">Test debrief</p>
-      <h2 style="margin:0;font-size:20px;line-height:1.25;color:#18202b;">Missed-question overview</h2>
-      <p style="margin:0;color:#384152;line-height:1.5;">${escapeHtml(score)}${review.missedCount} missed of ${review.totalCount} across ${groups.length} concept${groups.length === 1 ? '' : 's'}.</p>
+      <h2 style="margin:0;font-size:20px;line-height:1.25;color:#18202b;">Learning queue</h2>
+      <p style="margin:0;color:#384152;line-height:1.5;">${escapeHtml(score)}${review.missedCount} facts to learn across ${groups.length} topic${groups.length === 1 ? '' : 's'}.</p>
     </div>
-    ${
-      review.missedCount
-        ? `<div style="display:grid;gap:8px;">
-            <button id="test-build-debrief" style="border:none;border-radius:999px;background:#0f766e;color:white;padding:10px 14px;font-weight:800;font-size:13px;cursor:pointer;">${debrief?.status === 'building' ? 'Building full debrief…' : debrief ? 'Rebuild full debrief' : 'Build full debrief'}</button>
-            <button id="test-find-anki" style="border:1px solid #0f766e;border-radius:999px;background:white;color:#0f766e;padding:9px 14px;font-weight:800;font-size:13px;cursor:pointer;">Find relevant cards in Anki</button>
-          </div>`
-        : '<p style="margin:0;color:#15803d;font-weight:700;">Clean sweep — there are no misses to debrief.</p>'
-    }
+    <div style="display:grid;gap:8px;">
+      ${review.missedCount ? '<button id="test-review-next" style="border:none;border-radius:999px;background:#0f766e;color:white;padding:10px 14px;font-weight:800;font-size:13px;cursor:pointer;">Review next</button>' : ''}
+      <button id="test-build-debrief" style="border:1px solid #0f766e;border-radius:999px;background:white;color:#0f766e;padding:9px 14px;font-weight:800;font-size:13px;cursor:pointer;">${debrief?.status === 'building' ? 'Building knowledge graph…' : debrief ? 'Resume knowledge graph run' : `Process all ${review.rows.length} questions`}</button>
+      ${review.missedCount ? '<button id="test-find-anki" style="border:1px solid #0f766e;border-radius:999px;background:white;color:#0f766e;padding:9px 14px;font-weight:800;font-size:13px;cursor:pointer;">Find relevant cards in Anki</button>' : ''}
+    </div>
     <p style="margin:0;font-size:12px;line-height:1.5;color:#5c6574;">SnapOrtho finds existing cards in the backend. The add-on opens the matching local cards in Browse without changing card state.</p>
   </section>`);
   content.appendChild(header);
@@ -158,11 +175,17 @@ export function appendOrthobulletsTestDebrief(
     buildButton.disabled = debrief?.status === 'building';
     buildButton.addEventListener('click', () => hooks.onBuildDebrief());
   }
+  header.querySelector<HTMLButtonElement>('#test-review-next')?.addEventListener('click', () => hooks.onReviewNext());
 
   if (debrief) {
     const ready = debrief.questions.filter((question) => question.explanation);
     const failed = debrief.questions.filter((question) => question.status === 'error');
-    const concepts = [...new Set(ready.map((question) => question.explanation!.testedConcept))];
+    const acceptedClaims = debrief.questions.filter((question) => question.claimStatus === 'accepted' || question.claimStatus === 'accepted_no_card');
+    const linkedClaims = debrief.questions.filter((question) => (question.linkedCardCount ?? 0) > 0);
+    const unresolvedClaims = debrief.questions.filter((question) => question.claimStatus === 'unresolved_automatic');
+    const retryableClaims = debrief.questions.filter((question) => question.claimStatus === 'retryable');
+    const concepts = [...new Set(ready.sort((a, b) => weakness(b) - weakness(a)).map((question) => question.explanation!.testedConcept))];
+    const persistent = ready.filter((question) => (question.reviewCount ?? 0) >= 2 && question.lastRating !== 'got_it');
     const statusCopy = debrief.status === 'building'
       ? `${ready.length} of ${debrief.questions.length} missed questions analyzed`
       : `${ready.length} analyzed${failed.length ? ` · ${failed.length} could not be loaded` : ''}`;
@@ -170,8 +193,10 @@ export function appendOrthobulletsTestDebrief(
       <div>
         <p style="margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#9a3412;font-weight:800;">Full debrief ${escapeHtml(debrief.status)}</p>
         <p style="margin:5px 0 0;color:#5c6574;font-size:12px;">${escapeHtml(statusCopy)} · saved locally</p>
+        <p style="margin:5px 0 0;color:#0f766e;font-size:12px;">Knowledge graph: ${acceptedClaims.length}/${debrief.questions.length} claims accepted · ${linkedClaims.length} linked to cards · ${retryableClaims.length} retryable · ${unresolvedClaims.length} unresolved automatically</p>
       </div>
       ${concepts.length ? `<div><p style="margin:0 0 5px;font-weight:800;color:#18202b;">Pattern diagnosis</p>${concepts.map((concept) => `<p style="margin:3px 0;color:#384152;font-size:13px;">• ${escapeHtml(concept)}</p>`).join('')}</div>` : ''}
+      ${persistent.length ? `<div><p style="margin:0 0 5px;font-weight:800;color:#9a3412;">Persistent weak areas</p>${persistent.map((question) => `<p style="margin:3px 0;color:#7c2d12;font-size:13px;">• ${escapeHtml(question.explanation!.testedConcept)}</p>`).join('')}</div>` : ''}
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button id="test-export-debrief" style="border:1px solid #c2410c;border-radius:999px;background:white;color:#9a3412;padding:7px 11px;font-weight:700;font-size:12px;cursor:pointer;">Copy debrief</button>
         <button id="test-clear-debrief" style="border:none;background:transparent;color:#64748b;padding:7px;font-weight:700;font-size:12px;cursor:pointer;">Clear saved debrief</button>
@@ -196,12 +221,12 @@ export function appendOrthobulletsTestDebrief(
       </button>
       ${enriched?.status === 'collecting' ? '<p style="margin:2px 8px;color:#0f766e;font-size:12px;">Collecting review and generating teaching analysis…</p>' : ''}
       ${enriched?.error ? `<p style="margin:2px 8px;color:#b91c1c;font-size:12px;">${escapeHtml(enriched.error)}</p>` : ''}
-      ${explanation ? `<div style="margin:0 2px 5px;padding:10px;border-left:3px solid #14b8a6;background:#f8fafc;display:grid;gap:6px;">
+      ${explanation ? `<div data-learning-card="${escapeHtml(question.questionId)}" style="margin:0 2px 5px;padding:10px;border-left:3px solid #14b8a6;background:#f8fafc;display:grid;gap:6px;">
         <p style="margin:0;font-weight:800;color:#18202b;">${escapeHtml(explanation.testedConcept)}</p>
         <p style="margin:0;font-size:12px;line-height:1.45;color:#384152;"><strong>Bottom line:</strong> ${escapeHtml(explanation.bottomLine)}</p>
         <p style="margin:0;font-size:12px;line-height:1.45;color:#7c2d12;"><strong>Your misconception:</strong> ${escapeHtml(misconception?.reason ?? explanation.boardTrap ?? 'No specific distractor analysis available.')}</p>
-        <p style="margin:0;font-size:12px;line-height:1.45;color:#065f46;"><strong>Remember:</strong> ${escapeHtml(explanation.boardPearl)}</p>
-        <p style="margin:0;font-size:12px;line-height:1.45;color:#475569;"><strong>Active recall:</strong> Explain the decisive clue and main trap without looking.</p>
+        <details><summary style="cursor:pointer;font-size:12px;font-weight:800;color:#0f766e;">Active recall — reveal the fact</summary><p style="margin:7px 0 0;font-size:12px;line-height:1.45;color:#065f46;"><strong>Remember:</strong> ${escapeHtml(explanation.boardPearl)}</p><p style="margin:5px 0 0;font-size:12px;color:#475569;">What decisive clue rules out your selected answer?</p></details>
+        <div style="display:flex;gap:6px;"><button data-rate="again" data-question-id="${escapeHtml(question.questionId)}" style="border:1px solid #dc2626;border-radius:999px;background:white;color:#b91c1c;padding:5px 8px;font-weight:700;font-size:11px;cursor:pointer;">Again</button><button data-rate="hard" data-question-id="${escapeHtml(question.questionId)}" style="border:1px solid #d97706;border-radius:999px;background:white;color:#92400e;padding:5px 8px;font-weight:700;font-size:11px;cursor:pointer;">Hard</button><button data-rate="got_it" data-question-id="${escapeHtml(question.questionId)}" style="border:1px solid #059669;border-radius:999px;background:white;color:#047857;padding:5px 8px;font-weight:700;font-size:11px;cursor:pointer;">Got it</button>${enriched?.lastRating ? `<span style="font-size:11px;color:#64748b;align-self:center;">Last: ${escapeHtml(enriched.lastRating.replace('_', ' '))}</span>` : ''}</div>
         <button data-question-anki="${escapeHtml(question.questionId)}" style="justify-self:start;border:1px solid #0f766e;border-radius:999px;background:white;color:#0f766e;padding:6px 10px;font-weight:700;font-size:11px;cursor:pointer;">Find cards for this misconception</button>
       </div>` : ''}`;
     }).join('');
@@ -225,6 +250,9 @@ export function appendOrthobulletsTestDebrief(
         const questionId = button.dataset.questionAnki;
         if (questionId) hooks.onFindQuestionAnkiCards(questionId, button);
       });
+    });
+    card.querySelectorAll<HTMLButtonElement>('[data-rate]').forEach((button) => {
+      button.addEventListener('click', () => hooks.onRateQuestion(button.dataset.questionId ?? '', button.dataset.rate as 'again' | 'hard' | 'got_it'));
     });
   }
 

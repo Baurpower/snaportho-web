@@ -10,6 +10,15 @@ export async function updateSession(request: NextRequest) {
       request.nextUrl.pathname === '/apple-app-site-association') {
     return NextResponse.next({ request })
   }
+  // High-frequency Anki addon pollers authenticate themselves with device
+  // tokens and never carry browser session cookies, so the Supabase session
+  // lookup below is a wasted Auth API round-trip on every poll (every ~4-10s
+  // per linked device). Both routes reject unauthenticated callers with 401
+  // JSON themselves.
+  if (request.nextUrl.pathname === '/api/anki/search-requests/pending' ||
+      request.nextUrl.pathname === '/api/brobot-anki/launch/pending') {
+    return NextResponse.next({ request })
+  }
   let response = NextResponse.next({
     request,
   })

@@ -2,23 +2,23 @@
 
 ## Objective
 
-Turn a user-opened, completed Orthobullets review question into one sanitized draft clinical claim, linked to the correct external-question record and canonical entity. The pipeline must improve its metadata coverage over time without requiring a human to approve ordinary cases.
+Turn completed Orthobullets review questions into sanitized, automatically validated clinical claims, link them to the correct external-question records and canonical entities, and verify which published Anki cards teach each claim. Results-page runs process every row sequentially and resume from durable checkpoints.
 
 ## Non-negotiable safety rules
 
 - Work in staging only: Supabase project `geznczcokbgybsseipjg`; use `scripts/lib/education/kg-staging-guard.ts` before any write script.
 - Never submit an answer, alter a test, create a test, or change Orthobullets progress. Navigate only user-owned completed review pages.
 - Treat stems, choices, explanations, images, and HTML as transient input. Do not store or log them. Persist only sanitized claims, hashes, source IDs, and safe provenance.
-- Never infer a clinical entity merely from an Orthobullets title or topic. A claim is created only after exactly one independently verified `question_canonical_entity_links` row is active.
+- Never infer a clinical entity merely from an Orthobullets title or topic. The generator and independent critic must agree on the entity and claim before automatic resolution.
 - Fail closed. Missing or ambiguous identity/mapping produces an `educational_claim_gaps` record, never a forced link.
 
 ## Current implementation
 
 - Extension extractor emits both the native QID and visible OBQ/SBQ alias.
 - `POST /api/brobot/extension/question-claims` resolves case-normalized identity candidates against `external_questions`.
-- Missing/ambiguous metadata records a `source_extraction_gap`; missing/ambiguous entity mapping records a `mapping_gap`.
-- The gap payload is safe metadata only: IDs, counts, page kind, and topic ID. No protected question content is persisted.
-- A resolved question with exactly one active canonical entity generates one original claim, a version, and a `question_claim_links` row in `needs_review`.
+- Missing question metadata is created from safe review-page identifiers. Missing canonical entities are resolved or created only after generator/critic consensus.
+- `orthobullets_claim_runs` and `orthobullets_claim_run_items` checkpoint safe IDs, hashes, graph references, and outcomes. No protected question content is persisted.
+- Accepted claims and question/card links use `machine_consensus` plus `auto_approved`; rejected or exhausted cases remain `unresolved_automatic` with reason codes.
 
 ## Where to work
 
@@ -31,12 +31,9 @@ Turn a user-opened, completed Orthobullets review question into one sanitized dr
 ## Operating loop
 
 1. Reload the unpacked extension and refresh the completed review page.
-2. Press **Generate graph claim** once. Interpret results:
-   - `created`: leave it for automated adjudication; do not promote directly.
-   - `Queued metadata gap`: add only a verified source-ID metadata record to the import corpus, then rerun.
-   - `Queued metadata gap — missing/ambiguous canonical entity`: resolve through the canonical ontology proposal/adjudication process, then rerun.
-3. Deduplicate gaps by `(provider, native_question_id, gap_class)`; update the existing gap instead of creating noise.
-4. Process a small reviewed-only cohort first. Measure created, metadata-gap, mapping-gap, ambiguous, and model-invalid rates before expanding.
+2. On a results page, press **Process all questions**. The extension opens one review page at a time, checkpoints the accepted claim/card links, closes it, and advances.
+3. Resume the same run to retry transient failures. Unchanged accepted questions are reused without a model call.
+4. Inspect run coverage by accepted, accepted-without-card, retryable, and unresolved outcomes before expanding.
 
 ## Required verification before handoff or batch work
 
@@ -49,6 +46,6 @@ node --experimental-strip-types -e "import('./src/lib/brobot/orthobullets/questi
 
 For any Supabase read/write, first read the Supabase skill, scan the current changelog, target staging explicitly, and perform a read-back verification. Do not use production as a test environment.
 
-## Next implementation stage
+## Remaining operational validation
 
-Build a resumable, review-only queue from the user's completed-results pages. It may visit explicit review URLs and invoke this same endpoint, but it must never manufacture question IDs, scrape an unauthenticated catalog, submit answers, or persist protected source material. The queue should prioritize unresolved `educational_claim_gaps`, then rerun automated evidence/adjudication after metadata and ontology coverage improve.
+Apply the migration in staging, deploy the backend, rebuild the extension, and run a small real results-page cohort. Verify database read-back, source-text exclusion, claim acceptance, exact Anki card/version links, resume behavior, and failure counts before starting the long-running bank pass.

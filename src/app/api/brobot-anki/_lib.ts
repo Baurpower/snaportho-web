@@ -21,6 +21,7 @@ type DeviceTokenRecord = {
   user_id: string;
   device_link_id: string;
   revoked_at: string | null;
+  last_used_at: string | null;
 };
 
 type DeviceLinkRecord = {
@@ -206,7 +207,7 @@ async function authenticateWithDeviceToken(
 
   const { data: tokenRecord, error: tokenError } = await supabase
     .from("brobot_anki_device_tokens")
-    .select("id, user_id, device_link_id, revoked_at")
+    .select("id, user_id, device_link_id, revoked_at, last_used_at")
     .eq("token_hash", tokenHash)
     .maybeSingle<DeviceTokenRecord>();
 
@@ -227,16 +228,24 @@ async function authenticateWithDeviceToken(
     };
   }
 
-  const { error: touchError } = await supabase
-    .from("brobot_anki_device_tokens")
-    .update({ last_used_at: isoNow() })
-    .eq("id", tokenRecord.id);
+  // Anki addons poll every few seconds, so touching last_used_at on every
+  // authenticated request would be a write per poll. Refresh it lazily: the
+  // timestamp only needs to be approximately recent for presence reporting.
+  const lastUsedMs = tokenRecord.last_used_at
+    ? new Date(tokenRecord.last_used_at).getTime()
+    : NaN;
+  if (!Number.isFinite(lastUsedMs) || Date.now() - lastUsedMs > 15 * 60_000) {
+    const { error: touchError } = await supabase
+      .from("brobot_anki_device_tokens")
+      .update({ last_used_at: isoNow() })
+      .eq("id", tokenRecord.id);
 
-  if (touchError) {
-    return {
-      success: false,
-      response: NextResponse.json({ error: touchError.message }, { status: 500 }),
-    };
+    if (touchError) {
+      return {
+        success: false,
+        response: NextResponse.json({ error: touchError.message }, { status: 500 }),
+      };
+    }
   }
 
   return {

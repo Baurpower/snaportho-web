@@ -81,7 +81,13 @@ export async function latestPublishedRelease() {
   return data?.id ?? null;
 }
 
-export async function linkAnkiClaims(answer: string, releaseId: string, subject: string): Promise<AnkiReference[]> {
+export async function linkAnkiClaims(
+  answer: string,
+  releaseId: string,
+  subject: string,
+  options: { maxCardsPerClaim?: number } = {},
+): Promise<AnkiReference[]> {
+  const maxCardsPerClaim = Math.max(1, Math.min(3, options.maxCardsPerClaim ?? 1));
   const claims = selectedClaims(answer);
   if (!claims.length) return [];
   const db = createAdminClient();
@@ -105,7 +111,7 @@ export async function linkAnkiClaims(answer: string, releaseId: string, subject:
   const pairs: Candidate[] = [];
   const perClaim = new Map<string, number>();
   for (const hit of hits.sort((a, b) => b.term_coverage - a.term_coverage)) {
-    if ((perClaim.get(hit.claim.id) ?? 0) >= 2) continue;
+    if ((perClaim.get(hit.claim.id) ?? 0) >= maxCardsPerClaim) continue;
     const version = byVersion.get(hit.canonical_card_version_id);
     const member = byMember.get(hit.canonical_card_version_id);
     if (!version?.is_active || !member || version.content_hash !== hit.content_hash) continue;
@@ -122,17 +128,17 @@ export async function linkAnkiClaims(answer: string, releaseId: string, subject:
   }
   const supported = await verifyPairs(pairs);
   const references: AnkiReference[] = [];
-  const seenClaims = new Set<string>();
+  const selectedPerClaim = new Map<string, number>();
   const seenCards = new Set<string>();
   for (const pair of supported.sort((a, b) => b.coverage - a.coverage)) {
-    if (seenClaims.has(pair.claim.id) || seenCards.has(pair.cardId)) continue;
+    if ((selectedPerClaim.get(pair.claim.id) ?? 0) >= maxCardsPerClaim || seenCards.has(pair.cardId)) continue;
     references.push({
       id: pair.cardVersionId, number: references.length + 1, claimId: pair.claim.id,
       anchorText: pair.claim.text, cardId: pair.cardId, cardVersionId: pair.cardVersionId,
       releaseId, deckPath: pair.deckPath, title: cardPreview(pair.front, pair.ordinal, pair.deckPath),
       token: createAnkiToken('card', subject, `${releaseId}:${pair.cardVersionId}`),
     });
-    seenClaims.add(pair.claim.id);
+    selectedPerClaim.set(pair.claim.id, (selectedPerClaim.get(pair.claim.id) ?? 0) + 1);
     seenCards.add(pair.cardId);
     if (references.length >= 3) break;
   }

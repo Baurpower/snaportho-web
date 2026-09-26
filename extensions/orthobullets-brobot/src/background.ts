@@ -24,6 +24,7 @@ import {
   resolveBroBotEndpoint,
   type BroBotExtensionRequest,
   validateCurriculumExplainRequest,
+  validateQuestionExplainRequest,
 } from './shared/brobot-routing.js';
 import { BACKGROUND_HANDLER_VERSION, EXTENSION_BUILD_ID, ROUTING_CONTRACT_VERSION } from './shared/build-info.js';
 import {
@@ -974,6 +975,18 @@ chrome.runtime.onMessage.addListener(
           return;
         }
 
+        if (message.type === 'ob:start-question-claim-run') {
+          const deviceToken = await getStoredDeviceToken();
+          if (!deviceToken) throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');
+          const result = await fetchJson('/api/brobot/extension/question-claim-runs', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', [EXTENSION_TOKEN_HEADER]: deviceToken },
+            body: JSON.stringify({ testKey: message.testKey, questions: message.questions }),
+          });
+          sendResponse({ ok: true, questionClaimRun: result });
+          return;
+        }
+
         if (message.type === 'ob:generate-question-claim') {
           const deviceToken = await getStoredDeviceToken();
           if (!deviceToken) throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');
@@ -985,7 +998,12 @@ chrome.runtime.onMessage.addListener(
           const result = await fetchJson('/api/brobot/extension/question-claims', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', [EXTENSION_TOKEN_HEADER]: deviceToken },
-            body: JSON.stringify({ contractVersion: 'orthobullets-question-claim-v1', pageContext: page }),
+            body: JSON.stringify({
+              contractVersion: 'orthobullets-question-claim-v1',
+              pageContext: page,
+              runId: message.runId,
+              runItemId: message.runItemId,
+            }),
           });
           sendResponse({ ok: true, questionClaim: result });
           return;
@@ -1144,6 +1162,27 @@ chrome.runtime.onMessage.addListener(
                     0,
                   ),
                   requestBodyCharCount: JSON.stringify(requestBodyObject).length,
+                },
+              );
+            }
+          } else {
+            const contract = validateQuestionExplainRequest(requestPayload);
+            if (!contract.success) {
+              throw new CodedError(
+                `Could not prepare this review: ${contract.issues.join('; ')}. Open the source question and retry.`,
+                'invalid_request',
+                {
+                  attemptedLinkUrl: `${getConfiguredAppOrigin()}${endpoint}`,
+                  baseUrl: getConfiguredAppOrigin(),
+                  httpStatus: null,
+                  responseBody: null,
+                  responseMessage: contract.issues.join(' | '),
+                  fetchFailedBeforeResponse: true,
+                  requestedTask: requestPayload.task,
+                  resolvedEndpoint: `${getConfiguredAppOrigin()}${endpoint}`,
+                  requestProvider: requestPayload.provider,
+                  requestPageKind: message.pageContext.pageKind,
+                  requestPayloadKind: 'question',
                 },
               );
             }

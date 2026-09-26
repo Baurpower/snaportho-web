@@ -142,6 +142,8 @@ export const OrthobulletsExplainRequestSchema = z.object({
 // bounded SnapOrtho claim plus hashes/provenance.
 export const OrthobulletsQuestionClaimRequestSchema = z.object({
   contractVersion: z.literal('orthobullets-question-claim-v1'),
+  runId: z.string().uuid().optional(),
+  runItemId: z.string().uuid().optional(),
   pageContext: StrictQuestionPageContextSchema,
 }).superRefine((value, ctx) => {
   if (value.pageContext.provider !== 'orthobullets') {
@@ -152,6 +154,9 @@ export const OrthobulletsQuestionClaimRequestSchema = z.object({
   }
   if (!value.pageContext.correctAnswerKey || !value.pageContext.explanationText?.trim()) {
     ctx.addIssue({ code: 'custom', path: ['pageContext'], message: 'Claims require visible answer and explanation signals.' });
+  }
+  if (Boolean(value.runId) !== Boolean(value.runItemId)) {
+    ctx.addIssue({ code: 'custom', path: ['runItemId'], message: 'runId and runItemId must be supplied together.' });
   }
 });
 

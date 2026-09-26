@@ -1,6 +1,6 @@
 import * as assert from 'node:assert/strict';
 import type { OrthobulletsTestResultRow } from '../shared/types.js';
-import { fullDebriefText, groupMissedQuestions, testDebriefStorageKey } from './orthobullets-test-debrief.js';
+import { claimRunRows, fullDebriefText, groupMissedQuestions, testDebriefStorageKey } from './orthobullets-test-debrief.js';
 
 const rows: OrthobulletsTestResultRow[] = [
   {
@@ -51,6 +51,8 @@ assert.equal(groups[0]?.label, 'Humeral Shaft Fractures');
 assert.deepEqual(groups[0]?.questions.map((row) => row.questionId), ['OBQ1', 'OBQ3']);
 assert.equal(groups[1]?.label, 'Flexor Tendon Injury');
 assert.ok(groups.flatMap((group) => group.questions).every((row) => row.isCorrect === false));
+assert.deepEqual(claimRunRows(rows).map((row) => row.questionId), ['OBQ1', 'OBQ2', 'OBQ3', 'OBQ4']);
+assert.equal(claimRunRows([...rows, rows[0]!]).length, 4);
 assert.match(testDebriefStorageKey({
   testId: 'TEST-1',
   day: null,

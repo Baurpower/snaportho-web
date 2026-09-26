@@ -140,6 +140,23 @@ export function validateCurriculumExplainRequest(payload: BroBotCurriculumPayloa
   return { success: issues.length === 0, issues };
 }
 
+/**
+ * Keep malformed review-page extractions out of the network path. The server
+ * has the authoritative Zod schema; this intentionally mirrors only the
+ * actionable requirements so the learner gets a useful recovery message.
+ */
+export function validateQuestionExplainRequest(payload: BroBotQuestionPayload) {
+  const page = payload.pageContext;
+  const issues: string[] = [];
+  if (page.mode !== 'question') issues.push('this page is not a completed question review');
+  if (!page.stem?.trim()) issues.push('the question stem was not found');
+  if (page.answerChoices.length < 2) issues.push('answer choices were not found');
+  const keys = new Set(page.answerChoices.flatMap((choice) => [choice.key, choice.label]).filter(Boolean));
+  if (page.selectedAnswerKey && !keys.has(page.selectedAnswerKey)) issues.push('your selected answer did not match the extracted choices');
+  if (page.correctAnswerKey && !keys.has(page.correctAnswerKey)) issues.push('the correct answer did not match the extracted choices');
+  return { success: issues.length === 0, issues };
+}
+
 function assertNever(value: never): never {
   throw new Error(`Unhandled BroBot task: ${String(value)}`);
 }
