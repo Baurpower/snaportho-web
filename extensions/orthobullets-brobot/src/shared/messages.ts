@@ -39,6 +39,27 @@ export type LinkStartResult = {
   expiresAt: string;
 };
 
+export type AnkiLinkField = { name: string; text: string };
+export type AnkiSourcePage = {
+  id: string;
+  provider: 'orthobullets' | 'rock';
+  canonical_url: string;
+  source_url: string;
+  title: string;
+};
+export type AnkiLinkCard = {
+  canonicalCardId: string;
+  canonicalCardVersionId: string;
+  noteGuid: string;
+  cardOrdinal: number;
+  orderingKey: string;
+  fields: AnkiLinkField[];
+  linkedPageIds?: string[];
+};
+export type AnkiLinkedReviewCard =
+  | (AnkiLinkCard & { available: true })
+  | { canonicalCardId: string; available: false };
+
 export type QuestionChangeMessage = {
   type: 'ob:question-changed';
   fingerprint: string;
@@ -86,6 +107,13 @@ export type ExtensionMessage =
   | { type: 'ob:start-link'; deviceName: string }
   | { type: 'ob:poll-link'; linkCode: string }
   | { type: 'ob:clear-link' }
+  | { type: 'ob:anki-link-deck'; offset: number; search?: string }
+  | { type: 'ob:anki-link-pages'; search?: string; provider?: 'orthobullets' | 'rock' }
+  | { type: 'ob:anki-register-page'; provider: 'orthobullets' | 'rock'; url: string; title: string }
+  | { type: 'ob:anki-card-links'; canonicalCardId: string }
+  | { type: 'ob:anki-page-cards'; pageId: string }
+  | { type: 'ob:anki-save-card-link'; canonicalCardId: string; pageId: string }
+  | { type: 'ob:anki-remove-card-link'; canonicalCardId: string; pageId: string }
   | { type: 'ob:cancel-curriculum-stream'; streamRequestId: string }
   // `questionAttemptId` targets one specific AAOS Himalaya question instead of
   // whatever is on screen, so the review board can load any row on demand.
@@ -202,6 +230,13 @@ export type ExtensionMessageResponse =
   | { ok: true; chat: OrthobulletsChatResponse }
   | { ok: true; topicTurn: OrthobulletsTopicTutorResponse }
   | { ok: true; cleared: true }
+  | { ok: true; deck: { release: { id: string; version: string }; total: number; offset: number; cards: AnkiLinkCard[] } }
+  | { ok: true; pages: AnkiSourcePage[] }
+  | { ok: true; page: AnkiSourcePage }
+  | { ok: true; links: Array<{ page: AnkiSourcePage | null }> }
+  | { ok: true; cards: AnkiLinkedReviewCard[] }
+  | { ok: true; saved: true }
+  | { ok: true; removed: true }
   | { ok: true; questionClaimRun: { runId: string; algorithmVersion: string; items: Array<{ id: string; native_question_id: string; status: string; claim_id?: string | null; linked_card_count?: number; last_error_code?: string | null }> } }
   | { ok: true; questionClaim: { status: string; claimId?: string; claimVersionId?: string; nativeQuestionId?: string; reviewStatus?: string; reason?: string; gapRecorded?: boolean; cardCount?: number; runItemId?: string } }
   | { ok: true; launchQueued: { noteGuid: string; cardOrdinal: number; rank: 1 | 2 | 3 }; command?: unknown }

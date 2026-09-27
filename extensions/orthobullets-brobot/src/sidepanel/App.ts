@@ -1,5 +1,8 @@
 import type {
   ActivePageState,
+  AnkiLinkCard,
+  AnkiLinkedReviewCard,
+  AnkiSourcePage,
   AuthState,
   ExtensionErrorCode,
   ExtensionMessage,
@@ -72,6 +75,7 @@ import {
   isCompatibleExtensionBuild,
 } from '../shared/build-info.js';
 import { getConfiguredAppOrigin } from '../shared/runtime.js';
+import { appendDeckLinkPanel, appendLinkedReviewPanel } from './anki-linking-panel.js';
 
 const BROBOT_ICON_URL = chrome.runtime.getURL('icons/brobot-32.png');
 const SIDEPANEL_BUILD_ID_MARKER = '2026-07-30-himalaya-live-v4';
@@ -793,6 +797,22 @@ export function mountSidePanelApp(root: HTMLElement) {
     learningProgress: Record<string, { reviewCount: number; lastRating: 'again' | 'hard' | 'got_it'; lastReviewedAt: string }>;
     curriculumStreamRequestId: string | null;
     curriculumStreamStatus: string | null;
+    ankiMode: 'link' | 'review' | null;
+    ankiDeckCard: AnkiLinkCard | null;
+    ankiDeckOffset: number;
+    ankiDeckTotal: number;
+    ankiDeckReleaseVersion: string | null;
+    ankiDeckSearch: string;
+    ankiPages: AnkiSourcePage[];
+    ankiPageSearch: string;
+    ankiSelectedPageId: string | null;
+    ankiLinkedPages: AnkiSourcePage[];
+    ankiReviewCards: AnkiLinkedReviewCard[];
+    ankiReviewPageId: string | null;
+    ankiReviewIndex: number;
+    ankiReviewRevealed: boolean;
+    ankiBusy: boolean;
+    ankiError: string | null;
   } = {
     activePage: null,
     auth: null,
@@ -839,6 +859,22 @@ export function mountSidePanelApp(root: HTMLElement) {
     learningProgress: {},
     curriculumStreamRequestId: null,
     curriculumStreamStatus: null,
+    ankiMode: null,
+    ankiDeckCard: null,
+    ankiDeckOffset: 0,
+    ankiDeckTotal: 0,
+    ankiDeckReleaseVersion: null,
+    ankiDeckSearch: '',
+    ankiPages: [],
+    ankiPageSearch: '',
+    ankiSelectedPageId: null,
+    ankiLinkedPages: [],
+    ankiReviewCards: [],
+    ankiReviewPageId: null,
+    ankiReviewIndex: 0,
+    ankiReviewRevealed: false,
+    ankiBusy: false,
+    ankiError: null,
   };
 
   let curriculumWatchdog: ReturnType<typeof setTimeout> | null = null;
@@ -2027,6 +2063,177 @@ export function mountSidePanelApp(root: HTMLElement) {
     button.textContent = claim.reason ? `Unresolved automatically — ${claim.reason.replaceAll('_', ' ')}` : 'Claim was not created';
   }
 
+  async function loadAnkiPages(search = state.ankiPageSearch) {
+    state.ankiPageSearch = search;
+    const result = await sendMessage({ type: 'ob:anki-link-pages', search });
+    if (!result.ok || !('pages' in result)) {
+      state.ankiError = result.ok ? 'Saved source pages could not be loaded.' : result.error;
+      render();
+      return;
+    }
+    state.ankiPages = result.pages;
+    render();
+  }
+
+  async function loadAnkiDeckCard(offset: number) {
+    const targetOffset = Math.max(0, Math.min(offset, Math.max(0, state.ankiDeckTotal - 1)));
+    state.ankiBusy = true;
+    state.ankiError = null;
+    render();
+    const result = await sendMessage({
+      type: 'ob:anki-link-deck',
+      offset: targetOffset,
+      search: state.ankiDeckSearch,
+    });
+    if (!result.ok || !('deck' in result)) {
+      state.ankiError = result.ok ? 'The published deck could not be loaded.' : result.error;
+      state.ankiBusy = false;
+      render();
+      return;
+    }
+    state.ankiDeckOffset = result.deck.offset;
+    state.ankiDeckTotal = result.deck.total;
+    state.ankiDeckReleaseVersion = result.deck.release.version;
+    state.ankiDeckCard = result.deck.cards[0] ?? null;
+    state.ankiLinkedPages = [];
+    if (state.ankiDeckCard) {
+      const links = await sendMessage({
+        type: 'ob:anki-card-links',
+        canonicalCardId: state.ankiDeckCard.canonicalCardId,
+      });
+      if (links.ok && 'links' in links) {
+        state.ankiLinkedPages = links.links
+          .map((link) => link.page)
+          .filter((page): page is AnkiSourcePage => page !== null);
+        if (state.ankiDeckCard) {
+          state.ankiDeckCard.linkedPageIds = state.ankiLinkedPages.map((page) => page.id);
+        }
+      } else if (!links.ok) {
+        state.ankiError = links.error;
+      }
+    }
+    state.ankiBusy = false;
+    render();
+  }
+
+  async function searchAnkiDeck(search: string) {
+    state.ankiDeckSearch = search;
+    state.ankiDeckTotal = 0;
+    state.ankiDeckOffset = 0;
+    await loadAnkiDeckCard(0);
+  }
+
+  async function loadAnkiReviewPage(pageId: string) {
+    state.ankiBusy = true;
+    state.ankiError = null;
+    state.ankiReviewPageId = pageId;
+    state.ankiReviewCards = [];
+    state.ankiReviewIndex = 0;
+    state.ankiReviewRevealed = false;
+    render();
+    const result = await sendMessage({ type: 'ob:anki-page-cards', pageId });
+    if (!result.ok || !('cards' in result)) {
+      state.ankiError = result.ok ? 'Linked cards could not be loaded.' : result.error;
+    } else {
+      state.ankiReviewCards = result.cards;
+    }
+    state.ankiBusy = false;
+    render();
+  }
+
+  async function enterAnkiMode(mode: 'link' | 'review') {
+    state.ankiMode = mode;
+    state.ankiError = null;
+    await loadAnkiPages('');
+    if (mode === 'link' && !state.ankiDeckCard) await loadAnkiDeckCard(0);
+    render();
+  }
+
+  async function registerAnkiSourcePage(provider: 'orthobullets' | 'rock', url: string, title: string) {
+    state.ankiBusy = true;
+    state.ankiError = null;
+    render();
+    const result = await sendMessage({ type: 'ob:anki-register-page', provider, url, title });
+    if (!result.ok || !('page' in result)) {
+      state.ankiError = result.ok ? 'Source page could not be saved.' : result.error;
+    } else {
+      state.ankiSelectedPageId = result.page.id;
+      await loadAnkiPages(state.ankiPageSearch);
+      if (state.ankiDeckCard) {
+        const links = await sendMessage({
+          type: 'ob:anki-card-links',
+          canonicalCardId: state.ankiDeckCard.canonicalCardId,
+        });
+        if (links.ok && 'links' in links) {
+          state.ankiLinkedPages = links.links
+            .map((link) => link.page)
+            .filter((page): page is AnkiSourcePage => page !== null);
+          if (state.ankiDeckCard) {
+            state.ankiDeckCard.linkedPageIds = state.ankiLinkedPages.map((page) => page.id);
+          }
+        }
+      }
+    }
+    state.ankiBusy = false;
+    render();
+  }
+
+  async function mutateAnkiCardLink(pageId: string, remove = false) {
+    const canonicalCardId = state.ankiDeckCard?.canonicalCardId;
+    if (!canonicalCardId) return;
+    state.ankiBusy = true;
+    state.ankiError = null;
+    render();
+    const result = await sendMessage(remove
+      ? { type: 'ob:anki-remove-card-link', canonicalCardId, pageId }
+      : { type: 'ob:anki-save-card-link', canonicalCardId, pageId });
+    if (!result.ok || (remove ? !('removed' in result) : !('saved' in result))) {
+      state.ankiError = result.ok ? 'Card link could not be updated.' : result.error;
+    } else {
+      const links = await sendMessage({ type: 'ob:anki-card-links', canonicalCardId });
+      if (links.ok && 'links' in links) {
+        state.ankiLinkedPages = links.links
+          .map((link) => link.page)
+          .filter((page): page is AnkiSourcePage => page !== null);
+        if (state.ankiDeckCard) {
+          state.ankiDeckCard.linkedPageIds = state.ankiLinkedPages.map((page) => page.id);
+        }
+      } else if (!links.ok) {
+        state.ankiError = links.error;
+      }
+    }
+    state.ankiBusy = false;
+    render();
+  }
+
+  async function removeUnavailableAnkiLink(canonicalCardId: string) {
+    const pageId = state.ankiReviewPageId;
+    if (!pageId) return;
+    state.ankiBusy = true;
+    state.ankiError = null;
+    render();
+    const result = await sendMessage({
+      type: 'ob:anki-remove-card-link',
+      canonicalCardId,
+      pageId,
+    });
+    if (!result.ok) {
+      state.ankiError = result.error;
+      state.ankiBusy = false;
+      render();
+      return;
+    }
+    const refreshed = await sendMessage({ type: 'ob:anki-page-cards', pageId });
+    if (refreshed.ok && 'cards' in refreshed) {
+      state.ankiReviewCards = refreshed.cards;
+      state.ankiReviewIndex = Math.min(state.ankiReviewIndex, Math.max(0, refreshed.cards.length - 1));
+    } else if (!refreshed.ok) {
+      state.ankiError = refreshed.error;
+    }
+    state.ankiBusy = false;
+    render();
+  }
+
   function render() {
     root.innerHTML = '';
     syncQuestionTutorViewContext();
@@ -2116,6 +2323,92 @@ export function mountSidePanelApp(root: HTMLElement) {
     content.style.minWidth = '0';
     content.style.boxSizing = 'border-box';
     content.style.overflowX = 'hidden';
+
+    if (state.auth?.status === 'linked') {
+      const modes = createElement('div');
+      Object.assign(modes.style, { display: 'flex', gap: '8px', flexWrap: 'wrap' });
+      const tutorButton = createElement('button', { text: 'BroBot' });
+      const linkButton = createElement('button', { text: 'Link Anki cards' });
+      const reviewButton = createElement('button', { text: 'Review linked cards' });
+      for (const button of [tutorButton, linkButton, reviewButton]) {
+        Object.assign(button.style, {
+          border: '1px solid #0f766e',
+          borderRadius: '999px',
+          background: '#fff',
+          color: '#0f766e',
+          padding: '8px 12px',
+          fontWeight: '700',
+          cursor: 'pointer',
+        });
+      }
+      tutorButton.addEventListener('click', () => {
+        state.ankiMode = null;
+        render();
+      });
+      linkButton.addEventListener('click', () => void enterAnkiMode('link'));
+      reviewButton.addEventListener('click', () => void enterAnkiMode('review'));
+      modes.append(tutorButton, linkButton, reviewButton);
+      content.appendChild(modes);
+      if (state.ankiMode === 'link') {
+        appendDeckLinkPanel(content, {
+          card: state.ankiDeckCard,
+          total: state.ankiDeckTotal,
+          offset: state.ankiDeckOffset,
+          releaseVersion: state.ankiDeckReleaseVersion,
+          pages: state.ankiPages,
+          selectedPageId: state.ankiSelectedPageId,
+          linkedPages: state.ankiLinkedPages,
+          activeUrl: state.activePage?.url ?? null,
+          activeTitle: state.activePage?.title ?? null,
+          activeProvider: state.activePage?.provider === 'rock' || state.activePage?.provider === 'orthobullets'
+            ? state.activePage.provider
+            : null,
+          busy: state.ankiBusy,
+          error: state.ankiError,
+          hooks: {
+            searchDeck: (query) => void searchAnkiDeck(query),
+            loadDeckCard: (offset) => void loadAnkiDeckCard(offset),
+            searchPages: (query) => void loadAnkiPages(query),
+            registerPage: (provider, url, title) => void registerAnkiSourcePage(provider, url, title),
+            selectPage: (pageId) => {
+              state.ankiSelectedPageId = pageId;
+              render();
+            },
+            saveLink: (pageId) => void mutateAnkiCardLink(pageId),
+            removeLink: (pageId) => void mutateAnkiCardLink(pageId, true),
+          },
+        });
+      } else if (state.ankiMode === 'review') {
+        appendLinkedReviewPanel(content, {
+          pages: state.ankiPages,
+          pageId: state.ankiReviewPageId,
+          cards: state.ankiReviewCards,
+          cardIndex: state.ankiReviewIndex,
+          revealed: state.ankiReviewRevealed,
+          busy: state.ankiBusy,
+          error: state.ankiError,
+          hooks: {
+            searchPages: (query) => void loadAnkiPages(query),
+            selectPage: (pageId) => void loadAnkiReviewPage(pageId),
+            moveCard: (index) => {
+              state.ankiReviewIndex = Math.max(0, Math.min(index, state.ankiReviewCards.length - 1));
+              state.ankiReviewRevealed = false;
+              render();
+            },
+            toggleReveal: () => {
+              state.ankiReviewRevealed = !state.ankiReviewRevealed;
+              render();
+            },
+            removeUnavailableLink: (canonicalCardId) => void removeUnavailableAnkiLink(canonicalCardId),
+          },
+        });
+      }
+      if (state.ankiMode) {
+        container.appendChild(content);
+        root.appendChild(container);
+        return;
+      }
+    }
 
     const statusCard = createElement('div', {
       html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:8px;">

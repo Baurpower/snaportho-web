@@ -1,14 +1,15 @@
 # Orthobullets BroBot Extension
 
-A Chrome MV3 side-panel extension that lets a linked SnapOrtho user get a
-BroBot explanation of an Orthobullets review-page question on demand. This
-is a tutoring aid layered on top of Orthobullets — it never auto-scrapes,
-never sends data before the user clicks, and never persists raw question
-content server-side (see [Privacy / IP constraints](#privacy--ip-constraints)).
+A Chrome MV3 side-panel extension for linked SnapOrtho users. It provides
+BroBot tutoring, a deck-wide Anki card-to-page linking workflow, and a
+page-level linked-card reviewer. It never auto-scrapes, never sends page data
+before the user clicks, and never persists raw source-page content
+(see [Privacy / IP constraints](#privacy--ip-constraints)).
 
-Current scope is intentionally narrow: **explain this question**. Follow-up
-chat, conversation persistence, and Anki generation are explicitly out of
-scope until this extraction pipeline is validated and stable.
+The Anki linking workflow walks the latest published included deck in order,
+supports text search and revisiting existing links, and stores user-scoped
+many-to-many relationships keyed by stable canonical card IDs. Reviews resolve
+those IDs against the latest published card version at read time.
 
 ## Local setup
 
@@ -92,6 +93,29 @@ The extension never has its own login form. Instead:
 
 No password, API key, or session cookie is ever entered into the extension
 UI directly.
+
+## Linking and reviewing Anki cards
+
+After linking the extension to SnapOrtho, use **Link Anki cards** in the side
+panel to step through the latest published deck. Each card preview uses the
+published version; search covers its front/back text. Save one or more
+Orthobullets or ROCK source pages, skip cards without a link, and use Previous
+to revisit a card. A source page can be registered from the current tab or by
+entering its URL and title. Only HTTPS `orthobullets.com` and
+`rock.aaos.org` URLs are accepted.
+
+Use **Review linked cards** to select a saved page, step through its linked
+cards, and reveal or hide the back. The reviewer resolves each stable card ID
+to the latest published included version; cards that are no longer included
+are marked unavailable instead of silently showing stale content. Links and
+registered page identities are private to the linked SnapOrtho account. Saved
+pages can be searched by title or canonical URL; the page list displays the
+URL so similarly named source pages can be distinguished.
+
+The linking APIs persist only the source provider, canonical page URL, page
+title, user ID, and stable card/page identities. They do not receive or store
+the Orthobullets or ROCK page body. The schema is in
+`supabase/migrations/20260926190000_brobot_anki_page_links.sql`.
 
 ## Testing workflow
 
@@ -193,6 +217,10 @@ staging backend:
    retryable until the next day).
 6. Trigger a network failure (e.g. stop the backend) and confirm the
    network-failure state renders with a working **Retry** button.
+7. With a linked account and published deck, link several cards (including
+   multiple cards to one page and multiple pages to one card), refresh the
+   extension, and confirm links persist. Search and revisit a card, remove a
+   link, then review the page and confirm front/back reveal plus previous/next.
 
 ## Debug mode
 

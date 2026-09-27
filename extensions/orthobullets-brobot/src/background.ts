@@ -627,6 +627,67 @@ chrome.runtime.onMessage.addListener(
           return;
         }
 
+        if (message.type.startsWith('ob:anki-')) {
+          const deviceToken = await getStoredDeviceToken();
+          if (!deviceToken) {
+            throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');
+          }
+          const headers = {
+            'Content-Type': 'application/json',
+            [EXTENSION_TOKEN_HEADER]: deviceToken,
+          };
+          const api = '/api/brobot/extension/anki-linking';
+          if (message.type === 'ob:anki-link-deck') {
+            const params = new URLSearchParams({ offset: String(message.offset), limit: '1' });
+            if (message.search?.trim()) params.set('search', message.search.trim());
+            const deck = await fetchJson(`${api}/deck?${params}`, { headers });
+            sendResponse({ ok: true, deck });
+            return;
+          }
+          if (message.type === 'ob:anki-link-pages') {
+            const params = new URLSearchParams();
+            if (message.search?.trim()) params.set('search', message.search.trim());
+            if (message.provider) params.set('provider', message.provider);
+            const result = await fetchJson(`${api}/pages?${params}`, { headers });
+            sendResponse({ ok: true, pages: result.pages ?? [] });
+            return;
+          }
+          if (message.type === 'ob:anki-register-page') {
+            const result = await fetchJson(`${api}/pages`, {
+              method: 'POST',
+              headers,
+              body: JSON.stringify({ provider: message.provider, url: message.url, title: message.title }),
+            });
+            sendResponse({ ok: true, page: result.page });
+            return;
+          }
+          if (message.type === 'ob:anki-card-links') {
+            const params = new URLSearchParams({ canonicalCardId: message.canonicalCardId });
+            const result = await fetchJson(`${api}/links?${params}`, { headers });
+            sendResponse({ ok: true, links: result.links ?? [] });
+            return;
+          }
+          if (message.type === 'ob:anki-page-cards') {
+            const params = new URLSearchParams({ pageId: message.pageId });
+            const result = await fetchJson(`${api}/links?${params}`, { headers });
+            sendResponse({ ok: true, cards: result.cards ?? [] });
+            return;
+          }
+          if (message.type === 'ob:anki-save-card-link' || message.type === 'ob:anki-remove-card-link') {
+            await fetchJson(`${api}/links`, {
+              method: message.type === 'ob:anki-save-card-link' ? 'POST' : 'DELETE',
+              headers,
+              body: JSON.stringify({ canonicalCardId: message.canonicalCardId, pageId: message.pageId }),
+            });
+            if (message.type === 'ob:anki-save-card-link') {
+              sendResponse({ ok: true, saved: true });
+            } else {
+              sendResponse({ ok: true, removed: true });
+            }
+            return;
+          }
+        }
+
         if (message.type === 'ob:start-question-claim-run') {
           const deviceToken = await getStoredDeviceToken();
           if (!deviceToken) throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');
