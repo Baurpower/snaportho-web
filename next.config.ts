@@ -2,11 +2,30 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
-    '/api/anki/addon/download': ['./dist/snaportho-1.0.5.ankiaddon'],
+    '/api/anki/addon/download': ['./dist/snaportho-1.0.6.ankiaddon'],
   },
   webpack(config) {
     config.externals.push({ fs: 'commonjs fs', path: 'commonjs path' });
     return config;
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/anki/search-requests/pending',
+        destination: '/retired/anki-search-pending.json',
+      },
+    ];
+  },
+  async headers() {
+    return [
+      {
+        source: '/api/anki/search-requests/pending',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=300, s-maxage=86400, stale-while-revalidate=604800' },
+          { key: 'Content-Type', value: 'application/json; charset=utf-8' },
+        ],
+      },
+    ];
   },
   async redirects() {
     return [

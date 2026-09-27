@@ -22,7 +22,7 @@ from snaportho_reviewer.sync import (
 )
 from snaportho_reviewer.brobot_panel import ATTENDING_PROMPT,OITE_PROMPT,card_context,chat_payload,deck_footer_state,deck_footer_text,plain_text
 from snaportho_reviewer.resource_search import anki_card_query,parse_orthobullets_id,request_payload,resolve_local_results,result_summary
-from snaportho_reviewer.bootstrap import ANKI_DOWNLOAD_URL,MIN_ANKI,UnsupportedAnkiError,ProfileRuntime
+from snaportho_reviewer.bootstrap import ANKI_DOWNLOAD_URL,LAUNCH_POLL_ACTIVE_MS,MIN_ANKI,UnsupportedAnkiError,ProfileRuntime,launch_poll_interval_ms
 class Card:
  def __init__(self,id,h):self.id=id;self.h=h
 class Gateway:
@@ -42,10 +42,14 @@ class ReviewerTests(unittest.TestCase):
     self.assertEqual(timer.called,expected)
     self.assertEqual(timer.singleShot.called,expected)
     if expected:
-     timer.return_value.setInterval.assert_called_once_with(4000)
+     timer.return_value.setInterval.assert_called_once_with(LAUNCH_POLL_ACTIVE_MS)
      timer.return_value.timeout.connect.assert_called_once_with(runtime.poll_launches)
      timer.return_value.start.assert_called_once()
      timer.singleShot.assert_called_once_with(2000,runtime.poll_launches)
+ def test_launch_poll_backoff_reaches_five_minutes_and_adds_jitter(self):
+  self.assertEqual([launch_poll_interval_ms(x) for x in (0,1,2,3,4,7,8,20)],[4000,4000,30000,30000,120000,120000,300000,300000])
+  self.assertEqual(launch_poll_interval_ms(8,1234),301234)
+  self.assertEqual(launch_poll_interval_ms(1,1234),4000)
  def setUp(self):self.i=CardIdentity("c","v","guid",0,"a"*64)
  def test_anki_2509_is_supported(self):
   self.assertEqual(MIN_ANKI,(25,9))

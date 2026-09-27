@@ -1,14 +1,10 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-import { retiredAnkiSearchResponse } from '@/lib/anki/retired-search-relay'
-
 import { isPublicProviderWebhookPath } from '@/lib/auth/public-provider-webhook-path'
 import { isMarketingAppPath } from '@/lib/marketing/links'
 
 export async function updateSession(request: NextRequest) {
-  const retiredResponse = retiredAnkiSearchResponse(request)
-  if (retiredResponse) return retiredResponse
   // Apple must fetch association files without authentication or redirects.
   if (request.nextUrl.pathname === '/.well-known/apple-app-site-association' ||
       request.nextUrl.pathname === '/apple-app-site-association') {

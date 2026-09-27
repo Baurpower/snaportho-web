@@ -265,6 +265,20 @@ export async function authenticateBroBotAnkiRequest(
 ): Promise<
   AuthenticatedBroBotAnkiRequest | { response: NextResponse }
 > {
+  // Add-ons and extensions always send a device header. Resolve it first so
+  // high-frequency polling does not make a wasted Supabase Auth request.
+  if (getDeviceToken(request)) {
+    const deviceAuth = await authenticateWithDeviceToken(request);
+
+    if (deviceAuth.success) {
+      return deviceAuth.context;
+    }
+
+    if (deviceAuth.response) {
+      return { response: deviceAuth.response };
+    }
+  }
+
   const userAuth = await authenticateWithSupabaseUser(request);
 
   if (userAuth.success) {
@@ -273,16 +287,6 @@ export async function authenticateBroBotAnkiRequest(
 
   if (userAuth.response) {
     return { response: userAuth.response };
-  }
-
-  const deviceAuth = await authenticateWithDeviceToken(request);
-
-  if (deviceAuth.success) {
-    return deviceAuth.context;
-  }
-
-  if (deviceAuth.response) {
-    return { response: deviceAuth.response };
   }
 
   return {

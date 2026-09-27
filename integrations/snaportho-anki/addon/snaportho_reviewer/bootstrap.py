@@ -9,6 +9,14 @@ except ImportError:
 # smoke testing instead of the version on the development machine.
 MIN_ANKI=(25,9)
 ANKI_DOWNLOAD_URL="https://apps.ankiweb.net/"
+LAUNCH_POLL_ACTIVE_MS=4000
+LAUNCH_POLL_BACKOFF=((2,30000),(4,120000),(8,300000))
+
+def launch_poll_interval_ms(empty_streak,jitter_ms=0):
+    interval=LAUNCH_POLL_ACTIVE_MS
+    for threshold,candidate in LAUNCH_POLL_BACKOFF:
+        if empty_streak>=threshold:interval=candidate
+    return interval+(jitter_ms if interval>LAUNCH_POLL_ACTIVE_MS else 0)
 
 class UnsupportedAnkiError(RuntimeError):
     def __init__(self,installed):
@@ -121,8 +129,10 @@ class ProfileRuntime:
         except Exception:return True
     def _start_launch_poller(self,timer_class):
         if not self._owns_launch_polling():return
+        self._launch_empty_streak=0
+        self._launch_jitter_ms=int(getattr(self,"profile_hash","0")[:4],16)%15001
         self.launch_timer=timer_class(self.mw)
-        self.launch_timer.setInterval(4000)
+        self.launch_timer.setInterval(LAUNCH_POLL_ACTIVE_MS)
         self.launch_timer.timeout.connect(self.poll_launches)
         self.launch_timer.start()
         timer_class.singleShot(2000,self.poll_launches)
@@ -322,12 +332,12 @@ class ProfileRuntime:
                 commands = body.get("commands") or []
                 if not commands:
                     self._launch_empty_streak = getattr(self, "_launch_empty_streak", 0) + 1
-                    if self._launch_empty_streak >= 8:
-                        try:self.launch_timer.setInterval(30000)
-                        except Exception:pass
+                    interval=launch_poll_interval_ms(self._launch_empty_streak,getattr(self,"_launch_jitter_ms",0))
+                    try:self.launch_timer.setInterval(interval)
+                    except Exception:pass
                     return
                 self._launch_empty_streak = 0
-                try:self.launch_timer.setInterval(4000)
+                try:self.launch_timer.setInterval(LAUNCH_POLL_ACTIVE_MS)
                 except Exception:pass
                 class Client:
                     def __init__(self, api, pending):
