@@ -42,3 +42,7 @@ not a promise of zero requests or zero hosting cost.
   endpoint must return 410. Launch pending must still reject missing credentials.
 - Confirm the extension release JSON reports 0.1.1 and the signed-in Anki
   download returns `snaportho-1.0.5.ankiaddon`.
+- `npm run build` also checks that Next.js discovered `src/middleware.ts`, its
+  compiled matcher is limited to the retired routes, and the add-on download
+  package is included in the server file trace. The repository-root middleware
+  is not the active entrypoint in this `src/app` project.

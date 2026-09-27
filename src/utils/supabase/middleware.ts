@@ -1,27 +1,14 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+import { retiredAnkiSearchResponse } from '@/lib/anki/retired-search-relay'
+
 import { isPublicProviderWebhookPath } from '@/lib/auth/public-provider-webhook-path'
 import { isMarketingAppPath } from '@/lib/marketing/links'
 
 export async function updateSession(request: NextRequest) {
-  // Installed clients can outlive retired API routes. Respond before session
-  // lookup so their timers never redirect to (and render) the sign-in page.
-  // An empty successful poll also lets older add-ons enter their idle backoff.
-  const retiredPath = request.nextUrl.pathname.replace(/\/$/, '')
-  if (retiredPath === '/api/anki/search-requests' ||
-      retiredPath.startsWith('/api/anki/search-requests/') ||
-      retiredPath === '/api/brobot/extension/anki-search' ||
-      retiredPath.startsWith('/api/brobot/extension/anki-search/')) {
-    const headers = { 'Cache-Control': 'no-store' }
-    if (request.method === 'GET' && retiredPath === '/api/anki/search-requests/pending') {
-      return NextResponse.json({ requests: [], retired: true }, { headers })
-    }
-    return NextResponse.json({
-      error: 'Anki search has been retired. Update the SnapOrtho extension and Anki add-on.',
-      code: 'anki_search_retired',
-    }, { status: 410, headers })
-  }
+  const retiredResponse = retiredAnkiSearchResponse(request)
+  if (retiredResponse) return retiredResponse
   // Apple must fetch association files without authentication or redirects.
   if (request.nextUrl.pathname === '/.well-known/apple-app-site-association' ||
       request.nextUrl.pathname === '/apple-app-site-association') {
