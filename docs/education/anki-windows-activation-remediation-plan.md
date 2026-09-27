@@ -1,6 +1,6 @@
 # Anki cross-platform activation remediation plan
 
-**Status:** implemented in `1.0.6`; production migration deployed; native Windows release smoke test remains a release gate
+**Status:** implemented and released in `1.0.6`; production migration deployed; native Windows, macOS, and Linux release gates passed
 **Primary defect:** Windows users can complete browser approval but cannot persist the returned device token.
 **Target release:** next patch release after `1.0.5`
 **Owners:** Anki client, device-link API, release engineering
