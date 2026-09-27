@@ -1,5 +1,5 @@
 import json,os,sys,tempfile,unittest,uuid
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 ROOT=os.path.join(os.path.dirname(__file__),"..","addon");sys.path.insert(0,ROOT)
 from snaportho_reviewer.contracts import CardIdentity
 from snaportho_reviewer.resolver import resolve_card
@@ -22,7 +22,7 @@ from snaportho_reviewer.sync import (
 )
 from snaportho_reviewer.brobot_panel import ATTENDING_PROMPT,OITE_PROMPT,card_context,chat_payload,deck_footer_state,deck_footer_text,plain_text
 from snaportho_reviewer.resource_search import anki_card_query,parse_orthobullets_id,request_payload,resolve_local_results,result_summary
-from snaportho_reviewer.bootstrap import ANKI_DOWNLOAD_URL,MIN_ANKI,UnsupportedAnkiError
+from snaportho_reviewer.bootstrap import ANKI_DOWNLOAD_URL,MIN_ANKI,UnsupportedAnkiError,ProfileRuntime
 class Card:
  def __init__(self,id,h):self.id=id;self.h=h
 class Gateway:
@@ -31,6 +31,21 @@ class Gateway:
  def content_hash(self,c):return c.h
  def save_working_edit(self,*args,**kwargs):self.saved.append((args,kwargs))
 class ReviewerTests(unittest.TestCase):
+ def test_only_one_edition_starts_launch_polling(self):
+  for reviewer,installed,expected in [(False,["snaportho","snaportho_reviewer"],True),(True,["snaportho","snaportho_reviewer"],False),(True,["snaportho_reviewer"],True)]:
+   with self.subTest(reviewer=reviewer,installed=installed):
+    runtime=object.__new__(ProfileRuntime)
+    runtime.reviewer_edition=reviewer;runtime.mw=MagicMock()
+    runtime.mw.addonManager.allAddons.return_value=installed
+    timer=MagicMock()
+    runtime._start_launch_poller(timer)
+    self.assertEqual(timer.called,expected)
+    self.assertEqual(timer.singleShot.called,expected)
+    if expected:
+     timer.return_value.setInterval.assert_called_once_with(4000)
+     timer.return_value.timeout.connect.assert_called_once_with(runtime.poll_launches)
+     timer.return_value.start.assert_called_once()
+     timer.singleShot.assert_called_once_with(2000,runtime.poll_launches)
  def setUp(self):self.i=CardIdentity("c","v","guid",0,"a"*64)
  def test_anki_2509_is_supported(self):
   self.assertEqual(MIN_ANKI,(25,9))

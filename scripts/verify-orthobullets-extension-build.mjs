@@ -21,6 +21,15 @@ const sidepanelSource = [
   readFileSync(path.join(distDir, 'sidepanel', 'question-tutor-controller.js'), 'utf8'),
 ].join('\n');
 
+for (const retired of ['ob:send-to-anki', 'ob:send-page-to-anki', 'ob:send-test-to-anki', 'ob:get-anki-search-status', '/api/brobot/extension/anki-search']) {
+  if (backgroundSource.includes(retired) || sidepanelSource.includes(retired)) {
+    throw new Error(`Release still contains retired Anki search: ${retired}`);
+  }
+}
+if (!backgroundSource.includes('ob:open-anki-launch')) {
+  throw new Error('Release is missing the supported Anki launch handler');
+}
+
 const assertions = [
   ['background service worker', backgroundSource, '2026-07-30-himalaya-live-v4'],
   ['background service worker', backgroundSource, 'brobot:request'],

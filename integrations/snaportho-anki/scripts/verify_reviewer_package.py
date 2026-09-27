@@ -23,6 +23,10 @@ with zipfile.ZipFile(package) as archive:
     assert "from .surfaces import ReviewerSidePanel" in bootstrap
     assert 'menu_title="SnapOrtho Reviewer" if self.reviewer_edition else "SnapOrtho"' in bootstrap
 
+    assert "poll_search_relay" not in bootstrap, "stale search relay in packaged add-on"
+    assert "_owns_launch_polling" in bootstrap, "missing launch poll ownership guard"
+    assert 'ADDON_VERSION = "'+manifest["version"]+'"' in archive.read("snaportho_reviewer/version.py").decode()
+
 digest=hashlib.sha256(package.read_bytes()).hexdigest()
 expected=package.with_suffix(package.suffix+".sha256").read_text().split()[0]
 assert digest==expected
