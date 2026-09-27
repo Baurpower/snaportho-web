@@ -29,8 +29,6 @@ export type FullTestDebrief = {
 };
 
 export type TestDebriefHooks = {
-  onFindAnkiCards: (button: HTMLButtonElement, debrief: FullTestDebrief | null) => void;
-  onFindQuestionAnkiCards: (questionId: string, button: HTMLButtonElement) => void;
   onOpenQuestion: (reviewUrl: string) => void;
   onBuildDebrief: () => void;
   onExportDebrief: () => void;
@@ -162,14 +160,9 @@ export function appendOrthobulletsTestDebrief(
     <div style="display:grid;gap:8px;">
       ${review.missedCount ? '<button id="test-review-next" style="border:none;border-radius:999px;background:#0f766e;color:white;padding:10px 14px;font-weight:800;font-size:13px;cursor:pointer;">Review next</button>' : ''}
       <button id="test-build-debrief" style="border:1px solid #0f766e;border-radius:999px;background:white;color:#0f766e;padding:9px 14px;font-weight:800;font-size:13px;cursor:pointer;">${debrief?.status === 'building' ? 'Building knowledge graph…' : debrief ? 'Resume knowledge graph run' : `Process all ${review.rows.length} questions`}</button>
-      ${review.missedCount ? '<button id="test-find-anki" style="border:1px solid #0f766e;border-radius:999px;background:white;color:#0f766e;padding:9px 14px;font-weight:800;font-size:13px;cursor:pointer;">Find relevant cards in Anki</button>' : ''}
     </div>
-    <p style="margin:0;font-size:12px;line-height:1.5;color:#5c6574;">SnapOrtho finds existing cards in the backend. The add-on opens the matching local cards in Browse without changing card state.</p>
   </section>`);
   content.appendChild(header);
-  header.querySelector<HTMLButtonElement>('#test-find-anki')?.addEventListener('click', (event) => {
-    hooks.onFindAnkiCards(event.currentTarget as HTMLButtonElement, debrief);
-  });
   const buildButton = header.querySelector<HTMLButtonElement>('#test-build-debrief');
   if (buildButton) {
     buildButton.disabled = debrief?.status === 'building';
@@ -227,7 +220,6 @@ export function appendOrthobulletsTestDebrief(
         <p style="margin:0;font-size:12px;line-height:1.45;color:#7c2d12;"><strong>Your misconception:</strong> ${escapeHtml(misconception?.reason ?? explanation.boardTrap ?? 'No specific distractor analysis available.')}</p>
         <details><summary style="cursor:pointer;font-size:12px;font-weight:800;color:#0f766e;">Active recall — reveal the fact</summary><p style="margin:7px 0 0;font-size:12px;line-height:1.45;color:#065f46;"><strong>Remember:</strong> ${escapeHtml(explanation.boardPearl)}</p><p style="margin:5px 0 0;font-size:12px;color:#475569;">What decisive clue rules out your selected answer?</p></details>
         <div style="display:flex;gap:6px;"><button data-rate="again" data-question-id="${escapeHtml(question.questionId)}" style="border:1px solid #dc2626;border-radius:999px;background:white;color:#b91c1c;padding:5px 8px;font-weight:700;font-size:11px;cursor:pointer;">Again</button><button data-rate="hard" data-question-id="${escapeHtml(question.questionId)}" style="border:1px solid #d97706;border-radius:999px;background:white;color:#92400e;padding:5px 8px;font-weight:700;font-size:11px;cursor:pointer;">Hard</button><button data-rate="got_it" data-question-id="${escapeHtml(question.questionId)}" style="border:1px solid #059669;border-radius:999px;background:white;color:#047857;padding:5px 8px;font-weight:700;font-size:11px;cursor:pointer;">Got it</button>${enriched?.lastRating ? `<span style="font-size:11px;color:#64748b;align-self:center;">Last: ${escapeHtml(enriched.lastRating.replace('_', ' '))}</span>` : ''}</div>
-        <button data-question-anki="${escapeHtml(question.questionId)}" style="justify-self:start;border:1px solid #0f766e;border-radius:999px;background:white;color:#0f766e;padding:6px 10px;font-weight:700;font-size:11px;cursor:pointer;">Find cards for this misconception</button>
       </div>` : ''}`;
     }).join('');
     const card = createElement(`<section style="padding:14px;border-radius:14px;background:white;border:1px solid #ded7c8;display:grid;gap:10px;">
@@ -243,12 +235,6 @@ export function appendOrthobulletsTestDebrief(
       button.addEventListener('click', () => {
         const reviewUrl = button.dataset.reviewUrl;
         if (reviewUrl) hooks.onOpenQuestion(reviewUrl);
-      });
-    });
-    card.querySelectorAll<HTMLButtonElement>('[data-question-anki]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const questionId = button.dataset.questionAnki;
-        if (questionId) hooks.onFindQuestionAnkiCards(questionId, button);
       });
     });
     card.querySelectorAll<HTMLButtonElement>('[data-rate]').forEach((button) => {

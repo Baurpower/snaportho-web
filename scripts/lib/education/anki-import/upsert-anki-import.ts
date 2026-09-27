@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
+import { toProductDeckPath } from "../../../../src/lib/education/anki-deck-path.ts";
 import { createStableHash, truncateForTitle } from "./hash.ts";
 import { parseApkg } from "./parse-apkg.ts";
 import { parseTsv } from "./parse-tsv.ts";
@@ -245,9 +246,9 @@ export async function importAnkiFile(filePath: string, options: ImportOptions): 
       source_id: sourceId,
       anki_deck_id: deck.sourceDeckId,
       parent_deck_id: null,
-      full_name: deck.fullName,
-      deck_name: deck.deckName,
-      deck_path: deck.deckPath,
+      full_name: toProductDeckPath(deck.fullName),
+      deck_name: toProductDeckPath(deck.deckName),
+      deck_path: toProductDeckPath(deck.fullName).split("::"),
       metadata: deck.metadata,
       comments: null,
       is_active: true,

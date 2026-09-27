@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment, @typescript-eslint/no-explicit-any -- Additive Phase 3 tables are absent from generated database types until deployment. */
 // @ts-nocheck Additive Phase 3 tables are absent from generated database types until deployment.
+import { toProductDeckPath } from "@/lib/education/anki-deck-path";
 import { NextResponse } from "next/server";
 import { reviewerAuth } from "../_lib";
 // Priority curation queue for the add-on dashboard. v1 source: cards in the current published
@@ -63,7 +64,7 @@ export async function GET(request: Request) {
       return {
         noteGuid: member.note_guid,
         cardOrdinal: member.card_ordinal,
-        deckPath: member.deck_path,
+        deckPath: toProductDeckPath(member.deck_path),
         priority: "medium",
         reason: "missing_kg_mapping",
         front: frontPreview(snapshotByVersion.get(r.canonical_card_version_id)),

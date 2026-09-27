@@ -18,7 +18,6 @@ export interface TopicTutorPanelState {
 
 export interface TopicTutorPanelActions {
   runTopicTutorTurn: (input: { action?: OrthobulletsTopicAction; userMessage?: string }) => void;
-  findPageAnkiCards: (button: HTMLButtonElement) => void;
   saveTopicPearl: (quote: string) => void;
   setDraft: (value: string) => void;
   unlink: () => void;
@@ -119,7 +118,6 @@ export function renderTopicTutorPanel(
     `<div style="padding:12px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:8px;">
       <p style="margin:0;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#64748b;font-weight:800;">Quick tools</p>
       ${renderPrimaryActions(actions.isBusy)}
-      <button type="button" id="topic-find-anki" ${actions.isBusy ? 'disabled' : ''} style="width:100%;border:0;border-radius:10px;background:${actions.isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:11px 12px;font-size:12px;font-weight:800;cursor:${actions.isBusy ? 'default' : 'pointer'};">Find relevant Anki cards</button>
     </div>`
   );
 
@@ -159,9 +157,6 @@ export function renderTopicTutorPanel(
       actions.runTopicTutorTurn({ action });
     });
   });
-  const ankiButton = actionsCard.querySelector<HTMLButtonElement>('#topic-find-anki');
-  ankiButton?.addEventListener('click', () => actions.findPageAnkiCards(ankiButton));
-
   if (state.topicInsufficientContent) {
     content.appendChild(
       createElement(

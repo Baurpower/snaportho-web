@@ -1,3 +1,4 @@
+import { toProductDeckPath } from "@/lib/education/anki-deck-path";
 import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient } from '@/utils/supabase/server';
@@ -55,7 +56,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ mes
             id: row.canonical_card_version_id, number: row.rank, claimId: row.claim_id!,
             anchorText: row.anchor_text, cardId: row.canonical_card_id,
             cardVersionId: row.canonical_card_version_id, releaseId,
-            deckPath: paths.get(row.canonical_card_version_id)!.deck_path,
+            deckPath: toProductDeckPath(paths.get(row.canonical_card_version_id)!.deck_path),
             title: cardPreview(fronts.get(row.canonical_card_version_id)!,
               paths.get(row.canonical_card_version_id)!.card_ordinal,
               paths.get(row.canonical_card_version_id)!.deck_path),

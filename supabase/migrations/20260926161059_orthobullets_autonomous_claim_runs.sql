@@ -177,7 +177,7 @@ create or replace function public.commit_orthobullets_machine_claim(
 returns jsonb
 language plpgsql
 security definer
-set search_path = public
+set search_path = public, extensions
 as $$
 declare
   v_fingerprint text;

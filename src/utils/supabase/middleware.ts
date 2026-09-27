@@ -5,18 +5,34 @@ import { isPublicProviderWebhookPath } from '@/lib/auth/public-provider-webhook-
 import { isMarketingAppPath } from '@/lib/marketing/links'
 
 export async function updateSession(request: NextRequest) {
+  // Installed clients can outlive retired API routes. Respond before session
+  // lookup so their timers never redirect to (and render) the sign-in page.
+  // An empty successful poll also lets older add-ons enter their idle backoff.
+  const retiredPath = request.nextUrl.pathname.replace(/\/$/, '')
+  if (retiredPath === '/api/anki/search-requests' ||
+      retiredPath.startsWith('/api/anki/search-requests/') ||
+      retiredPath === '/api/brobot/extension/anki-search' ||
+      retiredPath.startsWith('/api/brobot/extension/anki-search/')) {
+    const headers = { 'Cache-Control': 'no-store' }
+    if (request.method === 'GET' && retiredPath === '/api/anki/search-requests/pending') {
+      return NextResponse.json({ requests: [], retired: true }, { headers })
+    }
+    return NextResponse.json({
+      error: 'Anki search has been retired. Update the SnapOrtho extension and Anki add-on.',
+      code: 'anki_search_retired',
+    }, { status: 410, headers })
+  }
   // Apple must fetch association files without authentication or redirects.
   if (request.nextUrl.pathname === '/.well-known/apple-app-site-association' ||
       request.nextUrl.pathname === '/apple-app-site-association') {
     return NextResponse.next({ request })
   }
-  // High-frequency Anki addon pollers authenticate themselves with device
-  // tokens and never carry browser session cookies, so the Supabase session
-  // lookup below is a wasted Auth API round-trip on every poll (every ~4-10s
-  // per linked device). Both routes reject unauthenticated callers with 401
-  // JSON themselves.
-  if (request.nextUrl.pathname === '/api/anki/search-requests/pending' ||
-      request.nextUrl.pathname === '/api/brobot-anki/launch/pending') {
+  // The Anki addon launch poller authenticates itself with a device token
+  // and never carries browser session cookies, so the Supabase session
+  // lookup below is a wasted Auth API round-trip on every poll (every ~4s
+  // per linked device). The route rejects unauthenticated callers with 401
+  // JSON itself.
+  if (request.nextUrl.pathname === '/api/brobot-anki/launch/pending') {
     return NextResponse.next({ request })
   }
   let response = NextResponse.next({

@@ -113,17 +113,19 @@ class ProfileRuntime:
             self.side_panel=LearnerSidePanel(self.mw,self)
         self._maybe_first_run_prompt()
         QTimer.singleShot(4000,self._maybe_heartbeat)
-        if self._handles_search_relay():
-            self.search_relay_timer=QTimer(self.mw)
-            self.search_relay_timer.setInterval(10000)
-            self.search_relay_timer.timeout.connect(self.poll_search_relay)
-            self.search_relay_timer.start()
-            QTimer.singleShot(1500,self.poll_search_relay)
-            self.launch_timer=QTimer(self.mw)
-            self.launch_timer.setInterval(4000)
-            self.launch_timer.timeout.connect(self.poll_launches)
-            self.launch_timer.start()
-            QTimer.singleShot(2000,self.poll_launches)
+        self._start_launch_poller(QTimer)
+    def _owns_launch_polling(self):
+        """Only the user edition polls when both editions share this profile."""
+        if not self.reviewer_edition:return True
+        try:return "snaportho" not in set(self.mw.addonManager.allAddons())
+        except Exception:return True
+    def _start_launch_poller(self,timer_class):
+        if not self._owns_launch_polling():return
+        self.launch_timer=timer_class(self.mw)
+        self.launch_timer.setInterval(4000)
+        self.launch_timer.timeout.connect(self.poll_launches)
+        self.launch_timer.start()
+        timer_class.singleShot(2000,self.poll_launches)
     def _maybe_heartbeat(self):
         if self.closed or not self.settings.usage_reporting:return
         try:
@@ -153,16 +155,10 @@ class ProfileRuntime:
         if hasattr(self,"store"):self.store.close()
         if hasattr(self,"menu"):self.menu.deleteLater()
         if hasattr(self,"side_panel"):self.side_panel.close()
-        if hasattr(self,"search_relay_timer"):self.search_relay_timer.stop()
         if hasattr(self,"launch_timer"):self.launch_timer.stop()
     def background(self,operation,success):
         if self.closed:return
         self.mw.taskman.run_in_background(operation,lambda future:None if self.closed else success(future))
-    def _handles_search_relay(self):
-        """Prefer the User add-on when both editions share this Anki profile."""
-        if not self.reviewer_edition:return True
-        try:return "snaportho" not in set(self.mw.addonManager.allAddons())
-        except Exception:return True
     def _owns_deck_sync(self):
         """The user add-on owns deck state when both editions are installed."""
         if not self.reviewer_edition:return True
@@ -366,92 +362,6 @@ class ProfileRuntime:
             finally:
                 self._launch_busy = False
         self.background(self.api.pending_launches, done)
-
-    def poll_search_relay(self):
-        # Finding cards is a learner feature. Reviewer roles only gate curation
-        # surfaces and must not prevent a linked learner from claiming searches.
-        if self.closed or getattr(self,"_search_relay_busy",False):return
-        try:
-            if not self.credentials.get():return
-        except Exception:return
-        self._search_relay_busy=True
-        def pending_done(future):
-            try:
-                _,body=future.result();requests=body.get("requests")or[]
-                if not requests:
-                    self._search_relay_busy=False
-                    self._search_relay_empty_streak=getattr(self,"_search_relay_empty_streak",0)+1
-                    if self._search_relay_empty_streak>=6:
-                        try:self.search_relay_timer.setInterval(60000)
-                        except Exception:pass
-                    return
-                self._search_relay_empty_streak=0
-                try:self.search_relay_timer.setInterval(10000)
-                except Exception:pass
-                request=requests[0]
-                self.background(lambda:self.api.claim_search_request(request["id"]),lambda f:self._claimed_search(f,request))
-            except Exception:self._search_relay_busy=False
-        self.background(self.api.pending_search_requests,pending_done)
-
-    def _claimed_search(self,future,queued):
-        try:
-            _,body=future.result();request=body.get("request")or queued
-            from .resource_search import request_payload
-            self.background(
-                lambda:self.api.resource_search(request_payload(
-                    request["normalized_native_id"],
-                    30 if request.get("query_kind")=="topic_page" else 50,
-                    request.get("tested_concept")or"",
-                    request.get("concept_summary")or"",
-                    request.get("search_keywords")or[],
-                    request.get("query_kind")or"question",
-                    request.get("page_sections")or[],
-                )),
-                lambda f:self._resolve_relay_search(f,request),
-            )
-        except Exception:self._search_relay_busy=False
-
-    def _resolve_relay_search(self,future,request):
-        from .anki_runtime import CollectionGateway
-        from .resource_search import open_browse_with_card_ids,resolve_local_results
-        gateway=CollectionGateway(self.mw.col);tier="direct_reviewed";error_code=None
-        try:
-            _,body=future.result()
-            backend_results=body.get("results")or[]
-            local=resolve_local_results(gateway,backend_results)
-            card_ids=local["cardIds"]
-            dispositions=local["dispositions"]
-            tier=(backend_results[0].get("tier")if backend_results else"none")or"none"
-            status="completed" if card_ids else("review_required" if not backend_results else"no_local_results")
-            payload={
-                "status":status,"availableCount":len(set(card_ids)),
-                "missingCount":sum(1 for x in dispositions if x["status"]=="missing"),
-                "ambiguousCount":sum(1 for x in dispositions if x["status"]=="ambiguous"),
-                "versionMismatchCount":sum(1 for x in dispositions if x["status"]=="version_mismatch"),
-                "backendCandidateCount":len(backend_results),
-                "localSupplementCount":0,
-                "resultTier":tier,"errorCode":error_code,
-            }
-        except Exception:
-            card_ids=[];tier="none"
-            payload={"status":"failed","availableCount":0,"missingCount":0,"ambiguousCount":0,"versionMismatchCount":0,"backendCandidateCount":0,"localSupplementCount":0,"resultTier":"none","errorCode":"resolution_failed"}
-        if card_ids:
-            try:
-                open_browse_with_card_ids(self.mw,card_ids,{
-                    "nativeId":request.get("normalized_native_id")or request.get("submitted_native_id")or"",
-                    "concept":request.get("tested_concept")or request.get("concept_summary")or"",
-                    "tier":tier,
-                })
-            except Exception:
-                card_ids=[]
-                payload={"status":"failed","availableCount":0,"missingCount":0,"ambiguousCount":0,"versionMismatchCount":0,"backendCandidateCount":payload["backendCandidateCount"],"localSupplementCount":payload["localSupplementCount"],"resultTier":"none","errorCode":"browse_open_failed"}
-        def complete_done(complete_future):
-            try:
-                complete_future.result()
-            except Exception:
-                pass
-            self._search_relay_busy=False
-        self.background(lambda:self.api.complete_search_request(request["id"],payload),complete_done)
 
     def propose_from_editor(self, editor):
         """Save Browse/editor fields, then open workspace for the note's card."""

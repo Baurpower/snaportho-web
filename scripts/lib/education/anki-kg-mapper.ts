@@ -14,16 +14,16 @@ const HIGH_CONFIDENCE_THRESHOLD = 0.9;
 const MEDIUM_CONFIDENCE_THRESHOLD = 0.75;
 
 const HIGH_PRIORITY_PREFIXES = [
-  "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity",
-  "Marty McFlyin's Ortho Deck::3) OrthoBullets::Shoulder & Elbow::Shoulder",
-  "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Lower Extremity",
-  "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::General Trauma",
-  "Marty McFlyin's Ortho Deck::2) Pocket Pimped::14 Pediatrics::14.05 Lower Extremity",
-  "Marty McFlyin's Ortho Deck::3) OrthoBullets::Recon::Hip Reconstruction",
-  "Marty McFlyin's Ortho Deck::3) OrthoBullets::Knee & Sports::Knee",
-  "Marty McFlyin's Ortho Deck::3) OrthoBullets::Pediatrics::Pediatric Syndromes",
-  "Marty McFlyin's Ortho Deck::3) OrthoBullets::Basic Science::MSK Science",
-  "Marty McFlyin's Ortho Deck::2) Pocket Pimped::06 Hand::06.02 Hand Conditions",
+  "SnapOrtho::3) OrthoBullets::Trauma::Upper Extremity",
+  "SnapOrtho::3) OrthoBullets::Shoulder & Elbow::Shoulder",
+  "SnapOrtho::3) OrthoBullets::Trauma::Lower Extremity",
+  "SnapOrtho::3) OrthoBullets::Trauma::General Trauma",
+  "SnapOrtho::2) Pocket Pimped::14 Pediatrics::14.05 Lower Extremity",
+  "SnapOrtho::3) OrthoBullets::Recon::Hip Reconstruction",
+  "SnapOrtho::3) OrthoBullets::Knee & Sports::Knee",
+  "SnapOrtho::3) OrthoBullets::Pediatrics::Pediatric Syndromes",
+  "SnapOrtho::3) OrthoBullets::Basic Science::MSK Science",
+  "SnapOrtho::2) Pocket Pimped::06 Hand::06.02 Hand Conditions",
 ];
 
 const SPECIALTY_RULES = [

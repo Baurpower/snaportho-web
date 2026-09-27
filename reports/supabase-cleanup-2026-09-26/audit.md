@@ -1,5 +1,7 @@
 # Supabase Anki cleanup audit — 2026-09-26
 
+**Update:** The user approved the proposed deactivation and requested SnapOrtho naming. Cleanup has now been applied and verified. See [execution.md](execution.md) for results, retained history, and rollback instructions. The original findings below describe the before-state.
+
 Project: `snaportho` (`geznczcokbgybsseipjg`). Live database inspection and local application source review. No database writes performed. This audit covers Anki import, release, mapping, and related graph data; it is not a complete security or storage audit.
 
 ## Findings

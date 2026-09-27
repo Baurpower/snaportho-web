@@ -149,26 +149,6 @@ export type ExtensionMessage =
       userMessage?: string;
     }
   | {
-      type: 'ob:send-to-anki';
-      pageContext: OrthobulletsPageContext;
-      explanation?: OrthobulletsExplainResponse;
-    }
-  | {
-      type: 'ob:send-page-to-anki';
-      pageContext: OrthobulletsPageContext;
-    }
-  | {
-      type: 'ob:send-test-to-anki';
-      pageContext: OrthobulletsPageContext;
-      enrichedQuestions?: Array<{
-        questionId: string;
-        testedConcept: string;
-        summary: string;
-        searchKeywords: string[];
-      }>;
-    }
-  | { type: 'ob:get-anki-search-status'; searchRequestId: string }
-  | {
       type: 'ob:open-anki-launch';
       command: { noteGuid: string; cardOrdinal: number; rank: 1 | 2 | 3 };
     };
@@ -221,16 +201,6 @@ export type ExtensionMessageResponse =
     }
   | { ok: true; chat: OrthobulletsChatResponse }
   | { ok: true; topicTurn: OrthobulletsTopicTutorResponse }
-  | {
-      ok: true;
-      ankiSearch: {
-        searchRequestId: string;
-        status: string;
-        expiresAt: string;
-        resultSummary?: Record<string, unknown>;
-        errorCode?: string | null;
-      };
-    }
   | { ok: true; cleared: true }
   | { ok: true; questionClaimRun: { runId: string; algorithmVersion: string; items: Array<{ id: string; native_question_id: string; status: string; claim_id?: string | null; linked_card_count?: number; last_error_code?: string | null }> } }
   | { ok: true; questionClaim: { status: string; claimId?: string; claimVersionId?: string; nativeQuestionId?: string; reviewStatus?: string; reason?: string; gapRecorded?: boolean; cardCount?: number; runItemId?: string } }

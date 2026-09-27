@@ -296,7 +296,7 @@ function writeCollectionSqlite(
   modelId: number,
   mod: number,
 ): Map<string, number> {
-  // Product-facing parent deck root (Marty McFlyin… → SnapOrtho)
+  // Install every card under the SnapOrtho parent deck.
   const productPaths = included.map(() => PRODUCT_PARENT_DECK);
   const { decksJson, deckIdByPath } = buildDeckMap(productPaths, mod);
   const db = new DatabaseSync(path);

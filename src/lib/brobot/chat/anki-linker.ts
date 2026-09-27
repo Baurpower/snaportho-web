@@ -1,3 +1,4 @@
+import { toProductDeckPath } from "@/lib/education/anki-deck-path";
 import { createHash } from 'node:crypto';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { getOpenAI } from '@/lib/brobot/openai-client';
@@ -85,14 +86,17 @@ export async function linkAnkiClaims(
   answer: string,
   releaseId: string,
   subject: string,
-  options: { maxCardsPerClaim?: number } = {},
+  options: { maxCardsPerClaim?: number; terms?: string[] } = {},
 ): Promise<AnkiReference[]> {
   const maxCardsPerClaim = Math.max(1, Math.min(3, options.maxCardsPerClaim ?? 1));
-  const claims = selectedClaims(answer);
+  const suppliedTerms = (options.terms ?? []).map((term) => term.toLowerCase()).filter((term) => term.length >= 3).slice(0, 8);
+  const claims = suppliedTerms.length
+    ? [{ id: 'claim:0', text: answer, start: 0, end: answer.length }]
+    : selectedClaims(answer);
   if (!claims.length) return [];
   const db = createAdminClient();
   const searches = await Promise.all(claims.map((claim) => db.rpc('search_latest_anki_deck_by_concept', {
-    search_terms: searchTerms(searchText(claim.text)), result_limit: 5,
+    search_terms: suppliedTerms.length ? suppliedTerms : searchTerms(searchText(claim.text)), result_limit: 5,
   }).limit(5)));
   if (searches.some((result) => result.error)) throw new Error('Card search failed');
   const hits = searches.flatMap((result, index) => ((result.data ?? []) as SearchRow[])
@@ -121,7 +125,7 @@ export async function linkAnkiClaims(
     const fact = plainCardText(rendered).replace(/\s+/g, ' ').trim();
     if (fact.length < 20 || obviousConflict(hit.claim.text, fact)) continue;
     pairs.push({ claim: hit.claim, cardId: hit.canonical_card_id, cardVersionId: hit.canonical_card_version_id,
-      releaseId, ordinal: member.card_ordinal, deckPath: member.deck_path, front, cardText: fact,
+      releaseId, ordinal: member.card_ordinal, deckPath: toProductDeckPath(member.deck_path), front, cardText: fact,
       coverage: hit.term_coverage });
     perClaim.set(hit.claim.id, (perClaim.get(hit.claim.id) ?? 0) + 1);
     if (pairs.length >= MAX_PAIRS) break;

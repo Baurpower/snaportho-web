@@ -4,39 +4,39 @@ import type { EvidenceCollector, CollectorContext, CollectorResult } from "./typ
 
 const DECK_BRANCH_HINTS: Record<string, string> = {
   "ankle-fracture":
-    "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Lower Extremity",
+    "SnapOrtho::3) OrthoBullets::Trauma::Lower Extremity",
   "compartment-syndrome":
-    "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Lower Extremity",
+    "SnapOrtho::3) OrthoBullets::Trauma::Lower Extremity",
   "tibial-shaft-fracture":
-    "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Lower Extremity",
+    "SnapOrtho::3) OrthoBullets::Trauma::Lower Extremity",
   "femoral-neck-fracture":
-    "Marty McFlyin's Ortho Deck::2) Pocket Pimped::09 Hip::09.02 Trauma::Femoral Neck Fractures",
+    "SnapOrtho::2) Pocket Pimped::09 Hip::09.02 Trauma::Femoral Neck Fractures",
   "intertrochanteric-fracture":
-    "Marty McFlyin's Ortho Deck::2) Pocket Pimped::09 Hip::09.02 Trauma::Intertrochanteric Fractures",
+    "SnapOrtho::2) Pocket Pimped::09 Hip::09.02 Trauma::Intertrochanteric Fractures",
   "subtrochanteric-fracture":
-    "Marty McFlyin's Ortho Deck::2) Pocket Pimped::09 Hip::09.02 Trauma::Subtrochanteric Fractures",
+    "SnapOrtho::2) Pocket Pimped::09 Hip::09.02 Trauma::Subtrochanteric Fractures",
   "humeral-shaft-fracture":
-    "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity",
+    "SnapOrtho::3) OrthoBullets::Trauma::Upper Extremity",
   "distal-humerus-fracture":
-    "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity",
+    "SnapOrtho::3) OrthoBullets::Trauma::Upper Extremity",
   "pelvic-ring-injury":
-    "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Lower Extremity",
+    "SnapOrtho::3) OrthoBullets::Trauma::Lower Extremity",
   "acetabular-fracture":
-    "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Lower Extremity",
+    "SnapOrtho::3) OrthoBullets::Trauma::Lower Extremity",
   "femoral-shaft-fracture":
-    "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Lower Extremity",
+    "SnapOrtho::3) OrthoBullets::Trauma::Lower Extremity",
   "distal-femur-fracture":
-    "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Lower Extremity",
+    "SnapOrtho::3) OrthoBullets::Trauma::Lower Extremity",
   "patella-fracture":
-    "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Lower Extremity",
+    "SnapOrtho::3) OrthoBullets::Trauma::Lower Extremity",
   "tibial-plateau-fracture":
-    "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Lower Extremity",
+    "SnapOrtho::3) OrthoBullets::Trauma::Lower Extremity",
   "pilon-fracture":
-    "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Lower Extremity",
+    "SnapOrtho::3) OrthoBullets::Trauma::Lower Extremity",
   "calcaneus-fracture":
-    "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Lower Extremity",
+    "SnapOrtho::3) OrthoBullets::Trauma::Lower Extremity",
   "talus-fracture":
-    "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Lower Extremity",
+    "SnapOrtho::3) OrthoBullets::Trauma::Lower Extremity",
 };
 
 const MAPPING_REPORT_PATH = "reports/anki-kg-mapping-v1-report.md";

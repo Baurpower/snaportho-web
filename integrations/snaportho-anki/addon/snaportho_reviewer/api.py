@@ -208,15 +208,6 @@ class ReviewerApi:
     def ack_launch(self, payload):
         return self.request("POST", "/api/brobot-anki/launch/ack", payload, retries=0)
 
-    def pending_search_requests(self):
-        return self.request("GET", "/api/anki/search-requests/pending", retries=0)
-
-    def claim_search_request(self, request_id):
-        return self.request("POST", f"/api/anki/search-requests/{request_id}/claim", {}, retries=0)
-
-    def complete_search_request(self, request_id, payload):
-        return self.request("POST", f"/api/anki/search-requests/{request_id}/complete", payload, retries=0)
-
     def kg_draft(self, payload):
         """Card-driven KG suggestions (no graph write)."""
         return self.request("POST", "/api/anki/reviewer/kg/draft", payload, retries=0)

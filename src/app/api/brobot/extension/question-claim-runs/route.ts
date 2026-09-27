@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 
 import { authenticateDeviceLinkedRequest } from '@/lib/brobot/device-link';
-import { ORTHOBULLETS_AUTONOMOUS_CLAIM_VERSION } from '@/lib/brobot/orthobullets/autonomous-claim';
+import { ORTHOBULLETS_AUTONOMOUS_CLAIM_VERSION, ORTHOBULLETS_CLAIM_RUN_MAX } from '@/lib/brobot/orthobullets/autonomous-claim';
 import { createAdminClient } from '@/lib/supabase/admin';
 
 const TOKEN_HEADER = 'x-snaportho-extension-token';
@@ -11,7 +11,7 @@ const StartRunSchema = z.object({
   questions: z.array(z.object({
     nativeQuestionId: z.string().regex(/^[A-Za-z0-9._:-]{1,200}$/),
     reviewLocator: z.string().url().max(1000),
-  })).min(1).max(500),
+  })).min(1).max(ORTHOBULLETS_CLAIM_RUN_MAX),
 });
 
 export async function POST(request: Request) {
@@ -19,7 +19,12 @@ export async function POST(request: Request) {
     deviceTokenHeader: TOKEN_HEADER, allowBrowserSession: false, allowBearerToken: false,
   });
   if ('response' in auth) return auth.response;
-  const parsed = StartRunSchema.safeParse(await request.json().catch(() => null));
+  const body = await request.json().catch(() => null);
+  if (body && typeof body === 'object' && Array.isArray((body as { questions?: unknown }).questions)
+    && (body as { questions: unknown[] }).questions.length > ORTHOBULLETS_CLAIM_RUN_MAX) {
+    return NextResponse.json({ error: 'cohort_limit_exceeded', limit: ORTHOBULLETS_CLAIM_RUN_MAX }, { status: 400 });
+  }
+  const parsed = StartRunSchema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: 'invalid_request' }, { status: 400 });
   const admin = createAdminClient();
   const { data: reviewer } = await admin.auth.admin.getUserById(auth.userId);

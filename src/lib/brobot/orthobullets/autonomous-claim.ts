@@ -1,7 +1,9 @@
 import { CLINICAL_CLAIM_PREDICATES, CLINICAL_CLAIM_TYPES } from '@/lib/education/contracts/clinical-claim-v1';
 
-export const ORTHOBULLETS_AUTONOMOUS_CLAIM_VERSION = 'orthobullets-autonomous-claim.v2';
+export const ORTHOBULLETS_AUTONOMOUS_CLAIM_VERSION = 'orthobullets-autonomous-claim.v3';
 export const AUTO_ACCEPT_MIN_CONFIDENCE = 0.9;
+export const ORTHOBULLETS_CLAIM_COHORT_LIMIT = 25;
+export const ORTHOBULLETS_CLAIM_RUN_MAX = 100;
 
 const ENTITY_TYPES = new Set([
   'condition', 'procedure', 'anatomy_structure', 'classification_system', 'classification_grade',
@@ -19,6 +21,7 @@ export type AutonomousClaimDraft = {
   qualifiers: Record<string, string>;
   primaryEntityLabel: string;
   primaryEntityType: string;
+  primaryEntityId: string;
   confidence: number;
 };
 
@@ -36,6 +39,78 @@ export function normalizeEntityLabel(value: string) {
   return value.toLowerCase().replace(/[^a-z0-9+/-]+/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
+export function lightEntityLabel(value: string) {
+  return normalizeEntityLabel(value).replace(/^the /, '');
+}
+
+export type ApprovedEntityRecord = {
+  id: string;
+  preferredLabel: string;
+  entityType: string;
+  normalizedLabel: string;
+};
+
+export type EntityCandidate = ApprovedEntityRecord & {
+  strength: 'exact' | 'direct' | 'weak';
+};
+
+export function assembleEntityCandidates(input: {
+  labels: string[];
+  approved: ApprovedEntityRecord[];
+  links: Array<ApprovedEntityRecord & { path: 'direct_exact' | 'curriculum_node_bridge' }>;
+}): { candidates: EntityCandidate[]; outcome: 'exact' | 'choose' | 'ambiguous' | 'none' } {
+  const wanted = new Set(input.labels.map(lightEntityLabel).filter((label) => label.length >= 3));
+  const exact = input.approved.filter((entity) =>
+    wanted.has(lightEntityLabel(entity.normalizedLabel)) || wanted.has(lightEntityLabel(entity.preferredLabel)));
+  const uniqueExact = [...new Map(exact.map((entity) => [entity.id, entity])).values()];
+  if (uniqueExact.length > 1) return { candidates: [], outcome: 'ambiguous' };
+  if (uniqueExact.length === 1) return { candidates: [{ ...uniqueExact[0], strength: 'exact' }], outcome: 'exact' };
+  const ranked: EntityCandidate[] = [
+    ...input.links.filter((link) => link.path === 'direct_exact').map((link) => ({ ...link, strength: 'direct' as const })),
+    ...input.links.filter((link) => link.path === 'curriculum_node_bridge').map((link) => ({ ...link, strength: 'weak' as const })),
+  ];
+  const unique = [...new Map(ranked.map((entity) => [entity.id, entity])).values()].slice(0, 8);
+  if (!unique.length) return { candidates: [], outcome: 'none' };
+  return { candidates: unique, outcome: 'choose' };
+}
+
+export function assertionText(value: string) {
+  return value.toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+export function assertionIdentity(input: {
+  claimText: string;
+  claimType: string;
+  primaryEntityId: string;
+  predicate: string;
+  objectText: string;
+  qualifiers?: Record<string, string>;
+}) {
+  const qualifiers = Object.entries(input.qualifiers ?? {})
+    .filter(([, value]) => value.trim().length > 0)
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([key, value]) => `${key}=${value.toLowerCase().replace(/[^a-z0-9+/ -]+/g, ' ').replace(/\s+/g, ' ').trim()}`)
+    .join(';');
+  return [
+    `type=${input.claimType.toLowerCase().replace(/[^a-z0-9+/ -]+/g, ' ').replace(/\s+/g, ' ').trim()}`,
+    `entity=${input.primaryEntityId.toLowerCase()}`,
+    `predicate=${input.predicate.toLowerCase().replace(/[^a-z0-9+/ -]+/g, ' ').replace(/\s+/g, ' ').trim()}`,
+    `object=${input.objectText.toLowerCase().replace(/[^a-z0-9+/ -]+/g, ' ').replace(/\s+/g, ' ').trim()}`,
+    `qualifiers=${qualifiers}`,
+    `assertion=${assertionText(input.claimText)}`,
+  ].join('\n');
+}
+
+const AGE_VIGNETTE = /\b\d{1,3}\s*-?\s*years?\s*-?\s*old\b/i;
+const OCCUPATION_VIGNETTE = /\b(?:male|female)\s+(?:laborer|carpenter|farmer|mechanic)\b/i;
+
+export function vignetteRejectionCodes(claimText: string) {
+  const reasons: string[] = [];
+  if (AGE_VIGNETTE.test(claimText)) reasons.push('age_vignette');
+  if (OCCUPATION_VIGNETTE.test(claimText)) reasons.push('occupation_vignette');
+  return reasons;
+}
+
 export function parseAutonomousClaimDraft(value: unknown): AutonomousClaimDraft | null {
   const row = object(value);
   if (!row) return null;
@@ -45,6 +120,7 @@ export function parseAutonomousClaimDraft(value: unknown): AutonomousClaimDraft 
   const objectText = typeof row.objectText === 'string' ? row.objectText.trim() : '';
   const primaryEntityLabel = typeof row.primaryEntityLabel === 'string' ? row.primaryEntityLabel.trim() : '';
   const primaryEntityType = typeof row.primaryEntityType === 'string' ? row.primaryEntityType.trim() : '';
+  const primaryEntityId = typeof row.primaryEntityId === 'string' ? row.primaryEntityId.trim() : '';
   const confidence = Number(row.confidence);
   const rawQualifiers = object(row.qualifiers) ?? {};
   const qualifiers = Object.fromEntries(Object.entries(rawQualifiers)
@@ -55,8 +131,9 @@ export function parseAutonomousClaimDraft(value: unknown): AutonomousClaimDraft 
   if (!(CLINICAL_CLAIM_PREDICATES as readonly string[]).includes(predicate)) return null;
   if (!objectText || objectText.length > 200) return null;
   if (!primaryEntityLabel || primaryEntityLabel.length > 200 || !ENTITY_TYPES.has(primaryEntityType)) return null;
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(primaryEntityId)) return null;
   if (!Number.isFinite(confidence) || confidence < 0 || confidence > 1) return null;
-  return { claimText, claimType, predicate, objectText, qualifiers, primaryEntityLabel, primaryEntityType, confidence };
+  return { claimText, claimType, predicate, objectText, qualifiers, primaryEntityLabel, primaryEntityType, primaryEntityId, confidence };
 }
 
 export function parseAutonomousClaimCritique(value: unknown): AutonomousClaimCritique | null {

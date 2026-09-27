@@ -7,7 +7,7 @@ import { serializeCsv } from "./lib/education/review-csv.ts";
 
 const { Client } = pg;
 const ENTITY_ID = "1ad8280b-74e5-416c-b8fb-06c7d9cc0d0a";
-const DECK = "Marty McFlyin's Ortho Deck::3) OrthoBullets::Knee & Sports::Knee::Knee Extensor Mechanism::Patellar Instability";
+const DECK = "SnapOrtho::3) OrthoBullets::Knee & Sports::Knee::Knee Extensor Mechanism::Patellar Instability";
 const DEFAULT_OUT = "reports/educational-content-layer/anki-launch-foundation/patellar-instability-review";
 
 function loadEnv(filePath: string) {

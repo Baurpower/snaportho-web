@@ -17,6 +17,8 @@ import { createHash, randomUUID } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import OpenAI from "openai";
+// @ts-expect-error Direct Node strip-types runner imports TypeScript source.
+import { toProductDeckPath } from "../src/lib/education/anki-deck-path.ts";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 // @ts-expect-error Direct Node strip-types runner imports TypeScript source.
@@ -572,7 +574,7 @@ async function ensureBatches(
     rows.push({
       pipeline_run_id: runId,
       batch_key: `batch-${String(ordinal).padStart(4, "0")}`,
-      cohort_key: slice[0]?.releaseCard.deck_path ?? "master-deck",
+      cohort_key: toProductDeckPath(slice[0]?.releaseCard.deck_path ?? "master-deck"),
       ordered_card_version_ids: slice.map(({ packet }) => packet.canonicalCardVersionId),
       batch_checksum: sha(slice.map(({ packet }) => [packet.canonicalCardVersionId, packet.contentHash])),
       status: "pending",

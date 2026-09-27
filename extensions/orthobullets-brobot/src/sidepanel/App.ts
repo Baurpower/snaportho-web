@@ -148,30 +148,6 @@ type OperationState = 'idle' | 'extracting' | 'hinting' | 'explaining' | 'chatti
 type UsageState =
   OrthobulletsExplainResponse['usage'] | OrthobulletsChatResponse['usage'] | OrthobulletsHintResponse['usage'] | null;
 
-const ANKI_STATUS_POLL_INTERVAL_MS = 2_000;
-const ANKI_STATUS_POLL_ATTEMPTS = 15;
-
-function waitingForAnkiCopy(attempt: number) {
-  if (attempt < 5) return 'Waiting for Anki to connect…';
-  const appOrigin = getConfiguredAppOrigin();
-  const environment = /^https?:\/\/(?:localhost|127\.0\.0\.1)(?::|\/|$)/i.test(appOrigin) ? 'local' : 'production';
-  return attempt < 10
-    ? `Anki has not connected — open Anki (${environment})…`
-    : `Still waiting — verify the SnapOrtho add-on is linked to ${environment}…`;
-}
-
-function ankiConnectionTimeoutCopy() {
-  const appOrigin = getConfiguredAppOrigin();
-  const environment = /^https?:\/\/(?:localhost|127\.0\.0\.1)(?::|\/|$)/i.test(appOrigin) ? 'local' : 'production';
-  return `Anki did not connect — check the ${environment} add-on and retry`;
-}
-
-function ankiSearchFailureCopy(errorCode: string | null | undefined) {
-  if (errorCode === 'browse_open_failed') return 'Open Anki Browse, then try again';
-  if (errorCode === 'resolution_failed') return 'Anki could not match the installed deck — update it and retry';
-  return 'Anki search failed — try again';
-}
-
 async function sendMessage(message: ExtensionMessage): Promise<ExtensionMessageResponse> {
   return chrome.runtime.sendMessage(message);
 }
@@ -1806,125 +1782,6 @@ export function mountSidePanelApp(root: HTMLElement) {
     state.questionRefreshing = questionTutorController.store.deriveViewState().showLoadingCurrentQuestion;
   }
 
-  async function sendQuestionToAnki(button: HTMLButtonElement, explanation?: OrthobulletsExplainResponse) {
-    if (!state.pageContext || (explanation && isCurriculumStudyResponse(explanation))) return;
-    button.disabled = true;
-    button.textContent = 'Preparing Anki search…';
-    const result = await sendMessage({
-      type: 'ob:send-to-anki',
-      pageContext: state.pageContext,
-      explanation,
-    });
-    if (result.ok && 'ankiSearch' in result) {
-      button.textContent = 'Waiting for Anki to connect…';
-      const requestId = result.ankiSearch.searchRequestId;
-      let statusFailures = 0;
-      for (let attempt = 0; attempt < ANKI_STATUS_POLL_ATTEMPTS; attempt += 1) {
-        button.textContent = waitingForAnkiCopy(attempt);
-        await new Promise((resolve) => setTimeout(resolve, ANKI_STATUS_POLL_INTERVAL_MS));
-        const status = await sendMessage({
-          type: 'ob:get-anki-search-status',
-          searchRequestId: requestId,
-        });
-        if (!status.ok || !('ankiSearch' in status)) {
-          statusFailures += 1;
-          if (statusFailures >= 3) {
-            button.disabled = false;
-            button.textContent = 'Could not confirm Anki — try again';
-            return;
-          }
-          continue;
-        }
-        statusFailures = 0;
-        const current = status.ankiSearch.status;
-        if (current === 'queued') {
-          button.textContent = waitingForAnkiCopy(attempt + 1);
-        } else if (current === 'claimed' || current === 'resolving_local') {
-          button.textContent = 'Searching Anki…';
-        }
-        if (current === 'completed') {
-          const count = Number(status.ankiSearch.resultSummary?.availableCount ?? 0);
-          const missing = Number(status.ankiSearch.resultSummary?.missingCount ?? 0);
-          button.textContent = `Sent ${count} card${count === 1 ? '' : 's'} to Anki${missing ? ` · ${missing} need a deck update` : ''}`;
-          return;
-        }
-        if (['no_local_results', 'review_required', 'failed', 'expired', 'cancelled'].includes(current)) {
-          button.textContent =
-            current === 'review_required'
-              ? 'No confident cards — review needed'
-              : `Anki search: ${current.replaceAll('_', ' ')}`;
-          return;
-        }
-      }
-      button.disabled = false;
-      button.textContent = ankiConnectionTimeoutCopy();
-      return;
-    }
-    button.disabled = false;
-    button.textContent = result.ok ? 'Find cards in Anki' : `Try again — ${result.error}`;
-  }
-
-  async function findPageAnkiCards(button: HTMLButtonElement) {
-    if (!state.pageContext) return;
-    button.disabled = true;
-    button.textContent = 'Preparing page search…';
-    const result = await sendMessage({
-      type: 'ob:send-page-to-anki',
-      pageContext: state.pageContext,
-    });
-    if (!result.ok || !('ankiSearch' in result)) {
-      button.disabled = false;
-      button.textContent = result.ok ? 'Find relevant Anki cards from this page' : `Try again — ${result.error}`;
-      return;
-    }
-    button.textContent = 'Waiting for Anki to connect…';
-    let statusFailures = 0;
-    for (let attempt = 0; attempt < ANKI_STATUS_POLL_ATTEMPTS; attempt += 1) {
-      button.textContent = waitingForAnkiCopy(attempt);
-      await new Promise((resolve) => setTimeout(resolve, ANKI_STATUS_POLL_INTERVAL_MS));
-      const status = await sendMessage({
-        type: 'ob:get-anki-search-status',
-        searchRequestId: result.ankiSearch.searchRequestId,
-      });
-      if (!status.ok || !('ankiSearch' in status)) {
-        statusFailures += 1;
-        if (statusFailures >= 3) {
-          button.disabled = false;
-          button.textContent = 'Could not confirm Anki — try again';
-          return;
-        }
-        continue;
-      }
-      statusFailures = 0;
-      if (status.ankiSearch.status === 'queued') {
-        button.textContent = waitingForAnkiCopy(attempt + 1);
-      } else if (status.ankiSearch.status === 'claimed' || status.ankiSearch.status === 'resolving_local') {
-        button.textContent = 'Searching Anki…';
-      }
-      if (status.ankiSearch.status === 'completed') {
-        const count = Number(status.ankiSearch.resultSummary?.availableCount ?? 0);
-        const missing = Number(status.ankiSearch.resultSummary?.missingCount ?? 0);
-        const mismatched = Number(status.ankiSearch.resultSummary?.versionMismatchCount ?? 0);
-        button.textContent = `Opened ${count} relevant card${count === 1 ? '' : 's'} in Anki${missing ? ` · ${missing} missing locally` : ''}${mismatched ? ` · ${mismatched} from an older deck version` : ''}`;
-        return;
-      }
-      if (
-        ['no_local_results', 'review_required', 'failed', 'expired', 'cancelled'].includes(status.ankiSearch.status)
-      ) {
-        button.disabled = false;
-        button.textContent =
-          status.ankiSearch.status === 'review_required'
-            ? 'No confident matches — try again'
-            : status.ankiSearch.status === 'failed'
-              ? ankiSearchFailureCopy(status.ankiSearch.errorCode)
-              : `Anki search: ${status.ankiSearch.status.replaceAll('_', ' ')}`;
-        return;
-      }
-    }
-    button.disabled = false;
-    button.textContent = ankiConnectionTimeoutCopy();
-  }
-
   function waitForTabToLoad(tabId: number, timeoutMs = 20_000) {
     return new Promise<void>((resolve, reject) => {
       const timeout = window.setTimeout(() => {
@@ -1948,17 +1805,6 @@ export function mountSidePanelApp(root: HTMLElement) {
         })
         .catch(() => undefined);
     });
-  }
-
-  function debriefSearchKeywords(explanation: OrthobulletsExplainResponse) {
-    return [
-      ...new Set(
-        [explanation.testedConcept, explanation.bottomLine, explanation.boardPearl, ...explanation.studyNext]
-          .join(' ')
-          .match(/[A-Za-z][A-Za-z-]{4,}/g)
-          ?.map((token) => token.toLowerCase()) ?? [],
-      ),
-    ].slice(0, 24);
   }
 
   async function persistFullTestDebrief(
@@ -2152,48 +1998,6 @@ export function mountSidePanelApp(root: HTMLElement) {
     document.querySelector(`[data-learning-card="${CSS.escape(next.row.questionId)}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
-  async function findQuestionAnkiCards(questionId: string, button: HTMLButtonElement) {
-    const question = state.fullTestDebrief?.questions.find((candidate) => candidate.row.questionId === questionId);
-    if (!question?.pageContext || !question.explanation) {
-      button.textContent = 'Rebuild the debrief to search this question';
-      return;
-    }
-    button.disabled = true;
-    button.textContent = 'Searching for this misconception…';
-    const result = await sendMessage({
-      type: 'ob:send-to-anki',
-      pageContext: question.pageContext,
-      explanation: question.explanation,
-    });
-    if (!result.ok || !('ankiSearch' in result)) {
-      button.disabled = false;
-      button.textContent = result.ok ? 'Try again' : `Try again — ${result.error}`;
-      return;
-    }
-    for (let attempt = 0; attempt < ANKI_STATUS_POLL_ATTEMPTS; attempt += 1) {
-      await new Promise((resolve) => setTimeout(resolve, ANKI_STATUS_POLL_INTERVAL_MS));
-      const status = await sendMessage({
-        type: 'ob:get-anki-search-status',
-        searchRequestId: result.ankiSearch.searchRequestId,
-      });
-      if (!status.ok || !('ankiSearch' in status)) continue;
-      if (status.ankiSearch.status === 'completed') {
-        const count = Number(status.ankiSearch.resultSummary?.availableCount ?? 0);
-        button.textContent = `Opened ${count} matching card${count === 1 ? '' : 's'} in Anki`;
-        return;
-      }
-      if (
-        ['no_local_results', 'review_required', 'failed', 'expired', 'cancelled'].includes(status.ankiSearch.status)
-      ) {
-        button.disabled = false;
-        button.textContent = `Anki search: ${status.ankiSearch.status.replaceAll('_', ' ')}`;
-        return;
-      }
-    }
-    button.disabled = false;
-    button.textContent = ankiConnectionTimeoutCopy();
-  }
-
   async function generateQuestionClaim(button: HTMLButtonElement) {
     const page = state.pageContext;
     if (!page) return;
@@ -2221,73 +2025,6 @@ export function mountSidePanelApp(root: HTMLElement) {
       return;
     }
     button.textContent = claim.reason ? `Unresolved automatically — ${claim.reason.replaceAll('_', ' ')}` : 'Claim was not created';
-  }
-
-  async function findTestAnkiCards(button: HTMLButtonElement, debrief: FullTestDebrief | null) {
-    if (!state.pageContext || !getOrthobulletsTestReview(state.pageContext)) return;
-    button.disabled = true;
-    button.textContent = 'Preparing missed-concept search…';
-    const result = await sendMessage({
-      type: 'ob:send-test-to-anki',
-      pageContext: state.pageContext,
-      enrichedQuestions: debrief?.questions.flatMap((question) =>
-        question.explanation
-          ? [
-              {
-                questionId: question.row.questionId,
-                testedConcept: question.explanation.testedConcept,
-                summary: question.explanation.bottomLine,
-                searchKeywords: debriefSearchKeywords(question.explanation),
-              },
-            ]
-          : [],
-      ),
-    });
-    if (!result.ok || !('ankiSearch' in result)) {
-      button.disabled = false;
-      button.textContent = result.ok ? 'Find all relevant cards in Anki' : `Try again — ${result.error}`;
-      return;
-    }
-    let statusFailures = 0;
-    for (let attempt = 0; attempt < ANKI_STATUS_POLL_ATTEMPTS; attempt += 1) {
-      button.textContent = waitingForAnkiCopy(attempt);
-      await new Promise((resolve) => setTimeout(resolve, ANKI_STATUS_POLL_INTERVAL_MS));
-      const status = await sendMessage({
-        type: 'ob:get-anki-search-status',
-        searchRequestId: result.ankiSearch.searchRequestId,
-      });
-      if (!status.ok || !('ankiSearch' in status)) {
-        statusFailures += 1;
-        if (statusFailures >= 3) {
-          button.disabled = false;
-          button.textContent = 'Could not confirm Anki — try again';
-          return;
-        }
-        continue;
-      }
-      statusFailures = 0;
-      const current = status.ankiSearch.status;
-      if (current === 'claimed' || current === 'resolving_local') {
-        button.textContent = 'Resolving cards in Anki…';
-      }
-      if (current === 'completed') {
-        const count = Number(status.ankiSearch.resultSummary?.availableCount ?? 0);
-        const missing = Number(status.ankiSearch.resultSummary?.missingCount ?? 0);
-        const mismatch = Number(status.ankiSearch.resultSummary?.versionMismatchCount ?? 0);
-        button.textContent = `Opened ${count} card${count === 1 ? '' : 's'} in Anki${missing + mismatch ? ` · ${missing + mismatch} unavailable` : ''}`;
-        return;
-      }
-      if (['no_local_results', 'review_required', 'failed', 'expired', 'cancelled'].includes(current)) {
-        button.disabled = false;
-        button.textContent =
-          current === 'review_required'
-            ? 'No confident backend matches'
-            : `Anki search: ${current.replaceAll('_', ' ')}`;
-        return;
-      }
-    }
-    button.disabled = false;
-    button.textContent = ankiConnectionTimeoutCopy();
   }
 
   function render() {
@@ -2443,8 +2180,6 @@ export function mountSidePanelApp(root: HTMLElement) {
         review: testReview,
         debrief: state.fullTestDebrief,
         hooks: {
-          onFindAnkiCards: (button, debrief) => void findTestAnkiCards(button, debrief),
-          onFindQuestionAnkiCards: (questionId, button) => void findQuestionAnkiCards(questionId, button),
           onOpenQuestion: (reviewUrl) => {
             if (state.activePage?.tabId != null) {
               void chrome.tabs.update(state.activePage.tabId, {
@@ -2489,7 +2224,6 @@ export function mountSidePanelApp(root: HTMLElement) {
     } else if (isTopicPage) {
       renderTopicTutorPanel(content, state, {
         runTopicTutorTurn: (input) => void runTopicTutorTurn(input),
-        findPageAnkiCards: (button) => void findPageAnkiCards(button),
         saveTopicPearl,
         setDraft: (value) => {
           state.topicChatDraft = value;
@@ -2510,7 +2244,6 @@ export function mountSidePanelApp(root: HTMLElement) {
           onHintClick: () => questionTutorController.openHint(),
           onExplainClick: () => questionTutorController.openExplain(),
           onDismissExplanation: () => questionTutorController.closeExplanation(),
-          onSendToAnki: (button, explanation) => void sendQuestionToAnki(button, explanation),
           onRefreshClick: () =>
             void questionTutorController.onManualRefresh().then(() => syncQuestionTutorShellState()),
           onUnlink: () => void unlink(),
@@ -2577,7 +2310,6 @@ export function mountSidePanelApp(root: HTMLElement) {
               <p style="margin:0;color:#384152;line-height:1.5;">This looks like a learning page, not a question. BroBot can teach the visible curriculum content instead of forcing Question Tutor mode.</p>
               <div style="display:flex;gap:8px;flex-wrap:wrap;">
                 <button id="explain-page" ${isBusy ? 'disabled' : ''} style="border:none;border-radius:999px;background:${isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">${escapeHtml(explainButtonLabel)}</button>
-                <button id="educational-find-anki" ${isBusy ? 'disabled' : ''} style="border:1px solid #0f766e;border-radius:999px;background:white;color:#0f766e;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Find Anki cards</button>
                 <button id="unlink-edu" ${isBusy ? 'disabled' : ''} style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Unlink</button>
               </div>
             </div>`,
@@ -2588,8 +2320,6 @@ export function mountSidePanelApp(root: HTMLElement) {
           void runExplain();
         });
         content.querySelector('#unlink-edu')?.addEventListener('click', () => void unlink());
-        const educationalAnkiButton = content.querySelector<HTMLButtonElement>('#educational-find-anki');
-        educationalAnkiButton?.addEventListener('click', () => void findPageAnkiCards(educationalAnkiButton));
         }
       } else if (isMixedPage && !state.explanation) {
         content.appendChild(
@@ -2658,11 +2388,6 @@ export function mountSidePanelApp(root: HTMLElement) {
             <p style="margin:0;color:#5c6574;line-height:1.45;">Active page: ${escapeHtml(state.activePage.title ?? state.activePage.url ?? providerLabel(state.activePage.provider))}</p>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
               <button id="explain" ${isBusy ? 'disabled' : ''} style="border:none;border-radius:999px;background:${isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">${escapeHtml(explainButtonLabel)}</button>
-              ${
-                state.pageContext?.provider === 'rock' && isCurriculumPage
-                  ? `<button id="rock-find-anki" ${isBusy ? 'disabled' : ''} style="border:1px solid #0f766e;border-radius:999px;background:white;color:#0f766e;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Find Anki cards</button>`
-                  : ''
-              }
               ${pageLooksHintEligible ? '' : `<button id="unlink" ${isBusy ? 'disabled' : ''} style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Unlink</button>`}
             </div>
             <p style="margin:0;font-size:12px;color:#5c6574;">${
@@ -2687,8 +2412,6 @@ export function mountSidePanelApp(root: HTMLElement) {
         content.appendChild(controls);
         controls.querySelector('#explain')?.addEventListener('click', () => void runExplain());
         controls.querySelector('#retry-curriculum-explain')?.addEventListener('click', () => void runExplain());
-        const rockAnkiButton = controls.querySelector<HTMLButtonElement>('#rock-find-anki');
-        rockAnkiButton?.addEventListener('click', () => void findPageAnkiCards(rockAnkiButton));
         controls.querySelector('#unlink')?.addEventListener('click', () => void unlink());
       }
     }
@@ -2815,19 +2538,6 @@ export function mountSidePanelApp(root: HTMLElement) {
             ),
           }),
         );
-        if (state.pageContext?.provider === 'orthobullets' && !isCurriculumStudyResponse(state.explanation)) {
-          const sendToAnki = createElement('button', {
-            text: 'Find cards in Anki',
-          });
-          sendToAnki.setAttribute('type', 'button');
-          sendToAnki.style.cssText =
-            'width:100%;border:0;border-radius:12px;background:#0f766e;color:white;padding:10px 12px;font-size:13px;font-weight:700;cursor:pointer;';
-          sendToAnki.addEventListener('click', () => {
-            if (!state.explanation || isCurriculumStudyResponse(state.explanation)) return;
-            void sendQuestionToAnki(sendToAnki, state.explanation);
-          });
-          content.appendChild(sendToAnki);
-        }
       }
 
       const questionWarnings = state.explanation?.warnings.filter(isClinicallyImportantWarning) ?? [];

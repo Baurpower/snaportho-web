@@ -1,3 +1,4 @@
+import { toProductDeckPath } from "@/lib/education/anki-deck-path";
 import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient } from '@/utils/supabase/server';
@@ -36,7 +37,7 @@ export async function GET(request: Request) {
     if (!member || !version?.is_active) return NextResponse.json({ error: 'Card unavailable' }, { status: 404 });
     const fields = cardFields(version.field_snapshot);
     const detail: AnkiCardDetail = {
-      cardVersionId, deckPath: member.deck_path,
+      cardVersionId, deckPath: toProductDeckPath(member.deck_path),
       front: fields.front, back: fields.back, extra: fields.extra,
       frontHtml: fields.frontHtml.slice(0, 50_000),
       backHtml: fields.backHtml.slice(0, 50_000),

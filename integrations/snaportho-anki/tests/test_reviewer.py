@@ -112,12 +112,14 @@ class ReviewerTests(unittest.TestCase):
  def test_packaged_editions_can_coexist(self):
   with open(os.path.join(os.path.dirname(__file__),"..","scripts","package_addon.py"))as source:text=source.read()
   self.assertIn('"conflicts":[]',text)
- def test_user_addon_is_preferred_relay_handler_when_both_are_installed(self):
+ def test_search_relay_surface_is_removed(self):
+  api=ReviewerApi("http://127.0.0.1:3000")
+  for gone in("pending_search_requests","claim_search_request","complete_search_request"):
+   self.assertFalse(hasattr(api,gone),gone)
   with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:text=source.read()
-  self.assertIn("if self._handles_search_relay():",text)
-  handler=text[text.index("def _handles_search_relay"):text.index("def open_dashboard")]
-  self.assertIn('if not self.reviewer_edition:return True',handler)
-  self.assertIn('"snaportho" not in set(self.mw.addonManager.allAddons())',handler)
+  for gone in("poll_search_relay","search_relay_timer","_claimed_search","_resolve_relay_search","_handles_search_relay"):
+   self.assertNotIn(gone,text,gone)
+  self.assertTrue(hasattr(api,"pending_launches"))
  def test_user_edition_installs_browse_search_before_reviewer_gate(self):
   with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:text=source.read()
   browse=text[text.index("    def add_browser_action"):text.index("    def open_resource_search")]
@@ -250,26 +252,11 @@ class ReviewerTests(unittest.TestCase):
   for gone in("assignments","assignment","start_assignment","submit_mapping","submit_proposal","submit_assignment"):
    self.assertFalse(hasattr(api,gone),gone)
   self.assertTrue(hasattr(api,"review_queue"))
- def test_search_relay_only_reports_completion_after_opening_browse(self):
-  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:
-   text=source.read()
-  poll=text[text.index("def poll_search_relay"):text.index("def _claimed_search")]
-  self.assertNotIn("reviewer_enabled",poll)
-  relay=text[text.index("def _resolve_relay_search"):text.index("def propose_from_editor")]
-  self.assertLess(relay.index("open_browse_with_card_ids("),relay.index("complete_search_request("))
-  self.assertIn('"errorCode":"browse_open_failed"',relay)
-  self.assertNotIn("local_concept_card_ids",relay)
-  self.assertIn('"localSupplementCount":0',relay)
  def test_relay_opens_browse_through_main_window_action(self):
   with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","resource_search.py"))as source:
    text=source.read()
   browse=text[text.index("def open_browse_with_card_ids"):text.index("def result_summary")]
   self.assertLess(browse.index('mw.onBrowse()'),browse.index('dialogs.open("Browser", mw)'))
- def test_question_relay_does_not_apply_the_topic_page_cap(self):
-  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","bootstrap.py"))as source:
-   text=source.read()
-  claim=text[text.index("def _claimed_search"):text.index("def _resolve_relay_search")]
-  self.assertIn('30 if request.get("query_kind")=="topic_page" else 50',claim)
  def test_start_link_pins_browser_approval_to_addon_origin(self):
   class Response:
    status=200
