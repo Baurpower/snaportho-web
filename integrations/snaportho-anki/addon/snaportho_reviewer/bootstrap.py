@@ -83,8 +83,9 @@ class ProfileRuntime:
         self.reviewer_edition=REVIEWER_EDITION
         raw=mw.addonManager.getConfig(__name__.split('.')[0]) or {}
         self.settings=validate(raw);self.profile_hash=__import__('hashlib').sha256(str(mw.pm.name).encode()).hexdigest()[:16]
-        from .credential_store import MacOSKeychainStore
-        self.credentials=MacOSKeychainStore(self.settings.environment,self.profile_hash,"reviewer-device")
+        from .credential_store import create_credential_store
+        self.credentials=create_credential_store(self.settings.environment,self.profile_hash,"reviewer-device")
+        self.credential_preflight_ok=False
         from .api import ReviewerApi
         self.api=ReviewerApi(self.settings.base_url,self.credentials,self.settings.request_timeout_seconds,lambda:self.closed)
         from .state import DraftStore
@@ -468,5 +469,22 @@ class ProfileRuntime:
         from .dialogs import DiagnosticsDialog
         DiagnosticsDialog(self.mw,self).exec()
     def sign_out(self):
-        from aqt.utils import askUser,showInfo
-        if askUser("Sign out of SnapOrtho on this Anki profile?"):self.credentials.delete();showInfo("Signed out of SnapOrtho.")
+        from aqt.utils import askUser,showInfo,showWarning
+        if not askUser("Sign out of SnapOrtho on this Anki profile?"):return
+        def operation():
+            revoke_error=None
+            try:
+                token=self.credentials.get()
+                if token:self.api.revoke_token(token)
+            except Exception as error:revoke_error=error
+            self.credentials.delete()
+            return revoke_error
+        def done(future):
+            try:
+                revoke_error=future.result()
+                if revoke_error:showWarning("Signed out locally. SnapOrtho could not confirm server revocation; remove the device from your web account when online.")
+                else:showInfo("Signed out of SnapOrtho.")
+            except Exception as error:
+                from .errors import describe
+                showWarning(f"Sign-out could not remove the local credential: {describe(error)}")
+        self.background(operation,done)

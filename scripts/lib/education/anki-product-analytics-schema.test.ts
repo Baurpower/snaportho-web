@@ -24,6 +24,10 @@ for (const name of [
   'anki_addon_downloaded',
   'anki_addon_first_downloaded',
   'anki_device_linked',
+  'anki_link_approved',
+  'anki_credential_store_succeeded',
+  'anki_credential_store_failed',
+  'anki_link_verified',
   'anki_addon_opened',
   'anki_deck_imported',
   'anki_deck_update_applied',
@@ -49,6 +53,23 @@ assert.match(clientEvents, /startsWith\('anki_'\)/);
 
 const poll = read('src/app/api/brobot-anki/auth/poll-link/route.ts');
 assert.match(poll, /anki_device_linked/);
+assert.match(poll, /supportsActivationAck/);
+assert.match(poll, /provisional_expires_at/);
+
+const activateDevice = read('src/app/api/brobot-anki/auth/activate-device/route.ts');
+assert.match(activateDevice, /allowProvisionalDeviceToken: true/);
+assert.match(activateDevice, /activated_at: now/);
+assert.match(activateDevice, /anki_device_linked/);
+
+const authLib = read('src/app/api/brobot-anki/_lib.ts');
+assert.match(authLib, /Device token activation is required/);
+assert.match(authLib, /Provisional device token expired/);
+
+const activationMigration = read('supabase/migrations/20260927230000_anki_device_token_activation_lifecycle.sql');
+assert.match(activationMigration, /activated_at timestamptz/);
+assert.match(activationMigration, /provisional_expires_at timestamptz/);
+assert.match(activationMigration, /revoke_expired_provisional_anki_tokens/);
+assert.match(activationMigration, /revoke all on function/);
 
 const bootstrap = read('src/app/api/anki/deck/releases/[id]/artifact/bootstrap_apkg/route.ts');
 assert.match(bootstrap, /anki_deck_imported/);

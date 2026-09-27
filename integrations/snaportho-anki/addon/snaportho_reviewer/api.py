@@ -1,4 +1,4 @@
-import json, socket, time, urllib.error, urllib.parse, urllib.request
+import json, platform, socket, time, urllib.error, urllib.parse, urllib.request
 from .version import ADDON_VERSION
 
 CONTRACT = "snaportho-anki-reviewer.v1"
@@ -74,6 +74,7 @@ class ReviewerApi:
         retries=2,
         extra_headers=None,
         timeout=None,
+        credential_token=None,
     ):
         if self.cancelled():
             raise ApiError("cancelled")
@@ -82,9 +83,10 @@ class ReviewerApi:
             "X-SnapOrtho-Contract": CONTRACT,
             "X-SnapOrtho-Client": f"reviewer-addon/{ADDON_VERSION}",
             "X-SnapOrtho-Addon-Base-Url": self.base_url,
+            "X-SnapOrtho-OS": platform.system().lower(),
         }
         if authenticated:
-            token = self.credentials.get() if self.credentials else None
+            token = credential_token or (self.credentials.get() if self.credentials else None)
             if not token:
                 raise ApiError("unlinked", 401)
             headers["X-SnapOrtho-Anki-Token"] = token
@@ -166,6 +168,19 @@ class ReviewerApi:
             {"linkCode": link_code},
             authenticated=False,
             retries=0,
+        )
+
+    def activate_device(self, token):
+        return self.request(
+            "POST", "/api/brobot-anki/auth/activate-device", {}, retries=0,
+            credential_token=token,
+        )
+
+    def revoke_token(self, token, reason=None):
+        return self.request(
+            "POST", "/api/brobot-anki/auth/revoke-device", {}, retries=0,
+            credential_token=token,
+            extra_headers={"X-SnapOrtho-Revocation-Reason": reason} if reason else None,
         )
 
     def heartbeat(self, payload):

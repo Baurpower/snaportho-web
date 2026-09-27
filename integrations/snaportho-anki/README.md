@@ -22,7 +22,7 @@ Architecture: **`.apkg` bootstrap (first install) + in-place deltas**. Design: [
 
 **Tools → SnapOrtho → Get Started / Master Deck…**
 
-1. **Sign in to SnapOrtho** (browser one-time approval; Keychain token)
+1. **Sign in to SnapOrtho** (browser one-time approval; macOS Keychain or Windows Credential Manager)
 2. **Download SnapOrtho Master Deck** (`.apkg`, sha256-verified) → **File → Import** in Anki
 3. **Stay up to date** — human update plan; Apply never touches scheduling or `Personal_*` fields
 

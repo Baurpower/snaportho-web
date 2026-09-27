@@ -2,14 +2,14 @@
 
 ## Supported runtime
 
-- Add-on: `0.5.0`
+- Add-on: `1.0.6`
 - API contract: `snaportho-anki-reviewer.v1`
 - Schema compatibility: `20260720_180000`
 - Minimum Anki: 26.05
 - Inspected runtime: Anki 26.05, macOS 26.5.2, bundled Python and Qt 6
-- Supported production OS for credentials: macOS only
+- Supported production OS for credentials: macOS and Windows
 
-Unsupported Anki versions fail visibly. Windows/Linux authenticated submission is disabled until a non-plaintext native credential implementation exists.
+Unsupported Anki versions fail visibly. Linux authenticated submission remains disabled until a reviewed Secret Service implementation exists.
 
 ## Install and quick start
 
@@ -30,7 +30,7 @@ Resolution uses a parameterized GUID lookup, card ordinal, and importer-compatib
 
 ## Credentials and security
 
-macOS credentials use the system Keychain through `/usr/bin/security`, namespaced by environment, hashed profile identifier, and device identity. There is no plaintext fallback. The token is never written to config or SQLite and is never logged. macOS `security` necessarily receives it as a short-lived process argument during Keychain insertion; migration to direct Security.framework calls is recommended before broad rollout.
+macOS credentials use the system Keychain through `/usr/bin/security`; Windows credentials use Generic Credentials through the native Credential Management API and Python `ctypes`. Both are namespaced by environment, hashed profile identifier, and device identity. There is no plaintext fallback. The token is never written to config or SQLite and is never logged. Storage is probed before browser approval, written and read back before success, and acknowledged to the server only after persistence. macOS `security` necessarily receives the token as a short-lived process argument during Keychain insertion; migration to direct Security.framework calls remains recommended.
 
 SQLite schema v2 stores only assignment caches, drafts, idempotency/retry state, safe conflicts, and UI progress. It backs up before migration, checks corruption, supports explicit deletion, and expires submitted drafts after 90 days.
 
@@ -54,7 +54,7 @@ Create a new explicitly named profile such as `SnapOrtho Reviewer Disposable`; i
 
 - [x] Installable deterministic package and checksum
 - [x] Visible Qt source implementation
-- [x] macOS Keychain implementation; no plaintext fallback
+- [x] macOS Keychain and Windows Credential Manager implementations; no plaintext fallback
 - [x] Scoped reviewer API client and safe diagnostics
 - [x] Local drafts, migration, recovery, retries, and conflicts
 - [ ] Clean startup in a disposable profile

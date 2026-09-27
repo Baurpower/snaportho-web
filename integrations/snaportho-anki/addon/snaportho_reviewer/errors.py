@@ -27,7 +27,7 @@ def headline(error):
         return "Daily BroBot limit reached"
     if code == "cancelled":
         return "Cancelled"
-    if code == "CredentialUnavailable":
+    if code in {"CredentialUnavailable", "CredentialStoreError", "CredentialBackendUnavailable", "CredentialReadError", "CredentialWriteError", "CredentialDeleteError", "UnsupportedCredentialPlatform"}:
         return "Credential store locked"
     if code == "no_release":
         return "No deck published"
@@ -104,11 +104,16 @@ def describe(error):
         return f"{base} ({extra})" if extra else base
     if code == "response_too_large":
         return "The server response was too large to load. Try again or contact the SnapOrtho team."
-    if code == "CredentialUnavailable":
-        return (
-            "Secure credential storage is unavailable. On macOS, unlock your Keychain; "
-            "other platforms aren't supported yet."
-        )
+    if code == "UnsupportedCredentialPlatform":
+        return "Secure sign-in storage is not supported on this operating system yet."
+    if code in {"CredentialUnavailable", "CredentialStoreError", "CredentialBackendUnavailable", "CredentialReadError", "CredentialWriteError", "CredentialDeleteError"}:
+        backend = getattr(error, "backend", "")
+        if backend == "windows_credential_manager":
+            return ("Windows Credential Manager could not save the SnapOrtho sign-in. "
+                    "Retry after signing back into Windows, or open Safe Diagnostics if it continues.")
+        if backend == "macos_keychain":
+            return "macOS Keychain could not save the SnapOrtho sign-in. Unlock Keychain and retry."
+        return "Secure credential storage is unavailable. Retry or open Safe Diagnostics."
     server = getattr(error, "server_message", None)
     if server:
         return f"Something went wrong ({code}): {server}."

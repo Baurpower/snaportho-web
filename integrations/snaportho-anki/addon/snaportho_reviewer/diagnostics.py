@@ -8,4 +8,5 @@ def build(runtime,settings,linked,reviewer=None,last_error=None):
       "reviewerRoles":(reviewer or{}).get("roles",[]),"profileHash":runtime.get("profileHash"),"localSchemaVersion":4,
       "pendingDrafts":runtime.get("pendingDrafts",0),"pendingRetries":runtime.get("pendingRetries",0),
       "deckSubscription":runtime.get("deckSubscription"),"deckRecoveryInventory":runtime.get("deckRecoveryInventory"),
-      "pendingDeckJournal":runtime.get("pendingDeckJournal",0),"lastSafeErrorCode":last_error}
+      "pendingDeckJournal":runtime.get("pendingDeckJournal",0),"lastSafeErrorCode":last_error,
+      "credentialBackend":runtime.get("credentialBackend"),"credentialBackendAvailable":runtime.get("credentialBackendAvailable")}

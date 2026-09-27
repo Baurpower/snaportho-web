@@ -1,0 +1,42 @@
+name: Anki add-on cross-platform
+
+on:
+  pull_request:
+    paths:
+      - "integrations/snaportho-anki/**"
+      - "src/app/api/brobot-anki/auth/**"
+      - "src/app/api/brobot-anki/_lib.ts"
+      - "supabase/migrations/**anki_device_token**"
+      - ".github/workflows/anki-addon-cross-platform.yml"
+  push:
+    branches: [main]
+    paths:
+      - "integrations/snaportho-anki/**"
+      - "src/app/api/brobot-anki/auth/**"
+      - "src/app/api/brobot-anki/_lib.ts"
+      - "supabase/migrations/**anki_device_token**"
+
+jobs:
+  credential-contract:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Run add-on tests
+        run: python -m unittest discover -s integrations/snaportho-anki/tests -p "test_*.py"
+        env:
+          SNAPORTHO_NATIVE_CREDENTIAL_TESTS: "1"
+      - name: Build user package
+        run: python integrations/snaportho-anki/scripts/package_addon.py
+      - name: Verify user package
+        run: python integrations/snaportho-anki/scripts/verify_package.py
+      - name: Build reviewer package
+        run: python integrations/snaportho-anki/scripts/package_addon.py --edition reviewer
+      - name: Verify reviewer package
+        run: python integrations/snaportho-anki/scripts/verify_reviewer_package.py

@@ -22,6 +22,8 @@ type DeviceTokenRecord = {
   device_link_id: string;
   revoked_at: string | null;
   last_used_at: string | null;
+  activated_at: string | null;
+  provisional_expires_at: string | null;
 };
 
 type DeviceLinkRecord = {
@@ -60,8 +62,8 @@ function getBearerToken(request: Request): string | null {
 }
 
 function getDeviceToken(request: Request): string | null {
-  const token = request.headers.get("x-snaportho-anki-token")?.trim()
-    || request.headers.get("x-snaportho-extension-token")?.trim();
+  const token =
+    request.headers.get("x-snaportho-anki-token")?.trim() || request.headers.get("x-snaportho-extension-token")?.trim();
   return token ? token : null;
 }
 
@@ -91,43 +93,31 @@ export function isExpired(expiresAt: string): boolean {
 
 export async function requireAuthenticatedUser(
   request: Request
-): Promise<
-  AuthenticatedContext | { response: NextResponse }
-> {
+): Promise<AuthenticatedContext | { response: NextResponse }> {
   const supabase = await createClient();
   const bearerToken = getBearerToken(request);
 
   const {
     data: { user },
     error: authError,
-  } = bearerToken
-    ? await supabase.auth.getUser(bearerToken)
-    : await supabase.auth.getUser();
+  } = bearerToken ? await supabase.auth.getUser(bearerToken) : await supabase.auth.getUser();
 
   if (authError) {
     return {
-      response: NextResponse.json(
-        { error: `Authentication failed: ${authError.message}` },
-        { status: 401 }
-      ),
+      response: NextResponse.json({ error: `Authentication failed: ${authError.message}` }, { status: 401 }),
     };
   }
 
   if (!user) {
     return {
-      response: NextResponse.json(
-        { error: "Not authenticated" },
-        { status: 401 }
-      ),
+      response: NextResponse.json({ error: "Not authenticated" }, { status: 401 }),
     };
   }
 
   return { supabase, user };
 }
 
-async function authenticateWithSupabaseUser(
-  request: Request
-): Promise<
+async function authenticateWithSupabaseUser(request: Request): Promise<
   | {
       success: true;
       context: AuthenticatedBroBotAnkiRequest;
@@ -147,18 +137,13 @@ async function authenticateWithSupabaseUser(
   const {
     data: { user },
     error: authError,
-  } = bearerToken
-    ? await supabase.auth.getUser(bearerToken)
-    : await supabase.auth.getUser();
+  } = bearerToken ? await supabase.auth.getUser(bearerToken) : await supabase.auth.getUser();
 
   if (authError) {
     if (bearerToken) {
       return {
         success: false,
-        response: NextResponse.json(
-          { error: `Authentication failed: ${authError.message}` },
-          { status: 401 }
-        ),
+        response: NextResponse.json({ error: `Authentication failed: ${authError.message}` }, { status: 401 }),
       };
     }
 
@@ -190,7 +175,8 @@ async function authenticateWithSupabaseUser(
 }
 
 async function authenticateWithDeviceToken(
-  request: Request
+  request: Request,
+  allowProvisional = false
 ): Promise<
   | { success: true; context: AuthenticatedBroBotAnkiRequest }
   | { success: false; response: NextResponse }
@@ -207,7 +193,7 @@ async function authenticateWithDeviceToken(
 
   const { data: tokenRecord, error: tokenError } = await supabase
     .from("brobot_anki_device_tokens")
-    .select("id, user_id, device_link_id, revoked_at, last_used_at")
+    .select("id, user_id, device_link_id, revoked_at, last_used_at, activated_at, provisional_expires_at")
     .eq("token_hash", tokenHash)
     .maybeSingle<DeviceTokenRecord>();
 
@@ -221,19 +207,35 @@ async function authenticateWithDeviceToken(
   if (!tokenRecord || tokenRecord.revoked_at) {
     return {
       success: false,
-      response: NextResponse.json(
-        { error: "Invalid or revoked device token." },
-        { status: 401 }
-      ),
+      response: NextResponse.json({ error: "Invalid or revoked device token." }, { status: 401 }),
     };
+  }
+
+  if (!tokenRecord.activated_at) {
+    const expired =
+      !tokenRecord.provisional_expires_at || new Date(tokenRecord.provisional_expires_at).getTime() <= Date.now();
+    if (expired) {
+      await supabase
+        .from("brobot_anki_device_tokens")
+        .update({ revoked_at: isoNow(), updated_at: isoNow() })
+        .eq("id", tokenRecord.id);
+      return {
+        success: false,
+        response: NextResponse.json({ error: "Provisional device token expired." }, { status: 401 }),
+      };
+    }
+    if (!allowProvisional) {
+      return {
+        success: false,
+        response: NextResponse.json({ error: "Device token activation is required." }, { status: 403 }),
+      };
+    }
   }
 
   // Anki addons poll every few seconds, so touching last_used_at on every
   // authenticated request would be a write per poll. Refresh it lazily: the
   // timestamp only needs to be approximately recent for presence reporting.
-  const lastUsedMs = tokenRecord.last_used_at
-    ? new Date(tokenRecord.last_used_at).getTime()
-    : NaN;
+  const lastUsedMs = tokenRecord.last_used_at ? new Date(tokenRecord.last_used_at).getTime() : NaN;
   if (!Number.isFinite(lastUsedMs) || Date.now() - lastUsedMs > 15 * 60_000) {
     const { error: touchError } = await supabase
       .from("brobot_anki_device_tokens")
@@ -261,14 +263,13 @@ async function authenticateWithDeviceToken(
 }
 
 export async function authenticateBroBotAnkiRequest(
-  request: Request
-): Promise<
-  AuthenticatedBroBotAnkiRequest | { response: NextResponse }
-> {
+  request: Request,
+  options: { allowProvisionalDeviceToken?: boolean } = {}
+): Promise<AuthenticatedBroBotAnkiRequest | { response: NextResponse }> {
   // Add-ons and extensions always send a device header. Resolve it first so
   // high-frequency polling does not make a wasted Supabase Auth request.
   if (getDeviceToken(request)) {
-    const deviceAuth = await authenticateWithDeviceToken(request);
+    const deviceAuth = await authenticateWithDeviceToken(request, options.allowProvisionalDeviceToken === true);
 
     if (deviceAuth.success) {
       return deviceAuth.context;
@@ -290,25 +291,22 @@ export async function authenticateBroBotAnkiRequest(
   }
 
   return {
-    response: NextResponse.json(
-      { error: "Not authenticated" },
-      { status: 401 }
-    ),
+    response: NextResponse.json({ error: "Not authenticated" }, { status: 401 }),
   };
 }
 
-export async function getDeviceLinkByCode(
-  linkCode: string
-): Promise<
-  | { success: true; supabase: AdminSupabaseClient; link: DeviceLinkRecord | null }
+export async function getDeviceLinkByCode(linkCode: string): Promise<
+  | {
+      success: true;
+      supabase: AdminSupabaseClient;
+      link: DeviceLinkRecord | null;
+    }
   | { success: false; response: NextResponse }
 > {
   const supabase = createAdminClient();
   const { data, error } = await supabase
     .from("brobot_anki_device_links")
-    .select(
-      "id, device_name, user_id, status, approved_at, exchanged_at, revoked_at, expires_at"
-    )
+    .select("id, device_name, user_id, status, approved_at, exchanged_at, revoked_at, expires_at")
     .eq("link_code", linkCode)
     .maybeSingle<DeviceLinkRecord>();
 
@@ -329,10 +327,7 @@ export async function getDeviceLinkByCode(
 export async function parseJsonBody<TSchema extends z.ZodTypeAny>(
   request: Request,
   schema: TSchema
-): Promise<
-  | { success: true; data: z.infer<TSchema> }
-  | { success: false; response: NextResponse }
-> {
+): Promise<{ success: true; data: z.infer<TSchema> } | { success: false; response: NextResponse }> {
   let rawBody: unknown;
 
   try {
@@ -340,10 +335,7 @@ export async function parseJsonBody<TSchema extends z.ZodTypeAny>(
   } catch {
     return {
       success: false,
-      response: NextResponse.json(
-        { error: "Request body must be valid JSON." },
-        { status: 400 }
-      ),
+      response: NextResponse.json({ error: "Request body must be valid JSON." }, { status: 400 }),
     };
   }
 
@@ -355,10 +347,7 @@ export async function parseJsonBody<TSchema extends z.ZodTypeAny>(
 
     return {
       success: false,
-      response: NextResponse.json(
-        { error: `${path}: ${firstIssue.message}` },
-        { status: 400 }
-      ),
+      response: NextResponse.json({ error: `${path}: ${firstIssue.message}` }, { status: 400 }),
     };
   }
 
@@ -368,9 +357,7 @@ export async function parseJsonBody<TSchema extends z.ZodTypeAny>(
   };
 }
 
-export function normalizeOptionalString(
-  value: string | undefined
-): string | null {
+export function normalizeOptionalString(value: string | undefined): string | null {
   if (typeof value !== "string") {
     return null;
   }
@@ -379,28 +366,22 @@ export function normalizeOptionalString(
   return trimmed.length > 0 ? trimmed : null;
 }
 
-export const optionalTrimmedStringSchema = z.preprocess(
-  (value) => {
-    if (typeof value !== "string") {
-      return value;
-    }
+export const optionalTrimmedStringSchema = z.preprocess((value) => {
+  if (typeof value !== "string") {
+    return value;
+  }
 
-    const trimmed = value.trim();
-    return trimmed.length > 0 ? trimmed : undefined;
-  },
-  z.string().optional()
-);
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : undefined;
+}, z.string().optional());
 
-export const optionalStringArraySchema = z.preprocess(
-  (value) => {
-    if (!Array.isArray(value)) {
-      return value;
-    }
+export const optionalStringArraySchema = z.preprocess((value) => {
+  if (!Array.isArray(value)) {
+    return value;
+  }
 
-    return value
-      .filter((item): item is string => typeof item === "string")
-      .map((item) => item.trim())
-      .filter((item) => item.length > 0);
-  },
-  z.array(z.string()).optional()
-);
+  return value
+    .filter((item): item is string => typeof item === "string")
+    .map((item) => item.trim())
+    .filter((item) => item.length > 0);
+}, z.array(z.string()).optional());

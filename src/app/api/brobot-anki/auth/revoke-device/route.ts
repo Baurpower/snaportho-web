@@ -7,6 +7,7 @@ import {
   isoNow,
 } from "../../_lib";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { recordAnkiProductEvent } from "@/lib/analytics/anki-usage";
 
 const revokeDeviceSchema = z.object({
   deviceToken: z.string().trim().min(1).optional(),
@@ -14,7 +15,9 @@ const revokeDeviceSchema = z.object({
 
 export async function POST(request: Request) {
   try {
-    const auth = await authenticateBroBotAnkiRequest(request);
+    const auth = await authenticateBroBotAnkiRequest(request, {
+      allowProvisionalDeviceToken: true,
+    });
 
     if ("response" in auth) {
       return auth.response;
@@ -29,7 +32,7 @@ export async function POST(request: Request) {
       } catch {
         return NextResponse.json(
           { error: "Request body must be valid JSON." },
-          { status: 400 }
+          { status: 400 },
         );
       }
     }
@@ -37,11 +40,12 @@ export async function POST(request: Request) {
     const parsed = revokeDeviceSchema.safeParse(parsedBody);
     if (!parsed.success) {
       const firstIssue = parsed.error.issues[0];
-      const path = firstIssue.path.length > 0 ? firstIssue.path.join(".") : "body";
+      const path =
+        firstIssue.path.length > 0 ? firstIssue.path.join(".") : "body";
 
       return NextResponse.json(
         { error: `${path}: ${firstIssue.message}` },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -52,7 +56,7 @@ export async function POST(request: Request) {
       if (!auth.deviceTokenId) {
         return NextResponse.json(
           { error: "Current device token could not be identified." },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
@@ -66,6 +70,21 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: error.message }, { status: 500 });
       }
 
+      if (
+        request.headers.get("x-snaportho-revocation-reason") ===
+        "credential_persistence_failed"
+      ) {
+        void recordAnkiProductEvent({
+          eventName: "anki_credential_store_failed",
+          userId: auth.userId,
+          surface: "anki_device_link",
+          properties: {
+            device_token_id: auth.deviceTokenId,
+            cleanup_revoked: true,
+          },
+        });
+      }
+
       return NextResponse.json({ revoked: true }, { status: 200 });
     }
 
@@ -73,7 +92,7 @@ export async function POST(request: Request) {
     if (!rawDeviceToken) {
       return NextResponse.json(
         { error: "deviceToken is required when revoking from the website." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 

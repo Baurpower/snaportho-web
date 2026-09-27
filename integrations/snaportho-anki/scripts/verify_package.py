@@ -11,6 +11,7 @@ with zipfile.ZipFile(package)as archive:
     edition=archive.read("snaportho_reviewer/__init__.py").decode()
     assert "USER_EDITION = True" in edition and "REVIEWER_EDITION = True" not in edition
     runtime=archive.read("snaportho_reviewer/bootstrap.py").decode()
+    credentials=archive.read("snaportho_reviewer/credential_store.py").decode()
     assert "if self.reviewer_edition:" in runtime
     assert "from .brobot_panel import LearnerSidePanel" in runtime
     assert 'addMenu("Reviewer tools")' not in runtime
@@ -21,6 +22,10 @@ with zipfile.ZipFile(package)as archive:
     payload=b"".join(archive.read(n)for n in names);assert b"SUPABASE_SERVICE_ROLE"not in payload and b"BEGIN PRIVATE KEY"not in payload
     assert "poll_search_relay" not in runtime, "stale search relay in packaged add-on"
     assert "_owns_launch_polling" in runtime, "missing launch poll ownership guard"
+    assert "create_credential_store" in runtime and "MacOSKeychainStore(" not in runtime
+    assert "WindowsCredentialManagerStore" in credentials and "CredWriteW" in credentials and "CredReadW" in credentials
+    assert "UnsupportedCredentialStore" in credentials and "plaintext" not in credentials.lower()
+    assert "snaportho_reviewer/activation.py" in names
     assert 'ADDON_VERSION = "'+manifest["version"]+'"' in archive.read("snaportho_reviewer/version.py").decode()
 
 digest=hashlib.sha256(package.read_bytes()).hexdigest();expected=package.with_suffix(package.suffix+".sha256").read_text().split()[0];assert digest==expected;print(json.dumps({"verified":True,"package":str(package),"sha256":digest,"files":len(names)}))

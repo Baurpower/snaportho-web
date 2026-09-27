@@ -7,8 +7,13 @@ from snaportho_reviewer.editor import field_diff,save_local_working_edit
 from snaportho_reviewer.state import DraftStore
 from snaportho_reviewer.config import validate
 from snaportho_reviewer.usage import os_family, should_send_heartbeat, utc_day, write_heartbeat_day, read_heartbeat_day, heartbeat_path
-from snaportho_reviewer.credential_store import FakeCredentialStore,CredentialUnavailable
+from snaportho_reviewer.credential_store import (
+ FakeCredentialStore,CredentialUnavailable,CredentialReadError,CredentialWriteError,
+ UnsupportedCredentialPlatform,WindowsCredentialManagerStore,create_credential_store,
+ credential_service,
+)
 from snaportho_reviewer.api import ReviewerApi,ApiError
+from snaportho_reviewer.activation import persist_activate_and_verify
 from snaportho_reviewer.diagnostics import build
 from snaportho_reviewer.dialogs import access_level_label,format_roles,linked_copy,summarize_local_deck
 from snaportho_reviewer.errors import describe,headline
@@ -182,10 +187,69 @@ class ReviewerTests(unittest.TestCase):
  def test_credentials_namespace_and_failure(self):
   store=FakeCredentialStore();store.set("secret");self.assertEqual(store.get(),"secret");store.delete();self.assertIsNone(store.get())
   with self.assertRaises(CredentialUnavailable):FakeCredentialStore(False).get()
+ def test_platform_credential_factory_and_probe(self):
+  class WindowsApi:
+   MAX_BLOB_BYTES=2560
+   def __init__(self):self.values={};self.deleted=[]
+   def write_generic(self,target,username,blob):self.values[target]=blob
+   def read_generic(self,target):return self.values.get(target)
+   def delete_generic(self,target):self.deleted.append(target);self.values.pop(target,None)
+  api=WindowsApi();store=create_credential_store("production","0123456789abcdef","reviewer-device","Windows",api)
+  self.assertIsInstance(store,WindowsCredentialManagerStore)
+  store.probe();self.assertEqual(api.values,{})
+  self.assertTrue(any(target.endswith("/reviewer-device.probe")for target in api.deleted))
+  store.set("sëcret");self.assertEqual(store.get(),"sëcret");store.delete();self.assertIsNone(store.get())
+  self.assertEqual(create_credential_store("production","hash","device","Darwin").backend_name(),"macos_keychain")
+  unsupported=create_credential_store("production","hash","device","Linux")
+  with self.assertRaises(UnsupportedCredentialPlatform):unsupported.probe()
+ def test_windows_store_separates_profiles_and_rejects_bad_blobs(self):
+  class WindowsApi:
+   MAX_BLOB_BYTES=8
+   def __init__(self):self.values={}
+   def write_generic(self,target,username,blob):self.values[target]=blob
+   def read_generic(self,target):return self.values.get(target)
+   def delete_generic(self,target):self.values.pop(target,None)
+  api=WindowsApi();left=WindowsCredentialManagerStore("production","left","reviewer-device",api);right=WindowsCredentialManagerStore("production","right","reviewer-device",api)
+  left.set("token");self.assertEqual(left.get(),"token");self.assertIsNone(right.get())
+  with self.assertRaises(CredentialWriteError):left.set("too-large")
+  api.values[left._target(left.account)]=b"\xff"
+  with self.assertRaises(CredentialReadError):left.get()
+  self.assertEqual(credential_service("production","left"),"com.snaportho.anki-reviewer.production.left")
+  with self.assertRaises(ValueError):credential_service("", "left")
  def test_api_safe_error_and_no_token(self):
   store=FakeCredentialStore();api=ReviewerApi("http://127.0.0.1:3000",store)
   with self.assertRaises(ApiError):api.me()
   self.assertNotIn("secret",str(api.safe_error(ApiError("authorization_failed",401))))
+ def test_activation_ack_and_revoke_can_use_just_issued_token(self):
+  class Response:
+   status=200
+   def __enter__(self):return self
+   def __exit__(self,*args):return False
+   def read(self,*args):return b'{}'
+  captured=[]
+  def open_request(request,timeout):captured.append(request);return Response()
+  api=ReviewerApi("https://snap-ortho.com",FakeCredentialStore())
+  with patch("snaportho_reviewer.api.urllib.request.urlopen",open_request):
+   api.activate_device("issued-token");api.revoke_token("issued-token")
+  self.assertEqual([request.full_url.rsplit("/",1)[-1]for request in captured],["activate-device","revoke-device"])
+  for request in captured:
+   headers={name.lower():value for name,value in request.header_items()}
+   self.assertEqual(headers["x-snaportho-anki-token"],"issued-token")
+ def test_activation_transaction_verifies_and_cleans_up_failure(self):
+  class Api:
+   def __init__(self,fail=False):self.fail=fail;self.activated=[];self.revoked=[]
+   def activate_device(self,token):
+    self.activated.append(token)
+    if self.fail:raise ApiError("server_error",500)
+   def me(self):return 200,{"status":"active"}
+   def revoke_token(self,token,reason=None):self.revoked.append((token,reason))
+  credentials=FakeCredentialStore();api=Api()
+  self.assertEqual(persist_activate_and_verify(credentials,api,"device-token"),{"status":"active"})
+  self.assertEqual(credentials.get(),"device-token");self.assertEqual(api.activated,["device-token"])
+  failing_credentials=FakeCredentialStore();failing_api=Api(True)
+  with self.assertRaises(ApiError):persist_activate_and_verify(failing_credentials,failing_api,"failed-token")
+  self.assertIsNone(failing_credentials.get())
+  self.assertEqual(failing_api.revoked,[("failed-token","credential_persistence_failed")])
  def test_workspace_proposal_posts_edits_to_backend_with_auth_and_idempotency(self):
   class Response:
    status=200

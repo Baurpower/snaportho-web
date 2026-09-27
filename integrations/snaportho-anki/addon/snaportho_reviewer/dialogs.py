@@ -316,7 +316,7 @@ class SettingsDialog:
         if not self._is_linked():
             self.account_body.setText(
                 "This Anki profile is not signed in. Sign in to use BroBot and download the "
-                "Master Deck. Credentials are stored securely in macOS Keychain."
+                "Master Deck. Credentials are stored securely by your operating system."
             )
             self._set_badge(self.account_badge, "Not linked", "bad")
             self.subtitle.setText(
@@ -466,19 +466,30 @@ class SettingsDialog:
             settings = validate(raw)
             self.runtime.mw.addonManager.writeConfig(__name__.split(".")[0], raw)
             self.runtime.settings = settings
-            # Rebuild API client against the new origin
+            # Rebuild both the credential namespace and API client atomically.
+            from .credential_store import create_credential_store
             from .api import ReviewerApi
 
-            self.runtime.api = ReviewerApi(
+            credentials = create_credential_store(
+                settings.environment, self.runtime.profile_hash, "reviewer-device"
+            )
+            credentials.probe()
+            api = ReviewerApi(
                 settings.base_url,
-                self.runtime.credentials,
+                credentials,
                 settings.request_timeout_seconds,
                 lambda: self.runtime.closed,
             )
+            self.runtime.credentials = credentials
+            self.runtime.api = api
+            self.runtime.credential_preflight_ok = False
             showInfo("Connection settings saved.")
             self.refresh_status()
         except ValueError as error:
             showWarning(str(error))
+        except Exception as error:
+            from .errors import describe
+            showWarning(describe(error))
 
     def exec(self):
         return self.dialog.exec()
@@ -493,13 +504,15 @@ class DeviceLinkDialog:
         self.link_code = None
         self.approval_url = None
         self.polling = False
+        self.preflight_ok = bool(getattr(runtime, "credential_preflight_ok", False))
+        self.closed = False
         self.poll_attempts = 0
         self.dialog = QDialog(parent)
         self.dialog.setWindowTitle("Sign in to SnapOrtho")
         self.dialog.resize(480, 280)
         layout = QVBoxLayout(self.dialog)
         self.status = QLabel(
-            "Continue in your browser to sign in. Your credential is stored securely in macOS Keychain."
+            "Continue in your browser to sign in. Your device credential will be stored securely by your operating system."
         )
         self.status.setWordWrap(True)
         self.code = QLabel("")
@@ -542,7 +555,31 @@ class DeviceLinkDialog:
             MasterDeckDialog(self.runtime.mw, self.runtime).exec()
 
     def start(self):
+        if not self.preflight_ok:
+            self.start_button.setEnabled(False)
+            self.status.setText("Checking secure credential storage…")
+
+            def preflight_done(future):
+                if self.closed:
+                    return
+                self.start_button.setEnabled(True)
+                try:
+                    future.result()
+                    self.preflight_ok = True
+                    self.runtime.credential_preflight_ok = True
+                    self._start_link()
+                except Exception as error:
+                    from .errors import describe
+                    self.status.setText(f"Secure storage check failed: {describe(error)}")
+
+            self.runtime.background(self.runtime.credentials.probe, preflight_done)
+            return
+        self._start_link()
+
+    def _start_link(self):
         def done(future):
+            if self.closed:
+                return
             try:
                 _, body = future.result()
                 self.link_code = body.get("linkCode")
@@ -583,11 +620,13 @@ class DeviceLinkDialog:
         self._poll_once()
 
     def _poll_once(self):
-        if not self.polling:
+        if not self.polling or self.closed:
             return
         self.poll_attempts += 1
 
         def done(future):
+            if self.closed:
+                return
             try:
                 _, body = future.result()
                 if body.get("status") == "pending":
@@ -605,24 +644,39 @@ class DeviceLinkDialog:
                     self.polling = False
                     self.status.setText(f"Link status: {body.get('status', 'failed')}")
                     return
-                self.runtime.credentials.set(token)
-                token = None
                 try:
-                    _, reviewer = self.runtime.api.me()
+                    self.status.setText("Securing this device…")
+                    from .activation import persist_activate_and_verify
+                    reviewer = persist_activate_and_verify(
+                        self.runtime.credentials, self.runtime.api, token
+                    )
                     self.show_linked(reviewer)
-                except Exception:
-                    self.show_linked()
+                except Exception as error:
+                    from .errors import describe
+                    self.link_code = None
+                    self.approval_url = None
+                    self.start_button.setText("Start sign-in again")
+                    self.status.setText(f"Link error: {describe(error)}")
+                finally:
+                    token = None
                 self.polling = False
             except Exception as error:
                 from .errors import describe
 
                 self.polling = False
+                if getattr(error, "body", {}).get("status") == "consumed":
+                    self.link_code = None
+                    self.approval_url = None
+                    self.start_button.setText("Start sign-in again")
                 self.status.setText(f"Link error: {describe(error)}")
 
         self.runtime.background(lambda: self.runtime.api.poll_link(self.link_code), done)
 
     def exec(self):
-        return self.dialog.exec()
+        result = self.dialog.exec()
+        self.closed = True
+        self.polling = False
+        return result
 
 
 class DiagnosticsDialog:
@@ -635,6 +689,12 @@ class DiagnosticsDialog:
         self.dialog = QDialog(parent)
         self.dialog.setWindowTitle("SnapOrtho Safe Diagnostics")
         layout = QVBoxLayout(self.dialog)
+        try:
+            linked = bool(runtime.credentials.get())
+            credential_error = None
+        except Exception as error:
+            linked = False
+            credential_error = type(error).__name__
         data = build(
             {
                 "ankiVersion": __import__("anki").version,
@@ -645,9 +705,12 @@ class DiagnosticsDialog:
                 "deckSubscription": runtime.store.deck_subscription(),
                 "deckRecoveryInventory": recovery_diagnostic(runtime.mw.col),
                 "pendingDeckJournal": len(runtime.store.pending_deck_journal()),
+                "credentialBackend": runtime.credentials.backend_name(),
+                "credentialBackendAvailable": runtime.credentials.is_available(),
             },
             runtime.settings,
-            bool(runtime.credentials.get()),
+            linked,
+            last_error=credential_error,
         )
         self.text = QTextEdit(json.dumps(data, indent=2))
         self.text.setReadOnly(True)
