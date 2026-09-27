@@ -1,9 +1,18 @@
 import assert from 'node:assert/strict';
-import { campaignActivity, campaignHistory } from './audience-history.ts';
+import { campaignActivity, campaignHistory, productCampaignActivity } from './audience-history.ts';
 const created='2026-01-01T00:00:00Z', updated='2026-09-01T00:00:00Z';
 const activity=campaignActivity([{user_id:'u',created_at:created,updated_at:updated}]).get('u');
 assert.equal(Math.min(...activity),Date.parse(created),'Reopening a conversation must not reset first use');
 assert.equal(Math.max(...activity),Date.parse(updated));
+const eventAt='2026-09-20T00:00:00Z';
+assert.equal(campaignActivity([{user_id:'p',occurred_at:eventAt}]).get('p')[0],Date.parse(eventAt));
+const products=productCampaignActivity([
+ {user_id:'p',product_area:'caseprep',event_name:'caseprep_completed',occurred_at:eventAt},
+ {user_id:'p',product_area:'anki',event_name:'anki_addon_first_downloaded',occurred_at:updated},
+ {user_id:null,product_area:'anki',event_name:'anki_addon_first_downloaded',occurred_at:eventAt},
+]);
+assert.deepEqual(products.get('p').caseprepCompletions,[Date.parse(eventAt)]);
+assert.deepEqual(products.get('p').ankiDownloads,[Date.parse(updated)]);
 const history=campaignHistory([
  {user_id:'u',campaign_step:'activation_1',send_status:'sending',sent_at:created},
  {user_id:'v',campaign_step:'activation_1',send_status:'delivered',sent_at:created},

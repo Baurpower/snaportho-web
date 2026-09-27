@@ -2,10 +2,17 @@ import { BRANCH_CAMPAIGN_STEPS, configuredBranchUrl, campaignWebUrl, isMarketing
 import type { CampaignStep } from './types';
 
 export async function verifyMarketingDestinations(base: string, request: typeof fetch = fetch) {
-  for (const step of ['activation_1', 'profile_completion_1', 'profile_grad_year_1', 'conversion_1'] as CampaignStep[]) {
+  for (const step of [
+    'activation_1',
+    'profile_completion_1',
+    'profile_grad_year_1',
+    'conversion_1',
+    'caseprep_activation_1',
+    'anki_activation_1',
+  ] as CampaignStep[]) {
     const action = new URL(marketingActionUrl(step, base));
     if (configuredBranchUrl(step)) continue;
-    const expected = campaignWebUrl(action);
+    const expected = isMarketingAppPath(action.pathname) ? campaignWebUrl(action) : action;
     const response = await request(action, { redirect: 'manual', signal: AbortSignal.timeout(15_000) });
     const location = response.headers.get('location');
     const actual = location ? new URL(location, action) : null;

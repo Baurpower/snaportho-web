@@ -26,6 +26,9 @@ for (const step of CAMPAIGN_STEPS) {
   } else if (step === 'profile_completion_1' || step === 'profile_grad_year_1') {
     assert.equal(action.pathname, step === 'profile_grad_year_1' ? '/account/grad-year' : '/account/profile');
     assert.equal(web.pathname, action.pathname);
+  } else if (step === 'caseprep_activation_1' || step === 'anki_activation_1') {
+    assert.equal(action.pathname, step === 'caseprep_activation_1' ? '/app/brobot/guest' : '/anki');
+    assert.equal(web.pathname, step === 'caseprep_activation_1' ? '/brobot' : '/anki');
   } else {
     assert.equal(action.pathname, '/brobot/pricing');
     assert.equal(web.pathname, '/brobot/pricing');
@@ -47,7 +50,8 @@ for (const step of CAMPAIGN_STEPS) {
     step === 'profile_grad_year_1' ? 'Add my graduation year'
       : step === 'profile_completion_1' ? 'Update my profile'
       : step === 'conversion_1' ? 'Continue on the website'
-      : 'Open Chat on the website'));
+    : step === 'caseprep_activation_1' || step === 'anki_activation_1' ? 'Continue on the website'
+    : 'Open Chat on the website'));
   assert.ok(!rendered.html.includes('/app/brobot/chat?'));
   assert.ok(!rendered.html.includes('/app/account/profile?'));
   assert.ok(!rendered.html.includes('/app/brobot/pricing?'));
@@ -74,6 +78,8 @@ for (const step of CAMPAIGN_STEPS) {
 assert.equal(isBrobotCampaignEntry({}), false);
 assert.equal(isBrobotCampaignEntry({ utm_source: 'resend', utm_medium: 'email', utm_campaign: 'unknown' }), false);
 assert.equal(campaignWebUrl(new URL('https://snap-ortho.com/app/brobot/guest')).pathname, '/brobot/chat');
+const caseprepLink = new URL(marketingActionUrl('caseprep_activation_1', 'https://snap-ortho.com'));
+assert.equal(campaignWebUrl(caseprepLink).pathname, '/brobot');
 assert.equal(isMarketingAppPath('/app/admin'), false);
 assert.equal(isMarketingAppPath('/app/account/profile/other'), false);
 assert.throws(() => campaignWebUrl(new URL('https://snap-ortho.com/app/unknown')));

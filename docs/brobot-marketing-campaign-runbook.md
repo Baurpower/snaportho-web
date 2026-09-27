@@ -5,7 +5,14 @@
 Campaign commands are dry-run by default. Production delivery requires both
 `BROBOT_MARKETING_SEND_ENABLED=true` and an exact per-campaign confirmation
 argument. The sender rechecks `user_profiles.receive_emails`, global/topic
-opt-outs, and the unique delivery reservation immediately before each send.
+opt-outs, product-use signals when applicable, and the atomic daily quota
+reservation immediately before each send.
+
+**Production sending and scheduled automation remain on hold.** Do not enable
+any send flag or configure an external schedule until an operator separately
+approves the documented delivery-quality hold, verifies the quota migration
+and telemetry, and confirms the deployed route and sender configuration.
+Vercel cron is not used for this system.
 
 Never export recipient emails to a CSV. Supabase remains the audience source of
 truth and Resend receives one eligible recipient at delivery time.
@@ -22,7 +29,16 @@ MARKETING_FROM_EMAIL=SnapOrtho BroBot <brobot@updates.snap-ortho.com>
 MARKETING_POSTAL_ADDRESS=
 MARKETING_PREFERENCES_SECRET=
 BROBOT_MARKETING_SEND_ENABLED=false
+MARKETING_SCHEDULER_SECRET=
+MARKETING_AUTOMATION_ENABLED=false
+MARKETING_DELIVERY_HEALTH_APPROVED=false
+MARKETING_AUTOMATION_QUOTA_APPROVED=false
 ```
+
+The scheduler secret is a separate random bearer token used only by the
+external scheduler; do not reuse `CRON_SECRET`. Keep all four marketing flags
+off by default. The last three variables are deliberate hold/approval gates,
+not deployment defaults to turn on.
 
 Verify the sending subdomain's SPF, DKIM, and DMARC in Resend. Register the
 webhook URL `https://snap-ortho.com/api/webhooks/resend` for delivered, clicked,
@@ -34,6 +50,26 @@ Review and apply `supabase/migrations/20260901185616_brobot_marketing_campaigns.
 through the normal production migration workflow. The migration does not
 backfill consent provenance: historical `receive_emails=true` records remain
 identifiable because `marketing_consent_at` stays null.
+
+Before enabling the scheduler, also review and apply
+`supabase/migrations/20260926_190000_marketing_automation_quota.sql`. It
+reserves campaign rows under a database advisory lock, enforces a shared cap of
+50 marketing delivery reservations per Pacific calendar day, and allows at
+most one marketing reservation per recipient per day. A reservation counts
+against the cap even if delivery later becomes ambiguous or fails; this is
+intentional to avoid exceeding the cap on retries. Only rows with a non-null
+`campaign_key` count, so transactional lifecycle and billing win-back email
+remain outside this cap. Both the operator runner and scheduled route use this
+same reservation function. A separate durable batch claim enforces at least 24
+hours between customer batches using the latest marketing reservation's
+`sent_at` timestamp; this is not inferred from scheduler cadence. It also
+allows only one active batch at a time, and a crashed/unfinalized batch blocks
+subsequent runs until it is reconciled. A hard process termination can leave
+the batch in `running`; ordinary send errors finalize it in `finally`, but an
+operator must inspect every associated delivery reservation and reconcile
+provider state with Resend before manually marking or completing a stale batch.
+Never clear or complete a stuck batch blindly: an ambiguous send may already
+have reached a customer.
 
 ## Preview and audience audit
 
@@ -58,7 +94,8 @@ Legacy users without recorded consent must be asked to opt in inside the
 product. Do not email them to obtain marketing consent.
 
 Supported steps are `activation_1`, `activation_2`, `activation_3`, `habit_1`,
-`habit_2`, `conversion_1`, `profile_completion_1`, `profile_grad_year_1`, and `reengagement_1`.
+`habit_2`, `conversion_1`, `profile_completion_1`, `profile_grad_year_1`,
+`reengagement_1`, `caseprep_activation_1`, and `anki_activation_1`.
 
 ## Profile reactivation campaigns (September 16 revision)
 
@@ -115,6 +152,8 @@ Campaign links must work with the existing app; no iOS update is required.
 | Emails | Main destination | Browser option |
 | --- | --- | --- |
 | Activation 1–3, Habit 1–2, Reengagement | `/app/brobot/guest` — existing guest BroBot route | `/brobot/chat` |
+| CasePrep onboarding | `/app/brobot/guest` — CasePrep guest entry | `/brobot` |
+| Anki onboarding | `/anki` — Anki setup page | Same |
 | Empty-profile reactivation | BroBot feature link in the email; profile link goes to `/account/profile` | Web profile editor |
 | Medical-student graduation year | `/account/grad-year` one-field form, then `/whats-new` | BroBot Chat or Anki download |
 | Conversion | `/brobot/pricing` — website plans | Same |
@@ -166,7 +205,9 @@ NODE_ENV=production node --env-file=.env.local --experimental-strip-types \
 
 ## Pilot send
 
-Keep the feature flag off during review. When the preview, migration, Resend
+This is the existing operator-only procedure, not authorization to send during
+the current hold. Do not run it until the delivery-quality hold is separately
+cleared. Keep the feature flag off during review. When the preview, migration, Resend
 domain, webhook, postal address, and audience count have been approved, enable
 the flag temporarily and send a small activation pilot:
 
@@ -229,3 +270,83 @@ Deploy the webhook and sender changes together before resuming production. The
 current rollout remains on its delivery-quality hold. The three pilot bounces
 were authentication-address sends; they are not failed profile sends and are
 not eligible for this fallback. No existing suppressions were cleared.
+
+## Multi-product onboarding and external scheduler
+
+The automated daily journey includes only these one-message cohorts:
+
+| Step | Signal and eligibility |
+| --- | --- |
+| `activation_1` | Confirmed, explicitly opted-in account created within 30 days and no recorded BroBot request use. |
+| `caseprep_activation_1` | Authenticated `product_events.caseprep_completed` within 30 days and no CasePrep start/first-section/completion/failure event in at least two days. |
+| `anki_activation_1` | Authenticated `anki_addon_first_downloaded` between one and 14 days ago, with no currently active linked Anki device. |
+
+Anonymous product events are not joined to accounts and never qualify. CasePrep
+uses the first-party completion event, not the prompt-bearing `caseprep_runs`
+table; Anki uses the user-bound download event and active device-token state.
+Missing or failed telemetry therefore excludes a person instead of broadening
+eligibility. Consent, confirmed email, current entitlement, provider
+suppression, opt-out, address validation, idempotency, and product-signal
+checks are repeated immediately before delivery. Product steps use the
+`product_updates` topic and distinct campaign keys/UTM labels.
+
+Measure product use by joining each campaign's `lifecycle_emails.user_id` and
+`sent_at` to that user's matching product event within 14 days. Report each
+journey separately and compare with an unmessaged cohort where available.
+This is an observed post-send association, not proof email caused product use.
+Do not add prompts, patient details, card contents, or email addresses to
+analytics for attribution.
+
+The external scheduler calls the deployed app endpoint:
+
+```text
+POST https://snap-ortho.com/api/marketing/automation/run
+Authorization: Bearer <MARKETING_SCHEDULER_SECRET>
+```
+
+Configure an external scheduler for once daily at **9:00 AM
+America/Los_Angeles**, with no Vercel cron entry. The route only runs from
+9:00–9:59 AM Pacific and rejects requests outside that window. Retries within
+the hour are idempotent: each recipient/step has a durable reservation, a
+recipient can receive at most one marketing email per Pacific day, and a
+database-wide reservation lock prevents concurrent requests from exceeding 50
+marketing reservations/day. The database checks the 24-hour minimum against
+the latest actual `sent_at`, so a 9:59 AM batch cannot be followed by a 9:00 AM
+batch only 23 hours later. Reservations count against the cap even when a
+delivery is ambiguous or fails, avoiding over-send on retries. Only
+`lifecycle_emails` rows with non-null `campaign_key` count; transactional
+lifecycle and billing win-back messages remain outside the cap. The route
+returns aggregate counts only. HTTP 401 means scheduler authentication failed;
+HTTP 409 means the call was outside the window; HTTP 503 returns a closed-gate
+reason.
+
+The route is fail-closed. In addition to all approval flags and sender
+configuration, it requires a delivery confirmation within the preceding
+30 days, no unresolved or failed webhook events, no bounce/complaint/provider
+suppression or failed delivery in that period, no unresolved `sending`
+reservation older than 15 minutes, and delivery confirmation for sends older
+than 24 hours. Lookup failures or incomplete telemetry block sending. The
+database reservation function independently enforces the 50/day cap even if
+the scheduler is called concurrently or an operator runs the CLI.
+The temporary zero-bounce/complaint rule is intentionally stricter than the
+documented `<2%` delivery-quality target; it is a launch-hold safeguard, not a
+permanent replacement for that policy.
+
+**Launch remains blocked pending a separate operator decision.** Known pilot
+bounces remain within the 30-day health lookback as of this runbook revision,
+so the route is expected to refuse sends even if approval flags are set. Do
+not clear suppressions, delete delivery history, mark uncertain sends failed,
+or bypass the gate to make a run pass. The operator must resolve the existing
+delivery-quality hold, review webhook and quota evidence, deploy and verify
+both migrations and the route, validate sender/link preflight, and explicitly
+approve rollout. Only then may the operator configure the external schedule
+and set the automation, delivery-health, quota-approval, and existing send
+flags to `true`.
+
+To hold or roll back automation, disable the external schedule first, then set
+`MARKETING_AUTOMATION_ENABLED=false` and
+`BROBOT_MARKETING_SEND_ENABLED=false`; leave delivery history, suppressions,
+and ambiguous reservations intact. The operator-run dry-run path remains
+available while automation is held. Do not configure external scheduling,
+production secrets, Vercel settings, DNS, or Resend as part of this repository
+change.
