@@ -411,7 +411,11 @@ class ReviewerTests(unittest.TestCase):
   self.assertNotIn("Differs from master",mismatch)
   missing=side_panel_status({"found":False,"identityResolved":False})
   self.assertIn("Not in the master deck",missing)
-  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","surfaces.py"))as source:panel=source.read()
+  with open(
+   os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","surfaces.py"),
+   encoding="utf-8",
+  ) as source:
+   panel=source.read()
   self.assertIn("GOVERNED HIERARCHY",panel)
   self.assertIn("No leaf fact will be proposed yet",panel)
   self.assertIn("Hierarchy first",panel)
