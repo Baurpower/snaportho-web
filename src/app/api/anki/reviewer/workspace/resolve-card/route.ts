@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import { reviewerAuth, body } from "../../_lib";
 import { workspaceLocalIdentitySchema } from "@/lib/education/anki-reviewer";
+import { isTrustedCanonicalEntity } from "@/lib/education/entity-promotion/trusted-entity";
 
 /** Master resource fields the enrichment panel cares about (non-empty only). */
 const RESOURCE_HINT_FIELDS = [
@@ -146,7 +147,7 @@ export async function POST(request: Request) {
   const { data: links } = await a.auth.supabase
     .from("card_canonical_entity_links")
     .select(
-      "canonical_entity_id,canonical_entities!inner(preferred_label,entity_type,status,is_active)",
+      "canonical_entity_id,canonical_entities!inner(preferred_label,entity_type,status,is_active,review_status)",
     )
     .eq("canonical_card_id", canonical.id)
     .eq("is_active", true)
@@ -171,8 +172,7 @@ export async function POST(request: Request) {
     mappings: (links ?? [])
       .filter(
         (x: any) =>
-          x.canonical_entities?.is_active &&
-          x.canonical_entities?.status === "canonical",
+          x.canonical_entities && isTrustedCanonicalEntity(x.canonical_entities),
       )
       .map((x: any) => ({
         canonicalEntityId: x.canonical_entity_id,

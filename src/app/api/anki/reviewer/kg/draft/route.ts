@@ -10,6 +10,11 @@ import {
 } from "@/lib/education/anki-kg-draft";
 import type { EntityIndexRow } from "@/lib/education/deck-semantic-mapping";
 import { normalizeClinicalText } from "@/lib/education/deck-semantic-mapping";
+import {
+  TRUSTED_ENTITY_ACTIVE,
+  TRUSTED_ENTITY_REVIEW_STATUS,
+  TRUSTED_ENTITY_STATUSES,
+} from "@/lib/education/entity-promotion/trusted-entity";
 
 const draftRequestSchema = z
   .object({
@@ -102,8 +107,9 @@ export async function POST(request: Request) {
     const { data } = await a.auth.supabase
       .from("canonical_entities")
       .select("id,preferred_label,entity_type,status,is_active")
-      .eq("is_active", true)
-      .eq("status", "canonical")
+      .eq("is_active", TRUSTED_ENTITY_ACTIVE)
+      .eq("review_status", TRUSTED_ENTITY_REVIEW_STATUS)
+      .in("status", [...TRUSTED_ENTITY_STATUSES])
       .ilike("preferred_label", pattern)
       .limit(25);
     for (const e of data ?? []) entityMap.set(e.id, e);
@@ -132,8 +138,9 @@ export async function POST(request: Request) {
       .from("canonical_entities")
       .select("id,preferred_label,entity_type,status,is_active")
       .in("id", aliasEntityIds)
-      .eq("is_active", true)
-      .eq("status", "canonical");
+      .eq("is_active", TRUSTED_ENTITY_ACTIVE)
+      .eq("review_status", TRUSTED_ENTITY_REVIEW_STATUS)
+      .in("status", [...TRUSTED_ENTITY_STATUSES]);
     for (const e of data ?? []) entityMap.set(e.id, e);
   }
 

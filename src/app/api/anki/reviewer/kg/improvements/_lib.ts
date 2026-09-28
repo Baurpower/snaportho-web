@@ -11,6 +11,11 @@ import {
   type KgImprovement,
 } from "@/lib/education/anki-kg-improvement";
 import { normalizeClinicalText } from "@/lib/education/deck-semantic-mapping";
+import {
+  TRUSTED_ENTITY_ACTIVE,
+  TRUSTED_ENTITY_REVIEW_STATUS,
+  TRUSTED_ENTITY_STATUSES,
+} from "@/lib/education/entity-promotion/trusted-entity";
 
 export type ImprovementContext = {
   canonicalCardId: string;
@@ -80,8 +85,9 @@ export async function buildImprovementContext(
     const { data: entities } = await supabase
       .from("canonical_entities")
       .select("id,preferred_label,normalized_label,entity_type,description,status,is_active")
-      .eq("is_active", true)
-      .eq("status", "canonical")
+      .eq("is_active", TRUSTED_ENTITY_ACTIVE)
+      .eq("review_status", TRUSTED_ENTITY_REVIEW_STATUS)
+      .in("status", [...TRUSTED_ENTITY_STATUSES])
       .ilike("preferred_label", `%${escaped}%`)
       .limit(20);
     for (const entity of entities ?? []) entityMap.set(entity.id, entity);
@@ -104,8 +110,9 @@ export async function buildImprovementContext(
         .from("canonical_entities")
         .select("id,preferred_label,normalized_label,entity_type,description,status,is_active")
         .in("id", missingIds)
-        .eq("is_active", true)
-        .eq("status", "canonical");
+        .eq("is_active", TRUSTED_ENTITY_ACTIVE)
+        .eq("review_status", TRUSTED_ENTITY_REVIEW_STATUS)
+        .in("status", [...TRUSTED_ENTITY_STATUSES]);
       for (const entity of aliasEntities ?? []) entityMap.set(entity.id, entity);
     }
   }
@@ -123,8 +130,9 @@ export async function buildImprovementContext(
       .from("canonical_entities")
       .select("id,preferred_label,normalized_label,entity_type,description,status,is_active")
       .in("id", missingLinkedIds)
-      .eq("is_active", true)
-      .eq("status", "canonical");
+      .eq("is_active", TRUSTED_ENTITY_ACTIVE)
+      .eq("review_status", TRUSTED_ENTITY_REVIEW_STATUS)
+      .in("status", [...TRUSTED_ENTITY_STATUSES]);
     for (const entity of linkedEntities ?? []) entityMap.set(entity.id, entity);
   }
   const entities: ImprovementEntity[] = [...entityMap.values()].map((entity) => ({
@@ -172,8 +180,9 @@ export async function buildImprovementContext(
         .from("canonical_entities")
         .select("id,preferred_label,normalized_label,entity_type,description,status,is_active")
         .in("id", missingParents)
-        .eq("is_active", true)
-        .eq("status", "canonical");
+        .eq("is_active", TRUSTED_ENTITY_ACTIVE)
+        .eq("review_status", TRUSTED_ENTITY_REVIEW_STATUS)
+        .in("status", [...TRUSTED_ENTITY_STATUSES]);
       for (const entity of parentEntities ?? [])
         hierarchyEntityMap.set(entity.id, entity);
     }

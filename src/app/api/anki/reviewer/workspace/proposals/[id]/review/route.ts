@@ -2,6 +2,11 @@
 import { NextResponse } from "next/server";
 import { reviewerAuth, body } from "../../../../_lib";
 import { workspaceReviewSchema } from "@/lib/education/anki-reviewer";
+import {
+  TRUSTED_ENTITY_ACTIVE,
+  TRUSTED_ENTITY_REVIEW_STATUS,
+  TRUSTED_ENTITY_STATUSES,
+} from "@/lib/education/entity-promotion/trusted-entity";
 export async function POST(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
@@ -67,8 +72,9 @@ export async function POST(
         .from("canonical_entities")
         .select("id")
         .in("id", unique)
-        .eq("is_active", true)
-        .eq("status", "canonical");
+        .eq("is_active", TRUSTED_ENTITY_ACTIVE)
+        .eq("review_status", TRUSTED_ENTITY_REVIEW_STATUS)
+        .in("status", [...TRUSTED_ENTITY_STATUSES]);
     if ((entities ?? []).length !== unique.length)
       return NextResponse.json(
         {

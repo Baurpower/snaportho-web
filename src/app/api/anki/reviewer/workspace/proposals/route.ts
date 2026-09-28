@@ -5,6 +5,11 @@ import {
   workspaceProposalSchema,
   workspaceProposalEvidenceHash,
 } from "@/lib/education/anki-reviewer";
+import {
+  TRUSTED_ENTITY_ACTIVE,
+  TRUSTED_ENTITY_REVIEW_STATUS,
+  TRUSTED_ENTITY_STATUSES,
+} from "@/lib/education/entity-promotion/trusted-entity";
 const personalTag = /^(personal|user|local)::/i;
 const listStatuses = [
   "submitted",
@@ -147,8 +152,9 @@ export async function POST(request: Request) {
         .from("canonical_entities")
         .select("id")
         .in("id", unique)
-        .eq("is_active", true)
-        .eq("status", "canonical");
+        .eq("is_active", TRUSTED_ENTITY_ACTIVE)
+        .eq("review_status", TRUSTED_ENTITY_REVIEW_STATUS)
+        .in("status", [...TRUSTED_ENTITY_STATUSES]);
     if ((entities ?? []).length !== unique.length)
       return NextResponse.json(
         {

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- Workspace and entity rows await generated Supabase types. */
 import { NextResponse } from "next/server";
 import { reviewerAuth } from "../../../_lib";
+import { isTrustedCanonicalEntity } from "@/lib/education/entity-promotion/trusted-entity";
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
@@ -38,7 +39,7 @@ export async function GET(
     ? await a.auth.supabase
         .from("canonical_entities")
         .select(
-          "id,preferred_label,entity_type,status,is_active,replacement_entity_id",
+          "id,preferred_label,entity_type,status,is_active,replacement_entity_id,review_status",
         )
         .in("id", entityIds)
     : { data: [] };
@@ -47,7 +48,7 @@ export async function GET(
     currentVersionId !== data.base_canonical_card_version_id,
   );
   const inactiveEntities = (entities ?? [])
-    .filter((e: any) => !e.is_active || e.status !== "canonical")
+    .filter((e: any) => !isTrustedCanonicalEntity(e))
     .map((e: any) => e.id);
   return NextResponse.json({
     proposal: data,

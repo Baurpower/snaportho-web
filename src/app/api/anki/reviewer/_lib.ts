@@ -3,6 +3,7 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 import { authenticateBroBotAnkiRequest } from "@/app/api/brobot-anki/_lib";
+import { isTrustedCanonicalEntity } from "@/lib/education/entity-promotion/trusted-entity";
 import {
   mappingReviewSchema,
   changeProposalSchema,
@@ -125,10 +126,10 @@ export async function loadItem(
   if (entityId) {
     const { data: e } = await supabase
       .from("canonical_entities")
-      .select("is_active,status")
+      .select("is_active,status,review_status")
       .eq("id", entityId)
       .maybeSingle();
-    entityActive = Boolean(e?.is_active && e?.status === "canonical");
+    entityActive = e ? isTrustedCanonicalEntity(e) : false;
   }
   return {
     assignmentReviewerId: data.anki_review_assignments.assigned_reviewer_id,

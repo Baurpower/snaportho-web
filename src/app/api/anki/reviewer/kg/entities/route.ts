@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- Canonical entity rows await generated Supabase types. */
 import { NextResponse } from "next/server";
 import { reviewerAuth } from "../../_lib";
+import {
+  TRUSTED_ENTITY_ACTIVE,
+  TRUSTED_ENTITY_REVIEW_STATUS,
+  TRUSTED_ENTITY_STATUSES,
+} from "@/lib/education/entity-promotion/trusted-entity";
 export async function GET(request: Request) {
   const a = await reviewerAuth(request, "mapping_reviewer");
   if ("response" in a) return a.response;
@@ -21,8 +26,9 @@ export async function GET(request: Request) {
     .select(
       "id,preferred_label,entity_type,description,status,review_status,replacement_entity_id",
     )
-    .eq("is_active", true)
-    .eq("status", "canonical")
+    .eq("is_active", TRUSTED_ENTITY_ACTIVE)
+    .eq("review_status", TRUSTED_ENTITY_REVIEW_STATUS)
+    .in("status", [...TRUSTED_ENTITY_STATUSES])
     .ilike("preferred_label", pattern)
     .order("preferred_label")
     .limit(limit);

@@ -3,6 +3,11 @@ import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { authenticateBroBotAnkiRequest } from "@/app/api/brobot-anki/_lib";
 import {
+  TRUSTED_ENTITY_ACTIVE,
+  TRUSTED_ENTITY_REVIEW_STATUS,
+  TRUSTED_ENTITY_STATUSES,
+} from "@/lib/education/entity-promotion/trusted-entity";
+import {
   rankSearchCandidates,
   selectConfidentQuestionCandidates,
 } from "@/lib/education/anki-search-ranking";
@@ -294,8 +299,9 @@ export async function POST(request: Request) {
     .from("canonical_entities")
     .select("id,preferred_label")
     .in("id", entityIds)
-    .eq("is_active", true)
-    .eq("status", "canonical");
+    .eq("is_active", TRUSTED_ENTITY_ACTIVE)
+    .eq("review_status", TRUSTED_ENTITY_REVIEW_STATUS)
+    .in("status", [...TRUSTED_ENTITY_STATUSES]);
   const entityLabel = new Map((entityRows ?? []).map((row: any) => [row.id, row.preferred_label]));
   const canonicalEntities = eligibleQuestionLinks
     .filter((link: any) => entityLabel.has(link.canonical_entity_id))
