@@ -27,7 +27,7 @@ import {
   type KgProposalPlanRef,
   type ReviewDecisionInput,
 } from "../src/lib/education/entity-promotion/promotion-applier";
-import { executePlan, type PromotionDb } from "../src/lib/education/entity-promotion/promotion-apply-executor";
+import { buildLiveContext, executePlan, type PromotionDb } from "../src/lib/education/entity-promotion/promotion-apply-executor";
 
 const commonModulePromise = import(new URL("./kg-automation-common.ts", import.meta.url).href);
 
@@ -35,16 +35,27 @@ function liveDb(supabase: { from: (relation: string) => any }): PromotionDb {
   const must = (error: unknown, what: string): void => {
     if (error) throw new Error(`${what}: ${error instanceof Error ? error.message : JSON.stringify(error)}`);
   };
+  const fetchAll = async (what: string, build: () => any): Promise<any[]> => {
+    const rows: any[] = [];
+    const pageSize = 1_000;
+    for (let from = 0; ; from += pageSize) {
+      const { data, error } = await build().range(from, from + pageSize - 1);
+      must(error, what);
+      const page = data ?? [];
+      rows.push(...page);
+      if (page.length < pageSize) return rows;
+    }
+  };
   return {
     fetchCanonical: async () => {
-      const { data, error } = await supabase.from("canonical_entities").select("id,normalized_label,entity_type").eq("is_active", true);
-      must(error, "fetchCanonical");
-      return (data ?? []).map((row: any) => ({ id: row.id, normalizedLabel: row.normalized_label, entityType: row.entity_type }));
+      const data = await fetchAll("fetchCanonical", () => supabase.from("canonical_entities")
+        .select("id,normalized_label,entity_type").eq("is_active", true).order("id"));
+      return data.map((row: any) => ({ id: row.id, normalizedLabel: row.normalized_label, entityType: row.entity_type }));
     },
     fetchAliases: async () => {
-      const { data, error } = await supabase.from("canonical_entity_aliases").select("normalized_alias,canonical_entity_id,is_active").eq("is_active", true);
-      must(error, "fetchAliases");
-      return (data ?? []).map((row: any) => ({ normalizedAlias: row.normalized_alias, canonicalEntityId: row.canonical_entity_id, isActive: row.is_active }));
+      const data = await fetchAll("fetchAliases", () => supabase.from("canonical_entity_aliases")
+        .select("id,normalized_alias,canonical_entity_id,is_active").eq("is_active", true).order("id"));
+      return data.map((row: any) => ({ normalizedAlias: row.normalized_alias, canonicalEntityId: row.canonical_entity_id, isActive: row.is_active }));
     },
     fetchKgProposals: async (ids) => {
       if (ids.length === 0) return [];
@@ -53,9 +64,9 @@ function liveDb(supabase: { from: (relation: string) => any }): PromotionDb {
       return (data ?? []).map((row: any) => ({ id: row.id, reviewStatus: row.review_status, proposalType: row.proposal_type, supersededBy: row.superseded_by }));
     },
     fetchAppliedDecisionKeys: async () => {
-      const { data, error } = await supabase.from("entity_review_decisions").select("decision_key").not("applied_at", "is", null);
-      must(error, "fetchAppliedDecisionKeys");
-      return (data ?? []).map((row: any) => row.decision_key as string);
+      const data = await fetchAll("fetchAppliedDecisionKeys", () => supabase.from("entity_review_decisions")
+        .select("id,decision_key").not("applied_at", "is", null).order("id"));
+      return data.map((row: any) => row.decision_key as string);
     },
     fetchProposalEdges: async (proposalIds) => {
       if (proposalIds.length === 0) return [];
@@ -175,18 +186,36 @@ type Args = {
   snapshotPath: string | null;
   sqlOutPath: string | null;
   apply: boolean;
+  live: boolean;
   reviewer: string | null;
+  target: "staging" | "production" | null;
+  confirmProjectRef: string | null;
 };
 
 function parseArgs(argv: string[]): Args {
-  const args: Args = { decisionsPath: null, snapshotPath: null, sqlOutPath: null, apply: false, reviewer: null };
+  const args: Args = {
+    decisionsPath: null,
+    snapshotPath: null,
+    sqlOutPath: null,
+    apply: false,
+    live: false,
+    reviewer: null,
+    target: null,
+    confirmProjectRef: null,
+  };
   for (let i = 0; i < argv.length; i++) {
     const token = argv[i];
     if (token === "--apply") args.apply = true;
+    else if (token === "--live") args.live = true;
     else if (token === "--decisions") args.decisionsPath = argv[++i] ?? null;
     else if (token === "--snapshot") args.snapshotPath = argv[++i] ?? null;
     else if (token === "--sql-out") args.sqlOutPath = argv[++i] ?? null;
     else if (token === "--reviewer") args.reviewer = argv[++i] ?? null;
+    else if (token === "--target") {
+      const target = argv[++i] ?? null;
+      if (target !== "staging" && target !== "production") throw new Error("--target must be staging or production");
+      args.target = target;
+    } else if (token === "--confirm-project-ref") args.confirmProjectRef = argv[++i] ?? null;
   }
   return args;
 }
@@ -232,8 +261,16 @@ async function main(): Promise<void> {
     process.exit(2);
   }
   if (args.apply) {
-    const { createServiceRoleClient, requireStagingEnvironment } = await commonModulePromise;
-    requireStagingEnvironment();
+    const { createServiceRoleClient, requireStagingEnvironment, resolveEnv } = await commonModulePromise;
+    if (args.target === "production") {
+      const { supabaseUrl } = resolveEnv();
+      const actualRef = new URL(supabaseUrl).hostname.split(".")[0] ?? "";
+      if (!args.confirmProjectRef || args.confirmProjectRef !== actualRef) {
+        throw new Error(`Production apply requires --confirm-project-ref matching ${actualRef || "the configured project"}.`);
+      }
+    } else {
+      requireStagingEnvironment();
+    }
     if (!args.reviewer) {
       console.error("apply mode requires --reviewer <email> for the applied_by record.");
       process.exit(2);
@@ -242,11 +279,17 @@ async function main(): Promise<void> {
     console.log(JSON.stringify(report, null, 2));
     process.exit(report.errors.length > 0 ? 1 : 0);
   }
-  if (!args.snapshotPath) {
-    console.error("dry-run needs --snapshot <file> (offline canonical snapshot).");
+  let context: ApplyContext;
+  if (args.live) {
+    const { createServiceRoleClient } = await commonModulePromise;
+    context = await buildLiveContext(liveDb(createServiceRoleClient()), decisions);
+  } else if (args.snapshotPath) {
+    context = loadSnapshot(args.snapshotPath);
+  } else {
+    console.error("dry-run needs --live or --snapshot <file>.");
     process.exit(2);
   }
-  const plan = planApply(decisions, loadSnapshot(args.snapshotPath), true);
+  const plan = planApply(decisions, context, true);
   const sql = renderApplySql(plan, decisions);
   if (args.sqlOutPath) fs.writeFileSync(args.sqlOutPath, sql);
   else console.log(sql);

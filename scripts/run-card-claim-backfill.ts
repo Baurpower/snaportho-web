@@ -27,6 +27,7 @@ import {
 import { checksum, stableJson } from "../src/lib/education/deck-mapping-factory.ts";
 import {
   SEMANTIC_CLAIM_IDENTITY_VERSION,
+  clinicalClaimFingerprintHash,
   semanticClaimFingerprintHash,
 } from "../src/lib/education/contracts/clinical-claim-v1.ts";
 import {
@@ -41,13 +42,33 @@ const args = new Map(process.argv.slice(2).map((value) => {
   return [key, rest.join("=") || "true"] as const;
 }));
 
-// This workflow is intentionally recommendation-only. Canonical mutations
-// require a separately reviewed decision import; never re-enable an inline
-// `--apply` escape hatch here.
-if (args.has("--apply")) {
-  throw new Error("card_claim_backfill_is_review_only_no_human_decision_importer_is_available");
+const apply = args.has("--apply");
+if (apply) {
+  const target = args.get("--target");
+  const confirmedRef = args.get("--confirm-project-ref");
+  const configuredUrl = envFile(path.resolve(".env.local")).NEXT_PUBLIC_SUPABASE_URL ?? "";
+  const actualRef = configuredUrl ? new URL(configuredUrl).hostname.split(".")[0] : "";
+  if (target !== "production" || !confirmedRef || confirmedRef !== actualRef) {
+    throw new Error(`production_apply_requires_exact_project_confirmation:${actualRef || "unknown"}`);
+  }
 }
-const apply = false;
+// E2→E3 handoff: factory dry-runs reference pending promotions by offline
+// proposal uuid (placeholder). After the promotion apply, --entity-id-map
+// points at {placeholderId: liveCanonicalId} so persistence stores real
+// FK targets. Unknown ids die on the FK inside the card savepoint (failed
+// card, never silent).
+const entityIdMap = new Map<string, string>();
+{
+  const mapPath = args.get("--entity-id-map");
+  if (mapPath && mapPath !== "true") {
+    const raw = JSON.parse(readFileSync(mapPath, "utf8")) as Record<string, string>;
+    for (const [from, to] of Object.entries(raw)) entityIdMap.set(from.toLowerCase(), to);
+  }
+}
+function resolveCanonicalEntityId(id: string | null): string | null {
+  if (id == null) return null;
+  return entityIdMap.get(id.toLowerCase()) ?? id;
+}
 const fromDb = args.has("--from-db");
 const explicitMode = args.get("--mode");
 if (explicitMode !== undefined && explicitMode !== "live" && explicitMode !== "fixture") {
@@ -99,6 +120,8 @@ type Totals = {
   claimConflicts: number;
   linksInserted: number;
   linksReused: number;
+  cardClaimLinksInserted: number;
+  cardClaimLinksReused: number;
   canonicalMatches: number;
   proposedEntities: number;
   unresolved: number;
@@ -110,7 +133,8 @@ function emptyTotals(): Totals {
   return {
     discovered: 0, eligible: 0, skipped: 0, processed: 0, claimsProduced: 0,
     claimsInserted: 0, claimsReused: 0, claimConflicts: 0, linksInserted: 0,
-    linksReused: 0, canonicalMatches: 0, proposedEntities: 0, unresolved: 0,
+    linksReused: 0, cardClaimLinksInserted: 0, cardClaimLinksReused: 0,
+    canonicalMatches: 0, proposedEntities: 0, unresolved: 0,
     failed: 0, skippedReasons: {},
   };
 }
@@ -120,6 +144,7 @@ async function loadFixture(): Promise<{
   entities: EntityIndexRow[];
   existingClaims: ExistingClaimRef[];
   release: DeckReleaseRef | null;
+  rejectedNormalizedLabels: string[];
 }> {
   const inputDir = args.get("--input") ?? "/tmp/snaportho-card-claim-factory-input";
   const { readFile } = await import("node:fs/promises");
@@ -133,6 +158,7 @@ async function loadFixture(): Promise<{
     entities: payload.entities,
     existingClaims: payload.existingClaims ?? [],
     release: null,
+    rejectedNormalizedLabels: [],
   };
 }
 
@@ -272,6 +298,7 @@ async function main(): Promise<void> {
               entities: loaded.entities,
               existingClaims: loaded.existingClaims,
               deckId: loaded.release?.id ?? undefined,
+              rejectedNormalizedLabels: loaded.rejectedNormalizedLabels,
             }),
             cards: batch,
           });
@@ -286,6 +313,7 @@ async function main(): Promise<void> {
                   entities: loaded.entities,
                   existingClaims: loaded.existingClaims,
                   deckId: loaded.release?.id ?? undefined,
+                  rejectedNormalizedLabels: loaded.rejectedNormalizedLabels,
                 }),
                 cards: [card],
               });
@@ -409,6 +437,7 @@ async function loadLive(dbHandle: pg.Client): Promise<{
   entities: EntityIndexRow[];
   existingClaims: ExistingClaimRef[];
   release: DeckReleaseRef;
+  rejectedNormalizedLabels: string[];
 }> {
   const releaseRow = args.get("--release-id")
     ? (await dbHandle.query(RELEASE_BY_ID_SQL, [args.get("--release-id")])).rows[0]
@@ -443,7 +472,26 @@ async function loadLive(dbHandle: pg.Client): Promise<{
   const existingClaims = ((await dbHandle.query(EXISTING_CLAIMS_SQL)).rows as Array<{
     id: string; current_version_id: string | null; fingerprint_hash: string; semantic_fingerprint_hash?: string | null;
   }>).map(mapExistingClaimRow).filter((row): row is ExistingClaimRef => row !== null);
-  return { cards, entities, existingClaims, release };
+  const decisionRows = (await dbHandle.query(`
+    select offline_proposal_id, canonical_entity_id, proposal_normalized_label, decision
+    from public.entity_review_decisions
+    where applied_at is not null
+      and (decision like 'REJECT%' or (offline_proposal_id is not null and canonical_entity_id is not null))
+  `)).rows as Array<{
+    offline_proposal_id: string | null;
+    canonical_entity_id: string | null;
+    proposal_normalized_label: string;
+    decision: string;
+  }>;
+  for (const row of decisionRows) {
+    if (row.offline_proposal_id && row.canonical_entity_id) {
+      entityIdMap.set(row.offline_proposal_id.toLowerCase(), row.canonical_entity_id);
+    }
+  }
+  const rejectedNormalizedLabels = decisionRows
+    .filter((row) => row.decision.startsWith("REJECT"))
+    .map((row) => row.proposal_normalized_label);
+  return { cards, entities, existingClaims, release, rejectedNormalizedLabels };
 }
 
 type FactoryBatchResult = ReturnType<typeof runCardClaimFactory>;
@@ -456,7 +504,7 @@ type PersistClaim = {
   predicate: string;
   objectText: string;
   qualifiers: Record<string, string>;
-  primaryEntityId: string;
+  primaryEntityId: string | null;
   approvalMethod: string;
   algorithmVersion: string;
   evidenceLocator: string;
@@ -476,6 +524,8 @@ type CanonicalClaimOutcome = {
   outcome: "inserted" | "reused" | "conflict";
   /** Active stored claims sharing the canonical semantic fingerprint. Recorded, never auto-merged. */
   semanticCandidates: string[];
+  /** Live current_version_id (inserted: factory-provided; reused: stored value). */
+  claimVersionId: string | null;
 };
 
 function groupBy<T>(rows: T[], key: (row: T) => string): Map<string, T[]> {
@@ -500,6 +550,7 @@ type UnitPersistOutcome = {
   entityTargetKind: string | null;
   proposalId: string | null;
   teachesLinkId: string | null;
+  cardClaimLinkId: string | null;
   conflict: boolean;
   semanticCandidates: string[];
 };
@@ -512,7 +563,18 @@ async function persistUnitClaim(
   claim: PersistClaim,
   unit: { claimIndex: number; claimsInVersion: number; sourceUnitId: string; queue: string; reasonCodes: string[] },
   gapMetadata: Record<string, unknown>,
-  link: { confidence: number } | undefined,
+  link:
+    | {
+      confidence: number;
+      approvalMethod: string;
+      reviewStatus: string;
+      algorithmVersion: string;
+      evidenceLocator: string;
+      evidenceHashes: string[];
+      reasonCodes: string[];
+      metadata: unknown;
+    }
+    | undefined,
   entityById: Map<string, EntityIndexRow>,
   totals: Totals,
 ): Promise<UnitPersistOutcome> {
@@ -525,40 +587,41 @@ async function persistUnitClaim(
     claimId: claim.claimId,
   };
   const target = claim.entityTargetType;
-  if (target === "canonical") {
-    const persisted = await upsertCanonicalClaim(dbHandle, runId, factoryRunId, card, claim);
-    if (persisted.outcome === "conflict") {
-      totals.claimConflicts += 1;
-      return {
-        ...base, claimRefKind: "stored_claim", entityTargetKind: "canonical",
-        proposalId: null, teachesLinkId: null, conflict: true,
-        semanticCandidates: persisted.semanticCandidates,
-      };
-    }
-    if (persisted.outcome === "inserted") totals.claimsInserted += 1;
-    else totals.claimsReused += 1;
-    let teachesLinkId: string | null = null;
-    if (link) {
-      teachesLinkId = await upsertTeachesLink(
-        dbHandle, runId, factoryRunId, card, claim, link, entityById, unit.reasonCodes, totals,
-      );
-    }
+  // Every claim persists as a row regardless of entity-target kind: canonical
+  // primaries store the entity id, proposed/unresolved primaries store NULL
+  // (detail lives in claim_entities edges). Payload-only outcomes would leave
+  // edges pointing at missing rows, so they are not an option.
+  const persisted = await upsertCanonicalClaim(dbHandle, runId, factoryRunId, card, claim);
+  if (persisted.outcome === "conflict") {
+    totals.claimConflicts += 1;
     return {
-      ...base, claimRefKind: "stored_claim", entityTargetKind: "canonical",
-      proposalId: null, teachesLinkId, conflict: false,
+      ...base, claimRefKind: "stored_claim", entityTargetKind: target,
+      proposalId: null, teachesLinkId: null, cardClaimLinkId: null, conflict: true,
       semanticCandidates: persisted.semanticCandidates,
     };
   }
+  if (persisted.outcome === "inserted") totals.claimsInserted += 1;
+  else totals.claimsReused += 1;
+  let proposalId: string | null = null;
   if (target === "proposed") {
-    const proposalId = await upsertProposal(dbHandle, runId, factoryRunId, card, claim, gapMetadata);
-    return {
-      ...base, claimRefKind: "proposed_payload", entityTargetKind: "proposed",
-      proposalId, teachesLinkId: null, conflict: false, semanticCandidates: [],
-    };
+    proposalId = await upsertProposal(dbHandle, runId, factoryRunId, card, claim, gapMetadata);
+  }
+  let teachesLinkId: string | null = null;
+  if (link && claim.primaryEntityId != null) {
+    teachesLinkId = await upsertTeachesLink(
+      dbHandle, runId, factoryRunId, card, claim, link, entityById, unit.reasonCodes, totals,
+    );
+  }
+  let cardClaimLinkId: string | null = null;
+  if (link && persisted.claimVersionId) {
+    cardClaimLinkId = await upsertCardClaimLink(
+      dbHandle, card, claim, persisted.claimVersionId, link, totals,
+    );
   }
   return {
-    ...base, claimRefKind: "unresolved_payload", entityTargetKind: "unresolved",
-    proposalId: null, teachesLinkId: null, conflict: false, semanticCandidates: [],
+    ...base, claimRefKind: "stored_claim", entityTargetKind: target,
+    proposalId, teachesLinkId, cardClaimLinkId, conflict: false,
+    semanticCandidates: persisted.semanticCandidates,
   };
 }
 
@@ -653,6 +716,7 @@ async function persistBatch(
             entityTargetKind: null,
             proposalId: null,
             teachesLinkId: null,
+            cardClaimLinkId: null,
             conflict: false,
             semanticCandidates: [],
           });
@@ -707,7 +771,7 @@ async function persistBatch(
              on conflict do nothing`,
             [
               claimId, claim.currentVersionId, entityLink.entityKind,
-              entityLink.entityKind === "canonical" ? entityLink.entityId : null,
+              entityLink.entityKind === "canonical" ? resolveCanonicalEntityId(entityLink.entityId) : null,
               entityLink.entityKind === "proposed"
                 ? outcomes.find((outcome) => outcome.claimId === claimId)?.proposalId ?? null
                 : null,
@@ -770,7 +834,7 @@ async function upsertCanonicalClaim(
   )).rows as Array<{ id: string }>).map((row) => String(row.id));
   const existing = (await dbHandle.query(
     `select id, claim_text, claim_type, predicate, object_text, qualifiers,
-            primary_entity_id, fingerprint_hash
+            primary_entity_id, fingerprint_hash, current_version_id
      from public.educational_claims where id = $1::uuid`,
     [claim.claimId],
   )).rows[0];
@@ -781,9 +845,11 @@ async function upsertCanonicalClaim(
       && existing.predicate === claim.predicate
       && existing.object_text === claim.objectText
       && stableJson(existing.qualifiers ?? {}) === stableJson(claim.qualifiers ?? {})
-      && String(existing.primary_entity_id) === claim.primaryEntityId
+      && (existing.primary_entity_id ?? null) === (claim.primaryEntityId ?? null)
       && existing.fingerprint_hash === claim.fingerprintHash;
-    return same ? { outcome: "reused", semanticCandidates } : { outcome: "conflict", semanticCandidates };
+    return same
+      ? { outcome: "reused", semanticCandidates, claimVersionId: existing.current_version_id ?? null }
+      : { outcome: "conflict", semanticCandidates, claimVersionId: null };
   }
   const provenance = {
     sourceUnitId: claim.sourceUnitId ?? null,
@@ -805,6 +871,7 @@ async function upsertCanonicalClaim(
     semanticIdentityVersion: SEMANTIC_CLAIM_IDENTITY_VERSION,
     ...provenance,
   };
+  const persistedPrimary = resolveCanonicalEntityId(claim.primaryEntityId);
   const inserted = (await dbHandle.query(
     `insert into public.educational_claims
       (id, primary_entity_id, claim_text, claim_type, predicate, object_text, qualifiers,
@@ -812,19 +879,28 @@ async function upsertCanonicalClaim(
      values ($1::uuid, $2::uuid, $3, $4, $5, $6, $7::jsonb, $8, $9, 'generated_draft', 'unreviewed', $10::jsonb)
      returning fingerprint_hash, semantic_fingerprint_hash, semantic_identity_version`,
     [
-      claim.claimId, claim.primaryEntityId, claim.claimText, claim.claimType,
+      claim.claimId, persistedPrimary, claim.claimText, claim.claimType,
       claim.predicate, claim.objectText, JSON.stringify(claim.qualifiers ?? {}),
       claim.approvalMethod, claim.algorithmVersion, JSON.stringify(metadata),
     ],
   )).rows[0];
   // TS/SQL parity gate: the trigger must agree with the shared implementation
   // on BOTH identities, or the row is a conflict, never a silent write.
-  if (inserted.fingerprint_hash !== claim.fingerprintHash) return { outcome: "conflict", semanticCandidates };
+  // The legacy expectation is recomputed with the REMAPPED primary: factory
+  // fingerprints embed placeholder ids, persistence stores live ones.
+  const expectedLegacy = clinicalClaimFingerprintHash({
+    claimType: claim.claimType,
+    primaryEntityId: persistedPrimary,
+    predicate: claim.predicate,
+    objectText: claim.objectText,
+    qualifiers: claim.qualifiers ?? {},
+  });
+  if (inserted.fingerprint_hash !== expectedLegacy) return { outcome: "conflict", semanticCandidates, claimVersionId: null };
   if (
     inserted.semantic_fingerprint_hash !== semanticHash
     || inserted.semantic_identity_version !== SEMANTIC_CLAIM_IDENTITY_VERSION
   ) {
-    return { outcome: "conflict", semanticCandidates };
+    return { outcome: "conflict", semanticCandidates, claimVersionId: null };
   }
   await dbHandle.query(
     `insert into public.educational_claim_versions
@@ -834,14 +910,14 @@ async function upsertCanonicalClaim(
     [
       claim.currentVersionId, claim.claimId, claim.claimText, claim.claimType,
       claim.predicate, claim.objectText, JSON.stringify(claim.qualifiers ?? {}),
-      claim.primaryEntityId, claim.approvalMethod, claim.algorithmVersion,
+      persistedPrimary, claim.approvalMethod, claim.algorithmVersion,
       JSON.stringify(provenance),
     ],
   );
   await dbHandle.query("update public.educational_claims set current_version_id = $2::uuid where id = $1::uuid", [
     claim.claimId, claim.currentVersionId,
   ]);
-  return { outcome: "inserted", semanticCandidates };
+  return { outcome: "inserted", semanticCandidates, claimVersionId: claim.currentVersionId };
 }
 
 async function upsertProposal(
@@ -907,6 +983,50 @@ async function upsertProposal(
   return inserted.id as string;
 }
 
+async function upsertCardClaimLink(
+  dbHandle: pg.Client,
+  card: CardClaimFactoryCard,
+  claim: PersistClaim,
+  claimVersionId: string,
+  link: {
+    confidence: number;
+    approvalMethod: string;
+    reviewStatus: string;
+    algorithmVersion: string;
+    evidenceLocator: string;
+    evidenceHashes: string[];
+    reasonCodes: string[];
+    metadata: unknown;
+  },
+  totals: Totals,
+): Promise<string> {
+  const inserted = (await dbHandle.query(
+    `insert into public.card_claim_links
+      (canonical_card_id, canonical_card_version_id, claim_id, claim_version_id,
+       mapping_role, confidence, approval_method, review_status, algorithm_version,
+       evidence_locator, evidence_hashes, reason_codes, metadata, is_active)
+     values ($1::uuid, $2::uuid, $3::uuid, $4::uuid, 'teaches', $5, $6, $7, $8, $9, $10, $11, $12::jsonb, true)
+     on conflict (canonical_card_id, claim_id) where is_active do nothing
+     returning id`,
+    [
+      card.canonicalCardId, card.canonicalCardVersionId, claim.claimId, claimVersionId,
+      link.confidence, link.approvalMethod, link.reviewStatus, link.algorithmVersion,
+      link.evidenceLocator, link.evidenceHashes, link.reasonCodes, JSON.stringify(link.metadata ?? {}),
+    ],
+  )).rows[0];
+  if (inserted) {
+    totals.cardClaimLinksInserted += 1;
+    return inserted.id as string;
+  }
+  const existing = (await dbHandle.query(
+    `select id from public.card_claim_links
+     where canonical_card_id = $1::uuid and claim_id = $2::uuid and is_active`,
+    [card.canonicalCardId, claim.claimId],
+  )).rows[0];
+  totals.cardClaimLinksReused += 1;
+  return existing.id as string;
+}
+
 async function upsertTeachesLink(
   dbHandle: pg.Client,
   runId: string,
@@ -918,7 +1038,8 @@ async function upsertTeachesLink(
   reasonCodes: string[],
   totals: Totals,
 ): Promise<string | null> {
-  const entityId = claim.primaryEntityId;
+  const entityId = resolveCanonicalEntityId(claim.primaryEntityId);
+  if (!entityId) return null;
   const existing = (await dbHandle.query(
     `select id from public.card_canonical_entity_links
      where canonical_card_id = $1::uuid and canonical_entity_id = $2::uuid and is_active`,
