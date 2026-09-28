@@ -226,7 +226,17 @@
     "rollout:apply-migrations": "node --experimental-strip-types scripts/apply-rds-cutover-migrations.ts",
     "education:ob-claims-v5:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/orthobullets/claim-extractor-v5.test.ts",
     "education:ob-claims-v5:pilot": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs scripts/run-ob-claim-extraction-pilot.ts",
-    "education:ob-claims-v5:fetch": "node scripts/fetch-ob-question-packets.mjs"
+    "education:ob-claims-v5:fetch": "node scripts/fetch-ob-question-packets.mjs",
+    "education:ob-claims-v5:regression:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/orthobullets/claim-extraction-regression-v5.test.ts",
+    "education:ob-claims-v5:regression:eval": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs scripts/eval-ob-claims-regression.ts",
+    "ob:claims:run": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs scripts/run-ob-claims-production.ts --mode=run",
+    "ob:claims:resume": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs scripts/run-ob-claims-production.ts --mode=resume",
+    "education:ob:claims:contract:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/orthobullets/claim-extraction-contract-v1.test.ts",
+    "education:ob:claims:pipeline:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/orthobullets/claim-review-pipeline.test.ts",
+    "education:ob:claims:identity:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/orthobullets/ob-question-identity.test.ts",
+    "education:ob:claims:resolution:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/orthobullets/ob-claim-resolution.test.ts",
+    "education:ob:claims:runner:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/orthobullets/ob-production-runner-lib.test.ts",
+    "education:ob:claims:stability": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs scripts/eval-ob-claims-stability.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1095.0",

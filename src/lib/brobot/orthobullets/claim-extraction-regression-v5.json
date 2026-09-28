@@ -1,0 +1,1838 @@
+{
+  "schemaVersion": "ob-claims-regression-v1",
+  "description": "Hand-reviewed v5 extraction cases. Packets are NEVER stored here (no OB source text in repo); the eval script refetches by qid with the curator session, runs extraction, and checks expectations. Every case also requires guard-clean output (no vignette flags, no verbatim dupes, no distractor flags). Cases flagged derived:true carry programmatic expectations from the v5.1 pilot and await human review; reviewed cases (no flag) are hand-verified.",
+  "cases": [
+    {
+      "qid": "1126",
+      "specialty": "oncology",
+      "notes": "EXCEPT question: GCT locations. Exception must be stated as positive truth, never flipped.",
+      "traps": [
+        "negation_flip"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "diaphysis",
+            "uncommon"
+          ],
+          "note": "exception stated as positive truth"
+        },
+        {
+          "all": [
+            "knee"
+          ],
+          "note": "common sites covered"
+        }
+      ],
+      "forbiddenPatterns": [
+        "\\bcommon\\b.{0,30}diaphysis",
+        "diaphysis.{0,20}is a common"
+      ],
+      "minClaims": 1,
+      "maxClaims": 4
+    },
+    {
+      "qid": "4504",
+      "specialty": "spine",
+      "notes": "Risser scoliosis progression. Must not enumerate the Risser 1-5 ladder; must not emit truisms.",
+      "traps": [
+        "classification_ladder",
+        "truism"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "risser 0"
+          ],
+          "note": "decision-relevant grade present"
+        },
+        {
+          "all": [
+            "highest risk",
+            "progression"
+          ],
+          "note": "tested prognosis present"
+        }
+      ],
+      "forbiddenPatterns": [
+        "risser [1-5] indicates \\d+%",
+        "important (variable|factor)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "219958",
+      "specialty": "hand",
+      "notes": "Anatomy precision trap: generator once asserted a false APB insertion; critic must remove or correct false anatomy.",
+      "traps": [
+        "false_claim"
+      ],
+      "expectedConcepts": [],
+      "forbiddenPatterns": [
+        "insertion point of the abductor pollicis"
+      ],
+      "minClaims": 1,
+      "maxClaims": 6
+    },
+    {
+      "qid": "215427",
+      "specialty": "foot & ankle",
+      "notes": "Threshold precision: Achilles V-Y lengthening gap is 2-5 cm, not <3 cm.",
+      "traps": [
+        "wrong_qualifier",
+        "threshold_fabrication"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "2-5 cm",
+            "V-Y"
+          ],
+          "note": "correct threshold preserved"
+        }
+      ],
+      "forbiddenPatterns": [
+        "less than 3 cm.{0,40}V-Y"
+      ],
+      "minClaims": 1,
+      "maxClaims": 6
+    },
+    {
+      "qid": "4650",
+      "specialty": "hand",
+      "notes": "Atypical CTS from gout tophus. Must keep the diagnostic trigger AND the management answer (tissue diagnosis); must prune generic CTS trivia.",
+      "traps": [
+        "recall",
+        "over_prune",
+        "secondary_overproduction"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "space-occupying",
+            "gout"
+          ],
+          "note": "diagnostic trigger"
+        },
+        {
+          "all": [
+            "tissue diagnosis"
+          ],
+          "note": "management answer retained"
+        }
+      ],
+      "forbiddenPatterns": [],
+      "minClaims": 2,
+      "maxClaims": 5
+    },
+    {
+      "qid": "220128",
+      "specialty": "sports",
+      "notes": "Multi-concept management question (meniscal root repair). Requires several primaries; definition may be secondary.",
+      "traps": [
+        "multi_concept_recall"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "root repair",
+            "biomechanics"
+          ],
+          "note": "treatment mechanism"
+        },
+        {
+          "all": [
+            "meniscectomy"
+          ],
+          "note": "why-not contrast or definition"
+        }
+      ],
+      "forbiddenPatterns": [],
+      "minClaims": 3,
+      "minPrimaries": 2,
+      "maxClaims": 7
+    },
+    {
+      "qid": "218209",
+      "specialty": "hand",
+      "notes": "Prioritization: palmar cutaneous branch claims are primary; generic CTS background must be secondary.",
+      "traps": [
+        "primary_inflation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "palmar cutaneous",
+            "thenar"
+          ],
+          "importance": "primary",
+          "note": "tested anatomy stays primary"
+        }
+      ],
+      "forbiddenPatterns": [],
+      "minClaims": 2,
+      "maxClaims": 7
+    },
+    {
+      "qid": "5227",
+      "specialty": "basic science",
+      "notes": "Range precision: BMD loss invisible on X-ray until 30-40% loss; critic must fix inaccurate ranges.",
+      "traps": [
+        "wrong_qualifier"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "30% to 40%"
+          ],
+          "note": "correct range preserved"
+        }
+      ],
+      "forbiddenPatterns": [
+        "until 40% of mineral"
+      ],
+      "minClaims": 1,
+      "maxClaims": 6
+    },
+    {
+      "qid": "1062",
+      "specialty": "adult reconstruction",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "complication",
+            "arthroplasty",
+            "pathologic"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "significantly",
+            "arthroplasty",
+            "pathologic"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        },
+        {
+          "all": [
+            "arthroplasty",
+            "survivorship",
+            "pathologic"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "212341",
+      "specialty": "adult reconstruction",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (2 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "periprosthetic",
+            "arthroplasty",
+            "infection"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "periprosthetic",
+            "arthroplasty",
+            "infection"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 4
+    },
+    {
+      "qid": "215120",
+      "specialty": "adult reconstruction",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (4 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation",
+        "multi_concept_recall"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "metalloproteinase",
+            "degeneration",
+            "stromelysin"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "metalloproteinases",
+            "extracellular",
+            "proteoglycans"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        },
+        {
+          "all": [
+            "chondrocytes",
+            "stromelysin",
+            "fibroblasts"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 6
+    },
+    {
+      "qid": "215232",
+      "specialty": "adult reconstruction",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "arthroplasty",
+            "prosthetic",
+            "infection"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "arthroplasty",
+            "prosthetic",
+            "infections"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        },
+        {
+          "all": [
+            "arthroplasty",
+            "prosthetic",
+            "infection"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "215525",
+      "specialty": "basic science",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (4 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation",
+        "multi_concept_recall"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "intramedullary",
+            "endochondral",
+            "ossification"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "endochondral",
+            "ossification",
+            "conversion"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "intramedullary",
+            "mechanical",
+            "stability"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 6
+    },
+    {
+      "qid": "215741",
+      "specialty": "basic science",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (2 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "secondary",
+            "between",
+            "healing"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "intramedullary",
+            "environment",
+            "comminuted"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 4
+    },
+    {
+      "qid": "217329",
+      "specialty": "basic science",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (4 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation",
+        "multi_concept_recall"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "remodeling",
+            "haversian",
+            "primary"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "intramembranous",
+            "ossification",
+            "achieved"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        },
+        {
+          "all": [
+            "endochondral",
+            "ossification",
+            "secondary"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 6
+    },
+    {
+      "qid": "219158",
+      "specialty": "basic science",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "intramembranous",
+            "remodeling",
+            "haversian"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "stability",
+            "reduction",
+            "fixation"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "primary",
+            "healing",
+            "occurs"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "211275",
+      "specialty": "foot & ankle",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (2 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "metatarsal",
+            "cuneiform",
+            "lisfranc"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "ecchymosis",
+            "suspicion",
+            "lisfranc"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 4
+    },
+    {
+      "qid": "216304",
+      "specialty": "foot & ankle",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "complications",
+            "postoperative",
+            "percutaneous"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "percutaneous",
+            "techniques",
+            "increased"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "percutaneous",
+            "procedures",
+            "techniques"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "219318",
+      "specialty": "foot & ankle",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "complication",
+            "minimally",
+            "invasive"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "ruptures",
+            "sporting",
+            "achilles"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        },
+        {
+          "all": [
+            "plantarflexion",
+            "clinically",
+            "diagnosis"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "220815",
+      "specialty": "foot & ankle",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "immobilization",
+            "operatively",
+            "protected"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "tarsometatarsal",
+            "dislocations",
+            "ligamentous"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        },
+        {
+          "all": [
+            "intervention",
+            "arthrodesis",
+            "displaced"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "210259",
+      "specialty": "hand",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (4 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation",
+        "multi_concept_recall"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "responsible",
+            "innervates",
+            "opposition"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "transligamentous",
+            "transecting",
+            "transverse"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "originates",
+            "recurrent",
+            "central"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 6
+    },
+    {
+      "qid": "211545",
+      "specialty": "hand",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "immobilization",
+            "operative",
+            "fixation"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        },
+        {
+          "all": [
+            "diagnosing",
+            "fixation",
+            "standard"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "persistent",
+            "fixation",
+            "indicate"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "218149",
+      "specialty": "hand",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "compression",
+            "indicated",
+            "positive"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "transverse",
+            "innervated",
+            "abductor"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "demonstrate",
+            "compression",
+            "abductor"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "218165",
+      "specialty": "hand",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (2 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "deviation",
+            "scaphoid",
+            "postero"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "presentation",
+            "radiographs",
+            "negative"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 4
+    },
+    {
+      "qid": "215278",
+      "specialty": "oncology",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "osteosarcoma",
+            "malignancy",
+            "metastasis"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "osteosarcoma",
+            "radiographic",
+            "metastasis"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        },
+        {
+          "all": [
+            "osteosarcoma",
+            "evaluate",
+            "lesions"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "219348",
+      "specialty": "oncology",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (4 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation",
+        "multi_concept_recall"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "extraskeletal",
+            "osteosarcoma",
+            "radiation"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "extraskeletal",
+            "osteosarcomas",
+            "osteosarcoma"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        },
+        {
+          "all": [
+            "extraskeletal",
+            "osteosarcoma",
+            "conventional"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 6
+    },
+    {
+      "qid": "219444",
+      "specialty": "oncology",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (2 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "osteosarcoma",
+            "neighboring",
+            "metastases"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "osteosarcoma",
+            "metastases",
+            "metastatic"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 4
+    },
+    {
+      "qid": "3738",
+      "specialty": "oncology",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (2 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "metastasis",
+            "common",
+            "giant"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "appropriate",
+            "metastasis",
+            "imaging"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 4
+    },
+    {
+      "qid": "210231",
+      "specialty": "pediatrics",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (4 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation",
+        "multi_concept_recall"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "supracondylar",
+            "children",
+            "flexion"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "supracondylar",
+            "observation",
+            "initially"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "supracondylar",
+            "likelihood",
+            "requiring"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 6
+    },
+    {
+      "qid": "218542",
+      "specialty": "pediatrics",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (4 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation",
+        "multi_concept_recall"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "hypertrophic",
+            "disruption",
+            "shortening"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "epiphysis",
+            "outcomes",
+            "femoral"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "endocrinopathies",
+            "contralateral",
+            "prophylactic"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 6
+    },
+    {
+      "qid": "220841",
+      "specialty": "pediatrics",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "supracondylar",
+            "flexion",
+            "humerus"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "originates",
+            "roots",
+            "nerve"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "supracondylar",
+            "interosseous",
+            "extension"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "2279",
+      "specialty": "pediatrics",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (5 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation",
+        "multi_concept_recall"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "histological",
+            "hypertrophic",
+            "granulation"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "perichondral",
+            "thickness",
+            "decreased"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        },
+        {
+          "all": [
+            "undulations",
+            "decrease",
+            "chronic"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 7
+    },
+    {
+      "qid": "213034",
+      "specialty": "shoulder & elbow",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (2 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "dislocation",
+            "shoulder",
+            "palsies"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "dislocation",
+            "persistent",
+            "modality"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 4
+    },
+    {
+      "qid": "213062",
+      "specialty": "shoulder & elbow",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (2 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "supraspinatus",
+            "dislocations",
+            "affected"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "instability",
+            "dislocation",
+            "persistent"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 4
+    },
+    {
+      "qid": "218203",
+      "specialty": "shoulder & elbow",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (4 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation",
+        "multi_concept_recall"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "dislocations",
+            "shoulder",
+            "rotator"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "dislocation",
+            "management",
+            "capsular"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "supraspinatus",
+            "dislocations",
+            "involved"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 6
+    },
+    {
+      "qid": "218962",
+      "specialty": "shoulder & elbow",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "glenoid",
+            "extends",
+            "defect"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "calculated",
+            "diameter",
+            "inferior"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        },
+        {
+          "all": [
+            "considered",
+            "interval",
+            "glenoid"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "211795",
+      "specialty": "spine",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (4 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation",
+        "multi_concept_recall"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "paracentral",
+            "herniation",
+            "traversing"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "paracentral",
+            "herniations",
+            "traversing"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "herniations",
+            "exiting",
+            "lateral"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 6
+    },
+    {
+      "qid": "214154",
+      "specialty": "spine",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "hypokyphosis",
+            "adolescent",
+            "idiopathic"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "approximately",
+            "kyphosis",
+            "thoracic"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        },
+        {
+          "all": [
+            "adolescent",
+            "idiopathic",
+            "scoliosis"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "2269",
+      "specialty": "spine",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (2 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "evaluation",
+            "scoliotic",
+            "thoracic"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "thoracolumbar",
+            "investigated",
+            "scoliotic"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 4
+    },
+    {
+      "qid": "3716",
+      "specialty": "spine",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (4 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation",
+        "multi_concept_recall"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "posterolateral",
+            "herniation",
+            "affects"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "innervated",
+            "controlled",
+            "inversion"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "posterolateral",
+            "paracentral",
+            "herniations"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 6
+    },
+    {
+      "qid": "211513",
+      "specialty": "sports",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "incidence",
+            "ruptures",
+            "ligament"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "translation",
+            "activities",
+            "ligament"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        },
+        {
+          "all": [
+            "discontinuity",
+            "diagnosing",
+            "ligament"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "213997",
+      "specialty": "sports",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (2 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "reconstruction",
+            "rupture",
+            "gender"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "patellar",
+            "rupture",
+            "grafts"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 4
+    },
+    {
+      "qid": "218198",
+      "specialty": "sports",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (2 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "circumferential",
+            "meniscectomy",
+            "equivalent"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "compromises",
+            "functional",
+            "meniscal"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 4
+    },
+    {
+      "qid": "219976",
+      "specialty": "sports",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "increased",
+            "lifestyle",
+            "alignment"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "descending",
+            "mechanisms",
+            "downhill"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "consistent",
+            "disruption",
+            "weighted"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "1150",
+      "specialty": "trauma",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (2 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "intramedullary",
+            "stabilization",
+            "complications"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "complications",
+            "minimize",
+            "followed"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 4
+    },
+    {
+      "qid": "215469",
+      "specialty": "trauma",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "classification",
+            "syndesmosis",
+            "transverse"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "classification",
+            "rotational",
+            "direction"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        },
+        {
+          "all": [
+            "tibiofibular",
+            "pronation",
+            "abduction"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "219523",
+      "specialty": "trauma",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "tibiofibular",
+            "originates",
+            "ligament"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "maisonneuve",
+            "syndesmotic",
+            "mechanism"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        },
+        {
+          "all": [
+            "radiographs",
+            "maisonneuve",
+            "syndesmotic"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    },
+    {
+      "qid": "220428",
+      "specialty": "trauma",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (4 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation",
+        "multi_concept_recall"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "reconstruction",
+            "incompetent",
+            "syndesmotic"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "superficial",
+            "components",
+            "comprised"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "superficial",
+            "functions",
+            "restrain"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 6
+    },
+    {
+      "qid": "4020",
+      "specialty": "trauma",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (4 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation",
+        "multi_concept_recall"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "presentation",
+            "immobilized",
+            "thrombosis"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "extremities",
+            "thrombosis",
+            "ultrasound"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "preoperatively",
+            "presentation",
+            "thrombosis"
+          ],
+          "note": "derived from v5.1 primary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 6
+    },
+    {
+      "qid": "8921",
+      "specialty": "sports",
+      "derived": true,
+      "notes": "Derived from v5.1 pilot output (3 claims); keywords must reappear. Human review pending.",
+      "traps": [
+        "derived_expectation"
+      ],
+      "expectedConcepts": [
+        {
+          "all": [
+            "predisposes",
+            "increased",
+            "decreased"
+          ],
+          "note": "derived from v5.1 primary claim"
+        },
+        {
+          "all": [
+            "neuromuscular",
+            "specifically",
+            "recruitment"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        },
+        {
+          "all": [
+            "compared",
+            "ligament",
+            "cruciate"
+          ],
+          "note": "derived from v5.1 secondary claim"
+        }
+      ],
+      "forbiddenPatterns": [
+        "important (variable|factor)",
+        "a \\d{1,3}-year-old (man|woman|male|female|boy|girl|child|patient)"
+      ],
+      "minClaims": 1,
+      "maxClaims": 5
+    }
+  ]
+}

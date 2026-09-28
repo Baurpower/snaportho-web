@@ -231,11 +231,15 @@ assert.equal(flagWithinQuestionDuplicates([
   'Smoking is a risk factor for surgical site infection after lumbar fusion.',
   'Obesity is a risk factor for surgical site infection after lumbar fusion.',
 ]).length, 0);
-// Near-verbatim repeat (generator glitch) flags.
+// Exact repeat (generator glitch) flags; near-identical template siblings do not.
 assert.equal(flagWithinQuestionDuplicates([
   'The radial nerve travels in the spiral groove along the posterior humeral shaft.',
-  'The radial nerve travels in the spiral groove along the posterior humeral shaft!',
+  'The radial nerve travels in the spiral groove along the posterior humeral shaft.',
 ]).length, 1);
+assert.equal(flagWithinQuestionDuplicates([
+  'Risser 1 indicates 25% ossification of the iliac crest apophysis.',
+  'Risser 2 indicates 50% ossification of the iliac crest apophysis.',
+]).length, 0);
 
 assert.deepEqual(vignetteFlagsV5('Displaced femoral neck fractures in older adults are treated with arthroplasty.'), []);
 assert.deepEqual(
@@ -244,6 +248,12 @@ assert.deepEqual(
 );
 assert.ok(vignetteFlagsV5('In a 42-year-old male laborer, fixation is preferred for this fracture.').includes('age_vignette'));
 assert.ok(vignetteFlagsV5('A 23-year-old football player presents with knee instability after pivoting.').length > 0);
+assert.ok(vignetteFlagsV5('A 46-year-old man who fell from a ladder requires operative fixation.').includes('age_vignette'));
+// Legitimate thresholds and definitional references never flag.
+assert.deepEqual(vignetteFlagsV5('Rotator cuff tears are common after shoulder dislocations in patients over 40 years old.'), []);
+assert.deepEqual(vignetteFlagsV5('Adolescent idiopathic scoliosis occurs in patients aged 10-18 years old.'), []);
+assert.deepEqual(vignetteFlagsV5('Bone grafts have higher re-rupture rates in patients under 20 years old.'), []);
+assert.deepEqual(vignetteFlagsV5('Osteoporosis is defined against the peak bone mass of a 25-year-old individual.'), []);
 
 assert.deepEqual(
   autoFlagsForDraft({

@@ -1,4 +1,9 @@
 import { createAdminClient } from '@/lib/supabase/admin';
+import {
+  TRUSTED_ENTITY_ACTIVE,
+  TRUSTED_ENTITY_REVIEW_STATUS,
+  TRUSTED_ENTITY_STATUSES,
+} from '@/lib/education/entity-promotion/trusted-entity';
 
 import type { OrthobulletsKgLookupResult } from './types';
 
@@ -21,6 +26,11 @@ type MappingLookupRow = {
 
 type CanonicalLinkRow = {
   canonical_entity_id: string;
+  canonical_entities?: {
+    is_active: boolean;
+    review_status: string;
+    status: string;
+  } | null;
 };
 
 export async function lookupOrthobulletsKgContext(input: {
@@ -59,11 +69,17 @@ export async function lookupOrthobulletsKgContext(input: {
       .eq('is_primary', true)
       .maybeSingle<MappingLookupRow>();
 
+    // Defense in depth: links are write-time gated, but BroBot must never
+    // surface a proposed/unreviewed/deprecated entity even if a bad link
+    // exists. The inner join drops links whose target is not trusted.
     const { data: canonicalLinks } = await supabase
       .from('question_canonical_entity_links')
-      .select('canonical_entity_id')
+      .select('canonical_entity_id, canonical_entities!inner(is_active,review_status,status)')
       .eq('external_question_id', questionRow.id)
       .eq('is_active', true)
+      .eq('canonical_entities.is_active', TRUSTED_ENTITY_ACTIVE)
+      .eq('canonical_entities.review_status', TRUSTED_ENTITY_REVIEW_STATUS)
+      .in('canonical_entities.status', [...TRUSTED_ENTITY_STATUSES])
       .returns<CanonicalLinkRow[]>();
 
     return {

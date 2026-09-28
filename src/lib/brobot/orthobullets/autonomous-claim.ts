@@ -9,7 +9,7 @@ const ENTITY_TYPES = new Set([
   'condition', 'procedure', 'anatomy_structure', 'classification_system', 'classification_grade',
   'complication', 'diagnostic_test', 'imaging_finding', 'implant', 'fixation_method',
   'treatment_principle', 'biomechanics_concept', 'exam_maneuver', 'surgical_approach',
-  'surgical_positioning',
+  'surgical_positioning', 'symptom',
 ]);
 const QUALIFIER_KEYS = new Set(['anatomy', 'age_group', 'setting', 'severity', 'laterality', 'procedure', 'contraindication']);
 
