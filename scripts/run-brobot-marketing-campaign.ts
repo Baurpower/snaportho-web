@@ -1,5 +1,5 @@
 import { resolveCampaignAddress, ADDRESS_HISTORY_COLUMNS, isApplePrivateRelayEmail } from '../src/lib/marketing/recipient-address';
-import { campaignActivity, campaignHistory } from '../src/lib/marketing/audience-history';
+import { campaignActivity, campaignHistory, productCampaignActivity } from '../src/lib/marketing/audience-history';
 import { doesSubscriptionGrantEntitlement } from '../src/lib/subscriptions/ledger';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -10,6 +10,8 @@ import { renderMarketingEmail } from '../src/lib/marketing/templates';
 import { verifyMarketingDestinations } from '../src/lib/marketing/link-preflight';
 import { setTimeout as pause } from 'node:timers/promises';
 import { deliverMarketingCampaignEmail } from '../src/lib/marketing/delivery';
+import { marketingDailyQuotaStatus } from '../src/lib/marketing/automation';
+import { randomUUID } from 'node:crypto';
 
 function loadEnv() {
   for (const filename of ['.env.local', '.env']) {
@@ -33,7 +35,14 @@ function args(argv: string[]) {
 async function allRows(client: ReturnType<typeof createClient>, table: string, columns: string) {
   const rows: Record<string, unknown>[] = [];
   for (let from = 0; ; from += 1000) {
-    const { data, error } = await client.from(table).select(columns).order(table === 'user_profiles' || table === 'student_workspace_profiles' ? 'user_id' : 'id').range(from, from + 999);
+    let query = client.from(table).select(columns).order(
+      table === 'user_profiles' || table === 'student_workspace_profiles' ? 'user_id' : table === 'product_events' ? 'event_id' : 'id'
+    );
+    if (table === 'product_events') {
+      query = query.gte('occurred_at', new Date(Date.now() - 31 * 86_400_000).toISOString())
+        .in('event_name', ['brobot_request_completed', 'caseprep_started', 'caseprep_first_section_rendered', 'caseprep_completed', 'caseprep_failed', 'anki_addon_first_downloaded']);
+    }
+    const { data, error } = await query.range(from, from + 999);
     if (error) throw new Error(`${table}: ${error.message}`);
     rows.push(...(data as Record<string, unknown>[]));
     if (data.length < 1000) return rows;
@@ -69,7 +78,7 @@ async function main() {
     authUsers.push(...data.users);
     if (data.users.length < 1000) break;
   }
-  const [profiles, workspaceProfiles, usage, conversations, subscriptions, sends, optouts] = await Promise.all([
+  const [profiles, workspaceProfiles, usage, conversations, subscriptions, sends, optouts, productEvents, ankiDevices] = await Promise.all([
     allRows(supabase, 'user_profiles', 'user_id,email,full_name,receive_emails,is_profile_complete,marketing_consent_at,marketing_unsubscribed_at,training_level,grad_year,country,city,institution,subspecialty_interest'),
     allRows(supabase, 'student_workspace_profiles', 'user_id,expected_graduation_year'),
     allRows(supabase, 'brobot_usage_events', 'user_id,created_at'),
@@ -77,12 +86,17 @@ async function main() {
     allRows(supabase, 'subscriptions', 'user_id,plan_code,status,current_period_end,provider'),
     allRows(supabase, 'lifecycle_emails', `${ADDRESS_HISTORY_COLUMNS},complained_at,suppressed_at`),
     allRows(supabase, 'lifecycle_email_optouts', 'user_id,kind'),
+    allRows(supabase, 'product_events', 'user_id,event_name,occurred_at,product_area'),
+    allRows(supabase, 'brobot_anki_device_tokens', 'user_id,revoked_at'),
   ]);
   const profileByUser = new Map(profiles.map((p) => [String(p.user_id), p]));
   const workspaceGradByUser = new Map(workspaceProfiles.map((p) => [String(p.user_id), p.expected_graduation_year]));
-  const times = campaignActivity([...usage, ...conversations]);
+  const productActivity = productCampaignActivity(productEvents);
+  const times = campaignActivity([...usage, ...conversations, ...productEvents.filter((event) => event.product_area === 'brobot')]);
+  const activeAnkiDevices = new Set(ankiDevices.filter((device) => !device.revoked_at).map((device) => String(device.user_id)));
   const entitled = new Set(subscriptions.filter((s) => s.plan_code === 'unlimited_brobot' && doesSubscriptionGrantEntitlement({ status: String(s.status), provider: s.provider as 'apple' | 'stripe', current_period_end: s.current_period_end as string | null })).map((s) => String(s.user_id)));
   const { attempted, prior } = campaignHistory(sends);
+  const quota = marketingDailyQuotaStatus(sends);
   const deliverySuppressed = new Set(sends.filter((row) => row.user_id && (row.complained_at || row.suppressed_at)).map((row) => String(row.user_id)));
   const suppressed = new Map<string, Set<string>>();
   for (const row of optouts) if (row.user_id) { const set = suppressed.get(String(row.user_id)) ?? new Set<string>(); set.add(row.kind === null ? '*' : String(row.kind)); suppressed.set(String(row.user_id), set); }
@@ -100,24 +114,59 @@ async function main() {
     const priorSteps = new Set(attempted.get(user.id) ?? []);
     if (address?.fallbackFromDeliveryId) priorSteps.delete(options.campaign);
     const name = typeof profile?.full_name === 'string' ? profile.full_name.trim().split(/\s+/)[0] : null;
-    return { userId: user.id, email: address?.email ?? '', confirmed: Boolean(user.email_confirmed_at), receiveEmails: profile?.receive_emails === true && !profile?.marketing_unsubscribed_at, marketingConsentAt: profile?.marketing_consent_at ? new Date(String(profile.marketing_consent_at)).getTime() : null, accountCreatedAt: user.created_at ? new Date(user.created_at).getTime() : null, profileCohort: profileCohort(profile, workspaceGradByUser.get(user.id)), firstName: name || null, profileComplete: profile?.is_profile_complete === true, currentlyEntitled: entitled.has(user.id), hasDeliverySuppression: deliverySuppressed.has(user.id), firstUseAt: activity[0] ?? null, lastUseAt: activity.at(-1) ?? null, priorSteps, priorStepAt, optedOutTopics: suppressed.get(user.id) ?? new Set() };
+    const product = productActivity.get(user.id);
+    const caseprepActivity = product?.caseprep ?? [];
+    const caseprepCompletions = product?.caseprepCompletions ?? [];
+    const ankiDownloads = product?.ankiDownloads ?? [];
+    const productFirstUseAt = options.campaign === 'caseprep_activation_1'
+      ? caseprepCompletions.length ? Math.min(...caseprepCompletions) : null
+      : options.campaign === 'anki_activation_1'
+        ? ankiDownloads.length ? Math.min(...ankiDownloads) : null
+        : null;
+    return { userId: user.id, email: address?.email ?? '', confirmed: Boolean(user.email_confirmed_at), receiveEmails: profile?.receive_emails === true && !profile?.marketing_unsubscribed_at, marketingConsentAt: profile?.marketing_consent_at ? new Date(String(profile.marketing_consent_at)).getTime() : null, accountCreatedAt: user.created_at ? new Date(String(user.created_at)).getTime() : null, profileCohort: profileCohort(profile, workspaceGradByUser.get(user.id)), firstName: name || null, profileComplete: profile?.is_profile_complete === true, currentlyEntitled: entitled.has(user.id), hasDeliverySuppression: deliverySuppressed.has(user.id), firstUseAt: activity[0] ?? null, lastUseAt: activity.at(-1) ?? null, priorSteps, priorStepAt, optedOutTopics: suppressed.get(user.id) ?? new Set(), productFirstUseAt, productLastUseAt: options.campaign === 'caseprep_activation_1' ? caseprepActivity.length ? Math.max(...caseprepActivity) : null : null, hasActiveAnkiDevice: activeAnkiDevices.has(user.id) };
   });
   const exclusions: Record<string, number> = {};
   const candidates = profilesForCampaign.filter((profile) => {
-    const reason = profile.email ? campaignIneligibilityReason(profile, options.campaign) : 'email_missing';
+    const reason = quota.usersSentToday.has(profile.userId)
+      ? 'already_sent_today'
+      : profile.email ? campaignIneligibilityReason(profile, options.campaign) : 'email_missing';
     if (reason) exclusions[reason] = (exclusions[reason] ?? 0) + 1;
     return reason === null && (!options.fallbackOnly || Boolean(addresses.get(profile.userId)?.fallbackFromDeliveryId));
   });
-  const selectedCandidates = candidates.slice(0, options.limit);
-  console.log(JSON.stringify({ campaign: options.campaign, evaluated: profilesForCampaign.length, eligible: candidates.length, selected: selectedCandidates.length, exclusions: Object.fromEntries(Object.entries(exclusions).sort((a, b) => b[1] - a[1])), selectedApplePrivateRelay: selectedCandidates.filter((candidate) => isApplePrivateRelayEmail(candidate.email)).length, safeguards: { explicitConsentRequired: true, activation1MaxAccountAgeDays: 30, priorDeliverySuppressionExcluded: true }, mode: options.send ? 'send' : options.preview ? 'preview' : 'dry-run', addressMode: options.fallbackOnly ? 'failed-profile-auth-fallback-only' : 'all-eligible' }, null, 2));
+  const selectedCandidates = candidates.slice(0, Math.min(options.limit, quota.dailyRemaining));
+  console.log(JSON.stringify({ campaign: options.campaign, evaluated: profilesForCampaign.length, eligible: candidates.length, selected: selectedCandidates.length, exclusions: Object.fromEntries(Object.entries(exclusions).sort((a, b) => b[1] - a[1])), selectedApplePrivateRelay: selectedCandidates.filter((candidate) => isApplePrivateRelayEmail(candidate.email)).length, dailyQuota: { pacificDaySent: quota.dailySent, remaining: quota.dailyRemaining, cap: 50 }, safeguards: { explicitConsentRequired: true, activation1MaxAccountAgeDays: 30, priorDeliverySuppressionExcluded: true, productSignalRequired: options.campaign === 'caseprep_activation_1' || options.campaign === 'anki_activation_1' }, mode: options.send ? 'send' : options.preview ? 'preview' : 'dry-run', addressMode: options.fallbackOnly ? 'failed-profile-auth-fallback-only' : 'all-eligible' }, null, 2));
   if (!options.send) return;
-  let sent = 0, duplicate = 0, skipped = 0, failed = 0;
-  for (const [index, candidate] of selectedCandidates.entries()) {
-    if (index > 0) await pause(1000);
-    const recipient: MarketingRecipient = { userId: candidate.userId, email: candidate.email, firstName: candidate.firstName, campaignStep: options.campaign, ...config, ...addresses.get(candidate.userId)! };
-    try { const result = await deliverMarketingCampaignEmail(recipient); if (result.status === 'sent') sent += 1; else if (result.status === 'duplicate') duplicate += 1; else skipped += 1; } catch (error) { failed += 1; console.error(`[marketing] send failed for user=${candidate.userId.slice(0, 8)}: ${error instanceof Error ? error.message : String(error)}`); break; }
+  if (!selectedCandidates.length) return;
+  const batchId = randomUUID();
+  const { data: batchClaims, error: batchClaimError } = await supabase.rpc('claim_marketing_email_batch', { p_batch_id: batchId });
+  if (batchClaimError) throw new Error(`Unable to claim marketing batch: ${batchClaimError.message}`);
+  const batchClaim = batchClaims?.[0];
+  if (!batchClaim || batchClaim.batch_status !== 'started') {
+    throw new Error(batchClaim?.batch_status === 'minimum_interval'
+      ? 'Marketing sends require at least 24 hours since the previous customer batch.'
+      : 'Another marketing batch is still in progress.');
   }
-  console.log(JSON.stringify({ sent, duplicate, skipped, failed }, null, 2));
+  let sent = 0, duplicate = 0, skipped = 0, failed = 0, dailyCapReached = false;
+  try {
+    for (const [index, candidate] of selectedCandidates.entries()) {
+      if (index > 0) await pause(1000);
+      const recipient: MarketingRecipient = { userId: candidate.userId, email: candidate.email, firstName: candidate.firstName, campaignStep: options.campaign, ...config, ...addresses.get(candidate.userId)! };
+      try {
+        const result = await deliverMarketingCampaignEmail(recipient, batchId);
+        if (result.status === 'sent') sent += 1;
+        else if (result.status === 'duplicate') duplicate += 1;
+        else if (result.status === 'daily_cap') { dailyCapReached = true; break; }
+        else skipped += 1;
+      } catch (error) { failed += 1; console.error(`[marketing] send failed for user=${candidate.userId.slice(0, 8)}: ${error instanceof Error ? error.message : String(error)}`); break; }
+    }
+  } finally {
+    const { error: completeError } = await supabase.rpc('complete_marketing_email_batch', {
+      p_batch_id: batchId,
+      p_status: failed ? 'failed' : 'completed',
+    });
+    if (completeError) throw new Error(`Unable to finalize marketing batch: ${completeError.message}`);
+  }
+  console.log(JSON.stringify({ sent, duplicate, skipped, failed, dailyCapReached }, null, 2));
   if (failed) process.exitCode = 1;
 }
 

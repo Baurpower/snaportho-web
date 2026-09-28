@@ -16,6 +16,8 @@ export const CAMPAIGN_STEPS = [
   'profile_completion_1',
   'profile_grad_year_1',
   'reengagement_1',
+  'caseprep_activation_1',
+  'anki_activation_1',
 ] as const;
 
 export type CampaignStep = (typeof CAMPAIGN_STEPS)[number];

@@ -67,6 +67,10 @@ export function marketingWebUrl(step: CampaignStep, base: string): string {
       ? PROFILE_CAMPAIGN_WEB_PATH
     : step === 'conversion_1'
       ? PRICING_CAMPAIGN_WEB_PATH
+      : step === 'caseprep_activation_1'
+        ? '/brobot'
+      : step === 'anki_activation_1'
+        ? '/anki'
       : '/brobot/chat';
   const url = new URL(path, base);
   url.searchParams.set('utm_source', BRANCH_CAMPAIGN_STEPS.includes(step as (typeof BRANCH_CAMPAIGN_STEPS)[number]) ? 'branch' : 'resend');
@@ -101,6 +105,10 @@ export function marketingActionUrl(step: CampaignStep, base: string): string {
       ? PROFILE_CAMPAIGN_WEB_PATH
     : step === 'conversion_1'
       ? PRICING_CAMPAIGN_WEB_PATH
+      : step === 'caseprep_activation_1'
+        ? BROBOT_CAMPAIGN_APP_PATH
+      : step === 'anki_activation_1'
+        ? '/anki'
       : BROBOT_CAMPAIGN_APP_PATH;
   const url = new URL(path, base);
   url.searchParams.set('utm_source', 'resend');
@@ -142,7 +150,9 @@ export function marketingFeatureUrl(feature: MarketingFeature, base: string, opt
 
 export function campaignWebUrl(incoming: URL): URL {
   if (!Object.hasOwn(WEB_DESTINATIONS, incoming.pathname)) throw new Error('Unknown campaign destination');
-  const destination = new URL(WEB_DESTINATIONS[incoming.pathname], incoming.origin);
+  const caseprepCampaign = incoming.pathname === BROBOT_CAMPAIGN_APP_PATH &&
+    incoming.searchParams.get('utm_campaign') === CAMPAIGN_CONFIG.caseprep_activation_1.campaignKey;
+  const destination = new URL(caseprepCampaign ? '/brobot' : WEB_DESTINATIONS[incoming.pathname], incoming.origin);
   for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content']) {
     const value = incoming.searchParams.get(key);
     if (value) destination.searchParams.set(key, value);

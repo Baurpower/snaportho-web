@@ -29,4 +29,11 @@ assert.equal(isEligibleForCampaign({ ...base, profileCohort: 'empty', receiveEma
 assert.equal(isEligibleForCampaign({ ...base, profileCohort: 'med_student_grad_year_only', receiveEmails: false }, 'profile_grad_year_1', now), false);
 assert.equal(isEligibleForCampaign({ ...base, profileCohort: 'empty', optedOutTopics: new Set(['product_updates']) }, 'profile_completion_1', now), false);
 assert.equal(isEligibleForCampaign({ ...base, profileCohort: 'med_student_grad_year_only', priorSteps: new Set(['profile_completion_1']) }, 'profile_grad_year_1', now), false);
+assert.equal(isEligibleForCampaign({ ...base, productFirstUseAt: now - 4 * 86400000, productLastUseAt: now - 3 * 86400000 }, 'caseprep_activation_1', now), true);
+assert.equal(isEligibleForCampaign({ ...base, productFirstUseAt: null, productLastUseAt: null }, 'caseprep_activation_1', now), false);
+assert.equal(isEligibleForCampaign({ ...base, productFirstUseAt: now - 4 * 86400000, productLastUseAt: now - 86400000 }, 'caseprep_activation_1', now), false);
+assert.equal(isEligibleForCampaign({ ...base, productFirstUseAt: now - 2 * 86400000, hasActiveAnkiDevice: false }, 'anki_activation_1', now), true);
+assert.equal(isEligibleForCampaign({ ...base, productFirstUseAt: now - 2 * 86400000, hasActiveAnkiDevice: true }, 'anki_activation_1', now), false);
+assert.equal(isEligibleForCampaign({ ...base, productFirstUseAt: now - 30 * 86400000, hasActiveAnkiDevice: false }, 'anki_activation_1', now), false);
+assert.equal(isEligibleForCampaign({ ...base, productFirstUseAt: now - 2 * 86400000, optedOutTopics: new Set(['product_updates']) }, 'anki_activation_1', now), false);
 console.log('marketing segment tests passed');
