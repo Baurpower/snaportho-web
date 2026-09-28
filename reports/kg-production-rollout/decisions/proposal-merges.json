@@ -1,0 +1,26 @@
+[
+ {
+  "offlineProposalId": "1ff2c8a3-8471-456e-89e8-49986c7117cc",
+  "proposalLabel": "Musculocutaneous",
+  "proposalNormalizedLabel": "musculocutaneous",
+  "proposedEntityType": "condition",
+  "sourceClaimIds": [],
+  "reviewer": "phase3c-review@snaportho.dev",
+  "confidence": 0.8,
+  "reason": "slice-3 intra-queue merge member -> Musculocutaneous nerve head (blocked pre-backfill: needs live head)",
+  "decision": "MERGE_PROPOSALS",
+  "mergeHeadProposalId": "2fede6df-ca6a-4f6c-8b1a-fd84607f879f"
+ },
+ {
+  "offlineProposalId": "0bb2224e-a177-4da6-86ec-e04fa94e7506",
+  "proposalLabel": "Chauffer's fracture",
+  "proposalNormalizedLabel": "chauffer's fracture",
+  "proposedEntityType": "condition",
+  "sourceClaimIds": [],
+  "reviewer": "phase3c-review@snaportho.dev",
+  "confidence": 0.55,
+  "reason": "slice-4 misspelling member -> Chauffeur head (blocked pre-backfill: needs live head)",
+  "decision": "MERGE_PROPOSALS",
+  "mergeHeadProposalId": "1e0337c3-667b-4335-8e7c-69d51e7a6e39"
+ }
+]
