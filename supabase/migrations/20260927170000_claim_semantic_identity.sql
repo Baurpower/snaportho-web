@@ -258,6 +258,12 @@ where semantic_fingerprint_hash is null
      claim_text, claim_type, qualifiers
    );
 
+-- Version rows are normally immutable. This migration is the one controlled
+-- exception: it backfills only the new semantic identity columns, inside the
+-- migration transaction, and restores the guard before commit.
+alter table public.educational_claim_versions
+  disable trigger guard_educational_claim_versions_immutable;
+
 update public.educational_claim_versions
 set semantic_fingerprint_hash = public.educational_claim_semantic_fingerprint_hash(
       claim_text, claim_type, qualifiers
@@ -268,6 +274,9 @@ where semantic_fingerprint_hash is null
    or semantic_fingerprint_hash is distinct from public.educational_claim_semantic_fingerprint_hash(
      claim_text, claim_type, qualifiers
    );
+
+alter table public.educational_claim_versions
+  enable trigger guard_educational_claim_versions_immutable;
 
 -- Candidate-lookup index (NON-unique by design: duplicates are review
 -- candidates until the merge phase; a merge-key unique index is deferred).

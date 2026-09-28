@@ -156,5 +156,5 @@ where is_active
     'condition', 'procedure', 'anatomy_structure', 'classification_system',
     'classification_grade', 'complication', 'diagnostic_test', 'imaging_finding',
     'implant', 'fixation_method', 'treatment_principle', 'biomechanics_concept',
-    'exam_maneuver', 'surgical_approach', 'surgical_positioning'
+    'exam_maneuver', 'surgical_approach', 'surgical_positioning', 'symptom'
   );
