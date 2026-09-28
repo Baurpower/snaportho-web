@@ -1,0 +1,6364 @@
+[
+  {
+    "proposal_id": "a9b42e42-d07e-49ad-8757-c42df6df3f83",
+    "proposed_label": "MRI",
+    "factory_type": "imaging_finding",
+    "inferred_type": "diagnostic_test",
+    "confidence": 0.95,
+    "reasons": [
+      "diagnostic_modality",
+      "best_test_context_support"
+    ],
+    "claims": 7,
+    "disposition": "DEFER_NEEDS_REVIEW"
+  },
+  {
+    "proposal_id": "0fd81358-494f-42e5-893f-0f13ff18961f",
+    "proposed_label": "Humerus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 6,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "7d7c5f57-9fa1-4d98-815d-2ba27fe3f2a3",
+    "proposed_label": "Adduction",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 6,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "20d136a1-574b-4a2a-8c33-4a69e586f120",
+    "proposed_label": "External rotation",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 5,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "17907c6b-23fe-448e-86a7-93b1a414466f",
+    "proposed_label": "Varus",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 5,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "7a4a2dfa-d653-4fdd-82b0-a5d39ba9e162",
+    "proposed_label": "Abduction",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 5,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "11dee81d-fda4-42e5-860a-ba7e8864be7a",
+    "proposed_label": "ORIF",
+    "factory_type": "condition",
+    "inferred_type": "fixation_method",
+    "confidence": 0.85,
+    "reasons": [
+      "fixation_method_pattern"
+    ],
+    "claims": 5,
+    "disposition": "DEFER_NEEDS_REVIEW"
+  },
+  {
+    "proposal_id": "80cded43-f6bc-454a-82ab-c56edb4803b7",
+    "proposed_label": "Femoral anteversion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 4,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "8a441734-8dd9-4dbd-8f7e-abaafa28c24c",
+    "proposed_label": "Supination",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 4,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "c4664ceb-8076-435a-8837-22fce7aaca0e",
+    "proposed_label": "Synostosis",
+    "factory_type": "complication",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 4,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "df141b50-ddde-4ba9-85a7-7872f36cb94e",
+    "proposed_label": "Arthrodesis",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 4,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "13d7edd1-4320-4bd3-8944-675b78831223",
+    "proposed_label": "Excision",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 3,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "23ddd6de-0b40-40c6-8654-0c8d68a93c1f",
+    "proposed_label": "Knee",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 3,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "4790ad46-7807-4f37-843c-9c1ed9cb4e0e",
+    "proposed_label": "pronation",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 3,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "54b14c05-0899-4fce-810d-93bc38f000e8",
+    "proposed_label": "Base of 5th metatarsal",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 3,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "57a7145a-bd8b-44f3-8930-b990c96005ee",
+    "proposed_label": "Scapula",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 3,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "814f7e5d-47c6-4d1e-88cb-09193bc07dad",
+    "proposed_label": "Nerve to obturator internus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 3,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "962cd7a5-f86c-4a7f-8aea-f09a8ded1116",
+    "proposed_label": "semimembranosus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 3,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "bd8f6429-86c2-48d7-8e84-7345e9ab950f",
+    "proposed_label": "valgus",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 3,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "c3721bf3-f541-4d07-8c37-ea098790aaa6",
+    "proposed_label": "Annular ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 3,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e99d4a2f-8120-4a51-800b-5089de8328c9",
+    "proposed_label": "Ischial tuberosity",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 3,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "f0501643-9ac1-4bc6-8ca1-05aae6e07c44",
+    "proposed_label": "Hawkins",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 3,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d44b9e5f-4499-4a86-8209-f83788c99ed4",
+    "proposed_label": "Instability",
+    "factory_type": "complication",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 3,
+    "disposition": "REJECT_TOO_GENERIC"
+  },
+  {
+    "proposal_id": "633b74af-d276-4ff2-87b0-d6a3e777a26e",
+    "proposed_label": "AC and CC ligament disruption",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 4,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "0492168b-a424-4c13-8629-707e9bf2a814",
+    "proposed_label": "Internal rotation",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "050be074-cc0a-4cf2-80ef-4770eadb7caf",
+    "proposed_label": "1st metatarsal",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "09222ff1-6a0a-4764-87f2-2d0deea080c2",
+    "proposed_label": "Incompetent radioscaphocapitate ligament",
+    "factory_type": "procedure",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "0bcd2a5d-4f87-4d2e-8135-56bbecb34fe4",
+    "proposed_label": "Superior peroneal retinaculum",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "0e6f039f-2a66-462c-840a-80e802cd1138",
+    "proposed_label": "FADIR",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 2,
+    "disposition": "DEFER_NEEDS_REVIEW"
+  },
+  {
+    "proposal_id": "0e8094e7-93ba-498b-8558-0e2ae24e3cef",
+    "proposed_label": "Speed",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "1406f022-475a-4d9b-8c3f-0a0feb420120",
+    "proposed_label": "Wrist flexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "14eb30e7-f0a9-4227-8af9-fa16e073a0ce",
+    "proposed_label": "dorsiflexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "18421eb3-4965-40b4-8a07-38ab5abf6381",
+    "proposed_label": "Dislocation",
+    "factory_type": "complication",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "2acc4aa9-ae90-4493-8b00-2d5e424dbff8",
+    "proposed_label": "Anconeus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "3a6d8f54-6c30-47dc-8c9f-fde31b4dcf3d",
+    "proposed_label": "Peroneus brevis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "412abfe5-fcb7-441b-848f-ec9fe19f172e",
+    "proposed_label": "Biceps femoris",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "44f71eb2-5104-4777-815e-6d76fdee8824",
+    "proposed_label": "Adductor brevis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "49e0283b-a296-4f47-8f0a-91749ade3c78",
+    "proposed_label": "Vastus medialis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "4e0bbd5b-f645-4121-8890-ff7156f49bb6",
+    "proposed_label": "Partial meniscectomy and saucerization",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "4e277c25-f599-4600-8ba6-c326d62e567a",
+    "proposed_label": "semitendinosus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "58726afc-eee2-438d-809c-a0ac77198648",
+    "proposed_label": "hypothenar",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "596325b5-8806-4441-8304-d87316953bc0",
+    "proposed_label": "Elbow extension",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6c6a6bbd-568f-401d-8483-fb040f592681",
+    "proposed_label": "Wrist extension",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "7756144c-0c30-4204-8184-ce6e2082606a",
+    "proposed_label": "Deltopectoral",
+    "factory_type": "condition",
+    "inferred_type": "surgical_approach",
+    "confidence": 0.85,
+    "reasons": [
+      "surgical_approach_pattern"
+    ],
+    "claims": 2,
+    "disposition": "DEFER_NEEDS_REVIEW"
+  },
+  {
+    "proposal_id": "77d3d1ce-b07b-4f6c-87c7-0a97b99c3c6c",
+    "proposed_label": "retroversion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "7b7af75e-db65-464a-88b8-079dbb67bc91",
+    "proposed_label": "External rotation of thigh",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "90c101f0-c953-4b7c-8630-3dab8332ee64",
+    "proposed_label": "adductor",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "90c561eb-cb43-4604-839e-05e3d26b80fd",
+    "proposed_label": "Popliteus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "920c53e5-6002-4a29-82d5-f8c1cd3c2572",
+    "proposed_label": "rotator interval",
+    "factory_type": "condition",
+    "inferred_type": "surgical_approach",
+    "confidence": 0.85,
+    "reasons": [
+      "surgical_approach_pattern"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "95b06135-be9b-4cf1-8c2a-fddce52184b3",
+    "proposed_label": "Thenar",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "97028e63-564d-44da-87a6-461d58012491",
+    "proposed_label": "Coracobrachialis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "9c9a7dbb-45c6-4c45-8699-2ca52b5b08d1",
+    "proposed_label": "extended tibial tubercle osteotomy",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "9e02cdbf-c433-4dec-8d11-974c80543359",
+    "proposed_label": "Gracilis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a2db14b5-a991-47c9-8ef4-b2d6f0ceee81",
+    "proposed_label": "Adduct scapula",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "REJECT_NON_ENTITY"
+  },
+  {
+    "proposal_id": "a51c7359-961d-4caf-8bfc-3a4fc07440e6",
+    "proposed_label": "Yergason",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ac334c63-8dca-40e7-8a70-9ca5543a2ca0",
+    "proposed_label": "Gastrocnemius",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ad33bf2a-39cc-4c2e-8d66-9585dec3b639",
+    "proposed_label": "Plantarflexion and eversion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 2,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "b596be82-e002-4237-89d3-7024d12dd6f6",
+    "proposed_label": "Tibial tubercle",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b64b099b-66cb-46d5-8c5b-7bbeffcf84ca",
+    "proposed_label": "ECU and Anconeus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "c85e61c2-7bc9-4dd5-8859-30dc7782d94d",
+    "proposed_label": "metaphysis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "c92cf018-9b8c-4849-88ff-e01d3dedaa51",
+    "proposed_label": "Galeazzi",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "cfb64567-51e5-4c95-88b2-d2fe704b90c0",
+    "proposed_label": "Iliac crest",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d3368f00-2657-4345-8c9e-872e8fa51548",
+    "proposed_label": "Olecranon",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "DEFER_NEEDS_REVIEW"
+  },
+  {
+    "proposal_id": "e5a9c414-68b0-4af4-8205-f3baf54a9c2b",
+    "proposed_label": "proximal 1/3 ulna",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "f448214a-aaa8-4893-8dfd-ce8ef292b46e",
+    "proposed_label": "Adductor magnus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "fac7bb4c-1ed1-4b52-84de-6c3fe503ba2a",
+    "proposed_label": "Epiphysis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ff3fa36b-e49a-4c8d-8371-c09e23f0acba",
+    "proposed_label": "Ankle",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "DEFER_NEEDS_REVIEW"
+  },
+  {
+    "proposal_id": "0985439d-b0ef-48f9-8c85-6e9b52bb677d",
+    "proposed_label": "Sides of middle phalanges",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "ALIAS_EXISTING"
+  },
+  {
+    "proposal_id": "3f51c571-ba60-4e11-8aff-cb06170201f7",
+    "proposed_label": "Medial parapatellar",
+    "factory_type": "condition",
+    "inferred_type": "surgical_approach",
+    "confidence": 0.85,
+    "reasons": [
+      "surgical_approach_pattern"
+    ],
+    "claims": 1,
+    "disposition": "ALIAS_EXISTING"
+  },
+  {
+    "proposal_id": "78639de5-db66-4404-8e21-92c8e69e14c4",
+    "proposed_label": "Proximal phalanges",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "ALIAS_EXISTING"
+  },
+  {
+    "proposal_id": "a34a2fbb-82d3-491b-827b-0c8d9d85369f",
+    "proposed_label": "Middle phalanges of digits",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "ALIAS_EXISTING"
+  },
+  {
+    "proposal_id": "891c73ec-39a2-4edd-849c-16bdcecf55ad",
+    "proposed_label": "Stage I",
+    "factory_type": "condition",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 2,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "a5c0ccbe-ae08-4c22-8370-31e09c4dee0a",
+    "proposed_label": "repair",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "f4ac2daa-dc0c-48be-8fcd-64b8c6219a90",
+    "proposed_label": "Thumb flexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 2,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "04600480-b493-4f82-8b26-c3499785f222",
+    "proposed_label": "Lateral femoral condyle",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "MERGE_PROPOSALS"
+  },
+  {
+    "proposal_id": "633750d1-fff7-4ece-8592-e9e8f2270cf5",
+    "proposed_label": "Lateral distal femoral condyle",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6c61b606-5bac-4f7a-86a0-19b44d8c0f2a",
+    "proposed_label": "Lateral condyle",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "MERGE_PROPOSALS"
+  },
+  {
+    "proposal_id": "00050f79-95a7-435a-8226-278fb184ea0c",
+    "proposed_label": "Spinous process C7-T3",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "004b388e-2dda-4119-8d22-631f0a91e914",
+    "proposed_label": "Anterior inferior iliac spine",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "01758530-73ac-4b27-8f68-58a7bbc650a0",
+    "proposed_label": "Medial compartment",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "01fae1e7-b5a5-455c-8faa-bb2bc6a3d148",
+    "proposed_label": "Bone loss",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "028926e6-547c-4202-8d37-959afe4536f5",
+    "proposed_label": "Medial Patellofemoral Ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "032b6ef5-ef57-4a8e-83e9-6212c349e3aa",
+    "proposed_label": "Facet joint capsules",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "03826037-6a4a-403c-83fe-be1b9da085b0",
+    "proposed_label": "Mirels Scoring System",
+    "factory_type": "complication",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "03ba288d-9467-4520-85c3-dc02c187d4fa",
+    "proposed_label": "Ulnohumeral articulation",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "05496b58-d01a-4ca0-8bd5-7ac5e541d351",
+    "proposed_label": "Fusion",
+    "factory_type": "imaging_finding",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "05fc8461-63fa-46a3-8940-c28ae03d6652",
+    "proposed_label": "Joint space narrowing",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "063b0d23-891d-4405-8bb4-79d0fee1dfdd",
+    "proposed_label": "30° to 130° flexion/extension",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "06795ca1-de83-461b-8c6e-e5a5726f9d17",
+    "proposed_label": "Congenital finger flexion anomaly",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "06b7704b-9e8c-4726-8844-a6bdb6111a0e",
+    "proposed_label": "Forced dorsiflexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "0735fc77-2a0f-4447-8a05-a8d543225de1",
+    "proposed_label": "Closed reduction",
+    "factory_type": "condition",
+    "inferred_type": "fixation_method",
+    "confidence": 0.85,
+    "reasons": [
+      "fixation_method_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "08b66118-76f8-4b9d-8c6b-bdedf566d797",
+    "proposed_label": "Ideberg",
+    "factory_type": "condition",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "09bd09f6-c82f-4904-80fa-f64d462e6fdd",
+    "proposed_label": "Tenodesis - \"groove pain",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "09d08e8f-8236-46a9-8a25-0a4d2f351322",
+    "proposed_label": "Marginal excision",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "09d2a7a9-e024-44c0-826d-f44d074815b0",
+    "proposed_label": "Cerclage wiring + interfragmentary screw compression",
+    "factory_type": "condition",
+    "inferred_type": "fixation_method",
+    "confidence": 0.85,
+    "reasons": [
+      "fixation_method_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "0af73145-5546-4799-8993-bcdbaf59505a",
+    "proposed_label": "McMurray's",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "0b8c4249-80d3-40f2-830c-f7e2ca86a857",
+    "proposed_label": "Anterior symphyseal plate and posterior stabilization",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "0c18a1a1-c1bd-4bb9-8368-a6dab5b0255c",
+    "proposed_label": "Safe zone for hardware placement",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "0d9faa6f-957a-4d87-8b79-63c1b2c60b03",
+    "proposed_label": "Masquelet",
+    "factory_type": "condition",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "0db063b3-f970-4840-83e0-0ed9dd121b94",
+    "proposed_label": "biceps tenodesis/tenotomy",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "0db91783-4f80-4f92-878c-61ec289c41df",
+    "proposed_label": "Calcaneonavicular (Spring) ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "0ec6e344-1d04-4a3b-8860-ea64b9565e02",
+    "proposed_label": "T12-L1 vertebrae",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "0f002c5e-8329-4af1-8a84-41a467f7f9bc",
+    "proposed_label": "Medial proximal phalanges: toes 3-5",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "0f574674-cbbb-4b02-81b0-7facb8c5c46d",
+    "proposed_label": "Arthritis affecting a single compartment",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "0f9787dc-a58f-4799-84b4-523c9a629e9f",
+    "proposed_label": "III-A: Muscle origin",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "10538bac-71a1-4b70-88f4-3432c191fcea",
+    "proposed_label": "Nonmarginal syndesmophytes involving 4 contiguous vertebrae",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "109e1a98-a2e6-4970-870f-dbd13f7a469d",
+    "proposed_label": "Lateral geniculate artery",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "11ce7e6f-ac29-4cd7-885f-c7a9608e5ec7",
+    "proposed_label": "grade 1 in extremities",
+    "factory_type": "condition",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "11d1155a-25c5-4ff0-827c-996d9954acd0",
+    "proposed_label": "fuller crescent-shaped meniscus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "131e20a0-826f-4323-820b-0b4d5150c3fb",
+    "proposed_label": "Adductor longus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "MERGE_PROPOSALS"
+  },
+  {
+    "proposal_id": "14f2ed21-8fb7-4db9-8acf-dab7ea7c5919",
+    "proposed_label": "Lachman's",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "1534a313-dc62-4aa5-8219-e3945a580070",
+    "proposed_label": "the bone",
+    "factory_type": "imaging_finding",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "153c1522-bab1-4c40-8409-b9c07ec113d7",
+    "proposed_label": "Gastrocnemius/ankle plantarflexion",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "1585a70b-79f2-45b6-86c8-8be41ea4495e",
+    "proposed_label": "External rotation thigh",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "MERGE_PROPOSALS"
+  },
+  {
+    "proposal_id": "16335e77-1574-45a4-8ca1-2e2ddc7a2c25",
+    "proposed_label": "Lateral meniscal tear",
+    "factory_type": "imaging_finding",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "16bbe3ca-0fac-4d35-85eb-53479eea5e33",
+    "proposed_label": "Nail",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "16f5a0a8-6a35-4b2d-844a-13e2e953dcc2",
+    "proposed_label": "Cut more posterior condyle",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "1782a133-6d7b-4813-8976-2ffbd84add50",
+    "proposed_label": "5th metatarsal base",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "178a2642-fbb4-40d3-89b4-78ada5d79dbe",
+    "proposed_label": "Lateral transfer of anterior tibialis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "18e06ac2-6d93-4aa7-8767-53972b99eaf8",
+    "proposed_label": "Anterior spinal artery",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "19b7afcd-fe99-47f3-80c2-65ef12a91f87",
+    "proposed_label": "DIPJ and distal phalanx",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "1af43ec2-04ba-45da-8f17-826b85084f21",
+    "proposed_label": "Medial calcaneal tuberosity",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "1c1534db-a972-475d-8717-7c3c43424464",
+    "proposed_label": "Volar radioulnar ligaments: Pronation",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "1c5eff0d-e273-41f2-812c-3817d7d11986",
+    "proposed_label": "Posterior and superior AC ligaments",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "1cb61ea5-49ae-4cdb-8ed3-853ee93878bb",
+    "proposed_label": "abduction pillow",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "1d31f26b-7a96-4bf4-8a69-d4b8a9cc10ad",
+    "proposed_label": "Tenderness allong tendon sheath",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "1dcc69c5-009f-49e5-8268-5554a9923142",
+    "proposed_label": "Lauge-Hansen Classification",
+    "factory_type": "condition",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "1edc313d-6b69-4bda-8646-2f24d5e64e37",
+    "proposed_label": "Forefoot abduction",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "1f333fdd-d96c-40a3-80f7-4e3fe66ad40e",
+    "proposed_label": "Flexion of the MCP joints",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "1f516a9d-a5c6-45ef-82eb-b9ae6c18e16d",
+    "proposed_label": "Bado type 2",
+    "factory_type": "complication",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "1f7faa15-ca28-4fe3-80bf-f3599a0f2985",
+    "proposed_label": "2-stage implant exchange",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "1fa5db42-1601-4ca9-8a76-73dff731ea6f",
+    "proposed_label": "Stryker-Notch",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "20dda2ae-1fed-446b-8542-4cc56bb16bf0",
+    "proposed_label": "nerve root compression",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "210bc97d-ee0d-4ca1-8629-c5a801d67366",
+    "proposed_label": "Sciatic notch",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "21770a5e-991a-4751-8fb3-f7c0a2bb2156",
+    "proposed_label": "posterior capsule",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "218cc072-e420-4fb1-8d6a-0f2b5325932d",
+    "proposed_label": "Speed's",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "21ae493d-1343-4a89-8d89-a0ca1cc2836d",
+    "proposed_label": "Recurvatum",
+    "factory_type": "procedure",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "22083528-718c-448f-87ef-40573fc71c9a",
+    "proposed_label": "Grade III ≤300% w/ superior displacement",
+    "factory_type": "condition",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "22402988-c786-49ad-8d10-693c7d990a57",
+    "proposed_label": "Posterior tibialis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "2275a75d-ee07-4689-8f02-d395d8ca7fc7",
+    "proposed_label": "Apprehension test",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "22ac9e52-6217-4fe0-8529-4e63feec905c",
+    "proposed_label": "Inversion and plantarflexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "22e7f8af-5bfc-4207-8e6d-68fdb06b8842",
+    "proposed_label": "Total hip arthroplasty",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "239aa526-4622-48a2-812d-0f77b7d513fc",
+    "proposed_label": "Long head of biceps tendon",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "25f6b055-7140-4977-8726-790748aa0dca",
+    "proposed_label": "Thomas",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "263a8f6f-99d3-4498-8e41-b1600391034b",
+    "proposed_label": "Shortening (Weil) osteotomy",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "26953655-64b7-484e-80eb-1b13dcd6fff6",
+    "proposed_label": "hamstring harvest of an ACL reconstruction",
+    "factory_type": "complication",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "26a24315-56b7-4ac9-824d-3a0ffccd8f5f",
+    "proposed_label": "sartorius",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "270bfe88-90a7-4266-8545-09c5bdc52c58",
+    "proposed_label": "Joint stiffness",
+    "factory_type": "condition",
+    "inferred_type": "complication",
+    "confidence": 0.85,
+    "reasons": [
+      "complication_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "2710596d-ff68-445d-8c9d-1f47cb49b9f4",
+    "proposed_label": "Fingers abduction",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "28291a53-1212-4d77-83b4-82c13247aff6",
+    "proposed_label": "Anterior to posterior screw",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "285c76de-e5cb-433d-8bd8-85870b2d88e8",
+    "proposed_label": "Base of the 2nd metacarpal",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "28b36321-7a35-491c-81f1-88b6e2597cfb",
+    "proposed_label": "Recurrent anterior tibial artery",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "292a77b1-5ddc-4bff-83b5-d2966c8be760",
+    "proposed_label": "Hawkins Classification",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "2a0c259a-0556-40bd-817f-02bf044f139e",
+    "proposed_label": "Palpable click with abduction+ER",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "2a9fb236-830c-41a7-8aad-0d4b76c91eef",
+    "proposed_label": "forced dorsiflexion with axial load",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "2c32f1cf-28f5-4b70-8b5b-3ef3228ad1d1",
+    "proposed_label": "Meniscal graft tear",
+    "factory_type": "complication",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "2d0fed9f-206c-4e2d-8f2a-e184e5347d1a",
+    "proposed_label": "Lumbar extension",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "2d61f6a0-f9d3-44a7-88b1-ca677ae6f240",
+    "proposed_label": "Pronator quadratus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "2da4dc9e-43e0-4f34-88ab-60eafbb2602e",
+    "proposed_label": "Lateral FDL tendon",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "2dcf74c1-3f10-4543-8dde-49d9f1d8faae",
+    "proposed_label": "Graft impingement in extension",
+    "factory_type": "complication",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "2eb8feae-a943-4cdd-80bc-3ec0aef4419f",
+    "proposed_label": "Stage II or III",
+    "factory_type": "condition",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "2fb8ee9a-38f2-4d80-831c-a3437f190368",
+    "proposed_label": "Four-corner fusion",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "30c21df2-89a7-45a6-8e99-a95dc5483baf",
+    "proposed_label": "Plantar fascia",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "324fd04b-a718-4d82-80f7-a1c67f73d215",
+    "proposed_label": "Rotate scapula",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_NON_ENTITY"
+  },
+  {
+    "proposal_id": "32650da8-0668-4c2e-86c8-d686b0878138",
+    "proposed_label": "C-spine involvement",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "34a71f37-1d2f-459b-810a-dfd3d12b2904",
+    "proposed_label": "Elevated ESR/CRP",
+    "factory_type": "condition",
+    "inferred_type": "diagnostic_test",
+    "confidence": 0.9,
+    "reasons": [
+      "diagnostic_modality"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "35194789-51d5-431a-84b7-8a3a418f654b",
+    "proposed_label": "Nerve communication between the median",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "35dde82e-564e-40f0-839a-7fa6b57f339c",
+    "proposed_label": "Small finger extension",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "35e4487e-dcfb-45a6-8723-5e2840d8652e",
+    "proposed_label": "Before Risser Stage 1",
+    "factory_type": "condition",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "360a310a-2169-490b-8175-576b8077db72",
+    "proposed_label": "Supinator Crest",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "36fe58ef-94b1-40d0-819a-2a85f4bbe230",
+    "proposed_label": "Hip flexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "373cef0e-c692-4a60-8d18-1f7052e2b50c",
+    "proposed_label": "In-situ L4-S1 fusion",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "37641991-997e-43c5-8c57-5edf848c0a87",
+    "proposed_label": "Plantar flexion metatarsal osteotomy",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "37a7c001-2b04-4d92-818d-1ed58d125a79",
+    "proposed_label": "marginal resection at base of stalk",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "37aebd4c-a668-4344-8198-a62869d8c613",
+    "proposed_label": "Coracohumeral ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "384db43d-934d-4584-818d-91d5a56579ae",
+    "proposed_label": "Neuropathic joint",
+    "factory_type": "procedure",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "38933fce-f106-4e92-8b22-e06ec7d84627",
+    "proposed_label": "Meidal tension band plating",
+    "factory_type": "procedure",
+    "inferred_type": "fixation_method",
+    "confidence": 0.85,
+    "reasons": [
+      "fixation_method_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "396a4792-db87-48d0-88dc-8b153a01f0ca",
+    "proposed_label": "Plantarflexion and internal rotation",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "39a3a278-c6e0-42e5-8cd7-6987108f2492",
+    "proposed_label": "Volar carpal ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "39c682bf-c920-4368-8334-60c5973f15d2",
+    "proposed_label": "trendelenburg",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "39cd3bf7-6545-451c-8bfb-9ebbf7963d64",
+    "proposed_label": "Fasciotomy",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "3c6fd64c-8325-4460-8cfc-e540595a6b56",
+    "proposed_label": "Iliacus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "3e2871b6-a83d-4f52-85b9-d56e926c1501",
+    "proposed_label": "Discoid meniscus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "3e561759-24a2-476f-8e2f-3100a424a22a",
+    "proposed_label": "Dorsal radioulnar ligaments: Supination",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "3ea4426e-cdde-490c-8fd9-df7ef6fb2ef5",
+    "proposed_label": "Interposition of the ECU tendon",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "3f2b69e0-38ec-49ef-876e-d5f66cec6a50",
+    "proposed_label": "CT-guided biopsy",
+    "factory_type": "procedure",
+    "inferred_type": "diagnostic_test",
+    "confidence": 0.9,
+    "reasons": [
+      "diagnostic_modality"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "3f75ddbd-15f7-4032-84f4-95beb6cc7daf",
+    "proposed_label": "Digit extension",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "40613c48-48d4-4906-8791-4d6113f7efb3",
+    "proposed_label": "Slight flexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "428e7cfc-f789-404a-822a-b6a30d8a40cd",
+    "proposed_label": "Volar (Henry) approach",
+    "factory_type": "condition",
+    "inferred_type": "surgical_approach",
+    "confidence": 0.85,
+    "reasons": [
+      "surgical_approach_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "42fd1b31-2d0c-49f8-8b1c-d6ff4e761cf3",
+    "proposed_label": "Ligament of Humphrey",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "440685d7-83ec-4ee7-83de-d1d600207df4",
+    "proposed_label": "Arthroplasty",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "442b5c2d-dcd0-4321-802c-0cec67a8fced",
+    "proposed_label": "Tile Classification",
+    "factory_type": "condition",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "44a8e11a-d020-436d-80c9-4370fbe70c61",
+    "proposed_label": "Gastrocnemius; Soleus; Plantaris",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "44cd830c-935e-4b43-8a71-4b8e98b94dea",
+    "proposed_label": "Centered over the greater trochanters",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "45b7dbd9-e31d-45f4-8a85-a0664edf6aa1",
+    "proposed_label": "primary neoplasm of bone",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "45c7cdb1-6073-4110-87ae-79b7ff55cc5d",
+    "proposed_label": "Kocher-Langenbeck",
+    "factory_type": "condition",
+    "inferred_type": "surgical_approach",
+    "confidence": 0.85,
+    "reasons": [
+      "surgical_approach_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "45f9c284-62ef-4a76-87f1-0f793d5b855c",
+    "proposed_label": "Coracoplasty",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "45fb92e2-670f-4c5c-8f00-562b483d9d05",
+    "proposed_label": "Temporary percutaneous pinning",
+    "factory_type": "condition",
+    "inferred_type": "fixation_method",
+    "confidence": 0.85,
+    "reasons": [
+      "fixation_method_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "46285716-eb08-440c-8f28-377efbeb382f",
+    "proposed_label": "Hamstrings",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "46dc2203-05b2-4e4b-8df9-2b698c1617ed",
+    "proposed_label": "Duran protocol - patient assisted flexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "47673fcc-9a1a-4de3-8dcc-86f02bec870c",
+    "proposed_label": "ACL Rupture",
+    "factory_type": "imaging_finding",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "48b8520c-27c2-4fa9-80f3-38308a8bfe32",
+    "proposed_label": "Valgus knee",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "48e5da10-aefe-4845-8659-3681d000348a",
+    "proposed_label": "Arcuate artery",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "4b3906c4-245e-430d-8efb-7bdfa1dcffc5",
+    "proposed_label": "Radial tuberosity",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "4c619de5-e414-457a-876f-63255a9cfb3e",
+    "proposed_label": "Prevention of presynaptic release of Ach",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "4c7bb1bd-77a1-4ca3-8d97-7af2100b2417",
+    "proposed_label": "Proximal tubercle",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "4dc22ccc-e243-4ce2-8283-c81f876599e6",
+    "proposed_label": "Stage III",
+    "factory_type": "condition",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "4faa39fd-e90f-4b51-8382-33c2815c6155",
+    "proposed_label": "ER asure of growth plate",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "4fb0f835-8d82-46e5-8ef9-0a22b6e08ac4",
+    "proposed_label": "Stage III: Panscaphoid arthritis",
+    "factory_type": "condition",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "51297f7c-064b-4327-8bc1-2de5c92c9192",
+    "proposed_label": "Varus knee",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "52199e41-b42b-4a0e-80f2-e4bbfeae7617",
+    "proposed_label": "Nerve entrapment",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "52caf5c7-ce8b-46cc-859d-171214bc3fbe",
+    "proposed_label": "Adductor hallucis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "53c9d9e6-be60-4d35-8d3b-b903f56e5dd6",
+    "proposed_label": "Transverse carpal ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "53d9b3dd-c61d-447c-8cac-8bde3fe3b733",
+    "proposed_label": "Periscapular muscle weakness",
+    "factory_type": "complication",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "5411e723-d348-4ea7-8f54-30eaa7497c2f",
+    "proposed_label": "Grade III w/ inferior displacement",
+    "factory_type": "condition",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "54826de7-5c35-438e-8b72-9e91b4ad3cea",
+    "proposed_label": "radial nerve/PIN",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "550c163e-9efc-4296-8c72-aaec3424623c",
+    "proposed_label": "Olecranon - 15 years old",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "55675326-1e7c-4caa-8636-6e0b625d47c3",
+    "proposed_label": "Radioulnar synostosis",
+    "factory_type": "complication",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "MERGE_PROPOSALS"
+  },
+  {
+    "proposal_id": "5680e25f-a3ae-4e05-8a27-c19090d82e60",
+    "proposed_label": "Trochanteris fossa",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "5742ec49-f0e0-4cda-83b5-ba83959f6dcc",
+    "proposed_label": "Pain on extension",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "58970ccd-36ac-4155-839d-28eb8c084722",
+    "proposed_label": "Nail plate deformity",
+    "factory_type": "complication",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "58e36227-ecb4-45bc-8919-b2d7e3f36c17",
+    "proposed_label": "Long 2nd metatarsal",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "591cff90-bc2b-4a8a-8bd1-5385b276a094",
+    "proposed_label": "Curretage and bone grafting",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "594ce942-2b21-442b-8cde-45bd33baf0b7",
+    "proposed_label": "Iliac fossa",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "5a009fa9-4518-4359-8a6d-5d7fbaf45085",
+    "proposed_label": "Posterior Ulna",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "5a752b42-2bc6-4e9f-862c-6b9ecd9fa11d",
+    "proposed_label": "Interspinous ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "5aa5993c-bd9f-485f-8d97-33354304b873",
+    "proposed_label": "Repair capsule",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "5ab416f1-647d-4c80-8183-91de1909f51c",
+    "proposed_label": "Superior gluteal artery",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "5bb88d1d-89ad-4a08-8107-1cab6429d2ac",
+    "proposed_label": "Deltoid artery",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "5bd6e0eb-25ae-4d29-84fb-1a4cab604832",
+    "proposed_label": "ORIF with plates/screws",
+    "factory_type": "condition",
+    "inferred_type": "fixation_method",
+    "confidence": 0.85,
+    "reasons": [
+      "fixation_method_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "5c1dbb76-ad08-49cf-8b5f-9de8e3d003d3",
+    "proposed_label": "Latissimus dorsi transfer",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "5da7076c-0ad9-40dd-8aa0-867221441074",
+    "proposed_label": "Knot of Henry",
+    "factory_type": "condition",
+    "inferred_type": "surgical_approach",
+    "confidence": 0.85,
+    "reasons": [
+      "surgical_approach_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "5f86e2ae-dd88-4871-8173-72d5ba863a80",
+    "proposed_label": "Partial patellectomy",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "60066e67-3af5-4c46-8309-f20fe3fb8c3f",
+    "proposed_label": "Gartland Classification",
+    "factory_type": "condition",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "612ed6bc-466b-4a66-8e85-28fd3b769d7b",
+    "proposed_label": "Observation if asymptomatic with serial radiographs",
+    "factory_type": "condition",
+    "inferred_type": "diagnostic_test",
+    "confidence": 0.9,
+    "reasons": [
+      "diagnostic_modality"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "61f98896-1b32-4be5-8d77-d1c2325a504c",
+    "proposed_label": "Supraglenoid tubercle",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6229a41f-dd4e-4d92-80c4-6349168a8b39",
+    "proposed_label": "Posterior humeral circumflex artery",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "62a7fc2f-fcf1-4c0b-86ab-dbb24d8f1600",
+    "proposed_label": "Femur/Patella",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "62efb69e-c77e-4464-816e-98d63d22561a",
+    "proposed_label": "MRI arthrogram",
+    "factory_type": "imaging_finding",
+    "inferred_type": "diagnostic_test",
+    "confidence": 0.9,
+    "reasons": [
+      "diagnostic_modality"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "630f7b01-ce21-490d-805a-d956f74276f1",
+    "proposed_label": "Center of the intercondylar notch",
+    "factory_type": "imaging_finding",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "63a2bc87-0824-4cec-89f9-6a9c891d4741",
+    "proposed_label": "Intramedullary nail",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "64e3b4ab-fdf0-465c-8baa-f0742e09091f",
+    "proposed_label": "Knee will be tight in flexion",
+    "factory_type": "complication",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "65e5f543-d0d8-4356-8de3-cc9addc8b53b",
+    "proposed_label": "medial femoral condyle",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "65f5eba7-a74e-47d7-805f-4a52d19e922d",
+    "proposed_label": "Mason Classification",
+    "factory_type": "condition",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6778a80a-0671-4ce4-8e5d-8bc3047ea389",
+    "proposed_label": "Standing radiograph",
+    "factory_type": "imaging_finding",
+    "inferred_type": "diagnostic_test",
+    "confidence": 0.9,
+    "reasons": [
+      "diagnostic_modality"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "68c4a5d4-6fe6-4adc-8933-917cf0712ab8",
+    "proposed_label": "anterior inferior tibiofibular (AITFL) ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "68d8803a-9e50-4b32-8ead-a3283e8d7cf3",
+    "proposed_label": "Biceps/resisted elbow flexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "68e9b934-8876-428a-8ccc-c87d214a6ae5",
+    "proposed_label": "Osteotomy",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "692db4f1-2cf4-4b7c-86b4-7ee8ca6d50cb",
+    "proposed_label": "Squaring of lateral femoral condyle",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6b0e1af9-87c9-4afe-8bb5-bc775a40e4e3",
+    "proposed_label": "Latissimus dorsi",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6ba5ee83-e33b-457a-82e7-99536076f774",
+    "proposed_label": "5th metatarsal",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6bd45fbe-0f3a-48f4-8fe0-1ed5d77dd44b",
+    "proposed_label": "CT",
+    "factory_type": "imaging_finding",
+    "inferred_type": "diagnostic_test",
+    "confidence": 0.9,
+    "reasons": [
+      "diagnostic_modality"
+    ],
+    "claims": 1,
+    "disposition": "DEFER_NEEDS_REVIEW"
+  },
+  {
+    "proposal_id": "6be1ccab-321a-4267-8c26-41d5bfef85fb",
+    "proposed_label": "Anterior-Superior Capsule",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6c4f34dd-1990-4a1b-8851-5ca365ac2395",
+    "proposed_label": "95-degree angled blade plate",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6c52182b-c216-46e6-8812-c8888feb3b4a",
+    "proposed_label": "bone overgrowth",
+    "factory_type": "complication",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6cf58912-fcb6-4a2f-81b2-22c0c378163f",
+    "proposed_label": "Anterior capsule",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6d031014-9993-42b5-8c6f-f5c1b69a10d3",
+    "proposed_label": "Distance between screw threads",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6d8a4bc0-d122-4203-8a5e-e63495784687",
+    "proposed_label": "MTP joint arthrodesis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6dd6c75b-5352-405f-8417-77d2b1849708",
+    "proposed_label": "Meyers and McKeever Classification",
+    "factory_type": "condition",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "6deb5518-1100-4876-80ef-af807d632748",
+    "proposed_label": "Implant failure with symptomatic fracture instability",
+    "factory_type": "condition",
+    "inferred_type": "complication",
+    "confidence": 0.85,
+    "reasons": [
+      "complication_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6df221ea-1ba1-4223-8303-1a0f7e1f4c1b",
+    "proposed_label": "Grayson's ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6e146a28-d578-443f-8b40-c390f87330c9",
+    "proposed_label": "Holds scapula to chest wall",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6e1ce2b7-00e1-4697-8f68-d5c20772a84b",
+    "proposed_label": "Transverse humeral ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "6fa40a30-9139-4914-818b-0a39b3070337",
+    "proposed_label": "labrum",
+    "factory_type": "imaging_finding",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "DEFER_NEEDS_REVIEW"
+  },
+  {
+    "proposal_id": "6fd34bfd-49bc-4be6-8a32-5492a9b165e5",
+    "proposed_label": "revision",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "71031f81-23d8-43d4-86f8-9f798d87f8c7",
+    "proposed_label": "Lateral condyle fractures",
+    "factory_type": "complication",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "726fbbd0-7bbb-4237-8343-eb112918405b",
+    "proposed_label": "Tibialis posterior overpowers weak peroneus brevis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "72b23809-fea2-424f-8bd8-b4d9295511ce",
+    "proposed_label": "Anterior cervical diskectomy/corpectomy and fusion",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "73c86354-e960-4ad5-842f-2f23df1aa348",
+    "proposed_label": "plantar plate",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "74c8e81c-de78-4d92-85a1-d939a6ed7cb8",
+    "proposed_label": "Total synovectomy +/- external beam radiation",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "74d03ed0-b31e-4d3c-8fc1-630ca1361023",
+    "proposed_label": "Emergent Fasciotomy",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "754db009-36bd-433e-825c-98f0658eaf52",
+    "proposed_label": "Slight extension",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "76075be1-59ef-457e-8d91-93c514929d35",
+    "proposed_label": "Straight leg raise",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "765e0760-2b29-47c0-8a85-fa39a1da8ee1",
+    "proposed_label": "Medial head of the Gastrocnemius",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "76749c86-dad3-4c72-8bde-905f879ab323",
+    "proposed_label": "Olecranon - 9 years old",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "77299b7c-36ba-4268-8502-dfe3cc3f16cf",
+    "proposed_label": "flexion-extension",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "77a472de-fd46-4039-8b9f-b64ec8ab1758",
+    "proposed_label": "Intermetatarsal ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "784d083f-e12a-470e-8937-5a31ffc92dda",
+    "proposed_label": "Forearm pronation",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "798bac4b-4de5-40bd-857c-2edeb2e06339",
+    "proposed_label": "Lift off",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "79b20c8b-bc00-4aad-814f-12f636438086",
+    "proposed_label": "Acromial branch of the Thoracoacromial artery",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "7b5d267d-6584-4fdf-876f-ca4fbfdc6302",
+    "proposed_label": "Nerve to piriformis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "7c2c2971-38c4-409c-81f7-374a41c488a5",
+    "proposed_label": "Skin necrosis",
+    "factory_type": "complication",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "7ca1beb0-ef63-4576-84b0-b91c089bdc50",
+    "proposed_label": "Two incision approach",
+    "factory_type": "condition",
+    "inferred_type": "surgical_approach",
+    "confidence": 0.85,
+    "reasons": [
+      "surgical_approach_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "7e3333ed-56c8-4b58-858d-3bafc34074ba",
+    "proposed_label": "Dorsalis pedis artery",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "7f0e9a80-9955-456e-8779-63bab1df6d5d",
+    "proposed_label": "Cubitus Varus",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "80547071-86b9-4d0e-8f30-9ec98efd3794",
+    "proposed_label": "Thompson",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "8081c31f-855a-4e84-8136-4ccc3d55f8a1",
+    "proposed_label": "Ultrasound",
+    "factory_type": "imaging_finding",
+    "inferred_type": "diagnostic_test",
+    "confidence": 0.9,
+    "reasons": [
+      "diagnostic_modality"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "81c435a3-72e5-43ca-8c2a-52eaf4d27a44",
+    "proposed_label": "Axillary nerve/deltoid dysfunction",
+    "factory_type": "procedure",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "81c57c52-aea4-43b2-8009-b37be516d8e7",
+    "proposed_label": "Plantaris tendon",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "81e42a6d-4d97-4ce6-8cf8-7d4feb7d5c91",
+    "proposed_label": "Flexion and adduction",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "82f9968c-fe4f-4a98-8418-8b5fc7018e3b",
+    "proposed_label": "Adductor canal block",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "845e0d0b-3058-4667-8607-e2b2eb5b4412",
+    "proposed_label": "Labral tear",
+    "factory_type": "imaging_finding",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "84985018-9f6a-4816-8bbe-d020993a38e4",
+    "proposed_label": "Long head of the triceps",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "84e712a2-3173-4337-8733-74ca4c81f9d0",
+    "proposed_label": "Mechanical axis alignment",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "853ef38d-71ec-4c24-8947-65bbb0499569",
+    "proposed_label": "Stryker Notch",
+    "factory_type": "imaging_finding",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "MERGE_PROPOSALS"
+  },
+  {
+    "proposal_id": "8540dd22-8140-4216-82db-6344030c10fd",
+    "proposed_label": "Radius/Ulna",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "856f3196-4629-45d0-868a-045b3bffa152",
+    "proposed_label": "Articular cartilage",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "85b5dd2a-4240-4ff3-8939-db524b26be05",
+    "proposed_label": "S eparation of growth plate",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "85e41ba5-e7e4-47dc-86d0-abbcfc83da5d",
+    "proposed_label": "Nerve to quadratus femoris",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "86418044-e238-4b51-8553-3e0c1f6715d9",
+    "proposed_label": "Long second metatarsal",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "87fdbe84-05a5-49f3-821a-1a8546acb990",
+    "proposed_label": "Small finger flexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "8935913b-b77f-4dfd-874f-46904a27fa5d",
+    "proposed_label": "Tibial crest",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "894f620e-754b-45a8-872e-b977501c7fc1",
+    "proposed_label": "Radioulnar ligaments - volar and dorsal",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "8959a793-e084-4c90-8bab-e6e0c8d2fd81",
+    "proposed_label": "Serratus Anterior",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "899256a4-b631-493a-8b4d-861bfa264bc2",
+    "proposed_label": "Length unstable fractures",
+    "factory_type": "procedure",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "8a282f0c-d8aa-42c2-8123-90cdabb2d6a5",
+    "proposed_label": "Young-Burgess Classification",
+    "factory_type": "condition",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "8ab4a1f3-b657-4463-83bf-77c736a369dc",
+    "proposed_label": "Ultrasound + aspiration",
+    "factory_type": "imaging_finding",
+    "inferred_type": "diagnostic_test",
+    "confidence": 0.9,
+    "reasons": [
+      "diagnostic_modality"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "8b0bfab6-bc55-4b42-82e7-2addfe1a748d",
+    "proposed_label": "Spine",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "8cab56ce-2d65-4828-84c9-11342bbb0cda",
+    "proposed_label": "20-30 degrees of flexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "8db971d5-ac47-4802-81b4-dd7ca0d1fc5a",
+    "proposed_label": "Left gluteus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "8ecdba55-ed4f-48bf-8341-bff223a6c46c",
+    "proposed_label": "Grade III w/ posterior displacement",
+    "factory_type": "condition",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "90178663-b727-4daf-84b6-6f9a20ae6e37",
+    "proposed_label": "Radioulnar ligaments of the TFCC",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "911770fc-10f0-49d5-89d0-8a7c41ad5ac1",
+    "proposed_label": "Yergason's",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "919f8132-5a36-4a9d-88ff-166d3b01aa82",
+    "proposed_label": "wide surgical resection",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "927b4208-241c-4be9-80dd-1540e1e002d9",
+    "proposed_label": "Anterior ulna",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "92bcc991-8aa6-4500-8e31-d72ba3f55cdb",
+    "proposed_label": "Volar beak ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "92c589da-f826-4072-8481-1f0ae933da24",
+    "proposed_label": "CT Myelogram",
+    "factory_type": "imaging_finding",
+    "inferred_type": "diagnostic_test",
+    "confidence": 0.9,
+    "reasons": [
+      "diagnostic_modality"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "93135211-6d93-4721-87fa-791d4c51d8c9",
+    "proposed_label": "Circular external fixator",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "9416a09f-513a-438b-8493-11f3d24ae893",
+    "proposed_label": "Tibialis anterior - ankle dorsiflexion L4",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "947cc2e8-485d-4544-824b-04d7bf71a1a0",
+    "proposed_label": "bicipital tuberosity",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "94bad514-d3a8-4a2f-8aab-b6c93115cdf0",
+    "proposed_label": "Degeneration of the remaining compartments",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "94cd1faf-af2b-450c-8656-901dcf4bbe66",
+    "proposed_label": "Exploratory laparotomy/small bowel repair",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "957c33d9-ac92-43bc-8303-87df342d415f",
+    "proposed_label": "Assists great toe flexion at MTPJ",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "963234f6-a01d-4a47-8c3e-bb2c54aaa094",
+    "proposed_label": "Single incision approach",
+    "factory_type": "condition",
+    "inferred_type": "surgical_approach",
+    "confidence": 0.85,
+    "reasons": [
+      "surgical_approach_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "97177086-14ee-456c-8e89-142ea491987d",
+    "proposed_label": "Soleus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "97764c23-8f88-4164-8b23-519bf07cac5e",
+    "proposed_label": "Zone 6 - metacarpal",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "978c2f38-8dd0-45a6-82e1-d393a8b67f75",
+    "proposed_label": "Stage II",
+    "factory_type": "condition",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "97feace7-f189-4353-8bce-3ad2e8a0a31c",
+    "proposed_label": "Arthroscopic Bankart repair; Remplissage procedure",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "984a0b62-1459-4c73-84f2-9b42135f1b30",
+    "proposed_label": "posterior oblique ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "9876cc89-8e69-4a85-8da2-843886478a64",
+    "proposed_label": "Loder Classification",
+    "factory_type": "condition",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "98953286-4a95-4e43-8998-29dfb9df3757",
+    "proposed_label": "Varus neck-shaft angulation",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "99652672-b4dd-4e64-8097-b750522cde0e",
+    "proposed_label": "Pronator teres",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "998e05c4-b2ef-402e-8b6d-ef1afc8cef29",
+    "proposed_label": "Sublabral foramen + cordlike MGHL",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "99f50ada-4564-4a6a-8adc-6d47d63bb492",
+    "proposed_label": "Volkmann ischemic contracture",
+    "factory_type": "condition",
+    "inferred_type": "complication",
+    "confidence": 0.85,
+    "reasons": [
+      "complication_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "9b0488c7-186a-4497-8237-902753e0ad97",
+    "proposed_label": "O'Brien Classification",
+    "factory_type": "condition",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "9caf89d3-ee48-49e7-8826-e275f9c3657e",
+    "proposed_label": "synovectomy + loose body removal",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "9d13f7eb-ec0f-46b0-85c6-baa49acefa38",
+    "proposed_label": "Pelvis/Acetabulum",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "9d22e1c1-195c-4105-8cfa-87c2f62d330c",
+    "proposed_label": "overstuffing of the ulnohumeral joint",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "9d554996-0ef6-403e-862a-4f3bd2e60dee",
+    "proposed_label": "Alar ligaments",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "9d8dcec6-c235-43e6-8d81-12d6b4ca8d2c",
+    "proposed_label": "Entrapment within the joint",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "9d95be32-ec55-4994-8330-d2aee9490ee8",
+    "proposed_label": "Varus + flexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "9e074a68-29e3-47d5-8cd5-bc7948f9e78e",
+    "proposed_label": "Elbow",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "DEFER_NEEDS_REVIEW"
+  },
+  {
+    "proposal_id": "9ec70046-f29f-41bb-8ec7-4a80c72b89da",
+    "proposed_label": "Congenital fusion of 2 tarsal bones",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "9f3156a6-364b-403d-8a93-b7e949dcddb5",
+    "proposed_label": "femoral stem",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "9f46e1ce-b68d-434b-8992-fcb51aaf7f35",
+    "proposed_label": "Tibialis anterior",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "9f59c923-c0f5-4f62-8d23-663d3eaf87de",
+    "proposed_label": "Quadriceps/knee extension abduction",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "9f71f293-b428-41af-8f22-93d9db6677e1",
+    "proposed_label": "CT",
+    "factory_type": "condition",
+    "inferred_type": "diagnostic_test",
+    "confidence": 0.95,
+    "reasons": [
+      "diagnostic_modality",
+      "best_test_context_support"
+    ],
+    "claims": 1,
+    "disposition": "MERGE_PROPOSALS"
+  },
+  {
+    "proposal_id": "9f8de0de-ae5e-4440-8bf5-1d96d2eb2323",
+    "proposed_label": "Index Finger Extension",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a04c03eb-5330-45b2-83ea-b42f244cea67",
+    "proposed_label": "Plantar 1st metatarsal",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a06bdb50-cf68-4fd6-84ac-9b64399f2eb6",
+    "proposed_label": "Posterior placed rim liner",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a13a7e79-56b7-4acc-8759-86448afee699",
+    "proposed_label": "Manual external rotation stress",
+    "factory_type": "imaging_finding",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a17663ed-5eab-46e1-84dc-3a9ba067cf8c",
+    "proposed_label": "ECRB tendon",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a17d6e19-8751-4972-8a6a-4cecdc84a1ec",
+    "proposed_label": "decompression",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a1df58a3-694a-4da5-8cfe-d82d50c187ac",
+    "proposed_label": "5-15° hindfoot valgus",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a24da682-421b-4ef4-8382-b428afa2fa08",
+    "proposed_label": "Lister's tubercle",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a31a5e5f-c00c-4440-803d-fbf1282191ca",
+    "proposed_label": "Abduction and internal rotation",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "a3e9682d-cd93-4240-810e-fdd4cfc85bf9",
+    "proposed_label": "Apical ligaments",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a4274b19-677d-4a77-8f44-065168cb21a5",
+    "proposed_label": "Jaw necrosis",
+    "factory_type": "complication",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a536d4c2-e21f-4c0f-8daf-be59e98f2c04",
+    "proposed_label": "Tibialis anterior/ankle dorsiflexion",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a57d0f2d-e59b-4da2-8db6-b87d329cacdc",
+    "proposed_label": "Two-stage replacement arthroplasty",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a5d653f1-4480-4f7f-8482-cde410b16577",
+    "proposed_label": "soft-tissue interposition arthroplasty",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a6013684-bd9c-482f-82fa-54ee4a3090f4",
+    "proposed_label": "Block vertebrae",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a641094e-72af-4306-8dca-845fdcd890b7",
+    "proposed_label": "Push-off and forced great toe dorsiflexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "a681ce79-05b3-4b2f-82d5-41a96ee4c253",
+    "proposed_label": "Watanabe Classification",
+    "factory_type": "condition",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a6b6c9d4-a6d8-4144-8a1b-484c631ba4d9",
+    "proposed_label": "Revision ankle arthrodesis +/- bone grafting",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a6c491fb-fa5e-4b69-814f-7f4fa235a7cb",
+    "proposed_label": "facet",
+    "factory_type": "procedure",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a6caab11-11c3-42f3-8ffd-9e790ecb4b2e",
+    "proposed_label": "Gastrocnemius/Soleus complex - ankle plantarflexion S1",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a6df53be-eb81-40cf-80e5-39259ea53722",
+    "proposed_label": "Middle geniculate artery",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a70ab399-4679-4f9f-8c3e-16dcc0b625dd",
+    "proposed_label": "Scapulothoracic articulation",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a888e0ec-7276-4cbf-89d6-8c4fd5959d2d",
+    "proposed_label": "Bone to bone healing",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a8bac7a7-df31-4122-8766-5837f8570d84",
+    "proposed_label": "Closed reduction under anesthesia",
+    "factory_type": "condition",
+    "inferred_type": "fixation_method",
+    "confidence": 0.85,
+    "reasons": [
+      "fixation_method_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "a9e72bd2-5eb0-4ff0-8ffd-4a5f2bbc30c6",
+    "proposed_label": "Hawkins-Kennedy",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "aa87343e-a973-49e8-82eb-17e75c2bf554",
+    "proposed_label": "10-year risk of major osteoporosis-related fractures",
+    "factory_type": "complication",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "aaa21b85-96d6-4e1f-86e2-184cd7545e5a",
+    "proposed_label": "Volar and dorsal radioulnar ligaments",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "abb73db3-ca24-4c56-8b49-f9fe1b73b3a1",
+    "proposed_label": "Shortening the long side - epiphysiodesis",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ac501a65-4894-4b2b-820c-2e70fbba5bed",
+    "proposed_label": "Hardware failure; - Persistent neck pain",
+    "factory_type": "condition",
+    "inferred_type": "complication",
+    "confidence": 0.85,
+    "reasons": [
+      "complication_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "ac90a5d5-99e7-463d-8da0-0b3d5e517ab8",
+    "proposed_label": "DIPJ flexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ac982b6b-b908-4b58-8b38-a6f59e2042d2",
+    "proposed_label": "Supraspinous ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ad6fcb03-2258-4374-85ab-8d30139cf640",
+    "proposed_label": "Base of 1st thumb metacarpal",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ad7cfe5d-77a7-44cb-866d-4577b2c3572a",
+    "proposed_label": "Adjacent metacarpals",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ae68e80b-cc5c-4512-83d0-8d6766ddef71",
+    "proposed_label": "Prosthetic joint infection",
+    "factory_type": "complication",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ae8a7caa-7b0a-4a4b-8093-b7c274411324",
+    "proposed_label": "Smith-Robinson anterior approach",
+    "factory_type": "condition",
+    "inferred_type": "surgical_approach",
+    "confidence": 0.85,
+    "reasons": [
+      "surgical_approach_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "afb391e8-7884-42e1-84e0-6160203b4fc7",
+    "proposed_label": "Triceps/resisted elbow extension",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "afbf97e0-2659-436c-86b4-22c6c32b0b80",
+    "proposed_label": "Ulnar side of 5th metacarpal",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b07c6ccf-2523-4949-804d-05dac5fca060",
+    "proposed_label": "Compartment Syndrome of the volar forearm",
+    "factory_type": "condition",
+    "inferred_type": "complication",
+    "confidence": 0.85,
+    "reasons": [
+      "complication_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b19b7c2f-cafe-4d56-88d3-1521d32b4af5",
+    "proposed_label": "C1-C4 transverse process",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b28050b6-cfb7-4e70-86f1-d629bc24a15f",
+    "proposed_label": "Thigh extension",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b2dec8eb-31cf-40d7-8978-4caa432dfa79",
+    "proposed_label": "1st MTP joint pain",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b2e9393f-9d3f-454d-8c77-62867ce2b1ad",
+    "proposed_label": "Knee will be loose in flexion",
+    "factory_type": "complication",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b32e7eb8-42dc-4e03-8d0b-037fd26aabb3",
+    "proposed_label": "fusion",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "MERGE_PROPOSALS"
+  },
+  {
+    "proposal_id": "b51769a9-58c1-4170-822e-8ac63bbd05e1",
+    "proposed_label": "posterior spine",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b52e55ab-37f6-436d-8faf-ac18dceb8a49",
+    "proposed_label": "Gravity-assisted varus stress test",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b55dc193-1786-43d5-8821-b9a5ee24c8e2",
+    "proposed_label": "Lateral calcaneal branch of peroneal artery",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b564684a-5015-47b4-882b-1ff709c45373",
+    "proposed_label": "Bicipital groove",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b5a3c6a8-b30a-476b-80e8-5efe9596da15",
+    "proposed_label": "Deltoid/resisted abduction",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b6c69d8a-f9f3-41ae-852e-5b9b87419ceb",
+    "proposed_label": "Synovial fluid analysis - includes WBC",
+    "factory_type": "condition",
+    "inferred_type": "diagnostic_test",
+    "confidence": 0.9,
+    "reasons": [
+      "diagnostic_modality"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b7bf6cbf-1d0c-4b55-8a64-7903f72c6ba9",
+    "proposed_label": "Proximal tibia/fibula osteotomy",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b7c99e9f-9669-4cc4-8214-6f6e5994e14d",
+    "proposed_label": "Peroneus longus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b8186f12-30db-42a5-83f5-78d411775889",
+    "proposed_label": "Posterior medial ulna",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b8250ac6-bfbd-453f-871f-354bb5776fbd",
+    "proposed_label": "Second metatarsal",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b8a4485a-3f4a-4fd5-8e4f-e3d6541f2352",
+    "proposed_label": "Stretching of ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b8df07a5-c216-4895-8976-06ce96d8428a",
+    "proposed_label": "Suturing the posterior capsule",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "b9c1eaca-4b0f-4cb0-856f-ec32eaf528ea",
+    "proposed_label": "Forearm supination",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ba072d82-631d-4336-871b-4b02e189d66d",
+    "proposed_label": "Hill Sachs lesion",
+    "factory_type": "imaging_finding",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ba5db947-5976-4000-8916-62e3ec7c6bd5",
+    "proposed_label": "Ligament of Wrisberg",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ba75bd38-904c-4920-884e-2a3b389bf2c2",
+    "proposed_label": "Peri-implant lucency",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "bb7a4e7b-77a1-43ca-81b9-01263e987733",
+    "proposed_label": "Proximal edge of the supinator muscle",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "bcc91135-b334-4dc6-8813-d9edbce7463f",
+    "proposed_label": "III-B: Muscle belly",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "bcfa9897-4f5c-4640-80d5-8f9570492cac",
+    "proposed_label": "Intersesamoid ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "bd270381-a267-4ac5-87f6-a85f6d9d7a01",
+    "proposed_label": "Flexor retinaculum",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "bd7fa637-cf20-4282-8afc-3fe55003d0ab",
+    "proposed_label": "Middle 1/3 of lateral femoral condyle",
+    "factory_type": "imaging_finding",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "bdcadd80-4ae5-448b-81b2-9607b7ad7e1d",
+    "proposed_label": "Metacarpal",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "DEFER_NEEDS_REVIEW"
+  },
+  {
+    "proposal_id": "be2b7244-ad6a-40f9-894f-2901cc42e9e4",
+    "proposed_label": "Partial/complete sesamoidectomy",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "bf01bb8f-9fdb-4492-888f-83e47b6eb433",
+    "proposed_label": "Rectus femoris",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "bf13e05f-c87d-4558-8cd1-a6ff6870d366",
+    "proposed_label": "Empty can",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "bf37a6d9-ed84-4ea3-896f-601052c1d219",
+    "proposed_label": "Type I - minimal defects",
+    "factory_type": "condition",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "bf88245f-fa57-4cff-8a84-8c4e531fc0f0",
+    "proposed_label": "Dorsiflexion and inversion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "c054dbc6-3aaf-405d-8d92-4cbe78a4289d",
+    "proposed_label": "Valgus deformity >5°",
+    "factory_type": "procedure",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "c07bb273-5db7-4e53-8306-c8f7e1d5ae15",
+    "proposed_label": "Obturator internus tendon",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "c0c27e13-98aa-456b-8935-6d69fab451cf",
+    "proposed_label": "Valgus mold",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "c25c1fd3-e0d1-4361-8e7c-ec16d441a6a6",
+    "proposed_label": "Extension of the IP joints",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "c262a69f-9958-4eac-800f-f9cd0d21cf9b",
+    "proposed_label": "Prophylactic fixation of impending fracture",
+    "factory_type": "imaging_finding",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "c2d8535f-0e21-4f97-8d33-534a27230f58",
+    "proposed_label": "Internal rotation of tibia/knee",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "c380cef9-daaf-4415-89bf-6b2173d619d4",
+    "proposed_label": "Supra-acetabular and iliac crest",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "c56c0b24-e5e4-4727-8ef7-9596f32ad951",
+    "proposed_label": "Trochanteric and Piriformis fossa",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "c5a5c293-e7df-42a9-80ab-39ed30d4c873",
+    "proposed_label": "Anterior Inferior Tibiofibular Ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "MERGE_PROPOSALS"
+  },
+  {
+    "proposal_id": "c5ac423d-70d1-46b2-8707-f897a688ef31",
+    "proposed_label": "Valgus and procurvatum",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "c66603ca-1adb-4eb8-8498-48be57b94dd6",
+    "proposed_label": "Tibia/Fibula",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "c6d4002d-517c-4f64-8d58-e7fd15727728",
+    "proposed_label": "Arthritis of the capitolunate joint",
+    "factory_type": "procedure",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "c70f7eb0-8cc5-4568-8def-4fe0d2d39e29",
+    "proposed_label": "Type II",
+    "factory_type": "condition",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "c851fcc5-7067-4ff2-83bf-0ba970bda7c1",
+    "proposed_label": "Forearm extension",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "c9012511-e2f3-4894-8a0d-aab980bd2e12",
+    "proposed_label": "Elevate scapula",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_NON_ENTITY"
+  },
+  {
+    "proposal_id": "c92ec0ba-ae81-4ec6-8735-8226602983e3",
+    "proposed_label": "FABER",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 1,
+    "disposition": "DEFER_NEEDS_REVIEW"
+  },
+  {
+    "proposal_id": "c9726343-5b2a-45de-8368-1a6d91960d7e",
+    "proposed_label": "Plantar flexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "c9d61d80-6f22-4d0e-8af5-19770a54fb8b",
+    "proposed_label": "Diaphysis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "DEFER_NEEDS_REVIEW"
+  },
+  {
+    "proposal_id": "c9dcecca-07d3-4a75-8df7-1fd0a2f4c805",
+    "proposed_label": "Peroneus longus; Peroneus brevis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "caa660fe-e7f8-44bc-8888-4bfa5d1b10c5",
+    "proposed_label": "Excessive kyphosis",
+    "factory_type": "imaging_finding",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "cb09c6fd-7751-42bd-8f04-5b9d14eabd81",
+    "proposed_label": "Type I",
+    "factory_type": "condition",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "cb337dc6-521b-4440-885b-6aa3df3fc773",
+    "proposed_label": "Peroneus longus overpowers weak tibialis anterior",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "cc00a3be-38ed-4073-893a-4e90a7dae2b4",
+    "proposed_label": "Persistent internal rotation contracture/external rotation weakness",
+    "factory_type": "condition",
+    "inferred_type": "complication",
+    "confidence": 0.85,
+    "reasons": [
+      "complication_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "cc67864d-e020-468d-8f3c-ae25aab8d9df",
+    "proposed_label": "Wassel Classification",
+    "factory_type": "condition",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "cd5678e1-2605-475b-8709-fc192e5f4372",
+    "proposed_label": "Pain w/ adduction",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "cdea754f-d5fc-44e6-8351-83c87a958621",
+    "proposed_label": "Adductors longus",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "cec2d116-4ecb-4b09-8d4f-18b68b73d41f",
+    "proposed_label": "Joint space narrowing",
+    "factory_type": "imaging_finding",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "MERGE_PROPOSALS"
+  },
+  {
+    "proposal_id": "cf3cefc3-a81d-4f93-836f-55accd8b5951",
+    "proposed_label": "PASTA lesion",
+    "factory_type": "imaging_finding",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d01eae05-58df-429a-829e-79b420adb94b",
+    "proposed_label": "Pudendal nerve neuropraxia",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d043c17a-df69-4506-8a8f-c608a5d72ff2",
+    "proposed_label": "Suprascapular nerve/artery",
+    "factory_type": "complication",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d0b25067-d51a-42e7-8867-476a98e60d8a",
+    "proposed_label": "External rotation force",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d0c4d51a-2770-4378-8b07-e8eb7ddee1e2",
+    "proposed_label": "Idiopathic AVN of the proximal epiphysis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d13803d7-02e0-4124-81bb-e015267a98dc",
+    "proposed_label": "Shuck test",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d146705e-a3c9-4f05-829f-6d0dc91781d3",
+    "proposed_label": "Middle genicular artery",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d2605bdf-1c7f-4e65-8748-c127c859df27",
+    "proposed_label": "Meyerding Classification",
+    "factory_type": "condition",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d35a392a-79e7-4660-8d0f-781d82e15be4",
+    "proposed_label": "Assists FDL with toe flexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d4b21927-ea42-464d-8c99-da4ceda6c9bc",
+    "proposed_label": "Open reduction + osteotomy",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d56f8eda-ffe1-4a22-8104-0d56c3bfee3a",
+    "proposed_label": "Subcutaneous approach to ulna shaft",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d669471a-3c39-47e7-84c5-42bb70f3b536",
+    "proposed_label": "Shoulder",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d6eb058f-bdfe-4bf7-88b4-a963e64e7e62",
+    "proposed_label": "Flexion and extension films",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "d788439b-c1be-47f6-8fe1-1d78f02609f6",
+    "proposed_label": "Oblique pulley",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d79b364d-5b06-41d4-8f8e-c13ac9720fb6",
+    "proposed_label": "Type IV",
+    "factory_type": "condition",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "d80c68d5-bb8b-4399-869b-faf9cd35c82a",
+    "proposed_label": "Type 1",
+    "factory_type": "condition",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "d83b3649-ff97-4de3-8cdf-6e4ab97ecbe8",
+    "proposed_label": "Intrinsics/resisted finger abduction",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d887e0b9-99f5-4386-87ce-f4f85e8d2992",
+    "proposed_label": "Recurvatum",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "MERGE_PROPOSALS"
+  },
+  {
+    "proposal_id": "d9571be4-9d63-4a30-8fbf-19e3feb96a8a",
+    "proposed_label": "Posterior-proximal ulna",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "d9fddf45-054d-4809-8c27-f10525223d71",
+    "proposed_label": "Deformity",
+    "factory_type": "imaging_finding",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_TOO_GENERIC"
+  },
+  {
+    "proposal_id": "da3d59ec-be70-4288-877a-f048ba2accb7",
+    "proposed_label": "Deep abrasion with skin/muscle contusion",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "db172197-03dd-47dc-8adb-6e9d75823105",
+    "proposed_label": "Tendon and ligament insufficiency",
+    "factory_type": "complication",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "db74719b-a373-4861-89bf-154e27108309",
+    "proposed_label": "T hrough growth plate",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "db9f0684-be59-4ec5-8900-357d10a888e3",
+    "proposed_label": "acetabular cup",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "dbfeb0bf-dd01-4894-8648-189e416ec06f",
+    "proposed_label": "Piriformis fossa",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "dcdd4694-de24-425c-8826-54d4c004d16d",
+    "proposed_label": "Bigliani Classification",
+    "factory_type": "condition",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "dd9c2b00-7eb5-4304-8286-a100298b2cdc",
+    "proposed_label": "ORIF +/- bone graft",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ddac48c5-5385-456a-8a8d-7d490c2db3ee",
+    "proposed_label": "Drop arm",
+    "factory_type": "condition",
+    "inferred_type": "exam_maneuver",
+    "confidence": 0.85,
+    "reasons": [
+      "exam_maneuver_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ddca518e-99c6-4196-8bb4-caba125f31a8",
+    "proposed_label": "Cam type femoroacetabular impingement",
+    "factory_type": "imaging_finding",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "de70ec6a-a347-4e73-86c1-f0b8e6436b5f",
+    "proposed_label": "Perichondral artery",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "dec96676-0686-441a-8960-47dd8042dffe",
+    "proposed_label": "Popliteofibular ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "df42e387-7edf-42e6-86c5-9b3fa4bb2727",
+    "proposed_label": "Olecranon bursitis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e105ee9a-cd23-4d5f-82a9-dd43703dbcb3",
+    "proposed_label": "ESR>40 mm/h",
+    "factory_type": "condition",
+    "inferred_type": "diagnostic_test",
+    "confidence": 0.9,
+    "reasons": [
+      "diagnostic_modality"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e15d18c0-d14b-4a80-8bf6-5e6614cd1504",
+    "proposed_label": "ORIF and revision of femoral implant",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "e1cd6b4d-2d4a-4f9c-8dc4-de7467f99ef8",
+    "proposed_label": "Flexion contracture",
+    "factory_type": "procedure",
+    "inferred_type": "complication",
+    "confidence": 0.85,
+    "reasons": [
+      "complication_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e1fdc14f-f9b0-45e8-816d-203c6624d480",
+    "proposed_label": "T12-L5 vertebrae",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e2d00435-ae5e-4b8f-8a68-b9cbe6219e0c",
+    "proposed_label": "Hallux varus",
+    "factory_type": "complication",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e32568db-e007-4d94-8f8e-756a0cba8a6f",
+    "proposed_label": "synovial fluid",
+    "factory_type": "condition",
+    "inferred_type": "diagnostic_test",
+    "confidence": 0.9,
+    "reasons": [
+      "diagnostic_modality"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e33ad0ee-003e-4779-8ccd-c284c4c0997c",
+    "proposed_label": "Nerve to quadrator femoris",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e3ea0837-b88e-45c2-8e95-32d6cbe7b4f1",
+    "proposed_label": "Wide excision with adjuvant radiotherapy",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e4e91998-6e9a-439c-8f0b-7f6e45d8e6e4",
+    "proposed_label": "Inferior angle of the scapula",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e6421261-bdd1-4acf-8f3e-9b93f1a87c1c",
+    "proposed_label": "Spinous process",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e7342e82-79ca-4708-8403-ea40a8879f4d",
+    "proposed_label": "Varus deformity >10°",
+    "factory_type": "procedure",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e7706bad-42fc-4a8f-82f7-403767bd399a",
+    "proposed_label": "Olecranon fracture",
+    "factory_type": "procedure",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e851eba4-2557-4d3b-8967-c9c6f8be9760",
+    "proposed_label": "Lateral parapatellar",
+    "factory_type": "condition",
+    "inferred_type": "surgical_approach",
+    "confidence": 0.85,
+    "reasons": [
+      "surgical_approach_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e8a94f1c-b763-40df-8571-58be8a52eaa2",
+    "proposed_label": "Vastus intermedius",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e908890b-406b-47ab-81ed-ee48b7904b8c",
+    "proposed_label": "ORIF or arthrodesis",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e90e6bd8-030c-4808-8fbf-d6c5a4038ba2",
+    "proposed_label": "Plantarflexion of the first ray",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e928ef28-db2c-4b47-86b7-37289972c565",
+    "proposed_label": "Mayfield Classification",
+    "factory_type": "condition",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "e9c07739-a16c-423f-8131-35c4cb8ce94f",
+    "proposed_label": "Saphenous nerve injury",
+    "factory_type": "complication",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ea286087-782f-44f3-87ae-e9952fe5d040",
+    "proposed_label": "Vastus lateralis",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ea7f63b8-3f98-417e-8da8-5564c837c99e",
+    "proposed_label": "AC ligament disruption",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "MERGE_PROPOSALS"
+  },
+  {
+    "proposal_id": "eaae832e-866a-4aca-813d-ea2a14833bfa",
+    "proposed_label": "Internal rotation of leg 15°",
+    "factory_type": "imaging_finding",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "eab81e69-1654-49e0-864c-bfc431ccfdd5",
+    "proposed_label": "Dorsal cheilectomy",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "eb8ca886-958b-42ee-8969-8483460cdedb",
+    "proposed_label": "Neer",
+    "factory_type": "condition",
+    "inferred_type": "classification_system",
+    "confidence": 0.9,
+    "reasons": [
+      "classification_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ec391dbe-2b1c-4686-8fd1-896f6352f4b8",
+    "proposed_label": "Graft impingement with PCL",
+    "factory_type": "complication",
+    "inferred_type": "condition",
+    "confidence": 0.85,
+    "reasons": [
+      "condition_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ecd45ff6-4292-402a-8de2-413046a9e379",
+    "proposed_label": "Assists in hip flexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ecd4606a-6e81-4293-8973-2e8940076259",
+    "proposed_label": "Tensor fascia latae",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ed7ac553-c7db-4a09-86b7-c50589579203",
+    "proposed_label": "Shoulder arthrodesis",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "ee010201-3f56-42b3-83c0-9907939bb600",
+    "proposed_label": "Posterior medial tibial condyle",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "eebd8119-0d4c-4358-80ac-3bd89b2df3f0",
+    "proposed_label": "Plantarflexion and pronation",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "ef75f274-1628-4ea3-8df3-f23f9b6a047b",
+    "proposed_label": "Glenohumeral joint",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "efcc60ee-b842-4547-89c5-14f045fd733d",
+    "proposed_label": "Bruising of the lateral femoral condyle",
+    "factory_type": "imaging_finding",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "eff5195c-4d8b-479d-877e-fb9b37d09ac1",
+    "proposed_label": "Type 2",
+    "factory_type": "condition",
+    "inferred_type": "classification_grade",
+    "confidence": 0.85,
+    "reasons": [
+      "classification_grade_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "f0225b1a-da9c-44bf-8b9f-18b3e7626c0c",
+    "proposed_label": "Infraglenoid tubercle",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "f05ef4d3-c3a0-4738-8dc1-b1898797da0c",
+    "proposed_label": "Stinchfield resisted hip flexion test",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "f176ac65-9479-4ad6-8a01-233a5f49250b",
+    "proposed_label": "Posterior radius/ulna",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "f2884c86-d2e9-4018-83c4-a4daab844268",
+    "proposed_label": "Plantarflexion and hindfoot inversion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "f6a71adf-973e-4e1a-8ac2-e64932ed9f07",
+    "proposed_label": "Spinous process T11-L3",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "f6e1d8cc-f5ad-4d84-8afd-044a63b7fe2b",
+    "proposed_label": "Pectoralis minor",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "f76bd1e2-3df0-4587-8984-5acd30105b1f",
+    "proposed_label": "Radial head ORIF/arthroplasty",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "f77621ca-6ee5-4dc0-8bd2-09b0a9bfda8c",
+    "proposed_label": "Forearm flexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "f8c44f84-c8a0-4f02-86e3-06a120cf9c90",
+    "proposed_label": "30° of flexion",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "f93b9495-6b85-4d20-8d8b-d47af9d1441c",
+    "proposed_label": "Laminoplasty/Laminectomy and fusion",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "REJECT_CONTEXT_DEPENDENT"
+  },
+  {
+    "proposal_id": "f9904584-a141-458f-8ab8-16699c5f3b54",
+    "proposed_label": "Osteocytes to release Ca++",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "fa52e4c0-d234-46fe-87ff-cb1255684890",
+    "proposed_label": "Trapezius",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "fa7c0dc3-b5d6-420d-8010-23e227d61e53",
+    "proposed_label": "Lateralized liner",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "fadfe16f-8198-4cef-8fa8-94695393289f",
+    "proposed_label": "Superomedial calcaneonavicular (Spring) ligament",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "fb6fd2a9-4398-4431-8572-0e497a7a338b",
+    "proposed_label": "Shoulder abduction",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "fbb26111-c135-40e6-8290-31e4a0985166",
+    "proposed_label": "Revision to proximal femoral replacement",
+    "factory_type": "condition",
+    "inferred_type": "procedure",
+    "confidence": 0.9,
+    "reasons": [
+      "procedure_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "fbd55765-b71e-469e-82d7-d4c25e2ca0a0",
+    "proposed_label": "Capsule",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "DEFER_NEEDS_REVIEW"
+  },
+  {
+    "proposal_id": "fcae7a21-6f50-49cd-892c-a37e57e41764",
+    "proposed_label": "Base of 2nd/3rd metacarpal",
+    "factory_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "fceac76b-3bc0-4c2a-8ae0-e7d0b522fa54",
+    "proposed_label": "Supination-adduction",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "fddfadc8-bf49-417f-89c9-0a4a4346e504",
+    "proposed_label": "Be L ow growth plate",
+    "factory_type": "condition",
+    "inferred_type": "implant",
+    "confidence": 0.9,
+    "reasons": [
+      "implant_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  },
+  {
+    "proposal_id": "fe616548-2664-441e-8632-9f94642f8adc",
+    "proposed_label": "superior peroneal retinaculum",
+    "factory_type": "imaging_finding",
+    "inferred_type": "anatomy_structure",
+    "confidence": 0.9,
+    "reasons": [
+      "anatomy_head_noun"
+    ],
+    "claims": 1,
+    "disposition": "MERGE_PROPOSALS"
+  },
+  {
+    "proposal_id": "ff1f41b9-dbee-4815-81e9-5f5ee1c3762c",
+    "proposed_label": "Morton's extension orthotic",
+    "factory_type": "condition",
+    "inferred_type": "biomechanics_concept",
+    "confidence": 0.8,
+    "reasons": [
+      "biomechanics_pattern"
+    ],
+    "claims": 1,
+    "disposition": "PROMOTE_CANONICAL"
+  }
+]

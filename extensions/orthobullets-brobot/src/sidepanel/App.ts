@@ -57,9 +57,10 @@ import {
 } from './himalaya-review-board.js';
 import {
   appendOrthobulletsTestDebrief,
-  claimRunRows,
   fullDebriefText,
   getOrthobulletsTestReview,
+  hasIncompleteTestDebrief,
+  resumeMissedTestDebriefQuestions,
   testDebriefStorageKey,
   type FullTestDebrief,
   type TestDebriefQuestion,
@@ -72,6 +73,8 @@ import {
   isCompatibleExtensionBuild,
 } from '../shared/build-info.js';
 import { getConfiguredAppOrigin } from '../shared/runtime.js';
+import { readPageAnkiReview, type PageAnkiReview } from '../shared/page-anki-review.js';
+import { bindPageAnkiReview, renderPageAnkiReview } from './page-anki-review-panel.js';
 
 const BROBOT_ICON_URL = chrome.runtime.getURL('icons/brobot-32.png');
 const SIDEPANEL_BUILD_ID_MARKER = '2026-07-30-himalaya-live-v4';
@@ -610,8 +613,8 @@ function getStatusCopy(input: {
       return {
         label: 'Test debrief ready',
         detail: testReview.missedCount
-          ? `${testReview.missedCount} missed questions grouped into a concept map. Open any question for full review data or send all matched cards to Anki.`
-          : `All ${testReview.totalCount} detected questions were correct.`,
+          ? `${testReview.scorePercent != null ? `${testReview.scorePercent}% · ` : ''}${testReview.correctCount}/${testReview.totalCount} correct; BroBot is teaching the ${testReview.missedCount} missed questions as each is ready.`
+          : `All ${testReview.totalCount} detected questions were correct${testReview.scorePercent != null ? ` (${testReview.scorePercent}%)` : ''}.`,
       };
     }
     if (input.pageContext.provider === 'himalaya' && input.pageContext.pageKind === 'results-overview') {
@@ -793,6 +796,9 @@ export function mountSidePanelApp(root: HTMLElement) {
     learningProgress: Record<string, { reviewCount: number; lastRating: 'again' | 'hard' | 'got_it'; lastReviewedAt: string }>;
     curriculumStreamRequestId: string | null;
     curriculumStreamStatus: string | null;
+    pageAnkiReview: PageAnkiReview | null;
+    pageAnkiStatus: 'idle' | 'loading' | 'ready' | 'error';
+    pageAnkiError: string | null;
   } = {
     activePage: null,
     auth: null,
@@ -839,7 +845,12 @@ export function mountSidePanelApp(root: HTMLElement) {
     learningProgress: {},
     curriculumStreamRequestId: null,
     curriculumStreamStatus: null,
+    pageAnkiReview: null,
+    pageAnkiStatus: 'idle',
+    pageAnkiError: null,
   };
+
+  let fullTestDebriefBuildInFlight = false;
 
   let curriculumWatchdog: ReturnType<typeof setTimeout> | null = null;
   const clearCurriculumWatchdog = () => {
@@ -1194,6 +1205,31 @@ export function mountSidePanelApp(root: HTMLElement) {
     state.fullTestDebrief = null;
     state.reviewBoardRowStates.clear();
     state.reviewBoardLoadedFor = null;
+    state.pageAnkiReview = null;
+    state.pageAnkiStatus = 'idle';
+    state.pageAnkiError = null;
+  }
+
+  async function loadPageAnkiReview(pageContext: OrthobulletsPageContext, expectedRefreshSequence: number) {
+    if (pageContext.provider !== 'orthobullets' && pageContext.provider !== 'rock') return;
+    state.pageAnkiStatus = 'loading';
+    state.pageAnkiError = null;
+    render();
+    const result = await sendMessage({
+      type: 'ob:get-page-anki-cards',
+      pageUrl: pageContext.pageUrl || pageContext.sourceUrl,
+      provider: pageContext.provider,
+    });
+    if (expectedRefreshSequence !== pageRefreshSequence) return;
+    if (!result.ok || !('pageAnkiReview' in result)) {
+      state.pageAnkiStatus = 'error';
+      state.pageAnkiError = result.ok ? 'The page-card response was incomplete.' : result.error;
+    } else {
+      state.pageAnkiReview = readPageAnkiReview(result.pageAnkiReview);
+      state.pageAnkiStatus = state.pageAnkiReview ? 'ready' : 'error';
+      state.pageAnkiError = state.pageAnkiReview ? null : 'The page-card response was invalid.';
+    }
+    render();
   }
 
   async function refreshBaseState() {
@@ -1252,8 +1288,17 @@ export function mountSidePanelApp(root: HTMLElement) {
       } else if (pageContext.mode === 'question') {
         state.currentQuestionFingerprint = fingerprintFromPageContext(pageContext);
       }
+      void loadPageAnkiReview(pageContext, expectedRefreshSequence);
     }
     render();
+    const testReview = getOrthobulletsTestReview(pageContext);
+    if (
+      testReview &&
+      state.auth?.status === 'linked' &&
+      hasIncompleteTestDebrief(testReview, state.fullTestDebrief)
+    ) {
+      void buildFullTestDebrief();
+    }
   }
 
   async function startLinkFlow() {
@@ -1369,9 +1414,15 @@ export function mountSidePanelApp(root: HTMLElement) {
     if (extractedReview) {
       const storageKey = testDebriefStorageKey(extractedReview);
       const stored = await chrome.storage.local.get(storageKey);
-      state.fullTestDebrief = (stored[storageKey] as FullTestDebrief | undefined) ?? null;
+      const savedDebrief = stored[storageKey] as FullTestDebrief | undefined;
+      state.fullTestDebrief = savedDebrief
+        ? {
+            ...savedDebrief,
+            questions: resumeMissedTestDebriefQuestions(extractedReview.rows, savedDebrief.questions),
+          }
+        : null;
       if (state.fullTestDebrief?.status === 'building') {
-        const readyCount = state.fullTestDebrief.questions.filter((question) => question.status === 'ready').length;
+        const readyCount = state.fullTestDebrief.questions.filter((question) => question.explanation).length;
         state.fullTestDebrief.status = readyCount > 0 ? 'partial' : 'error';
         await chrome.storage.local.set({ [storageKey]: state.fullTestDebrief });
       }
@@ -1820,139 +1871,92 @@ export function mountSidePanelApp(root: HTMLElement) {
 
   async function buildFullTestDebrief() {
     const review = getOrthobulletsTestReview(state.pageContext);
-    if (!review || state.fullTestDebrief?.status === 'building') return;
+    if (!review || fullTestDebriefBuildInFlight || !hasIncompleteTestDebrief(review, state.fullTestDebrief)) return;
+    fullTestDebriefBuildInFlight = true;
     const now = new Date().toISOString();
     const progressKey = 'snaportho:learning-progress:v1';
-    const storedProgress = await chrome.storage.local.get(progressKey);
-    state.learningProgress = (storedProgress[progressKey] as typeof state.learningProgress | undefined) ?? {};
-    const previousDebrief = state.fullTestDebrief;
-    const claimRows = claimRunRows(review.rows);
-    const debrief: FullTestDebrief = {
-      version: 1,
-      testKey: testDebriefStorageKey(review),
-      createdAt: now,
-      updatedAt: now,
-      status: 'building',
-      questions: claimRows
-        .map((row) => {
-          const previous = previousDebrief?.questions.find((candidate) => candidate.row.questionId === row.questionId);
-          return ({
-          row,
-          pageContext: null,
-          explanation: previous?.explanation ?? null,
-          status: 'pending' as const,
-          error: null,
-          claimStatus: 'pending' as const,
-          ...(state.learningProgress[row.questionId] ?? {}),
-        });
-        }),
-    };
-    state.fullTestDebrief = debrief;
-    await persistFullTestDebrief(review, debrief);
-    render();
-
-    const runKey = `test:${review.testId ?? `${review.day ?? 'unknown'}:${review.totalCount}:${review.rows[0]?.questionId ?? 'first'}:${review.rows.at(-1)?.questionId ?? 'last'}`}`;
-    const runResponse = await sendMessage({
-      type: 'ob:start-question-claim-run',
-      testKey: runKey,
-      questions: claimRows.map((row) => ({ nativeQuestionId: row.questionId, reviewLocator: row.reviewUrl })),
-    });
-    if (!runResponse.ok || !('questionClaimRun' in runResponse)) {
-      debrief.status = 'error';
-      for (const question of debrief.questions) {
-        question.status = 'error';
-        question.error = runResponse.ok ? 'Could not create the claim run.' : runResponse.error;
-      }
+    try {
+      const storedProgress = await chrome.storage.local.get(progressKey);
+      state.learningProgress = (storedProgress[progressKey] as typeof state.learningProgress | undefined) ?? {};
+      const previousDebrief = state.fullTestDebrief;
+      const debrief: FullTestDebrief = {
+        version: 1,
+        testKey: testDebriefStorageKey(review),
+        createdAt: previousDebrief?.createdAt ?? now,
+        updatedAt: now,
+        status: 'building',
+        questions: resumeMissedTestDebriefQuestions(
+          review.rows,
+          previousDebrief?.questions,
+        ).map((question) => ({
+          ...question,
+          ...(state.learningProgress[question.row.questionId] ?? {}),
+        })),
+      };
+      state.fullTestDebrief = debrief;
       await persistFullTestDebrief(review, debrief);
       render();
-      return;
-    }
-    const runId = runResponse.questionClaimRun.runId;
-    const runItems = new Map(runResponse.questionClaimRun.items.map((item) => [item.native_question_id, item]));
-    for (const question of debrief.questions) {
-      const saved = runItems.get(question.row.questionId);
-      if (saved?.status !== 'accepted' && saved?.status !== 'accepted_no_card') continue;
-      question.status = 'ready';
-      question.claimStatus = saved.status;
-      question.claimId = saved.claim_id ?? null;
-      question.linkedCardCount = saved.linked_card_count ?? 0;
-    }
-    await persistFullTestDebrief(review, debrief);
-    render();
 
-    const analyzeQuestion = async (question: TestDebriefQuestion) => {
-      question.status = 'collecting';
-      question.claimStatus = 'processing';
-      await persistFullTestDebrief(review, debrief);
-      if (state.fullTestDebrief === debrief) render();
-      let temporaryTabId: number | null = null;
-      try {
-        const tab = await chrome.tabs.create({
-          url: question.row.reviewUrl,
-          active: false,
-        });
-        if (tab.id == null) throw new Error('Chrome could not open the question review page.');
-        temporaryTabId = tab.id;
-        await waitForTabToLoad(tab.id);
-        // Orthobullets sometimes paints the answer block after the load event.
-        await new Promise((resolve) => window.setTimeout(resolve, 450));
-        const extracted = await sendMessage({
-          type: 'ob:extract-page-context',
-          tabId: tab.id,
-        });
-        if (!extracted.ok || !('pageContext' in extracted)) {
-          throw new Error(extracted.ok ? 'Could not read this review page.' : extracted.error);
-        }
-        const runItem = runItems.get(question.row.questionId);
-        if (!runItem) throw new Error('The claim run did not contain this question.');
-        const claimResult = await sendMessage({
-          type: 'ob:generate-question-claim',
-          pageContext: extracted.pageContext,
-          runId,
-          runItemId: runItem.id,
-        });
-        if (!claimResult.ok || !('questionClaim' in claimResult)) {
-          throw new Error(claimResult.ok ? 'The claim pipeline returned the wrong response type.' : claimResult.error);
-        }
-        const claim = claimResult.questionClaim;
-        question.claimStatus = claim.status === 'accepted' || claim.status === 'accepted_no_card'
-          ? claim.status
-          : claim.status === 'retryable' ? 'retryable' : 'unresolved_automatic';
-        question.claimId = claim.claimId ?? null;
-        question.linkedCardCount = claim.cardCount ?? 0;
-        if (question.row.isCorrect === false) {
+      const analyzeQuestion = async (question: TestDebriefQuestion): Promise<ExtensionErrorCode | null> => {
+        question.status = 'collecting';
+        question.error = null;
+        await persistFullTestDebrief(review, debrief);
+        if (state.fullTestDebrief === debrief) render();
+        let temporaryTabId: number | null = null;
+        let errorCode: ExtensionErrorCode | null = null;
+        try {
+          const tab = await chrome.tabs.create({
+            url: question.row.reviewUrl,
+            active: false,
+          });
+          if (tab.id == null) throw new Error('Chrome could not open the question review page.');
+          temporaryTabId = tab.id;
+          await waitForTabToLoad(tab.id);
+          // Orthobullets sometimes paints the answer block after the load event.
+          await new Promise((resolve) => window.setTimeout(resolve, 450));
+          const extracted = await sendMessage({
+            type: 'ob:extract-page-context',
+            tabId: tab.id,
+          });
+          if (!extracted.ok || !('pageContext' in extracted)) {
+            errorCode = extracted.ok ? 'extraction_failure' : extracted.code ?? 'extraction_failure';
+            throw new Error(extracted.ok ? 'Could not read this review page.' : extracted.error);
+          }
           const explained = await sendMessage({ type: 'ob:explain', pageContext: extracted.pageContext });
           if (!explained.ok || !('explanation' in explained) || isCurriculumStudyResponse(explained.explanation)) {
+            errorCode = explained.ok ? 'api_failure' : explained.code ?? 'api_failure';
             throw new Error(explained.ok ? 'BroBot returned the wrong response type.' : explained.error);
           }
           question.explanation = explained.explanation;
           state.usage = explained.explanation.usage ?? state.usage;
+          question.status = 'ready';
+        } catch (error) {
+          question.status = 'error';
+          question.error = error instanceof Error ? error.message : 'Could not analyze this question.';
+        } finally {
+          if (temporaryTabId != null) {
+            await chrome.tabs.remove(temporaryTabId).catch(() => undefined);
+          }
         }
-        // Source question content remains transient. Durable browser state keeps
-        // only the safe claim outcome and generated teaching summary.
         question.pageContext = null;
-        question.status = 'ready';
-      } catch (error) {
-        question.status = 'error';
-        question.error = error instanceof Error ? error.message : 'Could not analyze this question.';
-      } finally {
-        if (temporaryTabId != null) {
-          await chrome.tabs.remove(temporaryTabId).catch(() => undefined);
-        }
+        await persistFullTestDebrief(review, debrief);
+        if (state.fullTestDebrief === debrief) render();
+        return errorCode;
+      };
+
+      // A single sequential worker preserves the per-request quota safeguard
+      // and checkpoints each missed question before opening the next review.
+      for (const question of debrief.questions.filter((candidate) => !candidate.explanation)) {
+        const errorCode = await analyzeQuestion(question);
+        if (errorCode === 'quota_exceeded') break;
       }
+      const readyCount = debrief.questions.filter((question) => question.explanation).length;
+      debrief.status = readyCount === debrief.questions.length ? 'ready' : readyCount > 0 ? 'partial' : 'error';
       await persistFullTestDebrief(review, debrief);
       if (state.fullTestDebrief === debrief) render();
-    };
-
-    // A single sequential worker keeps page identity stable and checkpoints
-    // each question before the next review page opens.
-    for (const question of debrief.questions.filter((candidate) => candidate.status !== 'ready')) {
-      await analyzeQuestion(question);
+    } finally {
+      fullTestDebriefBuildInFlight = false;
     }
-    const readyCount = debrief.questions.filter((question) => question.status === 'ready').length;
-    debrief.status = readyCount === debrief.questions.length ? 'ready' : readyCount > 0 ? 'partial' : 'error';
-    await persistFullTestDebrief(review, debrief);
-    if (state.fullTestDebrief === debrief) render();
   }
 
   async function exportFullTestDebrief() {
@@ -2010,11 +2014,12 @@ export function mountSidePanelApp(root: HTMLElement) {
       return;
     }
     const claim = result.questionClaim;
-    if (claim.status === 'accepted' || claim.status === 'accepted_no_card') {
+    if (claim.status === 'accepted' || claim.status === 'accepted_no_card' || claim.status === 'accepted_provisional_entity') {
       const count = claim.cardCount ?? 0;
+      const provisional = claim.status === 'accepted_provisional_entity' ? ' · provisional entity' : '';
       button.textContent = count
-        ? `Claim accepted · ${count} card${count === 1 ? '' : 's'} linked`
-        : 'Claim accepted · no adequate card found';
+        ? `Claim accepted${provisional} · ${count} card${count === 1 ? '' : 's'} linked`
+        : `Claim accepted${provisional} · no adequate card found`;
       return;
     }
     button.disabled = false;
@@ -2146,6 +2151,21 @@ export function mountSidePanelApp(root: HTMLElement) {
     statusCard.querySelector('#refresh-question')?.addEventListener('click', () => {
       void questionTutorController.onManualRefresh().then(() => syncQuestionTutorShellState());
     });
+
+    if (state.pageAnkiStatus !== 'idle') {
+      const pageCards = createElement('div', {
+        html: renderPageAnkiReview(
+          state.pageAnkiReview,
+          state.pageAnkiStatus,
+          escapeHtml,
+          state.pageAnkiError,
+        ),
+      });
+      content.appendChild(pageCards);
+      bindPageAnkiReview(pageCards, (command) => {
+        void sendMessage({ type: 'ob:open-anki-launch', command });
+      });
+    }
 
     if (state.loading) {
       content.appendChild(

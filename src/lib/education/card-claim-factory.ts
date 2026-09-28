@@ -1,14 +1,22 @@
 import {
+  SEMANTIC_CLAIM_IDENTITY_VERSION,
   clinicalClaimFingerprintHash,
   containsProtectedEducationalContent,
   isCardClaimLinkV1,
   isClinicalClaimRecordV1,
+  semanticClaimFingerprintHash,
   type CardClaimLinkV1,
   type ClinicalClaimQualifiers,
   type ClinicalClaimRecordV1,
   type ClinicalClaimType,
   type EducationalClaimGapV1,
 } from "./contracts/clinical-claim-v1";
+import {
+  ATOMIC_EXTRACTOR_VERSION,
+  extractCardClaims,
+  type AtomicClaimCandidate,
+  type AtomicExtractionUnit,
+} from "./atomic-claim-extractor";
 import { checksum } from "./deck-mapping-factory";
 import { containsUnsafeMetadata, deterministicUuid } from "./deck-foundation";
 import {
@@ -20,13 +28,14 @@ import {
   validateEphemeralCard,
   type EntityIndexRow,
   type EphemeralCard,
+  type ExtractedConcept,
   type SemanticCardResult,
   type SemanticCritic,
   type SemanticResolution,
 } from "./deck-semantic-mapping";
 
 export const CARD_CLAIM_FACTORY_CONTRACT_VERSION = "snaportho-card-claim-factory.v1" as const;
-export const CARD_CLAIM_FACTORY_IMPLEMENTATION_VERSION = "2026-09-23.1" as const;
+export const CARD_CLAIM_FACTORY_IMPLEMENTATION_VERSION = "2026-09-27.1-atomic" as const;
 export const UNRESOLVED_CLAIM_ENTITY_ID = "00000000-0000-4000-8000-000000000001" as const;
 export const CARD_CLAIM_FACTORY_ALGORITHM = "card-claim-factory.v1" as const;
 
@@ -50,6 +59,8 @@ export const CARD_CLAIM_FACTORY_QUEUES = [
   "inactive_or_stale",
   "cross_card_contradiction",
   "insufficient_content",
+  "zero_claims",
+  "multi_claim_review",
 ] as const;
 
 export type CardClaimFactoryQueue = (typeof CARD_CLAIM_FACTORY_QUEUES)[number];
@@ -65,6 +76,8 @@ export type ExistingClaimRef = {
   claimId: string;
   currentVersionId: string;
   fingerprintHash: string;
+  /** Null for pre-Phase-1 rows, which match any assertion of the fingerprint. */
+  semanticFingerprintHash: string | null;
 };
 
 export type ExtractedCloze = {
@@ -81,6 +94,17 @@ export type ProposedFactoryClaim = ClinicalClaimRecordV1 & {
   evidenceHash: string;
   /** Explicit entity-target kind so downstream code never infers it from ID format. */
   entityTargetType: EntityTargetType;
+  /** 1-based position of this claim within its source card version. */
+  claimIndex: number;
+  /** Total atomic claims extracted from the same source card version. */
+  claimsInVersion: number;
+  /** Deterministic id of the source extraction unit (block/cloze occurrence). */
+  sourceUnitId: string;
+  sourceUnitOrdinal: number;
+  /** Declarative-rewrite method that produced claimText from the unit. */
+  rewriteMethod: string;
+  /** Extractor confidence in the atomic rewrite. */
+  atomicConfidence: number;
 };
 
 export type CanonicalMatchAttempt = {
@@ -116,6 +140,8 @@ export type ProposedOntologyEntity = {
   /** Contextual-specificity verdict, assessed after entity-likeness passes. */
   contextuallySpecific: true | false | "uncertain";
   specificityReasons: SpecificityReason[];
+  /** Claims that cited this entity as support across the run (dedup provenance). */
+  sourceClaimIds: string[];
 };
 
 /* ---- Promotion boundary (future, not wired) ----
@@ -171,6 +197,61 @@ export type CardClaimFactoryAssignment = {
   queue: CardClaimFactoryQueue;
   reasonCodes: string[];
   fingerprintHash: string | null;
+  /** All claim ids extracted from this card version (empty for zero-claim cards). */
+  claimIds: string[];
+};
+
+export type ClaimEntityRole =
+  | "teaches_about"
+  | "tested_answer"
+  | "context"
+  | "comparison"
+  | "contraindication";
+
+/** Proposed claim_entities row. Claim-level, multi-entity; supports 0..N per claim. */
+export type FactoryClaimEntityLink = {
+  claimId: string;
+  canonicalCardId: string;
+  canonicalCardVersionId: string;
+  entityKind: EntityTargetType;
+  entityId: string | null;
+  role: ClaimEntityRole;
+  confidence: number;
+  evidenceLocator: string;
+  algorithmVersion: typeof CARD_CLAIM_FACTORY_ALGORITHM;
+};
+
+export type FactoryQualityFlagSeverity = "review" | "block_auto_approve";
+
+export type FactoryQualityFlag = {
+  claimId: string;
+  canonicalCardId: string;
+  canonicalCardVersionId: string;
+  code: string;
+  severity: FactoryQualityFlagSeverity;
+  detail: string;
+};
+
+/** Per-unit outcome feeding card_claim_backfill_claims: one row per claim. */
+export type FactoryUnitOutcome = {
+  canonicalCardId: string;
+  canonicalCardVersionId: string;
+  claimIndex: number;
+  claimsInVersion: number;
+  sourceUnitId: string;
+  queue: CardClaimFactoryQueue;
+  reasonCodes: string[];
+  fingerprintHash: string | null;
+  claimId: string | null;
+};
+
+export type SemanticCandidateGroup = {
+  semanticFingerprintHash: string;
+  semanticIdentityVersion: typeof SEMANTIC_CLAIM_IDENTITY_VERSION;
+  claimIds: string[];
+  candidateCount: number;
+  /** Candidates only: grouping never merges, repoints, or auto-approves. */
+  disposition: "candidate";
 };
 
 export type CardClaimFactoryOutput = {
@@ -179,8 +260,16 @@ export type CardClaimFactoryOutput = {
   factoryRunId: string;
   dryRun: true;
   proposedClaims: ProposedFactoryClaim[];
+  /** Claims sharing one canonical semantic fingerprint. Review input only. */
+  semanticCandidates: SemanticCandidateGroup[];
   proposedEntities: ProposedOntologyEntity[];
   autoApprovedLinks: CardClaimLinkV1[];
+  /** Proposed claim_entities rows across the run (one per claim x entity). */
+  entityLinks: FactoryClaimEntityLink[];
+  /** Claim-level quality flags for ALL claims, including auto-approved ones. */
+  qualityFlags: FactoryQualityFlag[];
+  /** One row per processed unit, in card order then claim index. */
+  unitOutcomes: FactoryUnitOutcome[];
   assignments: CardClaimFactoryAssignment[];
   exceptionQueue: CardClaimFactoryAssignment[];
   gaps: EducationalClaimGapV1[];
@@ -206,6 +295,15 @@ export type CardClaimFactoryOutput = {
     entityLikenessBlocked: number;
     contextSpecificityBlocked: number;
     openMissingEntity: number;
+    semanticUniqueFingerprints: number;
+    semanticCandidateGroups: number;
+    extractionUnits: number;
+    zeroClaimCards: number;
+    multiClaimCards: number;
+    maxClaimsPerCard: number;
+    entityLinksProposed: number;
+    claimsWithoutEntities: number;
+    qualityFlagsRaised: number;
   };
 };
 
@@ -887,6 +985,7 @@ export function buildProposedEntity(input: {
     status: "proposed",
     contextuallySpecific: "uncertain",
     specificityReasons: [],
+    sourceClaimIds: [],
   };
 }
 
@@ -982,6 +1081,99 @@ export function autoApprovePolicy(input: {
   return { approved: true, queue: "auto_approved", reasonCodes: ["machine_consensus"] };
 }
 
+/** Claim index carried on auto-approved link metadata for deterministic ordering. */
+function linkClaimIndex(link: CardClaimLinkV1): number {
+  const raw = (link.metadata as Record<string, unknown> | undefined)?.claimIndex;
+  return typeof raw === "number" && Number.isFinite(raw) ? raw : 0;
+}
+
+/** Token-contiguous phrase containment, so short labels cannot match substrings. */
+function unitContainsLabel(unitText: string, label: string): boolean {
+  const unitTokens = unitText.split(" ").filter(Boolean);
+  const labelTokens = label.split(" ").filter(Boolean);
+  if (labelTokens.length === 0 || unitTokens.length === 0) return false;
+  for (let start = 0; start + labelTokens.length <= unitTokens.length; start += 1) {
+    let hit = true;
+    for (let offset = 0; offset < labelTokens.length; offset += 1) {
+      if (unitTokens[start + offset] !== labelTokens[offset]) {
+        hit = false;
+        break;
+      }
+    }
+    if (hit) return true;
+  }
+  return false;
+}
+
+export type UnitConceptAssignment = {
+  byUnit: Map<string, ExtractedConcept[]>;
+  unmatched: ExtractedConcept[];
+};
+
+/**
+ * Assign whole-card concepts to extraction units by normalized label
+ * containment. Evidence is non-exclusive: a concept attaches to EVERY unit
+ * whose text contains its label, so repeated blocks each resolve. Concepts
+ * matching no unit are reported as unmatched so entity evidence is never
+ * silently dropped.
+ */
+export function assignUnitConcepts(
+  concepts: ExtractedConcept[],
+  units: Array<{ unitId: string; matchText: string }>,
+): UnitConceptAssignment {
+  const byUnit = new Map(units.map((unit) => [unit.unitId, [] as ExtractedConcept[]]));
+  const unmatched: ExtractedConcept[] = [];
+  for (const concept of concepts) {
+    const label = normalizeClinicalText(concept.normalizedConceptLabel);
+    const owners = units.filter((unit) => unitContainsLabel(unit.matchText, label));
+    if (owners.length === 0) {
+      unmatched.push(concept);
+    } else {
+      for (const owner of owners) byUnit.get(owner.unitId)!.push(concept);
+    }
+  }
+  return { byUnit, unmatched };
+}
+
+/**
+ * Raw cloze answers by number from the teaching field, so sibling cards keep
+ * distinct tested answers when several units share one field.
+ */
+export function clozeAnswersByNumber(rawValue: string): Map<number, string> {
+  const out = new Map<number, string>();
+  rawValue.replace(CLOZE_RE, (_match, rawNumber: string, answer: string) => {
+    const clozeNumber = Number(rawNumber);
+    if (!out.has(clozeNumber)) out.set(clozeNumber, answer);
+    return "";
+  });
+  return out;
+}
+
+/**
+ * Tested answer for one unit. The sibling ordinal selects the cloze number;
+ * the UNIT's own block selects which same-numbered answer, so repeated c1
+ * clozes across blocks (list cards) each test their own answer instead of
+ * all collapsing onto the field-first one. Sub-units split from one block
+ * map positionally onto the block's answers in document order.
+ */
+export function unitTestedAnswer(unit: AtomicExtractionUnit, targetCloze: number): string {
+  const entries = unit.clozeAnswers ?? [];
+  const targeted = entries.filter((entry) => entry.number === targetCloze);
+  // Sub-units split from one list block carry their own item as the unit
+  // answer; it refines the block-level answer list so sibling items keep
+  // distinct tested answers (and distinct fingerprints).
+  const own = (unit.answer ?? "").trim();
+  if (targeted.length > 0 && own && own !== targeted[0].answer && targeted[0].answer.includes(own)) {
+    return own;
+  }
+  if (targeted.length === 1) return targeted[0].answer;
+  if (targeted.length > 1) {
+    return targeted[Math.min(unit.occurrenceIndex, targeted.length - 1)].answer;
+  }
+  if (entries.length === 0) return "";
+  return entries[Math.min(unit.occurrenceIndex, entries.length - 1)].answer;
+}
+
 export function runCardClaimFactory(input: {
   cards: CardClaimFactoryCard[];
   entities: EntityIndexRow[];
@@ -1009,13 +1201,15 @@ export function runCardClaimFactory(input: {
 
   const semanticByCard = new Map(cards.map((card) => [card.canonicalCardId, runSemanticCard(card, input.entities)]));
   const existingByHash = new Map((input.existingClaims ?? []).map((claim) => [claim.fingerprintHash, claim]));
-  const claimByHash = new Map<string, ProposedFactoryClaim>();
+  /** Run dedup is assertion-aware: fingerprint alone merges distinct claims. */
+  const claimByIdentity = new Map<string, ProposedFactoryClaim>();
+  const fingerprintsSeen = new Set<string>();
   const entityById = new Map<string, ProposedOntologyEntity>();
   const links: CardClaimLinkV1[] = [];
   const assignments: CardClaimFactoryAssignment[] = [];
   const gaps: EducationalClaimGapV1[] = [];
   const machineReviews: CardClaimFactoryOutput["machineReviews"] = [];
-  const approvedFingerprintsByNote = new Map<string, Set<string>>();
+  const approvedIdentityKeysByNote = new Map<string, Set<string>>();
   let canonicalEntityMatches = 0;
   let proposedEntitiesCreated = 0;
   let proposedEntitiesReused = 0;
@@ -1023,33 +1217,78 @@ export function runCardClaimFactory(input: {
   let shortLabelInsufficientContext = 0;
   let entityLikenessBlocked = 0;
   let contextSpecificityBlocked = 0;
+  const entityLinks: FactoryClaimEntityLink[] = [];
+  const qualityFlags: FactoryQualityFlag[] = [];
+  const unitOutcomes: FactoryUnitOutcome[] = [];
+  const seenReviewKeys = new Set<string>();
+  let extractionUnits = 0;
+  let zeroClaimCards = 0;
+  let multiClaimCards = 0;
+  let maxClaimsPerCard = 0;
+  let claimsWithoutEntities = 0;
 
-  for (const card of cards) {
-    const eligibility = cardEligible(card);
-    const semantic = semanticByCard.get(card.canonicalCardId)!;
-    const field = teachingField(card);
-    const cloze = field ? extractTargetCloze(field.rawValue, card.cardOrdinal) : null;
-    const filled = cloze?.filledText ?? field?.plainText ?? "";
-    const objectText = compactText(cloze?.answer ?? "", 200);
-    const claimText = cloze ? toDeclarativeClaimText(filled, cloze.answer) : compactText(filled, 500);
+  type UnitProcessOutcome = {
+    queue: CardClaimFactoryQueue;
+    reasonCodes: string[];
+    fingerprintHash: string | null;
+    claimId: string | null;
+  };
+
+  /**
+   * Process one atomic (unit, candidate) pair into zero or one claim. All
+   * entity gating, policy, link, gap, and flag logic from the single-claim
+   * factory is preserved; only the input scope narrows from card to unit.
+   */
+  const processUnit = (args: {
+    card: CardClaimFactoryCard;
+    semantic: SemanticCardResult;
+    unit: AtomicExtractionUnit;
+    candidate: AtomicClaimCandidate;
+    unitConcepts: ExtractedConcept[];
+    claimIndex: number;
+    claimsInVersion: number;
+    testedAnswer: string;
+  }): UnitProcessOutcome => {
+    const { card, semantic, unit, candidate, unitConcepts, claimIndex, claimsInVersion, testedAnswer } = args;
+    const unitResolutions = semantic.resolutions.filter((row) => (
+      unitConcepts.some((concept) => concept.conceptId === row.conceptId)
+    ));
+    const unitSemantic: SemanticCardResult = {
+      ...semantic,
+      concepts: unitConcepts,
+      resolutions: unitResolutions,
+    };
+    const filled = [unit.contextHeader, unit.filledBlock].filter(Boolean).join(" ").trim() || unit.filledBlock;
+    const claimText = compactText(candidate.assertion, 500);
+    // Non-cloze units have no tested answer; the unit text itself is the
+    // asserted object so distinct units keep distinct fingerprints.
+    const objectText = testedAnswer ? compactText(testedAnswer, 200) : compactText(unit.filledBlock, 200);
+    const evidenceLocator = unit.fieldName.toLowerCase() === "extra" ? "extra" as const : "cloze" as const;
     const qualifierInfo = extractQualifiers(filled);
-    const centrals = semantic.concepts.filter((concept) => concept.central);
-    const picked = pickPrimaryEntity(semantic, cloze?.answer ?? "", filled);
-    const negated = semantic.concepts.some((concept) => concept.negated || concept.distractor);
+    const unitCentrals = unitConcepts.filter((concept) => concept.central);
+    const picked = pickPrimaryEntity(unitSemantic, testedAnswer, filled);
+    const negated = unitConcepts.some((concept) => concept.negated || concept.distractor);
     const primary = picked.resolution;
     const criticGate = primary?.canonicalEntityId
       ? primaryCriticsSupport(semantic, primary.canonicalEntityId)
-      : { supported: true, reasonCodes: ["unresolved_entity"], reviews: [] };
-    machineReviews.push(...criticGate.reviews.map((review) => ({
-      canonicalCardId: card.canonicalCardId,
-      reviewerType: review.reviewerType,
-      decision: review.decision,
-      reasonCodes: review.reasonCodes,
-    })));
+      : { supported: true, reasonCodes: ["unresolved_entity"], reviews: [] as SemanticCritic[] };
+    for (const review of criticGate.reviews) {
+      const key = `${card.canonicalCardId}|${review.reviewerType}|${review.decision}|${review.canonicalEntityId ?? ""}|${review.reasonCodes.join(",")}`;
+      if (seenReviewKeys.has(key)) continue;
+      seenReviewKeys.add(key);
+      machineReviews.push({
+        canonicalCardId: card.canonicalCardId,
+        reviewerType: review.reviewerType,
+        decision: review.decision,
+        reasonCodes: review.reasonCodes,
+      });
+    }
 
     let queue: CardClaimFactoryQueue = "extraction_failed";
     let reasonCodes: string[] = [];
     let fingerprintHash: string | null = null;
+    let identityKey: string | null = null;
+    let claimId: string | null = null;
     let ontologyFill: ProposedOntologyEntity | null = null;
     let canonicalShortFill: { canonicalEntityId: string; entityType: string } | null = null;
     let canonicalAnswerFill: { canonicalEntityId: string; entityType: string } | null = null;
@@ -1074,12 +1313,14 @@ export function runCardClaimFactory(input: {
     let gapAttempts: CanonicalMatchAttempt[] = [];
     let entityReuse: "new" | "reused" | null = null;
     let entityTargetType: EntityTargetType = "unresolved";
-    if (eligibility) {
-      queue = "inactive_or_stale";
-      reasonCodes = [eligibility];
-    } else if (!cloze || !objectText || !claimText) {
+    const pendingFlags: Array<{ code: string; severity: FactoryQualityFlagSeverity; detail: string }> = [];
+    const flag = (code: string, severity: FactoryQualityFlagSeverity, detail: string): void => {
+      if (!pendingFlags.some((entry) => entry.code === code)) pendingFlags.push({ code, severity, detail });
+    };
+
+    if (!claimText) {
       queue = "extraction_failed";
-      reasonCodes = ["cloze_not_extracted"];
+      reasonCodes = ["unit_assertion_empty"];
     } else if (qualifierInfo.conflicts.length) {
       queue = "qualifier_conflict";
       reasonCodes = qualifierInfo.conflicts;
@@ -1089,19 +1330,21 @@ export function runCardClaimFactory(input: {
     } else if (picked.competing && !primary) {
       queue = "competing_entities";
       reasonCodes = ["alias_ambiguity"];
-    } else if (semantic.qualityFindings.includes("potential_multiconcept_overload") || centrals.length > 2) {
+    } else if (unitCentrals.length > 2) {
       queue = "non_atomic";
-      reasonCodes = semantic.qualityFindings.length ? semantic.qualityFindings : ["non_atomic_card"];
+      reasonCodes = ["non_atomic_unit"];
     } else {
       const inferred = inferClaimType({ filledText: filled, entityType: primary?.entityType ?? null });
-      const missingLabels = semantic.resolutions
+      const missingLabels = unitResolutions
         .filter((row) => row.disposition === "missing_entity")
         .map((row) => row.normalizedConceptLabel)
         .filter(Boolean);
-      // Ontology gap resolution: canonical first, then proposed generation, then
-      // the short-answer path. The minimum-length rule is kept, not weakened.
+      // Ontology gap resolution: canonical first, then proposed generation,
+      // then the short-answer path. The minimum-length rule is kept.
       if (!primary?.canonicalEntityId) {
-        const canonicalAnswer = resolveCanonicalClozeAnswer(cloze.answer, input.entities);
+        const canonicalAnswer = testedAnswer
+          ? resolveCanonicalClozeAnswer(testedAnswer, input.entities)
+          : { entity: null, ambiguous: false, attempts: [] as CanonicalMatchAttempt[] };
         gapAttempts = canonicalAnswer.attempts;
         if (canonicalAnswer.entity) {
           canonicalAnswerFill = {
@@ -1110,9 +1353,9 @@ export function runCardClaimFactory(input: {
           };
         } else if (canonicalAnswer.ambiguous) {
           canonicalAnswerAmbiguous = true;
-        } else {
+        } else if (testedAnswer) {
           ontologyFill = proposeOntologyEntity({
-            clozeAnswer: cloze.answer,
+            clozeAnswer: testedAnswer,
             missingLabels,
             claimType: inferred.claimType,
             cardId: card.canonicalCardId,
@@ -1123,14 +1366,15 @@ export function runCardClaimFactory(input: {
             gapAttempts = [...gapAttempts, ...ontologyFill.canonicalMatchAttempts];
           }
         }
-        if (!canonicalAnswerFill && !ontologyFill && !canonicalAnswer.ambiguous && normalizeClinicalText(cloze.answer).length < PROPOSED_ENTITY_MIN_NORMALIZED_LENGTH) {
+        if (!canonicalAnswerFill && !ontologyFill && !canonicalAnswer.ambiguous && testedAnswer
+          && normalizeClinicalText(testedAnswer).length < PROPOSED_ENTITY_MIN_NORMALIZED_LENGTH) {
           const shortContext = [
             filled,
             ...card.fields.map((entry) => entry.plainText ?? entry.rawValue),
             ...card.tags,
           ].join(" ");
           const short = resolveShortClozeAnswer({
-            normalizedAnswer: normalizeClinicalText(cloze.answer),
+            normalizedAnswer: normalizeClinicalText(testedAnswer),
             cardContextText: shortContext,
             entities: input.entities,
           });
@@ -1142,7 +1386,7 @@ export function runCardClaimFactory(input: {
               preferredLabel: short.preferredLabel,
               normalizedLabel: short.normalizedLabel,
               entityType: refineOntologyEntityType(ontologyEntityType(inferred.claimType), short.normalizedLabel),
-              rawClozeText: cloze.answer,
+              rawClozeText: testedAnswer,
               cardId: card.canonicalCardId,
               derivation: short.derivation,
               confidence: short.confidence,
@@ -1158,7 +1402,7 @@ export function runCardClaimFactory(input: {
       }
       // Entity-likeness gate: a syntactically valid answer that does not look
       // like a real ontology concept never becomes a proposed entity. The
-      // card still produces its claim; only the entity target changes.
+      // unit still produces its claim; only the entity target changes.
       if (ontologyFill) {
         const likeness = assessEntityLikeness({
           preferredLabel: ontologyFill.preferredLabel,
@@ -1178,9 +1422,8 @@ export function runCardClaimFactory(input: {
         }
       }
       // Contextual-specificity gate: runs after entity-likeness passes. A
-      // label that is too generic for what the card actually teaches goes to
-      // manual review with its claim kept and no teaches link. Never invents
-      // a more specific label; uncertain cases are left alone.
+      // label that is too generic for what the unit actually teaches goes to
+      // manual review with its claim kept and no teaches link.
       if (ontologyFill) {
         const specificityContext = [
           filled,
@@ -1243,37 +1486,62 @@ export function runCardClaimFactory(input: {
         qualifiers: qualifierInfo.qualifiers,
       };
       fingerprintHash = clinicalClaimFingerprintHash(fingerprintInput);
-      const polarityClash = [...claimByHash.values()].some((claim) => (
+      const semanticHash = semanticClaimFingerprintHash({
+        claimText,
+        claimType: inferred.claimType,
+        qualifiers: qualifierInfo.qualifiers,
+      });
+      // Assertion-aware identity: the coarse fingerprint alone merges
+      // distinct propositions (same entity + object, different assertion).
+      // Reuse an id only for the same assertion; a novel assertion under a
+      // known fingerprint gets its own deterministic id. Never silently merge.
+      identityKey = `${fingerprintHash}|${semanticHash}`;
+      const polarityClash = [...claimByIdentity.values()].some((claim) => (
         claim.primaryEntityId === entityId
         && normalizeClinicalText(claim.objectText) === normalizeClinicalText(objectText)
         && opposingPolarity(claim.predicate, inferred.predicate)
       ));
-      const siblingKeys = approvedFingerprintsByNote.get(card.noteGuid) ?? new Set<string>();
+      const siblingKeys = approvedIdentityKeysByNote.get(card.noteGuid) ?? new Set<string>();
       const resolved = Boolean(primary?.canonicalEntityId || canonicalAnswerFill || canonicalShortFill || ontologyFill);
       const policy = autoApprovePolicy({
         criticsSupport: primary?.canonicalEntityId ? criticGate.supported : true,
         uniqueEntity: resolved,
-        atomic: centrals.length <= 2 && !semantic.qualityFindings.includes("potential_multiconcept_overload"),
+        atomic: unitCentrals.length <= 2,
         currentAndActive: true,
         contradiction: polarityClash,
-        duplicateSibling: siblingKeys.has(fingerprintHash),
+        duplicateSibling: siblingKeys.has(identityKey),
         qualifierConflict: false,
         extracted: true,
       });
-      const existing = existingByHash.get(fingerprintHash) ?? claimByHash.get(fingerprintHash);
-      const claimId = existing?.claimId ?? deterministicUuid(`clinical-claim|${fingerprintHash}`);
-      const currentVersionId = existing?.currentVersionId
-        ?? deterministicUuid(`clinical-claim-version|${fingerprintHash}|${CARD_CLAIM_FACTORY_ALGORITHM}`);
+      const dbExisting = existingByHash.get(fingerprintHash);
+      const dbMatch = !fingerprintsSeen.has(fingerprintHash) && dbExisting
+        && (dbExisting.semanticFingerprintHash == null || dbExisting.semanticFingerprintHash === semanticHash)
+        ? dbExisting
+        : null;
+      const runExisting = claimByIdentity.get(identityKey);
+      const novelAssertion = fingerprintsSeen.has(fingerprintHash) && !runExisting && !dbMatch;
+      claimId = runExisting?.claimId ?? dbMatch?.claimId
+        ?? (novelAssertion
+          ? deterministicUuid(`clinical-claim|${fingerprintHash}|${semanticHash}`)
+          : deterministicUuid(`clinical-claim|${fingerprintHash}`));
+      const currentVersionId = runExisting?.currentVersionId ?? dbMatch?.currentVersionId
+        ?? (novelAssertion
+          ? deterministicUuid(`clinical-claim-version|${fingerprintHash}|${semanticHash}|${CARD_CLAIM_FACTORY_ALGORITHM}`)
+          : deterministicUuid(`clinical-claim-version|${fingerprintHash}|${CARD_CLAIM_FACTORY_ALGORITHM}`));
+      fingerprintsSeen.add(fingerprintHash);
       const evidenceHash = checksum({
         cardVersionId: card.canonicalCardVersionId,
         fingerprintHash,
-        locator: "cloze",
+        locator: evidenceLocator,
+        sourceUnitId: unit.unitId,
       });
       const proposed: ProposedFactoryClaim = {
         contractVersion: "snaportho-clinical-claim.v1",
         claimId,
         currentVersionId,
         fingerprintHash,
+        semanticFingerprintHash: semanticHash,
+        semanticIdentityVersion: SEMANTIC_CLAIM_IDENTITY_VERSION,
         claimText,
         claimType: inferred.claimType,
         predicate: inferred.predicate,
@@ -1283,12 +1551,127 @@ export function runCardClaimFactory(input: {
         approvalMethod: "machine_consensus",
         algorithmVersion: CARD_CLAIM_FACTORY_ALGORITHM,
         isActive: true,
-        evidenceLocator: "cloze",
+        evidenceLocator,
         evidenceHash,
         entityTargetType,
+        claimIndex,
+        claimsInVersion: claimsInVersion,
+        sourceUnitId: unit.unitId,
+        sourceUnitOrdinal: unit.blockIndex,
+        rewriteMethod: candidate.rewriteMethod,
+        atomicConfidence: candidate.confidence,
       };
       if (!isClinicalClaimRecordV1(proposed)) throw new Error(`unsafe_or_invalid_claim:${card.canonicalCardId}`);
-      if (!claimByHash.has(fingerprintHash)) claimByHash.set(fingerprintHash, proposed);
+      if (!claimByIdentity.has(identityKey)) claimByIdentity.set(identityKey, proposed);
+      if (ontologyFill && !ontologyFill.sourceClaimIds.includes(claimId)) {
+        ontologyFill.sourceClaimIds.push(claimId);
+      }
+      // Claim-level quality flags for every claim, including auto-approved.
+      if (!testedAnswer) flag("non_cloze_unit", "review", "object_derived_from_unit_text");
+      if (unit.clozeNumbers.length > 1) {
+        flag("multi_cloze_unit", "review", `cloze_count_${unit.clozeNumbers.length}`);
+      }
+      if (!candidate.atomic) {
+        flag("extractor_non_atomic", "review", `rewrite_${candidate.rewriteMethod}`);
+      }
+      for (const candidateFlag of candidate.qualityFlags) {
+        if (candidateFlag === "atomic") continue;
+        flag(`extractor_${candidateFlag}`, "review", `rewrite_${candidate.rewriteMethod}`);
+      }
+      if (candidate.confidence < 0.5) {
+        flag("low_confidence_rewrite", "review", `confidence_${candidate.confidence}`);
+      }
+      if (picked.multiple) flag("competing_entities_present", "review", "primary_entity_picked");
+      if (canonicalAnswerAmbiguous) flag("alias_ambiguity", "review", "canonical_answer_ambiguous");
+      if (shortUnresolved) flag("short_label_insufficient_context", "review", SHORT_LABEL_INSUFFICIENT_CONTEXT);
+      if (likenessBlocked) {
+        flag("entity_likeness_blocked", "review", likenessBlocked.reasons.join(","));
+      }
+      if (specificityBlocked) {
+        flag("context_insufficient_for_specific_entity", "review", "specificity_gate");
+      }
+      if (!resolved) flag("unresolved_entity", "review", "missing_entity");
+      if (ontologyFill && ontologyFill.confidence < PROPOSED_ENTITY_AUTO_APPROVE_CONFIDENCE) {
+        flag("low_confidence_proposed_entity", "block_auto_approve", `confidence_${ontologyFill.confidence}`);
+      }
+      // Proposed claim_entities rows: every resolved unit concept plus the
+      // tested-answer fill, or a single unresolved row when nothing resolved.
+      const unitEntityLinks: FactoryClaimEntityLink[] = [];
+      const seenLinkKeys = new Set<string>();
+      const answerNorm = testedAnswer ? normalizeClinicalText(testedAnswer) : "";
+      for (const resolution of unitResolutions) {
+        if (!resolution.canonicalEntityId) continue;
+        const concept = unitConcepts.find((entry) => entry.conceptId === resolution.conceptId);
+        let role: ClaimEntityRole = "context";
+        if (answerNorm && concept && normalizeClinicalText(concept.normalizedConceptLabel) === answerNorm) {
+          role = "tested_answer";
+        } else if (concept && (concept.conceptRole === "comparison" || concept.conceptRole === "differential")) {
+          role = "comparison";
+        } else if (inferred.claimType === "contraindication" && concept?.negated) {
+          role = "contraindication";
+        } else if (resolution.canonicalEntityId === primary?.canonicalEntityId) {
+          role = "teaches_about";
+        }
+        const linkKey = `canonical|${resolution.canonicalEntityId}|${role}`;
+        if (seenLinkKeys.has(linkKey)) continue;
+        seenLinkKeys.add(linkKey);
+        unitEntityLinks.push({
+          claimId,
+          canonicalCardId: card.canonicalCardId,
+          canonicalCardVersionId: card.canonicalCardVersionId,
+          entityKind: "canonical",
+          entityId: resolution.canonicalEntityId,
+          role,
+          confidence: concept?.confidence ?? resolution.resolutionConfidence,
+          evidenceLocator: unit.evidenceLocator,
+          algorithmVersion: CARD_CLAIM_FACTORY_ALGORITHM,
+        });
+      }
+      if (ontologyFill) {
+        unitEntityLinks.push({
+          claimId,
+          canonicalCardId: card.canonicalCardId,
+          canonicalCardVersionId: card.canonicalCardVersionId,
+          entityKind: "proposed",
+          entityId: ontologyFill.entityId,
+          role: testedAnswer ? "tested_answer" : "teaches_about",
+          confidence: ontologyFill.confidence,
+          evidenceLocator: unit.evidenceLocator,
+          algorithmVersion: CARD_CLAIM_FACTORY_ALGORITHM,
+        });
+      }
+      if (unitEntityLinks.length === 0) {
+        unitEntityLinks.push({
+          claimId,
+          canonicalCardId: card.canonicalCardId,
+          canonicalCardVersionId: card.canonicalCardVersionId,
+          entityKind: "unresolved",
+          entityId: null,
+          role: "teaches_about",
+          confidence: 0,
+          evidenceLocator: unit.evidenceLocator,
+          algorithmVersion: CARD_CLAIM_FACTORY_ALGORITHM,
+        });
+      }
+      entityLinks.push(...unitEntityLinks);
+      const distinctResolved = new Set(
+        unitEntityLinks.filter((link) => link.entityKind !== "unresolved").map((link) => link.entityId),
+      );
+      if (distinctResolved.size > 1) {
+        flag("multi_entity_claim", "review", `entity_count_${distinctResolved.size}`);
+      }
+      if (distinctResolved.size === 0) claimsWithoutEntities += 1;
+      for (const pending of pendingFlags) {
+        qualityFlags.push({
+          claimId,
+          canonicalCardId: card.canonicalCardId,
+          canonicalCardVersionId: card.canonicalCardVersionId,
+          code: pending.code,
+          severity: pending.severity,
+          detail: pending.detail,
+        });
+      }
+      const blocked = pendingFlags.some((entry) => entry.severity === "block_auto_approve");
       if (!resolved) {
         queue = "missing_entity";
         const unresolvedReasons = likenessBlocked
@@ -1305,60 +1688,62 @@ export function runCardClaimFactory(input: {
         reasonCodes = picked.multiple
           ? ["multiple_central_entities", ...unresolvedReasons]
           : unresolvedReasons;
-      } else if (policy.approved) {
-        // Never auto-approve off a low-confidence proposed entity, even if
-        // generation ever yields one below the threshold.
-        if (ontologyFill && ontologyFill.confidence < PROPOSED_ENTITY_AUTO_APPROVE_CONFIDENCE) {
-          queue = "missing_entity";
-          reasonCodes = ["low_confidence_proposed_entity"];
-        } else {
-          queue = "auto_approved";
-          reasonCodes = [
-            "machine_consensus",
-            ...(ontologyFill ? [ONTOLOGY_GAP_FILLED_REASON] : []),
-            ...(canonicalAnswerFill || canonicalShortFill ? ["canonical_alias_match"] : []),
-            ...(picked.multiple ? ["primary_entity_picked"] : []),
-          ];
-          const link: CardClaimLinkV1 = {
-            contractVersion: "snaportho-clinical-claim.v1",
-            canonicalCardId: card.canonicalCardId,
-            canonicalCardVersionId: card.canonicalCardVersionId,
+      } else if (policy.approved && !blocked) {
+        queue = "auto_approved";
+        reasonCodes = [
+          "machine_consensus",
+          ...(ontologyFill ? [ONTOLOGY_GAP_FILLED_REASON] : []),
+          ...(canonicalAnswerFill || canonicalShortFill ? ["canonical_alias_match"] : []),
+          ...(picked.multiple ? ["primary_entity_picked"] : []),
+        ];
+        const link: CardClaimLinkV1 = {
+          contractVersion: "snaportho-clinical-claim.v1",
+          canonicalCardId: card.canonicalCardId,
+          canonicalCardVersionId: card.canonicalCardVersionId,
+          claimId,
+          claimVersionId: currentVersionId,
+          mappingRole: "teaches",
+          confidence: Math.min(
+            0.99,
+            Math.max(0.9, criticGate.reviews.reduce((sum, review) => sum + review.confidence, 0) / Math.max(criticGate.reviews.length, 1)),
+          ),
+          approvalMethod: "machine_consensus",
+          reviewStatus: "auto_approved",
+          algorithmVersion: CARD_CLAIM_FACTORY_ALGORITHM,
+          evidenceLocator,
+          evidenceHashes: [evidenceHash],
+          reasonCodes: [...reasonCodes, "atomic_card"],
+          metadata: {
+            factoryImplementation: CARD_CLAIM_FACTORY_IMPLEMENTATION_VERSION,
+            atomicExtractorVersion: ATOMIC_EXTRACTOR_VERSION,
+            sourceCardId: card.canonicalCardId,
             claimId,
-            claimVersionId: currentVersionId,
-            mappingRole: "teaches",
-            confidence: Math.min(
-              0.99,
-              Math.max(0.9, criticGate.reviews.reduce((sum, review) => sum + review.confidence, 0) / Math.max(criticGate.reviews.length, 1)),
-            ),
-            approvalMethod: "machine_consensus",
-            reviewStatus: "auto_approved",
-            algorithmVersion: CARD_CLAIM_FACTORY_ALGORITHM,
-            evidenceLocator: "cloze",
-            evidenceHashes: [evidenceHash],
-            reasonCodes: [...reasonCodes, "atomic_card"],
-            metadata: {
-              factoryImplementation: CARD_CLAIM_FACTORY_IMPLEMENTATION_VERSION,
-              sourceCardId: card.canonicalCardId,
-              claimId,
-              entityId,
-              entityTargetType,
-              ...(ontologyFill
-                ? {
-                  approvalReason: ONTOLOGY_GAP_FILLED_APPROVAL_REASON,
-                  proposedEntityId: ontologyFill.entityId,
-                  proposedEntityConfidence: ontologyFill.confidence,
-                }
-                : {}),
-            },
-            isActive: true,
-          };
-          if (!isCardClaimLinkV1(link) || containsProtectedEducationalContent(link)) {
-            throw new Error(`unsafe_or_invalid_link:${card.canonicalCardId}`);
-          }
-          links.push(link);
-          siblingKeys.add(fingerprintHash);
-          approvedFingerprintsByNote.set(card.noteGuid, siblingKeys);
+            claimIndex,
+            claimsInVersion,
+            sourceUnitId: unit.unitId,
+            entityId,
+            entityTargetType,
+            ...(ontologyFill
+              ? {
+                approvalReason: ONTOLOGY_GAP_FILLED_APPROVAL_REASON,
+                proposedEntityId: ontologyFill.entityId,
+                proposedEntityConfidence: ontologyFill.confidence,
+              }
+              : {}),
+          },
+          isActive: true,
+        };
+        if (!isCardClaimLinkV1(link) || containsProtectedEducationalContent(link)) {
+          throw new Error(`unsafe_or_invalid_link:${card.canonicalCardId}`);
         }
+        links.push(link);
+        siblingKeys.add(identityKey);
+        approvedIdentityKeysByNote.set(card.noteGuid, siblingKeys);
+      } else if (blocked) {
+        queue = "missing_entity";
+        reasonCodes = pendingFlags
+          .filter((entry) => entry.severity === "block_auto_approve")
+          .map((entry) => entry.code);
       } else {
         queue = policy.queue;
         reasonCodes = policy.reasonCodes;
@@ -1368,15 +1753,15 @@ export function runCardClaimFactory(input: {
       }
     }
 
-    if (queue === "missing_entity" || reasonCodes.includes(ONTOLOGY_GAP_FILLED_REASON)) {
-      const claim = fingerprintHash ? claimByHash.get(fingerprintHash) : null;
-      const filled = reasonCodes.includes(ONTOLOGY_GAP_FILLED_REASON);
+    if ((queue === "missing_entity" || reasonCodes.includes(ONTOLOGY_GAP_FILLED_REASON)) && fingerprintHash) {
+      const claim = identityKey ? claimByIdentity.get(identityKey) : undefined;
+      const filledGap = reasonCodes.includes(ONTOLOGY_GAP_FILLED_REASON);
       gaps.push({
         contractVersion: "snaportho-clinical-claim.v1",
         gapClass: "missing_claim",
         owner: "kg",
-        disposition: filled ? "resolved" : "open",
-        priorityScore: filled ? 40 : 70,
+        disposition: filledGap ? "resolved" : "open",
+        priorityScore: filledGap ? 40 : 70,
         claimId: claim?.claimId ?? null,
         claimVersionId: claim?.currentVersionId ?? null,
         canonicalCardId: card.canonicalCardId,
@@ -1387,7 +1772,10 @@ export function runCardClaimFactory(input: {
         metadata: {
           canonicalCardVersionId: card.canonicalCardVersionId,
           sourceCardId: card.canonicalCardId,
-          rawClozeText: compactText(cloze?.answer ?? "", 200),
+          sourceUnitId: unit.unitId,
+          claimIndex,
+          claimsInVersion,
+          rawClozeText: compactText(testedAnswer, 200),
           claimId: claim?.claimId ?? null,
           claimVersionId: claim?.currentVersionId ?? null,
           ...(ontologyFill
@@ -1400,7 +1788,7 @@ export function runCardClaimFactory(input: {
               approvalReason: ONTOLOGY_GAP_FILLED_APPROVAL_REASON,
             }
             : {
-              normalizedLabel: normalizeClinicalText(cloze?.answer ?? ""),
+              normalizedLabel: normalizeClinicalText(testedAnswer),
               ...(likenessBlocked
                 ? {
                   proposalAssessment: {
@@ -1435,12 +1823,146 @@ export function runCardClaimFactory(input: {
                 : {}),
             }),
           canonicalMatchAttempts: gapAttempts.slice(0, 10),
-          semanticReasonCodes: [...new Set(semantic.resolutions.flatMap((row) => row.reasonCodes))].slice(0, 10),
+          semanticReasonCodes: [...new Set(unitResolutions.flatMap((row) => row.reasonCodes))].slice(0, 10),
         },
         isActive: true,
       });
     }
+    return { queue, reasonCodes, fingerprintHash, claimId };
+  };
 
+  for (const card of cards) {
+    const eligibility = cardEligible(card);
+    if (eligibility) {
+      assignments.push({
+        canonicalCardId: card.canonicalCardId,
+        canonicalCardVersionId: card.canonicalCardVersionId,
+        noteGuid: card.noteGuid,
+        cardOrdinal: card.cardOrdinal,
+        contentHash: card.contentHash,
+        queue: "inactive_or_stale",
+        reasonCodes: [eligibility],
+        fingerprintHash: null,
+        claimIds: [],
+      });
+      continue;
+    }
+    const semantic = semanticByCard.get(card.canonicalCardId)!;
+    const extraction = extractCardClaims(card);
+    if (extraction.extractionStatus === "needs_review") {
+      // Claim ceiling exceeded: candidates are recorded for review, but no
+      // claims are emitted automatically.
+      assignments.push({
+        canonicalCardId: card.canonicalCardId,
+        canonicalCardVersionId: card.canonicalCardVersionId,
+        noteGuid: card.noteGuid,
+        cardOrdinal: card.cardOrdinal,
+        contentHash: card.contentHash,
+        queue: "multi_claim_review",
+        reasonCodes: extraction.reasonCodes,
+        fingerprintHash: null,
+        claimIds: [],
+      });
+      continue;
+    }
+    if (extraction.extractionStatus !== "claims_extracted") {
+      zeroClaimCards += 1;
+      assignments.push({
+        canonicalCardId: card.canonicalCardId,
+        canonicalCardVersionId: card.canonicalCardVersionId,
+        noteGuid: card.noteGuid,
+        cardOrdinal: card.cardOrdinal,
+        contentHash: card.contentHash,
+        queue: "zero_claims",
+        reasonCodes: extraction.reasonCodes.length ? extraction.reasonCodes : ["zero_claims_no_usable_unit"],
+        fingerprintHash: null,
+        claimIds: [],
+      });
+      continue;
+    }
+    const unitsById = new Map(extraction.units.map((unit) => [unit.unitId, unit]));
+    const pairs = extraction.candidates
+      .filter((candidate) => candidate.assertion.trim().length > 0)
+      .map((candidate) => ({ candidate, unit: unitsById.get(candidate.unitId) ?? null }))
+      .filter((pair): pair is { candidate: AtomicClaimCandidate; unit: AtomicExtractionUnit } => pair.unit !== null);
+    if (pairs.length === 0) {
+      zeroClaimCards += 1;
+      assignments.push({
+        canonicalCardId: card.canonicalCardId,
+        canonicalCardVersionId: card.canonicalCardVersionId,
+        noteGuid: card.noteGuid,
+        cardOrdinal: card.cardOrdinal,
+        contentHash: card.contentHash,
+        queue: "zero_claims",
+        reasonCodes: ["zero_claims_no_usable_unit"],
+        fingerprintHash: null,
+        claimIds: [],
+      });
+      continue;
+    }
+    const matchTexts = pairs.map(({ unit }) => ({
+      unitId: unit.unitId,
+      matchText: normalizeClinicalText(`${unit.contextHeader} ${unit.filledBlock} ${unit.answer}`),
+    }));
+    const assignment = assignUnitConcepts(semantic.concepts, matchTexts);
+    extractionUnits += pairs.length;
+    if (pairs.length > 1) multiClaimCards += 1;
+    maxClaimsPerCard = Math.max(maxClaimsPerCard, pairs.length);
+    const targetCloze = card.cardOrdinal + 1;
+    const outcomes: UnitProcessOutcome[] = pairs.map(({ unit, candidate }, index) => {
+      const testedAnswer = unitTestedAnswer(unit, targetCloze);
+      const outcome = processUnit({
+        card,
+        semantic,
+        unit,
+        candidate,
+        unitConcepts: assignment.byUnit.get(unit.unitId) ?? [],
+        claimIndex: index + 1,
+        claimsInVersion: pairs.length,
+        testedAnswer,
+      });
+      unitOutcomes.push({
+        canonicalCardId: card.canonicalCardId,
+        canonicalCardVersionId: card.canonicalCardVersionId,
+        claimIndex: index + 1,
+        claimsInVersion: pairs.length,
+        sourceUnitId: unit.unitId,
+        queue: outcome.queue,
+        reasonCodes: outcome.reasonCodes,
+        fingerprintHash: outcome.fingerprintHash,
+        claimId: outcome.claimId,
+      });
+      return outcome;
+    });
+    if (assignment.unmatched.length > 0 && outcomes[0]?.claimId) {
+      qualityFlags.push({
+        claimId: outcomes[0].claimId!,
+        canonicalCardId: card.canonicalCardId,
+        canonicalCardVersionId: card.canonicalCardVersionId,
+        code: "entity_evidence_outside_units",
+        severity: "review",
+        detail: assignment.unmatched.map((concept) => concept.normalizedConceptLabel).slice(0, 5).join("; "),
+      });
+    }
+    const claimIds = outcomes.map((outcome) => outcome.claimId).filter((id): id is string => Boolean(id));
+    const fingerprintHash = outcomes.find((outcome) => outcome.fingerprintHash)?.fingerprintHash ?? null;
+    const outcomeQueues = new Set(outcomes.map((outcome) => outcome.queue));
+    let queue: CardClaimFactoryQueue;
+    let reasonCodes: string[];
+    if (outcomeQueues.size === 1) {
+      queue = outcomes[0].queue;
+      reasonCodes = [...new Set(outcomes.flatMap((outcome) => outcome.reasonCodes))];
+      if (queue === "auto_approved" && pairs.length > 1) reasonCodes = [...reasonCodes, "multi_claim_card"];
+    } else {
+      queue = "multi_claim_review";
+      reasonCodes = [...new Set(outcomes.flatMap((outcome) => outcome.reasonCodes))];
+      reasonCodes.push(
+        outcomes.some((outcome) => outcome.queue === "auto_approved") ? "partial_auto_approval" : "mixed_unit_outcomes",
+      );
+    }
+    if (extraction.reasonCodes.some((reason) => reason.startsWith("dropped_empty_answer"))) {
+      reasonCodes = [...reasonCodes, "partial_unit_drop"];
+    }
     assignments.push({
       canonicalCardId: card.canonicalCardId,
       canonicalCardVersionId: card.canonicalCardVersionId,
@@ -1450,20 +1972,69 @@ export function runCardClaimFactory(input: {
       queue,
       reasonCodes,
       fingerprintHash,
+      claimIds,
     });
   }
-
-  const proposedClaims = [...claimByHash.values()].sort((left, right) => left.claimId.localeCompare(right.claimId));
+  const proposedClaims = [...claimByIdentity.values()].sort((left, right) => left.claimId.localeCompare(right.claimId));
   const proposedEntities = [...entityById.values()].sort((left, right) => left.entityId.localeCompare(right.entityId));
-  const autoApprovedLinks = [...links].sort((left, right) => left.canonicalCardId.localeCompare(right.canonicalCardId));
+  const autoApprovedLinks = [...links].sort((left, right) => (
+    left.canonicalCardId.localeCompare(right.canonicalCardId)
+    || String(linkClaimIndex(left)).localeCompare(String(linkClaimIndex(right)), undefined, { numeric: true })
+  ));
+  // Claim-level dedup: several units can legitimately share one claim (same
+  // assertion), but the (claim, entity, role) and (claim, code) rows must be
+  // unique for the claim_entities / claim_quality_flags merge keys.
+  const bestLinkByKey = new Map<string, FactoryClaimEntityLink>();
+  for (const link of entityLinks) {
+    const key = `${link.claimId}|${link.entityKind}|${link.entityId ?? ""}|${link.role}`;
+    const previous = bestLinkByKey.get(key);
+    if (!previous || link.confidence > previous.confidence) bestLinkByKey.set(key, link);
+  }
+  const sortedEntityLinks = [...bestLinkByKey.values()].sort((left, right) => (
+    left.claimId.localeCompare(right.claimId)
+    || left.entityKind.localeCompare(right.entityKind)
+    || (left.entityId ?? "").localeCompare(right.entityId ?? "")
+  ));
+  const bestFlagByKey = new Map<string, FactoryQualityFlag>();
+  for (const flag of qualityFlags) {
+    const key = `${flag.claimId}|${flag.code}`;
+    if (!bestFlagByKey.has(key)) bestFlagByKey.set(key, flag);
+  }
+  const sortedQualityFlags = [...bestFlagByKey.values()].sort((left, right) => (
+    left.claimId.localeCompare(right.claimId) || left.code.localeCompare(right.code)
+  ));
+  // Canonical semantic candidate grouping. Candidates are recorded for review;
+  // grouping never merges claims, repoints links, or changes queues.
+  const semanticGroups = new Map<string, string[]>();
+  for (const claim of proposedClaims) {
+    const key = claim.semanticFingerprintHash ?? "";
+    if (!key) continue;
+    const group = semanticGroups.get(key) ?? [];
+    group.push(claim.claimId);
+    semanticGroups.set(key, group);
+  }
+  const semanticCandidates: SemanticCandidateGroup[] = [...semanticGroups.entries()]
+    .filter(([, claimIds]) => claimIds.length > 1)
+    .map(([semanticFingerprintHash, claimIds]) => ({
+      semanticFingerprintHash,
+      semanticIdentityVersion: SEMANTIC_CLAIM_IDENTITY_VERSION,
+      claimIds: [...claimIds].sort(),
+      candidateCount: claimIds.length,
+      disposition: "candidate" as const,
+    }))
+    .sort((left, right) => left.semanticFingerprintHash.localeCompare(right.semanticFingerprintHash));
   const output: CardClaimFactoryOutput = {
     contractVersion: CARD_CLAIM_FACTORY_CONTRACT_VERSION,
     algorithmVersion: CARD_CLAIM_FACTORY_ALGORITHM,
     factoryRunId: deterministicUuid(`card-claim-factory|${checksum(cards.map((card) => [card.canonicalCardVersionId, card.contentHash]))}|${CARD_CLAIM_FACTORY_IMPLEMENTATION_VERSION}`),
     dryRun: true,
     proposedClaims,
+    semanticCandidates,
     proposedEntities,
     autoApprovedLinks,
+    entityLinks: sortedEntityLinks,
+    qualityFlags: sortedQualityFlags,
+    unitOutcomes,
     assignments,
     exceptionQueue: assignments.filter((row) => row.queue !== "auto_approved"),
     gaps,
@@ -1484,6 +2055,15 @@ export function runCardClaimFactory(input: {
       entityLikenessBlocked,
       contextSpecificityBlocked,
       openMissingEntity: assignments.filter((row) => row.queue === "missing_entity").length,
+      semanticUniqueFingerprints: semanticGroups.size,
+      semanticCandidateGroups: semanticCandidates.length,
+      extractionUnits,
+      zeroClaimCards,
+      multiClaimCards,
+      maxClaimsPerCard,
+      entityLinksProposed: sortedEntityLinks.length,
+      claimsWithoutEntities,
+      qualityFlagsRaised: sortedQualityFlags.length,
     },
   };
   assertDurableSemanticSafe({
@@ -1512,6 +2092,8 @@ export function runCardClaimFactory(input: {
       void noteGuid;
       return row;
     }),
+    entityLinks: output.entityLinks,
+    qualityFlags: output.qualityFlags,
     gaps: output.gaps,
     metrics: output.metrics,
   });

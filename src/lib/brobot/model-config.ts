@@ -80,6 +80,15 @@ export const BROBOT_TITLE_MODEL = readModelEnv('BROBOT_TITLE_MODEL', 'gpt-4o-min
  */
 export const BROBOT_FALLBACK_MODEL = readModelEnv('BROBOT_FALLBACK_MODEL', 'gpt-4o-mini');
 
+/** Orthobullets claim extraction v5: multi-claim generator (quality-first, strong by default). */
+export const BROBOT_OB_CLAIMS_GENERATOR_MODEL = readModelEnv('BROBOT_OB_CLAIMS_GENERATOR_MODEL', BROBOT_STRONG_MODEL);
+
+/** Orthobullets claim extraction v5: per-claim critic with rewrite/split/merge/remove. */
+export const BROBOT_OB_CLAIMS_CRITIC_MODEL = readModelEnv('BROBOT_OB_CLAIMS_CRITIC_MODEL', BROBOT_STRONG_MODEL);
+
+/** Orthobullets claim extraction v5: question-level set review. */
+export const BROBOT_OB_CLAIMS_REVIEW_MODEL = readModelEnv('BROBOT_OB_CLAIMS_REVIEW_MODEL', BROBOT_STRONG_MODEL);
+
 /** Feature flag: run a second metadata-only pass after answer generation. */
 export const BROBOT_SEPARATE_METADATA_PASS = readBooleanEnv(
   'BROBOT_SEPARATE_METADATA_PASS',

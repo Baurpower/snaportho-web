@@ -1,0 +1,454 @@
+[
+  {
+    "proposal_id": "af6cf0c6-8704-4159-8574-c4fc0ffcc6d2",
+    "proposed_label": "Femoral",
+    "proposed_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "claims": 10,
+    "cards": 10,
+    "target_id": "0bb7c697-1b07-40bd-80e1-484e46ef6d98",
+    "target_label": "Femoral Nerve",
+    "target_type": "anatomy_structure",
+    "confidence": 0.7,
+    "reason": "elided_nerve_form_with_innervation_context",
+    "evidence": [
+      "elided_form_containment",
+      "token_jaccard_0.50",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "The Vastus Intermedius is innervated by Femoral.",
+      "The Vastus medialis is innervated by Femoral.",
+      "The Rectus Femoris is innervated by Femoral."
+    ]
+  },
+  {
+    "proposal_id": "b9dac7b9-a638-4407-8ecd-aebc84ae0c8d",
+    "proposed_label": "Median",
+    "proposed_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "claims": 9,
+    "cards": 9,
+    "target_id": "b8c22ec6-1383-4b7e-ae89-a4e598722eb6",
+    "target_label": "Median Nerve",
+    "target_type": "anatomy_structure",
+    "confidence": 0.7,
+    "reason": "elided_nerve_form_with_innervation_context",
+    "evidence": [
+      "elided_form_containment",
+      "token_jaccard_0.50",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "The Flexor Digitorum Profundus (FDP) is innervated by Median, ulnar.",
+      "The Pronator Quadratus is innervated by Median.",
+      "The Superficial head is innervated by Median."
+    ]
+  },
+  {
+    "proposal_id": "ac38bbd3-fce8-4315-851a-78619c8119a4",
+    "proposed_label": "Ulnar",
+    "proposed_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "claims": 7,
+    "cards": 7,
+    "target_id": "cd78780a-9a5d-4838-aa0b-fe8d0a642a06",
+    "target_label": "Ulnar Nerve",
+    "target_type": "anatomy_structure",
+    "confidence": 0.7,
+    "reason": "elided_nerve_form_with_innervation_context",
+    "evidence": [
+      "elided_form_containment",
+      "token_jaccard_0.50",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "The Deep head is innervated by Ulnar.",
+      "The Opponens Digiti Minimi is innervated by Ulnar.",
+      "The Interosseous is innervated by Ulnar."
+    ]
+  },
+  {
+    "proposal_id": "75f770db-7355-45c5-8eff-aee213816dea",
+    "proposed_label": "Radial-PIN",
+    "proposed_type": "condition",
+    "inferred_type": "condition",
+    "claims": 6,
+    "cards": 6,
+    "target_id": "72031bf2-a184-4835-88c9-117c16a3f69b",
+    "target_label": "PIN",
+    "target_type": "anatomy_structure",
+    "confidence": 0.6,
+    "reason": "moderate_candidate_score_0.70",
+    "evidence": [
+      "elided_form_containment",
+      "token_jaccard_0.50",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "The Extensor Indicis Proprius is innervated by Radial-PIN.",
+      "The Extensor pollicis longus (EPL) is innervated by Radial-PIN.",
+      "The Extensor Pollicis Brevis (EPB) is innervated by Radial-PIN."
+    ]
+  },
+  {
+    "proposal_id": "32fc83a2-d150-4501-8eac-2ade0536cf89",
+    "proposed_label": "Superficial peroneal",
+    "proposed_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "claims": 2,
+    "cards": 2,
+    "target_id": "5a16b93a-d689-4dc3-bd29-7e0b5d9a4298",
+    "target_label": "Superficial Peroneal Nerve",
+    "target_type": "anatomy_structure",
+    "confidence": 0.75,
+    "reason": "strong_candidate_score_0.90",
+    "evidence": [
+      "elided_form_containment",
+      "trigram_0.83",
+      "token_jaccard_0.67",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "The Peroneus Longus is innervated by Superficial peroneal.",
+      "The Peroneus brevis is innervated by Superficial peroneal."
+    ]
+  },
+  {
+    "proposal_id": "57abeaa2-eee5-4fcc-8462-0561c02c622b",
+    "proposed_label": "Deep posterior",
+    "proposed_type": "condition",
+    "inferred_type": "condition",
+    "claims": 2,
+    "cards": 2,
+    "target_id": "fe5a6bf7-94b6-4cff-8338-fb3cb041d1db",
+    "target_label": "Deep Posterior Compartment",
+    "target_type": "anatomy_structure",
+    "confidence": 0.6,
+    "reason": "moderate_candidate_score_0.70",
+    "evidence": [
+      "elided_form_containment",
+      "token_jaccard_0.67",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "The compartments (4) of the lower leg are Deep posterior.",
+      "The most commonly inadequately released in the lower leg is Deep Posterior."
+    ]
+  },
+  {
+    "proposal_id": "a1fc1b25-9ff4-4d8e-8d2a-32dcf6ab540c",
+    "proposed_label": "PCL",
+    "proposed_type": "condition",
+    "inferred_type": "condition",
+    "claims": 2,
+    "cards": 2,
+    "target_id": "ffca4b51-3055-40f8-b65e-771336fbf194",
+    "target_label": "Posterior Cruciate Ligament",
+    "target_type": "anatomy_structure",
+    "confidence": 0.6,
+    "reason": "moderate_candidate_score_0.65",
+    "evidence": [
+      "acronym_expansion",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "The this is PCL.",
+      "PCL injury typically occurs during hyperextension (such as stepping into a hole) or direct blow to flexed knee."
+    ]
+  },
+  {
+    "proposal_id": "ba291f4d-6135-4605-8e1d-7752a5086df0",
+    "proposed_label": "FDP tendons",
+    "proposed_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "claims": 2,
+    "cards": 2,
+    "target_id": "f7b1d430-204f-40a3-b926-c9412a1bf23b",
+    "target_label": "FDP",
+    "target_type": "anatomy_structure",
+    "confidence": 0.6,
+    "reason": "moderate_candidate_score_0.70",
+    "evidence": [
+      "elided_form_containment",
+      "token_jaccard_0.50",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "The Lumbricals originates from FDP tendons.",
+      "The origin of the lumbrical muscles is FDP tendons."
+    ]
+  },
+  {
+    "proposal_id": "02305e94-8f45-43bd-843a-6b77bd4b8a61",
+    "proposed_label": "Posterior Interosseous Nerve",
+    "proposed_type": "anatomy_structure",
+    "inferred_type": "anatomy_structure",
+    "claims": 1,
+    "cards": 1,
+    "target_id": "72031bf2-a184-4835-88c9-117c16a3f69b",
+    "target_label": "PIN",
+    "target_type": "anatomy_structure",
+    "confidence": 0.6,
+    "reason": "moderate_candidate_score_0.65",
+    "evidence": [
+      "acronym_expansion",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "The nerve evaluated with the \"thumbs up\" sign is Posterior Interosseous Nerve."
+    ]
+  },
+  {
+    "proposal_id": "0985439d-b0ef-48f9-8c85-6e9b52bb677d",
+    "proposed_label": "Sides of middle phalanges",
+    "proposed_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "claims": 1,
+    "cards": 1,
+    "target_id": "f6c55355-6880-48e7-b0f5-ea0a21c11624",
+    "target_label": "Middle Phalanx",
+    "target_type": "anatomy_structure",
+    "confidence": 0.75,
+    "reason": "strong_candidate_score_0.90",
+    "evidence": [
+      "elided_form_containment",
+      "trigram_0.73",
+      "token_jaccard_0.50",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "The Flexor Digitorum Brevis insertion is Sides of middle phalanges."
+    ]
+  },
+  {
+    "proposal_id": "3f51c571-ba60-4e11-8aff-cb06170201f7",
+    "proposed_label": "Medial parapatellar",
+    "proposed_type": "condition",
+    "inferred_type": "surgical_approach",
+    "claims": 1,
+    "cards": 1,
+    "target_id": "8b491e8b-e24d-4ded-8f24-57844362cc78",
+    "target_label": "Medial Parapatellar Interval",
+    "target_type": "anatomy_structure",
+    "confidence": 0.6,
+    "reason": "moderate_candidate_score_0.65",
+    "evidence": [
+      "elided_form_containment",
+      "trigram_0.80",
+      "token_jaccard_0.67",
+      "type_mismatch"
+    ],
+    "example_claims": [
+      "The most common approach for a TKA is Medial parapatellar."
+    ]
+  },
+  {
+    "proposal_id": "4806217e-c179-4074-8b87-97558bf1de3f",
+    "proposed_label": "ACL",
+    "proposed_type": "complication",
+    "inferred_type": "condition",
+    "claims": 1,
+    "cards": 1,
+    "target_id": "850e2c40-054b-487f-9089-6ac253f787a2",
+    "target_label": "Anterior Cruciate Ligament",
+    "target_type": "anatomy_structure",
+    "confidence": 0.6,
+    "reason": "moderate_candidate_score_0.65",
+    "evidence": [
+      "acronym_expansion",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "The structure at risk with a retrograde IM nail starting point that is posterior to Blumensaat's line is ACL."
+    ]
+  },
+  {
+    "proposal_id": "78639de5-db66-4404-8e21-92c8e69e14c4",
+    "proposed_label": "Proximal phalanges",
+    "proposed_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "claims": 1,
+    "cards": 1,
+    "target_id": "7174f760-664c-4873-8778-fc7c36db796d",
+    "target_label": "Proximal Phalanx",
+    "target_type": "anatomy_structure",
+    "confidence": 0.95,
+    "reason": "exact_normalized_label_match",
+    "evidence": [
+      "exact_normalized_label",
+      "trigram_1.00",
+      "token_jaccard_1.00",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "The Lumbricals (Foot) insertion is Proximal phalanges, extensor expansion."
+    ]
+  },
+  {
+    "proposal_id": "7c72af69-8e5e-4b2e-85f1-44380a58ed23",
+    "proposed_label": "Flexor digitorum superficialis",
+    "proposed_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "claims": 1,
+    "cards": 1,
+    "target_id": "a61498d3-73af-40bc-839e-0ab4d0f6682b",
+    "target_label": "FDS",
+    "target_type": "anatomy_structure",
+    "confidence": 0.6,
+    "reason": "moderate_candidate_score_0.65",
+    "evidence": [
+      "acronym_expansion",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "Flexor digitorum superficialis originates on the medial epicondyle."
+    ]
+  },
+  {
+    "proposal_id": "876cb3bb-f629-4e04-87ea-669f2e598764",
+    "proposed_label": "Flexor carpi radialis",
+    "proposed_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "claims": 1,
+    "cards": 1,
+    "target_id": "5f3c0369-f4e6-4438-903c-57bf479ba633",
+    "target_label": "FCR",
+    "target_type": "anatomy_structure",
+    "confidence": 0.6,
+    "reason": "moderate_candidate_score_0.65",
+    "evidence": [
+      "acronym_expansion",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "Flexor carpi radialis originates on the medial epicondyle."
+    ]
+  },
+  {
+    "proposal_id": "a34a2fbb-82d3-491b-827b-0c8d9d85369f",
+    "proposed_label": "Middle phalanges of digits",
+    "proposed_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "claims": 1,
+    "cards": 1,
+    "target_id": "f6c55355-6880-48e7-b0f5-ea0a21c11624",
+    "target_label": "Middle Phalanx",
+    "target_type": "anatomy_structure",
+    "confidence": 0.75,
+    "reason": "strong_candidate_score_0.90",
+    "evidence": [
+      "elided_form_containment",
+      "trigram_0.71",
+      "token_jaccard_0.50",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "The Flexor Digitorum Superficialis insertion is Middle phalanges of digits."
+    ]
+  },
+  {
+    "proposal_id": "bc190e8f-5f7c-4d4d-8b45-57ae40b6710b",
+    "proposed_label": "Extensor carpi ulnaris",
+    "proposed_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "claims": 1,
+    "cards": 1,
+    "target_id": "40a424b0-9add-40f7-b141-8ca3b548ed15",
+    "target_label": "ECU",
+    "target_type": "anatomy_structure",
+    "confidence": 0.6,
+    "reason": "moderate_candidate_score_0.65",
+    "evidence": [
+      "acronym_expansion",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "Extensor carpi ulnaris originates on the lateral epicondyle."
+    ]
+  },
+  {
+    "proposal_id": "c6d2e06d-34d0-4c6f-86dd-7628a21b2882",
+    "proposed_label": "Anterior talofibular",
+    "proposed_type": "condition",
+    "inferred_type": "condition",
+    "claims": 1,
+    "cards": 1,
+    "target_id": "84ae62dc-cf45-492b-8872-e54696aa7ef3",
+    "target_label": "Anterior Talofibular Ligament",
+    "target_type": "anatomy_structure",
+    "confidence": 0.75,
+    "reason": "strong_candidate_score_0.90",
+    "evidence": [
+      "elided_form_containment",
+      "trigram_0.79",
+      "token_jaccard_0.67",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "With inversion ankle sprains, the most likely to be injured is Anterior talofibular."
+    ]
+  },
+  {
+    "proposal_id": "d66c1b7a-56ff-4500-8c91-db93c32418e3",
+    "proposed_label": "Flexor carpi ulnaris",
+    "proposed_type": "condition",
+    "inferred_type": "anatomy_structure",
+    "claims": 1,
+    "cards": 1,
+    "target_id": "52df6b06-b4c2-484c-9bbd-fb7765763097",
+    "target_label": "FCU",
+    "target_type": "anatomy_structure",
+    "confidence": 0.6,
+    "reason": "moderate_candidate_score_0.65",
+    "evidence": [
+      "acronym_expansion",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "Flexor carpi ulnaris originates on the medial epicondyle."
+    ]
+  },
+  {
+    "proposal_id": "e12bcb94-b7cf-42b5-8f64-fc4e49304790",
+    "proposed_label": "MCL",
+    "proposed_type": "condition",
+    "inferred_type": "condition",
+    "claims": 1,
+    "cards": 1,
+    "target_id": "6ae60b9d-4932-4fe1-bba8-d8fa87b9528a",
+    "target_label": "Medial Collateral Ligament",
+    "target_type": "anatomy_structure",
+    "confidence": 0.6,
+    "reason": "moderate_candidate_score_0.65",
+    "evidence": [
+      "acronym_expansion",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "When a patient suffers a terrible triad injury of the elbow , MCL."
+    ]
+  },
+  {
+    "proposal_id": "e27cf139-7642-48ee-8183-fc8b11198149",
+    "proposed_label": "Superficial posterior",
+    "proposed_type": "condition",
+    "inferred_type": "condition",
+    "claims": 1,
+    "cards": 1,
+    "target_id": "f3ef0b57-ed5a-4ffa-9dde-e27d2e09e47a",
+    "target_label": "Superficial Posterior Compartment",
+    "target_type": "anatomy_structure",
+    "confidence": 0.75,
+    "reason": "strong_candidate_score_0.90",
+    "evidence": [
+      "elided_form_containment",
+      "trigram_0.76",
+      "token_jaccard_0.67",
+      "type_compatible"
+    ],
+    "example_claims": [
+      "The compartments (4) of the lower leg are Superficial posterior."
+    ]
+  }
+]

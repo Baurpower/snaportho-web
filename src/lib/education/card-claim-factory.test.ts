@@ -243,8 +243,19 @@ const merged = runCardClaimFactory({
   entities,
 });
 assert.equal(merged.autoApprovedLinks.length, 2);
-assert.equal(merged.proposedClaims.length, 1, JSON.stringify(merged.proposedClaims));
-assert.equal(merged.metrics.mergedClaimCount, 1);
+// Same coarse fingerprint, different assertions: never silently merged.
+assert.equal(merged.proposedClaims.length, 2, JSON.stringify(merged.proposedClaims));
+assert.equal(merged.metrics.mergedClaimCount, 0);
+assert.equal(
+  new Set(merged.proposedClaims.map((row) => row.fingerprintHash)).size,
+  1,
+  "expected one shared fingerprint across two assertions",
+);
+assert.equal(
+  new Set(merged.proposedClaims.map((row) => row.claimId)).size,
+  2,
+  "expected distinct claim ids per assertion",
+);
 
 const colliding = [
   entities[0],

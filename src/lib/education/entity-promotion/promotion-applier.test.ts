@@ -1,0 +1,145 @@
+/** Tests for the review-driven promotion applier. */
+import { describe, it } from "node:test";
+import assert from "node:assert/strict";
+import {
+  decisionKeyFor,
+  planApply,
+  renderApplySql,
+  slugifyLabel,
+  validateDecisions,
+  type ApplyContext,
+  type ReviewDecisionInput,
+} from "./promotion-applier";
+
+function context(overrides: Partial<ApplyContext> = {}): ApplyContext {
+  return {
+    canonicalById: new Map([
+      ["canon-nerve", { id: "canon-nerve", normalizedLabel: "femoral nerve", entityType: "anatomy_structure" }],
+    ]),
+    canonicalByNormalized: new Map([
+      ["femoral nerve", [{ id: "canon-nerve", normalizedLabel: "femoral nerve", entityType: "anatomy_structure" }]],
+    ]),
+    aliases: [],
+    kgProposals: new Map([
+      ["kg-head", { id: "kg-head", reviewStatus: "generated", proposalType: "create_canonical_entity" }],
+    ]),
+    appliedDecisionKeys: new Set(),
+    edges: [
+      { claimId: "c1", role: "tested_answer", entityKind: "proposed", proposalId: "kg-1" },
+      { claimId: "c2", role: "tested_answer", entityKind: "proposed", proposalId: "kg-1" },
+    ],
+    ...overrides,
+  };
+}
+
+function decision(overrides: Partial<ReviewDecisionInput> = {}): ReviewDecisionInput {
+  return {
+    kgProposalId: "kg-1",
+    proposalLabel: "Femoral",
+    proposalNormalizedLabel: "femoral",
+    proposedEntityType: "condition",
+    sourceClaimIds: ["c1", "c2"],
+    decision: "ALIAS_EXISTING",
+    canonicalEntityId: "canon-nerve",
+    reviewer: "reviewer@example.com",
+    reason: "innervation context",
+    ...overrides,
+  };
+}
+
+describe("validateDecisions", () => {
+  it("accepts a well-formed alias decision", () => {
+    assert.deepEqual(validateDecisions([decision()]), []);
+  });
+
+  it("rejects unknown dispositions and missing fields", () => {
+    const errors = validateDecisions([
+      decision({ decision: "maybe" }),
+      decision({ decision: "ALIAS_EXISTING", canonicalEntityId: undefined }),
+      decision({ decision: "PROMOTE_CANONICAL", canonicalLabel: undefined, entityType: undefined }),
+      decision({ decision: "PROMOTE_CANONICAL", canonicalLabel: "X", entityType: "organism" }),
+      decision({ reviewer: "" }),
+    ]);
+    const codes = errors.map((entry) => entry.code);
+    assert.ok(codes.includes("unknown_decision"));
+    assert.ok(codes.includes("alias_missing_target"));
+    assert.ok(codes.includes("promote_missing_label_or_type"));
+    assert.ok(codes.includes("promote_invalid_type"));
+    assert.ok(codes.includes("missing_reviewer_or_reason"));
+  });
+
+  it("rejects duplicate decision keys", () => {
+    const errors = validateDecisions([decision(), decision()]);
+    assert.ok(errors.some((entry) => entry.code === "duplicate_decision_key"));
+  });
+});
+
+describe("planApply", () => {
+  it("defaults to dry-run", () => {
+    const plan = planApply([decision()], context());
+    assert.equal(plan.dryRun, true);
+  });
+
+  it("plans alias with edge repoint and decision record", () => {
+    const plan = planApply([decision()], context());
+    assert.deepEqual(plan.errors, []);
+    const kinds = plan.operations.map((operation) => operation.kind);
+    assert.deepEqual(kinds, ["add_entity_alias", "repoint_edges_to_canonical", "record_decision"]);
+    const repoint = plan.operations[1];
+    assert.equal(repoint.kind === "repoint_edges_to_canonical" && repoint.edgeCount, 2);
+  });
+
+  it("fails closed when the alias target is missing", () => {
+    const plan = planApply([decision({ canonicalEntityId: "nope" })], context());
+    assert.equal(plan.operations.length, 0);
+    assert.equal(plan.errors[0].code, "alias_target_missing");
+  });
+
+  it("fails closed on alias conflicts", () => {
+    const plan = planApply(
+      [decision()],
+      context({ aliases: [{ normalizedAlias: "femoral", canonicalEntityId: "canon-other", isActive: true }] }),
+    );
+    assert.equal(plan.errors[0].code, "alias_conflict");
+  });
+
+  it("converts promote to re-review when a canonical appears", () => {
+    const plan = planApply(
+      [decision({ decision: "PROMOTE_CANONICAL", canonicalLabel: "Femoral nerve", entityType: "anatomy_structure", canonicalEntityId: undefined })],
+      context(),
+    );
+    assert.equal(plan.operations[0].kind, "needs_rereview");
+    assert.ok(plan.warnings.some((warning) => warning.code === "promote_blocked_by_existing_canonical"));
+  });
+
+  it("skips already-applied decisions for idempotent replay", () => {
+    const plan = planApply(
+      [decision()],
+      context({ appliedDecisionKeys: new Set([decisionKeyFor(decision())]) }),
+    );
+    assert.equal(plan.operations.length, 0);
+    assert.equal(plan.stats.skipped_applied, 1);
+  });
+
+  it("slugifies canonical labels", () => {
+    assert.equal(slugifyLabel("Tibial Nerve (Deep)"), "tibial-nerve-deep");
+  });
+
+  it("infers elided_form alias types", () => {
+    const plan = planApply([decision()], context());
+    const alias = plan.operations[0];
+    assert.equal(alias.kind === "add_entity_alias" && alias.aliasType, "elided_form");
+  });
+});
+
+describe("renderApplySql", () => {
+  it("renders one transaction with idempotent guards", () => {
+    const inputs = [decision()];
+    const sql = renderApplySql(planApply(inputs, context()), inputs);
+    assert.match(sql, /^-- promotion apply plan/m);
+    assert.ok(sql.includes("begin;"));
+    assert.ok(sql.includes("commit;"));
+    assert.ok(sql.includes("where not exists"));
+    assert.ok(sql.includes("on conflict (decision_key) do nothing;"));
+  });
+});

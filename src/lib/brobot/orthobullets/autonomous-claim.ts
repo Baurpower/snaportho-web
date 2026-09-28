@@ -1,6 +1,6 @@
 import { CLINICAL_CLAIM_PREDICATES, CLINICAL_CLAIM_TYPES } from '@/lib/education/contracts/clinical-claim-v1';
 
-export const ORTHOBULLETS_AUTONOMOUS_CLAIM_VERSION = 'orthobullets-autonomous-claim.v3';
+export const ORTHOBULLETS_AUTONOMOUS_CLAIM_VERSION = 'orthobullets-autonomous-claim.v4';
 export const AUTO_ACCEPT_MIN_CONFIDENCE = 0.9;
 export const ORTHOBULLETS_CLAIM_COHORT_LIMIT = 25;
 export const ORTHOBULLETS_CLAIM_RUN_MAX = 100;
@@ -21,8 +21,11 @@ export type AutonomousClaimDraft = {
   qualifiers: Record<string, string>;
   primaryEntityLabel: string;
   primaryEntityType: string;
-  primaryEntityId: string;
   confidence: number;
+};
+
+export type ResolvedAutonomousClaimDraft = AutonomousClaimDraft & {
+  primaryEntityId: string;
 };
 
 export type AutonomousClaimCritique = {
@@ -41,6 +44,14 @@ export function normalizeEntityLabel(value: string) {
 
 export function lightEntityLabel(value: string) {
   return normalizeEntityLabel(value).replace(/^the /, '');
+}
+
+export function safeTopicHint(value: string) {
+  const compact = value.replace(/\s+/g, ' ').trim();
+  if (compact.length < 3 || compact.length > 120) return null;
+  if ((compact.match(/[•|;]/g) ?? []).length >= 2) return null;
+  if ((compact.match(/\b(?:flap|fixation|arthroplasty|reconstruction|treatment)\b/gi) ?? []).length >= 3) return null;
+  return compact;
 }
 
 export type ApprovedEntityRecord = {
@@ -120,7 +131,6 @@ export function parseAutonomousClaimDraft(value: unknown): AutonomousClaimDraft 
   const objectText = typeof row.objectText === 'string' ? row.objectText.trim() : '';
   const primaryEntityLabel = typeof row.primaryEntityLabel === 'string' ? row.primaryEntityLabel.trim() : '';
   const primaryEntityType = typeof row.primaryEntityType === 'string' ? row.primaryEntityType.trim() : '';
-  const primaryEntityId = typeof row.primaryEntityId === 'string' ? row.primaryEntityId.trim() : '';
   const confidence = Number(row.confidence);
   const rawQualifiers = object(row.qualifiers) ?? {};
   const qualifiers = Object.fromEntries(Object.entries(rawQualifiers)
@@ -131,9 +141,8 @@ export function parseAutonomousClaimDraft(value: unknown): AutonomousClaimDraft 
   if (!(CLINICAL_CLAIM_PREDICATES as readonly string[]).includes(predicate)) return null;
   if (!objectText || objectText.length > 200) return null;
   if (!primaryEntityLabel || primaryEntityLabel.length > 200 || !ENTITY_TYPES.has(primaryEntityType)) return null;
-  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(primaryEntityId)) return null;
   if (!Number.isFinite(confidence) || confidence < 0 || confidence > 1) return null;
-  return { claimText, claimType, predicate, objectText, qualifiers, primaryEntityLabel, primaryEntityType, primaryEntityId, confidence };
+  return { claimText, claimType, predicate, objectText, qualifiers, primaryEntityLabel, primaryEntityType, confidence };
 }
 
 export function parseAutonomousClaimCritique(value: unknown): AutonomousClaimCritique | null {

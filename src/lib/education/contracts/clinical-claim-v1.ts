@@ -110,6 +110,13 @@ export type ClinicalClaimRecordV1 = {
   claimId: string;
   currentVersionId: string | null;
   fingerprintHash: string;
+  /**
+   * Canonical semantic identity (Pattern A coexistence). Optional so legacy
+   * rows and fixtures without semantic backfill keep validating; all new
+   * writers must populate it via semanticClaimFingerprintHash.
+   */
+  semanticFingerprintHash?: string | null;
+  semanticIdentityVersion?: string | null;
   claimText: string;
   claimType: ClinicalClaimType;
   predicate: string;
@@ -350,9 +357,147 @@ export function isEducationalClaimGapV1(value: unknown): value is EducationalCla
     && typeof row.isActive === "boolean";
 }
 
+/**
+ * @deprecated Legacy v1 structural identity. Two claims sharing this
+ * fingerprint are NOT automatically equivalent: the predicate vocabulary is
+ * degenerate and object_text is raw cloze-answer text, so clinically distinct
+ * propositions collide. Use claimsShareSemanticFingerprint for candidate
+ * matching, and never treat legacy equality as equivalence.
+ */
 export function claimsShareFingerprint(
   left: ClinicalClaimFingerprintInput,
   right: ClinicalClaimFingerprintInput,
 ): boolean {
   return clinicalClaimFingerprintHash(left) === clinicalClaimFingerprintHash(right);
+}
+
+// ---------------------------------------------------------------------------
+// Canonical semantic identity (v1).
+//
+// The semantic fingerprint identifies the PROPOSITION asserted, independent of
+// source provenance, entity resolution, extractor, or review state. A card
+// claim and an Orthobullets claim asserting the same proposition converge to
+// the same fingerprint; clinically distinct propositions stay distinct.
+//
+// This TypeScript implementation is the shared client-side copy. The
+// authoritative server-side copy is
+// public.educational_claim_semantic_fingerprint_hash in the
+// claim_semantic_identity migration. Both implement the identical
+// normalization order; claim-semantic-identity.test.ts pins exact payload
+// strings, and the migration header carries the same worked examples.
+// ---------------------------------------------------------------------------
+
+export const SEMANTIC_CLAIM_IDENTITY_VERSION = "v1" as const;
+
+export type SemanticClaimFingerprintInput = {
+  claimText: string;
+  claimType: string;
+  qualifiers?: ClinicalClaimQualifiers | Record<string, string>;
+};
+
+const SEMANTIC_HTML_ENTITIES: Array<[RegExp, string]> = [
+  [/&nbsp;/g, " "],
+  [/&lt;/g, "<"],
+  [/&gt;/g, ">"],
+  [/&quot;/g, "\""],
+  [/&#39;/g, "'"],
+  [/&apos;/g, "'"],
+  [/&deg;/g, "deg"],
+  [/&ge;/g, ">="],
+  [/&le;/g, "<="],
+  [/&plusmn;/g, "+/-"],
+  [/&times;/g, "x"],
+  // &amp; decodes LAST so "&amp;lt;" yields "&lt;" (single decode), never "<".
+  [/&amp;/g, "&"],
+];
+
+const SEMANTIC_UNICODE_MAP: Array<[RegExp, string]> = [
+  // Explicit escapes (never literal invisible characters) so SQL and TS stay
+  // visibly in sync: U+00A0 nbsp, U+2013/2014 dashes, U+2212 minus,
+  // U+2018/2019 quotes, U+201C/201D dquotes, U+2265/2264, U+00D7, U+00B0, U+00B1.
+  [/\u00a0/g, " "],
+  [/[\u2013\u2014\u2212]/g, "-"],
+  [/[\u2018\u2019]/g, "'"],
+  [/[\u201c\u201d]/g, "\""],
+  [/\u2265/g, ">="],
+  [/\u2264/g, "<="],
+  [/\u00d7/g, "x"],
+  [/\u00b0/g, "deg"],
+  [/\u00b1/g, "+/-"],
+];
+
+// Known inline-HTML tags only: a generic <[^>]+> strip would eat clinical
+// comparators such as "<5 mm and >2 mm".
+const SEMANTIC_HTML_TAG =
+  /<\/?(b|i|u|em|strong|sub|sup|br|p|div|span|table|tr|td|th|ul|ol|li)\b[^>]*>/g;
+
+export function normalizeSemanticClaimText(value: string): string {
+  let out = value;
+  for (const [pattern, replacement] of SEMANTIC_HTML_ENTITIES) out = out.replace(pattern, replacement);
+  for (const [pattern, replacement] of SEMANTIC_UNICODE_MAP) out = out.replace(pattern, replacement);
+  out = out.toLowerCase();
+  out = out.replace(/\{\{c\d+::/g, "").replace(/}}/g, "");
+  out = out.replace(SEMANTIC_HTML_TAG, "");
+  // Comparators, decimals, percent, and units survive: v1 dropped < > . %
+  // from normalized text, which is exactly how thresholds collided.
+  out = out.replace(/[^a-z0-9 +\-/.,<>=%']/g, " ");
+  // Trim again after the trailing-dot strip: "knee ." must not keep a
+  // trailing space (SQL twin applies the identical final btrim).
+  out = out.replace(/\s+/g, " ").trim().replace(/\.$/, "").trim();
+  return out;
+}
+
+export function semanticClaimFingerprintPayload(input: SemanticClaimFingerprintInput): string {
+  const qualifiers = input.qualifiers ?? {};
+  const qualifierStr = Object.entries(qualifiers)
+    .filter(([, value]) => typeof value === "string" && value.trim().length > 0)
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([key, value]) => `${key}=${normalizeSemanticClaimText(value ?? "")}`)
+    .join(";");
+  return [
+    `semantic=${SEMANTIC_CLAIM_IDENTITY_VERSION}`,
+    `assertion=${normalizeSemanticClaimText(input.claimText)}`,
+    `type=${normalizeSemanticClaimText(input.claimType)}`,
+    `qualifiers=${qualifierStr}`,
+  ].join("\n");
+}
+
+export function semanticClaimFingerprintHash(input: SemanticClaimFingerprintInput): string {
+  return createHash("sha256").update(semanticClaimFingerprintPayload(input), "utf8").digest("hex");
+}
+
+export function claimsShareSemanticFingerprint(
+  left: SemanticClaimFingerprintInput,
+  right: SemanticClaimFingerprintInput,
+): boolean {
+  return semanticClaimFingerprintHash(left) === semanticClaimFingerprintHash(right);
+}
+
+const SEMANTIC_SHA256 = /^[0-9a-f]{64}$/;
+
+/** True when the record carries a well-formed v1 semantic fingerprint. */
+export function hasSemanticFingerprint(value: unknown): boolean {
+  if (!value || typeof value !== "object") return false;
+  const row = value as Record<string, unknown>;
+  return (
+    (row.semanticIdentityVersion === undefined || row.semanticIdentityVersion === SEMANTIC_CLAIM_IDENTITY_VERSION)
+    && typeof row.semanticFingerprintHash === "string"
+    && SEMANTIC_SHA256.test(row.semanticFingerprintHash)
+  );
+}
+
+/** True when the record's stored semantic fingerprint matches its content. */
+export function semanticFingerprintMatchesContent(value: unknown): boolean {
+  if (!value || typeof value !== "object") return false;
+  const row = value as Record<string, unknown>;
+  if (typeof row.claimText !== "string" || typeof row.claimType !== "string") return false;
+  if (row.semanticIdentityVersion !== undefined && row.semanticIdentityVersion !== SEMANTIC_CLAIM_IDENTITY_VERSION) {
+    return false;
+  }
+  const qualifiers = (row.qualifiers ?? {}) as ClinicalClaimQualifiers;
+  return row.semanticFingerprintHash === semanticClaimFingerprintHash({
+    claimText: row.claimText,
+    claimType: row.claimType,
+    qualifiers,
+  });
 }

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { assembleEntityCandidates, assertionIdentity, machineConsensus, normalizeEntityLabel, parseAutonomousClaimCritique, parseAutonomousClaimDraft, vignetteRejectionCodes } from './autonomous-claim';
+import { assembleEntityCandidates, assertionIdentity, machineConsensus, normalizeEntityLabel, parseAutonomousClaimCritique, parseAutonomousClaimDraft, safeTopicHint, vignetteRejectionCodes } from './autonomous-claim';
 
 const draft = parseAutonomousClaimDraft({
   claimText: 'Displaced femoral neck fractures in older adults are generally treated with arthroplasty.',
@@ -9,12 +9,13 @@ const draft = parseAutonomousClaimDraft({
   qualifiers: { age_group: 'older adult', setting: 'displaced fracture', unknown: 'removed' },
   primaryEntityLabel: 'Femoral Neck Fracture',
   primaryEntityType: 'condition',
-  primaryEntityId: '1ad8280b-74e5-416c-b8fb-06c7d9cc0d0a',
   confidence: 0.96,
 });
 assert.ok(draft);
 assert.deepEqual(draft.qualifiers, { age_group: 'older adult', setting: 'displaced fracture' });
 assert.equal(normalizeEntityLabel('  Femoral-neck   Fracture '), 'femoral-neck fracture');
+assert.equal(safeTopicHint('Fingertip Amputations & Finger Flaps'), 'Fingertip Amputations & Finger Flaps');
+assert.equal(safeTopicHint('• Reverse cross finger • Axial flag flap • Thenar flap • Treatment'), null);
 assert.equal(parseAutonomousClaimDraft({ ...draft, predicate: 'invented' }), null);
 
 const critique = parseAutonomousClaimCritique({ accepted: true, confidence: 0.94, reasonCodes: ['entailed', 'numbers_match'] });

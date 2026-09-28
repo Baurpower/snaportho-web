@@ -26,6 +26,10 @@ import {
 } from "../src/lib/education/card-claim-deck-loader.ts";
 import { checksum, stableJson } from "../src/lib/education/deck-mapping-factory.ts";
 import {
+  SEMANTIC_CLAIM_IDENTITY_VERSION,
+  semanticClaimFingerprintHash,
+} from "../src/lib/education/contracts/clinical-claim-v1.ts";
+import {
   normalizeClinicalText,
   type EntityIndexRow,
 } from "../src/lib/education/deck-semantic-mapping.ts";
@@ -437,7 +441,7 @@ async function loadLive(dbHandle: pg.Client): Promise<{
     is_active: boolean; status: string; aliases: string[] | null; source_aliases: string[] | null;
   }>).map(mapEntityRow);
   const existingClaims = ((await dbHandle.query(EXISTING_CLAIMS_SQL)).rows as Array<{
-    id: string; current_version_id: string | null; fingerprint_hash: string;
+    id: string; current_version_id: string | null; fingerprint_hash: string; semantic_fingerprint_hash?: string | null;
   }>).map(mapExistingClaimRow).filter((row): row is ExistingClaimRef => row !== null);
   return { cards, entities, existingClaims, release };
 }
@@ -459,7 +463,127 @@ type PersistClaim = {
   evidenceHash: string;
   fingerprintHash: string;
   entityTargetType: string;
+  semanticFingerprintHash?: string | null;
+  semanticIdentityVersion?: string | null;
+  sourceUnitId?: string | null;
+  claimIndex?: number | null;
+  claimsInVersion?: number | null;
+  rewriteMethod?: string | null;
+  atomicConfidence?: number | null;
 };
+
+type CanonicalClaimOutcome = {
+  outcome: "inserted" | "reused" | "conflict";
+  /** Active stored claims sharing the canonical semantic fingerprint. Recorded, never auto-merged. */
+  semanticCandidates: string[];
+};
+
+function groupBy<T>(rows: T[], key: (row: T) => string): Map<string, T[]> {
+  const out = new Map<string, T[]>();
+  for (const row of rows) {
+    const groupKey = key(row);
+    const list = out.get(groupKey) ?? [];
+    list.push(row);
+    out.set(groupKey, list);
+  }
+  return out;
+}
+
+type UnitPersistOutcome = {
+  claimIndex: number;
+  claimsInVersion: number;
+  sourceUnitId: string;
+  queue: string;
+  reasonCodes: string[];
+  claimId: string | null;
+  claimRefKind: string | null;
+  entityTargetKind: string | null;
+  proposalId: string | null;
+  teachesLinkId: string | null;
+  conflict: boolean;
+  semanticCandidates: string[];
+};
+
+async function persistUnitClaim(
+  dbHandle: pg.Client,
+  runId: string,
+  factoryRunId: string,
+  card: CardClaimFactoryCard,
+  claim: PersistClaim,
+  unit: { claimIndex: number; claimsInVersion: number; sourceUnitId: string; queue: string; reasonCodes: string[] },
+  gapMetadata: Record<string, unknown>,
+  link: { confidence: number } | undefined,
+  entityById: Map<string, EntityIndexRow>,
+  totals: Totals,
+): Promise<UnitPersistOutcome> {
+  const base = {
+    claimIndex: unit.claimIndex,
+    claimsInVersion: unit.claimsInVersion,
+    sourceUnitId: unit.sourceUnitId,
+    queue: unit.queue,
+    reasonCodes: unit.reasonCodes,
+    claimId: claim.claimId,
+  };
+  const target = claim.entityTargetType;
+  if (target === "canonical") {
+    const persisted = await upsertCanonicalClaim(dbHandle, runId, factoryRunId, card, claim);
+    if (persisted.outcome === "conflict") {
+      totals.claimConflicts += 1;
+      return {
+        ...base, claimRefKind: "stored_claim", entityTargetKind: "canonical",
+        proposalId: null, teachesLinkId: null, conflict: true,
+        semanticCandidates: persisted.semanticCandidates,
+      };
+    }
+    if (persisted.outcome === "inserted") totals.claimsInserted += 1;
+    else totals.claimsReused += 1;
+    let teachesLinkId: string | null = null;
+    if (link) {
+      teachesLinkId = await upsertTeachesLink(
+        dbHandle, runId, factoryRunId, card, claim, link, entityById, unit.reasonCodes, totals,
+      );
+    }
+    return {
+      ...base, claimRefKind: "stored_claim", entityTargetKind: "canonical",
+      proposalId: null, teachesLinkId, conflict: false,
+      semanticCandidates: persisted.semanticCandidates,
+    };
+  }
+  if (target === "proposed") {
+    const proposalId = await upsertProposal(dbHandle, runId, factoryRunId, card, claim, gapMetadata);
+    return {
+      ...base, claimRefKind: "proposed_payload", entityTargetKind: "proposed",
+      proposalId, teachesLinkId: null, conflict: false, semanticCandidates: [],
+    };
+  }
+  return {
+    ...base, claimRefKind: "unresolved_payload", entityTargetKind: "unresolved",
+    proposalId: null, teachesLinkId: null, conflict: false, semanticCandidates: [],
+  };
+}
+
+async function insertBackfillClaim(
+  dbHandle: pg.Client,
+  backfillItemId: string,
+  outcome: UnitPersistOutcome,
+): Promise<void> {
+  await dbHandle.query(
+    `insert into public.card_claim_backfill_claims
+      (backfill_item_id, claim_index, claims_in_version, queue, claim_id,
+       claim_ref_kind, entity_target_kind, reason_codes, result_payload)
+     values ($1::uuid, $2, $3, $4, $5::uuid, $6, $7, $8, $9::jsonb)
+     on conflict (backfill_item_id, claim_index) do update set
+       queue = excluded.queue, claim_id = excluded.claim_id,
+       claim_ref_kind = excluded.claim_ref_kind, entity_target_kind = excluded.entity_target_kind,
+       reason_codes = excluded.reason_codes, result_payload = excluded.result_payload,
+       updated_at = now()`,
+    [
+      backfillItemId, outcome.claimIndex, outcome.claimsInVersion, outcome.queue,
+      outcome.claimId, outcome.claimRefKind, outcome.entityTargetKind,
+      outcome.reasonCodes, JSON.stringify(outcome),
+    ],
+  );
+}
 
 async function persistBatch(
   dbHandle: pg.Client,
@@ -470,110 +594,142 @@ async function persistBatch(
   totals: Totals,
 ): Promise<void> {
   const assignmentByCard = new Map(result.assignments.map((row) => [row.canonicalCardId, row]));
-  const claimByFingerprint = new Map(result.proposedClaims.map((claim) => [claim.fingerprintHash, claim]));
-  const linkByCard = new Map(result.autoApprovedLinks.map((link) => [link.canonicalCardId, link]));
-  const gapByCard = new Map(result.gaps.map((gap) => [gap.canonicalCardId, gap]));
+  const claimById = new Map(result.proposedClaims.map((claim) => [claim.claimId, claim as PersistClaim]));
+  const unitsByCard = groupBy(result.unitOutcomes ?? [], (row) => row.canonicalCardId);
+  // Links are per (card, claim): a claim shared across cards carries one link
+  // row each, and each card must persist its own confidence.
+  const linksByCardClaim = new Map(
+    result.autoApprovedLinks
+      .filter((link) => link.mappingRole === "teaches" && link.reviewStatus === "auto_approved")
+      .map((link) => [`${link.canonicalCardId}|${link.claimId}`, link]),
+  );
+  const gapsByClaim = new Map<string, Record<string, unknown>>();
+  for (const gap of result.gaps) {
+    const claimId = (gap.metadata as Record<string, unknown> | undefined)?.claimId;
+    if (typeof claimId === "string") gapsByClaim.set(claimId, (gap.metadata ?? {}) as Record<string, unknown>);
+  }
+  const factoryLinksByClaim = groupBy(result.entityLinks ?? [], (row) => row.claimId);
+  const flagsByClaim = groupBy(result.qualityFlags ?? [], (row) => row.claimId);
 
   for (const card of batch) {
     await dbHandle.query("savepoint backfill_card");
     try {
       const assignment = assignmentByCard.get(card.canonicalCardId);
       if (!assignment) throw new Error("missing_assignment");
-      if (assignment.queue === "extraction_failed" || !assignment.fingerprintHash) {
-        await upsertItem(dbHandle, runId, card, "failed", {
-          resolutionReason: assignment.reasonCodes[0] ?? "extraction_failed",
-          errorText: `queue:${assignment.queue}`,
-          resultPayload: { queue: assignment.queue, reasonCodes: assignment.reasonCodes },
+      const units = (unitsByCard.get(card.canonicalCardId) ?? [])
+        .sort((left, right) => left.claimIndex - right.claimIndex);
+      if (units.length === 0) {
+        // Zero-claim cards (image-dependent, insufficient context, ceiling
+        // review) carry no claims; the item records the terminal queue.
+        const status = assignment.queue === "extraction_failed"
+          ? "failed"
+          : assignment.queue === "multi_claim_review"
+            ? "needs_review"
+            : "processed";
+        await upsertItem(dbHandle, runId, card, status, {
+          resolutionReason: assignment.reasonCodes[0] ?? assignment.queue,
+          resultPayload: {
+            queue: assignment.queue, reasonCodes: assignment.reasonCodes, claimCount: 0, claims: [],
+          },
         });
-        // extraction_failed is already counted by accumulate(); only count refusal
-        // queues that reach persistence without a fingerprint here.
-        if (assignment.queue !== "extraction_failed") totals.failed += 1;
+        if (status === "failed") totals.failed += 1;
         await dbHandle.query("release savepoint backfill_card");
         continue;
       }
-      const claim = claimByFingerprint.get(assignment.fingerprintHash) as PersistClaim | undefined;
-      if (!claim) throw new Error("missing_claim");
-      const gap = gapByCard.get(card.canonicalCardId);
-      const gapMetadata = (gap?.metadata ?? {}) as Record<string, unknown>;
-      const target = claim.entityTargetType;
-
-      if (target === "canonical") {
-        const outcome = await upsertCanonicalClaim(dbHandle, runId, result.factoryRunId, card, claim);
-        if (outcome === "conflict") {
-          await upsertItem(dbHandle, runId, card, "needs_review", {
-            claimId: claim.claimId,
-            claimRefKind: "stored_claim",
-            entityTargetKind: "canonical",
-            entityId: claim.primaryEntityId,
-            resolutionReason: assignment.reasonCodes[0] ?? "machine_consensus",
-            conflictKind: "claim_conflict",
-            resultPayload: {
-              queue: assignment.queue, reasonCodes: assignment.reasonCodes,
-              claimId: claim.claimId, entityTarget: target, entityId: claim.primaryEntityId,
-            },
+      const outcomes: UnitPersistOutcome[] = [];
+      for (const unit of units) {
+        const claim = unit.claimId ? claimById.get(unit.claimId) : undefined;
+        if (!claim) {
+          // Early-exit units (qualifier conflict, negation, competing
+          // entities, non-atomic) build no claim; record the queue only.
+          outcomes.push({
+            claimIndex: unit.claimIndex,
+            claimsInVersion: unit.claimsInVersion,
+            sourceUnitId: unit.sourceUnitId,
+            queue: unit.queue,
+            reasonCodes: unit.reasonCodes,
+            claimId: null,
+            claimRefKind: null,
+            entityTargetKind: null,
+            proposalId: null,
+            teachesLinkId: null,
+            conflict: false,
+            semanticCandidates: [],
           });
-          totals.claimConflicts += 1;
-        } else {
-          if (outcome === "inserted") totals.claimsInserted += 1;
-          else totals.claimsReused += 1;
-          totals.canonicalMatches += 1;
-          let teachesLinkId: string | null = null;
-          const link = linkByCard.get(card.canonicalCardId);
-          if (link && link.mappingRole === "teaches" && link.reviewStatus === "auto_approved") {
-            teachesLinkId = await upsertTeachesLink(dbHandle, runId, result.factoryRunId, card, claim, link, entityById, assignment.reasonCodes, totals);
-          }
-          await upsertItem(dbHandle, runId, card, "processed", {
-            claimId: claim.claimId,
-            claimRefKind: "stored_claim",
-            entityTargetKind: "canonical",
-            entityId: claim.primaryEntityId,
-            resolutionReason: assignment.reasonCodes[0] ?? "machine_consensus",
-            teachesLinkId,
-            resultPayload: {
-              queue: assignment.queue, reasonCodes: assignment.reasonCodes,
-              claimId: claim.claimId, entityTarget: target, entityId: claim.primaryEntityId,
-              teachesLinkId,
-            },
-          });
+          continue;
         }
-      } else if (target === "proposed") {
-        const assessment = (gapMetadata.proposalAssessment ?? {}) as Record<string, unknown>;
-        const proposalId = await upsertProposal(dbHandle, runId, result.factoryRunId, card, claim, gapMetadata);
-        await upsertItem(dbHandle, runId, card, "processed", {
-          claimId: claim.claimId,
-          claimRefKind: "proposed_payload",
-          entityTargetKind: "proposed",
-          proposedLabel: String(assessment.preferredLabel ?? gapMetadata.normalizedLabel ?? claim.objectText),
-          proposedType: String(assessment.entityType ?? "condition"),
-          proposedProposalId: proposalId,
-          resolutionReason: assignment.reasonCodes[0] ?? "ontology_gap_filled",
-          resultPayload: {
-            queue: assignment.queue, reasonCodes: assignment.reasonCodes,
-            claimId: claim.claimId, entityTarget: target,
-            claim: {
-              claimId: claim.claimId, claimText: claim.claimText, claimType: claim.claimType,
-              predicate: claim.predicate, objectText: claim.objectText, qualifiers: claim.qualifiers,
-              primaryEntityId: claim.primaryEntityId, fingerprintHash: claim.fingerprintHash,
-            },
-            proposalId,
-          },
-        });
-      } else {
-        await upsertItem(dbHandle, runId, card, "processed", {
-          claimId: claim.claimId,
-          claimRefKind: "unresolved_payload",
-          entityTargetKind: "unresolved",
-          resolutionReason: assignment.reasonCodes[0] ?? "unresolved_entity",
-          resultPayload: {
-            queue: assignment.queue, reasonCodes: assignment.reasonCodes,
-            claimId: claim.claimId, entityTarget: target,
-            claim: {
-              claimId: claim.claimId, claimText: claim.claimText, claimType: claim.claimType,
-              predicate: claim.predicate, objectText: claim.objectText, qualifiers: claim.qualifiers,
-              primaryEntityId: claim.primaryEntityId, fingerprintHash: claim.fingerprintHash,
-            },
-          },
-        });
+        outcomes.push(await persistUnitClaim(
+          dbHandle, runId, result.factoryRunId, card, claim, unit,
+          gapsByClaim.get(claim.claimId) ?? {},
+          linksByCardClaim.get(`${card.canonicalCardId}|${claim.claimId}`),
+          entityById, totals,
+        ));
+      }
+      const hasConflict = outcomes.some((outcome) => outcome.conflict);
+      const status = hasConflict || assignment.queue === "multi_claim_review" ? "needs_review" : "processed";
+      const firstClaim = outcomes.find((outcome) => outcome.claimId);
+      const firstProposal = outcomes.find((outcome) => outcome.proposalId);
+      const itemId = await upsertItem(dbHandle, runId, card, status, {
+        claimId: firstClaim?.claimId ?? undefined,
+        claimRefKind: firstClaim?.claimRefKind ?? undefined,
+        entityTargetKind: firstClaim?.entityTargetKind ?? undefined,
+        proposedProposalId: firstProposal?.proposalId ?? undefined,
+        resolutionReason: assignment.reasonCodes[0] ?? assignment.queue,
+        teachesLinkId: outcomes.find((outcome) => outcome.teachesLinkId)?.teachesLinkId ?? null,
+        conflictKind: hasConflict ? "claim_conflict" : undefined,
+        resultPayload: {
+          queue: assignment.queue, reasonCodes: assignment.reasonCodes,
+          claimCount: outcomes.filter((outcome) => outcome.claimId).length,
+          claims: outcomes.map((outcome) => ({
+            claimIndex: outcome.claimIndex, queue: outcome.queue, claimId: outcome.claimId,
+            entityTarget: outcome.entityTargetKind, conflict: outcome.conflict,
+          })),
+        },
+      });
+      for (const outcome of outcomes) {
+        await insertBackfillClaim(dbHandle, itemId, outcome);
+      }
+      // Claim-level entity links and quality flags for every persisted claim.
+      const persistedClaims = new Map<string, PersistClaim>();
+      for (const outcome of outcomes) {
+        if (outcome.claimId && !outcome.conflict) {
+          const claim = claimById.get(outcome.claimId);
+          if (claim) persistedClaims.set(outcome.claimId, claim);
+        }
+      }
+      for (const [claimId, claim] of persistedClaims) {
+        for (const entityLink of factoryLinksByClaim.get(claimId) ?? []) {
+          await dbHandle.query(
+            `insert into public.claim_entities
+              (claim_id, claim_version_id, entity_kind, canonical_entity_id, proposed_proposal_id,
+               role, confidence, evidence_locator, algorithm_version)
+             values ($1::uuid, $2::uuid, $3, $4::uuid, $5::uuid, $6, $7, $8, $9)
+             on conflict do nothing`,
+            [
+              claimId, claim.currentVersionId, entityLink.entityKind,
+              entityLink.entityKind === "canonical" ? entityLink.entityId : null,
+              entityLink.entityKind === "proposed"
+                ? outcomes.find((outcome) => outcome.claimId === claimId)?.proposalId ?? null
+                : null,
+              entityLink.role, entityLink.confidence,
+              entityLink.evidenceLocator, entityLink.algorithmVersion,
+            ],
+          );
+        }
+        for (const flag of flagsByClaim.get(claimId) ?? []) {
+          await dbHandle.query(
+            `insert into public.claim_quality_flags
+              (claim_id, claim_version_id, canonical_card_id, canonical_card_version_id,
+               code, severity, detail, algorithm_version)
+             values ($1::uuid, $2::uuid, $3::uuid, $4::uuid, $5, $6, $7, $8)
+             on conflict (claim_id, code) do update set
+               severity = excluded.severity, detail = excluded.detail`,
+            [
+              claimId, claim.currentVersionId, card.canonicalCardId, card.canonicalCardVersionId,
+              flag.code, flag.severity, flag.detail, CARD_CLAIM_FACTORY_ALGORITHM,
+            ],
+          );
+        }
       }
       await dbHandle.query("release savepoint backfill_card");
     } catch (error) {
@@ -595,7 +751,23 @@ async function upsertCanonicalClaim(
   factoryRunId: string,
   card: CardClaimFactoryCard,
   claim: PersistClaim,
-): Promise<"inserted" | "reused" | "conflict"> {
+): Promise<CanonicalClaimOutcome> {
+  // Canonical semantic identity via the ONE shared implementation. The factory
+  // attaches it; recompute here so a stale caller can never persist a wrong
+  // semantic value (the DB trigger recomputes once more on write).
+  const semanticHash = semanticClaimFingerprintHash({
+    claimText: claim.claimText,
+    claimType: claim.claimType,
+    qualifiers: claim.qualifiers ?? {},
+  });
+  const semanticCandidates = ((await dbHandle.query(
+    `select id from public.educational_claims
+     where is_active
+       and semantic_identity_version = $1
+       and semantic_fingerprint_hash = $2
+     order by created_at asc`,
+    [SEMANTIC_CLAIM_IDENTITY_VERSION, semanticHash],
+  )).rows as Array<{ id: string }>).map((row) => String(row.id));
   const existing = (await dbHandle.query(
     `select id, claim_text, claim_type, predicate, object_text, qualifiers,
             primary_entity_id, fingerprint_hash
@@ -611,8 +783,15 @@ async function upsertCanonicalClaim(
       && stableJson(existing.qualifiers ?? {}) === stableJson(claim.qualifiers ?? {})
       && String(existing.primary_entity_id) === claim.primaryEntityId
       && existing.fingerprint_hash === claim.fingerprintHash;
-    return same ? "reused" : "conflict";
+    return same ? { outcome: "reused", semanticCandidates } : { outcome: "conflict", semanticCandidates };
   }
+  const provenance = {
+    sourceUnitId: claim.sourceUnitId ?? null,
+    claimIndex: claim.claimIndex ?? null,
+    claimsInVersion: claim.claimsInVersion ?? null,
+    rewriteMethod: claim.rewriteMethod ?? null,
+    atomicConfidence: claim.atomicConfidence ?? null,
+  };
   const metadata = {
     backfillRunId: runId,
     factoryRunId,
@@ -622,35 +801,47 @@ async function upsertCanonicalClaim(
     evidenceLocator: claim.evidenceLocator,
     evidenceHash: claim.evidenceHash,
     entityTarget: "canonical",
+    semanticFingerprintHash: semanticHash,
+    semanticIdentityVersion: SEMANTIC_CLAIM_IDENTITY_VERSION,
+    ...provenance,
   };
   const inserted = (await dbHandle.query(
     `insert into public.educational_claims
       (id, primary_entity_id, claim_text, claim_type, predicate, object_text, qualifiers,
        approval_method, algorithm_version, content_source, review_status, metadata)
      values ($1::uuid, $2::uuid, $3, $4, $5, $6, $7::jsonb, $8, $9, 'generated_draft', 'unreviewed', $10::jsonb)
-     returning fingerprint_hash`,
+     returning fingerprint_hash, semantic_fingerprint_hash, semantic_identity_version`,
     [
       claim.claimId, claim.primaryEntityId, claim.claimText, claim.claimType,
       claim.predicate, claim.objectText, JSON.stringify(claim.qualifiers ?? {}),
       claim.approvalMethod, claim.algorithmVersion, JSON.stringify(metadata),
     ],
   )).rows[0];
-  if (inserted.fingerprint_hash !== claim.fingerprintHash) return "conflict";
+  // TS/SQL parity gate: the trigger must agree with the shared implementation
+  // on BOTH identities, or the row is a conflict, never a silent write.
+  if (inserted.fingerprint_hash !== claim.fingerprintHash) return { outcome: "conflict", semanticCandidates };
+  if (
+    inserted.semantic_fingerprint_hash !== semanticHash
+    || inserted.semantic_identity_version !== SEMANTIC_CLAIM_IDENTITY_VERSION
+  ) {
+    return { outcome: "conflict", semanticCandidates };
+  }
   await dbHandle.query(
     `insert into public.educational_claim_versions
       (id, claim_id, version_number, claim_text, claim_type, predicate, object_text, qualifiers,
        primary_entity_id, approval_method, content_source, review_status, algorithm_version, metadata)
-     values ($1::uuid, $2::uuid, 1, $3, $4, $5, $6, $7::jsonb, $8::uuid, $9, 'generated_draft', 'unreviewed', $10, '{}'::jsonb)`,
+     values ($1::uuid, $2::uuid, 1, $3, $4, $5, $6, $7::jsonb, $8::uuid, $9, 'generated_draft', 'unreviewed', $10, $11::jsonb)`,
     [
       claim.currentVersionId, claim.claimId, claim.claimText, claim.claimType,
       claim.predicate, claim.objectText, JSON.stringify(claim.qualifiers ?? {}),
       claim.primaryEntityId, claim.approvalMethod, claim.algorithmVersion,
+      JSON.stringify(provenance),
     ],
   );
   await dbHandle.query("update public.educational_claims set current_version_id = $2::uuid where id = $1::uuid", [
     claim.claimId, claim.currentVersionId,
   ]);
-  return "inserted";
+  return { outcome: "inserted", semanticCandidates };
 }
 
 async function upsertProposal(
@@ -783,8 +974,8 @@ async function upsertItem(
     errorText?: string;
     resultPayload?: Record<string, unknown>;
   },
-): Promise<void> {
-  await dbHandle.query(
+): Promise<string> {
+  const inserted = (await dbHandle.query(
     `insert into public.card_claim_backfill_items
       (run_id, canonical_card_id, canonical_card_version_id, content_hash, status,
        claim_id, claim_ref_kind, entity_target_kind, entity_id,
@@ -800,7 +991,8 @@ async function upsertItem(
        proposed_proposal_id = excluded.proposed_proposal_id,
        resolution_reason = excluded.resolution_reason, teaches_link_id = excluded.teaches_link_id,
        conflict_kind = excluded.conflict_kind, error_text = excluded.error_text,
-       result_payload = excluded.result_payload, updated_at = now()`,
+       result_payload = excluded.result_payload, updated_at = now()
+     returning id`,
     [
       runId, card.canonicalCardId, card.canonicalCardVersionId, card.contentHash, status,
       fields.claimId ?? null, fields.claimRefKind ?? null, fields.entityTargetKind ?? null,
@@ -809,7 +1001,8 @@ async function upsertItem(
       fields.teachesLinkId ?? null, fields.conflictKind ?? null, fields.errorText ?? null,
       JSON.stringify(fields.resultPayload ?? {}),
     ],
-  );
+  )).rows[0];
+  return String(inserted.id);
 }
 
 main().catch((error) => {

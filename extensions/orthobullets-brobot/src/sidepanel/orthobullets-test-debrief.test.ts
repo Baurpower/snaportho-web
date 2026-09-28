@@ -1,6 +1,13 @@
 import * as assert from 'node:assert/strict';
 import type { OrthobulletsTestResultRow } from '../shared/types.js';
-import { claimRunRows, fullDebriefText, groupMissedQuestions, testDebriefStorageKey } from './orthobullets-test-debrief.js';
+import {
+  fullDebriefText,
+  groupMissedQuestions,
+  hasIncompleteTestDebrief,
+  missedTestRows,
+  resumeMissedTestDebriefQuestions,
+  testDebriefStorageKey,
+} from './orthobullets-test-debrief.js';
 
 const rows: OrthobulletsTestResultRow[] = [
   {
@@ -51,17 +58,68 @@ assert.equal(groups[0]?.label, 'Humeral Shaft Fractures');
 assert.deepEqual(groups[0]?.questions.map((row) => row.questionId), ['OBQ1', 'OBQ3']);
 assert.equal(groups[1]?.label, 'Flexor Tendon Injury');
 assert.ok(groups.flatMap((group) => group.questions).every((row) => row.isCorrect === false));
-assert.deepEqual(claimRunRows(rows).map((row) => row.questionId), ['OBQ1', 'OBQ2', 'OBQ3', 'OBQ4']);
-assert.equal(claimRunRows([...rows, rows[0]!]).length, 4);
-assert.match(testDebriefStorageKey({
+assert.deepEqual(missedTestRows(rows).map((row) => row.questionId), ['OBQ1', 'OBQ3', 'OBQ4']);
+assert.equal(missedTestRows([...rows, rows[0]!]).length, 3);
+
+const review = {
   testId: 'TEST-1',
-  day: null,
+  day: '2026-09-26',
   scorePercent: 25,
   totalCount: 4,
   correctCount: 1,
   missedCount: 3,
   rows,
-}), /TEST-1$/);
+};
+const cacheKey = testDebriefStorageKey(review);
+assert.equal(testDebriefStorageKey({ ...review, rows: [...rows].reverse() }), cacheKey);
+assert.notEqual(testDebriefStorageKey({
+  ...review,
+  rows: rows.map((row) => row.questionId === 'OBQ1' ? { ...row, selectedAnswerKey: '3' } : row),
+}), cacheKey);
+assert.notEqual(testDebriefStorageKey({ ...review, day: '2026-09-27' }), cacheKey);
+assert.notEqual(testDebriefStorageKey({ ...review, testId: 'TEST-2' }), cacheKey);
+
+const completedQuestions = resumeMissedTestDebriefQuestions(rows).map((question) => ({
+  ...question,
+  status: 'ready' as const,
+  explanation: {
+    explanationId: '00000000-0000-4000-8000-000000000001',
+    testedConcept: question.row.questionId,
+    bottomLine: 'Source-grounded teaching point.',
+    whyCorrect: 'The reviewed key is correct.',
+    whyWrong: [],
+    boardPearl: 'Remember this.',
+    studyNext: [],
+    warnings: [],
+  },
+}));
+const completedDebrief = {
+  version: 1 as const,
+  testKey: cacheKey,
+  createdAt: '2026-07-29T00:00:00.000Z',
+  updatedAt: '2026-07-29T00:00:00.000Z',
+  status: 'ready' as const,
+  questions: completedQuestions,
+};
+assert.equal(hasIncompleteTestDebrief(review, completedDebrief), false, 'a completed cache should be reused without analysis');
+assert.equal(hasIncompleteTestDebrief(review, null), true, 'a missing cache should start analysis');
+assert.equal(hasIncompleteTestDebrief(review, {
+  ...completedDebrief,
+  questions: completedQuestions.slice(1),
+}), true, 'an incomplete cache should resume missing questions');
+
+const resumedQuestions = resumeMissedTestDebriefQuestions(rows, [
+  { ...completedQuestions[0]!, status: 'ready' },
+  { ...completedQuestions[1]!, status: 'error', error: 'Temporary failure', explanation: null },
+]);
+assert.deepEqual(resumedQuestions.map((question) => question.status), ['ready', 'pending', 'pending']);
+assert.equal(resumedQuestions[0]?.explanation?.testedConcept, 'OBQ1', 'completed teaching output should be preserved');
+assert.equal(resumedQuestions[1]?.error, null, 'error analysis should be retried');
+assert.ok(resumedQuestions.every((question) => question.row.isCorrect === false));
+assert.equal(hasIncompleteTestDebrief(review, {
+  ...completedDebrief,
+  questions: resumedQuestions,
+}), true, 'failed analysis should be eligible for retry');
 
 const exported = fullDebriefText({
   testId: 'TEST-1',

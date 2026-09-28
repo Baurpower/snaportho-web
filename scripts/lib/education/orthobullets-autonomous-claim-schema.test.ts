@@ -48,4 +48,29 @@ assert.match(reviewed, /status in \('reviewed', 'canonical'\)/);
 assert.doesNotMatch(reviewed, /insert into public\.canonical_entities/i);
 assert.match(reviewed, /v_match_count <> 1/);
 
+const v4 = readFileSync(path.join(root, 'supabase/migrations/20260926220000_orthobullets_claim_v4_pipeline.sql'), 'utf8');
+for (const expected of [
+  /orthobullets-autonomous-claim\.v4/,
+  /search_orthobullets_v4_entity_candidates/,
+  /resolve_or_create_orthobullets_v4_entity/,
+  /machine_consensus_v4/,
+  /accepted_provisional_entity/,
+  /processing_stage/,
+  /lease_expires_at/,
+  /review_status = 'auto_approved'/,
+  /'verified', 'approved'/,
+  /revoke all on function public\.resolve_or_create_orthobullets_v4_entity/,
+]) assert.match(v4, expected);
+for (const forbidden of [
+  /\bstem\s+text/i,
+  /\bexplanation\s+text/i,
+  /\banswer_choices\b/i,
+  /\braw_html\b/i,
+]) assert.doesNotMatch(v4, forbidden);
+
+const v4LabelFix = readFileSync(path.join(root, 'supabase/migrations/20260927160050_orthobullets_claim_v4_entity_label_fix.sql'), 'utf8');
+assert.match(v4LabelFix, /v_requested_label/);
+assert.match(v4LabelFix, /p_entity_type, v_requested_label, v_label/);
+assert.match(v4LabelFix, /coalesce\(v_resolved_label, v_requested_label\)/);
+
 console.log('orthobullets-autonomous-claim-schema.test.ts: all assertions passed');

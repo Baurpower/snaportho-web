@@ -556,6 +556,33 @@ chrome.runtime.onMessage.addListener(
           return;
         }
 
+        if (message.type === 'ob:get-page-anki-cards') {
+          const deviceToken = await getStoredDeviceToken();
+          if (!deviceToken) {
+            sendResponse({ ok: false, error: 'Extension is not linked to a SnapOrtho account.', code: 'not_linked' });
+            return;
+          }
+          try {
+            const pageAnkiReview = await fetchJson('/api/brobot-anki/page-cards', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                [EXTENSION_TOKEN_HEADER]: deviceToken,
+                'x-snaportho-anki-token': deviceToken,
+              },
+              body: JSON.stringify({ pageUrl: message.pageUrl, provider: message.provider }),
+            });
+            sendResponse({ ok: true, pageAnkiReview });
+          } catch (error) {
+            sendResponse({
+              ok: false,
+              error: error instanceof Error ? error.message : 'Could not load Anki cards for this page.',
+              code: error instanceof CodedError ? error.code : 'network_failure',
+            });
+          }
+          return;
+        }
+
         if (message.type === 'ob:get-build-info') {
           sendResponse({
             ok: true,

@@ -82,7 +82,7 @@ let databaseUrl = env.match(/^DATABASE_URL=(.*)$/m)[1].trim();
 if ((databaseUrl.startsWith('"') && databaseUrl.endsWith('"')) || (databaseUrl.startsWith("'") && databaseUrl.endsWith("'"))) databaseUrl = databaseUrl.slice(1, -1);
 const client = new Client({ connectionString: databaseUrl, ssl: { rejectUnauthorized: false } });
 await client.connect();
-const known = await client.query(`select native_question_id from orthobullets_claim_run_items where status in ('accepted', 'accepted_no_card')`);
+const known = await client.query(`select native_question_id from orthobullets_claim_run_items where status in ('accepted', 'accepted_no_card', 'accepted_provisional_entity')`);
 await client.end();
 const done = new Set(known.rows.map((row) => row.native_question_id));
 const pending = qids.filter((qid) => !done.has(qid));
@@ -112,7 +112,7 @@ record({ event: 'run_ready', runId: runBody.runId, items: runBody.items.length }
 for (const qid of pending) {
   const item = items.get(qid);
   const reviewUrl = `https://www.orthobullets.com/testview?qid=${qid}`;
-  if (!item || item.status === 'accepted' || item.status === 'accepted_no_card') {
+  if (!item || item.status === 'accepted' || item.status === 'accepted_no_card' || item.status === 'accepted_provisional_entity') {
     record({ qid, status: item?.status ?? 'missing_run_item' });
     continue;
   }
@@ -125,12 +125,18 @@ for (const qid of pending) {
       record({ qid, status: 'extraction_incomplete', pageKind: pageContext.pageKind ?? null, warnings: pageContext.extractionWarnings ?? [] });
       continue;
     }
-    const response = await fetch('http://localhost:3000/api/brobot/extension/question-claims', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json', 'x-snaportho-extension-token': token },
-      body: JSON.stringify({ contractVersion: 'orthobullets-question-claim-v1', pageContext, runId: runBody.runId, runItemId: item.id }),
-    });
-    const body = await response.json();
+    let response;
+    let body;
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      response = await fetch('http://localhost:3000/api/brobot/extension/question-claims', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', 'x-snaportho-extension-token': token },
+        body: JSON.stringify({ contractVersion: 'orthobullets-question-claim-v1', pageContext, runId: runBody.runId, runItemId: item.id }),
+      });
+      body = await response.json();
+      if (body.status !== 'retryable') break;
+      await new Promise((resolve) => setTimeout(resolve, 1_000 * (2 ** attempt)));
+    }
     record({
       qid, http: response.status, status: body.status ?? body.error ?? 'unknown', reason: body.reason ?? null,
       claimId: body.claimId ?? null, cardCount: body.cardCount ?? null, gapRecorded: body.gapRecorded ?? false,

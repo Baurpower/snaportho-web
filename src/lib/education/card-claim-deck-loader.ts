@@ -110,12 +110,14 @@ export function mapExistingClaimRow(row: {
   id: string;
   current_version_id: string | null;
   fingerprint_hash: string;
+  semantic_fingerprint_hash?: string | null;
 }): ExistingClaimRef | null {
   if (!row.current_version_id) return null;
   return {
     claimId: row.id,
     currentVersionId: row.current_version_id,
     fingerprintHash: row.fingerprint_hash,
+    semanticFingerprintHash: row.semantic_fingerprint_hash ?? null,
   };
 }
 
@@ -173,7 +175,7 @@ export const ENTITY_INDEX_SQL = `
 `;
 
 export const EXISTING_CLAIMS_SQL = `
-  select id, current_version_id, fingerprint_hash
+  select id, current_version_id, fingerprint_hash, semantic_fingerprint_hash
   from public.educational_claims
   where is_active
 `;

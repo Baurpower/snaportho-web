@@ -400,6 +400,27 @@ assert.ok(currentTestContext.extractionWarnings.includes('correct_answer_not_vis
 assert.ok(currentTestContext.extractionWarnings.includes('preferred_response_not_visible'));
 assert.ok(currentTestContext.extractionWarnings.includes('explanation_not_visible'));
 
+const { document: pollutedTopicDocument } = parseHTML(`<!doctype html><html><head><title>Review</title></head><body>
+  <div class="breadcrumbs-section--question">
+    <a class="breadcrumbs-section__path-item" href="/hand/1234/fingertip-amputations">Hand</a>
+    <a class="breadcrumbs-section__path-item" href="/hand/5678/finger-flaps">Fingertip Amputations &amp; Finger Flaps</a>
+  </div>
+  <div class="mainSection">
+    <a href="/topic/1">• Reverse cross finger • Axial flag flap from long finger</a>
+    <a href="/topic/2">1. Finger tip laceration • V-Y advancement flap • Cross finger flap • Thenar flap</a>
+  </div>
+  <div class="question__code">QID 5438</div>
+  <div class="question__text">Which reconstruction is most appropriate for this completed review question?</div>
+  <div class="answers"><div class="answerItem correct"><span class="answer-text">Cross finger flap</span></div><div class="answerItem"><span class="answer-text">Observation</span></div></div>
+  <div class="question-notes-section-text">The revealed explanation supports the reconstructive choice.</div>
+</body></html>`);
+const pollutedTopicContext = extractOrthobulletsPageContext({
+  document: pollutedTopicDocument,
+  pageUrl: 'https://www.orthobullets.com/testview?qid=5438',
+});
+assert.deepEqual(pollutedTopicContext.breadcrumbs, ['Hand', 'Fingertip Amputations & Finger Flaps']);
+assert.ok(!pollutedTopicContext.breadcrumbs.some((value) => value.includes('Reverse cross finger')));
+
 const missingFieldContext = extractOrthobulletsPageContext({
   document: {
     locationHref: 'https://www.orthobullets.com/trauma/1046/topic',

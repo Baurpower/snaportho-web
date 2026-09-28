@@ -18,6 +18,7 @@ import type {
 } from './types.js';
 import type { BroBotTask } from './brobot-routing.js';
 import type { ExtensionBuildInfo } from './build-info.js';
+import type { PageAnkiReview } from './page-anki-review.js';
 
 export type ActivePageState = {
   tabId: number | null;
@@ -86,6 +87,7 @@ export type ExtensionMessage =
   | { type: 'ob:start-link'; deviceName: string }
   | { type: 'ob:poll-link'; linkCode: string }
   | { type: 'ob:clear-link' }
+  | { type: 'ob:get-page-anki-cards'; pageUrl: string; provider: 'orthobullets' | 'rock' }
   | { type: 'ob:cancel-curriculum-stream'; streamRequestId: string }
   // `questionAttemptId` targets one specific AAOS Himalaya question instead of
   // whatever is on screen, so the review board can load any row on demand.
@@ -202,6 +204,7 @@ export type ExtensionMessageResponse =
   | { ok: true; chat: OrthobulletsChatResponse }
   | { ok: true; topicTurn: OrthobulletsTopicTutorResponse }
   | { ok: true; cleared: true }
+  | { ok: true; pageAnkiReview: PageAnkiReview }
   | { ok: true; questionClaimRun: { runId: string; algorithmVersion: string; items: Array<{ id: string; native_question_id: string; status: string; claim_id?: string | null; linked_card_count?: number; last_error_code?: string | null }> } }
   | { ok: true; questionClaim: { status: string; claimId?: string; claimVersionId?: string; nativeQuestionId?: string; reviewStatus?: string; reason?: string; gapRecorded?: boolean; cardCount?: number; runItemId?: string } }
   | { ok: true; launchQueued: { noteGuid: string; cardOrdinal: number; rank: 1 | 2 | 3 }; command?: unknown }

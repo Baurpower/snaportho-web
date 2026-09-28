@@ -1,0 +1,804 @@
+{
+ "auditDate": "2026-09-27",
+ "contractVersion": "snaportho-kg-audit.v1",
+ "sourceCohort": "card-claim-factory-2026-09-25/current-published-deck (3429 claims)",
+ "method": "exact match on (primaryEntityId, normalized predicate, normalized objectText, claimType); read-only, no merges performed",
+ "exactNormalizedTextDupGroups": 0,
+ "structuralDupGroups": 23,
+ "note": "predicate vocabulary is degenerate (2902/3429 teaches_fact) and objectText is the raw cloze answer, so structural groups are weak equivalence evidence and several inspected groups are clinically DISTINCT (e.g. Lachman grading vs TKA stem fracture sharing 3-5). Treat every cluster as dangerous-near-duplicate review, never auto-merge.",
+ "clusters": [
+  {
+   "clusterId": "STRUCT-001",
+   "entityId": "00000000-0000-4000-8000-000000000001",
+   "predicate": "teaches fact",
+   "object": "posterior",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "4979763b-7dc3-4139-8b72-b45cd6847c57",
+     "claimText": "Posterior arthroscopic portal of the shoulder is the primary viewing portal.",
+     "fingerprintHash": "56a2d0f29f5cf40500769d3bc8702deb4348c0a8a3f6b5924fcf4f22cf11c334",
+     "qualifiers": {
+      "setting": "primary"
+     },
+     "entityTargetType": "unresolved"
+    },
+    {
+     "claimId": "4c0244bf-ba52-4058-8ebc-1992d9e3888d",
+     "claimText": "Is the medial epicondyle an anterior or posterior structure: Posterior.",
+     "fingerprintHash": "6e24e33abf9ad4fdf8dd19dfcdf639f0b37233ddaba11993aa2a44fd815d6ffb",
+     "qualifiers": {},
+     "entityTargetType": "unresolved"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-002",
+   "entityId": "585db38b-2be1-4827-8d38-c523aa78b4cb",
+   "predicate": "teaches fact",
+   "object": "subscapularis",
+   "claimType": "anatomy_pearl",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "5856db93-6fc5-4e69-8bf0-e849fa117627",
+     "claimText": "Subscapularis rotator cuff tendon(s) attach to the lesser tuberosity.",
+     "fingerprintHash": "743ab041c9c09c94a1a3e8fc7e04e101749a62e18ee0a505a8134e1950cdbe98",
+     "qualifiers": {},
+     "entityTargetType": "canonical"
+    },
+    {
+     "claimId": "c088a296-3a9c-4e07-802b-b75b07770929",
+     "claimText": "The subscapularis is the primary restraint to posterior instability in the setting of a posterior labral tear.",
+     "fingerprintHash": "2acf2c7df33225952ea1abbb7a669e45dcf97d6b07f3c9548da9b533400e7f28",
+     "qualifiers": {
+      "setting": "primary"
+     },
+     "entityTargetType": "canonical"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-003",
+   "entityId": "00000000-0000-4000-8000-000000000001",
+   "predicate": "teaches fact",
+   "object": "anterior",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "66e34a18-aed5-41a5-8aa8-711eee0eb672",
+     "claimText": "Anterior bundle of the MUCL is the primary restraint to valgus motion.",
+     "fingerprintHash": "2545672b2a5bc8c468581c9c865d7aa2723f0f7f4eb984e50e5849254955a834",
+     "qualifiers": {
+      "setting": "primary"
+     },
+     "entityTargetType": "unresolved"
+    },
+    {
+     "claimId": "e19bf481-b4a6-487e-80ac-44badf4769db",
+     "claimText": "The relationship of the meniscofemoral ligaments to the PCL is Ligament of Humphrey - anterior to the PCL Ligament of Wrisberg - posterior to the PCL.",
+     "fingerprintHash": "a2a95e9db95b6f35f8d6cab73c3d72c41dd284296677f2255fc4be6413611cb0",
+     "qualifiers": {},
+     "entityTargetType": "unresolved"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-004",
+   "entityId": "00000000-0000-4000-8000-000000000001",
+   "predicate": "teaches fact",
+   "object": "3 5",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "e5985457-5052-46fc-862e-2fe1d988cce5",
+     "claimText": "Lachman's Test grading: A - firm endpoint B - no endpoint Grade 1 - 3-5 mm translation Grade 2 - 5-10 mm translation Grade 3 - &gt; 10 mm translation.",
+     "fingerprintHash": "3671d5e12c3a10d24efa9e6ba9061c6651a17c31d7ec38eea629da2d9d593801",
+     "qualifiers": {},
+     "entityTargetType": "unresolved"
+    },
+    {
+     "claimId": "75f31f80-3a06-4e08-858c-4abcb6d5bc84",
+     "claimText": "Using press-fit tibial stems during hybrid revision TKA is associated with a 3-5% incidence of intraoperative fracture.",
+     "fingerprintHash": "17010e287243b44a3eeb4f24417146f0915da95a38cc19392d7789666b96e290",
+     "qualifiers": {
+      "setting": "revision"
+     },
+     "entityTargetType": "unresolved"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-005",
+   "entityId": "00000000-0000-4000-8000-000000000001",
+   "predicate": "teaches fact",
+   "object": "10",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "2e56a6e7-823e-48c9-8b7f-4e1373b909e1",
+     "claimText": "The normal carrying angle of the elbow is 10-15\u00b0 of valgus.",
+     "fingerprintHash": "ca6ab4cce6602180fa72bb1c7173c961884ffacec3c3e5536b8d1baae54c22cf",
+     "qualifiers": {},
+     "entityTargetType": "unresolved"
+    },
+    {
+     "claimId": "64e8e781-f43b-4064-856e-a562ba02332f",
+     "claimText": "(&lt;4 weeks from index procedure) CRP &gt;10 mg/mL or ESR &gt;30 Aspiration with cell count &gt;1,700 and PMN &gt;80% are the diagnostic threshold values in patients with suspected acute-late postoperative THA infection.",
+     "fingerprintHash": "79a20e936a82925e9eae637835b9642ac1e4d05836356440cbe3fd0e2642db8b",
+     "qualifiers": {
+      "setting": "postoperative"
+     },
+     "entityTargetType": "unresolved"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-006",
+   "entityId": "77d3d1ce-b07b-4f6c-87c7-0a97b99c3c6c",
+   "predicate": "teaches fact",
+   "object": "retroversion",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "7296c781-3499-482a-8cec-4d16c17a753f",
+     "claimText": "62 y/o male presents with following deformity after primary THA 1 year ago. The stem has subsided and shifted into retroversion.",
+     "fingerprintHash": "e035e0786c2a0861bbc3a244c909aa8777a319b3a87a40bf2a67c0ebc928d7ab",
+     "qualifiers": {
+      "setting": "primary"
+     },
+     "entityTargetType": "proposed"
+    },
+    {
+     "claimId": "cafbaf98-9196-42a0-809e-e437d9ba2f5d",
+     "claimText": "The crossover sign is indicative of acetabular retroversion.",
+     "fingerprintHash": "e86b384a68b5a89fb4648549302bf838edd990c3f6540b7ab9295dc12672bcd8",
+     "qualifiers": {},
+     "entityTargetType": "proposed"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-007",
+   "entityId": "a9b42e42-d07e-49ad-8757-c42df6df3f83",
+   "predicate": "imaging finding",
+   "object": "mri",
+   "claimType": "imaging_point",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "c50df7c1-67e8-48f8-8638-40bdf1167ca6",
+     "claimText": "The best test for evaluating potential hip osteonecrosis is MRI.",
+     "fingerprintHash": "784af6771faf3b6320caf8b6a692cf4ad069d15a1f312c190091c9b10391931e",
+     "qualifiers": {},
+     "entityTargetType": "proposed"
+    },
+    {
+     "claimId": "7ef3fe40-c960-4aef-873f-12a10471efc3",
+     "claimText": "3 y/o F presents with pain and swelling of right thigh for past 3 weeks. Fevers as high as 100.4 degrees. Normal WBC, ESR, and CRP. Radiographs shown below. Next step: MRI.",
+     "fingerprintHash": "0677a1b302efe56a83d59b02833974c816538d718350dd1a14e3c30fc062a599",
+     "qualifiers": {
+      "laterality": "right"
+     },
+     "entityTargetType": "proposed"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-008",
+   "entityId": "e9dd1faf-6123-4b39-8454-05f34753f1bd",
+   "predicate": "teaches fact",
+   "object": "tibial torsion",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "c16e706d-1a11-4b17-8d76-a34b9a9ef857",
+     "claimText": "Tibial torsion is the most common cause of intoeing gait in the pediatric population.",
+     "fingerprintHash": "912e90e98df84df4c8ead8235e112a80680ef0295f08268aa6098d5bf11fad22",
+     "qualifiers": {
+      "age_group": "pediatric"
+     },
+     "entityTargetType": "proposed"
+    },
+    {
+     "claimId": "cd5ed9b7-45fa-4447-8045-4e60de754ce2",
+     "claimText": "The thigh-foot angle is used to evaluate Tibial torsion aspect of the lower extremity rotational profile.",
+     "fingerprintHash": "b0b0aec5407b48514ac39440c8276b5349cb5c092a588ad3aacf041c7c23efe9",
+     "qualifiers": {},
+     "entityTargetType": "proposed"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-009",
+   "entityId": "00000000-0000-4000-8000-000000000001",
+   "predicate": "teaches fact",
+   "object": "none",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "7b680e83-8a50-48b0-892d-6f7eae314fe4",
+     "claimText": "The difference in rates of union for pediatric both bone forearm fractures when comparing percutaneous/open IM nailing vs ORIF is None.",
+     "fingerprintHash": "70ad0aa2cbe8f5e568c6bd2e0d824f6081e6c014b4556ebc1780b487ce20d462",
+     "qualifiers": {
+      "age_group": "pediatric"
+     },
+     "entityTargetType": "unresolved"
+    },
+    {
+     "claimId": "adeb6c5a-dbf4-4eb0-8dc4-f9af4bba3e95",
+     "claimText": "The difference in strength following biceps tenotomy when compared to biceps tenodesis is None.",
+     "fingerprintHash": "35d7cdf6a6a10d10c7605691aa5c7366e93eff553734c5378b00403f6243f50f",
+     "qualifiers": {},
+     "entityTargetType": "unresolved"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-010",
+   "entityId": "00000000-0000-4000-8000-000000000001",
+   "predicate": "teaches fact",
+   "object": "t1",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "6bc85875-81f4-4eed-8050-f4b1248375a8",
+     "claimText": "In terms of pedicle diameter , T1 is the largest in the upper spine , T4 is the smallest overall , and L1 is the smallest in the lumbar spine .",
+     "fingerprintHash": "18d40d07b3c61187c29d83cbf0981060f0aa3dad73fff14644cd06c080d20da8",
+     "qualifiers": {},
+     "entityTargetType": "unresolved"
+    },
+    {
+     "claimId": "455bf819-baf4-4f97-8107-8fa76719ed4a",
+     "claimText": "Name the nerve root based on the following primary motion, muscle innervation, and sensory area. T1 Motion: Finger abduction Muscle: Interossei muscles Sensory: Medial elbow.",
+     "fingerprintHash": "ccc8843f8be5418f25ce8a0b46f3da7186bcadd2aa608bd3e9cf55bb453c87bf",
+     "qualifiers": {
+      "setting": "primary"
+     },
+     "entityTargetType": "unresolved"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-011",
+   "entityId": "00000000-0000-4000-8000-000000000001",
+   "predicate": "teaches fact",
+   "object": "6",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "40dcd95b-09c4-4d5d-8d40-ae62881ab4aa",
+     "claimText": "In both long bone and articular fractures of the right lower extremity , brake travel time (BTT) has been shown to be significantly increased until 6 weeks after initiation of weight bearing .",
+     "fingerprintHash": "f619804346a76eb42a2afada0cb03b580221cf5e24ec4d3c8428c846726369ba",
+     "qualifiers": {
+      "laterality": "right"
+     },
+     "entityTargetType": "unresolved"
+    },
+    {
+     "claimId": "c3089f0e-8b16-4972-8dc4-b8780578e33b",
+     "claimText": "Prior to removing an antibiotic spacer and placing the revision THA , a patient must receive IV antibiotics for 6 weeks and then undergo a joint aspiration and have a cell count of &lt;3,000.",
+     "fingerprintHash": "0fb93a762ad03bb3b7270700f2acad20603e6e25462e6fa81c86c1da953242e5",
+     "qualifiers": {
+      "setting": "revision"
+     },
+     "entityTargetType": "unresolved"
+    },
+    {
+     "claimId": "fa2438a0-141e-4a3b-85f3-cf36b55fabb7",
+     "claimText": "Hip fractures in the geriatric patient population are associated with a mortality rate ... In hospital: 6% One year: 30%.",
+     "fingerprintHash": "a74c7f821f9e7dfecf60f817d815383793fd39d10bd7222ea77aeb6024607da3",
+     "qualifiers": {},
+     "entityTargetType": "unresolved"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-012",
+   "entityId": "cd5d3ea2-45e8-405e-a7c1-7f2e76069c00",
+   "predicate": "teaches fact",
+   "object": "staph aureus",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "48469f2c-ec63-4739-83e4-8c5a40ed5198",
+     "claimText": "The most common causative organism in septic arthritis is Staph aureus.",
+     "fingerprintHash": "ea2c4feac13605a8ef967186a9eaed6e8e2e2604e26a7632f1a22034e308806c",
+     "qualifiers": {},
+     "entityTargetType": "canonical"
+    },
+    {
+     "claimId": "de81a42a-26f2-48a2-8585-1a3714fbb631",
+     "claimText": "Staph aureus organism is the most common cause of septic arthritis in pediatric patients.",
+     "fingerprintHash": "82e94de1beedcedcbaddfa6d1853d78bd1bb6b1ba857802b504762ee5f295124",
+     "qualifiers": {
+      "age_group": "pediatric"
+     },
+     "entityTargetType": "canonical"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-013",
+   "entityId": "00000000-0000-4000-8000-000000000001",
+   "predicate": "teaches fact",
+   "object": "l5",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "52e59bbf-07a8-4bc3-8654-038a5ac745ba",
+     "claimText": "Name the nerve root based on the following primary motion, muscle innervation, and sensory area. L5 Motion: Foot inversion, toe dorsiflexion, hip extension, hip abduction Muscle: Tibialis posterior, EHL, EDL, hamstrings, gluteus max, gluteus med Sensory: Lateral leg and dorsal foot.",
+     "fingerprintHash": "c94c19f4ba61f3cfcb5ad2ad4f4d84a3f9eefc7cefc4deb404718e5b26752ba5",
+     "qualifiers": {
+      "setting": "primary"
+     },
+     "entityTargetType": "unresolved"
+    },
+    {
+     "claimId": "f7aee267-e62b-439c-805c-523ede9b089a",
+     "claimText": "Anterior penetration of an iliosacral screw through the sacral ala would most likely lead to dysfunction about the L5 nerve root .",
+     "fingerprintHash": "db60a0a98e581c529d7ad610ab5193ae9ff366e8a6b839f648fffe61a44085d9",
+     "qualifiers": {},
+     "entityTargetType": "unresolved"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-014",
+   "entityId": "00000000-0000-4000-8000-000000000001",
+   "predicate": "teaches fact",
+   "object": "c6",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "8c0fa7d7-fd95-4c56-8107-e2e76f7fd21b",
+     "claimText": "Most commonly compressed cervical root = C6 Most commonly compressed lumbar root = L5.",
+     "fingerprintHash": "7a4d2c6d620d79acdc32cbbc4996d3e2fac4238405f91180974bb19376aa1b88",
+     "qualifiers": {},
+     "entityTargetType": "unresolved"
+    },
+    {
+     "claimId": "a0c9f75f-df82-4002-8f20-f7e8d4a3f436",
+     "claimText": "Name the nerve root based on the following primary motion, muscle innervation, and sensory area. C6 Motion: Elbow flexion, wrist extension Muscle: Brachioradialis, ECRL Sensory: Thumb and radial hand.",
+     "fingerprintHash": "2bb9eae2810da33dd27c4744e5705546076e31e4c76866b4d61d9d5cca267a5a",
+     "qualifiers": {
+      "setting": "primary"
+     },
+     "entityTargetType": "unresolved"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-015",
+   "entityId": "4f6ea227-1031-4303-81f8-3117d5bfd9c0",
+   "predicate": "teaches fact",
+   "object": "lucl",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "302749fb-38a6-4d40-832d-b991de922cd1",
+     "claimText": "Injury to the LUCL allows for radial head subluxation and posterolateral rotatory instability.",
+     "fingerprintHash": "f56b401d7a427b79369029a12e1cc9d1b971f2e1e54adc819ab71450d47ca4ac",
+     "qualifiers": {},
+     "entityTargetType": "proposed"
+    },
+    {
+     "claimId": "59c57a39-4654-44c4-880f-7515296aff06",
+     "claimText": "The primary stabilizer to varus and external rotation stress of the elbow is LUCL.",
+     "fingerprintHash": "238b28f197cc003536a8d62285cea61fbdfe758e62186837e945ba344973b94b",
+     "qualifiers": {
+      "setting": "primary"
+     },
+     "entityTargetType": "proposed"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-016",
+   "entityId": "00000000-0000-4000-8000-000000000001",
+   "predicate": "teaches fact",
+   "object": "cfl",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "9baec7f8-279c-46ac-84e0-b72cbb75939e",
+     "claimText": "CFL lateral ankle ligament is the primary restraint to inversion while the foot is in a neutral or dorsiflexed position.",
+     "fingerprintHash": "841127133f79ea7212cde85196669cbaf1654d45c4d9fb8354c8cdfedbab73ba",
+     "qualifiers": {
+      "setting": "primary"
+     },
+     "entityTargetType": "unresolved"
+    },
+    {
+     "claimId": "51a19d04-6595-4c2b-8554-483b3d9b24a7",
+     "claimText": "Injury to the CFL is required to have a positive varus stress (talar tilt) on radiographs .",
+     "fingerprintHash": "c3cded7f1ad4b00f0ed0f044b52dfb8ef5826af8d8b111554983c0050ead97f8",
+     "qualifiers": {},
+     "entityTargetType": "unresolved"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-017",
+   "entityId": "00000000-0000-4000-8000-000000000001",
+   "predicate": "teaches fact",
+   "object": "b",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "82e4ff45-07bd-466f-8e34-6fe0f35c8886",
+     "claimText": "B letter refers to the anterior bundle of the MCL.",
+     "fingerprintHash": "7fd4f35d316b8887c0c2d6da448ce3c62384a6aec0b4697ba3f07e53933e01fb",
+     "qualifiers": {},
+     "entityTargetType": "unresolved"
+    },
+    {
+     "claimId": "e59411be-ab60-450f-8ca6-b38db9a1dbf2",
+     "claimText": "B ligament as seen below should be released to address limited post-op flexion.",
+     "fingerprintHash": "0192c2b75d547b7081c4a493433d10e50aecbe7398be9037d818f52ad9381226",
+     "qualifiers": {
+      "setting": "postoperative"
+     },
+     "entityTargetType": "unresolved"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-018",
+   "entityId": "e0501c79-2a66-4aca-8218-11c56cf2a83b",
+   "predicate": "teaches fact",
+   "object": "atfl",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "92ba1abc-4c45-42d4-8389-55e632d3d7e7",
+     "claimText": "ATFL injuries will result in drawer laxity in plantar flexion . CFL injuries will result in drawer laxity in dorsiflexion .",
+     "fingerprintHash": "ccdea803b35cc76acbf90188d0a5c903b1a1b67f8d9de4abc9db5131fa676378",
+     "qualifiers": {},
+     "entityTargetType": "proposed"
+    },
+    {
+     "claimId": "80bfe4db-e876-41f9-8b3b-c56a7caed9cb",
+     "claimText": "ATFL lateral ankle ligament is the primary restraint to inversion while the foot is in plantarflexion.",
+     "fingerprintHash": "47d52847be779f64f171c16265edefbd0b5c2079e150dbd79afd1c88e88ed963",
+     "qualifiers": {
+      "setting": "primary"
+     },
+     "entityTargetType": "proposed"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-019",
+   "entityId": "574d932a-b892-4761-8859-d154c149944d",
+   "predicate": "teaches fact",
+   "object": "carpal instability nondissociative cind",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "95142bc8-913b-4e23-834d-1f1d8df75a2d",
+     "claimText": "22 y/o gymnast with ligamentous laxity has been treated in hand therapy clinic for 6 months for left wrist pain/discomfort. On physical exam, there is a clunk as the wrist is moved into ulnar deviation with an axial directed load. Radiographs shown below. Diagnosis: Carpal instability nondissociative (CIND).",
+     "fingerprintHash": "706c13d2a8ce89698aec4a3f60e8ebefd3c7297155b82eded77a4e9ca8fae5ae",
+     "qualifiers": {
+      "laterality": "left"
+     },
+     "entityTargetType": "canonical"
+    },
+    {
+     "claimId": "dadf9125-b4d3-47f7-8f53-f2be28ea8e08",
+     "claimText": "Carpal instability nondissociative (CIND) presents with an irritating clunking sign on physical exam when the wrist is moved ulnarly from flexion to extension with an axial load .",
+     "fingerprintHash": "5dc40e22ec90480474d8fc202616cd2e021798fcf93dd0593510b3da96a45808",
+     "qualifiers": {},
+     "entityTargetType": "canonical"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-020",
+   "entityId": "00000000-0000-4000-8000-000000000001",
+   "predicate": "teaches fact",
+   "object": "higher",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "3e414c30-0ff6-4544-8f28-028248795bfc",
+     "claimText": "When compared to semi-constrained TEA, nonconstrained implants have a higher rate of postsurgical instability.",
+     "fingerprintHash": "5627e9c70163a6479530b164c77ae906e35e40c51e243e98ff4ea35bf812e0c3",
+     "qualifiers": {},
+     "entityTargetType": "unresolved"
+    },
+    {
+     "claimId": "a058f028-b319-491c-87ae-9472ac2183ef",
+     "claimText": "For aTSA , metal-backed glenoids have a higher rate of revision than all-polyethylene glenoids .",
+     "fingerprintHash": "f6aef8eda07326fba25a42ca479374adb799ac34031d0de6c812d866c38ae3a3",
+     "qualifiers": {
+      "setting": "revision"
+     },
+     "entityTargetType": "unresolved"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-021",
+   "entityId": "18421eb3-4965-40b4-8a07-38ab5abf6381",
+   "predicate": "complication of",
+   "object": "dislocation",
+   "claimType": "complication",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "f4c32030-eb5c-43c5-8342-cc7f1b4365f3",
+     "claimText": "Dislocation complication is more common utilizing a posterior (Southern-Moore) THA approach.",
+     "fingerprintHash": "dc6c0f4aae3a87d50e603b74088da82c428b38c4574ed60c337d91d3583dcdfb",
+     "qualifiers": {},
+     "entityTargetType": "proposed"
+    },
+    {
+     "claimId": "97a5dea2-c4b9-453d-8375-2d3ac2a5524f",
+     "claimText": "The most common complication of revision THA surgery with polyethylene exchange is dislocation.",
+     "fingerprintHash": "0a4b9918ae579a298567a1c371006bf01e5e88a94feaf80d8ba6f931e12c41fc",
+     "qualifiers": {
+      "setting": "revision"
+     },
+     "entityTargetType": "proposed"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-022",
+   "entityId": "8a441734-8dd9-4dbd-8f7e-abaafa28c24c",
+   "predicate": "teaches fact",
+   "object": "supination",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "639ebdb4-4396-4aba-8942-9cf64a45ecdf",
+     "claimText": "The primary function of the long head of the biceps is Supination.",
+     "fingerprintHash": "7cde2e1954c26ad5c37b955603d4c98474f075fc1de0226643d48b6bc25d0e1c",
+     "qualifiers": {
+      "setting": "primary"
+     },
+     "entityTargetType": "proposed"
+    },
+    {
+     "claimId": "7dca0f86-6dc7-44bb-8fb8-30364b068073",
+     "claimText": "Is the LUCL tigher in pronation or supination: Supination.",
+     "fingerprintHash": "5c89b1f28d91cbf0313a57ac91ce38fd5ce9b8cfa78402f897d2ed3c4e234005",
+     "qualifiers": {},
+     "entityTargetType": "proposed"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  },
+  {
+   "clusterId": "STRUCT-023",
+   "entityId": "00000000-0000-4000-8000-000000000001",
+   "predicate": "teaches fact",
+   "object": "l4",
+   "claimType": "fact",
+   "signals": [
+    "shared_primary_entity",
+    "shared_predicate",
+    "shared_object_text",
+    "shared_claim_type"
+   ],
+   "candidates": [
+    {
+     "claimId": "6ab338f2-352a-4c5d-81d0-dd7ad33ad63d",
+     "claimText": "Name the nerve root based on the following primary motion, muscle innervation, and sensory area. L4 Motion: Ankle dorsiflexion Muscle: Tibialis anterior Sensory: Lateral thigh, anterior knee, and medial leg.",
+     "fingerprintHash": "c4035df394d49419457855021f6805f355d4735aaadd6eb5bc4276dd720b76e5",
+     "qualifiers": {
+      "setting": "primary"
+     },
+     "entityTargetType": "unresolved"
+    },
+    {
+     "claimId": "af5f83e4-17d6-4412-8ff2-3f7b17d0d0a5",
+     "claimText": "For pediatric patients with myelodysplasia, intact L4 allows for ambulation.",
+     "fingerprintHash": "244c91cc5266bfe0ffb27efc3678fb0fcd93c382b9e29810de87b88d42bbc310",
+     "qualifiers": {
+      "age_group": "pediatric"
+     },
+     "entityTargetType": "unresolved"
+    }
+   ],
+   "reasonMayBeEquivalent": "identical structural fingerprint inputs (entity+predicate+object+type)",
+   "reasonMayNotBeEquivalent": "claim texts may assert clinically distinct propositions sharing one cloze answer; qualifiers differ incidentally",
+   "recommendedDisposition": "needs_expert_review"
+  }
+ ]
+}

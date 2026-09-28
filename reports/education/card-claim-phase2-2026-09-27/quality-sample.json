@@ -1,0 +1,1684 @@
+[
+ {
+  "stratum": "auto_single",
+  "guid": "raK*`<6[Y[",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "What is a <b>Seymour fracture</b>?<div><br></div><div>{{c1::Open distal phalanx fracture with germinal matrix interposition}}</div>",
+  "extra": "",
+  "claim": "The Seymour fracture is Open distal phalanx fracture with germinal matrix interposition.",
+  "object": "Open distal phalanx fracture with germinal matrix interposition",
+  "type": "anatomy_pearl",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "canonical",
+  "entities": [
+   {
+    "kind": "canonical",
+    "role": "teaches_about",
+    "label": "Distal Phalanx"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus"
+  ]
+ },
+ {
+  "stratum": "auto_single",
+  "guid": "NYfVXNaQ>^",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "What is the <i>eponym</i> for an <u>apex dorsal extra-articular</u> <b>distal radius fracture</b>?<div><br></div><div>{{c1::Smith's fracture}}</div>",
+  "extra": "<img src=\"paste-1b26393da0ab84c4051b24002becd742b4872cee.jpg\">",
+  "claim": "The eponym for an apex dorsal extra-articular distal radius fracture is Smith's fracture.",
+  "object": "Smith's fracture",
+  "type": "anatomy_pearl",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "canonical",
+  "entities": [
+   {
+    "kind": "canonical",
+    "role": "teaches_about",
+    "label": "Distal Radius"
+   },
+   {
+    "kind": "canonical",
+    "role": "context",
+    "label": "Radius"
+   }
+  ],
+  "flags": [
+   "competing_entities_present",
+   "multi_entity_claim"
+  ],
+  "reasons": [
+   "machine_consensus",
+   "primary_entity_picked"
+  ]
+ },
+ {
+  "stratum": "auto_single",
+  "guid": "h~CqFTFn4w",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "In a <u style=\"font-weight: bold; font-style: italic;\">valgus</u>&nbsp;knee, <i>where</i> does most of the <u>wear occur</u>?<div><br></div><div>{{c1::Lateral distal femoral condyle}}</div>",
+  "extra": "Results in a hypoplastic lateral femoral condyle<div><br></div><div><img src=\"paste-9b3e88e556a6e70670592ad2b8593b5c809c1ec5.jpg\"><br></div>",
+  "claim": "In a valgus knee, most of the wear occurs Lateral distal femoral condyle.",
+  "object": "Lateral distal femoral condyle",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_where_does",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Lateral distal femoral condyle"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_single",
+  "guid": "re8?<opz`o",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "<div>{{c1::Sclerostin}}, which is created by the SOST gene, works to decrease bone mass by inhibiting the Wnt pathway.</div>",
+  "extra": "<img src=\"Chondrocyte.png\">",
+  "claim": "Sclerostin, which is created by the SOST gene, works to decrease bone mass by inhibiting the Wnt pathway.",
+  "object": "Sclerostin",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "declarative_passthrough",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Sclerostin"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_single",
+  "guid": "wu/v4Z)71<",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "What is the <u>biggest risk factor</u> for <i>developing</i> <b>meniscal injury</b>?<br><br>{{c1::ACL deficient knee}}",
+  "extra": "",
+  "claim": "The biggest risk factor for developing meniscal injury is ACL deficient knee.",
+  "object": "ACL deficient knee",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "ACL deficient knee"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_single",
+  "guid": "v0HyM=sE9F",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "The <u><b><i>inlet</i></b> view</u> of the <b>pelvis</b> evaluated for <u>displacement in which 2 planes</u>?<div><br></div><div>{{c1::AP &amp; Rotation}}</div>",
+  "extra": "<div>Ideal for visualizing</div><div>-Anterior or posterior translation of the hemipelvis</div><div>-Internal or external rotation of the hemipelvis</div><div>-Widening of the SI joint</div><div>-Sacral ala impaction</div><div><br></div><img src=\"PD-2-146-g002.gif\"><img src=\"198c3baed3912586e814e988",
+  "claim": "The inlet view of the pelvis evaluated for displacement in AP & Rotation.",
+  "object": "AP & Rotation",
+  "type": "imaging_point",
+  "predicate": "imaging_finding",
+  "method": "qa_mid_substitution",
+  "target": "canonical",
+  "entities": [
+   {
+    "kind": "canonical",
+    "role": "teaches_about",
+    "label": "Pelvis"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus"
+  ]
+ },
+ {
+  "stratum": "auto_single",
+  "guid": "z*~UuI]NYw",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "Which <u>group of ligaments</u> connect the <b>lateral meniscus</b> to the <b>PCL</b>?<div><br></div><div>{{c1::Meniscofemoral ligaments}}</div>",
+  "extra": "<img src=\"paste-0a0885cfcaf5544c47d6543fbbb2b625e1e35218.jpg\">",
+  "claim": "Which group of ligaments connect the lateral meniscus to the PCL Meniscofemoral ligaments.",
+  "object": "Meniscofemoral ligaments",
+  "type": "anatomy_pearl",
+  "predicate": "teaches_fact",
+  "method": "interrogative_fallback",
+  "target": "canonical",
+  "entities": [
+   {
+    "kind": "canonical",
+    "role": "teaches_about",
+    "label": "Lateral Meniscus"
+   }
+  ],
+  "flags": [
+   "extractor_question_shaped"
+  ],
+  "reasons": [
+   "machine_consensus"
+  ]
+ },
+ {
+  "stratum": "auto_single",
+  "guid": "B/~C_eiget",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "What <u>types of patients</u> are at a <u>higher risk</u> for <b>SCFE</b>?<div><br></div><div>{{c1::Obese adolescent boys}}</div>",
+  "extra": "",
+  "claim": "The types of patients at a higher risk for SCFE are Obese adolescent boys.",
+  "object": "Obese adolescent boys",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Obese adolescent boys"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_single",
+  "guid": "fOn!eahBvl",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "What <u>other joint</u>&nbsp;commonly <u>dislocates</u>&nbsp;with <b>subtalar joint dislocations</b>?<div><br></div><div>{{c1::Talonavicular joint}}</div>",
+  "extra": "<img src=\"paste-ed7e8ea53bd5c80cc6c8124639b29c8019a70295.jpg\">",
+  "claim": "What other joint commonly dislocates with subtalar joint dislocations Talonavicular joint.",
+  "object": "Talonavicular joint",
+  "type": "anatomy_pearl",
+  "predicate": "teaches_fact",
+  "method": "interrogative_fallback",
+  "target": "canonical",
+  "entities": [
+   {
+    "kind": "canonical",
+    "role": "teaches_about",
+    "label": "Subtalar Joint"
+   }
+  ],
+  "flags": [
+   "extractor_question_shaped"
+  ],
+  "reasons": [
+   "machine_consensus"
+  ]
+ },
+ {
+  "stratum": "auto_single",
+  "guid": "cndUn,:a%:",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "Patients with a femoral neck fracture will have a shortened, {{c1::ab}}-ducted, and {{c1::ex}}-ternally rotated lower extremity.",
+  "extra": "<img src=\"foreshortening-foreshortened-femoralneck-externally-radiology-original.png\">",
+  "claim": "Patients with a femoral neck fracture will have a shortened, ab-ducted, and ex-ternally rotated lower extremity.",
+  "object": "ab",
+  "type": "anatomy_pearl",
+  "predicate": "teaches_fact",
+  "method": "declarative_passthrough",
+  "target": "canonical",
+  "entities": [
+   {
+    "kind": "canonical",
+    "role": "teaches_about",
+    "label": "Femoral Neck"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus"
+  ]
+ },
+ {
+  "stratum": "auto_single",
+  "guid": "wS#1+Nf,(Y",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "What does the <b>Q-angle </b><u>represent</u>?<div><br></div><div>{{c1::Directional pull of the quadriceps muscle on the patella}}</div>",
+  "extra": "<img src=\"paste-1a43691255cc583358f8b87c23ab45e4247b4f0d.jpg\">",
+  "claim": "The Q-angle represents Directional pull of the quadriceps muscle on the patella.",
+  "object": "Directional pull of the quadriceps muscle on the patella",
+  "type": "anatomy_pearl",
+  "predicate": "teaches_fact",
+  "method": "qa_do_object",
+  "target": "canonical",
+  "entities": [
+   {
+    "kind": "canonical",
+    "role": "teaches_about",
+    "label": "Patella"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus"
+  ]
+ },
+ {
+  "stratum": "auto_single",
+  "guid": "l9MX%q1h@^",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "What is the <u>main blood supply</u> to the <b>scaphoid</b>?<div><br></div><div>{{c1::Dorsal carpal branch of the radial artery}}</div>",
+  "extra": "<img src=\"paste-376a79270e2a92b4eb8e97ffa2a03c790f3b0ff9.jpg\">",
+  "claim": "The main blood supply to the scaphoid is Dorsal carpal branch of the radial artery.",
+  "object": "Dorsal carpal branch of the radial artery",
+  "type": "anatomy_pearl",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "canonical",
+  "entities": [
+   {
+    "kind": "canonical",
+    "role": "context",
+    "label": "Scaphoid"
+   },
+   {
+    "kind": "canonical",
+    "role": "teaches_about",
+    "label": "Radial Artery"
+   }
+  ],
+  "flags": [
+   "competing_entities_present",
+   "multi_entity_claim"
+  ],
+  "reasons": [
+   "machine_consensus",
+   "primary_entity_picked"
+  ]
+ },
+ {
+  "stratum": "auto_single",
+  "guid": "j,roT0Kr{{",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "What is the name of the classification scheme for Colles fractures?<div><br></div><div>{{c1::Frykman}}</div>",
+  "extra": "<img src=\"Screen Shot 2020-10-01 at 11.46.16 AM.png\"><img src=\"Screen Shot 2020-10-01 at 11.46.20 AM.png\">",
+  "claim": "The name of the classification scheme for Colles fractures is Frykman.",
+  "object": "Frykman",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Frykman"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_single",
+  "guid": "pO|JuG][E~",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "Following <b>ORIF</b> of a <b>calcaneus fracture</b>, the patient in the recovery room has an <u>isolated, fixed flexed great toe</u>. What caused this?<br><br>{{c1::Screws in the constant fragment that are too long}}",
+  "extra": "<span style=\"color: rgb(51, 51, 51);\">The\nflexor hallucis longus runs along the medial aspect of the hindfoot, medial to\nthe posterior facet and inferior to middle facet just under sustentaculum\ntali(constant fragment). This tendon can be injured with poor drilling technique\nor use of screws that ar",
+  "claim": "Following ORIF of a calcaneus fracture , the patient in the recovery room has an isolated, fixed flexed great toe . Screws in the constant fragment that are too long.",
+  "object": "Screws in the constant fragment that are too long",
+  "type": "anatomy_pearl",
+  "predicate": "teaches_fact",
+  "method": "qa_mid_substitution",
+  "target": "canonical",
+  "entities": [
+   {
+    "kind": "canonical",
+    "role": "teaches_about",
+    "label": "Calcaneus"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus"
+  ]
+ },
+ {
+  "stratum": "auto_single",
+  "guid": "f>o=S^|B(7",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "How should the <u>forearm be positioned</u> to <u>minimize risk</u> to the <b>PIN</b> during the <b>Kaplan</b> or <b>Kocher</b> approach?<div><br></div><div>{{c1::Pronated}}</div>",
+  "extra": "<img src=\"paste-32e500cb676a0cc639b8b9ce2d9323f8c568ba83.jpg\">",
+  "claim": "The forearm should be positioned to minimize risk to the PIN during the Kaplan or Kocher approach: Pronated.",
+  "object": "Pronated",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_how_managed",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Pronated"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_multi",
+  "guid": "o:D.t|[O_Q",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 2,
+  "text": "What <u>percentage of shoulder motion</u> is attributable to the <b>glenohumeral joint</b> and <b>scapulothoracic articulations</b>?<div><br></div><div>Glenohumeral: {{c1::2/3 - 120\u00b0}}</div><div>Scapulothoracic: {{c1::1/3 - 60\u00b0}}</div>",
+  "extra": "<img src=\"Screen+Shot+2019-11-18+at+4.12.06+PM.jpg\">",
+  "claim": "The attributable to the glenohumeral joint and scapulothoracic articulations are 2/3 - 120\u00b0 (Glenohumeral).",
+  "object": "2/3 - 120\u00b0",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "2/3 - 120\u00b0"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_multi",
+  "guid": "x8=4-6,3H-",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 3,
+  "text": "What <i>muscles</i>&nbsp;(3) are <u>innervated</u> by the <b>AIN</b>?<div><br></div><div>{{c1::<div>Pronator quadratus</div><div>FPL</div><div>FDP to the index and middle fingers</div>}}<br></div>",
+  "extra": "<img src=\"paste-b1982a9659a7baee518512100439ca8ba84d3e51.jpg\"><img src=\"paste-2037ee65a20820ebadbc1f3c722c1c3cc5475b2c.jpg\"><img src=\"paste-b8c9c7dfcb9a381946554ce87e38c380b816c590.jpg\">",
+  "claim": "The innervated by the AIN is Pronator quadratus.",
+  "object": "Pronator quadratus",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Pronator quadratus"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_multi",
+  "guid": "BawK8CR?<b",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 2,
+  "claimsInVersion": 5,
+  "text": "<div>What is the <i>order</i> of <b>clubfoot</b> deformity correction with the\n<b>ponseti method</b>?</div>\n<div><br>{{c1::<div>CAVE<br><br></div>\n<div>1) Cavus</div>\n<div>2) Adductus</div>\n<div>3) Varus</div>\n<div>4) Equinus</div>}}<br></div>",
+  "extra": "<img src=\"download-6a1acd60a3ff8e6297088a5541219161a21dd0f8.jpg\">",
+  "claim": "The order of clubfoot deformity correction with the ponseti method is Cavus.",
+  "object": "Cavus",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Cavus"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_multi",
+  "guid": "t9W6GcL^(}",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 2,
+  "text": "<u>Special shoulder radiographs</u> following <b>anterior shoulder dislocation</b>:<br><br>{{c1::West point}} to evaluate glenoid bone loss (Bankart)<br><br>{{c1::Stryker-Notch}} to evaluate Hill-Sachs",
+  "extra": "<img src=\"paste-f7f51e6fa66ac309592c6c3a738f1128e9761570.jpg\"><br><img src=\"paste-8e196c07bad4886df717fa7faae94f8f623ec99a.jpg\">",
+  "claim": "West point to evaluate glenoid bone loss (Bankart).",
+  "object": "West point",
+  "type": "anatomy_pearl",
+  "predicate": "teaches_fact",
+  "method": "declarative_passthrough",
+  "target": "canonical",
+  "entities": [
+   {
+    "kind": "canonical",
+    "role": "teaches_about",
+    "label": "Glenoid"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus"
+  ]
+ },
+ {
+  "stratum": "auto_multi",
+  "guid": "b6VOgn{wVn",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 4,
+  "claimsInVersion": 4,
+  "text": "<div>What are the <i>four</i> (4) <u>most common</u> <b>traumatic etiologies</b> for <b>compartment syndrome of the leg</b>?<br><br></div>\n<div>{{c1::<div>Fractures</div>\n<div>Crush injuries</div>\n<div>Contusions</div>\n<div>Gunshot wounds</div>}}<br></div>",
+  "extra": "<div>*Fractures account for 69% of cases\u2026 Nice.</div>",
+  "claim": "The four (4) most common traumatic etiologies for compartment syndrome of the leg are Gunshot wounds.",
+  "object": "Gunshot wounds",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Gunshot wounds"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_multi",
+  "guid": "l_.`|)?]6X",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "auto_approved",
+  "claimIndex": 2,
+  "claimsInVersion": 3,
+  "text": "What are the <u>indications</u>&nbsp;(3) for an <u>endocrine work up</u>&nbsp;for a patient with <b>SCFE</b>?<div><br></div><div>{{c1::</div><div><span style=\"color: var(--field-fg); background: var(--field-bg);\">&lt;50th percentile for weight</span></div><div><span style=\"color: var(--field-fg); background: var(--field-bg);\">&lt;10 years old</span></div><div><span style=\"color: var(--field-fg); background: var(--field-bg);\">Valgus slips</span><br>}}<br></div>",
+  "extra": "",
+  "claim": "The indications (3) for an endocrine work up for a patient with SCFE are <10 years old.",
+  "object": "<10 years old",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "<10 years old"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_multi",
+  "guid": "Q6[G;TBu[|",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 2,
+  "claimsInVersion": 2,
+  "text": "<div>Which <i>two (2)</i> <u>physical examination maneuvers</u> should be performed to <u>assess the compartments</u> of the lower leg following a <b>proximal third tibia shaft fracture</b>?<br><br></div>\n<div>{{c1::<div>Palpation</div>\n<div>Passive motion of toes</div>}}<br></div>",
+  "extra": "",
+  "claim": "The two (2) physical examination maneuvers that should be performed to assess the compartments of the lower leg following a proximal third tibia shaft fracture is Passive motion of toes.",
+  "object": "Passive motion of toes",
+  "type": "anatomy_pearl",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_modal",
+  "target": "canonical",
+  "entities": [
+   {
+    "kind": "canonical",
+    "role": "teaches_about",
+    "label": "Tibia"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus"
+  ]
+ },
+ {
+  "stratum": "auto_multi",
+  "guid": "yb!U4WdAfX",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "auto_approved",
+  "claimIndex": 2,
+  "claimsInVersion": 4,
+  "text": "<i>Four (4)</i> <u>instability patterns</u> in <b>elbow injuries</b>:<br><br>{{c1::Posteromedial rotatory instability<br>Posterolateral rotatory instability<br>Olecranon fracture-dislocation<br>Terrible triad of elbow}}",
+  "extra": "<img src=\"paste-6775fe8cfe8f2165fc4b60dc83d8e76cb20e719c.jpg\"><img src=\"paste-00369f6a96e695630640f6a9a5bd79339fce8ed9.jpg\"><br>^^Posteromedial rotatory instability^^<br><br><img src=\"Screen Shot 2022-06-27 at 1.07.52 PM.png\"><br>^^Posterolateral rotatory instability^^<br><br><img src=\"Screen Shot 2",
+  "claim": "Four (4) instability patterns in elbow injuries: Posterolateral rotatory instability.",
+  "object": "Posterolateral rotatory instability",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "declarative_passthrough",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Posterolateral rotatory instability"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_multi",
+  "guid": "E]U%i#~knD",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "auto_approved",
+  "claimIndex": 5,
+  "claimsInVersion": 6,
+  "text": "<div>Which <b>foot compartment(s)</b> can be <i>assessed</i> at the <u>following locations</u>?<br><br><div>{{c1::Central}}: base of 1st MT, lateral and plantar through abductor hallucis</div>\n<div>{{c1::Medial}}: base of 1st MT advancing 2cm into abductor hallucis</div>\n<div>{{c1::Interosseous}}: second, third, and fourth webspaces</div>\n<div>{{c1::Lateral}}: Midshaft of fifth metatarsal</div></div>",
+  "extra": "<img src=\"Screen Shot 2022-06-02 at 7.26.34 AM.png\"><br><img src=\"abductor_hallucis.jpg\">",
+  "claim": "The foot compartment(s) that can be assessed at the following locations is fourth webspaces.",
+  "object": "Interosseous",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_modal",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Interosseous"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_multi",
+  "guid": "Ce4zqv|;2e",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 4,
+  "claimsInVersion": 6,
+  "text": "What&nbsp;<u>structures</u>&nbsp;(6) are within the&nbsp;<u><b><i>deep posterior</i></b></u><b> compartment</b>&nbsp;of the&nbsp;<u>leg</u>?<div><br></div><div>{{c1::<div>Flexor digitorum longus (FDL)</div><div>Tibialis posterior</div><div>Flexor hallicus longus (FHL)</div><div>Posterior tibial artery and vein</div><div>Tibial nerve</div><div>Peroneal artery and vein</div>}}<br></div>",
+  "extra": "<img src=\"paste-b9807e9c3f77ac18180812200326241c565a35c3.jpg\">",
+  "claim": "The structures (6) within the deep posterior compartment of the leg are Posterior tibial artery and vein.",
+  "object": "Posterior tibial artery and vein",
+  "type": "anatomy_pearl",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "canonical",
+  "entities": [
+   {
+    "kind": "canonical",
+    "role": "teaches_about",
+    "label": "Deep Posterior Compartment of the Leg"
+   },
+   {
+    "kind": "canonical",
+    "role": "context",
+    "label": "Deep Posterior Compartment"
+   }
+  ],
+  "flags": [
+   "competing_entities_present",
+   "multi_entity_claim"
+  ],
+  "reasons": [
+   "machine_consensus",
+   "primary_entity_picked"
+  ]
+ },
+ {
+  "stratum": "auto_multi",
+  "guid": "i@c%5bcB+X",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 3,
+  "claimsInVersion": 3,
+  "text": "What are the <u>surgical treatment options</u>&nbsp;(3) for <b>radial head fractures</b>?<div><br></div><div>{{c1::<div>ORIF</div><div>Replacement</div><div>Excision</div>}}<br></div>",
+  "extra": "",
+  "claim": "The surgical treatment options (3) for radial head fractures are Excision.",
+  "object": "Excision",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Excision"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_multi",
+  "guid": "lA*0zfoND*",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "auto_approved",
+  "claimIndex": 2,
+  "claimsInVersion": 2,
+  "text": "<u>Two</u> appropriate <i>ORIF</i> options for <b>comminuted patellar fractures</b>:<br><br>{{c1::Circumferential cerclage wiring<br>Cerclage wiring + interfragmentary screw compression}}",
+  "extra": "<img src=\"Screen Shot 2021-07-21 at 8.18.02 PM.png\"><img src=\"Screen Shot 2021-07-21 at 8.18.11 PM.png\">",
+  "claim": "Two appropriate ORIF options for comminuted patellar fractures: Cerclage wiring + interfragmentary screw compression.",
+  "object": "Cerclage wiring + interfragmentary screw compression",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "declarative_passthrough",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Cerclage wiring + interfragmentary screw compression"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_multi",
+  "guid": "B/gXrlMqp!",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 2,
+  "claimsInVersion": 3,
+  "text": "<b>Femoral component rotation</b> can be <i>referenced</i> using <u>what three lines</u>?<div><br></div><div>{{c1::<div>Whiteside's line</div><div>Transepicondylar axis</div><div>Posterior condylar axis</div>}}<br></div>",
+  "extra": "<img src=\"paste-106da7a8e72b89e7f627e53b47c53055a16c40a4.jpg\">",
+  "claim": "Femoral component rotation can be referenced using Transepicondylar axis.",
+  "object": "Transepicondylar axis",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_mid_substitution",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Transepicondylar axis"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_multi",
+  "guid": "K)DB+VpjP!",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 1,
+  "claimsInVersion": 9,
+  "text": "<u>Sensory</u><div>C5 - {{c1::Lateral shoulder::Area}}<br></div><div>C6 - {{c1::Thumb::Area}}</div><div>C7 - {{c1::Middle finger::Area}}</div><div>C8 - {{c1::Ring &amp; pink finger::Area}}</div><div>T1 - {{c1::Ulnar forearm::Area}}</div><div><br></div><div><u>Motor</u></div><div>C5 - {{c2::Deltoid/resisted abduction::Muscle/Action}}</div><div>C6 - {{c2::Biceps/resisted elbow flexion::Muscle/Action}}</div><div>C7 - {{c2::Triceps/resisted elbow extension::Muscle/Action}}</div><div>C8/T1 - {{c2::Intrinsics/resisted finger abduction::Muscle/Action}}</div>",
+  "extra": "<img src=\"Screen Shot 2020-05-23 at 5.19.29 PM.png\">",
+  "claim": "C5 - Lateral shoulder.",
+  "object": "Lateral shoulder",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "declarative_passthrough",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Lateral shoulder"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "auto_multi",
+  "guid": "uNl%DI[^Py",
+  "cardQueue": "auto_approved",
+  "unitQueue": "auto_approved",
+  "claimIndex": 2,
+  "claimsInVersion": 3,
+  "text": "What <i>structures (3)</i> create the <u>borders of the \"soft spot\"</u> on the <u>lateral aspect</u> of the <b>elbow</b>?<div><br></div><div>{{c1::<div>Olecranon</div><div>Lateral epicondyle</div><div>Radial head</div>}}<br></div>",
+  "extra": "<img src=\"paste-9709e47c6e6aac746261b75e06450849ba9cb0ed.jpg\">",
+  "claim": "What structures (3) create the borders of the \"soft spot\" on the lateral aspect of the elbow Lateral epicondyle.",
+  "object": "Lateral epicondyle",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "interrogative_fallback",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Lateral epicondyle"
+   }
+  ],
+  "flags": [
+   "extractor_question_shaped"
+  ],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "review",
+  "guid": "zzGXaUgN;r",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "missing_entity",
+  "claimIndex": 1,
+  "claimsInVersion": 3,
+  "text": "What <u>three radiographic views</u> of the <b>ankle</b> should always be obtained?<div><br></div><div>{{c1::<div>AP</div><div>Mortise</div><div>Lateral</div>}}<br></div>",
+  "extra": "<img src=\"B9780323072427000036_f003-003ac-9780323072427.jpg\">",
+  "claim": "The three radiographic views of the ankle that should always be obtained is AP.",
+  "object": "AP",
+  "type": "imaging_point",
+  "predicate": "imaging_finding",
+  "method": "qa_inversion_modal",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "short_label_insufficient_context",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "short_label_insufficient_context"
+  ]
+ },
+ {
+  "stratum": "review",
+  "guid": "m57*B]JX@M",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "auto_approved",
+  "claimIndex": 4,
+  "claimsInVersion": 6,
+  "text": "What are the <u>zones</u>&nbsp;of <b>flexor tendon injuries</b>?<div><br></div><div>Zone 1: {{c1::Distal to FDS insertion}}</div><div>Zone 2: {{c1::Between FDS insertion and the distal palmar crease}}</div><div>Zone 3: {{c1::Palm}}</div><div>Zone 4: {{c1::Carpal Tunnel}}</div><div>Zone 5: {{c1::Proximal to the wrist crease}}</div>",
+  "extra": "<img src=\"paste-40df122c501fdc9c34e697a75d5a1ee8a10fadb5.jpg\">",
+  "claim": "The zones of flexor tendon injuries are Palm (Zone 3).",
+  "object": "Palm",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Palm"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "review",
+  "guid": "oH%Gkjs<95",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "missing_entity",
+  "claimIndex": 4,
+  "claimsInVersion": 4,
+  "text": "What are the <u>layers</u> of the <b>lateral knee</b>?<div><br></div><div>Layer 1: {{c1::IT band, Biceps femoris}}</div><div>Layer 2: {{c2::Patella retinaculum, Patellofemoral ligament}}</div><div>Layer 3:</div><div>-Superficial: {{c3::LCL, Fibular collateral ligament, Anterior lateral ligament}}</div><div>-Deep: {{c4::Arcuate ligament, Coronary ligament, Popliteus tendon, Popliteofibular ligament}}</div>",
+  "extra": "<img src=\"paste-6cb11c3453d8c2a93f366e3c1d6e8ef5de0da1d5.jpg\">",
+  "claim": "The layers of the lateral knee are Arcuate ligament, Coronary ligament, Popliteus tendon, Popliteofibular ligament (-Deep).",
+  "object": "Arcuate ligament, Coronary ligament, Popliteus tendon, Popliteofibular ligament",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "entity_likeness_blocked",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "clause_like_answer",
+   "list_fragment"
+  ]
+ },
+ {
+  "stratum": "review",
+  "guid": "i2Ug?]ildg",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "auto_approved",
+  "claimIndex": 2,
+  "claimsInVersion": 4,
+  "text": "<u>Extensor pollicis longus (EPL)</u><div><u><br></u></div><div>Origin: {{c1::Posterior ulna}}</div><div>Insertion: {{c2::Base of thumb (distal phalanx)}}</div><div>Nerve: {{c3::Radial-PIN}}</div><div>Action: {{c4::Extend thumb}}</div>",
+  "extra": "<div><img src=\"paste-d8d45215aa135408b2c2d8adb1472f096d4f4a9e.jpg\"><br></div><img src=\"Screen Shot 2020-10-16 at 7.05.20 AM.png\">",
+  "claim": "The Extensor pollicis longus (EPL) insertion is Base of thumb (distal phalanx).",
+  "object": "Base of thumb (distal phalanx)",
+  "type": "anatomy_pearl",
+  "predicate": "teaches_fact",
+  "method": "anatomy_neutral",
+  "target": "canonical",
+  "entities": [
+   {
+    "kind": "canonical",
+    "role": "teaches_about",
+    "label": "Distal Phalanx"
+   }
+  ],
+  "flags": [
+   "extractor_context_prefixed"
+  ],
+  "reasons": [
+   "machine_consensus"
+  ]
+ },
+ {
+  "stratum": "review",
+  "guid": "JI`bbX:0WR",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "auto_approved",
+  "claimIndex": 6,
+  "claimsInVersion": 7,
+  "text": "Rockwood Grade for AC Separation:<div><br></div><div>Grade I: {{c1::AC ligament sprain}}</div><div><br></div><div>Grade II: {{c2::AC tear, CC intact}}</div><div><br></div><div>Grade III: {{c3::AC and CC ligament tears; \u2264100% displacement}}</div><div><br></div><div>Grade IV: {{c4::Grade III w/ posterior displacement}}</div><div><br></div><div>Grade V: {{c5::Grade III \u2264300% w/ superior displacement}}</div><div><br></div><div>Grade VI: {{c6::Grade III w/ inferior displacement}}</div>",
+  "extra": "<div>Tx:</div><div>Grades 1&amp;2 - sling, rest, PT</div><div>Grade 3 - controversial; mostly nonoperative</div><div>Grade 4-6 - CC ligament reconstruction</div><div><br></div><img src=\"Screen Shot 2020-06-16 at 8.12.30 AM.png\">",
+  "claim": "In Rockwood Grade for AC Separation, Grade V is Grade III \u2264300% w/ superior displacement.",
+  "object": "Grade III \u2264300% w/ superior displacement",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "classification_stage",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Grade III \u2264300% w/ superior displacement"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "review",
+  "guid": "iJ|)pbZOd@",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "missing_entity",
+  "claimIndex": 2,
+  "claimsInVersion": 5,
+  "text": "<div><u>Bisphosphonate-related</u> <b>subtrochanteric fractures</b> will have which <i>5 features</i>?<br><br></div>\n<div>{{c1::<div>Lateral cortical thickening</div>\n<div>Increased diaphysial cortical thickness</div>\n<div>Transverse vs. short oblique fracture orientation</div>\n<div>Medial spike (if complete fracture)</div>\n<div>Lack of comminution</div>}}<br></div>",
+  "extra": "<img src=\"Screen Shot 2022-02-09 at 6.23.24 PM.png\">",
+  "claim": "Bisphosphonate-related subtrochanteric fractures will have Increased diaphysial cortical thickness.",
+  "object": "Increased diaphysial cortical thickness",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_mid_substitution",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "entity_likeness_blocked",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "clause_like_answer"
+  ]
+ },
+ {
+  "stratum": "review",
+  "guid": "Jv[RMf]IgY",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "missing_entity",
+  "claimIndex": 5,
+  "claimsInVersion": 5,
+  "text": "<b>Paprovsky Classification</b> of <b>Acetabular Bone Loss</b>:<br><br>Type I: Minimal deformity<br>Type IIA: {{c2::Superior bone lysis, intact superior rim}}<br>Type IIB: {{c2::Absent superior rim}}<br>Type IIC: {{c2::Localized medial wall destruction}}<br>Type IIIA: {{c1::10-2 o'clock bone loss, superolateral cup migration}}<br>Type IIIB: {{c1::9-5 o'clock bone loss, superomedial cup migration}}",
+  "extra": "<img src=\"Screenshot 2023-01-24 at 10.46.15 AM.png\"><br><img src=\"paste-6250ac57f231bd9a4934fc1901d13a6158406712.jpg\">",
+  "claim": "In Paprovsky Classification of Acetabular Bone Loss , Type IIIB is 9-5 o'clock bone loss, superomedial cup migration.",
+  "object": "9-5 o'clock bone loss, superomedial cup migration",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "classification_stage",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "entity_likeness_blocked",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "clause_like_answer",
+   "list_fragment"
+  ]
+ },
+ {
+  "stratum": "review",
+  "guid": "Eo6ik&O%|",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "auto_approved",
+  "claimIndex": 2,
+  "claimsInVersion": 2,
+  "text": "What are the two types of femoroacetabular impingement?<div><br></div><div>{{c1::<div>Cam</div><div>Pincer</div>}}<br></div>",
+  "extra": "<img src=\"Screen Shot 2020-08-21 at 10.34.39 PM.png\">",
+  "claim": "The two types of femoroacetabular impingement are Pincer.",
+  "object": "Pincer",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "proposed",
+  "entities": [
+   {
+    "kind": "proposed",
+    "role": "tested_answer",
+    "label": "Pincer"
+   }
+  ],
+  "flags": [],
+  "reasons": [
+   "machine_consensus",
+   "ontology_gap_filled"
+  ]
+ },
+ {
+  "stratum": "review",
+  "guid": "KW?#c2HsUZ",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "missing_entity",
+  "claimIndex": 1,
+  "claimsInVersion": 5,
+  "text": "<u>Extensor digitorum communis (EDC)</u><div><u><br></u></div><div>Origin: {{c1::Lateral epicondyle}}</div><div>Insertion: {{c2::Extensor expansion of middle and distal phalanges of fingers 2-5}}</div><div>Nerve: {{c3::Radial}}</div><div>Action: {{c4::Digit extension}}</div>",
+  "extra": "<img src=\"Screen Shot 2020-10-05 at 7.21.26 AM.png\">",
+  "claim": "The Extensor digitorum communis (EDC) originates from Lateral epicondyle.",
+  "object": "Lateral epicondyle",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "anatomy_verb",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "context_insufficient_for_specific_entity",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "context_insufficient_for_specific_entity"
+  ]
+ },
+ {
+  "stratum": "review",
+  "guid": "HYAfJiR_?f",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "missing_entity",
+  "claimIndex": 7,
+  "claimsInVersion": 7,
+  "text": "What are the <u>operative indications</u>&nbsp;(7) for <b>ankle fractures</b>?<div><br></div><div>{{c1::<div>Bimalleolar or bimalleolar-equivalent fractures</div><div>Trimalleolar fractures</div><div>&gt;25% articular involvement of posterior malleolus fracture</div><div>Displacement of talus</div><div>Displacement of an isolated medial or lateral malleolus fracture</div><div>Bosworth fracture-dislocation</div><div>Open fractures</div>}}<br></div>",
+  "extra": "<img src=\"paste-f71612d54550d26bb45e65ae23fa6890357ac28a.jpg\">",
+  "claim": "The operative indications (7) for ankle fractures are Open fractures.",
+  "object": "Open fractures",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "context_insufficient_for_specific_entity",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "context_insufficient_for_specific_entity"
+  ]
+ },
+ {
+  "stratum": "review",
+  "guid": "p[dpAC!MN8",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "missing_entity",
+  "claimIndex": 1,
+  "claimsInVersion": 4,
+  "text": "<u>Rhomboid minor</u><div><u><br></u></div><div><div>Origin: {{c1::Spinous process (C7-T1)}}</div><div>Insertion: {{c2::Scapula}}</div><div>Action: {{c3::Adduct scapula}}</div><div>Nerve: {{c4::Dorsal scapular}}</div></div>",
+  "extra": "<img src=\"Screen Shot 2020-08-25 at 7.51.48 AM.png\">",
+  "claim": "The Rhomboid minor originates from Spinous process (C7-T1).",
+  "object": "Spinous process (C7-T1)",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "anatomy_verb",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "entity_likeness_blocked",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "malformed_label"
+  ]
+ },
+ {
+  "stratum": "review",
+  "guid": "L)>)tk923[",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "missing_entity",
+  "claimIndex": 4,
+  "claimsInVersion": 4,
+  "text": "<i>Three (3)</i> differences between&nbsp;<b>Becker's</b>&nbsp;and&nbsp;<b>Duchenne's</b>&nbsp;<b>Muscular Dystrophy</b>?<br><br>{{c1::Duchenne's<br>- complete absence of dystrophin<br>- faster progression<br>- <u>less</u> prone to cardiomyopathy}}",
+  "extra": "",
+  "claim": "The Three (3) differences between Becker's and Duchenne's Muscular Dystrophy is - less prone to cardiomyopathy.",
+  "object": "- less prone to cardiomyopathy",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_fragment",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "context_insufficient_for_specific_entity",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "context_insufficient_for_specific_entity"
+  ]
+ },
+ {
+  "stratum": "missing",
+  "guid": "Jlj%~LO.s8",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "missing_entity",
+  "claimIndex": 3,
+  "claimsInVersion": 5,
+  "text": "What are the pros and cons of cervical disc arthroplasty? (when compared to arthrodesis)<br><br>Benefits (3):<br>{{c1::- Preserves motion<br>- Pseudoarthrosis not a concern<br>- Quicker return to activity}}<br><br>Risk (2):<br>{{c1::- Hardware failure<br>- Persistent neck pain}}",
+  "extra": "<img src=\"Screenshot 2023-01-02 at 5.34.32 PM.png\" width=\"424\">",
+  "claim": "The pros and cons of cervical disc arthroplasty are - Quicker return to activity.",
+  "object": "- Quicker return to activity",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "context_insufficient_for_specific_entity",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "context_insufficient_for_specific_entity"
+  ]
+ },
+ {
+  "stratum": "missing",
+  "guid": "{*wSBp6)5",
+  "cardQueue": "missing_entity",
+  "unitQueue": "missing_entity",
+  "claimIndex": 1,
+  "claimsInVersion": 3,
+  "text": "<div><b>Southwick Slip Angle Classification</b> for <b>slipped capital femoral epiphysis (SCFE)</b>:<br><br><div>Mild: &lt;{{c1::30}}\u00b0</div>\n<div>Moderate: {{c1::30-50}}\u00b0</div>\n<div>Severe: &gt;{{c1::50}}\u00b0</div></div>",
+  "extra": "<div>*This is based on the femoral epiphyseal-diaphysral angle difference</div>\n<div>*Can be measured on AP and frog lateral</div>\n<div>*There is also a grading system based on the % of slip: Grade 1 (0-33%), grade 2 (34-50%), grade 3 (&gt;50%)<br><br><img src=\"Screen Shot 2021-11-23 at 6.57.00 AM.p",
+  "claim": "Mild is <30\u00b0.",
+  "object": "30",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "anatomy_scoped",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "extractor_context_dependent",
+   "extractor_short_answer_only",
+   "short_label_insufficient_context",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "short_label_insufficient_context"
+  ]
+ },
+ {
+  "stratum": "missing",
+  "guid": "re^>_gEjip",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "missing_entity",
+  "claimIndex": 3,
+  "claimsInVersion": 4,
+  "text": "<div><b>Garden Classification</b></div>\n<div><br></div>\n<div>Type I: {{c1::Incomplete fx}}</div>\n<div>Type II: {{c1::Complete fx, non displaced}}</div>\n<div>Type III: {{c1::Complete fx, partially displaced}}</div>\n<div>Type IV: {{c1::Complete fx, fully displaced}}</div>",
+  "extra": "<img src=\"paste-783c7b696143deb09356ab397fac2425a25abcc9.jpg\">",
+  "claim": "In Garden Classification, Type III is Complete fx, partially displaced.",
+  "object": "Complete fx, partially displaced",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "classification_stage",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "entity_likeness_blocked",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "list_fragment"
+  ]
+ },
+ {
+  "stratum": "missing",
+  "guid": "t~y&m}V^to",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "missing_entity",
+  "claimIndex": 6,
+  "claimsInVersion": 7,
+  "text": "<div><b>Ideberg classification</b> for <b>scapula fractures</b>:<br><br></div>\n<div>1a - {{c1::anterior rim}}</div>\n<div>1b - {{c1::posterior rim}}</div>\n<div>2 - {{c1::glenoid fossa exiting inferior}}</div>\n<div>3 - {{c1::glenoid fossa exiting superior}}</div>\n<div>4 - {{c2::glenoid fossa exiting medially through body}}</div>\n<div>5 - {{c2::combination of types 2, 3, and 4}}</div>\n<div>6 - {{c2::severe comminution}}</div>",
+  "extra": "<img src=\"Screen Shot 2022-06-17 at 9.05.31 AM.png\">",
+  "claim": "5 - combination of types 2, 3, and 4.",
+  "object": "combination of types 2, 3, and 4",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "declarative_passthrough",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "entity_likeness_blocked",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "clause_like_answer",
+   "list_fragment"
+  ]
+ },
+ {
+  "stratum": "missing",
+  "guid": "35h4h`yqm",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "missing_entity",
+  "claimIndex": 1,
+  "claimsInVersion": 6,
+  "text": "<div><i>Six (6)</i> <u>orthopedic manifestations</u> of <b>arthrogryposis</b>:<br><br></div>\n<div>{{c1::<div>Upper extremity deformity</div>\n<div>Teratogenic hip subluxation and dislocation</div>\n<div>Knee contractures</div>\n<div>Foot conditions (clubfoot and vertical talus)</div>\n<div>Neuromuscular C-shaped scoliosis</div>\n<div>Fractures</div>}}<br></div>",
+  "extra": "",
+  "claim": "Six (6) orthopedic manifestations of arthrogryposis: Upper extremity deformity.",
+  "object": "Upper extremity deformity",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "declarative_passthrough",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "context_insufficient_for_specific_entity",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "context_insufficient_for_specific_entity"
+  ]
+ },
+ {
+  "stratum": "missing",
+  "guid": "VSS45)NIg",
+  "cardQueue": "missing_entity",
+  "unitQueue": "missing_entity",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "<div>For bracing to slow progression of AIS, the brace is\nrecommended for {{c1::16-23}} hours/day until skeletal maturity or surgical\nintervention is deemed necessary.</div>",
+  "extra": "At least 13 hours required to slow progression",
+  "claim": "For bracing to slow progression of AIS, the brace is recommended for 16-23 hours/day until skeletal maturity or surgical intervention is deemed necessary.",
+  "object": "16-23",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "declarative_passthrough",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "entity_likeness_blocked",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "measurement_or_location_fragment"
+  ]
+ },
+ {
+  "stratum": "missing",
+  "guid": "rt83EzeEi#",
+  "cardQueue": "missing_entity",
+  "unitQueue": "missing_entity",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "Why does an <b>APC pelvic injury</b> look <i>less severe</i> on <u>CT-imaging</u> than on <u>initial radiographs</u>?<div><br></div><div>{{c1::Curve of the CT gantry under the patient internally rotates the hemipelvis}}</div>",
+  "extra": "<img src=\"paste-e6ad986a478269709a287b10f027e0dff88a896b.jpg\">",
+  "claim": "Why does an APC pelvic injury look less severe on CT-imaging than on initial radiographs Curve of the CT gantry under the patient internally rotates the hemipelvis.",
+  "object": "Curve of the CT gantry under the patient internally rotates the hemipelvis",
+  "type": "imaging_point",
+  "predicate": "imaging_finding",
+  "method": "interrogative_fallback",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "entity_likeness_blocked",
+   "extractor_question_shaped",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "clause_like_answer"
+  ]
+ },
+ {
+  "stratum": "missing",
+  "guid": "xkde#$L:nW",
+  "cardQueue": "missing_entity",
+  "unitQueue": "missing_entity",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "If a knee has <u>complete ligament instability</u>, a <b>hinge implant </b>can be used. Current hinge designs utilize a {{c1::rotating platform}} to add some <i>increased freedom</i> at the <u>articular surface</u>.",
+  "extra": "Rotating platforms take away some of the stress translated to the implant-cement-bone interface, whereas a fixed hinge transmits excessive force to the bone-cement interface and causes early failure.<br><br><img src=\"paste-8d8aa50c7fcdfebff43f6556df28fedef95bdd3d.jpg\">",
+  "claim": "If a knee has complete ligament instability , a hinge implant can be used. Current hinge designs utilize a rotating platform to add some increased freedom at the articular surface .",
+  "object": "rotating platform",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "declarative_passthrough",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "context_insufficient_for_specific_entity",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "context_insufficient_for_specific_entity"
+  ]
+ },
+ {
+  "stratum": "missing",
+  "guid": "t9ak&98]9Z",
+  "cardQueue": "multi_claim_review",
+  "unitQueue": "missing_entity",
+  "claimIndex": 1,
+  "claimsInVersion": 6,
+  "text": "What <u>structures</u>&nbsp;(6) make up the <b>superior shoulder suspensory complex</b>?<div><br></div><div>{{c1::<div>1) Acromial process</div><div>2) Acromioclavicular joint</div><div>3) Coraclavicular ligaments</div><div>4) Coracoid process</div><div>5) Distal clavicle</div><div>6) Glenoid</div>}}<br></div>",
+  "extra": "<img src=\"cc ligaments v4_moved-1.png\">",
+  "claim": "Acromial process is one of the structures (6) that make up the superior shoulder suspensory complex.",
+  "object": "Acromial process",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_member_of",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "context_insufficient_for_specific_entity",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "context_insufficient_for_specific_entity"
+  ]
+ },
+ {
+  "stratum": "missing",
+  "guid": "P[#^~[TYxE",
+  "cardQueue": "missing_entity",
+  "unitQueue": "missing_entity",
+  "claimIndex": 2,
+  "claimsInVersion": 2,
+  "text": "<div><i>Two (2)</i> <u>physical exam findings</u> of a patient with an <b>olecranon fracture</b>:</div>\n<div><br>{{c1::<div>Palpable defect</div>\n<div>Inability to extend elbow</div>}}<br></div>",
+  "extra": "",
+  "claim": "Two (2) physical exam findings of a patient with an olecranon fracture: Inability to extend elbow.",
+  "object": "Inability to extend elbow",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "declarative_passthrough",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "context_insufficient_for_specific_entity",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "context_insufficient_for_specific_entity"
+  ]
+ },
+ {
+  "stratum": "missing",
+  "guid": "P%J$Eka,ga",
+  "cardQueue": "missing_entity",
+  "unitQueue": "missing_entity",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "What is <b>Hilgrenreiner's line</b>?<div><br></div><div>{{c1::Horizontal line through the triradiate cartilage bilaterally}}</div>",
+  "extra": "<img src=\"paste-d35261ef2c1db3f659e0246a3e9378b75ebf78ac.jpg\">",
+  "claim": "The Hilgrenreiner's line are Horizontal line through the triradiate cartilage bilaterally.",
+  "object": "Horizontal line through the triradiate cartilage bilaterally",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "qa_inversion_be",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "entity_likeness_blocked",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "clause_like_answer"
+  ]
+ },
+ {
+  "stratum": "missing",
+  "guid": "zHZl,>+OqV",
+  "cardQueue": "missing_entity",
+  "unitQueue": "missing_entity",
+  "claimIndex": 1,
+  "claimsInVersion": 1,
+  "text": "Multiple hereditary exostosis (MHE) is caused by mutations in {{c1::EXT1}}, {{c1::EXT2}}, and {{c1::EXT3}}, which are tumor suppressor genes.",
+  "extra": "",
+  "claim": "Multiple hereditary exostosis (MHE) is caused by mutations in EXT1, EXT2, and EXT3, which are tumor suppressor genes.",
+  "object": "EXT1",
+  "type": "fact",
+  "predicate": "teaches_fact",
+  "method": "declarative_passthrough",
+  "target": "unresolved",
+  "entities": [
+   {
+    "kind": "unresolved",
+    "role": "teaches_about",
+    "label": null
+   }
+  ],
+  "flags": [
+   "entity_likeness_blocked",
+   "extractor_compound_conjunction",
+   "extractor_non_atomic",
+   "unresolved_entity"
+  ],
+  "reasons": [
+   "placeholder_like"
+  ]
+ },
+ {
+  "stratum": "zero",
+  "guid": "MIq>=cS:Vr",
+  "cardQueue": "zero_claims",
+  "text": "What pathology is shown on the XR below?<br><br>{{c1::Calcific tendonitis}}<br><br><img src=\"Screen Shot 2022-09-05 at 8.56.58 AM.png\" width=\"412\">",
+  "extra": "",
+  "reasons": [
+   "image_deictic_claims_only"
+  ]
+ },
+ {
+  "stratum": "zero",
+  "guid": "PmP+I/eK_A",
+  "cardQueue": "zero_claims",
+  "text": "What angle is being drawn on the radiograph below?<br><br>{{c1::Pelvic Tilt}}<br><br><img src=\"Screen Shot 2022-08-22 at 11.09.12 AM.png\" width=\"240\">",
+  "extra": "<img src=\"Screen Shot 2022-08-22 at 11.09.50 AM.png\">",
+  "reasons": [
+   "image_deictic_claims_only"
+  ]
+ },
+ {
+  "stratum": "zero",
+  "guid": "ue7#<{9n2z",
+  "cardQueue": "zero_claims",
+  "text": "The ratio of measurement #4 and #5 in the radiograph below demonstrates the {{c1::lateral tibiofibular ratio}}.<br><br><img src=\"Screen Shot 2022-09-09 at 6.09.00 PM.png\" width=\"355\">",
+  "extra": "*The APTF ratio is a good predictor of syndesmotic reduction.",
+  "reasons": [
+   "image_deictic_claims_only"
+  ]
+ },
+ {
+  "stratum": "zero",
+  "guid": "EQ.*23JMs7",
+  "cardQueue": "zero_claims",
+  "text": "What is being measured in the radiograph below?<br><br>{{c1::Leg length discrepancy}}<br><br><img src=\"Screen Shot 2022-09-23 at 9.24.37 PM.png\" width=\"376\">",
+  "extra": "<img src=\"Screen Shot 2022-09-23 at 9.24.49 PM.png\">",
+  "reasons": [
+   "image_deictic_claims_only"
+  ]
+ },
+ {
+  "stratum": "zero",
+  "guid": "K,U:VbWn4w",
+  "cardQueue": "zero_claims",
+  "text": "Physical exam of a patient with a femoral neck fracture will reveal a leg that is shortened, {{c1::externally rotated}}, and {{c1::abducted}}.",
+  "extra": "<div><br></div>This position decreases intracapsular pressure<br><br><img src=\"paste-178f3858bb97c5f937ba3a639ab817b2bc77e083.jpg\">",
+  "reasons": [
+   "image_deictic_claims_only"
+  ]
+ },
+ {
+  "stratum": "zero",
+  "guid": "t5fQxWtsa(",
+  "cardQueue": "zero_claims",
+  "text": "Which pediatric condition does this x-ray show?<div><br></div><div>{{c1::Posteromedial bowing of tibia}}</div><div><br></div><div><img src=\"Screen Shot 2020-09-23 at 7.50.57 AM.png\"><br></div>",
+  "extra": "<img src=\"Screen Shot 2020-09-23 at 7.51.24 AM.png\">",
+  "reasons": [
+   "image_deictic_claims_only"
+  ]
+ },
+ {
+  "stratum": "zero",
+  "guid": "k4:U5m:HCm",
+  "cardQueue": "zero_claims",
+  "text": "Spondylosis features a defect/fracture of the {{c1::pars interarticularis}} without slip. Lateral spine x-ray will show {{c2::\"scottie dog\"}} sign.",
+  "extra": "<div>Common in pediatric patients and associated with hyperextension. Surgery uncommon.</div><div><br></div><img src=\"spondylolysis-vs-spondylolisthesis-in-lumbar-cause-of-back-pain-01_1__1.jpg\"><img src=\"e8e9e0898c4f462c607a92612687fb3a.jpg\"><div><img src=\"Screen Shot 2020-05-25 at 8.24.32 AM.png\">",
+  "reasons": [
+   "image_deictic_claims_only"
+  ]
+ },
+ {
+  "stratum": "zero",
+  "guid": "A0ce_x~s*Z",
+  "cardQueue": "zero_claims",
+  "text": "What angle is being drawn on the radiograph below?<br><br>{{c1::Sacral slope}}<br><br><img src=\"Screen Shot 2022-08-22 at 11.10.02 AM.png\" width=\"292\">",
+  "extra": "<img src=\"Screen Shot 2022-08-22 at 11.10.28 AM.png\">",
+  "reasons": [
+   "image_deictic_claims_only"
+  ]
+ },
+ {
+  "stratum": "zero",
+  "guid": "PIaiQR]v<R",
+  "cardQueue": "zero_claims",
+  "text": "Which procedure is shown in the images below?<br><br><div>{{c1::Posterior cervical foraminotomy}}</div><br><img src=\"Screen Shot 2021-11-21 at 7.56.10 PM.png\"><br><img src=\"Screen Shot 2021-11-21 at 7.56.15 PM.png\"><br>",
+  "extra": "<img src=\"Screen Shot 2021-11-21 at 9.05.08 PM.png\">",
+  "reasons": [
+   "image_deictic_claims_only"
+  ]
+ },
+ {
+  "stratum": "zero",
+  "guid": "OJTw&HAv.r",
+  "cardQueue": "zero_claims",
+  "text": "What <u>humeral sided radiographic finding</u> may be seen following a <b>shoulder dislocation</b>?<div><br></div><div>{{c1::Hill Sachs lesion}}</div>",
+  "extra": "<img src=\"paste-78585f5c57d539e45ab9ffeeca9170d8be9de29c.jpg\">",
+  "reasons": [
+   "image_deictic_claims_only"
+  ]
+ }
+]

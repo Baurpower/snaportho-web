@@ -1,0 +1,14 @@
+
+[functions.send-anki-feedback-emails]
+enabled = true
+# Backend-only function: the gateway rejects requests without a valid JWT.
+# Supabase Cron authorizes with the service-role key from vault; manual
+# invocation requires an anon/service key in the Authorization header.
+verify_jwt = true
+import_map = "./functions/send-anki-feedback-emails/deno.json"
+# Uncomment to specify a custom file path to the entrypoint.
+# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+entrypoint = "./functions/send-anki-feedback-emails/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/send-anki-feedback-emails/*.html" ]

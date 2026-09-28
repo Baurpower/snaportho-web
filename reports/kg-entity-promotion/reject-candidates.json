@@ -1,0 +1,1772 @@
+[
+  {
+    "proposal_id": "36cbd56c-59e6-4df3-8659-88ca33e3c21e",
+    "proposed_label": "Infection",
+    "disposition": "REJECT_TOO_GENERIC",
+    "reason": "generic_seed_no_canonical_target",
+    "claims": 7,
+    "cards": 7,
+    "example_claims": [
+      "Three absolute contraindications to THA includes Infection.",
+      "Infection.",
+      "For femoral shaft fractures , IM nailing is preferable to ORIF with plating due to decreased risk of infection, nonunion, and hardware failure."
+    ]
+  },
+  {
+    "proposal_id": "391fb3d5-1f6b-43e6-819b-0fc8ae71cd94",
+    "proposed_label": "Observation",
+    "disposition": "REJECT_TOO_GENERIC",
+    "reason": "generic_seed_no_canonical_target",
+    "claims": 5,
+    "cards": 5,
+    "example_claims": [
+      "First-line treatment for hip subluxation/dislocation in patients with arthrogryposis : Observation.",
+      "Three (3) treatment options for non-ossifying fibromas: Observation.",
+      "The treatment for hip dislocation in a patient with a myelomeningocele is Observation."
+    ]
+  },
+  {
+    "proposal_id": "2f961f07-666b-474c-89e5-ce892daa37b8",
+    "proposed_label": "Extend",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 4,
+    "cards": 4,
+    "example_claims": [
+      "The Biceps femoris: Short head action is Extend thigh, flex leg.",
+      "The Semitendinosus action is Extend thigh, flex leg.",
+      "The Biceps Femoris: Long Head action is Extend thigh, flex leg."
+    ]
+  },
+  {
+    "proposal_id": "80f6c71e-2023-40a5-852e-538fb05f9dde",
+    "proposed_label": "False!",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "boolean_answer_token",
+    "claims": 4,
+    "cards": 4,
+    "example_claims": [
+      "True or false: In stage III SLAC, the radiolunate joint is arthritic. False!",
+      "Gender is a risk factor for elder abuse . False.",
+      "True or false. Defects in the Gs-alpha protein follow Mendelian patterns of inheritance. False."
+    ]
+  },
+  {
+    "proposal_id": "85e4d8e6-0a4e-4026-82ed-69dad2db7eb2",
+    "proposed_label": "Fracture",
+    "disposition": "REJECT_TOO_GENERIC",
+    "reason": "generic_seed_no_canonical_target",
+    "claims": 4,
+    "cards": 3,
+    "example_claims": [
+      "In the following populations, sprain is more common than a fracture (Fracture) (Pediatrics).",
+      "In the following populations, sprain is more common than a fracture (Fracture) (Geriatric).",
+      "Differential diagnoses (4) for medial elbow pain: Fracture."
+    ]
+  },
+  {
+    "proposal_id": "04c2e85f-ec3a-4647-813a-d21247171957",
+    "proposed_label": "Anterior and posterior",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 3,
+    "cards": 3,
+    "example_claims": [
+      "3+ levels compression Anterior and posterior.",
+      "The compartments (2) of the upper arm are Anterior and Posterior.",
+      "Rotation of a TKA implant is determined by Anterior and posterior."
+    ]
+  },
+  {
+    "proposal_id": "888dbe90-5e16-4ff0-89c4-59333e86ac23",
+    "proposed_label": "Swelling",
+    "disposition": "REJECT_TOO_GENERIC",
+    "reason": "generic_seed_no_canonical_target",
+    "claims": 3,
+    "cards": 3,
+    "example_claims": [
+      "Six (6) things to inspect when performing a shoulder exam: Swelling.",
+      "What three (3) physical exam findings associated with Morel-Lavallee Lesions (MLL) Swelling.",
+      "Four cardinal signs of Kanavel for purulent tenosynovitis of the digits: Swelling."
+    ]
+  },
+  {
+    "proposal_id": "d44b9e5f-4499-4a86-8209-f83788c99ed4",
+    "proposed_label": "Instability",
+    "disposition": "REJECT_TOO_GENERIC",
+    "reason": "generic_seed_no_canonical_target",
+    "claims": 3,
+    "cards": 3,
+    "example_claims": [
+      "Five complications following ankle fracture: Instability.",
+      "The Five (5) complications following ORIF of a terrible triad injury of the elbow are Instability.",
+      "The most common complication following revision surgery of failed metal-on-metal hip replacements is instability."
+    ]
+  },
+  {
+    "proposal_id": "e989f549-60fd-4bda-83ce-d685f408a186",
+    "proposed_label": "high",
+    "disposition": "REJECT_TOO_GENERIC",
+    "reason": "generic_seed_no_canonical_target",
+    "claims": 3,
+    "cards": 3,
+    "example_claims": [
+      "Nutrient artery systems for bone circulation are high pressure, while periosteal systems are low pressure.",
+      "High energy impact results in wedge or short oblique fracture with significant comminution with fibular fracture at same level.",
+      "In the superficial zone of articular cartilage , there is a high concentration of collagen and low concentration of proteoglycans ."
+    ]
+  },
+  {
+    "proposal_id": "eaecba2c-05ce-4b81-831d-67c9ace290ac",
+    "proposed_label": "Extend leg",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 3,
+    "cards": 3,
+    "example_claims": [
+      "The Vastus Intermedius action is Extend leg.",
+      "The Vastus medialis action is Extend leg.",
+      "The Vastus Lateralis action is Extend leg."
+    ]
+  },
+  {
+    "proposal_id": "ee8873a1-2163-4499-8e07-d79a89207fb1",
+    "proposed_label": "True",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "boolean_answer_token",
+    "claims": 3,
+    "cards": 3,
+    "example_claims": [
+      "True or False is Intramembranous bone formation occurs without a cartilage model . True.",
+      "True or false. Lymphoma is widely sensitive to radiation. True.",
+      "P acnes infection after shoulder arthroplasty is not associated with fevers. True."
+    ]
+  },
+  {
+    "proposal_id": "eefbb133-662d-4d16-8865-a897ed10d130",
+    "proposed_label": "Normal",
+    "disposition": "REJECT_TOO_GENERIC",
+    "reason": "generic_seed_no_canonical_target",
+    "claims": 3,
+    "cards": 3,
+    "example_claims": [
+      "Intelligence is Normal.",
+      "The stages of posterior tibial tendon insufficiency (PTTI) are Normal (Stage I).",
+      "Classify the following synovial fluid samples: A: Normal B: Osteoarthritis C: Inflammatory D: Septic E: Hemarthrosis."
+    ]
+  },
+  {
+    "proposal_id": "f8020ba6-916e-4ce2-87f7-9b6393098f26",
+    "proposed_label": "Dorsiflex",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 3,
+    "cards": 3,
+    "example_claims": [
+      "The Extensor Digitorum Longus (EDL) action is Dorsiflex, extend toes.",
+      "The Peroneus tertius action is Dorsiflex, evert foot.",
+      "The Extensor Hallucis Longus action is Dorsiflex, extend great toe."
+    ]
+  },
+  {
+    "proposal_id": "633b74af-d276-4ff2-87b0-d6a3e777a26e",
+    "proposed_label": "AC and CC ligament disruption",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 4,
+    "cards": 1,
+    "example_claims": [
+      "In Rockwood classification for acromioclavicular injury, Type III is AC and CC ligament disruption.",
+      "In Rockwood classification for acromioclavicular injury, Type IV is AC and CC ligament disruption.",
+      "In Rockwood classification for acromioclavicular injury, Type V is AC and CC ligament disruption."
+    ]
+  },
+  {
+    "proposal_id": "27d88cfd-bfae-4289-8e65-8f24e0f7d368",
+    "proposed_label": "A2 and A4",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 2,
+    "cards": 2,
+    "example_claims": [
+      "The most critical to preventing bowstringing is A2 and A4.",
+      "The most crucial in preventing bowstringing of the fingers is A2 and A4."
+    ]
+  },
+  {
+    "proposal_id": "495a3d40-f668-4bf8-81cd-e69618b86c8e",
+    "proposed_label": "surgery",
+    "disposition": "REJECT_TOO_GENERIC",
+    "reason": "generic_seed_no_canonical_target",
+    "claims": 2,
+    "cards": 2,
+    "example_claims": [
+      "Progressive symptoms, neurological deficits, or high-grade slips = surgery.",
+      "The basic treatment strategy based on curve severity is Surgery (≥50°)."
+    ]
+  },
+  {
+    "proposal_id": "4e0bbd5b-f645-4121-8890-ff7156f49bb6",
+    "proposed_label": "Partial meniscectomy and saucerization",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 2,
+    "cards": 2,
+    "example_claims": [
+      "The most common treatment for a discoid meniscus is Partial meniscectomy and saucerization.",
+      "The operative treatment for discoid meniscus is Partial meniscectomy and saucerization."
+    ]
+  },
+  {
+    "proposal_id": "61b0d6d9-1150-46b3-8b8f-a81f985ed299",
+    "proposed_label": "Lower",
+    "disposition": "REJECT_TOO_GENERIC",
+    "reason": "generic_seed_no_canonical_target",
+    "claims": 2,
+    "cards": 2,
+    "example_claims": [
+      "Medial, trunk, leads to the following cords (Lower).",
+      "Klumpke Palsy = damage to lower trunk."
+    ]
+  },
+  {
+    "proposal_id": "86d06105-2f3a-43c7-8cae-96a03922346e",
+    "proposed_label": "upper",
+    "disposition": "REJECT_TOO_GENERIC",
+    "reason": "generic_seed_no_canonical_target",
+    "claims": 2,
+    "cards": 2,
+    "example_claims": [
+      "In terms of mechanism of injury , caudally forced shoulder predominantly affects the upper brachial plexus while forced abduction predominantly affects the lower roots .",
+      "Erb Palsy = damage to upper trunk."
+    ]
+  },
+  {
+    "proposal_id": "8f957d32-772b-4ce4-8902-67e8425a0c63",
+    "proposed_label": "Flex wrist",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 2,
+    "cards": 2,
+    "example_claims": [
+      "The Flexor Carpi Radialis action is Flex wrist, radial deviation.",
+      "The Palmaris longus (PL) action is Flex wrist."
+    ]
+  },
+  {
+    "proposal_id": "a23c04ab-1df3-4259-88f7-411f3e9b2da2",
+    "proposed_label": "Flex",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 2,
+    "cards": 2,
+    "example_claims": [
+      "Three steps of FABER test includes Flex.",
+      "The Lumbricals (Foot) action is Flex MTP joint, extend IP joint."
+    ]
+  },
+  {
+    "proposal_id": "a2db14b5-a991-47c9-8ef4-b2d6f0ceee81",
+    "proposed_label": "Adduct scapula",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 2,
+    "cards": 2,
+    "example_claims": [
+      "The Rhomboid minor action is Adduct scapula.",
+      "The Rhomboid major action is Adduct scapula."
+    ]
+  },
+  {
+    "proposal_id": "ad33bf2a-39cc-4c2e-8d66-9585dec3b639",
+    "proposed_label": "Plantarflexion and eversion",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 2,
+    "cards": 2,
+    "example_claims": [
+      "The function of the peroneus longus tendon is Plantarflexion and eversion.",
+      "The function of the peroneus brevis tendon is Plantarflexion and eversion."
+    ]
+  },
+  {
+    "proposal_id": "b3c91bb0-4cd7-43db-8734-e9d237d0fb8d",
+    "proposed_label": "2 cortical diameters",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 2,
+    "cards": 2,
+    "example_claims": [
+      "When revising a femoral stem with an associated cortical defect s/p THA, the femoral stem must bypass the most distal defect by 2 cortical diameters.",
+      "When treating a periprosthetic fracture , fixation must bypass the fracture site by 2 cortical diameters."
+    ]
+  },
+  {
+    "proposal_id": "b64b099b-66cb-46d5-8c5b-7bbeffcf84ca",
+    "proposed_label": "ECU and Anconeus",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 2,
+    "cards": 2,
+    "example_claims": [
+      "The interval for the Kocher approach of the forearm is ECU and Anconeus.",
+      "The Kocher approach is a lateral approach to the elbow between ECU and anconeus."
+    ]
+  },
+  {
+    "proposal_id": "b9243101-ff69-4713-8ff5-bbc29e0c03ce",
+    "proposed_label": "medial to lateral",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "location_descriptor_label",
+    "claims": 2,
+    "cards": 2,
+    "example_claims": [
+      "In general, the direction of fixation for Lisfranc injuries is medial to lateral.",
+      "In Medial to lateral."
+    ]
+  },
+  {
+    "proposal_id": "c81cccac-9f69-4767-8cae-d4f519e16ed4",
+    "proposed_label": "1 mm/day",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 2,
+    "cards": 2,
+    "example_claims": [
+      "Nerve regeneration occurs at 1 mm/day.",
+      "For distraction osteogenesis for leg length discrepancy (LLD) , what is the recommended distraction amount per day : 1 mm/day."
+    ]
+  },
+  {
+    "proposal_id": "ec7cdc90-9ae9-44c4-8c24-4170eacf6792",
+    "proposed_label": "Extend thumb",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 2,
+    "cards": 2,
+    "example_claims": [
+      "The Extensor pollicis longus (EPL) action is Extend thumb.",
+      "The Extensor Pollicis Brevis (EPB) action is Extend thumb."
+    ]
+  },
+  {
+    "proposal_id": "891c73ec-39a2-4edd-849c-16bdcecf55ad",
+    "proposed_label": "Stage I",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "bare_qualifier_missing_parent",
+    "claims": 2,
+    "cards": 1,
+    "example_claims": [
+      "The following treatments can be used for Radial styloidectomy.",
+      "The following treatments can be used for Stage I (PIN and AIN denervation)."
+    ]
+  },
+  {
+    "proposal_id": "01166f8c-89a0-427b-870d-e885b0b93ea0",
+    "proposed_label": "2 positive synovial culture",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "2 positive synovial culture."
+    ]
+  },
+  {
+    "proposal_id": "01a5cc28-b69b-414c-8bf8-a6f82ac66639",
+    "proposed_label": "Interosseous x4",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The nine (9) compartments of the foot are Interosseous x4."
+    ]
+  },
+  {
+    "proposal_id": "03764600-d862-45f6-8e6e-9490aba9b3ab",
+    "proposed_label": "Removing < 1 year from implantation",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The four (4) risk factors for refracture following ORIF of both bone forearm fracture are Removing < 1 year from implantation."
+    ]
+  },
+  {
+    "proposal_id": "0578a02a-dbb3-49a9-80f8-b5a6bc369ce5",
+    "proposed_label": "8 pulleys",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "8 pulleys pulleys are in the fingers."
+    ]
+  },
+  {
+    "proposal_id": "0a247ed7-94b9-484c-8aa5-38c448a1cc3d",
+    "proposed_label": "Capture at least 3 cortices",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The \"Rule of 3's\" (4) for syndesmotic fixation is Capture at least 3 cortices."
+    ]
+  },
+  {
+    "proposal_id": "0b8c4249-80d3-40f2-830c-f7e2ca86a857",
+    "proposed_label": "Anterior symphyseal plate and posterior stabilization",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Young-Burgess Classification is posterior stabilization."
+    ]
+  },
+  {
+    "proposal_id": "0ca4ba67-8713-4947-82fc-abfc4116cb70",
+    "proposed_label": "anterior to the bladder",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "location_descriptor_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Space of Retzius is anterior to the bladder."
+    ]
+  },
+  {
+    "proposal_id": "10538bac-71a1-4b70-88f4-3432c191fcea",
+    "proposed_label": "Nonmarginal syndesmophytes involving 4 contiguous vertebrae",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "How is Diffuse Idiopathic Skeletal Hyperostosis (DISH) defined Nonmarginal syndesmophytes involving 4 contiguous vertebrae."
+    ]
+  },
+  {
+    "proposal_id": "11ce7e6f-ac29-4cd7-885f-c7a9608e5ec7",
+    "proposed_label": "grade 1 in extremities",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The indications for the following treatments of chondrosarcomas are grade 1 in extremities (Intra-lesional curettage)."
+    ]
+  },
+  {
+    "proposal_id": "156a23a9-fae8-4e01-83a6-b4df17d5abcb",
+    "proposed_label": "and calcaneofibular",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "CFL injuries will result in drawer laxity in dorsiflexion ."
+    ]
+  },
+  {
+    "proposal_id": "19b7afcd-fe99-47f3-80c2-65ef12a91f87",
+    "proposed_label": "DIPJ and distal phalanx",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The zones of extensor tendon injuries are DIPJ (Zone 1)."
+    ]
+  },
+  {
+    "proposal_id": "1c5eff0d-e273-41f2-812c-3817d7d11986",
+    "proposed_label": "Posterior and superior AC ligaments",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The structure that should be preserved when performing a Mumford procedure is Posterior and superior AC ligaments."
+    ]
+  },
+  {
+    "proposal_id": "1f226b89-3011-432b-81ad-58e9c019817f",
+    "proposed_label": "Give vaccine and IVIG",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Major wound, unknown vaccine history : Give vaccine and IVIG."
+    ]
+  },
+  {
+    "proposal_id": "20820cef-390c-4578-853c-faf531080dd4",
+    "proposed_label": "Medial epicondyle - 17 years old",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The order of fusion of the pediatric elbow is 17 years old (Medial epicondyle)."
+    ]
+  },
+  {
+    "proposal_id": "2282cf6b-1e15-4ab3-81c9-7983e3820053",
+    "proposed_label": "48 hours",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "How long does spinal shock typically last 48 hours."
+    ]
+  },
+  {
+    "proposal_id": "22ac9e52-6217-4fe0-8529-4e63feec905c",
+    "proposed_label": "Inversion and plantarflexion",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The function of the posterior tibialis tendon is Inversion and plantarflexion."
+    ]
+  },
+  {
+    "proposal_id": "28291a53-1212-4d77-83b4-82c13247aff6",
+    "proposed_label": "Anterior to posterior screw",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "location_descriptor_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The trajectory that must a screw be placed for treatment of a Hoffa fragment is Anterior to posterior screw."
+    ]
+  },
+  {
+    "proposal_id": "2df073d9-ddcc-41f6-8470-66379b51f422",
+    "proposed_label": "Flex thigh",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Rectus Femoris action is Flex thigh, extend leg."
+    ]
+  },
+  {
+    "proposal_id": "2edc128d-bd40-41ef-81e1-501db1a7ca2d",
+    "proposed_label": "Abduct toes",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Dorsal interossei action is Abduct toes."
+    ]
+  },
+  {
+    "proposal_id": "324fd04b-a718-4d82-80f7-a1c67f73d215",
+    "proposed_label": "Rotate scapula",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Trapezius action is Rotate scapula."
+    ]
+  },
+  {
+    "proposal_id": "336746f6-f5eb-4a5f-86c0-dffcd0435809",
+    "proposed_label": "High and inside",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The starting point for an intramedullary screw to treat a 5th metatarsal fracture is \"High and inside\"."
+    ]
+  },
+  {
+    "proposal_id": "33f06e72-ba2b-419e-83c1-ec5293c8eb8d",
+    "proposed_label": "Partial tear",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "bare_qualifier_missing_parent",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Collateral ligament injuries are graded by Partial tear (Grade II)."
+    ]
+  },
+  {
+    "proposal_id": "380a1ec4-786a-4a02-873d-083d936eb1ee",
+    "proposed_label": "T-score b/w -1 and -2.5",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The definitions of osteopenia and osteoporosis are T-score b/w -1 and -2.5 (Osteopenia)."
+    ]
+  },
+  {
+    "proposal_id": "38751dfa-e1b5-4d5e-8984-050d29b565a2",
+    "proposed_label": "Immobilization for 4 weeks",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The immediate postoperative protocol following total elbow arthroplasty is Immobilization for 4 weeks."
+    ]
+  },
+  {
+    "proposal_id": "38fa30c7-8a49-4e25-8ee7-4cedefdca331",
+    "proposed_label": "Dorsal foot & 1st web space",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "L5 - Dorsal foot & 1st web space."
+    ]
+  },
+  {
+    "proposal_id": "396a4792-db87-48d0-88dc-8b153a01f0ca",
+    "proposed_label": "Plantarflexion and internal rotation",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The reduction maneuver for a Tillaux fragment is Plantarflexion and internal rotation."
+    ]
+  },
+  {
+    "proposal_id": "397a0f72-703d-49bd-8a53-8bc0fa11d363",
+    "proposed_label": "Flexes 4 lateral toes",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Flexor Digitorum Brevis action is Flexes 4 lateral toes."
+    ]
+  },
+  {
+    "proposal_id": "39b1b508-5d90-436b-82df-83159a9eff45",
+    "proposed_label": "EDC and EIP",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The contents of the extensor tendon compartments of the wrist are EDM 6: ECU (EIP 5)."
+    ]
+  },
+  {
+    "proposal_id": "3eadf41e-bc4f-4b78-8979-17bbe2fcf12f",
+    "proposed_label": "EDC and ECRB",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The proximal and distal intervals for the Dorsal Thompson approach are EDC and ECRB (Proximally)."
+    ]
+  },
+  {
+    "proposal_id": "423b54bc-0106-4b43-8d6d-a78cad3f56db",
+    "proposed_label": "Complete tear",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "bare_qualifier_missing_parent",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Collateral ligament injuries are graded by Complete tear (Grade III)."
+    ]
+  },
+  {
+    "proposal_id": "44a8e11a-d020-436d-80c9-4370fbe70c61",
+    "proposed_label": "Gastrocnemius; Soleus; Plantaris",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Superficial posterior (3) ; Gastrocnemius; Soleus; Plantaris."
+    ]
+  },
+  {
+    "proposal_id": "45410824-af25-40de-8a27-580d2521ea07",
+    "proposed_label": "30 to 50 deg from horizontal",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "In Pauwels Classification, Type II is 30 to 50 deg from horizontal."
+    ]
+  },
+  {
+    "proposal_id": "45e6868b-2029-4cca-8618-100d71a61191",
+    "proposed_label": "Medial leg & ankle",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "L4 - Medial leg & ankle."
+    ]
+  },
+  {
+    "proposal_id": "47e119f7-0802-4523-821a-7a22a8f686f5",
+    "proposed_label": "Abducted and externally rotated",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The lower extremity will appear Abducted and externally rotated with an anterior hip dislocation."
+    ]
+  },
+  {
+    "proposal_id": "4b01a49c-792d-4380-8390-6b5cddaf7dc9",
+    "proposed_label": "Pronate forearm",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Pronator Quadratus action is Pronate forearm."
+    ]
+  },
+  {
+    "proposal_id": "4b4c761f-b7a6-4c37-8338-9e33d4bc62d4",
+    "proposed_label": "Volar interosseous x3",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The compartments (5) of the hand are Volar interosseous x3."
+    ]
+  },
+  {
+    "proposal_id": "4b5db5d2-b58a-4dcb-8052-32035c01373c",
+    "proposed_label": "junction of the meso- and meta-acromion",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The most common location for an os acromiale is the junction of the meso- and meta-acromion."
+    ]
+  },
+  {
+    "proposal_id": "4b8ceb4b-a6ac-4428-8930-d266a8fd714e",
+    "proposed_label": "Flex DIPJ",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Flexor Digitorum Profundus (FDP) action is Flex DIPJ."
+    ]
+  },
+  {
+    "proposal_id": "4dc22ccc-e243-4ce2-8283-c81f876599e6",
+    "proposed_label": "Stage III",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "bare_qualifier_missing_parent",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The following treatments can be used for Stage III (Wrist fusion)."
+    ]
+  },
+  {
+    "proposal_id": "4e212c98-069e-4c47-8b65-0ca4f01c729f",
+    "proposed_label": "Body and inferior pubic ramus",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Adductor brevis originates from Body and inferior pubic ramus."
+    ]
+  },
+  {
+    "proposal_id": "4e38122e-336c-4daa-8677-a67e36cc7dff",
+    "proposed_label": "Minimum of 13 hours/day",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Minimum of 13 hours/day hours a day must the brace actually be worn to prevent progression of scoliosis."
+    ]
+  },
+  {
+    "proposal_id": "550c163e-9efc-4296-8c72-aaec3424623c",
+    "proposed_label": "Olecranon - 15 years old",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The order of fusion of the pediatric elbow is 15 years old (Olecranon)."
+    ]
+  },
+  {
+    "proposal_id": "591cff90-bc2b-4a8a-8bd1-5385b276a094",
+    "proposed_label": "Curretage and bone grafting",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Patient presents with a unicameral bone cyst (UBC) that has been treated nonoperatively for one year . He remains symptomatic . Next step Curretage and bone grafting."
+    ]
+  },
+  {
+    "proposal_id": "5df50cea-027a-416a-8fc9-58981e4b91a1",
+    "proposed_label": "Penicillin G and clindamycin; Hyperbaric O2",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The 1st line antibiotics of choice to treat gas gangrene are What additional adjunct treatment can also be used? Penicillin G and clindamycin."
+    ]
+  },
+  {
+    "proposal_id": "5ecc052b-5448-45f3-81f0-6afd15f23bb3",
+    "proposed_label": "Displacement > 5 mm",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The operative indications (5) for medial epicondyle fractures are Displacement > 5 mm."
+    ]
+  },
+  {
+    "proposal_id": "5ef82888-31a1-4035-8ddc-d87dcbe198f0",
+    "proposed_label": "Ring & pink finger",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "C8 - Ring & pink finger."
+    ]
+  },
+  {
+    "proposal_id": "624f53e1-6718-42d1-8be2-14422ec90946",
+    "proposed_label": "1 cm anterior to the PCL",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The landmarks (3) that may be used for placement of the tibial tunnel during ACL reconstruction are 1 cm anterior to the PCL."
+    ]
+  },
+  {
+    "proposal_id": "6323928a-b202-4e24-8fdf-75bc55f69a76",
+    "proposed_label": "Lateral & plantar foot",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "S1 - Lateral & plantar foot."
+    ]
+  },
+  {
+    "proposal_id": "64403f11-63c1-416f-8ab3-fe504c68333a",
+    "proposed_label": "Flex PIPJ",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Flexor Digitorum Superficialis action is Flex PIPJ."
+    ]
+  },
+  {
+    "proposal_id": "6dd6c75b-5352-405f-8417-77d2b1849708",
+    "proposed_label": "Meyers and McKeever Classification",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The classification for tibial spine fractures is Meyers and McKeever Classification."
+    ]
+  },
+  {
+    "proposal_id": "6ea204fb-2a49-4113-8b40-64e9ce4df421",
+    "proposed_label": "Botox; Baclofen",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Two (2) medications that can help with spasticity in patients with Cerebral Palsy : ; Botox; Baclofen."
+    ]
+  },
+  {
+    "proposal_id": "6f2f0ea8-2597-4c5d-86df-621571e84937",
+    "proposed_label": "Depress ribs",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Serratus posterior inferior action is Depress ribs."
+    ]
+  },
+  {
+    "proposal_id": "6fae91b4-b300-45ec-8c39-a3976c7933b2",
+    "proposed_label": "Abduct thumb",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Abductor pollicis longus (APL) action is Abduct thumb, extend thumb."
+    ]
+  },
+  {
+    "proposal_id": "70626860-ad10-4a17-849f-d22bb8de9c90",
+    "proposed_label": "ED and ECRB",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The interval for the Kaplan approach is ED and ECRB."
+    ]
+  },
+  {
+    "proposal_id": "7131a02b-8b58-4f18-8704-0463d47394ed",
+    "proposed_label": "Fracture and dislocation of thumb",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The you concerned for if a patient falls with outstretched hand on ski pole is Fracture and dislocation of thumb."
+    ]
+  },
+  {
+    "proposal_id": "72690acb-b671-4762-8292-e7ccb07dded4",
+    "proposed_label": "Dorsal interosseous x4",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The compartments (5) of the hand are Dorsal interosseous x4."
+    ]
+  },
+  {
+    "proposal_id": "72b23809-fea2-424f-8bd8-b4d9295511ce",
+    "proposed_label": "Anterior cervical diskectomy/corpectomy and fusion",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Five (5) possible strategies for surgical management in cervical myelopathy: Anterior cervical diskectomy/corpectomy and fusion."
+    ]
+  },
+  {
+    "proposal_id": "755b1c55-dd8a-4dff-84c0-78703c31f82b",
+    "proposed_label": "Rotate during cocking",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The role of the scapula during an overhead throwing motion is Rotate during cocking."
+    ]
+  },
+  {
+    "proposal_id": "757eeb93-f266-44a4-8848-a3186636ff38",
+    "proposed_label": "Lateral 4 MTP",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "-Transverse: Lateral 4 MTP."
+    ]
+  },
+  {
+    "proposal_id": "7590c1cd-22d3-468c-84d1-501cd4b16f33",
+    "proposed_label": "Flex hip",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Psoas major action is Flex hip."
+    ]
+  },
+  {
+    "proposal_id": "76749c86-dad3-4c72-8bde-905f879ab323",
+    "proposed_label": "Olecranon - 9 years old",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The order of ossification of the pediatric elbow is 9 years old (Olecranon)."
+    ]
+  },
+  {
+    "proposal_id": "77ed3fa9-7612-46e9-85dd-6277df976001",
+    "proposed_label": "APL and APB",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Abduction of the thumb is controlled by APL and APB."
+    ]
+  },
+  {
+    "proposal_id": "79e804e8-b9c2-4e65-86e0-788a3e85e23d",
+    "proposed_label": "61 years old",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Life expectancy is ~61 years old."
+    ]
+  },
+  {
+    "proposal_id": "7e789fa1-94a4-400b-8053-c50a8147b187",
+    "proposed_label": "Inadequate mobilization; Inadequate blood supply",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "(2), , causes an atrophic nonunion."
+    ]
+  },
+  {
+    "proposal_id": "80036336-361e-4bea-8824-faaf9503b63a",
+    "proposed_label": "Proximal to Blumensaat's line",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "location_descriptor_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The location of Schottle's point on a lateral x-ray is Proximal to Blumensaat's line."
+    ]
+  },
+  {
+    "proposal_id": "81e42a6d-4d97-4ce6-8cf8-7d4feb7d5c91",
+    "proposed_label": "Flexion and adduction",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "After a remplissage procedure, patients should not perform Flexion and adduction."
+    ]
+  },
+  {
+    "proposal_id": "839dc173-edec-4efb-8158-1e543cbbe31e",
+    "proposed_label": "Clavicular and Sternocostal",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The two predominate heads of the pectoralis major are Clavicular and Sternocostal."
+    ]
+  },
+  {
+    "proposal_id": "83e51a00-b668-4e47-811f-163a6e705d3a",
+    "proposed_label": "MCL/LCL and PCL",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Varus/valgus laxity at the following degrees of flexion indicates injury to 0° = MCL/LCL and PCL."
+    ]
+  },
+  {
+    "proposal_id": "87112311-4a89-4587-8ca8-7dfb7bf782e4",
+    "proposed_label": "15 blade incision in LCL",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "15 blade incision in LCL."
+    ]
+  },
+  {
+    "proposal_id": "894f620e-754b-45a8-872e-b977501c7fc1",
+    "proposed_label": "Radioulnar ligaments - volar and dorsal",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The primary stabilizers are volar and dorsal (Radioulnar ligaments)."
+    ]
+  },
+  {
+    "proposal_id": "8bd2b7eb-ff48-4a14-8e28-cefe9ef1a47f",
+    "proposed_label": "Flex thumb",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Flexor Pollicis Longus (FPL) action is Flex thumb."
+    ]
+  },
+  {
+    "proposal_id": "8d50a3aa-47bc-44e6-8250-95eafc9fbd2f",
+    "proposed_label": "IV antibiotic coverage for 7 days",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "GSW to the abdomen causes bowel perforation and a retained bullet in the vertebral body . Patient has no neurological deficits. Next step IV antibiotic coverage for 7 days."
+    ]
+  },
+  {
+    "proposal_id": "8e3b3070-d4bc-4b28-834c-e4f2f2a2994b",
+    "proposed_label": "Anterior & medial thigh",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "L3 - Anterior & medial thigh."
+    ]
+  },
+  {
+    "proposal_id": "9047a319-0d25-42b5-8180-ec93ba341442",
+    "proposed_label": "200 cc/lumbar level",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "In spine surgery , the general rule of thumb of estimated blood loss per lumbar level is 200 cc/lumbar level."
+    ]
+  },
+  {
+    "proposal_id": "978c2f38-8dd0-45a6-82e1-d393a8b67f75",
+    "proposed_label": "Stage II",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "bare_qualifier_missing_parent",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The following treatments can be used for Stage II (Proximal row carpectomy)."
+    ]
+  },
+  {
+    "proposal_id": "97feace7-f189-4353-8bce-3ad2e8a0a31c",
+    "proposed_label": "Arthroscopic Bankart repair; Remplissage procedure",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "First-line surgical treatment for patient with anterior shoulder dislocation causing chronic Bankart tear and engaging Hill-Sachs lesion . Arthroscopic Bankart repair; Remplissage procedure."
+    ]
+  },
+  {
+    "proposal_id": "98371ba3-9575-4ddf-851c-29c8e0e6b790",
+    "proposed_label": "Adduct toes",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Plantar interossei action is Adduct toes."
+    ]
+  },
+  {
+    "proposal_id": "99ced40a-4c07-46dd-86b6-4693cc1b9ad1",
+    "proposed_label": "Elevate ribs",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Serratus posterior superior action is Elevate ribs."
+    ]
+  },
+  {
+    "proposal_id": "9b0da6af-319a-46de-8bf1-d15ef7525085",
+    "proposed_label": "APL and EPB",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The borders of the anatomical snuffbox are APL and EPB (Radial border)."
+    ]
+  },
+  {
+    "proposal_id": "9ec70046-f29f-41bb-8ec7-4a80c72b89da",
+    "proposed_label": "Congenital fusion of 2 tarsal bones",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The tarsal coalition is Congenital fusion of 2 tarsal bones."
+    ]
+  },
+  {
+    "proposal_id": "9f9b5ece-3811-4836-8718-659a991bd873",
+    "proposed_label": "Plantar flex lateral 4 toes",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Flexor digitorum longus (FDL) action is Plantar flex lateral 4 toes."
+    ]
+  },
+  {
+    "proposal_id": "a31a5e5f-c00c-4440-803d-fbf1282191ca",
+    "proposed_label": "Abduction and internal rotation",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "On physical exam, the typically lost for patients with Legg-Calve-Perthes is Abduction and internal rotation."
+    ]
+  },
+  {
+    "proposal_id": "a641094e-72af-4306-8dca-845fdcd890b7",
+    "proposed_label": "Push-off and forced great toe dorsiflexion",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "What movements exacerbate pain in hallux rigidus Push-off and forced great toe dorsiflexion."
+    ]
+  },
+  {
+    "proposal_id": "aaa21b85-96d6-4e1f-86e2-184cd7545e5a",
+    "proposed_label": "Volar and dorsal radioulnar ligaments",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The primary stabilizers (2) of the DRUJ are Volar and dorsal radioulnar ligaments."
+    ]
+  },
+  {
+    "proposal_id": "ac501a65-4894-4b2b-820c-2e70fbba5bed",
+    "proposed_label": "Hardware failure; - Persistent neck pain",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The pros and cons of cervical disc arthroplasty are (when compared to arthrodesis) Risk (2): - Hardware failure."
+    ]
+  },
+  {
+    "proposal_id": "afa33e69-3482-4322-8464-f03b86be6a3c",
+    "proposed_label": "Pain",
+    "disposition": "REJECT_TOO_GENERIC",
+    "reason": "generic_seed_no_canonical_target",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Image any extremity with Pain."
+    ]
+  },
+  {
+    "proposal_id": "b22404ae-05fb-4f3b-84c1-2eb72155d0ba",
+    "proposed_label": "Females > 50 y/o",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The two (2) patient populations in which trigger finger is most common are Females > 50 y/o."
+    ]
+  },
+  {
+    "proposal_id": "b635d4c2-38d9-4cfc-8d12-60150b83ca36",
+    "proposed_label": "ABduct",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Three steps of FABER test includes ABduct."
+    ]
+  },
+  {
+    "proposal_id": "b8a0c327-2b27-495f-8df7-272497a5ae42",
+    "proposed_label": "Central x3",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The nine (9) compartments of the foot are Central x3."
+    ]
+  },
+  {
+    "proposal_id": "b9dde9be-31cf-411e-869c-e6a1eb8edfeb",
+    "proposed_label": "Lateral epicondyle - 12 years old",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The order of fusion of the pediatric elbow is 12 years old (Lateral epicondyle)."
+    ]
+  },
+  {
+    "proposal_id": "bf439a31-cb98-4df6-8dd9-f2e766819078",
+    "proposed_label": "Radial head - 15 years old",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The order of fusion of the pediatric elbow is 15 years old (Radial head)."
+    ]
+  },
+  {
+    "proposal_id": "bf88245f-fa57-4cff-8a84-8c4e531fc0f0",
+    "proposed_label": "Dorsiflexion and inversion",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The function of the tibialis anterior tendon is Dorsiflexion and inversion."
+    ]
+  },
+  {
+    "proposal_id": "c380cef9-daaf-4415-89bf-6b2173d619d4",
+    "proposed_label": "Supra-acetabular and iliac crest",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The two (2) most common pin site locations for placing a pelvic external fixator are Supra-acetabular and iliac crest."
+    ]
+  },
+  {
+    "proposal_id": "c56c0b24-e5e4-4727-8ef7-9596f32ad951",
+    "proposed_label": "Trochanteric and Piriformis fossa",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The two most common starting points for an antegrade IMN are Trochanteric and Piriformis fossa."
+    ]
+  },
+  {
+    "proposal_id": "c5ac423d-70d1-46b2-8707-f897a688ef31",
+    "proposed_label": "Valgus and procurvatum",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The most common malunion deformity following use of an IMN for a proximal tibial fracture is Valgus and procurvatum."
+    ]
+  },
+  {
+    "proposal_id": "c70f7eb0-8cc5-4568-8def-4fe0d2d39e29",
+    "proposed_label": "Type II",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "bare_qualifier_missing_parent",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The most common is Type II."
+    ]
+  },
+  {
+    "proposal_id": "c7f564f8-b223-4e58-8594-2604d4ec75b1",
+    "proposed_label": "Chronic pain and hypersensitivity",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Two (2) complications of foot compartment syndrome are Chronic pain and hypersensitivity."
+    ]
+  },
+  {
+    "proposal_id": "c9012511-e2f3-4894-8a0d-aab980bd2e12",
+    "proposed_label": "Elevate scapula",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Levator Scapulae action is Elevate scapula."
+    ]
+  },
+  {
+    "proposal_id": "c9dcecca-07d3-4a75-8df7-1fd0a2f4c805",
+    "proposed_label": "Peroneus longus; Peroneus brevis",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Lateral (2) ; Peroneus longus; Peroneus brevis."
+    ]
+  },
+  {
+    "proposal_id": "cb09c6fd-7751-42bd-8f04-5b9d14eabd81",
+    "proposed_label": "Type I",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "bare_qualifier_missing_parent",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The bone is Type I."
+    ]
+  },
+  {
+    "proposal_id": "cc286f40-fb35-4052-8ddf-51d9a892e3ed",
+    "proposed_label": "Protein and glucose",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The laboratory tests (4) that should be ordered on synovial fluid samples are Protein and glucose."
+    ]
+  },
+  {
+    "proposal_id": "cf6bdd4e-a6bc-4c36-883c-70f39d7696cb",
+    "proposed_label": "False",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "boolean_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "True or false. Measuring compartment pressures is indicated for neonatal forearm compartment syndrome . False."
+    ]
+  },
+  {
+    "proposal_id": "cff28773-acc7-4749-892f-401c65761390",
+    "proposed_label": "Branches to 3 common digital arteries",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The branches of the deep arch of the hand (radial to ulnar) are Branches to 3 common digital arteries."
+    ]
+  },
+  {
+    "proposal_id": "d4c59a6d-0cd7-4c43-8eac-cf71e7875bee",
+    "proposed_label": "Proximal to distal",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "location_descriptor_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "In general, the direction of fixation for Lisfranc injuries is Proximal to distal."
+    ]
+  },
+  {
+    "proposal_id": "d5690116-82b9-4136-83b6-7faacb9458e6",
+    "proposed_label": "Evert foot",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Peroneus brevis action is Evert foot."
+    ]
+  },
+  {
+    "proposal_id": "d6eb058f-bdfe-4bf7-88b4-a963e64e7e62",
+    "proposed_label": "Flexion and extension films",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "If a cervical kyphotic deformity is rigid or flexible can be determined using Flexion and extension films."
+    ]
+  },
+  {
+    "proposal_id": "d6ef76f2-7ad5-49c1-88c7-c97fa8d9cb31",
+    "proposed_label": "< 30 deg from horizontal",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "In Pauwels Classification, Type I is < 30 deg from horizontal."
+    ]
+  },
+  {
+    "proposal_id": "d71efdc7-a1cd-4391-8152-d475bb58ef1d",
+    "proposed_label": "Coronoid - 12 years old",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The order of fusion of the pediatric elbow is 12 years old (Coronoid)."
+    ]
+  },
+  {
+    "proposal_id": "d73dc107-fb26-4ac4-8da7-6b3e0d9963bf",
+    "proposed_label": "Atlantoaxial instability; Cervical myelopathy; Progressive scoliosis",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Three (3) indications to treat the cervical spine of patients with diastrophic dysplasia : Atlantoaxial instability; Cervical myelopathy; Progressive scoliosis."
+    ]
+  },
+  {
+    "proposal_id": "d79b364d-5b06-41d4-8f8e-c13ac9720fb6",
+    "proposed_label": "Type IV",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "bare_qualifier_missing_parent",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The said to be a \"knee dislocation\" equivalent is Type IV."
+    ]
+  },
+  {
+    "proposal_id": "d80c68d5-bb8b-4399-869b-faf9cd35c82a",
+    "proposed_label": "Type 1",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "bare_qualifier_missing_parent",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Type 1 is one of the type of collagen that makes up the annulus fibrosis."
+    ]
+  },
+  {
+    "proposal_id": "d9fddf45-054d-4809-8c27-f10525223d71",
+    "proposed_label": "Deformity",
+    "disposition": "REJECT_TOO_GENERIC",
+    "reason": "generic_seed_no_canonical_target",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Image any extremity with Deformity."
+    ]
+  },
+  {
+    "proposal_id": "db172197-03dd-47dc-8adb-6e9d75823105",
+    "proposed_label": "Tendon and ligament insufficiency",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Rheumatoid patients is Tendon and ligament insufficiency."
+    ]
+  },
+  {
+    "proposal_id": "dca1b308-49d5-4862-8bc9-898d1a20c8eb",
+    "proposed_label": "Middle and ring fingers",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Finger syndactyly most commonly occurs between Middle and ring fingers."
+    ]
+  },
+  {
+    "proposal_id": "e15d18c0-d14b-4a80-8bf6-5e6614cd1504",
+    "proposed_label": "ORIF and revision of femoral implant",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The Treatement is ORIF and revision of femoral implant."
+    ]
+  },
+  {
+    "proposal_id": "e8495fe9-3794-4968-8d9b-f9ab761c4c03",
+    "proposed_label": "Calcaneocuboid and talonavicular joints",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The joints referred to as the Chopart's joints are Calcaneocuboid and talonavicular joints."
+    ]
+  },
+  {
+    "proposal_id": "eb81116b-cf83-48dd-8653-642fb1220fc1",
+    "proposed_label": "EIP and index branch of EDC",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The two extensor tendons of the index finger are EIP and index branch of EDC."
+    ]
+  },
+  {
+    "proposal_id": "eebd8119-0d4c-4358-80ac-3bd89b2df3f0",
+    "proposed_label": "Plantarflexion and pronation",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Displacement of the abductor hallucis leads to Plantarflexion and pronation."
+    ]
+  },
+  {
+    "proposal_id": "eed8eb60-e1e4-4e0a-8ecb-0f0c134840c7",
+    "proposed_label": "Internally rotating",
+    "disposition": "REJECT_NON_ENTITY",
+    "reason": "verb_fragment_answer_token",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "In addition to a binder or sheet , the else that may help to reduce intrapelvic volume is Internally rotating."
+    ]
+  },
+  {
+    "proposal_id": "eff5195c-4d8b-479d-877e-fb9b37d09ac1",
+    "proposed_label": "Type 2",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "bare_qualifier_missing_parent",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Type 2 is one of the type of collagen that makes up the nucleus pulposus."
+    ]
+  },
+  {
+    "proposal_id": "f2884c86-d2e9-4018-83c4-a4daab844268",
+    "proposed_label": "Plantarflexion and hindfoot inversion",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Zone 1: Plantarflexion and hindfoot inversion."
+    ]
+  },
+  {
+    "proposal_id": "f32b6f19-1787-43c4-8d09-f920806f42de",
+    "proposed_label": "Medial and lateral plantar arteries",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The terminal branches of the posterior tibial artery are Medial and lateral plantar arteries."
+    ]
+  },
+  {
+    "proposal_id": "f60ff6c4-9a74-450b-8427-0ae4105ee42d",
+    "proposed_label": "Rest and PT",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "First line treatment for Little league elbow : Rest and PT."
+    ]
+  },
+  {
+    "proposal_id": "f93b9495-6b85-4d20-8d8b-d47af9d1441c",
+    "proposed_label": "Laminoplasty/Laminectomy and fusion",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "composite_conjunction_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "3+ levels compression Laminoplasty/Laminectomy and fusion."
+    ]
+  },
+  {
+    "proposal_id": "f9c970ae-faff-4fa8-80ee-74f11e464d3a",
+    "proposed_label": "Radial head - 3 years old",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The order of ossification of the pediatric elbow is 3 years old (Radial head)."
+    ]
+  },
+  {
+    "proposal_id": "fcefe950-714a-4a9a-830b-cb443b229618",
+    "proposed_label": "Scapholunate angle > 70 degrees",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "Lateral is Scapholunate angle > 70 degrees."
+    ]
+  },
+  {
+    "proposal_id": "fd35eefe-2bd5-4c20-84c1-9c3021eb3450",
+    "proposed_label": "Distal to FDS insertion",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "location_descriptor_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "The zones of flexor tendon injuries are Distal to FDS insertion (Zone 1)."
+    ]
+  },
+  {
+    "proposal_id": "ff9f904f-b0e1-4672-8643-2f26776bea5b",
+    "proposed_label": "2 part displaced",
+    "disposition": "REJECT_CONTEXT_DEPENDENT",
+    "reason": "count_or_clause_shaped_label",
+    "claims": 1,
+    "cards": 1,
+    "example_claims": [
+      "1B: 2 part displaced."
+    ]
+  }
+]

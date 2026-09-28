@@ -1,0 +1,19 @@
+import type { PageAnkiReview } from '../shared/page-anki-review.js';
+
+export function renderPageAnkiReview(review: PageAnkiReview | null, status: 'idle' | 'loading' | 'ready' | 'error', escapeHtml: (value: string) => string, error: string | null = null) {
+  if (status === 'idle') return '';
+  if (status === 'loading') return `<section data-page-anki-review="loading" style="padding:14px;border-radius:16px;background:#f0fdfa;border:1px solid #99f6e4;display:grid;gap:7px;"><p style="margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#0f766e;font-weight:800;">Anki · matching this page</p><p style="margin:0;color:#475569;font-size:13px;">Checking your published SnapOrtho deck…</p></section>`;
+  if (status === 'error') return `<section data-page-anki-review="error" style="padding:12px 14px;border-radius:16px;background:#fff7ed;border:1px solid #fed7aa;"><p style="margin:0;color:#9a3412;font-size:13px;">${escapeHtml(error ?? 'Could not load page-matched Anki cards.')}</p></section>`;
+  if (!review?.cards.length) return `<section data-page-anki-review="empty" style="padding:14px;border-radius:16px;background:#f8fafc;border:1px solid #cbd5e1;display:grid;gap:6px;"><p style="margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#0f766e;font-weight:800;">Anki · this page</p><p style="margin:0;color:#475569;font-size:13px;line-height:1.45;">No cards in the current published deck link directly to this page.</p></section>`;
+  const cards = review.cards.map((card, index) => `<article style="padding:14px;border-radius:14px;background:white;border:1px solid #ded7c8;display:grid;gap:10px;"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;"><span style="font-size:11px;font-weight:800;color:#0f766e;text-transform:uppercase;letter-spacing:.08em;">Card ${index + 1} of ${review.cards.length}</span><button type="button" data-page-card-open="1" data-note-guid="${escapeHtml(card.noteGuid)}" data-card-ordinal="${card.cardOrdinal}" style="border:1px solid #0f766e;border-radius:999px;background:white;color:#0f766e;padding:5px 9px;font-weight:700;font-size:11px;cursor:pointer;">Open in Anki</button></div><p style="margin:0;color:#172033;line-height:1.55;font-weight:650;white-space:pre-wrap;">${escapeHtml(card.prompt)}</p><details style="border-top:1px solid #e7e1d5;padding-top:9px;"><summary style="cursor:pointer;color:#0f766e;font-weight:800;font-size:13px;">Reveal answer</summary><div style="display:grid;gap:8px;padding-top:9px;"><p style="margin:0;color:#172033;line-height:1.55;white-space:pre-wrap;">${escapeHtml(card.answer)}</p>${card.extra ? `<p style="margin:0;padding:9px;border-radius:10px;background:#f8fafc;color:#475569;line-height:1.5;font-size:12px;white-space:pre-wrap;">${escapeHtml(card.extra)}</p>` : ''}</div></details></article>`).join('');
+  return `<section data-page-anki-review="cards" style="padding:14px;border-radius:18px;background:#f0fdfa;border:1px solid #99f6e4;display:grid;gap:11px;"><div style="display:grid;gap:4px;"><p style="margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#0f766e;font-weight:800;">Anki · ${review.cards.length} card${review.cards.length === 1 ? '' : 's'} for this page</p><p style="margin:0;color:#475569;font-size:12px;">Review here, then open the exact card in Anki if you want scheduling recorded.</p></div>${cards}</section>`;
+}
+
+export function bindPageAnkiReview(root: ParentNode, onOpen: (command: { noteGuid: string; cardOrdinal: number; rank: 1 }) => void) {
+  root.querySelectorAll<HTMLButtonElement>('[data-page-card-open]').forEach((button) => button.addEventListener('click', () => {
+    const noteGuid = button.dataset.noteGuid;
+    const cardOrdinal = Number(button.dataset.cardOrdinal);
+    if (noteGuid && Number.isInteger(cardOrdinal) && cardOrdinal >= 0) onOpen({ noteGuid, cardOrdinal, rank: 1 });
+  }));
+}
+

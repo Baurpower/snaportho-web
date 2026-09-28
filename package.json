@@ -14,6 +14,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test:vercel-crons": "node scripts/validate-vercel-crons.mjs",
+    "test:anki-feedback-email": "node --experimental-strip-types supabase/functions/send-anki-feedback-emails/logic.test.ts",
     "calendar-source:test": "node --experimental-strip-types src/lib/google/outbound-range.test.ts && node --experimental-strip-types src/lib/google/program-calendar-source.test.ts",
     "brobot:test:chat": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/chat/prompt-builder.test.ts",
     "brobot:test:tiered": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/chat/tier-router.test.ts",
@@ -222,7 +223,10 @@
     "donations:test": "node --experimental-strip-types src/lib/donations/display.test.ts && node --experimental-strip-types src/lib/donations/webhook-handler.test.ts && node --experimental-strip-types src/app/api/donations/route.test.ts && node --experimental-strip-types src/lib/auth/public-provider-webhook-path.test.ts",
     "devices:validate-backfill": "node --experimental-strip-types scripts/validate-device-token-backfill.ts",
     "rollout:verify": "node --experimental-strip-types scripts/verify-production-rollout.ts",
-    "rollout:apply-migrations": "node --experimental-strip-types scripts/apply-rds-cutover-migrations.ts"
+    "rollout:apply-migrations": "node --experimental-strip-types scripts/apply-rds-cutover-migrations.ts",
+    "education:ob-claims-v5:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/orthobullets/claim-extractor-v5.test.ts",
+    "education:ob-claims-v5:pilot": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs scripts/run-ob-claim-extraction-pilot.ts",
+    "education:ob-claims-v5:fetch": "node scripts/fetch-ob-question-packets.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1095.0",
@@ -275,6 +279,7 @@
     "eslint-config-next": "15.3.3",
     "linkedom": "^0.18.12",
     "postcss": "^8.5.4",
+    "supabase": "2.118.0",
     "tailwindcss": "^4.1.8",
     "typescript": "^5"
   },

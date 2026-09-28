@@ -220,26 +220,58 @@ async function runCheckpointedFactory(input: {
   }
   const first = results[0];
   if (!first) return runCardClaimFactory(input);
-  const claims = new Map(first.proposedClaims.map((claim) => [claim.fingerprintHash, claim]));
+  // Claims key by claimId (assertion-aware identity); fingerprint keying
+  // would reintroduce the silent merges Phase 2 removed.
+  const claims = new Map(first.proposedClaims.map((claim) => [claim.claimId, claim]));
   const entities = new Map(first.proposedEntities.map((entity) => [entity.entityId, structuredClone(entity)]));
-  const links = new Map(first.autoApprovedLinks.map((link) => [link.canonicalCardId, link]));
+  // Links key by (card, claim): one card carries many approved links.
+  const links = new Map(
+    first.autoApprovedLinks.map((link) => [`${link.canonicalCardId}|${link.claimId}`, link]),
+  );
   const assignments = new Map(first.assignments.map((assignment) => [assignment.canonicalCardId, assignment]));
-  const gaps = new Map(first.gaps.map((gap) => [gap.canonicalCardId, gap]));
+  const gaps = [...first.gaps];
   const reviews = [...first.machineReviews];
+  const entityLinks = new Map(
+    (first.entityLinks ?? []).map((row) => [`${row.claimId}|${row.entityKind}|${row.entityId ?? ""}|${row.role}`, row]),
+  );
+  const qualityFlags = new Map(
+    (first.qualityFlags ?? []).map((row) => [`${row.claimId}|${row.code}`, row]),
+  );
+  const unitOutcomes = [...(first.unitOutcomes ?? [])];
+  const semanticCandidates = [...(first.semanticCandidates ?? [])];
   for (const result of results.slice(1)) {
-    for (const claim of result.proposedClaims) claims.set(claim.fingerprintHash, claim);
+    for (const claim of result.proposedClaims) claims.set(claim.claimId, claim);
     for (const entity of result.proposedEntities) {
       const previous = entities.get(entity.entityId);
-      if (!previous) entities.set(entity.entityId, structuredClone(entity));
-      else for (const cardId of entity.sourceCardIds) if (!previous.sourceCardIds.includes(cardId)) previous.sourceCardIds.push(cardId);
+      if (!previous) {
+        entities.set(entity.entityId, structuredClone(entity));
+      } else {
+        for (const cardId of entity.sourceCardIds) if (!previous.sourceCardIds.includes(cardId)) previous.sourceCardIds.push(cardId);
+        for (const claimId of entity.sourceClaimIds ?? []) {
+          if (!previous.sourceClaimIds.includes(claimId)) previous.sourceClaimIds.push(claimId);
+        }
+      }
     }
-    for (const link of result.autoApprovedLinks) links.set(link.canonicalCardId, link);
+    for (const link of result.autoApprovedLinks) links.set(`${link.canonicalCardId}|${link.claimId}`, link);
     for (const assignment of result.assignments) assignments.set(assignment.canonicalCardId, assignment);
-    for (const gap of result.gaps) gaps.set(gap.canonicalCardId, gap);
+    gaps.push(...result.gaps);
     reviews.push(...result.machineReviews);
+    for (const row of result.entityLinks ?? []) {
+      const key = `${row.claimId}|${row.entityKind}|${row.entityId ?? ""}|${row.role}`;
+      const previous = entityLinks.get(key);
+      if (!previous || row.confidence > previous.confidence) entityLinks.set(key, row);
+    }
+    for (const row of result.qualityFlags ?? []) {
+      const key = `${row.claimId}|${row.code}`;
+      if (!qualityFlags.has(key)) qualityFlags.set(key, row);
+    }
+    unitOutcomes.push(...(result.unitOutcomes ?? []));
+    semanticCandidates.push(...(result.semanticCandidates ?? []));
   }
-  const proposedClaims = [...claims.values()];
-  const autoApprovedLinks = [...links.values()];
+  const proposedClaims = [...claims.values()].sort((left, right) => left.claimId.localeCompare(right.claimId));
+  const autoApprovedLinks = [...links.values()].sort((left, right) => (
+    left.canonicalCardId.localeCompare(right.canonicalCardId) || left.claimId.localeCompare(right.claimId)
+  ));
   const allAssignments = [...assignments.values()];
   const allEntities = [...entities.values()];
   const allAssignmentsWithFailures = [
@@ -253,6 +285,7 @@ async function runCheckpointedFactory(input: {
       queue: "extraction_failed" as const,
       reasonCodes: ["factory_error", failure.error],
       fingerprintHash: null,
+      claimIds: [] as string[],
     })),
   ];
   return {
@@ -261,9 +294,21 @@ async function runCheckpointedFactory(input: {
     proposedClaims,
     proposedEntities: allEntities,
     autoApprovedLinks,
+    entityLinks: [...entityLinks.values()].sort((left, right) => (
+      left.claimId.localeCompare(right.claimId)
+      || left.entityKind.localeCompare(right.entityKind)
+      || (left.entityId ?? "").localeCompare(right.entityId ?? "")
+    )),
+    qualityFlags: [...qualityFlags.values()].sort((left, right) => (
+      left.claimId.localeCompare(right.claimId) || left.code.localeCompare(right.code)
+    )),
+    unitOutcomes: unitOutcomes.sort((left, right) => (
+      left.canonicalCardId.localeCompare(right.canonicalCardId) || left.claimIndex - right.claimIndex
+    )),
+    semanticCandidates,
     assignments: allAssignmentsWithFailures,
     exceptionQueue: allAssignmentsWithFailures.filter((assignment) => assignment.queue !== "auto_approved"),
-    gaps: [...gaps.values()],
+    gaps,
     machineReviews: reviews,
     metrics: {
       ...first.metrics,
@@ -282,6 +327,13 @@ async function runCheckpointedFactory(input: {
       entityLikenessBlocked: results.reduce((sum, result) => sum + result.metrics.entityLikenessBlocked, 0),
       contextSpecificityBlocked: results.reduce((sum, result) => sum + result.metrics.contextSpecificityBlocked, 0),
       openMissingEntity: allAssignmentsWithFailures.filter((assignment) => assignment.queue === "missing_entity").length,
+      extractionUnits: results.reduce((sum, result) => sum + (result.metrics.extractionUnits ?? 0), 0),
+      zeroClaimCards: allAssignmentsWithFailures.filter((assignment) => assignment.queue === "zero_claims").length,
+      multiClaimCards: allAssignmentsWithFailures.filter((assignment) => (assignment.claimIds?.length ?? 0) > 1).length,
+      maxClaimsPerCard: Math.max(0, ...allAssignmentsWithFailures.map((assignment) => assignment.claimIds?.length ?? 0)),
+      entityLinksProposed: entityLinks.size,
+      claimsWithoutEntities: results.reduce((sum, result) => sum + (result.metrics.claimsWithoutEntities ?? 0), 0),
+      qualityFlagsRaised: qualityFlags.size,
     },
   };
 }
@@ -338,6 +390,9 @@ try {
     "proposed-claims.json": result.proposedClaims,
     "proposed-entities.json": result.proposedEntities,
     "auto-approved-links.json": result.autoApprovedLinks,
+    "entity-links.json": result.entityLinks,
+    "quality-flags.json": result.qualityFlags,
+    "unit-outcomes.json": result.unitOutcomes,
     "card-assignments.json": result.assignments,
     "exception-queue.json": result.exceptionQueue,
     "gaps.json": result.gaps,
@@ -366,6 +421,11 @@ try {
       `- Cards: ${result.metrics.cardsProcessed}`,
       `- Auto-approved links: ${result.metrics.autoApprovedLinks}`,
       `- Proposed claims: ${result.metrics.proposedClaims}`,
+      `- Extraction units: ${result.metrics.extractionUnits}`,
+      `- Multi-claim cards: ${result.metrics.multiClaimCards}`,
+      `- Zero-claim cards: ${result.metrics.zeroClaimCards}`,
+      `- Entity links: ${result.metrics.entityLinksProposed}`,
+      `- Quality flags: ${result.metrics.qualityFlagsRaised}`,
       `- Exception cards: ${result.metrics.exceptionCards}`,
       `- Queue mix: ${JSON.stringify(distribution)}`,
       `- Run ID: ${result.factoryRunId}`,

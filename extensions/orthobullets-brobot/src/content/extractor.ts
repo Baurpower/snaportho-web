@@ -610,7 +610,11 @@ export function extractOrthobulletsPageContext(input: {
 }): OrthobulletsPageContext {
   const pageUrl = input.pageUrl ?? input.document.locationHref ?? '';
   const matchedSelectors: Record<string, string[]> = {};
-  const breadcrumbs = collectTexts(input.document, SELECTORS.breadcrumbs, 'breadcrumbs', matchedSelectors);
+  const breadcrumbs = collectTexts(input.document, SELECTORS.breadcrumbs, 'breadcrumbs', matchedSelectors)
+    .map((value) => value.replace(/\s+/g, ' ').trim())
+    .filter((value) => value.length >= 3 && value.length <= 120)
+    .filter((value) => (value.match(/[•|;]/g) ?? []).length < 2)
+    .filter((value) => (value.match(/\b(?:flap|fixation|arthroplasty|reconstruction|treatment)\b/gi) ?? []).length < 3);
   const stem = firstText(input.document, SELECTORS.stem, 'stem', matchedSelectors);
   const explanationText = firstVisibleText(input.document, SELECTORS.explanation);
   if (explanationText) {

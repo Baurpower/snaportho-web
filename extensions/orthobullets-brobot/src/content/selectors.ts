@@ -16,7 +16,7 @@
  * If Orthobullets changes their markup, re-capture fixtures (see README)
  * and update this file; the health report script will flag regressions.
  */
-export const SELECTOR_SET_VERSION = '2026-06-29-testview-review-v2';
+export const SELECTOR_SET_VERSION = '2026-09-26-testview-review-v3';
 
 export const SELECTORS = {
   // Breadcrumb trail above the question (topic > section > subsection).
@@ -27,7 +27,6 @@ export const SELECTORS = {
     '.breadcrumbs-section__path-item:not(.breadcrumbs-section__path-item--without-link)',
     '.dashboard-item__breadcrumbs a',
     '.innerPageTitleWrapper + .breadcrumbs a',
-    '.mainSection a[href*="/topic/"]',
     'nav.breadcrumb a',
     '[aria-label="breadcrumb"] a',
   ],
