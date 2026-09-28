@@ -104,6 +104,13 @@ describe("inferEntityType lexical rules", () => {
     assert.equal(inferEntityType("Sequestrum").type, "condition");
   });
 
+  it("types sarcomas as conditions and head compounds as anatomy", () => {
+    assert.equal(inferEntityType("Chondrosarcoma").type, "condition");
+    assert.equal(inferEntityType("Clear cell chondrosarcoma").type, "condition");
+    assert.equal(inferEntityType("radial head").type, "anatomy_structure");
+    assert.equal(inferEntityType("Femoral head").type, "anatomy_structure");
+  });
+
   it("types neuropathic and mechanical-symptom labels as conditions", () => {
     assert.equal(inferEntityType("Ulnar nerve neuropathy").type, "condition");
     assert.equal(inferEntityType("AIN palsy").type, "condition");
@@ -128,6 +135,24 @@ describe("inferEntityType lexical rules", () => {
 
   it("types implants", () => {
     assert.equal(inferEntityType("Cephalomedullary nail").type, "implant");
+  });
+});
+
+describe("inferEntityType symptom rule (Step 4)", () => {
+  it("types patient-reported phenomena as symptom", () => {
+    for (const label of ["Pain", "Thigh pain", "Numbness", "Muscle weakness", "Swelling", "Paresthesia", "Tingling", "Night ache"]) {
+      assert.equal(inferEntityType(label).type, "symptom", label);
+    }
+  });
+
+  it("prefers symptom over anatomy for symptomatic anatomy phrases", () => {
+    assert.equal(inferEntityType("Periscapular muscle weakness").type, "symptom");
+    assert.equal(inferEntityType("Pain on extension").type, "symptom");
+  });
+
+  it("keeps pain syndromes and stiff complications out of symptom", () => {
+    assert.equal(inferEntityType("Complex regional pain syndrome").type, "condition");
+    assert.equal(inferEntityType("Elbow stiffness").type, "complication");
   });
 });
 

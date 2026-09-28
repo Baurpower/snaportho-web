@@ -252,13 +252,17 @@ export function buildFactoryEvaluation(
   output: CardClaimFactoryOutput,
   input: { mode: EvaluationMode; entities: EntityIndexRow[]; generatedAt?: string },
 ): CardClaimFactoryEvaluation {
+  // Claim↔proposed-entity linkage runs through sourceClaimIds: primaries
+  // stay null for proposed/unresolved targets (never proposal-pointing).
   const claimsByEntity = new Map<string, string[]>();
-  for (const claim of output.proposedClaims) {
-    claimsByEntity.set(claim.primaryEntityId, [...(claimsByEntity.get(claim.primaryEntityId) ?? []), claim.claimId]);
+  for (const entity of output.proposedEntities) {
+    claimsByEntity.set(entity.entityId, [...entity.sourceClaimIds]);
   }
   const linksByEntity = new Map<string, number>();
   for (const link of output.autoApprovedLinks) {
-    const entityId = stringField((link.metadata as Record<string, unknown> | undefined)?.entityId)
+    const metadata = (link.metadata as Record<string, unknown> | undefined);
+    const entityId = stringField(metadata?.proposedEntityId)
+      || stringField(metadata?.entityId)
       || output.proposedClaims.find((claim) => claim.claimId === link.claimId)?.primaryEntityId
       || "";
     if (entityId) linksByEntity.set(entityId, (linksByEntity.get(entityId) ?? 0) + 1);
@@ -743,9 +747,8 @@ export function normalizeSnapshot(
       ? output.proposedClaims.find((item) => item.fingerprintHash === assignment.fingerprintHash) ?? null
       : null;
     const link = linkByCard.get(assignment.canonicalCardId) ?? null;
-    const proposedEntityId = claim && claim.primaryEntityId !== "00000000-0000-4000-8000-000000000001"
-      && output.proposedEntities.some((entity) => entity.entityId === claim.primaryEntityId)
-      ? claim.primaryEntityId
+    const proposedEntityId = claim
+      ? output.proposedEntities.find((entity) => entity.sourceClaimIds.includes(claim.claimId))?.entityId ?? null
       : null;
     return {
       canonicalCardId: assignment.canonicalCardId,
@@ -783,10 +786,7 @@ export function normalizeSnapshot(
       derivation: entity.derivation,
       sourceCardIds: [...entity.sourceCardIds],
       reused: entity.sourceCardIds.length > 1,
-      claimIds: output.proposedClaims
-        .filter((claim) => claim.primaryEntityId === entity.entityId)
-        .map((claim) => claim.claimId)
-        .sort(),
+      claimIds: [...entity.sourceClaimIds].sort(),
     })),
   };
 }

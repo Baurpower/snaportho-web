@@ -299,6 +299,121 @@ describe("matchProposedToCanonical", () => {
     assert.ok(fallback[0].score >= 0.55);
   });
 
+  it("penalizes confident structure-to-pathology matches in reverse", () => {
+    const ranked = matchProposedToCanonical(
+      {
+        entityId: "p15",
+        preferredLabel: "radial head",
+        normalizedLabel: "radial head",
+        entityType: "anatomy_structure",
+        claimIds: ["c1"],
+        proposalTypeConfident: true,
+      },
+      [
+        {
+          id: "canon-rhf",
+          preferredLabel: "Radial Head Fractures",
+          normalizedLabel: "radial head fractures",
+          entityType: "condition",
+          aliases: [],
+        },
+      ],
+    );
+    assert.ok(ranked[0].score < 0.55);
+    assert.ok(ranked[0].evidence.includes("confident_pathology_mismatch"));
+  });
+
+  it("penalizes confident device-technique mismatches", () => {
+    const ranked = matchProposedToCanonical(
+      {
+        entityId: "p16",
+        preferredLabel: "Intramedullary nail",
+        normalizedLabel: "intramedullary nail",
+        entityType: "implant",
+        claimIds: ["c1"],
+        proposalTypeConfident: true,
+      },
+      [
+        {
+          id: "canon-imnf",
+          preferredLabel: "Intramedullary Nail Fixation",
+          normalizedLabel: "intramedullary nail fixation",
+          entityType: "fixation_method",
+          aliases: [],
+        },
+      ],
+    );
+    assert.ok(ranked[0].score < 0.55);
+    assert.ok(ranked[0].evidence.includes("confident_device_technique_mismatch"));
+  });
+
+  it("vetoes at-risk context wrappers", () => {
+    const ranked = matchProposedToCanonical(
+      {
+        entityId: "p17",
+        preferredLabel: "Lateral femoral cutaneous nerve",
+        normalizedLabel: "lateral femoral cutaneous nerve",
+        entityType: "anatomy_structure",
+        claimIds: ["c1"],
+      },
+      [
+        {
+          id: "canon-lfcnr",
+          preferredLabel: "Lateral Femoral Cutaneous Nerve at Risk",
+          normalizedLabel: "lateral femoral cutaneous nerve at risk",
+          entityType: "anatomy_structure",
+          aliases: [],
+        },
+      ],
+    );
+    assert.equal(ranked.length, 0);
+  });
+
+  it("requires single-token elision differences", () => {
+    const ranked = matchProposedToCanonical(
+      {
+        entityId: "p18",
+        preferredLabel: "flexion-extension",
+        normalizedLabel: "flexion-extension",
+        entityType: "biomechanics_concept",
+        claimIds: ["c1"],
+      },
+      [
+        {
+          id: "canon-gap",
+          preferredLabel: "Flexion-Extension Gap Balance",
+          normalizedLabel: "flexion-extension gap balance",
+          entityType: "biomechanics_concept",
+          aliases: [],
+        },
+      ],
+    );
+    assert.equal(ranked[0].signals.elision, false);
+  });
+
+  it("bonuses partitive-only differences", () => {
+    const ranked = matchProposedToCanonical(
+      {
+        entityId: "p19",
+        preferredLabel: "Sides of middle phalanges",
+        normalizedLabel: "sides of middle phalanges",
+        entityType: "anatomy_structure",
+        claimIds: ["c1"],
+      },
+      [
+        {
+          id: "canon-mp",
+          preferredLabel: "Middle Phalanx",
+          normalizedLabel: "middle phalanx",
+          entityType: "anatomy_structure",
+          aliases: [],
+        },
+      ],
+    );
+    assert.ok(ranked[0].evidence.includes("partitive_descriptor"));
+    assert.ok(ranked[0].score >= 0.65);
+  });
+
   it("returns nothing for unrelated labels", () => {
     const ranked = matchProposedToCanonical(
       {

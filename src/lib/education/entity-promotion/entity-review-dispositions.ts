@@ -44,6 +44,7 @@ export const CANONICAL_ENTITY_TYPES = [
   "exam_maneuver",
   "surgical_approach",
   "surgical_positioning",
+  "symptom",
 ] as const;
 
 export type CanonicalEntityType = (typeof CANONICAL_ENTITY_TYPES)[number];

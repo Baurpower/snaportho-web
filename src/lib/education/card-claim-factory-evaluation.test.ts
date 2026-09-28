@@ -164,9 +164,12 @@ for (const raw of ["IV", "PE", "2"]) {
   const flags = auditProposedNearDuplicates(nearOutput.proposedEntities);
   const kinds = [...flags.values()].flat().map((flag) => flag.reason);
   assert.ok(kinds.includes("acronym_expansion_pair"), JSON.stringify([...flags.values()]));
-  // Not merged: two entities, each still the target of its own claim.
+  // Not merged: two entities, each still the target of its own claim
+  // (linked via sourceClaimIds; primaries stay null for proposed targets).
   for (const entity of nearOutput.proposedEntities) {
-    assert.ok(nearOutput.proposedClaims.some((claim) => claim.primaryEntityId === entity.entityId));
+    assert.ok(entity.sourceClaimIds.some((claimId) => nearOutput.proposedClaims.some(
+      (claim) => claim.claimId === claimId && claim.entityTargetType === "proposed",
+    )));
   }
 }
 
@@ -192,10 +195,12 @@ for (const raw of ["IV", "PE", "2"]) {
   const proposed = dupOutput.proposedEntities[0]!;
   const dupFlags = auditCanonicalSimilarity(proposed, dupEntities);
   assert.ok(dupFlags.some((flag) => flag.matchReason === "singular_plural_variant"));
-  // Claim still targets the proposal, not the canonical entity.
-  const claim = dupOutput.proposedClaims.find((item) => item.primaryEntityId === proposed.entityId);
+  // Claim still targets the proposal, not the canonical entity
+  // (linked via sourceClaimIds; primaries stay null for proposed targets).
+  const claim = dupOutput.proposedClaims.find((item) => proposed.sourceClaimIds.includes(item.claimId));
   assert.ok(claim);
   assert.equal(claim.entityTargetType, "proposed");
+  assert.equal(claim.primaryEntityId, null);
 }
 
 // No false mutation: audits and packet leave the factory result untouched.

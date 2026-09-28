@@ -165,11 +165,19 @@ export const ENTITY_INDEX_SQL = `
     e.entity_type,
     e.is_active,
     e.status,
-    coalesce(array_remove(array_agg(distinct case when sa.entity_type = 'canonical_entity' then sa.alias_value end), null), '{}') aliases,
+    coalesce((
+      select array_agg(distinct a.alias_name order by a.alias_name)
+      from public.canonical_entity_aliases a
+      where a.canonical_entity_id = e.id
+        and a.is_active
+        and a.review_status = 'approved'
+    ), '{}') aliases,
     coalesce(array_remove(array_agg(distinct case when sa.source_id is not null then sa.alias_value end), null), '{}') source_aliases
   from public.canonical_entities e
   left join public.source_aliases sa on sa.entity_id = e.id and sa.is_active
   where e.is_active
+    and e.review_status = 'approved'
+    and e.status in ('reviewed', 'canonical')
   group by e.id
   order by e.id
 `;

@@ -94,8 +94,9 @@ const SENSE_DISAMBIGUATORS = [
   "incision",
 ];
 
-/** Joint tokens for acronym sense-splitting ("LCL" knee vs elbow). */
-const JOINT_DISAMBIGUATORS = [
+/** Joint tokens for acronym sense-splitting ("LCL" knee vs elbow).
+ * Exported for the applier's Step 3 guard: shared vocabulary, one list. */
+export const JOINT_DISAMBIGUATORS = [
   "knee",
   "hip",
   "shoulder",
@@ -221,7 +222,30 @@ export function recommendDisposition(
   context: PacketContext,
 ): DispositionRecommendation {
   const normalized = proposal.normalizedLabel.toLowerCase().trim();
-  const [top] = context.candidates;
+  let [top] = context.candidates;
+  // Acronym preference: a short acronym without joint divergence resolves to
+  // its expansion ("PCL" -> ligament) even when an elision-driven rival
+  // ("PCL Injury") scores higher lexically. Exact/alias truth still wins.
+  if (
+    top
+    && !top.signals.exactLabel
+    && !top.signals.aliasMatch
+    && isShortAcronymLike(normalized)
+    && detectJointDivergence(context.claimTexts).length === 0
+  ) {
+    const expansion = context.candidates.find(
+      (candidate) => candidate.signals.acronymExpansion && candidate.score >= 0.55,
+    );
+    if (expansion) top = expansion;
+  }
+  // Score ties between distinct canonicals carry no discriminating evidence
+  // ("Medial Parapatellar Approach" vs "...Interval"): the alias rules below
+  // defer instead of picking by order. The innervation-gated elision path
+  // keeps its own principled tiebreak.
+  const second = context.candidates.find((candidate) => candidate.entityId !== top?.entityId);
+  const tiedTop = Boolean(
+    top && second && second.score === top.score && !top.signals.exactLabel && !top.signals.aliasMatch,
+  );
   const inferred = context.inferredType;
 
   // 1. Exact canonical duplicate -> alias (repoint, never a new canonical).
@@ -298,8 +322,13 @@ export function recommendDisposition(
   }
   // Generic seeds reject unless an exact/alias/strong candidate already
   // exists (rules 1-2 above, rule 4 below). Weak fuzzy candidates must not
-  // rescue "Infection" into a new canonical.
-  if (isGenericSeed(normalized) && (!top || top.score < 0.8)) {
+  // rescue "Infection" into a new canonical — and neither may elision-driven
+  // matches ("Fracture" is not "Open Fracture").
+  const singleToken = labelTokenCount(normalizeEntityLabelForMatch(proposal.preferredLabel)) < 2;
+  if (
+    isGenericSeed(normalized)
+    && (!top || top.score < 0.8 || (singleToken && top.signals.elision))
+  ) {
     return {
       disposition: "REJECT_TOO_GENERIC",
       confidence: 0.75,
@@ -320,8 +349,16 @@ export function recommendDisposition(
   // lexical similarity with same-prefix structures they are not ("ACL
   // bundle" vs "posterolateral corner"). Those route to the context-gated
   // rule 7 / defer path instead.
-  const singleToken = labelTokenCount(normalizeEntityLabelForMatch(proposal.preferredLabel)) < 2;
   if (top && top.score >= 0.8 && !(singleToken && top.signals.elision)) {
+    if (tiedTop) {
+      return {
+        disposition: "DEFER_NEEDS_REVIEW",
+        confidence: 0.6,
+        reason: "canonical_tie_needs_review",
+        recommendedTargetId: top.entityId,
+        needsFullDbRecheck: true,
+      };
+    }
     return {
       disposition: "ALIAS_EXISTING",
       confidence: 0.75,
@@ -399,6 +436,15 @@ export function recommendDisposition(
         needsFullDbRecheck: true,
       };
     } else if (top.score >= 0.65 || top.signals.acronymExpansion) {
+      if (tiedTop) {
+        return {
+          disposition: "DEFER_NEEDS_REVIEW",
+          confidence: 0.6,
+          reason: "canonical_tie_needs_review",
+          recommendedTargetId: top.entityId,
+          needsFullDbRecheck: true,
+        };
+      }
       return {
         disposition: "ALIAS_EXISTING",
         confidence: 0.6,

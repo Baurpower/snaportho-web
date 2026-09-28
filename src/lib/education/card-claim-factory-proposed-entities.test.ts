@@ -129,7 +129,8 @@ function makeCard(input: {
   assert.equal(run.metrics.cardsAttachedToProposedEntities, 1);
   const claim = run.proposedClaims[0];
   assert.equal(claim?.entityTargetType, "proposed");
-  assert.equal(claim?.primaryEntityId, entity.entityId);
+  assert.equal(claim?.primaryEntityId, null);
+  assert.ok(entity.sourceClaimIds.includes(claim!.claimId));
 }
 
 // Parenthetical answers must check the full, outer, and acronym forms against
@@ -210,7 +211,7 @@ function makeCard(input: {
   assert.equal(run.metrics.proposedEntitiesReused, 1);
   assert.equal(run.metrics.cardsAttachedToProposedEntities, 2);
   assert.equal(run.proposedClaims.length, 2);
-  for (const claim of run.proposedClaims) assert.equal(claim.primaryEntityId, entity.entityId);
+  for (const claim of run.proposedClaims) assert.equal(claim.primaryEntityId, null);
   assert.equal(run.autoApprovedLinks.length, 2);
   const gaps = run.gaps.filter((gap) => gap.disposition === "resolved");
   assert.equal(gaps.length, 2);
@@ -360,6 +361,29 @@ function makeCard(input: {
   const packet = buildPromotionPacket(run.proposedEntities[0]!, [run.proposedClaims[0]!.claimId]);
   assert.equal(packet.proposedEntityId, run.proposedEntities[0]!.entityId);
   assert.deepEqual(packet.supportingCardIds, [card.canonicalCardId]);
+}
+
+// Durable negatives: reviewed rejections never re-propose.
+{
+  const rejected = proposeOntologyEntity({
+    clozeAnswer: "Cup-Cage Reconstruction.",
+    missingLabels: [],
+    claimType: "treatment_indication",
+    cardId: id("1"),
+    now,
+    rejectedNormalizedLabels: ["cup-cage reconstruction"],
+  });
+  assert.equal(rejected, null);
+  const allowed = proposeOntologyEntity({
+    clozeAnswer: "Cup-Cage Reconstruction.",
+    missingLabels: [],
+    claimType: "treatment_indication",
+    cardId: id("1"),
+    now,
+    rejectedNormalizedLabels: ["something else"],
+  });
+  assert.ok(allowed);
+  assert.equal(allowed.normalizedLabel, "cup-cage reconstruction");
 }
 
 console.log("card-claim-factory-proposed-entities.test.ts: all assertions passed");

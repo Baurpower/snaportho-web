@@ -175,6 +175,52 @@ describe("recommendDisposition", () => {
     assert.equal(recommendDisposition(packet("surgery"), context()).disposition, "REJECT_TOO_GENERIC");
   });
 
+  it("rejects generics despite elision-driven strong candidates", () => {
+    const elision = { exactLabel: false, aliasMatch: false, tokenJaccard: 0.5, tokenContainment: 1, trigram: 0.75, typeCompatible: true, acronymExpansion: false, elision: true, claimOverlap: 0 };
+    const rec = recommendDisposition(
+      packet("Fracture"),
+      context({
+        candidates: [
+          { entityId: "of", label: "Open Fracture", type: "condition", signals: elision, score: 0.85, evidence: [] },
+        ],
+      }),
+    );
+    assert.equal(rec.disposition, "REJECT_TOO_GENERIC");
+  });
+
+  it("prefers acronym expansions over higher elision rivals", () => {
+    const injury = { exactLabel: false, aliasMatch: false, tokenJaccard: 0.5, tokenContainment: 1, trigram: 0.7, typeCompatible: true, acronymExpansion: false, elision: true, claimOverlap: 0 };
+    const expansion = { exactLabel: false, aliasMatch: false, tokenJaccard: 0, tokenContainment: 0, trigram: 0.3, typeCompatible: true, acronymExpansion: true, elision: false, claimOverlap: 0 };
+    const rec = recommendDisposition(
+      packet("PCL", { claimIds: ["c1", "c2"] }),
+      context({
+        candidates: [
+          { entityId: "inj", label: "PCL Injury", type: "condition", signals: injury, score: 0.9, evidence: [] },
+          { entityId: "lig", label: "Posterior Cruciate Ligament", type: "anatomy_structure", signals: expansion, score: 0.65, evidence: [] },
+        ],
+        claimTexts: ["The knee ligament PCL is torn.", "PCL reconstruction follows."],
+      }),
+    );
+    assert.equal(rec.disposition, "ALIAS_EXISTING");
+    assert.equal(rec.recommendedTargetId, "lig");
+  });
+
+  it("defers same-score canonical ties", () => {
+    const fuzzy = { exactLabel: false, aliasMatch: false, tokenJaccard: 0.67, tokenContainment: 1, trigram: 0.9, typeCompatible: true, acronymExpansion: false, elision: true, claimOverlap: 0 };
+    const rec = recommendDisposition(
+      packet("Medial parapatellar", { normalizedLabel: "medial parapatellar" }),
+      context({
+        inferredType: { type: "surgical_approach", confidence: 0.85, reasons: ["surgical_approach_pattern"], flags: [] },
+        candidates: [
+          { entityId: "app", label: "Medial Parapatellar Approach", type: "surgical_approach", signals: fuzzy, score: 0.65, evidence: [] },
+          { entityId: "int", label: "Medial Parapatellar Interval", type: "anatomy_structure", signals: fuzzy, score: 0.65, evidence: [] },
+        ],
+      }),
+    );
+    assert.equal(rec.disposition, "DEFER_NEEDS_REVIEW");
+    assert.equal(rec.reason, "canonical_tie_needs_review");
+  });
+
   it("defers single-token elision matches instead of strong-aliasing", () => {
     const elision = { exactLabel: false, aliasMatch: false, tokenJaccard: 0.5, tokenContainment: 1, trigram: 0.88, typeCompatible: true, acronymExpansion: false, elision: true, claimOverlap: 0 };
     const rec = recommendDisposition(

@@ -155,4 +155,15 @@ assert.equal(contract.isEducationalClaimGapV1({
   claimVersionId: null,
 }), true);
 
+// NULL primary skips the entity segment (SQL concat_ws parity), stays stable,
+// and validates as a record.
+{
+  const withNull = { ...cupCage, primaryEntityId: null };
+  const payload = contract.clinicalClaimFingerprintPayload(withNull);
+  assert.ok(!payload.includes("entity="));
+  assert.ok(!payload.includes("null"));
+  assert.equal(contract.clinicalClaimFingerprintHash(withNull), contract.clinicalClaimFingerprintHash({ ...withNull }));
+  assert.notEqual(contract.clinicalClaimFingerprintHash(withNull), contract.clinicalClaimFingerprintHash(cupCage));
+}
+
 console.log("clinical-claim-v1.test.ts: all assertions passed");

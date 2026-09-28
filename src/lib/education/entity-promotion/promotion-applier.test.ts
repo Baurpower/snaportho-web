@@ -3,6 +3,7 @@ import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import {
   decisionKeyFor,
+  inferAliasType,
   planApply,
   renderApplySql,
   slugifyLabel,
@@ -129,6 +130,110 @@ describe("planApply", () => {
     const plan = planApply([decision()], context());
     const alias = plan.operations[0];
     assert.equal(alias.kind === "add_entity_alias" && alias.aliasType, "elided_form");
+  });
+});
+
+describe("plural-folded fail-closed (Step 2)", () => {
+  const twinContext = (): ApplyContext => context({
+    canonicalById: new Map([
+      ["canon-fx", { id: "canon-fx", normalizedLabel: "femoral shaft fracture", entityType: "condition" }],
+      ["canon-fxs", { id: "canon-fxs", normalizedLabel: "femoral shaft fractures", entityType: "condition" }],
+    ]),
+    canonicalByNormalized: new Map([
+      ["femoral shaft fracture", [{ id: "canon-fx", normalizedLabel: "femoral shaft fracture", entityType: "condition" }]],
+      ["femoral shaft fractures", [{ id: "canon-fxs", normalizedLabel: "femoral shaft fractures", entityType: "condition" }]],
+    ]),
+  });
+
+  it("converts promote to re-review on a plural-folded twin", () => {
+    const plan = planApply(
+      [decision({ decision: "PROMOTE_CANONICAL", canonicalLabel: "Femoral Shaft Fractures", entityType: "condition", canonicalEntityId: undefined })],
+      context({
+        canonicalById: new Map([["canon-fx", { id: "canon-fx", normalizedLabel: "femoral shaft fracture", entityType: "condition" }]]),
+        canonicalByNormalized: new Map([["femoral shaft fracture", [{ id: "canon-fx", normalizedLabel: "femoral shaft fracture", entityType: "condition" }]]]),
+      }),
+    );
+    assert.equal(plan.operations[0].kind, "needs_rereview");
+    assert.ok(plan.warnings.some((warning) => warning.code === "promote_blocked_by_folded_canonical"));
+  });
+
+  it("converts promote to re-review on a folded alias claim", () => {
+    const plan = planApply(
+      [decision({ decision: "PROMOTE_CANONICAL", canonicalLabel: "Radial Head Fracture", entityType: "condition", canonicalEntityId: undefined })],
+      context({ aliases: [{ normalizedAlias: "radial head fractures", canonicalEntityId: "canon-other", isActive: true }] }),
+    );
+    assert.equal(plan.operations[0].kind, "needs_rereview");
+    assert.ok(plan.warnings.some((warning) => warning.code === "promote_blocked_by_folded_alias"));
+  });
+
+  it("converts alias to re-review when it folds into a different canonical", () => {
+    const plan = planApply(
+      [decision({ proposalLabel: "Femoral Shaft Fractures", proposalNormalizedLabel: "femoral shaft fractures", canonicalEntityId: "canon-fxs" })],
+      twinContext(),
+    );
+    assert.equal(plan.operations[0].kind, "needs_rereview");
+    assert.ok(plan.warnings.some((warning) => warning.code === "alias_blocked_by_folded_canonical"));
+  });
+
+  it("allows a plural alias whose folded form matches only its own target", () => {
+    const plan = planApply(
+      [decision({ proposalLabel: "Open fractures", proposalNormalizedLabel: "open fractures", canonicalEntityId: "canon-open" })],
+      context({
+        canonicalById: new Map([["canon-open", { id: "canon-open", normalizedLabel: "open fracture", entityType: "condition" }]]),
+        canonicalByNormalized: new Map([["open fracture", [{ id: "canon-open", normalizedLabel: "open fracture", entityType: "condition" }]]]),
+      }),
+    );
+    assert.deepEqual(plan.errors, []);
+    assert.equal(plan.operations[0].kind, "add_entity_alias");
+  });
+
+  it("types -es and irregular inflections as plural_variant", () => {
+    assert.equal(inferAliasType("Abscesses", "Abscess"), "plural_variant");
+    assert.equal(inferAliasType("Diagnoses", "Diagnosis"), "plural_variant");
+    assert.equal(inferAliasType("Open fractures", "Open Fracture"), "plural_variant");
+    assert.equal(inferAliasType("FDP tendons", "FDP"), "synonym");
+  });
+});
+
+describe("joint-ambiguous acronym guard (Step 3)", () => {
+  const mclContext = (): ApplyContext => context({
+    canonicalById: new Map([
+      ["canon-mcl", { id: "canon-mcl", normalizedLabel: "medial collateral ligament", entityType: "anatomy_structure" }],
+      ["canon-mcl-knee", { id: "canon-mcl-knee", normalizedLabel: "medial collateral ligament knee", entityType: "anatomy_structure" }],
+    ]),
+    canonicalByNormalized: new Map([
+      ["medial collateral ligament", [{ id: "canon-mcl", normalizedLabel: "medial collateral ligament", entityType: "anatomy_structure" }]],
+      ["medial collateral ligament knee", [{ id: "canon-mcl-knee", normalizedLabel: "medial collateral ligament knee", entityType: "anatomy_structure" }]],
+    ]),
+  });
+
+  it("allows a bare acronym alias to a joint-unspecified canonical (interim)", () => {
+    const plan = planApply(
+      [decision({ proposalLabel: "MCL", proposalNormalizedLabel: "mcl", canonicalEntityId: "canon-mcl" })],
+      mclContext(),
+    );
+    assert.deepEqual(plan.errors, []);
+    assert.equal(plan.operations[0].kind, "add_entity_alias");
+  });
+
+  it("errors a bare acronym alias to a joint-qualified canonical", () => {
+    for (const bare of ["MCL", "LCL", "UCL"]) {
+      const plan = planApply(
+        [decision({ proposalLabel: bare, proposalNormalizedLabel: bare.toLowerCase(), canonicalEntityId: "canon-mcl-knee" })],
+        mclContext(),
+      );
+      assert.equal(plan.operations.length, 0, bare);
+      assert.equal(plan.errors[0].code, "alias_joint_ambiguous", bare);
+    }
+  });
+
+  it("does not gate joint-unambiguous acronyms", () => {
+    const plan = planApply(
+      [decision({ proposalLabel: "ACL", proposalNormalizedLabel: "acl", canonicalEntityId: "canon-mcl-knee" })],
+      mclContext(),
+    );
+    assert.deepEqual(plan.errors, []);
+    assert.equal(plan.operations[0].kind, "add_entity_alias");
   });
 });
 

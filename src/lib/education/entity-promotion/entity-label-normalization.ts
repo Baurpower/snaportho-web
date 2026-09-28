@@ -15,14 +15,19 @@ export function normalizeEntityLabelForMatch(raw: string): string {
   text = text.replace(UNICODE_QUOTE_RE, "'");
   text = text.replace(UNICODE_DASH_RE, "-");
   text = text.replace(/&gt;/gi, ">").replace(/&lt;/gi, "<").replace(/&amp;/gi, "&");
+  // Possessives ("Ewing's sarcoma" -> "ewing sarcoma") so eponyms match
+  // across possessive/non-possessive spellings. Runs before punctuation
+  // removal, which would otherwise strand a meaningless "s" token.
+  text = text.replace(/'s\b/gi, "");
   // Strip leading articles before punctuation removal so dotted acronyms
   // ("A.C.L.") are not mistaken for an article + remainder.
   text = text.replace(/\s+/g, " ").trim().replace(LEADING_ARTICLE_RE, "");
   text = text.replace(PUNCT_KEEP_SLASH_RE, " ");
   text = text.replace(/-/g, " ");
   text = text.replace(/\s+/g, " ").trim().toLowerCase();
-  // Safe plural folding: regular -s plurals on multi-token or long labels
-  // only. Never fold short tokens (lens, MCS) or -ss/-us endings.
+  // Conservative plural folding (Step 2): regular -s/-es plurals plus
+  // reviewed Greek/Latin families, guarded by an unfoldable-singular
+  // denylist. Tokens under 4 chars (MCS) and -ss/-us endings never fold.
   text = text
     .split(" ")
     .map((token) => foldRegularPlural(token))
@@ -36,17 +41,71 @@ const IRREGULAR_PLURALS: ReadonlyMap<string, string> = new Map([
   ["menisci", "meniscus"],
   ["phalanges", "phalanx"],
   ["vertebrae", "vertebra"],
+  ["bursae", "bursa"],
+  ["cortices", "cortex"],
+  ["apices", "apex"],
+  ["indices", "index"],
+  ["calices", "calyx"],
+  ["nares", "naris"],
+  ["diagnoses", "diagnosis"],
+]);
+
+/** Singulars that must never fold: invariant nouns, Latin -is forms, and
+ * singulars whose folded form would be a different word (bases/base is
+ * handled by the -ases rule instead). Membership beats stemming. */
+const UNFOLDABLE_SINGULARS: ReadonlySet<string> = new Set([
+  "lens",
+  "menses",
+  "herpes",
+  "diabetes",
+  "species",
+  "series",
+  "forceps",
+  "facies",
+  "naris",
+  "pubis",
+  "cutis",
+  "subcutis",
 ]);
 
 function foldRegularPlural(token: string): string {
   const irregular = IRREGULAR_PLURALS.get(token);
   if (irregular) return irregular;
-  if (token.length < 8) return token;
-  if (!token.endsWith("s") || token.endsWith("ss") || token.endsWith("us")) return token;
-  if (token.endsWith("ies")) return token; // irregular
+  if (UNFOLDABLE_SINGULARS.has(token)) return token;
+  if (token.length < 4) return token;
+  if (!token.endsWith("s")) return token;
+  if (token.endsWith("ss") || token.endsWith("us")) return token;
+  if (token.endsWith("ies")) return token; // left unfolded: facies guard, recall loss acceptable
   if (token.endsWith("sis")) return token; // Greek singular: scoliosis, arthrodesis, diagnosis
+  if (token.endsWith("itis")) return token; // inflammatory singular: tendinitis, bursitis, tenosynovitis
+  if (token.endsWith("itides")) return `${token.slice(0, -5)}tis`; // tendinitides->tendinitis
   if (token.endsWith("lis")) return token; // Latin singular: gracilis, radialis, femoralis
+  // -stasis plurals precede the -ases rule (metastases->metastasis,
+  // stases->stasis); no regular English plural ends in -stases.
+  if (token.endsWith("stases")) return `${token.slice(0, -3)}sis`;
+  // Regular -e(s) plurals: strip only the -s (cases->case, bases->base,
+  // phases->phase). Must precede the -ses rule so -ases never becomes -asis.
+  if (token.endsWith("ases")) return token.slice(0, -1);
+  // Consonant + -es plurals (abscesses->abscess, arches->arch, sinuses->sinus).
+  if (
+    token.endsWith("sses")
+    || token.endsWith("ches")
+    || token.endsWith("shes")
+    || token.endsWith("uses")
+  ) {
+    return token.slice(0, -2);
+  }
+  // Greek -sis plurals (diagnoses->diagnosis, prostheses->prosthesis,
+  // epiphyses->epiphysis, metastases->metastasis).
+  if (token.endsWith("ses")) return `${token.slice(0, -3)}sis`;
   return token.slice(0, -1);
+}
+
+/** Equality key for duplicate detection (promotion recheck, alias safety).
+ * Same function as match normalization: folding can only merge keys, never
+ * split them, so dedup matches are a superset of exact matches. */
+export function dedupKeyForLabel(raw: string): string {
+  return normalizeEntityLabelForMatch(raw);
 }
 
 /** Match keys for one label: full normalized form plus conservative

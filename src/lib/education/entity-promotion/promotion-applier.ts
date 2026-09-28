@@ -5,11 +5,15 @@
  * plus a live database (see scripts/kg-entity-promotion-apply.ts).
  *
  * Fail-closed rules:
- * - PROMOTE re-checks exact + alias matches against the FULL canonical index
- *   at plan time. A newly visible canonical converts the decision to
- *   NEEDS_REREVIEW — the applier never auto-aliases and never duplicates.
+ * - PROMOTE re-checks exact, plural-folded, and alias matches against the
+ *   FULL canonical index at plan time. A newly visible canonical converts
+ *   the decision to NEEDS_REREVIEW — the applier never auto-aliases and
+ *   never duplicates.
  * - ALIAS requires the target to exist and the alias to be unclaimed by a
- *   different canonical. Conflicts are plan errors, not silent merges.
+ *   different canonical. Conflicts are plan errors, not silent merges. An
+ *   alias folding into a different canonical's label is NEEDS_REREVIEW.
+ * - Bare joint-ambiguous acronyms (MCL/LCL/UCL) may only target
+ *   joint-unspecified canonicals; joint-qualified targets are plan errors.
  * - MERGE requires the head proposal to exist and be unresolved.
  * - Every decision carries an idempotency key; applied keys are skipped.
  * - History is never deleted: edge repoints insert a new canonical edge and
@@ -17,9 +21,15 @@
  */
 
 import { isCanonicalEntityType, isEntityDisposition } from "./entity-review-dispositions";
-import { looksLikeAcronym, tokenContainment, trigramSimilarity } from "./entity-label-normalization";
+import { dedupKeyForLabel, looksLikeAcronym, tokenContainment, trigramSimilarity } from "./entity-label-normalization";
+import { JOINT_DISAMBIGUATORS } from "./review-packet";
 
 export const PROMOTION_APPLIER_VERSION = "promotion-applier.v1" as const;
+
+/** Bare acronyms proven joint-dependent in live claim context (Step 3):
+ * LCL primaries span elbow + knee; MCL's only primary is elbow while knee
+ * claims exist in-corpus; UCL primaries span elbow + thumb. Never universal. */
+const JOINT_AMBIGUOUS_ACRONYMS: ReadonlySet<string> = new Set(["mcl", "lcl", "ucl"]);
 
 export type ReviewDecisionInput = {
   decisionKey?: string;
@@ -109,7 +119,7 @@ export function inferAliasType(proposalLabel: string, canonicalLabel: string): s
   const proposal = proposalLabel.trim().toLowerCase().replace(/\s+/g, " ");
   const canonical = canonicalLabel.trim().toLowerCase().replace(/\s+/g, " ");
   if (!proposal.includes(" ") && canonical.split(" ").includes(proposal)) return "elided_form";
-  if (`${proposal}s` === canonical || proposal === `${canonical}s`) return "plural_variant";
+  if (proposal !== canonical && dedupKeyForLabel(proposal) === dedupKeyForLabel(canonical)) return "plural_variant";
   if (trigramSimilarity(proposal, canonical) >= 0.8 && tokenContainment(proposal, canonical) === 1) {
     return "alternate_spelling";
   }
@@ -177,6 +187,17 @@ export function planApply(
   const bump = (name: string): void => {
     stats[name] = (stats[name] ?? 0) + 1;
   };
+  // Plural-folded secondary index over the full canonical set (Step 2):
+  // catches singular/plural duplicates the exact check cannot see.
+  const canonicalByFolded = new Map<string, CanonicalPlanRef[]>();
+  for (const entries of context.canonicalByNormalized.values()) {
+    for (const entry of entries) {
+      const folded = dedupKeyForLabel(entry.normalizedLabel);
+      const list = canonicalByFolded.get(folded) ?? [];
+      list.push(entry);
+      canonicalByFolded.set(folded, list);
+    }
+  }
 
   for (const input of decisions) {
     const key = decisionKeyFor(input);
@@ -198,12 +219,31 @@ export function planApply(
           bump("needs_rereview");
           break;
         }
+        const folded = dedupKeyForLabel(normalized);
+        const foldedExisting = (canonicalByFolded.get(folded) ?? []).filter((entry) => entry.normalizedLabel !== normalized);
+        if (foldedExisting.length > 0) {
+          // Fail closed on inflection duplicates: singular/plural twins
+          // (Femoral Shaft Fracture/Fractures) must merge, never double-promote.
+          operations.push({ kind: "needs_rereview", decisionKey: key, reason: `canonical_folded_exists:${foldedExisting[0].id}` });
+          warnings.push({ decisionKey: key, code: "promote_blocked_by_folded_canonical", detail: foldedExisting.map((entry) => entry.id).join(",") });
+          bump("needs_rereview");
+          break;
+        }
         const aliasConflict = context.aliases.find(
           (alias) => alias.isActive && alias.normalizedAlias === normalized,
         );
         if (aliasConflict) {
           operations.push({ kind: "needs_rereview", decisionKey: key, reason: `alias_claimed_by:${aliasConflict.canonicalEntityId}` });
           warnings.push({ decisionKey: key, code: "promote_blocked_by_claimed_alias", detail: aliasConflict.canonicalEntityId });
+          bump("needs_rereview");
+          break;
+        }
+        const foldedAliasConflict = context.aliases.find(
+          (alias) => alias.isActive && alias.normalizedAlias !== normalized && dedupKeyForLabel(alias.normalizedAlias) === folded,
+        );
+        if (foldedAliasConflict) {
+          operations.push({ kind: "needs_rereview", decisionKey: key, reason: `alias_folded_claimed_by:${foldedAliasConflict.canonicalEntityId}` });
+          warnings.push({ decisionKey: key, code: "promote_blocked_by_folded_alias", detail: foldedAliasConflict.canonicalEntityId });
           bump("needs_rereview");
           break;
         }
@@ -243,6 +283,32 @@ export function planApply(
           errors.push({ decisionKey: key, code: "alias_conflict", detail: `claimed by ${conflict.canonicalEntityId}` });
           bump("error");
           break;
+        }
+        // Fail closed: an alias whose folded form equals a DIFFERENT
+        // canonical's folded label would split singular/plural across
+        // canonicals (the exact disease the governance backlog cleans up).
+        const foldedAlias = dedupKeyForLabel(normalized);
+        const foldedTwin = [...context.canonicalById.values()].find(
+          (entry) => entry.id !== target.id && dedupKeyForLabel(entry.normalizedLabel) === foldedAlias,
+        );
+        if (foldedTwin) {
+          operations.push({ kind: "needs_rereview", decisionKey: key, reason: `alias_folds_into_canonical:${foldedTwin.id}` });
+          warnings.push({ decisionKey: key, code: "alias_blocked_by_folded_canonical", detail: foldedTwin.id });
+          bump("needs_rereview");
+          break;
+        }
+        // Step 3 ruling (joint-dependent acronyms): a bare MCL/LCL/UCL alias
+        // may only target a joint-unspecified canonical. Targeting a
+        // joint-qualified canonical silently misresolves every other joint's
+        // claims, so it is a plan error, not a re-review.
+        const bareAlias = dedupKeyForLabel(normalized);
+        if (!bareAlias.includes(" ") && JOINT_AMBIGUOUS_ACRONYMS.has(bareAlias)) {
+          const targetTokens = new Set(target.normalizedLabel.split(" "));
+          if (JOINT_DISAMBIGUATORS.some((joint) => targetTokens.has(joint))) {
+            errors.push({ decisionKey: key, code: "alias_joint_ambiguous", detail: `${normalized} -> ${target.normalizedLabel}` });
+            bump("error");
+            break;
+          }
         }
         operations.push({
           kind: "add_entity_alias",

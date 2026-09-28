@@ -308,19 +308,6 @@ export type CardClaimFactoryOutput = {
 };
 
 const CLOZE_RE = /\{\{c(\d+)::([^{}]*?)(?:::[^{}]*?)?\}\}/gi;
-const TEXT_FIELDS = new Set(["text", "front"]);
-
-function teachingField(card: EphemeralCard): { name: string; rawValue: string; plainText: string } | null {
-  const preferred = card.fields.find((field) => TEXT_FIELDS.has(field.name.toLowerCase()))
-    ?? card.fields.find((field) => field.rawValue.includes("{{c"))
-    ?? card.fields[0];
-  if (!preferred) return null;
-  return {
-    name: preferred.name,
-    rawValue: preferred.rawValue,
-    plainText: preferred.plainText ?? preferred.rawValue,
-  };
-}
 
 export function extractTargetCloze(raw: string, cardOrdinal: number): ExtractedCloze | null {
   const clozeNumber = cardOrdinal + 1;
@@ -792,9 +779,15 @@ export const RECOGNIZED_SHORT_FORMS: Readonly<Record<string, { ambiguous: boolea
 };
 
 const RETIRED_LIFECYCLE = new Set(["deprecated", "replaced", "merged", "split"]);
+// Pre-trust states: automation proposals must never resolve as canonical.
+const PROVISIONAL_LIFECYCLE = new Set(["proposed", "draft"]);
 
 function activeCanonicalEntities(entities: EntityIndexRow[]): EntityIndexRow[] {
-  return entities.filter((entity) => entity.active && !RETIRED_LIFECYCLE.has(entity.lifecycleStatus));
+  return entities.filter(
+    (entity) => entity.active
+      && !RETIRED_LIFECYCLE.has(entity.lifecycleStatus)
+      && !PROVISIONAL_LIFECYCLE.has(entity.lifecycleStatus),
+  );
 }
 
 export function lookupCanonicalShortForm(
@@ -996,6 +989,9 @@ export function proposeOntologyEntity(input: {
   cardId: string;
   deckId?: string;
   now?: () => string;
+  /** Durable negative decisions (normalized labels). Reviewed rejections
+   * never re-propose, regardless of extraction confidence. */
+  rejectedNormalizedLabels?: ReadonlySet<string> | readonly string[];
 }): ProposedOntologyEntity | null {
   const fromCloze = normalizeProposedLabel(input.clozeAnswer);
   let preferredLabel = fromCloze.preferredLabel;
@@ -1013,6 +1009,9 @@ export function proposeOntologyEntity(input: {
     normalizedLabel = fallback.normalizedLabel;
     derivation = "normalized_cloze_answer";
     confidence = 0.8;
+  }
+  if (input.rejectedNormalizedLabels && new Set(input.rejectedNormalizedLabels).has(normalizedLabel)) {
+    return null;
   }
   const entityType = refineOntologyEntityType(ontologyEntityType(input.claimType), normalizedLabel);
   const seen = new Set<string>();
@@ -1181,6 +1180,8 @@ export function runCardClaimFactory(input: {
   deckId?: string;
   /** Injectable clock for deterministic dry runs. Defaults to wall-clock time. */
   now?: () => string;
+  /** Durable negative decisions (normalized labels from entity_review_decisions). */
+  rejectedNormalizedLabels?: string[];
 }): CardClaimFactoryOutput {
   if (containsUnsafeMetadata(input.cards.map((card) => card.tags))) {
     throw new Error("unsafe_input_metadata");
@@ -1361,6 +1362,7 @@ export function runCardClaimFactory(input: {
             cardId: card.canonicalCardId,
             deckId: input.deckId,
             now: input.now,
+            rejectedNormalizedLabels: input.rejectedNormalizedLabels,
           });
           if (ontologyFill) {
             gapAttempts = [...gapAttempts, ...ontologyFill.canonicalMatchAttempts];
@@ -1382,19 +1384,23 @@ export function runCardClaimFactory(input: {
           if (short.kind === "canonical") {
             canonicalShortFill = { canonicalEntityId: short.canonicalEntityId, entityType: short.entityType };
           } else if (short.kind === "proposed") {
-            ontologyFill = buildProposedEntity({
-              preferredLabel: short.preferredLabel,
-              normalizedLabel: short.normalizedLabel,
-              entityType: refineOntologyEntityType(ontologyEntityType(inferred.claimType), short.normalizedLabel),
-              rawClozeText: testedAnswer,
-              cardId: card.canonicalCardId,
-              derivation: short.derivation,
-              confidence: short.confidence,
-              canonicalMatchAttempts: short.attempts,
-              deckId: input.deckId,
-              now: input.now,
-            });
-            gapAttempts = ontologyFill.canonicalMatchAttempts;
+            if (input.rejectedNormalizedLabels?.includes(short.normalizedLabel)) {
+              shortUnresolved = true;
+            } else {
+              ontologyFill = buildProposedEntity({
+                preferredLabel: short.preferredLabel,
+                normalizedLabel: short.normalizedLabel,
+                entityType: refineOntologyEntityType(ontologyEntityType(inferred.claimType), short.normalizedLabel),
+                rawClozeText: testedAnswer,
+                cardId: card.canonicalCardId,
+                derivation: short.derivation,
+                confidence: short.confidence,
+                canonicalMatchAttempts: short.attempts,
+                deckId: input.deckId,
+                now: input.now,
+              });
+              gapAttempts = ontologyFill.canonicalMatchAttempts;
+            }
           } else {
             shortUnresolved = true;
           }
@@ -1473,11 +1479,15 @@ export function runCardClaimFactory(input: {
           : "unresolved";
       if (entityTargetType === "canonical") canonicalEntityMatches += 1;
       if (shortUnresolved) shortLabelInsufficientContext += 1;
-      const entityId = primary?.canonicalEntityId
+      // Canonical primary or NULL. Proposed/unresolved primaries must never
+      // proposal-point or sentinel-point: the column FKs canonical_entities,
+      // and the proposed/unresolved detail lives in claim_entities edges.
+      // Fingerprints are computed with this same null (SQL twin skips the
+      // entity segment via concat_ws), so trigger parity holds on write.
+      const entityId: string | null = primary?.canonicalEntityId
         ?? canonicalAnswerFill?.canonicalEntityId
         ?? canonicalShortFill?.canonicalEntityId
-        ?? ontologyFill?.entityId
-        ?? UNRESOLVED_CLAIM_ENTITY_ID;
+        ?? null;
       const fingerprintInput = {
         claimType: inferred.claimType,
         primaryEntityId: entityId,

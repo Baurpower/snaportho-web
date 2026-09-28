@@ -59,6 +59,7 @@ const RULES: LexicalRule[] = [
     patterns: [
       /\b(fracture|dislocation|subluxation|sprain|strain|rupture|tear|avulsion)\b/,
       /\b(disease|syndrome|deformity|dysplasia|arthritis|arthrosis|necrosis|tumor|tumour|cyst|lesion|infection)\b/,
+      /\b(sarcoma|osteosarcoma|chondrosarcoma|ewing|lymphoma|myeloma|chordoma|adamantinoma)\b/,
       /\b(scoliosis|kyphosis|lordosis|spondylolisthesis|spondylolysis|stenosis|herniation|myelopathy|radiculopathy)\b/,
       /\b(bursitis|tendinitis|tendinopathy|fasciitis|epicondylitis|synovitis|osteoporosis|rickets|paget|sequestrum|involucrum)\b/,
       /\b(neuropathy|palsy|neuritis|plexopathy|radiculitis)\b/,
@@ -68,6 +69,19 @@ const RULES: LexicalRule[] = [
       /\b(baja|alta)\b/,
       /\b(instability|impingement|laxity|synostosis)\b/,
       /\b\w+ (injury|injuries)\b/,
+    ],
+  },
+  // Symptom precedes anatomy ("muscle weakness" is a symptom, not a
+  // muscle) but follows condition/complication ("complex regional pain
+  // syndrome" stays a condition; "elbow stiffness" stays a complication).
+  // Step 4 ruling: patient-reported phenomena only. Examiner-observed
+  // findings stay deferred until a clinical_sign ruling lands.
+  {
+    type: "symptom",
+    confidence: 0.8,
+    reason: "symptom_head_noun",
+    patterns: [
+      /\b(pain|painful|ache|aching|numb|numbness|weakness|weak|swelling|swollen|paresthesia|tingling)\b/,
     ],
   },
   {
@@ -80,6 +94,7 @@ const RULES: LexicalRule[] = [
       /\b(meniscus|labrum|physis|epiphysis|metaphysis|diaphysis|condyle|trochanter|malleolus|olecranon|patella|clavicle|scapula|pelvis|sacrum|coccyx)\b/,
       /\b(spine|spinous process|transverse process|tuberosity|tubercle|crest|notch|groove|facet|pedicle|lamina|articulation)\b/,
       /\b(pulley|carpal|tarsal|metacarpal|metatarsal|phalanx|vertebra|femoral neck|surgical neck|anatomical neck)\b/,
+      /\b(radial head|ulnar head|femoral head|humeral head|fibular head|talar head)\b/,
       /\b(humerus|femur|tibia|fibula|radius|ulna|carpus|talus|calcaneus)\b/,
       // Bare joint singles only ("Knee"); phrases ("SLAC wrist", "hip pain")
       // need head-noun analysis and stay on the prior.

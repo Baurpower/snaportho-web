@@ -123,6 +123,13 @@ const PATHOLOGY_TYPES: ReadonlySet<string> = new Set([
   "imaging_finding",
 ]);
 
+/** Technique classes for the device↔technique penalty. */
+const TECHNIQUE_TYPES: ReadonlySet<string> = new Set([
+  "procedure",
+  "fixation_method",
+  "surgical_approach",
+]);
+
 /** Antonym substitutions that veto a candidate outright: same token count,
  * one substituted pair ("posterior" vs "anterior interosseous nerve"). */
 const ANTONYM_PAIRS: ReadonlyArray<ReadonlySet<string>> = [
@@ -156,11 +163,15 @@ function isAntonymSubstitution(left: string[], right: string[]): boolean {
 }
 
 /** Generic partitives exempt from the hyponym veto ("middle phalanges of
- * digits" still refers to the middle phalanx). */
+ * digits" still refers to the middle phalanx). Compared against
+ * plural-folded tokens, so both folded and surface forms are listed. */
 const GENERIC_PARTITIVES: ReadonlySet<string> = new Set([
   "of",
+  "digit",
   "digits",
+  "finger",
   "fingers",
+  "toe",
   "toes",
   "hand",
   "hands",
@@ -213,16 +224,28 @@ function scoreCandidate(
 ): { score: number; evidence: string[] } {
   const evidence: string[] = [];
   let score = 0;
-  // Confident pathology proposals never alias to structures: "AIN palsy"
-  // is a condition, "AIN" is a nerve. Non-confident (prior-fallback) types
-  // keep skew tolerance.
+  // Confident cross-class mismatches, both directions: "AIN palsy" (condition)
+  // is not "AIN" (nerve), and "radial head" (anatomy) is not "Radial Head
+  // Fractures" (condition). Non-confident (prior-fallback) types keep skew
+  // tolerance.
   if (
     proposalTypeConfident
-    && PATHOLOGY_TYPES.has(proposalType)
-    && !PATHOLOGY_TYPES.has(canonicalType)
+    && PATHOLOGY_TYPES.has(proposalType) !== PATHOLOGY_TYPES.has(canonicalType)
   ) {
     score -= 0.5;
     evidence.push("confident_pathology_mismatch");
+  }
+  // Confident device↔technique mismatches: "Intramedullary nail" (implant)
+  // is not "Intramedullary Nail Fixation" (fixation_method).
+  if (
+    proposalTypeConfident
+    && (
+      (proposalType === "implant" && TECHNIQUE_TYPES.has(canonicalType))
+      || (TECHNIQUE_TYPES.has(proposalType) && canonicalType === "implant")
+    )
+  ) {
+    score -= 0.5;
+    evidence.push("confident_device_technique_mismatch");
   }
   if (signals.exactLabel) {
     score += 1.0;
@@ -347,9 +370,13 @@ export function matchProposedToCanonical(
     // cutaneous nerve" vs "femoral nerve" (distinct nerve).
     const partOfRegion = extraTokens.length > 0
       && extraTokens.some((token) => REGION_QUALIFIERS.has(token));
+    // Elision requires EXACTLY one differing token: "femoral" vs "femoral
+    // nerve". Multi-token differences ("flexion extension" vs "Flexion-
+    // Extension Gap Balance") are distinct concepts, not elisions.
     const elision = !exactLabel
       && containment === 1
-      && Math.abs(proposalTokenList.length - canonicalTokenList.length) >= 1
+      && Math.abs(proposalTokenList.length - canonicalTokenList.length) === 1
+      && extraTokens.length === 1
       && !partOfRegion;
     // Hard vetoes (reviewed exact/alias truth always wins over vetoes):
     // 1. antonym substitution ("posterior" vs "anterior interosseous nerve");
@@ -360,6 +387,14 @@ export function matchProposedToCanonical(
     //    vs "knee articular cartilage").
     if (!exactLabel && !aliasMatch) {
       if (isAntonymSubstitution(proposalTokenList, canonicalTokenList)) continue;
+      // Context-wrapper veto: "Lateral femoral cutaneous nerve" is the
+      // structure, not the "…at Risk" surgical concept.
+      if (
+        canonicalNorm.endsWith(" at risk")
+        && !proposalNorm.includes("at risk")
+      ) {
+        continue;
+      }
       if (
         proposalTokenList.length > canonicalTokenList.length
         && canonicalTokenList.length > 1
@@ -401,12 +436,26 @@ export function matchProposedToCanonical(
     const plausible =
       exactLabel || aliasMatch || acronymExpansion || trigram >= 0.6 || jaccard >= 0.34 || claimOverlap >= 0.5;
     if (!plausible) continue;
-    const { score, evidence } = scoreCandidate(
+    const scored = scoreCandidate(
       signals,
       proposal.entityType,
       canonical.entityType,
       proposal.proposalTypeConfident ?? false,
     );
+    let { score } = scored;
+    const { evidence } = scored;
+    // Semantically empty partitive differences ("sides of middle phalanges"
+    // vs "middle phalanx") still denote the same referent: small bonus so
+    // multi-token partitives clear the moderate threshold.
+    if (
+      !exactLabel
+      && containment === 1
+      && extraTokens.length > 0
+      && extraTokens.every((token) => GENERIC_PARTITIVES.has(token))
+    ) {
+      score = round3(score + 0.15);
+      evidence.push("partitive_descriptor");
+    }
     candidates.push({
       entityId: canonical.id,
       label: canonical.preferredLabel,

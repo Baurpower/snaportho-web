@@ -99,7 +99,8 @@ export type QuestionClaimProvider = (typeof QUESTION_CLAIM_PROVIDERS)[number];
 
 export type ClinicalClaimFingerprintInput = {
   claimType: string;
-  primaryEntityId: string;
+  /** Null when the primary is proposed/unresolved (stored NULL; see claim_entities). */
+  primaryEntityId: string | null;
   predicate: string;
   objectText: string;
   qualifiers?: ClinicalClaimQualifiers | Record<string, string>;
@@ -122,7 +123,7 @@ export type ClinicalClaimRecordV1 = {
   predicate: string;
   objectText: string;
   qualifiers: ClinicalClaimQualifiers;
-  primaryEntityId: string;
+  primaryEntityId: string | null;
   approvalMethod: ClinicalClaimApprovalMethod;
   algorithmVersion: string;
   isActive: boolean;
@@ -208,13 +209,16 @@ export function clinicalClaimFingerprintPayload(input: ClinicalClaimFingerprintI
     .sort(([left], [right]) => left.localeCompare(right))
     .map(([key, value]) => `${key}=${normalizeClinicalClaimText(value ?? "")}`)
     .join(";");
-  return [
-    `type=${normalizeClinicalClaimText(input.claimType)}`,
-    `entity=${input.primaryEntityId.toLowerCase()}`,
+  // NULL primary skips the entity segment entirely, byte-identical to the
+  // SQL twin (concat_ws skips the null segment). Never 'entity=null'.
+  const segments = [`type=${normalizeClinicalClaimText(input.claimType)}`];
+  if (input.primaryEntityId != null) segments.push(`entity=${input.primaryEntityId.toLowerCase()}`);
+  segments.push(
     `predicate=${normalizeClinicalClaimText(input.predicate)}`,
     `object=${normalizeClinicalClaimText(input.objectText)}`,
     `qualifiers=${qualifierStr}`,
-  ].join("\n");
+  );
+  return segments.join("\n");
 }
 
 export function clinicalClaimFingerprintHash(input: ClinicalClaimFingerprintInput): string {
@@ -275,7 +279,7 @@ export function isClinicalClaimRecordV1(value: unknown): value is ClinicalClaimR
     && typeof row.predicate === "string" && row.predicate.length <= 80
     && typeof row.objectText === "string" && row.objectText.length <= 200
     && clinicalClaimQualifiersAreValid(row.qualifiers)
-    && isUuid(row.primaryEntityId)
+    && (row.primaryEntityId === null || isUuid(row.primaryEntityId))
     && (CLINICAL_CLAIM_APPROVAL_METHODS as readonly string[]).includes(row.approvalMethod as string)
     && typeof row.algorithmVersion === "string" && ALGORITHM.test(row.algorithmVersion)
     && typeof row.isActive === "boolean"
