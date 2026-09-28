@@ -422,16 +422,16 @@ class ProfileRuntime:
             else:break
     def refresh(self):
         if not self.window:return
-        from .errors import describe
+        from .errors import describe,is_reviewer_permission_error
         def me_done(future):
             try:_,body=future.result();roles=", ".join(body.get("roles",[])) or "no reviewer role yet";self.window.header.setText(f"SnapOrtho Reviewer — {self.settings.environment} — {body.get('displayName','linked')} ({roles})")
-            except Exception as error:self.window.header.setText(f"SnapOrtho Reviewer — {describe(error)}")
+            except Exception as error:self.window.header.setText("SnapOrtho Reviewer — linked, but reviewer access is unavailable for this account" if is_reviewer_permission_error(error) else f"SnapOrtho Reviewer — {describe(error)}")
         def queue_done(future):
             try:_,body=future.result();self.window.set_review_queue(body.get("cards",[]))
             except Exception as error:self.window.set_review_queue_error(error)
         def proposals_done(future):
             try:_,body=future.result();self.window.set_proposals(body.get("proposals",[]))
-            except Exception as error:self.window.header.setText(f"Proposal sync — {describe(error)}")
+            except Exception as error:self.window.header.setText("Proposal sync — reviewer access is unavailable for this account" if is_reviewer_permission_error(error) else f"Proposal sync — {describe(error)}")
         self.background(self.api.me,me_done);self.background(self.api.review_queue,queue_done);self.background(lambda:self.api.workspace_proposals("queue"),proposals_done)
     def open_review_queue_card(self,entry):
         from aqt.utils import showInfo

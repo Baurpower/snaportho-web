@@ -13,6 +13,20 @@ def _code(error):
     return getattr(error, "code", None) or type(error).__name__
 
 
+def is_reviewer_permission_error(error):
+    """True when a reviewer-gated endpoint rejected a VALID device credential.
+
+    The backend returns 401 when the device token itself is invalid/revoked
+    and 403 when the token is valid but the account lacks reviewer access.
+    Callers must never treat the latter as signed-out.
+    """
+    if _code(error) != "authorization_failed" or getattr(error, "status", 0) != 403:
+        return False
+    # A stored-but-never-activated token also yields 403 on device endpoints;
+    # that is a broken link flow needing re-authentication, not reviewer state.
+    return "activation" not in str(getattr(error, "server_message", "") or "").lower()
+
+
 def headline(error):
     if getattr(error, "conflict_type", None):
         return "Needs comparison"

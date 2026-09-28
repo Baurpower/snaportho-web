@@ -15,8 +15,8 @@ from snaportho_reviewer.credential_store import (
 from snaportho_reviewer.api import ReviewerApi,ApiError
 from snaportho_reviewer.activation import persist_activate_and_verify
 from snaportho_reviewer.diagnostics import build
-from snaportho_reviewer.dialogs import access_level_label,format_roles,linked_copy,summarize_local_deck
-from snaportho_reviewer.errors import describe,headline
+from snaportho_reviewer.dialogs import access_level_label,account_body_for_me_error,format_roles,linked_copy,summarize_local_deck
+from snaportho_reviewer.errors import describe,headline,is_reviewer_permission_error
 from snaportho_reviewer.version import ADDON_VERSION, addon_version_at_least
 from snaportho_reviewer.workspace import central_fields,central_tags,split_structured,combo_for_tag,tag_for_label,LEVEL_TAGS,YIELD_TAGS,CENTRAL_TAG_RE
 from snaportho_reviewer.sync import (
@@ -250,6 +250,38 @@ class ReviewerTests(unittest.TestCase):
   with self.assertRaises(ApiError):persist_activate_and_verify(failing_credentials,failing_api,"failed-token")
   self.assertIsNone(failing_credentials.get())
   self.assertEqual(failing_api.revoked,[("failed-token","credential_persistence_failed")])
+ def test_activation_survives_reviewer_gated_me_for_learners(self):
+  class LearnerApi:
+   def __init__(self):self.activated=[];self.revoked=[]
+   def activate_device(self,token):self.activated.append(token)
+   def me(self):raise ApiError("authorization_failed",403)
+   def revoke_token(self,token,reason=None):self.revoked.append((token,reason))
+  credentials=FakeCredentialStore();api=LearnerApi()
+  self.assertIsNone(persist_activate_and_verify(credentials,api,"learner-token"))
+  self.assertEqual(credentials.get(),"learner-token")
+  self.assertEqual(api.activated,["learner-token"])
+  self.assertEqual(api.revoked,[])
+ def test_activation_rejects_genuinely_invalid_token(self):
+  class RejectedApi:
+   def __init__(self):self.revoked=[]
+   def activate_device(self,token):raise ApiError("authorization_failed",401)
+   def me(self):return 200,{"status":"active"}
+   def revoke_token(self,token,reason=None):self.revoked.append((token,reason))
+  credentials=FakeCredentialStore();api=RejectedApi()
+  with self.assertRaises(ApiError):persist_activate_and_verify(credentials,api,"revoked-token")
+  self.assertIsNone(credentials.get())
+  self.assertEqual(api.revoked,[("revoked-token","credential_persistence_failed")])
+ def test_reviewer_permission_errors_stay_distinct_from_invalid_tokens(self):
+  self.assertTrue(is_reviewer_permission_error(ApiError("authorization_failed",403)))
+  self.assertFalse(is_reviewer_permission_error(ApiError("authorization_failed",401)))
+  self.assertFalse(is_reviewer_permission_error(ApiError("unlinked",401)))
+  self.assertFalse(is_reviewer_permission_error(ApiError("network_error",0,True)))
+  self.assertFalse(is_reviewer_permission_error(ApiError("authorization_failed",403,server_message="Device token activation is required.")))
+  learner_body=account_body_for_me_error(ApiError("authorization_failed",403))
+  self.assertIn("reviewer access is unavailable",learner_body)
+  self.assertNotIn("Sign in again",learner_body)
+  invalid_body=account_body_for_me_error(ApiError("authorization_failed",401))
+  self.assertIn("Sign in again",invalid_body)
  def test_workspace_proposal_posts_edits_to_backend_with_auth_and_idempotency(self):
   class Response:
    status=200

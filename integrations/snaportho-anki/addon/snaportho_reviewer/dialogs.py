@@ -71,6 +71,26 @@ ROLE_LABELS = {
 }
 
 
+def account_body_for_me_error(me_error):
+    """Pure account copy when /me fails for a linked device (unit-tested).
+
+    A 403 here means the device credential is valid but the account has no
+    reviewer access, so it must never direct the user to sign in again.
+    """
+    from .errors import describe, is_reviewer_permission_error
+
+    if is_reviewer_permission_error(me_error):
+        return (
+            "You are signed in, but reviewer access is unavailable for this account.\n"
+            "BroBot and Master Deck access use the saved device credential."
+        )
+    return (
+        "You are signed in, but account details could not be loaded.\n"
+        f"{describe(me_error)}\n\n"
+        "BroBot and Master Deck access use the saved device credential."
+    )
+
+
 def linked_copy(reviewer=None):
     if reviewer:
         return (
@@ -344,14 +364,8 @@ class SettingsDialog:
 
     def _render_account(self, reviewer, me_error):
         if me_error is not None:
-            from .errors import describe
-
-            # Device may be linked even when /me fails (e.g. no clinical_editor yet)
-            self.account_body.setText(
-                "You are signed in, but account details could not be loaded.\n"
-                f"{describe(me_error)}\n\n"
-                "BroBot and Master Deck access use the saved device credential."
-            )
+            # Device may be linked even when /me fails (e.g. no reviewer role yet)
+            self.account_body.setText(account_body_for_me_error(me_error))
             self._set_badge(self.account_badge, "Linked · limited", "warn")
             return
         roles = reviewer.get("roles") or []

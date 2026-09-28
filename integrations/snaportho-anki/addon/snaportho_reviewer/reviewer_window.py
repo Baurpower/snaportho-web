@@ -33,9 +33,10 @@ class ReviewerWindow:
         for row in rows:
             label=f"[{row.get('priority','—')}] {row.get('reason','review')} — {row.get('front') or row.get('noteGuid','')}";self.review_queue.addItem(label);self.review_queue.item(self.review_queue.count()-1).setData(256,row)
     def set_review_queue_error(self,error):
-        from .errors import describe
+        from .errors import describe,is_reviewer_permission_error
         self.review_queue.clear()
         if getattr(error,"status",0)==404:self.queue_status.setText("Priority review queue isn't enabled on this backend yet. Study or browse any card and use the SnapOrtho panel to curate it.")
+        elif is_reviewer_permission_error(error):self.queue_status.setText("Priority review queue — reviewer access is unavailable for this account.")
         else:self.queue_status.setText(f"Priority review queue — {describe(error)}")
     def set_proposals(self,rows):
         self.proposal_queue.clear()
