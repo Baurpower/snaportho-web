@@ -8,6 +8,7 @@ import {
   ANKI_MEDIA_SIGNED_URL_SECONDS,
   AWS_STORAGE_PROVIDER,
   describeAnkiAwsDeliveryError,
+  requireAddonVersion,
   signAnkiAwsDownload,
 } from "../../../../_lib";
 
@@ -26,7 +27,7 @@ export async function GET(
 
   const { data: release, error: releaseError } = await a.supabase
     .from("anki_deck_releases")
-    .select("id,status,release_version")
+    .select("id,status,release_version,minimum_addon_version")
     .eq("id", id)
     .maybeSingle();
   if (releaseError) {
@@ -41,6 +42,8 @@ export async function GET(
       { status: 404 },
     );
   }
+  const blocked = requireAddonVersion(request, release.minimum_addon_version);
+  if (blocked) return blocked;
 
   const { data: artifact, error } = await a.supabase
     .from("anki_deck_release_artifacts")
@@ -63,6 +66,18 @@ export async function GET(
     return NextResponse.json(
       { error: "bootstrap artifact not found" },
       { status: 404 },
+    );
+  }
+  // Fail closed: v1 packages reused source-deck GUIDs and can merge with a
+  // learner's Marty McFly collection. Only independently namespaced packages
+  // may ever be handed to Anki's importer.
+  if (
+    artifact.artifact_schema_version !== "snaportho-bootstrap-apkg.v2" ||
+    artifact.delivery_metadata?.identityScheme !== "snaportho-note-guid.v1"
+  ) {
+    return NextResponse.json(
+      { error: "safe bootstrap artifact not available", code: "unsafe_legacy_identity" },
+      { status: 409 },
     );
   }
 
@@ -131,6 +146,7 @@ export async function GET(
     filename,
     storageProvider: artifact.storage_provider,
     packageKind: artifact.delivery_metadata?.packageKind ?? "unknown",
+    identityScheme: artifact.delivery_metadata.identityScheme,
     cardCount: artifact.delivery_metadata?.cardCount ?? null,
     mediaCount: artifact.delivery_metadata?.mediaCount ?? null,
   });

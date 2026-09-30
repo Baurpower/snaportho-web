@@ -13,6 +13,7 @@ import {
   MARKER_VERSION,
   masterFieldOrder,
   PERSONAL_NOTES_FIELD,
+  productNoteGuid,
   SNAPORTHO_MASTER_NOTE_TYPE,
 } from "../../../../src/lib/education/anki-bootstrap-notetype.ts";
 import { computeCentralSyncHash } from "../../../../src/lib/education/anki-deck-incorporation.ts";
@@ -192,7 +193,9 @@ const input = {
     assert.equal(notes.length, 2);
 
     const byGuid = new Map(notes.map((n) => [n.guid, n]));
-    const noteA = byGuid.get("guid-aaa")!;
+    const noteA = byGuid.get(productNoteGuid(cardA.canonicalCardId))!;
+    assert.ok(noteA);
+    assert.ok(!byGuid.has("guid-aaa"));
     const valuesA = noteA.flds.split("\u001f");
     const mapA = Object.fromEntries(fieldNames.map((n, i) => [n, valuesA[i] ?? ""]));
     assert.equal(mapA.Text, "What is the {{c1::≥ threshold}}?");
@@ -214,7 +217,7 @@ const input = {
     assert.equal(recomputed, cardA.contentHash);
     assert.equal(mapA[MARKER_HASH], recomputed);
 
-    const noteB = byGuid.get("guid-bbb")!;
+    const noteB = byGuid.get(productNoteGuid(cardB.canonicalCardId))!;
     const valuesB = noteB.flds.split("\u001f");
     const mapB = Object.fromEntries(fieldNames.map((n, i) => [n, valuesB[i] ?? ""]));
     assert.equal(mapB.Extra, "µ value");

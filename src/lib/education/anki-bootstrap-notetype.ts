@@ -18,7 +18,8 @@ import {
 } from "./anki-master-card-style";
 
 export const SNAPORTHO_MASTER_NOTE_TYPE = "SnapOrtho Master";
-export const ARTIFACT_SCHEMA_VERSION = "snaportho-bootstrap-apkg.v1";
+export const ARTIFACT_SCHEMA_VERSION = "snaportho-bootstrap-apkg.v2";
+export const PRODUCT_GUID_SCHEME = "snaportho-note-guid.v1";
 
 export {
   SNAPORTHO_BACK_TEMPLATE,
@@ -46,6 +47,8 @@ export type BootstrapCardInput = {
   canonicalCardVersionId: string;
   contentHash: string;
   noteGuid: string;
+  /** Optional explicit product GUID. It must equal productNoteGuid(canonicalCardId). */
+  productGuid?: string;
   cardOrdinal: number;
   deckPath: string;
   orderingKey: string;
@@ -54,6 +57,17 @@ export type BootstrapCardInput = {
   centralTags: string[];
   mediaHashes?: string[];
 };
+
+/** Permanent SnapOrtho-owned Anki identity, disjoint from imported/source GUIDs. */
+export function productNoteGuid(canonicalCardId: string): string {
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(canonicalCardId)) {
+    throw new Error(`invalid_canonical_card_id_for_product_guid:${canonicalCardId}`);
+  }
+  return `so1_${createHash("sha256")
+    .update(`${PRODUCT_GUID_SCHEME}:${canonicalCardId.toLowerCase()}`, "utf8")
+    .digest("hex")
+    .slice(0, 32)}`;
+}
 
 export type MarkerValues = {
   [MARKER_ID]: string;
@@ -291,7 +305,16 @@ export function validateBootstrapCards(cards: BootstrapCardInput[]): string[] {
     if (card.cardOrdinal !== 0) {
       errors.push(`multi_ordinal_unsupported:${card.canonicalCardId}:${card.cardOrdinal}`);
     }
-    if (!card.noteGuid?.trim()) errors.push(`missing_guid:${card.canonicalCardId}`);
+    if (!card.noteGuid?.trim()) errors.push(`missing_source_guid:${card.canonicalCardId}`);
+    try {
+      const expected = productNoteGuid(card.canonicalCardId);
+      if (card.productGuid && card.productGuid !== expected) {
+        errors.push(`invalid_product_guid:${card.canonicalCardId}`);
+      }
+      if (card.noteGuid === expected) errors.push(`source_guid_equals_product_guid:${card.canonicalCardId}`);
+    } catch {
+      errors.push(`invalid_canonical_card_id_for_product_guid:${card.canonicalCardId}`);
+    }
     // Prefer SnapOrtho:: paths, but real import deck paths are allowed for bootstrap pilots.
     const path = card.deckPath?.trim() ?? "";
     if (!path || path.length > 1000 || /[\u0000-\u001f]/.test(path)) {
@@ -304,7 +327,9 @@ export function validateBootstrapCards(cards: BootstrapCardInput[]): string[] {
       errors.push(`duplicate_canonical_card:${card.canonicalCardId}`);
     }
     cardIds.add(card.canonicalCardId);
-    const identity = `${card.noteGuid}:${card.cardOrdinal}`;
+    let guid = card.productGuid;
+    try { guid = guid || productNoteGuid(card.canonicalCardId); } catch { /* reported above */ }
+    const identity = `${guid ?? "invalid"}:${card.cardOrdinal}`;
     if (guids.has(identity)) errors.push(`duplicate_guid_ordinal:${identity}`);
     guids.add(identity);
   }

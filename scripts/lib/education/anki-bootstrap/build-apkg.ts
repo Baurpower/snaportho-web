@@ -20,7 +20,9 @@ import {
   MARKER_ID,
   MARKER_VERSION,
   PERSONAL_NOTES_FIELD,
+  PRODUCT_GUID_SCHEME,
   SNAPORTHO_MASTER_NOTE_TYPE,
+  productNoteGuid,
   stableAnkiId,
   validateBootstrapCards,
   type BootstrapCardInput,
@@ -56,6 +58,7 @@ export type BootstrapBuildResult = {
   mediaCount: number;
   fieldOrder: string[];
   modelId: number;
+  identityScheme: typeof PRODUCT_GUID_SCHEME;
   warnings: string[];
 };
 
@@ -352,7 +355,7 @@ function writeCollectionSqlite(
       const tags = formatAnkiTags(card.centralTags ?? []);
       insertNote.run(
         noteId,
-        card.noteGuid,
+        card.productGuid ?? productNoteGuid(card.canonicalCardId),
         modelId,
         mod,
         tags,
@@ -480,6 +483,17 @@ export function buildBootstrapApkg(input: BootstrapBuildInput): BootstrapBuildRe
       cwd: tempDir,
       stdio: "ignore",
     });
+    const auditDb = new DatabaseSync(sqlitePath, { readOnly: true });
+    try {
+      const rows = auditDb.prepare("select guid from notes").all() as Array<{ guid: string }>;
+      const sourceGuids = new Set(included.map((card) => card.noteGuid));
+      if (rows.length !== included.length) throw new Error("bootstrap_audit_note_count_mismatch");
+      if (new Set(rows.map((row) => row.guid)).size !== rows.length) throw new Error("bootstrap_audit_duplicate_product_guid");
+      if (rows.some((row) => sourceGuids.has(row.guid))) throw new Error("bootstrap_audit_source_guid_leak");
+      if (rows.some((row) => !row.guid.startsWith("so1_"))) throw new Error("bootstrap_audit_unknown_guid_scheme");
+    } finally {
+      auditDb.close();
+    }
     const apkgBytes = readFileSync(apkgPath);
     return {
       apkgBytes,
@@ -490,7 +504,8 @@ export function buildBootstrapApkg(input: BootstrapBuildInput): BootstrapBuildRe
       mediaCount: files.length,
       fieldOrder,
       modelId,
-      warnings,
+      identityScheme: PRODUCT_GUID_SCHEME,
+      warnings: [...warnings, `identity_scheme:${PRODUCT_GUID_SCHEME}`],
     };
   } finally {
     rmSync(tempDir, { recursive: true, force: true });

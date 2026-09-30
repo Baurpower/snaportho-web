@@ -647,7 +647,7 @@ async function main() {
       status: "draft",
       manifest_schema_version: "snaportho-deck-manifest.v1",
       manifest_checksum: placeholderChecksum,
-      minimum_addon_version: "0.7.0",
+      minimum_addon_version: "1.0.8",
       metadata: {
         purpose: "cloze_only_style_beta",
         styleVersion: SNAPORTHO_STYLE_VERSION,
@@ -822,6 +822,7 @@ async function main() {
           releaseId,
           releaseVersion,
           packageKind: mediaMap.size ? "media_complete" : "text_only",
+          identityScheme: result.identityScheme,
           cardCount: String(selected.length),
           mediaCount: String(mediaMap.size),
         },
@@ -850,6 +851,7 @@ async function main() {
     storage_bucket: awsConfig.bucket,
     delivery_metadata: {
       packageKind: mediaMap.size ? "media_complete" : "text_only",
+      identityScheme: result.identityScheme,
       cardCount: selected.length,
       mediaCount: mediaMap.size,
     },
