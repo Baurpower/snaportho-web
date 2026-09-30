@@ -2,7 +2,7 @@
 
 ## Supported runtime
 
-- Add-on: `1.0.7`
+- Add-on: `1.0.8`
 - API contract: `snaportho-anki-reviewer.v1`
 - Schema compatibility: `20260720_180000`
 - Minimum Anki: 26.05

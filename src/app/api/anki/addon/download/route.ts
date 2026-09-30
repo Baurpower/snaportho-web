@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 import { recordAnkiProductEvent } from "@/lib/analytics/anki-usage";
 import { createClient } from "@/utils/supabase/server";
 
-const ADDON_VERSION = "1.0.7";
+const ADDON_VERSION = "1.0.8";
 const ADDON_FILENAME = `snaportho-${ADDON_VERSION}.ankiaddon`;
 
 export async function GET(request: Request) {
