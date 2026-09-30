@@ -31,6 +31,9 @@ for (const source of [v2Status, v2Updates]) {
   assert.match(source, /requireAddonVersion/);
   assert.match(source, /minimum_addon_version/);
 }
+for (const invariant of [/identity_scheme/, /lineageQuery\.eq\("identity_scheme"/, /lineageQuery\.is\("identity_scheme",null\)/]) {
+  assert.match(v2Updates, invariant);
+}
 
 // Media: signed URL, published-release only, never serves excluded assets, verifies hash format.
 for (const x of [/createSignedUrl/, /"published"/, /license_status/, /excluded/, /\[a-f0-9\]\{64\}/])
@@ -56,7 +59,10 @@ for (const x of [
   /createSignedUrl/,
   /"published"/,
   /deviceAuth/,
+  /requireAddonVersion/,
   /checksum/,
+  /unsafe_legacy_identity/,
+  /snaportho-note-guid\.v1/,
 ])
   assert.match(bootstrap, x);
 assert.doesNotMatch(bootstrap, /canonical_cards|canonical_card_versions/);

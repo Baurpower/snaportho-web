@@ -790,6 +790,10 @@ class ReviewerTests(unittest.TestCase):
     self.notes={n.id:n for n in notes};self.db=self;self.models=self;self.decks=self
     self.updated=[];self.added=[];self.moved=[];self.ids={"SnapOrtho":1,"SnapOrtho::Sports":2}
    def list(self,sql,guid):return [n.id for n in self.notes.values() if n.guid==guid]
+   def find_notes(self,query):
+    if not query.startswith("SnapOrtho_ID:"):return[]
+    marker=query.split(":",1)[1]
+    return[n.id for n in self.notes.values()if n.get("SnapOrtho_ID")==marker]
    def get_note(self,nid):
     if nid not in self.notes:raise Exception("missing")
     return self.notes[nid]
@@ -813,6 +817,13 @@ class ReviewerTests(unittest.TestCase):
    self.assertEqual(col.moved,[]);self.assertEqual(existing["Text"],"new")
    gateway.update_tags("canonical",["mine"],payload)
    self.assertEqual(existing.tags,["mine"])
+   legacy=FakeNote(10,"marty-source-guid",{"Text":"legacy","Personal_Notes":"keep","SnapOrtho_ID":"card-1"},["favorite"],deck_id=9)
+   col.notes[10]=legacy
+   adopted_payload={"noteGuid":"so1_product","productGuid":"so1_product","canonicalCardId":"card-1","noteTypeName":"SnapOrtho Master"}
+   adopted=gateway.snapshot("canonical-adopted",adopted_payload)
+   self.assertEqual(adopted["ankiNoteId"],10)
+   gateway.upsert_note("canonical-adopted",adopted_payload,{"Text":"adopted","Personal_Notes":"keep"},["favorite"])
+   self.assertEqual(legacy.guid,"marty-source-guid");self.assertEqual(legacy["Text"],"adopted")
    duplicate=FakeNote(8,"dup-guid",{"Text":"a"},[],deck_id=1)
    col.notes[8]=duplicate;duplicate.guid="dup-guid";existing.guid="dup-guid"
    with self.assertRaisesRegex(RuntimeError,"note_guid_ambiguous"):

@@ -77,12 +77,31 @@ class NoteCollectionGatewayV2:
     """Note-level collection adapter. Existing cards retain scheduling because notes are updated in place."""
     def __init__(self,col,store,deck_key="snaportho-master",media_payloads=None):
         self.col=col;self.store=store;self.deck_key=deck_key;self.media_payloads=media_payloads or{}
+    def _marker_note(self,payload):
+        """Adopt an existing SnapOrtho note without consulting a legacy/source GUID."""
+        marker=(payload or{}).get("canonicalCardId")
+        finder=getattr(self.col,"find_notes",None)
+        if not marker or not callable(finder):return None
+        try:ids=list(finder(f'SnapOrtho_ID:{marker}')or[])
+        except Exception:return None
+        matches=[]
+        for note_id in ids:
+            try:note=self.col.get_note(note_id)
+            except Exception:continue
+            if "SnapOrtho_ID" not in note or note["SnapOrtho_ID"]!=marker:continue
+            note_type=getattr(note,"note_type",None)
+            if callable(note_type)and(note_type()or{}).get("name")!="SnapOrtho Master":continue
+            matches.append(note)
+        if len(matches)>1:raise RuntimeError("snaportho_marker_ambiguous")
+        return matches[0]if matches else None
     def _note(self,canonical_note_id,payload=None):
         baseline=self.store.note_baseline(canonical_note_id,self.deck_key)
         if baseline:
             try:return self.col.get_note(baseline["ankiNoteId"])
             except Exception:pass
-        guid=(payload or{}).get("noteGuid") or (baseline or{}).get("noteGuid")
+        adopted=self._marker_note(payload)
+        if adopted:return adopted
+        guid=(payload or{}).get("productGuid")or(payload or{}).get("noteGuid")or(baseline or{}).get("noteGuid")
         if guid:
             ids=self.col.db.list("select id from notes where guid=?",guid) or []
             if len(ids)>1:raise RuntimeError("note_guid_ambiguous")
@@ -97,7 +116,7 @@ class NoteCollectionGatewayV2:
         if created:
             notetype=self.col.models.by_name(payload["noteTypeName"])
             if not notetype:raise RuntimeError("note_type_missing")
-            note=self.col.new_note(notetype);note.guid=payload["noteGuid"]
+            note=self.col.new_note(notetype);note.guid=payload.get("productGuid")or payload["noteGuid"]
         for name,value in fields.items():
             if name in note:note[name]=value
         note.tags=sorted(set(tags))

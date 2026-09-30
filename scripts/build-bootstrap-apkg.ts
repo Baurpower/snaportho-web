@@ -293,6 +293,7 @@ async function registerArtifact(
     artifactChecksum: string;
     cardCount: number;
     mediaCount: number;
+    identityScheme: string;
   },
   releaseVersion: string,
 ): Promise<void> {
@@ -309,6 +310,7 @@ async function registerArtifact(
       releaseId,
       releaseVersion,
       packageKind: result.mediaCount ? "media_complete" : "text_only",
+      identityScheme: result.identityScheme,
     },
     env,
   });
@@ -328,6 +330,7 @@ async function registerArtifact(
         storage_bucket: aws.bucket,
         delivery_metadata: {
           packageKind: result.mediaCount ? "media_complete" : "text_only",
+          identityScheme: result.identityScheme,
           cardCount: result.cardCount,
           mediaCount: result.mediaCount,
         },
@@ -378,6 +381,7 @@ async function main() {
     noteCount: result.noteCount,
     cardCount: result.cardCount,
     mediaCount: result.mediaCount,
+    identityScheme: result.identityScheme,
     fieldOrder: result.fieldOrder,
     warnings: result.warnings,
     releaseId: buildInput.release.id,

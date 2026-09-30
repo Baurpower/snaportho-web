@@ -435,7 +435,7 @@ async function main() {
       status: "draft",
       manifest_schema_version: "snaportho-deck-manifest.v1",
       manifest_checksum: placeholderChecksum,
-      minimum_addon_version: "0.7.0",
+      minimum_addon_version: "1.0.8",
       metadata: {
         purpose: "pilot_bootstrap_download",
         card_count: selected.length,
@@ -578,6 +578,7 @@ async function main() {
       releaseId,
       releaseVersion,
       packageKind: "media_complete",
+      identityScheme: result.identityScheme,
     },
     env: awsEnv,
   });
@@ -595,6 +596,7 @@ async function main() {
     storage_bucket: awsConfig.bucket,
     delivery_metadata: {
       packageKind: "media_complete",
+      identityScheme: result.identityScheme,
       cardCount: selected.length,
       mediaCount: mediaMap.size,
     },

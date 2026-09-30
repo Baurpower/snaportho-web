@@ -14,13 +14,17 @@ export async function GET(request:Request){
   const url=new URL(request.url),parsed=query.safeParse(Object.fromEntries(url.searchParams));
   if(!parsed.success)return NextResponse.json({error:"invalid v2 cursor request"},{status:400});
   const{data:release,error:releaseError}=await db.from("anki_sync_v2_releases")
-    .select("id,release_sequence,release_version,aggregate_checksum,expected_note_count,expected_card_count,expected_media_count,minimum_addon_version")
+    .select("id,release_sequence,release_version,aggregate_checksum,expected_note_count,expected_card_count,expected_media_count,minimum_addon_version,identity_scheme")
     .eq("status","published").order("release_sequence",{ascending:false}).limit(1).maybeSingle();
   if(releaseError)return NextResponse.json({error:"v2 release lookup unavailable"},{status:500});
   if(!release)return NextResponse.json({error:"no published SnapOrtho sync v2 release"},{status:404});
   const blocked=requireAddonVersion(request,release.minimum_addon_version);if(blocked)return blocked;
-  const{data:lineage,error:lineageError}=await db.from("anki_sync_v2_releases")
+  let lineageQuery=db.from("anki_sync_v2_releases")
     .select("id").in("status",["published","superseded"]).lte("release_sequence",release.release_sequence);
+  lineageQuery=release.identity_scheme
+    ?lineageQuery.eq("identity_scheme",release.identity_scheme)
+    :lineageQuery.is("identity_scheme",null);
+  const{data:lineage,error:lineageError}=await lineageQuery;
   if(lineageError)return NextResponse.json({error:"v2 release lineage unavailable"},{status:500});
   const releaseIds=(lineage??[]).map((row:any)=>row.id);
   const{data,error,count}=await db.from("anki_sync_v2_delta_operations")
