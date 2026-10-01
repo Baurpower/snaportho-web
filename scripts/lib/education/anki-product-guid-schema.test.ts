@@ -34,6 +34,7 @@ for (const invariant of [
 
 for (const invariant of [
   /SUPABASE_PAGE_SIZE = 1_000/,
+  /MEDIA_DOWNLOAD_CONCURRENCY = 8/,
   /loadAllRows<any>\("members_lookup_failed"/,
   /loadAllRows<any>\("media_lookup_failed"/,
   /loadAllRows<any>\("tag_members_lookup_failed"/,

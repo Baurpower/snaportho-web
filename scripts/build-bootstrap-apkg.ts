@@ -30,6 +30,7 @@ import {
 
 const ANKI_DECK_MEDIA_BUCKET = "anki-deck-media";
 const SUPABASE_PAGE_SIZE = 1_000;
+const MEDIA_DOWNLOAD_CONCURRENCY = 8;
 
 async function loadAllRows<T>(
   label: string,
@@ -204,9 +205,9 @@ async function loadFromRelease(
     for (const h of card.mediaHashes) needed.add(h);
   }
 
+  const neededAssets = manifest.media.filter((asset) => needed.has(asset.content_sha256));
   const media: BootstrapMediaInput[] = [];
-  for (const asset of manifest.media) {
-    if (!needed.has(asset.content_sha256)) continue;
+  async function downloadMedia(asset: (typeof neededAssets)[number]): Promise<BootstrapMediaInput> {
     let bytes: Buffer;
     if (asset.storage_provider === AWS_STORAGE_PROVIDER) {
       bytes = await downloadAnkiAwsObject(asset.object_key, runtimeEnv());
@@ -225,11 +226,16 @@ async function loadFromRelease(
     if (digest !== asset.content_sha256) {
       throw new Error(`media_hash_mismatch:${asset.logical_filename}`);
     }
-    media.push({
+    return {
       contentSha256: asset.content_sha256,
       logicalFilename: asset.logical_filename,
       bytes,
-    });
+    };
+  }
+  for (let offset = 0; offset < neededAssets.length; offset += MEDIA_DOWNLOAD_CONCURRENCY) {
+    media.push(...await Promise.all(
+      neededAssets.slice(offset, offset + MEDIA_DOWNLOAD_CONCURRENCY).map(downloadMedia),
+    ));
   }
 
   return {
