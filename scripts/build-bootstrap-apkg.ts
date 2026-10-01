@@ -29,6 +29,20 @@ import {
 } from "../src/lib/education/anki-aws-storage.ts";
 
 const ANKI_DECK_MEDIA_BUCKET = "anki-deck-media";
+const SUPABASE_PAGE_SIZE = 1_000;
+
+async function loadAllRows<T>(
+  label: string,
+  queryPage: (from: number, to: number) => PromiseLike<{ data: T[] | null; error: { message: string } | null }>,
+): Promise<T[]> {
+  const rows: T[] = [];
+  for (let from = 0; ; from += SUPABASE_PAGE_SIZE) {
+    const { data, error } = await queryPage(from, from + SUPABASE_PAGE_SIZE - 1);
+    if (error) throw new Error(`${label}:${error.message}`);
+    rows.push(...(data ?? []));
+    if (!data || data.length < SUPABASE_PAGE_SIZE) return rows;
+  }
+}
 
 function arg(name: string): string | undefined {
   return process.argv
@@ -106,51 +120,40 @@ async function loadFromRelease(
     );
   }
 
-  const { data: members, error: memberError } = await supabase
-    .from("anki_deck_release_cards")
-    .select(
+  const members = await loadAllRows<any>("members_lookup_failed", (from, to) =>
+    supabase.from("anki_deck_release_cards").select(
       "canonical_card_id,canonical_card_version_id,note_guid,card_ordinal,native_card_id_hint,content_hash,deck_path,ordering_key,inclusion_status",
-    )
-    .eq("deck_release_id", releaseId)
-    .order("ordering_key");
-  if (memberError)
-    throw new Error(`members_lookup_failed:${memberError.message}`);
+    ).eq("deck_release_id", releaseId).order("ordering_key").range(from, to),
+  );
 
-  const versionIds = (members ?? []).map((m) => m.canonical_card_version_id);
-  const { data: versions } = versionIds.length
-    ? await supabase
-        .from("canonical_card_versions")
-        .select(
-          "id,canonical_card_id,content_hash,field_snapshot,tag_snapshot,source_note_id,version_number",
-        )
-        .in("id", versionIds)
-    : { data: [] as any[] };
+  const versionIds = members.map((m) => m.canonical_card_version_id);
+  const versions: any[] = [], mappings: any[] = [];
+  for (let offset = 0; offset < versionIds.length; offset += 100) {
+    const ids = versionIds.slice(offset, offset + 100);
+    const { data: versionPage, error: versionError } = await supabase.from("canonical_card_versions")
+      .select("id,canonical_card_id,content_hash,field_snapshot,tag_snapshot,source_note_id,version_number").in("id", ids);
+    if (versionError) throw new Error(`versions_lookup_failed:${versionError.message}`);
+    versions.push(...(versionPage ?? []));
+    const { data: mappingPage, error: mappingError } = await supabase.from("anki_card_entity_version_mappings")
+      .select("canonical_card_version_id,canonical_entity_id,reviewer_mapping_role").in("canonical_card_version_id", ids)
+      .eq("production_eligible", true).eq("lifecycle_status", "approved");
+    if (mappingError) throw new Error(`mappings_lookup_failed:${mappingError.message}`);
+    mappings.push(...(mappingPage ?? []));
+  }
 
-  const { data: mappings } = versionIds.length
-    ? await supabase
-        .from("anki_card_entity_version_mappings")
-        .select(
-          "canonical_card_version_id,canonical_entity_id,reviewer_mapping_role",
-        )
-        .in("canonical_card_version_id", versionIds)
-        .eq("production_eligible", true)
-        .eq("lifecycle_status", "approved")
-    : { data: [] as any[] };
-
-  const { data: mediaRows } = await supabase
-    .from("anki_deck_media_assets")
-    .select(
+  const mediaRows = await loadAllRows<any>("media_lookup_failed", (from, to) =>
+    supabase.from("anki_deck_media_assets").select(
       "canonical_card_version_id,logical_filename,content_sha256,mime_type,byte_size,object_key,license_status,storage_provider,storage_bucket",
-    )
-    .eq("deck_release_id", releaseId)
-    .neq("license_status", "excluded");
+    ).eq("deck_release_id", releaseId).neq("license_status", "excluded")
+      .order("logical_filename").range(from, to),
+  );
 
   const manifest = assembleDeckSyncManifest({
     release,
-    members: members ?? [],
-    versions: versions ?? [],
-    mappings: mappings ?? [],
-    media: mediaRows ?? [],
+    members,
+    versions,
+    mappings,
+    media: mediaRows,
   });
 
   // First installs must contain the same governed tags that subsequent v2
@@ -166,13 +169,12 @@ async function loadFromRelease(
   if (tagReleaseError) throw new Error(`tag_release_lookup_failed:${tagReleaseError.message}`);
   const governedTagsByGuid = new Map<string, string[]>();
   if (tagRelease) {
-    const { data: tagMembers, error: tagMemberError } = await supabase
-      .from("anki_sync_v2_release_notes")
-      .select("note_id,note_version_id")
-      .eq("release_id", tagRelease.id);
-    if (tagMemberError) throw new Error(`tag_members_lookup_failed:${tagMemberError.message}`);
-    const noteIds = (tagMembers ?? []).map((row) => row.note_id);
-    const versionIdsForTags = (tagMembers ?? []).map((row) => row.note_version_id);
+    const tagMembers = await loadAllRows<any>("tag_members_lookup_failed", (from, to) =>
+      supabase.from("anki_sync_v2_release_notes").select("note_id,note_version_id")
+        .eq("release_id", tagRelease.id).order("ordering_key").range(from, to),
+    );
+    const noteIds = tagMembers.map((row) => row.note_id);
+    const versionIdsForTags = tagMembers.map((row) => row.note_version_id);
     const noteRows: any[] = [], tagVersions: any[] = [];
     for (let offset = 0; offset < noteIds.length; offset += 100) {
       const { data, error: noteError } = await supabase.from("anki_sync_v2_notes")
@@ -188,7 +190,7 @@ async function loadFromRelease(
     }
     const guidByNoteId = new Map(noteRows.map((row) => [row.id, String(row.stable_guid)]));
     const tagsByVersionId = new Map(tagVersions.map((row) => [row.id, (row.governed_tags ?? []).map(String)]));
-    for (const member of tagMembers ?? []) {
+    for (const member of tagMembers) {
       const guid = guidByNoteId.get(member.note_id);
       const tags = tagsByVersionId.get(member.note_version_id);
       if (guid && tags) governedTagsByGuid.set(guid, tags);

@@ -11,6 +11,10 @@ const publisher = readFileSync(
   path.join(root, "scripts/publish-anki-note-sync-v2-release.ts"),
   "utf8",
 );
+const bootstrapPublisher = readFileSync(
+  path.join(root, "scripts/build-bootstrap-apkg.ts"),
+  "utf8",
+);
 
 for (const invariant of [
   /source_guid text/,
@@ -27,5 +31,13 @@ for (const invariant of [
   /onConflict:"source_guid"/,
   /minimum_addon_version:"1\.0\.8"/,
 ]) assert.match(publisher, invariant);
+
+for (const invariant of [
+  /SUPABASE_PAGE_SIZE = 1_000/,
+  /loadAllRows<any>\("members_lookup_failed"/,
+  /loadAllRows<any>\("media_lookup_failed"/,
+  /loadAllRows<any>\("tag_members_lookup_failed"/,
+  /\.range\(from, to\)/,
+]) assert.match(bootstrapPublisher, invariant);
 
 console.log("anki-product-guid-schema.test.ts: all assertions passed");
