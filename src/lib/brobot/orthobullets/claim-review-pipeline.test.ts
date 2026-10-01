@@ -3,8 +3,8 @@ import { isObProdExtraction } from './claim-extraction-contract-v1';
 import { runProductionExtraction } from './claim-review-pipeline';
 import { deterministicSamplingParams } from './openai-model-compat';
 
-assert.deepEqual(deterministicSamplingParams('gpt-5-nano'), {});
-assert.deepEqual(deterministicSamplingParams('GPT-5.1'), {});
+assert.deepEqual(deterministicSamplingParams('gpt-5-nano'), { reasoning_effort: 'low' });
+assert.deepEqual(deterministicSamplingParams('GPT-5.1'), { reasoning_effort: 'low' });
 assert.deepEqual(deterministicSamplingParams('gpt-4o'), { temperature: 0 });
 
 const PACKET = {
