@@ -435,7 +435,8 @@ function baseConfig(overrides: Partial<ObRunnerConfig> = {}): ObRunnerConfig {
     specialtyFilter: null, questionFilter: null,
     models: { generator: 'g', reviewer: 'r', coverage: 'c', repair: 'p', validator: 'v', resolution: 'e' },
     costPer1kPromptUsd: 0.0025, costPer1kCompletionUsd: 0.01,
-    backoffBaseSeconds: 30, backoffCapSeconds: 1800, heartbeatDivider: 3, interItemDelayMs: 0,
+    backoffBaseSeconds: 30, backoffCapSeconds: 1800, heartbeatDivider: 3,
+    requestTimeoutMs: 120_000, interItemDelayMs: 0,
     ...overrides,
   };
 }
@@ -980,6 +981,7 @@ function seedRegistry(db: FakeDb, qid: string, id = '11111111-1111-4111-8111-111
 {
   assert.throws(() => validateObRunnerConfig(baseConfig({ interItemDelayMs: Number.NaN })), /interItemDelayMs/);
   assert.throws(() => validateObRunnerConfig(baseConfig({ leaseSeconds: 0 })), /leaseSeconds/);
+  assert.throws(() => validateObRunnerConfig(baseConfig({ requestTimeoutMs: 0 })), /requestTimeoutMs/);
   assert.throws(() => validateObRunnerConfig(baseConfig({
     limits: { maxQuestions: 1.5, maxErrors: 0, maxCostUsd: 0, maxConsecutiveFailures: 10 },
   })), /maxQuestions/);

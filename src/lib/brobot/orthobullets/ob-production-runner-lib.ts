@@ -89,6 +89,8 @@ export type ObRunnerConfig = {
   backoffBaseSeconds: number;
   backoffCapSeconds: number;
   heartbeatDivider: number;
+  /** Per-model-call timeout in milliseconds. */
+  requestTimeoutMs: number;
   /** Pause between leased items (ms). 0 = none. Paces model-call bursts. */
   interItemDelayMs: number;
 };
@@ -112,6 +114,7 @@ export function validateObRunnerConfig(config: ObRunnerConfig): void {
     ['maxCostUsd', config.limits.maxCostUsd],
     ['maxConsecutiveFailures', config.limits.maxConsecutiveFailures],
     ['interItemDelayMs', config.interItemDelayMs],
+    ['requestTimeoutMs', config.requestTimeoutMs],
     ['costPer1kPromptUsd', config.costPer1kPromptUsd],
     ['costPer1kCompletionUsd', config.costPer1kCompletionUsd],
   ];
@@ -125,6 +128,9 @@ export function validateObRunnerConfig(config: ObRunnerConfig): void {
     throw new Error('leaseSeconds must be a positive integer');
   }
   if (!Number.isInteger(config.interItemDelayMs)) throw new Error('interItemDelayMs must be an integer');
+  if (!Number.isInteger(config.requestTimeoutMs) || config.requestTimeoutMs <= 0) {
+    throw new Error('requestTimeoutMs must be a positive integer');
+  }
   if (!Number.isFinite(config.backoffBaseSeconds) || config.backoffBaseSeconds < 0) throw new Error('backoffBaseSeconds must be nonnegative');
   if (!Number.isFinite(config.backoffCapSeconds) || config.backoffCapSeconds < config.backoffBaseSeconds) {
     throw new Error('backoffCapSeconds must be at least backoffBaseSeconds');
@@ -413,6 +419,7 @@ async function processPacketDryRun(
       repair: config.models.repair, validator: config.models.validator,
     },
     now: deps.now,
+    requestTimeoutMs: config.requestTimeoutMs,
   });
   if (!result.ok) {
     for (const stage of Object.values(result.usage)) {
@@ -579,6 +586,7 @@ async function processLeasedItem(
       attemptNo,
       supersedesAttemptId,
       now: deps.now,
+      requestTimeoutMs: config.requestTimeoutMs,
     });
     if (heartbeatFailed) {
       return { ...base, outcome: 'failed', diagnostic: 'lease_lost', claimsAccepted: 0, ...usageOf() };

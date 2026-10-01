@@ -341,6 +341,7 @@ async function main(): Promise<void> {
       backoffBaseSeconds: 30,
       backoffCapSeconds: 1800,
       heartbeatDivider: 3,
+      requestTimeoutMs: Number(args.get('--request-timeout-ms') ?? '120000'),
       interItemDelayMs: Number(args.get('--inter-item-delay-ms') ?? '0'),
     },
   );
