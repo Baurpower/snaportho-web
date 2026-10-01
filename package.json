@@ -236,6 +236,9 @@
     "education:ob:claims:identity:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/orthobullets/ob-question-identity.test.ts",
     "education:ob:claims:resolution:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/orthobullets/ob-claim-resolution.test.ts",
     "education:ob:claims:runner:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/orthobullets/ob-production-runner-lib.test.ts",
+    "education:ob:claims:ops:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs scripts/discover-ob-registry-questions.test.ts && node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs scripts/audit-ob-claims-canary.test.ts",
+    "education:ob:claims:typecheck": "tsc --noEmit -p tsconfig.ob-claims.json",
+    "ob:claims:integrity": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs scripts/audit-ob-claims-integrity.ts",
     "education:ob:claims:stability": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs scripts/eval-ob-claims-stability.ts"
   },
   "dependencies": {

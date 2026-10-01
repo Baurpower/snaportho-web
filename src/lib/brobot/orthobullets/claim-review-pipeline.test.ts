@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
 import { isObProdExtraction } from './claim-extraction-contract-v1';
 import { runProductionExtraction } from './claim-review-pipeline';
+import { deterministicSamplingParams } from './openai-model-compat';
+
+assert.deepEqual(deterministicSamplingParams('gpt-5-nano'), {});
+assert.deepEqual(deterministicSamplingParams('GPT-5.1'), {});
+assert.deepEqual(deterministicSamplingParams('gpt-4o'), { temperature: 0 });
 
 const PACKET = {
   stem: 'Which nerve is most commonly injured in fractures of the humeral shaft?',
@@ -221,6 +226,28 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
   if (!result.ok) throw new Error('unreachable');
   assert.equal(result.extraction.finalState, 'accepted');
   assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 1);
+  assert.equal(isObProdExtraction(result.extraction), true);
+  // Residual verdict describes the persisted post-drop set; original preserved.
+  assert.equal(result.extraction.coverage.verdict, 'complete');
+  assert.match(result.extraction.coverage.notes, /coverage overextracted; dropped survivor indices 1/);
+  assert.equal(result.extraction.candidates.find((c) => !c.accepted)?.validator.reason, 'dropped:coverage_drop');
+}
+
+// 8b. Internally conflicting with drops: pruned then accepted, contract-valid.
+{
+  const coverage = JSON.stringify({
+    verdict: 'internally_conflicting', notes: 'clash', missing_concepts: [],
+    drop_indices: [1], importance_changes: [],
+  });
+  const client = stubClient([generatorTwo, reviewGood, coverage, validatorAccept]);
+  const result = await runProductionExtraction(PACKET, SOURCE, { client: client as never, models: MODELS });
+  assert.equal(result.ok, true);
+  if (!result.ok) throw new Error('unreachable');
+  assert.equal(result.extraction.finalState, 'accepted');
+  assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 1);
+  assert.equal(isObProdExtraction(result.extraction), true);
+  assert.equal(result.extraction.coverage.verdict, 'complete');
+  assert.match(result.extraction.coverage.notes, /coverage internally_conflicting; dropped survivor indices 1/);
 }
 
 // 9. Validator abstains: unresolved.

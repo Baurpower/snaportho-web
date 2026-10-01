@@ -8,7 +8,7 @@
 
 import {
   exactDurableIdentity,
-  isObProdExtraction,
+  explainObProdExtraction,
   OB_PROD_ALGORITHM,
   OB_PROD_PROMPT_SET,
   type ObProdExtraction,
@@ -89,6 +89,8 @@ export type ObRunnerConfig = {
   backoffBaseSeconds: number;
   backoffCapSeconds: number;
   heartbeatDivider: number;
+  /** Pause between leased items (ms). 0 = none. Paces model-call bursts. */
+  interItemDelayMs: number;
 };
 
 export type ObRunnerItemReport = {
@@ -96,11 +98,39 @@ export type ObRunnerItemReport = {
   itemId: string | null;
   outcome: string;
   diagnostic: string | null;
+  reasonCodes?: string[];
   claimsAccepted: number;
   promptTokens: number;
   completionTokens: number;
   estimatedCostUsd: number;
 };
+
+export function validateObRunnerConfig(config: ObRunnerConfig): void {
+  const finiteNonnegative: Array<[string, number]> = [
+    ['maxQuestions', config.limits.maxQuestions],
+    ['maxErrors', config.limits.maxErrors],
+    ['maxCostUsd', config.limits.maxCostUsd],
+    ['maxConsecutiveFailures', config.limits.maxConsecutiveFailures],
+    ['interItemDelayMs', config.interItemDelayMs],
+    ['costPer1kPromptUsd', config.costPer1kPromptUsd],
+    ['costPer1kCompletionUsd', config.costPer1kCompletionUsd],
+  ];
+  for (const [name, value] of finiteNonnegative) {
+    if (!Number.isFinite(value) || value < 0) throw new Error(`${name} must be a finite nonnegative number`);
+  }
+  for (const [name, value] of [finiteNonnegative[0], finiteNonnegative[1], finiteNonnegative[3]]) {
+    if (!Number.isInteger(value)) throw new Error(`${name} must be an integer`);
+  }
+  if (!Number.isInteger(config.leaseSeconds) || config.leaseSeconds <= 0) {
+    throw new Error('leaseSeconds must be a positive integer');
+  }
+  if (!Number.isInteger(config.interItemDelayMs)) throw new Error('interItemDelayMs must be an integer');
+  if (!Number.isFinite(config.backoffBaseSeconds) || config.backoffBaseSeconds < 0) throw new Error('backoffBaseSeconds must be nonnegative');
+  if (!Number.isFinite(config.backoffCapSeconds) || config.backoffCapSeconds < config.backoffBaseSeconds) {
+    throw new Error('backoffCapSeconds must be at least backoffBaseSeconds');
+  }
+  if (!Number.isFinite(config.heartbeatDivider) || config.heartbeatDivider <= 0) throw new Error('heartbeatDivider must be positive');
+}
 
 export type ObRunnerReport = {
   runId: string | null;
@@ -108,7 +138,11 @@ export type ObRunnerReport = {
   apply: boolean;
   startedAt: string;
   completedAt: string;
+  /** Lease completions checkpointed (retries count repeatedly). */
   processed: number;
+  /** Unique questions checkpointed. */
+  questions: number;
+  /** Per-question FINAL outcomes: only the last checkpoint per question counts. */
   outcomes: Record<string, number>;
   promptTokens: number;
   completionTokens: number;
@@ -139,19 +173,68 @@ function isTerminalDbError(error: unknown): boolean {
   return /check_violation|contract\/algorithm mismatch|not adoptable|extraction identity mismatch|reuse target failed identity/i.test(message);
 }
 
+const OB_RUNNER_MAX_CONTRACT_CODES = 5;
+
+/** Stable reason codes for a contract rejection (capped, length-bounded). */
+export function contractReasonCodesForViolations(violations: string[]): string[] {
+  return ['contract_rejected', ...violations.slice(0, OB_RUNNER_MAX_CONTRACT_CODES).map((code) => `contract:${code.slice(0, 80)}`)];
+}
+
+export function contractRejectionReasonCodes(value: unknown): string[] {
+  return contractReasonCodesForViolations(explainObProdExtraction(value));
+}
+
+const CONTENT_SAFETY_CODE_RE = /_safety:/;
+
+/**
+ * Content-safety rejections (LLM-produced text the DB CHECK cannot store)
+ * are retryable: fresh model outputs. Any shape violation means a pipeline
+ * bug, which retries cannot fix.
+ */
+export function isContentSafetyRejection(violations: string[]): boolean {
+  return violations.length > 0 && violations.every((code) => CONTENT_SAFETY_CODE_RE.test(code));
+}
+
+/** Single-line, length-bounded reason detail (mirrors the rpc: precedent). */
+export function sanitizeReasonDetail(message: string, maxLength = 160): string {
+  return message.replace(/\s+/g, ' ').trim().slice(0, maxLength);
+}
+
+/** Sum stage usage tolerantly: only valid non-negative integers count. */
+export function tolerantUsageTotals(usage: unknown): { promptTokens: number; completionTokens: number } {
+  let promptTokens = 0;
+  let completionTokens = 0;
+  if (!usage || typeof usage !== 'object' || Array.isArray(usage)) return { promptTokens, completionTokens };
+  for (const stage of Object.values(usage as Record<string, unknown>)) {
+    if (!stage || typeof stage !== 'object' || Array.isArray(stage)) continue;
+    const record = stage as Record<string, unknown>;
+    if (Number.isInteger(record.promptTokens) && (record.promptTokens as number) >= 0) promptTokens += record.promptTokens as number;
+    if (Number.isInteger(record.completionTokens) && (record.completionTokens as number) >= 0) {
+      completionTokens += record.completionTokens as number;
+    }
+  }
+  return { promptTokens, completionTokens };
+}
+
 export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig): Promise<ObRunnerReport> {
+  validateObRunnerConfig(config);
   const startedAt = deps.now();
   const report: ObRunnerReport = {
     runId: null, mode: config.mode, apply: config.apply, startedAt, completedAt: startedAt,
-    processed: 0, outcomes: {}, promptTokens: 0, completionTokens: 0, estimatedCostUsd: 0,
+    processed: 0, questions: 0, outcomes: {}, promptTokens: 0, completionTokens: 0, estimatedCostUsd: 0,
     stoppedBy: null, items: [],
-  };
-  const bumpOutcome = (outcome: string) => {
-    report.outcomes[outcome] = (report.outcomes[outcome] ?? 0) + 1;
   };
   const finish = (stoppedBy: string | null): ObRunnerReport => {
     report.completedAt = deps.now();
     report.stoppedBy = stoppedBy;
+    // Per-question FINAL outcomes: retries checkpoint one row per attempt, but
+    // only the last checkpoint per question counts toward outcomes.
+    const finalByQuestion = new Map<string, string>();
+    for (const entry of report.items) finalByQuestion.set(entry.nativeQuestionId, entry.outcome);
+    const outcomes: Record<string, number> = {};
+    for (const outcome of finalByQuestion.values()) outcomes[outcome] = (outcomes[outcome] ?? 0) + 1;
+    report.outcomes = outcomes;
+    report.questions = finalByQuestion.size;
     return report;
   };
 
@@ -208,7 +291,6 @@ export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig
     report.promptTokens += entry.promptTokens;
     report.completionTokens += entry.completionTokens;
     report.estimatedCostUsd += entry.estimatedCostUsd;
-    bumpOutcome(entry.outcome);
     deps.onCheckpoint(entry);
   };
 
@@ -228,6 +310,7 @@ export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig
       if (config.limits.maxConsecutiveFailures > 0 && consecutiveFailures >= config.limits.maxConsecutiveFailures) {
         return finish('max_consecutive_failures');
       }
+      if (config.interItemDelayMs > 0) await deps.sleep(config.interItemDelayMs);
     }
     return finish('queue_empty');
   }
@@ -281,6 +364,7 @@ export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig
     if (config.limits.maxConsecutiveFailures > 0 && consecutiveFailures >= config.limits.maxConsecutiveFailures) {
       return finish('max_consecutive_failures');
     }
+    if (config.interItemDelayMs > 0) await deps.sleep(config.interItemDelayMs);
   }
 }
 
@@ -331,7 +415,29 @@ async function processPacketDryRun(
     now: deps.now,
   });
   if (!result.ok) {
-    return { ...base, outcome: 'failed', diagnostic: result.diagnostic, claimsAccepted: 0, promptTokens: 0, completionTokens: 0, estimatedCostUsd: 0 };
+    for (const stage of Object.values(result.usage)) {
+      promptTokens += stage.promptTokens;
+      completionTokens += stage.completionTokens;
+    }
+    const modelDetail = sanitizeReasonDetail(result.detail ?? '');
+    return {
+      ...base, outcome: 'failed', diagnostic: result.diagnostic,
+      reasonCodes: modelDetail ? ['extraction_failed', `model:${modelDetail}`] : ['extraction_failed'],
+      claimsAccepted: 0,
+      promptTokens, completionTokens, estimatedCostUsd: costOf(promptTokens, completionTokens),
+    };
+  }
+  // Dry run mirrors the apply gate: a pipeline output the contract rejects is a
+  // would-be safety failure, never a silent would-accept.
+  if (explainObProdExtraction(result.extraction).length > 0) {
+    const salvaged = tolerantUsageTotals((result.extraction as unknown as Record<string, unknown> | null)?.usage);
+    promptTokens += salvaged.promptTokens;
+    completionTokens += salvaged.completionTokens;
+    return {
+      ...base, outcome: 'failed', diagnostic: 'safety_violation',
+      reasonCodes: contractRejectionReasonCodes(result.extraction), claimsAccepted: 0,
+      promptTokens, completionTokens, estimatedCostUsd: costOf(promptTokens, completionTokens),
+    };
   }
   for (const stage of Object.values(result.extraction.usage)) {
     promptTokens += stage.promptTokens;
@@ -488,9 +594,11 @@ async function processLeasedItem(
         promptTokens += stage.promptTokens;
         completionTokens += stage.completionTokens;
       }
+      const modelDetail = sanitizeReasonDetail(result.detail ?? '');
       await db.completeItem({
         itemId: leased.itemId, workerId: config.workerId, status, diagnostic: result.diagnostic,
-        reasonCodes: ['extraction_failed'], usage: usageOf(), nextAttemptAt,
+        reasonCodes: modelDetail ? ['extraction_failed', `model:${modelDetail}`] : ['extraction_failed'],
+        usage: usageOf(), nextAttemptAt,
         identity: {
           outcome: identity.outcome, registryQuestionId: identity.registryQuestionId,
           method: identity.method, confidence: identity.confidence, evidence: identity.evidence,
@@ -501,13 +609,33 @@ async function processLeasedItem(
     }
 
     let extraction = result.extraction;
-    if (!isObProdExtraction(extraction)) {
+    const contractViolations = explainObProdExtraction(extraction);
+    if (contractViolations.length > 0) {
+      const reasonCodes = contractReasonCodesForViolations(contractViolations);
+      const salvaged = tolerantUsageTotals((extraction as unknown as Record<string, unknown> | null)?.usage);
+      promptTokens += salvaged.promptTokens;
+      completionTokens += salvaged.completionTokens;
+      // Content-safety rejections are retryable (fresh model outputs); shape
+      // violations indicate a pipeline bug and are terminal.
+      if (isContentSafetyRejection(contractViolations)) {
+        await db.completeItem({
+          itemId: leased.itemId, workerId: config.workerId, status: 'failed_transient',
+          diagnostic: 'safety_violation', reasonCodes, usage: usageOf(),
+          nextAttemptAt: new Date(deps.nowMs() + backoffDelayMs(leased.attemptCount, config.backoffBaseSeconds, config.backoffCapSeconds, deps.random)).toISOString(),
+          identity: {
+            outcome: identity.outcome, registryQuestionId: identity.registryQuestionId,
+            method: identity.method, confidence: identity.confidence, evidence: identity.evidence,
+            locator: identity.locator, conflictingIds: identity.conflictingIds,
+          },
+        });
+        return { ...base, outcome: 'failed', diagnostic: 'safety_violation', reasonCodes, claimsAccepted: 0, ...usageOf() };
+      }
       await db.completeItem({
         itemId: leased.itemId, workerId: config.workerId, status: 'failed_permanent',
-        diagnostic: 'safety_violation', reasonCodes: ['contract_rejected'], usage: usageOf(),
+        diagnostic: 'safety_violation', reasonCodes, usage: usageOf(),
         nextAttemptAt: null, identity: null,
       });
-      return { ...base, outcome: 'failed', diagnostic: 'safety_violation', claimsAccepted: 0, ...usageOf() };
+      return { ...base, outcome: 'failed', diagnostic: 'safety_violation', reasonCodes, claimsAccepted: 0, ...usageOf() };
     }
     for (const stage of Object.values(extraction.usage)) {
       promptTokens += stage.promptTokens;
@@ -585,16 +713,19 @@ async function processLeasedItem(
         return { ...base, outcome: 'failed', diagnostic: 'lease_lost', claimsAccepted: 0, ...usageOf() };
       }
       if (isTerminalDbError(error)) {
+        const terminalDetail = message.replace(/\s+/g, ' ').trim().slice(0, 160);
         await db.completeItem({
           itemId: leased.itemId, workerId: config.workerId, status: 'failed_permanent',
-          diagnostic: 'persistence_failed', reasonCodes: ['persist_rejected'],
+          diagnostic: 'persistence_failed', reasonCodes: ['persist_rejected', `rpc:${terminalDetail}`],
           usage: usageOf(), nextAttemptAt: null, identity: null,
         });
         return { ...base, outcome: 'failed', diagnostic: 'persistence_failed', claimsAccepted: 0, ...usageOf() };
       }
+      // Surface the sanitized RPC message: bare db_error is undebuggable.
+      const detail = message.replace(/\s+/g, ' ').trim().slice(0, 160);
       await db.completeItem({
         itemId: leased.itemId, workerId: config.workerId, status: 'failed_transient',
-        diagnostic: 'db_error', reasonCodes: ['persist_failed'],
+        diagnostic: 'db_error', reasonCodes: ['persist_failed', `rpc:${detail}`],
         usage: usageOf(),
         nextAttemptAt: new Date(deps.nowMs() + backoffDelayMs(leased.attemptCount, config.backoffBaseSeconds, config.backoffCapSeconds, deps.random)).toISOString(),
         identity: null,
@@ -614,7 +745,7 @@ async function processLeasedItem(
   }
 }
 
-function buildPersistPayload(
+export function buildPersistPayload(
   extraction: ObProdExtraction,
   resolutions: Map<string, {
     decision: 'reuse' | 'create' | 'unresolved'; resolvedClaimId: string | null;
@@ -653,7 +784,11 @@ function buildPersistPayload(
       missing_concepts: extraction.coverage.missingConcepts,
     },
     diagnostics: extraction.diagnostics,
-    usage,
+    usage: {
+      prompt_tokens: usage.promptTokens,
+      completion_tokens: usage.completionTokens,
+      estimated_cost_usd: usage.estimatedCostUsd,
+    },
     identity: {
       outcome: identity.outcome,
       registry_question_id: identity.registryQuestionId,
@@ -674,7 +809,11 @@ function buildPersistPayload(
         claim_type: candidate.claimType,
         qualifiers: candidate.qualifiers,
         support: candidate.support,
-        generator: candidate.generator,
+        generator: {
+          model: candidate.generator.model,
+          prompt_version: candidate.generator.promptVersion,
+          confidence: candidate.generator.confidence,
+        },
         factual: candidate.factual,
         quality: candidate.quality,
         final_factual: candidate.finalFactual,
@@ -693,7 +832,11 @@ function buildPersistPayload(
           semantic_hash: resolution.semanticHash,
           model: resolution.model,
           prompt_version: resolution.promptVersion,
-          usage: resolution.usage,
+          usage: {
+            prompt_tokens: resolution.usage.promptTokens,
+            completion_tokens: resolution.usage.completionTokens,
+            estimated_cost_usd: resolution.usage.estimatedCostUsd,
+          },
           examined: resolution.examined,
         } : null,
       };

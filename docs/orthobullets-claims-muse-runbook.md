@@ -46,10 +46,25 @@ npm run education:ob:claims:pipeline:test
 npm run education:ob:claims:identity:test
 npm run education:ob:claims:resolution:test
 npm run education:ob:claims:runner:test
-npx tsc --noEmit -p tsconfig.json   # must be clean for orthobullets/(claim-|ob-)*
+npm run education:ob:claims:ops:test
+npm run education:ob:claims:typecheck
 ```
 
 ## 4. Dry run (zero writes, always first against a new target)
+
+Registry discovery must precede every run (new script, v4 find-or-create
+shape). Without it, items complete `identity_unresolved` with no extraction:
+
+```bash
+node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs \
+  scripts/discover-ob-registry-questions.ts --input=/tmp/packets.json \
+  --dry-run --max-questions=25
+node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs \
+  scripts/discover-ob-registry-questions.ts --input=/tmp/packets.json \
+  --apply --max-questions=25
+```
+
+Then the dry run itself:
 
 ```bash
 npm run ob:claims:run -- --input=/tmp/packets.json --dry-run --max-questions=25
@@ -58,6 +73,15 @@ npm run ob:claims:run -- --input=/tmp/packets.json --dry-run --max-questions=25
 Expect: per-item `would_*` outcomes, no `ob_claim_*` rows, exit 0.
 
 ## 5. Canaries (staging; authorize before prod)
+
+Canary inputs are selected deterministically (no cherry-picking):
+round-robin over specialties (alphabetical), qids numeric ascending, pure
+function of the pool file:
+
+```bash
+node scripts/select-ob-canary-packets.mjs --pool=/tmp/obv5-pool.json \
+  --out=/tmp/packets-500.json --n=500
+```
 
 ```bash
 # 25-question canary
@@ -79,6 +103,8 @@ npm run ob:claims:run -- --input=/tmp/packets-2000.json --apply \
 
 Useful filters: `--specialty=trauma`, `--question-id=Q123`,
 `--worker-id=canary-1`, `--lease-seconds=300`.
+Pacing: `--inter-item-delay-ms=2000` sleeps between leased items (default 0);
+use it on long runs after any `model_429` storm.
 
 ## 6. Resume and reprocess
 
@@ -123,12 +149,38 @@ select mapping_role, count(*) from public.question_claim_links
   group by mapping_role;
 ```
 
+Run the durable, fail-closed integrity suite after every canary/shard (exit 2
+means at least one invariant failed):
+
+```bash
+npm run ob:claims:integrity -- --run-id=<run-uuid> --out=tmp/integrity-<run-uuid>
+```
+
+Run-bound independent audits require an exact run ID. They resolve claims only
+through that run item's `live_attempt_id`, verify the transient packet's source
+hash, and write `audit-manifest.json` before the first model call. Adopted
+events retain both the auditing run ID and their origin event run ID.
+
+```bash
+node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs \
+  scripts/audit-ob-claims-canary.ts --run-id=<run-uuid> \
+  --input=/tmp/packets.json --out=tmp/audit-<run-uuid>
+```
+
+Never reuse an audit report after packet contents, item pointers, algorithm, or
+prompt-set versions change; the command fails closed on those mismatches.
+
 ## 8. Failure triage
 
 | Signal | Meaning | Action |
 |---|---|---|
 | `failed_transient` + `model_429`/`model_timeout`/`db_timeout` | retriable | resume; runner backs off automatically |
 | `failed_permanent` + `model_empty`/`model_malformed`/`model_refused` | model gave nothing usable | leave terminal; feed packet to the automated audit sample; do not force |
+| `failed_permanent` + `safety_violation` + `contract:*` codes | pipeline output rejected on SHAPE (pipeline bug) | read the codes (`explainObProdExtraction`); fix forward, then reprocess via a new run |
+| `failed_transient` + `safety_violation` + `contract:*_safety:*` codes | LLM text unpersistable (DB text CHECK) | retryable automatically; fresh outputs on re-lease |
+| `model_429` storm → `max_consecutive_failures` | rate-limit burst, not quality signal | wait for the quota window, resume with `--inter-item-delay-ms=2000` and a higher `--max-consecutive-failures` |
+| `model:429 ... no credits remaining` | org quota exhausted — hard external blocker | STOP. Do NOT resume again until credits exist: every credit-less resume burns +1 attempt on dozens of items toward `max_attempts` exhaustion. Verify with one read-only model call, then resume |
+| `model:<detail>` reason codes | sanitized model error text | read the detail (quota vs. outage) before resuming |
 | `failed_permanent` + `check_violation ...` | envelope/gate bug or tamper | read the detail; fix code, never hand-edit rows |
 | `reuse target failed identity verification` | resolution lied or race | terminal by design; re-extract the item |
 | `lease lost or not owned` | worker too slow or duplicate workers | raise `--lease-seconds`, ensure unique `--worker-id`s |
@@ -150,7 +202,11 @@ select mapping_role, count(*) from public.question_claim_links
 
 - [ ] Pre-flight tests + typecheck green (section 3), quoted in the report.
 - [ ] Dry run clean against the same target (section 4).
-- [ ] Counters reconcile: `completed = accepted + unresolved + failed`.
+- [ ] Counters reconcile: `questions = accepted + adopted + unresolved + failed` (per-question final outcomes; `processed` may exceed `questions` on retries).
+- [ ] Integrity suite green: 1 live event per extraction identity, 0 dup
+  active links, 0 dead-claim/missing-locator/null-version active links,
+  0 identity/pointer mismatches, 0 card/entity writes, accepted events all
+  `coverage = complete`.
 - [ ] Zero `failed_permanent` with `check_violation` (any = code bug, stop).
 - [ ] Transient rate < 5% of items, all resolved by resume.
 - [ ] Independent AI audit over the canary's final claim sets (see the rollout
@@ -159,6 +215,19 @@ select mapping_role, count(*) from public.question_claim_links
       with explicit defect categories). Human review is NOT a production
       requirement; unresolved/abstention states are preserved, never forced.
 - [ ] Zero-claim and unresolved rates sane vs. the 100-Q pilot baseline.
-- [ ] No rows outside the v5 surface: spot-check `educational_claims` rows
-      carry `predicate = 'v5_assertion'`, `primary_entity_id IS NULL`,
-      `review_status = 'unreviewed'`.
+- [ ] No newly created rows outside the v5 surface: claims whose own
+      `algorithm_version = 'orthobullets-claims-prod.v1'` carry
+      `predicate = 'v5_assertion'`, `primary_entity_id IS NULL`, and
+      `review_status = 'unreviewed'`. Cross-algorithm reuse may legitimately
+      link an older claim with its original predicate/entity metadata.
+
+## 11. Full-qbank rollout
+
+After the 500- and 2,000-question gates pass from one committed release SHA,
+partition the deterministic inventory into immutable 1,000-2,000-question
+shards. Each shard gets a unique run ID, packet-manifest hash, output directory,
+budget ceiling, integrity report, and run-bound audit manifest. Resume an
+interrupted shard by its run ID; never replace it merely because a worker
+stopped. Launch the next shard only when the preceding shard is terminal and
+its integrity suite passes. Stop on credit exhaustion, sustained 429s, any
+contract/check violation, or quality drift from the accepted canary baseline.

@@ -1,7 +1,12 @@
 import assert from 'node:assert/strict';
 import {
   backoffDelayMs,
+  contractRejectionReasonCodes,
+  isContentSafetyRejection,
   runObProduction,
+  sanitizeReasonDetail,
+  tolerantUsageTotals,
+  validateObRunnerConfig,
   type ObRunnerConfig,
   type ObRunnerDb,
   type ObRunnerDeps,
@@ -20,6 +25,7 @@ type FakeItem = {
   leaseOwner: string | null; leaseExpiresAt: number | null;
   sourceHash: string | null; identityOutcome: string | null; registryId: string | null;
   liveAttemptId: string | null; lastDiagnostic: string | null;
+  reasonCodes: string[];
   promptTokens: number; completionTokens: number; costUsd: number;
 };
 
@@ -59,7 +65,7 @@ class FakeDb implements ObRunnerDb {
         id: `item-${++this.seq}`, runId, nativeQuestionId: row.nativeQuestionId, specialty: row.specialty,
         status: 'pending', attemptCount: 0, maxAttempts: 5, nextAttemptAt: null,
         leaseOwner: null, leaseExpiresAt: null, sourceHash: null, identityOutcome: null,
-        registryId: null, liveAttemptId: null, lastDiagnostic: null,
+        registryId: null, liveAttemptId: null, lastDiagnostic: null, reasonCodes: [],
         promptTokens: 0, completionTokens: 0, costUsd: 0,
       });
     }
@@ -122,6 +128,7 @@ class FakeDb implements ObRunnerDb {
     item.leaseOwner = null;
     item.leaseExpiresAt = null;
     item.lastDiagnostic = input.diagnostic;
+    item.reasonCodes = [...input.reasonCodes];
     item.promptTokens += input.usage.promptTokens;
     item.completionTokens += input.usage.completionTokens;
     item.costUsd += input.usage.estimatedCostUsd;
@@ -173,6 +180,17 @@ class FakeDb implements ObRunnerDb {
       for (const candidate of candidates) {
         if (candidate.accepted) throw new Error('unresolved extraction marks claims accepted');
       }
+    }
+    // Mirror the real RPC's snake_case reads (NOT NULL columns + usage keys).
+    for (const candidate of candidates) {
+      const generator = candidate.generator as Record<string, unknown> | null;
+      if (typeof generator?.prompt_version !== 'string' || !generator.prompt_version) {
+        throw new Error('generator_prompt_version missing (NOT NULL)');
+      }
+    }
+    const payloadUsage = payload.usage as Record<string, unknown> | null;
+    if (typeof payloadUsage?.prompt_tokens !== 'number' || typeof payloadUsage?.completion_tokens !== 'number') {
+      throw new Error('payload usage must use snake_case token keys');
     }
     const attemptId = payload.attempt_id as string;
     const preexisted = this.events.some((event) => event.id === attemptId);
@@ -276,6 +294,7 @@ class FakeDb implements ObRunnerDb {
     item.liveAttemptId = attemptId;
     item.leaseOwner = null;
     item.leaseExpiresAt = null;
+    item.reasonCodes = [finalState === 'accepted' ? 'extraction_accepted' : 'extraction_unresolved'];
     item.sourceHash = src.source_hash;
     const usage = payload.usage as { promptTokens: number; completionTokens: number; estimatedCostUsd: number };
     item.promptTokens += usage.promptTokens;
@@ -293,6 +312,7 @@ class FakeDb implements ObRunnerDb {
     item.liveAttemptId = attemptId;
     item.leaseOwner = null;
     item.leaseExpiresAt = null;
+    item.reasonCodes = ['adopted_live_event'];
     this.ops.push('items.adopt');
   }
   async findRegistryByNative(nativeQuestionId: string) {
@@ -351,6 +371,7 @@ class FakeDb implements ObRunnerDb {
 
 const CLAIM_A = 'The radial nerve travels in the spiral groove along the posterior humeral shaft.';
 const CLAIM_B = 'The axillary nerve is at risk during anterior shoulder dislocation events here.';
+const CLAIM_C = 'The tibia heals by endochondral ossification within a stabilizing callus envelope.';
 
 function packet(qid: string, specialty = 'trauma'): ObRunnerPacket {
   return {
@@ -414,7 +435,7 @@ function baseConfig(overrides: Partial<ObRunnerConfig> = {}): ObRunnerConfig {
     specialtyFilter: null, questionFilter: null,
     models: { generator: 'g', reviewer: 'r', coverage: 'c', repair: 'p', validator: 'v', resolution: 'e' },
     costPer1kPromptUsd: 0.0025, costPer1kCompletionUsd: 0.01,
-    backoffBaseSeconds: 30, backoffCapSeconds: 1800, heartbeatDivider: 3,
+    backoffBaseSeconds: 30, backoffCapSeconds: 1800, heartbeatDivider: 3, interItemDelayMs: 0,
     ...overrides,
   };
 }
@@ -837,5 +858,131 @@ function seedRegistry(db: FakeDb, qid: string, id = '11111111-1111-4111-8111-111
   }
 }
 
-console.log('ob-production-runner-lib.test.ts: all assertions passed');
+// 22. Retry then accept: per-question FINAL outcomes (two rows, one question).
+{
+  const db = new FakeDb(1_000_000);
+  seedRegistry(db, 'Q1');
+  const model = scriptedModel([new Error('socket timed out after 120000ms'), ...acceptFlow(CLAIM_A)]);
+  const report = await runObProduction(
+    depsFor(db, model, [packet('Q1')]), baseConfig({ backoffBaseSeconds: 0 }),
+  );
+  assert.equal(report.processed, 2);
+  assert.equal(report.questions, 1);
+  assert.equal(report.items.length, 2);
+  assert.equal(report.items[0].outcome, 'failed');
+  assert.equal(report.items[1].outcome, 'accepted');
+  assert.equal(report.outcomes.accepted, 1);
+  assert.equal(report.outcomes.failed, undefined);
+  assert.equal(db.items[0].status, 'accepted');
+  assert.equal(model.calls(), 5);
+}
 
+// 23. Contract-rejection helpers: capped codes, tolerant usage salvage.
+{
+  assert.deepEqual(contractRejectionReasonCodes(null), ['contract_rejected', 'contract:not_record']);
+  assert.deepEqual(
+    contractRejectionReasonCodes({}),
+    ['contract_rejected', 'contract:contract_version', 'contract:attempt_id', 'contract:attempt_no', 'contract:supersedes_attempt_id', 'contract:algorithm_version'],
+  );
+  const codes = contractRejectionReasonCodes({ contractVersion: 'x', attemptNo: -1, candidates: 'many', usage: null, diagnostics: 7 });
+  assert.equal(codes[0], 'contract_rejected');
+  assert.ok(codes.length <= 6);
+  assert.ok(codes.some((code) => code === 'contract:contract_version'));
+  assert.ok(codes.every((code) => code.length <= 89));
+  assert.deepEqual(tolerantUsageTotals(null), { promptTokens: 0, completionTokens: 0 });
+  assert.deepEqual(tolerantUsageTotals({ generator: { promptTokens: 10, completionTokens: 5 } }), { promptTokens: 10, completionTokens: 5 });
+  assert.deepEqual(
+    tolerantUsageTotals({ generator: { promptTokens: 10, completionTokens: -3 }, review: 'junk', coverage: { promptTokens: 1.5, completionTokens: 2 } }),
+    { promptTokens: 10, completionTokens: 2 },
+  );
+}
+
+// 24. Dry run counts failure usage (no zero-token failures).
+{
+  const db = new FakeDb(1_000_000);
+  seedRegistry(db, 'Q1');
+  const model = scriptedModel(['not json']);
+  const report = await runObProduction(depsFor(db, model, [packet('Q1')]), baseConfig({ apply: false }));
+  assert.equal(report.outcomes.failed, 1);
+  assert.equal(report.items[0].diagnostic, 'model_malformed');
+  assert.equal(report.items[0].promptTokens, 10);
+  assert.equal(report.items[0].completionTokens, 5);
+  assert.ok(report.estimatedCostUsd > 0);
+  assert.equal(db.ops.length, 0);
+}
+
+// 25. Vignette text anywhere rejects pre-RPC as retryable (canary-500 Q1704).
+{
+  const db = new FakeDb(1_000_000);
+  seedRegistry(db, 'Q1');
+  const vignette = 'A 45-year-old man presents with wrist pain and numbness in the median nerve distribution.';
+  const model = scriptedModel(acceptFlow(vignette));
+  const report = await runObProduction(depsFor(db, model, [packet('Q1')]), baseConfig());
+  assert.equal(report.outcomes.failed, 1);
+  assert.equal(report.items[0].diagnostic, 'safety_violation');
+  assert.deepEqual(report.items[0].reasonCodes, ['contract_rejected', 'contract:candidate[0]:text_safety:age_vignette']);
+  assert.equal(db.items[0].status, 'failed_transient');
+  assert.deepEqual(db.items[0].reasonCodes, ['contract_rejected', 'contract:candidate[0]:text_safety:age_vignette']);
+  assert.ok(db.items[0].nextAttemptAt !== null);
+  assert.ok(report.items[0].promptTokens > 0);
+  assert.equal(db.events.length, 0);
+}
+
+// 26. Dry run mirrors the content-safety gate (no silent would-accept).
+{
+  const db = new FakeDb(1_000_000);
+  seedRegistry(db, 'Q1');
+  const vignette = 'A 45-year-old man presents with wrist pain and numbness in the median nerve distribution.';
+  const model = scriptedModel(acceptFlow(vignette));
+  const report = await runObProduction(depsFor(db, model, [packet('Q1')]), baseConfig({ apply: false }));
+  assert.equal(report.outcomes.failed, 1);
+  assert.equal(report.items[0].diagnostic, 'safety_violation');
+  assert.deepEqual(report.items[0].reasonCodes, ['contract_rejected', 'contract:candidate[0]:text_safety:age_vignette']);
+  assert.ok(report.items[0].promptTokens > 0);
+  assert.equal(db.ops.length, 0);
+}
+
+// 27. Model failures carry sanitized detail (429s are diagnosable).
+{
+  const db = new FakeDb(1_000_000);
+  seedRegistry(db, 'Q1');
+  const err429 = new Error('429 Rate limit reached for gpt-4o\ntry later');
+  (err429 as { status?: number }).status = 429;
+  const model = scriptedModel([err429]);
+  const report = await runObProduction(depsFor(db, model, [packet('Q1')]), baseConfig());
+  assert.equal(report.outcomes.failed, 1);
+  assert.equal(report.items[0].diagnostic, 'model_429');
+  assert.deepEqual(db.items[0].reasonCodes, ['extraction_failed', 'model:429 Rate limit reached for gpt-4o try later']);
+  assert.equal(db.items[0].status, 'failed_transient');
+  assert.equal(sanitizeReasonDetail('  a\nb  c  ', 3), 'a b');
+  assert.equal(sanitizeReasonDetail(''), '');
+}
+
+// 28. Inter-item pacing sleeps between items; safety classification is exact.
+{
+  const db = new FakeDb(1_000_000);
+  seedRegistry(db, 'Q1');
+  seedRegistry(db, 'Q2', '22222222-2222-4222-8222-222222222222');
+  const model = scriptedModel([...acceptFlow(CLAIM_A), ...acceptFlow(CLAIM_C)]);
+  const sleeps: number[] = [];
+  const deps = { ...depsFor(db, model, [packet('Q1'), packet('Q2')]), sleep: async (ms: number) => { sleeps.push(ms); } };
+  const report = await runObProduction(deps, baseConfig({ interItemDelayMs: 1500 }));
+  assert.equal(report.outcomes.accepted, 2);
+  assert.deepEqual(sleeps, [1500, 1500]);
+  assert.equal(isContentSafetyRejection(['candidate[0]:text_safety:age_vignette']), true);
+  assert.equal(isContentSafetyRejection(['candidate[0]:repair[0]:before_text_safety:presentation_vignette']), true);
+  assert.equal(isContentSafetyRejection(['contract_version']), false);
+  assert.equal(isContentSafetyRejection(['candidate[0]:text_safety:age_vignette', 'contract_version']), false);
+  assert.equal(isContentSafetyRejection([]), false);
+}
+
+// 29. Invalid numeric controls fail before database or model work.
+{
+  assert.throws(() => validateObRunnerConfig(baseConfig({ interItemDelayMs: Number.NaN })), /interItemDelayMs/);
+  assert.throws(() => validateObRunnerConfig(baseConfig({ leaseSeconds: 0 })), /leaseSeconds/);
+  assert.throws(() => validateObRunnerConfig(baseConfig({
+    limits: { maxQuestions: 1.5, maxErrors: 0, maxCostUsd: 0, maxConsecutiveFailures: 10 },
+  })), /maxQuestions/);
+}
+
+console.log('ob-production-runner-lib.test.ts: all assertions passed');

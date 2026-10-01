@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false,
+    "plugins": []
+  },
+  "include": [
+    "src/lib/brobot/orthobullets/**/*.ts",
+    "scripts/run-ob-claims-production.ts",
+    "scripts/discover-ob-registry-questions.ts",
+    "scripts/discover-ob-registry-questions.test.ts",
+    "scripts/audit-ob-claims-canary.ts",
+    "scripts/audit-ob-claims-canary.test.ts",
+    "scripts/audit-ob-claims-integrity.ts"
+  ],
+  "exclude": ["node_modules", "tmp"]
+}

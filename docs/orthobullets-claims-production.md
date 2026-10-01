@@ -41,7 +41,13 @@ The persist RPC rejects any envelope whose contract/algorithm differs.
    draft. Lineage (`origin_candidate_index`, `pre_repair_text`) is preserved.
 5. **Coverage**: set-level verdict `complete`/`missing_major_concept`/
    `overextracted`/`internally_conflicting`. Accepted extractions require
-   `complete`.
+   `complete`. When drops are applied, the recorded verdict is the RESIDUAL
+   `complete` (the persisted set is the post-drop set; the independent
+   validator still re-verifies it), with the original verdict + dropped
+   indices appended to `coverage.notes` and per-candidate
+   `validator.reason = dropped:coverage_drop`. Verdicts without drops that
+   cannot proceed (`missing_major_concept`, bare `overextracted` /
+   `internally_conflicting`) persist unchanged on unresolved extractions.
 6. **Validator**: independent `accept`/`abstain` per surviving claim.
 7. **Safety net**: vignette-pattern text can never persist, even if reviewers
    accept it (contract rule + `ob_claim_text_is_safe` CHECK).
@@ -53,6 +59,20 @@ The persist RPC rejects any envelope whose contract/algorithm differs.
 
 Final states: `accepted` or `ai_review_unresolved`. Anything else is a
 failure/identity outcome recorded on the item, never an extraction event.
+
+Report semantics (`report.json`): `processed` counts lease completions
+(retries repeat); `questions` counts unique questions; `outcomes` counts
+per-question FINAL outcomes (last checkpoint per question wins); `items`
+keeps the full attempt history. Safety failures carry `reasonCodes`.
+`live_attempt_id` names the event the item produced or adopted; after a
+later force-reprocess it may name a superseded (retained) event — staleness
+there is historical record, not corruption. Lineage integrity is: exactly
+one live event per extraction identity + every pointer names its own
+identity's event.
+The report also includes `databaseTotals`, grouped over the entire persisted
+run; use these rather than invocation-local counters when reconciling resumes.
+Independent audits bind to the run item's exact `live_attempt_id` and source
+fingerprint and emit an immutable pre-model audit manifest.
 
 ## 3. Extraction envelope (persist RPC input)
 
@@ -126,14 +146,25 @@ All keys below are read by the RPC; unknown keys are ignored.
 }
 ```
 
+Before the RPC is ever called, the runner gates every pipeline output through
+`isObProdExtraction` (single source: `explainObProdExtraction`, which returns
+one stable code per violated check). A rejection completes the item
+`failed_permanent` / `safety_violation` with reason codes
+`['contract_rejected', 'contract:<code>', ...]` (first 5 codes, length-bounded)
+and salvaged stage usage — never zero-token, never undiagnosed. Dry run
+applies the identical gate (`failed` / `safety_violation`, no writes).
+
 Rules enforced by the RPC (all fail the whole call, terminal `check_violation`):
 
 - Accepted requires coverage `complete`, and every accepted candidate needs
   `final_factual = supported`, `final_quality = good`, validator `accept`.
 - Unresolved extractions must mark zero candidates accepted.
-- Accepted candidates need a `reuse`/`create` resolution. `reuse` re-verifies
-  the target is live AND its stored hashes equal the RPC-recomputed identity;
-  mismatch raises `reuse target failed identity verification`.
+- Accepted candidates need a `reuse`/`create` resolution. `reuse` is verified
+  by examined verdict: `exact_identity` requires the target live with stored
+  hashes equal to the RPC-recomputed identity; `equivalent` (paraphrase)
+  requires the target live (hashes and cross-era type vocabularies cannot
+  verify a paraphrase). Any other verdict, or missing examined evidence for
+  the target, rejects loudly. Cross-algorithm reuse is intended.
 - `identity: null` and `resolution: null` mean absence (explicit JSON null is
   safe, not a crash).
 - Claim vocabulary: `review_status = 'unreviewed'`, `approval_method =
@@ -148,6 +179,17 @@ Migrations (apply in order):
 - `20260928150816_ob_claims_prod_tables.sql` — 7 tables, guards, trigram
   index, 2 additive link columns, RLS.
 - `20260928150846_ob_claims_prod_rpcs.sql` — 6 RPCs, service-role-only.
+- `20260929030000_ob_claim_persist_equivalence_reuse.sql` — patch 1:
+  verdict-aware reuse verification (`exact_identity` vs `equivalent`).
+- `20260929030100_ob_claim_equivalence_live_only.sql` — patch 2:
+  equivalence verifies live-only (cross-era type vocabs incomparable).
+- `20260929030200_ob_claim_supersede_global.sql` — patch 3: supersede scope
+  is the global extraction identity, not the same item.
+- `20260929030300_ob_claim_no_self_supersede.sql` — patch 4: link
+  supersession excludes edges touched by the current persist call.
+- `20260929030400_ob_claim_persist_reset_reason_codes.sql` — patch 5:
+  success persist stamps `extraction_accepted` / `extraction_unresolved`,
+  clearing stale failure codes from retried items.
 
 ### 4.1 New tables
 
@@ -168,7 +210,7 @@ stored anywhere: provenance is section identifiers + hashes only, enforced by
 
 ### 4.2 Touched prod tables (verified read-only against prod 2026-09-28)
 
-- `educational_claims`: v5 rows carry `predicate = 'v5_assertion'`,
+- `educational_claims`: claims created by v5 carry `predicate = 'v5_assertion'`,
   `primary_entity_id = NULL`, `review_status = 'unreviewed'`. Hashes are
   stamped by the prod `sync_educational_claim_fingerprint` BEFORE trigger
   (legacy structural branch + semantic v1); writers cannot smuggle hashes.
@@ -176,6 +218,8 @@ stored anywhere: provenance is section identifiers + hashes only, enforced by
   `(fingerprint_hash, semantic_fingerprint_hash) WHERE is_active AND ...`.
   Provenance rides `metadata.source_fingerprint_hash` (claims have no
   source-hash column).
+  A v5 link may reuse a live cross-algorithm claim; that pre-existing claim
+  retains its original predicate, entity, and algorithm metadata.
 - `educational_claim_versions`: writers own version rows (no version trigger
   in prod). The RPC snapshots v1 and maintains `current_version_id`.
 - `question_claim_links`: edges are `tests_primary`/`tests_secondary` with
@@ -184,8 +228,11 @@ stored anywhere: provenance is section identifiers + hashes only, enforced by
   adds nullable `superseded_at` / `superseded_by_claim_id` (absent in prod);
   supersession retires same-algorithm edges only and never touches other
   algorithms' edges.
-- `external_questions`: referenced by FK only; the pipeline never creates
-  registry rows.
+- `external_questions`: referenced by FK only from the extraction path. The
+  extraction pipeline itself never creates registry rows; a separate
+  discovery step (`scripts/discover-ob-registry-questions.ts`, v4
+  find-or-create convention) must register packet qids first, otherwise
+  items complete as `identity_unresolved` without extraction.
 
 ### 4.3 RPCs
 

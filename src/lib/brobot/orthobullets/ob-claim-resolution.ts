@@ -24,6 +24,7 @@ import {
   type ObProdStageUsage,
 } from './claim-extraction-contract-v1';
 import type { ObProdModelClient } from './claim-review-pipeline';
+import { deterministicSamplingParams } from './openai-model-compat';
 
 export type ObResolutionCandidateRow = {
   id: string;
@@ -151,7 +152,7 @@ export async function resolveObClaimCandidate(
   let raw: string | null = null;
   try {
     const completion = await options.client.chat.completions.create({
-      temperature: 0, model: options.model, response_format: equivalenceFormat,
+      ...deterministicSamplingParams(options.model), model: options.model, response_format: equivalenceFormat,
       messages: [
         { role: 'system', content: EQUIVALENCE_SYSTEM },
         {

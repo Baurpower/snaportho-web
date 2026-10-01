@@ -18,9 +18,10 @@ import {
   type ObRunnerDb,
   type ObRunnerPacket,
 } from '../src/lib/brobot/orthobullets/ob-production-runner-lib';
+import type { ObAliasHit, ObRegistryQuestionRow } from '../src/lib/brobot/orthobullets/ob-question-identity';
+import type { ObResolutionCandidateRow } from '../src/lib/brobot/orthobullets/ob-claim-resolution';
 
 const require = createRequire(import.meta.url);
-/* eslint-disable @typescript-eslint/no-require-imports */
 const { Client } = require('pg') as typeof import('pg');
 
 function parseArgs(values: string[]): Map<string, string> {
@@ -109,6 +110,13 @@ async function main(): Promise<void> {
     }
   };
 
+  // pg parses timestamptz into Date; the resolution lib contracts ISO strings.
+  type ResolutionDbRow = Omit<ObResolutionCandidateRow, 'createdAt'> & { createdAt: string | Date };
+  const normalizeResolutionRow = (row: ResolutionDbRow): ObResolutionCandidateRow => ({
+    ...row,
+    createdAt: row.createdAt instanceof Date ? row.createdAt.toISOString() : row.createdAt,
+  });
+
   const db: ObRunnerDb = {
     getRun: async (id) => {
       const rows = await query<{ id: string; status: string }>(
@@ -168,7 +176,11 @@ async function main(): Promise<void> {
     completeItem: async (input) => {
       await query('select public.ob_claim_complete_item($1, $2, $3, $4, $5, $6, $7, $8)', [
         input.itemId, input.workerId, input.status, input.diagnostic, input.reasonCodes,
-        JSON.stringify(input.usage), input.nextAttemptAt,
+        JSON.stringify({
+          prompt_tokens: input.usage.promptTokens,
+          completion_tokens: input.usage.completionTokens,
+          estimated_cost_usd: input.usage.estimatedCostUsd,
+        }), input.nextAttemptAt,
         input.identity ? JSON.stringify({
           outcome: input.identity.outcome, registry_question_id: input.identity.registryQuestionId,
           method: input.identity.method, confidence: input.identity.confidence,
@@ -188,7 +200,7 @@ async function main(): Promise<void> {
       await query('select public.ob_claim_adopt_live_event($1, $2, $3)', [itemId, workerId, attemptId]);
     },
     findRegistryByNative: async (nativeQuestionId) => {
-      return query(
+      return query<ObRegistryQuestionRow>(
         `select q.id as "id", s.slug as "sourceSlug", q.external_question_id as "externalQuestionId",
           q.topic_slug as "topicSlug", q.topic_normalized as "topicNormalized",
           q.specialty_normalized as "specialtyNormalized", q.is_active as "isActive"
@@ -200,7 +212,7 @@ async function main(): Promise<void> {
     },
     findRegistryByAliases: async (aliasValues) => {
       if (!aliasValues.length) return [];
-      return query(
+      return query<{ aliasKind: string; aliasValue: string; row: ObAliasHit['row'] }>(
         `select a.alias_kind as "aliasKind", a.alias_value as "aliasValue",
           jsonb_build_object(
             'id', q.id, 'sourceSlug', s.slug, 'externalQuestionId', q.external_question_id,
@@ -212,7 +224,7 @@ async function main(): Promise<void> {
          join public.external_sources s on s.id = q.source_id
          where a.entity_type = 'external_question' and a.is_active and a.alias_value = any($1)`,
         [aliasValues],
-      ).then((rows) => rows.map((row: { aliasKind: string; aliasValue: string; row: never }) => ({
+      ).then((rows) => rows.map((row) => ({
         aliasKind: row.aliasKind, aliasValue: row.aliasValue, row: row.row,
       })));
     },
@@ -251,7 +263,7 @@ async function main(): Promise<void> {
       return rows[0] ? { attemptId: rows[0].id } : null;
     },
     findByExactIdentity: async (structuralHash, semanticHash) => {
-      return query(
+      return query<ResolutionDbRow>(
         `select c.id as "id", c.claim_text as "claimText", c.claim_type as "claimType",
           c.qualifiers as "qualifiers", c.fingerprint_hash as "fingerprintHash",
           c.semantic_fingerprint_hash as "semanticFingerprintHash",
@@ -260,10 +272,10 @@ async function main(): Promise<void> {
          where c.is_active and c.fingerprint_hash = $1 and c.semantic_fingerprint_hash = $2
          order by c.created_at asc, c.id asc`,
         [structuralHash, semanticHash],
-      );
+      ).then((rows) => rows.map(normalizeResolutionRow));
     },
     findBySemanticHash: async (semanticHash) => {
-      return query(
+      return query<ResolutionDbRow>(
         `select c.id as "id", c.claim_text as "claimText", c.claim_type as "claimType",
           c.qualifiers as "qualifiers", c.fingerprint_hash as "fingerprintHash",
           c.semantic_fingerprint_hash as "semanticFingerprintHash",
@@ -272,10 +284,10 @@ async function main(): Promise<void> {
          where c.is_active and c.semantic_fingerprint_hash = $1
          order by c.created_at asc, c.id asc limit 10`,
         [semanticHash],
-      );
+      ).then((rows) => rows.map(normalizeResolutionRow));
     },
     findTextNeighbors: async (normalizedText, limit) => {
-      return query(
+      return query<ResolutionDbRow>(
         `select c.id as "id", c.claim_text as "claimText", c.claim_type as "claimType",
           c.qualifiers as "qualifiers", c.fingerprint_hash as "fingerprintHash",
           c.semantic_fingerprint_hash as "semanticFingerprintHash",
@@ -285,7 +297,7 @@ async function main(): Promise<void> {
          order by extensions.similarity(c.claim_text, $1) desc, c.created_at asc
          limit $2`,
         [normalizedText, Math.max(1, Math.min(20, limit))],
-      );
+      ).then((rows) => rows.map(normalizeResolutionRow));
     },
   };
 
@@ -329,10 +341,22 @@ async function main(): Promise<void> {
       backoffBaseSeconds: 30,
       backoffCapSeconds: 1800,
       heartbeatDivider: 3,
+      interItemDelayMs: Number(args.get('--inter-item-delay-ms') ?? '0'),
     },
   );
-  writeFileSync(path.join(outDir, 'report.json'), `${JSON.stringify(report, null, 2)}\n`);
-  console.log(JSON.stringify({ event: 'finished', outDir, ...report, items: undefined }));
+  const databaseTotals = report.runId ? (await query<{
+    status: string; count: string; prompt_tokens: string; completion_tokens: string; estimated_cost_usd: string;
+  }>(
+    `select status, count(*)::text as count,
+            coalesce(sum(prompt_tokens), 0)::text as prompt_tokens,
+            coalesce(sum(completion_tokens), 0)::text as completion_tokens,
+            coalesce(sum(estimated_cost_usd), 0)::text as estimated_cost_usd
+       from public.ob_claim_production_items where run_id = $1 group by status order by status`,
+    [report.runId],
+  )) : [];
+  const finalReport = { ...report, databaseTotals };
+  writeFileSync(path.join(outDir, 'report.json'), `${JSON.stringify(finalReport, null, 2)}\n`);
+  console.log(JSON.stringify({ event: 'finished', outDir, ...finalReport, items: undefined }));
   await client.end();
 }
 

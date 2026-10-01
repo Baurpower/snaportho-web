@@ -46,6 +46,7 @@ import {
   type ObProdUsage,
 } from './claim-extraction-contract-v1';
 import type { ObSourcePacketV5 } from './claim-extractor-v5';
+import { deterministicSamplingParams } from './openai-model-compat';
 
 export type ObProdModelClient = {
   // Mirrors the OpenAI SDK: request options (timeout/signal) ride the SECOND
@@ -478,7 +479,7 @@ export async function runProductionExtraction(
     let detail = '';
     try {
       const completion = await options.client.chat.completions.create({
-        temperature: 0, model, response_format: format,
+        ...deterministicSamplingParams(model), model, response_format: format,
         messages: [{ role: 'system', content: system }, { role: 'user', content: JSON.stringify(user) }],
       }, { timeout });
       usage[stage].modelCalls += 1;
@@ -684,6 +685,14 @@ export async function runProductionExtraction(
     extraction.diagnostics = ['review_unresolved'];
     return { ok: true, extraction };
   }
+  // Drops applied above: the persisted set is the POST-drop set. Record the
+  // residual verdict truthfully (the independent validator still re-verifies
+  // the final set below), preserving the original verdict as provenance.
+  if ((coverage.verdict === 'overextracted' || coverage.verdict === 'internally_conflicting') && coverage.dropIndices.length > 0) {
+    const dropped = [...coverage.dropIndices].sort((a, b) => a - b).join(',');
+    coverage.notes = `${coverage.notes} [coverage ${coverage.verdict}; dropped survivor indices ${dropped}]`.trim();
+    coverage.verdict = 'complete';
+  }
 
   // Stage 4: single repair for rewrite/split survivors.
   const needsRepair = survivors.filter((item) => item.droppedAt === null && (item.quality === 'rewrite' || item.quality === 'split'));
@@ -783,7 +792,7 @@ export async function runProductionExtraction(
   if (!validator) return fail('model_malformed', 'validator output rejected by schema');
 
   const accepted = validator.verdict === 'accept'
-    && (coverage.verdict === 'complete' || coverage.verdict === 'overextracted')
+    && coverage.verdict === 'complete'
     && safetyChecksContractV1(finalists.flatMap((item) => {
       const texts = item.repairedTexts ?? [item.draft.text];
       return texts.map((text) => ({
@@ -809,4 +818,3 @@ export async function runProductionExtraction(
   if (!accepted) extraction.diagnostics = ['review_unresolved'];
   return { ok: true, extraction };
 }
-
