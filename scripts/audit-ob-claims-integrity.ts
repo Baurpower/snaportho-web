@@ -2,6 +2,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import pg from 'pg';
+import { terminalRunPreconditions } from './lib/ob-claims-run-gate';
 
 function argsOf(values: string[]): Map<string, string> {
   const args = new Map<string, string>();
@@ -107,6 +108,15 @@ async function main(): Promise<void> {
         where run_id = $1 group by status order by status`,
       [runId],
     );
+    const readinessIssues = terminalRunPreconditions(run.rows[0], statuses.rows);
+    if (readinessIssues.length) {
+      const report = { runId, generatedAt: new Date().toISOString(), pass: false, readiness: 'NOT_READY', readinessIssues,
+        run: run.rows[0], statuses: statuses.rows, checks: [] };
+      writeFileSync(path.join(outDir, 'integrity-report.json'), `${JSON.stringify(report, null, 2)}\n`);
+      console.log(JSON.stringify({ event: 'not_ready', outDir, pass: false, readinessIssues }));
+      process.exitCode = 3;
+      return;
+    }
     const checks = [];
     for (const check of OB_INTEGRITY_CHECKS) {
       const result = await db.query(check.sql, check.sql.includes('$1') ? [runId] : []);

@@ -38,8 +38,11 @@ export type ObRunnerLeasedItem = {
 };
 
 export type ObRunnerDb = {
-  getRun: (runId: string) => Promise<{ id: string; status: string } | null>;
-  createRun: (input: { runKey: string; config: Record<string, unknown>; expectedCount: number; createdBy: string }) => Promise<{ id: string }>;
+  getRun: (runId: string) => Promise<{ id: string; status: string; releaseSha?: string | null; packetSha256?: string | null; executionManifest?: Record<string, unknown> | null } | null>;
+  createRun: (input: {
+    runKey: string; config: Record<string, unknown>; expectedCount: number; createdBy: string;
+    releaseSha: string; packetSha256: string; executionManifest: Record<string, unknown>; pricingProfile: Record<string, unknown>;
+  }) => Promise<{ id: string }>;
   upsertItems: (runId: string, rows: Array<{ nativeQuestionId: string; specialty: string | null }>) => Promise<number>;
   leaseItem: (runId: string, workerId: string, leaseSeconds: number) => Promise<ObRunnerLeasedItem | null>;
   heartbeat: (itemId: string, workerId: string, leaseSeconds: number) => Promise<'ok' | 'lease_lost' | 'item_missing'>;
@@ -91,6 +94,9 @@ export type ObRunnerConfig = {
   heartbeatDivider: number;
   /** Per-model-call timeout in milliseconds. */
   requestTimeoutMs: number;
+  releaseSha: string;
+  packetSha256: string;
+  pricingProfile: Record<string, unknown>;
   /** Pause between leased items (ms). 0 = none. Paces model-call bursts. */
   interItemDelayMs: number;
 };
@@ -136,6 +142,27 @@ export function validateObRunnerConfig(config: ObRunnerConfig): void {
     throw new Error('backoffCapSeconds must be at least backoffBaseSeconds');
   }
   if (!Number.isFinite(config.heartbeatDivider) || config.heartbeatDivider <= 0) throw new Error('heartbeatDivider must be positive');
+  if (!/^[0-9a-f]{7,64}$/.test(config.releaseSha)) throw new Error('releaseSha must be a git SHA');
+  if (!/^[0-9a-f]{64}$/.test(config.packetSha256)) throw new Error('packetSha256 must be sha256');
+}
+
+function stableJson(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(stableJson).join(',')}]`;
+  if (value && typeof value === 'object') {
+    return `{${Object.entries(value as Record<string, unknown>).sort(([a], [b]) => a.localeCompare(b))
+      .map(([key, child]) => `${JSON.stringify(key)}:${stableJson(child)}`).join(',')}}`;
+  }
+  return JSON.stringify(value);
+}
+
+function executionManifest(config: ObRunnerConfig): Record<string, unknown> {
+  return {
+    release_sha: config.releaseSha, packet_sha256: config.packetSha256,
+    algorithm_version: OB_PROD_ALGORITHM, prompt_set_version: OB_PROD_PROMPT_SET,
+    models: config.models, request_timeout_ms: config.requestTimeoutMs,
+    lease_seconds: config.leaseSeconds, inter_item_delay_ms: config.interItemDelayMs,
+    limits: config.limits, pricing_profile: config.pricingProfile,
+  };
 }
 
 export type ObRunnerReport = {
@@ -254,6 +281,7 @@ export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig
   ));
   if (config.limits.maxQuestions > 0) selected = selected.slice(0, config.limits.maxQuestions);
   const packetByQid = new Map(selected.map((row) => [row.nativeQuestionId, row]));
+  const requestedManifest = executionManifest(config);
 
   let runId = config.runId;
   if (config.mode === 'run' && !config.apply) {
@@ -264,6 +292,11 @@ export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig
     if (run.status !== 'running' && run.status !== 'paused') {
       throw new Error(`run not resumable from status ${run.status}`);
     }
+    if (run.packetSha256 && run.packetSha256 !== config.packetSha256) throw new Error('resume packet SHA mismatch');
+    if (run.releaseSha && run.releaseSha !== config.releaseSha) throw new Error('resume release SHA mismatch');
+    if (run.executionManifest && stableJson(run.executionManifest) !== stableJson(requestedManifest)) {
+      throw new Error('resume execution manifest mismatch');
+    }
   } else if (config.mode === 'run' && config.apply) {
     const created = await deps.db.createRun({
       runKey: `obprod-${deps.nowMs()}`,
@@ -273,6 +306,10 @@ export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig
       },
       expectedCount: selected.length,
       createdBy: config.workerId,
+      releaseSha: config.releaseSha,
+      packetSha256: config.packetSha256,
+      executionManifest: requestedManifest,
+      pricingProfile: config.pricingProfile,
     });
     runId = created.id;
   } else {

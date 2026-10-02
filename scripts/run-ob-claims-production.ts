@@ -10,6 +10,8 @@
  * authorization (see runbook); use --max-questions for canaries.
  */
 import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync, appendFileSync } from 'node:fs';
 import path from 'node:path';
 import OpenAI from 'openai';
@@ -74,8 +76,10 @@ async function main(): Promise<void> {
   if (!databaseUrl) throw new Error('DATABASE_URL is not configured');
   const apiKey = env.OPENAI_API_KEY;
   if (!apiKey) throw new Error('OPENAI_API_KEY is not configured');
+  const modelProfile = args.get('--model-profile') ?? 'environment';
+  if (!['environment', 'gpt5-nano'].includes(modelProfile)) throw new Error('unsupported --model-profile (use environment or gpt5-nano)');
   const strong = env.BROBOT_STRONG_MODEL?.trim() || 'gpt-4o';
-  const models = {
+  const environmentModels = {
     generator: env.BROBOT_OB_CLAIMS_GENERATOR_MODEL?.trim() || strong,
     reviewer: env.BROBOT_OB_CLAIMS_CRITIC_MODEL?.trim() || strong,
     coverage: env.BROBOT_OB_CLAIMS_REVIEW_MODEL?.trim() || strong,
@@ -83,8 +87,31 @@ async function main(): Promise<void> {
     validator: strong,
     resolution: strong,
   };
+  const models = modelProfile === 'gpt5-nano'
+    ? { generator: 'gpt-5-nano', reviewer: 'gpt-5-nano', coverage: 'gpt-5-nano', repair: 'gpt-5-nano', validator: 'gpt-5-nano', resolution: 'gpt-5-nano' }
+    : environmentModels;
 
-  const raw = JSON.parse(readFileSync(inputPath, 'utf8')) as unknown;
+  const rawText = readFileSync(inputPath, 'utf8');
+  const packetSha256 = createHash('sha256').update(rawText).digest('hex');
+  const headSha = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+  const releaseSha = (args.get('--release-sha') ?? headSha).trim();
+  if (releaseSha !== headSha) throw new Error('--release-sha must equal the checked-out HEAD');
+  if (apply) {
+    const releasePaths = [
+      'scripts/run-ob-claims-production.ts',
+      'src/lib/brobot/orthobullets/ob-production-runner-lib.ts',
+      'src/lib/brobot/orthobullets/claim-review-pipeline.ts',
+      'src/lib/brobot/orthobullets/claim-extraction-contract-v1.ts',
+      'src/lib/brobot/orthobullets/ob-claim-resolution.ts',
+      'src/lib/brobot/orthobullets/ob-question-identity.ts',
+    ];
+    try {
+      execFileSync('git', ['diff', '--quiet', 'HEAD', '--', ...releasePaths]);
+    } catch {
+      throw new Error('refusing durable run: pipeline source differs from the recorded release SHA');
+    }
+  }
+  const raw = JSON.parse(rawText) as unknown;
   if (!Array.isArray(raw)) throw new Error('packet file must be a JSON array');
   const invalid = raw.findIndex((row) => !validPacket(row));
   if (invalid >= 0) throw new Error(`invalid packet at index ${invalid}`);
@@ -119,16 +146,21 @@ async function main(): Promise<void> {
 
   const db: ObRunnerDb = {
     getRun: async (id) => {
-      const rows = await query<{ id: string; status: string }>(
-        'select id, status from public.ob_claim_production_runs where id = $1', [id],
+      const rows = await query<{ id: string; status: string; releaseSha: string | null; packetSha256: string | null; executionManifest: Record<string, unknown> | null }>(
+        `select id, status, release_sha as "releaseSha", packet_sha256 as "packetSha256",
+                execution_manifest as "executionManifest"
+           from public.ob_claim_production_runs where id = $1`, [id],
       );
       return rows[0] ?? null;
     },
     createRun: async (input) => {
       const rows = await query<{ id: string }>(
-        `insert into public.ob_claim_production_runs (run_key, config, expected_count, created_by)
-         values ($1, $2, $3, $4) returning id`,
-        [input.runKey, JSON.stringify(input.config), input.expectedCount, input.createdBy],
+        `insert into public.ob_claim_production_runs
+          (run_key, config, expected_count, created_by, release_sha, packet_sha256,
+           execution_manifest, pricing_profile, manifest_locked_at)
+         values ($1, $2, $3, $4, $5, $6, $7, $8, now()) returning id`,
+        [input.runKey, JSON.stringify(input.config), input.expectedCount, input.createdBy,
+         input.releaseSha, input.packetSha256, JSON.stringify(input.executionManifest), JSON.stringify(input.pricingProfile)],
       );
       return { id: rows[0].id };
     },
@@ -305,6 +337,20 @@ async function main(): Promise<void> {
   const workerId = args.get('--worker-id') ?? `worker-${process.pid}-${Math.floor(Math.random() * 1e6)}`;
   let processed = 0;
 
+  if (mode === 'resume' && runId) {
+    await query('select public.ob_claim_recover_expired_leases($1)', [runId]);
+    await query('select public.ob_claim_resume_run($1)', [runId]);
+  }
+  const promptPrice = Number(modelProfile === 'gpt5-nano' ? '0.00005' : env.BROBOT_COST_PROMPT_PER_1K_USD ?? '0.0025');
+  const completionPrice = Number(modelProfile === 'gpt5-nano' ? '0.0004' : env.BROBOT_COST_COMPLETION_PER_1K_USD ?? '0.01');
+  if (!Number.isFinite(promptPrice) || promptPrice < 0 || !Number.isFinite(completionPrice) || completionPrice < 0) {
+    throw new Error('model prices must be nonnegative finite numbers');
+  }
+  const pricingProfile = {
+    version: args.get('--pricing-profile') ?? (modelProfile === 'gpt5-nano' ? 'openai-gpt5-nano-2026-10-01' : 'operator-supplied-v1'),
+    model_profile: modelProfile,
+    prompt_per_1k_usd: promptPrice, completion_per_1k_usd: completionPrice,
+  };
   const report = await runObProduction(
     {
       db,
@@ -336,12 +382,15 @@ async function main(): Promise<void> {
       specialtyFilter: args.get('--specialty') ?? null,
       questionFilter: args.get('--question-id') ?? null,
       models,
-      costPer1kPromptUsd: Number(env.BROBOT_COST_PROMPT_PER_1K_USD ?? '0.0025'),
-      costPer1kCompletionUsd: Number(env.BROBOT_COST_COMPLETION_PER_1K_USD ?? '0.01'),
+      costPer1kPromptUsd: promptPrice,
+      costPer1kCompletionUsd: completionPrice,
       backoffBaseSeconds: 30,
       backoffCapSeconds: 1800,
       heartbeatDivider: 3,
       requestTimeoutMs: Number(args.get('--request-timeout-ms') ?? '120000'),
+      releaseSha,
+      packetSha256,
+      pricingProfile,
       interItemDelayMs: Number(args.get('--inter-item-delay-ms') ?? '0'),
     },
   );
@@ -355,7 +404,22 @@ async function main(): Promise<void> {
        from public.ob_claim_production_items where run_id = $1 group by status order by status`,
     [report.runId],
   )) : [];
-  const finalReport = { ...report, databaseTotals };
+  let lifecycle: Record<string, unknown> | null = null;
+  if (apply && report.runId) {
+    if (report.stoppedBy === 'queue_empty') {
+      const rows = await query<{ result: Record<string, unknown> }>(
+        'select public.ob_claim_finalize_run($1) as result', [report.runId],
+      );
+      lifecycle = rows[0]?.result ?? null;
+      if (lifecycle?.terminal !== true) {
+        await query('select public.ob_claim_pause_run($1, $2)', [report.runId, 'deferred_nonterminal_work']);
+      }
+    } else {
+      await query('select public.ob_claim_pause_run($1, $2)', [report.runId, report.stoppedBy ?? 'worker_stopped']);
+      lifecycle = { terminal: false, status: 'paused', reason: report.stoppedBy };
+    }
+  }
+  const finalReport = { ...report, releaseSha, packetSha256, pricingProfile, lifecycle, databaseTotals };
   writeFileSync(path.join(outDir, 'report.json'), `${JSON.stringify(finalReport, null, 2)}\n`);
   console.log(JSON.stringify({ event: 'finished', outDir, ...finalReport, items: undefined }));
   await client.end();

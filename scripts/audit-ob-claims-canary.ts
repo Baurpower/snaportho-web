@@ -24,6 +24,7 @@ import OpenAI from 'openai';
 import pg from 'pg';
 import { sourceContentHashV5, type ObSourcePacketV5 } from '../src/lib/brobot/orthobullets/claim-extractor-v5';
 import { deterministicSamplingParams } from '../src/lib/brobot/orthobullets/openai-model-compat';
+import { terminalRunPreconditions } from './lib/ob-claims-run-gate';
 
 const AUDITOR1_SYSTEM = `You are an independent orthopaedic-education auditor. You receive an Orthobullets source question (stem, answer choices, correct answer, explanation) and a set of final extracted educational claims labeled primary/secondary. You know nothing about how the claims were produced.
 
@@ -168,6 +169,8 @@ async function main(): Promise<void> {
   const second = args.get('--no-second') !== 'true';
   const delayMs = Number(args.get('--delay-ms') ?? '800');
   if (!Number.isInteger(delayMs) || delayMs < 0) throw new Error('--delay-ms must be a nonnegative integer');
+  const requestTimeoutMs = Number(args.get('--request-timeout-ms') ?? '120000');
+  if (!Number.isInteger(requestTimeoutMs) || requestTimeoutMs < 1) throw new Error('--request-timeout-ms must be a positive integer');
   const stamp = new Date().toISOString().replace(/[:.]/g, '-');
   const outDir = args.get('--out') ?? path.join('/tmp', 'ob-canary-audit', stamp);
   mkdirSync(outDir, { recursive: true });
@@ -181,13 +184,37 @@ async function main(): Promise<void> {
   const db = new pg.Client({ connectionString: env.DATABASE_URL, ssl: { rejectUnauthorized: false } });
   await db.connect();
 
-  const allPackets = JSON.parse(readFileSync(inputPath, 'utf8')) as AuditPacket[];
+  const inputText = readFileSync(inputPath, 'utf8');
+  const packetSha256 = sha256(inputText);
+  const allPackets = JSON.parse(inputText) as AuditPacket[];
   const questionId = args.get('--question-id');
   const packets = questionId
     ? allPackets.filter((packet) => packet.nativeQuestionId === questionId)
     : allPackets;
   if (questionId && packets.length !== 1) {
     throw new Error(`expected exactly one packet for --question-id=${questionId}; found ${packets.length}`);
+  }
+  const runResult = await db.query(
+    `select id, status, expected_count, completed_count, packet_sha256
+       from public.ob_claim_production_runs where id = $1`,
+    [runId],
+  );
+  if (runResult.rows.length !== 1) throw new Error(`production run not found: ${runId}`);
+  const run = runResult.rows[0] as {
+    status: string; expected_count: number | string; completed_count: number | string; packet_sha256: string | null;
+  };
+  const statusResult = await db.query(
+    `select status, count(*)::integer as count
+       from public.ob_claim_production_items where run_id = $1 group by status order by status`,
+    [runId],
+  );
+  const readinessIssues = terminalRunPreconditions(run, statusResult.rows as Array<{ status: string; count: number | string }>);
+  if (readinessIssues.length) throw new Error(`audit gate not ready: ${readinessIssues.join(', ')}`);
+  if (!questionId && allPackets.length !== Number(run.expected_count)) {
+    throw new Error(`audit packet count mismatch: ${allPackets.length}/${run.expected_count}`);
+  }
+  if (run.packet_sha256 && run.packet_sha256 !== packetSha256) {
+    throw new Error(`audit packet hash mismatch: ${packetSha256} != ${run.packet_sha256}`);
   }
   const results: Array<Record<string, unknown>> = [];
   const usage1 = { calls: 0, prompt: 0, completion: 0 };
@@ -253,7 +280,7 @@ async function main(): Promise<void> {
     const call1 = await client.chat.completions.create({
       model: model1, ...deterministicSamplingParams(model1), response_format: { type: 'json_object' },
       messages: [{ role: 'system', content: AUDITOR1_SYSTEM }, { role: 'user', content: JSON.stringify(userPayload) }],
-    }, { timeout: 120_000 });
+    }, { timeout: requestTimeoutMs });
     usage1.calls += 1;
     usage1.prompt += call1.usage?.prompt_tokens ?? 0;
     usage1.completion += call1.usage?.completion_tokens ?? 0;
@@ -272,7 +299,7 @@ async function main(): Promise<void> {
           { role: 'system', content: AUDITOR2_SYSTEM },
           { role: 'user', content: JSON.stringify({ ...userPayload, first_audit: parsed1.json }) },
         ],
-      }, { timeout: 120_000 });
+      }, { timeout: requestTimeoutMs });
       usage2.calls += 1;
       usage2.prompt += call2.usage?.prompt_tokens ?? 0;
       usage2.completion += call2.usage?.completion_tokens ?? 0;
@@ -298,7 +325,7 @@ async function main(): Promise<void> {
     return counts;
   };
   const report = {
-    runId, manifestPath, models: { auditor1: model1, auditor2: second ? model2 : null },
+    runId, packetSha256, manifestPath, models: { auditor1: model1, auditor2: second ? model2 : null },
     generatedAt: new Date().toISOString(), questions: results.length,
     final: tally('final'), auditor1: tally('auditor1'),
     usage: { auditor1: usage1, auditor2: usage2 },

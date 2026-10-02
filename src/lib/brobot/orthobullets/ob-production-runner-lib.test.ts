@@ -30,7 +30,7 @@ type FakeItem = {
 };
 
 class FakeDb implements ObRunnerDb {
-  runs = new Map<string, { id: string; status: string }>();
+  runs = new Map<string, { id: string; status: string; releaseSha?: string | null; packetSha256?: string | null; executionManifest?: Record<string, unknown> | null }>();
   items: FakeItem[] = [];
   events: Array<{ id: string; nativeQuestionId: string; sourceHash: string; finalState: string; supersededBy: string | null; attemptNo: number }> = [];
   candidates: Array<{ id: string; eventId: string; index: number; text: string }> = [];
@@ -437,6 +437,8 @@ function baseConfig(overrides: Partial<ObRunnerConfig> = {}): ObRunnerConfig {
     costPer1kPromptUsd: 0.0025, costPer1kCompletionUsd: 0.01,
     backoffBaseSeconds: 30, backoffCapSeconds: 1800, heartbeatDivider: 3,
     requestTimeoutMs: 120_000, interItemDelayMs: 0,
+    releaseSha: 'abcdef1', packetSha256: 'a'.repeat(64),
+    pricingProfile: { version: 'test', prompt_per_1k_usd: 0.0025, completion_per_1k_usd: 0.01 },
     ...overrides,
   };
 }
@@ -985,6 +987,24 @@ function seedRegistry(db: FakeDb, qid: string, id = '11111111-1111-4111-8111-111
   assert.throws(() => validateObRunnerConfig(baseConfig({
     limits: { maxQuestions: 1.5, maxErrors: 0, maxCostUsd: 0, maxConsecutiveFailures: 10 },
   })), /maxQuestions/);
+}
+
+// 30. Resume is bound to the packet, release, and complete execution manifest.
+{
+  const db = new FakeDb(1_000_000);
+  db.runs.set('locked', {
+    id: 'locked', status: 'paused', releaseSha: 'abcdef1', packetSha256: 'a'.repeat(64),
+    executionManifest: { deliberately: 'different' },
+  });
+  await assert.rejects(
+    runObProduction(depsFor(db, scriptedModel([]), []), baseConfig({ mode: 'resume', runId: 'locked' })),
+    /execution manifest mismatch/,
+  );
+  db.runs.set('wrong-packet', { id: 'wrong-packet', status: 'paused', packetSha256: '1'.repeat(64) });
+  await assert.rejects(
+    runObProduction(depsFor(db, scriptedModel([]), []), baseConfig({ mode: 'resume', runId: 'wrong-packet' })),
+    /packet SHA mismatch/,
+  );
 }
 
 console.log('ob-production-runner-lib.test.ts: all assertions passed');

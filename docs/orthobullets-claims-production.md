@@ -190,6 +190,8 @@ Migrations (apply in order):
 - `20260929030400_ob_claim_persist_reset_reason_codes.sql` — patch 5:
   success persist stamps `extraction_accepted` / `extraction_unresolved`,
   clearing stale failure codes from retried items.
+- `20261002005124_ob_claim_run_hardening.sql` — immutable release/packet/model
+  manifests, explicit pause/resume/finalize lifecycle, and expired-lease recovery.
 
 ### 4.1 New tables
 
@@ -262,3 +264,46 @@ surface once with `exhausted = true` (no attempt burn) for terminal
 conversion. Heartbeats extend live leases; a lost lease fails the persist
 loudly (`lease lost or not owned`), and the item is picked up again. Every
 persist is idempotent per `attempt_id`: replays reuse and write nothing new.
+
+## 6. Release-gated operation
+
+New durable runs bind to the current Git SHA, the byte-for-byte packet-file
+SHA-256, all stage models, request/lease/pacing controls, limits, and pricing.
+Resume rejects any mismatch. A worker pause is explicit; a run becomes
+`completed` or `completed_with_gaps` only when its item count equals the
+declared count and every item is terminal. Both integrity and AI audit gates
+reject nonterminal runs before performing their substantive checks or making
+model calls.
+
+Use the cheap-model profile explicitly (prices are recorded in the run):
+
+```sh
+npm run ob:claims:run -- --input=/absolute/packets.json --apply \
+  --model-profile=gpt5-nano --inter-item-delay-ms=1500 \
+  --request-timeout-ms=180000 --max-cost=10
+```
+
+Create immutable full-inventory shards only in a new empty directory:
+
+```sh
+node scripts/shard-ob-question-packets.mjs --input=/absolute/all.json \
+  --out=/absolute/shards --shard-size=1000
+```
+
+Before approving a model profile, run a deterministic dry-run evaluation set
+and gate its report (defaults: 50 questions, ≥70% accepted, ≤5% failed,
+≤25% unresolved, ≤$0.02/question):
+
+```sh
+node scripts/evaluate-ob-model-viability.mjs \
+  --reports=/absolute/dry-run/report.json --out=/absolute/viability.json
+```
+
+After a run is terminal, execute both gates with the exact packet file:
+
+```sh
+npm run ob:claims:integrity -- --run-id=RUN_UUID --out=/absolute/integrity
+node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs \
+  scripts/audit-ob-claims-canary.ts --run-id=RUN_UUID \
+  --input=/absolute/packets.json --out=/absolute/audit
+```
