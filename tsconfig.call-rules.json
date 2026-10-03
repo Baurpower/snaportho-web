@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "next-env.d.ts",
+    "src/app/api/program/call-policy-v2/**/*.ts",
+    "src/app/api/program/call-rules/**/*.ts",
+    "src/components/workspace/call/programrulessheet.tsx",
+    "src/lib/workspace/call/**/*.ts",
+    "scripts/backup-program-call-rules.ts",
+    "scripts/lib/call-policy-revisions-schema.test.ts",
+    "scripts/lib/transactional-call-rules-schema.test.ts"
+  ],
+  "exclude": [".next", "node_modules"]
+}

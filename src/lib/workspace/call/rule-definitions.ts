@@ -82,6 +82,10 @@ export type RuleConfig = {
   slotMaxPerMonth?: number | null;
   slotSortOrder?: number;
   slotRequiredWhenVisible?: boolean;
+  /** Ordered fallback PGY pool used only after the preferred slot pool is infeasible. */
+  slotFallbackPgyYears?: number[];
+  /** Human-readable explanation displayed when a fallback tier is used. */
+  slotFallbackLabel?: string;
 
   // max_calls_for_rotation fields
   /** Rotation IDs (program_rotations.id) this limit applies to. */
@@ -129,6 +133,12 @@ export type RuleConfig = {
   partnerPgyYear?: number;
   /** Rotation-name tokens (case/punctuation-insensitive) that make a resident buddy-eligible. */
   eligibleRotationNameTokens?: string[];
+  /** Service-month ordinals in which an intern is eligible for Buddy call. */
+  eligibleServiceMonthIndices?: number[];
+  /** Allowed Primary-partner PGY years for the policy engine. */
+  partnerPgyYears?: number[];
+  /** Service-month ordinal at which Buddy PGYs may enter the Primary pool. */
+  internPrimaryFromServiceMonthIndex?: number;
 };
 
 export type RuleFieldDefinition =
@@ -409,6 +419,30 @@ export const RULE_DEFINITIONS: RuleDefinition[] = [
     fields: [],
   },
   {
+    type: "buddy_requirement",
+    label: "Buddy scheduling policy",
+    description:
+      "System-managed eligibility, quota, service-month, and partner rules for Buddy call.",
+    category: "eligibility",
+    defaultName: "Buddy scheduling policy",
+    defaultEnabled: true,
+    defaultIsHardRule: true,
+    defaultConfig: {
+      requiredDaysPerMonth: 2,
+      allowedDaysOfWeek: [5, 6],
+      buddyPgyYears: [1],
+      partnerPgyYear: 4,
+      partnerPgyYears: [4],
+      eligibleRotationNameTokens: ["genortho", "pager"],
+      eligibleServiceMonthIndices: [1],
+      internPrimaryFromServiceMonthIndex: 2,
+    },
+    // This policy is displayed read-only in the rules sheet. A dedicated editor
+    // should be introduced only when all legacy and policy-engine fields can be
+    // changed together safely.
+    fields: [],
+  },
+  {
     type: "max_calls_for_rotation",
     label: "Limit calls for rotation",
     description:
@@ -559,6 +593,20 @@ function sanitizeDayOfWeekArray(value: unknown, fallback: number[]): number[] {
         .filter((d) => Number.isInteger(d) && d >= 0 && d <= 6)
     )
   ).sort((a, b) => a - b);
+}
+
+function sanitizePositiveIntegerArray(value: unknown, fallback: number[]): number[] {
+  if (!Array.isArray(value)) return fallback;
+
+  const cleaned = Array.from(
+    new Set(
+      value
+        .map((item) => (typeof item === "number" ? item : Number(item)))
+        .filter((item) => Number.isInteger(item) && item > 0)
+    )
+  ).sort((a, b) => a - b);
+
+  return cleaned.length > 0 ? cleaned : fallback;
 }
 
 function sanitizeStringIdArray(value: unknown, fallback: string[]): string[] {
@@ -809,6 +857,13 @@ export function sanitizeRuleConfig(
     if (typeof source.backupRequiredExplicit === "boolean") {
       next.backupRequiredExplicit = source.backupRequiredExplicit;
     }
+    if (Array.isArray(source.slotFallbackPgyYears)) {
+      next.slotFallbackPgyYears = sanitizePgyArray(source.slotFallbackPgyYears, []);
+    }
+    if (typeof source.slotFallbackLabel === "string") {
+      const label = source.slotFallbackLabel.trim();
+      if (label) next.slotFallbackLabel = label;
+    }
   }
 
   if (type === "monthly_load_target_by_pgy") {
@@ -831,6 +886,54 @@ export function sanitizeRuleConfig(
     next.preferenceCallTypes = rawPrefCallTypes.length > 0 ? rawPrefCallTypes : ["Primary"];
     next.preferenceRotationIds = sanitizeStringIdArray(source.preferenceRotationIds ?? [], []);
     next.preferencePgyYears = sanitizePgyArray(source.preferencePgyYears ?? [], []);
+  }
+
+  if (type === "buddy_requirement") {
+    next.requiredDaysPerMonth = sanitizeNumber(
+      source.requiredDaysPerMonth,
+      definition.defaultConfig.requiredDaysPerMonth ?? 2,
+      0
+    );
+    next.allowedDaysOfWeek = sanitizeDayOfWeekArray(
+      source.allowedDaysOfWeek,
+      [...(definition.defaultConfig.allowedDaysOfWeek ?? [5, 6])]
+    );
+    next.buddyPgyYears = sanitizePgyArray(
+      source.buddyPgyYears,
+      [...(definition.defaultConfig.buddyPgyYears ?? [1])]
+    );
+    next.partnerPgyYear = sanitizeNumber(
+      source.partnerPgyYear,
+      definition.defaultConfig.partnerPgyYear ?? 4,
+      1,
+      5
+    );
+    next.partnerPgyYears = sanitizePgyArray(
+      source.partnerPgyYears,
+      typeof source.partnerPgyYear === "number"
+        ? [
+            sanitizeNumber(
+              source.partnerPgyYear,
+              definition.defaultConfig.partnerPgyYear ?? 4,
+              1,
+              5
+            ),
+          ]
+        : [...(definition.defaultConfig.partnerPgyYears ?? [4])]
+    );
+    next.eligibleRotationNameTokens = sanitizeStringIdArray(
+      source.eligibleRotationNameTokens,
+      [...(definition.defaultConfig.eligibleRotationNameTokens ?? ["genortho", "pager"])]
+    );
+    next.eligibleServiceMonthIndices = sanitizePositiveIntegerArray(
+      source.eligibleServiceMonthIndices,
+      [...(definition.defaultConfig.eligibleServiceMonthIndices ?? [1])]
+    );
+    next.internPrimaryFromServiceMonthIndex = sanitizeNumber(
+      source.internPrimaryFromServiceMonthIndex,
+      definition.defaultConfig.internPrimaryFromServiceMonthIndex ?? 2,
+      1
+    );
   }
 
   return next;
@@ -973,6 +1076,7 @@ export const SINGLETON_RULE_TYPES: ReadonlySet<RuleType> = new Set<RuleType>([
   "restrict_call_type_by_pgy",
   "weekend_pairing",
   "restrict_call_by_rotation",
+  "buddy_requirement",
 ]);
 
 export function isSingletonRuleType(type: string): boolean {

@@ -1,6 +1,8 @@
 import { createClient } from "@/utils/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { getDefaultRuleScope } from "./rule-definitions";
 import { migratePersistedCallRules } from "./persisted-rule-migration";
+import { mergeEditableRulesWithProtectedRows } from "./rule-persistence";
 
 export type ProgramCallRuleSet = {
   id: string;
@@ -42,6 +44,13 @@ export type UpsertProgramCallRuleInput = {
   config?: Record<string, unknown>;
   createdBy?: string | null;
 };
+
+export class StaleProgramRuleSetError extends Error {
+  constructor(message = "Rule set has been modified since you last loaded it.") {
+    super(message);
+    this.name = "StaleProgramRuleSetError";
+  }
+}
 
 export async function getProgramRuleSets(programId: string) {
   const supabase = await createClient();
@@ -129,6 +138,23 @@ export async function getProgramRules(programId: string, ruleSetId?: string) {
   return migratePersistedCallRules(rows).rules;
 }
 
+async function getRawProgramRulesWithAdmin(programId: string, ruleSetId: string) {
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from("program_call_rules")
+    .select("*")
+    .eq("program_id", programId)
+    .eq("rule_set_id", ruleSetId)
+    .order("priority", { ascending: true })
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    throw new Error(`Failed to fetch existing rules: ${error.message}`);
+  }
+
+  return (data ?? []) as ProgramCallRule[];
+}
+
 export async function replaceProgramRulesForRuleSet(input: {
   programId: string;
   ruleSetId: string;
@@ -139,13 +165,17 @@ export async function replaceProgramRulesForRuleSet(input: {
    * Default false to protect against accidental full deletion from bad payloads.
    */
   allowEmpty?: boolean;
+  previousRuleSetUpdatedAt?: string | null;
 }) {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   // 1. Guard: never delete if caller accidentally passed empty unless explicitly allowed
   if (input.rules.length === 0 && !input.allowEmpty) {
     // Return current rules instead of wiping (defensive)
-    return getProgramRules(input.programId, input.ruleSetId);
+    return {
+      rules: await getProgramRules(input.programId, input.ruleSetId),
+      ruleSetUpdatedAt: null,
+    };
   }
 
   // 2. Basic validation before touching the DB (fail fast, no partial wipe)
@@ -158,59 +188,44 @@ export async function replaceProgramRulesForRuleSet(input: {
     }
   }
 
-  // 3. Ownership / existence check on the rule set (prevent cross-program accidents)
-  const { data: ruleSetCheck, error: checkErr } = await supabase
-    .from("program_call_rule_sets")
-    .select("id, program_id")
-    .eq("id", input.ruleSetId)
-    .maybeSingle();
-
-  if (checkErr) {
-    throw new Error(`Failed to verify rule set ownership: ${checkErr.message}`);
-  }
-  if (!ruleSetCheck || ruleSetCheck.program_id !== input.programId) {
-    throw new Error("Rule set does not belong to the specified program");
-  }
-
-  // 4. Perform the replace (delete + insert). This is still the current model.
-  // Future improvement: could move to an RPC with transaction + updated_at guard.
-  const { error: deleteError } = await supabase
-    .from("program_call_rules")
-    .delete()
-    .eq("program_id", input.programId)
-    .eq("rule_set_id", input.ruleSetId);
-
-  if (deleteError) {
-    throw new Error(`Failed to clear existing rules: ${deleteError.message}`);
-  }
-
-  if (input.rules.length === 0) {
-    // Only reachable if allowEmpty was true
-    return [];
-  }
-
-  const rows = input.rules.map((rule, index) => ({
-    program_id: input.programId,
-    rule_set_id: input.ruleSetId,
+  const existingRows = await getRawProgramRulesWithAdmin(input.programId, input.ruleSetId);
+  const mergedRules = mergeEditableRulesWithProtectedRows({
+    editableRules: input.rules,
+    existingRows,
+  });
+  const rows = mergedRules.map((rule, index) => ({
+    id: rule.id ?? null,
     rule_type: rule.ruleType,
     name: rule.name,
     is_enabled: rule.isEnabled,
     is_hard_rule: rule.isHardRule,
     priority: rule.priority ?? (index + 1) * 10,
-    // Scope is documented as currently unused for behavior (see rule-definitions.ts)
     scope: rule.scope ?? getDefaultRuleScope(),
     config: rule.config ?? {},
-    created_by: input.userId,
+    created_by: rule.createdBy ?? input.userId,
   }));
 
-  const { data, error } = await supabase
-    .from("program_call_rules")
-    .insert(rows)
-    .select("*");
+  const { data, error } = await supabase.rpc(
+    "replace_program_call_rules_transactional",
+    {
+      p_program_id: input.programId,
+      p_rule_set_id: input.ruleSetId,
+      p_actor_user_id: input.userId,
+      p_previous_updated_at: input.previousRuleSetUpdatedAt ?? null,
+      p_rules: rows,
+    }
+  );
 
   if (error) {
-    throw new Error(`Failed to save rules: ${error.message}`);
+    if (error.message.includes("STALE_RULE_SET")) {
+      throw new StaleProgramRuleSetError();
+    }
+    throw new Error(`Failed to save rules transactionally: ${error.message}`);
   }
 
-  return (data ?? []) as ProgramCallRule[];
+  const payload = data as { rules?: ProgramCallRule[]; ruleSetUpdatedAt?: string } | null;
+  return {
+    rules: payload?.rules ?? [],
+    ruleSetUpdatedAt: payload?.ruleSetUpdatedAt ?? null,
+  };
 }

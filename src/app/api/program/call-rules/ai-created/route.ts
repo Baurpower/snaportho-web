@@ -11,6 +11,11 @@ import {
   validateRuleDraft,
   type RuleDraft,
 } from "@/lib/workspace/call/rule-definitions";
+import { isProtectedProgramRuleType } from "@/lib/workspace/call/rule-persistence";
+import {
+  requireWorkspacePermission,
+  WorkspacePermissionError,
+} from "@/lib/workspace/access-control";
 
 export async function POST(request: NextRequest) {
   try {
@@ -33,6 +38,12 @@ export async function POST(request: NextRequest) {
         { status: 403 }
       );
     }
+
+    await requireWorkspacePermission({
+      userId: user.id,
+      programId: membership.program_id,
+      permission: "canManageCallRules",
+    });
 
     const body = await request.json();
 
@@ -89,7 +100,7 @@ export async function POST(request: NextRequest) {
 
     // 4. Merge using singleton semantics (replace existing of same type, never duplicate)
     const mergedList = mergeSingletonRuleIntoList(
-      existingRules.map((r) => ({
+      existingRules.filter((r) => !isProtectedProgramRuleType(r.rule_type)).map((r) => ({
         id: r.id,
         rule_type: r.rule_type,
         name: r.name,
@@ -134,11 +145,16 @@ export async function POST(request: NextRequest) {
     });
 
     // Return the specific rule that was created/updated
-    const resultingRule = saved.find((s) => s.rule_type === normalized.type) ?? saved[0];
+    const resultingRule =
+      saved.rules.find((s) => s.rule_type === normalized.type) ?? saved.rules[0];
 
     return NextResponse.json({ rule: resultingRule }, { status: 201 });
   } catch (error) {
     console.error("Failed to save AI-created rule", error);
+
+    if (error instanceof WorkspacePermissionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
 
     return NextResponse.json(
       {

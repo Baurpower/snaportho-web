@@ -32,6 +32,8 @@ import {
   sanitizeRuleConfig,
   validateRuleDraft,
 } from "@/lib/workspace/call/rule-definitions";
+import { isProtectedProgramRuleType } from "@/lib/workspace/call/rule-persistence";
+import PolicyAuthoringV2Preview from "@/components/workspace/call/PolicyAuthoringV2Preview";
 
 type ProgramRulesSheetProps = {
   open: boolean;
@@ -118,6 +120,16 @@ function isRulesResponse(value: unknown): value is RulesResponse {
     typeof value === "object" &&
     "rules" in value &&
     "ruleSetId" in value
+  );
+}
+
+function isRulesSaveResponse(value: unknown): value is RulesResponse & {
+  ruleSetUpdatedAt: string;
+} {
+  return (
+    isRulesResponse(value) &&
+    "ruleSetUpdatedAt" in value &&
+    typeof (value as { ruleSetUpdatedAt?: unknown }).ruleSetUpdatedAt === "string"
   );
 }
 
@@ -1599,6 +1611,49 @@ function RuleCard({
   );
 }
 
+function BuddyPolicySummary({ rule }: { rule: RuleDraft }) {
+  const config = rule.config;
+  const dayLabels = (config.allowedDaysOfWeek ?? []).map(
+    (day) => DAY_LABELS[day] ?? String(day)
+  );
+  const values = [
+    ["Monthly cap", `${config.requiredDaysPerMonth ?? 2} Buddy weekends`],
+    ["Eligible PGYs", (config.buddyPgyYears ?? [1]).map((pgy) => `PGY-${pgy}`).join(", ")],
+    ["Days", dayLabels.join(", ") || "Fri, Sat"],
+    ["Services", (config.eligibleRotationNameTokens ?? []).join(", ") || "Gen Ortho, Pager"],
+    ["Eligible service months", (config.eligibleServiceMonthIndices ?? [1]).join(", ")],
+    [
+      "Primary partners",
+      (config.partnerPgyYears ?? [config.partnerPgyYear ?? 4])
+        .map((pgy) => `PGY-${pgy}`)
+        .join(", "),
+    ],
+    ["Primary pool begins", `Service month ${config.internPrimaryFromServiceMonthIndex ?? 2}`],
+  ];
+
+  return (
+    <div className="mt-5 rounded-[1.35rem] border border-violet-200 bg-violet-50/60 p-4">
+      <div className="flex items-start gap-3">
+        <ShieldCheck className="mt-0.5 h-5 w-5 text-violet-700" />
+        <div>
+          <p className="text-sm font-semibold text-violet-950">{rule.name}</p>
+          <p className="mt-1 text-xs leading-5 text-violet-700">
+            System-managed Buddy scheduling policy. It is preserved unchanged when other rules are saved.
+          </p>
+        </div>
+      </div>
+      <dl className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {values.map(([label, value]) => (
+          <div key={label} className="rounded-xl bg-white/80 px-3 py-2 ring-1 ring-violet-100">
+            <dt className="text-[10px] font-semibold uppercase tracking-[0.1em] text-violet-500">{label}</dt>
+            <dd className="mt-1 text-sm font-medium text-slate-800">{value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  );
+}
+
 // ─── Call Slots Section ────────────────────────────────────────────────────────
 
 const SLOT_COLORS = [
@@ -1662,6 +1717,8 @@ function updateSlotConfig(rule: RuleDraft, patch: Partial<ProgramCallSlotDefinit
       slotMaxPerMonth: merged.maxPerMonth,
       slotSortOrder: merged.sortOrder,
       slotRequiredWhenVisible: merged.requiredWhenVisible,
+      slotFallbackPgyYears: rule.config.slotFallbackPgyYears,
+      slotFallbackLabel: rule.config.slotFallbackLabel,
       backupRequiredExplicit:
         merged.callType === "Backup" && merged.requiredWhenVisible === true
           ? true
@@ -2344,6 +2401,9 @@ async function submitProposedRuleType() {
       if (!ruleSetId) throw new Error("No rule set available");
 
       const rulesToSave = upsertRequiredDailySlotsRule(rules, scheduleSlotMode);
+      const editableRulesToSave = rulesToSave.filter(
+        (rule) => !isProtectedProgramRuleType(rule.type)
+      );
 
       const invalidRule = rulesToSave.find((rule) => validateRuleDraft(rule).length > 0);
       if (invalidRule) {
@@ -2365,7 +2425,7 @@ async function submitProposedRuleType() {
           ruleSetId,
           // Send the timestamp we captured on load so the server can detect concurrent edits
           previousRuleSetUpdatedAt: ruleSetUpdatedAt,
-          rules: rulesToSave.map((rule) => ({
+          rules: editableRulesToSave.map((rule) => ({
             id: rule.id.startsWith("rule-") ? undefined : rule.id,
             name: rule.name.trim(),
             type: rule.type,
@@ -2392,13 +2452,13 @@ async function submitProposedRuleType() {
         throw new Error(getErrorMessage(payload, "Failed to save rules"));
       }
 
-      // Refresh our local copy of the rule set timestamp if server returns the fresh value
-      if (payload?.ruleSetUpdatedAt) {
-        setRuleSetUpdatedAt(payload.ruleSetUpdatedAt);
-      } else {
-        // Fallback: if server didn't return it yet, we could re-fetch, but for minimal change we leave it.
-        // The next full load (sheet reopen or manager) will get the latest anyway.
+      if (!isRulesSaveResponse(payload)) {
+        throw new Error("Rules were saved, but the server did not return a verifiable result. Reload before editing again.");
       }
+
+      const confirmedRules = payload.rules.map(toFrontendRule);
+      setRules(confirmedRules);
+      setRuleSetUpdatedAt(payload.ruleSetUpdatedAt);
 
       await onSaved?.();
       onClose();
@@ -2494,6 +2554,8 @@ async function submitProposedRuleType() {
       }}
     />
 
+    <PolicyAuthoringV2Preview refreshKey={rules.length} />
+
     <div className="mt-4">
     <ScheduleSlotModePicker
   value={scheduleSlotMode}
@@ -2535,7 +2597,8 @@ async function submitProposedRuleType() {
         {RULE_DEFINITIONS.filter(
           (definition) =>
             definition.type !== REQUIRED_DAILY_CALL_SLOTS_RULE &&
-            definition.type !== "call_slot_definition"
+            definition.type !== "call_slot_definition" &&
+            !isProtectedProgramRuleType(definition.type)
         ).map((definition) => (
           <RuleTypePickerCard
             key={definition.type}
@@ -2559,6 +2622,9 @@ async function submitProposedRuleType() {
     </div>
 
     <div className="mt-5 space-y-4">
+      {rules
+        .filter((rule) => rule.type === "buddy_requirement")
+        .map((rule) => <BuddyPolicySummary key={rule.id} rule={rule} />)}
       {loading ? (
         <div className="rounded-[1.25rem] border border-slate-200 bg-white px-5 py-10 text-center">
           <Loader2 className="mx-auto h-6 w-6 animate-spin text-slate-500" />
@@ -2602,6 +2668,11 @@ async function submitProposedRuleType() {
 </div>
 
             <div className="shrink-0 border-t border-slate-200 px-6 py-4 md:px-8">
+              {loadError ? (
+                <p className="mb-3 text-sm font-medium text-rose-700" role="alert">
+                  Rules error: {loadError}
+                </p>
+              ) : null}
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="inline-flex items-center gap-2 text-sm text-slate-500">
                   <Sparkles className="h-4 w-4" />

@@ -1,0 +1,348 @@
+{
+  "programLabel": "Residency workspace (production snapshot 2026-10-03)",
+  "rules": [
+    {
+      "rule_type": "monthly_load_target_by_pgy",
+      "name": "Monthly load target",
+      "is_enabled": true,
+      "is_hard_rule": false,
+      "priority": 10,
+      "config": {
+        "targetCallType": "Primary",
+        "targetMaxCalls": 4,
+        "targetMinCalls": 2,
+        "targetPgyYears": [
+          4
+        ],
+        "targetHardMaxCalls": 6
+      }
+    },
+    {
+      "rule_type": "monthly_load_target_by_pgy",
+      "name": "Monthly load target",
+      "is_enabled": true,
+      "is_hard_rule": false,
+      "priority": 20,
+      "config": {
+        "targetCallType": "Primary",
+        "targetMaxCalls": 5,
+        "targetMinCalls": 3,
+        "targetPgyYears": [
+          3
+        ],
+        "targetHardMaxCalls": 6
+      }
+    },
+    {
+      "rule_type": "monthly_load_target_by_pgy",
+      "name": "Monthly load target",
+      "is_enabled": true,
+      "is_hard_rule": false,
+      "priority": 30,
+      "config": {
+        "targetCallType": "Primary",
+        "targetMaxCalls": 7,
+        "targetMinCalls": 6,
+        "targetPgyYears": [
+          2
+        ],
+        "targetHardMaxCalls": 9
+      }
+    },
+    {
+      "rule_type": "monthly_load_target_by_pgy",
+      "name": "Monthly load target",
+      "is_enabled": true,
+      "is_hard_rule": false,
+      "priority": 40,
+      "config": {
+        "targetCallType": "any",
+        "targetMaxCalls": 3,
+        "targetMinCalls": 2,
+        "targetPgyYears": [
+          1
+        ],
+        "targetHardMaxCalls": 4
+      }
+    },
+    {
+      "rule_type": "day_of_week_preference",
+      "name": "Avoid weekday call",
+      "is_enabled": true,
+      "is_hard_rule": false,
+      "priority": 50,
+      "config": {
+        "preferencePgyYears": [],
+        "preferenceCallTypes": [
+          "Primary"
+        ],
+        "preferenceDaysOfWeek": [
+          2,
+          4
+        ],
+        "preferenceRotationIds": [
+          "5a8cba98-7c6a-4fdd-96b4-3399c09ec077"
+        ]
+      }
+    },
+    {
+      "rule_type": "max_calls_for_rotation",
+      "name": "Rotation call limit",
+      "is_enabled": true,
+      "is_hard_rule": true,
+      "priority": 60,
+      "config": {
+        "rotationCallLimitIds": [
+          "98d7ac3b-e656-44d1-9a8e-8e524c95507f"
+        ],
+        "rotationCallLimitMax": 0,
+        "rotationCallLimitPeriod": "month",
+        "rotationCallLimitDayScope": "weekday_only",
+        "rotationCallLimitCallTypes": [
+          "Primary"
+        ]
+      }
+    },
+    {
+      "rule_type": "restrict_call_type_by_pgy",
+      "name": "PGY-4 call pool",
+      "is_enabled": true,
+      "is_hard_rule": true,
+      "priority": 70,
+      "config": {
+        "allowedCallTypes": [
+          "Primary"
+        ],
+        "restrictedPgyYears": [
+          4
+        ]
+      }
+    },
+    {
+      "rule_type": "restrict_call_type_by_pgy",
+      "name": "PGY-1 call pool",
+      "is_enabled": true,
+      "is_hard_rule": true,
+      "priority": 80,
+      "config": {
+        "allowedCallTypes": [
+          "Buddy"
+        ],
+        "restrictedPgyYears": [
+          1
+        ]
+      }
+    },
+    {
+      "rule_type": "max_calls_for_rotation",
+      "name": "Rotation call limit",
+      "is_enabled": true,
+      "is_hard_rule": true,
+      "priority": 90,
+      "config": {
+        "rotationCallLimitIds": [
+          "98d7ac3b-e656-44d1-9a8e-8e524c95507f"
+        ],
+        "rotationCallLimitMax": 1,
+        "rotationCallLimitPeriod": "month",
+        "rotationCallLimitDayScope": "weekend_only",
+        "rotationCallLimitCallTypes": [
+          "Primary"
+        ]
+      }
+    },
+    {
+      "rule_type": "buddy_requirement",
+      "name": "Buddy requirement (grey-zone)",
+      "is_enabled": true,
+      "is_hard_rule": true,
+      "priority": 100,
+      "config": {
+        "partnerPgyYears": [
+          4,
+          5
+        ],
+        "requiredDaysPerMonth": 2,
+        "eligibleRotationNameTokens": [
+          "genortho",
+          "pager"
+        ],
+        "eligibleServiceMonthIndices": [
+          1
+        ],
+        "internPrimaryFromServiceMonthIndex": 2
+      }
+    },
+    {
+      "rule_type": "restrict_call_type_by_pgy",
+      "name": "PGY-2 call pool",
+      "is_enabled": true,
+      "is_hard_rule": true,
+      "priority": 100,
+      "config": {
+        "allowedCallTypes": [
+          "Primary"
+        ],
+        "restrictedPgyYears": [
+          2
+        ]
+      }
+    },
+    {
+      "rule_type": "restrict_call_type_by_pgy",
+      "name": "PGY-3 call pool",
+      "is_enabled": true,
+      "is_hard_rule": true,
+      "priority": 110,
+      "config": {
+        "allowedCallTypes": [
+          "Primary"
+        ],
+        "restrictedPgyYears": [
+          3
+        ]
+      }
+    },
+    {
+      "rule_type": "required_daily_call_slots",
+      "name": "Required daily call slots",
+      "is_enabled": true,
+      "is_hard_rule": true,
+      "priority": 120,
+      "config": {
+        "requiredCallTypes": [
+          "Primary"
+        ]
+      }
+    },
+    {
+      "rule_type": "min_days_between_assignments",
+      "name": "Minimum spacing",
+      "is_enabled": true,
+      "is_hard_rule": false,
+      "priority": 130,
+      "config": {
+        "minDays": 3,
+        "excludeAdjacentWeekendPairing": true
+      }
+    },
+    {
+      "rule_type": "restrict_call_type_by_pgy",
+      "name": "PGY-5 call pool",
+      "is_enabled": true,
+      "is_hard_rule": true,
+      "priority": 140,
+      "config": {
+        "allowedCallTypes": [
+          "Backup"
+        ],
+        "restrictedPgyYears": [
+          5
+        ]
+      }
+    },
+    {
+      "rule_type": "restrict_call_by_rotation",
+      "name": "Restrict call by rotation",
+      "is_enabled": true,
+      "is_hard_rule": true,
+      "priority": 150,
+      "config": {
+        "rotationIds": [
+          "99c6c851-5c22-4c7c-a6e9-3c6c3be93f00",
+          "bbeb865c-fb59-4228-85d8-63b6f79a137c",
+          "d171f882-9050-425c-9168-5ccf3d43db45",
+          "94b22727-fda5-4666-b950-610dc09eb1bf",
+          "9870ba5a-1dcb-41db-abfb-739e35fa267c",
+          "5ba66e08-13f6-4311-915f-08a14286afb3",
+          "75749f95-819c-4896-8aa3-7612b7012eab",
+          "90f1b5f2-d06f-43f8-ad83-5cab455d4157"
+        ],
+        "blockAllCall": true,
+        "restrictedPgyYears": [],
+        "restrictedCallTypes": [
+          "Primary",
+          "Backup"
+        ]
+      }
+    },
+    {
+      "rule_type": "call_slot_definition",
+      "name": "Buddy",
+      "is_enabled": true,
+      "is_hard_rule": false,
+      "priority": 160,
+      "config": {
+        "slotLabel": "Buddy",
+        "slotCallType": "Buddy",
+        "slotColorKey": "violet",
+        "slotCondition": {
+          "type": "when_pgy_scheduled",
+          "pgyYears": [
+            4
+          ],
+          "sourceSlotCallTypes": [
+            "Primary"
+          ]
+        },
+        "slotSortOrder": 2,
+        "slotDaysOfWeek": [
+          5,
+          6
+        ],
+        "slotShortLabel": "B°",
+        "slotRequiredMode": "conditional",
+        "slotRequiredWhenVisible": false,
+        "slotCountsTowardWorkload": true
+      }
+    },
+    {
+      "rule_type": "call_slot_definition",
+      "name": "Primary",
+      "is_enabled": true,
+      "is_hard_rule": false,
+      "priority": 170,
+      "config": {
+        "slotLabel": "Primary",
+        "slotCallType": "Primary",
+        "slotColorKey": "sky",
+        "slotSortOrder": 1,
+        "slotShortLabel": "1°",
+        "slotRequiredMode": "always",
+        "slotRequiredWhenVisible": true,
+        "slotCountsTowardWorkload": true
+      }
+    },
+    {
+      "rule_type": "call_slot_definition",
+      "name": "Backup",
+      "is_enabled": true,
+      "is_hard_rule": false,
+      "priority": 180,
+      "config": {
+        "slotLabel": "Backup",
+        "slotCallType": "Backup",
+        "slotColorKey": "emerald",
+        "slotCondition": {
+          "type": "when_pgy_scheduled",
+          "pgyYears": [
+            1,
+            2
+          ],
+          "sourceSlotCallTypes": [
+            "Primary"
+          ]
+        },
+        "slotSortOrder": 2,
+        "slotShortLabel": "2°",
+        "slotRequiredMode": "conditional",
+        "slotFallbackLabel": "Fallback: PGY-4 covering",
+        "slotFallbackPgyYears": [
+          4
+        ],
+        "slotRequiredWhenVisible": false,
+        "slotCountsTowardWorkload": true
+      }
+    }
+  ]
+}

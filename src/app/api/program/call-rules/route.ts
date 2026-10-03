@@ -5,12 +5,17 @@ import {
   getDefaultProgramRuleSet,
   getProgramRules,
   replaceProgramRulesForRuleSet,
+  StaleProgramRuleSetError,
 } from "@/lib/workspace/call/programcallrules";
 import { normalizeRuleForSave, getDefaultRuleScope } from "@/lib/workspace/call/rule-definitions";
 import {
   requireWorkspacePermission,
   WorkspacePermissionError,
 } from "@/lib/workspace/access-control";
+import {
+  assertEditableProgramRuleType,
+  ProtectedProgramRuleMutationError,
+} from "@/lib/workspace/call/rule-persistence";
 
 type IncomingRule = {
   id?: string;
@@ -171,21 +176,23 @@ export async function PUT(request: NextRequest) {
 
     // Phase 3: run every incoming rule through the canonical normalizer
     // so config shape, defaults, and sanitization are identical for manual + future AI paths.
-    const normalized = rules.map((rule) =>
-      normalizeRuleForSave({
+    const normalized = rules.map((rule) => {
+      assertEditableProgramRuleType(rule.type);
+      return normalizeRuleForSave({
         id: rule.id,
         type: rule.type,
         name: rule.name,
         enabled: rule.enabled,
         isHardRule: rule.isHardRule,
         config: rule.config,
-      })
-    );
+      });
+    });
 
     const saved = await replaceProgramRulesForRuleSet({
       programId: membership.program_id,
       ruleSetId,
       userId: user.id,
+      previousRuleSetUpdatedAt,
       rules: normalized.map((nr, index) => ({
         id: rules[index]?.id, // preserve original id for updates
         programId: membership.program_id!,
@@ -200,23 +207,26 @@ export async function PUT(request: NextRequest) {
       })),
     });
 
-    // Bump the rule set's updated_at so that the staleness guard (previousRuleSetUpdatedAt)
-    // actually protects against concurrent *rules* edits (not just metadata edits).
-    // This makes the optimistic lock meaningful for the rules sheet without schema changes.
-    const now = new Date().toISOString();
-    await supabase
-      .from("program_call_rule_sets")
-      .update({ updated_at: now })
-      .eq("id", ruleSetId)
-      .eq("program_id", membership.program_id);
-
     return NextResponse.json({
       success: true,
-      count: saved.length,
-      rules: saved,
-      ruleSetUpdatedAt: now, // so client can immediately refresh its local copy
+      count: saved.rules.length,
+      rules: saved.rules,
+      ruleSetId,
+      ruleSetUpdatedAt: saved.ruleSetUpdatedAt,
     });
   } catch (error) {
+    if (error instanceof ProtectedProgramRuleMutationError) {
+      return NextResponse.json(
+        { error: error.message, code: "PROTECTED_RULE_TYPE" },
+        { status: 400 }
+      );
+    }
+    if (error instanceof StaleProgramRuleSetError) {
+      return NextResponse.json(
+        { error: error.message, code: "STALE_RULE_SET" },
+        { status: 409 }
+      );
+    }
     if (error instanceof WorkspacePermissionError) {
       return NextResponse.json({ error: error.message }, { status: error.status });
     }
