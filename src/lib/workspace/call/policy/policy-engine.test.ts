@@ -104,6 +104,7 @@ function rule(
 }
 
 const poolRules: ProgramRule[] = [
+  rule("buddy-policy", "buddy_requirement", {}),
   rule("pool1", "restrict_call_type_by_pgy", { restrictedPgyYears: [1], allowedCallTypes: ["Buddy"] }),
   rule("pool2", "restrict_call_type_by_pgy", { restrictedPgyYears: [2], allowedCallTypes: ["Primary"] }),
   rule("pool4", "restrict_call_type_by_pgy", { restrictedPgyYears: [4], allowedCallTypes: ["Primary"] }),

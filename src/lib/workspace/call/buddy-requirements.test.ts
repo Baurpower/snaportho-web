@@ -83,6 +83,14 @@ const rules: ProgramRule[] = [
     },
   } as ProgramRule,
   {
+    id: "buddy-requirement-rule",
+    name: "Buddy policy",
+    rule_type: "buddy_requirement",
+    is_enabled: true,
+    is_hard_rule: false,
+    config: {},
+  } as ProgramRule,
+  {
     id: "buddy-max-rule",
     name: "PGY-1 Buddy max",
     rule_type: "monthly_load_target_by_pgy",
@@ -270,6 +278,20 @@ assert.deepEqual(
 );
 
 const buddySlotRule = rules[0];
+
+assert.deepEqual(
+  getBuddyRequirementsForMonth({
+    year: 2026,
+    month: 7,
+    residents,
+    rotations: [],
+    rules: [buddySlotRule],
+    slotDefinitions: [buddySlotDefinition],
+    assignments: {},
+  }),
+  [],
+  "a Buddy slot alone never activates hidden Houston-specific requirements"
+);
 
 function rulesWithBuddyPolicy(config: Record<string, unknown>): ProgramRule[] {
   return [

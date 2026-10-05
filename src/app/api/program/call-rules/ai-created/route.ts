@@ -3,7 +3,8 @@ import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import {
   getProgramRules,
-  replaceProgramRulesForRuleSet,
+  getDefaultProgramRuleSet,
+  prepareProgramRulesForReplacement,
 } from "@/lib/workspace/call/programcallrules";
 import {
   normalizeRuleForSave,
@@ -16,6 +17,7 @@ import {
   requireWorkspacePermission,
   WorkspacePermissionError,
 } from "@/lib/workspace/access-control";
+import { activatePolicyRevision, buildPolicyDocumentFromRules, createPolicyDraftRevision } from "@/lib/workspace/call/policy/policy-revisions";
 
 export async function POST(request: NextRequest) {
   try {
@@ -48,11 +50,12 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     const ruleSetId = String(body?.ruleSetId ?? "").trim();
+    const previousRuleSetUpdatedAt = String(body?.previousRuleSetUpdatedAt ?? "").trim();
     const aiRule = body?.rule;
 
-    if (!ruleSetId || !aiRule) {
+    if (!ruleSetId || !aiRule || !previousRuleSetUpdatedAt) {
       return NextResponse.json(
-        { error: "ruleSetId and rule are required" },
+        { error: "ruleSetId, rule, and previousRuleSetUpdatedAt are required" },
         { status: 400 }
       );
     }
@@ -120,7 +123,11 @@ export async function POST(request: NextRequest) {
 
     // 5. Persist via the hardened replace path (full sanitization + safety guards already applied above)
     // We convert back to the Upsert shape the replace expects.
-    const saved = await replaceProgramRulesForRuleSet({
+    const ruleSet = await getDefaultProgramRuleSet(membership.program_id);
+    if (!ruleSet || ruleSet.id !== ruleSetId) {
+      return NextResponse.json({ error: "Unknown rule set" }, { status: 404 });
+    }
+    const candidateRules = await prepareProgramRulesForReplacement({
       programId: membership.program_id,
       ruleSetId,
       userId: user.id,
@@ -134,19 +141,35 @@ export async function POST(request: NextRequest) {
         isHardRule: r.is_hard_rule!,
         priority: r.priority ?? (idx + 1) * 10,
         scope: (existingRules.find((er) => er.id === r.id)?.scope) ?? {},
-        config: {
-          ...(r.config ?? {}),
-          // preserve / stamp AI provenance on the stored config
-          ai_generated: true,
-          ai_explanation: aiRule.explanation ?? null,
-          original_text: body.originalText ?? null,
-        },
+        config: r.config ?? {},
       })),
     });
+    const document = buildPolicyDocumentFromRules({ ruleSetId, ruleSetName: ruleSet.name, rules: candidateRules });
+    const revision = await createPolicyDraftRevision({
+      programId: membership.program_id,
+      ruleSetId,
+      actorUserId: user.id,
+      document,
+      legacyRules: existingRules,
+      baseRuleSetUpdatedAt: previousRuleSetUpdatedAt,
+      metadata: {
+        source: "ai_rule_editor",
+        explanation: aiRule.explanation ?? null,
+        originalText: body.originalText ?? null,
+      },
+    });
+    await activatePolicyRevision({
+      programId: membership.program_id,
+      ruleSetId,
+      revisionId: revision.id,
+      actorUserId: user.id,
+      previousRuleSetUpdatedAt,
+    });
+    const savedRules = await getProgramRules(membership.program_id, ruleSetId);
 
     // Return the specific rule that was created/updated
     const resultingRule =
-      saved.rules.find((s) => s.rule_type === normalized.type) ?? saved.rules[0];
+      savedRules.find((s) => s.rule_type === normalized.type) ?? savedRules[0];
 
     return NextResponse.json({ rule: resultingRule }, { status: 201 });
   } catch (error) {
@@ -154,6 +177,12 @@ export async function POST(request: NextRequest) {
 
     if (error instanceof WorkspacePermissionError) {
       return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+    if (error instanceof Error && (error.message.includes("STALE_RULE_SET") || error.message.includes("STALE_POLICY_REVISION"))) {
+      return NextResponse.json(
+        { error: "Rule set has changed. Reload before saving again.", code: "STALE_RULE_SET" },
+        { status: 409 }
+      );
     }
 
     return NextResponse.json(

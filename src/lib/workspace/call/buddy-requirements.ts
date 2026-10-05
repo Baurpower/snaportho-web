@@ -101,6 +101,13 @@ export const BUDDY_REQUIRED_DAYS_PER_MONTH =
 export const BUDDY_ALLOWED_DAYS_OF_WEEK = DEFAULT_BUDDY_POLICY.allowedDaysOfWeek;
 export const BUDDY_PRIMARY_PARTNER_PGY = DEFAULT_BUDDY_POLICY.partnerPgyYear;
 
+/** Buddy behavior is enabled only by an explicit, enabled program rule. */
+export function hasEnabledBuddyRequirementRule(
+  rules: RuleLike[] | null | undefined
+): boolean {
+  return resolveMatchingRules(rules ?? [], ["buddy_requirement"]).length > 0;
+}
+
 function numberOr(value: unknown, fallback: number) {
   return typeof value === "number" && Number.isFinite(value) ? value : fallback;
 }
@@ -320,7 +327,7 @@ export function getBuddyRequirementsForMonth(params: {
   } = params;
 
   const buddySlotDefinition = getBuddySlotDefinition(rules, slotDefinitions);
-  if (!buddySlotDefinition) return [];
+  if (!buddySlotDefinition || !hasEnabledBuddyRequirementRule(rules)) return [];
 
   const policy = resolveBuddyPolicy(rules);
   const monthDateKeys = getMonthDateKeys(year, month);
@@ -423,6 +430,7 @@ export function getBuddyDateStatesForMonth(params: {
     assignments = {},
   } = params;
   const buddySlotDefinition = getBuddySlotDefinition(rules, slotDefinitions);
+  if (!buddySlotDefinition || !hasEnabledBuddyRequirementRule(rules)) return [];
   const policy = resolveBuddyPolicy(rules);
   const requirements = getBuddyRequirementsForMonth({
     year,

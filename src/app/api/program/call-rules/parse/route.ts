@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import { requireWorkspacePermission, WorkspacePermissionError } from "@/lib/workspace/access-control";
+import { checkCallRuleAiRateLimit } from "@/lib/workspace/call/rate-limit";
 
 let openaiClient: OpenAI | null = null;
 
@@ -66,6 +68,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: "No active program membership found" },
         { status: 403 }
+      );
+    }
+
+    await requireWorkspacePermission({
+      userId: user.id,
+      programId: membership.program_id,
+      permission: "canManageCallRules",
+    });
+    const rateLimit = checkCallRuleAiRateLimit(`${membership.program_id}:${user.id}`);
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: "Too many rule-generation requests. Please wait and try again." },
+        { status: 429, headers: { "Retry-After": String(rateLimit.retryAfterSeconds) } }
       );
     }
 
@@ -220,6 +235,10 @@ Rules:
     });
   } catch (error) {
     console.error("Failed to parse call rule", error);
+
+    if (error instanceof WorkspacePermissionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
 
     return NextResponse.json(
       {

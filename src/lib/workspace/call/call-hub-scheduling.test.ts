@@ -108,6 +108,14 @@ const rules: ProgramRule[] = [
     },
   } as ProgramRule,
   {
+    id: "buddy-requirement",
+    name: "Houston Buddy policy",
+    rule_type: "buddy_requirement",
+    is_enabled: true,
+    is_hard_rule: false,
+    config: {},
+  } as ProgramRule,
+  {
     id: "pgy5-backup-only",
     name: "PGY-5: Backup call only",
     rule_type: "restrict_call_type_by_pgy",

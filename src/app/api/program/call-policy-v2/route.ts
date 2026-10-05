@@ -95,6 +95,8 @@ export async function POST(request: Request) {
       actorUserId: context.user.id,
       document,
       legacyRules: context.rules,
+      baseRuleSetUpdatedAt: context.ruleSet.updated_at,
+      metadata: { source: "policy_v2_editor" },
     });
     return NextResponse.json({ revision, authoritativeSource: "legacy_rules" }, { status: 201 });
   } catch (error) {

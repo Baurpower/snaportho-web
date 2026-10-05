@@ -1,4 +1,5 @@
 import { createAdminClient } from "@/lib/supabase/admin";
+import { createHash } from "node:crypto";
 import type { ProgramCallRule } from "../programcallrules";
 import {
   projectLegacyRulesToPolicyDocumentV2,
@@ -25,7 +26,25 @@ export type ProgramCallPolicyRevision = {
   created_by: string;
   created_at: string;
   activated_at: string | null;
+  base_rule_set_updated_at: string;
+  base_rules_hash: string;
+  metadata: Record<string, unknown>;
 };
+
+function canonicalJson(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(",")}]`;
+  if (value && typeof value === "object") {
+    return `{${Object.entries(value as Record<string, unknown>)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([key, item]) => `${JSON.stringify(key)}:${canonicalJson(item)}`)
+      .join(",")}}`;
+  }
+  return JSON.stringify(value);
+}
+
+export function hashPolicyRules(rules: ProgramCallRule[]) {
+  return createHash("sha256").update(canonicalJson(rules)).digest("hex");
+}
 
 export function buildPolicyDocumentFromRules(params: {
   ruleSetId: string;
@@ -68,6 +87,8 @@ export async function createPolicyDraftRevision(params: {
   actorUserId: string;
   document: ProgramCallPolicyDocumentV2;
   legacyRules: ProgramCallRule[];
+  baseRuleSetUpdatedAt: string;
+  metadata?: Record<string, unknown>;
 }) {
   const materialized = materializePolicyDocumentV2(params.document);
   const currentById = new Map(params.legacyRules.map((rule) => [rule.id, rule]));
@@ -109,6 +130,9 @@ export async function createPolicyDraftRevision(params: {
     p_legacy_rules_snapshot: activationRules,
     p_compatibility_audit: params.document.compatibility,
     p_parity_report: parityReport,
+    p_base_rule_set_updated_at: params.baseRuleSetUpdatedAt,
+    p_base_rules_hash: hashPolicyRules(params.legacyRules),
+    p_metadata: params.metadata ?? {},
   });
 
   if (error) throw new Error(`Failed to create policy revision: ${error.message}`);

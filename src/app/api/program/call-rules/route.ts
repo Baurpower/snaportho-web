@@ -4,7 +4,7 @@ import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import {
   getDefaultProgramRuleSet,
   getProgramRules,
-  replaceProgramRulesForRuleSet,
+  prepareProgramRulesForReplacement,
   StaleProgramRuleSetError,
 } from "@/lib/workspace/call/programcallrules";
 import { normalizeRuleForSave, getDefaultRuleScope } from "@/lib/workspace/call/rule-definitions";
@@ -16,6 +16,11 @@ import {
   assertEditableProgramRuleType,
   ProtectedProgramRuleMutationError,
 } from "@/lib/workspace/call/rule-persistence";
+import {
+  activatePolicyRevision,
+  buildPolicyDocumentFromRules,
+  createPolicyDraftRevision,
+} from "@/lib/workspace/call/policy/policy-revisions";
 
 type IncomingRule = {
   id?: string;
@@ -123,7 +128,7 @@ export async function PUT(request: NextRequest) {
     const body = await request.json();
     const ruleSetId = body?.ruleSetId as string | undefined;
     const rules = (body?.rules ?? []) as IncomingRule[];
-    const previousRuleSetUpdatedAt = body?.previousRuleSetUpdatedAt as string | undefined; // Phase 7 staleness guard
+    const previousRuleSetUpdatedAt = body?.previousRuleSetUpdatedAt as string | undefined;
 
     if (!ruleSetId) {
       return NextResponse.json(
@@ -131,25 +136,31 @@ export async function PUT(request: NextRequest) {
         { status: 400 }
       );
     }
+    if (!previousRuleSetUpdatedAt) {
+      return NextResponse.json(
+        { error: "previousRuleSetUpdatedAt is required", code: "MISSING_RULE_SET_VERSION" },
+        { status: 400 }
+      );
+    }
 
-    // Phase 7: optional staleness protection using rule_set.updated_at
-    if (previousRuleSetUpdatedAt) {
-      const { data: currentSet } = await supabase
-        .from("program_call_rule_sets")
-        .select("updated_at")
-        .eq("id", ruleSetId)
-        .maybeSingle();
-
-      if (currentSet?.updated_at && currentSet.updated_at !== previousRuleSetUpdatedAt) {
+    const { data: currentRuleSet } = await supabase
+      .from("program_call_rule_sets")
+      .select("*")
+      .eq("id", ruleSetId)
+      .eq("program_id", membership.program_id)
+      .maybeSingle();
+    if (!currentRuleSet) {
+      return NextResponse.json({ error: "Unknown rule set" }, { status: 404 });
+    }
+    if (currentRuleSet.updated_at !== previousRuleSetUpdatedAt) {
         return NextResponse.json(
           {
             error: "Rule set has been modified since you last loaded it. Please reload and try again.",
             code: "STALE_RULE_SET",
-            currentUpdatedAt: currentSet.updated_at,
+            currentUpdatedAt: currentRuleSet.updated_at,
           },
           { status: 409 }
         );
-      }
     }
 
     if (!Array.isArray(rules)) {
@@ -188,11 +199,11 @@ export async function PUT(request: NextRequest) {
       });
     });
 
-    const saved = await replaceProgramRulesForRuleSet({
+    const currentRules = await getProgramRules(membership.program_id, ruleSetId);
+    const candidateRules = await prepareProgramRulesForReplacement({
       programId: membership.program_id,
       ruleSetId,
       userId: user.id,
-      previousRuleSetUpdatedAt,
       rules: normalized.map((nr, index) => ({
         id: rules[index]?.id, // preserve original id for updates
         programId: membership.program_id!,
@@ -206,13 +217,36 @@ export async function PUT(request: NextRequest) {
         config: nr.config,
       })),
     });
+    const document = buildPolicyDocumentFromRules({
+      ruleSetId,
+      ruleSetName: currentRuleSet.name,
+      rules: candidateRules,
+    });
+    const revision = await createPolicyDraftRevision({
+      programId: membership.program_id,
+      ruleSetId,
+      actorUserId: user.id,
+      document,
+      legacyRules: currentRules,
+      baseRuleSetUpdatedAt: previousRuleSetUpdatedAt,
+      metadata: { source: "rules_editor" },
+    });
+    const activated = await activatePolicyRevision({
+      programId: membership.program_id,
+      ruleSetId,
+      revisionId: revision.id,
+      actorUserId: user.id,
+      previousRuleSetUpdatedAt,
+    });
+    const savedRules = await getProgramRules(membership.program_id, ruleSetId);
 
     return NextResponse.json({
       success: true,
-      count: saved.rules.length,
-      rules: saved.rules,
+      count: savedRules.length,
+      rules: savedRules,
       ruleSetId,
-      ruleSetUpdatedAt: saved.ruleSetUpdatedAt,
+      ruleSetUpdatedAt: activated.ruleSetUpdatedAt,
+      revisionId: revision.id,
     });
   } catch (error) {
     if (error instanceof ProtectedProgramRuleMutationError) {
@@ -229,6 +263,12 @@ export async function PUT(request: NextRequest) {
     }
     if (error instanceof WorkspacePermissionError) {
       return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+    if (error instanceof Error && (error.message.includes("STALE_RULE_SET") || error.message.includes("STALE_POLICY_REVISION"))) {
+      return NextResponse.json(
+        { error: "Rule set has changed. Reload before saving again.", code: "STALE_RULE_SET" },
+        { status: 409 }
+      );
     }
 
     return NextResponse.json(

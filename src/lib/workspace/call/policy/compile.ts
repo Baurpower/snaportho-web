@@ -15,7 +15,10 @@ import type {
   SlotCondition,
 } from "@/components/workspace/call/programcalltypes";
 import { extractSlotDefinitions } from "@/lib/workspace/call/rule-definitions";
-import { resolveBuddyPolicy } from "@/lib/workspace/call/buddy-requirements";
+import {
+  hasEnabledBuddyRequirementRule,
+  resolveBuddyPolicy,
+} from "@/lib/workspace/call/buddy-requirements";
 import {
   getRequiredCallTypesFromRules,
   isRuleEnabled,
@@ -39,6 +42,7 @@ const POLICY_VERSION = 1;
  * behavior (verified by policy-parity.test.ts), so enabling these is per-program.
  */
 type GreyZone = {
+  enabled: boolean;
   buddyPgyYears: number[];
   serviceTokens: string[];
   /** Broader service tokens used to count an intern's orthopedic months for Primary progression. */
@@ -54,6 +58,7 @@ type GreyZone = {
 };
 
 function resolveGreyZone(rules: ProgramRule[]): GreyZone {
+  const enabled = hasEnabledBuddyRequirementRule(rules);
   const buddyPolicy = resolveBuddyPolicy(rules);
   const config = resolveMatchingRules(rules, ["buddy_requirement"])[0]?.config ?? {};
 
@@ -81,6 +86,7 @@ function resolveGreyZone(rules: ProgramRule[]): GreyZone {
     : [];
 
   return {
+    enabled,
     buddyPgyYears: buddyPolicy.buddyPgyYears,
     serviceTokens: buddyPolicy.eligibleRotationNameTokens,
     primaryServiceTokens:
@@ -223,7 +229,7 @@ function buildEligibilityTiers(
   const tiers: EligibilityTier[] = [];
 
   // Base pool tier (preference 0).
-  if (callType === "Buddy" && gz.buddyMonthIndices !== null) {
+  if (gz.enabled && callType === "Buddy" && gz.buddyMonthIndices !== null) {
     // Grey-zone Buddy: an eligible intern (buddyPgyYears) on the buddy service in one
     // of the configured Gen-Ortho month indices (e.g. first month only). Replaces the
     // legacy any-month PGY-1 pool tier.
@@ -242,7 +248,7 @@ function buildEligibilityTiers(
   }
 
   // Intern → Primary progression: interns join the Primary pool once experienced.
-  if (callType === "Primary" && gz.internPrimaryFromMonthIndex !== null) {
+  if (gz.enabled && callType === "Primary" && gz.internPrimaryFromMonthIndex !== null) {
     tiers.push({
       preference: 0,
       predicate: {
@@ -268,7 +274,7 @@ function buildEligibilityTiers(
 }
 
 function buildPairing(callType: string, gz: GreyZone): PairingConstraint[] {
-  if (callType !== "Buddy") return [];
+  if (callType !== "Buddy" || !gz.enabled) return [];
   const label = gz.partnerPgyYears.map((y) => `PGY-${y}`).join(" or ");
   return [
     {

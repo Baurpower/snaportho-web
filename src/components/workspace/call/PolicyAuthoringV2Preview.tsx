@@ -115,6 +115,7 @@ export default function PolicyAuthoringV2Preview({ refreshKey }: { refreshKey?: 
 
   const latestRevision = payload.revisions[0] ?? null;
   const latestDraft = payload.revisions.find((revision) => revision.status === "draft") ?? null;
+  const latestDraftIsCurrent = latestDraft?.base_rule_set_updated_at === payload.ruleSetUpdatedAt;
   const shownDocument = editing && draft ? draft : payload.document;
 
   function updateSource(
@@ -174,7 +175,7 @@ export default function PolicyAuthoringV2Preview({ refreshKey }: { refreshKey?: 
           <button
             type="button"
             onClick={() => void activateLatest()}
-            disabled={!latestDraft || latestDraft.parity_status !== "passed" || activating}
+            disabled={!latestDraft || latestDraft.parity_status !== "passed" || !latestDraftIsCurrent || activating}
             className="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-3 py-2 text-xs font-semibold text-white disabled:opacity-50"
           >
             {activating ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <CheckCircle2 className="h-3.5 w-3.5" />}
@@ -182,6 +183,12 @@ export default function PolicyAuthoringV2Preview({ refreshKey }: { refreshKey?: 
           </button>
         </div>
       </div>
+
+      {latestDraft && !latestDraftIsCurrent ? (
+        <p className="mt-3 rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-800">
+          This draft was created from an older rule version. Create a fresh draft before activating it.
+        </p>
+      ) : null}
 
       <div className="mt-4 grid gap-2 lg:grid-cols-2">
         {shownDocument.panels.map((panel) => (

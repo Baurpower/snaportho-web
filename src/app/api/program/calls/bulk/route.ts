@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import {
   assertValidProgramCallMutationDraft,
   ProgramCallScheduleValidationError,
@@ -173,13 +174,13 @@ export async function POST(request: NextRequest) {
 
     let existingRowsBySlot = new Map<
       string,
-      { id: string; call_date: string | null; call_type: string | null; source_kind?: string | null }
+      { id: string; call_date: string | null; call_type: string | null; source_kind?: string | null; updated_at: string | null }
     >();
 
     if (touchedDates.length > 0) {
       const { data: existingRows, error: existingRowsError } = await supabase
         .from("call_assignments")
-        .select("id, call_date, call_type, source_kind")
+        .select("id, call_date, call_type, source_kind, updated_at")
         .eq("program_id", access.accessContext.programId)
         .in("call_date", touchedDates);
 
@@ -262,26 +263,12 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    if (rowsToDelete.length > 0) {
-      const { error: deleteError } = await supabase
-        .from("call_assignments")
-        .delete()
-        .in("id", rowsToDelete);
-
-      if (deleteError) {
-        throw new Error(`Failed deleting cleared slots: ${deleteError.message}`);
-      }
-    }
-
-    const saved: Array<{ action: "created" | "updated"; id: string }> = [];
-
-    for (const [index, row] of rows.entries()) {
+    const mutationRows = rows.map((row, index) => {
       const slotKey = `${row.callDate}__${row.callType}`;
       const existing = existingRowsBySlot.get(slotKey);
       const resolvedTarget = resolvedTargets[index];
-
-      const payload = {
-        program_id: access.accessContext.programId,
+      return {
+        existing_id: existing?.id ?? null,
         roster_id: resolvedTarget.rosterId,
         program_membership_id: resolvedTarget.programMembershipId,
         call_type: row.callType,
@@ -291,42 +278,47 @@ export async function POST(request: NextRequest) {
         site: row.site ?? null,
         is_home_call: row.isHomeCall ?? false,
         notes: row.notes ?? null,
-        created_by: user.id,
-        updated_at: new Date().toISOString(),
       };
+    });
 
-      if (existing?.id) {
-        const { error: updateError } = await supabase
-          .from("call_assignments")
-          .update(payload)
-          .eq("id", existing.id);
-
-        if (updateError) {
-          throw new Error(`Failed updating call row: ${updateError.message}`);
-        }
-
-        saved.push({ action: "updated", id: existing.id });
-      } else {
-        const { data: created, error: insertError } = await supabase
-          .from("call_assignments")
-          .insert(payload)
-          .select("id")
-          .single();
-
-        if (insertError) {
-          throw new Error(`Failed inserting call row: ${insertError.message}`);
-        }
-
-        saved.push({ action: "created", id: created.id });
+    const admin = createAdminClient();
+    const { data: result, error: mutationError } = await admin.rpc(
+      "replace_program_call_assignments_transactional",
+      {
+        p_program_id: access.accessContext.programId,
+        p_actor_user_id: user.id,
+        p_touched_dates: touchedDates,
+        p_expected_assignments: Array.from(existingRowsBySlot.values()).map((row) => ({
+          id: row.id,
+          updated_at: row.updated_at,
+        })),
+        p_delete_ids: rowsToDelete,
+        p_rows: mutationRows,
       }
+    );
+    if (mutationError) {
+      if (mutationError.message.includes("STALE_CALL_SCHEDULE")) {
+        return NextResponse.json(
+          { error: "The schedule changed while you were editing. Reload and try again.", code: "STALE_CALL_SCHEDULE" },
+          { status: 409 }
+        );
+      }
+      if (mutationError.message.includes("SOURCE_OWNED_ASSIGNMENT")) {
+        return NextResponse.json(
+          { error: "Bulk changes cannot overwrite Google-owned assignments. Update the authoritative calendar and reconcile." },
+          { status: 409 }
+        );
+      }
+      throw new Error(`Failed publishing call schedule: ${mutationError.message}`);
     }
 
+    const counts = result as { created?: number; updated?: number; deleted?: number } | null;
     return NextResponse.json(
       {
         success: true,
-        created: saved.filter((item) => item.action === "created").length,
-        updated: saved.filter((item) => item.action === "updated").length,
-        deleted: rowsToDelete.length,
+        created: counts?.created ?? 0,
+        updated: counts?.updated ?? 0,
+        deleted: counts?.deleted ?? 0,
       },
       { status: 200 }
     );

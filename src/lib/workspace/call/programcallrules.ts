@@ -1,4 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
+import { randomUUID } from "node:crypto";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getDefaultRuleScope } from "./rule-definitions";
 import { migratePersistedCallRules } from "./persisted-rule-migration";
@@ -138,7 +139,7 @@ export async function getProgramRules(programId: string, ruleSetId?: string) {
   return migratePersistedCallRules(rows).rules;
 }
 
-async function getRawProgramRulesWithAdmin(programId: string, ruleSetId: string) {
+export async function getRawProgramRulesWithAdmin(programId: string, ruleSetId: string) {
   const supabase = createAdminClient();
   const { data, error } = await supabase
     .from("program_call_rules")
@@ -153,6 +154,36 @@ async function getRawProgramRulesWithAdmin(programId: string, ruleSetId: string)
   }
 
   return (data ?? []) as ProgramCallRule[];
+}
+
+export async function prepareProgramRulesForReplacement(input: {
+  programId: string;
+  ruleSetId: string;
+  rules: UpsertProgramCallRuleInput[];
+  userId: string;
+}) {
+  const existingRows = await getRawProgramRulesWithAdmin(input.programId, input.ruleSetId);
+  const mergedRules = mergeEditableRulesWithProtectedRows({ editableRules: input.rules, existingRows });
+  const existingById = new Map(existingRows.map((rule) => [rule.id, rule]));
+  return mergedRules.map((rule, index) => {
+    const existing = rule.id ? existingById.get(rule.id) : undefined;
+    return {
+      ...existing,
+      id: rule.id ?? randomUUID(),
+      program_id: input.programId,
+      rule_set_id: input.ruleSetId,
+      rule_type: rule.ruleType,
+      name: rule.name,
+      is_enabled: rule.isEnabled,
+      is_hard_rule: rule.isHardRule,
+      priority: rule.priority ?? (index + 1) * 10,
+      scope: rule.scope ?? getDefaultRuleScope(),
+      config: rule.config ?? {},
+      created_by: rule.createdBy ?? existing?.created_by ?? input.userId,
+      created_at: existing?.created_at ?? new Date().toISOString(),
+      updated_at: existing?.updated_at ?? new Date().toISOString(),
+    } satisfies ProgramCallRule;
+  });
 }
 
 export async function replaceProgramRulesForRuleSet(input: {

@@ -46,8 +46,8 @@ export async function POST(
     }
     const message = error instanceof Error ? error.message : "Policy activation failed";
     return NextResponse.json(
-      { error: message, code: message.includes("STALE_RULE_SET") ? "STALE_RULE_SET" : undefined },
-      { status: message.includes("STALE_RULE_SET") ? 409 : 500 }
+      { error: message, code: /STALE_(RULE_SET|POLICY_REVISION)/.test(message) ? "STALE_POLICY_REVISION" : undefined },
+      { status: /STALE_(RULE_SET|POLICY_REVISION)/.test(message) ? 409 : 500 }
     );
   }
 }

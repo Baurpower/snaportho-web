@@ -20,6 +20,7 @@ import {
 } from "@/lib/workspace/call/rule-evaluator";
 import {
   getBuddyDateStatesForMonth,
+  hasEnabledBuddyRequirementRule,
   isBuddyEligibleRotationName,
   resolveBuddyPolicy,
 } from "@/lib/workspace/call/buddy-requirements";
@@ -1709,6 +1710,7 @@ function buildBuddyDateStateLookup(
 export function validateBuddyAssignments(input: CallValidationInput) {
   const issues: CallValidationIssue[] = [];
   const rulesRaw = input.rules ?? input.context?.rules ?? [];
+  if (!hasEnabledBuddyRequirementRule(rulesRaw)) return issues;
   const slotDefs = extractSlotDefinitions(
     rulesRaw.map((r) => ({
       id: normalizeString(r.id) ?? "",
@@ -2079,6 +2081,7 @@ export function validateBuddyCapRule(input: CallValidationInput): CallValidation
   if (!isCallPolicyV2Enabled()) return [];
 
   const rulesRaw = input.rules ?? input.context?.rules ?? [];
+  if (!hasEnabledBuddyRequirementRule(rulesRaw)) return [];
   const cap = resolveBuddyPolicy(rulesRaw).requiredDaysPerMonth;
 
   const buddyDatesByRoster = new Map<string, string[]>();
