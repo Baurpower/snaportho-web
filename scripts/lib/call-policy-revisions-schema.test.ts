@@ -11,7 +11,7 @@ const migration = readFileSync(
 );
 const hardeningMigration = readFileSync(
   new URL(
-    "../../supabase/migrations/20261004191040_harden_call_policy_architecture.sql",
+    "../../supabase/migrations/20261005024144_harden_call_policy_architecture.sql",
     import.meta.url
   ),
   "utf8"
