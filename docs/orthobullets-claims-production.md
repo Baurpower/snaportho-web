@@ -296,7 +296,10 @@ npm run ob:claims:run -- --input=/absolute/packets.json --apply \
 ```
 
 The pinned standard Muse profile uses `https://api.meta.ai/v1`,
-`muse-spark-1.3`, and the recorded standard-tier prices. For another
+`muse-spark-1.3`, minimal reasoning, a 4,096-token per-call ceiling, and the
+recorded standard-tier prices. The reasoning controls are mandatory cost
+guards: Muse reasoning tokens are billed as completion tokens even though
+they are not present in the visible JSON response. For another
 OpenAI-compatible endpoint, use `custom-compatible` with
 `OB_MODEL_API_KEY`, `OB_MODEL_BASE_URL`, `OB_MODEL_ID`, and explicit pricing
 environment variables. Never change provider or model while resuming a

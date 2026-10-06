@@ -5,6 +5,10 @@ import { deterministicSamplingParams } from './openai-model-compat';
 
 assert.deepEqual(deterministicSamplingParams('gpt-5-nano'), {});
 assert.deepEqual(deterministicSamplingParams('GPT-5.1'), {});
+assert.deepEqual(deterministicSamplingParams('muse-spark-1.3'), {
+  reasoning_effort: 'minimal',
+  max_completion_tokens: 4096,
+});
 assert.deepEqual(deterministicSamplingParams('gpt-4o'), { temperature: 0 });
 
 const PACKET = {
