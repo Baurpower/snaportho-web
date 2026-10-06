@@ -17,7 +17,7 @@ import { execSync } from 'node:child_process';
 import { readFileSync, writeFileSync, existsSync, copyFileSync, rmSync } from 'node:fs';
 import crypto from 'node:crypto';
 import { DatabaseSync } from 'node:sqlite';
-import { parseHTML } from '/tmp/pilot-deps/node_modules/linkedom/esm/index.js';
+import { parseHTML } from 'linkedom';
 import { extractOrthobulletsPageContext } from '../extensions/orthobullets-brobot/dist/content/extractor.js';
 
 const args = new Map();
@@ -27,13 +27,32 @@ for (const value of process.argv.slice(2)) {
   args.set(at < 0 ? value.slice(2) : value.slice(2, at), at < 0 ? 'true' : value.slice(at + 1));
 }
 const topicsFile = args.get('topics-file');
-const directQids = (args.get('qids') ?? '').split(',').map((qid) => qid.trim()).filter(Boolean);
+const qidsFile = args.get('qids-file');
+const qidSpecialties = new Map();
+let fileQids = [];
+if (qidsFile) {
+  const text = readFileSync(qidsFile, 'utf8');
+  try {
+    const parsed = JSON.parse(text);
+    const rows = Array.isArray(parsed) ? parsed : parsed.questions;
+    if (!Array.isArray(rows)) throw new Error('JSON qids file must be an array or recovery manifest');
+    fileQids = rows.map((row) => typeof row === 'string' ? row : String(row.native_question_id ?? row.nativeQuestionId ?? '')).filter(Boolean);
+    for (const row of rows) if (row && typeof row === 'object') {
+      const qid = String(row.native_question_id ?? row.nativeQuestionId ?? '');
+      if (qid) qidSpecialties.set(qid, row.specialty ?? null);
+    }
+  } catch (error) {
+    if (text.trim().startsWith('{') || text.trim().startsWith('[')) throw error;
+    fileQids = text.split(/\r?\n/).map((qid) => qid.trim()).filter(Boolean);
+  }
+}
+const directQids = [...new Set([...(args.get('qids') ?? '').split(',').map((qid) => qid.trim()).filter(Boolean), ...fileQids])];
 const directSpecialty = args.get('specialty') ?? 'regression';
 const perTopic = Number(args.get('per-topic') ?? '5');
 const outPath = args.get('out') ?? '/tmp/obv5-packets.json';
 const delayMs = Number(args.get('delay-ms') ?? '2000');
 const topicDelayMs = Number(args.get('topic-delay-ms') ?? '3000');
-if (!topicsFile && !directQids.length) throw new Error('missing --topics-file or --qids');
+if (!topicsFile && !directQids.length) throw new Error('missing --topics-file, --qids, or --qids-file');
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const cookieCopy = '/tmp/obv5-fetch-cookies.sqlite';
 
@@ -150,7 +169,7 @@ for (const topic of topics) {
   }
 }
 for (const qid of directQids) {
-  await capture(qid, directSpecialty, null);
+  await capture(qid, qidSpecialties.get(qid) ?? directSpecialty, null);
 }
 rmSync(cookieCopy, { force: true });
 console.log(JSON.stringify({ event: 'finished', total: packets.length, counts }));

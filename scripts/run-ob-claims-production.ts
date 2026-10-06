@@ -22,6 +22,7 @@ import {
 } from '../src/lib/brobot/orthobullets/ob-production-runner-lib';
 import type { ObAliasHit, ObRegistryQuestionRow } from '../src/lib/brobot/orthobullets/ob-question-identity';
 import type { ObResolutionCandidateRow } from '../src/lib/brobot/orthobullets/ob-claim-resolution';
+import { resolveObModelProfile } from './lib/ob-model-profile';
 
 const require = createRequire(import.meta.url);
 const { Client } = require('pg') as typeof import('pg');
@@ -74,22 +75,9 @@ async function main(): Promise<void> {
   const env = { ...loadEnv(path.resolve('.env.local')), ...process.env };
   const databaseUrl = env.DATABASE_URL;
   if (!databaseUrl) throw new Error('DATABASE_URL is not configured');
-  const apiKey = env.OPENAI_API_KEY;
-  if (!apiKey) throw new Error('OPENAI_API_KEY is not configured');
   const modelProfile = args.get('--model-profile') ?? 'environment';
-  if (!['environment', 'gpt5-nano'].includes(modelProfile)) throw new Error('unsupported --model-profile (use environment or gpt5-nano)');
-  const strong = env.BROBOT_STRONG_MODEL?.trim() || 'gpt-4o';
-  const environmentModels = {
-    generator: env.BROBOT_OB_CLAIMS_GENERATOR_MODEL?.trim() || strong,
-    reviewer: env.BROBOT_OB_CLAIMS_CRITIC_MODEL?.trim() || strong,
-    coverage: env.BROBOT_OB_CLAIMS_REVIEW_MODEL?.trim() || strong,
-    repair: env.BROBOT_OB_CLAIMS_REVIEW_MODEL?.trim() || strong,
-    validator: strong,
-    resolution: strong,
-  };
-  const models = modelProfile === 'gpt5-nano'
-    ? { generator: 'gpt-5-nano', reviewer: 'gpt-5-nano', coverage: 'gpt-5-nano', repair: 'gpt-5-nano', validator: 'gpt-5-nano', resolution: 'gpt-5-nano' }
-    : environmentModels;
+  const provider = resolveObModelProfile(modelProfile, env);
+  const models = provider.models;
 
   const rawText = readFileSync(inputPath, 'utf8');
   const packetSha256 = createHash('sha256').update(rawText).digest('hex');
@@ -99,6 +87,7 @@ async function main(): Promise<void> {
   if (apply) {
     const releasePaths = [
       'scripts/run-ob-claims-production.ts',
+      'scripts/lib/ob-model-profile.ts',
       'src/lib/brobot/orthobullets/ob-production-runner-lib.ts',
       'src/lib/brobot/orthobullets/claim-review-pipeline.ts',
       'src/lib/brobot/orthobullets/claim-extraction-contract-v1.ts',
@@ -333,7 +322,7 @@ async function main(): Promise<void> {
     },
   };
 
-  const openai = new OpenAI({ apiKey });
+  const openai = new OpenAI({ apiKey: provider.apiKey, ...(provider.baseURL ? { baseURL: provider.baseURL } : {}) });
   const workerId = args.get('--worker-id') ?? `worker-${process.pid}-${Math.floor(Math.random() * 1e6)}`;
   let processed = 0;
 
@@ -341,14 +330,11 @@ async function main(): Promise<void> {
     await query('select public.ob_claim_recover_expired_leases($1)', [runId]);
     await query('select public.ob_claim_resume_run($1)', [runId]);
   }
-  const promptPrice = Number(modelProfile === 'gpt5-nano' ? '0.00005' : env.BROBOT_COST_PROMPT_PER_1K_USD ?? '0.0025');
-  const completionPrice = Number(modelProfile === 'gpt5-nano' ? '0.0004' : env.BROBOT_COST_COMPLETION_PER_1K_USD ?? '0.01');
-  if (!Number.isFinite(promptPrice) || promptPrice < 0 || !Number.isFinite(completionPrice) || completionPrice < 0) {
-    throw new Error('model prices must be nonnegative finite numbers');
-  }
+  const promptPrice = provider.promptPricePer1kUsd;
+  const completionPrice = provider.completionPricePer1kUsd;
   const pricingProfile = {
-    version: args.get('--pricing-profile') ?? (modelProfile === 'gpt5-nano' ? 'openai-gpt5-nano-2026-10-01' : 'operator-supplied-v1'),
-    model_profile: modelProfile,
+    version: args.get('--pricing-profile') ?? provider.pricingVersion,
+    model_profile: modelProfile, provider: provider.provider, base_url: provider.baseURL,
     prompt_per_1k_usd: promptPrice, completion_per_1k_usd: completionPrice,
   };
   const report = await runObProduction(

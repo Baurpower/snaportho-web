@@ -283,6 +283,56 @@ npm run ob:claims:run -- --input=/absolute/packets.json --apply \
   --request-timeout-ms=180000 --max-cost=10
 ```
 
+Meta Model API is available as a run-bound fallback. Keep the full key only in
+the local environment; never put it in a command, report, or repository:
+
+```sh
+export MODEL_API_KEY='<key from dev.meta.ai>'
+node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs \
+  scripts/test-ob-model-provider.ts --model-profile=muse-spark
+npm run ob:claims:run -- --input=/absolute/packets.json --apply \
+  --model-profile=muse-spark --inter-item-delay-ms=1500 \
+  --request-timeout-ms=180000 --max-cost=10
+```
+
+The pinned standard Muse profile uses `https://api.meta.ai/v1`,
+`muse-spark-1.3`, and the recorded standard-tier prices. For another
+OpenAI-compatible endpoint, use `custom-compatible` with
+`OB_MODEL_API_KEY`, `OB_MODEL_BASE_URL`, `OB_MODEL_ID`, and explicit pricing
+environment variables. Never change provider or model while resuming a
+manifest-locked run. On quota exhaustion, pause it and create a new run over
+the remaining-question packet:
+
+```sh
+node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs \
+  scripts/build-ob-fallback-packet.ts --run-id=SOURCE_RUN_UUID \
+  --input=/absolute/full-packets.json --out=/absolute/muse-fallback-packets.json
+npm run ob:claims:run -- --input=/absolute/muse-fallback-packets.json --apply \
+  --model-profile=muse-spark --inter-item-delay-ms=1500 \
+  --request-timeout-ms=180000 --max-cost=10
+```
+
+If a transient packet is lost, export the non-source recovery manifest before
+refetching:
+
+```sh
+node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs \
+  scripts/export-ob-run-recovery-manifest.ts --run-id=RUN_UUID \
+  --out=private/orthobullets-runs/RUN_UUID
+node scripts/fetch-ob-question-packets.mjs \
+  --qids-file=private/orthobullets-runs/RUN_UUID/recovery-manifest.json \
+  --out=private/orthobullets-runs/RUN_UUID/packets.json --delay-ms=2000
+node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs \
+  scripts/verify-ob-recovered-packets.ts \
+  --manifest=private/orthobullets-runs/RUN_UUID/recovery-manifest.json \
+  --packets=private/orthobullets-runs/RUN_UUID/packets.json \
+  --out=private/orthobullets-runs/RUN_UUID/recovery-verification.json
+```
+
+The private run directory is gitignored. Resume is allowed only when the
+verification report passes; otherwise preserve the old run and launch a new
+deterministic canary.
+
 Create immutable full-inventory shards only in a new empty directory:
 
 ```sh

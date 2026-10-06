@@ -25,6 +25,7 @@ import pg from 'pg';
 import { sourceContentHashV5, type ObSourcePacketV5 } from '../src/lib/brobot/orthobullets/claim-extractor-v5';
 import { deterministicSamplingParams } from '../src/lib/brobot/orthobullets/openai-model-compat';
 import { terminalRunPreconditions } from './lib/ob-claims-run-gate';
+import { resolveObModelProfile } from './lib/ob-model-profile';
 
 const AUDITOR1_SYSTEM = `You are an independent orthopaedic-education auditor. You receive an Orthobullets source question (stem, answer choices, correct answer, explanation) and a set of final extracted educational claims labeled primary/secondary. You know nothing about how the claims were produced.
 
@@ -177,10 +178,15 @@ async function main(): Promise<void> {
 
   const env = { ...loadEnv(path.resolve('.env.local')), ...process.env };
   if (!env.DATABASE_URL) throw new Error('DATABASE_URL is not configured');
-  if (!env.OPENAI_API_KEY) throw new Error('OPENAI_API_KEY is not configured');
-  const model1 = env.OB_AUDIT_MODEL_1?.trim() || env.BROBOT_STRONG_MODEL?.trim() || 'gpt-4o';
-  const model2 = env.OB_AUDIT_MODEL_2?.trim() || env.BROBOT_STRONG_MODEL?.trim() || 'gpt-4o';
-  const client = new OpenAI({ apiKey: env.OPENAI_API_KEY });
+  const modelProfile = args.get('--model-profile') ?? 'environment';
+  const provider = resolveObModelProfile(modelProfile, env);
+  const model1 = modelProfile === 'environment'
+    ? env.OB_AUDIT_MODEL_1?.trim() || env.BROBOT_STRONG_MODEL?.trim() || provider.models.generator
+    : provider.models.generator;
+  const model2 = modelProfile === 'environment'
+    ? env.OB_AUDIT_MODEL_2?.trim() || env.BROBOT_STRONG_MODEL?.trim() || provider.models.reviewer
+    : provider.models.reviewer;
+  const client = new OpenAI({ apiKey: provider.apiKey, ...(provider.baseURL ? { baseURL: provider.baseURL } : {}) });
   const db = new pg.Client({ connectionString: env.DATABASE_URL, ssl: { rejectUnauthorized: false } });
   await db.connect();
 
@@ -325,7 +331,8 @@ async function main(): Promise<void> {
     return counts;
   };
   const report = {
-    runId, packetSha256, manifestPath, models: { auditor1: model1, auditor2: second ? model2 : null },
+    runId, packetSha256, manifestPath, provider: provider.provider,
+    models: { auditor1: model1, auditor2: second ? model2 : null },
     generatedAt: new Date().toISOString(), questions: results.length,
     final: tally('final'), auditor1: tally('auditor1'),
     usage: { auditor1: usage1, auditor2: usage2 },

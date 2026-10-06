@@ -11,7 +11,11 @@
     "scripts/discover-ob-registry-questions.test.ts",
     "scripts/audit-ob-claims-canary.ts",
     "scripts/audit-ob-claims-canary.test.ts",
-    "scripts/audit-ob-claims-integrity.ts"
+    "scripts/audit-ob-claims-integrity.ts",
+    "scripts/test-ob-model-provider.ts",
+    "scripts/export-ob-run-recovery-manifest.ts",
+    "scripts/verify-ob-recovered-packets.ts",
+    "scripts/build-ob-fallback-packet.ts"
   ],
   "exclude": ["node_modules", "tmp"]
 }
