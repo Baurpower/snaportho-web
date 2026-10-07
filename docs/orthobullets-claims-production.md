@@ -283,6 +283,12 @@ npm run ob:claims:run -- --input=/absolute/packets.json --apply \
   --request-timeout-ms=180000 --max-cost=10
 ```
 
+`gpt5-mini` is the pinned OpenAI profile for the viability gate (`gpt-5-mini`,
+$0.25 / $2.00 per 1M tokens, pricing version `openai-gpt5-mini-2026-10-06`).
+It keeps default GPT-5 reasoning and sets `max_completion_tokens` to 8192.
+`--max-item-cost` stops a run after the first item whose own cost exceeds the
+cap. The 50-question gate stays zero-write until `viability.json` passes.
+
 Meta Model API is available as a run-bound fallback. Keep the full key only in
 the local environment; never put it in a command, report, or repository:
 

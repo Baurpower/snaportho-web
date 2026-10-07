@@ -25,4 +25,14 @@ assert.throws(() => resolveObModelProfile('custom-compatible', {
 }), /OB_MODEL_PROMPT_PER_1K_USD/);
 assert.throws(() => resolveObModelProfile('muse-spark', {}), /MODEL_API_KEY/);
 
+const mini = resolveObModelProfile('gpt5-mini', { OPENAI_API_KEY: 'secret' });
+assert.equal(mini.provider, 'openai');
+assert.equal(mini.baseURL, null);
+assert.equal(mini.models.generator, 'gpt-5-mini');
+assert.equal(mini.models.validator, 'gpt-5-mini');
+assert.equal(mini.promptPricePer1kUsd, 0.00025);
+assert.equal(mini.completionPricePer1kUsd, 0.002);
+assert.equal(mini.pricingVersion, 'openai-gpt5-mini-2026-10-06');
+assert.throws(() => resolveObModelProfile('gpt5-mini', {}), /OPENAI_API_KEY/);
+
 console.log('ob-model-profile.test.ts: all assertions passed');

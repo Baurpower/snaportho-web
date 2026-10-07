@@ -4,6 +4,7 @@ import { runProductionExtraction } from './claim-review-pipeline';
 import { deterministicSamplingParams } from './openai-model-compat';
 
 assert.deepEqual(deterministicSamplingParams('gpt-5-nano'), {});
+assert.deepEqual(deterministicSamplingParams('gpt-5-mini'), { max_completion_tokens: 8192 });
 assert.deepEqual(deterministicSamplingParams('GPT-5.1'), {});
 assert.deepEqual(deterministicSamplingParams('muse-spark-1.3'), {
   reasoning_effort: 'minimal',
@@ -165,7 +166,7 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
   if (!result.ok) throw new Error('unreachable');
   assert.equal(result.extraction.finalState, 'ai_review_unresolved');
   assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 0);
-  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved']);
+  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved', 'repair_still_disputed']);
   assert.equal(isObProdExtraction(result.extraction), true);
 }
 
@@ -182,6 +183,8 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
   assert.equal(result.ok, true);
   if (!result.ok) throw new Error('unreachable');
   assert.equal(result.extraction.finalState, 'ai_review_unresolved');
+  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved', 'factual_ambiguous']);
+  assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 0);
 }
 
 // 6. Unsupported draft drops cleanly; survivors still accept.
@@ -216,6 +219,32 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
   assert.equal(result.ok, true);
   if (!result.ok) throw new Error('unreachable');
   assert.equal(result.extraction.finalState, 'ai_review_unresolved');
+  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved', 'coverage_missing_major_concept']);
+  assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 0);
+}
+
+// 7b. Bare overextracted and bare internal conflict stay unresolved.
+{
+  const over = JSON.stringify({
+    verdict: 'overextracted', notes: 'trivia', missing_concepts: [], drop_indices: [], importance_changes: [],
+  });
+  const client = stubClient([generatorTwo, reviewGood, over]);
+  const result = await runProductionExtraction(PACKET, SOURCE, { client: client as never, models: MODELS });
+  assert.equal(result.ok, true);
+  if (!result.ok) throw new Error('unreachable');
+  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved', 'coverage_overextracted']);
+  assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 0);
+}
+{
+  const clash = JSON.stringify({
+    verdict: 'internally_conflicting', notes: 'clash', missing_concepts: [], drop_indices: [], importance_changes: [],
+  });
+  const client = stubClient([generatorTwo, reviewGood, clash]);
+  const result = await runProductionExtraction(PACKET, SOURCE, { client: client as never, models: MODELS });
+  assert.equal(result.ok, true);
+  if (!result.ok) throw new Error('unreachable');
+  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved', 'coverage_internally_conflicting']);
+  assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 0);
 }
 
 // 8. Overextracted with drops: pruned then accepted.
@@ -261,6 +290,8 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
   assert.equal(result.ok, true);
   if (!result.ok) throw new Error('unreachable');
   assert.equal(result.extraction.finalState, 'ai_review_unresolved');
+  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved', 'validator_abstain']);
+  assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 0);
 }
 
 // 10. Zero drafts: accepted-zero when coverage confirms; unresolved on gap.
@@ -284,6 +315,8 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
   assert.equal(result.ok, true);
   if (!result.ok) throw new Error('unreachable');
   assert.equal(result.extraction.finalState, 'ai_review_unresolved');
+  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved', 'coverage_missing_major_concept']);
+  assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 0);
 }
 
 // 11. Malformed outputs classify precisely.
@@ -355,6 +388,8 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
   assert.equal(result.ok, true);
   if (!result.ok) throw new Error('unreachable');
   assert.equal(result.extraction.finalState, 'ai_review_unresolved');
+  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved', 'safety_rejected']);
+  assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 0);
 }
 
 // 14. Request shape: timeout rides the SDK options argument, never the body

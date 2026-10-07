@@ -48,6 +48,18 @@ import {
 import type { ObSourcePacketV5 } from './claim-extractor-v5';
 import { deterministicSamplingParams } from './openai-model-compat';
 
+function coverageAbstention(verdict: string): ObProdDiagnostic {
+  if (verdict === 'missing_major_concept') return 'coverage_missing_major_concept';
+  if (verdict === 'internally_conflicting') return 'coverage_internally_conflicting';
+  if (verdict === 'overextracted') return 'coverage_overextracted';
+  return 'coverage_empty_incomplete';
+}
+
+function markUnresolved(extraction: ObProdExtraction, reason: ObProdDiagnostic): ObProdExtraction {
+  extraction.diagnostics = ['review_unresolved', reason];
+  return extraction;
+}
+
 export type ObProdModelClient = {
   // Mirrors the OpenAI SDK: request options (timeout/signal) ride the SECOND
   // argument. Passing them in the body is a 400 ("Unrecognized request argument").
@@ -611,7 +623,7 @@ export async function runProductionExtraction(
     if (!coverage) return fail('model_malformed', 'coverage output rejected by schema');
     if (coverage.verdict !== 'complete') {
       const extraction = assemble('ai_review_unresolved', coverage);
-      extraction.diagnostics = ['review_unresolved'];
+      markUnresolved(extraction, coverageAbstention(coverage.verdict));
       return { ok: true, extraction };
     }
     const validated = await callStage('validator', options.models.validator, validatorFormat, VALIDATOR_SYSTEM, {
@@ -623,7 +635,7 @@ export async function runProductionExtraction(
     const validator = parseValidator(validatorJson);
     if (!validator) return fail('model_malformed', 'validator output rejected by schema');
     const extraction = assemble(validator.verdict === 'accept' ? 'accepted' : 'ai_review_unresolved', coverage);
-    if (validator.verdict !== 'accept') extraction.diagnostics = ['review_unresolved'];
+    if (validator.verdict !== 'accept') markUnresolved(extraction, 'validator_abstain');
     return { ok: true, extraction };
   }
 
@@ -672,17 +684,17 @@ export async function runProductionExtraction(
 
   if (coverage.verdict === 'missing_major_concept') {
     const extraction = assemble('ai_review_unresolved', coverage);
-    extraction.diagnostics = ['review_unresolved'];
+    markUnresolved(extraction, 'coverage_missing_major_concept');
     return { ok: true, extraction };
   }
   if (coverage.verdict === 'internally_conflicting' && coverage.dropIndices.length === 0) {
     const extraction = assemble('ai_review_unresolved', coverage);
-    extraction.diagnostics = ['review_unresolved'];
+    markUnresolved(extraction, 'coverage_internally_conflicting');
     return { ok: true, extraction };
   }
   if (coverage.verdict === 'overextracted' && coverage.dropIndices.length === 0) {
     const extraction = assemble('ai_review_unresolved', coverage);
-    extraction.diagnostics = ['review_unresolved'];
+    markUnresolved(extraction, 'coverage_overextracted');
     return { ok: true, extraction };
   }
   // Drops applied above: the persisted set is the POST-drop set. Record the
@@ -760,7 +772,7 @@ export async function runProductionExtraction(
         // One repair only: still disputed after repair.
         const cov: typeof coverage = { ...coverage, verdict: coverage.verdict };
         const extraction = assemble('ai_review_unresolved', cov);
-        extraction.diagnostics = ['review_unresolved'];
+        markUnresolved(extraction, 'repair_still_disputed');
         return { ok: true, extraction };
       }
     }
@@ -770,12 +782,12 @@ export async function runProductionExtraction(
   const finalists = survivors.filter((item) => item.droppedAt === null);
   if (finalists.some((item) => (item.refactual ?? item.factual) === 'ambiguous')) {
     const extraction = assemble('ai_review_unresolved', coverage);
-    extraction.diagnostics = ['review_unresolved'];
+    markUnresolved(extraction, 'factual_ambiguous');
     return { ok: true, extraction };
   }
   if (finalists.some((item) => (item.refactual ?? item.factual) !== 'supported')) {
     const extraction = assemble('ai_review_unresolved', coverage);
-    extraction.diagnostics = ['review_unresolved'];
+    markUnresolved(extraction, 'factual_unsupported');
     return { ok: true, extraction };
   }
 
@@ -791,20 +803,21 @@ export async function runProductionExtraction(
   const validator = parseValidator(validatorJson);
   if (!validator) return fail('model_malformed', 'validator output rejected by schema');
 
+  const safetyViolations = safetyChecksContractV1(finalists.flatMap((item) => {
+    const texts = item.repairedTexts ?? [item.draft.text];
+    return texts.map((text) => ({
+      candidateId: '00000000-0000-4000-8000-000000000000',
+      index: 0, text, importance: item.importance, claimType: item.draft.claimType,
+      qualifiers: item.draft.qualifiers, support: item.draft.support,
+      generator: { model: '', promptVersion: '', confidence: 0 },
+      factual: { verdict: item.factual, reason: '' }, quality: { verdict: item.quality, reason: '' },
+      repairs: [], finalFactual: item.refactual ?? item.factual, finalQuality: item.requality ?? item.quality,
+      validator: { verdict: 'accept' as const, reason: '' }, accepted: true,
+    }));
+  }));
   const accepted = validator.verdict === 'accept'
     && coverage.verdict === 'complete'
-    && safetyChecksContractV1(finalists.flatMap((item) => {
-      const texts = item.repairedTexts ?? [item.draft.text];
-      return texts.map((text) => ({
-        candidateId: '00000000-0000-4000-8000-000000000000',
-        index: 0, text, importance: item.importance, claimType: item.draft.claimType,
-        qualifiers: item.draft.qualifiers, support: item.draft.support,
-        generator: { model: '', promptVersion: '', confidence: 0 },
-        factual: { verdict: item.factual, reason: '' }, quality: { verdict: item.quality, reason: '' },
-        repairs: [], finalFactual: item.refactual ?? item.factual, finalQuality: item.requality ?? item.quality,
-        validator: { verdict: 'accept' as const, reason: '' }, accepted: true,
-      }));
-    })).length === 0;
+    && safetyViolations.length === 0;
 
   const extraction = assemble(accepted ? 'accepted' : 'ai_review_unresolved', coverage);
   // Stamp the shared set-level validator verdict onto survivors.
@@ -815,6 +828,13 @@ export async function runProductionExtraction(
     candidate.accepted = accepted && candidate.validator.verdict === 'accept'
       && candidate.finalFactual === 'supported' && candidate.finalQuality === 'good';
   }
-  if (!accepted) extraction.diagnostics = ['review_unresolved'];
+  if (!accepted) {
+    const reason: ObProdDiagnostic = safetyViolations.length > 0
+      ? 'safety_rejected'
+      : validator.verdict !== 'accept'
+        ? 'validator_abstain'
+        : coverageAbstention(coverage.verdict);
+    markUnresolved(extraction, reason);
+  }
   return { ok: true, extraction };
 }

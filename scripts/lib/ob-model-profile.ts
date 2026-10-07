@@ -47,6 +47,11 @@ export function resolveObModelProfile(name: string, env: Record<string, string |
       models: allStages('gpt-5-nano'), promptPricePer1kUsd: 0.00005, completionPricePer1kUsd: 0.0004,
       pricingVersion: 'openai-gpt5-nano-2026-10-01' };
   }
+  if (name === 'gpt5-mini') {
+    return { name, provider: 'openai', apiKey: required(env, 'OPENAI_API_KEY'), baseURL: null,
+      models: allStages('gpt-5-mini'), promptPricePer1kUsd: 0.00025, completionPricePer1kUsd: 0.002,
+      pricingVersion: 'openai-gpt5-mini-2026-10-06' };
+  }
   if (name === 'muse-spark') {
     return { name, provider: 'meta-model-api', apiKey: required(env, 'MODEL_API_KEY'),
       baseURL: 'https://api.meta.ai/v1', models: allStages(env.MUSE_MODEL?.trim() || 'muse-spark-1.3'),
@@ -62,7 +67,7 @@ export function resolveObModelProfile(name: string, env: Record<string, string |
       completionPricePer1kUsd: requiredPrice(env, 'OB_MODEL_COMPLETION_PER_1K_USD'),
       pricingVersion: env.OB_MODEL_PRICING_VERSION?.trim() || 'operator-supplied-v1' };
   }
-  if (name !== 'environment') throw new Error('unsupported --model-profile (use environment, gpt5-nano, muse-spark, or custom-compatible)');
+  if (name !== 'environment') throw new Error('unsupported --model-profile (use environment, gpt5-nano, gpt5-mini, muse-spark, or custom-compatible)');
   const strong = env.BROBOT_STRONG_MODEL?.trim() || 'gpt-4o';
   return { name, provider: 'openai', apiKey: required(env, 'OPENAI_API_KEY'), baseURL: null,
     models: {

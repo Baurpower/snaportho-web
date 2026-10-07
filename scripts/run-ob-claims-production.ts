@@ -364,6 +364,7 @@ async function main(): Promise<void> {
         maxErrors: Number(args.get('--max-errors') ?? '0'),
         maxCostUsd: Number(args.get('--max-cost') ?? '0'),
         maxConsecutiveFailures: Number(args.get('--max-consecutive-failures') ?? '10'),
+        maxItemCostUsd: Number(args.get('--max-item-cost') ?? '0'),
       },
       specialtyFilter: args.get('--specialty') ?? null,
       questionFilter: args.get('--question-id') ?? null,

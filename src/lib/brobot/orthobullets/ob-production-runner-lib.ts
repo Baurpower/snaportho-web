@@ -74,6 +74,8 @@ export type ObRunnerLimits = {
   maxErrors: number;
   maxCostUsd: number;
   maxConsecutiveFailures: number;
+  /** Stop after recording an item whose own cost exceeds this. 0 or omitted disables the check. */
+  maxItemCostUsd?: number;
 };
 
 export type ObRunnerConfig = {
@@ -140,6 +142,10 @@ export function validateObRunnerConfig(config: ObRunnerConfig): void {
   if (!Number.isFinite(config.backoffBaseSeconds) || config.backoffBaseSeconds < 0) throw new Error('backoffBaseSeconds must be nonnegative');
   if (!Number.isFinite(config.backoffCapSeconds) || config.backoffCapSeconds < config.backoffBaseSeconds) {
     throw new Error('backoffCapSeconds must be at least backoffBaseSeconds');
+  }
+  if (config.limits.maxItemCostUsd !== undefined
+    && (!Number.isFinite(config.limits.maxItemCostUsd) || config.limits.maxItemCostUsd < 0)) {
+    throw new Error('maxItemCostUsd must be a finite nonnegative number');
   }
   if (!Number.isFinite(config.heartbeatDivider) || config.heartbeatDivider <= 0) throw new Error('heartbeatDivider must be positive');
   if (!/^[0-9a-f]{7,64}$/.test(config.releaseSha)) throw new Error('releaseSha must be a git SHA');
@@ -343,6 +349,9 @@ export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig
       if (report.estimatedCostUsd >= config.limits.maxCostUsd && config.limits.maxCostUsd > 0) return finish('max_cost');
       const entry = await processPacketDryRun(deps, config, row, costOf);
       checkpoint(entry);
+      if ((config.limits.maxItemCostUsd ?? 0) > 0 && entry.estimatedCostUsd > (config.limits.maxItemCostUsd ?? 0)) {
+        return finish('max_item_cost');
+      }
       if (entry.outcome.startsWith('failed') || entry.outcome === 'error') {
         errors += 1;
         consecutiveFailures += 1;
@@ -397,6 +406,9 @@ export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig
     }
     const entry = await processLeasedItem(deps, config, leased, packetByQid.get(leased.nativeQuestionId) ?? null, costOf);
     checkpoint(entry);
+    if ((config.limits.maxItemCostUsd ?? 0) > 0 && entry.estimatedCostUsd > (config.limits.maxItemCostUsd ?? 0)) {
+      return finish('max_item_cost');
+    }
     if (entry.outcome === 'failed' || entry.outcome === 'error') {
       errors += 1;
       consecutiveFailures += 1;
@@ -503,10 +515,12 @@ async function processPacketDryRun(
   }
   void wouldReuse;
   void wouldCreate;
+  const abstention = result.extraction.diagnostics.filter((code) => code !== 'review_unresolved');
   return {
     ...base,
     outcome: result.extraction.finalState === 'accepted' ? 'would_accept' : 'would_unresolved',
     diagnostic: result.extraction.finalState === 'accepted' ? null : 'review_unresolved',
+    reasonCodes: abstention,
     claimsAccepted: result.extraction.candidates.filter((entry) => entry.accepted).length,
     promptTokens, completionTokens, estimatedCostUsd: costOf(promptTokens, completionTokens),
   };
@@ -782,6 +796,7 @@ async function processLeasedItem(
       ...base,
       outcome: extraction.finalState === 'accepted' ? 'accepted' : 'unresolved',
       diagnostic: extraction.finalState === 'accepted' ? null : 'review_unresolved',
+      reasonCodes: extraction.diagnostics.filter((code) => code !== 'review_unresolved'),
       claimsAccepted: accepted,
       ...usageOf(),
     };

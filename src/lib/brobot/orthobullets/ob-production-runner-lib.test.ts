@@ -818,6 +818,22 @@ function seedRegistry(db: FakeDb, qid: string, id = '11111111-1111-4111-8111-111
   assert.equal(report.stoppedBy, 'max_cost');
   assert.equal(report.processed, 1);
 }
+{
+  const db = new FakeDb(1_000_000);
+  seedRegistry(db, 'Q1');
+  seedRegistry(db, 'Q2', '22222222-2222-4222-8222-222222222222');
+  const model = scriptedModel([...acceptFlow(CLAIM_A), ...acceptFlow(CLAIM_B)]);
+  const report = await runObProduction(
+    depsFor(db, model, [packet('Q1'), packet('Q2')]),
+    baseConfig({
+      apply: false,
+      limits: { maxQuestions: 0, maxErrors: 0, maxCostUsd: 0, maxConsecutiveFailures: 0, maxItemCostUsd: 0.0001 },
+    }),
+  );
+  assert.equal(report.stoppedBy, 'max_item_cost');
+  assert.equal(report.processed, 1);
+  assert.equal(db.ops.length, 0);
+}
 
 // 19. Dry run: full pipeline, zero DB writes.
 {
@@ -826,9 +842,30 @@ function seedRegistry(db: FakeDb, qid: string, id = '11111111-1111-4111-8111-111
   const model = scriptedModel(acceptFlow(CLAIM_A));
   const report = await runObProduction(depsFor(db, model, [packet('Q1')]), baseConfig({ apply: false }));
   assert.equal(report.outcomes.would_accept, 1);
+  assert.deepEqual(report.items[0].reasonCodes, []);
   assert.equal(db.ops.length, 0);
   assert.equal(db.events.length, 0);
   assert.equal(db.runs.size, 0);
+}
+{
+  const db = new FakeDb(1_000_000);
+  seedRegistry(db, 'Q1');
+  const gap = JSON.stringify({
+    verdict: 'missing_major_concept', notes: 'gap', missing_concepts: ['nerve course'],
+    drop_indices: [], importance_changes: [],
+  });
+  const model = scriptedModel([
+    JSON.stringify({
+      claims: [{ text: CLAIM_A, importance: 'primary', claim_type: 'anatomy', qualifiers: QUALIFIERS, support: ['stem', 'explanation'], confidence: 0.9 }],
+    }),
+    JSON.stringify({ judgments: [judgmentGood(0)] }),
+    gap,
+  ]);
+  const report = await runObProduction(depsFor(db, model, [packet('Q1')]), baseConfig({ apply: false }));
+  assert.equal(report.outcomes.would_unresolved, 1);
+  assert.equal(report.items[0].diagnostic, 'review_unresolved');
+  assert.deepEqual(report.items[0].reasonCodes, ['coverage_missing_major_concept']);
+  assert.equal(db.ops.length, 0);
 }
 
 // 20. Backoff bounds: exponential with jitter in [0.8, 1.2].

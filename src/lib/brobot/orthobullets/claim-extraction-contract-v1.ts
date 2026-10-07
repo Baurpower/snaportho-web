@@ -95,6 +95,11 @@ export const OB_PROD_DIAGNOSTICS = [
   'identity_unresolved', 'identity_conflict', 'review_unresolved', 'lease_lost',
   'lease_expired', 'budget_exceeded', 'safety_violation', 'persistence_failed',
   'attempts_exhausted', 'worker_stopped',
+  // Abstention branches. review_unresolved stays the stable item diagnostic;
+  // exactly one of these names the branch. They carry no question text.
+  'coverage_missing_major_concept', 'coverage_internally_conflicting', 'coverage_overextracted',
+  'coverage_empty_incomplete', 'repair_still_disputed', 'factual_ambiguous', 'factual_unsupported',
+  'validator_abstain', 'safety_rejected',
 ] as const;
 export type ObProdDiagnostic = (typeof OB_PROD_DIAGNOSTICS)[number];
 
