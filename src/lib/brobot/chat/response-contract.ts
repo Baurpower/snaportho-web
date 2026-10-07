@@ -44,6 +44,8 @@ export type BroBotChatInternalResult = {
   resolvedTopic?: string;
   entityResolutionState?: string;
   ankiLookupToken?: string;
+  usedClaimIds?: string[];
+  knowledgeCoverage?: 'full' | 'partial' | 'unknown' | 'unavailable';
 };
 
 export type BroBotLegacyResponse = BroBotChatInternalResult;

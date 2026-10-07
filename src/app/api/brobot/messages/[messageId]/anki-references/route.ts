@@ -3,10 +3,11 @@ import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient } from '@/utils/supabase/server';
 import { getGuestSessionFromRequest } from '@/lib/brobot/guest-session';
-import { ANKI_LINKER_VERSION, answerHash, latestPublishedRelease, linkAnkiClaims } from '@/lib/brobot/chat/anki-linker';
+import { ANKI_LINKER_VERSION, answerHash, latestPublishedRelease, linkAnkiCardsForClaimIds, linkAnkiClaims } from '@/lib/brobot/chat/anki-linker';
 import { answerClaims } from '@/lib/brobot/chat/anki-claims';
 import { createAnkiToken, verifyAnkiToken } from '@/lib/brobot/chat/anki-tokens';
 import { cardFields, cardPreview, type AnkiReference } from '@/lib/brobot/chat/anki-references';
+import { getBroBotClaimAnkiMode } from '@/lib/brobot/kg/config';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -22,10 +23,13 @@ export async function GET(_request: Request, { params }: { params: Promise<{ mes
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   const db = createAdminClient();
   const { data: message, error: messageError } = await db.from('brobot_messages')
-    .select('content').eq('id', messageId).eq('user_id', user.id).eq('role', 'assistant').maybeSingle();
+    .select('content,structured_json').eq('id', messageId).eq('user_id', user.id).eq('role', 'assistant').maybeSingle();
   if (messageError) return NextResponse.json({ error: 'Unable to load message' }, { status: 503 });
   if (!message) return NextResponse.json({ error: 'Message not found' }, { status: 404 });
   const answer = String(message.content ?? '');
+  const structured = (message.structured_json ?? {}) as Record<string, unknown>;
+  const usedClaimIds = Array.isArray(structured.usedClaimIds)
+    ? structured.usedClaimIds.filter((value): value is string => typeof value === 'string') : [];
   const hash = answerHash(answer);
   try {
     const releaseId = await latestPublishedRelease();
@@ -49,7 +53,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ mes
         const paths = new Map((members ?? []).map((member) => [member.canonical_card_version_id, member]));
         const fronts = new Map((versions ?? []).filter((version) => version.is_active)
           .map((version) => [version.id, cardFields(version.field_snapshot).front]));
-        if (rows.every((row) => row.claim_id && claims.get(row.claim_id) === row.anchor_text
+        if (rows.every((row) => row.claim_id && (UUID.test(row.claim_id) || claims.get(row.claim_id) === row.anchor_text)
           && row.deck_release_id === releaseId && paths.has(row.canonical_card_version_id)
           && fronts.has(row.canonical_card_version_id))) {
           const references: AnkiReference[] = rows.map((row) => ({
@@ -66,7 +70,9 @@ export async function GET(_request: Request, { params }: { params: Promise<{ mes
         }
       }
     }
-    const references = await linkAnkiClaims(answer, releaseId, user.id);
+    const exactReferences = getBroBotClaimAnkiMode() === 'enabled'
+      ? await linkAnkiCardsForClaimIds(usedClaimIds, releaseId, user.id) : [];
+    const references = exactReferences.length ? exactReferences : await linkAnkiClaims(answer, releaseId, user.id);
     const { error: deleteError } = await db.from('brobot_anki_references')
       .delete().eq('message_id', messageId).eq('user_id', user.id);
     if (deleteError) throw deleteError;

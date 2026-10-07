@@ -15,6 +15,8 @@ const MODE_SET = new Set<string>(BROBOT_CHAT_MODES);
 type ParseOptions = {
   fallbackAnswer?: string;
   fallbackMode?: BroBotChatMode;
+  validClaimIds?: string[];
+  knowledgeCoverage?: 'full' | 'partial' | 'unknown' | 'unavailable';
 };
 
 export type BroBotTier1ParsedOutput = {
@@ -326,6 +328,8 @@ function fallbackOutput(raw: unknown, options: ParseOptions): BroBotChatOutput {
     needsClarification: false,
     clarifyingQuestions: [],
     assumedContext: '',
+    usedClaimIds: [],
+    knowledgeCoverage: 'unavailable',
   };
 }
 
@@ -415,6 +419,8 @@ export function parseBroBotChatResponse(raw: unknown, options: ParseOptions = {}
         : [],
     researchSubmode:
       detectedMode === 'research' ? normalizeResearchSubmode(parsed.researchSubmode) : undefined,
+    usedClaimIds: normalizeArray(parsed.usedClaimIds, 12).filter((id) => (options.validClaimIds ?? []).includes(id)),
+    knowledgeCoverage: options.knowledgeCoverage ?? 'unavailable',
   };
 
   normalized.suggestedQuestions = removeItemsDuplicatedInAnswer(

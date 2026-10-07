@@ -7,7 +7,7 @@ import { answerClaims, type AnkiClaim } from './anki-claims';
 import { cardFields, cardPreview, obviousConflict, plainCardText, renderCloze, searchTerms, type AnkiReference } from './anki-references';
 import { createAnkiToken } from './anki-tokens';
 
-export const ANKI_LINKER_VERSION = 'claim-link-v2';
+export const ANKI_LINKER_VERSION = 'claim-link-v3';
 const MAX_CLAIMS = 24;
 const MAX_PAIRS = 48;
 const UUID = /^[0-9a-f-]{36}$/i;
@@ -80,6 +80,49 @@ export async function latestPublishedRelease() {
     .order('created_at', { ascending: false }).limit(1).maybeSingle();
   if (error) throw error;
   return data?.id ?? null;
+}
+
+export async function linkAnkiCardsForClaimIds(
+  claimIds: string[], releaseId: string, subject: string, limit = 3,
+): Promise<AnkiReference[]> {
+  const ids = [...new Set(claimIds.filter((id) => UUID.test(id)))].slice(0, 12);
+  if (!ids.length) return [];
+  const db = createAdminClient();
+  const { data: links, error: linksError } = await db.from('card_claim_links')
+    .select('canonical_card_id,canonical_card_version_id,claim_id,claim_version_id,confidence,review_status')
+    .in('claim_id', ids).eq('is_active', true).in('review_status', ['approved', 'auto_approved'])
+    .order('confidence', { ascending: false }).limit(40);
+  if (linksError) throw new Error('Claim card lookup failed');
+  if (!links?.length) return [];
+  const versionIds = [...new Set(links.map((row) => row.canonical_card_version_id))];
+  const [{ data: members, error: memberError }, { data: versions, error: versionError }, { data: claims, error: claimError }] = await Promise.all([
+    db.from('anki_deck_release_cards').select('canonical_card_id,canonical_card_version_id,deck_path,card_ordinal')
+      .eq('deck_release_id', releaseId).eq('inclusion_status', 'included').in('canonical_card_version_id', versionIds),
+    db.from('canonical_card_versions').select('id,canonical_card_id,field_snapshot,is_active').in('id', versionIds),
+    db.from('educational_claims').select('id,current_version_id,claim_text,is_active').in('id', ids),
+  ]);
+  if (memberError || versionError || claimError) throw new Error('Claim card detail lookup failed');
+  const memberByVersion = new Map((members ?? []).map((row) => [row.canonical_card_version_id, row]));
+  const versionById = new Map((versions ?? []).map((row) => [row.id, row]));
+  const claimById = new Map((claims ?? []).filter((row) => row.is_active).map((row) => [row.id, row]));
+  const selected: AnkiReference[] = [];
+  const seenCards = new Set<string>();
+  for (const link of links) {
+    if (selected.length >= Math.max(1, Math.min(3, limit)) || seenCards.has(link.canonical_card_id)) continue;
+    const member = memberByVersion.get(link.canonical_card_version_id);
+    const version = versionById.get(link.canonical_card_version_id);
+    const claim = claimById.get(link.claim_id);
+    if (!member || !version?.is_active || !claim || claim.current_version_id !== link.claim_version_id) continue;
+    const front = cardFields(version.field_snapshot).front;
+    if (!front) continue;
+    selected.push({ id: link.canonical_card_version_id, number: selected.length + 1, claimId: link.claim_id,
+      anchorText: claim.claim_text, cardId: link.canonical_card_id, cardVersionId: link.canonical_card_version_id,
+      releaseId, deckPath: toProductDeckPath(member.deck_path),
+      title: cardPreview(front, member.card_ordinal, member.deck_path),
+      token: createAnkiToken('card', subject, `${releaseId}:${link.canonical_card_version_id}`) });
+    seenCards.add(link.canonical_card_id);
+  }
+  return selected;
 }
 
 export async function linkAnkiClaims(

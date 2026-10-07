@@ -6,8 +6,16 @@ import type {
   BroBotTrainingLevel,
 } from "@/lib/brobot/chat/types";
 
+export type BroBotClaimConflict = {
+  claimIds: string[];
+  reason: string;
+};
+
 export const BROBOT_KG_POLICY_VERSION = "brobot-kg-shadow-v1";
 export const BROBOT_KG_PACKET_SCHEMA_VERSION = "brobot-kg-packet-v1";
+export const BROBOT_KNOWLEDGE_PACKET_SCHEMA_VERSION = "brobot-knowledge-packet.v2";
+export const BROBOT_KNOWLEDGE_POLICY_VERSION = "brobot-claims-v2";
+export const BROBOT_KNOWLEDGE_POLICY_VERSION_V3 = "brobot-claims-v3";
 export const BROBOT_KG_PINNED_RELEASE_ID = "kg-beta-20260716-002";
 
 export type BroBotKgFeatureMode = "off" | "shadow" | "enabled";
@@ -53,16 +61,33 @@ export type BroBotKgFact = {
   provenanceStatus: string;
 };
 
+export type BroBotKnowledgeClaim = {
+  claimId: string; claimVersionId: string; claimText: string; claimType: string;
+  predicate: string; objectText: string; qualifiers: Record<string, unknown>;
+  importanceLevel: string; primaryEntityId: string; primaryEntityLabel: string;
+  approvalMethod: string; reviewStatus: string; contentSource: string;
+  algorithmVersion: string; trustTier: "A" | "B"; score: number; selectionReasons: string[];
+};
+
+export type BroBotKnowledgeCardCandidate = {
+  cardId: string; cardVersionId: string; claimId: string; claimVersionId: string;
+  releaseId: string; deckPath: string; cardOrdinal: number; confidence: number;
+  reviewStatus: string; score: number;
+};
+
 export type BroBotKgPacket = {
   retrievalId: string;
   releaseId: string;
   status: BroBotKgRetrievalStatus;
   anchors: BroBotKgCandidate[];
   facts: BroBotKgFact[];
+  claims: BroBotKnowledgeClaim[];
+  cardCandidates: BroBotKnowledgeCardCandidate[];
   neighborhoodSlugs: string[];
   coverage: "full" | "partial" | "unknown";
   limitations: string[];
   tokenEstimate: number;
+  claimConflicts?: BroBotClaimConflict[];
 };
 
 export type BroBotKgGapType =
@@ -97,6 +122,8 @@ export type BroBotKgTrace = {
   candidates: BroBotKgCandidate[];
   selectedEntityIds: string[];
   selectedRelationshipIds: string[];
+  selectedClaimIds: string[];
+  candidateCardIds: string[];
   neighborhoodSlugs: string[];
   predicateFamilies: string[];
   cacheStatus: string;
@@ -114,14 +141,22 @@ export type BroBotKgTrace = {
   rpcCompleted: boolean;
   safeErrorCode?: string;
   safeErrorStage?: string;
-  answerInfluenced: false;
-  retrievalMode: "shadow";
+  answerInfluenced: boolean;
+  retrievalMode: "shadow" | "enabled";
   packetTokenEstimate: number;
   status: BroBotKgRetrievalStatus;
   failureReason?: string;
   policyVersion: string;
   packetSchemaVersion: string;
   gaps: BroBotKgGapSignal[];
+  queryVariants?: string[];
+  requestedFacets?: string[];
+  retrievalChannels?: Record<string, number>;
+  exclusionReasons?: string[];
+  rerankVersion?: string;
+  poolSize?: number;
+  claimScoreComponents?: Array<{ claimId: string; finalScore: number; parts: Record<string, number> }>;
+  supportLevel?: string;
 };
 
 export type BroBotKgRetrievalInput = {

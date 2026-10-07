@@ -1928,6 +1928,8 @@ async function generateBroBotPipelineResult(params: {
   let parsedOutput = parseBroBotChatResponse(answerCompletion.rawContent, {
     fallbackMode: params.intent.mode,
     fallbackAnswer: 'BroBot could not format a structured response. Please try again.',
+    validClaimIds: answerContext.knowledgePacket?.claims.map((claim) => claim.claimId),
+    knowledgeCoverage: answerContext.knowledgePacket?.coverage ?? 'unavailable',
   });
   if (BROBOT_TIERED_PIPELINE_ENABLED) {
     parsedOutput = {
@@ -1951,6 +1953,8 @@ async function generateBroBotPipelineResult(params: {
     answerRoute,
     clinicalContext: answerContext.clinicalContext,
     question: params.body.message,
+    usedClaimIds: parsedOutput.usedClaimIds,
+    knowledgePacket: answerContext.knowledgePacket,
   });
   addSemanticRelevanceWarnings({
     warnings: qualityGate.warnings,
@@ -2011,6 +2015,8 @@ async function generateBroBotPipelineResult(params: {
     const revisedOutput = parseBroBotChatResponse(revisionCompletion.rawContent, {
       fallbackMode: params.intent.mode,
       fallbackAnswer: parsedOutput.answer,
+      validClaimIds: answerContext.knowledgePacket?.claims.map((claim) => claim.claimId),
+      knowledgeCoverage: answerContext.knowledgePacket?.coverage ?? 'unavailable',
     });
     parsedOutput = {
       ...revisedOutput,
@@ -2038,6 +2044,8 @@ async function generateBroBotPipelineResult(params: {
       procedureOrTopic: params.intent.procedureOrTopic,
       answerRoute,
       clinicalContext: answerContext.clinicalContext,
+      usedClaimIds: parsedOutput.usedClaimIds,
+      knowledgePacket: answerContext.knowledgePacket,
       question: params.body.message,
     });
     addSemanticRelevanceWarnings({
@@ -3188,12 +3196,14 @@ export async function POST(request: Request) {
       'parallel_context'
     );
     const kgShadow = await kgShadowPromise;
+    answerContext.knowledgePacket = kgShadow.trace.answerInfluenced ? kgShadow.packet : null;
     for (const [name, duration] of Object.entries(kgShadow.trace.stageTimingsMs)) {
       stageTimer.mark(name, duration);
     }
-    const kgTelemetry = tierOneFastPath
-      ? { persisted: false, latencyMs: 0, errorCode: 'DEFERRED_TO_ENRICHMENT' }
-      : await persistBroBotKgShadowTrace({
+    // Prefer inline telemetry always. Tier-1 previously deferred to enrichment, which
+    // left brobot_kg_retrieval_events empty when the enrich queue was idle/empty.
+    // Upserts are idempotent on request_id; enrich may still re-run retrieval later.
+    const kgTelemetry = await persistBroBotKgShadowTrace({
           result: kgShadow,
           query: validatedBody.message,
           userId,
@@ -3339,6 +3349,7 @@ export async function POST(request: Request) {
     await attachBroBotKgAnswerOutcome({
       requestId,
       qualityGateWarnings: qualityGate.warnings,
+      usedClaimIds: brobotOutput.usedClaimIds,
     });
 
     if (!qualityGate.passed) {
@@ -3746,6 +3757,18 @@ export async function POST(request: Request) {
         stageTimings: stageTimer.snapshot(),
         kgShadowStatus: kgShadow.trace.status,
         kgRetrievalId: kgShadow.trace.retrievalId,
+        kgTelemetryPersisted: kgTelemetry.persisted,
+        kgTelemetryErrorCode: kgTelemetry.errorCode ?? null,
+        kgSafeErrorCode: kgShadow.trace.safeErrorCode ?? null,
+        kgSafeErrorStage: kgShadow.trace.safeErrorStage ?? null,
+        kgTimeoutStage: kgShadow.trace.timeoutStage ?? null,
+        kgElapsedLatencyMs: Math.round(kgShadow.trace.elapsedLatencyMs),
+        kgConfiguredDeadlineMs: kgShadow.trace.configuredDeadlineMs,
+        kgClaimCandidateCount: kgShadow.packet?.claims.length ?? 0,
+        kgCardCandidateCount: kgShadow.packet?.cardCandidates.length ?? 0,
+        kgAnswerInfluenced: kgShadow.trace.answerInfluenced,
+        kgRetrievalMode: kgShadow.trace.retrievalMode,
+        kgPolicyVersion: kgShadow.trace.policyVersion,
         ...researchSubmodeMetadata(researchSubmodeRoute),
       },
     });
@@ -3988,6 +4011,8 @@ async function persistCompletedBroBotOutput(params: PersistCompletedParams) {
     answerRoute: params.answerRoute,
     clinicalContext: params.answerContext.clinicalContext,
     question: params.body.message,
+    usedClaimIds: params.brobotOutput.usedClaimIds,
+    knowledgePacket: params.answerContext.knowledgePacket,
   });
   if (BROBOT_SEMANTIC_RELEVANCE_GATE_ENABLED && !params.revisionTriggered) {
     for (const warning of params.qualityGateWarningsBeforeRevision ?? []) {
@@ -3995,6 +4020,12 @@ async function persistCompletedBroBotOutput(params: PersistCompletedParams) {
     }
     qualityGate.passed = qualityGate.warnings.length === 0;
   }
+
+  await attachBroBotKgAnswerOutcome({
+    requestId: params.requestId,
+    qualityGateWarnings: qualityGate.warnings,
+    usedClaimIds: params.brobotOutput.usedClaimIds,
+  });
 
   if (!qualityGate.passed) {
     void recordChatAnalyticsEvent({
