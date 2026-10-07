@@ -14,7 +14,7 @@ Architecture map: [implementation map](./orthobullets-claims-implementation-map.
 | Contract | `ob-claims-production.v1` |
 | Algorithm | `orthobullets-claims-prod.v1` |
 | Prompt set | `ob-claims-prod-prompts-v1.0` |
-| Generator prompt | `ob-claims-prod-generator-v1.0` |
+| Generator prompt | `ob-claims-prod-generator-v1.1` |
 | Review prompt | `ob-claims-prod-review-v1.0` |
 | Coverage prompt | `ob-claims-prod-coverage-v1.0` |
 | Repair prompt | `ob-claims-prod-repair-v1.0` |

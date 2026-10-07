@@ -19,7 +19,7 @@ import {
 
 export const OB_PROD_CONTRACT_VERSION = 'ob-claims-production.v1' as const;
 export const OB_PROD_ALGORITHM = 'orthobullets-claims-prod.v1' as const;
-export const OB_PROD_PROMPT_GENERATOR = 'ob-claims-prod-generator-v1.0' as const;
+export const OB_PROD_PROMPT_GENERATOR = 'ob-claims-prod-generator-v1.1' as const;
 export const OB_PROD_PROMPT_REVIEW = 'ob-claims-prod-review-v1.0' as const;
 export const OB_PROD_PROMPT_COVERAGE = 'ob-claims-prod-coverage-v1.0' as const;
 export const OB_PROD_PROMPT_REPAIR = 'ob-claims-prod-repair-v1.0' as const;
