@@ -1,7 +1,7 @@
 /** Request fields that differ across OpenAI-compatible Chat Completions models. */
 export function deterministicSamplingParams(model: string):
   | { temperature: 0 }
-  | { reasoning_effort: 'minimal'; max_completion_tokens: 4096 }
+  | { reasoning_effort: 'minimal'; max_completion_tokens: 4096 | 1024 }
   | { max_completion_tokens: 8192 }
   | Record<string, never> {
   const name = model.trim();
@@ -15,6 +15,12 @@ export function deterministicSamplingParams(model: string):
   // bill without the minimal-effort setting that failed the 3797 canary.
   if (/^gpt-5-mini(?:[.-]|$)/i.test(name)) {
     return { max_completion_tokens: 8192 };
+  }
+  // The bank budget is $10 for the remaining questions. Uncapped nano reasoning
+  // is billed as completion tokens, so the bank profile forces minimal effort
+  // and a per-call ceiling. The 50-question gate still has to pass on quality.
+  if (/^gpt-5-nano(?:[.-]|$)/i.test(name)) {
+    return { reasoning_effort: 'minimal', max_completion_tokens: 1024 };
   }
   // Other GPT-5 models reject temperature=0. Use the model's default reasoning
   // effort: minimal failed the representative 3797 contract canary, while

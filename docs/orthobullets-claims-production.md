@@ -283,6 +283,8 @@ npm run ob:claims:run -- --input=/absolute/packets.json --apply \
   --request-timeout-ms=180000 --max-cost=10
 ```
 
+`gpt5-nano` is the profile for the remaining bank. `gpt-5-nano` uses minimal reasoning and a 1,024-token completion ceiling so a question stays near the $0.00126 average that fits 7,927 questions inside $10. The 50-question gate must project the remaining bank at or under $10 before any apply.
+
 `gpt5-mini` is the pinned OpenAI profile for the viability gate (`gpt-5-mini`,
 $0.25 / $2.00 per 1M tokens, pricing version `openai-gpt5-mini-2026-10-06`).
 It keeps default GPT-5 reasoning and sets `max_completion_tokens` to 8192.

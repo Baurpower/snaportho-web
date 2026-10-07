@@ -28,6 +28,13 @@ export function scoreObViabilityReport(report, thresholds) {
   if (metrics.costPerQuestionUsd !== null && metrics.costPerQuestionUsd > thresholds.maxCostPerQuestionUsd) {
     failures.push(`cost_per_question:${metrics.costPerQuestionUsd}`);
   }
+  if (thresholds.remainingQuestions > 0 && metrics.costPerQuestionUsd !== null) {
+    const projected = metrics.costPerQuestionUsd * thresholds.remainingQuestions;
+    metrics.projectedRemainingCostUsd = projected;
+    if (projected > thresholds.maxRemainingCostUsd) {
+      failures.push(`projected_remaining_cost:${projected}`);
+    }
+  }
   return { model: report.models ?? null, pass: failures.length === 0, failures, metrics };
 }
 
@@ -46,6 +53,8 @@ function main() {
     maxFailedRate: Number(args.get('max-failed-rate') ?? '0.05'),
     maxUnresolvedRate: Number(args.get('max-unresolved-rate') ?? '0.25'),
     maxCostPerQuestionUsd: Number(args.get('max-cost-per-question') ?? '0.02'),
+    remainingQuestions: Number(args.get('remaining-questions') ?? '0'),
+    maxRemainingCostUsd: Number(args.get('max-remaining-cost') ?? '10'),
   };
   if (!Number.isInteger(thresholds.minQuestions) || thresholds.minQuestions < 1
     || Object.entries(thresholds).slice(1).some(([, value]) => !Number.isFinite(value) || value < 0)) {

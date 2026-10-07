@@ -3,7 +3,7 @@ import { isObProdExtraction } from './claim-extraction-contract-v1';
 import { runProductionExtraction } from './claim-review-pipeline';
 import { deterministicSamplingParams } from './openai-model-compat';
 
-assert.deepEqual(deterministicSamplingParams('gpt-5-nano'), {});
+assert.deepEqual(deterministicSamplingParams('gpt-5-nano'), { reasoning_effort: 'minimal', max_completion_tokens: 1024 });
 assert.deepEqual(deterministicSamplingParams('gpt-5-mini'), { max_completion_tokens: 8192 });
 assert.deepEqual(deterministicSamplingParams('GPT-5.1'), {});
 assert.deepEqual(deterministicSamplingParams('muse-spark-1.3'), {

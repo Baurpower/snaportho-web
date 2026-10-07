@@ -26,6 +26,22 @@ assert.equal(clear.metrics.unresolved, 12);
 assert.equal(clear.pass, true);
 assert.deepEqual(clear.failures, []);
 
+const bankOk = scoreObViabilityReport(dryRun(38, 11, 0.045), {
+  ...thresholds,
+  remainingQuestions: 7927,
+  maxRemainingCostUsd: 10,
+});
+assert.equal(bankOk.pass, true);
+assert.ok(bankOk.metrics.projectedRemainingCostUsd <= 10);
+
+const bankOver = scoreObViabilityReport(dryRun(38, 11, 0.15), {
+  ...thresholds,
+  remainingQuestions: 7927,
+  maxRemainingCostUsd: 10,
+});
+assert.equal(bankOver.pass, false);
+assert.ok(bankOver.failures.some((failure) => failure.startsWith('projected_remaining_cost:')));
+
 const ignoredDryRunNames = scoreObViabilityReport({
   questions: 50,
   outcomes: { accepted: 0, unresolved: 0 },
