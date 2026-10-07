@@ -12,14 +12,14 @@ function result(status: "hit" | "timeout" | "error" = "hit"): BroBotKgShadowResu
       retrievalId: "00000000-0000-4000-8000-000000000002",
       releaseId: "kg-beta-20260716-002",
       status: "hit",
-      anchors: [], facts: [], neighborhoodSlugs: [], coverage: "full", limitations: [], tokenEstimate: 0,
+      anchors: [], facts: [], claims: [], cardCandidates: [], neighborhoodSlugs: [], coverage: "full", limitations: [], tokenEstimate: 0,
     } : null,
     trace: {
       requestId: "00000000-0000-4000-8000-000000000001",
       retrievalId: "00000000-0000-4000-8000-000000000002",
       releaseId: "kg-beta-20260716-002",
       decision: { eligible: true, action: "retrieve", score: 1, reasons: ["clinical"] },
-      candidates: [], selectedEntityIds: [], selectedRelationshipIds: [], neighborhoodSlugs: [],
+      candidates: [], selectedEntityIds: [], selectedRelationshipIds: [], selectedClaimIds: [], candidateCardIds: [], neighborhoodSlugs: [],
       predicateFamilies: [], cacheStatus: "miss", stageTimingsMs: { kg_subgraph_retrieval: 275 },
       configuredDeadlineMs: 275, elapsedLatencyMs: 276, timeoutStage: status === "timeout" ? "rpc_timeout" : undefined,
       rpcStarted: true, rpcCompleted: status === "hit", answerInfluenced: false, retrievalMode: "shadow",
@@ -56,21 +56,26 @@ const writer = {
   },
 };
 
-assert.equal((await persistBroBotKgShadowTrace(baseInput, { client: writer })).persisted, true);
-assert.equal(writes.length, 1);
-assert.equal((await persistBroBotKgShadowTrace({ ...baseInput, result: result("timeout") }, { client: writer })).persisted, true);
-assert.equal(writes[1]?.retrieval_status, "timeout");
-assert.equal(writes[1]?.timeout_stage, "rpc_timeout");
-assert.equal((await persistBroBotKgShadowTrace({ ...baseInput, result: result("error") }, { client: writer })).persisted, true);
-assert.equal(writes[2]?.safe_error_code, "KG_RPC_ERROR");
 
-const failed = await persistBroBotKgShadowTrace(baseInput, { client: {
-  from() { return { async upsert() { return { error: { message: "safe failure" } }; } }; },
-} });
-assert.equal(failed.persisted, false);
-assert.equal(failed.errorCode, "KG_TELEMETRY_INSERT_FAILED");
+async function main() {
+  assert.equal((await persistBroBotKgShadowTrace(baseInput, { client: writer })).persisted, true);
+  assert.equal(writes.length, 1);
+  assert.equal((await persistBroBotKgShadowTrace({ ...baseInput, result: result("timeout") }, { client: writer })).persisted, true);
+  assert.equal(writes[1]?.retrieval_status, "timeout");
+  assert.equal(writes[1]?.timeout_stage, "rpc_timeout");
+  assert.equal((await persistBroBotKgShadowTrace({ ...baseInput, result: result("error") }, { client: writer })).persisted, true);
+  assert.equal(writes[2]?.safe_error_code, "KG_RPC_ERROR");
 
-await persistBroBotKgShadowTrace(baseInput, { client: writer });
-assert.equal(writes[3]?.request_id, writes[0]?.request_id);
+  const failed = await persistBroBotKgShadowTrace(baseInput, { client: {
+    from() { return { async upsert() { return { error: { message: "safe failure" } }; } }; },
+  } });
+  assert.equal(failed.persisted, false);
+  assert.equal(failed.errorCode, "KG_TELEMETRY_INSERT_FAILED");
 
-console.log("brobot kg telemetry tests passed");
+  await persistBroBotKgShadowTrace(baseInput, { client: writer });
+  assert.equal(writes[3]?.request_id, writes[0]?.request_id);
+
+  console.log("brobot kg telemetry tests passed");
+}
+
+main().catch((error) => { console.error(error); process.exit(1); });

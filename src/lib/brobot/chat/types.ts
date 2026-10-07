@@ -199,6 +199,8 @@ export const BroBotChatOutputSchema = z.object({
   consultConfidence: BroBotConsultConfidenceSchema.optional(),
   missingInformation: z.array(z.string()).optional(),
   researchSubmode: BroBotResearchSubmodeSchema.optional(),
+  usedClaimIds: z.array(z.string().uuid()).max(12).optional(),
+  knowledgeCoverage: z.enum(['full', 'partial', 'unknown', 'unavailable']).optional(),
 });
 
 export type BroBotChatOutput = z.infer<typeof BroBotChatOutputSchema>;

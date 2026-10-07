@@ -1,14 +1,23 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { buildBroBotClinicalContextFromIntent } from "@/lib/brobot/chat/clinical-context";
 import { BoundedTtlCache, normalizeKgQuery } from "./cache";
-import { BROBOT_KG_RETRIEVAL_DEADLINE_MS, getBroBotKgFeatureMode } from "./config";
+import {
+  BROBOT_KG_RETRIEVAL_DEADLINE_MS,
+  getBroBotKgFeatureMode,
+  getBroBotKnowledgeRetrievalVersion,
+  isBroBotClaimsGroundingAllowedForMode,
+} from "./config";
 import {
   BROBOT_KG_PACKET_SCHEMA_VERSION,
   BROBOT_KG_PINNED_RELEASE_ID,
   BROBOT_KG_POLICY_VERSION,
+  BROBOT_KNOWLEDGE_PACKET_SCHEMA_VERSION,
+  BROBOT_KNOWLEDGE_POLICY_VERSION,
   type BroBotKgCandidate,
   type BroBotKgFact,
   type BroBotKgPacket,
+  type BroBotKnowledgeCardCandidate,
+  type BroBotKnowledgeClaim,
   type BroBotKgRetrievalInput,
   type BroBotKgShadowResult,
 } from "./contracts";
@@ -21,6 +30,8 @@ type RpcPayload = {
   coverage: "full" | "partial" | "unknown";
   candidates: BroBotKgCandidate[];
   facts: BroBotKgFact[];
+  claims?: BroBotKnowledgeClaim[];
+  cardCandidates?: BroBotKnowledgeCardCandidate[];
   neighborhoodSlugs: string[];
   limitations?: string[];
 };
@@ -31,6 +42,7 @@ function estimateTokens(payload: RpcPayload) {
   const chars = JSON.stringify({
     candidates: payload.candidates,
     facts: payload.facts,
+    claims: payload.claims ?? [],
     limitations: payload.limitations,
   }).length;
   return Math.min(1200, Math.ceil(chars / 4));
@@ -87,6 +99,8 @@ function emptyResult(input: {
   rpcCompleted?: boolean;
   safeErrorCode?: string;
   safeErrorStage?: string;
+  policyVersion?: string;
+  packetSchemaVersion?: string;
 }): BroBotKgShadowResult {
   return {
     mode: input.mode,
@@ -98,6 +112,8 @@ function emptyResult(input: {
       candidates: [],
       selectedEntityIds: [],
       selectedRelationshipIds: [],
+      selectedClaimIds: [],
+      candidateCardIds: [],
       neighborhoodSlugs: [],
       predicateFamilies: [],
       cacheStatus: "not_applicable",
@@ -114,11 +130,15 @@ function emptyResult(input: {
       packetTokenEstimate: 0,
       status: input.status,
       failureReason: input.failureReason,
-      policyVersion: BROBOT_KG_POLICY_VERSION,
-      packetSchemaVersion: BROBOT_KG_PACKET_SCHEMA_VERSION,
+      policyVersion: input.policyVersion ?? BROBOT_KNOWLEDGE_POLICY_VERSION,
+      packetSchemaVersion: input.packetSchemaVersion ?? BROBOT_KNOWLEDGE_PACKET_SCHEMA_VERSION,
       gaps: [],
     },
   };
+}
+
+function shouldInfluenceAnswer(mode: BroBotKgRetrievalInput["intent"]["mode"], claimCount: number): boolean {
+  return isBroBotClaimsGroundingAllowedForMode(mode) && claimCount > 0;
 }
 
 export async function retrieveBroBotKgShadow(
@@ -129,6 +149,10 @@ export async function retrieveBroBotKgShadow(
   const overallStarted = performance.now();
   const mode = getBroBotKgFeatureMode();
   const retrievalId = crypto.randomUUID();
+  const retrievalVersion = getBroBotKnowledgeRetrievalVersion();
+  // Phase A: always use live v2 Path-1+Path-2 RPC. v3 stays opt-in and falls back if missing.
+  const policyVersion =
+    retrievalVersion === "v3" ? "brobot-claims-v3" : BROBOT_KNOWLEDGE_POLICY_VERSION;
   const clinicalContext =
     input.clinicalContext ??
     buildBroBotClinicalContextFromIntent({
@@ -159,21 +183,24 @@ export async function retrieveBroBotKgShadow(
       status: "bypass",
       timings: stageTimingsMs,
       elapsedLatencyMs: Math.round((performance.now() - overallStarted) * 100) / 100,
+      policyVersion,
     });
   }
 
   const policy = getBroBotKgModePolicy(input.intent.mode);
+  const maxClaims = Math.min(8, policy.maxRelationshipsByDepth[input.responseDepth] || 8);
   const normalizedQuery = normalizeKgQuery(
     [input.intent.procedureOrTopic, input.selectedBranch?.label, input.query].filter(Boolean).join(" ")
   ).slice(0, 240);
   const cacheKey = [
     BROBOT_KG_PINNED_RELEASE_ID,
-    BROBOT_KG_POLICY_VERSION,
-    BROBOT_KG_PACKET_SCHEMA_VERSION,
+    policyVersion,
+    BROBOT_KNOWLEDGE_PACKET_SCHEMA_VERSION,
     normalizedQuery,
     input.intent.mode,
     input.intent.subintent,
     input.responseDepth,
+    "v2",
   ].join(":");
   const cached = packetCache.get(cacheKey);
   let payload: RpcPayload;
@@ -200,7 +227,9 @@ export async function retrieveBroBotKgShadow(
       try {
         activeStage = "rpc_network_call";
         rpcStarted = true;
-        const rpcPromise = supabase.rpc("retrieve_brobot_kg_shadow", {
+        // Path-1 reviewed + Path-2 factory claims via live v2 RPC. Never Orthobullets QCL.
+        const rpcPromise = supabase
+          .rpc("retrieve_brobot_knowledge_v2", {
             p_release_id: BROBOT_KG_PINNED_RELEASE_ID,
             p_query: normalizedQuery,
             p_entity_types: policy.entityTypes,
@@ -208,19 +237,22 @@ export async function retrieveBroBotKgShadow(
             p_predicates: policy.predicateFamilies,
             p_max_candidates: 8,
             p_max_entities: policy.maxEntitiesByDepth[input.responseDepth],
-            p_max_relationships: decision.action === "lightweight_resolve"
-              ? 0
-              : policy.maxRelationshipsByDepth[input.responseDepth],
+            p_max_relationships:
+              decision.action === "lightweight_resolve"
+                ? 0
+                : policy.maxRelationshipsByDepth[input.responseDepth],
             p_max_neighborhoods: policy.maxNeighborhoodsByDepth[input.responseDepth],
-          }).abortSignal(abortController.signal);
+            p_mode: input.intent.mode,
+            p_subintent: input.intent.subintent,
+            p_max_claims: maxClaims,
+            p_max_cards: 8,
+          })
+          .abortSignal(abortController.signal);
         const timeoutPromise = new Promise<never>((_resolve, reject) => {
-          deadlineTimer = setTimeout(
-            () => {
-              abortController.abort();
-              reject(new DOMException("KG retrieval deadline exceeded", "AbortError"));
-            },
-            BROBOT_KG_RETRIEVAL_DEADLINE_MS
-          );
+          deadlineTimer = setTimeout(() => {
+            abortController.abort();
+            reject(new DOMException("KG retrieval deadline exceeded", "AbortError"));
+          }, BROBOT_KG_RETRIEVAL_DEADLINE_MS);
         });
         const { data, error } = await Promise.race([rpcPromise, timeoutPromise]);
         rpcCompleted = true;
@@ -240,12 +272,22 @@ export async function retrieveBroBotKgShadow(
 
     activeStage = "packet_construction";
     const assemblyStarted = performance.now();
+    const packetClaims = (payload.claims ?? []).slice(0, maxClaims);
+    const packetCards = (payload.cardCandidates ?? []).slice(0, 8);
+    const groundingEnabled = shouldInfluenceAnswer(input.intent.mode, packetClaims.length);
+    const shadowNote = groundingEnabled
+      ? []
+      : ["Shadow only: claims were not supplied to answer generation."];
     const status =
-      payload.candidates.length === 0
-        ? "miss"
-        : payload.facts.length === 0 || payload.coverage === "partial"
-          ? "partial"
-          : "hit";
+      packetClaims.length > 0
+        ? payload.coverage === "full"
+          ? "hit"
+          : "partial"
+        : payload.candidates.length === 0
+          ? "miss"
+          : payload.facts.length === 0 || payload.coverage === "partial" || payload.coverage === "unknown"
+            ? "partial"
+            : "hit";
     const anchors = payload.candidates.slice(0, policy.maxAnchorsByDepth[input.responseDepth]);
     const bounded = boundFacts({
       payload,
@@ -260,13 +302,14 @@ export async function retrieveBroBotKgShadow(
       status,
       anchors,
       facts: bounded.facts,
-      neighborhoodSlugs: payload.neighborhoodSlugs.slice(0, policy.maxNeighborhoodsByDepth[input.responseDepth]),
-      coverage: payload.coverage,
-      limitations: [
-        ...(payload.limitations ?? []),
-        "Shadow only: packet was not supplied to answer generation.",
-        "Active release contains no claims or decision points.",
-      ],
+      claims: packetClaims,
+      cardCandidates: packetCards,
+      neighborhoodSlugs: payload.neighborhoodSlugs.slice(
+        0,
+        policy.maxNeighborhoodsByDepth[input.responseDepth]
+      ),
+      coverage: packetClaims.length ? payload.coverage : payload.coverage === "full" ? "partial" : payload.coverage,
+      limitations: [...(payload.limitations ?? []), ...shadowNote],
       tokenEstimate: bounded.tokenEstimate,
     };
     stageTimingsMs.kg_packet_assembly =
@@ -290,6 +333,8 @@ export async function retrieveBroBotKgShadow(
         candidates: payload.candidates,
         selectedEntityIds: packet.anchors.map((candidate) => candidate.entityId),
         selectedRelationshipIds: packet.facts.map((fact) => fact.relationshipId),
+        selectedClaimIds: packet.claims.map((claim) => claim.claimId),
+        candidateCardIds: packet.cardCandidates.map((card) => card.cardId),
         neighborhoodSlugs: packet.neighborhoodSlugs,
         predicateFamilies: policy.predicateFamilies,
         cacheStatus,
@@ -298,12 +343,12 @@ export async function retrieveBroBotKgShadow(
         elapsedLatencyMs: Math.round((performance.now() - overallStarted) * 100) / 100,
         rpcStarted,
         rpcCompleted,
-        answerInfluenced: false,
-        retrievalMode: "shadow",
+        answerInfluenced: groundingEnabled,
+        retrievalMode: groundingEnabled ? "enabled" : "shadow",
         packetTokenEstimate: bounded.tokenEstimate,
         status,
-        policyVersion: BROBOT_KG_POLICY_VERSION,
-        packetSchemaVersion: BROBOT_KG_PACKET_SCHEMA_VERSION,
+        policyVersion,
+        packetSchemaVersion: BROBOT_KNOWLEDGE_PACKET_SCHEMA_VERSION,
         gaps,
       },
     };
@@ -334,6 +379,7 @@ export async function retrieveBroBotKgShadow(
       rpcCompleted,
       safeErrorCode: timedOut ? "KG_RETRIEVAL_DEADLINE" : "KG_RPC_ERROR",
       safeErrorStage: activeStage,
+      policyVersion,
     });
   }
 }
@@ -344,8 +390,8 @@ export async function retrieveBroBotKgShadow(
  * stable while KG work is moved to the durable enrichment queue.
  */
 export function createBroBotKgBypassResult(
-  input: Omit<BroBotKgRetrievalInput, 'clinicalContext'> & {
-    clinicalContext?: BroBotKgRetrievalInput['clinicalContext'];
+  input: Omit<BroBotKgRetrievalInput, "clinicalContext"> & {
+    clinicalContext?: BroBotKgRetrievalInput["clinicalContext"];
   }
 ): BroBotKgShadowResult {
   const clinicalContext =
@@ -368,10 +414,18 @@ export function createBroBotKgBypassResult(
     requestId: input.requestId,
     retrievalId: crypto.randomUUID(),
     mode: getBroBotKgFeatureMode(),
-    decision: { ...decision, action: 'bypass', eligible: false, reasons: ['bypass:tier1_fast_path'] },
-    status: 'bypass',
-    failureReason: 'tier1_fast_path',
+    decision: {
+      ...decision,
+      action: "bypass",
+      eligible: false,
+      reasons: ["bypass:tier1_fast_path"],
+    },
+    status: "bypass",
+    failureReason: "tier1_fast_path",
     elapsedLatencyMs: 0,
     timings: { kg_decision: 0 },
+    // Keep legacy shadow policy labels on synthetic bypass rows.
+    policyVersion: BROBOT_KG_POLICY_VERSION,
+    packetSchemaVersion: BROBOT_KG_PACKET_SCHEMA_VERSION,
   });
 }

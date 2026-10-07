@@ -8,6 +8,7 @@ import type {
   BroBotTrainingLevel,
 } from './types';
 import type { BroBotAnswerRoute } from './answer-router';
+import type { BroBotKgPacket } from '@/lib/brobot/kg/contracts';
 import { detectBroBotInteractionConstraints } from './interaction-constraints';
 import { deriveBroBotLatestTurnTask } from './latest-turn-task';
 import { BROBOT_OR_PREP_TASK_CONTRACT_ENABLED } from '@/lib/brobot/model-config';
@@ -194,6 +195,8 @@ export function runBroBotQualityGate(input: {
   answerRoute?: BroBotAnswerRoute;
   clinicalContext?: BroBotClinicalContext;
   question?: string;
+  usedClaimIds?: string[];
+  knowledgePacket?: BroBotKgPacket | null;
 }): BroBotQualityGateResult {
   const warnings: string[] = [];
   const answer = input.answer.trim();
@@ -207,6 +210,25 @@ export function runBroBotQualityGate(input: {
     : null;
   const narrowOrPrepTask = BROBOT_OR_PREP_TASK_CONTRACT_ENABLED && input.mode === 'or_prep' &&
     (latestTask?.action === 'estimate_duration' || latestTask?.action === 'retrieve_articles' || latestTask?.action === 'quiz');
+
+  if (input.usedClaimIds?.length) {
+    const allowed = new Set(input.knowledgePacket?.claims.map((claim) => claim.claimId) ?? []);
+    if (input.usedClaimIds.some((claimId) => !allowed.has(claimId))) warnings.push('knowledge_unknown_claim_id');
+    const used = new Set(input.usedClaimIds);
+    const conflicts = input.knowledgePacket?.claimConflicts ?? [];
+    if (conflicts.some((conflict) => conflict.claimIds.every((claimId) => used.has(claimId)))) {
+      warnings.push('knowledge_claim_conflict');
+    }
+    const usedClaims = (input.knowledgePacket?.claims ?? []).filter((claim) => input.usedClaimIds?.includes(claim.claimId));
+    const answerNumbers = new Set(answer.match(/\b\d+(?:\.\d+)?\b/g) ?? []);
+    const claimNumbers = new Set(usedClaims.flatMap((claim) => claim.claimText.match(/\b\d+(?:\.\d+)?\b/g) ?? []));
+    if (answerNumbers.size > 0 && claimNumbers.size > 0 && ![...answerNumbers].some((value) => claimNumbers.has(value))) {
+      warnings.push('knowledge_numeric_mismatch');
+    }
+    const hasAnswerNegation = /\b(?:not|never|without|no)\b/i.test(answer);
+    const hasClaimNegation = usedClaims.some((claim) => /\b(?:not|never|without|no)\b/i.test(claim.claimText));
+    if (usedClaims.length === 1 && hasAnswerNegation !== hasClaimNegation) warnings.push('knowledge_polarity_mismatch');
+  }
 
   // ask_clarification answers are supposed to be a brief framing line (or
   // empty) with the clarifying questions/focus options carrying the rest.

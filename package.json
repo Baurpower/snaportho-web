@@ -236,7 +236,8 @@
     "education:ob:claims:identity:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/orthobullets/ob-question-identity.test.ts",
     "education:ob:claims:resolution:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/orthobullets/ob-claim-resolution.test.ts",
     "education:ob:claims:runner:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/orthobullets/ob-production-runner-lib.test.ts",
-    "education:ob:claims:stability": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs scripts/eval-ob-claims-stability.ts"
+    "education:ob:claims:stability": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs scripts/eval-ob-claims-stability.ts",
+    "brobot:test:path2-grounding": "node --experimental-strip-types --experimental-loader ./scripts/lib/alias-loader.mjs src/lib/brobot/kg/telemetry.test.ts && node --experimental-strip-types --experimental-loader ./scripts/lib/alias-loader.mjs src/lib/brobot/kg/knowledge-v2.test.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1095.0",

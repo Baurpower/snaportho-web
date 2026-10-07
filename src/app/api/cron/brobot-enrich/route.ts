@@ -14,6 +14,8 @@ import { getMetadataModel } from '@/lib/brobot/model-config';
 import { persistBroBotKgShadowTrace, retrieveBroBotKgShadow } from '@/lib/brobot/kg';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { getDisabledAutomationResponse, isCronJobsEnabled } from '@/lib/config/automation';
+import { answerHash, ANKI_LINKER_VERSION, latestPublishedRelease, linkAnkiCardsForClaimIds } from '@/lib/brobot/chat/anki-linker';
+import { getBroBotClaimAnkiMode } from '@/lib/brobot/kg/config';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -119,6 +121,32 @@ async function processJob(job: BroBotEnrichmentJob) {
   });
 
   const structured = (message.structured_json ?? {}) as Record<string, unknown>;
+  const usedClaimIds = Array.isArray(structured.usedClaimIds)
+    ? structured.usedClaimIds.filter((value): value is string => typeof value === 'string') : [];
+  let claimLinkedCardCount = 0;
+  if (getBroBotClaimAnkiMode() === 'enabled' && usedClaimIds.length) {
+    const releaseId = await latestPublishedRelease();
+    if (releaseId) {
+      const references = await linkAnkiCardsForClaimIds(usedClaimIds, releaseId, job.user_id);
+      const hash = answerHash(job.payload.answer);
+      await supabase.from('brobot_anki_references').delete().eq('message_id', job.message_id).eq('user_id', job.user_id);
+      if (references.length) {
+        const { error: referenceError } = await supabase.from('brobot_anki_references').insert(references.map((reference) => ({
+          user_id: job.user_id, message_id: job.message_id, answer_hash: hash,
+          anchor_text: reference.anchorText, claim_id: reference.claimId,
+          canonical_card_id: reference.cardId, canonical_card_version_id: reference.cardVersionId,
+          deck_release_id: releaseId, rank: reference.number,
+        })));
+        if (referenceError) throw new Error(referenceError.message);
+      }
+      const { error: lookupError } = await supabase.from('brobot_anki_reference_lookups').upsert({
+        message_id: job.message_id, user_id: job.user_id, answer_hash: hash,
+        deck_release_id: releaseId, linker_version: ANKI_LINKER_VERSION, checked_at: new Date().toISOString(),
+      }, { onConflict: 'message_id' });
+      if (lookupError) throw new Error(lookupError.message);
+      claimLinkedCardCount = references.length;
+    }
+  }
   const enrichmentLatencyMs = Math.round((performance.now() - startedAt) * 100) / 100;
   const { error: updateError } = await supabase
     .from('brobot_messages')
@@ -135,6 +163,7 @@ async function processJob(job: BroBotEnrichmentJob) {
           metadataUsage,
           kgRetrievalId: kg.trace.retrievalId,
           kgStatus: kg.trace.status,
+          claimLinkedCardCount,
         },
       },
     })
@@ -156,6 +185,7 @@ async function processJob(job: BroBotEnrichmentJob) {
       metadata_token_usage: metadataUsage,
       stage_timings: job.payload.stageTimings ?? {},
       suggested_follow_up_count: suggestedQuestions.length,
+      claim_linked_card_count: claimLinkedCardCount,
     },
   });
   await completeBroBotEnrichmentJob(job.id);
