@@ -3,6 +3,7 @@ import {
   isSubscriptionOwnerConflict,
   SubscriptionOwnerConflictError,
 } from './ownership';
+import { invalidateEntitlementCache } from '@/lib/brobot/entitlement-cache';
 
 /**
  * Canonical paid entitlement selection policy.
@@ -135,6 +136,7 @@ export async function upsertCanonicalSubscription(
       throw new SubscriptionOwnerConflictError();
     }
 
+    invalidateEntitlementCache({ type: 'user', id: entry.user_id });
     return { applied: true, payload, row };
   }
 
@@ -155,6 +157,7 @@ export async function upsertCanonicalSubscription(
     throw new SubscriptionOwnerConflictError();
   }
 
+  invalidateEntitlementCache({ type: 'user', id: entry.user_id });
   return { applied: true, payload, row: data ?? null };
 }
 

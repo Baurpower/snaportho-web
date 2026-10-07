@@ -14,6 +14,7 @@
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 import { createAdminClient } from '@/lib/supabase/admin';
 import type { Subject } from './entitlements';
+import { invalidateEntitlementCache } from './entitlement-cache';
 import { recordProductEvent, recordSuccessfulBroBotProductUse } from '@/lib/analytics/product-events-server';
 
 export type UsageOutcome = 'success' | 'failure' | 'limit_hit' | 'cached' | 'disabled';
@@ -67,6 +68,9 @@ export async function incrementDailyUsage(subject: Subject, feature: string = BR
     // Fail closed on write error for safety (user may see "limit reached" incorrectly once)
     throw new Error('Failed to record usage');
   }
+
+  // Remaining quota can change; drop any short-TTL entitlement cache for this subject.
+  invalidateEntitlementCache(subject);
 
   return (data as number) ?? 1;
 }

@@ -9,6 +9,7 @@ import {
 } from '@/lib/config/app-url'; // Centralized production-safe URL resolution
 import { getRemainingAIUses } from '@/lib/brobot/entitlements';
 import { upsertCanonicalSubscription } from '@/lib/subscriptions/ledger';
+import { invalidateEntitlementCache } from '@/lib/brobot/entitlement-cache';
 import { getStripeLifecycleReason } from '@/lib/subscriptions/stripe-lifecycle';
 import { evaluatePendingSubscriptionClaimGate } from '@/lib/subscriptions/ownership';
 import {
@@ -1560,6 +1561,7 @@ async function upsertStripeBrobotSubscription(
         db_row_id: data.id ?? null,
       });
 
+      invalidateEntitlementCache({ type: 'user', id: userId });
       return { applied: true, payload: upsertPayload, row: data };
     }
 
@@ -1617,6 +1619,7 @@ async function upsertStripeBrobotSubscription(
       db_row_id: data.id ?? null,
     });
 
+    invalidateEntitlementCache({ type: 'user', id: userId });
     return { applied: true, payload: upsertPayload, row: data };
   }
 }

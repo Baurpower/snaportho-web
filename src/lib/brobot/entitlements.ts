@@ -18,6 +18,13 @@ import {
   pickBestSubscriptionForEntitlement,
   type CanonicalSubscriptionRow,
 } from '@/lib/subscriptions/ledger';
+import {
+  invalidateEntitlementCache,
+  readEntitlementCacheEntry,
+  writeEntitlementCacheEntry,
+} from '@/lib/brobot/entitlement-cache';
+
+export { invalidateEntitlementCache };
 
 export type Subject =
   { type: 'user'; id: string } | { type: 'guest'; id: string };
@@ -267,6 +274,91 @@ export function evaluateSubscriptionCandidates(
   };
 }
 
+type SubscriptionEntitlementEvaluation = ReturnType<
+  typeof evaluateSubscriptionCandidates
+> & {
+  recoveryCandidate: SubscriptionEntitlementRow | null;
+};
+
+type SubscriptionEvaluationOptions = {
+  subscriptionEvaluation?: SubscriptionEntitlementEvaluation;
+  now?: Date;
+};
+
+/** Verbose entitlement diagnostics — off in production unless explicitly enabled. */
+function isEntitlementDebugEnabled(): boolean {
+  if (process.env.NODE_ENV !== 'production') return true;
+  const flag = process.env.BROBOT_ENTITLEMENT_DEBUG;
+  return flag === '1' || flag === 'true';
+}
+
+function logEntitlementDebug(
+  label: string,
+  payload: Record<string, unknown>,
+): void {
+  if (!isEntitlementDebugEnabled()) return;
+  console.log(label, payload);
+}
+
+function deriveRecoveryCandidate(rows: SubscriptionEntitlementRow[]) {
+  return (
+    rows.find(
+      (row) =>
+        (row.provider ?? 'stripe') === 'stripe' &&
+        ['past_due', 'unpaid', 'incomplete'].includes(row.status),
+    ) ?? null
+  );
+}
+
+const SUBSCRIPTION_ENTITLEMENT_SELECT = `
+      id, user_id, status, plan_code, current_period_start, current_period_end, cancel_at_period_end, canceled_at,
+      stripe_customer_id, stripe_subscription_id, stripe_price_id,
+      provider, provider_subscription_id, provider_transaction_id, environment, last_verified_at, updated_at, created_at
+    `;
+
+async function fetchSubscriptionEntitlementRows(userId: string) {
+  const supabase = createAdminClient();
+  const { data: rows, error } = await supabase
+    .from('subscriptions')
+    .select(SUBSCRIPTION_ENTITLEMENT_SELECT)
+    .eq('user_id', userId)
+    .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
+    .order('current_period_end', { ascending: false, nullsFirst: false })
+    .order('updated_at', { ascending: false })
+    .limit(50);
+
+  return {
+    rows: (rows ?? []) as SubscriptionEntitlementRow[],
+    error,
+  };
+}
+
+function buildSubscriptionEntitlementEvaluation(
+  rows: SubscriptionEntitlementRow[],
+  now: Date,
+): SubscriptionEntitlementEvaluation {
+  const evaluation = evaluateSubscriptionCandidates(rows, now);
+  return {
+    ...evaluation,
+    recoveryCandidate: deriveRecoveryCandidate(rows),
+  };
+}
+
+/** Fetch once, evaluate once, derive recoveryCandidate from the same rows. */
+async function loadSubscriptionEntitlementEvaluation(
+  userId: string,
+  now: Date,
+  options: { throwOnError?: boolean } = {},
+): Promise<SubscriptionEntitlementEvaluation> {
+  const { rows, error } = await fetchSubscriptionEntitlementRows(userId);
+  if (error && options.throwOnError) {
+    throw new Error(
+      `Failed to load subscription entitlement candidates: ${error.message}`,
+    );
+  }
+  return buildSubscriptionEntitlementEvaluation(rows, now);
+}
+
 function getResolutionSource(params: {
   entitlement: BroBotEntitlement & { isLimitReached?: boolean };
   selected: SubscriptionEntitlementRow | null;
@@ -337,9 +429,10 @@ function getResolutionReason(params: {
  */
 export async function getUserEntitlement(
   subject: Subject,
+  options: SubscriptionEvaluationOptions = {},
 ): Promise<BroBotEntitlement> {
-  if (process.env.NODE_ENV !== 'production' && subject.type === 'user') {
-    console.log('[entitlements] getUserEntitlement called for user', {
+  if (isEntitlementDebugEnabled() && subject.type === 'user') {
+    logEntitlementDebug('[entitlements] getUserEntitlement called for user', {
       userId: subject.id,
     });
   }
@@ -376,7 +469,10 @@ export async function getUserEntitlement(
 
   // 3. Active paid subscription (Phase 2)
   if (subject.type === 'user' && BROBOT_CONFIG.PAID_ENABLED) {
-    const subEntitlement = await getPaidSubscriptionEntitlement(subject.id);
+    const subEntitlement = await getPaidSubscriptionEntitlement(subject.id, {
+      subscriptionEvaluation: options.subscriptionEvaluation,
+      now: options.now,
+    });
     if (subEntitlement) {
       return subEntitlement;
     }
@@ -419,44 +515,28 @@ async function getActiveOverride(userId: string) {
 /** Checks for an active paid BroBot subscription with proper grace period logic */
 async function getPaidSubscriptionEntitlement(
   userId: string,
+  options: SubscriptionEvaluationOptions = {},
 ): Promise<BroBotEntitlement | null> {
-  const supabase = createAdminClient();
-  const { data: rows } = await supabase
-    .from('subscriptions')
-    .select(
-      `
-      id, user_id, status, plan_code, current_period_start, current_period_end, cancel_at_period_end, canceled_at,
-      stripe_customer_id, stripe_subscription_id, stripe_price_id,
-      provider, provider_subscription_id, provider_transaction_id, environment, last_verified_at, updated_at, created_at
-    `,
-    )
-    .eq('user_id', userId)
-    .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
-    .order('current_period_end', { ascending: false, nullsFirst: false })
-    .order('updated_at', { ascending: false })
-    .limit(50);
-
-  // [BROBOT-ENTITLEMENT-SELECT] - detailed row inspection for debugging Apple vs Stripe
-  {
-    console.log('[BROBOT-ENTITLEMENT-SELECT]', {
-      userId: userId.slice(0, 8),
-      rowsFound: rows?.length ?? 0,
-      rows: (rows || []).map((r) => ({
-        provider: r.provider,
-        plan_code: r.plan_code,
-        status: r.status,
-        current_period_end: r.current_period_end,
-        environment: r.environment,
-      })),
-    });
-  }
-
-  const candidates = (rows ?? []) as SubscriptionEntitlementRow[];
-  const now = new Date();
-  const evaluation = evaluateSubscriptionCandidates(candidates, now);
+  const now = options.now ?? new Date();
+  const evaluation =
+    options.subscriptionEvaluation ??
+    (await loadSubscriptionEntitlementEvaluation(userId, now));
   const sub = evaluation.selected;
 
-  console.log('[BROBOT-ENTITLEMENT-RESOLUTION]', {
+  // [BROBOT-ENTITLEMENT-SELECT] - detailed row inspection for debugging Apple vs Stripe
+  logEntitlementDebug('[BROBOT-ENTITLEMENT-SELECT]', {
+    userId: userId.slice(0, 8),
+    rowsFound: evaluation.candidates.length,
+    rows: evaluation.candidates.map((r) => ({
+      provider: r.provider,
+      plan_code: r.planCode,
+      status: r.status,
+      current_period_end: r.currentPeriodEnd,
+      environment: r.environment,
+    })),
+  });
+
+  logEntitlementDebug('[BROBOT-ENTITLEMENT-RESOLUTION]', {
     user_id: userId,
     selected_subscription_row_id: evaluation.selectedRowId,
     provider: sub?.provider ?? null,
@@ -521,7 +601,7 @@ async function getPaidSubscriptionEntitlement(
       }
     }
 
-    console.log('[SUBSCRIPTION-ENTITLEMENT-DEBUG]', {
+    logEntitlementDebug('[SUBSCRIPTION-ENTITLEMENT-DEBUG]', {
       userId: userId.slice(0, 8),
       subscriptionRowUserId: sub.user_id ? sub.user_id.slice(0, 8) : null,
       status: sub.status,
@@ -534,9 +614,9 @@ async function getPaidSubscriptionEntitlement(
       reasonIfInactive,
     });
 
-    // Required per-request log for Apple IAP status refresh tracing
+    // Per-request Apple IAP status refresh tracing (debug only)
     if (sub.provider === 'apple') {
-      console.log('[APPLE-IAP-STATUS-REFRESH]', {
+      logEntitlementDebug('[APPLE-IAP-STATUS-REFRESH]', {
         userId: userId.slice(0, 8),
         originalTransactionId: sub.provider_subscription_id ?? null,
         appleStatus: sub.status,
@@ -567,7 +647,7 @@ async function getPaidSubscriptionEntitlement(
     // Also attach today's usage count for the mobile contract (even for unlimited users)
     const usedToday = await getUsedCountToday({ type: 'user', id: userId });
 
-    console.log('[ENTITLEMENTS]', {
+    logEntitlementDebug('[ENTITLEMENTS]', {
       source: sub.provider ?? 'stripe',
       status: sub.status,
       plan: sub.plan_code,
@@ -685,8 +765,11 @@ export function getDailyResetAt(): string {
  * Convenience helper used by the proxy route.
  * Returns the entitlement plus a small derived object useful for responses.
  */
-export async function getRemainingAIUses(subject: Subject) {
-  const ent = await getUserEntitlement(subject);
+export async function getRemainingAIUses(
+  subject: Subject,
+  options: SubscriptionEvaluationOptions = {},
+) {
+  const ent = await getUserEntitlement(subject, options);
   return {
     ...ent,
     isLimitReached:
@@ -695,42 +778,13 @@ export async function getRemainingAIUses(subject: Subject) {
 }
 
 async function getSubscriptionDiagnosticsForUser(userId: string, now: Date) {
-  const supabase = createAdminClient();
-  const { data: rows, error } = await supabase
-    .from('subscriptions')
-    .select(
-      `
-      id, user_id, status, plan_code, current_period_start, current_period_end, cancel_at_period_end, canceled_at,
-      stripe_customer_id, stripe_subscription_id, stripe_price_id,
-      provider, provider_subscription_id, provider_transaction_id, environment, last_verified_at, updated_at, created_at
-    `,
-    )
-    .eq('user_id', userId)
-    .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
-    .order('current_period_end', { ascending: false, nullsFirst: false })
-    .order('updated_at', { ascending: false })
-    .limit(50);
-
-  if (error) {
-    throw new Error(
-      `Failed to load subscription entitlement candidates: ${error.message}`,
-    );
-  }
-
-  const typedRows = (rows ?? []) as SubscriptionEntitlementRow[];
-  const evaluation = evaluateSubscriptionCandidates(typedRows, now);
-  const recoveryCandidate =
-    typedRows.find(
-      (row) =>
-        (row.provider ?? 'stripe') === 'stripe' &&
-        ['past_due', 'unpaid', 'incomplete'].includes(row.status),
-    ) ?? null;
-
-  return { ...evaluation, recoveryCandidate };
+  return loadSubscriptionEntitlementEvaluation(userId, now, {
+    throwOnError: true,
+  });
 }
 
 /**
- * Canonical API contract for web and mobile entitlement reads.
+ * Uncached entitlement resolution (DB path).
  *
  * Provider verification policy:
  * - Entitlement reads trust the local canonical subscription ledger until
@@ -740,7 +794,7 @@ async function getSubscriptionDiagnosticsForUser(userId: string, now: Date) {
  *   current verified local row into "free"; it should surface on that write
  *   route while this resolver continues to use the cached row through period end.
  */
-export async function getNormalizedBroBotEntitlement(
+async function computeNormalizedBroBotEntitlement(
   subject: Subject,
   options: { includeDebug?: boolean } = {},
 ): Promise<
@@ -749,18 +803,21 @@ export async function getNormalizedBroBotEntitlement(
   }
 > {
   const now = new Date();
-  const legacy = await getRemainingAIUses(subject);
+  // Fetch + evaluate subscriptions once; reuse for paid entitlement and diagnostics.
+  const subscriptionEvaluation =
+    subject.type === 'user' && BROBOT_CONFIG.PAID_ENABLED
+      ? await getSubscriptionDiagnosticsForUser(subject.id, now)
+      : null;
+  const legacy = await getRemainingAIUses(subject, {
+    subscriptionEvaluation: subscriptionEvaluation ?? undefined,
+    now,
+  });
   const used = legacy.usedToday ?? (await getUsedCountToday(subject));
   const quotaLimit =
     subject.type === 'guest'
       ? BROBOT_CONFIG.GUEST_DAILY_CAP
       : BROBOT_CONFIG.FREE_DAILY_CAP;
   const quotaRemaining = Math.max(0, quotaLimit - used);
-
-  const subscriptionEvaluation =
-    subject.type === 'user' && BROBOT_CONFIG.PAID_ENABLED
-      ? await getSubscriptionDiagnosticsForUser(subject.id, now)
-      : null;
   const selected = subscriptionEvaluation?.selected ?? null;
   const recoveryCandidate = subscriptionEvaluation?.recoveryCandidate ?? null;
   const provider =
@@ -847,7 +904,7 @@ export async function getNormalizedBroBotEntitlement(
     };
   }
 
-  console.log('[BROBOT-ENTITLEMENT-NORMALIZED]', {
+  logEntitlementDebug('[BROBOT-ENTITLEMENT-NORMALIZED]', {
     user_id: subject.type === 'user' ? subject.id : null,
     access: normalized.access,
     planCode: normalized.planCode,
@@ -861,6 +918,32 @@ export async function getNormalizedBroBotEntitlement(
       subscriptionEvaluation?.selectionReason ?? 'non_user_or_paid_disabled',
   });
 
+  return normalized;
+}
+
+/**
+ * Canonical API contract for web and mobile entitlement reads.
+ * Wraps compute with an optional short-TTL in-process cache (ENTITLEMENTS_TTL_SECONDS;
+ * default 0 = disabled). Debug reads skip the cache. Fail-open on any cache error.
+ */
+export async function getNormalizedBroBotEntitlement(
+  subject: Subject,
+  options: { includeDebug?: boolean } = {},
+): Promise<
+  NormalizedBroBotEntitlement & {
+    data: Awaited<ReturnType<typeof getRemainingAIUses>>;
+  }
+> {
+  const includeDebug = options.includeDebug === true;
+  type NormalizedResult = NormalizedBroBotEntitlement & {
+    data: Awaited<ReturnType<typeof getRemainingAIUses>>;
+  };
+
+  const cached = readEntitlementCacheEntry<NormalizedResult>(subject, includeDebug);
+  if (cached) return cached;
+
+  const normalized = await computeNormalizedBroBotEntitlement(subject, options);
+  writeEntitlementCacheEntry(subject, includeDebug, normalized);
   return normalized;
 }
 
@@ -983,15 +1066,13 @@ export async function getMobileBroBotEntitlement(
   const ent = normalized.data; // BroBotEntitlement shape + isLimitReached
 
   // Safe debug logs (userId prefix only, no secrets)
-  if (process.env.NODE_ENV !== 'production') {
-    console.log('[mobile-entitlement-mapper] website-decision', {
-      userId: userId.slice(0, 8),
-      websiteSource: ent.source,
-      websiteUnlimited: ent.aiAccess.unlimited,
-      websiteRemaining: ent.aiAccess.remainingToday,
-      isLimitReached: ent.isLimitReached,
-    });
-  }
+  logEntitlementDebug('[mobile-entitlement-mapper] website-decision', {
+    userId: userId.slice(0, 8),
+    websiteSource: ent.source,
+    websiteUnlimited: ent.aiAccess.unlimited,
+    websiteRemaining: ent.aiAccess.remainingToday,
+    isLimitReached: ent.isLimitReached,
+  });
 
   const hasBroBotAccess =
     ent.aiAccess.unlimited || (ent.aiAccess.remainingToday ?? 0) > 0;
@@ -1085,22 +1166,20 @@ export async function getMobileBroBotEntitlement(
   // (access may still be valid through accessEndsAt, or may already be expired)
   const canResubscribe = mobileSource === 'stripe' && isCanceled;
 
-  if (process.env.NODE_ENV !== 'production') {
-    console.log('[mobile-entitlement-mapper] lifecycle', {
-      userId: userId.slice(0, 8),
-      provider: ent.provider ?? null,
-      subscriptionStatus,
-      cancelAtPeriodEnd,
-      currentPeriodEnd,
-      isCanceled,
-      isScheduledToCancel,
-      isRenewing,
-      renewsAt,
-      accessEndsAt,
-      canManageStripe,
-      canResubscribe,
-    });
-  }
+  logEntitlementDebug('[mobile-entitlement-mapper] lifecycle', {
+    userId: userId.slice(0, 8),
+    provider: ent.provider ?? null,
+    subscriptionStatus,
+    cancelAtPeriodEnd,
+    currentPeriodEnd,
+    isCanceled,
+    isScheduledToCancel,
+    isRenewing,
+    renewsAt,
+    accessEndsAt,
+    canManageStripe,
+    canResubscribe,
+  });
 
   const usedToday =
     ent.usedToday ?? (await getUsedCountToday({ type: 'user', id: userId }));
@@ -1216,16 +1295,14 @@ export async function getMobileBroBotEntitlement(
   };
 
   // Additional required safe debug logs after mapping
-  if (process.env.NODE_ENV !== 'production') {
-    console.log('[mobile-entitlement-mapper] final', {
-      userId: userId.slice(0, 8),
-      hasBroBotAccess: payload.hasBroBotAccess,
-      plan: payload.plan,
-      source: payload.source,
-      websiteSource: ent.source,
-      websiteUnlimited: ent.aiAccess.unlimited,
-    });
-  }
+  logEntitlementDebug('[mobile-entitlement-mapper] final', {
+    userId: userId.slice(0, 8),
+    hasBroBotAccess: payload.hasBroBotAccess,
+    plan: payload.plan,
+    source: payload.source,
+    websiteSource: ent.source,
+    websiteUnlimited: ent.aiAccess.unlimited,
+  });
 
   return payload;
 }
