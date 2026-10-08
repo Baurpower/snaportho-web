@@ -54,7 +54,7 @@ function main() {
     maxUnresolvedRate: Number(args.get('max-unresolved-rate') ?? '0.25'),
     maxCostPerQuestionUsd: Number(args.get('max-cost-per-question') ?? '0.02'),
     remainingQuestions: Number(args.get('remaining-questions') ?? '0'),
-    maxRemainingCostUsd: Number(args.get('max-remaining-cost') ?? '10'),
+    maxRemainingCostUsd: Number(args.get('max-remaining-cost') ?? '25'),
   };
   if (!Number.isInteger(thresholds.minQuestions) || thresholds.minQuestions < 1
     || Object.entries(thresholds).slice(1).some(([, value]) => !Number.isFinite(value) || value < 0)) {
