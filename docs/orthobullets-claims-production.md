@@ -283,7 +283,7 @@ npm run ob:claims:run -- --input=/absolute/packets.json --apply \
   --request-timeout-ms=180000 --max-cost=10
 ```
 
-`gpt5-nano` is the profile for the remaining bank. `gpt-5-nano` uses minimal reasoning and a 4,096-token completion ceiling. The 1,024 ceiling returned empty content because reasoning tokens count against that limit. The 50-question gate must project the remaining 7,927 questions at or under $25 before any apply.
+`gpt41-mini` is the profile under test for the remaining bank (`gpt-4.1-mini`, $0.40 / $1.60 per 1M tokens, pricing version `openai-gpt-4.1-mini-2026-10-07`). It uses temperature 0 and has no reasoning-token budget. A 50-question dry run has to pass the quality gate and project the remaining 7,927 questions at or under $65 before any apply.
 
 `gpt5-mini` is the pinned OpenAI profile for the viability gate (`gpt-5-mini`,
 $0.25 / $2.00 per 1M tokens, pricing version `openai-gpt5-mini-2026-10-06`).

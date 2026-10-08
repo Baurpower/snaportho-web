@@ -11,6 +11,7 @@ assert.deepEqual(deterministicSamplingParams('muse-spark-1.3'), {
   max_completion_tokens: 4096,
 });
 assert.deepEqual(deterministicSamplingParams('gpt-4o'), { temperature: 0 });
+assert.deepEqual(deterministicSamplingParams('gpt-4.1-mini'), { temperature: 0 });
 
 const PACKET = {
   stem: 'Which nerve is most commonly injured in fractures of the humeral shaft?',

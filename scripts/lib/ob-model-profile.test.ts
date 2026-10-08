@@ -35,4 +35,14 @@ assert.equal(mini.completionPricePer1kUsd, 0.002);
 assert.equal(mini.pricingVersion, 'openai-gpt5-mini-2026-10-06');
 assert.throws(() => resolveObModelProfile('gpt5-mini', {}), /OPENAI_API_KEY/);
 
+const gpt41 = resolveObModelProfile('gpt41-mini', { OPENAI_API_KEY: 'secret' });
+assert.equal(gpt41.provider, 'openai');
+assert.equal(gpt41.baseURL, null);
+assert.equal(gpt41.models.generator, 'gpt-4.1-mini');
+assert.equal(gpt41.models.validator, 'gpt-4.1-mini');
+assert.equal(gpt41.promptPricePer1kUsd, 0.0004);
+assert.equal(gpt41.completionPricePer1kUsd, 0.0016);
+assert.equal(gpt41.pricingVersion, 'openai-gpt-4.1-mini-2026-10-07');
+assert.throws(() => resolveObModelProfile('gpt41-mini', {}), /OPENAI_API_KEY/);
+
 console.log('ob-model-profile.test.ts: all assertions passed');
