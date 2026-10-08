@@ -7,4 +7,9 @@ for (const required of ['marketing_consent_at', 'lifecycle_emails_campaign_deliv
 }
 assert.ok(sql.includes('security invoker'));
 assert.ok(!sql.toLowerCase().includes('security definer'));
+const quotaSql = readFileSync('supabase/migrations/20260926_190000_marketing_automation_quota.sql', 'utf8');
+for (const required of ['reserve_marketing_email_delivery', 'claim_marketing_email_batch', 'complete_marketing_email_batch', 'pg_advisory_xact_lock', 'America/Los_Angeles', "interval '24 hours'", 'daily_count >= 50', 'same_day_count > 0', 'automation_batch_id', 'to service_role']) {
+  assert.ok(quotaSql.includes(required), `quota migration missing ${required}`);
+}
+assert.ok(quotaSql.includes('campaign_key is not null'), 'only campaign sends count toward the marketing cap');
 console.log('marketing schema tests passed');

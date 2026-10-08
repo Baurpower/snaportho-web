@@ -17,6 +17,9 @@ export type CampaignProfile = {
   priorSteps: Set<CampaignStep>;
   priorStepAt: Map<CampaignStep, number>;
   optedOutTopics: Set<string>;
+  productFirstUseAt?: number | null;
+  productLastUseAt?: number | null;
+  hasActiveAnkiDevice?: boolean;
 };
 
 const DAY = 86_400_000;
@@ -38,7 +41,8 @@ export type CampaignIneligibilityReason =
   | 'recently_active'
   | 'profile_already_complete'
   | 'profile_cohort_ineligible'
-  | 'profile_campaign_already_sent';
+  | 'profile_campaign_already_sent'
+  | 'product_signal_missing_or_too_recent';
 
 export type ProfileCohort = 'empty' | 'med_student_grad_year_only' | 'other';
 
@@ -64,6 +68,8 @@ export const CAMPAIGN_CONFIG: Record<CampaignStep, { campaignKey: string; topic:
   profile_completion_1: { campaignKey: 'profile_completion_v2', topic: 'product_updates', templateVersion: 'v1' },
   profile_grad_year_1: { campaignKey: 'profile_med_student_grad_year_v1', topic: 'product_updates', templateVersion: 'v1' },
   reengagement_1: { campaignKey: 'brobot_reengagement_v1', topic: 'brobot_learning', templateVersion: 'v1' },
+  caseprep_activation_1: { campaignKey: 'caseprep_onboarding_v1', topic: 'product_updates', templateVersion: 'v1' },
+  anki_activation_1: { campaignKey: 'anki_onboarding_v1', topic: 'product_updates', templateVersion: 'v1' },
 };
 
 export function campaignIneligibilityReason(
@@ -123,6 +129,20 @@ export function campaignIneligibilityReason(
       return profile.lastUseAt !== null && now - profile.lastUseAt >= 30 * DAY
         ? null
         : 'recently_active';
+    case 'caseprep_activation_1':
+      return profile.productFirstUseAt !== null && profile.productFirstUseAt !== undefined
+        && profile.productFirstUseAt >= now - 30 * DAY
+        && profile.productLastUseAt !== null && profile.productLastUseAt !== undefined
+        && now - profile.productLastUseAt >= 2 * DAY
+        ? null
+        : 'product_signal_missing_or_too_recent';
+    case 'anki_activation_1':
+      return profile.productFirstUseAt !== null && profile.productFirstUseAt !== undefined
+        && now - profile.productFirstUseAt >= DAY
+        && profile.productFirstUseAt >= now - 14 * DAY
+        && !profile.hasActiveAnkiDevice
+        ? null
+        : 'product_signal_missing_or_too_recent';
   }
 }
 
