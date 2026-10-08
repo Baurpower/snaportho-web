@@ -215,7 +215,9 @@ class ReviewerApi:
         )
 
     def pending_launches(self):
-        return self.request("GET", "/api/brobot-anki/launch/pending", retries=0)
+        # Long-poll: the server may hold this request up to ~55s for add-on
+        # versions at/above 1.0.9. Keep the timeout comfortably above the hold.
+        return self.request("GET", "/api/brobot-anki/launch/pending", retries=0, timeout=70)
 
     def claim_launch(self, launch_command_id):
         return self.request("POST", "/api/brobot-anki/launch/claim", {"launchCommandId": launch_command_id}, retries=0)
