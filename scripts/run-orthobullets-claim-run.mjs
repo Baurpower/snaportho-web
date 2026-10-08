@@ -71,11 +71,35 @@ function reviewDocument(html, url) {
   return document;
 }
 
+function exactReviewUrls(resultsHtml, base) {
+  const found = new Map();
+  const score = (url) => (url.searchParams.has('ans') ? 2 : 0) + (url.searchParams.has('test') ? 1 : 0);
+  for (const match of resultsHtml.matchAll(/href=(["'])([^"']*\/testview[^"']*)\1/gi)) {
+    let url;
+    try {
+      url = new URL(match[2], base);
+    } catch {
+      continue;
+    }
+    if (url.hostname !== 'www.orthobullets.com' && url.hostname !== 'orthobullets.com') continue;
+    if (url.protocol !== 'https:') continue;
+    const qid = url.searchParams.get('qid');
+    if (!/^\d{4,8}$/.test(qid ?? '')) continue;
+    url.hash = '';
+    const current = found.get(qid);
+    if (!current || score(url) > score(new URL(current))) found.set(qid, url.toString());
+  }
+  return [...found.entries()].map(([qid, reviewUrl]) => ({ qid, reviewUrl }));
+}
+
 const cookie = sessionCookie();
 const html = await fetchHtml(resultsUrl, cookie);
 if (!/\/qbank\/(testscore|loadresults)\b/.test(resultsUrl)) throw new Error('results_url_not_completed_review');
-const qids = [...new Set([...html.matchAll(/[?&]qid=(\d{4,8})/g)].map((match) => match[1]))].slice(0, limit);
-if (!qids.length) throw new Error('no_completed_questions');
+// Preserve the exact review URL from the results row (qid + ans + test).
+// Never reconstruct it from a bare question id: partial URLs can land on an
+// unrevealed or wrong-question page.
+const roster = exactReviewUrls(html, resultsUrl).slice(0, limit);
+if (!roster.length) throw new Error('no_completed_review_urls');
 
 const env = readFileSync(new URL('../.env.local', import.meta.url), 'utf8');
 let databaseUrl = env.match(/^DATABASE_URL=(.*)$/m)[1].trim();
@@ -85,8 +109,8 @@ await client.connect();
 const known = await client.query(`select native_question_id from orthobullets_claim_run_items where status in ('accepted', 'accepted_no_card', 'accepted_provisional_entity')`);
 await client.end();
 const done = new Set(known.rows.map((row) => row.native_question_id));
-const pending = qids.filter((qid) => !done.has(qid));
-record({ event: 'roster', results: qids.length, alreadyDone: qids.filter((qid) => done.has(qid)).length, pending: pending.length });
+const pending = roster.filter(({ qid }) => !done.has(qid));
+record({ event: 'roster', results: roster.length, alreadyDone: roster.filter(({ qid }) => done.has(qid)).length, pending: pending.length });
 if (!pending.length) {
   rmSync(cookieCopy, { force: true });
   process.exit(0);
@@ -98,7 +122,7 @@ const runResponse = await fetch('http://localhost:3000/api/brobot/extension/ques
   headers: { 'content-type': 'application/json', 'x-snaportho-extension-token': token },
   body: JSON.stringify({
     testKey,
-    questions: pending.map((qid) => ({ nativeQuestionId: qid, reviewLocator: `https://www.orthobullets.com/testview?qid=${qid}` })),
+    questions: pending.map(({ qid, reviewUrl }) => ({ nativeQuestionId: qid, reviewLocator: reviewUrl })),
   }),
 });
 const runBody = await runResponse.json();
@@ -109,9 +133,8 @@ if (!runResponse.ok) {
 const items = new Map(runBody.items.map((item) => [item.native_question_id, item]));
 record({ event: 'run_ready', runId: runBody.runId, items: runBody.items.length });
 
-for (const qid of pending) {
+for (const { qid, reviewUrl } of pending) {
   const item = items.get(qid);
-  const reviewUrl = `https://www.orthobullets.com/testview?qid=${qid}`;
   if (!item || item.status === 'accepted' || item.status === 'accepted_no_card' || item.status === 'accepted_provisional_entity') {
     record({ qid, status: item?.status ?? 'missing_run_item' });
     continue;
@@ -119,10 +142,17 @@ for (const qid of pending) {
   try {
     const pageHtml = await fetchHtml(reviewUrl, cookie);
     const pageContext = extractOrthobulletsPageContext({ document: reviewDocument(pageHtml, reviewUrl), pageUrl: reviewUrl });
-    const ready = pageContext.pageKind === 'review' && pageContext.questionId === qid && pageContext.stem?.trim()
+    const legacyReady = pageContext.pageKind === 'review' && pageContext.questionId === qid && pageContext.stem?.trim()
       && pageContext.correctAnswerKey && pageContext.explanationText?.trim() && pageContext.answerChoices.length >= 2;
+    const ready = pageContext.reviewState ? pageContext.reviewState === 'ready' && pageContext.questionId === qid : legacyReady;
     if (!ready) {
-      record({ qid, status: 'extraction_incomplete', pageKind: pageContext.pageKind ?? null, warnings: pageContext.extractionWarnings ?? [] });
+      record({
+        qid, status: pageContext.reviewDiagnostics?.errorCode ?? 'extraction_incomplete',
+        pageKind: pageContext.pageKind ?? null, reviewState: pageContext.reviewState ?? null,
+        missingFields: pageContext.reviewDiagnostics?.missingFields ?? [],
+        extractedQuestionId: pageContext.questionId ?? null,
+        warnings: pageContext.extractionWarnings ?? [],
+      });
       continue;
     }
     let response;

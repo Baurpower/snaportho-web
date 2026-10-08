@@ -27,7 +27,7 @@ from snaportho_reviewer.sync import (
 )
 from snaportho_reviewer.brobot_panel import ATTENDING_PROMPT,OITE_PROMPT,card_context,chat_payload,deck_footer_state,deck_footer_text,plain_text
 from snaportho_reviewer.resource_search import anki_card_query,parse_orthobullets_id,request_payload,resolve_local_results,result_summary
-from snaportho_reviewer.bootstrap import ANKI_DOWNLOAD_URL,LAUNCH_POLL_ACTIVE_MS,MIN_ANKI,UnsupportedAnkiError,ProfileRuntime,launch_poll_interval_ms
+from snaportho_reviewer.bootstrap import ANKI_DOWNLOAD_URL,LAUNCH_POLL_ACTIVE_MS,LAUNCH_POLL_IDLE_MS,LAUNCH_POLL_IDLE_MAX_MS,LAUNCH_POLL_JITTER_MAX_MS,MIN_ANKI,UnsupportedAnkiError,ProfileRuntime,launch_poll_delay_ms,launch_poll_interval_ms
 class Card:
  def __init__(self,id,h):self.id=id;self.h=h
 class Gateway:
@@ -45,16 +45,29 @@ class ReviewerTests(unittest.TestCase):
     timer=MagicMock()
     runtime._start_launch_poller(timer)
     self.assertEqual(timer.called,expected)
-    self.assertEqual(timer.singleShot.called,expected)
     if expected:
-     timer.return_value.setInterval.assert_called_once_with(LAUNCH_POLL_ACTIVE_MS)
+     timer.return_value.setSingleShot.assert_called_once_with(True)
      timer.return_value.timeout.connect.assert_called_once_with(runtime.poll_launches)
-     timer.return_value.start.assert_called_once()
-     timer.singleShot.assert_called_once_with(2000,runtime.poll_launches)
- def test_launch_poll_backoff_reaches_five_minutes_and_adds_jitter(self):
-  self.assertEqual([launch_poll_interval_ms(x) for x in (0,1,2,3,4,7,8,20)],[4000,4000,30000,30000,120000,120000,300000,300000])
-  self.assertEqual(launch_poll_interval_ms(8,1234),301234)
-  self.assertEqual(launch_poll_interval_ms(1,1234),4000)
+     timer.return_value.start.assert_called_once_with(2000)
+ def test_launch_polling_is_idle_by_default_and_active_only_in_bounded_windows(self):
+  self.assertEqual(launch_poll_interval_ms(0),LAUNCH_POLL_ACTIVE_MS)
+  self.assertEqual(launch_poll_interval_ms(1),LAUNCH_POLL_IDLE_MS)
+  self.assertEqual(launch_poll_interval_ms(20,1234),LAUNCH_POLL_IDLE_MS+1234)
+  self.assertEqual(launch_poll_delay_ms(False,0,100,jitter_ms=1234),LAUNCH_POLL_IDLE_MS+1234)
+  self.assertEqual(launch_poll_delay_ms(False,101,100,jitter_ms=1234),LAUNCH_POLL_ACTIVE_MS)
+  self.assertEqual(launch_poll_delay_ms(True,0,100,jitter_ms=1234),LAUNCH_POLL_ACTIVE_MS)
+  self.assertEqual(launch_poll_delay_ms(False,0,100,suggested_seconds=3600),LAUNCH_POLL_IDLE_MAX_MS)
+  self.assertEqual(launch_poll_delay_ms(False,0,100,jitter_ms=999999),LAUNCH_POLL_IDLE_MS+LAUNCH_POLL_JITTER_MAX_MS)
+  # Launch commands default to a two-minute lifetime. Even the slowest idle
+  # check must happen before that so automatic browser-to-Anki launches work.
+  self.assertLess(LAUNCH_POLL_IDLE_MAX_MS+LAUNCH_POLL_JITTER_MAX_MS,2*60*1000)
+ def test_manual_launch_check_interrupts_idle_timer_and_polls_now(self):
+  runtime=object.__new__(ProfileRuntime);runtime.closed=False;runtime.reviewer_edition=False
+  runtime.mw=MagicMock();runtime.launch_timer=MagicMock();runtime.poll_launches=MagicMock()
+  runtime.check_browser_requests()
+  runtime.launch_timer.stop.assert_called_once_with()
+  runtime.poll_launches.assert_called_once_with()
+  self.assertGreater(runtime._launch_active_until,0)
  def setUp(self):self.i=CardIdentity("c","v","guid",0,"a"*64)
  def test_anki_2509_is_supported(self):
   self.assertEqual(MIN_ANKI,(25,9))
@@ -377,13 +390,21 @@ class ReviewerTests(unittest.TestCase):
    status=200
    def __enter__(self):return self
    def __exit__(self,*args):return False
-   def read(self,*args):return json.dumps({"linkCode":"ABC123","approvalUrl":"http://127.0.0.1:3000/brobot-decks/link?code=ABC123"}).encode()
+   def read(self,*args):return json.dumps({"linkCode":"ABC123DEF4","approvalUrl":"http://127.0.0.1:3000/anki/link?code=ABC123DEF4"}).encode()
   captured=[]
   def open_request(request,timeout):captured.append(request);return Response()
   api=ReviewerApi("http://127.0.0.1:3000")
   with patch("snaportho_reviewer.api.urllib.request.urlopen",open_request):api.start_link("Reviewer")
   headers={key.lower():value for key,value in captured[0].header_items()}
   self.assertEqual(headers["x-snaportho-addon-base-url"],"http://127.0.0.1:3000");self.assertEqual(headers["x-snaportho-client"],f"reviewer-addon/{ADDON_VERSION}")
+ def test_device_link_dialog_keeps_reopen_and_manual_fallback(self):
+  with open(os.path.join(os.path.dirname(__file__),"..","addon","snaportho_reviewer","dialogs.py"))as source:
+   text=source.read()
+  dialog=text[text.index("class DeviceLinkDialog:"):text.index("class DiagnosticsDialog:")]
+  self.assertIn('self.poll_button.clicked.connect(self.open_approval_page)',dialog)
+  self.assertNotIn('self.approval_url = None\n                self.polling = True',dialog)
+  self.assertIn('/anki/link',dialog)
+  self.assertIn('QApplication.clipboard().setText(self.link_code)',dialog)
  def test_brobot_uses_shared_web_chat_contract(self):
   class Response:
    status=200

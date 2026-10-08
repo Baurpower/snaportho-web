@@ -3,11 +3,13 @@ import { z } from 'zod';
 
 import { authenticateDeviceLinkedRequest } from '@/lib/brobot/device-link';
 import { ORTHOBULLETS_AUTONOMOUS_CLAIM_VERSION, ORTHOBULLETS_CLAIM_RUN_MAX } from '@/lib/brobot/orthobullets/autonomous-claim';
+import { OB_PROD_ALGORITHM } from '@/lib/brobot/orthobullets/claim-extraction-contract-v1';
 import { createAdminClient } from '@/lib/supabase/admin';
 
 const TOKEN_HEADER = 'x-snaportho-extension-token';
 const StartRunSchema = z.object({
   testKey: z.string().trim().min(1).max(300),
+  algorithmVersion: z.enum([ORTHOBULLETS_AUTONOMOUS_CLAIM_VERSION, OB_PROD_ALGORITHM]).optional(),
   questions: z.array(z.object({
     nativeQuestionId: z.string().regex(/^[A-Za-z0-9._:-]{1,200}$/),
     reviewLocator: z.string().url().max(1000),
@@ -37,15 +39,16 @@ export async function POST(request: Request) {
     return !/(^|\.)orthobullets\.com$/i.test(url.hostname) || url.protocol !== 'https:';
   })) return NextResponse.json({ error: 'invalid_review_locator' }, { status: 400 });
 
+  const algorithmVersion = parsed.data.algorithmVersion ?? ORTHOBULLETS_AUTONOMOUS_CLAIM_VERSION;
   const { data: run, error: runError } = await admin.from('orthobullets_claim_runs').upsert({
     user_id: auth.userId, test_key: parsed.data.testKey, status: 'running', expected_count: unique.length,
-    algorithm_version: ORTHOBULLETS_AUTONOMOUS_CLAIM_VERSION, completed_at: null,
+    algorithm_version: algorithmVersion, completed_at: null,
   }, { onConflict: 'user_id,test_key,algorithm_version' }).select('id').single();
   if (runError || !run) return NextResponse.json({ error: 'claim_run_create_failed' }, { status: 500 });
   const { error: itemError } = await admin.from('orthobullets_claim_run_items').upsert(unique.map((question) => ({
     run_id: run.id, user_id: auth.userId, native_question_id: question.nativeQuestionId,
     review_locator: question.reviewLocator, status: 'pending',
-    algorithm_version: ORTHOBULLETS_AUTONOMOUS_CLAIM_VERSION,
+    algorithm_version: algorithmVersion,
   })), { onConflict: 'run_id,native_question_id', ignoreDuplicates: true });
   if (itemError) return NextResponse.json({ error: 'claim_run_items_create_failed' }, { status: 500 });
   const { data: items, error: readError } = await admin.from('orthobullets_claim_run_items')
@@ -53,5 +56,5 @@ export async function POST(request: Request) {
     .eq('run_id', run.id).order('native_question_id');
   if (readError) return NextResponse.json({ error: 'claim_run_items_read_failed' }, { status: 500 });
   await admin.rpc('refresh_orthobullets_claim_run', { p_run_id: run.id });
-  return NextResponse.json({ runId: run.id, algorithmVersion: ORTHOBULLETS_AUTONOMOUS_CLAIM_VERSION, items });
+  return NextResponse.json({ runId: run.id, algorithmVersion, items });
 }

@@ -10,13 +10,22 @@ except ImportError:
 MIN_ANKI=(25,9)
 ANKI_DOWNLOAD_URL="https://apps.ankiweb.net/"
 LAUNCH_POLL_ACTIVE_MS=4000
-LAUNCH_POLL_BACKOFF=((2,30000),(4,120000),(8,300000))
+LAUNCH_POLL_IDLE_MS=60*1000
+LAUNCH_POLL_IDLE_MAX_MS=90*1000
+LAUNCH_POLL_JITTER_MAX_MS=10*1000
+LAUNCH_POLL_ACTIVE_WINDOW_SECONDS=60
+UPDATE_CHECK_INTERVAL_SECONDS=24*60*60
 
 def launch_poll_interval_ms(empty_streak,jitter_ms=0):
-    interval=LAUNCH_POLL_ACTIVE_MS
-    for threshold,candidate in LAUNCH_POLL_BACKOFF:
-        if empty_streak>=threshold:interval=candidate
-    return interval+(jitter_ms if interval>LAUNCH_POLL_ACTIVE_MS else 0)
+    return LAUNCH_POLL_ACTIVE_MS if empty_streak<=0 else LAUNCH_POLL_IDLE_MS+max(0,min(int(jitter_ms),LAUNCH_POLL_JITTER_MAX_MS))
+
+def launch_poll_delay_ms(commands_found,active_until,now,jitter_ms=0,suggested_seconds=None):
+    active=bool(commands_found)or float(active_until or 0)>float(now)
+    if active:return LAUNCH_POLL_ACTIVE_MS
+    suggested_ms=LAUNCH_POLL_IDLE_MS
+    try:suggested_ms=max(LAUNCH_POLL_IDLE_MS,int(suggested_seconds)*1000)
+    except (TypeError,ValueError):pass
+    return min(suggested_ms,LAUNCH_POLL_IDLE_MAX_MS)+max(0,min(int(jitter_ms),LAUNCH_POLL_JITTER_MAX_MS))
 
 class UnsupportedAnkiError(RuntimeError):
     def __init__(self,installed):
@@ -103,6 +112,7 @@ class ProfileRuntime:
             ("Sign Out",self.sign_out),
         ]
         if self._owns_deck_sync():common_actions.insert(0,("Get Started / Master Deck…",self.open_deck_sync))
+        if self._owns_launch_polling():common_actions.insert(1,("Check for browser requests",self.check_browser_requests))
         for label,callback in common_actions:
             action=QAction(label,menu);qconnect(action.triggered,callback);menu.addAction(action)
         reviewer_actions=[
@@ -122,6 +132,7 @@ class ProfileRuntime:
             self.side_panel=LearnerSidePanel(self.mw,self)
         self._maybe_first_run_prompt()
         QTimer.singleShot(4000,self._maybe_heartbeat)
+        QTimer.singleShot(5000,self._maybe_check_for_update)
         self._start_launch_poller(QTimer)
     def _owns_launch_polling(self):
         """Only the user edition polls when both editions share this profile."""
@@ -132,11 +143,21 @@ class ProfileRuntime:
         if not self._owns_launch_polling():return
         self._launch_empty_streak=0
         self._launch_jitter_ms=int(getattr(self,"profile_hash","0")[:4],16)%15001
+        self._launch_active_until=0
+        self._launch_busy=False
         self.launch_timer=timer_class(self.mw)
-        self.launch_timer.setInterval(LAUNCH_POLL_ACTIVE_MS)
+        self.launch_timer.setSingleShot(True)
         self.launch_timer.timeout.connect(self.poll_launches)
-        self.launch_timer.start()
-        timer_class.singleShot(2000,self.poll_launches)
+        self.launch_timer.start(2000)
+    def _schedule_launch_poll(self,delay_ms):
+        if self.closed or not hasattr(self,"launch_timer"):return
+        self.launch_timer.start(max(LAUNCH_POLL_ACTIVE_MS,int(delay_ms)))
+    def check_browser_requests(self):
+        if not self._owns_launch_polling():return
+        import time
+        self._launch_active_until=time.monotonic()+LAUNCH_POLL_ACTIVE_WINDOW_SECONDS
+        if hasattr(self,"launch_timer"):self.launch_timer.stop()
+        self.poll_launches()
     def _maybe_heartbeat(self):
         if self.closed or not self.settings.usage_reporting:return
         try:
@@ -160,6 +181,29 @@ class ProfileRuntime:
             except Exception:
                 pass
         self.background(send,done)
+    def _maybe_check_for_update(self):
+        import time
+        cached=self.store.cached("addon_update_check")or{}
+        if int(time.time())-int(cached.get("checkedAt")or 0)<UPDATE_CHECK_INTERVAL_SECONDS:return
+        def done(future):
+            try:
+                _,body=future.result();latest=str(body.get("latestVersion")or"")
+                self.store.cache("addon_update_check",{"checkedAt":int(time.time()),"latestVersion":latest})
+                if not body.get("upgradeRequired")or not latest:return
+                shown=self.store.cached("addon_update_notice")or{}
+                if shown.get("latestVersion")==latest:return
+                self.store.cache("addon_update_notice",{"latestVersion":latest})
+                from aqt.qt import QMessageBox
+                from aqt.utils import openLink
+                box=QMessageBox(self.mw);box.setWindowTitle("SnapOrtho update available")
+                box.setText(f"SnapOrtho {latest} is available.")
+                box.setInformativeText(str(body.get("message")or"Update to reduce background network use and receive the latest fixes."))
+                update=box.addButton("Download update",QMessageBox.ButtonRole.AcceptRole)
+                box.addButton("Later",QMessageBox.ButtonRole.RejectRole);box.exec()
+                if box.clickedButton()is update:openLink(str(body.get("downloadUrl")or f"{self.api.base_url}/anki/download"))
+            except Exception:
+                self.store.cache("addon_update_check",{"checkedAt":int(time.time())})
+        self.background(self.api.addon_version,done)
     def stop(self):
         self.closed=True
         if self.window:self.window.close();self.window=None
@@ -325,21 +369,18 @@ class ProfileRuntime:
             return
         self._launch_busy = True
         def done(future):
+            delay=LAUNCH_POLL_IDLE_MS+getattr(self,"_launch_jitter_ms",0)
             try:
+                import time
                 from .anki_runtime import CollectionGateway
                 from .launch_consumer import consume_pending_launches
                 from .resource_search import open_browse_with_card_ids
                 _, body = future.result()
                 commands = body.get("commands") or []
-                if not commands:
-                    self._launch_empty_streak = getattr(self, "_launch_empty_streak", 0) + 1
-                    interval=launch_poll_interval_ms(self._launch_empty_streak,getattr(self,"_launch_jitter_ms",0))
-                    try:self.launch_timer.setInterval(interval)
-                    except Exception:pass
-                    return
-                self._launch_empty_streak = 0
-                try:self.launch_timer.setInterval(LAUNCH_POLL_ACTIVE_MS)
-                except Exception:pass
+                self._launch_empty_streak=0 if commands else getattr(self,"_launch_empty_streak",0)+1
+                if commands:self._launch_active_until=time.monotonic()+LAUNCH_POLL_ACTIVE_WINDOW_SECONDS
+                delay=launch_poll_delay_ms(bool(commands),getattr(self,"_launch_active_until",0),time.monotonic(),getattr(self,"_launch_jitter_ms",0),body.get("nextPollAfterSeconds"))
+                if not commands:return
                 class Client:
                     def __init__(self, api, pending):
                         self.api = api
@@ -368,10 +409,15 @@ class ProfileRuntime:
                     CollectionGateway(self.mw.col),
                     Opener(self.mw),
                 )
-            except Exception:
-                pass
+            except Exception as error:
+                self._launch_active_until=0
+                # Authentication can recover after relinking or a transient server
+                # failure. Only an explicitly unsupported add-on version stops the
+                # background timer; the daily update check guides that upgrade.
+                if getattr(error,"status",0)==426:delay=None
             finally:
                 self._launch_busy = False
+                if delay is not None:self._schedule_launch_poll(delay)
         self.background(self.api.pending_launches, done)
 
     def propose_from_editor(self, editor):

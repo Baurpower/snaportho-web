@@ -1,3 +1,4 @@
+export * from "./abbreviations";
 export * from "./config";
 export * from "./contracts";
 export * from "./gaps";
@@ -5,5 +6,8 @@ export * from "./mode-policies";
 export * from "./policy";
 export * from "./privacy";
 export * from "./provider";
+export * from "./qualifiers";
+export * from "./query-understanding";
+export * from "./rerank";
 export * from "./telemetry";
 export * from "./timing";

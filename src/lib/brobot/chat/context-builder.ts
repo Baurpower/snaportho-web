@@ -22,6 +22,8 @@ import {
   buildOiteLearningMetadata,
   type OiteLearningMetadata,
 } from './oite-context';
+import type { BroBotKgPacket } from '@/lib/brobot/kg/contracts';
+import { getBroBotClaimsGroundingMode } from '@/lib/brobot/kg/config';
 
 export type BroBotAnswerContext = {
   selectedBranch?: {
@@ -39,7 +41,22 @@ export type BroBotAnswerContext = {
   orPrepProcedureMetadata: OrPrepProcedureMetadata | null;
   oiteLearningMetadata: OiteLearningMetadata | null;
   clinicalContext: BroBotClinicalContext;
+  knowledgePacket?: BroBotKgPacket | null;
 };
+
+export function formatKnowledgePacketForPrompt(packet?: BroBotKgPacket | null): string {
+  if (!packet || getBroBotClaimsGroundingMode() !== 'enabled' || packet.claims.length === 0) return '';
+  const claims = packet.claims.map((claim) => JSON.stringify({
+    claimId: claim.claimId, text: claim.claimText, type: claim.claimType,
+    predicate: claim.predicate, object: claim.objectText, qualifiers: claim.qualifiers,
+    trustTier: claim.trustTier,
+  }));
+  return [
+    `Grounded knowledge packet (${packet.coverage} coverage):`,
+    ...claims,
+    packet.limitations.length ? `Limitations: ${packet.limitations.join('; ')}` : '',
+  ].filter(Boolean).join('\n');
+}
 
 export function buildBroBotMinimalAnswerContext(input: {
   message: string;
@@ -276,5 +293,6 @@ export function formatAnswerContextForPrompt(context?: BroBotAnswerContext): str
     orPrepMetadata,
     oiteMetadata,
     certified,
+    formatKnowledgePacketForPrompt(context.knowledgePacket),
   ].filter(Boolean).join('\n');
 }

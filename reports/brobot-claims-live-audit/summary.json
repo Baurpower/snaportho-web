@@ -1,0 +1,1174 @@
+{
+  "generatedAt": "2026-09-29T03:03:56.874Z",
+  "liveData": true,
+  "liveEligibility": {
+    "claimRows": 1000,
+    "activeClaims": 1000,
+    "currentVersionPointers": 1000,
+    "currentVersionsFound": 1000,
+    "parentReviewStatus": {
+      "unreviewed": 1000
+    },
+    "parentContentSource": {
+      "generated_draft": 998,
+      "deprecated": 2
+    },
+    "versionReviewStatus": {
+      "unreviewed": 1000
+    },
+    "versionContentSource": {
+      "generated_draft": 1000
+    },
+    "versionApprovalMethod": {
+      "machine_consensus": 1000
+    },
+    "exactCounts": {
+      "claims": 6447,
+      "activeClaims": 6447,
+      "approvedVersions": 4,
+      "verifiedVersions": 4,
+      "approvedVerifiedVersions": 4,
+      "cardClaimLinks": 3309
+    },
+    "eligibleVersions": [
+      {
+        "id": "d9dbc949-a76c-4e06-a5b6-d26da8183d13",
+        "claim_id": "6276bafb-76f4-4554-bef8-df69ac2cd6dc",
+        "claim_text": "In a 42-year-old male laborer with a partial laceration of the median nerve, the perineurium is the connective tissue that surrounds nerve fascicles.",
+        "claim_type": "fact",
+        "predicate": "teaches_fact",
+        "object_text": "perineurium",
+        "primary_entity_id": "ef7d1c34-9b15-46ef-b8f8-11632d28e969",
+        "review_status": "approved",
+        "content_source": "verified",
+        "approval_method": "machine_consensus",
+        "entityLabel": "perineurium",
+        "parent": {
+          "id": "6276bafb-76f4-4554-bef8-df69ac2cd6dc",
+          "current_version_id": "d9dbc949-a76c-4e06-a5b6-d26da8183d13",
+          "is_active": true,
+          "review_status": "approved",
+          "content_source": "verified",
+          "primary_entity_id": "ef7d1c34-9b15-46ef-b8f8-11632d28e969"
+        }
+      },
+      {
+        "id": "c88a279d-b41d-4d56-84c4-5213ff89cdd7",
+        "claim_id": "188aee4f-e10e-4a0e-a868-7b8fa821f36e",
+        "claim_text": "In a groin flap procedure for soft-tissue coverage of a traumatic thumb amputation, the flap relies on the superficial circumflex iliac artery and poses a risk to the lateral femoral cutaneous nerve.",
+        "claim_type": "fact",
+        "predicate": "preferred_treatment",
+        "object_text": "groin flap",
+        "primary_entity_id": "4e1668e6-5870-43e9-a817-35a5d12c9251",
+        "review_status": "approved",
+        "content_source": "verified",
+        "approval_method": "machine_consensus",
+        "entityLabel": "groin flap",
+        "parent": {
+          "id": "188aee4f-e10e-4a0e-a868-7b8fa821f36e",
+          "current_version_id": "c88a279d-b41d-4d56-84c4-5213ff89cdd7",
+          "is_active": true,
+          "review_status": "approved",
+          "content_source": "verified",
+          "primary_entity_id": "4e1668e6-5870-43e9-a817-35a5d12c9251"
+        }
+      },
+      {
+        "id": "04b62706-0f9b-4975-aab9-24336528d944",
+        "claim_id": "c224c608-a2e7-458e-be5c-43ca1c9fb36c",
+        "claim_text": "The thoracodorsal artery supplies the main perforators to the latissimus dorsi myocutaneous flap used for reconstructing large soft tissue defects around the elbow in adults.",
+        "claim_type": "fact",
+        "predicate": "preferred_treatment",
+        "object_text": "latissimus dorsi myocutaneous flap",
+        "primary_entity_id": "d7e304ee-6931-4815-b8a5-f88b73998328",
+        "review_status": "approved",
+        "content_source": "verified",
+        "approval_method": "machine_consensus",
+        "entityLabel": "latissimus dorsi myocutaneous flap",
+        "parent": {
+          "id": "c224c608-a2e7-458e-be5c-43ca1c9fb36c",
+          "current_version_id": "04b62706-0f9b-4975-aab9-24336528d944",
+          "is_active": true,
+          "review_status": "approved",
+          "content_source": "verified",
+          "primary_entity_id": "d7e304ee-6931-4815-b8a5-f88b73998328"
+        }
+      },
+      {
+        "id": "f5b16faf-4019-498f-9e4a-fd0047b9eca4",
+        "claim_id": "9e52b505-fdd6-488e-ab36-1a9c8f30c3ba",
+        "claim_text": "Iatrogenic transection of the recurrent motor branch of the median nerve during open carpal tunnel release leads to inability to oppose the thumb when the transverse carpal ligament is cut radially.",
+        "claim_type": "fact",
+        "predicate": "preferred_treatment",
+        "object_text": "open carpal tunnel release",
+        "primary_entity_id": "c5e07daf-00d5-49a9-b22b-41e533843d0e",
+        "review_status": "approved",
+        "content_source": "verified",
+        "approval_method": "machine_consensus",
+        "entityLabel": "Recurrent Motor Branch of the Median Nerve",
+        "parent": {
+          "id": "9e52b505-fdd6-488e-ab36-1a9c8f30c3ba",
+          "current_version_id": "f5b16faf-4019-498f-9e4a-fd0047b9eca4",
+          "is_active": true,
+          "review_status": "approved",
+          "content_source": "verified",
+          "primary_entity_id": "c5e07daf-00d5-49a9-b22b-41e533843d0e"
+        }
+      }
+    ],
+    "eligibleCardLinks": {
+      "total": 0,
+      "activeApproved": 0
+    },
+    "cardLinkPopulation": {
+      "totalFetched": 3309,
+      "reviewStatus": {
+        "needs_review": 19,
+        "auto_approved": 3290
+      },
+      "approvalMethod": {
+        "machine_consensus": 3309
+      },
+      "algorithmVersion": {
+        "claims-v2.3": 19,
+        "card-claim-factory.v1": 3290
+      },
+      "active": 3309
+    },
+    "productionRpc": {
+      "available": true,
+      "claims": 0,
+      "cards": 0
+    }
+  },
+  "fixtureCount": 6,
+  "wins": {
+    "grounded": 0,
+    "baseline": 2,
+    "tie": 4
+  },
+  "totalEligibleClaims": 6,
+  "results": [
+    {
+      "fixture": {
+        "id": "oite-scfe",
+        "prompt": "SCFE OITE points and treatment thresholds",
+        "mode": "oite",
+        "level": "pgy2"
+      },
+      "entityAnchors": [
+        "SCFE"
+      ],
+      "eligibleClaimCount": 0,
+      "baseline": {
+        "output": {
+          "goal": "Provide high-yield OITE points and treatment thresholds for SCFE.",
+          "selectedFocus": "Focus: General framework",
+          "answer": "- **Direct answer:** Unstable SCFE has the highest risk of avascular necrosis (AVN); treatment urgency often pivots on stability rather than just slip angle.\n- **Core framework:** Consider age, body habitus, and endocrine risk factors; differentiate stable vs unstable SCFE, then decide on in-situ fixation vs more complex correction.\n- **High-yield distinction:** Recognize obligate external rotation and limited internal rotation as key exam findings rather than vague hip pain.\n- **Exam trap:** Residents often memorize Klein's line but miss that management decisions usually hinge on stability or atypical endocrine features.\n- **Management pivot:** Stability is crucial; unstable SCFE requires urgent surgical intervention to prevent complications like AVN.",
+          "priorityPoints": [
+            "Unstable SCFE = high AVN risk",
+            "Stability determines urgency and treatment",
+            "Obligate external rotation is a key exam finding",
+            "Klein's line is less critical than stability",
+            "Endocrine disorders can present atypically"
+          ],
+          "knowledgeGaps": [
+            "Differentiate SCFE from Perthes and septic hip",
+            "Understand Klein's line and its limitations",
+            "Recognize endocrine risk factors for SCFE",
+            "Learn the surgical indications for stable vs unstable SCFE"
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "treatment_algorithm",
+              "label": "What treatment algorithm gets tested?",
+              "description": "Explore the decision-making process for treating SCFE based on stability and other factors.",
+              "category": "treatment"
+            },
+            {
+              "id": "distractor_diagnosis",
+              "label": "What diagnosis is the distractor?",
+              "description": "Learn how to differentiate SCFE from other similar conditions like Perthes disease.",
+              "category": "diagnosis"
+            },
+            {
+              "id": "test_traps",
+              "label": "What traps show up on OITE?",
+              "description": "Identify common pitfalls and traps in SCFE questions on the OITE.",
+              "category": "exam"
+            }
+          ],
+          "tags": [],
+          "detectedMode": "oite",
+          "confidence": 0.95,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "I am assuming you mean OITE-style high-yield points.",
+          "missingInformation": [],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unavailable"
+        },
+        "warnings": [
+          "oite_memory_hook_missing"
+        ],
+        "latencyMs": 5181
+      },
+      "grounded": {
+        "output": {
+          "goal": "Provide high-yield SCFE points and treatment thresholds for OITE preparation.",
+          "selectedFocus": "Focus: General framework",
+          "answer": "- **Direct answer:** Unstable SCFE has the highest risk of avascular necrosis (AVN); treatment urgency and strategy often pivot on stability rather than slip angle alone.\n- **Core framework:** Classify SCFE as stable or unstable; stable SCFE typically managed with in-situ pinning, while unstable may require more urgent intervention.\n- **High-yield distinction:** Recognize obligate external rotation and limited internal rotation as key exam findings; these are more reliable than vague hip pain.\n- **Exam trap:** Klein's line is often memorized, but management decisions usually hinge on stability and atypical features like endocrine disorders.\n- **Management pivot:** Stability assessment is crucial; unstable SCFE requires urgent surgical intervention to minimize complications like AVN.",
+          "priorityPoints": [
+            "Unstable SCFE = high AVN risk; requires urgent intervention.",
+            "Stable vs unstable classification guides treatment approach.",
+            "Obligate external rotation and limited internal rotation are key exam findings.",
+            "Klein's line is less critical than stability for management decisions."
+          ],
+          "knowledgeGaps": [
+            "Understand the difference between stable and unstable SCFE.",
+            "Learn the key physical exam findings for SCFE.",
+            "Review the complications associated with untreated SCFE."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "treatment_algorithm",
+              "label": "What treatment algorithm gets tested?",
+              "description": "Explore the treatment algorithm for SCFE, focusing on stability and intervention timing.",
+              "category": "treatment"
+            },
+            {
+              "id": "test_traps",
+              "label": "What traps show up on OITE?",
+              "description": "Identify common test traps and distractors related to SCFE on the OITE.",
+              "category": "exam"
+            },
+            {
+              "id": "distractor_diagnosis",
+              "label": "What diagnosis is the distractor?",
+              "description": "Learn about diagnoses that are often confused with SCFE.",
+              "category": "diagnosis"
+            }
+          ],
+          "tags": [],
+          "detectedMode": "oite",
+          "confidence": 0.95,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "I am assuming you mean OITE-style high-yield points.",
+          "missingInformation": [],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unknown"
+        },
+        "warnings": [
+          "oite_memory_hook_missing"
+        ],
+        "latencyMs": 5246
+      },
+      "cardCount": 0,
+      "cards": [],
+      "evaluation": {
+        "winner": "tie",
+        "scoresA": {
+          "correctness": 5,
+          "specificity": 4,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 5,
+          "reasons": "Accurately states that unstable SCFE has highest AVN risk and urgency depends on stability; includes relevant exam findings and management principles. Slightly less explicit on typical management of stable SCFE."
+        },
+        "scoresB": {
+          "correctness": 5,
+          "specificity": 5,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 5,
+          "reasons": "Equally accurate and preserves qualifiers; more explicit about stable SCFE management (in-situ pinning) and clarifies treatment strategy differences. Matches A in all other aspects."
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": "oite-garden",
+        "prompt": "Explain the Garden classification and why it changes treatment",
+        "mode": "oite",
+        "level": "pgy2"
+      },
+      "entityAnchors": [
+        "AIN",
+        "Garden Classification"
+      ],
+      "eligibleClaimCount": 0,
+      "baseline": {
+        "output": {
+          "goal": "Explain the Garden classification of femoral neck fractures and its treatment implications.",
+          "selectedFocus": "Focus: Classification systems",
+          "answer": "- **Classification system:** The Garden classification is used for femoral neck fractures, categorizing them based on displacement seen on AP radiographs.\n- **Key grades:**\n  - **Garden I:** Incomplete fracture, valgus impacted.\n  - **Garden II:** Complete fracture, non-displaced.\n  - **Garden III:** Complete fracture, partially displaced.\n  - **Garden IV:** Complete fracture, fully displaced.\n- **Treatment implications:**\n  - **Garden I/II:** Typically treated with internal fixation due to preserved blood supply.\n  - **Garden III/IV:** Often require arthroplasty in older patients due to higher risk of avascular necrosis (AVN) and nonunion.\n- **High-yield distinction:** Displacement (Garden III/IV) increases AVN risk, guiding the decision towards arthroplasty.\n- **Common trap:** Confusing Garden I with II; both are non-displaced but differ in fracture completeness.",
+          "priorityPoints": [
+            "Garden I/II = nondisplaced, often fixed internally.",
+            "Garden III/IV = displaced, higher AVN risk, often treated with arthroplasty.",
+            "Displacement is the key factor in treatment decision.",
+            "Garden classification is based on AP radiograph displacement."
+          ],
+          "knowledgeGaps": [
+            "Differentiate Garden I from II based on fracture completeness.",
+            "Understand why Garden III/IV have higher AVN risk.",
+            "Compare Garden classification with Pauwels classification."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "board_pearls",
+              "label": "What are the board-style pearls?",
+              "description": "The fastest board-relevant overview.",
+              "category": "Board Review"
+            },
+            {
+              "id": "concept_prerequisites",
+              "label": "What must I know first?",
+              "description": "Prerequisite concept framework before memorizing details.",
+              "category": "Board Review"
+            },
+            {
+              "id": "classification",
+              "label": "What classification should I know?",
+              "description": "Classification systems and thresholds.",
+              "category": "Classification Systems"
+            },
+            {
+              "id": "treatment_algorithm",
+              "label": "What treatment algorithm gets tested?",
+              "description": "Testable management sequence.",
+              "category": "Clinical Decision Making"
+            },
+            {
+              "id": "treatment_pivots",
+              "label": "What finding changes treatment?",
+              "description": "Thresholds, classifications, and findings that change the answer.",
+              "category": "Clinical Decision Making"
+            },
+            {
+              "id": "test_traps",
+              "label": "What traps show up on OITE?",
+              "description": "Common wrong-answer traps.",
+              "category": "Board Review"
+            }
+          ],
+          "tags": [],
+          "detectedMode": "oite",
+          "confidence": 0.95,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "I am assuming you mean OITE-style high-yield points.",
+          "missingInformation": [],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unavailable"
+        },
+        "warnings": [
+          "oite_memory_hook_missing",
+          "branch_rubric_coverage_low"
+        ],
+        "latencyMs": 4806
+      },
+      "grounded": {
+        "output": {
+          "goal": "Explain the Garden classification of femoral neck fractures and its treatment implications.",
+          "selectedFocus": "Focus: Classification systems",
+          "answer": "- **Classification system:** The Garden classification is used for femoral neck fractures, categorizing them based on displacement seen on AP radiographs.\n- **Key grades:**\n  - **Garden I:** Incomplete fracture, valgus impacted.\n  - **Garden II:** Complete fracture, non-displaced.\n  - **Garden III:** Complete fracture, partially displaced.\n  - **Garden IV:** Complete fracture, fully displaced.\n- **Treatment implications:**\n  - **Garden I/II:** Typically managed with internal fixation due to stability.\n  - **Garden III/IV:** Often require arthroplasty in older patients due to high risk of avascular necrosis (AVN) and nonunion.\n- **High-yield distinction:** Displacement (III/IV) increases risk of AVN, influencing the decision towards arthroplasty.\n- **Common trap:** Confusing Garden I with II; both are non-displaced but I is impacted, which affects stability and treatment.",
+          "priorityPoints": [
+            "Garden I/II = non-displaced, often fixed internally.",
+            "Garden III/IV = displaced, higher AVN risk, often treated with arthroplasty.",
+            "Displacement is the key factor in treatment decision.",
+            "Garden classification is based on AP radiograph displacement.",
+            "Risk of AVN increases with displacement (III/IV)."
+          ],
+          "knowledgeGaps": [
+            "Differentiate Garden I from II based on impaction.",
+            "Understand why displacement increases AVN risk.",
+            "Review imaging features of femoral neck fractures.",
+            "Compare Garden classification with Pauwels classification."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "board_pearls",
+              "label": "What are the board-style pearls?",
+              "description": "The fastest board-relevant overview.",
+              "category": "Board Review"
+            },
+            {
+              "id": "concept_prerequisites",
+              "label": "What must I know first?",
+              "description": "Prerequisite concept framework before memorizing details.",
+              "category": "Board Review"
+            },
+            {
+              "id": "classification",
+              "label": "What classification should I know?",
+              "description": "Classification systems and thresholds.",
+              "category": "Classification Systems"
+            },
+            {
+              "id": "treatment_algorithm",
+              "label": "What treatment algorithm gets tested?",
+              "description": "Testable management sequence.",
+              "category": "Clinical Decision Making"
+            },
+            {
+              "id": "treatment_pivots",
+              "label": "What finding changes treatment?",
+              "description": "Thresholds, classifications, and findings that change the answer.",
+              "category": "Clinical Decision Making"
+            },
+            {
+              "id": "test_traps",
+              "label": "What traps show up on OITE?",
+              "description": "Common wrong-answer traps.",
+              "category": "Board Review"
+            }
+          ],
+          "tags": [],
+          "detectedMode": "oite",
+          "confidence": 0.95,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "I am assuming you mean OITE-style high-yield points.",
+          "missingInformation": [],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unknown"
+        },
+        "warnings": [
+          "oite_memory_hook_missing",
+          "branch_rubric_coverage_low"
+        ],
+        "latencyMs": 4997
+      },
+      "cardCount": 0,
+      "cards": [],
+      "evaluation": {
+        "winner": "tie",
+        "scoresA": {
+          "correctness": 5,
+          "specificity": 5,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 5,
+          "reasons": "Accurately describes Garden classification grades and treatment implications with correct qualifiers; clearly explains AVN risk and treatment rationale; includes a useful note on common confusion between Garden I and II."
+        },
+        "scoresB": {
+          "correctness": 5,
+          "specificity": 5,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 5,
+          "reasons": "Equally accurate and specific as A; correctly details classification and treatment; adds a slightly different but valid note on Garden I being impacted affecting stability and treatment; overall equally educational."
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": "clinic-acl",
+        "prompt": "What are the indications for ACL reconstruction?",
+        "mode": "clinic",
+        "level": "pgy2"
+      },
+      "entityAnchors": [],
+      "eligibleClaimCount": 0,
+      "baseline": {
+        "output": {
+          "goal": "Identify the indications for ACL reconstruction.",
+          "selectedFocus": "General framework",
+          "answer": "- Instability during activities of daily living or sports is a key indication.\n- Associated meniscal injuries can influence surgical decisions.\n- Age and activity level are critical factors in determining the need for reconstruction.",
+          "priorityPoints": [
+            "Instability during activities of daily living or sports is a key indication.",
+            "Associated meniscal injuries can influence surgical decisions.",
+            "Age and activity level are critical factors in determining the need for reconstruction.",
+            "Conservative management failure after 3-6 months may prompt surgical consideration."
+          ],
+          "knowledgeGaps": [
+            "What are the specific criteria for surgical candidacy based on imaging findings?",
+            "How do different graft choices impact outcomes in ACL reconstruction?",
+            "What are the long-term outcomes of ACL reconstruction versus conservative management?"
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "graft_choice_tradeoffs",
+              "label": "BTB vs Quad vs Hamstring Graft",
+              "description": "Explore the pros and cons of different graft options for ACL reconstruction.",
+              "category": "surgical decision-making"
+            },
+            {
+              "id": "meniscus_root_plan_changers",
+              "label": "Meniscus/Root Lesions that Change the Plan",
+              "description": "Understand how meniscal injuries can alter surgical planning for ACL reconstruction.",
+              "category": "surgical decision-making"
+            }
+          ],
+          "tags": [],
+          "detectedMode": "clinic",
+          "confidence": 0.85,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "",
+          "missingInformation": [],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unavailable"
+        },
+        "warnings": [
+          "answer_short_for_depth",
+          "facet_clinic_differential_missing",
+          "branch_rubric_coverage_low"
+        ],
+        "latencyMs": 4525
+      },
+      "grounded": {
+        "output": {
+          "goal": "Identify the indications for ACL reconstruction.",
+          "selectedFocus": "General framework",
+          "answer": "- History of knee instability or giving way episodes.\n- Physical exam findings: Lachman test and pivot shift test.\n- Imaging: MRI to confirm ACL tear and assess for associated injuries.",
+          "priorityPoints": [
+            "History of knee instability or giving way episodes.",
+            "Physical exam findings: Lachman test and pivot shift test.",
+            "Imaging: MRI to confirm ACL tear and assess for associated injuries.",
+            "First-line treatment: Conservative management may be appropriate for low-demand patients."
+          ],
+          "knowledgeGaps": [
+            "Understand the role of physical therapy in preoperative management.",
+            "Learn about the different graft options and their implications.",
+            "Explore the long-term outcomes of ACL reconstruction versus conservative management."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "graft_choice_tradeoffs",
+              "label": "BTB vs quad vs hamstring graft",
+              "description": "Explore the advantages and disadvantages of different graft choices for ACL reconstruction.",
+              "category": "surgical decision-making"
+            },
+            {
+              "id": "meniscus_root_plan_changers",
+              "label": "Meniscus/root lesions that change the plan",
+              "description": "Understand how meniscal injuries can affect surgical planning for ACL reconstruction.",
+              "category": "surgical decision-making"
+            }
+          ],
+          "tags": [],
+          "detectedMode": "clinic",
+          "confidence": 0.85,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "",
+          "missingInformation": [],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unknown"
+        },
+        "warnings": [
+          "answer_short_for_depth",
+          "facet_clinic_differential_missing",
+          "branch_rubric_coverage_low"
+        ],
+        "latencyMs": 4010
+      },
+      "cardCount": 0,
+      "cards": [],
+      "evaluation": {
+        "winner": "A",
+        "scoresA": {
+          "correctness": 5,
+          "specificity": 4,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 5,
+          "reasons": "Accurately identifies key clinical indications such as instability during activities, considers meniscal injuries and patient factors like age and activity level, which are important in decision-making."
+        },
+        "scoresB": {
+          "correctness": 4,
+          "specificity": 4,
+          "qualifierPreservation": 4,
+          "educationalUsefulness": 4,
+          "reasons": "Lists relevant clinical history and exam findings and imaging, but these are more diagnostic steps rather than direct indications for reconstruction."
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": "or-ctr",
+        "prompt": "How do I confirm carpal tunnel release is complete?",
+        "mode": "or_prep",
+        "level": "pgy1"
+      },
+      "entityAnchors": [
+        "Carpal Tunnel"
+      ],
+      "eligibleClaimCount": 0,
+      "baseline": {
+        "output": {
+          "goal": "Understand how to confirm the completeness of a carpal tunnel release.",
+          "selectedFocus": "Focus: General framework",
+          "answer": "- **Objective:** Ensure full decompression of the median nerve by releasing the transverse carpal ligament.\n- **Exposure:** Identify the transverse carpal ligament under direct visualization after incising the skin and subcutaneous tissue.\n- **Anatomy at Risk:** Be cautious of the median nerve and its branches, especially the recurrent motor branch, during the release.\n- **Key Decision/Check:** Palpate the edges of the released ligament to ensure no residual tight bands remain. You should be able to see and feel the median nerve freely.\n- **Pitfall/Bailout:** Incomplete release can lead to persistent symptoms. If unsure, extend the incision proximally or distally to ensure full release.\n- **Attending Expectation:** Be prepared to explain how you confirmed the release and what you did to protect the nerve during the procedure.",
+          "priorityPoints": [
+            "Transverse carpal ligament: ensure complete release for decompression.",
+            "Median nerve: protect and visualize during the procedure.",
+            "Recurrent motor branch: avoid injury during ligament release.",
+            "Palpation: confirm no residual tight bands remain.",
+            "Incision extension: consider if release is incomplete."
+          ],
+          "knowledgeGaps": [
+            "Review the anatomy of the carpal tunnel and its contents.",
+            "Understand the course of the median nerve and its branches.",
+            "Learn techniques for extending the incision safely if needed."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "landmarks",
+              "label": "What landmarks should I identify?",
+              "description": "Learn about the key landmarks for carpal tunnel release.",
+              "category": "landmarks"
+            },
+            {
+              "id": "structures_at_risk",
+              "label": "What structure is most at risk?",
+              "description": "Understand the structures at risk during carpal tunnel release.",
+              "category": "anatomy"
+            },
+            {
+              "id": "common_pitfalls",
+              "label": "What pitfalls cause failure?",
+              "description": "Identify common pitfalls in carpal tunnel release.",
+              "category": "complications"
+            }
+          ],
+          "tags": [
+            "mode:or_prep",
+            "procedure:carpal_tunnel_release",
+            "concept:landmarks",
+            "concept:surgical_steps",
+            "anatomy:median_nerve"
+          ],
+          "detectedMode": "or_prep",
+          "confidence": 0.9,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "",
+          "missingInformation": [],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unavailable"
+        },
+        "warnings": [],
+        "latencyMs": 6375
+      },
+      "grounded": {
+        "output": {
+          "goal": "Understand how to confirm the completeness of a carpal tunnel release during surgery.",
+          "selectedFocus": "Focus: General framework",
+          "answer": "- **Objective:** Ensure complete decompression of the median nerve by releasing the transverse carpal ligament.\n- **Exposure:** Use a standard longitudinal incision over the carpal tunnel, typically starting at the wrist crease and extending distally.\n- **Anatomy at Risk:** Be cautious of the median nerve and its palmar cutaneous branch, which are at risk during the release.\n- **Key Decision/Check:** Palpate the edges of the released transverse carpal ligament to ensure no residual tight bands remain. You should be able to see and feel the median nerve freely.\n- **Pitfall/Bailout:** Incomplete release can lead to persistent symptoms. If unsure, extend the incision slightly to improve visualization and ensure full release.\n- **Attending Expectation:** Be prepared to explain how you confirmed the release was complete and how you protected the nerve during the procedure.",
+          "priorityPoints": [
+            "Transverse carpal ligament: ensure full release to decompress the median nerve.",
+            "Median nerve: protect and visualize to confirm decompression.",
+            "Palmar cutaneous branch: avoid injury during incision and release.",
+            "Palpation check: feel for any remaining tight bands after release.",
+            "Incision extension: consider if visualization is inadequate."
+          ],
+          "knowledgeGaps": [
+            "Review the anatomy of the carpal tunnel and median nerve.",
+            "Understand the implications of incomplete release.",
+            "Learn techniques for protecting the median nerve during surgery."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "landmarks",
+              "label": "What landmarks should I identify?",
+              "description": "Learn the key surface landmarks for carpal tunnel release.",
+              "category": "landmarks"
+            },
+            {
+              "id": "incision_interval",
+              "label": "Where is the safe interval?",
+              "description": "Understand the safe surgical interval for carpal tunnel release.",
+              "category": "incision_interval"
+            },
+            {
+              "id": "structures_at_risk",
+              "label": "What structure is most at risk?",
+              "description": "Identify the structures at risk during carpal tunnel release.",
+              "category": "structures_at_risk"
+            },
+            {
+              "id": "release_endpoint",
+              "label": "How do I know the release is complete?",
+              "description": "Learn how to confirm the completeness of the carpal tunnel release.",
+              "category": "release_endpoint"
+            },
+            {
+              "id": "common_pitfalls",
+              "label": "What pitfalls cause failure?",
+              "description": "Understand common pitfalls in carpal tunnel release.",
+              "category": "common_pitfalls"
+            }
+          ],
+          "tags": [
+            "mode:or_prep",
+            "procedure:carpal_tunnel_release",
+            "concept:landmarks",
+            "concept:surgical_steps",
+            "anatomy:median_nerve",
+            "anatomy:transverse_carpal_ligament"
+          ],
+          "detectedMode": "or_prep",
+          "confidence": 0.9,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "",
+          "missingInformation": [],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unknown"
+        },
+        "warnings": [],
+        "latencyMs": 6013
+      },
+      "cardCount": 0,
+      "cards": [],
+      "evaluation": {
+        "winner": "tie",
+        "scoresA": {
+          "correctness": 5,
+          "specificity": 4,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 4,
+          "reasons": "Accurately describes key steps to confirm complete release, including palpation and visualization of the median nerve. Mentions anatomy at risk and potential pitfalls. Slightly less specific about incision details."
+        },
+        "scoresB": {
+          "correctness": 5,
+          "specificity": 4,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 4,
+          "reasons": "Also accurately describes confirmation by palpation and visualization, mentions anatomy at risk with slightly different branch noted, and incision details. Similar educational value and completeness."
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": "consult-ankle",
+        "prompt": "Ankle fracture consult. What changes urgency and management?",
+        "mode": "consult",
+        "level": "pgy1"
+      },
+      "entityAnchors": [
+        "Ankle Fracture"
+      ],
+      "eligibleClaimCount": 0,
+      "baseline": {
+        "output": {
+          "goal": "Understand what factors change the urgency and management of an ankle fracture consult.",
+          "selectedFocus": "General framework",
+          "answer": "- **Urgency factors:** Open fractures, neurovascular compromise, dislocation, and skin tenting or compromise are emergent and require immediate attention.\n- **Management changes:** Talar shift, syndesmotic injury, medial clear-space widening, and inability to maintain reduction can change management from non-operative to operative.\n- **Immediate priorities:** Document neurovascular status, open vs closed fracture, reduction status, and obtain appropriate imaging.\n- **Presentation framework:** Include age, mechanism, open/closed status, neurovascular exam, reduction/splint status, and imaging findings.\n- **Attending questions:** Expect questions on fracture classification, stability, and any signs of soft tissue compromise.",
+          "priorityPoints": [
+            "Assess for open fracture or neurovascular compromise immediately.",
+            "Determine if the fracture is stable or unstable based on imaging.",
+            "Document reduction status and splint appropriately if unstable."
+          ],
+          "knowledgeGaps": [
+            "Learn the Weber and Lauge-Hansen classification systems.",
+            "Understand the indications for operative vs non-operative management.",
+            "Review the steps for a thorough neurovascular exam."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [
+            "Is the fracture open or closed?",
+            "What are the imaging findings?",
+            "What is the neurovascular status?",
+            "Help me present this consult.",
+            "What are the operative indications?",
+            "What classification should I know?",
+            "What findings would change management?"
+          ],
+          "nextLearningBranches": [
+            {
+              "id": "missing_information",
+              "label": "What information am I missing?",
+              "description": "What data you need before calling up.",
+              "category": "Clinical Decision Making"
+            },
+            {
+              "id": "immediate_priorities",
+              "label": "What should I do first?",
+              "description": "Safety checks, red flags, and temporizing actions.",
+              "category": "Clinical Decision Making"
+            },
+            {
+              "id": "presentation_help",
+              "label": "How should I present this consult?",
+              "description": "How to present the consult clearly.",
+              "category": "Pimp Questions"
+            },
+            {
+              "id": "imaging_labs",
+              "label": "What imaging or labs matter?",
+              "description": "Views, labs, and diagnostic pitfalls.",
+              "category": "Classification Systems"
+            },
+            {
+              "id": "differential",
+              "label": "What else could this be?",
+              "description": "What else this could be and why it matters.",
+              "category": "Clinical Decision Making"
+            },
+            {
+              "id": "operative_indications",
+              "label": "What makes this operative?",
+              "description": "What pushes this toward surgery.",
+              "category": "Indications"
+            }
+          ],
+          "tags": [
+            "consult:fracture",
+            "concept:classification",
+            "concept:operative_indications",
+            "concept:presentation",
+            "red_flag:compartment_syndrome"
+          ],
+          "detectedMode": "consult",
+          "confidence": 0.9,
+          "needsClarification": true,
+          "clarifyingQuestions": [
+            "Is the fracture open or closed?",
+            "What are the imaging findings?",
+            "What is the neurovascular status?"
+          ],
+          "assumedContext": "",
+          "consultConfidence": "low",
+          "missingInformation": [
+            "age",
+            "mechanism",
+            "open/closed status",
+            "neurovascular exam",
+            "imaging findings"
+          ],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unavailable"
+        },
+        "warnings": [
+          "ask_clarification_answer_too_long"
+        ],
+        "latencyMs": 4571
+      },
+      "grounded": {
+        "output": {
+          "goal": "Understand what factors change the urgency and management of an ankle fracture consult.",
+          "selectedFocus": "General framework",
+          "answer": "- **Urgency factors:** Open fractures, neurovascular compromise, dislocation, and severe soft tissue injury require emergent attention.\n- **Assessment:** Determine if the fracture is open or closed, check for neurovascular status, and assess for dislocation or talar shift.\n- **Management priorities:** Immediate reduction and splinting if dislocated, especially if neurovascular compromise is present.\n- **Imaging:** Obtain AP, lateral, and mortise views to assess fracture pattern and stability.\n- **Attending questions:** Be prepared to discuss the mechanism of injury, fracture classification, and any signs of syndesmotic injury.",
+          "priorityPoints": [
+            "Assess for open fracture or dislocation immediately.",
+            "Document neurovascular status before and after any intervention.",
+            "Obtain appropriate imaging to classify the fracture and assess stability."
+          ],
+          "knowledgeGaps": [
+            "Learn the Weber and Lauge-Hansen classification systems.",
+            "Understand the indications for operative vs. non-operative management.",
+            "Review the steps for safe reduction and splinting of ankle fractures."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [
+            "Is the fracture open or closed?",
+            "What is the neurovascular status?",
+            "Do you have imaging findings available?",
+            "Help me present this consult.",
+            "What are the operative indications?",
+            "What classification should I know?",
+            "What findings would change management?"
+          ],
+          "nextLearningBranches": [
+            {
+              "id": "missing_information",
+              "label": "What information am I missing?",
+              "description": "What data you need before calling up.",
+              "category": "Clinical Decision Making"
+            },
+            {
+              "id": "immediate_priorities",
+              "label": "What should I do first?",
+              "description": "Safety checks, red flags, and temporizing actions.",
+              "category": "Clinical Decision Making"
+            },
+            {
+              "id": "presentation_help",
+              "label": "How should I present this consult?",
+              "description": "How to present the consult clearly.",
+              "category": "Pimp Questions"
+            },
+            {
+              "id": "imaging_labs",
+              "label": "What imaging or labs matter?",
+              "description": "Views, labs, and diagnostic pitfalls.",
+              "category": "Classification Systems"
+            },
+            {
+              "id": "differential",
+              "label": "What else could this be?",
+              "description": "What else this could be and why it matters.",
+              "category": "Clinical Decision Making"
+            },
+            {
+              "id": "operative_indications",
+              "label": "What makes this operative?",
+              "description": "What pushes this toward surgery.",
+              "category": "Indications"
+            }
+          ],
+          "tags": [
+            "consult:fracture",
+            "concept:classification",
+            "concept:operative_indications",
+            "red_flag:compartment_syndrome"
+          ],
+          "detectedMode": "consult",
+          "confidence": 0.9,
+          "needsClarification": true,
+          "clarifyingQuestions": [
+            "Is the fracture open or closed?",
+            "What is the neurovascular status?",
+            "Do you have imaging findings available?"
+          ],
+          "assumedContext": "",
+          "consultConfidence": "low",
+          "missingInformation": [
+            "age",
+            "mechanism",
+            "open/closed status",
+            "neurovascular exam",
+            "imaging findings"
+          ],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unknown"
+        },
+        "warnings": [
+          "ask_clarification_answer_too_long"
+        ],
+        "latencyMs": 4085
+      },
+      "cardCount": 0,
+      "cards": [],
+      "evaluation": {
+        "winner": "A",
+        "scoresA": {
+          "correctness": 5,
+          "specificity": 5,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 5,
+          "reasons": "A accurately identifies key urgency factors including open fractures, neurovascular compromise, dislocation, and skin tenting. It clearly links specific findings (talar shift, syndesmotic injury, medial clear-space widening) to management changes. It provides a structured approach to presentation and attending questions, enhancing educational value."
+        },
+        "scoresB": {
+          "correctness": 4,
+          "specificity": 4,
+          "qualifierPreservation": 4,
+          "educationalUsefulness": 4,
+          "reasons": "B correctly lists urgency factors but uses less precise terms (e.g., 'severe soft tissue injury' vs 'skin tenting or compromise'). It mentions important management steps like immediate reduction but lacks detail on specific radiographic findings that alter management. The attending questions are less comprehensive."
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": "or-distal-radius",
+        "prompt": "Distal radius ORIF tomorrow. Key exposure, anatomy, and decisions?",
+        "mode": "or_prep",
+        "level": "pgy2"
+      },
+      "entityAnchors": [
+        "Distal Radius",
+        "Distal Radius ORIF",
+        "ORIF",
+        "ORIF",
+        "Radius"
+      ],
+      "eligibleClaimCount": 6,
+      "baseline": {
+        "output": {
+          "goal": "Prepare for distal radius ORIF by understanding key exposure, anatomy at risk, and intraoperative decisions.",
+          "selectedFocus": "Focus: General framework",
+          "answer": "- **Objective:** Restore length, radial inclination, volar tilt, and articular congruity without losing reduction during plate placement.\n- **Exposure:** Use the volar FCR approach. Incise along the radial border of the flexor carpi radialis (FCR) tendon, retract it ulnarly, and protect the radial artery. Elevate the pronator quadratus to expose the distal radius.\n- **Anatomy at risk:** Be cautious of the median nerve in the carpal tunnel, the palmar cutaneous branch of the median nerve, the radial artery, and flexor tendons if the plate is placed too distally.\n- **Key decisions/checks:** Confirm fracture pattern and reduction. Use provisional fixation before plate application. Check lateral and tilt views for dorsal screw penetration.\n- **Pitfall/Bailout:** Avoid accepting malreduction or long distal screws. If the volar plate is fighting the reduction, re-reduce before locking distally.\n- **Attending relevance:** Be prepared to discuss why the FCR interval was chosen, the significance of the watershed line, and strategies to avoid flexor tendon irritation.",
+          "priorityPoints": [
+            "Volar FCR approach: Stay radial to FCR, protect radial artery.",
+            "Median nerve: At risk in carpal tunnel, avoid excessive retraction.",
+            "Provisional fixation: Essential before plate application to maintain reduction.",
+            "Dorsal screw penetration: Check lateral views carefully.",
+            "Watershed line: Critical for plate positioning to avoid tendon irritation."
+          ],
+          "knowledgeGaps": [
+            "Understand the watershed line and its importance in plate positioning.",
+            "Review the anatomy of the median nerve and its branches.",
+            "Learn the steps for checking screw length intraoperatively."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "key_landmarks",
+              "label": "What landmarks should I find first?",
+              "description": "Positioning, incision, portals, and approach cues.",
+              "category": "Surgical Approach"
+            },
+            {
+              "id": "operative_steps",
+              "label": "What are the key operative steps?",
+              "description": "Stepwise flow and decision points.",
+              "category": "OR Technique"
+            },
+            {
+              "id": "anatomy_at_risk",
+              "label": "What anatomy is most at risk?",
+              "description": "Structures to protect and where they are encountered.",
+              "category": "Anatomy"
+            },
+            {
+              "id": "implant_selection",
+              "label": "What implants should I know?",
+              "description": "Implant choices, reduction goals, and backup plans.",
+              "category": "Implant Selection"
+            },
+            {
+              "id": "complications_tested",
+              "label": "What complications get tested most?",
+              "description": "Pitfalls and how to avoid them.",
+              "category": "Complications"
+            },
+            {
+              "id": "attending_pimp_questions",
+              "label": "What will the attending ask?",
+              "description": "What to ask before incision and what they may ask you.",
+              "category": "Pimp Questions"
+            }
+          ],
+          "tags": [
+            "mode:or_prep",
+            "procedure:distal_radius_orif",
+            "concept:exposure",
+            "concept:anatomy_at_risk",
+            "concept:intraoperative_decision"
+          ],
+          "detectedMode": "or_prep",
+          "confidence": 0.95,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "",
+          "missingInformation": [],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unavailable"
+        },
+        "warnings": [
+          "branch_rubric_coverage_low"
+        ],
+        "latencyMs": 4450
+      },
+      "grounded": {
+        "output": {
+          "goal": "Prepare for distal radius ORIF by understanding key exposure, anatomy at risk, and intraoperative decisions.",
+          "selectedFocus": "Focus: General framework",
+          "answer": "- **Objective:** Restore length, radial inclination, volar tilt, and articular congruity without losing reduction during plate placement.\n- **Exposure:** Use the volar FCR approach; stay radial to the Flexor Carpi Radialis (FCR) tendon, protect the radial artery, and elevate the pronator quadratus to expose the distal radius.\n- **Anatomy at risk:** Be cautious of the median nerve in the carpal tunnel, the palmar cutaneous branch, the radial artery, and flexor tendons, especially if the plate is placed too distally.\n- **Key decisions/checks:** Confirm fracture pattern and reduction before plate fixation. Use fluoroscopy to check for dorsal screw penetration and ensure proper alignment.\n- **Pitfall/Bailout:** Avoid accepting malreduction or long distal screws. If the volar plate is not fitting well, re-reduce the fracture before locking the distal screws.\n- **Attending relevance:** Be prepared to discuss why the FCR interval was chosen, the significance of the watershed line, and strategies to avoid flexor tendon irritation.",
+          "priorityPoints": [
+            "Volar FCR approach: Stay radial to FCR to protect the radial artery.",
+            "Median nerve: At risk in the carpal tunnel; avoid excessive retraction.",
+            "Watershed line: Critical for plate positioning to avoid tendon irritation.",
+            "Fluoroscopy checks: Confirm no dorsal screw penetration.",
+            "Reduction maintenance: Ensure reduction is stable before locking screws."
+          ],
+          "knowledgeGaps": [
+            "Understand the volar FCR approach and its anatomical landmarks.",
+            "Learn how to identify and protect the median nerve during exposure.",
+            "Review the importance of the watershed line in plate positioning."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [
+            "What are the landmarks for the volar FCR approach?",
+            "How do you protect the median nerve during this procedure?",
+            "What are the signs of dorsal screw penetration on fluoroscopy?",
+            "How do you ensure proper reduction before plate fixation?",
+            "What is the significance of the watershed line in distal radius ORIF?"
+          ],
+          "nextLearningBranches": [
+            {
+              "id": "key_landmarks",
+              "label": "What landmarks should I find first?",
+              "description": "Positioning, incision, portals, and approach cues.",
+              "category": "Surgical Approach"
+            },
+            {
+              "id": "operative_steps",
+              "label": "What are the key operative steps?",
+              "description": "Stepwise flow and decision points.",
+              "category": "OR Technique"
+            },
+            {
+              "id": "anatomy_at_risk",
+              "label": "What anatomy is most at risk?",
+              "description": "Structures to protect and where they are encountered.",
+              "category": "Anatomy"
+            },
+            {
+              "id": "implant_selection",
+              "label": "What implants should I know?",
+              "description": "Implant choices, reduction goals, and backup plans.",
+              "category": "Implant Selection"
+            },
+            {
+              "id": "complications_tested",
+              "label": "What complications get tested most?",
+              "description": "Pitfalls and how to avoid them.",
+              "category": "Complications"
+            },
+            {
+              "id": "attending_pimp_questions",
+              "label": "What will the attending ask?",
+              "description": "What to ask before incision and what they may ask you.",
+              "category": "Pimp Questions"
+            }
+          ],
+          "tags": [
+            "mode:or_prep",
+            "procedure:distal_radius_orif",
+            "concept:exposure",
+            "concept:anatomy_at_risk",
+            "concept:intraoperative_decisions"
+          ],
+          "detectedMode": "or_prep",
+          "confidence": 0.95,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "",
+          "missingInformation": [],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "full"
+        },
+        "warnings": [
+          "branch_rubric_coverage_low"
+        ],
+        "latencyMs": 5822
+      },
+      "cardCount": 0,
+      "cards": [],
+      "evaluation": {
+        "winner": "tie",
+        "scoresA": {
+          "correctness": 5,
+          "specificity": 5,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 5,
+          "reasons": "Accurately describes key exposure, anatomy, and decisions with correct anatomical details and surgical steps. Includes relevant pitfalls and attending discussion points."
+        },
+        "scoresB": {
+          "correctness": 5,
+          "specificity": 5,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 5,
+          "reasons": "Equally accurate and specific as A, with clear description of exposure, anatomy at risk, and key decisions. Includes fluoroscopy mention which is appropriate and consistent with A's content."
+        }
+      }
+    }
+  ]
+}

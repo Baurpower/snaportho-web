@@ -21,5 +21,6 @@ export async function GET(request: Request) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({
     commands: (data ?? []).map((row) => toLaunchRequest(row)),
+    nextPollAfterSeconds: data?.length ? 4 : 1800,
   });
 }

@@ -18,7 +18,7 @@ const startLinkSchema = z.object({
 function serverError(
   message: string,
   code: string,
-  status = 500
+  status = 500,
 ): NextResponse {
   return NextResponse.json({ error: message, code }, { status });
 }
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
       });
       return serverError(
         "SnapOrtho linking failed on the server. Check production environment configuration.",
-        "ADMIN_CLIENT_INIT_FAILED"
+        "ADMIN_CLIENT_INIT_FAILED",
       );
     }
 
@@ -57,7 +57,7 @@ export async function POST(request: Request) {
 
       if (!existing.success) {
         console.error(
-          "[brobot-anki/auth/start-link] link code lookup failed while generating code"
+          "[brobot-anki/auth/start-link] link code lookup failed while generating code",
         );
         return existing.response;
       }
@@ -70,11 +70,11 @@ export async function POST(request: Request) {
 
     if (!linkCode) {
       console.error(
-        "[brobot-anki/auth/start-link] unable to generate unique link code"
+        "[brobot-anki/auth/start-link] unable to generate unique link code",
       );
       return serverError(
         "Unable to generate a unique link code. Please try again.",
-        "LINK_CODE_GENERATION_FAILED"
+        "LINK_CODE_GENERATION_FAILED",
       );
     }
 
@@ -96,7 +96,7 @@ export async function POST(request: Request) {
       });
       return serverError(
         "SnapOrtho linking failed on the server. Check production environment/database logs.",
-        "DEVICE_LINK_INSERT_FAILED"
+        "DEVICE_LINK_INSERT_FAILED",
       );
     }
 
@@ -109,12 +109,15 @@ export async function POST(request: Request) {
     try {
       baseUrl = resolveBrowserAccessibleBaseUrl(request);
     } catch (error) {
-      console.error("[brobot-anki/auth/start-link] base URL resolution failed", {
-        error: error instanceof Error ? error.message : "Unknown error",
-      });
+      console.error(
+        "[brobot-anki/auth/start-link] base URL resolution failed",
+        {
+          error: error instanceof Error ? error.message : "Unknown error",
+        },
+      );
       return serverError(
         "SnapOrtho linking failed on the server. Browser approval URL could not be created.",
-        "APPROVAL_URL_RESOLUTION_FAILED"
+        "APPROVAL_URL_RESOLUTION_FAILED",
       );
     }
 
@@ -123,8 +126,8 @@ export async function POST(request: Request) {
     });
 
     const approvalUrl = new URL(
-      `/brobot-decks/link?code=${encodeURIComponent(linkCode)}`,
-      `${baseUrl}/`
+      `/anki/link?code=${encodeURIComponent(linkCode)}`,
+      `${baseUrl}/`,
     ).toString();
 
     return NextResponse.json(
@@ -133,7 +136,7 @@ export async function POST(request: Request) {
         approvalUrl,
         expiresAt,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     const message =
@@ -145,7 +148,7 @@ export async function POST(request: Request) {
 
     return serverError(
       "SnapOrtho linking failed on the server. Check production logs.",
-      "START_LINK_UNEXPECTED_ERROR"
+      "START_LINK_UNEXPECTED_ERROR",
     );
   }
 }

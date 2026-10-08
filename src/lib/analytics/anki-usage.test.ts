@@ -32,6 +32,10 @@ const summary = summarizeAnkiUsage({
     { user_id: 'user-2', last_used_at: '2026-08-01T12:00:00.000Z', revoked_at: null },
     { user_id: 'user-3', last_used_at: '2026-09-12T12:00:00.000Z', revoked_at: '2026-09-12T13:00:00.000Z' },
   ],
+  addonDevices: [
+    { addon_version: '1.0.6', last_seen_at: '2026-09-12T12:00:00.000Z', is_active: true },
+    { addon_version: '1.0.7', last_seen_at: '2026-09-12T12:00:00.000Z', is_active: true },
+  ],
   events: [
     {
       event_name: 'anki_addon_first_downloaded',
@@ -103,6 +107,8 @@ assert.equal(summary.activationRate, 1);
 assert.equal(summary.linkedDevices, 2);
 assert.equal(summary.activeUsers1d, 1);
 assert.equal(summary.promptKindCounts.attending, 1);
+assert.equal(summary.activeLegacyDevices, 1);
+assert.equal(summary.deviceVersionMix.length, 2);
 assert.equal(summary.versionMix[0]?.version, '1.0.4');
 assert.equal(summary.setupFailures[0]?.code, 'download_unavailable');
 assert.equal(JSON.stringify(summary).includes('secret'), false);

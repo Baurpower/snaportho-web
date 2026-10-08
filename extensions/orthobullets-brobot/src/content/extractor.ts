@@ -1,6 +1,7 @@
 import { SELECTOR_SET_VERSION, SELECTORS } from './selectors.js';
 import { classifyPage } from '../shared/page-classification.js';
-import { attachQuestionReviewSignals, firstVisibleText, isElementVisible } from '../shared/question-review-state.js';
+import { attachQuestionReviewSignals, firstVisibleText, isElementVisible, isSelectAnswerPlaceholderText } from '../shared/question-review-state.js';
+import { classifyReviewReadiness, detectAuthFailureKind } from '../shared/review-readiness.js';
 import { buildQuestionSourceIdentity } from '../shared/question-source-identity.js';
 import { extractHimalayaProviderContext, detectHimalayaProvider } from '../providers/himalaya/himalaya-provider.js';
 export { extractHimalayaPageContext, extractHimalayaQuestionSnapshot } from '../providers/himalaya/himalaya-extractor.js';
@@ -16,7 +17,7 @@ import type {
   TopicSection,
 } from '../shared/types.js';
 
-export const EXTRACTOR_VERSION = '2026-07-19-rock-structured-long-page-v3';
+export const EXTRACTOR_VERSION = '2026-10-08-review-readiness-v1';
 export { SELECTOR_SET_VERSION };
 
 // This is an abuse/memory ceiling, not a model-request limit. The backend
@@ -616,7 +617,11 @@ export function extractOrthobulletsPageContext(input: {
     .filter((value) => (value.match(/[•|;]/g) ?? []).length < 2)
     .filter((value) => (value.match(/\b(?:flap|fixation|arthroplasty|reconstruction|treatment)\b/gi) ?? []).length < 3);
   const stem = firstText(input.document, SELECTORS.stem, 'stem', matchedSelectors);
-  const explanationText = firstVisibleText(input.document, SELECTORS.explanation);
+  const rawExplanationText = firstVisibleText(input.document, SELECTORS.explanation);
+  // "Select Answer to see Preferred Response" occupies the explanation node
+  // before the review is revealed. It is a prompt, not teaching text.
+  const explanationText =
+    rawExplanationText && !isSelectAnswerPlaceholderText(rawExplanationText) ? rawExplanationText : undefined;
   if (explanationText) {
     for (const selector of SELECTORS.explanation) {
       const nodes = Array.from(input.document.querySelectorAll(selector));
@@ -703,10 +708,22 @@ export function extractOrthobulletsPageContext(input: {
     },
   };
 
-  return attachQuestionReviewSignals(input.document, {
+  const withSignals = attachQuestionReviewSignals(input.document, {
     ...draftContext,
     classification: classifyPage(draftContext),
   });
+  const reviewDiagnostics = classifyReviewReadiness(withSignals, {
+    authFailure: detectAuthFailureKind(input.document),
+  });
+  const reviewWarnings = [...withSignals.extractionWarnings];
+  if (reviewDiagnostics.state === 'not_authenticated') reviewWarnings.push('orthobullets_login_required');
+  if (reviewDiagnostics.state === 'answer_reveal_required') reviewWarnings.push('orthobullets_review_not_revealed');
+  return {
+    ...withSignals,
+    extractionWarnings: reviewWarnings,
+    reviewState: reviewDiagnostics.state,
+    reviewDiagnostics,
+  };
 }
 
 const ROCK_SELECTORS = {

@@ -4,9 +4,10 @@ import path from "node:path";
 import { NextResponse } from "next/server";
 
 import { recordAnkiProductEvent } from "@/lib/analytics/anki-usage";
+import { SNAPORTHO_ADDON_LATEST_VERSION } from "@/lib/anki/addon-release";
 import { createClient } from "@/utils/supabase/server";
 
-const ADDON_VERSION = "1.0.6";
+const ADDON_VERSION = SNAPORTHO_ADDON_LATEST_VERSION;
 const ADDON_FILENAME = `snaportho-${ADDON_VERSION}.ankiaddon`;
 
 export async function GET(request: Request) {

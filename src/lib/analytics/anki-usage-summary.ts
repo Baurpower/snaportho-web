@@ -1,4 +1,6 @@
 import type { ProductEventName } from './product-events.ts';
+import { addonVersionAtLeast } from '@/lib/education/deck-addon-version';
+import { SNAPORTHO_ADDON_MINIMUM_VERSION } from '@/lib/anki/addon-release';
 
 export const ANKI_ATTENDING_PROMPT = 'What would an attending ask related to this?';
 export const ANKI_OITE_PROMPT = 'What is a common OITE board trap or question?';
@@ -21,6 +23,12 @@ export type AnkiDeviceTokenRow = {
   revoked_at: string | null;
 };
 
+export type AnkiAddonDeviceRow = {
+  addon_version: string;
+  last_seen_at: string;
+  is_active: boolean;
+};
+
 export type AnkiUsageSummary = {
   generatedAt: string;
   windowDays: number;
@@ -39,6 +47,8 @@ export type AnkiUsageSummary = {
   activeUsers30d: number;
   promptKindCounts: Record<AnkiBroBotPromptKind, number>;
   versionMix: Array<{ version: string; people: number }>;
+  deviceVersionMix: Array<{ version: string; devices: number }>;
+  activeLegacyDevices: number;
   setupFailures: Array<{ code: string; count: number }>;
   daily: Array<{
     day: string;
@@ -89,6 +99,7 @@ function uniqueUsers(
 export function summarizeAnkiUsage(input: {
   events: AnkiProductEventRow[];
   tokens: AnkiDeviceTokenRow[];
+  addonDevices?: AnkiAddonDeviceRow[];
   allTimeDownloaders: number;
   windowDays?: number;
   now?: Date;
@@ -154,6 +165,13 @@ export function summarizeAnkiUsage(input: {
   const versionCounts = new Map<string, number>();
   for (const { version } of latestVersion.values()) {
     versionCounts.set(version, (versionCounts.get(version) ?? 0) + 1);
+  }
+  const deviceVersionCounts = new Map<string, number>();
+  let activeLegacyDevices = 0;
+  for (const device of input.addonDevices ?? []) {
+    if (!device.is_active || Date.parse(device.last_seen_at) < now.getTime() - 30 * dayMs) continue;
+    deviceVersionCounts.set(device.addon_version, (deviceVersionCounts.get(device.addon_version) ?? 0) + 1);
+    if (!addonVersionAtLeast(device.addon_version, SNAPORTHO_ADDON_MINIMUM_VERSION)) activeLegacyDevices += 1;
   }
 
   const failureCounts = new Map<string, number>();
@@ -232,6 +250,10 @@ export function summarizeAnkiUsage(input: {
     versionMix: [...versionCounts.entries()]
       .map(([version, people]) => ({ version, people }))
       .sort((a, b) => b.people - a.people || a.version.localeCompare(b.version)),
+    deviceVersionMix: [...deviceVersionCounts.entries()]
+      .map(([version, devices]) => ({ version, devices }))
+      .sort((a, b) => b.devices - a.devices || a.version.localeCompare(b.version)),
+    activeLegacyDevices,
     setupFailures: [...failureCounts.entries()]
       .map(([code, count]) => ({ code, count }))
       .sort((a, b) => b.count - a.count || a.code.localeCompare(b.code)),

@@ -17,6 +17,10 @@ assert.equal(rewrite.destination, '/retired/anki-search-pending.json');
 assert.deepEqual(readJson('public/retired/anki-search-pending.json'), { requests: [], retired: true });
 
 const version = readJson('integrations/snaportho-anki/addon/manifest.json').version;
+const versionSource = readFileSync('integrations/snaportho-anki/addon/snaportho_reviewer/version.py', 'utf8');
+const releaseSource = readFileSync('src/lib/anki/addon-release.ts', 'utf8');
+assert.match(versionSource, new RegExp(`ADDON_VERSION = ["']${version.replaceAll('.', '\\.')}["']`));
+assert.match(releaseSource, new RegExp(`SNAPORTHO_ADDON_LATEST_VERSION = ["']${version.replaceAll('.', '\\.')}["']`));
 const tracePath = '.next/server/app/api/anki/addon/download/route.js.nft.json';
 const trace = readJson(tracePath);
 const packagePath = path.resolve(`dist/snaportho-${version}.ankiaddon`);

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OrthobulletsHintResponseSchema = exports.OrthobulletsChatResponseSchema = exports.OrthobulletsChatRequestSchema = exports.OrthobulletsChatTurnSchema = exports.OrthobulletsExplainResponseSchema = exports.CurriculumExplainRequestSchema = exports.OrthobulletsHintRequestSchema = exports.OrthobulletsQuestionClaimRequestSchema = exports.OrthobulletsExplainRequestSchema = exports.OrthobulletsPageContextSchema = void 0;
+exports.OrthobulletsHintResponseSchema = exports.OrthobulletsChatResponseSchema = exports.OrthobulletsChatRequestSchema = exports.OrthobulletsChatTurnSchema = exports.OrthobulletsExplainResponseSchema = exports.CurriculumExplainRequestSchema = exports.OrthobulletsHintRequestSchema = exports.OrthobulletsQuestionClaimV5RequestSchema = exports.OrthobulletsQuestionClaimRequestSchema = exports.OrthobulletsExplainRequestSchema = exports.StrictQuestionPageContextSchema = exports.OrthobulletsPageContextSchema = void 0;
 const zod_1 = require("zod");
 const curriculum_types_1 = require("./curriculum-types");
 const OrthobulletsChoiceSchema = zod_1.z.object({
@@ -84,7 +84,7 @@ function hasMatchingChoice(value, key) {
         return true;
     return value.answerChoices.some((choice) => choice.key === key || choice.label === key);
 }
-const StrictQuestionPageContextSchema = exports.OrthobulletsPageContextSchema.superRefine((value, ctx) => {
+exports.StrictQuestionPageContextSchema = exports.OrthobulletsPageContextSchema.superRefine((value, ctx) => {
     if (value.mode !== 'question') {
         ctx.addIssue({
             code: 'custom',
@@ -123,7 +123,7 @@ const StrictQuestionPageContextSchema = exports.OrthobulletsPageContextSchema.su
 });
 exports.OrthobulletsExplainRequestSchema = zod_1.z.object({
     task: zod_1.z.literal('question_explain').default('question_explain'),
-    pageContext: StrictQuestionPageContextSchema,
+    pageContext: exports.StrictQuestionPageContextSchema,
     emphasis: curriculum_types_1.CurriculumExplainEmphasisSchema.optional(),
 });
 // This contract deliberately carries the source page only for an in-memory
@@ -134,7 +134,31 @@ exports.OrthobulletsQuestionClaimRequestSchema = zod_1.z.object({
     contractVersion: zod_1.z.literal('orthobullets-question-claim-v1'),
     runId: zod_1.z.string().uuid().optional(),
     runItemId: zod_1.z.string().uuid().optional(),
-    pageContext: StrictQuestionPageContextSchema,
+    pageContext: exports.StrictQuestionPageContextSchema,
+}).superRefine((value, ctx) => {
+    if (value.pageContext.provider !== 'orthobullets') {
+        ctx.addIssue({ code: 'custom', path: ['pageContext', 'provider'], message: 'Only Orthobullets questions are supported.' });
+    }
+    if (!['review', 'testview'].includes(value.pageContext.pageKind)) {
+        ctx.addIssue({ code: 'custom', path: ['pageContext', 'pageKind'], message: 'Claims require a completed review page.' });
+    }
+    if (!value.pageContext.correctAnswerKey || !value.pageContext.explanationText?.trim()) {
+        ctx.addIssue({ code: 'custom', path: ['pageContext'], message: 'Claims require visible answer and explanation signals.' });
+    }
+    if (Boolean(value.runId) !== Boolean(value.runItemId)) {
+        ctx.addIssue({ code: 'custom', path: ['runItemId'], message: 'runId and runItemId must be supplied together.' });
+    }
+});
+// v5 transient contract: the extension posts a READY review page (exact
+// results-page URL, all review signals revealed). The route converts it to a
+// transient packet in memory, runs the v5 multi-claim pipeline, persists only
+// durable data (claims, hashes, diagnostics, model usage), and releases the
+// raw packet. Source prose is never persisted by this contract.
+exports.OrthobulletsQuestionClaimV5RequestSchema = zod_1.z.object({
+    contractVersion: zod_1.z.literal('orthobullets-question-claim-v5'),
+    runId: zod_1.z.string().uuid().optional(),
+    runItemId: zod_1.z.string().uuid().optional(),
+    pageContext: exports.StrictQuestionPageContextSchema,
 }).superRefine((value, ctx) => {
     if (value.pageContext.provider !== 'orthobullets') {
         ctx.addIssue({ code: 'custom', path: ['pageContext', 'provider'], message: 'Only Orthobullets questions are supported.' });
@@ -156,7 +180,7 @@ const PriorHintSchema = zod_1.z.object({
 });
 exports.OrthobulletsHintRequestSchema = zod_1.z.object({
     task: zod_1.z.literal('question_hint').default('question_hint'),
-    pageContext: StrictQuestionPageContextSchema,
+    pageContext: exports.StrictQuestionPageContextSchema,
     hintLevel: zod_1.z.union([zod_1.z.literal(1), zod_1.z.literal(2), zod_1.z.literal(3)]),
     selectedAnswerKey: zod_1.z.string().trim().min(1).max(32).optional(),
     priorHints: zod_1.z.array(PriorHintSchema).max(2).default([]),

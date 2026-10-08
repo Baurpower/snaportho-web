@@ -92,7 +92,7 @@ function hasMatchingChoice(value: z.infer<typeof OrthobulletsPageContextSchema>,
   return value.answerChoices.some((choice) => choice.key === key || choice.label === key);
 }
 
-const StrictQuestionPageContextSchema = OrthobulletsPageContextSchema.superRefine((value, ctx) => {
+export const StrictQuestionPageContextSchema = OrthobulletsPageContextSchema.superRefine((value, ctx) => {
   if (value.mode !== 'question') {
     ctx.addIssue({
       code: 'custom',
@@ -142,6 +142,31 @@ export const OrthobulletsExplainRequestSchema = z.object({
 // bounded SnapOrtho claim plus hashes/provenance.
 export const OrthobulletsQuestionClaimRequestSchema = z.object({
   contractVersion: z.literal('orthobullets-question-claim-v1'),
+  runId: z.string().uuid().optional(),
+  runItemId: z.string().uuid().optional(),
+  pageContext: StrictQuestionPageContextSchema,
+}).superRefine((value, ctx) => {
+  if (value.pageContext.provider !== 'orthobullets') {
+    ctx.addIssue({ code: 'custom', path: ['pageContext', 'provider'], message: 'Only Orthobullets questions are supported.' });
+  }
+  if (!['review', 'testview'].includes(value.pageContext.pageKind)) {
+    ctx.addIssue({ code: 'custom', path: ['pageContext', 'pageKind'], message: 'Claims require a completed review page.' });
+  }
+  if (!value.pageContext.correctAnswerKey || !value.pageContext.explanationText?.trim()) {
+    ctx.addIssue({ code: 'custom', path: ['pageContext'], message: 'Claims require visible answer and explanation signals.' });
+  }
+  if (Boolean(value.runId) !== Boolean(value.runItemId)) {
+    ctx.addIssue({ code: 'custom', path: ['runItemId'], message: 'runId and runItemId must be supplied together.' });
+  }
+});
+
+// v5 transient contract: the extension posts a READY review page (exact
+// results-page URL, all review signals revealed). The route converts it to a
+// transient packet in memory, runs the v5 multi-claim pipeline, persists only
+// durable data (claims, hashes, diagnostics, model usage), and releases the
+// raw packet. Source prose is never persisted by this contract.
+export const OrthobulletsQuestionClaimV5RequestSchema = z.object({
+  contractVersion: z.literal('orthobullets-question-claim-v5'),
   runId: z.string().uuid().optional(),
   runItemId: z.string().uuid().optional(),
   pageContext: StrictQuestionPageContextSchema,

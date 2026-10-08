@@ -20,6 +20,8 @@ import {
 
 import { createClient } from "@/utils/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { SNAPORTHO_ADDON_MINIMUM_VERSION } from "@/lib/anki/addon-release";
+import { addonVersionAtLeast } from "@/lib/education/deck-addon-version";
 
 const PAGE_URL = "https://snap-ortho.com/anki";
 
@@ -63,6 +65,26 @@ async function loadCurrentDeckStats(): Promise<DeckStats> {
   }
 }
 
+async function hasLegacyAddonDevice(userId: string): Promise<boolean> {
+  try {
+    const admin = createAdminClient();
+    const cutoff = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+    const { data, error } = await admin
+      .from("brobot_anki_addon_devices")
+      .select("addon_version")
+      .eq("user_id", userId)
+      .eq("is_active", true)
+      .gte("last_seen_at", cutoff);
+    if (error) throw error;
+    return (data ?? []).some(
+      (device) => !addonVersionAtLeast(device.addon_version, SNAPORTHO_ADDON_MINIMUM_VERSION),
+    );
+  } catch (error) {
+    console.error("Unable to check the installed SnapOrtho add-on version", error);
+    return false;
+  }
+}
+
 export const metadata: Metadata = {
   title: "SnapOrtho for Anki Beta",
   description:
@@ -93,9 +115,19 @@ export default async function AnkiLandingPage() {
     loadCurrentDeckStats(),
   ]);
   const user = authResult.data.user;
+  const legacyAddonDetected = user ? await hasLegacyAddonDevice(user.id) : false;
 
   return (
     <div className="min-h-screen overflow-hidden bg-[#f7f2e9] pt-14 text-[#11162f]">
+      {legacyAddonDetected ? (
+        <div className="border-b border-amber-300 bg-amber-100 px-5 py-4 text-center text-sm font-semibold text-amber-950">
+          An older SnapOrtho add-on was recently active on your account. The latest version fixes excessive background network requests.{' '}
+          <Link href="/anki/download" className="font-black underline underline-offset-2">
+            Download the required update
+          </Link>
+          .
+        </div>
+      ) : null}
       <section className="relative isolate border-b border-[#11162f]/10 px-5 pb-20 pt-14 sm:px-8 lg:pb-28 lg:pt-20">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_82%_18%,rgba(163,207,255,0.5),transparent_30%),radial-gradient(circle_at_18%_82%,rgba(255,210,90,0.28),transparent_26%)]" />
         <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.02fr_0.98fr]">

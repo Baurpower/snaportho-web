@@ -125,7 +125,7 @@ export const BROBOT_TIER1_METADATA_LLM_ENABLED = readBooleanEnv(
 
 export const BROBOT_TIER1_KG_ENABLED = readBooleanEnv(
   'BROBOT_TIER1_KG_ENABLED',
-  false
+  true
 );
 
 /** Default-off quality rollout flags. Each can be disabled independently. */

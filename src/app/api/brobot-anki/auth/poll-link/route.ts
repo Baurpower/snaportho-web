@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { recordAnkiProductEvent } from "@/lib/analytics/anki-usage";
+import { normalizeAnkiLinkCode } from "@/lib/brobot-anki/link-code";
 import {
   generateDeviceToken,
   getDeviceLinkByCode,
@@ -12,7 +13,14 @@ import {
 } from "../../_lib";
 
 const pollLinkSchema = z.object({
-  linkCode: z.string().trim().min(1, "linkCode is required.").max(32),
+  linkCode: z
+    .string()
+    .transform(normalizeAnkiLinkCode)
+    .pipe(
+      z
+        .string()
+        .regex(/^[0-9A-F]{10}$/, "Enter a valid 10-character link code."),
+    ),
 });
 
 export async function POST(request: Request) {
@@ -23,9 +31,7 @@ export async function POST(request: Request) {
       return parsed.response;
     }
 
-    const lookup = await getDeviceLinkByCode(
-      parsed.data.linkCode.trim().toUpperCase(),
-    );
+    const lookup = await getDeviceLinkByCode(parsed.data.linkCode);
 
     if (!lookup.success) {
       return lookup.response;

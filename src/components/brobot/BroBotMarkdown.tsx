@@ -2,7 +2,11 @@
 
 import { memo, type ReactNode, useMemo } from 'react';
 import type { AnkiReference } from '@/lib/brobot/chat/anki-references';
-import { parseAnkiBlocks, claimsForText, type ListItem } from '@/lib/brobot/chat/anki-claims';
+import {
+  parseAnkiBlocks,
+  claimsForText,
+  type ListItem,
+} from '@/lib/brobot/chat/anki-claims';
 
 function renderInline(text: string): ReactNode[] {
   const nodes: ReactNode[] = [];
@@ -18,9 +22,12 @@ function renderInline(text: string): ReactNode[] {
     const token = match[0];
     if (token.startsWith('**')) {
       nodes.push(
-        <strong key={`${match.index}-strong`} className="font-semibold text-slate-950">
+        <strong
+          key={`${match.index}-strong`}
+          className="font-semibold text-slate-950"
+        >
           {token.slice(2, -2)}
-        </strong>
+        </strong>,
       );
     } else if (token.startsWith('`')) {
       nodes.push(
@@ -29,7 +36,7 @@ function renderInline(text: string): ReactNode[] {
           className="rounded-md bg-slate-100 px-1.5 py-0.5 text-[0.85em] font-medium text-slate-800"
         >
           {token.slice(1, -1)}
-        </code>
+        </code>,
       );
     } else {
       const link = /^\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)$/.exec(token);
@@ -43,7 +50,7 @@ function renderInline(text: string): ReactNode[] {
             className="font-semibold text-teal-700 underline decoration-teal-200 underline-offset-2 hover:text-teal-900"
           >
             {link[1]}
-          </a>
+          </a>,
         );
       }
     }
@@ -80,9 +87,23 @@ function RenderList({
     >
       {items.map((item, index) => (
         <li key={`${item.text}-${index}`} className="pl-1">
-          <span>{renderInlineWithReference(item.text, `${path}:${index}`, references, onOpenAnkiReference)}</span>
+          <span>
+            {renderInlineWithReference(
+              item.text,
+              `${path}:${index}`,
+              references,
+              onOpenAnkiReference,
+            )}
+          </span>
           {item.children.length > 0 && (
-            <RenderList type="ul" items={item.children} path={`${path}:${index}:child`} nested references={references} onOpenAnkiReference={onOpenAnkiReference} />
+            <RenderList
+              type="ul"
+              items={item.children}
+              path={`${path}:${index}:child`}
+              nested
+              references={references}
+              onOpenAnkiReference={onOpenAnkiReference}
+            />
           )}
         </li>
       ))}
@@ -90,32 +111,72 @@ function RenderList({
   );
 }
 
-function referenceMarker(reference: AnkiReference, onOpen?: (id: string) => void) {
+function referenceMarker(
+  reference: AnkiReference,
+  onOpen?: (id: string) => void,
+) {
   if (!onOpen) return null;
-  return <button type="button" onClick={() => onOpen(reference.id)}
-    className="ml-1 inline rounded-md bg-sky-50 px-1.5 py-0.5 align-baseline text-xs font-bold text-sky-800 hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-500"
-    aria-label={`Open Anki card ${reference.number} for this fact`}>
-    Anki {reference.number}
-  </button>;
+  return (
+    <button
+      type="button"
+      onClick={() => onOpen(reference.id)}
+      className="ml-1 inline rounded-md bg-sky-50 px-1.5 py-0.5 align-baseline text-xs font-bold text-sky-800 hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-500"
+      aria-label={`Open Anki card ${reference.number} for this fact`}
+    >
+      Anki {reference.number}
+    </button>
+  );
 }
 
-function renderInlineWithReference(text: string, path: string, references: AnkiReference[], onOpen?: (id: string) => void): ReactNode {
+function renderInlineWithReference(
+  text: string,
+  path: string,
+  references: AnkiReference[],
+  onOpen?: (id: string) => void,
+): ReactNode {
   const placements = claimsForText(text, path)
-    .map((claim) => ({ claim, reference: references.find((item) => item.claimId === claim.id) }))
-    .filter((item): item is { claim: ReturnType<typeof claimsForText>[number]; reference: AnkiReference } => Boolean(item.reference));
+    .map((claim) => ({
+      claim,
+      reference: references.find(
+        (item) =>
+          item.answerAnchorId === claim.id ||
+          item.claimId === claim.id ||
+          item.anchorText === claim.text,
+      ),
+    }))
+    .filter(
+      (
+        item,
+      ): item is {
+        claim: ReturnType<typeof claimsForText>[number];
+        reference: AnkiReference;
+      } => Boolean(item.reference),
+    );
   if (!placements.length) return renderInline(text);
   const output: ReactNode[] = [];
   let cursor = 0;
   for (const { reference, claim } of placements) {
-    output.push(<span key={`text-${cursor}`}>{renderInline(text.slice(cursor, claim.end))}</span>);
-    output.push(<span key={`ref-${reference.id}`}>{referenceMarker(reference, onOpen)}</span>);
+    output.push(
+      <span key={`text-${cursor}`}>
+        {renderInline(text.slice(cursor, claim.end))}
+      </span>,
+    );
+    output.push(
+      <span key={`ref-${reference.id}`}>
+        {referenceMarker(reference, onOpen)}
+      </span>,
+    );
     cursor = claim.end;
   }
   output.push(<span key="tail">{renderInline(text.slice(cursor))}</span>);
   return output;
 }
 
-function BroBotMarkdown({ children, references = [], onOpenAnkiReference }: {
+function BroBotMarkdown({
+  children,
+  references = [],
+  onOpenAnkiReference,
+}: {
   children: string;
   references?: AnkiReference[];
   onOpenAnkiReference?: (id: string) => void;
@@ -126,7 +187,8 @@ function BroBotMarkdown({ children, references = [], onOpenAnkiReference }: {
     <div className="space-y-3 text-[15px] leading-6 text-slate-700 sm:space-y-4 sm:leading-7">
       {blocks.map((block, index) => {
         if (block.type === 'heading') {
-          const HeadingTag = block.level === 2 ? 'h2' : block.level === 3 ? 'h3' : 'h4';
+          const HeadingTag =
+            block.level === 2 ? 'h2' : block.level === 3 ? 'h3' : 'h4';
           return (
             <HeadingTag
               key={`${block.type}-${index}`}
@@ -138,7 +200,16 @@ function BroBotMarkdown({ children, references = [], onOpenAnkiReference }: {
         }
 
         if (block.type === 'ul' || block.type === 'ol') {
-          return <RenderList key={`${block.type}-${index}`} type={block.type} items={block.items} path={String(index)} references={references} onOpenAnkiReference={onOpenAnkiReference} />;
+          return (
+            <RenderList
+              key={`${block.type}-${index}`}
+              type={block.type}
+              items={block.items}
+              path={String(index)}
+              references={references}
+              onOpenAnkiReference={onOpenAnkiReference}
+            />
+          );
         }
 
         if (block.type === 'blockquote') {
@@ -147,7 +218,12 @@ function BroBotMarkdown({ children, references = [], onOpenAnkiReference }: {
               key={`${block.type}-${index}`}
               className="rounded-xl border border-amber-100 bg-amber-50/70 px-3 py-2.5 text-sm leading-6 text-amber-950"
             >
-              {renderInlineWithReference(block.text, String(index), references, onOpenAnkiReference)}
+              {renderInlineWithReference(
+                block.text,
+                String(index),
+                references,
+                onOpenAnkiReference,
+              )}
             </blockquote>
           );
         }
@@ -178,7 +254,10 @@ function BroBotMarkdown({ children, references = [], onOpenAnkiReference }: {
                 <thead className="bg-slate-50 text-xs font-bold uppercase tracking-wide text-slate-500">
                   <tr>
                     {block.headers.map((header, headerIndex) => (
-                      <th key={`${header}-${headerIndex}`} className="px-2.5 py-2">
+                      <th
+                        key={`${header}-${headerIndex}`}
+                        className="px-2.5 py-2"
+                      >
                         {renderInline(header)}
                       </th>
                     ))}
@@ -188,8 +267,16 @@ function BroBotMarkdown({ children, references = [], onOpenAnkiReference }: {
                   {block.rows.map((row, rowIndex) => (
                     <tr key={`row-${rowIndex}`}>
                       {block.headers.map((_, cellIndex) => (
-                        <td key={`cell-${cellIndex}`} className="max-w-full px-2.5 py-2 align-top">
-                          {renderInlineWithReference(row[cellIndex] ?? '', `${index}:row:${rowIndex}:cell:${cellIndex}`, references, onOpenAnkiReference)}
+                        <td
+                          key={`cell-${cellIndex}`}
+                          className="max-w-full px-2.5 py-2 align-top"
+                        >
+                          {renderInlineWithReference(
+                            row[cellIndex] ?? '',
+                            `${index}:row:${rowIndex}:cell:${cellIndex}`,
+                            references,
+                            onOpenAnkiReference,
+                          )}
                         </td>
                       ))}
                     </tr>
@@ -203,7 +290,12 @@ function BroBotMarkdown({ children, references = [], onOpenAnkiReference }: {
         if (block.type === 'paragraph') {
           return (
             <p key={`${block.type}-${index}`} className="max-w-none">
-              {renderInlineWithReference(block.text, String(index), references, onOpenAnkiReference)}
+              {renderInlineWithReference(
+                block.text,
+                String(index),
+                references,
+                onOpenAnkiReference,
+              )}
             </p>
           );
         }

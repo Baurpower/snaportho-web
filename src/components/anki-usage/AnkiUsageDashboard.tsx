@@ -127,6 +127,11 @@ export function AnkiUsageDashboard() {
               value={data.activeUsers30d}
               hint="From linked device last_used_at"
             />
+            <SummaryCard
+              label="Legacy add-on devices"
+              value={data.activeLegacyDevices}
+              hint="Seen in the last 30 days and below the polling-fix version"
+            />
           </div>
 
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
@@ -151,6 +156,16 @@ export function AnkiUsageDashboard() {
                   ))}
                 </ul>
               )}
+              {data.deviceVersionMix.length > 0 ? (
+                <div className="mt-5 border-t border-gray-100 pt-4">
+                  <h3 className="text-sm font-semibold text-gray-900">Active devices by version</h3>
+                  <ul className="mt-2 space-y-1 text-sm text-gray-700">
+                    {data.deviceVersionMix.map((row) => (
+                      <li key={row.version}>{row.version}: {row.devices} {row.devices === 1 ? 'device' : 'devices'}</li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
             </section>
           </div>
 

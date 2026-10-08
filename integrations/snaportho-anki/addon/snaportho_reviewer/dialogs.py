@@ -511,12 +511,13 @@ class SettingsDialog:
 
 class DeviceLinkDialog:
     def __init__(self, parent, runtime, on_linked=None):
-        from aqt.qt import QDialog, QLabel, QPushButton, QVBoxLayout
+        from aqt.qt import QDialog, QLabel, QPushButton, QVBoxLayout, Qt
 
         self.runtime = runtime
         self.on_linked = on_linked
         self.link_code = None
         self.approval_url = None
+        self.expires_at = None
         self.polling = False
         self.preflight_ok = bool(getattr(runtime, "credential_preflight_ok", False))
         self.closed = False
@@ -531,10 +532,21 @@ class DeviceLinkDialog:
         self.status.setWordWrap(True)
         self.code = QLabel("")
         self.code.setStyleSheet("font-size: 22px; font-weight: 700; letter-spacing: 2px;")
+        self.code.setTextInteractionFlags(
+            self.code.textInteractionFlags() | Qt.TextInteractionFlag.TextSelectableByMouse
+        )
+        self.fallback = QLabel("")
+        self.fallback.setWordWrap(True)
+        self.fallback.setOpenExternalLinks(False)
+        self.fallback.hide()
         self.start_button = QPushButton("Continue in browser")
         self.start_button.clicked.connect(self.start)
         self.poll_button = QPushButton("Open browser again")
-        self.poll_button.clicked.connect(self.poll)
+        self.poll_button.clicked.connect(self.open_approval_page)
+        self.poll_button.hide()
+        self.copy_button = QPushButton("Copy code")
+        self.copy_button.clicked.connect(self.copy_code)
+        self.copy_button.hide()
         self.continue_button = QPushButton("Continue to Master Deck")
         self.continue_button.clicked.connect(self._continue_master)
         self.continue_button.hide()
@@ -543,8 +555,10 @@ class DeviceLinkDialog:
         self.close_button.hide()
         layout.addWidget(self.status)
         layout.addWidget(self.code)
+        layout.addWidget(self.fallback)
         layout.addWidget(self.start_button)
         layout.addWidget(self.poll_button)
+        layout.addWidget(self.copy_button)
         layout.addWidget(self.continue_button)
         layout.addWidget(self.close_button)
 
@@ -553,11 +567,14 @@ class DeviceLinkDialog:
         self.status.setText(f"<h2 style='color:#087f5b'>✓ {title}</h2><p>{detail}</p>"
                             f"<p>Next: download the SnapOrtho Master Deck.</p>")
         self.code.hide()
+        self.fallback.hide()
         self.start_button.hide()
         self.poll_button.hide()
+        self.copy_button.hide()
         self.continue_button.show()
         self.continue_button.setDefault(True)
         self.close_button.show()
+        self.runtime.check_browser_requests()
 
     def _continue_master(self):
         self.dialog.accept()
@@ -598,16 +615,25 @@ class DeviceLinkDialog:
                 _, body = future.result()
                 self.link_code = body.get("linkCode")
                 self.approval_url = body.get("approvalUrl")
+                self.expires_at = body.get("expiresAt")
                 self.polling = False
                 self.poll_attempts = 0
-                self.code.setText(self.link_code or "")
+                display_code = self._display_code()
+                self.code.setText(display_code)
+                self.code.show()
+                manual_url = f"{self.runtime.api.base_url.rstrip('/')}/anki/link"
+                self.fallback.setText(
+                    f"<b>Browser didn't open?</b> Go to <code>{manual_url}</code> "
+                    f"and enter <code>{display_code}</code> manually. This code expires in 15 minutes."
+                )
+                self.fallback.show()
+                self.start_button.hide()
+                self.poll_button.show()
+                self.copy_button.show()
                 self.status.setText("Waiting for browser confirmation…")
-                if self.approval_url:
-                    from aqt.utils import openLink
-                    openLink(self.approval_url)
-                    self.approval_url = None
                 self.polling = True
                 self.poll_attempts = 0
+                self.open_approval_page()
                 self._poll_once()
             except Exception as error:
                 from .errors import describe
@@ -618,14 +644,28 @@ class DeviceLinkDialog:
             lambda: self.runtime.api.start_link("SnapOrtho Anki"), done
         )
 
+    def _display_code(self):
+        code = self.link_code or ""
+        return f"{code[:5]}-{code[5:]}" if len(code) == 10 else code
+
+    def copy_code(self):
+        if not self.link_code:
+            return
+        from aqt.qt import QApplication
+        QApplication.clipboard().setText(self.link_code)
+        self.status.setText("Code copied. Waiting for browser approval…")
+
+    def open_approval_page(self):
+        if not self.approval_url:
+            return
+        from aqt.utils import openLink
+        openLink(self.approval_url)
+        if not self.polling:
+            self.poll()
+
     def poll(self):
         if not self.link_code:
             return
-        if self.approval_url:
-            from aqt.utils import openLink
-
-            openLink(self.approval_url)
-            self.approval_url = None
         if self.polling:
             return
         self.polling = True
@@ -646,7 +686,11 @@ class DeviceLinkDialog:
                 if body.get("status") == "pending":
                     if self.poll_attempts >= 60:
                         self.polling = False
-                        self.status.setText("Approval timed out; choose Open Approval Page to try again.")
+                        self.status.setText(
+                            "Still not approved. You can open the browser again, enter the code manually, or start over if it expired."
+                        )
+                        self.start_button.setText("Start over with a new code")
+                        self.start_button.show()
                         return
                     from aqt.qt import QTimer
 
@@ -669,6 +713,7 @@ class DeviceLinkDialog:
                     from .errors import describe
                     self.link_code = None
                     self.approval_url = None
+                    self.expires_at = None
                     self.start_button.setText("Start sign-in again")
                     self.status.setText(f"Link error: {describe(error)}")
                 finally:
@@ -681,6 +726,7 @@ class DeviceLinkDialog:
                 if getattr(error, "body", {}).get("status") == "consumed":
                     self.link_code = None
                     self.approval_url = None
+                    self.expires_at = None
                     self.start_button.setText("Start sign-in again")
                 self.status.setText(f"Link error: {describe(error)}")
 

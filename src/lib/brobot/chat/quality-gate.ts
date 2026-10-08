@@ -8,6 +8,7 @@ import type {
   BroBotTrainingLevel,
 } from './types';
 import type { BroBotAnswerRoute } from './answer-router';
+import type { BroBotKgPacket } from '@/lib/brobot/kg/contracts';
 import { detectBroBotInteractionConstraints } from './interaction-constraints';
 import { deriveBroBotLatestTurnTask } from './latest-turn-task';
 import { BROBOT_OR_PREP_TASK_CONTRACT_ENABLED } from '@/lib/brobot/model-config';
@@ -20,9 +21,27 @@ export type BroBotQualityGateResult = {
 // High-yield terms an answer about a known entity should name at least one of.
 // Keyed by the canonical topic produced by entityToTopic(). Warning-only.
 const ENTITY_EXPECTED_TERMS: Record<string, string[]> = {
-  'proximal humerus': ['deltopectoral', 'deltoid', 'axillary', 'greater tuberosity', 'cephalic'],
-  'distal radius': ['fcr', 'volar', 'median nerve', 'pronator quadratus', 'watershed'],
-  ankle: ['weber', 'lauge-hansen', 'syndesmosis', 'medial clear space', 'malleol'],
+  'proximal humerus': [
+    'deltopectoral',
+    'deltoid',
+    'axillary',
+    'greater tuberosity',
+    'cephalic',
+  ],
+  'distal radius': [
+    'fcr',
+    'volar',
+    'median nerve',
+    'pronator quadratus',
+    'watershed',
+  ],
+  ankle: [
+    'weber',
+    'lauge-hansen',
+    'syndesmosis',
+    'medial clear space',
+    'malleol',
+  ],
   'reverse total shoulder arthroplasty': [
     'glenosphere',
     'baseplate',
@@ -41,7 +60,11 @@ const ENTITY_EXPECTED_TERMS: Record<string, string[]> = {
 };
 
 const JUNIOR_LEVELS = new Set<BroBotTrainingLevel>(['med_student', 'pgy1']);
-const SENIOR_LEVELS = new Set<BroBotTrainingLevel>(['pgy4', 'pgy5', 'attending']);
+const SENIOR_LEVELS = new Set<BroBotTrainingLevel>([
+  'pgy4',
+  'pgy5',
+  'attending',
+]);
 
 const JUNIOR_SHAPE_TERMS = [
   'orient',
@@ -99,40 +122,46 @@ function lineCountMatching(answer: string, patterns: RegExp[]) {
 }
 
 function hasEmptyCaveat(answer: string) {
-  return /depends on (patient|clinical|individual) factors|patient-specific factors|management varies|use clinical judgment/i.test(answer);
+  return /depends on (patient|clinical|individual) factors|patient-specific factors|management varies|use clinical judgment/i.test(
+    answer,
+  );
 }
 
 function hasDecisionSignal(answer: string) {
-  return tokenHits(answer, [
-    'because',
-    'why',
-    'therefore',
-    'threshold',
-    'pivot',
-    'changes management',
-    'changes treatment',
-    'indication',
-    'operative',
-    'nonoperative',
-    'stability',
-    'unstable',
-    'if',
-    'when',
-  ]) >= 1;
+  return (
+    tokenHits(answer, [
+      'because',
+      'why',
+      'therefore',
+      'threshold',
+      'pivot',
+      'changes management',
+      'changes treatment',
+      'indication',
+      'operative',
+      'nonoperative',
+      'stability',
+      'unstable',
+      'if',
+      'when',
+    ]) >= 1
+  );
 }
 
 function hasPearlSignal(answer: string) {
-  return tokenHits(answer, [
-    'attending',
-    'pitfall',
-    'mistake',
-    'trap',
-    'pearl',
-    'miss',
-    'avoid',
-    'bailout',
-    'classic',
-  ]) >= 1;
+  return (
+    tokenHits(answer, [
+      'attending',
+      'pitfall',
+      'mistake',
+      'trap',
+      'pearl',
+      'miss',
+      'avoid',
+      'bailout',
+      'classic',
+    ]) >= 1
+  );
 }
 
 function hasKnownTopic(context?: BroBotClinicalContext) {
@@ -157,8 +186,12 @@ function genericTopicSignal(answer: string) {
 function entitySpecificHits(answer: string, context?: BroBotClinicalContext) {
   if (!context) return 0;
   const terms = Object.values(context.entities)
-    .filter((value): value is string => typeof value === 'string' && value.length > 2)
-    .flatMap((value) => value.split(/\s+|-/).filter((part) => part.length >= 4));
+    .filter(
+      (value): value is string => typeof value === 'string' && value.length > 2,
+    )
+    .flatMap((value) =>
+      value.split(/\s+|-/).filter((part) => part.length >= 4),
+    );
   return tokenHits(answer, terms);
 }
 
@@ -194,6 +227,8 @@ export function runBroBotQualityGate(input: {
   answerRoute?: BroBotAnswerRoute;
   clinicalContext?: BroBotClinicalContext;
   question?: string;
+  usedClaimIds?: string[];
+  knowledgePacket?: BroBotKgPacket | null;
 }): BroBotQualityGateResult {
   const warnings: string[] = [];
   const answer = input.answer.trim();
@@ -202,11 +237,68 @@ export function runBroBotQualityGate(input: {
     ? deriveBroBotLatestTurnTask({
         message: input.question,
         topic: input.procedureOrTopic,
-        constraints: detectBroBotInteractionConstraints({ message: input.question }),
+        constraints: detectBroBotInteractionConstraints({
+          message: input.question,
+        }),
       })
     : null;
-  const narrowOrPrepTask = BROBOT_OR_PREP_TASK_CONTRACT_ENABLED && input.mode === 'or_prep' &&
-    (latestTask?.action === 'estimate_duration' || latestTask?.action === 'retrieve_articles' || latestTask?.action === 'quiz');
+  const narrowOrPrepTask =
+    BROBOT_OR_PREP_TASK_CONTRACT_ENABLED &&
+    input.mode === 'or_prep' &&
+    (latestTask?.action === 'estimate_duration' ||
+      latestTask?.action === 'retrieve_articles' ||
+      latestTask?.action === 'quiz');
+
+  const packetClaims = input.knowledgePacket?.claims ?? [];
+  if (packetClaims.length > 0 && !input.usedClaimIds?.length) {
+    warnings.push('knowledge_packet_unused');
+  }
+  const highRiskFact =
+    /\b(?:\d+(?:\.\d+)?\s*(?:mm|cm|degrees?|weeks?|hours?|%)|indicat(?:ion|ed)|contraindicat|classification|always|never)\b/i.test(
+      answer,
+    );
+  if (packetClaims.length > 0 && highRiskFact && !input.usedClaimIds?.length) {
+    warnings.push('knowledge_high_risk_fact_unattributed');
+  }
+
+  if (input.usedClaimIds?.length) {
+    const allowed = new Set(
+      input.knowledgePacket?.claims.map((claim) => claim.claimId) ?? [],
+    );
+    if (input.usedClaimIds.some((claimId) => !allowed.has(claimId)))
+      warnings.push('knowledge_unknown_claim_id');
+    const used = new Set(input.usedClaimIds);
+    const conflicts = input.knowledgePacket?.claimConflicts ?? [];
+    if (
+      conflicts.some((conflict) =>
+        conflict.claimIds.every((claimId) => used.has(claimId)),
+      )
+    ) {
+      warnings.push('knowledge_claim_conflict');
+    }
+    const usedClaims = (input.knowledgePacket?.claims ?? []).filter((claim) =>
+      input.usedClaimIds?.includes(claim.claimId),
+    );
+    const answerNumbers = new Set(answer.match(/\b\d+(?:\.\d+)?\b/g) ?? []);
+    const claimNumbers = new Set(
+      usedClaims.flatMap(
+        (claim) => claim.claimText.match(/\b\d+(?:\.\d+)?\b/g) ?? [],
+      ),
+    );
+    if (
+      answerNumbers.size > 0 &&
+      claimNumbers.size > 0 &&
+      ![...answerNumbers].some((value) => claimNumbers.has(value))
+    ) {
+      warnings.push('knowledge_numeric_mismatch');
+    }
+    const hasAnswerNegation = /\b(?:not|never|without|no)\b/i.test(answer);
+    const hasClaimNegation = usedClaims.some((claim) =>
+      /\b(?:not|never|without|no)\b/i.test(claim.claimText),
+    );
+    if (usedClaims.length === 1 && hasAnswerNegation !== hasClaimNegation)
+      warnings.push('knowledge_polarity_mismatch');
+  }
 
   // ask_clarification answers are supposed to be a brief framing line (or
   // empty) with the clarifying questions/focus options carrying the rest.
@@ -230,7 +322,11 @@ export function runBroBotQualityGate(input: {
     }
   }
 
-  if (input.responseDepth !== 'quick' && answer.length < 450 && !narrowOrPrepTask) {
+  if (
+    input.responseDepth !== 'quick' &&
+    answer.length < 450 &&
+    !narrowOrPrepTask
+  ) {
     warnings.push('answer_short_for_depth');
   }
 
@@ -238,7 +334,11 @@ export function runBroBotQualityGate(input: {
     warnings.push('empty_caveat_without_concrete_pivots');
   }
 
-  if (!hasDecisionSignal(answer) && input.responseDepth !== 'quick' && !narrowOrPrepTask) {
+  if (
+    !hasDecisionSignal(answer) &&
+    input.responseDepth !== 'quick' &&
+    !narrowOrPrepTask
+  ) {
     warnings.push('decision_making_missing');
   }
 
@@ -259,7 +359,8 @@ export function runBroBotQualityGate(input: {
   }
 
   if (
-    input.mode === 'or_prep' && !narrowOrPrepTask &&
+    input.mode === 'or_prep' &&
+    !narrowOrPrepTask &&
     tokenHits(answer, [
       'approach',
       'exposure',
@@ -332,7 +433,15 @@ export function runBroBotQualityGate(input: {
       warnings.push('or_prep_decision_point_missing');
     }
 
-    if (tokenHits(answer, ['pitfall', 'bailout', 'troubleshoot', 'mistake', 'avoid']) < 1) {
+    if (
+      tokenHits(answer, [
+        'pitfall',
+        'bailout',
+        'troubleshoot',
+        'mistake',
+        'avoid',
+      ]) < 1
+    ) {
       warnings.push('or_prep_pitfall_bailout_missing');
     }
 
@@ -356,13 +465,22 @@ export function runBroBotQualityGate(input: {
         /^\s*(?:[-*]|\d+[.)])\s*(?:then|next|after|start|close|place|make)\b/i,
         /^\s*(?:[-*]|\d+[.)])\s*(?:step\s*)?\d+\b/i,
       ]) >= 5 &&
-      tokenHits(answer, ['objective', 'exposure', 'decision', 'pitfall', 'bailout']) < 3
+      tokenHits(answer, [
+        'objective',
+        'exposure',
+        'decision',
+        'pitfall',
+        'bailout',
+      ]) < 3
     ) {
       warnings.push('or_prep_generic_chronology_dominant');
     }
 
     if (input.subintent === 'surgical_approach') {
-      if (tokenHits(answer, ['incision', 'landmark', 'positioning', 'position']) < 1) {
+      if (
+        tokenHits(answer, ['incision', 'landmark', 'positioning', 'position']) <
+        1
+      ) {
         warnings.push('surgical_approach_incision_landmark_missing');
       }
 
@@ -399,84 +517,102 @@ export function runBroBotQualityGate(input: {
   if (input.clinicalContext) {
     const requirements = input.clinicalContext.coverageRequirements;
 
-    if (requirements.includes('exposure_or_approach') && tokenHits(answer, [
-      'approach',
-      'exposure',
-      'incision',
-      'portal',
-      'interval',
-      'landmark',
-      'corridor',
-    ]) < 1) {
+    if (
+      requirements.includes('exposure_or_approach') &&
+      tokenHits(answer, [
+        'approach',
+        'exposure',
+        'incision',
+        'portal',
+        'interval',
+        'landmark',
+        'corridor',
+      ]) < 1
+    ) {
       warnings.push('facet_or_prep_exposure_missing');
     }
 
-    if (requirements.includes('named_anatomy') && tokenHits(answer, [
-      'nerve',
-      'vessel',
-      'artery',
-      'vein',
-      'tendon',
-      'cartilage',
-      'radial',
-      'ulnar',
-      'median',
-      'axillary',
-      'peroneal',
-      'femoral',
-      'saphenous',
-      'sciatic',
-    ]) < 1) {
+    if (
+      requirements.includes('named_anatomy') &&
+      tokenHits(answer, [
+        'nerve',
+        'vessel',
+        'artery',
+        'vein',
+        'tendon',
+        'cartilage',
+        'radial',
+        'ulnar',
+        'median',
+        'axillary',
+        'peroneal',
+        'femoral',
+        'saphenous',
+        'sciatic',
+      ]) < 1
+    ) {
       warnings.push('facet_named_anatomy_missing');
     }
 
-    if (requirements.includes('pitfalls_or_bailout') && tokenHits(answer, [
-      'pitfall',
-      'bailout',
-      'avoid',
-      'mistake',
-      'failure',
-      'complication',
-      'trap',
-    ]) < 1) {
+    if (
+      requirements.includes('pitfalls_or_bailout') &&
+      tokenHits(answer, [
+        'pitfall',
+        'bailout',
+        'avoid',
+        'mistake',
+        'failure',
+        'complication',
+        'trap',
+      ]) < 1
+    ) {
       warnings.push('facet_pitfall_layer_missing');
     }
 
-    if (requirements.includes('trap_or_distractor') && tokenHits(answer, [
-      'trap',
-      'distractor',
-      'wrong answer',
-      'except',
-      'confuse',
-      'tempting',
-    ]) < 1) {
+    if (
+      requirements.includes('trap_or_distractor') &&
+      tokenHits(answer, [
+        'trap',
+        'distractor',
+        'wrong answer',
+        'except',
+        'confuse',
+        'tempting',
+      ]) < 1
+    ) {
       warnings.push('facet_oite_trap_distractor_missing');
     }
 
-    if (requirements.includes('algorithm_or_threshold') && tokenHits(answer, [
-      'algorithm',
-      'threshold',
-      'classification',
-      'stable',
-      'unstable',
-      'operative',
-      'nonoperative',
-      'indication',
-      'treatment',
-    ]) < 1) {
+    if (
+      requirements.includes('algorithm_or_threshold') &&
+      tokenHits(answer, [
+        'algorithm',
+        'threshold',
+        'classification',
+        'stable',
+        'unstable',
+        'operative',
+        'nonoperative',
+        'indication',
+        'treatment',
+      ]) < 1
+    ) {
       warnings.push('facet_algorithm_threshold_missing');
     }
 
-    if (requirements.includes('red_flags') && tokenHits(answer, [
-      'red flag',
-      'urgent',
-      'emergent',
-      'open',
-      'neurovascular',
-      'compartment',
-      'septic',
-      'fever',
-    ]) < 1) {
+    if (
+      requirements.includes('red_flags') &&
+      tokenHits(answer, [
+        'red flag',
+        'urgent',
+        'emergent',
+        'open',
+        'neurovascular',
+        'compartment',
+        'septic',
+        'fever',
+      ]) < 1
+    ) {
       warnings.push('facet_consult_red_flags_missing');
     }
 
@@ -501,18 +637,25 @@ export function runBroBotQualityGate(input: {
       warnings.push('facet_consult_disposition_missing');
     }
 
-    if (requirements.includes('differential') && tokenHits(answer, [
-      'differential',
-      'diagnosis',
-      'consider',
-      'mimic',
-      'versus',
-      'vs',
-    ]) < 1) {
+    if (
+      requirements.includes('differential') &&
+      tokenHits(answer, [
+        'differential',
+        'diagnosis',
+        'consider',
+        'mimic',
+        'versus',
+        'vs',
+      ]) < 1
+    ) {
       warnings.push('facet_clinic_differential_missing');
     }
 
-    if (hasKnownTopic(input.clinicalContext) && genericTopicSignal(answer) >= 2 && entitySpecificHits(answer, input.clinicalContext) === 0) {
+    if (
+      hasKnownTopic(input.clinicalContext) &&
+      genericTopicSignal(answer) >= 2 &&
+      entitySpecificHits(answer, input.clinicalContext) === 0
+    ) {
       warnings.push('answer_too_generic_for_known_topic');
     }
   }
@@ -541,8 +684,17 @@ export function runBroBotQualityGate(input: {
   }
 
   if (
-    (input.subintent === 'fracture' || input.procedureOrTopic?.toLowerCase().includes('fracture')) &&
-    tokenHits(answer, ['classification', 'stability', 'unstable', 'imaging', 'operative', 'fixation', 'complication']) < 3
+    (input.subintent === 'fracture' ||
+      input.procedureOrTopic?.toLowerCase().includes('fracture')) &&
+    tokenHits(answer, [
+      'classification',
+      'stability',
+      'unstable',
+      'imaging',
+      'operative',
+      'fixation',
+      'complication',
+    ]) < 3
   ) {
     warnings.push('fracture_framework_weak');
   }
@@ -577,13 +729,33 @@ export function runBroBotQualityGate(input: {
 
   if (
     input.subintent === 'anatomy_at_risk' &&
-    tokenHits(answer, ['course', 'origin', 'insertion', 'branch', 'danger', 'surgical', 'injury', 'at risk']) < 2
+    tokenHits(answer, [
+      'course',
+      'origin',
+      'insertion',
+      'branch',
+      'danger',
+      'surgical',
+      'injury',
+      'at risk',
+    ]) < 2
   ) {
     warnings.push('anatomy_surgical_relevance_weak');
   }
 
-  if (input.mode === 'oite' && !OITE_BOARD_CHECKS_EXEMPT.has(input.subintent ?? '')) {
-    if (tokenHits(answer, ['trap', 'distractor', 'wrong answer', 'commonly miss', 'except']) < 1) {
+  if (
+    input.mode === 'oite' &&
+    !OITE_BOARD_CHECKS_EXEMPT.has(input.subintent ?? '')
+  ) {
+    if (
+      tokenHits(answer, [
+        'trap',
+        'distractor',
+        'wrong answer',
+        'commonly miss',
+        'except',
+      ]) < 1
+    ) {
       warnings.push('oite_trap_missing');
     }
 
@@ -656,7 +828,17 @@ export function runBroBotQualityGate(input: {
       warnings.push('oite_test_taking_signal_missing');
     }
 
-    if (tokenHits(answer, ['memory', 'mnemonic', 'remember', 'hook', 'classic', 'think', 'note']) < 1) {
+    if (
+      tokenHits(answer, [
+        'memory',
+        'mnemonic',
+        'remember',
+        'hook',
+        'classic',
+        'think',
+        'note',
+      ]) < 1
+    ) {
       warnings.push('oite_memory_hook_missing');
     }
   }
@@ -689,10 +871,16 @@ export function runBroBotQualityGate(input: {
   // senior answers should include judgment/tradeoff/bailout language. Low
   // brittleness — only checks for the presence of any one signal.
   if (input.trainingLevel) {
-    if (JUNIOR_LEVELS.has(input.trainingLevel) && tokenHits(answer, JUNIOR_SHAPE_TERMS) < 1) {
+    if (
+      JUNIOR_LEVELS.has(input.trainingLevel) &&
+      tokenHits(answer, JUNIOR_SHAPE_TERMS) < 1
+    ) {
       warnings.push('level_junior_orientation_missing');
     }
-    if (SENIOR_LEVELS.has(input.trainingLevel) && tokenHits(answer, SENIOR_SHAPE_TERMS) < 1) {
+    if (
+      SENIOR_LEVELS.has(input.trainingLevel) &&
+      tokenHits(answer, SENIOR_SHAPE_TERMS) < 1
+    ) {
       warnings.push('level_senior_judgment_missing');
     }
   }

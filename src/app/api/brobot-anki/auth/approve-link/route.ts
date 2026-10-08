@@ -8,9 +8,17 @@ import {
   isoNow,
   parseJsonBody,
 } from "../../_lib";
+import { normalizeAnkiLinkCode } from "@/lib/brobot-anki/link-code";
 
 const approveLinkSchema = z.object({
-  linkCode: z.string().trim().min(1, "linkCode is required.").max(32),
+  linkCode: z
+    .string()
+    .transform(normalizeAnkiLinkCode)
+    .pipe(
+      z
+        .string()
+        .regex(/^[0-9A-F]{10}$/, "Enter a valid 10-character link code."),
+    ),
 });
 
 export async function POST(request: Request) {
@@ -24,7 +32,7 @@ export async function POST(request: Request) {
     if (auth.authMethod === "device_token") {
       return NextResponse.json(
         { error: "Device tokens cannot approve new device links." },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -34,7 +42,7 @@ export async function POST(request: Request) {
       return parsed.response;
     }
 
-    const lookup = await getDeviceLinkByCode(parsed.data.linkCode.trim().toUpperCase());
+    const lookup = await getDeviceLinkByCode(parsed.data.linkCode);
 
     if (!lookup.success) {
       return lookup.response;
@@ -43,13 +51,16 @@ export async function POST(request: Request) {
     const { supabase, link } = lookup;
 
     if (!link) {
-      return NextResponse.json({ error: "Link code not found." }, { status: 404 });
+      return NextResponse.json(
+        { error: "Link code not found." },
+        { status: 404 },
+      );
     }
 
     if (link.revoked_at || link.status === "revoked") {
       return NextResponse.json(
         { error: "This link request has already been revoked." },
-        { status: 410 }
+        { status: 410 },
       );
     }
 
@@ -60,15 +71,18 @@ export async function POST(request: Request) {
         .eq("id", link.id);
 
       return NextResponse.json(
-        { error: "This link code has expired. Start the link flow again in Anki." },
-        { status: 410 }
+        {
+          error:
+            "This link code has expired. Start the link flow again in Anki.",
+        },
+        { status: 410 },
       );
     }
 
     if (link.user_id && link.user_id !== auth.userId) {
       return NextResponse.json(
         { error: "This device link was already approved by another account." },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -92,7 +106,7 @@ export async function POST(request: Request) {
         status: "approved",
         deviceName: link.device_name,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     const message =

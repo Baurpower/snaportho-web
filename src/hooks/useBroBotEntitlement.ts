@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import {
   fetchMeEntitlementsView,
@@ -28,6 +28,9 @@ export function useBroBotEntitlement(source: string): UseBroBotEntitlementResult
   const [view, setView] = useState<WebEntitlementView | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  /** Skip focus/visibility refetch when a successful refresh completed within this window. */
+  const FOCUS_REFETCH_DEBOUNCE_MS = 60_000;
+  const lastSuccessfulRefreshAtRef = useRef<number | null>(null);
 
   const refresh = useCallback(async () => {
     if (!user) {
@@ -43,6 +46,9 @@ export function useBroBotEntitlement(source: string): UseBroBotEntitlementResult
       const nextView = await fetchMeEntitlementsView({ source });
       setView(nextView);
       setError(!nextView);
+      if (nextView) {
+        lastSuccessfulRefreshAtRef.current = Date.now();
+      }
       return nextView;
     } catch {
       setView(null);
@@ -65,16 +71,23 @@ export function useBroBotEntitlement(source: string): UseBroBotEntitlementResult
   useEffect(() => {
     if (!user) return;
 
+    const shouldSkipFocusVisibilityRefetch = () => {
+      const last = lastSuccessfulRefreshAtRef.current;
+      return last != null && Date.now() - last < FOCUS_REFETCH_DEBOUNCE_MS;
+    };
+
     const handleInvalidate = () => {
       void refresh();
     };
 
     const handleFocus = () => {
+      if (shouldSkipFocusVisibilityRefetch()) return;
       void refresh();
     };
 
     const handleVisibility = () => {
       if (document.visibilityState === 'visible') {
+        if (shouldSkipFocusVisibilityRefetch()) return;
         void refresh();
       }
     };

@@ -2,7 +2,8 @@ export const BROBOT_RESPONSE_VERSION_HEADER = 'x-brobot-response-version';
 export const BROBOT_CLIENT_HEADER = 'x-snaportho-client';
 
 export type BroBotResponseContract = 'legacy' | 'web_v2';
-export type BroBotStreamEventName = 'start' | 'delta' | 'metadata' | 'done' | 'error';
+export type BroBotStreamEventName =
+  'start' | 'delta' | 'metadata' | 'done' | 'error';
 
 export type BroBotChatInternalResult = {
   conversationId: string;
@@ -44,60 +45,110 @@ export type BroBotChatInternalResult = {
   resolvedTopic?: string;
   entityResolutionState?: string;
   ankiLookupToken?: string;
+  usedClaimIds?: string[];
+  claimSupport?: import('./answer-support').BroBotAnswerSupport[];
+  knowledgeCoverage?: 'full' | 'partial' | 'unknown' | 'unavailable';
 };
 
 export type BroBotLegacyResponse = BroBotChatInternalResult;
-export type BroBotWebV2Response = BroBotChatInternalResult & { responseVersion: 2 };
+export type BroBotWebV2Response = BroBotChatInternalResult & {
+  responseVersion: 2;
+};
 
 /**
  * Canonical shipped JSON surface. Keep this allowlist explicit so new internal
  * or web_v2-only fields cannot leak into the unversioned/iOS response.
  */
 export const BROBOT_LEGACY_RESPONSE_KEYS = [
-  'conversationId', 'messageId', 'goal', 'selectedFocus', 'answer',
-  'priorityPoints', 'knowledgeGaps', 'whatMostResidentsMiss',
-  'suggestedQuestions', 'nextLearningBranches', 'tags', 'detectedMode',
-  'remainingFreeUses', 'confidence', 'needsClarification',
-  'clarifyingQuestions', 'assumedContext', 'consultConfidence',
-  'missingInformation', 'researchSubmode', 'tier', 'status', 'directAnswer',
-  'keyPoints', 'pearl', 'pitfall', 'clarifyingQuestion', 'specialty',
-  'resolvedTopic', 'entityResolutionState',
+  'conversationId',
+  'messageId',
+  'goal',
+  'selectedFocus',
+  'answer',
+  'priorityPoints',
+  'knowledgeGaps',
+  'whatMostResidentsMiss',
+  'suggestedQuestions',
+  'nextLearningBranches',
+  'tags',
+  'detectedMode',
+  'remainingFreeUses',
+  'confidence',
+  'needsClarification',
+  'clarifyingQuestions',
+  'assumedContext',
+  'consultConfidence',
+  'missingInformation',
+  'researchSubmode',
+  'tier',
+  'status',
+  'directAnswer',
+  'keyPoints',
+  'pearl',
+  'pitfall',
+  'clarifyingQuestion',
+  'specialty',
+  'resolvedTopic',
+  'entityResolutionState',
 ] as const satisfies readonly (keyof BroBotLegacyResponse)[];
 
 // This list intentionally preserves every branch field already shipped to legacy/iOS
 // clients, including rankScore. New v2-only fields must not be added here.
 export const BROBOT_LEGACY_BRANCH_KEYS = [
-  'id', 'label', 'description', 'category', 'topicId', 'branchQuestionId', 'rankScore',
-] as const satisfies readonly (keyof NonNullable<BroBotLegacyResponse['nextLearningBranches']>[number])[];
+  'id',
+  'label',
+  'description',
+  'category',
+  'topicId',
+  'branchQuestionId',
+  'rankScore',
+] as const satisfies readonly (keyof NonNullable<
+  BroBotLegacyResponse['nextLearningBranches']
+>[number])[];
 
 export type ContractSelection =
-  | { ok: true; contract: BroBotResponseContract; clientPlatform: 'ios' | 'web' | 'unknown' }
+  | {
+      ok: true;
+      contract: BroBotResponseContract;
+      clientPlatform: 'ios' | 'web' | 'unknown';
+    }
   | { ok: false; requestedVersion: string };
 
-export function selectBroBotResponseContract(headers: Headers): ContractSelection {
+export function selectBroBotResponseContract(
+  headers: Headers,
+): ContractSelection {
   const rawRequestedVersion = headers.get(BROBOT_RESPONSE_VERSION_HEADER);
   const requestedVersion = rawRequestedVersion?.trim();
   const client = headers.get(BROBOT_CLIENT_HEADER)?.trim().toLowerCase();
 
-  if (rawRequestedVersion !== null && requestedVersion !== '1' && requestedVersion !== '2') {
+  if (
+    rawRequestedVersion !== null &&
+    requestedVersion !== '1' &&
+    requestedVersion !== '2'
+  ) {
     return { ok: false, requestedVersion: requestedVersion || '(empty)' };
   }
 
   if (requestedVersion === '2') {
-    return { ok: true, contract: 'web_v2', clientPlatform: client === 'ios' ? 'ios' : 'web' };
+    return {
+      ok: true,
+      contract: 'web_v2',
+      clientPlatform: client === 'ios' ? 'ios' : 'web',
+    };
   }
 
   // Unversioned requests intentionally retain the released native client's JSON contract.
   return {
     ok: true,
     contract: 'legacy',
-    clientPlatform: client === 'ios' ? 'ios' : client === 'web' ? 'web' : 'unknown',
+    clientPlatform:
+      client === 'ios' ? 'ios' : client === 'web' ? 'web' : 'unknown',
   };
 }
 
 export function shouldUseCasePrepV2Migration(
   contract: BroBotResponseContract,
-  prompt: string
+  prompt: string,
 ): boolean {
   return (
     contract === 'web_v2' &&
@@ -107,16 +158,21 @@ export function shouldUseCasePrepV2Migration(
 
 export function encodeBroBotStreamEvent(
   event: BroBotStreamEventName,
-  data: Record<string, unknown>
+  data: Record<string, unknown>,
 ): string {
   return `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
 }
 
-export function serializeLegacyResponse(result: BroBotChatInternalResult): BroBotLegacyResponse {
+export function serializeLegacyResponse(
+  result: BroBotChatInternalResult,
+): BroBotLegacyResponse {
   const serialized: Partial<BroBotLegacyResponse> = {};
   for (const key of BROBOT_LEGACY_RESPONSE_KEYS) {
     if (Object.prototype.hasOwnProperty.call(result, key)) {
-      if (key === 'nextLearningBranches' && Array.isArray(result.nextLearningBranches)) {
+      if (
+        key === 'nextLearningBranches' &&
+        Array.isArray(result.nextLearningBranches)
+      ) {
         Object.assign(serialized, {
           nextLearningBranches: result.nextLearningBranches.map((branch) => {
             const legacyBranch: Record<string, unknown> = {};
@@ -136,13 +192,15 @@ export function serializeLegacyResponse(result: BroBotChatInternalResult): BroBo
   return serialized as BroBotLegacyResponse;
 }
 
-export function serializeWebResponseV2(result: BroBotChatInternalResult): BroBotWebV2Response {
+export function serializeWebResponseV2(
+  result: BroBotChatInternalResult,
+): BroBotWebV2Response {
   return { ...result, responseVersion: 2 };
 }
 
 export function serializeBroBotResponse(
   contract: BroBotResponseContract,
-  result: BroBotChatInternalResult
+  result: BroBotChatInternalResult,
 ): BroBotLegacyResponse | BroBotWebV2Response {
   return contract === 'web_v2'
     ? serializeWebResponseV2(result)

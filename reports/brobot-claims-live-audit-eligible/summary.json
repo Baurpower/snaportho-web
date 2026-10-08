@@ -1,0 +1,865 @@
+{
+  "generatedAt": "2026-09-29T02:48:01.938Z",
+  "liveData": true,
+  "liveEligibility": {
+    "claimRows": 1000,
+    "activeClaims": 1000,
+    "currentVersionPointers": 1000,
+    "currentVersionsFound": 1000,
+    "parentReviewStatus": {
+      "unreviewed": 1000
+    },
+    "parentContentSource": {
+      "generated_draft": 998,
+      "deprecated": 2
+    },
+    "versionReviewStatus": {
+      "unreviewed": 1000
+    },
+    "versionContentSource": {
+      "generated_draft": 1000
+    },
+    "versionApprovalMethod": {
+      "machine_consensus": 1000
+    },
+    "exactCounts": {
+      "claims": 6435,
+      "activeClaims": 6435,
+      "approvedVersions": 4,
+      "verifiedVersions": 4,
+      "approvedVerifiedVersions": 4
+    },
+    "eligibleVersions": [
+      {
+        "id": "d9dbc949-a76c-4e06-a5b6-d26da8183d13",
+        "claim_id": "6276bafb-76f4-4554-bef8-df69ac2cd6dc",
+        "claim_text": "In a 42-year-old male laborer with a partial laceration of the median nerve, the perineurium is the connective tissue that surrounds nerve fascicles.",
+        "claim_type": "fact",
+        "predicate": "teaches_fact",
+        "object_text": "perineurium",
+        "primary_entity_id": "ef7d1c34-9b15-46ef-b8f8-11632d28e969",
+        "review_status": "approved",
+        "content_source": "verified",
+        "approval_method": "machine_consensus",
+        "entityLabel": "perineurium",
+        "parent": {
+          "id": "6276bafb-76f4-4554-bef8-df69ac2cd6dc",
+          "current_version_id": "d9dbc949-a76c-4e06-a5b6-d26da8183d13",
+          "is_active": true,
+          "review_status": "approved",
+          "content_source": "verified",
+          "primary_entity_id": "ef7d1c34-9b15-46ef-b8f8-11632d28e969"
+        }
+      },
+      {
+        "id": "c88a279d-b41d-4d56-84c4-5213ff89cdd7",
+        "claim_id": "188aee4f-e10e-4a0e-a868-7b8fa821f36e",
+        "claim_text": "In a groin flap procedure for soft-tissue coverage of a traumatic thumb amputation, the flap relies on the superficial circumflex iliac artery and poses a risk to the lateral femoral cutaneous nerve.",
+        "claim_type": "fact",
+        "predicate": "preferred_treatment",
+        "object_text": "groin flap",
+        "primary_entity_id": "4e1668e6-5870-43e9-a817-35a5d12c9251",
+        "review_status": "approved",
+        "content_source": "verified",
+        "approval_method": "machine_consensus",
+        "entityLabel": "groin flap",
+        "parent": {
+          "id": "188aee4f-e10e-4a0e-a868-7b8fa821f36e",
+          "current_version_id": "c88a279d-b41d-4d56-84c4-5213ff89cdd7",
+          "is_active": true,
+          "review_status": "approved",
+          "content_source": "verified",
+          "primary_entity_id": "4e1668e6-5870-43e9-a817-35a5d12c9251"
+        }
+      },
+      {
+        "id": "04b62706-0f9b-4975-aab9-24336528d944",
+        "claim_id": "c224c608-a2e7-458e-be5c-43ca1c9fb36c",
+        "claim_text": "The thoracodorsal artery supplies the main perforators to the latissimus dorsi myocutaneous flap used for reconstructing large soft tissue defects around the elbow in adults.",
+        "claim_type": "fact",
+        "predicate": "preferred_treatment",
+        "object_text": "latissimus dorsi myocutaneous flap",
+        "primary_entity_id": "d7e304ee-6931-4815-b8a5-f88b73998328",
+        "review_status": "approved",
+        "content_source": "verified",
+        "approval_method": "machine_consensus",
+        "entityLabel": "latissimus dorsi myocutaneous flap",
+        "parent": {
+          "id": "c224c608-a2e7-458e-be5c-43ca1c9fb36c",
+          "current_version_id": "04b62706-0f9b-4975-aab9-24336528d944",
+          "is_active": true,
+          "review_status": "approved",
+          "content_source": "verified",
+          "primary_entity_id": "d7e304ee-6931-4815-b8a5-f88b73998328"
+        }
+      },
+      {
+        "id": "f5b16faf-4019-498f-9e4a-fd0047b9eca4",
+        "claim_id": "9e52b505-fdd6-488e-ab36-1a9c8f30c3ba",
+        "claim_text": "Iatrogenic transection of the recurrent motor branch of the median nerve during open carpal tunnel release leads to inability to oppose the thumb when the transverse carpal ligament is cut radially.",
+        "claim_type": "fact",
+        "predicate": "preferred_treatment",
+        "object_text": "open carpal tunnel release",
+        "primary_entity_id": "c5e07daf-00d5-49a9-b22b-41e533843d0e",
+        "review_status": "approved",
+        "content_source": "verified",
+        "approval_method": "machine_consensus",
+        "entityLabel": "Recurrent Motor Branch of the Median Nerve",
+        "parent": {
+          "id": "9e52b505-fdd6-488e-ab36-1a9c8f30c3ba",
+          "current_version_id": "f5b16faf-4019-498f-9e4a-fd0047b9eca4",
+          "is_active": true,
+          "review_status": "approved",
+          "content_source": "verified",
+          "primary_entity_id": "c5e07daf-00d5-49a9-b22b-41e533843d0e"
+        }
+      }
+    ]
+  },
+  "fixtureCount": 4,
+  "wins": {
+    "grounded": 1,
+    "baseline": 1,
+    "tie": 2
+  },
+  "totalEligibleClaims": 3,
+  "results": [
+    {
+      "fixture": {
+        "id": "eligible-perineurium",
+        "prompt": "What connective tissue surrounds nerve fascicles after a partial median nerve laceration?",
+        "mode": "oite",
+        "level": "pgy2"
+      },
+      "entityAnchors": [
+        "Median Nerve",
+        "Median Nerve Compression",
+        "Obturator nerve",
+        "Suprascapular nerve",
+        "Median Neuropathy",
+        "Tibial nerve",
+        "Sciatic Nerve",
+        "Axillary Nerve"
+      ],
+      "eligibleClaimCount": 0,
+      "baseline": {
+        "output": {
+          "goal": "Identify the connective tissue surrounding nerve fascicles.",
+          "selectedFocus": "Focus: General framework",
+          "answer": "- **Direct answer:** The connective tissue that surrounds nerve fascicles is called the **perineurium**.\n- **Core framework:** Nerves are organized into fascicles, each surrounded by perineurium, which provides a protective barrier and maintains the internal environment.\n- **High-yield distinction:** The perineurium is distinct from the epineurium, which surrounds the entire nerve, and the endoneurium, which surrounds individual nerve fibers within a fascicle.\n- **Exam pearl:** Understanding the layers of nerve structure is crucial for surgical repair and avoiding further damage during procedures.\n- **Common trap:** Confusing the perineurium with the epineurium or endoneurium can lead to errors in understanding nerve repair techniques.",
+          "priorityPoints": [
+            "Perineurium surrounds nerve fascicles.",
+            "Epineurium surrounds the entire nerve.",
+            "Endoneurium surrounds individual nerve fibers.",
+            "Perineurium provides a protective barrier."
+          ],
+          "knowledgeGaps": [
+            "Differentiate between perineurium, epineurium, and endoneurium.",
+            "Understand the role of perineurium in nerve repair.",
+            "Review nerve anatomy and structure."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "board_pearls",
+              "label": "What are the board-style pearls?",
+              "description": "The fastest board-relevant overview.",
+              "category": "Board Review"
+            },
+            {
+              "id": "concept_prerequisites",
+              "label": "What must I know first?",
+              "description": "Prerequisite concept framework before memorizing details.",
+              "category": "Board Review"
+            },
+            {
+              "id": "classification",
+              "label": "What classification should I know?",
+              "description": "Classification systems and thresholds.",
+              "category": "Classification Systems"
+            },
+            {
+              "id": "treatment_algorithm",
+              "label": "What treatment algorithm gets tested?",
+              "description": "Testable management sequence.",
+              "category": "Clinical Decision Making"
+            },
+            {
+              "id": "treatment_pivots",
+              "label": "What finding changes treatment?",
+              "description": "Thresholds, classifications, and findings that change the answer.",
+              "category": "Clinical Decision Making"
+            },
+            {
+              "id": "test_traps",
+              "label": "What traps show up on OITE?",
+              "description": "Common wrong-answer traps.",
+              "category": "Board Review"
+            }
+          ],
+          "tags": [],
+          "detectedMode": "oite",
+          "confidence": 0.95,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "",
+          "missingInformation": [],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unavailable"
+        },
+        "warnings": [
+          "decision_making_missing",
+          "facet_algorithm_threshold_missing",
+          "anatomy_surgical_relevance_weak",
+          "branch_rubric_coverage_low"
+        ],
+        "latencyMs": 3514
+      },
+      "grounded": {
+        "output": {
+          "goal": "Identify the connective tissue surrounding nerve fascicles.",
+          "selectedFocus": "Focus: General framework",
+          "answer": "- **Direct answer:** The perineurium is the connective tissue that surrounds nerve fascicles.\n- **Core framework:** In nerve anatomy, the epineurium surrounds the entire nerve, the perineurium surrounds each fascicle, and the endoneurium surrounds individual nerve fibers.\n- **High-yield distinction:** The perineurium provides a protective barrier and maintains the internal environment of the fascicles.\n- **Exam trap:** Confusing the perineurium with the epineurium or endoneurium can lead to errors in understanding nerve repair techniques.\n- **Next study move:** Review the layers of nerve structure and their roles in nerve injury and repair.",
+          "priorityPoints": [
+            "Perineurium surrounds nerve fascicles.",
+            "Epineurium surrounds the entire nerve.",
+            "Endoneurium surrounds individual nerve fibers.",
+            "Perineurium's role in maintaining fascicle environment."
+          ],
+          "knowledgeGaps": [
+            "Differentiate between perineurium, epineurium, and endoneurium.",
+            "Understand the role of perineurium in nerve repair.",
+            "Review nerve anatomy layers and their functions."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "board_pearls",
+              "label": "What are the board-style pearls?",
+              "description": "The fastest board-relevant overview.",
+              "category": "Board Review"
+            },
+            {
+              "id": "concept_prerequisites",
+              "label": "What must I know first?",
+              "description": "Prerequisite concept framework before memorizing details.",
+              "category": "Board Review"
+            },
+            {
+              "id": "classification",
+              "label": "What classification should I know?",
+              "description": "Classification systems and thresholds.",
+              "category": "Classification Systems"
+            },
+            {
+              "id": "treatment_algorithm",
+              "label": "What treatment algorithm gets tested?",
+              "description": "Testable management sequence.",
+              "category": "Clinical Decision Making"
+            },
+            {
+              "id": "treatment_pivots",
+              "label": "What finding changes treatment?",
+              "description": "Thresholds, classifications, and findings that change the answer.",
+              "category": "Clinical Decision Making"
+            },
+            {
+              "id": "test_traps",
+              "label": "What traps show up on OITE?",
+              "description": "Common wrong-answer traps.",
+              "category": "Board Review"
+            }
+          ],
+          "tags": [],
+          "detectedMode": "oite",
+          "confidence": 0.95,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "",
+          "missingInformation": [],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unknown"
+        },
+        "warnings": [
+          "decision_making_missing",
+          "facet_algorithm_threshold_missing",
+          "anatomy_surgical_relevance_weak",
+          "branch_rubric_coverage_low"
+        ],
+        "latencyMs": 3927
+      },
+      "cardCount": 0,
+      "cards": [],
+      "evaluation": {
+        "winner": "tie",
+        "scoresA": {
+          "correctness": 5,
+          "specificity": 5,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 5,
+          "reasons": "Accurately identifies perineurium as connective tissue surrounding fascicles; clearly distinguishes nerve layers; includes relevant clinical context and exam pearls."
+        },
+        "scoresB": {
+          "correctness": 5,
+          "specificity": 5,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 5,
+          "reasons": "Correctly names perineurium and distinguishes nerve layers; provides protective function; includes study advice enhancing educational value."
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": "eligible-groin-flap",
+        "prompt": "Preparing a groin flap for traumatic thumb soft-tissue coverage. What is the pedicle and which nerve is at risk?",
+        "mode": "or_prep",
+        "level": "pgy2"
+      },
+      "entityAnchors": [
+        "groin flap",
+        "Saphenous Nerve at Risk",
+        "Femoral Nerve at Risk",
+        "Obturator nerve",
+        "Suprascapular nerve",
+        "Tibial nerve",
+        "Median Nerve",
+        "Sciatic Nerve"
+      ],
+      "eligibleClaimCount": 1,
+      "baseline": {
+        "output": {
+          "goal": "Understand the vascular supply and nerve risk when preparing a groin flap for thumb coverage.",
+          "selectedFocus": "Focus: Anatomy at Risk",
+          "answer": "- **Pedicle:** The superficial circumflex iliac artery (SCIA) is the primary vascular pedicle for a groin flap.\n- **Nerve at Risk:** The lateral femoral cutaneous nerve (LFCN) is at risk during flap elevation.\n- **Danger Zone:** The LFCN runs near the anterior superior iliac spine (ASIS) and can be injured during dissection.\n- **Protection Strategy:** Carefully identify and preserve the LFCN during flap elevation to prevent sensory loss.\n- **Consequence of Injury:** Damage to the LFCN can result in numbness or dysesthesia over the lateral thigh.",
+          "priorityPoints": [
+            "SCIA pedicle: ensure adequate length and caliber for flap viability.",
+            "LFCN: identify and protect near ASIS to avoid sensory deficits.",
+            "Flap design: ensure adequate size and orientation for thumb coverage.",
+            "Flap elevation: maintain pedicle integrity and avoid excessive tension."
+          ],
+          "knowledgeGaps": [
+            "Review the course of the superficial circumflex iliac artery.",
+            "Understand the sensory distribution of the lateral femoral cutaneous nerve.",
+            "Learn techniques for flap inset and monitoring postoperatively."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "key_landmarks",
+              "label": "What landmarks should I find first?",
+              "description": "Positioning, incision, portals, and approach cues.",
+              "category": "Surgical Approach"
+            },
+            {
+              "id": "operative_steps",
+              "label": "What are the key operative steps?",
+              "description": "Stepwise flow and decision points.",
+              "category": "OR Technique"
+            },
+            {
+              "id": "anatomy_at_risk",
+              "label": "What anatomy is most at risk?",
+              "description": "Structures to protect and where they are encountered.",
+              "category": "Anatomy"
+            },
+            {
+              "id": "implant_selection",
+              "label": "What implants should I know?",
+              "description": "Implant choices, reduction goals, and backup plans.",
+              "category": "Implant Selection"
+            },
+            {
+              "id": "complications_tested",
+              "label": "What complications get tested most?",
+              "description": "Pitfalls and how to avoid them.",
+              "category": "Complications"
+            },
+            {
+              "id": "attending_pimp_questions",
+              "label": "What will the attending ask?",
+              "description": "What to ask before incision and what they may ask you.",
+              "category": "Pimp Questions"
+            }
+          ],
+          "tags": [
+            "mode:or_prep",
+            "procedure:groin_flap",
+            "concept:anatomy_at_risk",
+            "anatomy:lateral_femoral_cutaneous_nerve",
+            "anatomy:superficial_circumflex_iliac_artery"
+          ],
+          "detectedMode": "or_prep",
+          "confidence": 0.9,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "",
+          "missingInformation": [],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unavailable"
+        },
+        "warnings": [
+          "limited_concrete_ortho_detail",
+          "or_prep_exposure_terms_missing",
+          "or_prep_pitfall_bailout_missing",
+          "or_prep_learner_level_signal_missing",
+          "facet_or_prep_exposure_missing",
+          "facet_pitfall_layer_missing",
+          "branch_rubric_coverage_low"
+        ],
+        "latencyMs": 6195
+      },
+      "grounded": {
+        "output": {
+          "goal": "Understand the vascular supply and nerve risk in a groin flap for thumb coverage.",
+          "selectedFocus": "Focus: Anatomy at risk",
+          "answer": "- **Pedicle:** The groin flap is based on the superficial circumflex iliac artery, which provides the vascular supply.\n- **Nerve at risk:** The lateral femoral cutaneous nerve is at risk during flap elevation.\n- **Danger zone:** The nerve is most at risk when dissecting near the anterior superior iliac spine (ASIS).\n- **Protection strategy:** Carefully identify and protect the nerve by staying superficial and lateral to the ASIS during dissection.\n- **Consequence of injury:** Injury to the lateral femoral cutaneous nerve can result in sensory loss or dysesthesia over the lateral thigh.",
+          "priorityPoints": [
+            "Superficial circumflex iliac artery: primary pedicle for groin flap.",
+            "Lateral femoral cutaneous nerve: risk during dissection near ASIS.",
+            "Stay superficial and lateral to ASIS to protect the nerve.",
+            "Identify the pedicle early to ensure adequate blood supply.",
+            "Monitor flap perfusion intraoperatively to avoid ischemia."
+          ],
+          "knowledgeGaps": [
+            "Review the course of the lateral femoral cutaneous nerve.",
+            "Understand the anatomy of the superficial circumflex iliac artery.",
+            "Learn techniques for flap perfusion monitoring."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "key_landmarks",
+              "label": "What landmarks should I find first?",
+              "description": "Positioning, incision, portals, and approach cues.",
+              "category": "Surgical Approach"
+            },
+            {
+              "id": "operative_steps",
+              "label": "What are the key operative steps?",
+              "description": "Stepwise flow and decision points.",
+              "category": "OR Technique"
+            },
+            {
+              "id": "anatomy_at_risk",
+              "label": "What anatomy is most at risk?",
+              "description": "Structures to protect and where they are encountered.",
+              "category": "Anatomy"
+            },
+            {
+              "id": "implant_selection",
+              "label": "What implants should I know?",
+              "description": "Implant choices, reduction goals, and backup plans.",
+              "category": "Implant Selection"
+            },
+            {
+              "id": "complications_tested",
+              "label": "What complications get tested most?",
+              "description": "Pitfalls and how to avoid them.",
+              "category": "Complications"
+            },
+            {
+              "id": "attending_pimp_questions",
+              "label": "What will the attending ask?",
+              "description": "What to ask before incision and what they may ask you.",
+              "category": "Pimp Questions"
+            }
+          ],
+          "tags": [
+            "mode:or_prep",
+            "procedure:groin_flap",
+            "concept:anatomy_at_risk",
+            "anatomy:lateral_femoral_cutaneous_nerve",
+            "anatomy:superficial_circumflex_iliac_artery"
+          ],
+          "detectedMode": "or_prep",
+          "confidence": 0.9,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "",
+          "missingInformation": [],
+          "usedClaimIds": [
+            "188aee4f-e10e-4a0e-a868-7b8fa821f36e"
+          ],
+          "knowledgeCoverage": "full"
+        },
+        "warnings": [
+          "limited_concrete_ortho_detail",
+          "or_prep_exposure_terms_missing",
+          "or_prep_pitfall_bailout_missing",
+          "or_prep_learner_level_signal_missing",
+          "facet_or_prep_exposure_missing",
+          "facet_pitfall_layer_missing",
+          "branch_rubric_coverage_low"
+        ],
+        "latencyMs": 4966
+      },
+      "cardCount": 0,
+      "cards": [],
+      "evaluation": {
+        "winner": "tie",
+        "scoresA": {
+          "correctness": 5,
+          "specificity": 5,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 5,
+          "reasons": "Accurately identifies the pedicle as the superficial circumflex iliac artery and the nerve at risk as the lateral femoral cutaneous nerve, consistent with the reviewed claim. Provides detailed anatomical context and consequences of injury, enhancing understanding."
+        },
+        "scoresB": {
+          "correctness": 5,
+          "specificity": 5,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 5,
+          "reasons": "Correctly states the pedicle and nerve at risk matching the reviewed claim. Includes relevant anatomical details and protective strategies, maintaining clarity and educational value."
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": "eligible-latissimus-flap",
+        "prompt": "For a latissimus dorsi myocutaneous flap covering a large adult elbow defect, what vessel supplies the main perforators?",
+        "mode": "or_prep",
+        "level": "pgy2"
+      },
+      "entityAnchors": [
+        "latissimus dorsi myocutaneous flap",
+        "groin flap",
+        "Elbow dislocation",
+        "Elbow Stiffness",
+        "Elbow Joint",
+        "Elbow Instability",
+        "Elbow Anatomy",
+        "Elbow Approaches"
+      ],
+      "eligibleClaimCount": 2,
+      "baseline": {
+        "output": {
+          "goal": "Identify the vessel supplying the main perforators for a latissimus dorsi myocutaneous flap.",
+          "selectedFocus": "Focus: General framework",
+          "answer": "**Vessel Supply:** The thoracodorsal artery supplies the main perforators for the latissimus dorsi myocutaneous flap. This artery is a branch of the subscapular artery, which itself branches from the axillary artery. The thoracodorsal artery runs along the deep surface of the latissimus dorsi muscle, providing robust vascular supply for the flap.",
+          "priorityPoints": [
+            "Thoracodorsal artery: main vessel supplying the latissimus dorsi flap.",
+            "Subscapular artery: parent vessel of the thoracodorsal artery.",
+            "Axillary artery: origin of the subscapular artery."
+          ],
+          "knowledgeGaps": [
+            "Understand the course of the thoracodorsal artery in relation to the latissimus dorsi muscle.",
+            "Review the anatomy of the axillary artery and its branches.",
+            "Learn about flap design and planning for elbow coverage."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "key_landmarks",
+              "label": "What landmarks should I find first?",
+              "description": "Explore the key landmarks for identifying the thoracodorsal artery.",
+              "category": "anatomy"
+            },
+            {
+              "id": "operative_steps",
+              "label": "What are the key operative steps?",
+              "description": "Learn the operative steps for harvesting a latissimus dorsi flap.",
+              "category": "procedure"
+            },
+            {
+              "id": "anatomy_at_risk",
+              "label": "What anatomy is most at risk?",
+              "description": "Identify structures at risk during flap harvest.",
+              "category": "anatomy"
+            }
+          ],
+          "tags": [
+            "mode:or_prep",
+            "procedure:latissimus_dorsi_flap",
+            "concept:vascular_supply",
+            "anatomy:thoracodorsal_artery"
+          ],
+          "detectedMode": "or_prep",
+          "confidence": 0.95,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "",
+          "missingInformation": [],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unavailable"
+        },
+        "warnings": [
+          "answer_short_for_depth",
+          "decision_making_missing",
+          "limited_concrete_ortho_detail",
+          "or_prep_exposure_terms_missing",
+          "or_prep_decision_point_missing",
+          "or_prep_pitfall_bailout_missing",
+          "or_prep_learner_level_signal_missing",
+          "facet_or_prep_exposure_missing",
+          "facet_pitfall_layer_missing",
+          "anatomy_surgical_relevance_weak",
+          "branch_rubric_coverage_low"
+        ],
+        "latencyMs": 6307
+      },
+      "grounded": {
+        "output": {
+          "goal": "Identify the vessel supplying the main perforators for a latissimus dorsi myocutaneous flap used in elbow reconstruction.",
+          "selectedFocus": "Focus: General framework",
+          "answer": "- **Vessel:** The thoracodorsal artery supplies the main perforators to the latissimus dorsi myocutaneous flap.\n- **Course:** The thoracodorsal artery is a branch of the subscapular artery, which itself branches from the axillary artery.\n- **Surgical Relevance:** Ensure the thoracodorsal artery is preserved during flap harvest to maintain flap viability.\n- **Injury Consequence:** Damage to this artery can lead to flap necrosis due to inadequate blood supply.\n- **Protective Maneuver:** Careful dissection and identification of the thoracodorsal artery during flap elevation are crucial to avoid injury.",
+          "priorityPoints": [
+            "Thoracodorsal artery: main blood supply for latissimus dorsi flap.",
+            "Preserve thoracodorsal artery during flap harvest.",
+            "Flap necrosis risk if thoracodorsal artery is damaged."
+          ],
+          "knowledgeGaps": [
+            "Understand the course of the thoracodorsal artery.",
+            "Learn flap elevation techniques to protect the artery.",
+            "Review complications of flap necrosis."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "key_landmarks",
+              "label": "What landmarks should I find first?",
+              "description": "Identify key anatomical landmarks for flap harvest.",
+              "category": "landmarks"
+            },
+            {
+              "id": "operative_steps",
+              "label": "What are the key operative steps?",
+              "description": "Learn the sequence of steps for flap elevation and transfer.",
+              "category": "steps"
+            },
+            {
+              "id": "anatomy_at_risk",
+              "label": "What anatomy is most at risk?",
+              "description": "Understand which structures are at risk during flap harvest.",
+              "category": "anatomy"
+            }
+          ],
+          "tags": [
+            "mode:or_prep",
+            "procedure:latissimus_dorsi_flap",
+            "concept:vascular_supply",
+            "anatomy:thoracodorsal_artery"
+          ],
+          "detectedMode": "or_prep",
+          "confidence": 0.95,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "",
+          "missingInformation": [],
+          "usedClaimIds": [
+            "c224c608-a2e7-458e-be5c-43ca1c9fb36c"
+          ],
+          "knowledgeCoverage": "full"
+        },
+        "warnings": [
+          "limited_concrete_ortho_detail",
+          "or_prep_exposure_terms_missing",
+          "or_prep_learner_level_signal_missing",
+          "facet_or_prep_exposure_missing",
+          "branch_rubric_coverage_low"
+        ],
+        "latencyMs": 5987
+      },
+      "cardCount": 0,
+      "cards": [],
+      "evaluation": {
+        "winner": "B",
+        "scoresA": {
+          "correctness": 5,
+          "specificity": 4,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 4,
+          "reasons": "Accurately identifies the thoracodorsal artery as the main vessel supplying the flap and its origin; concise but less detailed on surgical implications."
+        },
+        "scoresB": {
+          "correctness": 5,
+          "specificity": 5,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 5,
+          "reasons": "Correctly identifies the vessel and origin, adds important surgical relevance, consequences of injury, and protective maneuvers, enhancing educational value without unsupported detail."
+        }
+      }
+    },
+    {
+      "fixture": {
+        "id": "eligible-carpal-tunnel",
+        "prompt": "During open carpal tunnel release, which branch is endangered by a radial transverse carpal ligament cut and what deficit results?",
+        "mode": "or_prep",
+        "level": "pgy1"
+      },
+      "entityAnchors": [
+        "Carpal Tunnel",
+        "Open Carpal Tunnel Release",
+        "Incomplete Carpal Tunnel Release",
+        "Revision Carpal Tunnel Release",
+        "Endoscopic Carpal Tunnel Release",
+        "Open Carpal Tunnel Approach",
+        "Radial Collateral Ligament",
+        "Carpal Tunnel Syndrome"
+      ],
+      "eligibleClaimCount": 0,
+      "baseline": {
+        "output": {
+          "goal": "Identify the nerve branch at risk during a radial transverse carpal ligament cut in carpal tunnel release and the resulting deficit.",
+          "selectedFocus": "Focus: Anatomy at risk",
+          "answer": "- **Anatomy at risk:** The palmar cutaneous branch of the median nerve is at risk during a radial transverse cut of the transverse carpal ligament.\n- **Resulting deficit:** Injury to this branch can lead to sensory loss in the palm, as it provides sensation to the central palm area.\n- **Key decision:** Ensure the incision stays ulnar to the thenar crease to avoid this branch.\n- **Pitfall:** Residents often misjudge the location of the palmar cutaneous branch, leading to inadvertent injury.\n- **Attending expectation:** Be prepared to discuss the course of the palmar cutaneous branch and how to avoid it during the procedure.",
+          "priorityPoints": [
+            "Palmar cutaneous branch: arises from the median nerve proximal to the carpal tunnel.",
+            "Sensory loss: affects the central palm if the branch is injured.",
+            "Incision placement: stay ulnar to the thenar crease to avoid the branch.",
+            "Anatomy knowledge: critical to avoid nerve injury during ligament release."
+          ],
+          "knowledgeGaps": [
+            "Review the course of the palmar cutaneous branch of the median nerve.",
+            "Understand the sensory distribution of the median nerve in the hand.",
+            "Learn the safe incision landmarks for carpal tunnel release."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "landmarks",
+              "label": "What landmarks should I identify?",
+              "description": "Learn the key surface landmarks for safe incision placement.",
+              "category": "anatomy"
+            },
+            {
+              "id": "incision_interval",
+              "label": "Where is the safe interval?",
+              "description": "Understand the surgical interval to avoid nerve injury.",
+              "category": "surgical_steps"
+            },
+            {
+              "id": "structures_at_risk",
+              "label": "What structure is most at risk?",
+              "description": "Identify the structures at risk during carpal tunnel release.",
+              "category": "anatomy"
+            }
+          ],
+          "tags": [
+            "mode:or_prep",
+            "procedure:carpal_tunnel_release",
+            "concept:anatomy_at_risk",
+            "anatomy:palmar_cutaneous_branch"
+          ],
+          "detectedMode": "or_prep",
+          "confidence": 0.95,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "",
+          "missingInformation": [],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unavailable"
+        },
+        "warnings": [
+          "decision_making_missing",
+          "limited_concrete_ortho_detail",
+          "or_prep_exposure_terms_missing",
+          "level_junior_orientation_missing"
+        ],
+        "latencyMs": 5236
+      },
+      "grounded": {
+        "output": {
+          "goal": "Identify the nerve branch at risk during a radial transverse carpal ligament cut in carpal tunnel release and the resulting deficit.",
+          "selectedFocus": "Focus: Anatomy at risk",
+          "answer": "- **Anatomy at risk:** The palmar cutaneous branch of the median nerve is at risk during a radial transverse cut of the transverse carpal ligament.\n- **Deficit:** Injury to this branch can result in sensory loss over the thenar eminence, as it provides sensation to the skin over this area.\n- **Key decision:** Ensure the incision stays ulnar to the palmar cutaneous branch to avoid injury.\n- **Pitfall/Bailout:** If the branch is inadvertently cut, the deficit is purely sensory, and no motor function is affected.\n- **Attending relevance:** Be prepared to discuss how you identify and protect the palmar cutaneous branch during the procedure.",
+          "priorityPoints": [
+            "Palmar cutaneous branch: arises from the median nerve proximal to the carpal tunnel.",
+            "Sensory loss: affects the thenar eminence if the branch is injured.",
+            "Incision strategy: stay ulnar to avoid the palmar cutaneous branch.",
+            "Radial transverse cut: increases risk to the palmar cutaneous branch."
+          ],
+          "knowledgeGaps": [
+            "Review the course of the palmar cutaneous branch of the median nerve.",
+            "Understand the sensory distribution of the median nerve in the hand.",
+            "Learn techniques to identify and protect the palmar cutaneous branch during surgery."
+          ],
+          "whatMostResidentsMiss": [],
+          "suggestedQuestions": [],
+          "nextLearningBranches": [
+            {
+              "id": "key_landmarks",
+              "label": "What landmarks should I find first?",
+              "description": "Positioning, incision, portals, and approach cues.",
+              "category": "Surgical Approach"
+            },
+            {
+              "id": "operative_steps",
+              "label": "What are the key operative steps?",
+              "description": "Stepwise flow and decision points.",
+              "category": "OR Technique"
+            },
+            {
+              "id": "anatomy_at_risk",
+              "label": "What anatomy is most at risk?",
+              "description": "Structures to protect and where they are encountered.",
+              "category": "Anatomy"
+            },
+            {
+              "id": "implant_selection",
+              "label": "What implants should I know?",
+              "description": "Implant choices, reduction goals, and backup plans.",
+              "category": "Implant Selection"
+            },
+            {
+              "id": "complications_tested",
+              "label": "What complications get tested most?",
+              "description": "Pitfalls and how to avoid them.",
+              "category": "Complications"
+            },
+            {
+              "id": "attending_pimp_questions",
+              "label": "What will the attending ask?",
+              "description": "What to ask before incision and what they may ask you.",
+              "category": "Pimp Questions"
+            }
+          ],
+          "tags": [
+            "mode:or_prep",
+            "procedure:carpal_tunnel_release",
+            "concept:anatomy_at_risk",
+            "anatomy:palmar_cutaneous_branch"
+          ],
+          "detectedMode": "or_prep",
+          "confidence": 0.95,
+          "needsClarification": false,
+          "clarifyingQuestions": [],
+          "assumedContext": "",
+          "missingInformation": [],
+          "usedClaimIds": [],
+          "knowledgeCoverage": "unknown"
+        },
+        "warnings": [
+          "limited_concrete_ortho_detail",
+          "or_prep_exposure_terms_missing"
+        ],
+        "latencyMs": 4508
+      },
+      "cardCount": 0,
+      "cards": [],
+      "evaluation": {
+        "winner": "A",
+        "scoresA": {
+          "correctness": 5,
+          "specificity": 4,
+          "qualifierPreservation": 5,
+          "educationalUsefulness": 5,
+          "reasons": "Correctly identifies the palmar cutaneous branch as at risk and sensory loss in the palm; emphasizes incision placement relative to the thenar crease, which is a standard landmark; includes useful surgical tips and pitfalls; preserves qualifiers about anatomy and surgical technique."
+        },
+        "scoresB": {
+          "correctness": 3,
+          "specificity": 3,
+          "qualifierPreservation": 4,
+          "educationalUsefulness": 4,
+          "reasons": "Correctly identifies the palmar cutaneous branch but incorrectly states sensory loss over the thenar eminence rather than the central palm; incision guidance is less precise; notes sensory-only deficit which is accurate; less detailed about surgical landmarks and pitfalls."
+        }
+      }
+    }
+  ]
+}

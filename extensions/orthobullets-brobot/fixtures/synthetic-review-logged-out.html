@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Synthetic Orthobullets Logged Out Fixture</title>
+  </head>
+  <body>
+    <!-- Synthetic logged-out state: a login wall instead of review content.
+         All prose is invented for review-readiness tests. -->
+    <nav class="breadcrumb">
+      <a href="/synthetic">Synthetic Specialty</a>
+    </nav>
+    <main>
+      <h1>Please log in to view this question</h1>
+      <p>Your session expired. Sign in to continue reviewing.</p>
+      <form action="/login" method="post">
+        <label>Username <input type="text" name="username" /></label>
+        <label>Password <input type="password" name="password" /></label>
+        <button type="submit">Log in</button>
+      </form>
+    </main>
+  </body>
+</html>

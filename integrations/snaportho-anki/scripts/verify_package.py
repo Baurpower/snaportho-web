@@ -22,6 +22,9 @@ with zipfile.ZipFile(package)as archive:
     payload=b"".join(archive.read(n)for n in names);assert b"SUPABASE_SERVICE_ROLE"not in payload and b"BEGIN PRIVATE KEY"not in payload
     assert "poll_search_relay" not in runtime, "stale search relay in packaged add-on"
     assert "_owns_launch_polling" in runtime, "missing launch poll ownership guard"
+    assert "LAUNCH_POLL_IDLE_MS=30*60*1000" in runtime, "idle launch polling budget missing"
+    assert "setSingleShot(True)" in runtime, "launch polling must use non-overlapping single-shot timers"
+    assert "/api/anki/addon/version" in archive.read("snaportho_reviewer/api.py").decode(), "daily add-on update check missing"
     assert "create_credential_store" in runtime and "MacOSKeychainStore(" not in runtime
     assert "WindowsCredentialManagerStore" in credentials and "CredWriteW" in credentials and "CredReadW" in credentials
     assert "UnsupportedCredentialStore" in credentials and "plaintext" not in credentials.lower()

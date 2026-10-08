@@ -688,6 +688,29 @@ chrome.runtime.onMessage.addListener(
           return;
         }
 
+        if (message.type === 'ob:generate-question-claim-v5') {
+          const deviceToken = await getStoredDeviceToken();
+          if (!deviceToken) throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');
+          const page = message.pageContext;
+          const reviewed = page.provider === 'orthobullets'
+            && (page.pageKind === 'review' || page.pageKind === 'testview')
+            && (page.reviewState === undefined || page.reviewState === 'ready')
+            && Boolean(page.questionId && page.stem?.trim() && page.correctAnswerKey && page.explanationText?.trim());
+          if (!reviewed) throw new CodedError('Open a completed Orthobullets review question before generating claims.', 'invalid_request');
+          const result = await fetchJson('/api/brobot/extension/question-claims-v5', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', [EXTENSION_TOKEN_HEADER]: deviceToken },
+            body: JSON.stringify({
+              contractVersion: 'orthobullets-question-claim-v5',
+              pageContext: page,
+              runId: message.runId,
+              runItemId: message.runItemId,
+            }),
+          });
+          sendResponse({ ok: true, questionClaimV5: result });
+          return;
+        }
+
         if (message.type === 'ob:extract-page-context') {
           const tabSnapshot = await getTabSnapshot(message.tabId);
           const initialAttempt = await sendExtractionMessage(message.tabId, message.questionAttemptId);

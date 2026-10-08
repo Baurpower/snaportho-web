@@ -161,6 +161,29 @@ export interface ExtensionFetchDiagnostics {
   failureStage?: string | null;
 }
 
+export type OrthobulletsReviewState =
+  | 'ready'
+  | 'loading'
+  | 'answer_reveal_required'
+  | 'not_authenticated'
+  | 'not_completed';
+
+export type OrthobulletsReviewErrorCode =
+  | 'orthobullets_login_required'
+  | 'orthobullets_review_not_revealed'
+  | 'orthobullets_question_mismatch'
+  | 'orthobullets_review_load_timeout';
+
+export interface OrthobulletsReviewDiagnostics {
+  state: OrthobulletsReviewState;
+  missingFields: string[];
+  errorCode: OrthobulletsReviewErrorCode | null;
+  expectedQuestionId: string | null;
+  extractedQuestionId: string | null;
+  fingerprint: string;
+  detail: string | null;
+}
+
 export interface OrthobulletsPageContext {
   source: QuestionProvider;
   provider: QuestionProvider;
@@ -168,6 +191,8 @@ export interface OrthobulletsPageContext {
   pageUrl: string;
   sourceUrl: string;
   pageKind: OrthobulletsPageKind | string;
+  reviewState?: OrthobulletsReviewState;
+  reviewDiagnostics?: OrthobulletsReviewDiagnostics;
   supportedPageKind?: SupportedPageKind;
   questionId?: string | null;
   topicId?: string | null;

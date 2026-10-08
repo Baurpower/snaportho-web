@@ -1,0 +1,1310 @@
+{
+ "generatedAt": "2026-09-29T03:26:44.915Z",
+ "rpc": "retrieve_brobot_knowledge_v2",
+ "summary": {
+  "n": 77,
+  "coverageFull": 20,
+  "promptsWithAnyClaim": 20,
+  "meanExpectedRecall": 0.013078470824949699,
+  "promptsWithFullRecall": 0,
+  "promptsWithZeroRecall": 69,
+  "totalHardNegativeLeaks": 9,
+  "promptsWithLeaks": 2,
+  "noClaimPromptsCorrect": 2,
+  "noClaimPromptsTotal": 6,
+  "latencyP50": 2.11,
+  "latencyP95": 9.3,
+  "latencyMax": 25.17
+ },
+ "results": [
+  {
+   "id": "smoke-oite-scfe",
+   "split": "train",
+   "mode": "oite",
+   "latencyMs": 25.17,
+   "coverage": "unknown",
+   "anchors": [
+    "SCFE"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "smoke-oite-garden",
+   "split": "train",
+   "mode": "oite",
+   "latencyMs": 11.19,
+   "coverage": "unknown",
+   "anchors": [
+    "AIN",
+    "Garden Classification"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "smoke-clinic-acl",
+   "split": "train",
+   "mode": "clinic",
+   "latencyMs": 7.53,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": null,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "smoke-or-ctr",
+   "split": "train",
+   "mode": "or_prep",
+   "latencyMs": 7.98,
+   "coverage": "unknown",
+   "anchors": [
+    "Carpal Tunnel"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "smoke-consult-ankle",
+   "split": "train",
+   "mode": "consult",
+   "latencyMs": 6.42,
+   "coverage": "unknown",
+   "anchors": [
+    "Ankle Fracture"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "smoke-or-distal-radius",
+   "split": "train",
+   "mode": "or_prep",
+   "latencyMs": 11.79,
+   "coverage": "full",
+   "anchors": [
+    "Distal Radius",
+    "Distal Radius ORIF",
+    "ORIF",
+    "ORIF",
+    "Radius"
+   ],
+   "returnedClaimIds": [
+    "56593429-f96d-48ed-84bd-27167946a48b",
+    "74fd5f49-c654-4da0-889e-b8be85dce337",
+    "a4736acc-89aa-4568-8bcf-375eb561595a",
+    "c2e0bc4c-3677-4090-8fb8-7c88d97ce51d",
+    "d2c99aa9-26e9-4dd8-8542-771a14b1d6f7",
+    "e7ba0d39-a58c-4080-87d2-d3b2f088797c"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [
+    "56593429-f96d-48ed-84bd-27167946a48b",
+    "74fd5f49-c654-4da0-889e-b8be85dce337",
+    "a4736acc-89aa-4568-8bcf-375eb561595a",
+    "c2e0bc4c-3677-4090-8fb8-7c88d97ce51d",
+    "d2c99aa9-26e9-4dd8-8542-771a14b1d6f7",
+    "e7ba0d39-a58c-4080-87d2-d3b2f088797c"
+   ],
+   "cardCount": 2
+  },
+  {
+   "id": "regress-ankle-exact",
+   "split": "train",
+   "mode": "consult",
+   "latencyMs": 9.3,
+   "coverage": "full",
+   "anchors": [
+    "Ankle Fracture",
+    "Ankle Fracture Classification",
+    "Ankle Fractures"
+   ],
+   "returnedClaimIds": [
+    "014b74d5-db10-463d-8227-f643035eddd8",
+    "0cc91781-c819-4736-86c1-ca0d51ea766f",
+    "13bbdca4-4850-4a0b-8fd9-f02e671c8c95",
+    "17919122-29c8-4e69-8d20-3ecbbf2489b9",
+    "4fed34e9-1898-4911-8eda-fabd80a202bf",
+    "5ba6413a-6b16-4278-8c81-83d4bd600af1",
+    "5fee007c-42a0-4134-89e7-0951861a1c1c",
+    "8f63764a-f480-4c6a-8a98-580efc3546ac"
+   ],
+   "expectedRecalled": [
+    "13bbdca4-4850-4a0b-8fd9-f02e671c8c95",
+    "5ba6413a-6b16-4278-8c81-83d4bd600af1",
+    "5fee007c-42a0-4134-89e7-0951861a1c1c"
+   ],
+   "expectedRecall": 0.42857142857142855,
+   "hardNegativesLeaked": [],
+   "cardCount": 6
+  },
+  {
+   "id": "regress-ctr-radial-cut",
+   "split": "holdout",
+   "mode": "or_prep",
+   "latencyMs": 4.16,
+   "coverage": "unknown",
+   "anchors": [
+    "Carpal Tunnel",
+    "Open Carpal Tunnel Release"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "regress-acl-indications-variant",
+   "split": "holdout",
+   "mode": "clinic",
+   "latencyMs": 2.29,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": null,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "regress-garden-elderly",
+   "split": "holdout",
+   "mode": "clinic",
+   "latencyMs": 3.84,
+   "coverage": "unknown",
+   "anchors": [
+    "Femoral Neck",
+    "Femoral Neck Fracture"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-scfe-exam",
+   "split": "train",
+   "mode": "oite",
+   "latencyMs": 2.94,
+   "coverage": "unknown",
+   "anchors": [
+    "SCFE"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-scfe-slip-direction",
+   "split": "train",
+   "mode": "oite",
+   "latencyMs": 4.77,
+   "coverage": "unknown",
+   "anchors": [
+    "Physis",
+    "SCFE",
+    "Tap"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-scfe-southwick",
+   "split": "holdout",
+   "mode": "oite",
+   "latencyMs": 2.96,
+   "coverage": "unknown",
+   "anchors": [
+    "SCFE"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-scfe-contralateral",
+   "split": "train",
+   "mode": "oite",
+   "latencyMs": 4.62,
+   "coverage": "full",
+   "anchors": [
+    "PIN",
+    "SCFE"
+   ],
+   "returnedClaimIds": [
+    "278addb7-5211-49e3-8c4c-f847c3a8c6e3",
+    "477b0a2e-0837-46d9-83e8-34bd20ffdab3",
+    "8a802ff7-1dea-496f-807a-577a908d8fdc",
+    "8b7555d5-e1b4-4384-8d37-9b2df29b398c",
+    "a1d8f1a7-7e60-4262-8c14-31cd79cfba77",
+    "bf1a8802-f0c2-4bc6-8f5f-e834ae42ad6a",
+    "cca2f9ba-2861-481e-8aff-c2c64b20765d",
+    "e08b93d2-f5ab-4686-8364-36caddcf8d6f"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 5
+  },
+  {
+   "id": "oite-scfe-knee-pain",
+   "split": "holdout",
+   "mode": "oite",
+   "latencyMs": 3.95,
+   "coverage": "full",
+   "anchors": [
+    "AIN",
+    "Knee",
+    "SCFE"
+   ],
+   "returnedClaimIds": [
+    "26363c2c-9579-4d1c-8334-89c4ab6a2eee"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 1
+  },
+  {
+   "id": "oite-kleins-line",
+   "split": "train",
+   "mode": "oite",
+   "latencyMs": 2.42,
+   "coverage": "unknown",
+   "anchors": [
+    "SCFE"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-monteggia",
+   "split": "train",
+   "mode": "oite",
+   "latencyMs": 1.49,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-galeazzi",
+   "split": "holdout",
+   "mode": "oite",
+   "latencyMs": 2.67,
+   "coverage": "unknown",
+   "anchors": [
+    "DRUJ",
+    "Galeazzi Fracture"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-schatzker",
+   "split": "train",
+   "mode": "oite",
+   "latencyMs": 5.63,
+   "coverage": "full",
+   "anchors": [
+    "Tibia",
+    "Tibial Plateau",
+    "Tibial Plateau Fracture",
+    "Tibial Plateau Fractures"
+   ],
+   "returnedClaimIds": [
+    "004e8894-40dc-4863-89c2-360527207f4e",
+    "0336d13c-a1f3-4579-835f-8505550468ba",
+    "0fb7f4c2-026d-4b2b-8c78-245251621621",
+    "2bb565f6-6774-4cb6-85b1-4a9d9530baac",
+    "37b4d9e2-d096-4a34-8bc9-6aa5929aca57",
+    "37f46876-2ffb-48bd-8803-8e9aa4a9fbed",
+    "432c2d43-4f65-4fe1-8a09-9a466dc8ab90",
+    "43d3995b-85b6-4f9a-8a92-63fd424fb161"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 5
+  },
+  {
+   "id": "oite-meyerding",
+   "split": "train",
+   "mode": "oite",
+   "latencyMs": 2.1,
+   "coverage": "unknown",
+   "anchors": [
+    "Spondylolisthesis"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-spondylo-level",
+   "split": "holdout",
+   "mode": "oite",
+   "latencyMs": 1.97,
+   "coverage": "unknown",
+   "anchors": [
+    "Spondylolisthesis"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-sarcoma-mets",
+   "split": "train",
+   "mode": "oite",
+   "latencyMs": 1.44,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-translocation-rhabdo",
+   "split": "holdout",
+   "mode": "oite",
+   "latencyMs": 1.44,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-snac",
+   "split": "train",
+   "mode": "oite",
+   "latencyMs": 1.31,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-preiser",
+   "split": "holdout",
+   "mode": "oite",
+   "latencyMs": 1.94,
+   "coverage": "unknown",
+   "anchors": [
+    "Scaphoid"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-tubs",
+   "split": "train",
+   "mode": "oite",
+   "latencyMs": 1.31,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-acl-bundles",
+   "split": "train",
+   "mode": "oite",
+   "latencyMs": 1.34,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-discoid",
+   "split": "holdout",
+   "mode": "oite",
+   "latencyMs": 1.34,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-meniscus-patterns",
+   "split": "train",
+   "mode": "oite",
+   "latencyMs": 1.99,
+   "coverage": "unknown",
+   "anchors": [
+    "Meniscus Tear"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "oite-acl-female",
+   "split": "holdout",
+   "mode": "oite",
+   "latencyMs": 1.93,
+   "coverage": "unknown",
+   "anchors": [
+    "ACL Tear"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "clinic-acl-exam",
+   "split": "train",
+   "mode": "clinic",
+   "latencyMs": 1.42,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "clinic-acl-mri",
+   "split": "holdout",
+   "mode": "clinic",
+   "latencyMs": 2.13,
+   "coverage": "unknown",
+   "anchors": [
+    "ACL Tear"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "clinic-acl-peds",
+   "split": "train",
+   "mode": "clinic",
+   "latencyMs": 1.49,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "clinic-achilles",
+   "split": "train",
+   "mode": "clinic",
+   "latencyMs": 2.5,
+   "coverage": "unknown",
+   "anchors": [
+    "Achilles Tendon",
+    "Achilles Tendon Rupture"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "clinic-ddh",
+   "split": "holdout",
+   "mode": "clinic",
+   "latencyMs": 1.32,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "clinic-spondylo-exam",
+   "split": "train",
+   "mode": "clinic",
+   "latencyMs": 2.55,
+   "coverage": "unknown",
+   "anchors": [
+    "AIN",
+    "Spondylolisthesis"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "clinic-cuff-goutallier",
+   "split": "train",
+   "mode": "clinic",
+   "latencyMs": 2.07,
+   "coverage": "unknown",
+   "anchors": [
+    "Rotator Cuff"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "clinic-cuff-healing",
+   "split": "holdout",
+   "mode": "clinic",
+   "latencyMs": 2.01,
+   "coverage": "unknown",
+   "anchors": [
+    "Rotator Cuff"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "clinic-ctr-endo",
+   "split": "train",
+   "mode": "clinic",
+   "latencyMs": 2.53,
+   "coverage": "unknown",
+   "anchors": [
+    "Carpal Tunnel",
+    "Endoscopic Carpal Tunnel Release"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "clinic-hip-postreduction",
+   "split": "holdout",
+   "mode": "clinic",
+   "latencyMs": 2.03,
+   "coverage": "unknown",
+   "anchors": [
+    "Hip Dislocation"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "clinic-gustilo-abx",
+   "split": "train",
+   "mode": "clinic",
+   "latencyMs": 2.03,
+   "coverage": "unknown",
+   "anchors": [
+    "Open Fracture"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "clinic-gunshot",
+   "split": "train",
+   "mode": "clinic",
+   "latencyMs": 1.39,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "consult-compartment",
+   "split": "train",
+   "mode": "consult",
+   "latencyMs": 5.12,
+   "coverage": "full",
+   "anchors": [
+    "AIN",
+    "Compartment Syndrome",
+    "Pain with Passive Stretch",
+    "Tibia",
+    "Tibial Shaft",
+    "Tibial Shaft Fracture"
+   ],
+   "returnedClaimIds": [
+    "2bb565f6-6774-4cb6-85b1-4a9d9530baac",
+    "94b6e12e-d53a-4b03-821b-4b42322ac61c",
+    "9e2ffd9e-53ff-491d-89a4-e5d53a0e8aa4",
+    "e99a8726-df6e-4303-82dd-edf3b706f2c1"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 2
+  },
+  {
+   "id": "consult-open-fx",
+   "split": "train",
+   "mode": "consult",
+   "latencyMs": 2.22,
+   "coverage": "full",
+   "anchors": [
+    "Tibia"
+   ],
+   "returnedClaimIds": [
+    "2bb565f6-6774-4cb6-85b1-4a9d9530baac",
+    "94b6e12e-d53a-4b03-821b-4b42322ac61c",
+    "9e2ffd9e-53ff-491d-89a4-e5d53a0e8aa4",
+    "e99a8726-df6e-4303-82dd-edf3b706f2c1"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 2
+  },
+  {
+   "id": "consult-freshwater",
+   "split": "holdout",
+   "mode": "consult",
+   "latencyMs": 2.1,
+   "coverage": "unknown",
+   "anchors": [
+    "Open Fracture"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "consult-hip-dislocation",
+   "split": "train",
+   "mode": "consult",
+   "latencyMs": 2.04,
+   "coverage": "unknown",
+   "anchors": [
+    "Hip Dislocation"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "consult-supracondylar",
+   "split": "holdout",
+   "mode": "consult",
+   "latencyMs": 8.02,
+   "coverage": "full",
+   "anchors": [
+    "Humerus",
+    "Supracondylar Humerus Fracture"
+   ],
+   "returnedClaimIds": [
+    "67691ea1-00f1-4899-8458-c60c93cecc00",
+    "04fd06cb-623b-4e65-8a22-f9b2a9de4eb0",
+    "05c46d4e-2406-47ce-84c0-5bb79026012c",
+    "0bf38bdb-1432-4f63-8cff-401419c32283",
+    "0fbb8db1-e3c9-4c1d-83e5-d7a3d8c4c65f",
+    "108384da-5edb-4e20-8207-2e79a12f9c1b",
+    "164acf8b-e843-4b10-87d7-caa69364ad44",
+    "279d7e3a-15f4-4c74-8d16-58e12f95cb12"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 7
+  },
+  {
+   "id": "consult-syndesmosis",
+   "split": "train",
+   "mode": "consult",
+   "latencyMs": 3.21,
+   "coverage": "unknown",
+   "anchors": [
+    "Ankle Fracture",
+    "Medial Clear Space",
+    "Widened Medial Clear Space"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "consult-syndesmosis-ligaments",
+   "split": "holdout",
+   "mode": "consult",
+   "latencyMs": 1.91,
+   "coverage": "unknown",
+   "anchors": [
+    "Syndesmosis"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "consult-peds-ankle",
+   "split": "train",
+   "mode": "consult",
+   "latencyMs": 1.99,
+   "coverage": "unknown",
+   "anchors": [
+    "Ankle Fracture"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "consult-bosworth",
+   "split": "holdout",
+   "mode": "consult",
+   "latencyMs": 3.42,
+   "coverage": "full",
+   "anchors": [
+    "Ankle Fracture",
+    "Fibula",
+    "Tibia"
+   ],
+   "returnedClaimIds": [
+    "2bb565f6-6774-4cb6-85b1-4a9d9530baac",
+    "94b6e12e-d53a-4b03-821b-4b42322ac61c",
+    "957cbee5-fa8d-4626-8693-c842f174a6b5",
+    "9e2ffd9e-53ff-491d-89a4-e5d53a0e8aa4",
+    "e99a8726-df6e-4303-82dd-edf3b706f2c1"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 3
+  },
+  {
+   "id": "consult-bankart",
+   "split": "train",
+   "mode": "consult",
+   "latencyMs": 1.48,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "consult-open-femur",
+   "split": "holdout",
+   "mode": "consult",
+   "latencyMs": 2.16,
+   "coverage": "full",
+   "anchors": [
+    "Femur"
+   ],
+   "returnedClaimIds": [
+    "1031e100-cae5-4593-8273-f2877735e5c9",
+    "2555bf7a-da83-474f-8f47-6f95dd8ac12e",
+    "34d4cd2d-1267-45bc-8a0c-01331da2dcc5",
+    "35c5ed9c-2009-4679-8eba-2464bd5bc6ef",
+    "71b00013-5c18-4357-8617-eb1aae05de85"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 1
+  },
+  {
+   "id": "consult-unsupported-billing",
+   "split": "train",
+   "mode": "consult",
+   "latencyMs": 3.8,
+   "coverage": "full",
+   "anchors": [
+    "Tibia",
+    "Tibial Shaft",
+    "Tibial Shaft Fracture"
+   ],
+   "returnedClaimIds": [
+    "2bb565f6-6774-4cb6-85b1-4a9d9530baac",
+    "94b6e12e-d53a-4b03-821b-4b42322ac61c",
+    "9e2ffd9e-53ff-491d-89a4-e5d53a0e8aa4",
+    "e99a8726-df6e-4303-82dd-edf3b706f2c1"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": null,
+   "hardNegativesLeaked": [],
+   "cardCount": 2
+  },
+  {
+   "id": "consult-unsupported-stemcells",
+   "split": "holdout",
+   "mode": "consult",
+   "latencyMs": 2.11,
+   "coverage": "full",
+   "anchors": [
+    "Knee"
+   ],
+   "returnedClaimIds": [
+    "26363c2c-9579-4d1c-8334-89c4ab6a2eee"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": null,
+   "hardNegativesLeaked": [],
+   "cardCount": 1
+  },
+  {
+   "id": "consult-followup-syndesmosis",
+   "split": "holdout",
+   "mode": "consult",
+   "latencyMs": 3.75,
+   "coverage": "unknown",
+   "anchors": [
+    "Ankle Fracture",
+    "Medial Clear Space",
+    "Syndesmosis",
+    "Weber B"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "or-acl-tunnel",
+   "split": "train",
+   "mode": "or_prep",
+   "latencyMs": 1.51,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "or-acl-harvest",
+   "split": "holdout",
+   "mode": "or_prep",
+   "latencyMs": 1.38,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "or-acl-motion",
+   "split": "train",
+   "mode": "or_prep",
+   "latencyMs": 2.12,
+   "coverage": "full",
+   "anchors": [
+    "Knee"
+   ],
+   "returnedClaimIds": [
+    "26363c2c-9579-4d1c-8334-89c4ab6a2eee"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 1
+  },
+  {
+   "id": "or-supracondylar-pins",
+   "split": "train",
+   "mode": "or_prep",
+   "latencyMs": 3.69,
+   "coverage": "full",
+   "anchors": [
+    "Humerus",
+    "PIN",
+    "Supracondylar Humerus Fracture"
+   ],
+   "returnedClaimIds": [
+    "67691ea1-00f1-4899-8458-c60c93cecc00",
+    "bf1a8802-f0c2-4bc6-8f5f-e834ae42ad6a",
+    "04fd06cb-623b-4e65-8a22-f9b2a9de4eb0",
+    "05c46d4e-2406-47ce-84c0-5bb79026012c",
+    "0bf38bdb-1432-4f63-8cff-401419c32283",
+    "0fbb8db1-e3c9-4c1d-83e5-d7a3d8c4c65f",
+    "108384da-5edb-4e20-8207-2e79a12f9c1b",
+    "164acf8b-e843-4b10-87d7-caa69364ad44"
+   ],
+   "expectedRecalled": [
+    "0fbb8db1-e3c9-4c1d-83e5-d7a3d8c4c65f"
+   ],
+   "expectedRecall": 0.5,
+   "hardNegativesLeaked": [],
+   "cardCount": 8
+  },
+  {
+   "id": "or-supracondylar-type1",
+   "split": "holdout",
+   "mode": "or_prep",
+   "latencyMs": 1.39,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "or-femneck-options",
+   "split": "train",
+   "mode": "or_prep",
+   "latencyMs": 2.61,
+   "coverage": "unknown",
+   "anchors": [
+    "Femoral Neck",
+    "Femoral Neck Fracture"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "or-volar-finger",
+   "split": "train",
+   "mode": "or_prep",
+   "latencyMs": 2,
+   "coverage": "unknown",
+   "anchors": [
+    "Volar Approach"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "or-forearm-fasciotomy",
+   "split": "holdout",
+   "mode": "or_prep",
+   "latencyMs": 1.4,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "or-monteggia-orif",
+   "split": "train",
+   "mode": "or_prep",
+   "latencyMs": 3.04,
+   "coverage": "unknown",
+   "anchors": [
+    "ORIF",
+    "ORIF",
+    "Ulna"
+   ],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "or-pavlik",
+   "split": "holdout",
+   "mode": "or_prep",
+   "latencyMs": 1.47,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "or-bankart-tx",
+   "split": "train",
+   "mode": "or_prep",
+   "latencyMs": 1.4,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "or-achilles-infected",
+   "split": "holdout",
+   "mode": "or_prep",
+   "latencyMs": 1.32,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "or-fpl-short",
+   "split": "train",
+   "mode": "or_prep",
+   "latencyMs": 2.06,
+   "coverage": "full",
+   "anchors": [
+    "FPL"
+   ],
+   "returnedClaimIds": [
+    "48629635-c49d-410b-8097-c6dbbcfc9240",
+    "b96f50d1-8897-40fa-85ba-a321628561a1",
+    "ebf280ae-4198-4579-8f3c-273f294576b0"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 2
+  },
+  {
+   "id": "or-misspelling",
+   "split": "holdout",
+   "mode": "or_prep",
+   "latencyMs": 1.35,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "or-druj",
+   "split": "train",
+   "mode": "or_prep",
+   "latencyMs": 3.79,
+   "coverage": "full",
+   "anchors": [
+    "DRUJ",
+    "Distal Radius",
+    "Distal Radius Fracture",
+    "Radius"
+   ],
+   "returnedClaimIds": [
+    "56593429-f96d-48ed-84bd-27167946a48b",
+    "74fd5f49-c654-4da0-889e-b8be85dce337",
+    "a4736acc-89aa-4568-8bcf-375eb561595a",
+    "c2e0bc4c-3677-4090-8fb8-7c88d97ce51d",
+    "d2c99aa9-26e9-4dd8-8542-771a14b1d6f7",
+    "e7ba0d39-a58c-4080-87d2-d3b2f088797c"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [
+    "a4736acc-89aa-4568-8bcf-375eb561595a",
+    "c2e0bc4c-3677-4090-8fb8-7c88d97ce51d",
+    "e7ba0d39-a58c-4080-87d2-d3b2f088797c"
+   ],
+   "cardCount": 2
+  },
+  {
+   "id": "or-unsupported-implant",
+   "split": "holdout",
+   "mode": "or_prep",
+   "latencyMs": 2.64,
+   "coverage": "full",
+   "anchors": [
+    "Distal Radius",
+    "Radius"
+   ],
+   "returnedClaimIds": [
+    "56593429-f96d-48ed-84bd-27167946a48b",
+    "74fd5f49-c654-4da0-889e-b8be85dce337",
+    "a4736acc-89aa-4568-8bcf-375eb561595a",
+    "c2e0bc4c-3677-4090-8fb8-7c88d97ce51d",
+    "d2c99aa9-26e9-4dd8-8542-771a14b1d6f7",
+    "e7ba0d39-a58c-4080-87d2-d3b2f088797c"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": null,
+   "hardNegativesLeaked": [],
+   "cardCount": 2
+  },
+  {
+   "id": "general-peroneus",
+   "split": "train",
+   "mode": "general",
+   "latencyMs": 1.53,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "general-shenton",
+   "split": "holdout",
+   "mode": "general",
+   "latencyMs": 1.51,
+   "coverage": "unknown",
+   "anchors": [],
+   "returnedClaimIds": [],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 0
+  },
+  {
+   "id": "general-lachman-short",
+   "split": "train",
+   "mode": "general",
+   "latencyMs": 4.19,
+   "coverage": "full",
+   "anchors": [
+    "Lachman Test"
+   ],
+   "returnedClaimIds": [
+    "6d624752-e9b4-4ff3-82bf-c7c07392683b"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 1
+  },
+  {
+   "id": "general-unsupported-rare",
+   "split": "holdout",
+   "mode": "general",
+   "latencyMs": 2.1,
+   "coverage": "full",
+   "anchors": [
+    "Femur"
+   ],
+   "returnedClaimIds": [
+    "1031e100-cae5-4593-8273-f2877735e5c9",
+    "2555bf7a-da83-474f-8f47-6f95dd8ac12e",
+    "34d4cd2d-1267-45bc-8a0c-01331da2dcc5",
+    "35c5ed9c-2009-4679-8eba-2464bd5bc6ef",
+    "71b00013-5c18-4357-8617-eb1aae05de85"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": null,
+   "hardNegativesLeaked": [],
+   "cardCount": 1
+  },
+  {
+   "id": "general-plateau-followup",
+   "split": "train",
+   "mode": "general",
+   "latencyMs": 4.25,
+   "coverage": "full",
+   "anchors": [
+    "ORIF",
+    "ORIF",
+    "Tibia",
+    "Tibial Plateau",
+    "Tibial Plateau Fracture"
+   ],
+   "returnedClaimIds": [
+    "2bb565f6-6774-4cb6-85b1-4a9d9530baac",
+    "94b6e12e-d53a-4b03-821b-4b42322ac61c",
+    "9e2ffd9e-53ff-491d-89a4-e5d53a0e8aa4",
+    "e99a8726-df6e-4303-82dd-edf3b706f2c1"
+   ],
+   "expectedRecalled": [],
+   "expectedRecall": 0,
+   "hardNegativesLeaked": [],
+   "cardCount": 2
+  }
+ ]
+}

@@ -9,11 +9,28 @@ import {
   failBroBotEnrichmentJob,
   type BroBotEnrichmentJob,
 } from '@/lib/brobot/enrichment';
-import { BroBotChatIntentSchema, buildBroBotClinicalContextFromIntent } from '@/lib/brobot/chat';
+import {
+  BroBotChatIntentSchema,
+  buildBroBotClinicalContextFromIntent,
+} from '@/lib/brobot/chat';
 import { getMetadataModel } from '@/lib/brobot/model-config';
-import { persistBroBotKgShadowTrace, retrieveBroBotKgShadow } from '@/lib/brobot/kg';
+import {
+  persistBroBotKgShadowTrace,
+  retrieveBroBotKgShadow,
+} from '@/lib/brobot/kg';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { getDisabledAutomationResponse, isCronJobsEnabled } from '@/lib/config/automation';
+import {
+  getDisabledAutomationResponse,
+  isCronJobsEnabled,
+} from '@/lib/config/automation';
+import {
+  answerHash,
+  ANKI_LINKER_VERSION,
+  latestPublishedRelease,
+  linkAnkiCardsForSupport,
+} from '@/lib/brobot/chat/anki-linker';
+import type { BroBotAnswerSupport } from '@/lib/brobot/chat/answer-support';
+import { getBroBotClaimAnkiMode } from '@/lib/brobot/kg/config';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -37,7 +54,10 @@ function configurationError() {
   if (!isCronJobsEnabled()) return 'Cron jobs are disabled.';
   if (!process.env.CRON_SECRET) return 'CRON_SECRET is missing.';
   if (!process.env.OPENAI_API_KEY) return 'OPENAI_API_KEY is missing.';
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  if (
+    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    !process.env.SUPABASE_SERVICE_ROLE_KEY
+  ) {
     return 'Supabase admin environment variables are missing.';
   }
   return null;
@@ -53,7 +73,8 @@ async function processJob(job: BroBotEnrichmentJob) {
     .eq('id', job.message_id)
     .eq('user_id', job.user_id)
     .single();
-  if (messageError || !message) throw new Error(messageError?.message ?? 'Assistant message missing');
+  if (messageError || !message)
+    throw new Error(messageError?.message ?? 'Assistant message missing');
 
   let suggestedQuestions = job.payload.suggestedFollowUps.slice(0, 3);
   let tags: string[] = [];
@@ -77,15 +98,23 @@ async function processJob(job: BroBotEnrichmentJob) {
       ],
     });
     metadataUsage = completion.usage ?? null;
-    const raw = JSON.parse(completion.choices[0]?.message?.content ?? '{}') as Record<string, unknown>;
+    const raw = JSON.parse(
+      completion.choices[0]?.message?.content ?? '{}',
+    ) as Record<string, unknown>;
     if (Array.isArray(raw.suggestedQuestions)) {
       suggestedQuestions = raw.suggestedQuestions
-        .filter((value): value is string => typeof value === 'string' && Boolean(value.trim()))
+        .filter(
+          (value): value is string =>
+            typeof value === 'string' && Boolean(value.trim()),
+        )
         .slice(0, 3);
     }
     if (Array.isArray(raw.tags)) {
       tags = raw.tags
-        .filter((value): value is string => typeof value === 'string' && Boolean(value.trim()))
+        .filter(
+          (value): value is string =>
+            typeof value === 'string' && Boolean(value.trim()),
+        )
         .slice(0, 6);
     }
   } catch (error) {
@@ -103,7 +132,8 @@ async function processJob(job: BroBotEnrichmentJob) {
     intent,
     clinicalContext,
     responseDepth: job.payload.responseDepth as 'quick' | 'standard' | 'deep',
-    trainingLevel: job.payload.trainingLevel as 'med_student' | 'pgy1' | 'pgy2' | 'pgy3' | 'pgy4' | 'pgy5' | 'attending',
+    trainingLevel: job.payload.trainingLevel as
+      'med_student' | 'pgy1' | 'pgy2' | 'pgy3' | 'pgy4' | 'pgy5' | 'attending',
   });
   await persistBroBotKgShadowTrace({
     result: kg,
@@ -119,7 +149,67 @@ async function processJob(job: BroBotEnrichmentJob) {
   });
 
   const structured = (message.structured_json ?? {}) as Record<string, unknown>;
-  const enrichmentLatencyMs = Math.round((performance.now() - startedAt) * 100) / 100;
+  const claimSupport = Array.isArray(structured.claimSupport)
+    ? (structured.claimSupport as BroBotAnswerSupport[])
+    : [];
+  let claimLinkedCardCount = 0;
+  if (getBroBotClaimAnkiMode() === 'enabled' && claimSupport.length) {
+    const releaseId = await latestPublishedRelease();
+    if (releaseId) {
+      const references = await linkAnkiCardsForSupport(
+        claimSupport,
+        releaseId,
+        job.user_id,
+      );
+      const hash = answerHash(job.payload.answer);
+      await supabase
+        .from('brobot_anki_references')
+        .delete()
+        .eq('message_id', job.message_id)
+        .eq('user_id', job.user_id);
+      if (references.length) {
+        const { error: referenceError } = await supabase
+          .from('brobot_anki_references')
+          .insert(
+            references.map((reference) => ({
+              user_id: job.user_id,
+              message_id: job.message_id,
+              answer_hash: hash,
+              anchor_text: reference.anchorText,
+              claim_id: reference.claimId,
+              support_claim_id: reference.supportClaimId,
+              support_claim_version_id: reference.supportClaimVersionId,
+              answer_anchor_id: reference.answerAnchorId,
+              answer_anchor_hash: reference.answerAnchorHash,
+              match_source: reference.matchSource ?? 'semantic_fallback',
+              support_confidence: reference.supportConfidence,
+              canonical_card_id: reference.cardId,
+              canonical_card_version_id: reference.cardVersionId,
+              deck_release_id: releaseId,
+              rank: reference.number,
+            })),
+          );
+        if (referenceError) throw new Error(referenceError.message);
+      }
+      const { error: lookupError } = await supabase
+        .from('brobot_anki_reference_lookups')
+        .upsert(
+          {
+            message_id: job.message_id,
+            user_id: job.user_id,
+            answer_hash: hash,
+            deck_release_id: releaseId,
+            linker_version: ANKI_LINKER_VERSION,
+            checked_at: new Date().toISOString(),
+          },
+          { onConflict: 'message_id' },
+        );
+      if (lookupError) throw new Error(lookupError.message);
+      claimLinkedCardCount = references.length;
+    }
+  }
+  const enrichmentLatencyMs =
+    Math.round((performance.now() - startedAt) * 100) / 100;
   const { error: updateError } = await supabase
     .from('brobot_messages')
     .update({
@@ -135,6 +225,7 @@ async function processJob(job: BroBotEnrichmentJob) {
           metadataUsage,
           kgRetrievalId: kg.trace.retrievalId,
           kgStatus: kg.trace.status,
+          claimLinkedCardCount,
         },
       },
     })
@@ -156,6 +247,7 @@ async function processJob(job: BroBotEnrichmentJob) {
       metadata_token_usage: metadataUsage,
       stage_timings: job.payload.stageTimings ?? {},
       suggested_follow_up_count: suggestedQuestions.length,
+      claim_linked_card_count: claimLinkedCardCount,
     },
   });
   await completeBroBotEnrichmentJob(job.id);
@@ -168,7 +260,8 @@ export async function GET(request: Request) {
       status: isCronJobsEnabled() ? 503 : 200,
     });
   }
-  if (!isAuthorized(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (!isAuthorized(request))
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const jobs = await claimBroBotEnrichmentJobs(JOBS_PER_RUN);
   let succeeded = 0;
@@ -181,5 +274,9 @@ export async function GET(request: Request) {
       await failBroBotEnrichmentJob(job, jobError);
     }
   }
-  return NextResponse.json({ claimed: jobs.length, succeeded, failed: jobs.length - succeeded });
+  return NextResponse.json({
+    claimed: jobs.length,
+    succeeded,
+    failed: jobs.length - succeeded,
+  });
 }

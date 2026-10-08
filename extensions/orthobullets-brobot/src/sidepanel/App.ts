@@ -75,6 +75,7 @@ import {
 import { getConfiguredAppOrigin } from '../shared/runtime.js';
 import { readPageAnkiReview, type PageAnkiReview } from '../shared/page-anki-review.js';
 import { bindPageAnkiReview, renderPageAnkiReview } from './page-anki-review-panel.js';
+import { ReviewReadinessError, waitForCompletedReviewContext } from './review-readiness-poll.js';
 
 const BROBOT_ICON_URL = chrome.runtime.getURL('icons/brobot-32.png');
 const SIDEPANEL_BUILD_ID_MARKER = '2026-07-30-himalaya-live-v4';
@@ -144,6 +145,22 @@ const ERROR_COPY: Record<ExtensionErrorCode, { title: string; canRetry: boolean 
   },
   extraction_failure: { title: 'Could not read this page.', canRetry: true },
   network_failure: { title: 'Could not reach SnapOrtho.', canRetry: true },
+  orthobullets_login_required: {
+    title: 'Log in to Orthobullets to load this review.',
+    canRetry: true,
+  },
+  orthobullets_review_not_revealed: {
+    title: 'Open the completed review through the test-results page.',
+    canRetry: true,
+  },
+  orthobullets_question_mismatch: {
+    title: 'The review page opened a different question.',
+    canRetry: true,
+  },
+  orthobullets_review_load_timeout: {
+    title: 'The review page took too long to load.',
+    canRetry: true,
+  },
   unknown: { title: 'Something went wrong.', canRetry: true },
 };
 
@@ -1910,19 +1927,61 @@ export function mountSidePanelApp(root: HTMLElement) {
             active: false,
           });
           if (tab.id == null) throw new Error('Chrome could not open the question review page.');
-          temporaryTabId = tab.id;
-          await waitForTabToLoad(tab.id);
-          // Orthobullets sometimes paints the answer block after the load event.
-          await new Promise((resolve) => window.setTimeout(resolve, 450));
-          const extracted = await sendMessage({
-            type: 'ob:extract-page-context',
-            tabId: tab.id,
-          });
-          if (!extracted.ok || !('pageContext' in extracted)) {
-            errorCode = extracted.ok ? 'extraction_failure' : extracted.code ?? 'extraction_failure';
-            throw new Error(extracted.ok ? 'Could not read this review page.' : extracted.error);
+          const reviewTabId: number = tab.id;
+          temporaryTabId = reviewTabId;
+          await waitForTabToLoad(reviewTabId);
+          // Orthobullets paints review content asynchronously after the load
+          // event, so poll for a settled, fully revealed review instead of a
+          // fixed sleep. Read-only: never clicks answers or submits forms.
+          const wakeWaiters: Array<() => void> = [];
+          const onReviewMutation = (message: unknown) => {
+            const typed = message as { type?: string; tabId?: number };
+            if (typed?.type === 'ob:question-changed' && typed.tabId === reviewTabId) {
+              for (const wake of wakeWaiters.splice(0)) wake();
+            }
+          };
+          chrome.runtime.onMessage.addListener(onReviewMutation);
+          let reviewPageContext: OrthobulletsPageContext;
+          try {
+            const ready = await waitForCompletedReviewContext({
+              expectedQuestionId: question.row.questionId,
+              extract: async () => {
+                const extracted = await sendMessage({
+                  type: 'ob:extract-page-context',
+                  tabId: reviewTabId,
+                });
+                if (!extracted.ok || !('pageContext' in extracted)) {
+                  return {
+                    ok: false as const,
+                    error: extracted.ok ? 'Could not read this review page.' : extracted.error,
+                  };
+                }
+                return { ok: true as const, page: extracted.pageContext };
+              },
+              waitForWake: (timeoutMs) =>
+                new Promise<void>((resolve) => {
+                  let settled = false;
+                  const done = () => {
+                    if (settled) return;
+                    settled = true;
+                    window.clearTimeout(timer);
+                    resolve();
+                  };
+                  const timer = window.setTimeout(done, timeoutMs);
+                  wakeWaiters.push(done);
+                }),
+            });
+            reviewPageContext = ready.page as OrthobulletsPageContext;
+          } catch (error) {
+            if (error instanceof ReviewReadinessError) {
+              errorCode = error.diagnostics.errorCode ?? 'extraction_failure';
+              throw new Error(error.diagnostics.detail ?? 'The review page did not finish loading.');
+            }
+            throw error;
+          } finally {
+            chrome.runtime.onMessage.removeListener(onReviewMutation);
           }
-          const explained = await sendMessage({ type: 'ob:explain', pageContext: extracted.pageContext });
+          const explained = await sendMessage({ type: 'ob:explain', pageContext: reviewPageContext });
           if (!explained.ok || !('explanation' in explained) || isCurriculumStudyResponse(explained.explanation)) {
             errorCode = explained.ok ? 'api_failure' : explained.code ?? 'api_failure';
             throw new Error(explained.ok ? 'BroBot returned the wrong response type.' : explained.error);

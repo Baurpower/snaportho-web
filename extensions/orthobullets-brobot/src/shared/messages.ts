@@ -111,6 +111,15 @@ export type ExtensionMessage =
       runItemId?: string;
     }
   | {
+      // v5 multi-claim route for READY reviews collected by the
+      // browser-driven batch path (exact review URL + readiness polling).
+      // Same transient guarantee: the server persists only durable data.
+      type: 'ob:generate-question-claim-v5';
+      pageContext: OrthobulletsPageContext;
+      runId?: string;
+      runItemId?: string;
+    }
+  | {
       type: 'brobot:request';
       task: BroBotTask;
       pageContext: OrthobulletsPageContext;
@@ -177,6 +186,10 @@ export type ExtensionErrorCode =
   | 'parse_failure'
   | 'extraction_failure'
   | 'network_failure'
+  | 'orthobullets_login_required'
+  | 'orthobullets_review_not_revealed'
+  | 'orthobullets_question_mismatch'
+  | 'orthobullets_review_load_timeout'
   | 'unknown';
 
 export type ExtensionMessageResponse =
@@ -207,6 +220,7 @@ export type ExtensionMessageResponse =
   | { ok: true; pageAnkiReview: PageAnkiReview }
   | { ok: true; questionClaimRun: { runId: string; algorithmVersion: string; items: Array<{ id: string; native_question_id: string; status: string; claim_id?: string | null; linked_card_count?: number; last_error_code?: string | null }> } }
   | { ok: true; questionClaim: { status: string; claimId?: string; claimVersionId?: string; nativeQuestionId?: string; reviewStatus?: string; reason?: string; gapRecorded?: boolean; cardCount?: number; runItemId?: string } }
+  | { ok: true; questionClaimV5: { status: string; claimCount?: number; diagnostics?: string[]; runItemId?: string } }
   | { ok: true; launchQueued: { noteGuid: string; cardOrdinal: number; rank: 1 | 2 | 3 }; command?: unknown }
   | {
       ok: false;

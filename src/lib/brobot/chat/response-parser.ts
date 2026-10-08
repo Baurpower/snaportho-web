@@ -9,12 +9,16 @@ import {
 } from './types';
 import { getModeBranchOptions } from './branch-templates';
 import { normalizeResearchSubmode } from '@/lib/brobot/research/types';
+import { normalizeAnswerSupport, verifiedClaimIds } from './answer-support';
 
 const MODE_SET = new Set<string>(BROBOT_CHAT_MODES);
 
 type ParseOptions = {
   fallbackAnswer?: string;
   fallbackMode?: BroBotChatMode;
+  validClaimIds?: string[];
+  validClaims?: Array<{ claimId: string; claimText: string }>;
+  knowledgeCoverage?: 'full' | 'partial' | 'unknown' | 'unavailable';
 };
 
 export type BroBotTier1ParsedOutput = {
@@ -54,7 +58,9 @@ const FILLER_INTROS = [
 ];
 
 function record(value: unknown): Record<string, unknown> {
-  return value !== null && typeof value === 'object' ? (value as Record<string, unknown>) : {};
+  return value !== null && typeof value === 'object'
+    ? (value as Record<string, unknown>)
+    : {};
 }
 
 function extractJsonObject(raw: string): string | null {
@@ -111,13 +117,17 @@ function normalizeString(value: unknown): string {
 
 export function parseBroBotTier1Response(
   raw: unknown,
-  fallback: { status?: 'answer' | 'clarify'; clarifyingQuestion?: string } = {}
+  fallback: { status?: 'answer' | 'clarify'; clarifyingQuestion?: string } = {},
 ): BroBotTier1ParsedOutput {
   const parsed = parseRaw(raw) ?? {};
   const clarifyingQuestion =
-    normalizeString(parsed.clarifyingQuestion) || fallback.clarifyingQuestion || undefined;
+    normalizeString(parsed.clarifyingQuestion) ||
+    fallback.clarifyingQuestion ||
+    undefined;
   const status =
-    fallback.status === 'clarify' || parsed.status === 'clarify' || clarifyingQuestion
+    fallback.status === 'clarify' ||
+    parsed.status === 'clarify' ||
+    clarifyingQuestion
       ? 'clarify'
       : 'answer';
   return {
@@ -191,9 +201,7 @@ function normalizeArray(value: unknown, max: number): string[] {
   const array = Array.isArray(value)
     ? value
     : typeof value === 'string'
-      ? value
-          .split(/\n|;/)
-          .map((item) => item.replace(/^[-*]\s*/, '').trim())
+      ? value.split(/\n|;/).map((item) => item.replace(/^[-*]\s*/, '').trim())
       : [];
 
   const seen = new Set<string>();
@@ -213,16 +221,25 @@ function normalizeArray(value: unknown, max: number): string[] {
     .slice(0, max);
 }
 
-function normalizeBranchOptions(value: unknown, mode: BroBotChatMode): BroBotBranchOption[] {
+function normalizeBranchOptions(
+  value: unknown,
+  mode: BroBotChatMode,
+): BroBotBranchOption[] {
   const raw = Array.isArray(value) ? value : [];
   const seen = new Set<string>();
   const normalized = raw
     .map((item) => {
-      const record = item && typeof item === 'object' ? (item as Record<string, unknown>) : {};
+      const record =
+        item && typeof item === 'object'
+          ? (item as Record<string, unknown>)
+          : {};
       const label = normalizeString(record.label);
       const id =
         normalizeString(record.id) ||
-        label.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+        label
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '_')
+          .replace(/^_|_$/g, '');
 
       return {
         id,
@@ -232,7 +249,8 @@ function normalizeBranchOptions(value: unknown, mode: BroBotChatMode): BroBotBra
         topicId: normalizeString(record.topicId) || undefined,
         branchQuestionId: normalizeString(record.branchQuestionId) || undefined,
         rankScore:
-          typeof record.rankScore === 'number' && Number.isFinite(record.rankScore)
+          typeof record.rankScore === 'number' &&
+          Number.isFinite(record.rankScore)
             ? record.rankScore
             : undefined,
       };
@@ -244,7 +262,9 @@ function normalizeBranchOptions(value: unknown, mode: BroBotChatMode): BroBotBra
     })
     .slice(0, 6);
 
-  return normalized.length > 0 ? normalized : getModeBranchOptions(mode).slice(0, 6);
+  return normalized.length > 0
+    ? normalized
+    : getModeBranchOptions(mode).slice(0, 6);
 }
 
 function softCapListItem(value: string, maxLength = 220): string {
@@ -253,7 +273,7 @@ function softCapListItem(value: string, maxLength = 220): string {
   const breakpoint = Math.max(
     candidate.lastIndexOf('. '),
     candidate.lastIndexOf('; '),
-    candidate.lastIndexOf(', ')
+    candidate.lastIndexOf(', '),
   );
   return `${candidate.slice(0, breakpoint > 90 ? breakpoint : maxLength).trim()}...`;
 }
@@ -264,16 +284,23 @@ function normalizeConfidence(value: unknown): number {
   return Math.min(1, Math.max(0, numeric));
 }
 
-function normalizeMode(value: unknown, fallbackMode: BroBotChatMode): BroBotChatMode {
+function normalizeMode(
+  value: unknown,
+  fallbackMode: BroBotChatMode,
+): BroBotChatMode {
   const mode = normalizeString(value);
   const fallback = fallbackMode === 'fracture_call' ? 'consult' : fallbackMode;
   if (mode === 'fracture_call') return 'consult';
   return MODE_SET.has(mode) ? (mode as BroBotChatMode) : fallback;
 }
 
-function normalizeConsultConfidence(value: unknown): BroBotChatOutput['consultConfidence'] {
+function normalizeConsultConfidence(
+  value: unknown,
+): BroBotChatOutput['consultConfidence'] {
   const confidence = normalizeString(value);
-  return confidence === 'low' || confidence === 'moderate' || confidence === 'high'
+  return confidence === 'low' ||
+    confidence === 'moderate' ||
+    confidence === 'high'
     ? confidence
     : undefined;
 }
@@ -283,7 +310,10 @@ function synthesizeAnswerFromStructured(input: {
   knowledgeGaps: string[];
   fallbackAnswer: string;
 }): string {
-  const source = input.priorityPoints.length > 0 ? input.priorityPoints : input.knowledgeGaps;
+  const source =
+    input.priorityPoints.length > 0
+      ? input.priorityPoints
+      : input.knowledgeGaps;
   const usable = source.slice(0, 3);
 
   if (usable.length === 0) {
@@ -297,7 +327,7 @@ function filterVagueOrPrepConcepts(items: string[]): string[] {
   const filtered = items.filter((item) => {
     const normalized = normalizeForDedupe(item);
     return !OR_PREP_VAGUE_CONCEPTS.some((phrase) =>
-      normalized.includes(normalizeForDedupe(phrase))
+      normalized.includes(normalizeForDedupe(phrase)),
     );
   });
 
@@ -308,7 +338,7 @@ function fallbackOutput(raw: unknown, options: ParseOptions): BroBotChatOutput {
   const answer =
     typeof raw === 'string' && isReadableProse(raw)
       ? stripCodeFence(raw)
-      : options.fallbackAnswer ?? STRUCTURE_FALLBACK;
+      : (options.fallbackAnswer ?? STRUCTURE_FALLBACK);
 
   return {
     goal: '',
@@ -318,14 +348,21 @@ function fallbackOutput(raw: unknown, options: ParseOptions): BroBotChatOutput {
     knowledgeGaps: [],
     whatMostResidentsMiss: [],
     suggestedQuestions: [],
-    nextLearningBranches: getModeBranchOptions(options.fallbackMode ?? 'general').slice(0, 6),
+    nextLearningBranches: getModeBranchOptions(
+      options.fallbackMode ?? 'general',
+    ).slice(0, 6),
     tags: [],
     detectedMode:
-      options.fallbackMode === 'fracture_call' ? 'consult' : options.fallbackMode ?? 'general',
+      options.fallbackMode === 'fracture_call'
+        ? 'consult'
+        : (options.fallbackMode ?? 'general'),
     confidence: 0.25,
     needsClarification: false,
     clarifyingQuestions: [],
     assumedContext: '',
+    usedClaimIds: [],
+    claimSupport: [],
+    knowledgeCoverage: 'unavailable',
   };
 }
 
@@ -333,21 +370,27 @@ function isReadableProse(raw: string): boolean {
   const cleaned = stripCodeFence(raw);
   if (!cleaned) return false;
   if (/^\s*[{[]/.test(cleaned)) return false;
-  if (/"answer"\s*:/.test(cleaned) || /"priorityPoints"\s*:/.test(cleaned)) return false;
+  if (/"answer"\s*:/.test(cleaned) || /"priorityPoints"\s*:/.test(cleaned))
+    return false;
   return true;
 }
 
-function removeItemsDuplicatedInAnswer(items: string[], answer: string): string[] {
+function removeItemsDuplicatedInAnswer(
+  items: string[],
+  answer: string,
+): string[] {
   const normalizedAnswer = normalizeForDedupe(answer);
   return items.filter((item) => {
     const normalizedItem = normalizeForDedupe(item);
-    return normalizedItem.length > 20 ? !normalizedAnswer.includes(normalizedItem) : true;
+    return normalizedItem.length > 20
+      ? !normalizedAnswer.includes(normalizedItem)
+      : true;
   });
 }
 
 function mergeClarifyingQuestionsIntoSuggested(
   suggestedQuestions: string[],
-  clarifyingQuestions: string[]
+  clarifyingQuestions: string[],
 ): string[] {
   const seen = new Set<string>();
   return [...clarifyingQuestions, ...suggestedQuestions]
@@ -360,18 +403,24 @@ function mergeClarifyingQuestionsIntoSuggested(
     .slice(0, 7);
 }
 
-export function parseBroBotChatResponse(raw: unknown, options: ParseOptions = {}): BroBotChatOutput {
+export function parseBroBotChatResponse(
+  raw: unknown,
+  options: ParseOptions = {},
+): BroBotChatOutput {
   const parsed = parseRaw(raw);
   if (!parsed) {
     return fallbackOutput(raw, options);
   }
 
   const fallbackAnswer = options.fallbackAnswer || STRUCTURE_FALLBACK;
-  const detectedMode = normalizeMode(parsed.detectedMode, options.fallbackMode ?? 'general');
+  const detectedMode = normalizeMode(
+    parsed.detectedMode,
+    options.fallbackMode ?? 'general',
+  );
   const priorityPoints = normalizeArray(parsed.priorityPoints, 6);
   const knowledgeGaps = normalizeArray(
     parsed.knowledgeGaps,
-    detectedMode === 'consult' ? 8 : detectedMode === 'or_prep' ? 5 : 4
+    detectedMode === 'consult' ? 8 : detectedMode === 'or_prep' ? 5 : 4,
   );
   const missingInformation = normalizeArray(parsed.missingInformation, 8);
   const normalizedAnswer = normalizeAnswer(parsed.answer, fallbackAnswer);
@@ -380,6 +429,12 @@ export function parseBroBotChatResponse(raw: unknown, options: ParseOptions = {}
   const assumedContext = normalizeString(parsed.assumedContext);
   const needsClarification = clarifyingQuestions.length > 0;
 
+  const claimSupport = normalizeAnswerSupport({
+    answer: normalizedAnswer,
+    raw: parsed.claimSupport,
+    claims: options.validClaims ?? [],
+  });
+  const supportedIds = verifiedClaimIds(claimSupport);
   const normalized: BroBotChatOutput = {
     goal,
     selectedFocus: normalizeString(parsed.selectedFocus),
@@ -391,14 +446,19 @@ export function parseBroBotChatResponse(raw: unknown, options: ParseOptions = {}
         })
       : normalizedAnswer,
     priorityPoints:
-      detectedMode === 'or_prep' ? filterVagueOrPrepConcepts(priorityPoints) : priorityPoints,
+      detectedMode === 'or_prep'
+        ? filterVagueOrPrepConcepts(priorityPoints)
+        : priorityPoints,
     knowledgeGaps,
     whatMostResidentsMiss: normalizeArray(parsed.whatMostResidentsMiss, 5),
     suggestedQuestions: mergeClarifyingQuestionsIntoSuggested(
       normalizeArray(parsed.suggestedQuestions, 6),
-      clarifyingQuestions
+      clarifyingQuestions,
     ),
-    nextLearningBranches: normalizeBranchOptions(parsed.nextLearningBranches, detectedMode),
+    nextLearningBranches: normalizeBranchOptions(
+      parsed.nextLearningBranches,
+      detectedMode,
+    ),
     tags: normalizeArray(parsed.tags, 8).map((tag) => tag.toLowerCase()),
     detectedMode,
     confidence: normalizeConfidence(parsed.confidence),
@@ -406,7 +466,9 @@ export function parseBroBotChatResponse(raw: unknown, options: ParseOptions = {}
     clarifyingQuestions,
     assumedContext,
     consultConfidence:
-      detectedMode === 'consult' ? normalizeConsultConfidence(parsed.consultConfidence) : undefined,
+      detectedMode === 'consult'
+        ? normalizeConsultConfidence(parsed.consultConfidence)
+        : undefined,
     missingInformation:
       detectedMode === 'consult'
         ? missingInformation.length > 0
@@ -414,12 +476,21 @@ export function parseBroBotChatResponse(raw: unknown, options: ParseOptions = {}
           : knowledgeGaps.slice(0, 8)
         : [],
     researchSubmode:
-      detectedMode === 'research' ? normalizeResearchSubmode(parsed.researchSubmode) : undefined,
+      detectedMode === 'research'
+        ? normalizeResearchSubmode(parsed.researchSubmode)
+        : undefined,
+    usedClaimIds: supportedIds.length
+      ? supportedIds
+      : normalizeArray(parsed.usedClaimIds, 12).filter((id) =>
+          (options.validClaimIds ?? []).includes(id),
+        ),
+    claimSupport,
+    knowledgeCoverage: options.knowledgeCoverage ?? 'unavailable',
   };
 
   normalized.suggestedQuestions = removeItemsDuplicatedInAnswer(
     normalized.suggestedQuestions,
-    normalized.answer
+    normalized.answer,
   );
 
   const validation = BroBotChatOutputSchema.safeParse(normalized);
@@ -440,13 +511,17 @@ export function parseBroBotMetadataResponse(input: {
   const parsed = parseRaw(input.raw);
   const fallbackMode = input.fallbackMode ?? 'general';
   const fallback: BroBotMetadataOutput = {
-    suggestedQuestions: normalizeArray(input.fallbackSuggestedQuestions ?? [], 6),
-    nextLearningBranches:
-      (input.fallbackNextLearningBranches?.length
-        ? input.fallbackNextLearningBranches
-        : getModeBranchOptions(fallbackMode)
-      ).slice(0, 6),
-    tags: normalizeArray(input.fallbackTags ?? [], 8).map((tag) => tag.toLowerCase()),
+    suggestedQuestions: normalizeArray(
+      input.fallbackSuggestedQuestions ?? [],
+      6,
+    ),
+    nextLearningBranches: (input.fallbackNextLearningBranches?.length
+      ? input.fallbackNextLearningBranches
+      : getModeBranchOptions(fallbackMode)
+    ).slice(0, 6),
+    tags: normalizeArray(input.fallbackTags ?? [], 8).map((tag) =>
+      tag.toLowerCase(),
+    ),
   };
 
   if (!parsed) {
@@ -455,7 +530,10 @@ export function parseBroBotMetadataResponse(input: {
 
   const normalized: BroBotMetadataOutput = {
     suggestedQuestions: normalizeArray(parsed.suggestedQuestions, 6),
-    nextLearningBranches: normalizeBranchOptions(parsed.nextLearningBranches, fallbackMode),
+    nextLearningBranches: normalizeBranchOptions(
+      parsed.nextLearningBranches,
+      fallbackMode,
+    ),
     tags: normalizeArray(parsed.tags, 8).map((tag) => tag.toLowerCase()),
   };
 

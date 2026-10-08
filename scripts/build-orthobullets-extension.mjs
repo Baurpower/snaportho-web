@@ -30,6 +30,7 @@ function buildClassicContentScriptBundle() {
   const extractorPath = path.join(distDir, 'content', 'extractor.js');
   const questionFingerprintPath = path.join(distDir, 'shared', 'question-fingerprint.js');
   const questionSourceIdentityPath = path.join(distDir, 'shared', 'question-source-identity.js');
+  const reviewReadinessPath = path.join(distDir, 'shared', 'review-readiness.js');
   const himalayaDebugPath = path.join(distDir, 'providers', 'himalaya', 'himalaya-debug.js');
   const himalayaExtractorPath = path.join(distDir, 'providers', 'himalaya', 'himalaya-extractor.js');
   const himalayaTe6TypesPath = path.join(distDir, 'providers', 'himalaya', 'himalaya-te6-types.js');
@@ -64,6 +65,7 @@ function buildClassicContentScriptBundle() {
     .replace(/^import\s+\{[^}]+\}\s+from\s+['"]\.\.\/shared\/question-review-state\.js['"];\r?\n?/m, '')
     .replace(/^import\s+\{[^}]+\}\s+from\s+['"]\.\.\/providers\/himalaya\/himalaya-provider\.js['"];\r?\n?/m, '')
     .replace(/^import\s+\{[^}]+\}\s+from\s+['"]\.\.\/shared\/question-source-identity\.js['"];\r?\n?/m, '')
+    .replace(/^import\s+\{[^}]+\}\s+from\s+['"]\.\.\/shared\/review-readiness\.js['"];\r?\n?/m, '')
     .replace(/^import\s+type\s+\{[^}]+\}\s+from\s+['"]\.\.\/shared\/types\.js['"];\r?\n?/m, '')
     .replace(/^export\s+\{[^}]+\}\s+from\s+['"]\.\.\/providers\/himalaya\/himalaya-extractor\.js['"];\r?\n?/m, '')
     .replace(/^export const EXTRACTOR_VERSION =/m, 'const EXTRACTOR_VERSION =')
@@ -84,6 +86,10 @@ function buildClassicContentScriptBundle() {
 
   const questionSourceIdentitySource = readFileSync(questionSourceIdentityPath, 'utf8')
     .replace(/^export\s+type\s+[^;]+;\r?\n?/gm, '')
+    .replace(/^export const /gm, 'const ')
+    .replace(/^export function /gm, 'function ');
+
+  const reviewReadinessSource = readFileSync(reviewReadinessPath, 'utf8')
     .replace(/^export const /gm, 'const ')
     .replace(/^export function /gm, 'function ');
 
@@ -129,6 +135,8 @@ function buildClassicContentScriptBundle() {
     questionFingerprintSource.trim(),
     '',
     questionSourceIdentitySource.trim(),
+    '',
+    reviewReadinessSource.trim(),
     '',
     himalayaDebugSource.trim(),
     '',

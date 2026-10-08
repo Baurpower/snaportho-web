@@ -55,6 +55,10 @@ export function buildBroBotKgTelemetryRow(input: PersistInput): Record<string, u
     selected_neighborhood_slugs: trace.neighborhoodSlugs,
     selected_entity_ids: trace.selectedEntityIds,
     selected_relationship_ids: trace.selectedRelationshipIds,
+    selected_claim_ids: trace.selectedClaimIds,
+    candidate_card_ids: trace.candidateCardIds,
+    claim_candidate_count: input.result.packet?.claims.length ?? 0,
+    card_candidate_count: input.result.packet?.cardCandidates.length ?? 0,
     candidate_scores: trace.candidates,
     predicate_families: trace.predicateFamilies,
     cache_status: trace.cacheStatus,
@@ -74,6 +78,14 @@ export function buildBroBotKgTelemetryRow(input: PersistInput): Record<string, u
     policy_version: trace.policyVersion,
     packet_schema_version: trace.packetSchemaVersion,
     gap_signals: trace.gaps,
+    query_variants: trace.queryVariants ?? [],
+    requested_facets: trace.requestedFacets ?? [],
+    retrieval_channels: trace.retrievalChannels ?? {},
+    claim_score_components: trace.claimScoreComponents ?? [],
+    exclusion_reasons: trace.exclusionReasons ?? [],
+    rerank_version: trace.rerankVersion ?? null,
+    pool_size: trace.poolSize ?? null,
+    support_level: trace.supportLevel ?? null,
   };
 }
 
@@ -113,11 +125,12 @@ export async function persistBroBotKgShadowTrace(
 export async function attachBroBotKgAnswerOutcome(input: {
   requestId: string;
   qualityGateWarnings: string[];
+  usedClaimIds?: string[];
 }) {
   try {
     await createAdminClient()
       .from("brobot_kg_retrieval_events")
-      .update({ quality_gate_warnings: input.qualityGateWarnings })
+      .update({ quality_gate_warnings: input.qualityGateWarnings, answer_used_claim_ids: input.usedClaimIds ?? [] })
       .eq("request_id", input.requestId);
   } catch (error) {
     console.error("[brobot-kg] outcome update failed (non-fatal)", error);

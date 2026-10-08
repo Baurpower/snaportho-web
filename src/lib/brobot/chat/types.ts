@@ -4,7 +4,7 @@ import { BroBotResearchSubmodeSchema } from '@/lib/brobot/research/types';
 
 const OptionalBroBotResearchSubmodeSchema = z.preprocess(
   (value) => (value === null ? undefined : value),
-  BroBotResearchSubmodeSchema.optional()
+  BroBotResearchSubmodeSchema.optional(),
 );
 
 export const BROBOT_CHAT_MODES = [
@@ -50,7 +50,11 @@ export type BroBotChatSource = z.infer<typeof BroBotChatSourceSchema>;
 export type BroBotIntentSource = z.infer<typeof BroBotIntentSourceSchema>;
 export type BroBotResearchSubmode = z.infer<typeof BroBotResearchSubmodeSchema>;
 
-export const BroBotResponseTierSchema = z.union([z.literal(1), z.literal(2), z.literal(3)]);
+export const BroBotResponseTierSchema = z.union([
+  z.literal(1),
+  z.literal(2),
+  z.literal(3),
+]);
 export const BroBotAnswerStatusSchema = z.enum(['answer', 'clarify']);
 export const BroBotEntityResolutionStateSchema = z.enum([
   'resolved',
@@ -60,7 +64,9 @@ export const BroBotEntityResolutionStateSchema = z.enum([
 
 export type BroBotResponseTier = z.infer<typeof BroBotResponseTierSchema>;
 export type BroBotAnswerStatus = z.infer<typeof BroBotAnswerStatusSchema>;
-export type BroBotEntityResolutionState = z.infer<typeof BroBotEntityResolutionStateSchema>;
+export type BroBotEntityResolutionState = z.infer<
+  typeof BroBotEntityResolutionStateSchema
+>;
 
 export const BroBotChatSubintentSchema = z.enum([
   'landmarks',
@@ -95,7 +101,11 @@ export const BroBotChatSubintentSchema = z.enum([
 ]);
 
 export const BroBotChatAmbiguitySchema = z.enum(['low', 'moderate', 'high']);
-export const BroBotConsultConfidenceSchema = z.enum(['low', 'moderate', 'high']);
+export const BroBotConsultConfidenceSchema = z.enum([
+  'low',
+  'moderate',
+  'high',
+]);
 export const BroBotProcedureCategorySchema = z.enum([
   'fracture_orif',
   'arthroplasty',
@@ -115,8 +125,12 @@ export const BroBotProcedureCategorySchema = z.enum([
 
 export type BroBotChatSubintent = z.infer<typeof BroBotChatSubintentSchema>;
 export type BroBotChatAmbiguity = z.infer<typeof BroBotChatAmbiguitySchema>;
-export type BroBotConsultConfidence = z.infer<typeof BroBotConsultConfidenceSchema>;
-export type BroBotProcedureCategory = z.infer<typeof BroBotProcedureCategorySchema>;
+export type BroBotConsultConfidence = z.infer<
+  typeof BroBotConsultConfidenceSchema
+>;
+export type BroBotProcedureCategory = z.infer<
+  typeof BroBotProcedureCategorySchema
+>;
 
 export const BroBotBranchOptionSchema = z.object({
   id: z.string().trim().min(1).max(80),
@@ -160,13 +174,15 @@ export const BroBotChatRequestSchema = z.object({
   researchSubmode: OptionalBroBotResearchSubmodeSchema,
   answerNow: z.boolean().optional(),
   stream: z.boolean().optional(),
-  attribution: z.object({
-    source: z.enum(['branch', 'resend']),
-    medium: z.literal('email'),
-    campaign: z.string().trim().min(1).max(100),
-    content: z.string().trim().min(1).max(80),
-    branchClickId: z.string().trim().min(1).max(128).nullable().optional(),
-  }).optional(),
+  attribution: z
+    .object({
+      source: z.enum(['branch', 'resend']),
+      medium: z.literal('email'),
+      campaign: z.string().trim().min(1).max(100),
+      content: z.string().trim().min(1).max(80),
+      branchClickId: z.string().trim().min(1).max(128).nullable().optional(),
+    })
+    .optional(),
 });
 
 export type BroBotChatRequest = z.infer<typeof BroBotChatRequestSchema>;
@@ -199,6 +215,29 @@ export const BroBotChatOutputSchema = z.object({
   consultConfidence: BroBotConsultConfidenceSchema.optional(),
   missingInformation: z.array(z.string()).optional(),
   researchSubmode: BroBotResearchSubmodeSchema.optional(),
+  usedClaimIds: z.array(z.string().uuid()).max(12).optional(),
+  claimSupport: z
+    .array(
+      z.object({
+        answerAnchorId: z.string().min(1).max(200),
+        answerText: z.string().min(1).max(2000),
+        answerAnchorHash: z.string().regex(/^[0-9a-f]{64}$/),
+        claimIds: z.array(z.string().uuid()).min(1).max(4),
+        verification: z.enum([
+          'model_reported',
+          'deterministic_verified',
+          'model_verified',
+          'rejected',
+          'posthoc_verified',
+        ]),
+        verificationReason: z.string().max(200).optional(),
+      }),
+    )
+    .max(16)
+    .optional(),
+  knowledgeCoverage: z
+    .enum(['full', 'partial', 'unknown', 'unavailable'])
+    .optional(),
 });
 
 export type BroBotChatOutput = z.infer<typeof BroBotChatOutputSchema>;
