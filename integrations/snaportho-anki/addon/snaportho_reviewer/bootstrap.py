@@ -323,6 +323,14 @@ class ProfileRuntime:
                 return
         except Exception:
             return
+        try:
+            # Skip polling while Anki is minimized: a launch cannot be seen
+            # until the window is restored, and the next timer tick picks up
+            # any pending commands then.
+            if self.mw.isMinimized():
+                return
+        except Exception:
+            pass
         self._launch_busy = True
         def done(future):
             try:
