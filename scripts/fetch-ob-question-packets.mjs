@@ -17,7 +17,7 @@ import { execSync } from 'node:child_process';
 import { readFileSync, writeFileSync, existsSync, copyFileSync, rmSync } from 'node:fs';
 import crypto from 'node:crypto';
 import { DatabaseSync } from 'node:sqlite';
-import { parseHTML } from '/tmp/pilot-deps/node_modules/linkedom/esm/index.js';
+import { parseHTML } from 'linkedom';
 import { extractOrthobulletsPageContext } from '../extensions/orthobullets-brobot/dist/content/extractor.js';
 
 const args = new Map();
@@ -109,6 +109,7 @@ async function capture(qid, specialty, topicUrl) {
     const pctRow = (ctx.percentDistribution ?? []).find((row) => row.answerKey === ctx.correctAnswerKey || row.label === ctx.correctAnswerKey);
     packets.push({
       nativeQuestionId: qid,
+      questionAliases: ctx.raw?.providerSpecific?.questionAliases ?? [],
       specialty,
       topicUrl,
       topic: (ctx.breadcrumbs ?? []).at(-1) ?? null,

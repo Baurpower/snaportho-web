@@ -1,6 +1,7 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { buildBroBotClinicalContextFromIntent } from "@/lib/brobot/chat/clinical-context";
-import { BoundedTtlCache, normalizeKgQuery } from "./cache";
+import { normalizeKgQuery } from "./cache";
+import { retrieveKnowledgeRpc } from "./retrieve-rpc";
 import {
   BROBOT_KG_RETRIEVAL_DEADLINE_MS,
   getBroBotKgFeatureMode,
@@ -36,7 +37,6 @@ type RpcPayload = {
   limitations?: string[];
 };
 
-const packetCache = new BoundedTtlCache<RpcPayload>(500, 30 * 60_000);
 
 function estimateTokens(payload: RpcPayload) {
   const chars = JSON.stringify({
@@ -151,7 +151,7 @@ export async function retrieveBroBotKgShadow(
   const retrievalId = crypto.randomUUID();
   const retrievalVersion = getBroBotKnowledgeRetrievalVersion();
   // Phase A: always use live v2 Path-1+Path-2 RPC. v3 stays opt-in and falls back if missing.
-  const policyVersion =
+  let policyVersion =
     retrievalVersion === "v3" ? "brobot-claims-v3" : BROBOT_KNOWLEDGE_POLICY_VERSION;
   const clinicalContext =
     input.clinicalContext ??
@@ -192,30 +192,15 @@ export async function retrieveBroBotKgShadow(
   const normalizedQuery = normalizeKgQuery(
     [input.intent.procedureOrTopic, input.selectedBranch?.label, input.query].filter(Boolean).join(" ")
   ).slice(0, 240);
-  const cacheKey = [
-    BROBOT_KG_PINNED_RELEASE_ID,
-    policyVersion,
-    BROBOT_KNOWLEDGE_PACKET_SCHEMA_VERSION,
-    normalizedQuery,
-    input.intent.mode,
-    input.intent.subintent,
-    input.responseDepth,
-    "v2",
-  ].join(":");
-  const cached = packetCache.get(cacheKey);
+  // Publication and revocation take effect on the next retrieval.
   let payload: RpcPayload;
-  let cacheStatus = "hit";
+  const cacheStatus = "miss";
   let rpcStarted = false;
   let rpcCompleted = false;
-  let activeStage = "cache_lookup";
+  let activeStage = "supabase_client_initialization";
 
   try {
-    if (cached) {
-      payload = cached;
-      stageTimingsMs.kg_candidate_generation = 0;
-      stageTimingsMs.kg_subgraph_retrieval = 0;
-    } else {
-      cacheStatus = "miss";
+    {
       activeStage = "supabase_client_initialization";
       const clientStarted = performance.now();
       const supabase = createAdminClient();
@@ -227,27 +212,22 @@ export async function retrieveBroBotKgShadow(
       try {
         activeStage = "rpc_network_call";
         rpcStarted = true;
-        // Path-1 reviewed + Path-2 factory claims via live v2 RPC. Never Orthobullets QCL.
-        const rpcPromise = supabase
-          .rpc("retrieve_brobot_knowledge_v2", {
-            p_release_id: BROBOT_KG_PINNED_RELEASE_ID,
-            p_query: normalizedQuery,
-            p_entity_types: policy.entityTypes,
-            p_neighborhood_hints: [],
-            p_predicates: policy.predicateFamilies,
-            p_max_candidates: 8,
-            p_max_entities: policy.maxEntitiesByDepth[input.responseDepth],
-            p_max_relationships:
-              decision.action === "lightweight_resolve"
-                ? 0
-                : policy.maxRelationshipsByDepth[input.responseDepth],
-            p_max_neighborhoods: policy.maxNeighborhoodsByDepth[input.responseDepth],
-            p_mode: input.intent.mode,
-            p_subintent: input.intent.subintent,
-            p_max_claims: maxClaims,
-            p_max_cards: 8,
-          })
-          .abortSignal(abortController.signal);
+        const commonArgs = {
+          p_release_id: BROBOT_KG_PINNED_RELEASE_ID, p_query: normalizedQuery,
+          p_entity_types: policy.entityTypes, p_predicates: policy.predicateFamilies,
+          p_max_candidates: 8, p_max_entities: policy.maxEntitiesByDepth[input.responseDepth],
+          p_max_relationships: decision.action === "lightweight_resolve" ? 0 : policy.maxRelationshipsByDepth[input.responseDepth],
+          p_max_neighborhoods: policy.maxNeighborhoodsByDepth[input.responseDepth],
+          p_mode: input.intent.mode, p_subintent: input.intent.subintent,
+          p_max_claims: maxClaims, p_max_cards: 8,
+        };
+        const rpcPromise = retrieveKnowledgeRpc(supabase, {
+          version: retrievalVersion, query: normalizedQuery, commonArgs,
+          signal: abortController.signal,
+        }).then(({ result, version }) => {
+          if (version === "v2") policyVersion = BROBOT_KNOWLEDGE_POLICY_VERSION;
+          return result;
+        });
         const timeoutPromise = new Promise<never>((_resolve, reject) => {
           deadlineTimer = setTimeout(() => {
             abortController.abort();
@@ -267,7 +247,6 @@ export async function retrieveBroBotKgShadow(
         stageTimingsMs.kg_subgraph_retrieval =
           Math.round((performance.now() - retrievalStarted) * 100) / 100;
       }
-      packetCache.set(cacheKey, payload);
     }
 
     activeStage = "packet_construction";

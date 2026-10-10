@@ -3,7 +3,9 @@ import {
   candidateId,
   containsProtectedContent,
   exactDurableIdentity,
+  explainObProdExtraction,
   extractionAttemptId,
+  findProtectedKeyPath,
   isObProdAcceptanceConsistent,
   isObProdExtraction,
   isObProdQualifiers,
@@ -15,6 +17,7 @@ import {
   safetyChecksContractV1,
   sha256Hex,
   structuralPayloadV5,
+  textSafetyFlagsContractV1,
   uuidFromHash,
   vignetteFlagsContractV1,
   type ObProdExtraction,
@@ -204,5 +207,122 @@ assert.equal(safetyChecksContractV1([acceptedCandidate({ text: 'A 46-year-old ma
 assert.equal(safetyChecksContractV1([acceptedCandidate({ text: 'short' }) as never]).length, 1);
 
 assert.equal(isObProdAcceptanceConsistent(baseExtraction() as unknown as ObProdExtraction), true);
+
+// --- explainer: stable codes + boolean parity ---
+
+assert.deepEqual(explainObProdExtraction(baseExtraction()), []);
+assert.deepEqual(explainObProdExtraction(baseExtraction({ candidates: [acceptedCandidate()] })), []);
+// Q3797 shape: accepted with a stale non-complete coverage verdict.
+assert.deepEqual(explainObProdExtraction(baseExtraction({
+  candidates: [acceptedCandidate()],
+  coverage: { verdict: 'overextracted', notes: 'trivia', missingConcepts: [] },
+})), ['accept:coverage']);
+assert.deepEqual(explainObProdExtraction(baseExtraction({
+  candidates: [acceptedCandidate({ finalFactual: 'ambiguous' })],
+})), ['accept:candidate[0]:final_factual']);
+assert.deepEqual(explainObProdExtraction(baseExtraction({
+  finalState: 'ai_review_unresolved', candidates: [acceptedCandidate()],
+  coverage: { verdict: 'missing_major_concept', notes: '', missingConcepts: ['x'] },
+})), ['nonaccept:accepted_present']);
+// Shape violations report precise codes.
+assert.ok(explainObProdExtraction(baseExtraction({ contractVersion: 'other' })).includes('contract_version'));
+assert.ok(explainObProdExtraction(baseExtraction({ attemptNo: -1 })).includes('attempt_no'));
+assert.ok(explainObProdExtraction(baseExtraction({
+  source: { provider: 'orthobullets', nativeQuestionId: '1150', registryQuestionId: null, sourceHash: 'short', reviewLocator: 'https://www.orthobullets.com/testview?qid=1150' },
+})).includes('source:source_hash'));
+assert.ok(explainObProdExtraction(baseExtraction({
+  candidates: [acceptedCandidate({ qualifiers: { bogus: 'x' } })],
+})).includes('candidate[0]:qualifiers:key:bogus'));
+assert.ok(explainObProdExtraction('not-an-object').includes('not_record'));
+// Protected-key finder agrees with the boolean and names the path.
+const leaked = baseExtraction({ candidates: [acceptedCandidate({ text: 'x'.repeat(30), support: ['stem'], explanation: 'leak' })] });
+assert.equal(containsProtectedContent(leaked), true);
+assert.equal(findProtectedKeyPath(leaked), 'root.candidates[0].explanation');
+assert.equal(findProtectedKeyPath(baseExtraction()), null);
+assert.ok(explainObProdExtraction(leaked)[0].startsWith('protected:root.candidates[0].explanation'));
+
+// DB text CHECK applies to every candidate row: vignette text is unpersistable
+// even on dropped/non-accepted candidates (canary-500 Q1704 crashed persist).
+const VIGNETTE_TEXT = 'A 46-year-old man who fell requires fixation here now with follow-up care.';
+assert.deepEqual(textSafetyFlagsContractV1('The radial nerve travels in the spiral groove along the posterior humeral shaft.'), []);
+assert.deepEqual(textSafetyFlagsContractV1(VIGNETTE_TEXT), ['age_vignette']);
+assert.deepEqual(textSafetyFlagsContractV1('short'), ['length']);
+assert.deepEqual(explainObProdExtraction(baseExtraction({
+  candidates: [acceptedCandidate({ text: VIGNETTE_TEXT })],
+})), ['candidate[0]:text_safety:age_vignette']);
+assert.deepEqual(explainObProdExtraction(baseExtraction({
+  finalState: 'ai_review_unresolved',
+  candidates: [acceptedCandidate({ text: VIGNETTE_TEXT, accepted: false, validator: { verdict: 'abstain', reason: 'dropped' } })],
+  coverage: { verdict: 'missing_major_concept', notes: '', missingConcepts: ['x'] },
+})), ['candidate[0]:text_safety:age_vignette']);
+assert.deepEqual(explainObProdExtraction(baseExtraction({
+  candidates: [acceptedCandidate({
+    repairs: [{ stage: 'quality_repair', action: 'rewrite', beforeText: VIGNETTE_TEXT, afterTexts: ['b'.repeat(30)], reason: 'r', repairedAt: '2026-09-28T00:00:30.000Z' }],
+  })],
+})), ['candidate[0]:repair[0]:before_text_safety:age_vignette']);
+assert.ok(explainObProdExtraction(baseExtraction({
+  candidates: [acceptedCandidate({
+    repairs: [{ stage: 'quality_repair', action: 'rewrite', beforeText: 'short', afterTexts: ['b'.repeat(30)], reason: 'r', repairedAt: '2026-09-28T00:00:30.000Z' }],
+  })],
+})).includes('candidate[0]:repair[0]:before_text_length'));
+
+// Parity battery: explainer emptiness must match the boolean gate on every shape.
+const parityCases: Record<string, unknown>[] = [
+  baseExtraction(),
+  baseExtraction({ candidates: [acceptedCandidate()] }),
+  baseExtraction({ candidates: [acceptedCandidate()], coverage: { verdict: 'overextracted', notes: '', missingConcepts: [] } }),
+  baseExtraction({ candidates: [acceptedCandidate({ finalFactual: 'ambiguous' })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ finalQuality: 'needs_repair' })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ text: 'A 46-year-old man who fell requires fixation here now.' })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ validator: { verdict: 'abstain', reason: 'doubt' } })] }),
+  baseExtraction({ finalState: 'ai_review_unresolved', candidates: [acceptedCandidate()], coverage: { verdict: 'complete', notes: '', missingConcepts: [] } }),
+  baseExtraction({ contractVersion: 'other' }),
+  baseExtraction({ algorithmVersion: 'orthobullets-claims-v4' }),
+  baseExtraction({ attemptId: 'nope' }),
+  baseExtraction({ attemptNo: 1.5 }),
+  baseExtraction({ supersedesAttemptId: 'nope' }),
+  baseExtraction({ promptVersions: { generator: 'g' } }),
+  baseExtraction({ models: null }),
+  baseExtraction({ source: null }),
+  baseExtraction({ startedAt: 'whenever' }),
+  baseExtraction({ candidates: 'many' }),
+  baseExtraction({ candidates: [acceptedCandidate({ candidateId: 'nope' })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ index: -2 })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ text: 'short' })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ importance: 'tertiary' })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ claimType: 'vibes' })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ qualifiers: null })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ qualifiers: { anatomy: '' } })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ qualifiers: { anatomy: 'y'.repeat(81) } })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ support: [] })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ support: ['stem', 'vibes'] })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ generator: { model: 'm' } })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ generator: { model: 'm', promptVersion: 'g', confidence: 'high' } })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ factual: { verdict: 'supported' } })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ factual: { verdict: 'maybe', reason: 'r' } })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ quality: 'good' })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ repairs: 'none' })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ repairs: [{ stage: 'triage', action: 'rewrite', beforeText: 'a', afterTexts: ['b'], reason: 'r', repairedAt: '2026-09-28T00:00:30.000Z' }] })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ validator: { verdict: 'accept' } })] }),
+  baseExtraction({ candidates: [acceptedCandidate({ accepted: 'yes' })] }),
+  baseExtraction({ coverage: null }),
+  baseExtraction({ coverage: { verdict: 'so-so', notes: '', missingConcepts: [] } }),
+  baseExtraction({ coverage: { verdict: 'complete', notes: null, missingConcepts: [] } }),
+  baseExtraction({ finalState: 'pending' }),
+  baseExtraction({ usage: null }),
+  baseExtraction({ usage: { generator: null, review: null, coverage: null, repair: null, validator: null } }),
+  baseExtraction({ diagnostics: 'none' }),
+  baseExtraction({ diagnostics: ['review_unresolved', 'vibes'] }),
+  leaked,
+  baseExtraction({ candidates: [acceptedCandidate()], diagnostics: ['bogus'] }),
+];
+// The pre-existing isObProdExtraction true/false assertions above are the parity
+// guard (the boolean is now defined as "explainer empty"). Here: the first two
+// shapes are valid, every other shape must produce at least one code.
+parityCases.forEach((shape, position) => {
+  const violations = explainObProdExtraction(shape);
+  assert.equal(violations.length === 0, position < 2, `case ${position}: ${JSON.stringify(violations).slice(0, 160)}`);
+  assert.equal(isObProdExtraction(shape), position < 2, `boolean case ${position}`);
+});
 
 console.log('claim-extraction-contract-v1.test.ts: all assertions passed');

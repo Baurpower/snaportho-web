@@ -15,6 +15,7 @@
     "typecheck": "tsc --noEmit",
     "test:vercel-crons": "node scripts/validate-vercel-crons.mjs",
     "test:anki-feedback-email": "node --experimental-strip-types supabase/functions/send-anki-feedback-emails/logic.test.ts",
+    "xray:workflow:test": "node --experimental-strip-types scripts/lib/xray-practice-workflow-schema.test.ts && node --experimental-strip-types scripts/lib/xray-practice-api-boundary.test.ts && node --experimental-strip-types src/lib/xray/workflow.test.ts",
     "calendar-source:test": "node --experimental-strip-types src/lib/google/outbound-range.test.ts && node --experimental-strip-types src/lib/google/program-calendar-source.test.ts",
     "brobot:test:chat": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/chat/prompt-builder.test.ts",
     "brobot:test:tiered": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/chat/tier-router.test.ts",
@@ -237,7 +238,8 @@
     "education:ob:claims:resolution:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/orthobullets/ob-claim-resolution.test.ts",
     "education:ob:claims:runner:test": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs src/lib/brobot/orthobullets/ob-production-runner-lib.test.ts",
     "education:ob:claims:stability": "node --experimental-strip-types --experimental-loader ./tmp/alias-loader.mjs scripts/eval-ob-claims-stability.ts",
-    "brobot:test:path2-grounding": "node --experimental-strip-types --experimental-loader ./scripts/lib/alias-loader.mjs src/lib/brobot/kg/telemetry.test.ts && node --experimental-strip-types --experimental-loader ./scripts/lib/alias-loader.mjs src/lib/brobot/kg/knowledge-v2.test.ts"
+    "brobot:test:path2-grounding": "node --experimental-strip-types --experimental-loader ./scripts/lib/alias-loader.mjs src/lib/brobot/kg/telemetry.test.ts && node --experimental-strip-types --experimental-loader ./scripts/lib/alias-loader.mjs src/lib/brobot/kg/knowledge-v2.test.ts",
+    "education:ob:remediation:test": "node scripts/test-ob-remediation.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1095.0",
@@ -276,6 +278,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4.1.8",
     "@types/branch-sdk": "^2.53.7",

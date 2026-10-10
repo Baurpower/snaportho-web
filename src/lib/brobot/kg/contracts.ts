@@ -64,7 +64,7 @@ export type BroBotKgFact = {
 export type BroBotKnowledgeClaim = {
   claimId: string; claimVersionId: string; claimText: string; claimType: string;
   predicate: string; objectText: string; qualifiers: Record<string, unknown>;
-  importanceLevel: string; primaryEntityId: string; primaryEntityLabel: string;
+  importanceLevel: string; primaryEntityId: string | null; primaryEntityLabel: string | null;
   approvalMethod: string; reviewStatus: string; contentSource: string;
   algorithmVersion: string; trustTier: "A" | "B"; score: number; selectionReasons: string[];
 };

@@ -1,6 +1,17 @@
 import assert from 'node:assert/strict';
 import { isObProdExtraction } from './claim-extraction-contract-v1';
 import { runProductionExtraction } from './claim-review-pipeline';
+import { deterministicSamplingParams } from './openai-model-compat';
+
+assert.deepEqual(deterministicSamplingParams('gpt-5-nano'), { reasoning_effort: 'minimal', max_completion_tokens: 4096 });
+assert.deepEqual(deterministicSamplingParams('gpt-5-mini'), { max_completion_tokens: 8192 });
+assert.deepEqual(deterministicSamplingParams('GPT-5.1'), {});
+assert.deepEqual(deterministicSamplingParams('muse-spark-1.3'), {
+  reasoning_effort: 'minimal',
+  max_completion_tokens: 4096,
+});
+assert.deepEqual(deterministicSamplingParams('gpt-4o'), { temperature: 0 });
+assert.deepEqual(deterministicSamplingParams('gpt-4.1-mini'), { temperature: 0 });
 
 const PACKET = {
   stem: 'Which nerve is most commonly injured in fractures of the humeral shaft?',
@@ -21,11 +32,13 @@ const MODELS = { generator: 'g', reviewer: 'r', coverage: 'c', repair: 'p', vali
 type Scripted = string | Error | { refusal: string } | null;
 function stubClient(outputs: Scripted[]) {
   let calls = 0;
+  const requests: Array<{messages:Array<{content:string}>}> = [];
   return {
-    calls: () => calls,
+    calls: () => calls, requests,
     chat: {
       completions: {
-        create: async () => {
+        create: async (request: {messages:Array<{content:string}>}) => {
+          requests.push(request);
           const output = outputs[Math.min(calls, outputs.length - 1)];
           calls += 1;
           if (output instanceof Error) throw output;
@@ -95,7 +108,7 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
       { claim_index: 0, factual: 'supported', factual_reason: 'ok', quality: 'good', quality_reason: 'fixed', importance_override: 'keep' },
     ],
   });
-  const client = stubClient([generatorTwo, review, coverageComplete, repair, rereview, validatorAccept]);
+  const client = stubClient([generatorTwo, review, coverageComplete, repair, rereview, coverageComplete, validatorAccept]);
   const result = await runProductionExtraction(PACKET, SOURCE, { client: client as never, models: MODELS });
   assert.equal(result.ok, true);
   if (!result.ok) throw new Error('unreachable');
@@ -115,7 +128,10 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
       { claim_index: 0, factual: 'supported', factual_reason: 'ok', quality: 'split', quality_reason: 'two facts', importance_override: 'keep' },
     ],
   });
-  const repair = JSON.stringify({ repaired: [{ claim_index: 0, texts: [DRAFT_A, DRAFT_B] }] });
+  const repair = JSON.stringify({ repaired: [{ claim_index: 0, texts: [
+    {text:DRAFT_A,importance:'primary',claim_type:'anatomy',qualifiers:QUALIFIERS,support:['stem'],confidence:0.9},
+    {text:DRAFT_B,importance:'secondary',claim_type:'anatomy',qualifiers:{...QUALIFIERS,anatomy:'child scope'},support:['explanation'],confidence:0.8},
+  ] }] });
   const rereview = JSON.stringify({
     judgments: [
       { claim_index: 0, factual: 'supported', factual_reason: 'ok', quality: 'good', quality_reason: 'ok', importance_override: 'keep' },
@@ -125,13 +141,22 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
   const coverage = JSON.stringify({
     verdict: 'complete', notes: '', missing_concepts: [], drop_indices: [], importance_changes: [],
   });
-  const client = stubClient([generator, review, coverage, repair, rereview, validatorAccept]);
+  const client = stubClient([generator, review, coverage, repair, rereview, coverageComplete, validatorAccept]);
   const result = await runProductionExtraction(PACKET, SOURCE, { client: client as never, models: MODELS });
   assert.equal(result.ok, true);
   if (!result.ok) throw new Error('unreachable');
   assert.equal(result.extraction.finalState, 'accepted');
   assert.equal(result.extraction.candidates.length, 2);
   assert.ok(result.extraction.candidates.every((c) => c.accepted));
+  const child=result.extraction.candidates[1];
+  assert.equal(child.originCandidateIndex,0);assert.equal(child.repairChildIndex,1);
+  assert.equal(child.importance,'secondary');assert.deepEqual(child.qualifiers,{anatomy:'child scope'});
+  const finalRequest=JSON.parse(client.requests.at(-1)!.messages[1].content);
+  assert.deepEqual(finalRequest.claims[1].qualifiers,{anatomy:'child scope'});
+  assert.equal(finalRequest.claims[1].importance,'secondary');
+  assert.deepEqual(finalRequest.claims[1].support,['explanation']);
+  assert.deepEqual(child.support,['explanation']);assert.equal(child.finalReview?.quality.verdict,'good');
+
 }
 
 // 4. Still bad after the single repair: unresolved (no second repair).
@@ -150,13 +175,13 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
       { claim_index: 0, factual: 'supported', factual_reason: 'ok', quality: 'rewrite', quality_reason: 'still bad', importance_override: 'keep' },
     ],
   });
-  const client = stubClient([generator, review, coverageComplete, repair, rereview, validatorAccept]);
+  const client = stubClient([generator, review, coverageComplete, repair, rereview, coverageComplete, validatorAccept]);
   const result = await runProductionExtraction(PACKET, SOURCE, { client: client as never, models: MODELS });
   assert.equal(result.ok, true);
   if (!result.ok) throw new Error('unreachable');
   assert.equal(result.extraction.finalState, 'ai_review_unresolved');
   assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 0);
-  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved']);
+  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved', 'repair_still_disputed']);
   assert.equal(isObProdExtraction(result.extraction), true);
 }
 
@@ -173,6 +198,8 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
   assert.equal(result.ok, true);
   if (!result.ok) throw new Error('unreachable');
   assert.equal(result.extraction.finalState, 'ai_review_unresolved');
+  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved', 'factual_ambiguous']);
+  assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 0);
 }
 
 // 6. Unsupported draft drops cleanly; survivors still accept.
@@ -202,11 +229,37 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
     verdict: 'missing_major_concept', notes: 'gap', missing_concepts: ['nerve course'],
     drop_indices: [], importance_changes: [],
   });
-  const client = stubClient([generatorTwo, reviewGood, coverage, validatorAccept]);
+  const client = stubClient([generatorTwo, reviewGood, coverage, coverageComplete, validatorAccept]);
   const result = await runProductionExtraction(PACKET, SOURCE, { client: client as never, models: MODELS });
   assert.equal(result.ok, true);
   if (!result.ok) throw new Error('unreachable');
   assert.equal(result.extraction.finalState, 'ai_review_unresolved');
+  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved', 'coverage_missing_major_concept']);
+  assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 0);
+}
+
+// 7b. Bare overextracted and bare internal conflict stay unresolved.
+{
+  const over = JSON.stringify({
+    verdict: 'overextracted', notes: 'trivia', missing_concepts: [], drop_indices: [], importance_changes: [],
+  });
+  const client = stubClient([generatorTwo, reviewGood, over]);
+  const result = await runProductionExtraction(PACKET, SOURCE, { client: client as never, models: MODELS });
+  assert.equal(result.ok, true);
+  if (!result.ok) throw new Error('unreachable');
+  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved', 'coverage_overextracted']);
+  assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 0);
+}
+{
+  const clash = JSON.stringify({
+    verdict: 'internally_conflicting', notes: 'clash', missing_concepts: [], drop_indices: [], importance_changes: [],
+  });
+  const client = stubClient([generatorTwo, reviewGood, clash]);
+  const result = await runProductionExtraction(PACKET, SOURCE, { client: client as never, models: MODELS });
+  assert.equal(result.ok, true);
+  if (!result.ok) throw new Error('unreachable');
+  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved', 'coverage_internally_conflicting']);
+  assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 0);
 }
 
 // 8. Overextracted with drops: pruned then accepted.
@@ -215,12 +268,34 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
     verdict: 'overextracted', notes: 'trivia', missing_concepts: [],
     drop_indices: [1], importance_changes: [],
   });
-  const client = stubClient([generatorTwo, reviewGood, coverage, validatorAccept]);
+  const client = stubClient([generatorTwo, reviewGood, coverage, coverageComplete, validatorAccept]);
   const result = await runProductionExtraction(PACKET, SOURCE, { client: client as never, models: MODELS });
   assert.equal(result.ok, true);
   if (!result.ok) throw new Error('unreachable');
   assert.equal(result.extraction.finalState, 'accepted');
   assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 1);
+  assert.equal(isObProdExtraction(result.extraction), true);
+  // Residual verdict describes the persisted post-drop set; original preserved.
+  assert.equal(result.extraction.coverage.verdict, 'complete');
+  assert.equal(result.extraction.coverage.notes, 'tight');
+  assert.equal(result.extraction.candidates.find((c) => !c.accepted)?.validator.reason, 'dropped:coverage_drop');
+}
+
+// 8b. Internally conflicting with drops: pruned then accepted, contract-valid.
+{
+  const coverage = JSON.stringify({
+    verdict: 'internally_conflicting', notes: 'clash', missing_concepts: [],
+    drop_indices: [1], importance_changes: [],
+  });
+  const client = stubClient([generatorTwo, reviewGood, coverage, coverageComplete, validatorAccept]);
+  const result = await runProductionExtraction(PACKET, SOURCE, { client: client as never, models: MODELS });
+  assert.equal(result.ok, true);
+  if (!result.ok) throw new Error('unreachable');
+  assert.equal(result.extraction.finalState, 'accepted');
+  assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 1);
+  assert.equal(isObProdExtraction(result.extraction), true);
+  assert.equal(result.extraction.coverage.verdict, 'complete');
+  assert.equal(result.extraction.coverage.notes, 'tight');
 }
 
 // 9. Validator abstains: unresolved.
@@ -230,6 +305,8 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
   assert.equal(result.ok, true);
   if (!result.ok) throw new Error('unreachable');
   assert.equal(result.extraction.finalState, 'ai_review_unresolved');
+  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved', 'validator_abstain']);
+  assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 0);
 }
 
 // 10. Zero drafts: accepted-zero when coverage confirms; unresolved on gap.
@@ -253,6 +330,8 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
   assert.equal(result.ok, true);
   if (!result.ok) throw new Error('unreachable');
   assert.equal(result.extraction.finalState, 'ai_review_unresolved');
+  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved', 'coverage_missing_major_concept']);
+  assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 0);
 }
 
 // 11. Malformed outputs classify precisely.
@@ -324,6 +403,8 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
   assert.equal(result.ok, true);
   if (!result.ok) throw new Error('unreachable');
   assert.equal(result.extraction.finalState, 'ai_review_unresolved');
+  assert.deepEqual(result.extraction.diagnostics, ['review_unresolved', 'safety_rejected']);
+  assert.equal(result.extraction.candidates.filter((c) => c.accepted).length, 0);
 }
 
 // 14. Request shape: timeout rides the SDK options argument, never the body
@@ -364,7 +445,7 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
   assert.equal(result.ok, false);
   if (result.ok) throw new Error('unreachable');
   assert.equal(result.diagnostic, 'model_empty');
-  assert.match(result.detail, /Unrecognized request argument/);
+  assert.equal(result.detail, 'model_request_rejected');
 }
 {
   const err500 = new Error('500 The server had an error while processing your request');
@@ -385,4 +466,9 @@ const validatorAccept = JSON.stringify({ verdict: 'accept', reason: 'independent
   assert.equal(result.diagnostic, 'model_timeout');
 }
 
+{
+ const client=stubClient([new Error('model budget exhausted')]);
+ const result=await runProductionExtraction(PACKET,SOURCE,{client:client as never,models:MODELS});
+ assert.equal(result.ok,false);if(!result.ok)assert.equal(result.diagnostic,'model_budget_exhausted');
+}
 console.log('claim-review-pipeline.test.ts: all assertions passed');

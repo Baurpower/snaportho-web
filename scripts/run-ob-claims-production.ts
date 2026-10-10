@@ -10,6 +10,10 @@
  * authorization (see runbook); use --max-questions for canaries.
  */
 import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
+import { createBudgetedModelClient } from '../src/lib/brobot/orthobullets/budgeted-model-client';
+import { OB_PROD_PROMPT_SET } from '../src/lib/brobot/orthobullets/claim-extraction-contract-v1';
+import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync, appendFileSync } from 'node:fs';
 import path from 'node:path';
 import OpenAI from 'openai';
@@ -18,9 +22,11 @@ import {
   type ObRunnerDb,
   type ObRunnerPacket,
 } from '../src/lib/brobot/orthobullets/ob-production-runner-lib';
+import type { ObAliasHit, ObRegistryQuestionRow } from '../src/lib/brobot/orthobullets/ob-question-identity';
+import type { ObResolutionCandidateRow } from '../src/lib/brobot/orthobullets/ob-claim-resolution';
+import { resolveObModelProfile } from './lib/ob-model-profile';
 
 const require = createRequire(import.meta.url);
-/* eslint-disable @typescript-eslint/no-require-imports */
 const { Client } = require('pg') as typeof import('pg');
 
 function parseArgs(values: string[]): Map<string, string> {
@@ -68,22 +74,43 @@ async function main(): Promise<void> {
   if (mode === 'resume' && !runId) throw new Error('resume mode requires --run-id');
   if (mode === 'resume' && !apply) throw new Error('resume mode requires --apply (dry run uses run mode)');
 
-  const env = { ...loadEnv(path.resolve('.env.local')), ...process.env };
+  const env = { ...loadEnv(path.resolve(args.get('--env-file') ?? '.env.local')), ...process.env };
   const databaseUrl = env.DATABASE_URL;
   if (!databaseUrl) throw new Error('DATABASE_URL is not configured');
-  const apiKey = env.OPENAI_API_KEY;
-  if (!apiKey) throw new Error('OPENAI_API_KEY is not configured');
-  const strong = env.BROBOT_STRONG_MODEL?.trim() || 'gpt-4o';
-  const models = {
-    generator: env.BROBOT_OB_CLAIMS_GENERATOR_MODEL?.trim() || strong,
-    reviewer: env.BROBOT_OB_CLAIMS_CRITIC_MODEL?.trim() || strong,
-    coverage: env.BROBOT_OB_CLAIMS_REVIEW_MODEL?.trim() || strong,
-    repair: env.BROBOT_OB_CLAIMS_REVIEW_MODEL?.trim() || strong,
-    validator: strong,
-    resolution: strong,
-  };
+  const modelProfile = args.get('--model-profile') ?? 'environment';
+  const provider = resolveObModelProfile(modelProfile, env);
+  const models = provider.models;
+  if (apply && new Set(Object.values(models)).size > 1) throw new Error('durable mixed-model runs require separate per-model pricing profiles');
+  if (apply && !(Number(args.get('--max-cost')) > 0)) throw new Error('positive durable model budget required');
+  let invocationItemId: string | null = null;
 
-  const raw = JSON.parse(readFileSync(inputPath, 'utf8')) as unknown;
+  const rawText = readFileSync(inputPath === '-' ? 0 : inputPath, 'utf8');
+  if (Buffer.byteLength(rawText, 'utf8') > 10_000_000) throw new Error('packet input exceeds bounded size');
+  const packetSha256 = createHash('sha256').update(rawText).digest('hex');
+  const headSha = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+  const releaseSha = (args.get('--release-sha') ?? headSha).trim();
+  if (releaseSha !== headSha) throw new Error('--release-sha must equal the checked-out HEAD');
+  if (apply) {
+    const releasePaths = [
+      'scripts/run-ob-claims-production.ts',
+      'scripts/lib/ob-model-profile.ts',
+      'src/lib/brobot/orthobullets/ob-production-runner-lib.ts',
+      'src/lib/brobot/orthobullets/claim-review-pipeline.ts',
+      'src/lib/brobot/orthobullets/claim-extraction-contract-v1.ts',
+      'src/lib/brobot/orthobullets/ob-claim-resolution.ts',
+      'src/lib/brobot/orthobullets/ob-question-identity.ts',
+      'src/lib/brobot/orthobullets/openai-model-compat.ts',
+      'src/lib/brobot/orthobullets/budgeted-model-client.ts',
+      'src/lib/brobot/orthobullets/claim-extractor-v5.ts',
+      'src/lib/brobot/orthobullets/claim-contract.ts',
+    ];
+    try {
+      execFileSync('git', ['diff', '--quiet', 'HEAD', '--', ...releasePaths]);
+    } catch {
+      throw new Error('refusing durable run: pipeline source differs from the recorded release SHA');
+    }
+  }
+  const raw = JSON.parse(rawText) as unknown;
   if (!Array.isArray(raw)) throw new Error('packet file must be a JSON array');
   const invalid = raw.findIndex((row) => !validPacket(row));
   if (invalid >= 0) throw new Error(`invalid packet at index ${invalid}`);
@@ -103,24 +130,36 @@ async function main(): Promise<void> {
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       if (/timeout|expired|ECONNRESET|ENOTFOUND|connection/i.test(message)) {
-        throw new Error(`db_timeout: ${message.slice(0, 200)}`);
+        throw new Error('db_timeout');
       }
       throw error;
     }
   };
 
+  // pg parses timestamptz into Date; the resolution lib contracts ISO strings.
+  type ResolutionDbRow = Omit<ObResolutionCandidateRow, 'createdAt'> & { createdAt: string | Date };
+  const normalizeResolutionRow = (row: ResolutionDbRow): ObResolutionCandidateRow => ({
+    ...row,
+    createdAt: row.createdAt instanceof Date ? row.createdAt.toISOString() : row.createdAt,
+  });
+
   const db: ObRunnerDb = {
     getRun: async (id) => {
-      const rows = await query<{ id: string; status: string }>(
-        'select id, status from public.ob_claim_production_runs where id = $1', [id],
+      const rows = await query<{ id: string; status: string; releaseSha: string | null; packetSha256: string | null; executionManifest: Record<string, unknown> | null }>(
+        `select id, status, release_sha as "releaseSha", packet_sha256 as "packetSha256",
+                execution_manifest as "executionManifest"
+           from public.ob_claim_production_runs where id = $1`, [id],
       );
       return rows[0] ?? null;
     },
     createRun: async (input) => {
       const rows = await query<{ id: string }>(
-        `insert into public.ob_claim_production_runs (run_key, config, expected_count, created_by)
-         values ($1, $2, $3, $4) returning id`,
-        [input.runKey, JSON.stringify(input.config), input.expectedCount, input.createdBy],
+        `insert into public.ob_claim_production_runs
+          (run_key, config, expected_count, created_by, release_sha, packet_sha256,
+           execution_manifest, pricing_profile, manifest_locked_at)
+         values ($1, $2, $3, $4, $5, $6, $7, $8, now()) returning id`,
+        [input.runKey, JSON.stringify(input.config), input.expectedCount, input.createdBy,
+         input.releaseSha, input.packetSha256, JSON.stringify(input.executionManifest), JSON.stringify(input.pricingProfile)],
       );
       return { id: rows[0].id };
     },
@@ -145,6 +184,7 @@ async function main(): Promise<void> {
         attempt_count: number; max_attempts: number; source_fingerprint_hash: string | null; exhausted: boolean;
       }>('select * from public.ob_claim_lease_item($1, $2, $3)', [id, workerId, leaseSeconds]);
       const row = rows[0];
+      invocationItemId = row?.item_id ?? null;
       return row ? {
         itemId: row.item_id, nativeQuestionId: row.native_question_id, specialty: row.specialty,
         attemptCount: Number(row.attempt_count), maxAttempts: Number(row.max_attempts),
@@ -168,7 +208,11 @@ async function main(): Promise<void> {
     completeItem: async (input) => {
       await query('select public.ob_claim_complete_item($1, $2, $3, $4, $5, $6, $7, $8)', [
         input.itemId, input.workerId, input.status, input.diagnostic, input.reasonCodes,
-        JSON.stringify(input.usage), input.nextAttemptAt,
+        JSON.stringify({
+          prompt_tokens: input.usage.promptTokens,
+          completion_tokens: input.usage.completionTokens,
+          estimated_cost_usd: input.usage.estimatedCostUsd,
+        }), input.nextAttemptAt,
         input.identity ? JSON.stringify({
           outcome: input.identity.outcome, registry_question_id: input.identity.registryQuestionId,
           method: input.identity.method, confidence: input.identity.confidence,
@@ -188,7 +232,7 @@ async function main(): Promise<void> {
       await query('select public.ob_claim_adopt_live_event($1, $2, $3)', [itemId, workerId, attemptId]);
     },
     findRegistryByNative: async (nativeQuestionId) => {
-      return query(
+      return query<ObRegistryQuestionRow>(
         `select q.id as "id", s.slug as "sourceSlug", q.external_question_id as "externalQuestionId",
           q.topic_slug as "topicSlug", q.topic_normalized as "topicNormalized",
           q.specialty_normalized as "specialtyNormalized", q.is_active as "isActive"
@@ -200,7 +244,7 @@ async function main(): Promise<void> {
     },
     findRegistryByAliases: async (aliasValues) => {
       if (!aliasValues.length) return [];
-      return query(
+      return query<{ aliasKind: string; aliasValue: string; row: ObAliasHit['row'] }>(
         `select a.alias_kind as "aliasKind", a.alias_value as "aliasValue",
           jsonb_build_object(
             'id', q.id, 'sourceSlug', s.slug, 'externalQuestionId', q.external_question_id,
@@ -212,7 +256,7 @@ async function main(): Promise<void> {
          join public.external_sources s on s.id = q.source_id
          where a.entity_type = 'external_question' and a.is_active and a.alias_value = any($1)`,
         [aliasValues],
-      ).then((rows) => rows.map((row: { aliasKind: string; aliasValue: string; row: never }) => ({
+      ).then((rows) => rows.map((row) => ({
         aliasKind: row.aliasKind, aliasValue: row.aliasValue, row: row.row,
       })));
     },
@@ -251,7 +295,7 @@ async function main(): Promise<void> {
       return rows[0] ? { attemptId: rows[0].id } : null;
     },
     findByExactIdentity: async (structuralHash, semanticHash) => {
-      return query(
+      return query<ResolutionDbRow>(
         `select c.id as "id", c.claim_text as "claimText", c.claim_type as "claimType",
           c.qualifiers as "qualifiers", c.fingerprint_hash as "fingerprintHash",
           c.semantic_fingerprint_hash as "semanticFingerprintHash",
@@ -260,10 +304,10 @@ async function main(): Promise<void> {
          where c.is_active and c.fingerprint_hash = $1 and c.semantic_fingerprint_hash = $2
          order by c.created_at asc, c.id asc`,
         [structuralHash, semanticHash],
-      );
+      ).then((rows) => rows.map(normalizeResolutionRow));
     },
     findBySemanticHash: async (semanticHash) => {
-      return query(
+      return query<ResolutionDbRow>(
         `select c.id as "id", c.claim_text as "claimText", c.claim_type as "claimType",
           c.qualifiers as "qualifiers", c.fingerprint_hash as "fingerprintHash",
           c.semantic_fingerprint_hash as "semanticFingerprintHash",
@@ -272,31 +316,58 @@ async function main(): Promise<void> {
          where c.is_active and c.semantic_fingerprint_hash = $1
          order by c.created_at asc, c.id asc limit 10`,
         [semanticHash],
-      );
+      ).then((rows) => rows.map(normalizeResolutionRow));
     },
     findTextNeighbors: async (normalizedText, limit) => {
-      return query(
+      return query<ResolutionDbRow>(
         `select c.id as "id", c.claim_text as "claimText", c.claim_type as "claimType",
           c.qualifiers as "qualifiers", c.fingerprint_hash as "fingerprintHash",
           c.semantic_fingerprint_hash as "semanticFingerprintHash",
-          c.is_active as "isActive", c.created_at as "createdAt", c.algorithm_version as "algorithmVersion"
+          c.is_active as "isActive", c.created_at as "createdAt", c.algorithm_version as "algorithmVersion",
+          extensions.similarity(c.claim_text, $1) as "retrievalScore"
          from public.educational_claims c
          where c.is_active and extensions.similarity(c.claim_text, $1) >= 0.35
          order by extensions.similarity(c.claim_text, $1) desc, c.created_at asc
          limit $2`,
         [normalizedText, Math.max(1, Math.min(20, limit))],
-      );
+      ).then((rows) => rows.map(normalizeResolutionRow));
     },
   };
 
-  const openai = new OpenAI({ apiKey });
+  const openai = new OpenAI({ apiKey: provider.apiKey, ...(provider.baseURL ? { baseURL: provider.baseURL } : {}) });
   const workerId = args.get('--worker-id') ?? `worker-${process.pid}-${Math.floor(Math.random() * 1e6)}`;
+  const modelClient = apply ? createBudgetedModelClient(openai as never, {
+    reserve: async ({ id, model, inputHash, inputBytes, maxOutputTokens }) => {
+      if (!invocationItemId) throw new Error('missing model invocation item');
+      const promptRate = provider.promptPricePer1kUsd / 1000;
+      const completionRate = provider.completionPricePer1kUsd / 1000;
+      const reservation = Math.max(0.000000001, inputBytes * promptRate + maxOutputTokens * completionRate);
+      await query('select reserve_ob_production_model_invocation($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)', [
+        id, invocationItemId, workerId, model, OB_PROD_PROMPT_SET, inputHash, reservation,
+        promptRate, completionRate, provider.pricingVersion,
+      ]);
+    },
+    settle: async (id, prompt, completion) => {
+      await query('select finish_claim_model_invocation($1,$2,$3)', [id,prompt,completion]);
+    },
+  }) : openai as never;
   let processed = 0;
 
+  if (mode === 'resume' && runId) {
+    await query('select public.ob_claim_recover_expired_leases($1)', [runId]);
+    await query('select public.ob_claim_resume_run($1)', [runId]);
+  }
+  const promptPrice = provider.promptPricePer1kUsd;
+  const completionPrice = provider.completionPricePer1kUsd;
+  const pricingProfile = {
+    version: args.get('--pricing-profile') ?? provider.pricingVersion,
+    model_profile: modelProfile, provider: provider.provider, base_url: provider.baseURL,
+    prompt_per_1k_usd: promptPrice, completion_per_1k_usd: completionPrice,
+  };
   const report = await runObProduction(
     {
       db,
-      model: openai as never,
+      model: modelClient,
       packets,
       now: () => new Date().toISOString(),
       nowMs: () => Date.now(),
@@ -320,23 +391,55 @@ async function main(): Promise<void> {
         maxErrors: Number(args.get('--max-errors') ?? '0'),
         maxCostUsd: Number(args.get('--max-cost') ?? '0'),
         maxConsecutiveFailures: Number(args.get('--max-consecutive-failures') ?? '10'),
+        maxItemCostUsd: Number(args.get('--max-item-cost') ?? '0'),
       },
       specialtyFilter: args.get('--specialty') ?? null,
       questionFilter: args.get('--question-id') ?? null,
       models,
-      costPer1kPromptUsd: Number(env.BROBOT_COST_PROMPT_PER_1K_USD ?? '0.0025'),
-      costPer1kCompletionUsd: Number(env.BROBOT_COST_COMPLETION_PER_1K_USD ?? '0.01'),
+      costPer1kPromptUsd: promptPrice,
+      costPer1kCompletionUsd: completionPrice,
       backoffBaseSeconds: 30,
       backoffCapSeconds: 1800,
       heartbeatDivider: 3,
+      requestTimeoutMs: Number(args.get('--request-timeout-ms') ?? '120000'),
+      releaseSha,
+      packetSha256,
+      pricingProfile,
+      interItemDelayMs: Number(args.get('--inter-item-delay-ms') ?? '0'),
     },
   );
-  writeFileSync(path.join(outDir, 'report.json'), `${JSON.stringify(report, null, 2)}\n`);
-  console.log(JSON.stringify({ event: 'finished', outDir, ...report, items: undefined }));
+  const databaseTotals = report.runId ? (await query<{
+    status: string; count: string; prompt_tokens: string; completion_tokens: string; estimated_cost_usd: string;
+  }>(
+    `select status, count(*)::text as count,
+            coalesce(sum(prompt_tokens), 0)::text as prompt_tokens,
+            coalesce(sum(completion_tokens), 0)::text as completion_tokens,
+            coalesce(sum(estimated_cost_usd), 0)::text as estimated_cost_usd
+       from public.ob_claim_production_items where run_id = $1 group by status order by status`,
+    [report.runId],
+  )) : [];
+  let lifecycle: Record<string, unknown> | null = null;
+  if (apply && report.runId) {
+    if (report.stoppedBy === 'queue_empty') {
+      const rows = await query<{ result: Record<string, unknown> }>(
+        'select public.ob_claim_finalize_run($1) as result', [report.runId],
+      );
+      lifecycle = rows[0]?.result ?? null;
+      if (lifecycle?.terminal !== true) {
+        await query('select public.ob_claim_pause_run($1, $2)', [report.runId, 'deferred_nonterminal_work']);
+      }
+    } else {
+      await query('select public.ob_claim_pause_run($1, $2)', [report.runId, report.stoppedBy ?? 'worker_stopped']);
+      lifecycle = { terminal: false, status: 'paused', reason: report.stoppedBy };
+    }
+  }
+  const finalReport = { ...report, releaseSha, packetSha256, pricingProfile, lifecycle, databaseTotals };
+  writeFileSync(path.join(outDir, 'report.json'), `${JSON.stringify(finalReport, null, 2)}\n`);
+  console.log(JSON.stringify({ event: 'finished', outDir, ...finalReport, items: undefined }));
   await client.end();
 }
 
 main().catch((error) => {
-  console.error(JSON.stringify({ fatal: error instanceof Error ? error.message : 'unknown' }));
+  console.error(JSON.stringify({ fatal: 'runner_failed', databaseCode: typeof error?.code === 'string' && /^[A-Z0-9]{5}$/.test(error.code) ? error.code : undefined }));
   process.exit(1);
 });

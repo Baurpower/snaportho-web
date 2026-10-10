@@ -1,9 +1,13 @@
 import assert from 'node:assert/strict';
 import {
   canonicalReviewLocator,
+  obRegistryLookupValues,
   resolveObQuestionIdentity,
   type ObRegistryQuestionRow,
 } from './ob-question-identity';
+
+assert.deepEqual(obRegistryLookupValues('4463', ['obq12.103', 'arbitrary', 123]),
+  ['4463', 'OBQ12-103', 'obq12-103', 'OBQ12.103', 'obq12.103']);
 
 const row = (overrides: Partial<ObRegistryQuestionRow> = {}): ObRegistryQuestionRow => ({
   id: '11111111-1111-4111-8111-111111111111',

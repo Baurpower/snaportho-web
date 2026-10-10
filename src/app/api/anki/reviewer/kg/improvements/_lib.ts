@@ -213,11 +213,16 @@ export async function buildImprovementContext(
   if (entityIds.length) {
     const { data: claims } = await supabase
       .from("educational_claims")
-      .select("id,primary_entity_id,claim_text,claim_type,review_status")
+      .select("id,current_version_id,primary_entity_id,claim_text,claim_type,review_status")
       .in("primary_entity_id", entityIds)
       .eq("is_active", true)
       .in("review_status", ["approved", "in_review"]);
-    existingClaims = (claims ?? []).map((claim: any) => ({
+    const { data: eligibleVersions, error: eligibilityError } = await supabase.rpc('servable_claim_version_ids', {
+      p_version_ids: (claims ?? []).map((claim: any) => claim.current_version_id).filter(Boolean),
+    });
+    if (eligibilityError) throw new Error('Claim publication lookup failed');
+    const servable = new Set((eligibleVersions ?? []).map((row: { claim_version_id: string }) => row.claim_version_id));
+    existingClaims = (claims ?? []).filter((claim: any) => servable.has(claim.current_version_id)).map((claim: any) => ({
       id: claim.id,
       primaryEntityId: claim.primary_entity_id,
       claimText: claim.claim_text,

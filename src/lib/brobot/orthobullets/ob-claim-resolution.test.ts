@@ -133,7 +133,7 @@ const options = (client: ReturnType<typeof stubClient>) => ({ client: client as 
   assert.equal(outcome.resolvedClaimId, null);
 }
 
-// Uncertain-only shortlist still creates (nothing equivalent, nothing contradictory).
+// Unknown applicability abstains; uncertainty cannot authorize a new assertion.
 {
   const deps: ObResolutionDeps = {
     ...emptyDeps,
@@ -143,7 +143,7 @@ const options = (client: ReturnType<typeof stubClient>) => ({ client: client as 
     verdicts: [{ claim_id: 'n1', verdict: 'uncertain', reason: 'cannot decide' }],
   })]);
   const outcome = await resolveObClaimCandidate(candidate, deps, options(client));
-  assert.equal(outcome.decision, 'create');
+  assert.equal(outcome.decision, 'unresolved');
 }
 
 // Malformed / incomplete / failed equivalence review: unresolved + diagnostic.
@@ -164,7 +164,7 @@ const options = (client: ReturnType<typeof stubClient>) => ({ client: client as 
   }
   const outcome = await resolveObClaimCandidate(candidate, deps, options(stubClient([new Error('boom')])));
   assert.equal(outcome.decision, 'unresolved');
-  assert.equal(outcome.diagnostic, 'boom');
+  assert.equal(outcome.diagnostic, 'equivalence_unavailable');
 }
 
 // Request shape: timeout rides the SDK options argument, never the body
@@ -204,3 +204,30 @@ const options = (client: ReturnType<typeof stubClient>) => ({ client: client as 
 }
 
 console.log('ob-claim-resolution.test.ts: all assertions passed');
+
+// A matching claim must not hide an independently confirmed conflict.
+{
+ const deps = {...emptyDeps, findTextNeighbors: async()=>[claimRow({id:'same'}),claimRow({id:'opposite'})]};
+ const result = await resolveObClaimCandidate(candidate,deps,options(stubClient([
+  JSON.stringify({verdicts:[{claim_id:'same',verdict:'equivalent',reason:'same'},{claim_id:'opposite',verdict:'contradictory',reason:'opposite'}]}),
+  JSON.stringify({verdicts:[{claim_id:'opposite',verdict:'contradictory',reason:'same scope'}]}),
+ ])));
+ assert.equal(result.decision,'unresolved');assert.equal(result.usage.modelCalls,2);
+ assert.equal(result.records.reduce((sum,row)=>sum+row.usage.promptTokens,0),result.usage.promptTokens);
+}
+// A scoped second pass can correct a comparison of different outcomes.
+{
+ const deps = {...emptyDeps,findTextNeighbors:async()=>[claimRow({id:'different-outcome'})]};
+ const result=await resolveObClaimCandidate(candidate,deps,options(stubClient([
+ JSON.stringify({verdicts:[{claim_id:'different-outcome',verdict:'contradictory',reason:'initial comparison'}]}),
+ JSON.stringify({verdicts:[{claim_id:'different-outcome',verdict:'related_but_distinct',reason:'different outcomes'}]}),
+ ])));
+ assert.equal(result.decision,'create');assert.match(result.records[0].reason,/scoped_recheck/);
+}
+// Duplicate ids fail closed instead of silently replacing a decision.
+{
+ const result=await resolveObClaimCandidate(candidate,{...emptyDeps,findTextNeighbors:async()=>[claimRow({id:'duplicate'})]},options(stubClient([
+ JSON.stringify({verdicts:[{claim_id:'duplicate',verdict:'equivalent',reason:'a'},{claim_id:'duplicate',verdict:'related_but_distinct',reason:'b'}]})
+ ])));
+ assert.equal(result.decision,'unresolved');assert.match(result.diagnostic??'',/duplicate/);
+}

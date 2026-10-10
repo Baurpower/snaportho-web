@@ -22,6 +22,21 @@ export type ObAliasHit = {
   row: ObRegistryQuestionRow;
 };
 
+/** Only visible OBQ/SBQ identifiers supplement the native numeric QID. */
+export function obRegistryLookupValues(nativeQuestionId: string, aliases: unknown[] = []): string[] {
+  const values = [nativeQuestionId];
+  for (const alias of aliases) {
+    if (typeof alias !== 'string') continue;
+    const match = alias.trim().match(/^((?:OBQ|SBQ)\d+)[.-](\d+)$/i);
+    if (!match) continue;
+    for (const separator of ['-', '.']) {
+      const value = `${match[1]}${separator}${match[2]}`;
+      values.push(value.toUpperCase(), value.toLowerCase());
+    }
+  }
+  return [...new Set(values)];
+}
+
 export type ObIdentityInput = {
   nativeQuestionId: string;
   /** Canonical locator is DERIVED from the qid; observed URL is evidence only. */
@@ -84,7 +99,7 @@ export function resolveObQuestionIdentity(input: ObIdentityInput): ObIdentityRes
       conflictingIds: aliasIds,
     };
   }
-  if (nativeIds.length === 1 && aliasIds.length > 0 && !aliasIds.includes(nativeIds[0])) {
+  if (nativeIds.length === 1 && aliasIds.some((id) => id !== nativeIds[0])) {
     return {
       outcome: 'CONFLICT', registryQuestionId: null, method: 'native_alias_mismatch',
       confidence: 'low', evidence: [...evidence, 'native_alias_disagree'], locator,

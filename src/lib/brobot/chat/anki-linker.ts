@@ -90,7 +90,7 @@ export async function linkAnkiCardsForClaimIds(
   const db = createAdminClient();
   const { data: links, error: linksError } = await db.from('card_claim_links')
     .select('canonical_card_id,canonical_card_version_id,claim_id,claim_version_id,confidence,review_status')
-    .in('claim_id', ids).eq('is_active', true).in('review_status', ['approved', 'auto_approved'])
+    .in('claim_id', ids).eq('is_active', true).eq('mapping_role', 'teaches').in('review_status', ['approved', 'auto_approved'])
     .order('confidence', { ascending: false }).limit(40);
   if (linksError) throw new Error('Claim card lookup failed');
   if (!links?.length) return [];
@@ -105,6 +105,11 @@ export async function linkAnkiCardsForClaimIds(
   const memberByVersion = new Map((members ?? []).map((row) => [row.canonical_card_version_id, row]));
   const versionById = new Map((versions ?? []).map((row) => [row.id, row]));
   const claimById = new Map((claims ?? []).filter((row) => row.is_active).map((row) => [row.id, row]));
+  const { data: eligibleVersions, error: eligibilityError } = await db.rpc('servable_claim_version_ids', {
+    p_version_ids: (claims ?? []).filter((row) => row.is_active && row.current_version_id).map((row) => row.current_version_id),
+  });
+  if (eligibilityError) throw new Error('Claim publication lookup failed');
+  const servableVersions = new Set((eligibleVersions ?? []).map((row: { claim_version_id: string }) => row.claim_version_id));
   const selected: AnkiReference[] = [];
   const seenCards = new Set<string>();
   for (const link of links) {
@@ -112,7 +117,8 @@ export async function linkAnkiCardsForClaimIds(
     const member = memberByVersion.get(link.canonical_card_version_id);
     const version = versionById.get(link.canonical_card_version_id);
     const claim = claimById.get(link.claim_id);
-    if (!member || !version?.is_active || !claim || claim.current_version_id !== link.claim_version_id) continue;
+    if (!member || !version?.is_active || !claim || claim.current_version_id !== link.claim_version_id
+      || !servableVersions.has(link.claim_version_id)) continue;
     const front = cardFields(version.field_snapshot).front;
     if (!front) continue;
     selected.push({ id: link.canonical_card_version_id, number: selected.length + 1, claimId: link.claim_id,

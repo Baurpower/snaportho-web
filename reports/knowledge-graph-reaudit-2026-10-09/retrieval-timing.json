@@ -1,0 +1,58 @@
+[
+  {
+    "version": "v2",
+    "query": "explain (analyze,format json) select public.retrieve_brobot_knowledge_v2('kg-beta-20260716-002','femoral neck fracture');",
+    "result": [
+      {
+        "QUERY PLAN": [
+          {
+            "Plan": {
+              "Node Type": "Result",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 0,
+              "Total Cost": 0.26,
+              "Plan Rows": 1,
+              "Plan Width": 32,
+              "Actual Startup Time": 980.658,
+              "Actual Total Time": 980.658,
+              "Actual Rows": 1,
+              "Actual Loops": 1
+            },
+            "Planning Time": 0.053,
+            "Triggers": [],
+            "Execution Time": 981.442
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "version": "v3",
+    "query": "explain (analyze,format json) select public.retrieve_brobot_knowledge_v3('kg-beta-20260716-002','femoral neck fracture');",
+    "result": [
+      {
+        "QUERY PLAN": [
+          {
+            "Plan": {
+              "Node Type": "Result",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 0,
+              "Total Cost": 0.26,
+              "Plan Rows": 1,
+              "Plan Width": 32,
+              "Actual Startup Time": 1456.723,
+              "Actual Total Time": 1456.724,
+              "Actual Rows": 1,
+              "Actual Loops": 1
+            },
+            "Planning Time": 0.062,
+            "Triggers": [],
+            "Execution Time": 1458.37
+          }
+        ]
+      }
+    ]
+  }
+]

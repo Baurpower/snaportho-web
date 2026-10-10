@@ -8,19 +8,21 @@
 
 import {
   exactDurableIdentity,
-  isObProdExtraction,
+  explainObProdExtraction,
   OB_PROD_ALGORITHM,
   OB_PROD_PROMPT_SET,
+  OB_PROD_PROMPT_EQUIVALENCE,
   type ObProdExtraction,
   type ObProdItemStatus,
 } from './claim-extraction-contract-v1';
 import { runProductionExtraction, type ObProdModelClient } from './claim-review-pipeline';
-import { resolveObQuestionIdentity, type ObAliasHit, type ObRegistryQuestionRow } from './ob-question-identity';
+import { resolveObQuestionIdentity, obRegistryLookupValues, type ObAliasHit, type ObRegistryQuestionRow } from './ob-question-identity';
 import { resolveObClaimCandidate, type ObResolutionCandidateRow } from './ob-claim-resolution';
 import { sourceContentHashV5, type ObSourcePacketV5 } from './claim-extractor-v5';
 
 export type ObRunnerPacket = {
   nativeQuestionId: string;
+  questionAliases?: string[];
   specialty?: string;
   topicUrl?: string | null;
   topic?: string | null;
@@ -38,8 +40,11 @@ export type ObRunnerLeasedItem = {
 };
 
 export type ObRunnerDb = {
-  getRun: (runId: string) => Promise<{ id: string; status: string } | null>;
-  createRun: (input: { runKey: string; config: Record<string, unknown>; expectedCount: number; createdBy: string }) => Promise<{ id: string }>;
+  getRun: (runId: string) => Promise<{ id: string; status: string; releaseSha?: string | null; packetSha256?: string | null; executionManifest?: Record<string, unknown> | null } | null>;
+  createRun: (input: {
+    runKey: string; config: Record<string, unknown>; expectedCount: number; createdBy: string;
+    releaseSha: string; packetSha256: string; executionManifest: Record<string, unknown>; pricingProfile: Record<string, unknown>;
+  }) => Promise<{ id: string }>;
   upsertItems: (runId: string, rows: Array<{ nativeQuestionId: string; specialty: string | null }>) => Promise<number>;
   leaseItem: (runId: string, workerId: string, leaseSeconds: number) => Promise<ObRunnerLeasedItem | null>;
   heartbeat: (itemId: string, workerId: string, leaseSeconds: number) => Promise<'ok' | 'lease_lost' | 'item_missing'>;
@@ -71,6 +76,8 @@ export type ObRunnerLimits = {
   maxErrors: number;
   maxCostUsd: number;
   maxConsecutiveFailures: number;
+  /** Stop after recording an item whose own cost exceeds this. 0 or omitted disables the check. */
+  maxItemCostUsd?: number;
 };
 
 export type ObRunnerConfig = {
@@ -89,6 +96,13 @@ export type ObRunnerConfig = {
   backoffBaseSeconds: number;
   backoffCapSeconds: number;
   heartbeatDivider: number;
+  /** Per-model-call timeout in milliseconds. */
+  requestTimeoutMs: number;
+  releaseSha: string;
+  packetSha256: string;
+  pricingProfile: Record<string, unknown>;
+  /** Pause between leased items (ms). 0 = none. Paces model-call bursts. */
+  interItemDelayMs: number;
 };
 
 export type ObRunnerItemReport = {
@@ -96,11 +110,68 @@ export type ObRunnerItemReport = {
   itemId: string | null;
   outcome: string;
   diagnostic: string | null;
+  reasonCodes?: string[];
   claimsAccepted: number;
   promptTokens: number;
   completionTokens: number;
   estimatedCostUsd: number;
 };
+
+export function validateObRunnerConfig(config: ObRunnerConfig): void {
+  const finiteNonnegative: Array<[string, number]> = [
+    ['maxQuestions', config.limits.maxQuestions],
+    ['maxErrors', config.limits.maxErrors],
+    ['maxCostUsd', config.limits.maxCostUsd],
+    ['maxConsecutiveFailures', config.limits.maxConsecutiveFailures],
+    ['interItemDelayMs', config.interItemDelayMs],
+    ['requestTimeoutMs', config.requestTimeoutMs],
+    ['costPer1kPromptUsd', config.costPer1kPromptUsd],
+    ['costPer1kCompletionUsd', config.costPer1kCompletionUsd],
+  ];
+  for (const [name, value] of finiteNonnegative) {
+    if (!Number.isFinite(value) || value < 0) throw new Error(`${name} must be a finite nonnegative number`);
+  }
+  for (const [name, value] of [finiteNonnegative[0], finiteNonnegative[1], finiteNonnegative[3]]) {
+    if (!Number.isInteger(value)) throw new Error(`${name} must be an integer`);
+  }
+  if (!Number.isInteger(config.leaseSeconds) || config.leaseSeconds <= 0) {
+    throw new Error('leaseSeconds must be a positive integer');
+  }
+  if (!Number.isInteger(config.interItemDelayMs)) throw new Error('interItemDelayMs must be an integer');
+  if (!Number.isInteger(config.requestTimeoutMs) || config.requestTimeoutMs <= 0) {
+    throw new Error('requestTimeoutMs must be a positive integer');
+  }
+  if (!Number.isFinite(config.backoffBaseSeconds) || config.backoffBaseSeconds < 0) throw new Error('backoffBaseSeconds must be nonnegative');
+  if (!Number.isFinite(config.backoffCapSeconds) || config.backoffCapSeconds < config.backoffBaseSeconds) {
+    throw new Error('backoffCapSeconds must be at least backoffBaseSeconds');
+  }
+  if (config.limits.maxItemCostUsd !== undefined
+    && (!Number.isFinite(config.limits.maxItemCostUsd) || config.limits.maxItemCostUsd < 0)) {
+    throw new Error('maxItemCostUsd must be a finite nonnegative number');
+  }
+  if (!Number.isFinite(config.heartbeatDivider) || config.heartbeatDivider <= 0) throw new Error('heartbeatDivider must be positive');
+  if (!/^[0-9a-f]{7,64}$/.test(config.releaseSha)) throw new Error('releaseSha must be a git SHA');
+  if (!/^[0-9a-f]{64}$/.test(config.packetSha256)) throw new Error('packetSha256 must be sha256');
+}
+
+function stableJson(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(stableJson).join(',')}]`;
+  if (value && typeof value === 'object') {
+    return `{${Object.entries(value as Record<string, unknown>).sort(([a], [b]) => a.localeCompare(b))
+      .map(([key, child]) => `${JSON.stringify(key)}:${stableJson(child)}`).join(',')}}`;
+  }
+  return JSON.stringify(value);
+}
+
+function executionManifest(config: ObRunnerConfig): Record<string, unknown> {
+  return {
+    release_sha: config.releaseSha, packet_sha256: config.packetSha256,
+    algorithm_version: OB_PROD_ALGORITHM, prompt_set_version: OB_PROD_PROMPT_SET,
+    models: config.models, request_timeout_ms: config.requestTimeoutMs,
+    lease_seconds: config.leaseSeconds, inter_item_delay_ms: config.interItemDelayMs,
+    limits: config.limits, pricing_profile: config.pricingProfile,
+  };
+}
 
 export type ObRunnerReport = {
   runId: string | null;
@@ -108,7 +179,11 @@ export type ObRunnerReport = {
   apply: boolean;
   startedAt: string;
   completedAt: string;
+  /** Lease completions checkpointed (retries count repeatedly). */
   processed: number;
+  /** Unique questions checkpointed. */
+  questions: number;
+  /** Per-question FINAL outcomes: only the last checkpoint per question counts. */
   outcomes: Record<string, number>;
   promptTokens: number;
   completionTokens: number;
@@ -139,19 +214,83 @@ function isTerminalDbError(error: unknown): boolean {
   return /check_violation|contract\/algorithm mismatch|not adoptable|extraction identity mismatch|reuse target failed identity/i.test(message);
 }
 
+const OB_RUNNER_MAX_CONTRACT_CODES = 5;
+
+/** Stable reason codes for a contract rejection (capped, length-bounded). */
+export function contractReasonCodesForViolations(violations: string[]): string[] {
+  return ['contract_rejected', ...violations.slice(0, OB_RUNNER_MAX_CONTRACT_CODES).map((code) => `contract:${code.slice(0, 80)}`)];
+}
+
+export function contractRejectionReasonCodes(value: unknown): string[] {
+  return contractReasonCodesForViolations(explainObProdExtraction(value));
+}
+
+const CONTENT_SAFETY_CODE_RE = /_safety:/;
+
+/**
+ * Content-safety rejections (LLM-produced text the DB CHECK cannot store)
+ * are retryable: fresh model outputs. Any shape violation means a pipeline
+ * bug, which retries cannot fix.
+ */
+export function isContentSafetyRejection(violations: string[]): boolean {
+  return violations.length > 0 && violations.every((code) => CONTENT_SAFETY_CODE_RE.test(code));
+}
+
+/** Persist only closed diagnostic codes; truncating arbitrary errors can leak source text. */
+export function sanitizeReasonDetail(message: string, maxLength = 160): string {
+  if (!message.trim()) return '';
+  const categories: Array<[RegExp,string]> = [
+    [/lease lost|lease expired/i,'lease_lost'],
+    [/contract\/algorithm mismatch/i,'contract_algorithm_mismatch'],
+    [/extraction identity mismatch/i,'extraction_identity_mismatch'],
+    [/reuse target failed identity/i,'reuse_identity_mismatch'],
+    [/not adoptable/i,'event_not_adoptable'],
+    [/check_violation|check constraint/i,'check_violation'],
+    [/timeout|timed out|ECONNRESET|ENOTFOUND/i,'upstream_timeout'],
+    [/rate.?limit|429/i,'model_rate_limited'],
+    [/unparseable|malformed|schema/i,'response_schema_invalid'],
+    [/refusal|refused/i,'model_refused'],
+    [/model_request_rejected/i,'model_request_rejected'],
+    [/model_budget_exhausted|model budget exhausted/i,'model_budget_exhausted'],
+  ];
+  return (categories.find(([pattern])=>pattern.test(message))?.[1] ?? 'upstream_error').slice(0,maxLength);
+}
+
+/** Sum stage usage tolerantly: only valid non-negative integers count. */
+export function tolerantUsageTotals(usage: unknown): { promptTokens: number; completionTokens: number } {
+  let promptTokens = 0;
+  let completionTokens = 0;
+  if (!usage || typeof usage !== 'object' || Array.isArray(usage)) return { promptTokens, completionTokens };
+  for (const stage of Object.values(usage as Record<string, unknown>)) {
+    if (!stage || typeof stage !== 'object' || Array.isArray(stage)) continue;
+    const record = stage as Record<string, unknown>;
+    if (Number.isInteger(record.promptTokens) && (record.promptTokens as number) >= 0) promptTokens += record.promptTokens as number;
+    if (Number.isInteger(record.completionTokens) && (record.completionTokens as number) >= 0) {
+      completionTokens += record.completionTokens as number;
+    }
+  }
+  return { promptTokens, completionTokens };
+}
+
 export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig): Promise<ObRunnerReport> {
+  validateObRunnerConfig(config);
   const startedAt = deps.now();
   const report: ObRunnerReport = {
     runId: null, mode: config.mode, apply: config.apply, startedAt, completedAt: startedAt,
-    processed: 0, outcomes: {}, promptTokens: 0, completionTokens: 0, estimatedCostUsd: 0,
+    processed: 0, questions: 0, outcomes: {}, promptTokens: 0, completionTokens: 0, estimatedCostUsd: 0,
     stoppedBy: null, items: [],
-  };
-  const bumpOutcome = (outcome: string) => {
-    report.outcomes[outcome] = (report.outcomes[outcome] ?? 0) + 1;
   };
   const finish = (stoppedBy: string | null): ObRunnerReport => {
     report.completedAt = deps.now();
     report.stoppedBy = stoppedBy;
+    // Per-question FINAL outcomes: retries checkpoint one row per attempt, but
+    // only the last checkpoint per question counts toward outcomes.
+    const finalByQuestion = new Map<string, string>();
+    for (const entry of report.items) finalByQuestion.set(entry.nativeQuestionId, entry.outcome);
+    const outcomes: Record<string, number> = {};
+    for (const outcome of finalByQuestion.values()) outcomes[outcome] = (outcomes[outcome] ?? 0) + 1;
+    report.outcomes = outcomes;
+    report.questions = finalByQuestion.size;
     return report;
   };
 
@@ -165,6 +304,7 @@ export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig
   ));
   if (config.limits.maxQuestions > 0) selected = selected.slice(0, config.limits.maxQuestions);
   const packetByQid = new Map(selected.map((row) => [row.nativeQuestionId, row]));
+  const requestedManifest = executionManifest(config);
 
   let runId = config.runId;
   if (config.mode === 'run' && !config.apply) {
@@ -175,6 +315,11 @@ export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig
     if (run.status !== 'running' && run.status !== 'paused') {
       throw new Error(`run not resumable from status ${run.status}`);
     }
+    if (run.packetSha256 && run.packetSha256 !== config.packetSha256) throw new Error('resume packet SHA mismatch');
+    if (run.releaseSha && run.releaseSha !== config.releaseSha) throw new Error('resume release SHA mismatch');
+    if (run.executionManifest && stableJson(run.executionManifest) !== stableJson(requestedManifest)) {
+      throw new Error('resume execution manifest mismatch');
+    }
   } else if (config.mode === 'run' && config.apply) {
     const created = await deps.db.createRun({
       runKey: `obprod-${deps.nowMs()}`,
@@ -184,6 +329,10 @@ export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig
       },
       expectedCount: selected.length,
       createdBy: config.workerId,
+      releaseSha: config.releaseSha,
+      packetSha256: config.packetSha256,
+      executionManifest: requestedManifest,
+      pricingProfile: config.pricingProfile,
     });
     runId = created.id;
   } else {
@@ -208,7 +357,6 @@ export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig
     report.promptTokens += entry.promptTokens;
     report.completionTokens += entry.completionTokens;
     report.estimatedCostUsd += entry.estimatedCostUsd;
-    bumpOutcome(entry.outcome);
     deps.onCheckpoint(entry);
   };
 
@@ -218,6 +366,10 @@ export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig
       if (report.estimatedCostUsd >= config.limits.maxCostUsd && config.limits.maxCostUsd > 0) return finish('max_cost');
       const entry = await processPacketDryRun(deps, config, row, costOf);
       checkpoint(entry);
+    if (entry.diagnostic === 'model_budget_exhausted') return finish('max_cost');
+      if ((config.limits.maxItemCostUsd ?? 0) > 0 && entry.estimatedCostUsd > (config.limits.maxItemCostUsd ?? 0)) {
+        return finish('max_item_cost');
+      }
       if (entry.outcome.startsWith('failed') || entry.outcome === 'error') {
         errors += 1;
         consecutiveFailures += 1;
@@ -228,6 +380,7 @@ export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig
       if (config.limits.maxConsecutiveFailures > 0 && consecutiveFailures >= config.limits.maxConsecutiveFailures) {
         return finish('max_consecutive_failures');
       }
+      if (config.interItemDelayMs > 0) await deps.sleep(config.interItemDelayMs);
     }
     return finish('queue_empty');
   }
@@ -271,6 +424,10 @@ export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig
     }
     const entry = await processLeasedItem(deps, config, leased, packetByQid.get(leased.nativeQuestionId) ?? null, costOf);
     checkpoint(entry);
+    if (entry.diagnostic === 'model_budget_exhausted') return finish('max_cost');
+    if ((config.limits.maxItemCostUsd ?? 0) > 0 && entry.estimatedCostUsd > (config.limits.maxItemCostUsd ?? 0)) {
+      return finish('max_item_cost');
+    }
     if (entry.outcome === 'failed' || entry.outcome === 'error') {
       errors += 1;
       consecutiveFailures += 1;
@@ -281,6 +438,7 @@ export async function runObProduction(deps: ObRunnerDeps, config: ObRunnerConfig
     if (config.limits.maxConsecutiveFailures > 0 && consecutiveFailures >= config.limits.maxConsecutiveFailures) {
       return finish('max_consecutive_failures');
     }
+    if (config.interItemDelayMs > 0) await deps.sleep(config.interItemDelayMs);
   }
 }
 
@@ -299,14 +457,15 @@ async function processPacketDryRun(
   let promptTokens = 0;
   let completionTokens = 0;
   // Dry-run identity (read-only): mirrors the apply gate.
+  const aliasValues = obRegistryLookupValues(row.nativeQuestionId, row.questionAliases);
   const dryIdentity = resolveObQuestionIdentity({
     nativeQuestionId: row.nativeQuestionId,
     observedLocator: row.topicUrl ?? null,
     topicSlug: row.topic ?? null,
     topicNormalized: row.topic ?? null,
     nativeRows: await deps.db.findRegistryByNative(row.nativeQuestionId),
-    aliasHits: (await deps.db.findRegistryByAliases([row.nativeQuestionId]))
-      .filter((hit) => hit.aliasValue === row.nativeQuestionId),
+    aliasHits: (await deps.db.findRegistryByAliases(aliasValues))
+      .filter((hit) => aliasValues.includes(hit.aliasValue)),
   });
   if (dryIdentity.outcome !== 'RESOLVED') {
     return {
@@ -329,9 +488,32 @@ async function processPacketDryRun(
       repair: config.models.repair, validator: config.models.validator,
     },
     now: deps.now,
+    requestTimeoutMs: config.requestTimeoutMs,
   });
   if (!result.ok) {
-    return { ...base, outcome: 'failed', diagnostic: result.diagnostic, claimsAccepted: 0, promptTokens: 0, completionTokens: 0, estimatedCostUsd: 0 };
+    for (const stage of Object.values(result.usage)) {
+      promptTokens += stage.promptTokens;
+      completionTokens += stage.completionTokens;
+    }
+    const modelDetail = sanitizeReasonDetail(result.detail ?? '');
+    return {
+      ...base, outcome: 'failed', diagnostic: result.diagnostic,
+      reasonCodes: modelDetail ? ['extraction_failed', `model:${modelDetail}`] : ['extraction_failed'],
+      claimsAccepted: 0,
+      promptTokens, completionTokens, estimatedCostUsd: costOf(promptTokens, completionTokens),
+    };
+  }
+  // Dry run mirrors the apply gate: a pipeline output the contract rejects is a
+  // would-be safety failure, never a silent would-accept.
+  if (explainObProdExtraction(result.extraction).length > 0) {
+    const salvaged = tolerantUsageTotals((result.extraction as unknown as Record<string, unknown> | null)?.usage);
+    promptTokens += salvaged.promptTokens;
+    completionTokens += salvaged.completionTokens;
+    return {
+      ...base, outcome: 'failed', diagnostic: 'safety_violation',
+      reasonCodes: contractRejectionReasonCodes(result.extraction), claimsAccepted: 0,
+      promptTokens, completionTokens, estimatedCostUsd: costOf(promptTokens, completionTokens),
+    };
   }
   for (const stage of Object.values(result.extraction.usage)) {
     promptTokens += stage.promptTokens;
@@ -353,10 +535,12 @@ async function processPacketDryRun(
   }
   void wouldReuse;
   void wouldCreate;
+  const abstention = result.extraction.diagnostics.filter((code) => code !== 'review_unresolved');
   return {
     ...base,
     outcome: result.extraction.finalState === 'accepted' ? 'would_accept' : 'would_unresolved',
     diagnostic: result.extraction.finalState === 'accepted' ? null : 'review_unresolved',
+    reasonCodes: abstention,
     claimsAccepted: result.extraction.candidates.filter((entry) => entry.accepted).length,
     promptTokens, completionTokens, estimatedCostUsd: costOf(promptTokens, completionTokens),
   };
@@ -414,7 +598,7 @@ async function processLeasedItem(
 
     // Identity resolution (read-only lookups, then decide).
     const nativeRows = await db.findRegistryByNative(leased.nativeQuestionId);
-    const aliasValues = [leased.nativeQuestionId];
+    const aliasValues = obRegistryLookupValues(leased.nativeQuestionId, row.questionAliases);
     const aliasHits = await db.findRegistryByAliases(aliasValues);
     const identity = resolveObQuestionIdentity({
       nativeQuestionId: leased.nativeQuestionId,
@@ -422,7 +606,7 @@ async function processLeasedItem(
       topicSlug: row.topic ?? null,
       topicNormalized: row.topic ?? null,
       nativeRows,
-      aliasHits: aliasHits.filter((hit) => hit.aliasValue === leased.nativeQuestionId),
+      aliasHits: aliasHits.filter((hit) => aliasValues.includes(hit.aliasValue)),
     });
     if (identity.outcome !== 'RESOLVED') {
       await db.completeItem({
@@ -473,13 +657,14 @@ async function processLeasedItem(
       attemptNo,
       supersedesAttemptId,
       now: deps.now,
+      requestTimeoutMs: config.requestTimeoutMs,
     });
     if (heartbeatFailed) {
       return { ...base, outcome: 'failed', diagnostic: 'lease_lost', claimsAccepted: 0, ...usageOf() };
     }
     if (!result.ok) {
       const transient = result.diagnostic === 'model_429' || result.diagnostic === 'model_timeout'
-        || result.diagnostic === 'model_malformed' || result.diagnostic === 'model_empty';
+        || result.diagnostic === 'model_budget_exhausted' || result.diagnostic === 'model_malformed' || result.diagnostic === 'model_empty';
       const status = transient ? 'failed_transient' : 'failed_permanent';
       const nextAttemptAt = transient
         ? new Date(deps.nowMs() + backoffDelayMs(leased.attemptCount, config.backoffBaseSeconds, config.backoffCapSeconds, deps.random)).toISOString()
@@ -488,9 +673,11 @@ async function processLeasedItem(
         promptTokens += stage.promptTokens;
         completionTokens += stage.completionTokens;
       }
+      const modelDetail = sanitizeReasonDetail(result.detail ?? '');
       await db.completeItem({
         itemId: leased.itemId, workerId: config.workerId, status, diagnostic: result.diagnostic,
-        reasonCodes: ['extraction_failed'], usage: usageOf(), nextAttemptAt,
+        reasonCodes: modelDetail ? ['extraction_failed', `model:${modelDetail}`] : ['extraction_failed'],
+        usage: usageOf(), nextAttemptAt,
         identity: {
           outcome: identity.outcome, registryQuestionId: identity.registryQuestionId,
           method: identity.method, confidence: identity.confidence, evidence: identity.evidence,
@@ -501,13 +688,33 @@ async function processLeasedItem(
     }
 
     let extraction = result.extraction;
-    if (!isObProdExtraction(extraction)) {
+    const contractViolations = explainObProdExtraction(extraction);
+    if (contractViolations.length > 0) {
+      const reasonCodes = contractReasonCodesForViolations(contractViolations);
+      const salvaged = tolerantUsageTotals((extraction as unknown as Record<string, unknown> | null)?.usage);
+      promptTokens += salvaged.promptTokens;
+      completionTokens += salvaged.completionTokens;
+      // Content-safety rejections are retryable (fresh model outputs); shape
+      // violations indicate a pipeline bug and are terminal.
+      if (isContentSafetyRejection(contractViolations)) {
+        await db.completeItem({
+          itemId: leased.itemId, workerId: config.workerId, status: 'failed_transient',
+          diagnostic: 'safety_violation', reasonCodes, usage: usageOf(),
+          nextAttemptAt: new Date(deps.nowMs() + backoffDelayMs(leased.attemptCount, config.backoffBaseSeconds, config.backoffCapSeconds, deps.random)).toISOString(),
+          identity: {
+            outcome: identity.outcome, registryQuestionId: identity.registryQuestionId,
+            method: identity.method, confidence: identity.confidence, evidence: identity.evidence,
+            locator: identity.locator, conflictingIds: identity.conflictingIds,
+          },
+        });
+        return { ...base, outcome: 'failed', diagnostic: 'safety_violation', reasonCodes, claimsAccepted: 0, ...usageOf() };
+      }
       await db.completeItem({
         itemId: leased.itemId, workerId: config.workerId, status: 'failed_permanent',
-        diagnostic: 'safety_violation', reasonCodes: ['contract_rejected'], usage: usageOf(),
+        diagnostic: 'safety_violation', reasonCodes, usage: usageOf(),
         nextAttemptAt: null, identity: null,
       });
-      return { ...base, outcome: 'failed', diagnostic: 'safety_violation', claimsAccepted: 0, ...usageOf() };
+      return { ...base, outcome: 'failed', diagnostic: 'safety_violation', reasonCodes, claimsAccepted: 0, ...usageOf() };
     }
     for (const stage of Object.values(extraction.usage)) {
       promptTokens += stage.promptTokens;
@@ -533,14 +740,15 @@ async function processLeasedItem(
         promptTokens += outcome.usage.promptTokens;
         completionTokens += outcome.usage.completionTokens;
         if (outcome.diagnostic) {
+          const diagnostic = outcome.diagnostic === 'model_budget_exhausted' ? 'model_budget_exhausted' : 'model_timeout';
           await db.completeItem({
             itemId: leased.itemId, workerId: config.workerId, status: 'failed_transient',
-            diagnostic: 'model_timeout', reasonCodes: ['resolution_failed'],
+            diagnostic, reasonCodes: ['resolution_failed'],
             usage: usageOf(),
             nextAttemptAt: new Date(deps.nowMs() + backoffDelayMs(leased.attemptCount, config.backoffBaseSeconds, config.backoffCapSeconds, deps.random)).toISOString(),
             identity: null,
           });
-          return { ...base, outcome: 'failed', diagnostic: 'model_timeout', claimsAccepted: 0, ...usageOf() };
+          return { ...base, outcome: 'failed', diagnostic, claimsAccepted: 0, ...usageOf() };
         }
         resolutions.set(candidate.candidateId, {
           decision: outcome.decision,
@@ -548,7 +756,7 @@ async function processLeasedItem(
           structuralHash: identityHashes.structuralHash,
           semanticHash: identityHashes.semanticHash,
           model: config.models.resolution,
-          promptVersion: 'ob-claims-prod-equivalence-v1.0',
+          promptVersion: OB_PROD_PROMPT_EQUIVALENCE,
           usage: {
             promptTokens: outcome.usage.promptTokens,
             completionTokens: outcome.usage.completionTokens,
@@ -585,16 +793,19 @@ async function processLeasedItem(
         return { ...base, outcome: 'failed', diagnostic: 'lease_lost', claimsAccepted: 0, ...usageOf() };
       }
       if (isTerminalDbError(error)) {
+        const terminalDetail = sanitizeReasonDetail(message);
         await db.completeItem({
           itemId: leased.itemId, workerId: config.workerId, status: 'failed_permanent',
-          diagnostic: 'persistence_failed', reasonCodes: ['persist_rejected'],
+          diagnostic: 'persistence_failed', reasonCodes: ['persist_rejected', `rpc:${terminalDetail}`],
           usage: usageOf(), nextAttemptAt: null, identity: null,
         });
         return { ...base, outcome: 'failed', diagnostic: 'persistence_failed', claimsAccepted: 0, ...usageOf() };
       }
+      // Retain the error category without copying provider or database payloads.
+      const detail = sanitizeReasonDetail(message);
       await db.completeItem({
         itemId: leased.itemId, workerId: config.workerId, status: 'failed_transient',
-        diagnostic: 'db_error', reasonCodes: ['persist_failed'],
+        diagnostic: 'db_error', reasonCodes: ['persist_failed', `rpc:${detail}`],
         usage: usageOf(),
         nextAttemptAt: new Date(deps.nowMs() + backoffDelayMs(leased.attemptCount, config.backoffBaseSeconds, config.backoffCapSeconds, deps.random)).toISOString(),
         identity: null,
@@ -606,6 +817,7 @@ async function processLeasedItem(
       ...base,
       outcome: extraction.finalState === 'accepted' ? 'accepted' : 'unresolved',
       diagnostic: extraction.finalState === 'accepted' ? null : 'review_unresolved',
+      reasonCodes: extraction.diagnostics.filter((code) => code !== 'review_unresolved'),
       claimsAccepted: accepted,
       ...usageOf(),
     };
@@ -614,7 +826,7 @@ async function processLeasedItem(
   }
 }
 
-function buildPersistPayload(
+export function buildPersistPayload(
   extraction: ObProdExtraction,
   resolutions: Map<string, {
     decision: 'reuse' | 'create' | 'unresolved'; resolvedClaimId: string | null;
@@ -653,7 +865,11 @@ function buildPersistPayload(
       missing_concepts: extraction.coverage.missingConcepts,
     },
     diagnostics: extraction.diagnostics,
-    usage,
+    usage: {
+      prompt_tokens: usage.promptTokens,
+      completion_tokens: usage.completionTokens,
+      estimated_cost_usd: usage.estimatedCostUsd,
+    },
     identity: {
       outcome: identity.outcome,
       registry_question_id: identity.registryQuestionId,
@@ -674,7 +890,11 @@ function buildPersistPayload(
         claim_type: candidate.claimType,
         qualifiers: candidate.qualifiers,
         support: candidate.support,
-        generator: candidate.generator,
+        generator: {
+          model: candidate.generator.model,
+          prompt_version: candidate.generator.promptVersion,
+          confidence: candidate.generator.confidence,
+        },
         factual: candidate.factual,
         quality: candidate.quality,
         final_factual: candidate.finalFactual,
@@ -682,7 +902,9 @@ function buildPersistPayload(
         validator: candidate.validator,
         accepted: candidate.accepted,
         final_text: candidate.text,
-        origin_candidate_index: null,
+        origin_candidate_index: candidate.originCandidateIndex ?? candidate.index,
+        repair_child_index: candidate.repairChildIndex ?? 0,
+        final_review: candidate.finalReview ?? null,
         repair_action: repair?.action ?? null,
         repair_reason: repair?.reason ?? null,
         pre_repair_text: repair ? repair.beforeText : null,
@@ -693,7 +915,11 @@ function buildPersistPayload(
           semantic_hash: resolution.semanticHash,
           model: resolution.model,
           prompt_version: resolution.promptVersion,
-          usage: resolution.usage,
+          usage: {
+            prompt_tokens: resolution.usage.promptTokens,
+            completion_tokens: resolution.usage.completionTokens,
+            estimated_cost_usd: resolution.usage.estimatedCostUsd,
+          },
           examined: resolution.examined,
         } : null,
       };

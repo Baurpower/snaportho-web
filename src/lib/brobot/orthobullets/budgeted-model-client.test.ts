@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {createBudgetedModelClient,type InvocationReservation} from './budgeted-model-client.ts';
+import type {ObProdModelClient} from './claim-review-pipeline.ts';
+let calls=0;let options:unknown;let request:Record<string,unknown>={};let failed=false;
+const client:ObProdModelClient={chat:{completions:{create:async(args,opts)=>{calls++;request=args;options=opts;if(failed)throw new Error('private provider payload');return {choices:[{message:{content:'{}'}}],usage:{prompt_tokens:100,completion_tokens:10}};}}}};
+const reservations:InvocationReservation[]=[];const settlements:Array<{id:string;prompt:number|null;completion:number|null}>=[];
+const bounded=createBudgetedModelClient(client,{reserve:async input=>{reservations.push(input)},settle:async(id,prompt,completion)=>{settlements.push({id,prompt,completion})}});
+await bounded.chat.completions.create({model:'gpt-4.1-mini',messages:[{content:'Unicode μ'}]},{timeout:1000});
+assert.equal(request.max_completion_tokens,4096);assert.deepEqual(options,{timeout:1000,maxRetries:0});
+assert.equal(reservations[0].inputHash.length,64);assert.equal(reservations[0].id,settlements[0].id);assert.equal(settlements[0].prompt,100);
+failed=true;await assert.rejects(()=>bounded.chat.completions.create({model:'gpt-4.1-mini'}),/private provider payload/);assert.equal(settlements[1].prompt,null);assert.equal(settlements[1].completion,null);
+const refused=createBudgetedModelClient(client,{reserve:async()=>{throw new Error('model budget exhausted')},settle:async()=>{throw new Error('should not settle an unreserved request')}});
+await assert.rejects(()=>refused.chat.completions.create({model:'gpt-4.1-mini'}),/budget exhausted/);assert.equal(calls,2,'budget rejection must happen before provider transmission');
+await assert.rejects(()=>bounded.chat.completions.create({model:'gpt-4.1-mini',max_completion_tokens:10000}),/output bound/);assert.equal(calls,2);
+console.log('budgeted-model-client: reserve-before-call, bounded output, no automatic retries and unknown usage checks passed');

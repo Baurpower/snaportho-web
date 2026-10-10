@@ -46,7 +46,7 @@ export type EntityResolution =
   }
   | {
     action: "suppress";
-    reason: "rejected_label" | "non_entity_shape";
+    reason: "rejected_label" | "non_entity_shape" | "ambiguous_match";
     detail: string;
     normalizedLabel: string;
     evidence: string[];
@@ -57,6 +57,8 @@ export type EntityResolution =
     inference: EntityTypeInference;
     evidence: string[];
   };
+
+const GENERIC_ENTITY_RE = /^(?:(?:mild|moderate|severe|advanced|early|late|chronic|acute)\s+)?(?:disease|condition|injury|fracture|repair|procedure|patient|treatment|surgery)$/i;
 
 const BOOLEAN_TOKEN_RE = /^(true|false|yes|no)[!.]?$/i;
 
@@ -75,44 +77,25 @@ export function resolveEntityLabelForPropose(
 
   // 1. Exact canonical match (any match key, any type — type skew in the
   // proposal must never block a canonical hit; the canonical row owns truth).
-  for (const canonical of inputs.canonicalIndex) {
+  const exact = inputs.canonicalIndex.filter((canonical) => {
     const canonicalKeys = entityMatchKeys(canonical.preferredLabel);
     if (canonical.normalizedLabel) canonicalKeys.push(canonical.normalizedLabel);
-    if (canonicalKeys.some((key) => keys.includes(key))) {
-      return {
-        action: "link_canonical",
-        canonicalEntityId: canonical.id,
-        via: "exact_label",
-        normalizedLabel,
-        entityType: canonical.entityType,
-        confidence: 1,
-        evidence: ["exact_normalized_label"],
-      };
-    }
+    return canonicalKeys.some((key) => keys.includes(key));
+  });
+  const exactIds = new Set(exact.map((entry) => entry.id));
+  const aliases = inputs.aliases.filter((alias) => keys.includes(alias.aliasNormalized));
+  const aliasTargets = inputs.canonicalIndex.filter((entry) => aliases.some((alias) => alias.canonicalEntityId === entry.id));
+  const aliasIds = new Set(aliasTargets.map((entry) => entry.id));
+  if (exactIds.size > 1 || (exactIds.size === 0 && aliasIds.size > 1)) {
+    return {action:'suppress',reason:'ambiguous_match',detail:'multiple canonical targets',normalizedLabel,evidence:['ambiguous_canonical_targets']};
   }
-
-  // 2. Reviewed alias.
-  const aliasByNorm = new Map<string, AliasRef>();
-  for (const alias of inputs.aliases) {
-    if (!aliasByNorm.has(alias.aliasNormalized)) aliasByNorm.set(alias.aliasNormalized, alias);
-  }
-  for (const key of keys) {
-    const hit = aliasByNorm.get(key);
-    if (hit) {
-      const target = inputs.canonicalIndex.find((entry) => entry.id === hit.canonicalEntityId);
-      if (target) {
-        return {
-          action: "link_canonical",
-          canonicalEntityId: target.id,
-          via: "reviewed_alias",
-          normalizedLabel,
-          entityType: target.entityType,
-          confidence: 0.95,
-          evidence: [`reviewed_alias_${hit.aliasType}`],
-        };
-      }
-    }
-  }
+  const target = exact[0] ?? aliasTargets[0];
+  if (target) return {
+    action:'link_canonical',canonicalEntityId:target.id,
+    via:exact.length ? 'exact_label' : 'reviewed_alias',normalizedLabel,
+    entityType:target.entityType,confidence:exact.length ? 1 : 0.95,
+    evidence:exact.length ? ['exact_normalized_label'] : [`reviewed_alias_${aliases.find((a)=>a.canonicalEntityId===target.id)!.aliasType}`],
+  };
 
   // 3. Durable negative.
   if (inputs.rejectedLabels.has(normalizedLabel)) {
@@ -128,6 +111,7 @@ export function resolveEntityLabelForPropose(
   // 4. Non-entity shapes.
   const inference = inferEntityType(preferredLabel, normalizedLabel, claimHints);
   const shapeReasons: string[] = [];
+  if (GENERIC_ENTITY_RE.test(preferredLabel.trim())) shapeReasons.push('generic_entity_label');
   if (BOOLEAN_TOKEN_RE.test(preferredLabel.trim())) shapeReasons.push("boolean_token");
   if (inference.flags.includes("likely_verb_fragment")) shapeReasons.push("verb_fragment");
   if (hasDeictic(normalizedLabel)) shapeReasons.push("deictic_phrase");

@@ -1,0 +1,38 @@
+{
+  "comparedEdges": 2248,
+  "violations": [
+    {
+      "o": "10e53bdb-ca52-452b-8507-8fee1447f651",
+      "p": "has_imaging_finding",
+      "s": "180fc926-c59a-4a61-a506-85bd9e7d9e2d",
+      "id": "46103dd7-cd21-4392-a7dd-00e183774f95",
+      "oType": "imaging_finding",
+      "sType": "procedure",
+      "errors": [
+        "subject_type"
+      ]
+    },
+    {
+      "o": "35d4cc42-c5fc-4e6e-b644-49ce4c99ca49",
+      "p": "has_imaging_finding",
+      "s": "b306031a-1f71-41e6-a0d6-d0bb6bfa4edb",
+      "id": "73fa7822-047b-49f9-b423-402f23c32ba9",
+      "oType": "imaging_finding",
+      "sType": "procedure",
+      "errors": [
+        "subject_type"
+      ]
+    },
+    {
+      "o": "26d426b7-6e38-4339-b805-96584d48f5bc",
+      "p": "has_complication",
+      "s": "17bdb16c-377a-49f5-a2cb-4a0542780fac",
+      "id": "6fe1f39b-af4e-43bc-8744-75e8a931b49f",
+      "oType": "condition",
+      "sType": "procedure",
+      "errors": [
+        "object_type"
+      ]
+    }
+  ]
+}

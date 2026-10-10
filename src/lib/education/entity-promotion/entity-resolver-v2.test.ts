@@ -61,3 +61,17 @@ describe("resolveEntityLabelForPropose", () => {
     assert.equal(resolution.action, "propose");
   });
 });
+
+it('abstains on duplicate canonical labels and ambiguous aliases',()=>{
+ const index=inputs().canonicalIndex;
+ const duplicate={...index[0],id:'other-nerve'};
+ const exact=resolveEntityLabelForPropose('Femoral nerve',inputs({canonicalIndex:[...index,duplicate]}));
+ assert.equal(exact.action,'suppress');assert.equal(exact.action==='suppress'&&exact.reason,'ambiguous_match');
+ const alias=resolveEntityLabelForPropose('Femoral',inputs({canonicalIndex:[...index,{...duplicate,preferredLabel:'Another nerve',normalizedLabel:'another nerve'}],aliases:[...inputs().aliases,{aliasNormalized:'femoral',canonicalEntityId:'other-nerve',aliasType:'synonym'}]}));
+ assert.equal(alias.action,'suppress');
+});
+
+it('suppresses generic disease and procedure labels without suppressing specific diagnoses',()=>{
+ for(const label of ['severe disease','condition','procedure','mild injury']) assert.equal(resolveEntityLabelForPropose(label,inputs()).action,'suppress');
+ assert.equal(resolveEntityLabelForPropose('Carpal tunnel syndrome',inputs()).action,'propose');
+});

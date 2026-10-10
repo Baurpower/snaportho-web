@@ -580,7 +580,7 @@ function extractQuestionId(root: DocumentLike, url: string, matched: Record<stri
 
 function extractQuestionAliases(root: DocumentLike) {
   const text = textOf(root.querySelector('body')) || textOf(root);
-  const code = text.match(/\b((?:OBQ|SBQ)\d+\.\d+)\b/i)?.[1]?.toUpperCase();
+  const code = text.match(/\b((?:OBQ|SBQ)\d+[.-]\d+)\b/i)?.[1]?.toUpperCase();
   return code ? [code] : [];
 }
 

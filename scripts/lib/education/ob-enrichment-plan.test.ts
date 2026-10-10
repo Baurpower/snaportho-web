@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {planEnrichmentBatch} from './ob-enrichment-plan.ts';
+const inputs=Array.from({length:2047},(_,i)=>({claim_version_id:`v${i}`,input_hash:`h${i}`}));
+assert.deepEqual(planEnrichmentBatch(inputs,[],2),inputs.slice(0,2));
+const done=inputs.slice(0,2).map(row=>({...row,status:'complete'}));
+assert.deepEqual(planEnrichmentBatch(inputs,done,2),inputs.slice(2,4));
+assert.equal(planEnrichmentBatch(inputs,[],500).length,500);
+assert.deepEqual(planEnrichmentBatch(inputs,[{...inputs[0],status:'exhausted'}],1),[inputs[1]]);
+assert.deepEqual(planEnrichmentBatch([{...inputs[0],input_hash:'new'}],done,1),[{...inputs[0],input_hash:'new'}]);
+assert.deepEqual(planEnrichmentBatch([inputs[0],inputs[0]],[{...inputs[0],status:'retry'}],2),[inputs[0]]);
+for(const limit of [0,501,1.1,NaN])assert.throws(()=>planEnrichmentBatch(inputs,[],limit));
+console.log('ob-enrichment-plan: bounded enqueue and resume assertions passed');
